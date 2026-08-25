@@ -1,6 +1,6 @@
 # Ledger — hand-verified ground truth (solver test fixtures)
 
-| grid (r x m) | max blackout | # maximum blackouts | status |
+| grid (n x m) | max blackout | # maximum blackouts | status |
 |---|---|---|---|
 | 2 x 2 | 4 | 1 | hand-proved (vacuous: one rectangle) |
 | 2 x 3 | 4 | 12 | hand-proved; witnesses characterized |
