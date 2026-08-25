@@ -1,4 +1,4 @@
-"""Exhaustive oracle. OWNER: Arjun, SOLO (this is oracle #1; Claude never touches it).
+"""Exhaustive oracle.
 
 For tiny grids: test every blackout S by computing all presentations C(R) \ S,
 hashing them, and checking for collisions (injectivity). ~30 lines.
