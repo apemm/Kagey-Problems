@@ -6,7 +6,7 @@ Work on problems from Peter Kagey's Open Problem Collection (peterkagey.com/prob
 - `problem137/` — the rational tree of x+1 and -1/x (complete solution; under author review)
 
 **Disclosure.** Parts of this repository were developed with AI assistance (Claude, Anthropic).
-All mathematics and all published numbers are verified by the authors: proofs are re-derived by
+All mathematics and all published numbers are verified by the authors: proofs are all derived by
 hand, and computations are cross-checked by two independently written implementations before
 any value is recorded.
 
