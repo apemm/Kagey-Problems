@@ -41,9 +41,7 @@ def rectangles(rows, cols):
                 if r not in inside or s not in inside:
                     # Moving further along w only leaves the grid faster: coordinates are
                     # monotone in t, so once either corner exits it never re-enters.
-                    if (r[0] < 1 or r[0] > cols or r[1] < 1 or r[1] > rows or
-                            s[0] < 1 or s[0] > cols or s[1] < 1 or s[1] > rows):
-                        break
+                    break
                 found.add(frozenset((p, q, r, s)))
                 t += 1
     return sorted(found, key=lambda R: sorted(R))
