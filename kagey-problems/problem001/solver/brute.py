@@ -1,4 +1,4 @@
-"""Exhaustive oracle for problem 001.
+r"""Exhaustive oracle for problem 001.
 
 For tiny grids: test every blackout S by computing all presentations C(R) \ S,
 hashing them, and checking for collisions (injectivity). ~30 lines.
@@ -50,21 +50,36 @@ def valid(S, rect_masks):
     return True
 
 def max_blackout_brute(rows, cols):
+    """Returns (max blackout size, number of maximum blackouts, number of rectangles).
+
+    Searches blackout sizes from N downward; the first size admitting a valid S is the
+    maximum, and every valid S of that size is counted. Exhaustive at each size, so the
+    count is exact; sizes below the maximum are never visited.
+    """
     rect_masks, N = rectangle_masks(rows, cols)
     if len(rect_masks) < 2:
         return N, 1, len(rect_masks)
-    best, count = -1, 0
-    for S in range(1 << N):
-        if valid(S, rect_masks):
-            k = bin(S).count("1")
-            if k > best:
-                best, count = k, 1
-            elif k == best:
+    for k in range(N, -1, -1):
+        count = 0
+        for blk in combinations(range(N), k):
+            S = 0
+            for b in blk:
+                S |= 1 << b
+            if valid(S, rect_masks):
                 count += 1
-    return best, count, len(rect_masks)
+        if count:
+            return k, count, len(rect_masks)
+    raise AssertionError("unreachable: S = empty set is always valid")
 
 if __name__ == "__main__":
-    for rows, cols in [(2, 2), (2, 3), (2, 4), (2, 5), (3, 3), (3, 4), (4, 4)]:
+    import sys
+    if len(sys.argv) > 1:
+        grids = [tuple(int(x) for x in a.lower().split("x")) for a in sys.argv[1:]]
+    else:
+        grids = [(2, 2), (2, 3), (2, 4), (2, 5), (3, 3), (3, 4)]
+    print("| grid (rows x cols) | rectangles | max blackout | # maximum blackouts | time |")
+    print("|---|---|---|---|---|")
+    for rows, cols in grids:
         t0 = time.time()
         v, w, nr = max_blackout_brute(rows, cols)
-        print(f"{rows}x{cols}: rects={nr} value={v} witnesses={w}  ({time.time()-t0:.1f}s)")
+        print(f"| {rows} x {cols} | {nr} | {v} | {w} | {time.time()-t0:.2f}s |", flush=True)
