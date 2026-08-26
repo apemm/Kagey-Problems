@@ -10,6 +10,8 @@ All mathematics and all published numbers are verified by the authors: proofs ar
 hand, and computations are cross-checked by two independently written implementations before
 any value is recorded.
 
+The fig_tree.tex figures used in the paper were generated with the assistance of Claude.
+
 ## Quickstart (problem 001)
 ```
 pip install -r problem001/requirements.txt
