@@ -32,4 +32,18 @@ def test_strip_formula(m):
 def test_brute_agreement():
     from solver.brute import max_blackout_brute
     for rows, cols in [(2, 2), (2, 3), (2, 4), (3, 3)]:
-        assert max_blackout(rows, cols)[0] == max_blackout_brute(rows, cols)
+        assert max_blackout(rows, cols) == max_blackout_brute(rows, cols)[:2]
+
+
+@pytest.mark.parametrize("rows,cols,n", [(2, 3, 3), (3, 3, 10), (3, 4, 20)])
+def test_rectangle_counts(rows, cols, n):
+    from solver.enumerate import rectangles
+    assert len(rectangles(rows, cols)) == n
+
+
+def test_pruned_2x4_is_column_pairs():
+    from solver.enumerate import rectangles
+    from solver.table import difference_table, prune
+    pruned = prune(difference_table(rectangles(2, 4)))
+    cols = {frozenset({(i, 1), (i, 2), (k, 1), (k, 2)}) for i in range(1, 5) for k in range(i + 1, 5)}
+    assert set(pruned) == cols and len(pruned) == 6
