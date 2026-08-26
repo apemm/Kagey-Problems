@@ -1,4 +1,4 @@
-"""Minimum hitting set -> maximum blackout. OWNER: Arjun.
+"""Minimum hitting set -> maximum blackout. OWNER: Arjun. Line-by-line review and acceptance: Arjun and Claude
 
 max_blackout(rows, cols, count_witnesses=True) -> (max blackout size, number of maximum blackouts)
 
