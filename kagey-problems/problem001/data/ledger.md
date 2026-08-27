@@ -22,7 +22,7 @@
 | 4 x 8 | 12 | - | engine 2026-08-25 value-only (200 rectangles = A289832); kept 20; Four-Row REFUTED (said 13), excess-1 confirmed; brute infeasible (2^32) |
 | 5 x 7 | 12 | - | engine 2026-08-25 value-only, 723s (276 rectangles = A289832); kept 23; excess-1 confirmed; brute infeasible (2^35) |
 | 3 x 10 | 12 | - | engine 2026-08-25 value-only (143 rectangles = A289832); kept 18; Three-Row confirmed (8 cells); brute infeasible (2^30) |
-| 6 x 6 | ? | - | PREDICTION pre-registered 2026-08-25: excess-1 says 12 (kept 24); first cell with both dims >= 6 |
+| 6 x 6 | 12 | - | engine 2026-08-25 value-only, 1063s (313 rectangles = A085582); kept 24; excess-1 confirmed (7 cells); brute infeasible (2^36) |
 
 Strip Theorem (2026-08-24): for 2 x m, m >= 3, every maximum valid blackout has size m+1;
 there are exactly m * 2^(m-1); characterized as complements of kept sets with one survivor
@@ -87,3 +87,7 @@ large cell so far (4 x 6, 4 x 7, 4 x 8, 5 x 5, 5 x 6) has blackout exactly n+m.
   Three-Row hypothesis: blackout(3,m) = m+2 for all m >= 3 (candidate theorem; Strip-style proof?).
 Pre-registered before running: 5 x 7 -> 12 (in flight); 3 x 10 -> 12; 6 x 6 -> 12. A 6 x 6 value
 of 13 would mean the excess grows and excess-1 is dead.
+
+Round close (2026-08-25): 3 x 10 = 12 (Three-Row, 8 cells) and 6 x 6 = 12 (excess-1, 7 cells:
+4x6, 4x7, 4x8, 5x5, 5x6, 5x7, 6x6) both confirmed as pre-registered. Both hypotheses survive the
+night. Next kill attempts are 5 x 8 and 6 x 7 (40-42 points, engine ~30+ min each) and 3 x 11.
