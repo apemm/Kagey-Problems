@@ -3,7 +3,7 @@
 Work on problems from Peter Kagey's Open Problem Collection (peterkagey.com/problems).
 
 - `problem001/` — grid blackouts preserving rectangle identifiability (in progress; strips solved)
-- `problem137/` — the rational tree of x+1 and -1/x (complete solution; under author review)
+- `problem137/` — the rational tree of x+1 and -1/x (complete solution (I think))
 
 **Disclosure.** Parts of this repository were developed with AI assistance (Claude, Anthropic).
 All mathematics and all published numbers are verified by the authors: proofs are all derived by
