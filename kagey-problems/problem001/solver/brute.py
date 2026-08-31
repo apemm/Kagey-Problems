@@ -4,8 +4,9 @@ For tiny grids: test every blackout S by computing all presentations C(R) \ S,
 hashing them, and checking for collisions (injectivity). ~30 lines.
 Must agree with engine.py on every grid up to 2x4 and on 3x3.
 
-CODE AUTHOR: Arjun Pemmasani; logic per the
-project spec (PROBLEM.md); line-by-line review and acceptance: Arjun and Claude.
+CODE AUTHOR: Claude (Anthropic); size-descending search restructure and CLI:
+Arjun Pemmasani; logic per the project spec (PROBLEM.md); line-by-line review
+and acceptance: Arjun Pemmasani.
 
 Deliberately independent of everything else in three ways:
 1. No reduction: validity is checked straight from the definition, injectivity of the
