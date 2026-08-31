@@ -38,7 +38,7 @@ pre-registered computation, and state two live conjectures with supporting data.
 \end{abstract}
 
 \section{Introduction}
-The problem is posed with some alterations chosen for clarity as the following: Suppose you, the player, are shown an $n \times m$ grid of vertices. Each vertex has two states, 'white' or 'blacked out'. A vertex that is blacked out is unable to convey any information. The game master asks us to 'black out', or turn off as many of the vertices we like. Once we choose the 'blackout', which is simply the set of all vertices that are blacked out, the game master will draw a rectangle that we cannot see but know the corners of given that the corners are on a white vertex. The rectangle's sides are not necessarily parallel to the grid axes. We must be able to guess what the rectangle's corners are fr9m this information with complete confidence. The question posed by Kagey \cite{kagey} is how many vertices can be blacked out while every rectangle the opponent might draw remains distinctly identifiable. 
+The problem is posed with some alterations chosen for clarity as the following: Suppose you, the player, are shown an $n \times m$ grid of vertices. Each vertex has two states, 'white' or 'blacked out'. A vertex that is blacked out is unable to convey any information. The game master asks us to 'black out', or turn off as many of the vertices we like. Once we choose the 'blackout', which is simply the set of all vertices that are blacked out, the game master will draw a rectangle that we cannot see but know the corners of given that the corners are on a white vertex. The rectangle's sides are not necessarily parallel to the grid axes. We must be able to guess what the rectangle's corners are from this information with complete confidence. The question posed by Kagey \cite{kagey} is how many vertices can be blacked out while every rectangle the opponent might draw remains distinctly identifiable. 
 
 The order of play is important here. Because the blackout is chosen by us
 before the rectangle is chosen, a blackout is valid only if \emph{no} two
@@ -148,16 +148,56 @@ $m=2$ the condition is vacuous and every blackout is valid.
 %% (2) the explicit line locating where m >= 3 is used (a third column must exist);
 %% (3) the no-fully-blacked-column branch of the upper bound;
 %% (4) the validity line for the constructed witnesses and the exactness sentence.
-Define $K$ as the visible set where $G-S=K$. Let $K_0$ be the smallest possible $K$ such that $S$ is a valid blackout. For a $2\times m$ grid, 
+Define $K$ as the visible set where $V-S=K$. Let $K_0$ be the smallest possible $K$ such that $S$ is a valid blackout. For a $2\times m$ grid, define the set $T$ to be the set of all columns with at least 1 of their 2 points in $K$. Suppose $S$ is a maximum valid blackout. Represent any possible rectanlge $R$ as $R_{i,j}$, where $i$ is the column containing the left corners of $R$ and $j$ is the column containing the right corners, where $1\leq i < j \leq m$.  Then, every unique difference set $R_{i,j} \triangle R_{k,l} (1\leq i < j \leq m, 1\leq k < l \leq m, R_{i,j} \neq R_{k,l}$ corresponds to a distinct pair of columns. 2 distinct rectangles must have their corner sets combined comprised of at least 3 distinct columns, requiring the length of the grid $m\geq3$.
 
+Then, from Lemma \ref{lem:reduction}, $S$ is valid if and only if the visible set $K$ is one that intersects every distinct column pair. Conditioning on $T$, this constraints $T$ to contain every column except exactly one. If two distinct columns are excluded, then a distinct difference set would vanish and $K$ would not intersect every pair by the pigeonhole principle. Hence, $K_0$ has size $m-1$, as exactly one column is excluded from $T$, and in the other $m-1$ columns, exactly 1 of the 2 points in each column is blacked out.
 
-2 distinct rectangles must have their corner sets combined comprised of at least 3 distinct columns, requiring the length of the grid $m\geq3$.
-
-From 
-
-Hence, since there are $2m$ total points in a length $m$ strip, the maximum size of a valid blackout is $2m-(m-1)= m+1$.
+If any more points were blacked out, 2 columns would be blacked out and $K$ would not intersect every difference set. If no column is fully blacked out, $T$ would contain every column and $K$ would need $m$ points, and the $\vert S \vert \leq m$. Hence, since there are $2m$ total points in a length $m$ strip, the maximum size of a valid blackout is $2m-(m-1)= m+1$. 
 
 There are $m$ ways to choose which column to exclude from $T$ and $2^{m-1}$ ways to choose which 1 of the 2 points to blackout in the remaining $m-1$ columns. Hence, $m\times2^{m-1}$ such distinct maximum blackouts exist.
+\end{proof}
+
+
+\begin{proof}
+Define $K$ as the visible set, where $V \setminus S = K$, and let $K_0$ denote the
+minimum possible size of $K$ over valid blackouts. For a $2\times m$ grid, define the
+set $T$ to be the set of all columns with at least 1 of their 2 points in $K$. For
+$m=2$ there is exactly one rectangle, so injectivity is vacuous and every blackout is
+valid; assume $m\ge 3$. Suppose $S$ is a maximum valid blackout.
+
+On a $2\times m$ strip every rectangle is axis-aligned, since a tilted rectangle's
+corners would occupy at least 3 distinct rows and the strip has only 2. We can represent any
+possible rectangle $R$ as $R_{i,j}$, where $i$ is the column containing the left
+corners of $R$ and $j$ is the column containing the right corners, $1\leq i < j \leq m$.
+
+
+If two distinct rectangles share exactly one column, say $R_{z,p}$ and $R_{z,q}$, the
+shared column's corners overlap, and $C(R_{z,p}) \,\triangle\, C(R_{z,q})$ is exactly
+the 4 points of columns $p$ and $q$; we call this the pair row on $\{p,q\}$. If they
+share no column, the difference set is all 8 points of 4 distinct columns, which
+contains a pair row and is deleted in preprocessing
+(Section~\ref{sec:preprocessing}). Every pair $\{p,q\}$ arises this way: two
+rectangles sharing a column span at least 3 distinct columns between them, and
+$m\geq 3$ guarantees a third column $z$ from which to build $R_{z,p}$ and $R_{z,q}$.
+Hence, the pruned hypergraph consists of exactly the $\binom{m}{2}$ pair rows.
+
+Then, from Lemma~\ref{lem:reduction}, a valid visible set $K$ is one that intersects
+every pair row. Conditioning on $T$, this constrains $T$ to contain every column
+except at most one: if two distinct columns $p$ and $q$ are excluded, the pair row on
+$\{p,q\}$ contains no point of $K$, and $K$ would not intersect every pair row. Each
+column of $T$ contributes at least 1 point, so $\vert K\vert \geq \vert T\vert \geq
+m-1$, and hence $K_0 = m-1$ and $\vert S\vert \leq 2m-(m-1)=m+1$. If no column is
+fully blacked out, $T$ would contain every column and $K$ would need $m$ points, so
+$\vert S\vert \leq m$. If any column of $T$ kept both of its points, $\vert K \vert
+\geq m$ as well. Hence, at the maximum, exactly one column is excluded from $T$, and
+in the other $m-1$ columns, exactly 1 of the 2 points in each column is blacked out.
+
+
+Every such construction is valid: any pair of columns includes at least one column of
+$T$, whose surviving point meets the pair row. There are $m$ ways to choose which
+column to exclude from $T$ and $2^{m-1}$ ways to choose which 1 of the 2 points to
+black out in the remaining $m-1$ columns. Hence, $m\cdot 2^{m-1}$ such distinct
+maximum blackouts exist, characterized as in the statement.
 \end{proof}
 
 \section{Computations and verification}
@@ -166,7 +206,7 @@ hypergraph) and reconciled against an independently written oracle (branch and b
 ILP) and, on small grids, an exhaustive definitional check that never forms difference
 sets. Rectangle counts match the literature: $n\times n$ counts $1,10,44,130$ agree with
 OEIS \texttt{A085582}, and $3\times m$ counts with OEIS \texttt{A289832}.
-%% ARJUN: verify both A-numbers against the live OEIS pages before any distribution.
+%% verify both A-numbers against the live OEIS pages 
 
 \begin{table}[h]\centering
 \begin{tabular}{lrrrrl}
