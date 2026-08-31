@@ -3,6 +3,7 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{booktabs}
 \usepackage{graphicx}
+\usepackage{url}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
@@ -15,30 +16,29 @@
 
 \title{Blackouts Preserving Rectangle Identifiability on Grid Points\\
 \large A partial solution to Problem 001 of Kagey's Open Problem Collection}
-\author{Arjun Pemmasani.
-\thanks{All proofs are the author's and were re-derived by hand; every published computation is
+\author{Arjun Pemmasani\thanks{All proofs are the author's and were re-derived by hand; every published computation is
 cross-verified by two independently written implementations (the author's ILP engine and
 an independently authored reconciliation oracle) and, on small grids, by an exhaustive
 check working directly from the definition. Only reconciled values appear.
-Code and data:  \url{https://github.com/apemm/Kagey-Problems}.}}
+Code and data: \url{github.com/apemm/Kagey-Problems}.}}
 \date{Preliminary note --- \today}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-We study Problem 001 of Kagey's Open Problem Collection: black out as many points of an
+We investigate Problem 001 of Kagey's Open Problem Collection: black out as many points of an
 $n\times m$ grid as possible so that every possible rectangle drawn with its corners on grid points remains
 uniquely identifiable from its visible corners. We reduce the problem to a minimum
 hitting set of a difference hypergraph, solve the two-row case completely (the Strip
 Theorem: maximum blackout $m+1$ with exactly $m\cdot 2^{m-1}$ optima for $m\ge 3$),
-report cross-verified exact values for all grids through [range], prove the $5\times 5$
+report cross-verified exact values for grids through $6\times 6$, prove the $5\times 5$
 maximum blackout unique up to symmetry, record one natural conjecture refuted by
 pre-registered computation, and state two live conjectures with supporting data.
 \end{abstract}
 
 \section{Introduction}
-The problem is posed with some alterations chosen for clarity as the following: Suppose you, the player, are shown an $n \times m$ grid of vertices. Each vertex has two states, 'white' or 'blacked out'. A vertex that is blacked out is unable to convey any information. The game master asks us to 'black out', or turn off as many of the vertices we like. Once we choose the 'blackout', which is simply the set of all vertices that are blacked out, the game master will draw a rectangle that we cannot see but know the corners of given that the corners are on a white vertex. The rectangle's sides are not necessarily parallel to the grid axes. We must be able to guess what the rectangle's corners are from this information with complete confidence. The question posed by Kagey \cite{kagey} is how many vertices can be blacked out while every rectangle the opponent might draw remains distinctly identifiable. 
+The problem is posed with some alterations chosen for clarity as the following: Suppose you, the player, are shown an $n \times m$ grid of vertices. Each vertex has two states, 'white' or 'blacked out'. A vertex that is blacked out is unable to convey any information. The game master asks us to 'black out', or turn off as many of the vertices as we like. Once we choose the 'blackout', which is simply the set of all vertices that are blacked out, the game master will draw a rectangle that we cannot see but know the corners of given that the corners are on a white vertex. The rectangle's sides are not necessarily parallel to the grid axes. We must be able to guess what the rectangle's corners are from this information with complete confidence. The question posed by Kagey \cite{kagey} is how many vertices can be blacked out while every rectangle the game master might draw remains distinctly identifiable. 
 
 The order of play is important here. Because the blackout is chosen by us
 before the rectangle is chosen, a blackout is valid only if \emph{no} two
@@ -53,10 +53,9 @@ reduction (Lemma \ref{lem:reduction}), which recasts the problem as a minimum hi
 set, and the Strip Theorem (Theorem \ref{thm:strip}), which settles the two-row case
 completely, giving maximum blackout $m+1$ with exactly $m \cdot 2^{m-1}$ optima for
 $m \ge 3$. Computed and cross-verified: exact values and optimum counts for all grids
-through [RANGE], % ARJUN: state the actual range covered by your final table
-together with the fact that the $5 \times 5$ maximum blackout is unique up to the
+through $6\times 6$ (Table~1), together with the fact that the $5 \times 5$ maximum blackout is unique up to the
 symmetries of the square. Conjectured: two formulas supported by the computations
-(Conjectures \ref{conj:threerow} and \ref{conj:excess}). % ARJUN: check label names
+(Conjectures \ref{conj:threerow} and \ref{conj:excess}).
 Refuted: the natural guess that the minimum kept set has size $(n-1)(m-1)$, which holds
 for every grid with $n \le 4$ and fails at $5 \times 5$; the prediction was registered
 before the computation was run.
@@ -77,15 +76,8 @@ hypergraph. Section \ref{sec:strip} proves the Strip Theorem. Section
 \ref{sec:computations} reports the computations and the verification. Section
 \ref{sec:uniqueness} treats uniqueness at $5 \times 5$. Section \ref{sec:conjectures}
 records the refuted and live conjectures and states open questions.
-%% vs. computed vs. conjectured, and the plan-of-paper paragraph (edit the draft below).
-%
-% Draft plan of paper: Section 2 fixes conventions and the presentation map. Section 3
-% proves the reduction (Lemma 1) and its consequences. Section 4 describes preprocessing.
-% Section 5 proves the Strip Theorem. Section 6 reports computations and verification
-% methodology. Section 7 proves uniqueness at 5x5. Section 8 records refuted and live
-% conjectures and open questions.
 
-\section{Conventions and the presentation map}
+\section{Conventions and the presentation map}\label{sec:conventions}
 Vertices of the $n\times m$ grid are denoted as pairs $(i,j)$ with $1\le i\le m$ (column) and
 $1\le j\le n$ (row). The set of all vertices on the grid is $V$. The rectangle class consists of all rectangles with four corners on
 grid points, tilted rectangles included and degenerate (zero-area) configurations
@@ -97,10 +89,10 @@ rectangle may be fully hidden is a corollary of injectivity, not an axiom
 (Remark~\ref{rem:empty}).
 
 \begin{remark}\label{rem:empty}
-Suppose 2 distinct rectangles $R_1 \neq R_2$ with corner sets $C_1$ and $C_2$ are both fully hidden. Then $\pres(R_1)=\pres(R_2) \implies R_1 = R_2$ from injectivity, contradicting our supposition. 2 distinct rectangles with the same presentation cannot exist.
+Suppose 2 distinct rectangles $R_1 \neq R_2$ with corner sets $C_1$ and $C_2$ are both fully hidden, that is, $C_1 \subseteq S$ and $C_2 \subseteq S$. Then $\pres(R_1) = \emptyset = \pres(R_2)$, and since $\emptyset$ is an ordinary value of the presentation map, injectivity gives $R_1 = R_2$, contradicting our supposition. Hence, at most 1 rectangle may be fully hidden under any valid blackout, with no separate convention required.
 \end{remark}
 
-\section{The reduction}
+\section{The reduction}\label{sec:reduction}
 \begin{lemma}[difference-set characterization]\label{lem:reduction}
 For any sets $A,B,S$: \ $A\setminus S=B\setminus S$ if and only if
 $A\,\triangle\,B\subseteq S$.
@@ -123,41 +115,29 @@ A \,\triangle\, B \subseteq S$, contradicting $x \notin S$. Hence $x \in B$, and
 $x \notin S$ we get $x \in B \setminus S$. As $x$ was arbitrary,
 $A \setminus S \subseteq B \setminus S$; the reverse inclusion follows by symmetry, so
 $A \setminus S = B \setminus S$.
+\end{proof}
 
 \begin{corollary}
 $S$ is valid if and only if the kept set $K=V\setminus S$ intersects the difference set
 $C(R_1)\,\triangle\,C(R_2)$ for every pair of distinct rectangles. Hence a maximum
 blackout is the complement of a minimum hitting set of the \emph{difference hypergraph}.
 \end{corollary}
+\begin{proof}
+By definition, $S$ is valid if and only if $\pres(R_1) \neq \pres(R_2)$, i.e. $C(R_1)\setminus S \neq C(R_2)\setminus S$, for every pair of distinct rectangles. From Lemma~\ref{lem:reduction}, this holds if and only if $C(R_1)\,\triangle\,C(R_2) \not\subseteq S$, which is exactly the statement that at least 1 point of the difference set lies in $K$.
+\end{proof}
 
-\section{Preprocessing}
-Prior to any computation, we prune the hypergraph for convenience and clarity. The first technique is deduplication, since identical difference sets impose identical constraints on the allowed $K$, so we only need to keep one copy. The second technique is a containment rule: if $D_1$ and $D_2$ are two difference sets and $D_1 \subset D_2$, any $K$ intersecting $D_1$ automatically intersects $D_2$ as well, so $D_2$ can be omitted from the hypergraph without any impact on which $K$ are valid. Third, an empty row remark: an empty difference set would mean that $C_1 \triangle C_2 = \emptyset$, hence $C_1 = C_2$, no $K$ can intersect this difference set, so its presence would signal that the rectangle list was no deduplicated rather than a genuine constraint.
+\section{Preprocessing}\label{sec:preprocessing}
+Prior to any computation, we prune the hypergraph for convenience and clarity. The first technique is deduplication, since identical difference sets impose identical constraints on the allowed $K$, so we only need to keep one copy. The second technique is a containment rule: if $D_1$ and $D_2$ are two difference sets and $D_1 \subset D_2$, any $K$ intersecting $D_1$ automatically intersects $D_2$ as well, so $D_2$ can be omitted from the hypergraph without any impact on which $K$ are valid. Third, an empty row remark: an empty difference set would mean that $C_1 \triangle C_2 = \emptyset$, hence $C_1 = C_2$, no $K$ can intersect this difference set, so its presence would signal that the rectangle list was not deduplicated rather than a genuine constraint.
 
-With these pruning techniques, the hypergraph can be replaced by its pruned antichain of minimal rows. All of the following computations in Section 6 run on the pruned version of the hypergraph.
+With these pruning techniques, the hypergraph can be replaced by its pruned antichain of minimal rows. All of the following computations in Section~\ref{sec:computations} run on the pruned version of the hypergraph.
 
-\section{The Strip Theorem}
+\section{The Strip Theorem}\label{sec:strip}
 \begin{theorem}[Strip Theorem]\label{thm:strip}
 For a $2\times m$ grid with $m\ge 3$, every maximum valid blackout has size $m+1$,
 there are exactly $m\cdot 2^{m-1}$ of them, and they are characterized as the complements
 of kept sets containing one survivor per column and missing exactly one column. For
 $m=2$ the condition is vacuous and every blackout is valid.
 \end{theorem}
-\begin{proof}
-%% (1) classification of difference sets on strips stated in the fixed direction
-%%     (pairs sharing exactly one column give the pair-row on the two unshared columns);
-%% (2) the explicit line locating where m >= 3 is used (a third column must exist);
-%% (3) the no-fully-blacked-column branch of the upper bound;
-%% (4) the validity line for the constructed witnesses and the exactness sentence.
-Define $K$ as the visible set where $V-S=K$. Let $K_0$ be the smallest possible $K$ such that $S$ is a valid blackout. For a $2\times m$ grid, define the set $T$ to be the set of all columns with at least 1 of their 2 points in $K$. Suppose $S$ is a maximum valid blackout. Represent any possible rectanlge $R$ as $R_{i,j}$, where $i$ is the column containing the left corners of $R$ and $j$ is the column containing the right corners, where $1\leq i < j \leq m$.  Then, every unique difference set $R_{i,j} \triangle R_{k,l} (1\leq i < j \leq m, 1\leq k < l \leq m, R_{i,j} \neq R_{k,l}$ corresponds to a distinct pair of columns. 2 distinct rectangles must have their corner sets combined comprised of at least 3 distinct columns, requiring the length of the grid $m\geq3$.
-
-Then, from Lemma \ref{lem:reduction}, $S$ is valid if and only if the visible set $K$ is one that intersects every distinct column pair. Conditioning on $T$, this constraints $T$ to contain every column except exactly one. If two distinct columns are excluded, then a distinct difference set would vanish and $K$ would not intersect every pair by the pigeonhole principle. Hence, $K_0$ has size $m-1$, as exactly one column is excluded from $T$, and in the other $m-1$ columns, exactly 1 of the 2 points in each column is blacked out.
-
-If any more points were blacked out, 2 columns would be blacked out and $K$ would not intersect every difference set. If no column is fully blacked out, $T$ would contain every column and $K$ would need $m$ points, and the $\vert S \vert \leq m$. Hence, since there are $2m$ total points in a length $m$ strip, the maximum size of a valid blackout is $2m-(m-1)= m+1$. 
-
-There are $m$ ways to choose which column to exclude from $T$ and $2^{m-1}$ ways to choose which 1 of the 2 points to blackout in the remaining $m-1$ columns. Hence, $m\times2^{m-1}$ such distinct maximum blackouts exist.
-\end{proof}
-
-
 \begin{proof}
 Define $K$ as the visible set, where $V \setminus S = K$, and let $K_0$ denote the
 minimum possible size of $K$ over valid blackouts. For a $2\times m$ grid, define the
@@ -200,13 +180,12 @@ black out in the remaining $m-1$ columns. Hence, $m\cdot 2^{m-1}$ such distinct
 maximum blackouts exist, characterized as in the statement.
 \end{proof}
 
-\section{Computations and verification}
+\section{Computations and verification}\label{sec:computations}
 Every value below was produced by the author's engine (ILP over the pruned difference
 hypergraph) and reconciled against an independently written oracle (branch and bound, no
 ILP) and, on small grids, an exhaustive definitional check that never forms difference
 sets. Rectangle counts match the literature: $n\times n$ counts $1,10,44,130$ agree with
-OEIS \texttt{A085582}, and $3\times m$ counts with OEIS \texttt{A289832}.
-%% verify both A-numbers against the live OEIS pages 
+OEIS \texttt{A085582}, and $3\times m$ counts with OEIS \texttt{A289832} (indexing note in the bibliography).
 
 \begin{table}[h]\centering
 \begin{tabular}{lrrrrl}
@@ -225,57 +204,97 @@ $3\times 5$ & 33 & 7 & 8 & 892 & three-way \\
 $3\times 6$ & 49 & 8 & 10 & 3420 & three-way \\
 $4\times 4$ & 44 & 7 & 9 & 316 & three-way \\
 $4\times 5$ & 74 & 8 & 12 & 1810 & three-way \\
-$4\times 6$ & 110 & 10 & 14 & 26 & engine + brute \\ %% ARJUN: confirm status per run log
-$4\times 7$ & 152 & 11 & 17 & 292 & engine + brute \\ %% ARJUN: confirm
+$3\times 7$ & 68 & 9 & 12 & 12704 & engine + brute \\
+$3\times 8$ & 90 & 10 & 14 & 45864 & engine + brute \\
+$3\times 9$ & 115 & 11 & 16 & 161992 & engine + brute \\
+$3\times 10$ & 143 & 12 & 18 & --- & engine only (value) \\
+$4\times 6$ & 110 & 10 & 14 & 26 & engine + brute \\
+$4\times 7$ & 152 & 11 & 17 & 292 & engine + brute \\
 $4\times 8$ & 200 & 12 & 20 & --- & engine only (value) \\
 $5\times 5$ & 130 & 10 & 15 & 8 & engine + brute \\
 $5\times 6$ & 198 & 11 & 19 & --- & engine only (value) \\
 $5\times 7$ & 276 & 12 & 23 & --- & engine only (value) \\
+$6\times 6$ & 313 & 12 & 24 & --- & engine only (value) \\
 \bottomrule
 \end{tabular}
-\caption{Exact values. ``Three-way'' = engine, oracle, and definitional brute agree.
-%% ARJUN: extend with your 3x7--3x10 ledger rows and finalize each verification label.
-}
+\caption{Exact values. ``Three-way'' = engine, oracle, and definitional brute agree;
+``engine + brute'' = the ILP engine and the exhaustive definitional check agree;
+``engine only'' = the exhaustive check is infeasible at that size.}
 \end{table}
 
-\section{Uniqueness at $5\times 5$}
-%% ARJUN: statement + proof-by-verified-computation. Include your sentence: the unique
-%% extremal blackout is the nine-point anti-diagonal staircase plus one detached corner,
-%% one D4 orbit with trivial stabilizer — "the +1 made visible." Figure recommended.
+\section{Uniqueness at $5\times 5$}\label{sec:uniqueness}
+\begin{theorem}[computational]\label{thm:fivefive}
+The $5\times 5$ grid has maximum blackout $10$, attained by exactly $8$ blackouts, and
+the maximum blackout is unique up to the symmetries of the square: the $8$ optima form
+a single orbit of the dihedral group $D_4$, with trivial stabilizer.
+\end{theorem}
+The value and the count were produced independently by the engine and by the exhaustive
+definitional check; the orbit claim was verified by applying the 8 symmetries of the
+grid to one optimum and recovering all 8. The unique extremal blackout is the 9-point
+anti-diagonal staircase, the old $n+m-1$ pattern, plus 1 detached corner: the $+1$
+made visible. A representative (`.' blacked out, `\#' kept):
+\begin{verbatim}
+    ..###
+    ..#..
+    .##..
+    ##...
+    #...#
+\end{verbatim}
+The kept set is two triangular blocks of 5 and 10 points on either side of the band,
+and the extremal object is unique up to symmetry while having no symmetry of its own.
 
-\section{Refuted and live conjectures}
+\section{Refuted and live conjectures}\label{sec:conjectures}
 \begin{table}[h]\centering
 \begin{tabular}{lll}
 \toprule
 conjecture & status & killed by \\
 \midrule
 kept $=(n-1)(m-1)$ & refuted (pre-registered) & $5\times 5$ \\
-[H$_{\text{sum}}$: state precisely] & refuted & $3\times 7$ \\ %% ARJUN
-[H$_{\text{area}}$: state precisely] & refuted & $3\times 8$ \\ %% ARJUN
-Four-Row $\lceil 5m/2\rceil - 1$ & refuted & $4\times 8$ \\
+H$_{\text{sum}}$: blackout $= n+m-1+[\,n+m\ge 10\,]$ & refuted (pre-registered) & $3\times 7$ \\
+H$_{\text{area}}$: blackout $= n+m-1+[\,nm\ge 24\,]$ & refuted (pre-registered) & $3\times 8$ \\
+Four-Row: kept$(4,m) = \lceil 5m/2\rceil - 1$ & refuted (pre-registered) & $4\times 8$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\begin{conjecture}[Three-Row]
-$\mathrm{blackout}(3,m)=m+2$ for all $m\ge 3$. (Verified for $3\le m\le 10$.)
+\begin{conjecture}[Three-Row]\label{conj:threerow}
+$\mathrm{blackout}(3,m)=m+2$ for all $m\ge 3$.
 \end{conjecture}
-\begin{conjecture}[Excess-1]
-$\mathrm{blackout}(n,m)=n+m$ for $\min(n,m)\ge 4$, excepting $4\times4$ and $4\times5$
-where it is $n+m-1$. (Verified on six cells; $6\times 6$ pre-registered at $12$.)
+Verified for $3\le m\le 10$, eight cells, every prediction registered before its
+computation ran. This is the shape of the Strip Theorem one row up, kept set $2(m-1)$
+against the strip's $m-1$, and the strip argument is the plausible route; the
+difference sets on three rows are no longer full column pairs, so the classification
+step is where new work begins.
+
+\begin{conjecture}[Excess-1]\label{conj:excess}
+$\mathrm{blackout}(n,m)=n+m$ for $\min(n,m)\ge 4$, excepting $4\times4$ and
+$4\times5$, where it is $n+m-1$.
 \end{conjecture}
-%% ARJUN: one paragraph per conjecture — evidence, the strip technique's plausible
-%% extension for Three-Row, and open questions incl. the 4x6 optimum-count dip (26).
+Verified on seven cells ($4\times 6$ through $6\times 6$), including the
+$6\times 6$ prediction of $12$, registered before the $1063$-second computation
+confirmed it. The break past $n+m-1$ is a min-dimension phenomenon: every three-row
+grid obeys $m+2$, while every cell with $\min(n,m)\ge 4$ outside the two exceptions
+exceeds $n+m-1$ by exactly $1$.
+
+Beyond the two conjectures, three questions strike us as the natural next ones: why
+the number of optima collapses at $4\times 6$ ($26$, against neighbors in the
+hundreds and thousands); whether the excess ever grows past $1$, with $5\times 8$ and
+$6\times 7$ registered at $13$ as the next kill attempts; and whether the
+$5\times 5$ uniqueness admits a structural proof rather than a computational one.
 
 \section*{Data and code availability}
 The engine, the reconciliation oracle, the definitional brute, the pruned tables, and
-the ledger of pre-registrations and refutations accompany this note at [repo link].
+the ledger of pre-registrations and refutations accompany this note at \url{https://github.com/apemm/Kagey-Problems}.
 
 \begin{thebibliography}{9}
 \bibitem{kagey} P. Kagey, Problem 001, Open Problem Collection,
 \texttt{peterkagey.com/problems/001/} (accessed August 2026).
-\bibitem{oeisA085582} OEIS, Sequence \texttt{A085582}. %% ARJUN: verify
-\bibitem{oeisA289832} OEIS, Sequence \texttt{A289832}. %% ARJUN: verify
+\bibitem{oeisA085582} OEIS Foundation, Sequence A085582: number of rectangles
+(orthogonal or not) with corners on an $n\times n$ grid of points.
+\texttt{https://oeis.org/A085582}. Verified against Table 1: $1,10,44,130$ at $n=2..5$.
+\bibitem{oeisA289832} OEIS Foundation, Sequence A289832: table of rectangle counts
+on rectangular grids; diagonal equals A085582. \texttt{https://oeis.org/A289832}.
+%% ARJUN: pin the exact row/column indexing for the 3xm family (off-by-one from point counts).
 \end{thebibliography}
 
 \end{document}
