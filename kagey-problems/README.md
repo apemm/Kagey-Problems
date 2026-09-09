@@ -4,6 +4,7 @@ Work on problems from Peter Kagey's Open Problem Collection (peterkagey.com/prob
 
 - `problem001/` — grid blackouts preserving rectangle identifiability (in progress; strips solved)
 - `problem137/` — the rational tree of x+1 and -1/x (complete solution (I think))
+- `lean/` — Lean 4 / Mathlib formalizations of the proved results (Problem 137 in full; Problem 001: the reduction lemma and the Strip Theorem)
 
 **Disclosure.** Parts of this repository were developed with AI assistance (Claude, Anthropic).
 All mathematics and all published numbers are verified by the authors: proofs are all derived by
