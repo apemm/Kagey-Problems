@@ -18,8 +18,3 @@ The fig_tree.tex figures used in the paper were generated with the assistance of
 pip install -r problem001/requirements.txt
 cd problem001 && pytest          # tests are written first; they fail until the engine exists
 ```
-
-## Roles
-Engine architecture and implementation: Arjun Pemmasani.
-Review, debugging, and a blind reimplementation used only for reconciliation: Claude.
-Only values agreeing across both implementations enter the ledger, the paper, or correspondence.
