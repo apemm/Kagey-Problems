@@ -50,7 +50,7 @@ Enumeration referee: square rectangle counts 1, 10, 44, 130 (2 x 2 .. 5 x 5) mat
 
 5 x 5 structure (2026-08-25): the 8 maximum blackouts form a single orbit of the dihedral group
 D4 with trivial stabilizer -- the extremal object is unique up to symmetry and has none of its
-own. Representative blackout (rows top to bottom, '.' = blacked out, '#' = kept):
+own. Representative blackout (rows top to bottom, '#' = blacked out, '.' = kept):
     ..###
     ..#..
     .##..
@@ -91,3 +91,9 @@ of 13 would mean the excess grows and excess-1 is dead.
 Round close (2026-08-25): 3 x 10 = 12 (Three-Row, 8 cells) and 6 x 6 = 12 (excess-1, 7 cells:
 4x6, 4x7, 4x8, 5x5, 5x6, 5x7, 6x6) both confirmed as pre-registered. Both hypotheses survive the
 night. Next kill attempts are 5 x 8 and 6 x 7 (40-42 points, engine ~30+ min each) and 3 x 11.
+
+Correction (2026-09-18): the legend of the 5 x 5 representative above originally read '.' = blacked
+out, '#' = kept, which was backwards. The '#' set has 10 points and is the valid maximum blackout;
+the '.' set has 15 points and is the kept set (as a blackout it is invalid). Checked with the
+definitional brute: valid(# set) = True, valid(. set) = False. The picture itself and the text
+around it (9-point staircase plus the corner (5,5); kept blocks of 5 and 10) were already correct.
