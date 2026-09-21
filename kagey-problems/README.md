@@ -1,6 +1,6 @@
 # Kagey Open Problems — Pemmasani
 
-Work on problems from Peter Kagey's Open Problem Collection (peterkagey.com/problems).
+Work on problems from Peter Kagey's Open Problem Collection (peterkagey.com/problems). No AI-Assistance aside from checking for typos and helping write the LEAN verification in the lean folder.
 
 - `problem001/` — grid blackouts preserving rectangle identifiability (in progress; strips solved)
 - `problem137/` — the rational tree of x+1 and -1/x (complete solution (I think))
