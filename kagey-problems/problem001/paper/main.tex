@@ -16,11 +16,9 @@
 
 \title{Blackouts Preserving Rectangle Identifiability on Grid Points\\
 \large A partial solution to Problem 001 of Kagey's Open Problem Collection}
-\author{Arjun Pemmasani\thanks{Every published computation is
-cross-verified by two independently written implementations (the author's ILP engine and
-an independently authored reconciliation oracle) and, on small grids, by an exhaustive
-check working directly from the definition. Only reconciled values appear.
-Code and data: \texttt{github.com/apemm/Kagey-Problems}.}}
+\author{Arjun Pemmasani\thanks{Verification levels for the computational results are
+reported individually in Table 1. Code and data:
+\texttt{github.com/apemm/Kagey-Problems}.}}
 \date{Preliminary note --- \today}
 
 \begin{document}
@@ -32,9 +30,13 @@ $n\times m$ grid as possible so that every possible rectangle drawn with its cor
 uniquely identifiable from its visible corners. We reduce the problem to a minimum
 hitting set of a difference hypergraph, solve the two-row case completely (the Strip
 Theorem: maximum blackout $m+1$ with exactly $m\cdot 2^{m-1}$ optima for $m\ge 3$),
-report cross-verified exact values for grids through $6\times 6$, prove the $5\times 5$
-maximum blackout unique up to symmetry, record one natural conjecture refuted by
-pre-registered computation, and state two live conjectures with supporting data.
+prove that the maximum blackout is $m+2$ on three rows for $m\ge3$ and $m+4$ on
+four rows for $m\ge6$, and obtain the general upper bound
+$m+\lfloor n^2/4\rfloor$ for $m\ge3$. The structural step characterizes
+axis-aligned identification by the absence of four- and six-cycles in the black
+row--column incidence graph; a separate geometric argument handles tilted rectangles.
+We also report computations with their verification levels, the computational
+$5\times5$ uniqueness result, and the remaining higher-dimensional conjecture.
 \end{abstract}
 
 \section{Introduction}
@@ -48,31 +50,30 @@ is that this assignment be injective on the set of rectangles. Section
 \ref{sec:conventions} makes this precise, and the rest of the paper studies the
 resulting extremal quantity.
 
-Our results are of four kinds. Proved: the difference-set
-reduction (Lemma \ref{lem:reduction}), which recasts the problem as a minimum hitting
-set, and the Strip Theorem (Theorem \ref{thm:strip}), which settles the two-row case
-completely, giving maximum blackout $m+1$ with exactly $m \cdot 2^{m-1}$ optima for
-$m \ge 3$. Computed and cross-verified: exact values and optimum counts for all grids
-through $6\times 6$ (Table~1), together with the fact that the $5 \times 5$ maximum blackout is unique up to the
-symmetries of the square. Conjectured: two formulas supported by the computations
-(Conjectures \ref{conj:threerow} and \ref{conj:excess}).
-Refuted: the natural guess that the minimum kept set has size $(n-1)(m-1)$, which holds
-for every grid with $n \le 4$ and fails at $5 \times 5$; the prediction was registered
-before the computation was run.
+The Strip Theorem (Theorem~\ref{thm:strip}) settles two rows, including the
+classification and number of optima. Theorems~\ref{thm:threerow}
+and~\ref{thm:fourrow} now settle the values on three rows and on four rows of
+width at least six. The small four-row boundary cases have a finite exhaustive
+proof (Corollary~\ref{cor:fourboundary}). The general row bound and short-cycle
+characterization are Theorem~\ref{thm:rowbound} and Lemma~\ref{lem:girth}.
+Optimum counts beyond strips and the $5\times5$ uniqueness statement remain
+computational. The higher-dimensional Excess-1 formula remains conjectural
+(Conjecture~\ref{conj:excess}). The old guess that the kept set always has size
+$(n-1)(m-1)$ was first refuted at $5\times5$ and also fails on $4\times m$
+for every $m\ge6$.
 
-Because much of the evidence here is computational, we state the verification protocol. Small cases were solved by hand and recorded as a fixed ledger before any
-code was written. Every reported value was then produced by two independently written
-implementations, an ILP formulation over the pruned difference hypergraph and a
-branch-and-bound search using no ILP, and on small grids by a third exhaustive check
-that works directly from the definition of identifiability and never forms difference
-sets. Only values on which the implementations agree are reported. Conjectured formulas
-were recorded, with their predictions for untested grids, before those grids were
-computed; the refutation above is one such prediction failing.
+Small cases were recorded in a fixed ledger before computation. Verification methods
+include an ILP formulation, a branch-and-bound oracle, and a definitional exhaustive
+check; the table distinguishes their coverage and explicitly marks engine-only results.
+Conjectural predictions were recorded before the indicated computations. The new narrow-row
+proofs use a separate, standard-library verifier with independent diagonal enumeration.
+Original ledger entries are preserved as historical records, with subsequent proof updates.
 
 The paper is organized as follows. Section \ref{sec:conventions} fixes conventions and
 defines the presentation map. Section \ref{sec:reduction} proves the reduction and its
 consequences. Section \ref{sec:preprocessing} describes the pruning of the difference
-hypergraph. Section \ref{sec:strip} proves the Strip Theorem. Section
+hypergraph. Section \ref{sec:strip} proves the Strip Theorem and Section~\ref{sec:narrow}
+proves the new row bounds and narrow-grid results. Section
 \ref{sec:computations} reports the computations and the verification. Section
 \ref{sec:uniqueness} treats uniqueness at $5 \times 5$. Section \ref{sec:conjectures}
 records the refuted and live conjectures and states open questions.
@@ -180,11 +181,13 @@ black out in the remaining $m-1$ columns. Hence, $m\cdot 2^{m-1}$ such distinct
 maximum blackouts exist, characterized as in the statement.
 \end{proof}
 
+\input{narrow_rows.tex}
+
 \section{Computations and verification}\label{sec:computations}
-Every value below was produced by the author's engine (ILP over the pruned difference
-hypergraph) and reconciled against an independently written oracle (branch and bound, no
-ILP) and, on small grids, an exhaustive definitional check that never forms difference
-sets. Rectangle counts match the literature: $n\times n$ counts $1,10,44,130$ agree with
+The verification column records the original computational coverage: some values have
+multiple independent checks and some are engine-only. The narrow-row values now also
+follow from Section~\ref{sec:narrow}; their optimum counts remain computational.
+Rectangle counts match the literature: $n\times n$ counts $1,10,44,130$ agree with
 OEIS \texttt{A085582}, and $3\times m$ counts with OEIS \texttt{A289832} (indexing note in the bibliography).
 
 \begin{table}[h]\centering
@@ -232,7 +235,9 @@ The value and the count were produced independently by the engine and by the exh
 definitional check; the orbit claim was verified by applying the 8 symmetries of the
 grid to one optimum and recovering all 8. The unique extremal blackout is the 9-point
 anti-diagonal staircase, the old $n+m-1$ pattern, plus 1 detached corner: the $+1$
-made visible. A representative (`\#' blacked out, `.' kept):
+made visible.
+\par\noindent\begin{minipage}{\linewidth}
+A representative (`\#' blacked out, `.' kept):
 \begin{verbatim}
     ..###
     ..#..
@@ -240,6 +245,7 @@ made visible. A representative (`\#' blacked out, `.' kept):
     ##...
     #...#
 \end{verbatim}
+\end{minipage}\par\medskip
 The kept set is two triangular blocks of 5 and 10 points on either side of the band,
 and the extremal object is unique up to symmetry while having no symmetry of its own.
 
@@ -257,35 +263,37 @@ Four-Row: kept$(4,m) = \lceil 5m/2\rceil - 1$ & refuted (pre-registered) & $4\ti
 \end{tabular}
 \end{table}
 
-\begin{conjecture}[Three-Row]\label{conj:threerow}
-$\mathrm{blackout}(3,m)=m+2$ for all $m\ge 3$.
-\end{conjecture}
-Verified for $3\le m\le 10$, eight cells, every prediction registered before its
-computation ran. This is the shape of the Strip Theorem one row up, kept set $2(m-1)$
-against the strip's $m-1$, and the strip argument is the plausible route; the
-difference sets on three rows are no longer full column pairs, so the classification
-step is where new work begins.
+The former Three-Row conjecture, registered and checked first for $3\le m\le10$,
+is now Theorem~\ref{thm:threerow}. The four-row specialization of Excess-1 is now
+Theorem~\ref{thm:fourrow}, with its boundary cases in
+Corollary~\ref{cor:fourboundary}. These results do not classify all extremizers or
+give their counts beyond two rows.
 
 \begin{conjecture}[Excess-1]\label{conj:excess}
 $\mathrm{blackout}(n,m)=n+m$ for $\min(n,m)\ge 4$, excepting $4\times4$ and
-$4\times5$, where it is $n+m-1$.
+$4\times5$ up to transposition, where it is $n+m-1$.
 \end{conjecture}
-Verified on seven cells ($4\times 6$ through $6\times 6$), including the
+Originally checked on seven cells ($4\times 6$ through $6\times 6$), including the
 $6\times 6$ prediction of $12$, registered before the $1063$-second computation
-confirmed it. The break past $n+m-1$ is a min-dimension phenomenon: every three-row
-grid obeys $m+2$, while every cell with $\min(n,m)\ge 4$ outside the two exceptions
-exceeds $n+m-1$ by exactly $1$.
+confirmed it. The four-row cases are now proved; the assertion for both dimensions
+at least five remains open. The general row bound gives useful upper bounds but
+does not imply Excess-1 in that range.
 
-Beyond the two conjectures, three questions strike us as the natural next ones: why
+Beyond the remaining conjecture, three questions strike us as the natural next ones: why
 the number of optima collapses at $4\times 6$ ($26$, against neighbors in the
 hundreds and thousands); whether the excess ever grows past $1$, with $5\times 8$ and
 $6\times 7$ registered at $13$ as the next kill attempts; and whether the
 $5\times 5$ uniqueness admits a structural proof rather than a computational one.
 
 \section*{Data and code availability}
-The engine, the reconciliation oracle, the definitional brute, the pruned tables, and
-the ledger of pre-registrations and refutations accompany this note at \url{https://github.com/apemm/Kagey-Problems}.
+The code, tables, and ledger accompany this note in the repository:
+\url{https://github.com/apemm/Kagey-Problems}.
+The narrow-row proof and \texttt{verify\_narrow.py} were developed with OpenAI Codex
+assistance, including manuscript wording and verification code. The two finite four-row
+exclusions are explicitly computer-assisted. Independent human review and a targeted
+literature comparison of the short-cycle formulation remain necessary before publication.
 
+\clearpage
 \begin{thebibliography}{9}
 \bibitem{kagey} P. Kagey, Problem 001, Open Problem Collection,
 \texttt{peterkagey.com/problems/001/} (accessed August 2026).

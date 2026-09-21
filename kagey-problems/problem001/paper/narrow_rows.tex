@@ -1,0 +1,195 @@
+\section{Three and four rows}\label{sec:narrow}
+
+In this section coordinates start at zero: columns are $0,\ldots,m-1$ and rows
+are $0,\ldots,n-1$. This changes no geometric convention.
+
+\begin{lemma}[axis-aligned identification and short cycles]\label{lem:girth}
+Suppose $m\ge3$. Form a bipartite graph $G_S$ whose vertices are the rows and
+columns, with an edge between row $y$ and column $x$ exactly when $(x,y)\in S$.
+The axis-aligned rectangles have distinct presentations if and only if $G_S$
+has neither a cycle of length four nor a cycle of length six.
+\end{lemma}
+\begin{proof}
+If rows $a,b$ are black in both columns $x,z$, choose a third column $w$.
+The rectangles on these rows and column pairs $\{x,w\}$ and $\{z,w\}$
+have the same presentation. Thus a four-cycle is forbidden.
+If a six-cycle has successive vertices
+$a,x,b,y,c,z,a$, the rectangles with row/column pairs
+$(\{a,b\},\{x,y\})$ and $(\{a,c\},\{y,z\})$ have every corner black
+except possibly their common corner $(y,a)$. Their presentations coincide.
+
+Conversely, assume both cycles are absent. No rectangle is entirely black,
+since its four edges would form a four-cycle. Two rectangles with a common
+presentation of at least three points coincide, since three rectangle corners
+determine the fourth. If two visible points are opposite axis-aligned corners,
+they determine the axis-aligned rectangle. If they lie in one row or column,
+two distinct completions require a black four-cycle at the two other rows or
+columns. Finally, suppose the common presentation is the single corner $(x,a)$.
+Write the other row and column of the two rectangles as $(b,y)$ and $(c,z)$.
+If $b=c$ or $y=z$, their black corners contain a four-cycle. Otherwise the six
+black edges form the cycle $a,y,b,x,c,z,a$. Every possibility contradicts the
+assumption.
+\end{proof}
+
+\begin{theorem}[general row bound]\label{thm:rowbound}
+For $m\ge3$, every valid blackout on an $n\times m$ grid satisfies
+\[
+|S|\le m+\left\lfloor\frac{n^2}{4}\right\rfloor.
+\]
+If also $n\ge3$, the transposed bound holds as well.
+\end{theorem}
+\begin{proof}
+For each nonempty column let $B_x$ be its set of black rows, and choose any
+tree on $B_x$ (no edges if $|B_x|=1$). Superimpose these trees into a graph $H$
+on the $n$ row vertices. It is simple: repeating an edge would mean two columns
+share two black rows, a four-cycle in $G_S$. It is triangle-free. A triangle
+cannot lie within one tree; if two edges come from one column and the third
+from another, those columns share two rows; if the three edges come from three
+columns, they give a six-cycle in $G_S$. All cases are forbidden by
+Lemma~\ref{lem:girth}.
+
+For completeness, a triangle-free graph on $n$ vertices with $e>0$ edges
+satisfies $d(u)+d(v)\le n$ for every edge $uv$. Summing over edges and using
+Cauchy--Schwarz gives
+\[
+\frac{4e^2}{n}\le\sum_v d(v)^2\le ne,
+\]
+so $e\le\lfloor n^2/4\rfloor$, the usual Mantel bound. If $t\le m$ columns
+are nonempty, the construction gives
+$e=\sum_{B_x\ne\varnothing}(|B_x|-1)=|S|-t$.
+Therefore $|S|=t+e\le m+\lfloor n^2/4\rfloor$.
+\end{proof}
+
+\begin{lemma}[tilted rectangles on narrow grids]\label{lem:tilted}
+Every tilted rectangle on three rows is a translate of
+\[
+D(x,y)=\{(x,y+1),(x+1,y),(x+2,y+1),(x+1,y+2)\},
+\qquad y=0.
+\]
+On four rows, these diamonds have $y=0,1$, and the remaining tilted rectangles
+are the following four types, for $0\le x\le m-4$:
+\begin{align*}
+A_x&=\{(x,2),(x+1,3),(x+2,0),(x+3,1)\},\\
+B_x&=\{(x,2),(x+2,3),(x+1,0),(x+3,1)\},\\
+C_x&=\{(x,1),(x+1,3),(x+2,0),(x+3,2)\},\\
+E_x&=\{(x,1),(x+2,3),(x+1,0),(x+3,2)\}.
+\end{align*}
+\end{lemma}
+\begin{proof}
+At the unique leftmost corner, write the side vectors as $(a,b)$ and $(c,-d)$,
+where $a,b,c,d$ are positive integers. Orthogonality says $ac=bd$, and the
+vertical span is $b+d$. If this span is at most two, all four integers are one.
+If it is three, $\{b,d\}=\{1,2\}$ and $\{a,c\}=\{1,2\}$, giving the four
+listed cases. These exhaust the possibilities.
+\end{proof}
+
+\begin{theorem}[Three-Row Theorem]\label{thm:threerow}
+For every $m\ge3$, the maximum valid blackout on a $3\times m$ grid is $m+2$.
+\end{theorem}
+\begin{proof}
+The upper bound is Theorem~\ref{thm:rowbound}. For the lower bound take
+\[
+S=\{(x,0):0\le x<m\}\cup\{(0,1),(0,2)\}.
+\]
+Its incidence graph is a tree, so its axis-aligned presentations are distinct.
+By Lemma~\ref{lem:tilted}, each tilted rectangle is a diamond $D(x,0)$.
+For $x>0$ it has only one black corner, hence at least three visible corners
+and cannot be confused with any other rectangle. For $x=0$ its presentation
+is $\{(2,1),(1,2)\}$. The unique axis-aligned rectangle with these opposite
+corners also contains the white points $(1,1),(2,2)$, so cannot have this
+presentation. There is no second tilted rectangle with at most two visible
+corners. Thus $S$ is valid and has $m+2$ points.
+\end{proof}
+
+\begin{theorem}[Four-Row Theorem]\label{thm:fourrow}
+For every $m\ge6$, the maximum valid blackout on a $4\times m$ grid is $m+4$.
+\end{theorem}
+\begin{proof}
+The upper bound is Theorem~\ref{thm:rowbound}. For the matching construction set
+\begin{align*}
+S={}&\{(x,0):1\le x\le m-2\}\\
+&{}\cup\{(m-2,1),(m-1,1),(0,2),(1,2),(0,3),(m-1,3)\}.
+\end{align*}
+Its size is $m+4$. Its columns with two black points are
+$0,1,m-2,m-1$, joining row pairs
+$\{2,3\},\{0,2\},\{0,1\},\{1,3\}$, respectively. Thus $G_S$ is an
+eight-cycle with pendant edges, and all axis-aligned presentations are distinct.
+
+It remains to check tilted rectangles. Any rectangle with at least three visible
+corners is uniquely determined, so only rectangles with at least two black
+corners need attention. All diamonds $D(x,1)$, and all $C_x,E_x$, have at most
+one black corner. Put $L=\{0,1\}$ and $R=\{m-5,m-4\}$. The remaining
+presentations with at most two visible corners are exactly those in the table.
+In the last three rows $F=A$ or $B$, with $s=1$ or $2$, respectively.
+\begin{center}\small
+\begin{tabular}{lll}
+\toprule
+rectangle & range & visible corners\\
+\midrule
+$D(0,0)$ & & $\{(0,1),(2,1)\}$\\
+$D(x,0)$ & $x=m-4,m-3$ & $\{(x,1),(x+1,2)\}$\\
+$F_x$ & $x\in L\setminus R$ & $\{(x+s,3),(x+3,1)\}$\\
+$F_x$ & $x\in R\setminus L$ & $\{(x,2),(x+s,3)\}$\\
+$F_x$ & $x\in L\cap R$ & $\{(x+s,3)\}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+This table follows by direct membership in the displayed $S$. Its two-point
+presentations are distinct: their row pairs and horizontal separations distinguish
+the types, and within a type the coordinates determine $x$. The only one-point
+presentations occur at $m=6,x=1$, and are $(2,3)$ and $(3,3)$, which are distinct.
+
+None equals an axis-aligned presentation. For $\{(0,1),(2,1)\}$ no other row
+is black in both columns $0,2$. For $\{(x,1),(x+1,2)\}$ the other axis-aligned
+corner $(x,2)$ is white, since $x\ge2$. In the $L\setminus R$ case,
+$(x+s,1)$ is white, since $x+s\le3<m-2$. In the $R\setminus L$ case,
+$(x,3)$ is white, since $0<x<m-1$. Finally, when $m=6$, an axis-aligned
+rectangle with sole visible corner $(z,3)$, $z=2$ or $3$, would need another
+column $c=0$ or $5$ and another row black in both columns $z,c$. No such row
+exists: row zero is white at $0,5$, and rows one and two are white at $z$.
+All potential collisions have been excluded, proving validity.
+\end{proof}
+
+\begin{lemma}[four-row upper-bound equality cases]\label{lem:fourclassification}
+If $m\ge4$ and a valid blackout has $m+4$ black points on four rows, then every
+column is nonempty, exactly four columns have two black points, the others have
+one, and the four double columns form a four-cycle on the row vertices.
+\end{lemma}
+\begin{proof}
+Equality in Theorem~\ref{thm:rowbound} requires every column nonempty and total
+excess $\sum_x(|B_x|-1)=4$. A column containing all four rows leaves all other
+columns with at most one black point, giving excess three. If a column contains
+three rows, any other nonsingleton column must pair the fourth row with one of
+those three. There can be at most one such column: two with the same row pair
+give a four-cycle in $G_S$, and two with different row pairs give a six-cycle.
+The total excess is then at most $2+1=3$. Thus all nonsingleton columns have
+size two. They give a simple triangle-free graph with four vertices and four
+edges, necessarily a four-cycle.
+\end{proof}
+
+\begin{corollary}[finite boundary cases, computer-assisted]\label{cor:fourboundary}
+The maximum blackout is $7$ on $4\times4$ and $8$ on $4\times5$.
+\end{corollary}
+\begin{proof}
+The upper bound leaves only a possible value $m+4$ to exclude. By
+Lemma~\ref{lem:fourclassification}, candidates are generated by choosing one of
+the three four-cycles on the row labels, four columns, a bijection from their
+four row-pair edges to those columns, and a row for each remaining singleton
+column. This is the complete list of
+\[
+3\cdot4!\binom m4 4^{m-4}
+\]
+candidates: $72$ when $m=4$ and $1440$ when $m=5$. The standard-library script
+\texttt{verify\_narrow.py} checks every candidate directly against all rectangles,
+generated independently from equal-length diagonals with a common midpoint.
+Every candidate has a repeated presentation. The same script checks that
+the blackout consisting of row zero and column zero is valid in these two grids,
+attaining $m+3$. These two finite exclusions are computational; the theorems
+for arbitrary $m\ge3$ on three rows and $m\ge6$ on four rows have the proofs above.
+\end{proof}
+
+The verifier also exhaustively checks Lemma~\ref{lem:girth} on 74,304 blackouts
+of five small grids, compares the complete tilted-template lists against the
+independent diagonal enumeration, and checks the constructions for widths
+$3,\ldots,40,64,100,128$ where applicable. These computations corroborate the
+general proofs; finite sampling is not used to justify their unbounded ranges.

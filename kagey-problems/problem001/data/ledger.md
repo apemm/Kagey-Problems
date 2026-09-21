@@ -1,4 +1,4 @@
-# Ledger — hand-verified ground truth (solver test fixtures)
+# Ledger: hand-verified ground truth (solver test fixtures)
 
 | grid (n x m) | max blackout | # maximum blackouts | status |
 |---|---|---|---|
@@ -97,3 +97,21 @@ out, '#' = kept, which was backwards. The '#' set has 10 points and is the valid
 the '.' set has 15 points and is the kept set (as a blackout it is invalid). Checked with the
 definitional brute: valid(# set) = True, valid(. set) = False. The picture itself and the text
 around it (9-point staircase plus the corner (5,5); kept blocks of 5 and 10) were already correct.
+
+## Proof update: 2026-09-21
+
+The historical entries above are retained unchanged. The Three-Row hypothesis is now
+proved: blackout(3,m)=m+2 for every m>=3. The four-row specialization of Excess-1 is
+also proved: blackout(4,m)=m+4 for every m>=6. This is not the older, refuted
+ceil(5m/2)-1 kept-set formula. The 4x4 and 4x5 boundary values are settled by a complete
+finite exclusion of 72 and 1,440 candidates, respectively, using verify_narrow.py.
+
+The proof characterizes axis-aligned identification by absence of C4 and C6 in the
+row-column incidence graph, converts column neighborhoods to a triangle-free graph
+on rows, and uses Mantel's bound. Explicit constructions are checked against the
+complete list of tilted shapes on three and four rows. See paper/narrow_rows.tex.
+
+The all-width proofs do not depend on extrapolation from the tests. The general
+Excess-1 conjecture with both dimensions >=5 and the extremizer counts beyond strips
+remain unresolved. AI assistance is disclosed; independent human review and novelty
+checks are still needed.

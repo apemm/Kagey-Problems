@@ -4,17 +4,13 @@ For tiny grids: test every blackout S by computing all presentations C(R) \ S,
 hashing them, and checking for collisions (injectivity). ~30 lines.
 Must agree with engine.py on every grid up to 2x4 and on 3x3.
 
-CODE AUTHOR: Claude (Anthropic); size-descending search restructure and CLI:
-Arjun Pemmasani; logic per the project spec (PROBLEM.md); line-by-line review
-and acceptance: Arjun Pemmasani.
-
 Deliberately independent of everything else in three ways:
 1. No reduction: validity is checked straight from the definition, injectivity of the
    presentation map. Difference sets, Lemma 1, and pruning appear nowhere.
 2. Third enumeration method: rectangles found by testing every 4-subset of points
    (a 4-set is a rectangle iff some pairing into two "diagonals" has equal midpoints
    and equal lengths: bisecting diagonals give a parallelogram, equal ones make it
-   a rectangle). No constructive generation shared with oracle_claude.py.
+   a rectangle). No constructive generation shared with enumerate.py.
 3. No imports from solver/ or reconcile/.
 
 Slow on purpose. Feasible through ~4x4 (2^16 blackouts); 4x5 is minutes.
