@@ -1,7 +1,7 @@
 # Lean 4 formalizations
 
 Machine-checked versions of the proved results in this repository, built against
-Mathlib `v4.33.1` (Lean `v4.33.1`).  Both files compile with no `sorry`.
+Mathlib `v4.33.1` (Lean `v4.33.1`).  Both files compile with no `sorry`. I generated this with AI-assistance (Claude)
 
 - `KageyProblems/Problem137.lean` — Problem 137 (the tree of rationals under `x+1` and `-1/x`):
   the parent map, its termination, the increment identities (D1)–(D4), the exact distance
