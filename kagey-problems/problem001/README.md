@@ -21,8 +21,6 @@ bounds, with a complete tilted-rectangle analysis.
 
 The general-width proofs are in [paper/narrow_rows.tex](paper/narrow_rows.tex), included
 in [paper/main.tex](paper/main.tex). The compiled paper is `paper/main.pdf`.
-These arguments were developed with Codex assistance; novelty is not established by
-the proof or tests, and independent human review remains important.
 
 ## Verification
 
