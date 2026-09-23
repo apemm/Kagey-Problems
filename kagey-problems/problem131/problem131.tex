@@ -1,0 +1,920 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1.05in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[shortlabels]{enumitem}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\hypersetup{pdftitle={Endpoint competition in a Galton board with memory},pdfauthor={Arjun Pemmasani}}
+
+% ---------- theorem environments ----------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% ---------- notation macros ----------
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\chg}{\operatorname{chg}}
+\newcommand{\rep}{\operatorname{rep}}
+
+\title{Endpoint competition in a Galton board with memory:\\
+ uniform thresholds, boundary conditions, and simplex modes\\[1ex]
+ \large Problem 131 and its persistent-walk extensions}
+\author{Arjun Pemmasani}
+\date{September 22, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+A ball on a Galton board bounces left or right with equal probability at the first peg and afterwards
+repeats its previous direction with probability $p$. Problem 131 of Kagey's Open Problem Collection
+asks for the distribution over the bins, for the $p$ at which the middle bin is as likely as the
+extreme bins, for the relation to lattice walks and to OEIS A035002 and A348595, for other board
+geometries, and for the normal limit and its variance.
+
+The model is the correlated random walk of Goldstein and Gillis, and the exact distribution is a
+run count going back to Wald and Wolfowitz; we record it with a short proof, a rational generating
+function and a three-term Pascal-type recurrence. We prove by explicit bijections that Kagey's
+numerator table for $p=2/3$ is the rook-path array A035002 and that his table for $p=1/3$ is the
+symmetric array whose lower half is A348595. The bin index after $N$ bounces has variance
+$Np/(4(1-p))-(2p-1)\bigl(1-(2p-1)^N\bigr)/(8(1-p)^2)$ and is asymptotically normal for $0<p<1$. In
+every row with $N\ge2$ there is exactly one $p=p_N$ at which the middle equals the extremes; $p_N$ increases
+strictly from $p_2=2/3$, $p_3=1/\sqrt2$ to $1$. A uniform Bessel approximation proves
+$N(1-p_N)=\log N-\tfrac12\log\log N+\tfrac12\log(\pi/8)+o(1)$ and yields a further
+inverse-logarithm correction. We extend the relative Bessel bound to every interior bin,
+with error at most $Nu^2/2+u$, where $u=(1-p)/p$. This yields a threshold expansion uniform
+over all diverging distances from an edge, matched to a Laguerre-polynomial law at fixed
+distance. For periodic Ising boundaries we obtain the corresponding estimate, a rigorous
+refinement of a previously studied finite-size crossing, and an explicit $\log2$ boundary
+shift. Both boundary conditions have the spatial crossing profile $e^{t-2y^2}$.
+For the symmetric $d$-direction board, a positive Bessel integral gives sharp crossings
+for every balanced simplex face and a global-mode transition in the logarithmic window.
+An estimate uniform over all positive compositions then resolves a rare-coordinate
+crossover at $N/(\log N)^2$. We also determine the spatial volume of superlevel bins
+and prove that weak occupation fields can stabilize every intermediate support size.
+Near a vertex, a product of finite Laguerre polynomials determines the crossing and
+its first correction, which depends on the number and multiplicities of the rare colors.
+The leading Laguerre-product root remains valid uniformly for arbitrary growing rare
+counts whose total is $A=o(b)$, where $b$ is the dominant count, with relative root
+error $O_\ell(\sqrt{(A+1)/b})$ for a fixed number $\ell$ of rare colors.
+This root approximation can hold even when the corresponding relative probability
+approximation fails by an unbounded factor.
+Exact laws, ordinary normal limits, and fixed-scale Bessel distributions are established
+theory; the proposed contributions are the quantitative moving-parameter refinements.
+\end{abstract}
+
+\section{Introduction}\label{sec:intro}
+
+Problem 131 of Kagey's collection \cite{kagey131} reads as follows. Model a Plinko or Galton board
+by assuming that a ball (1) is equally likely to bounce in either direction off the first peg, and
+(2) thereafter bounces in the same direction it previously bounced with probability $p$. So for
+$p=1$ the ball always repeats its direction, for $p=\tfrac12$ the bounces are independent, and for
+$p=0$ the ball alternates. The page shows ``numerator tables'' for $p=\tfrac13,\tfrac23,\tfrac56$
+and the probability mass functions of the tenth row, and asks: \emph{for an arbitrary $p\in[0,1]$
+and a triangle with $n$ rows, what is the distribution of balls in bin $k$?} Four related questions
+follow.
+\begin{itemize}[leftmargin=2.2em,itemsep=0pt,topsep=3pt]
+\item[\textbf{R1.}] What is the least/greatest value of $p$ such that at the $(2n)$-th row the
+middle entry equals the extremes? How about the $(2n+1)$-st row?
+\item[\textbf{R2.}] What changes on a different geometry (a cylinder, a tetrahedron)?
+\item[\textbf{R3.}] How does this relate to lattice walks? (See A348595.)
+\item[\textbf{R4.}] As $n\to\infty$, does the distribution converge to a normal distribution? If so,
+what is the variance as a function of $p$?
+\end{itemize}
+The references given are A035002 (numerators for $p=\tfrac23$) and A348595 (``related'' to $p=\tfrac13$).
+
+\paragraph{Conventions.}
+We index by the number $N\ge0$ of bounces. After $N$ bounces the ball is in one of $N+1$ bins, and
+bin $k\in\{0,\dots,N\}$ means $k$ bounces to the right. Kagey's $n$-th row has $n$ entries, so it is
+our $N=n-1$; his tenth-row histograms have ten bars. We write $q=1-p$, $\rho=2p-1$, and $P_N(k)$ for
+the probability of bin $k$ after $N$ bounces. For $p=\alpha/(\alpha+\beta)$ in lowest terms, the
+entries of Kagey's tables are
+\[
+n_N(k)=2(\alpha+\beta)^{N-1}P_N(k)\quad(N\ge1),\qquad n_0(0)=1 ,
+\]
+not reduced further. This normalization reproduces all 3 tables of the figure, rows $1$ to $9$.
+
+\paragraph{What is answered.}
+The main question is answered by Theorem~\ref{thm:pmf} and Proposition~\ref{prop:gf}. R3 and the two
+OEIS references are settled by Theorems~\ref{thm:rook} and~\ref{thm:mathar}. R4 is answered by
+Proposition~\ref{prop:var} and Theorem~\ref{thm:clt}: the limit is normal for $0<p<1$ and the
+variance of the bin index is asymptotically $Np/(4(1-p))$. R1 is answered by
+Theorem~\ref{thm:root} and the paragraph after it: each row has exactly one solution $p_N$, the
+least values among nontrivial rows are $\tfrac23$ (odd rows) and $1/\sqrt2$ (even rows),
+and there is no greatest value. Theorem~\ref{thm:bessel} proves a quantitative Bessel approximation
+and its second-order expansion. Proposition~\ref{prop:adjacent} gives the adjacent-bin crossing.
+For R2, Remark~\ref{rem:cyl} treats the cylinder, and Propositions~\ref{prop:dgf}
+and~\ref{prop:dpmf} and Theorem~\ref{thm:dclt} give an exact law and a normal limit for the
+explicit symmetric tetrahedral model defined below. Other geometric transition rules can define
+different processes.
+
+The threshold analysis is developed in Sections~\ref{sec:allbin},
+\ref{sec:periodicwindow} and~\ref{sec:simplex-thresholds}. It extends the binary comparison
+to all edge distances and compares free with periodic spin boundaries. In the specified
+multidirectional model it also determines the sharp balanced-face crossings and the global
+modes in their critical window. The complete finite-$N$ multistate mode classification
+is not asserted: a four-step, three-direction example has its maxima on proper edges.
+Sections~\ref{sec:frontier-boundary} and~\ref{sec:frontier-modes} extend the analysis to
+rare coordinates, spatial superlevel volumes, and weak-field face phases.
+Section~\ref{sec:vertex-completion} completes the leading near-vertex crossing law
+uniformly over all rare-count totals $A=o(b)$, including arbitrarily unequal counts.
+
+\paragraph{Literature.}
+The position of the ball is the \emph{correlated} (or \emph{persistent}) random walk, studied since
+Goldstein \cite{goldstein1951} and Gillis \cite{gillis1955}. Renshaw and Henderson
+\cite{renshaw1981} treat exactly the walk that continues with probability $p$ and reverses with
+probability $1-p$; according to its abstract that paper derives exact $n$-step transition
+probabilities and limiting distributions. We have consulted only the abstract, and our proofs
+are self-contained. The count of binary words by number of runs, which is all that
+Theorem~\ref{thm:pmf} needs, is the classical computation of Wald and Wolfowitz
+\cite{waldwolfowitz1940}. Hence, the exact law and the normal limit should not be regarded as new.
+Dekking and Kong~\cite{dekkingkong2011} give the Markov-binomial law, variance, interior
+log-concavity, and local modality classification; their parameters $a=b=1-p$ and symmetric
+initial law give our model. Local modality is distinct from equality of central and endpoint
+heights. Herrmann and Vallois~\cite{herrmann2010} give the classical telegraph limit with its
+$I_0,I_1$ density. The quantitative estimate here treats the moving regime $Nu=O(\log N)$,
+which does not follow from fixed-scale weak convergence alone.
+
+The $d$-direction model belongs to Markov multinomial theory
+\cite{wangyang1995,wangtang2003}; we have not obtained the original Wang--Yang paper and make
+no novelty claim for the finite sum or normal limit given here. The OEIS entries
+\cite{oeisA035002,oeisA348595} already record the relevant generating functions, and Kagey
+already indicates their connections; our bijections explain these identifications.
+
+The Ising literature gives a closer antecedent than the initial search identified.
+Antal, Droz and R\'acz~\cite{antal2004} derive fixed-scale magnetization distributions
+under several boundary conditions. Dantchev and Rudnick~\cite{dantchev2022} give exact
+free and periodic fixed-magnetization formulas and periodic Bessel scaling.
+Stepanyan et al.~\cite{stepanyan2024} explicitly define the periodic endpoint--center
+and endpoint--adjacent crossings and report a finite-size approximation to the former.
+Thus the crossing question itself is already present in the literature. The refinements
+here control the discrete error while the persistence parameter moves with $N$, invert
+the resulting comparison quantitatively, and determine a spatial superlevel-set window.
+For the multistate extension, general continuous-time occupation densities on visited
+simplex faces are also known~\cite{brydges2007}; the discrete moving-scale comparison
+proved below is a different assertion.
+The square-root composition quantity $A^2-1$, where $A=\sum_i\sqrt{\alpha_i}$,
+is also classical: for the complete-graph generator $Q$ with off-diagonal entries one,
+the symmetric occupation rate is $I_Q(\alpha)=d-A^2$. Thus $A^2-1$ is the difference
+between the vertex rate and the rate at $\alpha$, not a new rate function.
+The results proposed here concern uniform discrete relative errors and their
+boundary-crossing and modal consequences.
+
+No matching theorem for the full quantitative package was located in the inspected
+sources. This bounded search does not establish priority. The full Renshaw--Henderson
+and Wang--Yang papers remain to be checked. Library access allowed us to inspect
+\v{C}ekanavi\v{c}ius and Mikalauskas~\cite{cekanavicius2001}: Theorem~1.1 assumes
+$p,\bar q\le1/2$, where $p$ is the repeat probability in state one. It therefore
+does not cover our symmetric $p\to1$ regime; the paragraph following Corollary~1.1
+explicitly leaves a high-persistence range unresolved there.
+Their separate large-deviation paper~\cite{cekanavicius2001ld} was also inspected:
+Theorems~1.1--1.2 require $p\le1/50$ and Theorem~1.3 requires $p\le\bar q$.
+These hypotheses likewise exclude the symmetric persistence limit studied here.
+
+\section{The exact distribution}\label{sec:exact}
+
+A run of the experiment with $N\ge1$ bounces is a word $w\in\{L,R\}^N$. Let $\chg(w)$ be the number of
+indices $i<N$ with $w_i\ne w_{i+1}$ and $\rep(w)=N-1-\chg(w)$. By the definition of the model,
+\begin{equation}\label{eq:wordprob}
+\Prob(w)=\tfrac12\,p^{\rep(w)}q^{\chg(w)} .
+\end{equation}
+
+\begin{theorem}[bin probabilities]\label{thm:pmf}
+Let $N\ge1$. Then $P_N(0)=P_N(N)=\tfrac12p^{N-1}$, and for $1\le k\le N-1$
+\[
+P_N(k)=\frac12\sum_{j=1}^{N-1}W(N,k,j)\,p^{N-1-j}q^{\,j},
+\]
+where, writing $a=k$ and $b=N-k$,
+\[
+W(N,k,2i-1)=2\binom{a-1}{i-1}\binom{b-1}{i-1},\qquad
+W(N,k,2i)=\binom{a-1}{i}\binom{b-1}{i-1}+\binom{a-1}{i-1}\binom{b-1}{i}
+\]
+is the number of words with $a$ letters $R$, $b$ letters $L$ and exactly $j$ direction changes.
+\end{theorem}
+
+\begin{proof}
+By \eqref{eq:wordprob} it suffices to count words. A word with $j$ changes consists of $j+1$ maximal
+runs, alternately of $R$'s and of $L$'s. If $k\in\{0,N\}$ there is one word and it has no change.
+Let $a,b\ge1$. If $j+1=2i$ there are $i$ runs of each letter and the first letter is free; the run
+lengths form a composition of $a$ into $i$ parts and a composition of $b$ into $i$ parts, and there
+are $\binom{a-1}{i-1}\binom{b-1}{i-1}$ such pairs. If $j+1=2i+1$ the word starts and ends with the
+same letter; starting with $R$ gives $i+1$ runs of $R$ and $i$ runs of $L$, that is
+$\binom{a-1}{i}\binom{b-1}{i-1}$ words, and starting with $L$ gives the other summand.
+\end{proof}
+
+For instance $P_2=(\tfrac p2,\,q,\,\tfrac p2)$, $P_3(1)=P_3(2)=\tfrac12(1-p^2)$ and
+$P_4(2)=(1-p)(1-p+p^2)$.
+
+\begin{proposition}[recurrence and generating function]\label{prop:gf}
+Let $R_N(k)$ and $L_N(k)$ be the probabilities of being in bin $k$ after $N$ bounces with last bounce
+$R$, respectively $L$. Then $R_1(1)=L_1(0)=\tfrac12$ and
+\begin{equation}\label{eq:dp}
+R_N(k)=p\,R_{N-1}(k-1)+q\,L_{N-1}(k-1),\qquad L_N(k)=p\,L_{N-1}(k)+q\,R_{N-1}(k).
+\end{equation}
+Consequently
+\begin{equation}\label{eq:gf}
+\sum_{N\ge0}\sum_{k=0}^{N}P_N(k)\,x^kt^N=\frac{1-(p-\tfrac12)(1+x)\,t}{1-p(1+x)\,t+(2p-1)\,x\,t^2},
+\end{equation}
+and for all $N\ge2$ and all $k$ (with $P_M(k)=0$ outside $0\le k\le M$)
+\begin{equation}\label{eq:rec}
+P_N(k)=p\bigl(P_{N-1}(k)+P_{N-1}(k-1)\bigr)-(2p-1)\,P_{N-2}(k-1).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The recursion \eqref{eq:dp} follows by conditioning on the last two bounces. Put $F_R=\sum R_N(k)x^kt^N$ and
+$F_L=\sum L_N(k)x^kt^N$. Then \eqref{eq:dp} and the initial values give
+$F_R=xt\bigl(\tfrac12+pF_R+qF_L\bigr)$ and $F_L=t\bigl(\tfrac12+pF_L+qF_R\bigr)$. The determinant of
+this linear system is $(1-pxt)(1-pt)-q^2xt^2=1-p(1+x)t+(p^2-q^2)xt^2$, and $p^2-q^2=2p-1$. Cramer's
+rule gives $F_R=\tfrac12xt\,(1-\rho t)/\Delta$ and $F_L=\tfrac12t\,(1-\rho xt)/\Delta$ with $\Delta$
+the determinant, and $1+F_R+F_L$ simplifies to \eqref{eq:gf}. Multiplying \eqref{eq:gf} by $\Delta$
+and reading off the coefficient of $x^kt^N$ for $N\ge2$ gives \eqref{eq:rec}.
+\end{proof}
+
+At $p=\tfrac12$ the last term of \eqref{eq:rec} vanishes and \eqref{eq:rec} is Pascal's rule with
+weights $\tfrac12$. In terms of numerators, \eqref{eq:rec} reads
+$n_N(k)=\alpha\bigl(n_{N-1}(k)+n_{N-1}(k-1)\bigr)-(\alpha^2-\beta^2)\,n_{N-2}(k-1)$ for $N\ge3$.
+
+The same computation works for a board on which each peg offers $d\ge2$ directions: the first
+bounce is uniform, and afterwards the ball repeats its direction with probability $p$ and takes each
+other direction with probability $q/(d-1)$. For $d=3$ this is a tetrahedral pile of pegs, with the
+bins of layer $N$ indexed by $(k_1,k_2,k_3)$, $k_1+k_2+k_3=N$.
+
+\begin{proposition}[$d$ directions]\label{prop:dgf}
+Let $P_N(k_1,\dots,k_d)$ be the probability that direction $i$ is taken $k_i$ times. Put
+$\sigma=p-\frac{q}{d-1}=\frac{dp-1}{d-1}$ and $A=\sum_{i=1}^d\frac{x_it}{1-\sigma x_it}$. Then
+\[
+\sum_{N\ge0}\sum_{k_1+\dots+k_d=N}P_N(k_1,\dots,k_d)\,x_1^{k_1}\cdots x_d^{k_d}\,t^N
+=1+\frac{A/d}{1-\frac{q}{d-1}A}.
+\]
+\end{proposition}
+
+\begin{proof}
+Let $F_i$ be the generating function of the runs whose last direction is $i$, and $S=\sum_iF_i$.
+Conditioning on the last bounce, $F_i=x_it\bigl(\tfrac1d+pF_i+\tfrac{q}{d-1}(S-F_i)\bigr)$, that is
+$F_i(1-\sigma x_it)=x_it\bigl(\tfrac1d+\tfrac{q}{d-1}S\bigr)$. Summing over $i$ gives
+$S=A\bigl(\tfrac1d+\tfrac{q}{d-1}S\bigr)$, and the generating function is $1+S$.
+\end{proof}
+
+For $d=2$, $x_1=x$, $x_2=1$ this reduces to \eqref{eq:gf}, since then $\sigma=\rho$.
+
+\begin{proposition}[finite bin probabilities in $d$ directions]\label{prop:dpmf}
+Put $r=q/(d-1)$ and $\sigma=p-r$. For $N\ge1$, let $k=(k_1,\ldots,k_d)$ have
+nonnegative integer coordinates summing to $N$, and put $H=\{i:k_i>0\}$. Sum over
+$m_i=0$ for $i\notin H$ and $1\le m_i\le k_i$ for $i\in H$, and set $M=\sum_i m_i$.
+Then
+\[
+P_N(k)=\frac1d\sum_m\frac{M!}{\prod_i m_i!}\,
+r^{M-1}\sigma^{N-M}\prod_{i\in H}\binom{k_i-1}{m_i-1}.
+\]
+All exponents are nonnegative, and $0^0=1$. Set $P_0(0,\ldots,0)=1$ separately.
+\end{proposition}
+\begin{proof}
+With $z_i=x_it$, Proposition~\ref{prop:dgf} becomes the formal power series
+\[
+1+\frac1d\sum_{M\ge1}r^{M-1}
+\left(\sum_i\frac{z_i}{1-\sigma z_i}\right)^M.
+\]
+Expand by the multinomial theorem and use, for $k\ge m\ge1$,
+\[
+[z^k]\left(\frac{z}{1-\sigma z}\right)^m
+=\binom{k-1}{m-1}\sigma^{k-m}.
+\]
+For $m=0$ only $k=0$ contributes. Multiplying the coefficients proves the formula.
+\end{proof}
+
+At $d=3$ this is a triple sum, with the support convention covering edge bins.
+At $p=1/d$, $\sigma=0$ and only $M=N$ survives, giving the ordinary multinomial law.
+At $p=1$, only $M=1$ survives, giving mass $1/d$ at each $Ne_i$.
+The formula is valid also at $p=0$; for $\sigma<0$ its terms can cancel, so dynamic
+programming or exact arithmetic is preferable numerically. This geometry assumes fixed global
+directions and uniform switching to the other directions; a different physical boundary or
+orientation rule need not have this law.
+
+
+\section{The numerator tables and lattice paths}\label{sec:tables}
+
+\begin{proposition}\label{prop:num}
+Let $p=\alpha/(\alpha+\beta)$ with integers $\alpha,\beta\ge0$, not both zero. For $N\ge1$,
+\[
+n_N(k)=\sum_{w}\alpha^{\rep(w)}\beta^{\chg(w)},
+\]
+the sum over the words with $k$ letters $R$ and $N-k$ letters $L$. In particular the numerators are
+integers, and
+\[
+\sum_{a,b\ge0}n_{a+b}(a)\,x^ay^b=
+\frac{1-(\alpha-1)(x+y)+(\alpha-\beta)(\alpha+\beta-2)\,xy}{1-\alpha(x+y)+(\alpha^2-\beta^2)\,xy}.
+\]
+\end{proposition}
+
+\begin{proof}
+Multiply \eqref{eq:wordprob} by $2(\alpha+\beta)^{N-1}$. For the generating function let $F_R,F_L$
+collect the weighted words ending in $R$, in $L$; then $F_R=x(1+\alpha F_R+\beta F_L)$ and
+$F_L=y(1+\alpha F_L+\beta F_R)$, and solving as in Proposition~\ref{prop:gf} gives the stated
+value of $1+F_R+F_L$.
+\end{proof}
+
+For $(\alpha,\beta)=(2,1)$ the generating function is $(1-x)(1-y)/(1-2x-2y+3xy)$, and for
+$(\alpha,\beta)=(1,2)$ it is $(1-xy)/(1-x-y-3xy)$. These are the generating functions recorded in
+A035002 (by Kruchinin and by Somos) and in A348595 (by Mathar) \cite{oeisA035002,oeisA348595}, which already identifies the
+tables. We prove the identifications directly from the definitions of the two sequences, which
+shows where the weights $2$ come from.
+
+\begin{theorem}[$p=\tfrac23$ and rook paths]\label{thm:rook}
+Let $T(a,b)$ be the number of ways to move a rook from $(0,0)$ to $(a,b)$ by moves that increase one
+coordinate by a positive amount. Then for $p=\tfrac23$, $n_N(k)=T(k,N-k)$ for all $N\ge0$ and
+$0\le k\le N$. In the indexing of A035002, whose array starts at $(1,1)$, this is the entry $(k+1,N-k+1)$, so
+Kagey's $p=\tfrac23$ table read by rows is A035002 read by antidiagonals.
+\end{theorem}
+
+\begin{proof}
+A035002 is defined by the rule that each entry is the sum of all entries to its left and all entries
+above it, which is the recursion for $T$ obtained by removing the last rook move (the OEIS entry
+records this interpretation). Given a rook path to $(a,b)$ with $a+b=N\ge1$, replace each move of
+length $\ell$ to the right by $R^\ell$ and each move of length $\ell$ upward by $L^\ell$. This
+gives a word $w$ with $a$ letters $R$ and $b$ letters $L$, together with the set of positions
+$i<N$ at which one move ends and the next begins. Such a cut is forced wherever
+$w_i\ne w_{i+1}$ and is optional wherever $w_i=w_{i+1}$, and every choice of optional cuts comes from
+exactly one rook path. Hence, $T(a,b)=\sum_w2^{\rep(w)}$, which is $n_N(a)$ for
+$(\alpha,\beta)=(2,1)$ by Proposition~\ref{prop:num}.
+\end{proof}
+
+\begin{theorem}[$p=\tfrac13$ and Mathar's blocked walks]\label{thm:mathar}
+Call a lattice point $(x,y)$ \emph{blocked} if $x\equiv y\equiv1$ or $x\equiv y\equiv2\pmod 3$. Let
+$M(a,b)$ be the number of walks from $(0,0)$ to $(3a,3b)$ with unit steps right and up that visit no
+blocked point. Then for $p=\tfrac13$, $n_N(k)=M(k,N-k)$. The array $M$ is symmetric, and A348595
+lists its lower triangle $M(n,k)$, $0\le k\le n$; this is the sense in which that entry is
+``related'' to the $p=\tfrac13$ table.
+\end{theorem}
+
+\begin{proof}
+Reduce coordinates modulo $3$. The allowed residues are $(0,0)$, $(1,0)$, $(2,0)$, $(2,1)$, $(0,1)$,
+$(0,2)$, $(1,2)$. Call a point with residue $(0,0)$ a \emph{corner}, and let $(X,Y)$ count how many
+times the walk has crossed a vertical line $x\equiv0$, respectively a horizontal line $y\equiv0$,
+by a step landing on it. From a corner the walk steps right or up. After a right step it is at
+residue $(1,0)$, and the step up is blocked, so it continues to $(2,0)$; call this state $\mathsf A$.
+From $\mathsf A$ a right step lands on a corner and increases $X$; an up step leads to $(2,1)$,
+where up is blocked, and then right to residue $(0,1)$, which increases $X$, and then (right being
+blocked) up to $(0,2)$; call this state $\mathsf B$. By symmetry, from a corner an up step leads
+to $\mathsf B$ without changing $(X,Y)$, and from $\mathsf B$ the walk either reaches a corner or
+reaches $\mathsf A$, increasing $Y$ by one in both cases. Hence, every walk from $\mathsf A$ emits one letter $R$ (an increase of $X$) and then is at a corner
+or at $\mathsf B$; every walk from $\mathsf B$ emits one letter $L$ and then is at a corner or at
+$\mathsf A$; and a corner leads to $\mathsf A$ or to $\mathsf B$ without emitting anything. A walk from the corner $(0,0)$ to the corner $(3a,3b)$ therefore
+determines a word $w$ with $a$ letters $R$ and $b$ letters $L$: the letter $w_i$ is emitted from
+$\mathsf A$ if it is $R$ and from $\mathsf B$ if it is $L$. Between $w_i$ and $w_{i+1}$ the walk goes
+from one emitting state to the next. If $w_i=w_{i+1}$ it must pass through a corner (one way). If
+$w_i\ne w_{i+1}$ it may pass through a corner or go directly (two ways). The start and the end are
+forced. Hence $M(a,b)=\sum_w2^{\chg(w)}$, which is $n_N(a)$ for $(\alpha,\beta)=(1,2)$. In Mathar's note
+\cite{mathar2022} attached to A348595 the ``squares'' of the sequence name are the lattice sites
+$(x,y)$ themselves, as his recurrences show, so $M$ is his count; a direct count of the walks also
+reproduces the published terms (Section~\ref{sec:verify}).
+\end{proof}
+
+For general $p=\alpha/(\alpha+\beta)$, Proposition~\ref{prop:num} says that $n_N(k)$ counts monotone
+lattice paths from $(0,0)$ to $(k,N-k)$ in which each straight continuation is colored in one of
+$\alpha$ ways and each corner in one of $\beta$ ways. This is the general answer to R3.
+
+\section{Variance and the normal limit}\label{sec:clt}
+
+Write $e_i=+1$ if the $i$-th bounce is $R$ and $e_i=-1$ otherwise, $X_N=e_1+\dots+e_N$, and
+$K_N=(N+X_N)/2$ for the bin index. Then $e_{i+1}=e_is_i$, where $s_1,s_2,\dots$ are independent of
+each other and of $e_1$, with $\Prob(s_i=1)=p$ and $\Prob(s_i=-1)=q$, so $\E s_i=\rho$.
+
+\begin{proposition}[mean and variance]\label{prop:var}
+$\E K_N=N/2$, and for $p<1$
+\[
+\Var K_N=\frac14\Bigl(N\,\frac{1+\rho}{1-\rho}-\frac{2\rho\,(1-\rho^N)}{(1-\rho)^2}\Bigr)
+=\frac{Np}{4(1-p)}-\frac{(2p-1)\bigl(1-(2p-1)^N\bigr)}{8(1-p)^2}.
+\]
+For $p=1$, $\Var K_N=N^2/4$.
+\end{proposition}
+
+\begin{proof}
+Note that $\E e_1=0$ and $e_{i+m}=e_is_i\cdots s_{i+m-1}$, so $\E e_i=0$ and
+$\E e_ie_{i+m}=\rho^m$. Hence,
+$\Var X_N=N+2\sum_{m=1}^{N-1}(N-m)\rho^m$, and summing the two geometric series gives the first
+form; the second uses $(1+\rho)/(1-\rho)=p/q$ and $1-\rho=2q$.
+\end{proof}
+
+\begin{theorem}[normal limit]\label{thm:clt}
+Let $0<p<1$. Then $(K_N-N/2)/\sqrt N$ converges in distribution to the normal law with mean $0$ and
+variance $p/(4(1-p))$.
+\end{theorem}
+
+\begin{proof}
+Let $\varphi_N(\theta)=\E e^{i\theta X_N}$ and let $v_N$ be the column vector with entries
+$\E\bigl[e^{i\theta X_N};e_N=+1\bigr]$ and $\E\bigl[e^{i\theta X_N};e_N=-1\bigr]$. By \eqref{eq:dp},
+$v_{N+1}=Mv_N$ with
+\[
+M=\begin{pmatrix}pe^{i\theta}&qe^{i\theta}\\qe^{-i\theta}&pe^{-i\theta}\end{pmatrix},\qquad
+\operatorname{tr}M=2p\cos\theta,\quad\det M=p^2-q^2=\rho .
+\]
+The eigenvalues are $\lambda_\pm(\theta)=p\cos\theta\pm\sqrt{q^2-p^2\sin^2\theta}$, using
+$p^2-\rho=q^2$. For $|\sin\theta|<q/p$ they are real and distinct, so
+$\varphi_N=c_+\lambda_+^{N-1}+c_-\lambda_-^{N-1}$ for $N\ge1$, with $c_\pm(\theta)$ determined by
+$\varphi_1=\cos\theta$ and $\varphi_2=p\cos2\theta+q$:
+\[
+c_+=\frac{\varphi_2-\lambda_-\cos\theta}{\lambda_+-\lambda_-},\qquad c_-=\cos\theta-c_+ .
+\]
+As $\theta\to0$ we have $\lambda_+\to1$, $\lambda_-\to\rho$, $c_+\to1$, $c_-\to0$, and
+\[
+\lambda_+(\theta)=p\bigl(1-\tfrac{\theta^2}2\bigr)+q\Bigl(1-\frac{p^2\theta^2}{2q^2}\Bigr)+O(\theta^4)
+=1-\frac{p}{2q}\,\theta^2+O(\theta^4).
+\]
+Fix $s\in\mathbb R$ and put $\theta=s/\sqrt N$. Since $|\rho|<1$, $c_-\lambda_-^{N-1}\to0$, and
+$\lambda_+^{N-1}\to\exp\bigl(-\tfrac{p}{2q}s^2\bigr)$. Hence, $\varphi_N(s/\sqrt N)\to
+\exp\bigl(-\tfrac{p}{2q}s^2\bigr)$, and by L\'evy's continuity theorem
+\cite[Theorem~26.3]{billingsley1995} $X_N/\sqrt N$ converges to the normal law with variance
+$p/q$. Finally $K_N-N/2=X_N/2$.
+\end{proof}
+
+For $p=1$ the ball is in bin $0$ or bin $N$ with probability $\tfrac12$ each, and for $p=0$ it is
+in a middle bin, so there is no normal limit in these two cases.
+
+\begin{remark}[cylinder]\label{rem:cyl}
+On a cylinder whose rows have $c$ pegs the local rule is unchanged, so the position is $X_N$ modulo
+$2c$ (in half-peg units), and the discrete Fourier coefficients of its law are
+$\varphi_N(\pi l/c)$, $0\le l<2c$. The formula $\varphi_N=c_+\lambda_+^{N-1}+c_-\lambda_-^{N-1}$
+holds whenever $\lambda_+\neq\lambda_-$. For $0<p<1$ and $\theta\notin\pi\Z$ both eigenvalues have
+modulus less than $1$: real eigenvalues satisfy $|\lambda_\pm|\le p|\cos\theta|+q$, and complex
+ones have modulus $\sqrt\rho$. The coefficients at $l=0$ and $l=c$ are $1$ and $(-1)^N$. Hence, on
+the cylinder the law approaches the uniform law on the $c$ positions of the correct parity
+geometrically fast, and there is no normal shape in the limit.
+\end{remark}
+
+\begin{remark}[tetrahedron]\label{rem:tetra}
+For the board with $d$ directions of Proposition~\ref{prop:dgf} let $K_a$ be the number of bounces in
+direction $a$. The direction chain has transition matrix $\sigma I+(1-\sigma)\tfrac1dJ$ with $J$ the
+all-ones matrix, so the indicator of direction $a$ at time $i$ and of direction $b$ at time $i+m$ have
+covariance $\sigma^m\bigl(\tfrac{\delta_{ab}}d-\tfrac1{d^2}\bigr)$, and as in
+Proposition~\ref{prop:var}
+\[
+\Cov(K_a,K_b)=\Bigl(\frac{\delta_{ab}}d-\frac1{d^2}\Bigr)
+\Bigl(N\,\frac{1+\sigma}{1-\sigma}-\frac{2\sigma(1-\sigma^N)}{(1-\sigma)^2}\Bigr),
+\qquad \frac{1+\sigma}{1-\sigma}=\frac{d-2+dp}{d\,(1-p)} .
+\]
+These formulas hold for $p<1$; at $p=1$ the covariance is
+$N^2(\delta_{ab}/d-1/d^2)$. The asymptotic multiplier of the multinomial covariance is
+$(d-2+dp)/(d(1-p))$, which is $(1+3p)/(3(1-p))$ for the tetrahedron.
+\end{remark}
+
+\begin{theorem}[simplex normal limit]\label{thm:dclt}
+Let $d\ge3$ and $0\le p<1$, or $d=2$ and $0<p<1$. Set
+\[
+\pi=(1/d,\ldots,1/d),\quad C=\frac1d I-\frac1{d^2}J,
+\quad c=\frac{1+\sigma}{1-\sigma}=\frac{d-2+dp}{d(1-p)}.
+\]
+Then $(K_N-N\pi)/\sqrt N$ converges in distribution to $\mathcal N_d(0,cC)$.
+This Gaussian is supported on the sum-zero hyperplane and is nondegenerate there.
+\end{theorem}
+\begin{proof}
+Let $\Pi=\mathbf1\pi$ and $T=\sigma I+(1-\sigma)\Pi$. Fix a real vector $a$ and
+put $f_i=a_i-d^{-1}\sum_j a_j$, so $\pi f=0$ and $Tf=\sigma f$.
+For $D(t)=\operatorname{diag}(e^{itf_i})$ and $B(t)=TD(t)$, stationarity gives
+\[
+\E\exp\left(it\sum_{j=1}^N f(X_j)\right)
+=\pi D(t)B(t)^{N-1}\mathbf1.
+\]
+At zero, $B(0)=T$ has the simple eigenvalue $1$ and all other eigenvalues equal
+$\sigma$, with $|\sigma|<1$. Analytic perturbation gives an eigenvalue $\lambda(t)$
+and right eigenvector $h(t)$ with $\lambda(0)=1$, $h(0)=\mathbf1$ and $\pi h(t)=1$.
+The complementary spectral part is uniformly exponentially small for sufficiently small
+$t$: choose a circle of radius $\eta<1$ enclosing the complementary spectrum but not
+$\lambda(t)$ and use the resolvent formula for matrix powers. Thus the characteristic
+function equals $b(t)\lambda(t)^{N-1}+O(\eta^N)$ with $b(t)\to1$.
+
+Differentiate $Bh=\lambda h$ at zero. Since $B'(0)=iT\operatorname{diag}(f)$,
+\[
+\lambda'(0)=0,\qquad (I-T)h'(0)=i\sigma f,
+\qquad h'(0)=\frac{i\sigma}{1-\sigma}f.
+\]
+Differentiating again and multiplying by $\pi$ gives
+\[
+\lambda''(0)=\pi B''(0)\mathbf1+2\pi B'(0)h'(0)
+=-\frac{1+\sigma}{1-\sigma}\pi(f^2)=-c\,\pi(f^2).
+\]
+Hence $\lambda(t)=1-c\pi(f^2)t^2/2+O(t^3)$. Substitute $t=s/\sqrt N$ to obtain
+the scalar normal characteristic function with variance $c\pi(f^2)=ca^{\mathsf T}Ca$.
+L\'evy's theorem and the Cram\'er--Wold device give the result.
+\end{proof}
+
+For $d=3$ the first two centered coordinates have limiting covariance
+\[
+\frac{1+3p}{27(1-p)}\begin{pmatrix}2&-1\\-1&2\end{pmatrix};
+\]
+the third is minus their sum. Unlike the binary case, $p=0$ is included for $d\ge3$.
+At $d=2,p=0$ bounded alternation gives the zero limit after division by $\sqrt N$.
+At $p=1$ the centered sequence on this scale is not tight. This theorem asserts weak
+convergence, not a local approximation for individual bin probabilities.
+
+
+\section{When does the middle equal the extremes?}\label{sec:middle}
+
+Let $N\ge2$ and let $m_N=\lfloor N/2\rfloor$ be a middle bin (for odd $N$ the two middle bins have
+equal probability by symmetry). Put $u=q/p$. By Theorem~\ref{thm:pmf},
+\begin{equation}\label{eq:SN}
+\frac{P_N(m_N)}{P_N(0)}=S_N(u):=\sum_{j=1}^{N-1}W(N,m_N,j)\,u^j ,
+\end{equation}
+a polynomial in $u$ with nonnegative integer coefficients and $W(N,m_N,1)=2$.
+
+\begin{theorem}\label{thm:root}
+\begin{enumerate}[(a)]
+\item For every $N\ge2$ there is exactly one $p=p_N\in[0,1]$ with $P_N(m_N)=P_N(0)$. The middle is
+more likely than the extremes for $p<p_N$ and less likely for $p>p_N$.
+\item $p_2=\tfrac23$, $p_3=1/\sqrt2$, $p_4$ is the real root of $3p^3-4p^2+4p-2$, and
+$p_N<p_{N+1}$ for all $N\ge2$.
+\item $p_N\to1$, and more precisely $1-p_N\sim(\log N)/N$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(a) At $p=0$ the extremes have probability $0$ and the middle does not. For $p>0$ the equation is
+$S_N(u)=1$ by \eqref{eq:SN}. $S_N$ is continuous and strictly increasing on $[0,\infty)$ with
+$S_N(0)=0$ and $S_N(u)\ge2u$, so there is exactly one root $u_N\in(0,\tfrac12]$, and $p=1/(1+u)$ is a
+decreasing bijection from $[0,\infty)$ to $(0,1]$.
+
+(b) $S_2=2u$, $S_3=2u+u^2$ and $S_4=2u+2u^2+2u^3$ give the three values; for $p_4$ substitute
+$u=(1-p)/p$ in $S_4(u)=1$. For monotonicity we compare coefficients. If $N=2m$ then the middle
+$(a,b)=(m,m)$ becomes $(m,m+1)$ for $N+1$, and if $N=2m+1$ then $(m,m+1)$ becomes $(m+1,m+1)$. In
+both cases one of $a,b$ grows by one and the other is unchanged, the formulas of
+Theorem~\ref{thm:pmf} are symmetric in $(a,b)$, and every binomial coefficient $\binom{a-1}{\cdot}$
+is nondecreasing in $a$. So $W(N+1,m_{N+1},j)\ge W(N,m_N,j)$ for every $j$. The coefficient of $u^2$
+is $a+b-2=N-2$, which increases strictly. Hence, $S_{N+1}(u)>S_N(u)$ for $u>0$, so
+$u_{N+1}<u_N$.
+
+(c) Let $a=\lfloor N/2\rfloor$ and $b=\lceil N/2\rceil$, and fix $\varepsilon\in(0,\tfrac12)$.
+
+\emph{Lower bound for $u_N$.} Using $\binom{a-1}{r},\binom{b-1}{r}\le b^r/r!$ and writing $x=bu$,
+the terms of $S_N(u)$ with $j=2i-1$ are at most $\tfrac2b\,x\bigl(x^{i-1}/(i-1)!\bigr)^2$ and those
+with $j=2i$ are at most $\tfrac2b\,\tfrac{x^i}{i!}\tfrac{x^i}{(i-1)!}$. Since
+$\sum_r(x^r/r!)^2\le e^{2x}$ and $\sum_i\tfrac{x^i}{i!}\tfrac{x^i}{(i-1)!}\le e^x\cdot xe^x$,
+\[
+S_N(u)\le\frac{4x}{b}\,e^{2x}.
+\]
+If $x\le(\tfrac12-\varepsilon)\log b$ the right side is at most $2b^{-2\varepsilon}\log b$, which is
+less than $1$ for large $b$. Hence, $b\,u_N>(\tfrac12-\varepsilon)\log b$ for large $N$.
+
+\emph{Upper bound for $u_N$.} Let $u^*=(\tfrac12+\varepsilon)(\log a)/a$, $y=au^*$ and
+$r=\lfloor y\rfloor$. Keep only the term $j=2r+1$ of $S_N(u^*)$ and use
+$\binom{b-1}{r}\ge\binom{a-1}{r}\ge(a-r)^r/r!$:
+\[
+S_N(u^*)\ge2u^*\Bigl(\frac{(a-r)^r(u^*)^r}{r!}\Bigr)^2
+=\frac{2y}{a}\Bigl(1-\frac ra\Bigr)^{2r}\Bigl(\frac{y^r}{r!}\Bigr)^2 .
+\]
+From $\log r!\le\int_1^r\log t\,dt+\log r$ we get $r!\le e\,r\,(r/e)^r$, so
+$y^r/r!\ge r^r/r!\ge e^{r-1}/r\ge e^{y-2}/y$. Also $(1-r/a)^{2r}\ge1-2r^2/a\to1$. Therefore
+\[
+S_N(u^*)\ge\bigl(1-o(1)\bigr)\frac{2e^{2y-4}}{a\,y}=\bigl(1-o(1)\bigr)\frac{2e^{-4}a^{2\varepsilon}}{y}\to\infty ,
+\]
+so $S_N(u^*)>1$ and $u_N<u^*$ for large $N$.
+
+Since $a,b=N/2+O(1)$, the two bounds give $u_N\sim\log(N/2)/N\sim(\log N)/N$, and
+$1-p_N=u_N/(1+u_N)\sim u_N$.
+\end{proof}
+
+In Kagey's terms: for the $(2n+1)$-st row ($N=2n$) the unique value is $p_{2n}$, and the least of
+these is $p_2=\tfrac23$, which is why the third row of his $p=\tfrac23$ table is $2,2,2$. For the
+$(2n)$-th row ($N=2n-1$, $n\ge2$) the least is $p_3=1/\sqrt2$; the second row is $1,1$ for every
+$p$. There is no greatest value, since $p_N\uparrow1$. The tenth row has $p_9=0.82829\ldots$, just
+below $\tfrac56$, which is why the extremes and the middle are nearly level in his third histogram.
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{@{}rl@{\hskip 2em}rl@{\hskip 2em}rl@{\hskip 2em}rl@{}}
+\toprule
+$N$ & $p_N$ & $N$ & $p_N$ & $N$ & $p_N$ & $N$ & $p_N$\\
+\midrule
+2 & 0.66666667 & 6 & 0.78871211 & 10 & 0.83840411 & 50 & 0.94200405\\
+3 & 0.70710678 & 7 & 0.80361731 & 11 & 0.84652725 & 100 & 0.96496633\\
+4 & 0.74487450 & 8 & 0.81759938 & 12 & 0.85426060 & 200 & 0.97939018\\
+5 & 0.76759188 & 9 & 0.82829163 & 20 & 0.89293837 & 400 & 0.98812464\\
+\bottomrule
+\end{tabular}
+\caption{The value $p_N$ at which the middle and extreme bins of row $N+1$ are equally likely.}
+\label{tab:pn}
+\end{table}
+
+\begin{theorem}[uniform Bessel approximation]\label{thm:bessel}
+Put $h=N/2$, $J(x)=I_0(2x)+I_1(2x)$ and $F(x)=2xJ(x)$.
+For every $N\ge2$ and $x>0$,
+\begin{equation}\label{eq:uniformbessel}
+0\le1-\frac{hS_N(x/h)}{F(x)}\le\frac{x(x+1)}h.
+\end{equation}
+Let $x_B$ be the unique positive root of $F(x_B)=h$, and put
+$u_B=x_B/h$, $u_N=(1-p_N)/p_N$. Then
+\[
+0\le u_N-u_B=O((\log N)^2/N^2).
+\]
+Writing $L=\log N$ and $c_0=\tfrac12\log(\pi/8)$, we have
+\begin{align}
+N(1-p_N)&=L-\tfrac12\log L+c_0
++O\left(\frac{\log L}{L}\right),\label{eq:secondorder}\\
+N(1-p_N)&=L-\tfrac12\log L+c_0
++\frac{\tfrac14\log L-\tfrac12c_0+\tfrac18}{L}
++O\left(\frac{(\log L)^2}{L^2}\right).\label{eq:thirdorder}
+\end{align}
+\end{theorem}
+\begin{proof}
+Let $a=\lfloor N/2\rfloor$, $b=\lceil N/2\rceil$, and define
+\[
+A_r=\frac{r!}{h^r}\binom{a-1}{r},\qquad
+B_r=\frac{r!}{h^r}\binom{b-1}{r}\quad(r\ge0).
+\]
+With $(v)_+=\max(v,0)$, these have the product expressions
+\[
+A_r=\prod_{k=1}^r\left(1-\frac{h-a+k}{h}\right)_+,
+\qquad B_r=\prod_{k=1}^r\left(1-\frac{h-b+k}{h}\right)_+.
+\]
+They lie in $[0,1]$, including beyond their finite support, where a factor is zero.
+For nonnegative $t_j$, the inequality $1-\prod_j(1-t_j)_+\le\sum_jt_j$
+holds even when some $t_j>1$. Since $a+b=2h$, it gives
+\[
+0\le1-A_rB_r\le\frac{r(r+1)}h.
+\]
+The deficits for $A_{r+1}B_r$ and $A_rB_{r+1}$ are at most
+$((r+1)^2+h-a)/h$ and $((r+1)^2+h-b)/h$, respectively. Averaging cancels
+the parity offsets, so
+\[
+0\le1-\frac{A_{r+1}B_r+A_rB_{r+1}}2\le\frac{(r+1)^2}h.
+\]
+The run-count formula, with $u=x/h$, becomes
+\[
+S_N(u)=2u\left[\sum_{r\ge0}\frac{x^{2r}}{(r!)^2}A_rB_r
++\sum_{r\ge0}\frac{x^{2r+1}}{r!(r+1)!}
+\frac{A_{r+1}B_r+A_rB_{r+1}}2\right].
+\]
+Dropping the $A,B$ factors yields $2uJ(x)=F(x)/h$, using the Bessel series
+\cite[Eq.~10.25.2]{dlmf}. Index shifts in those absolutely convergent series give
+\begin{align*}
+\sum_{r\ge0}r(r+1)\frac{x^{2r}}{(r!)^2}&=x^2I_0(2x)+xI_1(2x),\\
+\sum_{r\ge0}(r+1)^2\frac{x^{2r+1}}{r!(r+1)!}&=x^2I_1(2x)+xI_0(2x).
+\end{align*}
+Their sum is $x(x+1)J(x)$, proving \eqref{eq:uniformbessel}, including the tail
+beyond the finite polynomial support. In particular the relative error is
+$O((\log N)^2/N)$ uniformly for $0<x\le C\log N$ for each fixed $C$.
+
+Now let $x_N=hu_N$. Theorem~\ref{thm:root} gives $x_N\sim\tfrac12\log N$.
+Differentiation gives $F'(x)=2F(x)+2I_0(2x)$, hence $F'/F\ge2$.
+Set $\delta_N=x_N(x_N+1)/h$. For large $N$, $\delta_N<1$, and
+\eqref{eq:uniformbessel} at the root gives
+\[
+h\le F(x_N)\le\frac{h}{1-\delta_N},\qquad
+0\le x_N-x_B\le-\tfrac12\log(1-\delta_N)
+=O((\log N)^2/N).
+\]
+Divide by $h$ for the assertion about $u$. Moreover,
+\[
+N(1-p_N)=\frac{2x_N}{1+x_N/h}=2x_B+O((\log N)^2/N).
+\]
+Put $z=2x_B$. The standard large-argument expansion
+\cite[Eq.~10.40.1]{dlmf} is
+\[
+I_0(z)+I_1(z)=\frac{2e^z}{\sqrt{2\pi z}}
+\left(1-\frac1{8z}+O(z^{-2})\right).
+\]
+Since $z(I_0(z)+I_1(z))=N/2$, taking logarithms gives
+\[
+z+\tfrac12\log z=L+c_0+\frac1{8z}+O(z^{-2}).
+\]
+First $z=L+O(\log L)$, then substitution proves \eqref{eq:secondorder}.
+For one further term put $z=L+d+e/L$, where $d=-\tfrac12\log L+c_0$.
+Matching coefficients of $1/L$ gives $e=\tfrac18-d/2$. The residual is
+$O((\log L)^2/L^2)$; the derivative of $z+\tfrac12\log z$ is bounded below
+by one, so inversion preserves that order. This proves \eqref{eq:thirdorder}.
+\end{proof}
+
+The ratios $u_B/u_N$ are $0.9761$, $0.9864$, $0.9924$ at $N=100,200,400$ and
+$0.99579$, $0.99769$, $0.99874$ at $N=800,1600,3200$. The latter three were
+predicted within registered intervals before computation (\texttt{data/ledger.md}).
+Theorem~\ref{thm:bessel} now supplies the proof previously missing from that heuristic.
+
+\begin{proposition}[adjacent bins and global extrema]\label{prop:adjacent}
+For $N\ge2$, an adjacent bin has the same probability as an endpoint precisely at
+\[
+p_N^{\mathrm{adj}}=\frac{1+\sqrt{N-1}}{2+\sqrt{N-1}}.
+\]
+For $0<p<1$, endpoints attain the global minimum if $p<p_N^{\mathrm{adj}}$;
+bins $1,N-1$ attain it if $p>p_N^{\mathrm{adj}}$; both sets do at equality.
+At $p=p_N$ the middle and endpoints attain the global maximum and bins $1,N-1$
+attain the global minimum, allowing additional ties in small rows.
+\end{proposition}
+\begin{proof}
+A word with one $R$ has one change in two cases and two changes in $N-2$ cases.
+Thus $P_N(1)/P_N(0)=2u+(N-2)u^2$, and its positive root at level one is
+$u=1/(1+\sqrt{N-1})$, including $N=2$. This yields the stated $p$ and sign change.
+Dekking and Kong~\cite[Proposition~4.3]{dekkingkong2011} prove log-concavity on the
+interior bins. Symmetry therefore makes the middle maximal and bins $1,N-1$ minimal
+among interior bins. Comparing those minima with the endpoints proves the claims.
+\end{proof}
+
+The adjacent-bin scale is $1-p_N^{\mathrm{adj}}\sim N^{-1/2}$, distinct from
+$1-p_N\sim(\log N)/N$. At $p=0,1$ additional zero-probability ties occur.
+
+\input{allbin_thresholds.tex}
+\input{periodic_window.tex}
+\input{simplex_thresholds.tex}
+\input{frontier_boundary.tex}
+\input{vertex_completion.tex}
+\input{frontier_modes.tex}
+
+\section{Computational verification}\label{sec:verify}
+
+The script \texttt{verify.py} uses exact rational arithmetic except where it says otherwise. It
+computes $P_N$ in three ways: the closed form of Theorem~\ref{thm:pmf}, the recursion
+\eqref{eq:dp}, and enumeration of all $2^N$ words weighted by \eqref{eq:wordprob}. The three agree,
+and rows sum to $1$, for $N\le16$ and $20$ values of $p$; since $P_N(k)$ is a polynomial of degree
+less than $N$ in $p$, this is an identity in $p$. The closed form and the recursion also agree for
+$N\le40$. The numerators reproduce rows $1$ to $9$ of the three tables in Kagey's figure. The
+generating functions \eqref{eq:gf} and of Proposition~\ref{prop:num} and the recurrence
+\eqref{eq:rec} hold to degree $16$, and Proposition~\ref{prop:dgf} is checked against enumeration
+for $d=2$ ($N\le12$) and $d=3$ ($N\le8$). The $p=\tfrac23$ numerators equal the $60$ published terms
+of A035002 and a direct count of rook paths for $N\le24$; the $p=\tfrac13$ numerators equal the
+$55$ published terms of A348595 and a direct count of the blocked walks for $n,k\le12$.
+Proposition~\ref{prop:var} agrees exactly with the moments of the computed distribution for
+$N\le16$ and $N=25,40$, and Remark~\ref{rem:tetra} with enumeration of all $3^N$ words for $N\le9$.
+In floating point, the eigenvalue formula for $\varphi_N$ agrees with the computed distribution to
+$10^{-12}$, and at $N=2000$ the distribution function of $K_N$, computed by \eqref{eq:dp} and again
+by \eqref{eq:rec}, is within $1.1\times10^{-4}$ of the normal one (with continuity correction) for
+$p=\tfrac13,\tfrac23,\tfrac56$.
+
+For Theorem~\ref{thm:root} the script checks the polynomials in (b) exactly, the coefficient
+inequality for $N\le300$, the single sign change of $P_N(m_N)-P_N(0)$ on the grid $p=i/200$ for
+$N\le14$, and the monotonicity of $p_N$ for $N\le121$. Each entry of Table~\ref{tab:pn} is the root
+of $S_N$ found by bisection in integer arithmetic and confirmed by evaluating \eqref{eq:dp} exactly
+at the two ten-digit neighbours of the root. The roots at $N=800,1600,3200$ are confirmed by the
+floating-point recursion, and $x_B$ is computed by power series and again by quadrature. The run
+takes between one and two minutes.
+
+The supplementary script \texttt{check\_bessel.py} checks the uniform bound on
+1,400 even/odd test cases and the quantitative root bound through $N=10^8$, using
+80-digit decimal arithmetic. These are numerical corroborations, not interval-certified
+computations. The script \texttt{verify\_geometry.py} compares 6,733 exact rational bin
+probabilities in 237 distributions with an independent dynamic program; 158 distributions
+also agree with exhaustive word enumeration. It verifies normalization, nonnegativity, means,
+covariances and endpoint cases for $d=2,3,4$. The script \texttt{verify\_adjacent.py}
+checks the adjacent-bin polynomial and the consequences for global extrema. All checks can
+be run with \texttt{python verify\_all.py}.
+
+The additional script \texttt{verify\_allbin.py} checks 5,476 coefficient comparisons
+exactly, 264 all-bin Bessel inequalities, 28 Laguerre--Bessel inequalities, and crossing
+expansions with 80-digit arithmetic, including highly unbalanced bins.
+The script \texttt{verify\_periodic\_window.py} checks 66 cyclic polynomials against
+exhaustive word enumeration, 120 periodic relative-error inequalities, and root/window
+samples through $N=10^{12}$. The script \texttt{verify\_simplex\_threshold.py} checks
+the positive refresh formula against enumeration, strict balancing transfers, the small
+edge-mode counterexample, and face-center crossing expansions. Numerical asymptotic
+checks are corroboration, not interval certificates or substitutes for the analytic proofs.
+The scripts \texttt{verify\_frontier\_boundary.py} and
+\texttt{verify\_frontier\_modes.py} check the added uniform estimate, rare-coordinate
+asymptotics, spatial profile and weak-field phase assertions against finite calculations.
+Detailed records are saved in the accompanying JSON files under \texttt{data/}.
+The script \texttt{verify\_vertex\_completion.py} adds 462 exact identity
+comparisons, 200 rational elasticity checks, 16 explicit root-bracket checks,
+and four high-precision growing-rare-count stress cases. The runner now includes
+ten scripts. These finite checks do not formalize the uniform analytic proof.
+
+The \texttt{lean/} directory contains separately compiled Lean proofs of finite product
+and algebraic ingredients. It does not formalize the infinite Bessel sums, analytic
+inversion, Laplace expansion, or complete asymptotic theorems. Its coverage note and
+compiler/axiom logs give the exact formal statements checked.
+
+\section{Further questions and scope}\label{sec:remarks}
+
+The original distribution, lattice-walk and central-crossing questions are answered,
+as are the cylinder pushforward and the explicitly specified symmetric tetrahedral model.
+The extensions give quantitative thresholds for all binary bin distances and all fixed
+simplex face dimensions, together with free/periodic boundary comparisons and critical
+mode windows. The extensions also supply a composition-uniform relative bound,
+mixed-face boundary crossovers, spatial superlevel volumes and weak-field face phases.
+The leading near-vertex crossing is now uniform for every fixed number of rare
+colors with total $A=o(b)$. Uniform higher-order corrections in that whole regime,
+and a growing number of colors, are not established here.
+Their proposed novelty lies in these refinements, subject to the prior-art
+qualifications above. A complete multistate finite-size mode diagram outside the proved
+window remains open here, as do nonuniform switching and alternative geometric rules.
+The finite-size edge-mode example prevents promoting the asymptotic vertex/center
+dichotomy to an unrestricted theorem.
+
+\paragraph{Data and code availability.}
+The verification scripts (plain Python, standard library only) and prediction ledger
+accompany this document. The ledger preserves the original predictions and adds the later
+proof status. The repository's \texttt{PUBLICATION.md} records the separate literature and
+venue assessment; it is not a claim of acceptance or novelty.
+
+\begin{thebibliography}{99}\small\setlength{\baselineskip}{11pt}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}
+
+\bibitem{kagey131}
+P.~Kagey, \emph{Problem 131}, Open Problem Collection,
+\url{https://peterkagey.com/problems/131/} (accessed September 2026).
+
+\bibitem{oeisA035002}
+E.~Friedman, Sequence A035002, in: OEIS Foundation Inc., \emph{The On-Line Encyclopedia of Integer
+Sequences}, \url{https://oeis.org/A035002}.
+
+\bibitem{oeisA348595}
+R.~J.~Mathar, Sequence A348595, in: OEIS (2022), \url{https://oeis.org/A348595}.
+
+\bibitem{mathar2022}
+R.~J.~Mathar, \emph{Walks of up and right steps in the square lattice with blocked squares}
+(January 2022), \url{https://oeis.org/A348595/a348595.pdf}.
+
+\bibitem{goldstein1951}
+S.~Goldstein, \emph{On diffusion by discontinuous movements, and on the telegraph equation},
+Quart.\ J.\ Mech.\ Appl.\ Math.\ \textbf{4} (1951), 129--156.
+
+\bibitem{gillis1955}
+J.~Gillis, \emph{Correlated random walk}, Proc.\ Cambridge Philos.\ Soc.\ \textbf{51} (1955),
+639--651.
+
+\bibitem{renshaw1981}
+E.~Renshaw and R.~Henderson, \emph{The correlated random walk}, J.\ Appl.\ Probab.\ \textbf{18}
+(1981), 403--414.
+
+\bibitem{waldwolfowitz1940}
+A.~Wald and J.~Wolfowitz, \emph{On a test whether two samples are from the same population},
+Ann.\ Math.\ Statist.\ \textbf{11} (1940), 147--162.
+
+\bibitem{billingsley1995}
+P.~Billingsley, \emph{Probability and Measure}, 3rd ed., Wiley, New York, 1995.
+
+\bibitem{dekkingkong2011}
+F.~M.~Dekking and D.~Kong, \emph{Multimodality of the Markov binomial distribution},
+J.~Appl.~Probab.\ \textbf{48} (2011), 938--953.
+\url{https://arxiv.org/abs/1102.3613}.
+
+\bibitem{herrmann2010}
+S.~Herrmann and P.~Vallois, \emph{From persistent random walk to the telegraph noise},
+Stochastics and Dynamics \textbf{10} (2010), 161--196.
+\url{https://arxiv.org/abs/0810.0650}.
+
+\bibitem{wangyang1995}
+Y.~H.~Wang and Z.~J.~Yang, \emph{On a Markov multinomial distribution},
+Mathematical Scientist \textbf{20} (1995), 40--49. Cited via \cite{wangtang2003};
+original text not consulted.
+
+\bibitem{wangtang2003}
+Y.~H.~Wang and L.~Tang, \emph{Poisson style convergence theorems for
+additive processes defined on Markov chains}, Statistica Sinica \textbf{13} (2003), 227--242.
+\url{https://www3.stat.sinica.edu.tw/statistica/oldpdf/A13n114.pdf}.
+
+\bibitem{antal2004}
+T.~Antal, M.~Droz and Z.~R\'acz, \emph{Probability distribution of magnetization in the
+one-dimensional Ising model: effects of boundary conditions},
+J.~Phys.~A: Math.~Gen.~\textbf{37} (2004), 1465--1478.
+\url{https://arxiv.org/abs/cond-mat/0308442}.
+
+\bibitem{dantchev2022}
+D.~Dantchev and J.~Rudnick, \emph{Exact expressions for the partition function of the
+one-dimensional Ising model in the fixed-$M$ ensemble},
+Phys.~Rev.~E \textbf{106} (2022), L042103.
+\url{https://arxiv.org/abs/2207.01134}.
+
+\bibitem{stepanyan2024}
+V.~Stepanyan, A.~F.~Tzortzakakis, D.~Petrosyan and A.~E.~Allahverdyan,
+\emph{Thermal transitions in a one-dimensional, finite-size Ising model},
+J.~Stat.~Mech. (2024), 033202.
+\url{https://doi.org/10.1088/1742-5468/ad2679}.
+
+\bibitem{brydges2007}
+D.~Brydges, R.~van der Hofstad and W.~K\"onig,
+\emph{Joint density for the local times of continuous-time Markov chains},
+Ann.~Probab.~\textbf{35} (2007), 1307--1332.
+\url{https://arxiv.org/abs/math/0611525}.
+
+\bibitem{cekanavicius2001}
+V.~\v{C}ekanavi\v{c}ius and M.~Mikalauskas,
+\emph{Local theorems for the Markov binomial distribution},
+Lithuanian Math.~J.~\textbf{41} (2001), 219--231. Full text consulted via library access.
+\url{https://doi.org/10.1023/A:1012802428342}.
+
+\bibitem{cekanavicius2001ld}
+V.~\v{C}ekanavi\v{c}ius and M.~Mikalauskas,
+\emph{Large deviations for the Markov binomial distribution},
+Lithuanian Math.~J.~\textbf{41} (2001), 307--318. Full text consulted via library access.
+\url{https://doi.org/10.1023/A:1013840819221}.
+
+\bibitem{dlmf}
+NIST, \emph{Digital Library of Mathematical Functions}, Eqs.~10.25.2 and~10.40.1,
+and Sec.~18.15(iv),
+\url{https://dlmf.nist.gov/10.25.E2}, \url{https://dlmf.nist.gov/10.40.E1},
+\url{https://dlmf.nist.gov/18.15}.
+
+\end{thebibliography}
+
+\end{document}
