@@ -1,0 +1,373 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1.05in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,microtype,xcolor}
+\usepackage[shortlabels]{enumitem}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\hypersetup{pdftitle={Vertex crossings and boundary regimes in a symmetric Markov multinomial model},pdfauthor={Arjun Pemmasani}}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Prob}{\mathbb P}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\title{Vertex crossings and boundary regimes\\
+ in a symmetric Markov multinomial model}
+\author{Arjun Pemmasani}
+\date{September 22, 2026\\[0.5ex]
+ \small Unsubmitted draft; held for further review}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We study occupation counts of a stationary Markov chain that repeats its
+current state with probability $p$ and otherwise chooses uniformly among
+$d-1$ alternatives. For fixed $d$, we compare the probability of an individual
+count vector with that of a vertex, where every visit is to one state.
+A positive refresh expansion gives a relative Bessel approximation uniform
+over all positive compositions, including vectors approaching simplex
+boundaries. We obtain explicit crossing expansions for balanced faces and
+interior compositions, and a rare-coordinate crossover at
+$N/(\log N)^2$ when at least two coordinates are macroscopic. Near a vertex,
+a product of finite Laguerre polynomials determines the leading crossing
+uniformly for arbitrary rare counts with total $A=o(b)$, where $b$ is the
+dominant count; the relative root error is
+$O_\ell(\sqrt{(A+1)/b})$. This root approximation can hold even when its
+corresponding probability approximation diverges. We also determine
+spatial superlevel volumes and construct weak occupation fields that make
+every support size optimal in succession. Exact laws and ordinary normal
+limits are included as background. The proposed contributions are the
+uniform moving-parameter estimates and their boundary and modal
+consequences; historical priority remains to be established.
+\end{abstract}
+
+\section{Introduction}
+
+A symmetric persistent chain provides a simple model in which the most
+likely occupation vector changes from a vertex to the interior as the
+persistence decreases. The comparison involves the probability of one
+specific vector, rather than the aggregate probability of a face. It is
+especially sensitive to coordinates that are small relative to the total
+number of visits. This paper studies those crossing locations for a fixed
+number of states, including count vectors approaching a vertex at
+arbitrary rates.
+
+The model is a multistate version of the Galton-board process in Kagey's
+Problem 131~\cite{kagey131}. The binary analysis and its free/periodic
+boundary comparison are developed in the unpublished
+companion~\cite{companion}. Here we state the multistate model explicitly
+and prove all estimates needed for the multistate results; no theorem from
+the companion is required for a proof in this paper. In geometric terms,
+the occupation vectors index the bins of a simplex board with fixed global
+directions and uniform switching. Other rules at physical boundaries can
+define different processes.
+
+Our main estimates address three regimes. On a fixed simplex face, the
+balanced crossing lies in the common window
+$Nu=\log N-\tfrac12\log\log N+O(1)$, with explicit constants depending on
+its support size. A relative Bessel bound uniform over every positive
+composition resolves the transition when additional coordinates have size
+$N/(\log N)^2$. Finally, if one count is $b$ and the remaining counts have
+total $A=o(b)$, a single polynomial equation gives the crossing with
+relative error $O_\ell(\sqrt{(A+1)/b})$, uniformly over their individual
+sizes. The last assertion remains valid in a regime where the associated
+probability approximation is not uniform. The modal consequences include
+spatial superlevel volumes and an explicit weak field for which all
+support sizes occur successively.
+
+\paragraph{Relation to established results.}
+The underlying law belongs to Markov multinomial theory
+\cite{wangyang1995,wangtang2003}. The exact finite sum and the ordinary
+normal limit recorded below are background, not novelty claims. The
+original Wang--Yang article has not been obtained; its bibliographic
+information is reported through Wang and Tang, and comparison with its
+full text remains part of the priority review.
+General continuous-time occupation densities on visited simplex faces
+are also established~\cite{brydges2007}. The square-root composition
+quantity appearing below is classical: if $Q$ is the complete-graph
+continuous-time generator with off-diagonal entries one, then its
+symmetric occupation rate is
+\[
+ I_Q(\alpha)=-\langle\sqrt\alpha,Q\sqrt\alpha\rangle
+ =d-\left(\sum_i\sqrt{\alpha_i}\right)^2.
+\]
+Thus the exponent $(\sum_i\sqrt{\alpha_i})^2-1$ is the difference
+between the vertex rate and the rate at $\alpha$. We do not claim this
+rate function as a new result. Standard Bessel expansions are taken from
+\cite{dlmf}; all discrete comparison estimates and root inversions used
+here are proved explicitly. The proposed contribution is their uniform
+control in moving persistence regimes and the resulting boundary and
+modal statements. The literature search has not established historical
+priority, and this draft is held for further mathematical and
+bibliographic review.
+
+\paragraph{Organization and scope.}
+Section~\ref{sec:multistate-model} gives the exact law, elementary
+estimates, and fixed-persistence covariance and normal limit.
+Section~\ref{sec:simplex-thresholds} proves the face crossings and
+balancing theorem. Sections~\ref{sec:frontier-boundary}
+and~\ref{sec:vertex-completion} treat boundary coordinates and the
+uniform near-vertex law. Section~\ref{sec:frontier-modes} treats
+superlevel sets and weak fields. The results do not give every finite-size
+global mode or cover a growing number of states. A finite-size example
+shows why a vertex/full-center dichotomy cannot hold without qualification.
+
+\section{The model and exact formulas}\label{sec:multistate-model}
+
+Fix $d\ge2$ and let $(X_j)_{j\ge1}$ be a Markov chain on
+$\{1,\ldots,d\}$. The initial state is uniform.
+At each subsequent step the chain repeats its state with probability
+$p\in[0,1]$ and moves to each other state with probability
+$r=(1-p)/(d-1)$. Put $q=1-p$ and
+$\sigma=p-r=(dp-1)/(d-1)$. Let $K_N=(K_{N,1},\ldots,K_{N,d})$
+be the occupation vector over $N$ visits, and write
+$P_N(k)=\Prob(K_N=k)$. For a word $w$ of length $N\ge1$ with
+$j$ changes, its probability is $d^{-1}p^{N-1-j}r^j$.
+The vertex probability is $V_N=p^{N-1}/d$.
+For $p>0$ put $u=r/p$; for a positive vector
+$n=(n_1,\ldots,n_k)$ with total $N$, write
+\[
+ S_n(u)=\frac{P_N(n_1,\ldots,n_k,0,\ldots,0)}{V_N}
+ =\sum_j W_n(j)u^j,
+\]
+where $W_n(j)$ counts words on the specified $k$ states with these
+occupations and $j$ changes. The ratio is independent of the ambient
+number $d$ once the positive coordinates are fixed.
+Set $P_0(0,\ldots,0)=1$ separately.
+
+\begin{proposition}[$d$ directions]\label{prop:dgf}
+Let $P_N(k_1,\dots,k_d)$ be the probability that direction $i$ is taken $k_i$ times. Put
+$\sigma=p-\frac{q}{d-1}=\frac{dp-1}{d-1}$ and $\mathcal R=\sum_{i=1}^d\frac{x_it}{1-\sigma x_it}$. Then
+\[
+\sum_{N\ge0}\sum_{k_1+\dots+k_d=N}P_N(k_1,\dots,k_d)\,x_1^{k_1}\cdots x_d^{k_d}\,t^N
+=1+\frac{\mathcal R/d}{1-\frac{q}{d-1}\mathcal R}.
+\]
+\end{proposition}
+
+\begin{proof}
+Let $F_i$ be the generating function of words ending in state $i$, and $S=\sum_iF_i$.
+Conditioning on the last bounce, $F_i=x_it\bigl(\tfrac1d+pF_i+\tfrac{q}{d-1}(S-F_i)\bigr)$, that is
+$F_i(1-\sigma x_it)=x_it\bigl(\tfrac1d+\tfrac{q}{d-1}S\bigr)$. Summing over $i$ gives
+$S=\mathcal R\bigl(\tfrac1d+\tfrac{q}{d-1}S\bigr)$, and the generating function is $1+S$.
+\end{proof}
+
+For $d=2$, setting $x_1=x$ and $x_2=1$ gives the binary generating function studied in the companion~\cite{companion}.
+
+\begin{proposition}[finite bin probabilities in $d$ directions]\label{prop:dpmf}
+Put $r=q/(d-1)$ and $\sigma=p-r$. For $N\ge1$, let $k=(k_1,\ldots,k_d)$ have
+nonnegative integer coordinates summing to $N$, and put $H=\{i:k_i>0\}$. Sum over
+$m_i=0$ for $i\notin H$ and $1\le m_i\le k_i$ for $i\in H$, and set $M=\sum_i m_i$.
+Then
+\[
+P_N(k)=\frac1d\sum_m\frac{M!}{\prod_i m_i!}\,
+r^{M-1}\sigma^{N-M}\prod_{i\in H}\binom{k_i-1}{m_i-1}.
+\]
+All exponents are nonnegative, and $0^0=1$. Set $P_0(0,\ldots,0)=1$ separately.
+\end{proposition}
+\begin{proof}
+With $z_i=x_it$, Proposition~\ref{prop:dgf} becomes the formal power series
+\[
+1+\frac1d\sum_{M\ge1}r^{M-1}
+\left(\sum_i\frac{z_i}{1-\sigma z_i}\right)^M.
+\]
+Expand by the multinomial theorem and use, for $k\ge m\ge1$,
+\[
+[z^k]\left(\frac{z}{1-\sigma z}\right)^m
+=\binom{k-1}{m-1}\sigma^{k-m}.
+\]
+For $m=0$ only $k=0$ contributes. Multiplying the coefficients proves the formula.
+\end{proof}
+
+At $d=3$ this is a triple sum, with the support convention covering edge bins.
+At $p=1/d$, $\sigma=0$ and only $M=N$ survives, giving the ordinary multinomial law.
+At $p=1$, only $M=1$ survives, giving mass $1/d$ at each $Ne_i$.
+The formula is valid also at $p=0$; for $\sigma<0$ its terms can cancel, so dynamic
+programming or exact arithmetic is preferable numerically. This geometry assumes fixed global
+directions and uniform switching to the other directions; a different physical boundary or
+orientation rule need not have this law.
+
+
+
+\subsection{Elementary bounds used below}
+
+For $x\ge0$, the modified Bessel function used here is
+\[
+ I_1(x)=\sum_{j\ge0}\frac{(x/2)^{2j+1}}{j!(j+1)!}.
+\]
+Its coefficients give $I_1(x)\le\sinh x\le e^x$.
+We also use the standard expansion~\cite[Eq.~10.40.1]{dlmf}
+\[
+ I_1(x)=\frac{e^x}{\sqrt{2\pi x}}
+ \left(1-\frac{3}{8x}+O(x^{-2})\right),\qquad x\to\infty.
+\]
+The Laguerre--Bessel comparison needed at boundaries is proved in
+Lemma~\ref{lem:uniform-laguerre-bessel}; it is not imported from the
+binary companion.
+
+\begin{lemma}[clipped product deficit]\label{lem:clipped-product}
+For any finite list of nonnegative real numbers $t_1,\ldots,t_m$,
+with $(x)_+=\max(x,0)$,
+\[
+ 0\le1-\prod_{j=1}^m(1-t_j)_+\le\sum_{j=1}^m t_j.
+\]
+\end{lemma}
+\begin{proof}
+If some $t_j\ge1$, the product is zero and the sum is at least one.
+Otherwise all factors lie in $[0,1]$ and induction follows from
+$1-(1-a)(1-b)=a+b-ab\le a+b$. The empty product gives equality.
+\end{proof}
+
+\subsection{Covariance and the fixed-persistence normal limit}
+
+The following formulas are recorded for comparison with the moving
+regimes studied later. Their fixed-$p$ normal limit is not a local
+approximation for individual occupation probabilities when $p$ depends
+on $N$.
+
+\begin{remark}[covariance and the tetrahedral case]\label{rem:tetra}
+For the board with $d$ directions of Proposition~\ref{prop:dgf} let $K_a$ be the number of bounces in
+direction $a$. The direction chain has transition matrix $\sigma I+(1-\sigma)\tfrac1dJ$ with $J$ the
+all-ones matrix, so the indicator of direction $a$ at time $i$ and of direction $b$ at time $i+m$ have
+covariance $\sigma^m\bigl(\tfrac{\delta_{ab}}d-\tfrac1{d^2}\bigr)$. Summing over the
+two time indices and evaluating the finite geometric sum gives
+\[
+\Cov(K_a,K_b)=\Bigl(\frac{\delta_{ab}}d-\frac1{d^2}\Bigr)
+\Bigl(N\,\frac{1+\sigma}{1-\sigma}-\frac{2\sigma(1-\sigma^N)}{(1-\sigma)^2}\Bigr),
+\qquad \frac{1+\sigma}{1-\sigma}=\frac{d-2+dp}{d\,(1-p)} .
+\]
+These formulas hold for $p<1$; at $p=1$ the covariance is
+$N^2(\delta_{ab}/d-1/d^2)$. The asymptotic multiplier of the multinomial covariance is
+$(d-2+dp)/(d(1-p))$, which is $(1+3p)/(3(1-p))$ for the tetrahedron.
+\end{remark}
+
+\begin{theorem}[simplex normal limit]\label{thm:dclt}
+Let $d\ge3$ and $0\le p<1$, or $d=2$ and $0<p<1$. Set
+\[
+\pi=(1/d,\ldots,1/d),\quad C=\frac1d I-\frac1{d^2}J,
+\quad c=\frac{1+\sigma}{1-\sigma}=\frac{d-2+dp}{d(1-p)}.
+\]
+Then $(K_N-N\pi)/\sqrt N$ converges in distribution to $\mathcal N_d(0,cC)$.
+This Gaussian is supported on the sum-zero hyperplane and is nondegenerate there.
+\end{theorem}
+\begin{proof}
+Let $\Pi=\mathbf1\pi$ and $T=\sigma I+(1-\sigma)\Pi$. Fix a real vector $a$ and
+put $f_i=a_i-d^{-1}\sum_j a_j$, so $\pi f=0$ and $Tf=\sigma f$.
+For $D(t)=\operatorname{diag}(e^{itf_i})$ and $B(t)=TD(t)$, stationarity gives
+\[
+\E\exp\left(it\sum_{j=1}^N f(X_j)\right)
+=\pi D(t)B(t)^{N-1}\mathbf1.
+\]
+At zero, $B(0)=T$ has the simple eigenvalue $1$ and all other eigenvalues equal
+$\sigma$, with $|\sigma|<1$. Analytic perturbation gives an eigenvalue $\lambda(t)$
+and right eigenvector $h(t)$ with $\lambda(0)=1$, $h(0)=\mathbf1$ and $\pi h(t)=1$.
+The complementary spectral part is uniformly exponentially small for sufficiently small
+$t$: choose a circle of radius $\eta<1$ enclosing the complementary spectrum but not
+$\lambda(t)$ and use the resolvent formula for matrix powers. Thus the characteristic
+function equals $b(t)\lambda(t)^{N-1}+O(\eta^N)$ with $b(t)\to1$.
+
+Differentiate $Bh=\lambda h$ at zero. Since $B'(0)=iT\operatorname{diag}(f)$,
+\[
+\lambda'(0)=0,\qquad (I-T)h'(0)=i\sigma f,
+\qquad h'(0)=\frac{i\sigma}{1-\sigma}f.
+\]
+Differentiating again and multiplying by $\pi$ gives
+\[
+\lambda''(0)=\pi B''(0)\mathbf1+2\pi B'(0)h'(0)
+=-\frac{1+\sigma}{1-\sigma}\pi(f^2)=-c\,\pi(f^2).
+\]
+Hence $\lambda(t)=1-c\pi(f^2)t^2/2+O(t^3)$. Substitute $t=s/\sqrt N$ to obtain
+the scalar normal characteristic function with variance $c\pi(f^2)=ca^{\mathsf T}Ca$.
+L\'evy's theorem and the Cram\'er--Wold device give the result.
+\end{proof}
+
+For $d=3$ the first two centered coordinates have limiting covariance
+\[
+\frac{1+3p}{27(1-p)}\begin{pmatrix}2&-1\\-1&2\end{pmatrix};
+\]
+the third is minus their sum. Unlike the binary case, $p=0$ is included for $d\ge3$.
+At $d=2,p=0$ bounded alternation gives the zero limit after division by $\sqrt N$.
+At $p=1$ the centered sequence on this scale is not tight. This theorem asserts weak
+convergence, not a local approximation for individual bin probabilities.
+
+
+
+\input{simplex_thresholds.tex}
+\input{frontier_boundary.tex}
+\input{vertex_completion.tex}
+\input{frontier_modes.tex}
+
+\section{Verification and remaining questions}
+
+The proofs above are analytic and combinatorial. Independent finite
+checks are supplied by the standard-library Python scripts accompanying
+this draft. The script \texttt{verify\_geometry.py} compares 6,733 exact
+rational probabilities in 237 distributions with dynamic programming;
+158 distributions also agree with exhaustive enumeration. It checks
+normalization, means, covariances, and endpoint parameters for $d=2,3,4$.
+The script \texttt{verify\_simplex\_threshold.py} checks the positive
+refresh formula, balancing transfers, the finite-size edge-mode example,
+and crossing expansions. The scripts
+\texttt{verify\_frontier\_boundary.py} and
+\texttt{verify\_frontier\_modes.py} check the uniform comparison,
+rare-coordinate formulas, spatial profiles, and weak-field assertions
+against finite calculations. Finally,
+\texttt{verify\_vertex\_completion.py} contains 462 exact identity
+comparisons, 200 rational elasticity checks, 16 explicit root-bracket
+checks, and four large growing-rare-count stress cases. The associated
+records are stored under \texttt{data/}. Decimal asymptotic checks are
+numerical corroboration, not interval certificates or substitutes for
+the written proofs.
+
+For fixed support size, the leading near-vertex crossing is now uniform
+throughout $A=o(b)$. A uniform higher-order expansion throughout that
+whole regime remains open here. Other remaining questions include a
+growing number of colors, nonuniform switching, and the complete
+finite-size mode diagram outside the proved window. The explicit
+finite-size edge modes and the divergent probability approximation in
+Proposition~\ref{prop:vertex-probability-failure} delimit the results:
+they prevent stronger interpretations of the corresponding asymptotic
+claims. Before submission, the proposed refinements require independent
+mathematical review and completion of the literature comparison.
+
+\begin{thebibliography}{9}
+\bibitem{kagey131}
+P.~Kagey, \emph{Problem 131}, Open Problem Collection,
+\url{https://peterkagey.com/problems/131/} (accessed September 2026).
+
+\bibitem{companion}
+A.~Pemmasani, \emph{Endpoint crossings in the persistent random walk:
+uniform Bessel bounds and boundary effects}, unpublished companion
+manuscript, 2026.
+
+\bibitem{wangyang1995}
+Y.~H.~Wang and Z.~J.~Yang, \emph{On a Markov multinomial distribution},
+Mathematical Scientist \textbf{20} (1995), 40--49. Bibliographic details
+reported through~\cite{wangtang2003}; original text not consulted.
+
+\bibitem{wangtang2003}
+Y.~H.~Wang and L.~Tang, \emph{Poisson style convergence theorems for
+additive processes defined on Markov chains},
+Statistica Sinica \textbf{13} (2003), 227--242.
+\url{https://www3.stat.sinica.edu.tw/statistica/oldpdf/A13n114.pdf}.
+
+\bibitem{brydges2007}
+D.~Brydges, R.~van der Hofstad and W.~K\"onig,
+\emph{Joint density for the local times of continuous-time Markov chains},
+Ann.~Probab.~\textbf{35} (2007), 1307--1332.
+\url{https://arxiv.org/abs/math/0611525}.
+
+\bibitem{dlmf}
+NIST, \emph{Digital Library of Mathematical Functions},
+Eqs.~10.25.2 and~10.40.1,
+\url{https://dlmf.nist.gov/10.25.E2},
+\url{https://dlmf.nist.gov/10.40.E1}.
+\end{thebibliography}
+\end{document}
