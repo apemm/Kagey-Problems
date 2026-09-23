@@ -2,6 +2,13 @@
 
 Updated September 22, 2026. This is a working assessment, not a novelty certificate.
 
+The former combined manuscript is now split. Paper A, `problem131.tex`, treats
+binary crossings, the uniform Bessel bounds, fixed-edge Laguerre laws, periodic
+boundaries, and the spatial critical window. Paper B, `problem131_multistate.tex`,
+treats symmetric multistate occupations and is held as an unsubmitted draft for
+further review. Its only citation to Paper A is to an unpublished companion;
+no arXiv identifier or acceptance has been claimed.
+
 The strongest candidate contribution is now the uniform endpoint-crossing analysis:
 all binary bin distances, fixed-edge Laguerre asymptotics, free/periodic boundary shifts,
 the spatial critical window, and multistate simplex-face threshold and mode results.
@@ -59,7 +66,11 @@ Library access provided the full Cekanavicius--Mikalauskas (2001)
 Theorem 1.1 (p. 220) assumes p,qbar <= 1/2, where p is persistence in state one;
 the following high-persistence discussion explicitly leaves another range unresolved.
 It does not cover our symmetric p -> 1 window. This closes that particular reading gap.
-Source-access gaps remain for Renshaw--Henderson (1981) and Wang--Yang (1995).
+Renshaw--Henderson (1981) has now been read in full. It contains the same model,
+exact law, generating function, normal limit, endpoint-upturn discussion, and a
+fixed-scale Bessel limit followed by a separate large-parameter limit. It does
+not supply the uniform finite-N, logarithmically growing-scale estimates proved
+here. Wang--Yang (1995) remains an original-source reading gap for Paper B.
 The additional literature review obtained their separate 2001 paper,
 [Large Deviations for the Markov Binomial Distribution](https://doi.org/10.1023/A:1013840819221).
 Theorems 1.1--1.2 (pp. 308--309) require persistence p <= 1/50; Theorem 1.3 requires
@@ -68,7 +79,7 @@ uniform arbitrary-A=o(b) crossing theorem was found in the inspected sources.
 The exact representation uses established binomial/gamma-mixture methods; the
 claimed advance is its uniform quantitative root consequence. The manuscript's
 introduction and bibliography give the primary-source comparisons and access
-qualifications; Section 10 proves the completion theorem.
+qualifications; Paper B's near-vertex section proves the completion theorem.
 No matching theorem for the full new package was located. This remains a bounded
 literature assessment; the elementary one-factor inequality should not alone be sold
 as a frontier discovery. The uniform integrated bound and boundary/mode consequences
@@ -84,7 +95,8 @@ give the more substantial research claim.
   walk to the telegraph noise*: classical Bessel density and no-switch atoms.
 - [Renshaw and Henderson (1981)](https://www.cambridge.org/core/journals/journal-of-applied-probability/article/abs/correlated-random-walk/34990D29A83426D0BCD80B8C85032DEC):
   the same correlated walk, exact transition probabilities and limiting distributions.
-  Only the abstract was obtained.
+  Full text inspected: Sections 2--4, including the fixed-scale Bessel limit and
+  sequential large-parameter discussion. [JSTOR full text](https://www.jstor.org/stable/3213286).
 - Wang and Yang (1995), *On a Markov multinomial distribution*, Mathematical Scientist
   20, 40–49: original not obtained; cited in [Wang and Tang (2003)](https://www3.stat.sinica.edu.tw/statistica/oldpdf/A13n114.pdf),
   *Poisson style convergence theorems for additive processes defined on Markov chains*.
@@ -97,3 +109,11 @@ give the more substantial research claim.
 
 Obtain the missing originals and have a subject specialist check the proof and priority.
 No journal acceptance or suitability is established by these notes.
+
+The exact hypotheses of Dekking--Kong Proposition 4.3 and the text surrounding
+Stepanyan et al. equation (16) were checked in their primary papers; see
+`literature_review.md`. Paper A now proves its bin-ordering consequences directly.
+Statistics & Probability Letters advertises a six-journal-page limit; the present
+18-page draft would require substantial compression, not just a format change.
+The official Journal of Applied Probability pages give differing 25-printed-page
+and 30-page allocation guidance; reconcile that distinction before submission.

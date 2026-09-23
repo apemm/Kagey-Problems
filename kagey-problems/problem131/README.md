@@ -4,8 +4,9 @@ A ball chooses left or right fairly at the first peg and thereafter repeats its 
 direction with probability p. This folder answers Kagey's distribution, lattice-walk,
 center/endpoint crossing and normal-limit questions, and treats the cylinder and the
 explicit symmetric d-direction interpretation of a tetrahedral board. The September 22,
-2026 extension develops quantitative endpoint-crossing laws from the edge to the middle,
-compares free and periodic Ising boundaries, and proves simplex face and mode theorems.
+2026 revision separates the binary endpoint-crossing results (Paper A) from the
+multistate simplex results (Paper B). Paper B is an unsubmitted draft held for
+further review; its citation to Paper A is an unpublished-companion citation.
 
 ## Status
 
@@ -53,7 +54,13 @@ by Stepanyan et al. (2024) and exact periodic coefficients by Dantchev and Rudni
 The proposed contribution is the uniform moving-parameter analysis and its additional
 consequences. Novelty remains unconfirmed; see `PUBLICATION.md` for precise attribution
 and reading gaps.
-Library access provided the full 2001 local-limit paper and confirmed that
+The full Renshaw--Henderson (1981) paper has now been checked, including its
+fixed-scale Bessel limit and subsequent large-parameter limit. Dekking--Kong
+Proposition 4.3 and the wording around Stepanyan et al. equation (16) have also
+been checked. The binary extrema proof uses an independent coefficient-ordering
+argument; it includes the strict central/adjacent crossing gap for N>=4 and the
+N=2,3 ties. Details and source locations are in `literature_review.md`.
+Library access also provided the full 2001 local-limit paper and confirmed that
 its main theorem excludes the persistence regime used here. It also identifies the
 square-root composition exponent as the classical occupation-time large-deviation rate;
 the proposed advance is the uniform discrete control and its consequences.
@@ -68,9 +75,13 @@ his numerator is 2(a+b)^(N-1) P_N(k).
 
 ## Files and verification
 
-- `problem131.tex`, `problem131.pdf`: updated manuscript and compiled paper.
-- `allbin_thresholds.tex`, `periodic_window.tex`, `simplex_thresholds.tex`: complete
-  new sections included by the main manuscript.
+- `problem131.tex`, `problem131.pdf`: Paper A, *Endpoint crossings in the persistent
+  random walk: uniform Bessel bounds and boundary effects*.
+- `allbin_thresholds.tex`, `periodic_window.tex`: the two sections included by Paper A.
+- `problem131_multistate.tex`, `problem131_multistate.pdf`: Paper B, *Vertex crossings
+  and boundary regimes in a symmetric Markov multinomial model*. This is a
+  self-contained draft, held for further mathematical and literature review.
+- `simplex_thresholds.tex`: balanced-face crossings, included by Paper B.
 - `frontier_boundary.tex`, `frontier_modes.tex`: uniform simplex bounds, rare-coordinate
   crossings, spatial superlevel counts and weak-field face phases.
 - `vertex_completion.tex`: uniform leading near-vertex law for all A=o(b), explicit
@@ -88,16 +99,19 @@ his numerator is 2(a+b)^(N-1) P_N(k).
 - `verify_frontier_boundary.py`, `verify_frontier_modes.py`: checks for the frontier extensions.
 - `verify_vertex_completion.py`: 462 exact identity comparisons, 200 rational elasticity
   checks, 16 root brackets and four large growing-rare-count stress cases.
-- `verify_all.py`: runs all ten verification scripts and fails if any fail.
+- `verify_all.py`: runs all ten verification scripts and fails if any fail;
+  `--paper a` and `--paper b` select the five scripts for the corresponding paper.
+- `SUPPLEMENT.md`: script coverage, reproduction commands, and formalization limits.
 - `lean/`: formal finite-product and algebraic proofs, with coverage/build documentation.
 - `data/ledger.md`: original predictions preserved with subsequent proof status.
 - `data/bessel_verification.txt`: recorded high-precision results.
 
 Run `python -B verify_all.py` with standard-library Python 3. No packages are required.
 Numerical checks corroborate the proofs; they do not establish novelty or replace human review.
-Build the PDF with `pdflatex -interaction=nonstopmode -halt-on-error problem131.tex` twice.
+Build Paper A with `pdflatex -interaction=nonstopmode -halt-on-error problem131.tex`
+twice, or replace the filename with `problem131_multistate.tex` for Paper B.
 
-Complete analytic proofs are in `problem131.tex` and its included sections.
+Complete analytic proofs are in the two main TeX files and their included sections.
 Literature comparisons and reading gaps are recorded in `PUBLICATION.md`;
 formalization coverage is described in `lean/README.md`. Verification results
 are under `data/`. Full higher-order uniformity for all A=o(b) and a growing
