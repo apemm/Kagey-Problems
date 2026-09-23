@@ -1,0 +1,111 @@
+
+Running verify.py
+1. run counts W(N,k,j) = enumeration, N<=16                              PASS
+2. pmf: closed form = DP = enumeration, rows sum to 1, N<=16, 20 values of p PASS
+3. pmf: closed form = DP, rows sum to 1, N<=40                           PASS
+4. numerator tables of the figure, p = 1/3, 2/3, 5/6, rows 1..9          PASS
+5. numerators = sum_w a^repeats b^changes (enumeration), N<=16           PASS
+5b. numerator g.f. (1-(a-1)(x+y)+(a-b)(a+b-2)xy)/(1-a(x+y)+(a^2-b^2)xy), deg<=16 PASS
+6a. p=2/3 numerators = A035002 data (60 terms)                           PASS
+6b. p=2/3 numerators = rook-path counts by DP on the board, N<=24        PASS
+7a. p=1/3 numerators T(n,k)=row n+k, bin k = A348595 data (55 terms)     PASS
+7b. p=1/3 numerators = blocked-lattice walk counts by DP, n,k<=12        PASS
+8. P_N(k) = p(P_{N-1}(k)+P_{N-1}(k-1)) - (2p-1)P_{N-2}(k-1), 2<=N<=16    PASS
+9. rational generating function, d = 2 (N<=12) and d = 3 (N<=8), enumeration PASS
+10. G(x,t) = (1-(p-1/2)(1+x)t)/(1-p(1+x)t+(2p-1)xt^2), N<=16             PASS
+11. mean N/2 and exact variance formula (both forms), N<=16 and N=25,40  PASS
+12. d=3: Cov(K_a,K_b) = v_N(sigma) (delta_ab/3 - 1/9), enumeration, N<=9 PASS
+13. (float) characteristic function eigenvalue formula, N<=16            PASS
+14. (float) sup |CDF - normal CDF| at N=2000, p=1/3,2/3,5/6              PASS (3.40e-06, 3.74e-05, 1.01e-04)
+15. p_2 = 2/3; P_3(mid)-P_3(0) = (1-2p^2)/2; P_4(2)-P_4(0) = (1-p)(1-p+p^2)-p^3/2 PASS
+16. W(N+1,mid,j) >= W(N,mid,j) for all j, strict at j=2, 2<=N<=300       PASS
+    N  row    p_N            N(1-p_N)/log N
+     2    3   0.6666666666   0.9618
+     3    4   0.7071067811   0.7998
+     4    5   0.7448745010   0.7361
+     5    6   0.7675918792   0.7220
+     6    7   0.7887121148   0.7075
+     7    8   0.8036173131   0.7064
+     8    9   0.8175993756   0.7017
+     9   10   0.8282916292   0.7033
+    10   11   0.8384041128   0.7018
+    11   12   0.8465272542   0.7040
+    12   13   0.8542606023   0.7038
+    20   21   0.8929383708   0.7148
+    50   51   0.9420040492   0.7413
+   100  101   0.9649663263   0.7607
+   200  201   0.9793901765   0.7780
+   400  401   0.9881246428   0.7928
+17. p_N: root of S_N (closed form) bracketed to 1e-10 by DP sign change, N<=400 PASS
+18. middle - extreme changes sign exactly once on the grid p = i/200, 2<=N<=14 PASS
+19. p_N strictly increasing for 2<=N<=121                                PASS
+    N     1-p_N        N(1-p_N)/log N   u_Bessel/u_N
+    800   0.00673112   0.8056           0.99579
+   1600   0.00376539   0.8166           0.99769
+   3200   0.00208388   0.8262           0.99874
+  Bessel ratio at N=100,200,400: 0.9761, 0.9864, 0.9924
+20. Bessel root x_B: series+bisection = quadrature+secant                PASS
+21. p_N for N=800,1600,3200: root of S_N bracketed to 1e-8 by float DP   PASS
+22. ledger H2: Bessel ratio inside the registered windows                PASS
+================================================================================
+25 checks, 0 failed, 64.5s
+
+Running check_bessel.py
+Uniform inequality passed at 1400 even/odd grid points.
+N, p_N, u_B/u_N, x_N-x_B, root_bound, leading_residual, refined_residual
+100, 0.964966326319, 0.976058585355, 0.043460362, 0.053909764, 0.12914282, -0.031648807
+101, 0.965225044026, 0.976217300508, 0.043270363, 0.053557149, 0.12917486, -0.031387021
+400, 0.988124642887, 0.992394016544, 0.018281858, 0.020882525, 0.12120207, -0.013366348
+401, 0.988148554670, 0.992407798578, 0.018257074, 0.020845944, 0.12120024, -0.013329491
+800, 0.993268879398, 0.995790026306, 0.011411951, 0.012733983, 0.11754465, -0.0071641598
+1600, 0.996234613702, 0.997690905142, 0.0069819972, 0.0076624280, 0.11344996, -0.0028855588
+3200, 0.997916117713, 0.998743087103, 0.0041995650, 0.0045533640, 0.10900593, -0.00011989957
+10000, 0.999226573449, 0.999543727804, 0.0017658309, 0.0018883616, 0.10144437, 0.0022341844
+1000000, 0.999987888448, 0.999993229726, 0.000040999760, 0.000042730989, 0.076293677, 0.0028164145
+100000000, 0.999999834424, 0.999999909973, 7.4531338e-7, 7.6817146e-7, 0.060981709, 0.0019694265
+
+Running verify_geometry.py
+PASS: 6733 exact bin probabilities in 237 distributions agree with independent DP.
+PASS: 158 distributions also agree with independent exhaustive word enumeration.
+PASS: all means, covariance entries, normalization, nonnegativity, and boundary values.
+
+Running verify_adjacent.py
+PASS: adjacent polynomial and global extrema in 474 exact distributions;
+PASS: exact equality at all square-root-rational thresholds through N=80.
+
+Running verify_allbin.py
+{
+  "arithmetic": "Decimal, precision 80; not interval arithmetic",
+  "exact_inward_coefficient_comparisons": 5476,
+  "general_bessel_bound_checks": 264,
+  "laguerre_bessel_bound_checks": 28
+}
+Root and expansion data: C:\Users\arjun\OneDrive\Documents\GitHub\Kagey-Problems\kagey-problems\problem131\data\allbin-verification.json
+
+Running verify_periodic_window.py
+Cyclic enumeration: 66 polynomials.
+Uniform periodic inequality: 120 cases.
+Root comparisons: 8; window samples: 36.
+Data: C:\Users\arjun\OneDrive\Documents\GitHub\Kagey-Problems\kagey-problems\problem131\data\periodic-window-verification.json
+
+Running verify_simplex_threshold.py
+{
+  "status": "passed",
+  "exact": {
+    "enumeration_vs_refresh_comparisons": 68,
+    "strict_balancing_comparisons": 2106,
+    "global_maximum_reductions": 54,
+    "finite_size_counterexample": {
+      "d": 3,
+      "N": 4,
+      "p": "10/17",
+      "edge_vertex_ratio": "4123/4000",
+      "full_center_vertex_ratio": "3969/4000"
+    }
+  },
+  "large_N_cases": 20,
+  "general_composition_cases": 9,
+  "output": "C:\\Users\\arjun\\OneDrive\\Documents\\GitHub\\Kagey-Problems\\kagey-problems\\problem131\\data\\simplex-verification.json"
+}
+
+All 7 verification scripts passed.
