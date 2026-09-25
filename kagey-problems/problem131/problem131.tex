@@ -42,29 +42,29 @@ uniform Bessel bounds and boundary effects}
 \begin{abstract}
 For a symmetric persistent random walk, we bound the relative error of a
 Bessel approximation to the ratio of each interior bin probability to an
-endpoint probability. With $N$ steps and switching odds $u=(1-p)/p$, the
-relative error is at most $Nu^2/2+u$ for every bin. This gives an expansion
-of the crossing point that holds uniformly over all bins whose distance from
-an edge tends to infinity, with explicit constants and an inverse-logarithm
-correction. At a fixed distance from the edge, the crossing is instead
-determined by a finite Laguerre polynomial, and the next coefficient is the
-same for every such bin. We also prove a matching estimate between the two
-regimes. For periodic spin boundaries we prove the corresponding bound and
-show that the periodic and free central crossing odds differ by $(\log 2)/N$
-to leading order. Under both boundaries the critical profile is
-$\exp(t-2y^2)$, which gives the asymptotic number of bins above the endpoint
-height. The exact distribution, the normal limit, the Bessel scaling, and the
-endpoint--center comparison are already known. What we add is quantitative
-control of the discrete error when the persistence and the bin index vary
+endpoint probability. If there are $N$ steps and the switching odds are
+$u=(1-p)/p$, the relative error is at most $Nu^2/2+u$, whatever the bin. From
+this we get an expansion of the crossing point, with explicit constants and
+a $1/\log$ correction, that holds for all bins at a distance from the edge
+tending to infinity. For a bin at a fixed distance from the edge, the
+crossing comes instead from a finite Laguerre polynomial, and the next term
+turns out to be the same for all such bins. We also show that the two
+regimes match. We then prove the same kind of bound for periodic spin
+boundaries. The periodic and free central crossings differ in odds by
+$(\log 2)/N$ to leading order. In both cases the ratio near the center looks
+like $\exp(t-2y^2)$, which tells us how many bins sit above the endpoints.
+The exact law, the normal limit and the Bessel scaling were known before,
+and so was the question of when the middle and the endpoints are equal. Our
+results are about how big the discrete error is when $p$ and the bin change
 with $N$.
 \end{abstract}
 
 \section{Introduction}\label{sec:intro}
 
 Problem 131 of Kagey's Open Problem Collection~\cite{kagey131} asks about
-a Galton board whose successive directions are persistent: the first step
-is equally likely to be left or right, and each subsequent step repeats
-the preceding direction with probability $p$. In particular, it asks when
+a Galton board where the ball tends to keep going the same way. The first
+step is equally likely to be left or right, and after that each step
+repeats the one before it with probability $p$. In particular, it asks when
 the middle bin and the endpoints have equal probability. We study that
 comparison for every interior bin, including bins approaching an edge,
 and compare free and periodic spin boundaries.
@@ -118,11 +118,10 @@ magnetization distribution at fixed scale under several boundary conditions,
 and Dantchev and Rudnick~\cite{dantchev2022} give exact free and periodic
 coefficients. Stepanyan et al.~\cite[Section~III.B]{stepanyan2024} study the
 periodic endpoint--adjacent and endpoint--center crossings directly and give a
-finite-size approximation to the latter~\cite[Eq.~(16)]{stepanyan2024}, so the
-crossing question itself is not new. What we add
-is control of the discrete error in the regime $Nu=O(\log N)$ and its edge
-analogues, the inversion of the resulting comparison, and the spatial window
-of bins above the endpoint height. The Markov-binomial estimates
+finite-size approximation to the latter~\cite[Eq.~(16)]{stepanyan2024}. So we
+did not come up with the crossing question. Our part is bounding the discrete
+error when $Nu=O(\log N)$ (and near the edges), solving for the crossing from
+that bound, and finding the window of bins above the endpoints. The Markov-binomial estimates
 in~\cite{cekanavicius2001,cekanavicius2001ld} assume ranges of the transition
 probabilities that exclude the symmetric limit $p\to1$.
 
@@ -150,15 +149,19 @@ is the number of words with $a$ letters $R$, $b$ letters $L$ and exactly $j$ dir
 \begin{proof}
 By \eqref{eq:wordprob} it suffices to count words. A word with $j$ changes consists of $j+1$ maximal
 runs, alternately of $R$'s and of $L$'s. If $k\in\{0,N\}$ there is one word and it has no change.
-Let $a,b\ge1$. If $j+1=2i$ there are $i$ runs of each letter and the first letter is free; the run
+Let $a,b\ge1$. If $j+1=2i$ there are $i$ runs of each letter and the first letter is free. The run
 lengths form a composition of $a$ into $i$ parts and a composition of $b$ into $i$ parts, and there
 are $\binom{a-1}{i-1}\binom{b-1}{i-1}$ such pairs. If $j+1=2i+1$ the word starts and ends with the
-same letter; starting with $R$ gives $i+1$ runs of $R$ and $i$ runs of $L$, that is
+same letter. Starting with $R$ gives $i+1$ runs of $R$ and $i$ runs of $L$, so
 $\binom{a-1}{i}\binom{b-1}{i-1}$ words, and starting with $L$ gives the other summand.
 \end{proof}
 
 For instance $P_2=(\tfrac p2,\,q,\,\tfrac p2)$, $P_3(1)=P_3(2)=\tfrac12(1-p^2)$ and
 $P_4(2)=(1-p)(1-p+p^2)$.
+
+Note that the only way to end in bin $0$ is the word $L\cdots L$, which never switches. Every
+other bin needs at least one switch. So when $p$ is close to $1$ the endpoints win, and the
+question in Section~\ref{sec:middle} is how close $p$ has to be.
 
 \begin{proposition}[recurrence and generating function]\label{prop:gf}
 Let $R_N(k)$ and $L_N(k)$ be the probabilities of being in bin $k$ after $N$ bounces with last bounce
@@ -206,8 +209,8 @@ integers, and
 \end{proposition}
 
 \begin{proof}
-Multiply \eqref{eq:wordprob} by $2(\alpha+\beta)^{N-1}$. For the generating function let $F_R,F_L$
-collect the weighted words ending in $R$, in $L$; then $F_R=x(1+\alpha F_R+\beta F_L)$ and
+Multiply \eqref{eq:wordprob} by $2(\alpha+\beta)^{N-1}$. For the generating function, let $F_R$ and
+$F_L$ be the sums of the weighted words ending in $R$ and in $L$. Then $F_R=x(1+\alpha F_R+\beta F_L)$ and
 $F_L=y(1+\alpha F_L+\beta F_R)$, and solving as in Proposition~\ref{prop:gf} gives the stated
 value of $1+F_R+F_L$.
 \end{proof}
@@ -241,32 +244,49 @@ $(\alpha,\beta)=(2,1)$ by Proposition~\ref{prop:num}.
 Call a lattice point $(x,y)$ \emph{blocked} if $x\equiv y\equiv1$ or $x\equiv y\equiv2\pmod 3$. Let
 $M(a,b)$ be the number of walks from $(0,0)$ to $(3a,3b)$ with unit steps right and up that visit no
 blocked point. Then for $p=\tfrac13$, $n_N(k)=M(k,N-k)$. The array $M$ is symmetric, and A348595
-lists its lower triangle $M(n,k)$, $0\le k\le n$; this is the sense in which that entry is
+lists its lower triangle $M(n,k)$, $0\le k\le n$. This is the sense in which that entry is
 ``related'' to the $p=\tfrac13$ table.
 \end{theorem}
 
 \begin{proof}
 Reduce coordinates modulo $3$. The allowed residues are $(0,0)$, $(1,0)$, $(2,0)$, $(2,1)$, $(0,1)$,
-$(0,2)$, $(1,2)$. Call a point with residue $(0,0)$ a \emph{corner}, and let $(X,Y)$ count how many
-times the walk has crossed a vertical line $x\equiv0$, respectively a horizontal line $y\equiv0$,
-by a step landing on it. From a corner the walk steps right or up. After a right step it is at
-residue $(1,0)$, and the step up is blocked, so it continues to $(2,0)$; call this state $\mathsf A$.
-From $\mathsf A$ a right step lands on a corner and increases $X$; an up step leads to $(2,1)$,
-where up is blocked, and then right to residue $(0,1)$, which increases $X$, and then (right being
-blocked) up to $(0,2)$; call this state $\mathsf B$. By symmetry, from a corner an up step leads
-to $\mathsf B$ without changing $(X,Y)$, and from $\mathsf B$ the walk either reaches a corner or
-reaches $\mathsf A$, increasing $Y$ by one in both cases. Hence, every walk from $\mathsf A$ emits one letter $R$ (an increase of $X$) and then is at a corner
-or at $\mathsf B$; every walk from $\mathsf B$ emits one letter $L$ and then is at a corner or at
-$\mathsf A$; and a corner leads to $\mathsf A$ or to $\mathsf B$ without emitting anything. A walk from the corner $(0,0)$ to the corner $(3a,3b)$ therefore
-determines a word $w$ with $a$ letters $R$ and $b$ letters $L$: the letter $w_i$ is emitted from
-$\mathsf A$ if it is $R$ and from $\mathsf B$ if it is $L$. Between $w_i$ and $w_{i+1}$ the walk goes
-from one emitting state to the next. If $w_i=w_{i+1}$ it must pass through a corner (one way). If
-$w_i\ne w_{i+1}$ it may pass through a corner or go directly (two ways). The start and the end are
-forced. Hence $M(a,b)=\sum_w2^{\chg(w)}$, which is $n_N(a)$ for $(\alpha,\beta)=(1,2)$. In Mathar's note
-\cite{mathar2022} attached to A348595 the ``squares'' of the sequence name are the lattice sites
-$(x,y)$ themselves, as his recurrences show, so $M$ is his count; a direct count of the walks also
-reproduces the published terms (Section~\ref{sec:verify}).
+$(0,2)$, $(1,2)$. We call a point with residue $(0,0)$ a \emph{corner}. Let $X$ be the number of
+times the walk steps onto a vertical line $x\equiv0$, and $Y$ the number of times it steps onto a
+horizontal line $y\equiv0$. From a corner the walk goes right or up. After a right step it is at
+residue $(1,0)$, and up is blocked, so it goes on to $(2,0)$. Call this state $\mathsf A$. From
+$\mathsf A$, a right step lands on a corner and increases $X$. An up step leads to $(2,1)$, where up
+is blocked, so the walk goes right to $(0,1)$, which increases $X$, and then up to $(0,2)$ since
+right is blocked. Call this state $\mathsf B$. By symmetry, an up step from a corner leads to
+$\mathsf B$ without changing $X$ or $Y$, and from $\mathsf B$ the walk reaches either a corner or
+$\mathsf A$, with $Y$ going up by one either way.
+
+So each visit to $\mathsf A$ gives one letter $R$ (an increase of $X$) and is followed by a corner
+or by $\mathsf B$. Each visit to $\mathsf B$ gives one letter $L$ and is followed by a corner or by
+$\mathsf A$. A corner leads to $\mathsf A$ or $\mathsf B$ and gives no letter. Hence a walk from the
+corner $(0,0)$ to the corner $(3a,3b)$ gives a word $w$ with $a$ letters $R$ and $b$ letters $L$,
+where $w_i$ comes from a visit to $\mathsf A$ if it is $R$ and to $\mathsf B$ if it is $L$. Between
+$w_i$ and $w_{i+1}$ the walk goes from one of these states to the next. If $w_i=w_{i+1}$ it has to
+pass through a corner, so there is one way. If $w_i\ne w_{i+1}$ it can pass through a corner or go
+directly, so there are two ways. The start and the end are forced. Hence
+$M(a,b)=\sum_w2^{\chg(w)}$, which is $n_N(a)$ for $(\alpha,\beta)=(1,2)$. In Mathar's note
+\cite{mathar2022} attached to A348595, the ``squares'' in the name of the sequence are the lattice
+points $(x,y)$ themselves, as his recurrences show, so $M$ is his count. Counting the walks directly
+also gives the published terms (Section~\ref{sec:verify}).
 \end{proof}
+
+Figure~\ref{fig:lattice} shows both bijections for the word $RRLRLL$.
+
+\begin{figure}[t]
+\centering
+\includegraphics{figures/lattice}
+\caption{The two bijections for the word $RRLRLL$. (a) The rook path. A cut
+is forced at each of the $3$ direction changes (filled) and optional between
+equal letters (hollow), so the word comes from $2^2=4$ rook paths to $(3,3)$.
+(b) The union of the $2^3=8$ blocked walks to $(9,9)$ that give the word,
+with one detour square for each direction change. Blocked points are marked
+$\times$ and corners by dots.}
+\label{fig:lattice}
+\end{figure}
 
 For general $p=\alpha/(\alpha+\beta)$, Proposition~\ref{prop:num} says that $n_N(k)$ counts monotone
 lattice paths from $(0,0)$ to $(k,N-k)$ in which each straight continuation is colored in one of
@@ -290,8 +310,8 @@ For $p=1$, $\Var K_N=N^2/4$.
 \begin{proof}
 Note that $\E e_1=0$ and $e_{i+m}=e_is_i\cdots s_{i+m-1}$, so $\E e_i=0$ and
 $\E e_ie_{i+m}=\rho^m$. Hence,
-$\Var X_N=N+2\sum_{m=1}^{N-1}(N-m)\rho^m$, and summing the two geometric series gives the first
-form; the second uses $(1+\rho)/(1-\rho)=p/q$ and $1-\rho=2q$.
+$\Var X_N=N+2\sum_{m=1}^{N-1}(N-m)\rho^m$. Summing the two geometric series gives the first
+form, and the second follows from $(1+\rho)/(1-\rho)=p/q$ and $1-\rho=2q$.
 \end{proof}
 
 \begin{theorem}[normal limit]\label{thm:clt}
@@ -310,7 +330,7 @@ M=\begin{pmatrix}pe^{i\theta}&qe^{i\theta}\\qe^{-i\theta}&pe^{-i\theta}\end{pmat
 The eigenvalues are $\lambda_\pm(\theta)=p\cos\theta\pm\sqrt{q^2-p^2\sin^2\theta}$, using
 $p^2-\rho=q^2$. For $|\sin\theta|<q/p$ they are real and distinct, so
 $\varphi_N=c_+\lambda_+^{N-1}+c_-\lambda_-^{N-1}$ for $N\ge1$, with $c_\pm(\theta)$ determined by
-$\varphi_1=\cos\theta$ and $\varphi_2=p\cos2\theta+q$:
+$\varphi_1=\cos\theta$ and $\varphi_2=p\cos2\theta+q$, which give
 \[
 c_+=\frac{\varphi_2-\lambda_-\cos\theta}{\lambda_+-\lambda_-},\qquad c_-=\cos\theta-c_+ .
 \]
@@ -334,7 +354,7 @@ On a cylinder whose rows have $c$ pegs the local rule is unchanged, so the posit
 $2c$ (in half-peg units), and the discrete Fourier coefficients of its law are
 $\varphi_N(\pi l/c)$, $0\le l<2c$. The formula $\varphi_N=c_+\lambda_+^{N-1}+c_-\lambda_-^{N-1}$
 holds whenever $\lambda_+\neq\lambda_-$. For $0<p<1$ and $\theta\notin\pi\Z$ both eigenvalues have
-modulus less than $1$: real eigenvalues satisfy $|\lambda_\pm|\le p|\cos\theta|+q$, and complex
+modulus less than $1$. Real eigenvalues satisfy $|\lambda_\pm|\le p|\cos\theta|+q$, and complex
 ones have modulus $\sqrt\rho$. The coefficients at $l=0$ and $l=c$ are $1$ and $(-1)^N$. Hence, on
 the cylinder the law approaches the uniform law on the $c$ positions of the correct parity
 geometrically fast, and there is no normal shape in the limit.
@@ -348,6 +368,11 @@ equal probability by symmetry). Put $u=q/p$. By Theorem~\ref{thm:pmf},
 \frac{P_N(m_N)}{P_N(0)}=S_N(u):=\sum_{j=1}^{N-1}W(N,m_N,j)\,u^j ,
 \end{equation}
 a polynomial in $u$ with nonnegative integer coefficients and $W(N,m_N,1)=2$.
+
+We expect $1-p_N$ to be about $(\log N)/N$. Each switch in a word gives a factor of $u$, and a
+word that ends in the middle can switch almost anywhere, so adding them up gives roughly
+$e^{Nu}/N$. This is $1$ when $Nu\approx\log N$. Theorem~\ref{thm:bessel} proves this with the
+correction terms.
 
 \begin{theorem}\label{thm:root}
 \begin{enumerate}[(a)]
@@ -365,7 +390,7 @@ $S_N(u)=1$ by \eqref{eq:SN}. $S_N$ is continuous and strictly increasing on $[0,
 $S_N(0)=0$ and $S_N(u)\ge2u$, so there is exactly one root $u_N\in(0,\tfrac12]$, and $p=1/(1+u)$ is a
 decreasing bijection from $[0,\infty)$ to $(0,1]$.
 
-(b) $S_2=2u$, $S_3=2u+u^2$ and $S_4=2u+2u^2+2u^3$ give the three values; for $p_4$ substitute
+(b) $S_2=2u$, $S_3=2u+u^2$ and $S_4=2u+2u^2+2u^3$ give the three values. For $p_4$, substitute
 $u=(1-p)/p$ in $S_4(u)=1$. For monotonicity we compare coefficients. If $N=2m$ then the middle
 $(a,b)=(m,m)$ becomes $(m,m+1)$ for $N+1$, and if $N=2m+1$ then $(m,m+1)$ becomes $(m+1,m+1)$. In
 both cases one of $a,b$ grows by one and the other is unchanged, the formulas of
@@ -388,7 +413,7 @@ less than $1$ for large $b$. Hence, $b\,u_N>(\tfrac12-\varepsilon)\log b$ for la
 
 \emph{Upper bound for $u_N$.} Let $u^*=(\tfrac12+\varepsilon)(\log a)/a$, $y=au^*$ and
 $r=\lfloor y\rfloor$, so $r\ge1$ for large $N$. Keep only the term $j=2r+1$ of $S_N(u^*)$ and use
-$\binom{b-1}{r}\ge\binom{a-1}{r}\ge(a-r)^r/r!$:
+$\binom{b-1}{r}\ge\binom{a-1}{r}\ge(a-r)^r/r!$ to get
 \[
 S_N(u^*)\ge2u^*\Bigl(\frac{(a-r)^r(u^*)^r}{r!}\Bigr)^2
 =\frac{2y}{a}\Bigl(1-\frac ra\Bigr)^{2r}\Bigl(\frac{y^r}{r!}\Bigr)^2 .
@@ -404,11 +429,20 @@ Since $a,b=N/2+O(1)$, the two bounds give $u_N\sim\log(N/2)/N\sim(\log N)/N$, an
 $1-p_N=u_N/(1+u_N)\sim u_N$.
 \end{proof}
 
-In Kagey's terms: for the $(2n+1)$-st row ($N=2n$) the unique value is $p_{2n}$, and the least of
+In Kagey's terms, for the $(2n+1)$-st row ($N=2n$) the unique value is $p_{2n}$, and the least of
 these is $p_2=\tfrac23$, which is why the third row of his $p=\tfrac23$ table is $2,2,2$. For the
-$(2n)$-th row ($N=2n-1$, $n\ge2$) the least is $p_3=1/\sqrt2$; the second row is $1,1$ for every
+$(2n)$-th row ($N=2n-1$, $n\ge2$) the least is $p_3=1/\sqrt2$. The second row is $1,1$ for every
 $p$. There is no greatest value, since $p_N\uparrow1$. The tenth row has $p_9=0.82829\ldots$, just
 below $\tfrac56$, which is why the extremes and the middle are nearly level in his third histogram.
+Figure~\ref{fig:row10} shows this row at the four values of $p$ in his histograms.
+
+\begin{figure}[t]
+\centering
+\includegraphics{figures/row10}
+\caption{The bin probabilities $P_9(k)$ of Kagey's tenth row. At $p=5/6$, just
+above $p_9$, the two middle bins are slightly below the ends (dashed line).}
+\label{fig:row10}
+\end{figure}
 
 \begin{table}[ht]
 \centering\small
@@ -425,6 +459,11 @@ $N$ & $p_N$ & $N$ & $p_N$ & $N$ & $p_N$ & $N$ & $p_N$\\
 \caption{The value $p_N$ at which the middle and extreme bins of row $N+1$ are equally likely.}
 \label{tab:pn}
 \end{table}
+
+The Bessel functions come in because the runs are long. When $Nu$ is about $\log N$, a typical
+word only switches about $\log N$ times. Then the number of ways to split $a$ letters into $r$
+runs, $\binom{a-1}{r}$, is close to $a^r/r!$, and after this change the run count is exactly the
+power series of $I_0$ and $I_1$. The next theorem bounds the error we make by doing this.
 
 \begin{theorem}[uniform Bessel approximation]\label{thm:bessel}
 Put $h=N/2$, $J(x)=I_0(2x)+I_1(2x)$ and $F(x)=2xJ(x)$.
@@ -511,22 +550,34 @@ z+\tfrac12\log z=L+c_0+\frac1{8z}+O(z^{-2}).
 First $z=L+O(\log L)$, then substitution proves \eqref{eq:secondorder}.
 For one further term put $z=L+d+e/L$, where $d=-\tfrac12\log L+c_0$.
 Matching coefficients of $1/L$ gives $e=\tfrac18-d/2$. The residual is
-$O((\log L)^2/L^2)$; the derivative of $z+\tfrac12\log z$ is bounded below
-by one, so inversion preserves that order. This proves \eqref{eq:thirdorder}.
+$O((\log L)^2/L^2)$. The derivative of $z+\tfrac12\log z$ is at least one, so
+inverting keeps that order. This proves \eqref{eq:thirdorder}.
 \end{proof}
 
 The ratios $u_B/u_N$ are $0.9761$, $0.9864$, $0.9924$ at $N=100,200,400$ and
 $0.99579$, $0.99769$, $0.99874$ at $N=800,1600,3200$. We predicted intervals for
 the last three before computing them (\texttt{data/ledger.md}), and
 Theorem~\ref{thm:bessel} proves the approximation behind those predictions.
+Figure~\ref{fig:crossing} compares the exact roots with these approximations
+up to $N=10^4$.
+
+\begin{figure}[t]
+\centering
+\includegraphics{figures/crossing}
+\caption{(a) The scaled crossing $N(1-p_N)/\log N$ from the exact roots, from
+the Bessel root $u_B$, and from the expansions \eqref{eq:secondorder} and
+\eqref{eq:thirdorder} without their error terms. It tends to $1$ very slowly.
+(b) The error of each approximation to $N(1-p_N)$.}
+\label{fig:crossing}
+\end{figure}
 
 \begin{proposition}[adjacent bins and global extrema]\label{prop:adjacent}
 For $N\ge2$ and $0<p<1$, an adjacent bin has the same probability as an endpoint precisely at
 \[
 p_N^{\mathrm{adj}}=\frac{1+\sqrt{N-1}}{2+\sqrt{N-1}}.
 \]
-For $0<p<1$, endpoints attain the global minimum if $p<p_N^{\mathrm{adj}}$;
-bins $1,N-1$ attain it if $p>p_N^{\mathrm{adj}}$; both sets do at equality.
+For $0<p<1$, the endpoints are the least likely bins if $p<p_N^{\mathrm{adj}}$, bins
+$1$ and $N-1$ are if $p>p_N^{\mathrm{adj}}$, and they tie at equality.
 For $N\ge4$, the central crossing satisfies $p_N>p_N^{\mathrm{adj}}$.
 At $p=p_N$, the middle and endpoints attain the global maximum and bins
 $1,N-1$ attain the global minimum. For $N=2,3$,
@@ -537,11 +588,10 @@ A word with one $R$ has one change in two cases and two changes in $N-2$ cases.
 Thus $P_N(1)/P_N(0)=2u+(N-2)u^2$, whose positive root at level one is
 $u^{\mathrm{adj}}=1/(1+\sqrt{N-1})$, including $N=2$.
 This yields the stated $p$ and sign change.
-The coefficientwise ordering in Proposition~\ref{prop:allbin-order}
-(Section~\ref{sec:allbin}), proved directly from the run-count formula, shows that interior bin
-probabilities increase toward the middle. Symmetry therefore makes the
-middle maximal and bins $1,N-1$ minimal among interior bins.
-Comparing those minima with the endpoints proves the first assertions.
+By Proposition~\ref{prop:allbin-order} in Section~\ref{sec:allbin}, which we prove from the
+run-count formula, the interior bins get more likely as we move toward the middle. By
+symmetry, the middle is then the largest interior bin and bins $1$ and $N-1$ are the smallest.
+Comparing bins $1,N-1$ with the endpoints gives the claims about the global minimum.
 
 Put $a=\lfloor N/2\rfloor$ and $b=\lceil N/2\rceil$.
 The polynomial $S_N(u)$ begins with $2u+(N-2)u^2$ and has
@@ -553,27 +603,28 @@ $2(a-1)(b-1)>0$. Consequently, at its positive root $u_N$,
 The adjacent polynomial is strictly increasing, so $u_N<u^{\mathrm{adj}}$
 and hence $p_N>p_N^{\mathrm{adj}}$. The middle and endpoints tie by
 definition of $p_N$, proving the global-maximum assertion as well.
-For $N=2,3$, $S_N(u)=2u+(N-2)u^2$, and symmetry gives the stated ties;
-in particular $p_3=p_3^{\mathrm{adj}}=1/\sqrt2$.
+For $N=2,3$, $S_N(u)=2u+(N-2)u^2$, and symmetry gives the stated ties.
+In particular $p_3=p_3^{\mathrm{adj}}=1/\sqrt2$.
 \end{proof}
 
 The adjacent-bin scale is $1-p_N^{\mathrm{adj}}\sim N^{-1/2}$, distinct from
-$1-p_N\sim(\log N)/N$. At $p=0,1$ additional zero-probability ties occur.
+$1-p_N\sim(\log N)/N$. This makes sense. Bin $1$ has a single $R$, and unless it is at one of
+the ends it needs two switches. So $P_N(1)/P_N(0)\approx Nu^2$, which only reaches $1$ at
+$u\approx N^{-1/2}$. The middle bin has far more words, so it catches up to the endpoints much
+earlier. At $p=0,1$ there are also ties between bins of probability zero.
 
 \input{allbin_thresholds.tex}
 \input{periodic_window.tex}
 
 \section{Verification and scope}\label{sec:verify}
-The Python scripts for this paper use only the standard library. They
-compare the exact law with a dynamic program and with word enumeration,
-check the coefficient identities and the ordering of the crossings, and
-evaluate the Bessel bounds and asymptotic expansions at high precision. The
-periodic run polynomial is checked against a separate cyclic enumeration.
-\texttt{SUPPLEMENT.md} describes each script and the parts of the argument
-that are formalized in Lean, and the recorded output is in \texttt{data/}.
-The high-precision checks are numerical and do not replace the proofs. The
-multistate version of the problem, with occupation counts on the faces of a
-simplex, is treated in a separate paper.
+We also checked the results by computer, using Python with only the
+standard library. We compared the exact law with a dynamic program and with
+a list of every word, and the periodic run polynomial with a separate count
+of cyclic words. We also checked the coefficient identities and the order of
+the crossings, and evaluated the Bessel bounds and expansions to high
+precision. None of the proofs use these checks. \texttt{SUPPLEMENT.md} lists
+the scripts and the parts that are proved in Lean, and the output is in
+\texttt{data/}. The case of more than two directions is in a separate paper.
 
 \paragraph{Data and code availability.}
 The manuscript source, verification scripts, and recorded results are

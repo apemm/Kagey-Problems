@@ -1,12 +1,13 @@
 \section{Face-center thresholds on a simplex}\label{sec:simplex-thresholds}
 
-We retain the symmetric $d$-direction model of Proposition~\ref{prop:dgf}:
-the initial direction is uniform, a repeat has probability $p$, and each specified
+We keep the symmetric $d$-direction model of Proposition~\ref{prop:dgf}. The
+initial direction is uniform, a repeat has probability $p$, and each particular
 change has probability $r=(1-p)/(d-1)$. Other ways of modeling a tetrahedral
 board ($d=3$) give different laws, which we do not treat.
 For $2\le k\le d$ and $N\ge k$, let $C_{N,k}(p)$ denote the probability of
-one \emph{balanced face bin}: its $k$ positive coordinates differ by at most
-one, and its other coordinates vanish. All such bins have the same probability.
+one \emph{balanced face bin}, meaning that its $k$ positive coordinates differ by
+at most one and its other coordinates are zero. All such bins have the same
+probability.
 Let $V_N(p)=p^{N-1}/d$ be the probability of one vertex bin, and put
 \[
 u=\frac{1-p}{(d-1)p},\qquad
@@ -42,6 +43,20 @@ N(1-p_{N,d}^{(d)})=(d-1)\log N-\frac{d-1}{2}\log\log N+c_d+o(1),
 For $d=2$, $a_2=\tfrac12\log(\pi/8)$, and the expansion agrees with the
 binary one in~\cite{companion}. The proof below does not use the binary
 case and treats every face dimension at once.
+Figure~\ref{fig:simplex} shows the full-center crossing on the triangle at
+$N=24$.
+
+\begin{figure}[t]
+\centering
+\includegraphics{figures/simplex}
+\caption{The ratio $P_N(n)/V_N$ for $d=3$ and $N=24$, one hexagon per bin, on
+a $\log_{10}$ scale. (a) At $p=0.78$ only the $21$ bins inside the dashed
+curves near the vertices are below the vertex height. (b) At the full-center
+crossing $p^{(3)}_{24,3}=0.82921\ldots$ the center $(8,8,8)$ (cross) ties with
+the vertices and every other bin is below them. (c) At $p=0.88$ every
+nonvertex bin is below the vertex height.}
+\label{fig:simplex}
+\end{figure}
 
 \begin{theorem}[common critical window]\label{thm:simplex-window}
 Fix $d$ and put
@@ -59,6 +74,14 @@ at distinct constant offsets within a common window of persistence width
 $O(1/N)$.
 \end{theorem}
 
+It might seem strange that faces of every size cross in the same window. A
+word ending at a balanced vector on a face with $k$ states has to visit all
+$k$ of them. Each extra state needs its own runs, which means more switches,
+but those runs have about $N$ places to go, and together this gives roughly
+a factor of $e^{Nu}/N$ per state. So the ratio to a vertex is about
+$(e^{Nu}/N)^{k-1}$, which is $1$ near $Nu\approx\log N$ no matter what $k$ is.
+The size of the face only changes the constant $a_k$.
+
 We first prove the exact assertions, and then prove a uniform local
 estimate from which both asymptotic theorems follow.
 
@@ -72,8 +95,8 @@ S_n(u)=\sum_jW_n(j)u^j.
 To count $W_n(j)$, choose a proper word of $j+1$ run colors, meaning that
 successive colors differ. If color $i$ appears $m_i$ times, its run lengths
 can be chosen in $\binom{n_i-1}{m_i-1}$ ways. Thus $W_n(j)$ is a sum of
-products of these binomial coefficients. Every coefficient is nonnegative;
-the first nonzero one is $W_n(k-1)=k!$. Hence $S_n$ is strictly increasing
+products of these binomial coefficients. Every coefficient is nonnegative,
+and the first nonzero one is $W_n(k-1)=k!$. Hence $S_n$ is strictly increasing
 from zero to infinity on $u\ge0$ and crosses one exactly once. At $p=0$,
 cycling through the $k$ colors and truncating after $N$ positions gives a
 word with balanced counts and no successive repeat, so its probability is
@@ -87,7 +110,7 @@ The coefficient of $u^k$ is
 W_n(k)=\frac{k!(k-1)}2\sum_i(n_i-1)
 =\frac{k!(k-1)}2(N-k).
 \]
-Indeed, exactly one run color appears twice; for each such color there are
+Indeed, exactly one run color appears twice, and for each such color there are
 $(k+1)!/2-k!=k!(k-1)/2$ proper arrangements of the multiset of run colors.
 This coefficient increases strictly with $N$, so the positive root decreases
 strictly with $N$. The substitution $p=1/(1+(d-1)u)$ proves the claimed
@@ -118,7 +141,7 @@ In particular the relative error is $O_k((\log N)^2/N)$ when $x=O(\log N)$.
 \begin{proof}
 The equality in~\eqref{eq:simplex-F} follows from the Bessel power series
 and Tonelli's theorem, using $M!=\int_0^\infty e^{-t}t^Mdt$.
-The integral is finite for every positive $x$: the bound $I_1(y)\le e^y$
+The integral is finite for every positive $x$, since the bound $I_1(y)\le e^y$
 for $y\ge0$ reduces its tail to a polynomial times
 $\exp(-t+2k\sqrt{xt})$. Thus the positive series and all its termwise
 derivatives converge on compact subsets of $x>0$.
@@ -173,7 +196,7 @@ In~\eqref{eq:simplex-F} set $w=\sqrt t$ and $a=k\sqrt x$.
 The exponent becomes $-w^2+2k\sqrt x\,w=k^2x-(w-a)^2$.
 First restrict to $|w-a|\le\sqrt x/2$. There $2\sqrt x\,w$ is bounded
 below by $(2k-1)x$, so the standard Bessel expansion
-\cite[Eq.~10.40.1]{dlmf} applies uniformly:
+\cite[Eq.~10.40.1]{dlmf} applies uniformly and gives
 \[
 \bigl[\sqrt x\,w I_1(2\sqrt x\,w)\bigr]^k
 =\frac{x^{k/4}w^{k/2}e^{2k\sqrt x\,w}}{(4\pi)^{k/2}}
@@ -192,12 +215,12 @@ Put $\alpha=k/2+1$. Apart from that negligible tail, the integral is
 \int_{|w-a|\le\sqrt x/2} e^{-(w-a)^2}w^\alpha
 \left(1-\frac{3k}{16\sqrt x\,w}+O_k(x^{-2})\right)dw.
 \]
-Taylor-expand $w^\alpha$ about $a$. The odd terms integrate to zero on this
-symmetric interval, the quadratic term contributes
-$\alpha(\alpha-1)/(4a^2)$ relatively, and the fourth-order remainder is
-$O_k(a^{-4})$: the interval stays a fixed positive fraction of $a$ away
-from zero and all Gaussian moments are finite. Extending the centered
-Gaussian integrals to the real line changes them exponentially little.
+Now Taylor expand $w^\alpha$ about $a$. On this symmetric interval the odd
+terms integrate to zero. The quadratic term gives a relative correction of
+$\alpha(\alpha-1)/(4a^2)$, and the fourth-order remainder is $O_k(a^{-4})$,
+since the interval stays a fixed fraction of $a$ away from zero and the
+Gaussian moments are finite. If we extend the Gaussian integrals to the whole
+line, they change by an exponentially small amount.
 For the term involving $w^{\alpha-1}/\sqrt x$, keeping its constant term
 suffices, because its quadratic correction has relative order $x^{-2}$.
 Since $\int e^{-y^2}dy=\sqrt\pi$ and
@@ -223,7 +246,7 @@ Indeed, $x=z/(k(1-u))$, and
 \[
 k^2x+(N-1)\log(1-u)-sz=O_k(z^2/N).
 \]
-The prefactor changes by $1+O_k(z/N)$ on replacing $x$ by $z/k$;
+The prefactor changes by $1+O_k(z/N)$ when we replace $x$ by $z/k$, and
 rounding of the balanced coordinates is covered by
 \eqref{eq:simplex-discrete-comparison}.
 
@@ -318,7 +341,7 @@ The positive-series argument in Lemma~\ref{lem:simplex-integral} bounds
 the weighted second moment of $M$ by a constant times $(1+y)^2$.
 Uniformity follows from the uniform saddle expansion below, which bounds
 $G_{\alpha}(y+1)/G_{\alpha}(y)$ on the compact set
-$\{\alpha_i\ge\varepsilon,\ \sum_i\alpha_i=1\}$; for bounded $y$,
+$\{\alpha_i\ge\varepsilon,\ \sum_i\alpha_i=1\}$. For bounded $y$,
 continuity and the positive leading coefficient give the same conclusion.
 
 Set $w=\sqrt t$. The exponential factor of the integrand is
@@ -353,7 +376,7 @@ First $z=(s/g)L+O_{k,\varepsilon}(\log L)$; one substitution then gives
 \eqref{eq:simplex-interior-root}. The derivative of its left-hand side is
 at least $g$, bounded uniformly away from zero, so the stated error is
 preserved on inversion. Finally, the functions of $\alpha$ appearing in
-the formula have bounded derivatives on a slightly smaller compact set;
+the formula have bounded derivatives on a slightly smaller compact set, so
 changing $\alpha$ by $O(1/N)$ changes the expression by $O(L/N)$, which
 is absorbed by its error term.
 \end{proof}
@@ -366,6 +389,10 @@ the balanced composition, so the leading threshold coefficient $s/g$
 is minimized exactly at the center of each face.
 
 \subsection{Balanced bins and global modes}
+
+The idea is that once we fix how many runs each state gets, splitting the
+visits evenly gives the most ways to choose the run lengths. The
+log-concavity of $B_n$ in the proof below makes this precise.
 
 \begin{theorem}[balancing within a support]\label{thm:simplex-balance}
 For $1/d\le p<1$, among bins with a prescribed set of positive coordinates
@@ -398,7 +425,7 @@ The ratio $c_j/b_j$ is the expectation of the strictly decreasing sequence
 $a_{i+1}/a_i=y/(i+2)$ under weights proportional to $\binom ji a_i$.
 When $j$ increases to $j+1$, the likelihood ratio of the new and old
 unnormalized weights on the old support is
-$(j+1)/(j+1-i)$, increasing in $i$; additionally a strictly positive weight
+$(j+1)/(j+1-i)$, which increases in $i$, and a new positive weight
 appears at $i=j+1$. Thus these weights shift strictly toward larger
 indices, so the expectation of the strictly decreasing sequence decreases
 strictly. To check this last step, cross-multiply the two expectations and
@@ -434,7 +461,7 @@ one by
 \]
 Uniformity in Theorem~\ref{thm:simplex-window} gives both assertions.
 At the exact full-center crossing, its window parameter tends to $a_d$
-by Theorem~\ref{thm:simplex-crossing}; every proper face-center ratio then
+by Theorem~\ref{thm:simplex-crossing}, and every proper face-center ratio then
 has a limit strictly less than one. The same reduction proves the final
 claim.
 \end{proof}

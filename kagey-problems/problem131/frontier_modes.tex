@@ -13,11 +13,11 @@ define the \emph{tilted occupation law}
  \frac{e^{h\cdot n/N}P_N(n)}
  {\sum_{m_1+\cdots+m_d=N}e^{h\cdot m/N}P_N(m)}.
 \end{equation}
-Thus the field on each step is $h_i/N$. This tilts the occupation law; it
-does not change the transition probabilities of the chain. The
-normalization cancels in every comparison of bins. By a modal phase we
-mean the face that contains the largest individual bin probabilities, not
-a face that carries most of the mass. Put $L=\log N$, keep
+So each step feels a field of $h_i/N$. Note that we tilt the law of the
+counts, and the chain itself is unchanged. The normalizing sum cancels
+whenever we compare two bins. When we talk about a modal phase, we mean
+the face with the largest single bin probabilities, which need not be the
+face with most of the mass. Put $L=\log N$, keep
 \[
  u_N(t)=\frac{L-\tfrac12\log L+t}{N},\qquad
  p_N(t)=\frac{1}{1+(d-1)u_N(t)},
@@ -87,17 +87,18 @@ a balanced vector. By Theorem~\ref{thm:simplex-balance}, the untilted
 probability strictly increases at every transfer. Each transfer changes
 the scaled vector $y$ by norm $\sqrt{2L}/N$ and decreases its squared
 norm. If the starting vector has $\|y\|>R$, the first vector along this
-path with norm at most $R$ has norm $R+o(1)$; it lies in a compact subset
+path with norm at most $R$ has norm $R+o(1)$, so it lies in a compact subset
 of the relative interior of the face. Its untilted log ratio to a vertex
 is at most
 \[
  (k-1)(t-a_k)-k^2R^2/4+o(1).
 \]
 This is an upper bound for the starting vector's untilted log ratio.
-For every composition $\alpha$, $h\cdot\alpha-h_*\le0$. Consequently
-$R$ can be chosen uniformly so that every tilted superlevel bin satisfies
-$\|y\|\le R$. The same argument, with a larger $R$ if necessary, bounds
-all face maximizers when comparison is made with its balanced bin.
+Since $h\cdot\alpha-h_*\le0$ for every composition $\alpha$, we can pick
+one $R$ that works for all the parameters, so that every tilted superlevel
+bin has $\|y\|\le R$. The same argument, with $R$ larger if needed, also
+bounds where the maximum on a face can be, by comparing with the balanced
+bin of that face.
 
 Inside this ball the logarithms in~\eqref{eq:frontier-profile} converge
 uniformly. For any $\delta>0$, their positive set is sandwiched between
@@ -109,13 +110,13 @@ a translate of the lattice
  \frac{\sqrt L}{N}\{z\in\mathbb Z^S:\textstyle\sum_i z_i=0\}
  \quad\hbox{in }H_S.
 \]
-Its covolume is $\sqrt{k}(\sqrt L/N)^{k-1}$: the basis
+Its covolume is $\sqrt{k}(\sqrt L/N)^{k-1}$, since the basis
 $e_i-e_k$, $1\le i<k$, has Gram determinant $k$.
-Lattice Riemann sums over balls therefore give the stated volume constant.
-Letting $\delta\downarrow0$ proves~\eqref{eq:frontier-volume}, including
-$B_S=0$. The radii stay bounded on compact parameter sets, so the same
-sandwich proves uniform convergence. If $B_S<0$, the uniform profile on
-the confining ball is strictly below one for large $N$, proving emptiness.
+Counting lattice points in the two balls then gives the volume constant,
+and letting $\delta\downarrow0$ gives~\eqref{eq:frontier-volume}, also
+when $B_S=0$. On compact parameter sets the radii are bounded, so the
+convergence is uniform. Finally, if $B_S<0$, the profile is below one on
+the whole ball for large $N$, so there are no such bins.
 \end{proof}
 
 At zero field, all supports of the same size have the same count, so the
@@ -125,6 +126,12 @@ For $k=2$, writing $y=(y_1,-y_1)$ gives the profile
 $\exp(t-a_2-2y_1^2)$ and the one-face count constant
 $\sqrt{2[t-a_2]_+}$, which agrees with the free binary window once the
 different centering is taken into account.
+
+Without a field, a proper face never wins in the window, because the full
+center beats every proper face as soon as it beats the vertex
+(Corollary~\ref{cor:simplex-modes}). A field changes this. If some states
+are unfavorable, a face that avoids them can come out ahead for a range of
+$t$, and the next theorem says which face wins.
 
 \begin{theorem}[weak-field modal phase diagram]\label{thm:weakfield-phases}
 Define the face scores
@@ -185,13 +192,13 @@ face's balanced bin. This proves the location statement.
 Among supports of a given size $k$, the largest field average is the
 average of the $k$ largest fields. This proves~\eqref{eq:weakfield-lines}.
 For $t_1<t_2$, a line of strictly larger slope cannot win at $t_1$ and
-lose to a line of smaller slope at $t_2$: subtracting the two comparisons
+lose to a line of smaller slope at $t_2$, because subtracting the two comparisons
 would give $(k_1-k_2)(t_2-t_1)\le0$. Hence the winning size is
 nondecreasing away from ties.
 
 To realize a prescribed $2\le k<d$, set $h_1=\cdots=h_k=0$ and
 $h_{k+1}=\cdots=h_d=-H$. Choose $t>a_k$ sufficiently close to $a_k$ so
-that $t<a_{k-1}$ if $k>2$. The $k$-face score is positive; all smaller
+that $t<a_{k-1}$ if $k>2$. Then the $k$-face score is positive, all smaller
 nonvertex face scores are negative, and the largest vertex score is zero.
 For $j>k$, the largest score is
 \[
@@ -246,6 +253,19 @@ strictly exceeds every earlier and later line. The fields are strictly
 ordered, so its unique best support is $\{1,\ldots,k\}$. Apply
 Theorem~\ref{thm:weakfield-phases} to obtain the finite-$N$ conclusion.
 \end{proof}
+
+Figure~\ref{fig:phases} shows the lines of Corollary~\ref{cor:weakfield-full-hierarchy}
+for $d=5$.
+
+\begin{figure}[t]
+\centering
+\includegraphics{figures/phases}
+\caption{The lines \eqref{eq:weakfield-lines} for $d=5$ and $h_i=-(i-1)^2$.
+The grey band is their upper envelope. The dotted lines are
+$\tau_1<\cdots<\tau_4$, and the number at the top of each interval is the
+size $k$ of the winning support $\{1,\ldots,k\}$.}
+\label{fig:phases}
+\end{figure}
 
 \begin{example}[a persistent triangular edge phase]\label{ex:weakfield-triangle}
 For $d=3$ and $h=(0,0,-H)$, the three competing maximal scores are

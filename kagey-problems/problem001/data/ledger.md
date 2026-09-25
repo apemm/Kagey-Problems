@@ -106,8 +106,18 @@ refuted ceil(5m/2)-1 kept-set formula). 4x4 and 4x5 are settled by checking all 
 blackouts that could reach the upper bound (verify_narrow.py).
 
 Proof: the axis-aligned rectangles are identifiable iff the row-column incidence graph has no
-C4 or C6; replacing each column by a tree on its black rows gives a triangle-free graph on the
+C4 or C6. Replacing each column by a tree on its black rows gives a triangle-free graph on the
 rows, and Mantel bounds its edges. The constructions are checked against every tilted rectangle
 on three and four rows. See paper/narrow_rows.tex.
 
 Still open: Excess-1 with both dimensions >= 5, and the optimum counts beyond strips.
+
+## Lower bound n+m on the open cells (2026-09-24)
+
+While building the game in `game/`, an exhaustive search found that every monotone staircase from
+one corner to the opposite corner (n+m-1 points) is a valid blackout on every size from 5 x 5 to
+10 x 10, and that every one of these sizes also has valid blackouts made of a staircase plus one
+more point (from 18 of them on 5 x 6 up to 173,716 on 10 x 10). So blackout(n,m) >= n+m on every
+open cell up to 10 x 10, which is the lower half of Excess-1. The game stores one checked example
+per size. This has only been checked by one program so far, so it still needs a second check
+(engine or brute) before it goes in the paper.
