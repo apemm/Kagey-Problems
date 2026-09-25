@@ -1,8 +1,8 @@
 """Independent finite checks and numerical tests of the simplex boundary laws.
 
 Uses only the Python standard library. Exact identities use integer/Fraction
-arithmetic; asymptotic tests use 70-digit Decimal positive sums. Series cutoff
-comparisons are numerical checks, not interval-certified analytic proofs.
+arithmetic; asymptotic tests use 70-digit Decimal positive sums, compared at
+two series cutoffs. This is numerical, not interval arithmetic.
 Run: python -B verify_frontier_boundary.py
 """
 

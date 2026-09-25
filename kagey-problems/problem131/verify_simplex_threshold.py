@@ -3,7 +3,7 @@
 Run: python -B verify_simplex_threshold.py
 Outputs data/simplex-verification.json. Exact checks use word
 enumeration and rational arithmetic. Large-N checks use 65-digit Decimal and a
-positive refresh series; cutoff comparison is numerical, not interval-certified.
+positive refresh series, compared at two cutoffs (numerical, not interval arithmetic).
 """
 from collections import Counter, defaultdict
 from decimal import Decimal, localcontext
@@ -139,7 +139,7 @@ def root_from_coeff(n, k, coeff):
 
 def numerical_checks():
     rows = []
-    # 70 digits is ample here; these are numerical consistency checks only.
+    # 70 digits is more than enough for these checks.
     with localcontext() as ctx:
         ctx.prec = 70
         # Supply pi independently to more precision than any displayed result.

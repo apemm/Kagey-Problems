@@ -24,11 +24,10 @@ corners.
 - Strips solved: **Strip Theorem** (2026-08-24). For 2 x m, m >= 3: max blackout m+1, exactly
   m * 2^(m-1) maximum blackouts, characterized. m = 2 vacuous (every S valid).
 - Three rows solved (2026-09-21): max blackout m+2 for every m>=3.
-- Four rows solved (2026-09-21): max blackout m+4 for every m>=6. The 4x4 and 4x5
-  boundary values are 7 and 8, with finite exhaustive exclusions of all upper-bound candidates.
-- General upper bound: max blackout <= m+floor(n^2/4) for m>=3, and the transposed
-  bound when n>=3. The proof uses a C4/C6-free row-column incidence graph and Mantel's bound.
-- New proofs: `paper/narrow_rows.tex`, included in `paper/main.tex`.
-- Run `python verify_narrow.py` for independent standard-library verification.
-- Still open: extremizer classification/count beyond strips; Excess-1 for both dimensions >=5;
-  independent human proof review and precise literature comparison of the new formulation.
+- Four rows solved (2026-09-21): max blackout m+4 for every m>=6. For 4x4 and 4x5 it is 7 and 8,
+  by checking every blackout that could reach the upper bound.
+- Upper bound: max blackout <= m+floor(n^2/4) for m>=3, and the transposed bound when n>=3.
+  Proof: the row-column incidence graph has no C4 or C6, then Mantel.
+- Proofs in `paper/narrow_rows.tex`; checks in `verify_narrow.py`.
+- Still open: classifying and counting optima beyond strips; Excess-1 when both dimensions are
+  >= 5; comparing the incidence-graph formulation with the literature.

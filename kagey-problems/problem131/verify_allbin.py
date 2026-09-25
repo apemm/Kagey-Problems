@@ -1,7 +1,7 @@
 """Numerical and exact checks for the all-bin threshold theorem.
 
-Standard library only. Decimal numerical checks are corroboration, not an
-interval certificate or a replacement for the proof in allbin.md.
+Standard library only. The Decimal checks are numerical; the proof is in
+allbin_thresholds.tex.
 Run: python -B verify_allbin.py
 """
 from decimal import Decimal, localcontext

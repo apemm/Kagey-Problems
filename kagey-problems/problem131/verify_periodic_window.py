@@ -1,7 +1,7 @@
 """Independent cyclic enumeration and numerical crossing-window checks.
 
-Only the standard library is required. Decimal computations are numerical
-corroboration, not interval certificates. Run with python -B.
+Only the standard library is required. The Decimal computations are numerical,
+not interval arithmetic. Run with python -B.
 """
 from decimal import Decimal as D, localcontext
 from itertools import product

@@ -16,10 +16,9 @@
 
 \title{Blackouts Preserving Rectangle Identifiability on Grid Points\\
 \large A partial solution to Problem 001 of Kagey's Open Problem Collection}
-\author{Arjun Pemmasani\thanks{Verification levels for the computational results are
-reported individually in Table 1. Code and data:
+\author{Arjun Pemmasani\thanks{Code and data:
 \texttt{github.com/apemm/Kagey-Problems}.}}
-\date{Preliminary note --- \today}
+\date{Preliminary note, \today}
 
 \begin{document}
 \maketitle
@@ -34,9 +33,9 @@ prove that the maximum blackout is $m+2$ on three rows for $m\ge3$ and $m+4$ on
 four rows for $m\ge6$, and obtain the general upper bound
 $m+\lfloor n^2/4\rfloor$ for $m\ge3$. The structural step characterizes
 axis-aligned identification by the absence of four- and six-cycles in the black
-row--column incidence graph; a separate geometric argument handles tilted rectangles.
-We also report computations with their verification levels, the computational
-$5\times5$ uniqueness result, and the remaining higher-dimensional conjecture.
+row--column incidence graph, and a separate geometric argument handles tilted rectangles.
+We also report the computations, the uniqueness of the $5\times5$ optimum up to
+symmetry (by computer), and the remaining conjecture for larger grids.
 \end{abstract}
 
 \section{Introduction}
@@ -52,28 +51,28 @@ resulting extremal quantity.
 
 The Strip Theorem (Theorem~\ref{thm:strip}) settles two rows, including the
 classification and number of optima. Theorems~\ref{thm:threerow}
-and~\ref{thm:fourrow} now settle the values on three rows and on four rows of
-width at least six. The small four-row boundary cases have a finite exhaustive
-proof (Corollary~\ref{cor:fourboundary}). The general row bound and short-cycle
-characterization are Theorem~\ref{thm:rowbound} and Lemma~\ref{lem:girth}.
+and~\ref{thm:fourrow} settle the values on three rows and on four rows of
+width at least 6. The four-row grids of width 4 and 5 are settled by an
+exhaustive computer check (Corollary~\ref{cor:fourboundary}). The general row
+bound and the short-cycle characterization are Theorem~\ref{thm:rowbound} and
+Lemma~\ref{lem:girth}.
 Optimum counts beyond strips and the $5\times5$ uniqueness statement remain
 computational. The higher-dimensional Excess-1 formula remains conjectural
 (Conjecture~\ref{conj:excess}). The old guess that the kept set always has size
 $(n-1)(m-1)$ was first refuted at $5\times5$ and also fails on $4\times m$
 for every $m\ge6$.
 
-Small cases were recorded in a fixed ledger before computation. Verification methods
-include an ILP formulation, a branch-and-bound oracle, and a definitional exhaustive
-check; the table distinguishes their coverage and explicitly marks engine-only results.
-Conjectural predictions were recorded before the indicated computations. The new narrow-row
-proofs use a separate, standard-library verifier with independent diagonal enumeration.
-Original ledger entries are preserved as historical records, with subsequent proof updates.
+Every prediction was written in a ledger before the computation that tested it. The
+values were computed with an ILP formulation, a branch-and-bound oracle, and an
+exhaustive check straight from the definition, and Table 1 says which of these agree
+for each grid. The three- and four-row results have their own verifier, which
+enumerates the rectangles by their diagonals.
 
 The paper is organized as follows. Section \ref{sec:conventions} fixes conventions and
 defines the presentation map. Section \ref{sec:reduction} proves the reduction and its
 consequences. Section \ref{sec:preprocessing} describes the pruning of the difference
 hypergraph. Section \ref{sec:strip} proves the Strip Theorem and Section~\ref{sec:narrow}
-proves the new row bounds and narrow-grid results. Section
+proves the row bound and the results for three and four rows. Section
 \ref{sec:computations} reports the computations and the verification. Section
 \ref{sec:uniqueness} treats uniqueness at $5 \times 5$. Section \ref{sec:conjectures}
 records the refuted and live conjectures and states open questions.
@@ -184,9 +183,9 @@ maximum blackouts exist, characterized as in the statement.
 \input{narrow_rows.tex}
 
 \section{Computations and verification}\label{sec:computations}
-The verification column records the original computational coverage: some values have
-multiple independent checks and some are engine-only. The narrow-row values now also
-follow from Section~\ref{sec:narrow}; their optimum counts remain computational.
+The last column says which methods agree on each value. The values for three and four
+rows also follow from Section~\ref{sec:narrow}, but the counts of optima are only
+computational.
 Rectangle counts match the literature: $n\times n$ counts $1,10,44,130$ agree with
 OEIS \texttt{A085582}, and $3\times m$ counts with OEIS \texttt{A289832} (indexing note in the bibliography).
 
@@ -263,21 +262,20 @@ Four-Row: kept$(4,m) = \lceil 5m/2\rceil - 1$ & refuted (pre-registered) & $4\ti
 \end{tabular}
 \end{table}
 
-The former Three-Row conjecture, registered and checked first for $3\le m\le10$,
-is now Theorem~\ref{thm:threerow}. The four-row specialization of Excess-1 is now
-Theorem~\ref{thm:fourrow}, with its boundary cases in
-Corollary~\ref{cor:fourboundary}. These results do not classify all extremizers or
-give their counts beyond two rows.
+The Three-Row conjecture, which we checked for $3\le m\le10$ before proving it, is
+now Theorem~\ref{thm:threerow}. The four-row case of Excess-1 is
+Theorem~\ref{thm:fourrow}, with the boundary cases in
+Corollary~\ref{cor:fourboundary}. We have not classified or counted the optima
+beyond two rows.
 
 \begin{conjecture}[Excess-1]\label{conj:excess}
 $\mathrm{blackout}(n,m)=n+m$ for $\min(n,m)\ge 4$, excepting $4\times4$ and
 $4\times5$ up to transposition, where it is $n+m-1$.
 \end{conjecture}
-Originally checked on seven cells ($4\times 6$ through $6\times 6$), including the
-$6\times 6$ prediction of $12$, registered before the $1063$-second computation
-confirmed it. The four-row cases are now proved; the assertion for both dimensions
-at least five remains open. The general row bound gives useful upper bounds but
-does not imply Excess-1 in that range.
+We checked this on seven cells ($4\times 6$ through $6\times 6$), including the
+prediction of $12$ at $6\times 6$, which was written down before the
+$1063$-second computation. The four-row cases are now proved, and the case where
+both dimensions are at least 5 is open. The row bound does not imply Excess-1 there.
 
 Beyond the remaining conjecture, three questions strike us as the natural next ones: why
 the number of optima collapses at $4\times 6$ ($26$, against neighbors in the
@@ -286,12 +284,9 @@ $6\times 7$ registered at $13$ as the next kill attempts; and whether the
 $5\times 5$ uniqueness admits a structural proof rather than a computational one.
 
 \section*{Data and code availability}
-The code, tables, and ledger accompany this note in the repository:
+The code, tables, and ledger are at
 \url{https://github.com/apemm/Kagey-Problems}.
-The narrow-row proof and \texttt{verify\_narrow.py} were developed with OpenAI Codex
-assistance, including manuscript wording and verification code. The two finite four-row
-exclusions are explicitly computer-assisted. Independent human review and a targeted
-literature comparison of the short-cycle formulation remain necessary before publication.
+The two four-row boundary cases are computer-assisted.
 
 \clearpage
 \begin{thebibliography}{9}

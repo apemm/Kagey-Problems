@@ -1,6 +1,6 @@
 """Independent decimal-arithmetic check of the uniform Bessel bound and roots.
 
-No third-party dependencies. This is numerical corroboration, not the proof.
+Standard library only. This is a numerical check; the proof is in the paper.
 """
 from decimal import Decimal as D, localcontext
 from math import log, pi

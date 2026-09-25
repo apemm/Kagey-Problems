@@ -2,8 +2,8 @@
 
 Run with python -B verify_frontier_modes.py. Uses only the standard library.
 The large-N refresh series is evaluated with 65-digit Decimal arithmetic and
-a wider cutoff check; this is numerical evidence, not interval certification.
-Finite-N global modes are independently computed by a word-state dynamic program.
+a wider cutoff check. This is numerical, not interval arithmetic.
+Finite-N global modes are computed separately by a word-state dynamic program.
 """
 from decimal import Decimal, localcontext
 from math import ceil, exp, floor, gamma, log, pi, sqrt
@@ -126,7 +126,7 @@ def finite_modal_checks():
             modes = [counts for counts, value in tilted.items()
                      if abs(value-maximum) <= 1e-12*maximum]
             sizes = sorted({sum(ni > 0 for ni in counts) for counts in modes})
-            # This check is finite and does not infer the asymptotic theorem.
+            # Finite check only.
             if n >= 60:
                 assert sizes == [predicted_support_size], (n, t, modes)
             if predicted_support_size == 2 and n >= 60:
@@ -137,7 +137,7 @@ def finite_modal_checks():
                          "observed_support_sizes": sizes,
                          "limiting_winning_support_size": predicted_support_size})
     # Pointwise field tilt can move a full-support maximum away from exact balance.
-    # The theorem intentionally gives scaled convergence, not exact balanced modes.
+    # This is why the theorem only locates the modes up to o((log N)^(-1/2)).
     return rows
 
 

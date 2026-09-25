@@ -2,7 +2,7 @@
 
 Exact checks use Fraction arithmetic and independent word enumeration.
 Large examples use 100-digit Decimal arithmetic. Truncated positive sums
-are compared at two cutoffs; these numerical tests are not interval proofs.
+are compared at two cutoffs; this is numerical, not interval arithmetic.
 Only the Python standard library is required.
 """
 

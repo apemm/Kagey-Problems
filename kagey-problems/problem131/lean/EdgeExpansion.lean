@@ -1,7 +1,7 @@
 import Std
 /-!
 Algebra of the fixed-edge root expansion for Problem 131.
-This Lean verification code was developed with OpenAI Codex assistance.
+This Lean verification code was generated with Claude Opus 5.5.
 The analytic implicit-function theorem and Taylor expansion hypotheses are
 not proved here. These results verify the exact deductions from their first
 and second coefficient equations, including the universal correction -1.

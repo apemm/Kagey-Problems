@@ -117,7 +117,7 @@ transfer matrix, and obtained precisely the generating function $(1+t^2-t^3)/(1-
 does not establish is that counting \emph{words} is the same as counting \emph{rationals}: it is not shown
 that every pattern-avoiding word is in fact a minimal word for its endpoint, nor that distinct
 pattern-avoiding words produce distinct rationals, nor that every rational is realized.  These are exactly
-the difficult points, and the present paper supplies them.  Our main tool is an explicit formula for the
+the hard steps, and we prove them here.  Our main tool is an explicit formula for the
 rank of an individual rational, which seems to be of independent interest and answers Q3 in a strong form.
 
 Throughout, $d(x)$ denotes the rank of $x$: the least number of applications of $f,g$ producing $x$ from
@@ -168,8 +168,8 @@ $-1<x<0$ has one child ($x+1$); a vertex $x\le-1$ is a leaf, and for $x<-1$ the 
 appeared exactly \emph{three} ranks earlier.
 \end{thmC}
 
-The ``three ranks earlier'' phenomenon is the combinatorial source of the summand $a(n-3)$; we will see that
-it is a direct shadow of the relation $(gf)^3=\mathrm{id}$ in $\mathrm{PSL}_2(\Z)$.
+The ``three ranks earlier'' phenomenon is where the summand $a(n-3)$ comes from, and we will see that
+it comes directly from the relation $(gf)^3=\mathrm{id}$ in $\mathrm{PSL}_2(\Z)$.
 
 \begin{figure}[t]
 \centering
@@ -190,7 +190,7 @@ Section~\ref{sec:cf} converts the formula into the two continued-fraction forms 
 Section~\ref{sec:count} counts, proving Theorem A.  Section~\ref{sec:words} describes the geodesic words,
 proves that they form exactly the regular language counted in \cite{mmz}, and thereby completes that
 argument.  Section~\ref{sec:verify} reports the computational verification.  Section~\ref{sec:remarks}
-collects further remarks.  The paper is self-contained; the references are context, not dependencies.
+collects further remarks.  The paper is self-contained.
 
 \section{Setup: the graph, ranks, and generations}\label{sec:setup}
 
@@ -310,7 +310,7 @@ gives $F(x)=D(x)+F(0)=D(x)$.
 \end{proof}
 
 The next lemma computes how $D$ changes along \emph{all four} edge types of $G$, not only the two that $P$
-undoes.  Items (D1)--(D3) are immediate; (D4) is the crucial computation.
+undoes.  Items (D1)--(D3) are immediate; (D4) is the one that takes work.
 
 \begin{lemma}[increment identities]\label{lem:incr}
 For all $x\in\Q$:
@@ -830,7 +830,7 @@ begins with $fgf$ iff $m_1=1$ and $j\ge2$.  Hence the four conditions together a
 $m_i\ge2$ for all $1\le i\le j-1$ and $m_j\ge1$, which is the definition of $\lang$.
 \end{proof}
 
-\begin{remark}[what was missing in the Math.SE argument, and how it is now complete]\label{rem:mmz}
+\begin{remark}[the Math.SE argument]\label{rem:mmz}
 The accepted answer \cite{mmz} argued: by $g^{2}=\mathrm{id}$ and $fgfgf=g$ (consequences of the
 $\mathrm{PSL}_2(\Z)$ relations), a \emph{minimal} word cannot contain $gg$ or $fgfgf$; and a word may not
 begin with $g$ (undefined at $0$) or with $fgf$ (which returns to $0$).  It then counted the words
@@ -847,10 +847,9 @@ language, by exhaustive enumeration through length $14$.)
 
 \section{Computational verification}\label{sec:verify}
 
-Independently of the proofs, we ran a breadth-first search over $\Q$ in exact integer arithmetic
+Separately from the proofs, we ran a breadth-first search over $\Q$ in exact integer arithmetic
 (fractions stored in lowest terms; the maps preserve lowest terms), reproducing Kimberling's construction
-through rank $41$: a total of $14{,}144{,}885$ vertices.  All of the following were checked and hold with
-zero anomalies:
+through rank $41$: a total of $14{,}144{,}885$ vertices.  We checked the following, with no exceptions:
 
 \begin{enumerate}[itemsep=1pt]
 \item the rank sizes $a(0),\dots,a(41)$ (Table~\ref{tab:counts}) satisfy $a(n)=a(n-1)+a(n-3)$ for
@@ -895,13 +894,13 @@ $n$ & $a(n)$ & $n$ & $a(n)$ & $n$ & $a(n)$\\
 \section{Further remarks}\label{sec:remarks}
 
 \begin{remark}[negative integers]
-The formulas give pleasant special values.  For $n\ge1$ one checks
+The formulas give simple special values.  For $n\ge1$ one checks
 $\hj{2,2,\dots,2}$ ($j$ twos) $=(j+1)/j$ by induction, whence $\tfrac1n=\hj{1,2^{\,(n-1)}}$
 (meaning one $1$ followed by $n-1$ twos), so $d(1/n)=\bigl(1+2(n-1)\bigr)+n-1=3n-2$ and
 \[
 d(-n)=3n-1 .
 \]
-Thus $-1,-2,-3,\dots$ appear at ranks $2,5,8,\dots$, three apart: another visible trace of the
+Thus $-1,-2,-3,\dots$ appear at ranks $2,5,8,\dots$, three apart, which again comes from the
 three-step cycle.
 \end{remark}
 
@@ -930,7 +929,7 @@ then proves the analogues of (D1)--(D4).
 
 \subsection*{Data and code availability}
 The verification script (\texttt{verify.py}, plain Python, $\approx35$ s) and the full solution notes
-accompany this document.
+are in the Problem 137 folder of \url{https://github.com/apemm/Kagey-Problems}.
 
 \begin{thebibliography}{99}\small
 

@@ -40,23 +40,23 @@ uniform Bessel bounds and boundary effects}
 \maketitle
 
 \begin{abstract}
-For a symmetric persistent random walk, we bound the error of a Bessel
-approximation to each interior-bin probability relative to an endpoint.
-With $N$ steps and switching odds $u=(1-p)/p$, the relative error is at most
-$Nu^2/2+u$, uniformly in the bin index. This estimate yields a crossing
-expansion uniform over every bin whose distance from an edge diverges,
-including explicit logarithmic constants and inverse-logarithm corrections.
-At a fixed edge distance, the crossing is instead governed by a finite
-Laguerre polynomial, with a universal next-order coefficient; a quantitative
-matching estimate connects the two regimes. For periodic spin boundaries
-we obtain the corresponding relative bound and show that the periodic and
-free central-crossing odds differ by $(\log 2)/N$ to leading order.
-Both boundaries have the spatial critical profile $\exp(t-2y^2)$, which
-determines the asymptotic number of bins exceeding the endpoint height.
-The exact distribution, ordinary normal limit, Bessel scaling, and
-endpoint--center comparison have classical antecedents. Our contribution
-is quantitative discrete control as the persistence parameter and bin
-index vary with the walk length.
+For a symmetric persistent random walk, we bound the relative error of a
+Bessel approximation to the ratio of each interior bin probability to an
+endpoint probability. With $N$ steps and switching odds $u=(1-p)/p$, the
+relative error is at most $Nu^2/2+u$ for every bin. This gives an expansion
+of the crossing point that holds uniformly over all bins whose distance from
+an edge tends to infinity, with explicit constants and an inverse-logarithm
+correction. At a fixed distance from the edge, the crossing is instead
+determined by a finite Laguerre polynomial, and the next coefficient is the
+same for every such bin. We also prove a matching estimate between the two
+regimes. For periodic spin boundaries we prove the corresponding bound and
+show that the periodic and free central crossing odds differ by $(\log 2)/N$
+to leading order. Under both boundaries the critical profile is
+$\exp(t-2y^2)$, which gives the asymptotic number of bins above the endpoint
+height. The exact distribution, the normal limit, the Bessel scaling, and the
+endpoint--center comparison are already known. What we add is quantitative
+control of the discrete error when the persistence and the bin index vary
+with $N$.
 \end{abstract}
 
 \section{Introduction}\label{sec:intro}
@@ -78,7 +78,7 @@ his numerator tables are
 \[
  n_N(k)=2(\alpha+\beta)^{N-1}P_N(k)\quad(N\ge1),\qquad n_0(0)=1.
 \]
-These are the stated table normalizations, rather than reduced fractions.
+These are the numerators as Kagey tabulates them, not reduced fractions.
 
 \paragraph{Results and organization.}
 Our main estimate, Theorem~\ref{thm:allbin-bessel}, bounds the relative
@@ -89,45 +89,42 @@ matching limit (Theorems~\ref{thm:edge-laguerre} and~\ref{thm:edge-matching}),
 and the periodic/free boundary shift and spatial critical window in
 Section~\ref{sec:periodicwindow}. We first give short proofs of the exact
 law, the lattice-path interpretations of Kagey's two numerator tables,
-and the variance and normal limit. Section~\ref{sec:middle} establishes
-the unique central crossing and its strict increase with $N$. Its
-center expansion is also recovered by the all-bin theorem; it is
-retained as the symmetric case in which the inversion is most transparent.
+and the variance and normal limit. Section~\ref{sec:middle} proves that
+the central crossing is unique and strictly increasing in $N$. The
+all-bin theorem also gives the central expansion, but we treat the center
+separately since the inversion is simplest there.
 
 \paragraph{Prior work.}
 The correlated random walk goes back to Goldstein~\cite{goldstein1951}
 and Gillis~\cite{gillis1955}. Renshaw and Henderson~\cite{renshaw1981}
-study the same symmetric model, including its Galton-machine motivation,
-exact run-count law, generating function, normal limit, and endpoint upturns.
-Their Section~4 also gives a Bessel limit with a fixed persistence-scale
-parameter, followed by a large-parameter limit. These sequential limits
-do not provide a uniform finite-length error estimate when that parameter
-grows logarithmically with the walk length. Their full text has been
-consulted for this comparison. The run count used below
-is classical~\cite{waldwolfowitz1940}. Dekking and Kong~\cite{dekkingkong2011}
-give the Markov-binomial law, variance, and local modality classification.
-Their Proposition~4.3 proves interior log-concavity for arbitrary initial
-distribution and $0<a,b<1$; our specialization is $a=b=1-p$ with symmetric
-initial law. We prove the required ordering directly, coefficient by
-coefficient, without relying on that result. The exact law and ordinary
-normal limit are not claimed as new. The OEIS entries already record the
-two table sequences~\cite{oeisA035002,oeisA348595}; our bijections explain
-the connections indicated by Kagey.
+study the same symmetric model, motivated by a Galton machine, and give the
+exact law from run counts, the generating function, the normal limit, and
+the upturn at the endpoints. Their Section~4 also gives a Bessel limit at a
+fixed persistence scale, followed by a limit as that scale grows. Since the
+two limits are taken one after the other, they do not give an error bound at
+finite $N$ when the scale grows like $\log N$, which is where the crossing
+happens. The run count used below is classical~\cite{waldwolfowitz1940}.
+Dekking and Kong~\cite{dekkingkong2011} give the Markov-binomial law, the
+variance, and a classification of the local modes. Their Proposition~4.3
+proves interior log-concavity for an arbitrary initial distribution and
+$0<a,b<1$, and our model is the case $a=b=1-p$ with a symmetric initial law.
+We prove the ordering we need directly from the coefficients instead. The
+OEIS entries already record both tables~\cite{oeisA035002,oeisA348595}, and
+our bijections explain the connections Kagey points out.
 
 Herrmann and Vallois~\cite{herrmann2010} give the telegraph limit with
 its Bessel density. Antal, Droz and R\'acz~\cite{antal2004} treat the
-fixed-scale magnetization distribution under several boundary conditions,
+magnetization distribution at fixed scale under several boundary conditions,
 and Dantchev and Rudnick~\cite{dantchev2022} give exact free and periodic
-coefficients. Stepanyan et al.~\cite[Section~III.2, Eq.~(16)]{stepanyan2024}
-explicitly study the periodic endpoint--center crossing and give a
-finite-size approximation to it. The crossing question itself is
-therefore established. Our results control the discrete error in the
-moving regime $Nu=O(\log N)$ and its edge analogues, invert the resulting
-comparison, and determine a spatial superlevel-set window. The
-Markov-binomial estimates in~\cite{cekanavicius2001,cekanavicius2001ld}
-assume transition ranges excluding the symmetric persistence limit
-$p\to1$. These comparisons do not by themselves establish priority for
-the complete quantitative results below.
+coefficients. Stepanyan et al.~\cite[Section~III.B]{stepanyan2024} study the
+periodic endpoint--adjacent and endpoint--center crossings directly and give a
+finite-size approximation to the latter~\cite[Eq.~(16)]{stepanyan2024}, so the
+crossing question itself is not new. What we add
+is control of the discrete error in the regime $Nu=O(\log N)$ and its edge
+analogues, the inversion of the resulting comparison, and the spatial window
+of bins above the endpoint height. The Markov-binomial estimates
+in~\cite{cekanavicius2001,cekanavicius2001ld} assume ranges of the transition
+probabilities that exclude the symmetric limit $p\to1$.
 
 \section{The exact distribution}\label{sec:exact}
 
@@ -390,7 +387,7 @@ If $x\le(\tfrac12-\varepsilon)\log b$ the right side is at most $2b^{-2\varepsil
 less than $1$ for large $b$. Hence, $b\,u_N>(\tfrac12-\varepsilon)\log b$ for large $N$.
 
 \emph{Upper bound for $u_N$.} Let $u^*=(\tfrac12+\varepsilon)(\log a)/a$, $y=au^*$ and
-$r=\lfloor y\rfloor$. Keep only the term $j=2r+1$ of $S_N(u^*)$ and use
+$r=\lfloor y\rfloor$, so $r\ge1$ for large $N$. Keep only the term $j=2r+1$ of $S_N(u^*)$ and use
 $\binom{b-1}{r}\ge\binom{a-1}{r}\ge(a-r)^r/r!$:
 \[
 S_N(u^*)\ge2u^*\Bigl(\frac{(a-r)^r(u^*)^r}{r!}\Bigr)^2
@@ -519,9 +516,9 @@ by one, so inversion preserves that order. This proves \eqref{eq:thirdorder}.
 \end{proof}
 
 The ratios $u_B/u_N$ are $0.9761$, $0.9864$, $0.9924$ at $N=100,200,400$ and
-$0.99579$, $0.99769$, $0.99874$ at $N=800,1600,3200$. The latter three were
-predicted within registered intervals before computation (\texttt{data/ledger.md}).
-Theorem~\ref{thm:bessel} now supplies the proof previously missing from that heuristic.
+$0.99579$, $0.99769$, $0.99874$ at $N=800,1600,3200$. We predicted intervals for
+the last three before computing them (\texttt{data/ledger.md}), and
+Theorem~\ref{thm:bessel} proves the approximation behind those predictions.
 
 \begin{proposition}[adjacent bins and global extrema]\label{prop:adjacent}
 For $N\ge2$ and $0<p<1$, an adjacent bin has the same probability as an endpoint precisely at
@@ -540,8 +537,8 @@ A word with one $R$ has one change in two cases and two changes in $N-2$ cases.
 Thus $P_N(1)/P_N(0)=2u+(N-2)u^2$, whose positive root at level one is
 $u^{\mathrm{adj}}=1/(1+\sqrt{N-1})$, including $N=2$.
 This yields the stated $p$ and sign change.
-The coefficientwise ordering in Proposition~\ref{prop:allbin-order},
-proved directly from the run-count formula, shows that interior bin
+The coefficientwise ordering in Proposition~\ref{prop:allbin-order}
+(Section~\ref{sec:allbin}), proved directly from the run-count formula, shows that interior bin
 probabilities increase toward the middle. Symmetry therefore makes the
 middle maximal and bins $1,N-1$ minimal among interior bins.
 Comparing those minima with the endpoints proves the first assertions.
@@ -567,27 +564,21 @@ $1-p_N\sim(\log N)/N$. At $p=0,1$ additional zero-probability ties occur.
 \input{periodic_window.tex}
 
 \section{Verification and scope}\label{sec:verify}
-The supplementary standard-library Python scripts compare the exact law
-with dynamic programming and word enumeration, check the coefficient
-identities and crossing order, and evaluate the Bessel bounds and
-asymptotic expansions at high precision. They also verify the periodic
-run polynomial by independent cyclic enumeration. Script descriptions,
-commands, and the precise extent of the finite Lean formalization are
-given in \texttt{SUPPLEMENT.md}; recorded outputs are in \texttt{data/}.
-Numerical asymptotic checks are corroboration, not interval certificates
-or substitutes for the proofs. The companion multistate draft treats
-occupation-count crossings on simplex faces and is outside the scope of
-this binary paper.
+The Python scripts for this paper use only the standard library. They
+compare the exact law with a dynamic program and with word enumeration,
+check the coefficient identities and the ordering of the crossings, and
+evaluate the Bessel bounds and asymptotic expansions at high precision. The
+periodic run polynomial is checked against a separate cyclic enumeration.
+\texttt{SUPPLEMENT.md} describes each script and the parts of the argument
+that are formalized in Lean, and the recorded output is in \texttt{data/}.
+The high-precision checks are numerical and do not replace the proofs. The
+multistate version of the problem, with occupation counts on the faces of a
+simplex, is treated in a separate paper.
 
 \paragraph{Data and code availability.}
 The manuscript source, verification scripts, and recorded results are
-available in the Problem 131 folder of
+in the Problem 131 folder of
 \url{https://github.com/apemm/Kagey-Problems}.
-
-\paragraph{Acknowledgment.}
-OpenAI Codex assisted with mathematical development, debugging verification
-code, literature searches and revision, and Lean coding. The author takes
-responsibility for the content.
 
 \begin{thebibliography}{99}\small\setlength{\baselineskip}{11pt}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}
 
@@ -657,13 +648,13 @@ J.~Stat.~Mech. (2024), 033202.
 \bibitem{cekanavicius2001}
 V.~\v{C}ekanavi\v{c}ius and M.~Mikalauskas,
 \emph{Local theorems for the Markov binomial distribution},
-Lithuanian Math.~J.~\textbf{41} (2001), 219--231. Full text consulted via library access.
+Lithuanian Math.~J.~\textbf{41} (2001), 219--231.
 \url{https://doi.org/10.1023/A:1012802428342}.
 
 \bibitem{cekanavicius2001ld}
 V.~\v{C}ekanavi\v{c}ius and M.~Mikalauskas,
 \emph{Large deviations for the Markov binomial distribution},
-Lithuanian Math.~J.~\textbf{41} (2001), 307--318. Full text consulted via library access.
+Lithuanian Math.~J.~\textbf{41} (2001), 307--318.
 \url{https://doi.org/10.1023/A:1013840819221}.
 
 \bibitem{dlmf}

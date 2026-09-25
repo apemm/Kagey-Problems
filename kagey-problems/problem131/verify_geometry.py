@@ -1,6 +1,6 @@
 """Independent exact checks of the d-direction occupation-count formula.
 
-Uses only the Python standard library. Run directly; no generated dependencies.
+Uses only the Python standard library. Run directly.
 """
 from collections import defaultdict
 from fractions import Fraction as F

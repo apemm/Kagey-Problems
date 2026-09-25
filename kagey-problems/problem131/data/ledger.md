@@ -1,7 +1,7 @@
 # Problem 131 ledger
 
-Current status: H1 and H2 are proved. Earlier entries below retain their historical wording;
-the final section records the subsequent uniform Bessel proof.
+Current status: H1 and H2 are both proved. The entries below are left as they were written; the
+last section records the proof of H2.
 
 Notation: N = number of bounces (Kagey's row N+1), p_N = the unique p in (0,1) at which the middle
 bin of row N+1 has the same probability as the two extreme bins, u_N = (1-p_N)/p_N.
@@ -76,14 +76,11 @@ failed the exact check in verify.py at the first run. The correct polynomial is
 (1-p)(1-p+p^2) - p^3/2, i.e. p_4 is the root of 3p^3 - 4p^2 + 4p - 2.
 
 
-## Subsequent proof update (September 2026)
+## H2 proved (September 2026)
 
-The preceding entries preserve the historical predictions and their status at that time.
-H2 is now proved in the manuscript's uniform Bessel approximation theorem. With h=N/2,
-x=hu and F(x)=2x(I_0(2x)+I_1(2x)), the proof establishes
-0 <= 1-h*S_N(x/h)/F(x) <= x(x+1)/h for all N>=2 and x>0.
-It includes both parities and terms beyond the finite polynomial's support.
-Thus u_N-u_B=O(log(N)^2/N^2), with u_B<=u_N, and the conjectured log-log
-term and constant follow, together with a further inverse-logarithm correction.
-`check_bessel.py` independently corroborates the bound and root estimates; see
-`bessel_verification.txt`. These computations are not interval-certified proofs.
+H2 is now the uniform Bessel approximation theorem in the paper. With h = N/2, x = hu and
+F(x) = 2x(I_0(2x) + I_1(2x)), we get 0 <= 1 - h S_N(x/h)/F(x) <= x(x+1)/h for all N >= 2 and
+x > 0, for both parities and including the terms past the degree of S_N. Hence
+0 <= u_N - u_B = O(log(N)^2/N^2), which gives the log log term, the constant, and one more term in
+1/log N. `check_bessel.py` checks the bound and the roots numerically; the output is in
+`bessel_verification.txt`.
