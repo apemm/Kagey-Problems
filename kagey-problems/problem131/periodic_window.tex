@@ -1,18 +1,18 @@
 \section{Boundary conditions and a spatial crossing window}\label{sec:periodicwindow}
 
-The binary model is also a zero-field Ising chain with free boundaries: for step signs
+The binary model is also a zero-field Ising chain with free boundaries. For step signs
 $\varepsilon_i\in\{-1,1\}$ its weight is proportional to
 $\exp(K\sum_{i=1}^{N-1}\varepsilon_i\varepsilon_{i+1})$, where
 $u=q/p=e^{-2K}$. The analogous periodic measure includes the last-to-first bond.
 Antal, Droz and R\'acz~\cite{antal2004} derive boundary-dependent limiting magnetization
-laws; Dantchev and Rudnick~\cite{dantchev2022} give exact free and periodic coefficients.
+laws, and Dantchev and Rudnick~\cite{dantchev2022} give exact free and periodic coefficients.
 Stepanyan et al.~\cite{stepanyan2024} study the periodic endpoint--adjacent
 and endpoint--center comparisons directly. So neither the periodic law nor the
 crossing question is new. Here we bound the discrete error uniformly and give a
 large-$N$ expansion that refines their finite-size approximation.
 
-The periodic spin measure differs from wrapping the spatial position of the free
-Galton walk around a cylinder; the latter remains the pushforward in Remark~\ref{rem:cyl}.
+Note that the periodic spin measure is not the same as wrapping the free Galton walk
+around a cylinder, which is the case in Remark~\ref{rem:cyl}.
 Write $R^{\mathrm F}_{N,k}$ and $R^{\mathrm P}_{N,k}$ for bin-to-endpoint ratios under
 free and periodic boundaries. Put $a=k$, $b=N-k$ and $s=\sqrt{ab}$. The classical cyclic count is
 \begin{equation}\label{eq:periodicratio}
@@ -51,6 +51,12 @@ Their sum is $I_1(2x)$, while their $r(r+1)$-weighted sum is $x^2I_1(2x)$.
 Thus the relative deficit is at most $x^2/(2A)=Nu^2/2$.
 \end{proof}
 
+We can guess the $\log 2$ in the next theorem. A cyclic word always switches an even number of
+times, but a free word can also start and end on different letters, and those words give the
+$I_0$ term in the free approximation. For large arguments $I_0\approx I_1$, so near the crossing
+the free ratio is about twice the periodic one. Both grow like $e^{Nu}$, so the periodic crossing
+should need $Nu$ to be about $\log 2$ larger.
+
 \begin{theorem}[periodic crossing and boundary shift]\label{thm:periodic-crossing}
 Let $u_N^{\mathrm P}$ be the positive central root, and let $u_N^{\mathrm F}=u_N$
 be the free central root. Put $L=\log N$ and $c_{\mathrm P}=\tfrac12\log(\pi/2)$.
@@ -85,7 +91,7 @@ z+\tfrac12\log z=L+c_{\mathrm P}+\frac3{8z}
 +O(z^{-2}+L^2/N).
 \]
 The odd-$N$ argument change contributes only $O(L/N^2)$ to this logarithmic equation.
-Substitute $z=L+d+e/L$: the constant terms give
+Substitute $z=L+d+e/L$. The constant terms give
 $d=-\tfrac12\log L+c_{\mathrm P}$, and the $1/L$ terms give $e=3/8-d/2$.
 The derivative of the left side is at least one, so the residual yields the stated
 error. Since $N(u-u/(1+u))=O(L^2/N)$, the switching-probability version follows.
@@ -97,6 +103,11 @@ $\beta J=-\tfrac12\log u=\tfrac12(L-\log z)$ gives \eqref{eq:isingtemperature}.
 Stepanyan et al.\ describe their formula \cite[Eq.~(16)]{stepanyan2024}, which is
 linear in $\log N$, as a finite-size approximation. Equation~\eqref{eq:isingtemperature}
 gives the large-$N$ behavior with a proved error term.
+
+The factor $e^{-2y^2}$ is not hard to see. If we move $yN/\sqrt{\log N}$ away from the
+middle, the Bessel argument is multiplied by $2\sqrt{k(N-k)}/N\approx1-2y^2/\log N$. The argument
+is about $\log N$, so it goes down by about $2y^2$, and since the ratio grows roughly like $e$ to
+the argument, it goes down by a factor of about $e^{-2y^2}$.
 
 \begin{theorem}[spatial crossing window]\label{thm:critical-window}
 Let $X\in\{\mathrm F,\mathrm P\}$ and let $u_N^X$ be its exact central crossing.
@@ -143,6 +154,18 @@ resulting interval, divide by $N/\sqrt L$, and let $\epsilon\downarrow0$.
 Rounding changes the count by $O(1)$.
 \end{proof}
 
-The parameter window has width $N^{-1}$ and the spatial window has width
-$N/\sqrt{\log N}$. Note that a weak limit theorem alone cannot give this result,
-since it compares a single interior bin with the endpoint atom.
+The window has width about $1/N$ in $p$ and about $N/\sqrt{\log N}$ in space.
+A weak limit theorem would not give this, since it says nothing about a single
+bin, and in particular nothing about the endpoint.
+Figure~\ref{fig:window} shows the exact ratios at $N=10^6$.
+
+\begin{figure}[t]
+\centering
+\includegraphics{figures/window}
+\caption{The exact ratios $R^X_{N,k}(u_N^X+t/N)$ at $N=10^6$ for free (a) and
+periodic (b) boundaries, with the limit $e^{t-2y^2}$ of
+Theorem~\ref{thm:critical-window} (dashed). Here $y=(k-N/2)\sqrt{\log N}/N$,
+and the bins above the dotted line are above the endpoint height. The
+convergence is slow, and at $t=2$ and $y=0$ the relative error is still $0.08$.}
+\label{fig:window}
+\end{figure}

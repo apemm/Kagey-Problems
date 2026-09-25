@@ -1,0 +1,175 @@
+/* style.css: the rectangle game on its own page. Taken from the game section of the website's
+   stylesheet, with the tokens it needs. A point is a tile: facing you it is visible, turned
+   edge-on it is blacked out. */
+
+:root {
+  --font-sans: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+
+  --step--1: clamp(0.72rem, 0.7rem + 0.1vw, 0.8rem);
+  --step-0: clamp(1rem, 0.97rem + 0.14vw, 1.0625rem);
+  --step-1: clamp(1.2rem, 1.12rem + 0.4vw, 1.45rem);
+  --step-3: clamp(1.7rem, 1rem + 2vw, 3rem);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-bloom: cubic-bezier(0.7, 0, 0.2, 1);
+
+  color-scheme: light;
+  --bg: #f3f0e9;
+  --bg-raise: #e9e5dc;
+  --fg: #17181c;
+  --fg-2: #55544f;
+  --fg-3: #716f69;
+  --rule: rgb(23 24 28 / 0.15);
+  --mark: #e0a019;
+  --accent-text: #8a5a00;
+  --lat-ink: #17181c;
+  --mark-2: #2446e8;        /* a second colour, for the other rectangle of a confusable pair */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --bg: #1d1e21;
+    --bg-raise: #26272b;
+    --fg: #f3f1ec;
+    --fg-2: #b4b1aa;
+    --fg-3: #85837c;
+    --rule: rgb(243 241 236 / 0.13);
+    --mark: #f2b13a;
+    --accent-text: #f5c466;
+    --lat-ink: #f3f1ec;
+    --mark-2: #7aa2ff;
+  }
+}
+
+/* ---------------------------------------------------------------- page */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 400 var(--step-0)/1.55 var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+h1, p { margin: 0; }
+button { font: inherit; color: inherit; }
+a { color: var(--accent-text); text-underline-offset: 0.18em; }
+:focus-visible { outline: 2px solid var(--accent-text); outline-offset: 3px; border-radius: 2px; }
+
+.page { max-width: 76rem; margin: 0 auto; padding: clamp(1.5rem, 4vw, 3rem) 16px 3rem; }
+@media (min-width: 700px) { .page { padding-inline: clamp(1.5rem, 4vw, 3rem); } }
+
+.head { display: grid; gap: 0.9rem; max-width: 44rem; margin-bottom: clamp(1.5rem, 4vh, 2.5rem); }
+.head .label { font: 400 var(--step--1)/1.6 var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg-3); }
+.head h1 { font-size: var(--step-3); font-weight: 500; line-height: 1.08; letter-spacing: -0.022em; }
+.head p { color: var(--fg-2); }
+
+.foot { margin-top: 2rem; font-size: var(--step--1); color: var(--fg-3); max-width: 44rem; }
+
+/* ---------------------------------------------------------------- the game */
+
+.game {
+  display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 2rem clamp(1.5rem, 4vw, 3.5rem); align-items: center;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  border: 1px solid var(--rule); border-radius: 14px; background: var(--bg-raise);
+}
+.game__board svg { display: block; width: 100%; height: auto; margin-inline: auto; overflow: visible; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+
+.pt { cursor: pointer; outline: none; }
+.pt__hit { fill: transparent; }
+.pt__tile {
+  fill: var(--lat-ink); opacity: 0.2;
+  transform-box: fill-box; transform-origin: center;
+  transition: transform 0.5s var(--ease-bloom), opacity 0.5s, fill 0.3s;
+}
+/* Toggling a point turns the tile. The pinch and the flash are what make the turn readable. */
+.pt.is-turning .pt__tile { animation: tile-turn 0.5s var(--ease-bloom); }
+@keyframes tile-turn {
+  45% { transform: scaleX(0.03); fill: var(--mark); opacity: 0.9; }
+}
+.pt:hover .pt__tile { opacity: 0.36; }
+.pt.is-out .pt__tile { transform: scaleX(0.07); opacity: 0.75; }
+.pt.is-out:hover .pt__tile { opacity: 1; }
+.pt.is-lit .pt__tile { fill: var(--mark); opacity: 1; transform: scale(1.14); }
+.pt__ring {
+  fill: none; stroke: var(--mark); stroke-width: 3; opacity: 0;
+  transform-box: fill-box; transform-origin: center; transform: scale(0.7);
+  transition: opacity 0.25s, transform 0.4s var(--ease-out);
+}
+.pt.is-pick .pt__ring, .pt.is-shared .pt__ring { opacity: 1; transform: none; }
+.pt.is-shared .pt__ring { stroke: var(--fg); }
+.pt:focus-visible .pt__hit { stroke: var(--accent-text); stroke-width: 3; stroke-dasharray: 7 7; }
+.game[data-mode="guess"] .pt:not(.is-out) { cursor: default; }
+
+.game__rect {
+  fill: var(--mark); fill-opacity: 0.1; stroke: var(--mark); stroke-width: 4; stroke-linejoin: round;
+  stroke-dasharray: 1;
+  animation: game-trace 0.9s var(--ease-out) backwards;       /* drawn whole if animation is off */
+}
+.game__rect--b { fill: var(--mark-2); stroke: var(--mark-2); }
+@keyframes game-trace { from { stroke-dashoffset: 1; } }
+
+/* A confusable pair. Each is traced, held, then cleared while the other takes its turn; the cycle
+   repeats until something else is asked for. Drawn together they would sit on top of each other.
+   backwards: during its delay the second one holds the 0% frame, where the stroke is dashed
+   entirely out of sight, so it waits its turn instead of sitting there fully drawn. */
+.game__rect.is-cycling { animation: pair-cycle 5s var(--ease-out) infinite backwards; }
+.game__rect--b.is-cycling { animation-delay: 2.5s; }
+.game__rect.is-hidden { display: none; }
+@keyframes pair-cycle {
+  0%   { stroke-dashoffset: 1; opacity: 1; fill-opacity: 0; }
+  18%  { stroke-dashoffset: 0; opacity: 1; fill-opacity: 0.12; }
+  42%  { stroke-dashoffset: 0; opacity: 1; fill-opacity: 0.12; }
+  50%  { stroke-dashoffset: 0; opacity: 0; fill-opacity: 0; }
+  100% { stroke-dashoffset: 0; opacity: 0; fill-opacity: 0; }
+}
+
+.game__panel { display: grid; gap: 1.1rem; align-content: start; }
+.game__sizes { display: grid; gap: 0.9rem; }
+.game__pick { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.game__pick > span { flex: 0 0 100%; color: var(--fg-3); }
+.game__pick button, .game__actions button {
+  all: unset; box-sizing: border-box; cursor: pointer; text-align: center;
+  min-width: 2.4rem; padding: 0.45rem 0.7rem;
+  border: 1px solid var(--rule); border-radius: 999px;
+  font: 500 var(--step--1)/1.2 var(--font-mono); letter-spacing: 0.06em; color: var(--fg-2);
+  transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+}
+.game__actions button { padding: 0.6rem 1rem; text-transform: uppercase; }
+.game__pick button:hover, .game__actions button:hover { color: var(--fg); border-color: var(--fg-3); }
+.game__pick button[aria-pressed="true"], .game__actions button.is-primary { background: var(--fg); border-color: var(--fg); color: var(--bg); }
+.game__actions button.is-primary:hover { background: var(--accent-text); border-color: var(--accent-text); color: var(--bg); }
+.game button:focus-visible { outline: 2px solid var(--accent-text); outline-offset: 3px; }
+.game__actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+.game__count { font: 400 var(--step--1)/1.6 var(--font-mono); letter-spacing: 0.04em; color: var(--fg-3); }
+.game__status { min-height: 6.5em; font-size: var(--step-1); line-height: 1.4; letter-spacing: -0.008em; }
+.game__status[data-tone="good"]::before, .game__status[data-tone="bad"]::before {
+  content: ""; display: inline-block; width: 0.5em; height: 0.5em; margin-right: 0.55em; vertical-align: 0.12em; background: var(--mark);
+}
+.game__status[data-tone="bad"]::before { background: var(--mark-2); }
+
+.game__hint { padding-top: 1rem; border-top: 1px solid var(--rule); color: var(--fg-2); }
+.game__hint summary { cursor: pointer; font: 400 var(--step--1)/1.6 var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg-2); }
+.game__hint summary:hover { color: var(--fg); }
+.game__hint p { margin-top: 0.7rem; }
+.game__meter { height: 4px; margin-top: 0.9rem; border-radius: 2px; background: var(--rule); overflow: hidden; }
+.game__meter::before { content: ""; display: block; height: 100%; width: calc(var(--fill, 0) * 100%); background: var(--mark); transition: width 0.4s var(--ease-out); }
+.game__meter.is-over::before { background: var(--mark-2); }
+
+@media (max-width: 860px) {
+  .game { grid-template-columns: minmax(0, 1fr); }
+  .game__status { min-height: 0; }
+}
+
+/* Calm: the reduced-motion version, as on the website. Things still change, but by fading.
+   Nothing turns or traces, and a confusable pair takes turns only when asked. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-property: opacity, color, background-color, border-color !important;
+    animation: none !important;
+  }
+}
