@@ -3,6 +3,8 @@ import Mathlib
 /-!
 # Kagey's Problem 001 — blackouts preserving rectangle identifiability
 
+This Lean formalization was developed with AI assistance (Claude).
+
 Lean 4 / Mathlib formalization of the *proved* results of `paper/main.tex`
 (A. Pemmasani, 2026).  Nothing about the open conjectures (Three-Row, Excess-1) is stated here.
 
