@@ -58,6 +58,9 @@ the bin vary with N. See `literature_review.md` for what each source covers.
   `simplex_thresholds.tex`, `frontier_boundary.tex`, `vertex_completion.tex` and
   `frontier_modes.tex`.
 - `verify*.py`, `check_bessel.py`: checks for both papers; `SUPPLEMENT.md` says what each one covers.
+- `figures/`: the figures in both papers, made by `figures/make_figures.py`.
+- `animations/`: a Galton board with persistence at 4 values of p (`galton.gif`, `galton.mp4`),
+  made by `figures/animate.py`.
 - `lean/`: Lean 4 proofs of the finite algebraic steps (not the asymptotics).
 - `data/ledger.md`: predictions written down before the computations, and what happened to them.
 - `data/`: recorded output of the checks.

@@ -1,7 +1,7 @@
 \documentclass[11pt]{article}
 \usepackage[margin=1.05in]{geometry}
 \usepackage{amsmath,amssymb,amsthm,mathtools}
-\usepackage{booktabs,microtype,xcolor}
+\usepackage{booktabs,microtype,xcolor,graphicx}
 \usepackage[shortlabels]{enumitem}
 \usepackage[colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
 \hypersetup{pdftitle={Vertex crossings and boundary regimes in a symmetric Markov multinomial model},pdfauthor={Arjun Pemmasani}}
@@ -28,52 +28,48 @@
 \maketitle
 
 \begin{abstract}
-We study occupation counts of a stationary Markov chain that repeats its
-current state with probability $p$ and otherwise chooses uniformly among
-$d-1$ alternatives. For fixed $d$, we compare the probability of an individual
-count vector with that of a vertex, where every visit is to one state.
-A positive refresh expansion gives a relative Bessel approximation uniform
-over all positive compositions, including vectors approaching simplex
-boundaries. We obtain explicit crossing expansions for balanced faces and
-interior compositions, and a rare-coordinate crossover at
-$N/(\log N)^2$ when at least two coordinates are macroscopic. Near a vertex,
-a product of finite Laguerre polynomials determines the leading crossing
-uniformly for arbitrary rare counts with total $A=o(b)$, where $b$ is the
-dominant count; the relative root error is
-$O_\ell(\sqrt{(A+1)/b})$. This root approximation can hold even when its
-corresponding probability approximation diverges. We also determine
-spatial superlevel volumes and construct weak occupation fields that make
-every support size optimal in succession. The exact law and the normal
-limit are known and are included for reference. Our results are the
-uniform estimates when the persistence varies with $N$, and their
-consequences near the boundary and for the modes.
+Take a Markov chain on $d$ states that starts uniformly, stays in its
+current state with probability $p$, and otherwise moves to one of the other
+$d-1$ states at random. We count how often it visits each state and compare
+the probability of a given count vector with the probability of a vertex,
+where every visit is to the same state. Writing the law as a sum with
+positive terms, we get a Bessel approximation whose relative error is
+bounded for every positive count vector, even near the boundary of the
+simplex. From it we find the crossing points for balanced faces and for
+interior points, with explicit constants. When at least two coordinates
+are of order $N$, a small coordinate starts to matter once it has size
+$N/(\log N)^2$. Near a vertex, where one count $b$ is much larger than the
+total $A=o(b)$ of the others, the crossing is given by a product of
+Laguerre polynomials up to a relative error $O_\ell(\sqrt{(A+1)/b})$, and
+this can be true even when the matching approximation to the probabilities
+fails. We also find the volumes of the superlevel sets, and a weak field
+under which every support size is the mode in turn. The exact law and the
+normal limit were known before, and we include them for reference.
 \end{abstract}
 
 \section{Introduction}
 
-A symmetric persistent chain provides a simple model in which the most
-likely occupation vector changes from a vertex to the interior as the
-persistence decreases. The comparison involves the probability of one
-specific vector, rather than the aggregate probability of a face. It is
-especially sensitive to coordinates that are small relative to the total
-number of visits. This paper studies those crossing locations for a fixed
-number of states, including count vectors approaching a vertex at
-arbitrary rates.
+When $p$ is close to $1$ the chain rarely switches, so the most likely
+count vector is a vertex. As $p$ decreases, at some point a vector in the
+interior becomes more likely instead. We want to know where that happens.
+Note that we compare the probability of one vector, not of a whole face,
+and this makes the answer depend a lot on coordinates that are small
+compared with $N$. We keep the number of states fixed but let the count
+vector approach a vertex at any rate.
 
-The model is a multistate version of the Galton-board process in Kagey's
-Problem 131~\cite{kagey131}. The binary case, including the comparison of
-free and periodic boundaries, is treated in a companion
-paper~\cite{companion}. This paper does not depend on it, and we prove every
-estimate we use. Geometrically, the occupation vectors index the bins of a
-simplex board with fixed global directions and uniform switching; a board
-with a different rule at its walls gives a different process.
+This is the version of Kagey's Problem 131~\cite{kagey131} with $d$
+directions instead of 2. The binary case, including free and periodic
+boundaries, is in a companion paper~\cite{companion}, but we do not use it
+here and we prove every estimate we need. One way to picture the model is
+a board shaped like a simplex, where each bounce goes in one of $d$ fixed
+directions and a switch goes to each other direction equally often. A
+board with different rules at its walls would give a different process.
 
-Our main estimates address three regimes. On a fixed simplex face, the
-balanced crossing lies in the common window
-$Nu=\log N-\tfrac12\log\log N+O(1)$, with explicit constants depending on
-its support size. A relative Bessel bound uniform over every positive
-composition resolves the transition when additional coordinates have size
-$N/(\log N)^2$. Finally, if one count is $b$ and the remaining counts have
+There are three regimes. On a fixed face of the simplex, the balanced
+crossing is at $Nu=\log N-\tfrac12\log\log N+O(1)$, with a constant that
+depends on the size of the support. A Bessel bound that holds for all
+positive count vectors then handles the case where some coordinates have
+size $N/(\log N)^2$. Finally, if one count is $b$ and the remaining counts have
 total $A=o(b)$, a single polynomial equation gives the crossing with
 relative error $O_\ell(\sqrt{(A+1)/b})$, uniformly over their individual
 sizes. This holds even in a regime where the corresponding approximation
@@ -96,23 +92,21 @@ entries one, then its symmetric occupation rate is
  =d-\left(\sum_i\sqrt{\alpha_i}\right)^2.
 \]
 Hence the exponent $(\sum_i\sqrt{\alpha_i})^2-1$ is the difference
-between the rate at a vertex and the rate at $\alpha$. The Bessel
-expansions we use are standard~\cite{dlmf}, and we prove all the discrete
-comparisons and root inversions. What is new here is that these estimates
-hold uniformly when the persistence depends on $N$, and the consequences
-of this near the boundary and for the modes.
+between the rate at a vertex and the rate at $\alpha$. We take the
+Bessel expansions from~\cite{dlmf} and prove the rest ourselves. What we
+add is that the estimates hold uniformly when $p$ depends on $N$, and what
+that says near the boundary and about the modes.
 
-\paragraph{Organization and scope.}
-Section~\ref{sec:multistate-model} gives the exact law, elementary
-estimates, and fixed-persistence covariance and normal limit.
-Section~\ref{sec:simplex-thresholds} proves the face crossings and
+\paragraph{Organization.}
+In Section~\ref{sec:multistate-model} we write down the exact law, a few
+simple bounds, the covariance and the normal limit for fixed $p$.
+Section~\ref{sec:simplex-thresholds} has the face crossings and the
 balancing theorem. Sections~\ref{sec:frontier-boundary}
-and~\ref{sec:vertex-completion} treat boundary coordinates and the
-uniform near-vertex law. Section~\ref{sec:frontier-modes} treats
-superlevel sets and weak fields. We do not determine every global mode at
-finite $N$, and we do not allow the number of states to grow.
-Example~\ref{ex:simplex-edge-mode} shows that at finite $N$ the global mode
-need not be a vertex or a full center.
+and~\ref{sec:vertex-completion} deal with small coordinates and the
+near-vertex law, and Section~\ref{sec:frontier-modes} with superlevel
+sets and weak fields. We do not find every global mode at finite $N$, and
+the number of states stays fixed. In fact, at finite $N$ the mode does not
+have to be a vertex or a full center (Example~\ref{ex:simplex-edge-mode}).
 
 \section{The model and exact formulas}\label{sec:multistate-model}
 
@@ -126,15 +120,15 @@ be the occupation vector over $N$ visits, and write
 $P_N(k)=\Prob(K_N=k)$. For a word $w$ of length $N\ge1$ with
 $j$ changes, its probability is $d^{-1}p^{N-1-j}r^j$.
 The vertex probability is $V_N=p^{N-1}/d$.
-For $p>0$ put $u=r/p$; for a positive vector
+For $p>0$ put $u=r/p$, and for a positive vector
 $n=(n_1,\ldots,n_k)$ with total $N$, write
 \[
  S_n(u)=\frac{P_N(n_1,\ldots,n_k,0,\ldots,0)}{V_N}
  =\sum_j W_n(j)u^j,
 \]
-where $W_n(j)$ counts words on the specified $k$ states with these
-occupations and $j$ changes. The ratio is independent of the ambient
-number $d$ once the positive coordinates are fixed.
+where $W_n(j)$ is the number of words on the $k$ states with these
+counts and $j$ changes. Note that this ratio does not depend on $d$,
+only on the positive coordinates.
 Set $P_0(0,\ldots,0)=1$ separately.
 
 \begin{proposition}[$d$ directions]\label{prop:dgf}
@@ -235,7 +229,7 @@ two time indices and evaluating the finite geometric sum gives
 \Bigl(N\,\frac{1+\sigma}{1-\sigma}-\frac{2\sigma(1-\sigma^N)}{(1-\sigma)^2}\Bigr),
 \qquad \frac{1+\sigma}{1-\sigma}=\frac{d-2+dp}{d\,(1-p)} .
 \]
-These formulas hold for $p<1$; at $p=1$ the covariance is
+These formulas hold for $p<1$, and at $p=1$ the covariance is
 $N^2(\delta_{ab}/d-1/d^2)$. The asymptotic multiplier of the multinomial covariance is
 $(d-2+dp)/(d(1-p))$, which is $(1+3p)/(3(1-p))$ for the tetrahedral board, $d=3$.
 \end{remark}
@@ -260,9 +254,9 @@ For $D(t)=\operatorname{diag}(e^{itf_i})$ and $B(t)=TD(t)$, stationarity gives
 At zero, $B(0)=T$ has the simple eigenvalue $1$ and all other eigenvalues equal
 $\sigma$, with $|\sigma|<1$. Analytic perturbation gives an eigenvalue $\lambda(t)$
 and right eigenvector $h(t)$ with $\lambda(0)=1$, $h(0)=\mathbf1$ and $\pi h(t)=1$.
-The complementary spectral part is uniformly exponentially small for sufficiently small
-$t$: choose a circle of radius $\eta<1$ enclosing the complementary spectrum but not
-$\lambda(t)$ and use the resolvent formula for matrix powers. Thus the characteristic
+The rest of the spectrum is uniformly exponentially small for small enough $t$. To see
+this, take a circle of radius $\eta<1$ around the rest of the spectrum but not around
+$\lambda(t)$, and use the resolvent formula for matrix powers. Thus the characteristic
 function equals $b(t)\lambda(t)^{N-1}+O(\eta^N)$ with $b(t)\to1$.
 
 Differentiate $Bh=\lambda h$ at zero. Since $B'(0)=iT\operatorname{diag}(f)$,
@@ -310,16 +304,16 @@ rare-coordinate formulas, the spatial profiles, and the weak-field results
 against finite calculations. Finally, \texttt{verify\_vertex\_completion.py}
 makes 462 exact identity comparisons, 200 exact checks of the elasticity
 bounds, 16 root-bracket checks, and 4 large cases with growing rare counts.
-The output is stored under \texttt{data/}. The high-precision decimal checks
-are numerical and do not replace the proofs.
+Everything they print is saved in \texttt{data/}. The decimal checks are
+only numerical, and none of the proofs rely on them.
 
-For a fixed support size, the leading near-vertex crossing is uniform over
-all of $A=o(b)$, but we do not have a uniform higher-order expansion in that
-regime. Other open questions are a growing number of colors, nonuniform
-switching, and the full mode diagram at finite $N$ outside the critical
+Some things are still open. We know the leading near-vertex crossing for
+all of $A=o(b)$, but not the next term uniformly in that range. We also
+have not looked at a growing number of colors, at switching that is not
+uniform, or at the full mode diagram for finite $N$ outside the critical
 window. Example~\ref{ex:simplex-edge-mode} and
-Proposition~\ref{prop:vertex-probability-failure} show that the asymptotic
-results cannot be strengthened in the obvious ways.
+Proposition~\ref{prop:vertex-probability-failure} show that the simplest
+strengthenings of our results are false.
 
 \begin{thebibliography}{9}
 \bibitem{kagey131}

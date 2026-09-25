@@ -35,6 +35,9 @@ in `data/ledger.md`.
 
 Build the paper from `paper/` with `pdflatex main.tex` (twice).
 
+`game/index.html` is a playable version of the problem on grids up to 10 x 10 (open it in a
+browser). It is the rectangle game from my website, with larger grids.
+
 ## Open
 
 - Classify and count the optima for three and four rows.
