@@ -1,6 +1,6 @@
 # Publication and literature notes for Problem 131
 
-Updated September 22, 2026. This is a working assessment, not a novelty certificate.
+Updated September 22, 2026.
 
 The former combined manuscript is now split. Paper A, `problem131.tex`, treats
 binary crossings, the uniform Bessel bounds, fixed-edge Laguerre laws, periodic
