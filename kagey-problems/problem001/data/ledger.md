@@ -100,18 +100,14 @@ around it (9-point staircase plus the corner (5,5); kept blocks of 5 and 10) wer
 
 ## Proof update: 2026-09-21
 
-The historical entries above are retained unchanged. The Three-Row hypothesis is now
-proved: blackout(3,m)=m+2 for every m>=3. The four-row specialization of Excess-1 is
-also proved: blackout(4,m)=m+4 for every m>=6. This is not the older, refuted
-ceil(5m/2)-1 kept-set formula. The 4x4 and 4x5 boundary values are settled by a complete
-finite exclusion of 72 and 1,440 candidates, respectively, using verify_narrow.py.
+Entries above are unchanged. Three-Row is now proved: blackout(3,m) = m+2 for every m >= 3.
+The four-row case of Excess-1 is also proved: blackout(4,m) = m+4 for every m >= 6 (not the
+refuted ceil(5m/2)-1 kept-set formula). 4x4 and 4x5 are settled by checking all 72 and 1,440
+blackouts that could reach the upper bound (verify_narrow.py).
 
-The proof characterizes axis-aligned identification by absence of C4 and C6 in the
-row-column incidence graph, converts column neighborhoods to a triangle-free graph
-on rows, and uses Mantel's bound. Explicit constructions are checked against the
-complete list of tilted shapes on three and four rows. See paper/narrow_rows.tex.
+Proof: the axis-aligned rectangles are identifiable iff the row-column incidence graph has no
+C4 or C6; replacing each column by a tree on its black rows gives a triangle-free graph on the
+rows, and Mantel bounds its edges. The constructions are checked against every tilted rectangle
+on three and four rows. See paper/narrow_rows.tex.
 
-The all-width proofs do not depend on extrapolation from the tests. The general
-Excess-1 conjecture with both dimensions >=5 and the extremizer counts beyond strips
-remain unresolved. AI assistance is disclosed; independent human review and novelty
-checks are still needed.
+Still open: Excess-1 with both dimensions >= 5, and the optimum counts beyond strips.

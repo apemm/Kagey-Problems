@@ -1,7 +1,7 @@
 import Std
 /-!
 Exact finite coefficient and crossing algebra for Problem 131.
-This Lean verification code was developed with OpenAI Codex assistance.
+This Lean verification code was generated with Claude Opus 5.5.
 This file formalizes falling-product coefficients rather than assuming a
 library theorem connecting them to binary words or binomial coefficients.
 -/

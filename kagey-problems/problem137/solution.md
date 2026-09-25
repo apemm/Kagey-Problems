@@ -1,4 +1,4 @@
-# Peter Kagey's Problem 137 — Complete Solution
+# Peter Kagey's Problem 137: Complete Solution
 
 **Problem** ([peterkagey.com/problems/137](https://peterkagey.com/problems/137/)). Starting from $0$ and repeatedly applying $f(x)=x+1$ and $g(x)=-1/x$ produces every rational number; organizing the values by the least number of steps needed to produce them gives the tree of OEIS [A226247](https://oeis.org/A226247)/[A226248](https://oeis.org/A226248). Let $a(n)$ be the number of elements of rank $n$ (rank $0$ being the root $0$).
 
@@ -10,7 +10,7 @@
 
 ## Answers
 
-**Yes**, $a(n)=a(n-1)+a(n-3)$ for all $n\ge 4$ (Theorem 3; the recurrence fails at $n=3$, where $a(3)-a(2)-a(0) = -1$, so $n\ge4$ is sharp). **Yes**, blue $\iff$ negative (Corollary 2). And the rank of every rational is given by a closed formula in terms of its continued fraction expansion — three equivalent forms are given in Theorems 2 and 4 — which yields an explicit enumeration of each rank (Related question 2).
+**Yes**, $a(n)=a(n-1)+a(n-3)$ for all $n\ge 4$ (Theorem 3; the recurrence fails at $n=3$, where $a(3)-a(2)-a(0) = -1$, so $n\ge4$ is sharp). **Yes**, blue $\iff$ negative (Corollary 2). And the rank of every rational is given by a closed formula in terms of its continued fraction expansion (three equivalent forms are given in Theorems 2 and 4), which yields an explicit enumeration of each rank (Related question 2).
 
 Everything below is self-contained: we prove an exact formula for the rank of every rational, deduce the tree's local structure, and count. The generating function of $a$ is
 $$\sum_{n\ge0} a(n)\,t^n \;=\; \frac{1+t^2-t^3}{1-t-t^3},$$
@@ -22,9 +22,9 @@ so $a(n) \sim C\,\psi^{\,n}$ with $\psi = 1.465571\ldots$ the *supergolden ratio
 
 Work with the directed graph $G$ on vertex set $\mathbb{Q}$ having an $f$-edge $x \to x+1$ for every $x\in\mathbb{Q}$ and a $g$-edge $x \to -1/x$ for every $x \ne 0$. For $x \in \mathbb{Q}$ let
 $$d(x) = \text{length of the shortest directed path from } 0 \text{ to } x \text{ in } G,$$
-the least number of applications of $f,g$ producing $x$ from $0$. (Reachability — hence finiteness of $d$ — is part of Theorem 1.)
+the least number of applications of $f,g$ producing $x$ from $0$. (Reachability, and hence finiteness of $d$, is part of Theorem 1.)
 
-**Lemma 0 (generations are metric spheres).** In Kimberling's construction (A226247) — row $1 = (0)$, and row $n+1$ lists $c+1$ and $-1/c$ for each $c$ in row $n$, deleting previously generated values — row $n+1$ equals $\{x : d(x)=n\}$. The same set is Kagey's rank $n$ and the set $X_n$ of the Math.SE question.
+**Lemma 0 (generations are metric spheres).** In Kimberling's construction (A226247), row $1 = (0)$ and row $n+1$ lists $c+1$ and $-1/c$ for each $c$ in row $n$, deleting previously generated values. Then row $n+1$ equals $\{x : d(x)=n\}$. The same set is Kagey's rank $n$ and the set $X_n$ of the Math.SE question.
 
 *Proof.* Induction on $n$ (breadth-first search). Row 1 $=\{x: d(x)=0\}$. If rows $\le n$ are the spheres of radius $<n$, then a value listed in row $n+1$ is an out-neighbour of a vertex at distance $n-1$, so has $d \le n$; deletion of previously generated values forces $d > n-1$, so row $n+1 \subseteq \{d = n\}$. Conversely if $d(x)=n$, the predecessor of $x$ on a shortest path has distance $n-1$, so lies in row $n$, and $x$ appears in row $n+1$. $\blacksquare$
 
@@ -56,7 +56,7 @@ Unwinding the definition gives two identities for free, and two more with a shor
 $$z \;\xmapsto{P}\; \frac{1}{1-x}\in(0,1) \;\xmapsto{P}\; \frac{x}{1-x}\in(-1,0) \;\xmapsto{P}\; 1-\frac{1}{x} > 1 \;\xmapsto{P}\; -\frac1x = P(x).$$
 (For the second membership: $x/(1-x) = -u/(1+u) \in (-1,0)$ where $u=-x>0$.) Hence $D(z) = 4 + D(P(x)) = 4 + (D(x)-1) = D(x)+3$. $\blacksquare$
 
-*Remark.* The computation in (D4), read backwards, says $x-1 = (g\circ f\circ g\circ f\circ g)(x)$: it is exactly the relation $f^{-1} = g f g f g$ from the problem statement (equivalently $(gf)^3=\mathrm{id}$ in $\mathrm{PSL}_2(\mathbb{Z})\cong C_2 * C_3$). The "$3$" in (D4) — cost $5$ of the relator word minus the cancellation $g\cdot g=\mathrm{id}$ — is precisely where the $t^3$ of the recurrence will come from.
+*Remark.* The computation in (D4), read backwards, says $x-1 = (g\circ f\circ g\circ f\circ g)(x)$: it is exactly the relation $f^{-1} = g f g f g$ from the problem statement (equivalently $(gf)^3=\mathrm{id}$ in $\mathrm{PSL}_2(\mathbb{Z})\cong C_2 * C_3$). The "$3$" in (D4), which is the cost $5$ of the relator word minus the cancellation $g\cdot g=\mathrm{id}$, is exactly where the $t^3$ of the recurrence will come from.
 
 **Theorem 1 (distance formula, dynamic form).** Every rational is reachable from $0$, and $d(x)=D(x)$ for all $x\in\mathbb{Q}$.
 
@@ -83,7 +83,7 @@ In particular **exactly one** in-neighbour of $x$ is closer to $0$ than $x$, nam
 
 **Corollary 2 (tree structure).** (a) Each $x\ne0$ first appears as the image of its unique parent $P(x)$, and never appears twice in one generation (that would require both in-neighbours at distance $d(x)-1$). The construction is therefore a well-defined tree with rank function $d$, independent of any tie-breaking.
 
-(b) The last map applied to reach $x$ (the colour of the edge from its parent) is $f$ exactly when $x>0$ and $g$ exactly when $x<0$. **A vertex is blue if and only if its value is negative** — answering Related question 1 affirmatively.
+(b) The last map applied to reach $x$ (the colour of the edge from its parent) is $f$ exactly when $x>0$ and $g$ exactly when $x<0$. Hence a vertex is blue if and only if its value is negative, which answers Related question 1.
 
 (c) Children: a vertex $x>0$ has exactly two children, $x+1$ and $-1/x$ (both at rank $d(x)+1$); a vertex $x\in(-1,0)$ has exactly one child, $x+1\in(0,1)$; a vertex $x\le-1$ is a leaf. For a leaf $x<-1$ the blocked $f$-image is not new but **three ranks old**: $d(x+1)=d(x)-3$; for $x=-1$, $x+1=0$ is the root.
 
@@ -127,11 +127,11 @@ Consequently $\;a(n)=a(n-1)+a(n-3)$ for **all** $n\ge4$, and this fails at $n=3$
 
 *Proof.* The map $x\mapsto -1/x$ is a bijection from the negatives of rank $n$ to the positives of rank $n-1$ (by (D2)/(D3)), so $a(n)=r(n)+r(n-1)$ for $n\ge1$. By the enumeration above, $r(n)$ counts tuples $(c_1,\dots,c_k)$, $c_1\ge1$, $c_i\ge2$ ($i\ge2$), with $\sum_i c_i + (k-1) = n$; each tuple contributes $t^{\,c_1} \cdot (t\cdot t^{c_2})\cdots(t\cdot t^{c_k})$, whence
 $$R(t) = \sum_{k\ge1} \Big(\sum_{c\ge1}t^{c}\Big) \Big(t\sum_{c\ge2}t^{c}\Big)^{k-1} = \frac{t}{1-t}\sum_{k\ge1}\Big(\frac{t^{3}}{1-t}\Big)^{k-1} = \frac{t}{1-t-t^{3}}.$$
-Then $A(t) = 1 + (1+t)R(t) = \dfrac{(1-t-t^3) + t + t^2}{1-t-t^3} = \dfrac{1+t^2-t^3}{1-t-t^3}$. Multiplying out, $(1-t-t^3)A(t) = 1+t^2-t^3$: comparing coefficients of $t^n$ gives $a(n)-a(n-1)-a(n-3) = 0$ for every $n\ge4$ (the numerator has degree $3$), while at $n=3$ it equals $-1$ — matching $a(3)=2$, $a(2)+a(0)=3$. The identification with A000930/A097333 is by their generating functions $\frac{t}{1-t-t^3}$ (shifted) and $\frac{1+t}{1-t-t^3}$. $\blacksquare$
+Then $A(t) = 1 + (1+t)R(t) = \dfrac{(1-t-t^3) + t + t^2}{1-t-t^3} = \dfrac{1+t^2-t^3}{1-t-t^3}$. Multiplying out, $(1-t-t^3)A(t) = 1+t^2-t^3$: comparing coefficients of $t^n$ gives $a(n)-a(n-1)-a(n-3) = 0$ for every $n\ge4$ (the numerator has degree $3$), while at $n=3$ it equals $-1$, matching $a(3)=2$, $a(2)+a(0)=3$. The identification with A000930/A097333 is by their generating functions $\frac{t}{1-t-t^3}$ (shifted) and $\frac{1+t}{1-t-t^3}$. $\blacksquare$
 
 **Growth.** From $A(t)$: $a(n) = C\psi^n + O(|\mu|^n)$ where $\psi=1.4655712319\ldots$ is the supergolden ratio (real root of $t^3=t^2+1$), $\mu$ the complex roots ($|\mu| = \psi^{-1/2}\approx0.826$), and $C = \frac{\psi^2+\psi}{\psi^2+3} = 0.7019310679\ldots$.
 
-**Where the "$-3$" lives (structural view).** Corollary 2(c) sorts each rank into four classes — $r^{+}$: $x>1$; $r^{-}$: $0<x\le1$; $b^{0}$: $-1<x<0$; $b^{1}$: $x\le-1$ — with exact transition rules
+**Where the "$-3$" lives (structural view).** Corollary 2(c) sorts each rank into four classes ($r^{+}$: $x>1$; $r^{-}$: $0<x\le1$; $b^{0}$: $-1<x<0$; $b^{1}$: $x\le-1$) with exact transition rules
 $$r^{+\prime} = r^{+}+r^{-},\qquad r^{-\prime} = b^{0},\qquad b^{0\prime} = r^{+},\qquad b^{1\prime} = r^{-},$$
 (the $f$-child of any positive is $>1$; the $f$-child of a $b^0$-vertex is in $(0,1]$; $g$ sends $(1,\infty)\to(-1,0)$ and $(0,1]\to(-\infty,-1]$; $b^1$-vertices are leaves). The transfer matrix has characteristic polynomial $t\,(t^{3}-t^{2}-1)$: a positive takes three steps to produce a new positive through the negatives ($r^{+}\to b^{0}\to r^{-}\to r^{+}$), and that three-step detour is the combinatorial shadow of the relation $(gf)^3=\mathrm{id}$, i.e. of identity (D4).
 
@@ -141,7 +141,7 @@ Reversing $P$-orbits also solves the word problem for this generating process. R
 $$L \;=\; \Big{\, f^{m_1} g\, f^{m_2} g \cdots f^{m_j} g^{\,\varepsilon} \;:\; j\ge1,\ \varepsilon\in\{0,1\},\ m_1,\dots,m_{j-1}\ge2,\ m_j\ge1 \,} \cup \{\text{empty}\},$$
 and evaluation at $0$ is a **bijection** from $L$ onto $\mathbb{Q}$ sending word length to rank: the $f$-runs are precisely the negative-continued-fraction digits of Theorem 2 read bottom-up ($m_j = c_1$, $m_{j-1}=c_2,\dots$), with $\varepsilon=1$ exactly for the negatives.
 
-This closes the gap in the (accepted) answer by *mathmasterzach* to the Math.SE question [#5057812](https://math.stackexchange.com/q/5057812): that answer observed that minimal words must avoid the factors $gg$ and $fgfgf$ (from $g^2=\mathrm{id}$ and $(gf)^3=\mathrm{id}$) and must not begin $g\cdots$ or $fgf\cdots$, built the 14-state suffix automaton for the resulting language — which is exactly $L$ — and computed the generating function $\frac{1+t^2-t^3}{1-t-t^3}$ by transfer matrix. What that argument does not establish is that counting *words* counts *rationals*: that every pattern-avoiding word is in fact minimal for its endpoint, that no two such words evaluate to the same rational, and that every rational is realized. Those are exactly the statements supplied here by Theorem 1 and Corollary 2 (uniqueness of the parent), via the explicit formula $d=D$.
+This closes the gap in the (accepted) answer by *mathmasterzach* to the Math.SE question [#5057812](https://math.stackexchange.com/q/5057812): that answer observed that minimal words must avoid the factors $gg$ and $fgfgf$ (from $g^2=\mathrm{id}$ and $(gf)^3=\mathrm{id}$) and must not begin $g\cdots$ or $fgf\cdots$, built the 14-state suffix automaton for the resulting language (which is exactly $L$) and computed the generating function $\frac{1+t^2-t^3}{1-t-t^3}$ by transfer matrix. What that argument does not establish is that counting *words* counts *rationals*: that every pattern-avoiding word is in fact minimal for its endpoint, that no two such words evaluate to the same rational, and that every rational is realized. Those are exactly the statements supplied here by Theorem 1 and Corollary 2 (uniqueness of the parent), via the explicit formula $d=D$.
 
 ## 6. Computational verification
 

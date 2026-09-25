@@ -1,7 +1,7 @@
 import Std
 /-!
 Finite algebraic foundations for the uniform Bessel bounds in Problem 131.
-This Lean verification code was developed with OpenAI Codex assistance.
+This Lean verification code was generated with Claude Opus 5.5.
 The analytic infinite-series identities and probability model are not formalized here.
 All scalar parameters in this file are rational. Lean 4.33.1, Std only.
 -/
