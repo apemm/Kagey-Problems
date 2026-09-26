@@ -115,3 +115,7 @@ edge law and the matching between them, the log 2 shift between boundaries, the 
 window, and the multistate crossing constants and near-vertex results. The balancing argument in
 Paper B uses the standard fact that the binomial transform preserves log-concavity.
 
+## Papers C and D
+
+Papers C and D discuss their earlier work in their own introductions. `paperD/README.md` also
+lists the sources for the elephant walk, heavy-tailed runs and aging walks.

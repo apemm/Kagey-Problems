@@ -6,6 +6,8 @@ This supplement serves 4 papers on Kagey's Problem 131, all by A. Pemmasani (pre
 | --- | --- | --- |
 | A | Uniform Bessel bounds for endpoint crossings in the persistent random walk | `problem131.tex` |
 | B | Vertex crossings in a symmetric Markov multinomial model | `problem131_multistate.tex` |
+| C | Face selection for slowly switching Markov chains and the planar persistent walk | `paperC/problem131_switching.tex` |
+| D | Endpoint crossings for random walks with memory | `paperD/problem131_memory.tex` |
 
 The proofs are in the papers. The scripts check the finite statements exactly and the asymptotic
 ones numerically, and where possible each number is computed in 2 independent ways. For each paper
@@ -94,16 +96,60 @@ registered predictions that failed (T1(e) and T4), so the output cannot be judge
 registrations and check nothing, so `verify_all.py` does not run them. The dated logs in `data/`
 are from earlier versions of the manuscripts, before they were split.
 
-## Papers C and D
+## Paper C: slowly switching Markov chains
 
-Papers C and D will be added to this supplement when they are posted.
+`python -B verify_all.py --paper c` runs `paperC/verify_all.py`, which takes a few minutes, or up to
+about half an hour with `--full`. Its output is in `paperC/data/verify_output.txt`, and the ledgers
+are `paperC/data/ledger_C1.md` to `ledger_C5.md`. A script that finds a failed check lists it and
+exits with an error.
+
+| Result that rests on computation | Script | The 2 methods |
+| --- | --- | --- |
+| The moment lemma behind the Fisher theorem | `verify_sticky_fisher.py` | The 3 moments from the exact law with q as a symbol for N <= 12 against the closed forms, and exact rationals at N = 13, 15 and 17 for 3 values of q. The identity for Var X^2 is checked in sympy. |
+| The row Theta_eps of the table of examples (2 triangles joined by a weak link) | `verify_examples.py` | 3 exact resultants in sympy, from characteristic polynomials recomputed from the matrices. The thresholds from their closed forms and from numerical roots, and the certificate at eps_0 in exact rational arithmetic. |
+| The values of c_F on the 4-cycle | `verify_second_order.py` | The next Laplace term evaluated exactly in 2 forms, and a continuum check by Richardson extrapolation of the torus integral. |
+
+| Script | What it checks |
+| --- | --- |
+| `verify_first_order.py` | The exact law and first-order face selection. The run expansion in exact rationals against all words and a dynamic program, the rate on a face by direct maximization and by a Legendre transform of the Perron root, and the winners from the convex hull and from a direct minimization over all faces. |
+| `verify_second_order.py` | The local law, the constants K_F, the crossings and the directed 3-cycle. P_N(n) by the run expansion and by a discrete torus integral, and K_F from Perron vectors in double precision and from the Hessian of the Perron root at 30 digits. |
+| `verify_examples.py` | The 4-cycle and the table of examples. Exit rates with numpy and with mpmath at 40 digits, the winners by the hull and on a grid, and the modes at finite N by a dynamic program of the whole chain and by the run expansion on each face. |
+| `verify_planar.py` | The planar walk. The origin probability by the switch-count formula and by Fourier inversion, and for N <= 10 also by a dynamic program and all 4^N words. Paper A's crossing from the run formula and from the recurrence. |
+| `verify_sticky_fisher.py` | Sticky priors and the Fisher information. The law of the counts by a dynamic program and by exact formulas, the direct-jump probability by Monte Carlo and 2 quadratures, and the information of the endpoint by the run formula and by a complex-step derivative of Paper A's recurrence. |
+
+## Paper D: walks with memory
+
+`python -B verify_all.py --paper d` runs `paperD/verify_all.py`, which takes about 5 minutes, or
+about 45 minutes with `--full`. Its output is in `paperD/data/verify_output.txt` and
+`verify_output_full.txt`, and `paperD/data/ledger.md` indexes the ledgers `ledger_D1.md` to
+`ledger_D4.md`. Labels that say "research notes, not printed" check numbers that the paper no longer
+prints.
+
+The proofs do not use the computations, except that some constants are values of explicit series
+and integrals and that the remark on the bulk uses a computed sign.
+
+| Result that rests on computation | Script | The 2 methods |
+| --- | --- | --- |
+| The upper bound on C_n in the bounds theorem for the elephant walk (the constant 5200) | `verify_elephant_crossing.py` | The series sum over t of t^2 log(t+1) 2^(-t/2) = 102.59 by mpmath and by a direct sum, so 3 + 50.4 times it is below 5200. |
+| The golden-ratio corollary, C(phi) = 0.7761317206 and the factor 1.2884 | `verify_heavy_runs.py` | The general formula for C(alpha) and the closed form at the golden ratio. |
+| The remark on the bulk, f_L''(lambda_0) = -0.0789 (computed, not certified) | `verify_elephant_shape.py` | The Landau density by a real integral and by Fourier inversion. |
+| The convexity conjecture, checked for 10 <= n <= 600 and n = 1600, 3200, ..., 25600 | `verify_elephant_shape.py` | The law from the minority-count chain and from the law of A_n directly. |
+| The ranges after the dip corollary (x_n >= 2(1 - eps_n) for 8 <= n <= 600 and on the grid n = 50 * 2^k <= 51200) | `verify_elephant_shape.py` and `verify_elephant_crossing.py` | The crossing from the minority-count chain and from the full law of A_n. |
+| The numbers in the remarks on the refined crossing, on other exponents and on crossover sizes | `verify_elephant_crossing.py` and `verify_heavy_runs.py` | For the elephant walk the 2 methods above. For heavy tails the two-renewal formula and a spectral method, and for small n a first-run recursion and a sum over all run compositions. |
+| The aging remark | `verify_aging.py` | A forward recursion, transfer matrices at roots of unity, and the path-weight form in exact rationals. |
+
+`verify_elephant_crossing.py` checks the crossing of the elephant walk, `verify_elephant_shape.py`
+the shape of its law at the crossing, `verify_heavy_runs.py` the heavy-tailed runs and
+`verify_aging.py` the aging walk. For the Markov walk of Paper A they use an exact run-count formula
+and a dynamic program.
 
 ## Lean
 
-The Lean 4 proofs are in `lean/`, one library for each paper (`lean/PaperA` and `lean/PaperB`), with
+The Lean 4 proofs are in `lean/`, one library for each paper (`lean/PaperA` to `lean/PaperD`), with
 Lean 4.33.1 and Mathlib. `python -B lean/verify_lean.py` builds them with Lake and checks that every
 theorem and lemma uses only the axioms `propext`, `Classical.choice` and `Quot.sound`. The last run
-checked 481 declarations for Paper A and 307 for Paper B. The
+checked 481 declarations for Paper A, 307 for Paper B, 346 for Paper C and 281 for Paper D. The
 build output, source hashes and axioms are in `lean/build-log.txt` and
 `lean/verification-manifest.json`.
-`lean/README.md` says what each library covers and what is not in Lean.
+`lean/README.md` says what each library covers and what is not in Lean, and `lean/PaperC/MAP.md`
+and `lean/PaperD/MAP.md` match the statements of Papers C and D to their Lean theorems.

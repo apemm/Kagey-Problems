@@ -52,9 +52,31 @@ Files. `problem131_multistate.tex` and `problem131_multistate.pdf`, with the sec
 `frontier_boundary.tex`, and the appendices `app_thresholds.tex`, `app_start_field.tex`,
 `app_boundary.tex` and `vertex_completion.tex`.
 
-## Papers C and D
+## Paper C: Face selection for slowly switching Markov chains and the planar persistent walk
 
-Papers C and D will be added here when they are posted.
+Paper C gives the general theory for a chain on d states with transition matrix P = I + (T/N)Q, run
+for N steps with T = tau L. The counts of the N visits play the role of the bin. To first order the
+mode sits on a face F that minimizes tau lambda_F + |F| - 1, where lambda_F is the principal
+Dirichlet eigenvalue of -Q on F, the rate at which the chain leaves F. At second order a strongly
+connected face with start mass has a constant K_F, and the crossings of 2 such faces satisfy a
+crossing equation. The constants of Papers A and B are corollaries. The main application is the
+planar persistent walk, which is Kagey's board in 2 dimensions. The paper also treats sticky priors
+for hidden Markov models and the Fisher information carried by the endpoint.
+
+Files. The folder `paperC`, with `problem131_switching.tex` and `problem131_switching.pdf`, its
+section and appendix files, the check scripts and `paperC/README.md`.
+
+## Paper D: Endpoint crossings for random walks with memory
+
+Paper D asks what memory changes. In the elephant random walk each step copies a uniformly chosen
+earlier step and flips it with probability eps. The crossing x_n = n eps_n is unique and
+x_n = 2 z_n - log(2 pi) + o(1), about twice the Markov value. The law at the crossing has 2 humps,
+one near each end. For alternating runs with P(xi >= k) = k^(-alpha) and 1 < alpha < 2, the ends win
+for large n exactly when alpha is below the golden ratio. A short remark treats aging walks, where
+the crossing with a fixed first step is exactly c = 1.
+
+Files. The folder `paperD`, with `problem131_memory.tex` and `problem131_memory.pdf`, its section
+and appendix files, the check scripts and `paperD/README.md`.
 
 ## Earlier work
 
