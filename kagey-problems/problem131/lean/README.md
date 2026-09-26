@@ -1,21 +1,90 @@
-# Lean proofs of the finite steps
+# Lean proofs for Problem 131
 
-The three files contain 27 theorems, checked with Lean 4.33.1 and `Std` (no Mathlib). All
-parameters are rational, integer or natural numbers.
+This folder has the Lean 4 proofs for the Problem 131 papers. Each paper is a separate library
+with a root file (`PaperA.lean`) and a folder of modules (`PaperA/`). We use Lean 4.33.1 and
+Mathlib v4.33.1. Each module starts with a docstring that lists what it proves. Libraries for
+Papers C and D will be added when those papers are posted.
 
-- `FiniteBessel.lean`: clipped-product deficits, falling-product bounds including the zero tail,
-  weighted shifted products, and error bounds for finite weighted sums.
-- `RunAlgebra.lean`: monotonicity of the coefficient products toward the center and in the board
-  size, coefficient identities, the adjacent crossings, and the simplification of the error terms.
-- `EdgeExpansion.lean`: the coefficients that follow from the Taylor coefficient equations,
-  including the fixed-edge coefficient -1.
+## Paper A (`problem131.tex`)
 
-These do not prove the probability model or the asymptotic theorems. The infinite series, the
-Bessel asymptotics, Laplace's method, the implicit function theorem and the limits are only in the
-papers. The coefficient products are also not linked to a formal count of words or binomial
-coefficients.
+`PaperA/` is about the binary walk. It proves the following.
 
-Run `python -B verify_lean.py` (or add `--lean /path/to/lean`). It compiles the three files and
-checks that every theorem uses only the standard axioms (`propext`, `Classical.choice`,
-`Quot.sound`). The output, the source hashes and the list of theorems are in `build-log.txt` and
-`verification-manifest.json`.
+- The exact law of the walk, the two-state recursion and the count of words by their changes
+  (`Model`).
+- The three-term recurrence, the generating function, the numerators and the mean and variance
+  (`Recurrence`).
+- The rook-path and Mathar-walk counts for the numerator tables (`Tables`).
+- The normal limit, through the characteristic function and Lévy's continuity theorem
+  (`NormalLimit`).
+- The central and adjacent crossings, `p_N < p_{N+1}` and the ordering of all the bins
+  (`Crossing`, `RunAlgebra`).
+- The uniform Bessel bounds for the central, all-bin, periodic and edge polynomials. Here `I_0`
+  and `I_1` are defined as power series (`Bessel`, `BesselDeriv`, `FiniteBessel`,
+  `UniformBessel`).
+- The comparison of the exact crossings with the Bessel roots (`RootBounds`), and the leading
+  terms `1 - p_N ~ (log N)/N` and `2√(ab) u_{a,b} ~ log a` (`Asymptotics`, `AllbinAsymptotics`).
+- The finite parts of the edge and periodic results. These are the polynomial `H_a` and its root
+  `y_a`, the algebra of the edge expansion, the cyclic count and the adjacent periodic threshold
+  (`Edge`, `EdgeExpansion`, `Periodic`, `AllbinAsymptotics`).
+- The crossing at every `N ≥ 2`, `ζ_N + 1/(8ζ_N) - ε_N < N(1 - p_N) < ζ_N + 1/(8ζ_N)`, where
+  `8 ζ_N e^{2ζ_N} = π N²` and `ε_N = ζ_N(ζ_N+1)/N + 1/(16ζ_N²)`. For `N ≤ 174` the kernel checks
+  exact integer certificates. For `N ≥ 175` the proof uses the integral form of `I_0 + I_1` and
+  explicit bounds on `√(πz/2) e^{-z} (I_0(z) + I_1(z))` (`EveryN`, `BesselIntegral`,
+  `EveryNLarge`).
+
+## Paper B (`problem131_multistate.tex`)
+
+`PaperB/` is about the walk with `d` states. It proves the following.
+
+- The exact law for the uniform start and the finite positive-refresh sum (`Model`, `Refresh`).
+- The exact covariance of the occupation counts, whose variance case the weak-field proposition
+  uses (`Covariance`, `ChainCovariance`).
+- The face crossings, the growth of the balanced crossings with `N` and the first 2 coefficients
+  of the crossing polynomial (`Words`, `Crossing`, `Coefficients`).
+- Balancing within a support, using the log-concavity of `B_n` in `n` (`LogConcave`, `Balance`).
+- The example with `d = 3` and `N = 4` where the edge centers are the modes (`EdgeExample`).
+- Singleton insertion and the explicit `S_(b,1,1)`, exact checks from an earlier version of the
+  paper that the current version no longer states (`Singleton`).
+- The clipped-product, elasticity, Laguerre-Bessel and randomization lemmas (`Clipped`,
+  `Elasticity`, `VertexH`, `LaguerreBessel`, `Randomization`).
+- The uniform near-vertex bracket `(1-δ)√(y_a/b) < u_{b,a} < (1+δ)√(y_a/b)` (`VertexRoot`,
+  `Randomization`).
+- The ordering of the window constants `a_k`, the exact parts of the weak-field phase diagram and
+  the covolume `√k` behind the superlevel volumes (`Constants`, `Modes`).
+
+## What is not in Lean
+
+The general large-argument asymptotics of the Bessel functions are not formalized. The one
+exception is the explicit bound on `I_0 + I_1` that the every-N crossing theorem of Paper A needs,
+which is proved from its integral form, so that theorem is in Lean for every `N`. Anything else
+built on the asymptotics is left out, and for those results the libraries only have the exact
+finite steps. In Paper A this means the terms of the all-bin and edge expansions beyond the
+leading ones. The crossing equation, the corollary on the crossing at every `N` beyond its part
+(a), the sign remark, the spatial window and the uniform local law of Paper A are also not in
+Lean. In Paper B the window, the Gaussian volumes and the frontier limits are left out. `PaperB`
+proves the exact law for the uniform start only, so the law with a general start and the tree
+form of the constants are not in it.
+
+## Building and checking
+
+With a normal clone, run these commands in this folder.
+
+    lake exe cache get
+    lake build
+
+The first command downloads the compiled Mathlib. Then run
+
+    python -B verify_lean.py --workspace .
+
+This builds each library with Lake and runs `#print axioms` on every `theorem` and `lemma`. It
+checks that only `propext`, `Classical.choice` and `Quot.sound` appear. It also checks that the
+declarations it reads from the source are exactly the theorems Lean finds in the library. The
+results go to `build-log.txt` and `verification-manifest.json`. The manifest has the module list,
+the SHA-256 of every source file and the axioms of every declaration. To check only some
+libraries, name them (for example `python -B verify_lean.py PaperB --workspace .`).
+
+We build outside OneDrive, with one Lake workspace per paper (`~/lean-work/paperA` and so on).
+Each workspace has a `lakefile.toml` whose `lean_lib` has `srcDir` set to this folder. This is the
+default for `verify_lean.py`, and it writes its temporary Lean files inside the workspace.
+
+The Lean code in this folder was generated by AI (Claude Opus 5.5).

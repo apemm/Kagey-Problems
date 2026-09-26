@@ -1,0 +1,155 @@
+==========================================================================================
+T1  Kirchhoff form of the constants
+------------------------------------------------------------------------------------------
+(a) exp(-(k-1)a_k) against D_k = k^{k+1/2}/(4pi)^{(k-1)/2}
+   k=2  a_k=-0.467355827915  D_k=1.595769121606  exp(-(k-1)a_k)=1.595769121606  D_k/k^{k-2}=1.595769 (= k^{5/2}(4pi)^{-(k-1)/2} = 1.595769)
+   k=3  a_k=-0.657059381685  D_k=3.721470044097  exp(-(k-1)a_k)=3.721470044097  D_k/k^{k-2}=1.240490 (= k^{5/2}(4pi)^{-(k-1)/2} = 1.240490)
+   k=4  a_k=-0.813929418195  D_k=11.493575816011  exp(-(k-1)a_k)=11.493575816011  D_k/k^{k-2}=0.718348 (= k^{5/2}(4pi)^{-(k-1)/2} = 0.718348)
+   k=5  a_k=-0.947465006112  D_k=44.250205895509  exp(-(k-1)a_k)=44.250205895509  D_k/k^{k-2}=0.354002 (= k^{5/2}(4pi)^{-(k-1)/2} = 0.354002)
+   k=6  a_k=-1.063775186512  D_k=204.154269799753  exp(-(k-1)a_k)=204.154269799753  D_k/k^{k-2}=0.157526 (= k^{5/2}(4pi)^{-(k-1)/2} = 0.157526)
+   k=7  a_k=-1.166875562834  D_k=1098.008514954393  exp(-(k-1)a_k)=1098.008514954392  D_k/k^{k-2}=0.065330 (= k^{5/2}(4pi)^{-(k-1)/2} = 0.065330)
+   worst relative difference 1.44e-15
+(b) tau(K_k, c_ij = x_i x_j): matrix-tree vs Pruefer enumeration vs prod x (sum x)^{k-2}
+   k=2: matrix-tree==Pruefer: True   ==closed form: True   unit-weight count 1 (k^(k-2) = 1)  trees enumerated 1
+   k=3: matrix-tree==Pruefer: True   ==closed form: True   unit-weight count 3 (k^(k-2) = 3)  trees enumerated 3
+   k=4: matrix-tree==Pruefer: True   ==closed form: True   unit-weight count 16 (k^(k-2) = 16)  trees enumerated 16
+   k=5: matrix-tree==Pruefer: True   ==closed form: True   unit-weight count 125 (k^(k-2) = 125)  trees enumerated 125
+   k=6: matrix-tree==Pruefer: True   ==closed form: True   unit-weight count 1296 (k^(k-2) = 1296)  trees enumerated 1296
+   k=7: matrix-tree==Pruefer: True   ==closed form: True   unit-weight count 16807 (k^(k-2) = 16807)  trees enumerated 16807
+(c) det Sigma(Doob chain) == 2^{k-1} (prod alpha)^2 / tau(sqrt(alpha_i alpha_j)), exact
+   k=2: equal: True   det Sigma = 1.022403e-01
+   k=3: equal: True   det Sigma = 3.823869e-03
+   k=4: equal: True   det Sigma = 7.301111e-05
+   k=5: equal: True   det Sigma = 8.520625e-07
+   k=6: equal: True   det Sigma = 6.741339e-09
+   k=7: equal: True   det Sigma = 3.865846e-11
+   center of K_k (x all equal): det Sigma_k == 2^{k-1} k^{1-2k}:
+      k=2: True
+      k=3: True
+      k=4: True
+      k=5: True
+      k=6: True
+      k=7: True
+(d) D(alpha): Paper B's form vs A^2 (4pi)^{-(k-1)/2} sqrt(tau)/prod alpha vs A^2 det(2 pi Sigma)^{-1/2}
+   35 random alpha: worst rel diff tree form 4.44e-16, covariance form 4.44e-16
+(e) Legendre check: det Hess_{alpha'} (d - A^2) * det Sigma_alpha = 1
+   k=2 alpha=[0.5701, 0.4299]: product = 1.000000045
+   k=2 alpha=[0.7642, 0.2358]: product = 1.000000161
+   k=2 alpha=[0.2795, 0.7205]: product = 1.000000108
+   k=3 alpha=[0.2376, 0.3812, 0.3812]: product = 1.000000232
+   k=3 alpha=[0.2776, 0.4513, 0.2711]: product = 1.000000242
+   k=3 alpha=[0.2136, 0.4296, 0.3568]: product = 1.000000277
+   k=4 alpha=[0.155, 0.2682, 0.3778, 0.1991]: product = 1.000000808
+   k=4 alpha=[0.3298, 0.3807, 0.0943, 0.1952]: product = 1.000001589
+   k=4 alpha=[0.3418, 0.2947, 0.1194, 0.2441]: product = 1.000001031
+   k=5 alpha=[0.0674, 0.2435, 0.0778, 0.4164, 0.1949]: product = 1.000004791
+   k=5 alpha=[0.0989, 0.3268, 0.2531, 0.0989, 0.2224]: product = 1.000002617
+   k=5 alpha=[0.2077, 0.2519, 0.1175, 0.1709, 0.2519]: product = 1.000001581
+   worst |product - 1| = 4.79e-06
+(f) mass identity sum_n S_n(u) = sum_j (-1)^{k-j} C(k,j) j (1+(j-1)u)^{N-1}
+   brute force (all k^N words) == closed form for k=2..4, N=k..9: True
+   D_k (2pi)^{(k-1)/2} sqrt(det Sigma_k) / k - 1: worst 2.22e-16 (k=2..7)
+(g) Huang-Kious-Sidoravicius-Tarres Theorem 1 (last-exit trees) vs run-count density, K_3
+   HKST density = 2.267044696412719e-01   run-count density = 2.267044696412715e-01   rel diff = 1.78e-15
+==========================================================================================
+T2  exact law with a general start
+------------------------------------------------------------------------------------------
+(a) refresh formula == enumeration for 357 bins (d=3, mu=(1/2,1/3,1/6), p in {1/5,1/2,9/10}, N=1..7): True
+(b) balanced bins, k | N: P^mu == (d mu(F)/k) P^unif exactly: True
+(c) omega_a = E_w[m_a/M] (refresh weights) == S^(a)/S (enumeration): True
+(d) rounding, k=2, bin (h+1,h) at t=0 (z = L - (1/2) log L + a_2)
+   N=21: omega_big (refresh)=0.510776942328839 (run)=0.510776942328839  N(omega_big-omega_small)=0.452632  proved bound (2/h)(EM+EM^2)=6.6374e+00  diff<=bound: True  heuristic 0.5(1-1/(4z))=0.4381
+   N=201: omega_big (refresh)=0.501175729929270 (run)=0.501175729929269  N(omega_big-omega_small)=0.472643  proved bound (2/h)(EM+EM^2)=2.0782e+00  diff<=bound: True  heuristic 0.5(1-1/(4z))=0.4688
+   N=2001: omega_big (refresh)=0.500119701338405 (run)=0.500119701338406  N(omega_big-omega_small)=0.479045  proved bound (2/h)(EM+EM^2)=4.2795e-01  diff<=bound: True  heuristic 0.5(1-1/(4z))=0.4796
+(e) omega lemma, k=2, n=(1200,800), N=2000, z = L - (1/2) log L
+   omega_1 (run)=0.548555167907 (refresh)=0.548555167907  limit sqrt(a1)/A=0.550510  diff=-0.00196  heuristic (1-2 sqrt(a1)/A)/(4A^2 z)=-0.00194
+==========================================================================================
+T3  crossings with a general start, d=4, mu=(2/5,3/10,1/5,1/10)
+------------------------------------------------------------------------------------------
+A: F={1,2,3} (k=3) vs vertex 1: a_k(mu)=-0.5132183455, identity target S_n = 1.3333333333
+   N=     3: z(M1)=1.414213562373 z(M2)=1.414213562373 z(S_n=target)=1.414213562373  rel M1-M2=0.0e+00 M1-id=0.0e+00 trunc=0.0e+00  DP(M3) ratio at root = 1.00000000000000
+   N=    30: z(M1)=2.766346584059 z(M2)=2.766346584059 z(S_n=target)=2.766346584059  rel M1-M2=5.6e-16 M1-id=5.6e-16 trunc=0.0e+00  DP(M3) ratio at root = 1.00000000000000  u decreasing: True
+            ahat=-0.171273  ahat-a(mu)=+0.341945  tol=0.38576  within: True  heuristic ((k-1)/2)z^2/N=0.25509  [0.0s]
+   N=   300: z(M1)=4.548612647817 z(M2)=4.548612647817 z(S_n=target)=4.548612647817  rel M1-M2=0.0e+00 M1-id=0.0e+00 trunc=0.0e+00  u decreasing: True
+            ahat=-0.425240  ahat-a(mu)=+0.087979  tol=0.11730  within: True  heuristic ((k-1)/2)z^2/N=0.06897  [0.3s]
+   N=  3000: z(M1)=6.587380843338 z(M2)=6.587380843338 z(S_n=target)=6.587380843338  rel M1-M2=0.0e+00 M1-id=0.0e+00 trunc=0.0e+00  u decreasing: True
+            ahat=-0.495384  ahat-a(mu)=+0.017834  tol=0.03751  within: True  heuristic ((k-1)/2)z^2/N=0.01446  [0.5s]
+   N= 30000: z(M1)=8.729940847731 z(M2)=8.729940847731 z(S_n=target)=8.729940847731  rel M1-M2=0.0e+00 M1-id=0.0e+00 trunc=0.0e+00  u decreasing: True
+            ahat=-0.509951  ahat-a(mu)=+0.003267  tol=0.01566  within: True  heuristic ((k-1)/2)z^2/N=0.00254  [0.9s]
+B: F={2,3} (k=2) vs vertex 4: a_k(mu)=-1.3836465598, identity target S_n = 0.4000000000
+   N=     2: z(M1)=0.400000000000 z(M2)=0.400000000000 z(S_n=target)=0.400000000000  rel M1-M2=0.0e+00 M1-id=0.0e+00 trunc=0.0e+00  DP(M3) ratio at root = 1.00000000000000
+   N=    20: z(M1)=1.609752870433 z(M2)=1.609752870433 z(S_n=target)=1.609752870433  rel M1-M2=0.0e+00 M1-id=0.0e+00 trunc=0.0e+00  DP(M3) ratio at root = 1.00000000000000  u decreasing: True
+            ahat=-1.225591  ahat-a(mu)=+0.158056  tol=0.51547  within: True  heuristic ((k-1)/2)z^2/N=0.06478  [0.0s]
+   N=   200: z(M1)=3.389841688015 z(M2)=3.389841688015 z(S_n=target)=3.389841688015  rel M1-M2=0.0e+00 M1-id=0.0e+00 trunc=0.0e+00  u decreasing: True
+            ahat=-1.334959  ahat-a(mu)=+0.048688  tol=0.14448  within: True  heuristic ((k-1)/2)z^2/N=0.02873  [0.0s]
+   N=  2000: z(M1)=5.407675912958 z(M2)=5.407675912958 z(S_n=target)=5.407675912958  rel M1-M2=0.0e+00 M1-id=0.0e+00 trunc=0.0e+00  u decreasing: True
+            ahat=-1.372432  ahat-a(mu)=+0.011214  tol=0.04882  within: True  heuristic ((k-1)/2)z^2/N=0.00731  [0.0s]
+   N= 20000: z(M1)=7.529427709195 z(M2)=7.529427709195 z(S_n=target)=7.529427709195  rel M1-M2=0.0e+00 M1-id=0.0e+00 trunc=0.0e+00  u decreasing: True
+            ahat=-1.381252  ahat-a(mu)=+0.002395  tol=0.02047  within: True  heuristic ((k-1)/2)z^2/N=0.00142  [0.0s]
+==========================================================================================
+T4  K_3, mu=(1/2,1/2,0): edge window at finite N
+------------------------------------------------------------------------------------------
+N=90: t_low(M1)=-0.20298836 t_low(A's S_N=1, M2)=-0.20298836 rel u diff=0.0e+00
+        t_up=-0.04735056  width=0.155638   predicted t_low=-0.298226 t_up=-0.286088 width=0.012138
+        t_low-pred=+0.095238 (tol 0.1794, ok True)  t_up-pred=+0.238737 (tol 0.1887, ok False)
+        full-face maximiser at t_up: n=(32,32,26)  |n1-n2|=0  z(1/3-n3/N)=0.16446 (pred n3~27.3)
+        z*log(M_full/P(N/3,N/3,N/3))=0.05386 (limit 1/24=0.04167)
+        M2 confirms sign change at t_up +- 1e-9 rel: True  |M1-M2| log value at maximiser=2.7e-15  [0.1s]
+N=1002: t_low(M1)=-0.31970797 t_low(A's S_N=1, M2)=-0.31970797 rel u diff=0.0e+00
+        t_up=-0.27171620  width=0.047992   predicted t_low=-0.340235 t_up=-0.323179 width=0.017057
+        t_low-pred=+0.020527 (tol 0.0474, ok True)  t_up-pred=+0.051463 (tol 0.0476, ok False)
+        full-face maximiser at t_up: n=(345,345,312)  |n1-n2|=0  z(1/3-n3/N)=0.12453 (pred n3~314.4)
+        z*log(M_full/P(N/3,N/3,N/3))=0.04640 (limit 1/24=0.04167)
+        M2 confirms sign change at t_up +- 1e-9 rel: True  |M1-M2| log value at maximiser=0.0e+00  [0.1s]
+N=10002: t_low(M1)=-0.35992716 t_low(A's S_N=1, M2)=-0.35992716 rel u diff=0.0e+00
+        t_up=-0.33503444  width=0.024893   predicted t_low=-0.363991 t_up=-0.344597 width=0.019393
+        t_low-pred=+0.004064 (tol 0.0143, ok True)  t_up-pred=+0.009563 (tol 0.0143, ok True)
+        |width-shifted pred|=0.005500  |width-noshift pred|=0.000462  shifted closer: False
+        full-face maximiser at t_up: n=(3413,3413,3176)  |n1-n2|=0  z(1/3-n3/N)=0.12267 (pred n3~3190.9)
+        z*log(M_full/P(N/3,N/3,N/3))=0.04458 (limit 1/24=0.04167)
+        M2 confirms sign change at t_up +- 1e-9 rel: True  |M1-M2| log value at maximiser=1.8e-15  [0.3s]
+N=100002: t_low(M1)=-0.37896510 t_low(A's S_N=1, M2)=-0.37896510 rel u diff=0.0e+00
+        t_up=-0.35751150  width=0.021454   predicted t_low=-0.379849 t_up=-0.359060 width=0.020789
+        t_low-pred=+0.000884 (tol 0.0061, ok True)  t_up-pred=+0.001549 (tol 0.0061, ok True)
+        |width-shifted pred|=0.000665  |width-noshift pred|=0.003324  shifted closer: True
+        full-face maximiser at t_up: n=(33936,33936,32130)  |n1-n2|=0  z(1/3-n3/N)=0.11960 (pred n3~32215.5)
+        z*log(M_full/P(N/3,N/3,N/3))=0.04385 (limit 1/24=0.04167)
+        M2 confirms sign change at t_up +- 1e-9 rel: True  |M1-M2| log value at maximiser=0.0e+00  [0.7s]
+N=1000002: t_low(M1)=-0.39091547 t_low(A's S_N=1, M2)=-0.39091547 rel u diff=0.0e+00
+        t_up=-0.36927390  width=0.021642   predicted t_low=-0.391213 t_up=-0.369503 width=0.021710
+        t_low-pred=+0.000298 (tol 0.0036, ok True)  t_up-pred=+0.000229 (tol 0.0035, ok True)
+        |width-shifted pred|=0.000068  |width-noshift pred|=0.003363  shifted closer: True
+        full-face maximiser at t_up: n=(338194,338194,323614)  |n1-n2|=0  z(1/3-n3/N)=0.11794 (pred n3~324176.5)
+        z*log(M_full/P(N/3,N/3,N/3))=0.04343 (limit 1/24=0.04167)
+        M2 confirms sign change at t_up +- 1e-9 rel: True  |M1-M2| log value at maximiser=1.1e-14  [1.3s]
+N=90 brute-force DP over all bins (M3):
+   DP vs M1 on 6 bins at t=-0.3: worst rel diff 6.7e-15; total mass 1.000000000000000
+   from t=-1.00: global modes [(0, 90, 0), (90, 0, 0)]
+   from t=-0.20: global modes [(45, 45, 0)]
+   from t=-0.04: global modes [(32, 32, 26)]
+   from t=+0.20: global modes [(31, 32, 27), (32, 31, 27)]
+==========================================================================================
+T4' (registered after T4 was killed): same model, discrete z^2/N terms included
+------------------------------------------------------------------------------------------
+N=3000: t_low(M1)=-0.34333762 t_low(A's S_N=1, M2)=-0.34333762 rel u diff=0.0e+00
+        t_up=-0.31098157  width=0.032356   predicted t_low=-0.346109 t_up=-0.314003 width=0.032106
+        t_low-pred=+0.002771 (tol 0.0112, ok True)  t_up-pred=+0.003021 (tol 0.0112, ok True)
+        |width-shifted pred|=0.000250  |width-noshift pred|=0.005597  shifted closer: True
+        full-face maximiser at t_up: n=(1028,1028,944)  |n1-n2|=0  z(1/3-n3/N)=0.12423 (pred n3~949.9)
+        z*log(M_full/P(N/3,N/3,N/3))=0.04530 (limit 1/24=0.04167)
+        M2 confirms sign change at t_up +- 1e-9 rel: True  |M1-M2| log value at maximiser=5.3e-15  [0.3s]
+N=30000: t_low(M1)=-0.37037464 t_low(A's S_N=1, M2)=-0.37037464 rel u diff=0.0e+00
+        t_up=-0.34806909  width=0.022306   predicted t_low=-0.371064 t_up=-0.348481 width=0.022582
+        t_low-pred=+0.000689 (tol 0.0035, ok True)  t_up-pred=+0.000412 (tol 0.0035, ok True)
+        |width-shifted pred|=0.000276  |width-noshift pred|=0.004756  shifted closer: True
+        full-face maximiser at t_up: n=(10206,10206,9588)  |n1-n2|=0  z(1/3-n3/N)=0.12078 (pred n3~9621.0)
+        z*log(M_full/P(N/3,N/3,N/3))=0.04417 (limit 1/24=0.04167)
+        M2 confirms sign change at t_up +- 1e-9 rel: True  |M1-M2| log value at maximiser=5.3e-15  [0.5s]
+N=300000: t_low(M1)=-0.38521279 t_low(A's S_N=1, M2)=-0.38521279 rel u diff=0.0e+00
+        t_up=-0.36380289  width=0.021410   predicted t_low=-0.385511 t_up=-0.363855 width=0.021656
+        t_low-pred=+0.000298 (tol 0.0018, ok True)  t_up-pred=+0.000052 (tol 0.0018, ok True)
+        |width-shifted pred|=0.000246  |width-noshift pred|=0.003873  shifted closer: True
+        full-face maximiser at t_up: n=(101621,101622,96757)  |n1-n2|=1  z(1/3-n3/N)=0.11870 (pred n3~96964.3)
+        z*log(M_full/P(N/3,N/3,N/3))=0.04363 (limit 1/24=0.04167)
+        M2 confirms sign change at t_up +- 1e-9 rel: True  |M1-M2| log value at maximiser=0.0e+00  [0.9s]
+total time 18.7s

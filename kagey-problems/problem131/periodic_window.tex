@@ -1,65 +1,65 @@
 \section{Boundary conditions and a spatial crossing window}\label{sec:periodicwindow}
 
-The binary model is also a zero-field Ising chain with free boundaries. For step signs
-$\varepsilon_i\in\{-1,1\}$ its weight is proportional to
-$\exp(K\sum_{i=1}^{N-1}\varepsilon_i\varepsilon_{i+1})$, where
-$u=q/p=e^{-2K}$. The analogous periodic measure includes the last-to-first bond.
-Antal, Droz and R\'acz~\cite{antal2004} derive boundary-dependent limiting magnetization
-laws, and Dantchev and Rudnick~\cite{dantchev2022} give exact free and periodic coefficients.
-Stepanyan et al.~\cite{stepanyan2024} study the periodic endpoint--adjacent
-and endpoint--center comparisons directly. So neither the periodic law nor the
-crossing question is new. Here we bound the discrete error uniformly and give a
-large-$N$ expansion that refines their finite-size approximation.
+The periodic chain adds the bond between the last and the first spin to the
+Ising chain of the introduction. So its weight is proportional to
+$\exp(J\sum_{i=1}^N\sigma_i\sigma_{i+1})$ with $\sigma_{N+1}=\sigma_1$, and
+again $u=e^{-2J}$. Antal, Droz and
+R\'acz~\cite{antal2004} give the magnetization laws of both chains at a
+fixed scale, and Dantchev and Rudnick~\cite{dantchev2022} give exact free and
+periodic coefficients. This chain is not the free walk on the cylinder of
+Remark~\ref{rem:cyl}.
 
-Note that the periodic spin measure is not the same as wrapping the free Galton walk
-around a cylinder, which is the case in Remark~\ref{rem:cyl}.
-Write $R^{\mathrm F}_{N,k}$ and $R^{\mathrm P}_{N,k}$ for bin-to-endpoint ratios under
-free and periodic boundaries. Put $a=k$, $b=N-k$ and $s=\sqrt{ab}$. The classical cyclic count is
+Write $R^{\mathrm F}_{N,k}=S_{k,N-k}$ and $R^{\mathrm P}_{N,k}$ for the
+bin-to-endpoint ratios under free and periodic boundaries. Put $a=k$, $b=N-k$
+and $s=\sqrt{ab}$. The classical cyclic count is
 \begin{equation}\label{eq:periodicratio}
 R^{\mathrm P}_{N,k}(u)=\sum_{r=1}^{\min(a,b)}\frac Nr
  \binom{a-1}{r-1}\binom{b-1}{r-1}u^{2r}.
 \end{equation}
-Indeed, choose compositions of each letter count into $r$ positive runs, choose a
-labeled position for the start of a distinguished run of one letter, and divide by
-its $r$ possible choices. The normalization of the periodic measure cancels in the ratio.
-In particular $R^{\mathrm P}_{N,1}=Nu^2$, giving the known adjacent threshold
-$K=(\log N)/4$. Every interior ratio is strictly increasing from zero to infinity in
-$u>0$, and the ratios increase strictly toward the middle, except for the symmetric
-middle-bin tie. The coefficient comparison uses the same products $(a-j)(b-j)$ as
-the free case.
+To see this, choose compositions of $a$ and of $b$ into $r$ positive runs and a
+position for the start of a distinguished run of $\sR$'s, and divide by the $r$
+choices of that run. The normalization of the periodic measure cancels in the
+ratio. In particular $R^{\mathrm P}_{N,1}=Nu^2$, which gives the adjacent
+crossing $J=(\log N)/4$ of Stepanyan et~al.\@~\cite{stepanyan2024}. Every interior ratio increases strictly from $0$ to
+$\infty$ in $u>0$, and the ratios increase strictly toward the middle, apart
+from the symmetric middle tie, by the coefficient comparison of
+Proposition~\ref{prop:allbin-order}.
 
 \begin{theorem}[periodic relative error]\label{thm:periodic-bessel}
 For $N\ge2$, $1\le k\le N-1$, and $u>0$, define
 \[
-T^{\mathrm P}_{N,k}(u)=\frac{Nu}{\sqrt{k(N-k)}}
+\widehat R^{\mathrm P}_{N,k}(u)=\frac{Nu}{\sqrt{k(N-k)}}
  I_1\!\left(2u\sqrt{k(N-k)}\right).
 \]
 Then
 \begin{equation}\label{eq:periodicbound}
-0\le1-\frac{R^{\mathrm P}_{N,k}(u)}{T^{\mathrm P}_{N,k}(u)}
+0\le1-\frac{R^{\mathrm P}_{N,k}(u)}{\widehat R^{\mathrm P}_{N,k}(u)}
 \le\frac{Nu^2}{2}.
 \end{equation}
 \end{theorem}
 \begin{proof}
-Set $x=su$, $A=ab/N$, and
-$U_r=r!\binom{a-1}{r}/a^r$, $V_r=r!\binom{b-1}{r}/b^r$.
-The clipped-product inequality gives
-$0\le1-U_rV_r\le r(r+1)/(2A)$, including the zero factors beyond support.
-After shifting the index in \eqref{eq:periodicratio}, the ratio to $T^{\mathrm P}$ is
-the weighted average of $U_rV_r$ with weights $x^{2r+1}/(r!(r+1)!)$.
-Their sum is $I_1(2x)$, while their $r(r+1)$-weighted sum is $x^2I_1(2x)$.
-Thus the relative deficit is at most $x^2/(2A)=Nu^2/2$.
+Put $x=su$, $A=ab/N$, $U_r=U_r(a)$ and $V_r=U_r(b)$. Shifting the index in
+\eqref{eq:periodicratio} gives
+$R^{\mathrm P}_{N,k}(u)=(Nu/s)\sum_{r\ge0}U_rV_rx^{2r+1}/(r!(r+1)!)$, so the
+ratio to $\widehat R^{\mathrm P}_{N,k}$ is an average of the $U_rV_r$ with
+weights $x^{2r+1}/(r!(r+1)!)$, whose sum is $I_1(2x)$. By
+\eqref{eq:allbin-odd-deficit}, $0\le1-U_rV_r\le r(r+1)/(2A)$, and the second
+identity of Lemma~\ref{lem:clipped}(c) bounds the deficit by $x^2/(2A)=Nu^2/2$.
 \end{proof}
 
-We can guess the $\log 2$ in the next theorem. A cyclic word always switches an even number of
-times, but a free word can also start and end on different letters, and those words give the
-$I_0$ term in the free approximation. For large arguments $I_0\approx I_1$, so near the crossing
-the free ratio is about twice the periodic one. Both grow like $e^{Nu}$, so the periodic crossing
-should need $Nu$ to be about $\log 2$ larger.
+We can guess the $\log2$ in the next theorem. A cyclic word switches an even
+number of times, and the free words that start and end on different letters
+give the $I_0$ term of the free approximation. As $I_0\approx I_1$ for large
+arguments, the free ratio is about twice the periodic one near the crossing.
+Both grow like $e^{Nu}$, so the periodic crossing needs $Nu$ about $\log2$
+larger. The factor $2$ also appears at a fixed scale $T=Nq$, where Antal, Droz
+and R\'acz~\cite[Eqs.~(37) and~(47)]{antal2004} find the endpoint atoms
+$1/(2\cosh T)$ (periodic) and $e^{-T}/2$ (free), whose ratio tends to $2$ while
+the densities at zero magnetization agree to leading order.
 
 \begin{theorem}[periodic crossing and boundary shift]\label{thm:periodic-crossing}
-Let $u_N^{\mathrm P}$ be the positive central root, and let $u_N^{\mathrm F}=u_N$
-be the free central root. Put $L=\log N$ and $c_{\mathrm P}=\tfrac12\log(\pi/2)$.
+Let $u_N^{\mathrm P}$ be the positive root of $R^{\mathrm P}_{N,m_N}(u)=1$, and
+let $u_N^{\mathrm F}=u_N$ be the free central root. Put $L=\log N$ and $c_{\mathrm P}=\tfrac12\log(\pi/2)$.
 Then
 \begin{align}
 Nu_N^{\mathrm P}
@@ -71,43 +71,50 @@ N(u_N^{\mathrm P}-u_N^{\mathrm F})
  +o(1/\log N).\label{eq:boundaryshift}
 \end{align}
 Replacing $Nu_N^{\mathrm P}$ by $N(1-p_N^{\mathrm P})$ preserves
-\eqref{eq:periodicasym}. In the Ising convention $K=\beta J$,
+\eqref{eq:periodicasym}. At the periodic crossing the coupling
+$J_N^{\mathrm P}$ satisfies
 \begin{equation}\label{eq:isingtemperature}
-\beta_N^{\mathrm P}J
+J_N^{\mathrm P}
 =\tfrac12(\log N-\log\log N)
 +\frac{\tfrac14\log\log N-\tfrac12c_{\mathrm P}}{\log N}
 +O\!\left(\frac{(\log\log N)^2}{(\log N)^2}\right).
 \end{equation}
 \end{theorem}
 \begin{proof}
-At the middle, $2s=N+O(1/N)$. Evaluate Theorem~\ref{thm:periodic-bessel}
-at $u=c\log N/N$ for fixed $c>0$. Its relative error tends to zero, and the Bessel
-expansion makes the ratio tend to zero when $c<1$ and to infinity when $c>1$.
-Monotonicity therefore gives $Nu_N^{\mathrm P}\sim\log N$.
-Writing $z=Nu_N^{\mathrm P}$ and using
-$I_1(z)=e^z(2\pi z)^{-1/2}(1-3/(8z)+O(z^{-2}))$ in the estimate at the root yields
+At the middle $2s=N+O(1/N)$. At $u=(1\pm\epsilon)L/N$ with fixed
+$\epsilon\in(0,1)$ the bound of Theorem~\ref{thm:periodic-bessel} tends to $0$,
+and the large-argument form of $I_1$ makes $\widehat R^{\mathrm P}$ tend to
+$\infty$ with the plus sign and to $0$ with the minus sign. By monotonicity
+$Nu_N^{\mathrm P}\sim L$. Write $z=Nu_N^{\mathrm P}$. At the root
+$\log\widehat R^{\mathrm P}=O(L^2/N)$ by \eqref{eq:periodicbound}, replacing
+the argument $2su$ by $z$ changes it by $O(L/N^2)$, and
+$I_1(z)=e^z(2\pi z)^{-1/2}(1-3/(8z)+O(z^{-2}))$~\cite[Eq.~10.40.1]{dlmf}. So
 \[
-z+\tfrac12\log z=L+c_{\mathrm P}+\frac3{8z}
-+O(z^{-2}+L^2/N).
+z+\tfrac12\log z=L+c_{\mathrm P}+\frac3{8z}+O(z^{-2}+L^2/N),
 \]
-The odd-$N$ argument change contributes only $O(L/N^2)$ to this logarithmic equation.
-Substitute $z=L+d+e/L$. The constant terms give
-$d=-\tfrac12\log L+c_{\mathrm P}$, and the $1/L$ terms give $e=3/8-d/2$.
-The derivative of the left side is at least one, so the residual yields the stated
-error. Since $N(u-u/(1+u))=O(L^2/N)$, the switching-probability version follows.
-Subtract the free expansion, where $c_{\mathrm F}=\tfrac12\log(\pi/8)$ and the
-correction is $1/8$, to obtain \eqref{eq:boundaryshift}. Finally
-$\beta J=-\tfrac12\log u=\tfrac12(L-\log z)$ gives \eqref{eq:isingtemperature}.
+and Lemma~\ref{lem:inversion} with $\ell=L$, $C=c_{\mathrm P}$ and $B=\frac38$
+gives \eqref{eq:periodicasym}. As $N(u-u/(1+u))=O(L^2/N)$ for $Nu=O(L)$, it
+also holds for $N(1-p_N^{\mathrm P})$, and $Nu_N=z_N+O(L^2/N)$ by
+\eqref{eq:zN}. Subtracting \eqref{eq:thirdorder}, where $c_0=c_{\mathrm P}-\log2$
+and the correction is $\frac18$, gives \eqref{eq:boundaryshift}. Finally
+$J=-\frac12\log u=\frac12(L-\log z)$, and
+$\log z=\log L-(\frac12\log L-c_{\mathrm P})/L+O((\log L)^2/L^2)$ gives
+\eqref{eq:isingtemperature}.
 \end{proof}
 
-Stepanyan et al.\ describe their formula \cite[Eq.~(16)]{stepanyan2024}, which is
-linear in $\log N$, as a finite-size approximation. Equation~\eqref{eq:isingtemperature}
-gives the large-$N$ behavior with a proved error term.
+Stepanyan et~al.\@~\cite[Eq.~(16)]{stepanyan2024} approximate the periodic
+crossing by $\beta J\approx(2\log N-1)/5$, and their Fig.~1(b) fits the line
+$\beta J\approx0.3864\log N-0.21055$. At $N=10^5$ the exact periodic crossing
+is $J=4.576$ (their $\beta J$). Their Eq.~(16) gives $4.405$, their line gives
+$4.238$, and \eqref{eq:isingtemperature} without its error term gives $4.578$.
+The line is accurate for $10\le N\le100$ (at $N=100$ it gives $1.569$ and the
+exact value is $1.574$), but it has no $\log\log N$ term.
 
-The factor $e^{-2y^2}$ is not hard to see. If we move $yN/\sqrt{\log N}$ away from the
-middle, the Bessel argument is multiplied by $2\sqrt{k(N-k)}/N\approx1-2y^2/\log N$. The argument
-is about $\log N$, so it goes down by about $2y^2$, and since the ratio grows roughly like $e$ to
-the argument, it goes down by a factor of about $e^{-2y^2}$.
+The factor $e^{-2y^2}$ is easy to guess. Moving $yN/\sqrt{\log N}$ away from
+the middle multiplies the Bessel argument by
+$2\sqrt{k(N-k)}/N\approx1-2y^2/\log N$. The argument is about $\log N$, so it
+drops by about $2y^2$, and the ratio, which grows like $e$ to the argument,
+drops by about the factor $e^{-2y^2}$.
 
 \begin{theorem}[spatial crossing window]\label{thm:critical-window}
 Let $X\in\{\mathrm F,\mathrm P\}$ and let $u_N^X$ be its exact central crossing.
@@ -128,35 +135,33 @@ endpoint probability at that parameter, then
 \end{equation}
 \end{theorem}
 \begin{proof}
-Put $L=\log N$, $\delta=k/N-1/2$, and
-$\eta=2\sqrt{k(N-k)}/N=\sqrt{1-4\delta^2}$.
-For the stated rounding and bounded $y$,
+Put $\delta=k/N-\frac12$ and $\eta=2\sqrt{k(N-k)}/N=\sqrt{1-4\delta^2}$. For the
+stated rounding and bounded $y$,
 \[
-\eta=1-\frac{2y^2}{L}+O\!\left(L^{-2}+\frac1{N\sqrt L}\right),
+\eta=1-\frac{2y^2}{L}+O\Bigl(L^{-2}+\frac1{N\sqrt L}\Bigr),
 \qquad Nu_N^X=L+O(\log L).
 \]
-Thus the Bessel argument at $(u,k)$ equals
-$(Nu_N^X+t)\eta=Nu_N^X+t-2y^2+o(1)$, uniformly on the compact set.
-Use the free all-bin estimate and Theorem~\ref{thm:periodic-bessel}. Both have
-relative discrete error $O(L^2/N)$ here. The Bessel expansion
-$I_\nu(z)=e^z/\sqrt{2\pi z}\,(1+O(1/z))$, for $\nu=0,1$, shows that the
-prefactors relative to their central values tend uniformly to one. The argument
-change contributes $e^{t-2y^2}$. Since the central exact ratio is one, this proves
+So the Bessel argument $Nu\eta$ at $(u,k)$ is $Nu_N^X+t-2y^2+o(1)$, uniformly
+on the compact set. By Theorems~\ref{thm:allbin-bessel}
+and~\ref{thm:periodic-bessel} both ratios are within relative error
+$O(L^2/N)$ of their Bessel forms, and $I_0(z)$ and $I_1(z)$ equal
+$e^z(2\pi z)^{-1/2}(1+O(1/z))$~\cite[Eq.~10.40.1]{dlmf}, so the prefactors
+relative to their central values tend to $1$ uniformly. The change of argument
+gives $e^{t-2y^2}$, and the exact central ratio is $1$, which proves
 \eqref{eq:criticalprofile}.
 
-The interior ratios increase toward the middle. If $t\le0$, no interior bin is
-strictly above the endpoint at or below the central crossing. If $t>0$, for any
-$0<\epsilon<\sqrt{t/2}$ the bins at scaled distance less than
-$\sqrt{t/2}-\epsilon$ are above the endpoint, whereas those at distance
-$\sqrt{t/2}+\epsilon$ are below. Monotonicity excludes all more distant bins,
-even outside the compact interval on which the local limit was applied. Count the
-resulting interval, divide by $N/\sqrt L$, and let $\epsilon\downarrow0$.
+The interior ratios increase toward the middle. If $t\le0$, the central ratio
+is at most $1$, so no interior bin is above the endpoint. If $t>0$ and
+$0<\epsilon<\sqrt{t/2}$, then for large $N$ the bins at scaled distance less
+than $\sqrt{t/2}-\epsilon$ are above the endpoint and those at distance
+$\sqrt{t/2}+\epsilon$ are below, and by monotonicity so are all farther bins.
+Count the bins in between, divide by $N/\sqrt L$ and let $\epsilon\downarrow0$.
 Rounding changes the count by $O(1)$.
 \end{proof}
 
 The window has width about $1/N$ in $p$ and about $N/\sqrt{\log N}$ in space.
 A weak limit theorem would not give this, since it says nothing about a single
-bin, and in particular nothing about the endpoint.
+bin such as the endpoint.
 Figure~\ref{fig:window} shows the exact ratios at $N=10^6$.
 
 \begin{figure}[t]

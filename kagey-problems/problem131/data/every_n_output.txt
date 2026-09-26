@@ -1,0 +1,86 @@
+verify_every_n.py  (Paper A, crossing for every N)  run 2026-09-26 04:03
+c_0 = -0.467355827915217877054134506511
+
+[1] zeta_N: Decimal Newton vs float Lambert-W (Halley)
+  N in 2..2000 and 5e3,1e4,1e5,1e6: max relative difference = 2.20e-16
+  N(zeta=4) = sqrt(32/pi) e^4 = 174.252083839377  -> zeta_N >= 4 iff N >= 175
+  zeta_174 = 3.998713170327851
+  zeta_175 = 4.003807281595780
+
+[2] Bessel lemma: E(z) by series (Decimal) vs trapezoid (float), and the bounds
+   z        E_series              E_trap      |diff|     lower-gap    upper-gap   z^3*(E-1+1/(8z)+3/(128z^2))
+    0.01 0.124707876938436988 0.124707876938437 2.5e-16 8.814e+04 2.905e+04 +0.000246
+    0.05 0.273414891605553076 0.273414891605553 1.1e-16 7.143e+02 2.232e+02 +0.001394
+     0.1 0.377467043161318606 0.377467043161318 7.2e-16 9.086e+01 2.633e+01 +0.002971
+     0.2 0.509617950304801859 0.509617950304803 8.9e-16 1.171e+01 2.942e+00 +0.005764
+     0.5 0.710271952022118344 0.710271952022117 8.9e-16 7.571e-01 1.804e-01 +0.006753
+       1 0.844320163640556570 0.844320163640555 1.2e-15 8.065e-02 3.654e-02 -0.007242
+    1.25 0.877500467946870644 0.877500467946872 1.2e-15 3.750e-02 2.250e-02 -0.014648
+       2 0.928371645057628250 0.928371645057630 1.6e-15 7.717e-03 6.931e-03 -0.026152
+       3 0.954778253406322732 0.954778253406323 7.8e-16 2.304e-03 2.036e-03 -0.025675
+       4 0.966938777053816412 0.966938777053816 7.8e-16 1.027e-03 8.041e-04 -0.022168
+       5 0.973903879241419978 0.973903879241421 7.8e-16 5.445e-04 3.930e-04 -0.019828
+       7 0.981612888991840877 0.981612888991834 6.7e-15 2.046e-04 1.371e-04 -0.017717
+      10 0.987249050035802389 0.987249050035799 3.1e-15 7.132e-05 4.587e-05 -0.016575
+      15 0.991557804456317981 0.991557804456311 7.0e-15 2.135e-05 1.338e-05 -0.015847
+      20 0.993689466237414966 0.993689466237411 4.1e-15 9.046e-06 5.602e-06 -0.015520
+      30 0.995806728235415654 0.995806728235411 4.3e-15 2.692e-06 1.649e-06 -0.015213
+      50 0.997490505164761728 0.997490505164761 6.7e-16 5.833e-07 3.542e-07 -0.014979
+     100 0.998747641438768376 0.998747641438768 6.7e-16 7.308e-08 4.411e-08 -0.014811
+     200 0.999374412221352051 0.999374412221352 2.2e-16 9.145e-09 5.503e-09 -0.014729
+  bounds hold on the grid z = 0.05, 0.10, ..., 100 (2000 points); max |series - trapezoid| = 7.0e-15
+  -15/1024 = -0.014648 (predicted limit of the last column)
+
+[3] exact certificates, N = 2..400 (run-count and DP), N = 401..1000 (run-count only)
+  N = 2..174: all certificates pass. smallest upper margin 0.033193 at N = 174, smallest lower margin 0.085591 at N = 174
+     R_N: smallest gap to 1/(16 z^2) is 0.037363 at N = 174; smallest gap to -(z^2+z)/N is 0.081325 at N = 174
+  N = 2..1000: all certificates pass; DP agreed exactly for N <= 400.
+     also checked for every N in 2..1000: L/2 <= z_N (and z_N <= L for N >= 3); lambda_N <= zeta_N <= lambda_N + (log L - 2c_0)/(4 lambda_N), lambda_N = L - (1/2)log L + c_0
+     exact sign of z_N - zeta_N from the certificates: undecided at []; sign(N=2) = +1; changes at [16, 219]
+     smallest upper margin 0.0127860 at N = 1000; smallest lower margin 0.0259451 at N = 1000
+     time: run-count 38.6s, DP 10.9s
+  certificates written to data/every_n_certificates.csv
+  Paper A Table tab:pn consistent with the certified brackets (to its 8 decimals): yes
+
+[4a] margin functions of the analytic proof on zeta in [4, 60], step 0.001
+  B_U>0, D_U>0, beta_l<0, delta_l<0 and zeta^2 B_U nondecreasing on the grid: True
+  min zeta^2 B_U = 0.011236 ; min D_U N/zeta = 1.3789 ; max beta_l zeta^2 = -0.018084 ; max delta_l N/zeta = -1.0021
+  at zeta = 4: zeta^2 B_U = 0.011236, D_U = 0.031652, beta_l = -1.130e-03, delta_l = -2.705e-02
+  (outside the proof) zeta = 3.0: B_U = 4.508e-04, D_U = 3.900e-02, beta_l = -1.525e-03, delta_l = -7.243e-02
+  (outside the proof) zeta = 3.5: B_U = 6.690e-04, D_U = 3.776e-02, beta_l = -1.340e-03, delta_l = -4.413e-02
+
+[4b] sufficient conditions evaluated per N (N = 2..3000)
+     up: Phi(W)(1 - W(W+2)/(2N)) > N/2 with W = N U/(N-U), U = zeta + 1/(8 zeta)
+     lo: Phi(W') <= N/2 with W' = N l/(N-l), l = U - zeta(zeta+1)/N - 1/(16 zeta^2)
+  up_exact : fails at [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] -> holds for every N in [16, 3000]
+  lo_exact : fails at [] -> holds for every N in [2, 3000]
+  up_lemma : fails at [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16] -> holds for every N in [17, 3000]
+  lo_lemma : fails at [] -> holds for every N in [2, 3000]
+
+[5] z_N = N(1-p_N): method 1 = run-count Decimal bisection; method 2 = float DP
+   N      z_N (method 1)        z_N (method 2)       zeta_N        err_N=z-zeta-1/(8zeta)  heur    eps_N   R_N
+       2 0.666666666666667         0.666666666667 0.5368290974 -0.1030112 -0.10417 0.62938 +0.050643   (0.0s)
+       3 0.878679656440357         0.878679656440 0.7651186441 -0.0498123 -0.04300 0.55694 +0.040497   (0.0s)
+       4 1.020501995862309         1.020501995862 0.9464546465 -0.0580245 -0.03190 0.53033 -0.010778   (0.0s)
+       5 1.162040603780009         1.162040603780 1.0961706466 -0.0481634 -0.03174 0.51157 -0.012522   (0.0s)
+      10 1.615958871375812         1.615958871376 1.6001732978 -0.0623310 -0.04522 0.44048 -0.056660   (0.0s)
+      20 2.141232583259552         2.141232583260 2.1464652386 -0.0634679 -0.05397 0.35125 -0.064831   (0.0s)
+      50 2.899797536378304         2.899797536378 2.9105040397 -0.0536544 -0.04974 0.23501 -0.055656   (0.0s)
+     100 3.503367368092049         3.503367368092 3.5100055489 -0.0422507 -0.04031 0.16337 -0.043265   (0.0s)
+     174 3.996779704729778         3.996779704730 3.9987131703 -0.0331935 -0.03210 0.11878 -0.033450   (0.0s)
+     175 4.001967989169723         4.001967989170 4.0038072816 -0.0330596 -0.03202 0.11838 -0.033304   (0.0s)
+     200 4.121964698468657         4.121964698469 4.1227065946 -0.0310618 -0.03012 0.10927 -0.031157   (0.1s)
+     400 4.750142845327334         4.750142845327 4.7455093353 -0.0217072 -0.02126 0.07094 -0.021194   (0.2s)
+    1000 5.590351166974661         5.590351166975 5.5807388611 -0.0127862 -0.01264 0.03873 -0.011887   (1.0s)
+   10000 7.734265514998909         7.734265514999 7.7210118331 -0.0029359 -0.00295 0.00778 -0.002051   (147.4s)
+
+[6] sign of z_N - zeta_N = sign of 1 - S_N(zeta/(N-zeta)); float run-count N <= 3000, float DP N <= 3000
+  float methods disagree at: []   (250.8s)
+  sign(z_2 - zeta_2) = +1; sign changes at N = [16, 219] (first N with the new sign)
+  N = 15: z_N - zeta_N sign + (exact)
+  N = 16: z_N - zeta_N sign - (exact)
+  N = 218: z_N - zeta_N sign - (exact)
+  N = 219: z_N - zeta_N sign + (exact)
+  theorem gives z_N > zeta_N for every N >= N_2 = 2774 (checked to 20000; beyond, the gap grows)
+
+total time 472.1s

@@ -1,22 +1,12 @@
-\section{A uniform simplex estimate and a boundary crossover}
+\section{Near the boundary of the simplex}
 \label{sec:frontier-boundary}
 
-The compact-interior assumption in Theorem~\ref{thm:simplex-interior}
-excludes bins approaching a lower-dimensional face. We now remove that
-assumption from the Bessel estimate and study the transition in which some
-positive coordinates become small. The transition below needs at least two
-coordinates of order $N$. With only one such coordinate the persistence
-scale is different, and we treat that case at the end of this section and
-in Section~\ref{sec:vertex-completion}.
-
-Put
-\[
-\Phi(x)=\sum_{j\ge0}\frac{x^j}{j!(j+1)!}
-=\frac{I_1(2\sqrt{x})}{\sqrt{x}},\qquad \Phi(0)=1.
-\]
-As before, $S_n(u)$ is the probability of the positive count vector $n$
-divided by the probability of one vertex, and $u=r/p$. None of the
-statements depend on $d$ once the support is fixed.
+Theorem~\ref{thm:simplex-interior} needs every positive coordinate to be
+at least $\varepsilon N$. In this section we drop that assumption. The start
+is uniform, but note that $S_n(u)$ does not involve the start.
+Proposition~\ref{prop:dpmf} gives
+$P^\mu_N(n)\le(\max_i\mu_i)\,p^{N-1}S_n(u)$ for every start $\mu$, so every
+upper bound below also holds for a general start.
 
 \begin{lemma}[a uniform Laguerre--Bessel inequality]
 \label{lem:uniform-laguerre-bessel}
@@ -28,16 +18,8 @@ B_a(w)=\sum_{m=1}^{a}\binom{a-1}{m-1}\frac{w^m}{m!}.
 \end{equation}
 \end{lemma}
 
-\begin{proof}
-The coefficient of $(aw)^j/[j!(j+1)!]$ in $B_a(w)/w$ is
-$\prod_{h=1}^j(1-h/a)_+$. Its deficit from one lies between zero and
-$j(j+1)/(2a)$, including for $j\ge a$. Consequently
-\[
-0\le\Phi(aw)-\frac{B_a(w)}w
-\le\frac1{2a}\sum_{j\ge0}\frac{j(j+1)(aw)^j}{j!(j+1)!}
-=\frac w2\Phi(aw).
-\]
-\end{proof}
+The proof, in Appendix~\ref{app:boundary}, compares coefficients with
+Lemma~\ref{lem:clipped-product}.
 
 \begin{theorem}[a uniform Bessel majorant on every simplex stratum]
 \label{thm:uniform-simplex-majorant}
@@ -53,304 +35,107 @@ Then, with no lower bound on any $n_i/N$,
 \le k(k+1)v+\frac{k}{2}v^2\left(\sum_i\sqrt{n_i}\right)^2
 \le k(k+1)v+\frac{k^2}{2}Nv^2.
 \end{equation}
-Thus this approximation has relative error $O_k((\log N)^2/N)$ whenever
-$u=O(\log N/N)$, uniformly over every positive composition of $N$.
+Thus this approximation has relative error $O_k(L^2/N)$ whenever
+$u=O(L/N)$, uniformly over every positive composition of $N$.
 \end{theorem}
 
-\begin{proof}
-The positive refresh formula gives
-\[
-S_n(u)=\frac{(1-u)^{N-1}}v
-\int_0^\infty e^{-t}\prod_iB_{n_i}(vt)\,dt.
-\]
-Applying Lemma~\ref{lem:uniform-laguerre-bessel} to each factor, and then
-the product-deficit inequality, bounds the relative deficit by
-$(kv/2)\mathbb E[T]$, where $T$ has density proportional to
-$e^{-t}t^k\prod_i\Phi(n_i vt)$.
-For the probability weights proportional to $x^j/[j!(j+1)!]$, the identity
-$\mathbb E[J(J+1)]=x$ implies
-\[
-x\frac{\Phi'(x)}{\Phi(x)}=\mathbb E[J]\le\sqrt{x}.
-\]
-Integration by parts therefore gives
-\[
-\mathbb E[T]=k+1+
-\sum_i\mathbb E\!\left[\frac{n_ivT\Phi'(n_ivT)}{\Phi(n_ivT)}\right]
-\le k+1+\sqrt v\left(\sum_i\sqrt{n_i}\right)\sqrt{\mathbb E[T]}.
-\]
-The boundary terms vanish, since near zero the density is $O(t^k)$, while
-$\Phi(x)\le e^{2\sqrt{x}}$ bounds the tail by a polynomial times
-$\exp(-t+2\sqrt{vt}\sum_i\sqrt{n_i})$. This also proves finiteness of
-the integral and of every moment used above. Applying $2ab\le a^2+b^2$
-to the final term yields
-$\mathbb E[T]\le2(k+1)+v(\sum_i\sqrt{n_i})^2$.
-The claimed estimates follow, the last one by Cauchy--Schwarz.
-\end{proof}
+The proof is in Appendix~\ref{app:boundary}. We apply
+Lemma~\ref{lem:uniform-laguerre-bessel} to each factor of an integral form
+of $S_n$. Then the relative error is at most $kv/2$ times the mean of $t$
+under the probability density proportional to
+$e^{-t}t^k\prod_i\Phi(n_ivt)$, and integration by parts bounds this mean by
+$2(k+1)+v(\sum_i\sqrt{n_i})^2$.
 
-\subsection{Coordinates of order \texorpdfstring{$N/(\log N)^2$}{N divided by (log N) squared}}
+\begin{remark}[the scale $N/(\log N)^2$]\label{rem:crossover-scale}
+A small coordinate $a$ adds its own runs. Each run needs about 2 switches,
+which gives a factor $u^2$, and it can go in about $N$ places. So what
+matters is $aNu^2$. At the crossings of Section~\ref{sec:simplex-thresholds}
+the value $Nu=T/p$ is of order $L$, and then $aNu^2$ is of order $aL^2/N$.
+So when at least 2 coordinates are of order $N$, a rare count starts to
+matter once it has size $\rho N/L^2$ with $\rho$ fixed.
 
-A small coordinate $a$ adds its own runs. Each run needs about two switches,
-so it gives a factor $u^2$, and it can go in about $N$ places. So what
-matters is $aNu^2$, just like $bu^2$ in the binary edge law. At the crossing
-$u$ is about $(\log N)/N$, and then $aNu^2$ is about $a(\log N)^2/N$, which
-is why coordinates of this size start to matter.
+Appendix~\ref{app:boundary} proves this. Take $k_1\ge2$ large coordinates with
+fractions $\beta_i$ among themselves and $\ell$ rare counts
+$a_j=\rho_jN/L^2$. With $z=Nu$,
+Theorem~\ref{thm:simplex-boundary-crossover} gives $S_n(z/N)$ up to a factor
+$1+O(L^{-2}+L^2/N)$. Each rare count contributes a factor
+$\Phi(A^2a_jz^2/N)$, where $A=\sum_i\sqrt{\beta_i}$, and the complete
+correction of relative order $1/L$ is a factor $e^{\mathcal E(z)}$ with 3
+terms. The theorem also gives the crossing as the root of an implicit
+equation, and as an explicit expansion in $L$, which converges slowly. Rare
+counts with $a_j=o(N/L^2)$ change that expansion only by $o(1)$
+(Corollary~\ref{cor:simplex-rare-invisibility}), but their number $\ell$
+changes its leading and logarithmic coefficients. With only one large
+coordinate the formula would have $A=1$, so the growth factor
+$e^{(A^2-1)z}$ is gone. Then the crossing moves to $u$ of order $b^{-1/2}$,
+where $b$ is the large count, and the scale changes. This is the case of
+Subsection~\ref{sec:vertex-completion}.
+\end{remark}
 
-Fix integers $r\ge2$ and $\ell\ge1$, and put $k=r+\ell$.
-Consider $r$ large counts $n_1,\ldots,n_r$ and $\ell$ further positive
-counts $a_1,\ldots,a_\ell$. Write
-\[
-N=\sum_i n_i+\sum_j a_j,\quad M=\sum_i n_i,\quad
-L=\log N,\quad \beta_i=\frac{n_i}{M},\quad
-\rho_j=\frac{a_jL^2}{N}.
-\]
-The $\beta_i$ and $\rho_j$ below always refer to these actual counts.
-Define
-\[
-A=\sum_{i=1}^r\sqrt{\beta_i},\quad g=A^2-1,\quad
-K=r+\ell-1,\quad H=\frac{r-1}{2}+2\ell,\quad c=\frac Kg,
-\]
-and
-\[
-D_r(\beta)=\frac{A^{r/2+1}(\prod_i\beta_i)^{-3/4}}
-{(4\pi)^{(r-1)/2}}.
-\]
+\subsection{Near a vertex}\label{sec:vertex-completion}
 
-\begin{theorem}[a crossover between neighboring simplex strata]
-\label{thm:simplex-boundary-crossover}
-Fix $\varepsilon>0$ and $R<\infty$. Assume $\beta_i\ge\varepsilon$
-and $0<\rho_j\le R$. Uniformly for such count vectors and
-$c_0L\le z\le C_0L$, where $0<c_0<C_0<\infty$ are fixed,
-\begin{align}
-S_{(n,a)}(z/N)
-={}&D_r(\beta)A^{2\ell}\frac{z^H e^{gz}}{N^K}
-\prod_{j=1}^\ell\Phi\!\left(\frac{A^2a_jz^2}{N}\right)
-\left(1+O\!\left(L^{-1}+\frac{L^2}{N}\right)\right).
-\label{eq:simplex-boundary-profile}
-\end{align}
-The unique positive solution $u_{n,a}$ of $S_{(n,a)}(u)=1$ consequently
-satisfies
-\begin{align}
-Nu_{n,a}
-={}&cL-\frac Hg\log L
--\frac1g\left\{
-\log\bigl(D_r(\beta)A^{2\ell}\bigr)+H\log c
-+\sum_{j=1}^\ell\log\Phi(A^2c^2\rho_j)\right\}
-\notag\\
-&\hspace{20mm}+O\!\left(\frac{\log L}{L}+\frac{L^2}{N}\right).
-\label{eq:simplex-boundary-root}
-\end{align}
-The constants in the errors depend only on the displayed fixed parameters.
+Now let one count $b$ be large and let the other positive counts
+$a_1,\ldots,a_\ell$ be small compared with $b$, with $\ell\ge1$ fixed. In
+this subsection and in Appendix~\ref{app:vertex} we put
+$|a|=a_1+\cdots+a_\ell$. These rare counts are not the constants $a_k$ of
+Section~\ref{sec:simplex-thresholds}, which do not appear here. With
+$B_a$ as in Lemma~\ref{lem:uniform-laguerre-bessel}, put
+\[
+H(y)=\prod_{i=1}^{\ell}B_{a_i}(y),\qquad
+\kappa(y)=\frac{yH'(y)}{H(y)}.
+\]
+The polynomial $H$ has positive coefficients, $H(0)=0$ and $H(1)\ge1$, so
+$H(y_a)=1$ has exactly one positive root $y_a$, and $y_a\le1$. Write
+$S_{(b,a)}$ for $S_n$ with $n=(b,a_1,\ldots,a_\ell)$. It is a polynomial in
+$u$ with nonnegative coefficients, zero constant term and a positive
+coefficient at $u^\ell$, so $S_{(b,a)}(u)=1$ has exactly one positive root
+$u_{b,a}$.
+
+Each rare run again needs about 2 switches and has about $b$ places, so the
+rare counts enter through $bu^2$. For fixed rare counts the bounds of
+Lemma~\ref{lem:vertex-randomization} in Appendix~\ref{app:vertex} give
+$S_{(b,a)}(\sqrt{y/b})\to H(y)$ as $b\to\infty$. So the crossing is near
+$\sqrt{y_a/b}$, and $Nu$ is of order $\sqrt N$ instead of $L$. The next
+theorem shows that this leading term stays correct uniformly as long as
+$|a|=o(b)$.
+
+\begin{theorem}[all growing rare counts near a vertex]
+\label{thm:vertex-uniform-root}
+For fixed $\ell$, uniformly over all positive rare counts with $|a|=o(b)$,
+the unique positive crossing odds satisfy
+\begin{equation}\label{eq:vertex-uniform-root}
+ u_{b,a}=\sqrt{\frac{y_a}{b}}
+ \left(1+O_\ell\!\left(\sqrt{\frac{|a|+1}{b}}\right)\right),
+ \qquad \prod_i B_{a_i}(y_a)=1.
+\end{equation}
+Explicitly, put
+\[
+ c_\ell=\ell+\sqrt\ell+1,\quad
+ \varepsilon=\sqrt{\frac{|a|+1}{b}},\quad \delta=16c_\ell\varepsilon.
+\]
+If $\delta\le1/2$, then
+\begin{equation}\label{eq:vertex-uniform-bracket}
+ (1-\delta)\sqrt{y_a/b}\ \le u_{b,a}\le
+ (1+\delta)\sqrt{y_a/b}.
+\end{equation}
+The constants are not optimized.
 \end{theorem}
 
-\begin{proof}
-Let $v=u/(1-u)$ and $Y=Mv$. By Theorem~\ref{thm:uniform-simplex-majorant},
-with relative error $O_k(v+Nv^2)$, the exact ratio equals
-\begin{equation}\label{eq:simplex-mixed-integral}
-\frac{(1-u)^{N-1}v^{\ell-1}}{\prod_{i=1}^r n_i}
-\int_0^\infty e^{-t}t^\ell
-\prod_{i=1}^r\left[\sqrt{\beta_iYt}\,
-I_1(2\sqrt{\beta_iYt})\right]
-\prod_{j=1}^\ell\Phi(a_jvt)\,dt.
-\end{equation}
-In the stated regime $Y\asymp L$ and all $a_jvY$ are bounded.
-Set $w=\sqrt t$. The exponential from the $r$ large-coordinate factors
-is $\exp(A^2Y-(w-A\sqrt Y)^2)$.
-On $|w-A\sqrt Y|\le\sqrt Y/2$, the large-coordinate Bessel arguments
-are bounded below by a positive constant times $Y$. Their usual
-large-argument expansions are uniform, with relative error $O(1/Y)$.
-The remaining smooth factor, apart from constants and powers of $Y$, is
-\[
-w^{r/2+1+2\ell}\prod_j\Phi(a_jvw^2).
-\]
-Divide this factor by its value at $w=A\sqrt Y$. On the same interval
-its second derivative is $O(1/Y)$, uniformly, because $w/\sqrt Y$ lies in a fixed
-compact subset of $(0,\infty)$, the quantities $a_jvY$ lie in a fixed
-compact interval, and $\Phi\ge1$ there. Taylor's theorem, followed by
-integration against the centered Gaussian, eliminates the linear term
-and gives relative error $O(1/Y)$.
+The proof is in Appendix~\ref{app:vertex}. It rests on 2 facts. First,
+$\log H$ is concave, and for $0<y\le1$ its elasticity $\kappa(y)$ lies
+between $\max\{\ell,\frac12\sqrt{|a|y}\}$ and $\ell+\sqrt{\ell|a|y}$
+(Lemma~\ref{lem:vertex-elasticity}). Second,
+$S_{(b,a)}(u)=(1-u)^{|a|}\E[H(v\mathcal T)]$ exactly, where $v=u/(1-u)$ and
+$\mathcal T$ is a gamma variable plus a compound binomial sum with mean
+$2+(b-1)u$ (Lemma~\ref{lem:vertex-randomization}). Jensen's inequality then
+gives $S_{(b,a)}(u)\ge(1-u)^{|a|}H(bu^2)$, which exceeds $1$ at
+$u=(1+\delta)\sqrt{y_a/b}$. The tangent line of $\log H$ at $bu^2$ and the
+moment generating function of $\mathcal T$ give an upper bound that is
+below $1$ at $u=(1-\delta)\sqrt{y_a/b}$.
 
-The part outside this interval is exponentially small, uniformly. The
-bounds $I_1(x)\le e^x$ and
-$\Phi(x)\le e^{2\sqrt x}$ give a polynomial times
-\[
-\exp\!\left(A^2Y-(w-A\sqrt Y)^2
-+2w\sum_j\sqrt{a_jv}\right).
-\]
-Here $\sum_j\sqrt{a_jv}=O(Y^{-1/2})$, so completing the square leaves
-a Gaussian centered only $O(Y^{-1/2})$ away from $A\sqrt Y$.
-On the excluded region its integral is exponentially small relative to
-the main term, even after the polynomial factors are included.
-The same argument also justifies extending the central Gaussian
-integrals to the full real line.
-
-Evaluation of the leading Gaussian integral in
-\eqref{eq:simplex-mixed-integral} now gives
-\begin{align*}
-S_{(n,a)}(u)
-={}&D_r(\beta)A^{2\ell}\frac{Y^H}{M^K}
-e^{A^2Y+(N-1)\log(1-u)}
-\prod_j\Phi(A^2a_jMv^2)\\
-&\qquad\times\left(1+O(Y^{-1}+v+Nv^2)\right).
-\end{align*}
-Since $\sum_j a_j/N=O(L^{-2})$, at $u=z/N$ we have
-\[
-Y=z+O(L^{-1}+L^2/N),\qquad
-A^2Y+(N-1)\log(1-u)=gz+O(L^{-1}+L^2/N).
-\]
-Replacing $Y$ by $z$, $M$ by $N$, and $A^2a_jMv^2$ by
-$A^2a_jz^2/N$ in the other factors changes the expression by a relative
-$O(L^{-2}+L/N)$, because the arguments of $\Phi$ stay bounded and
-$\Phi\ge1$. This proves~\eqref{eq:simplex-boundary-profile}.
-
-The proper-run polynomial has nonnegative coefficients, zero constant
-coefficient, and positive coefficient $k!$ at $u^{k-1}$, so the crossing
-is unique. On the compact set of permitted $\beta$, both $g$ and
-$D_r(\beta)$ are bounded above and bounded away from zero. Testing
-\eqref{eq:simplex-boundary-profile} at fixed sufficiently small and large
-multiples of $L$ brackets the root uniformly. Its logarithm gives
-\[
-gz+H\log z=KL-\log(D_r(\beta)A^{2\ell})
--\sum_j\log\Phi(A^2\rho_j(z/L)^2)
-+O(L^{-1}+L^2/N).
-\]
-First $z=cL+O(\log L)$, so the sum of logarithms on the right differs
-from its value at $z=cL$ by $O(\log L/L)$. Substituting this estimate
-into $\log z$ proves~\eqref{eq:simplex-boundary-root}. Inverting keeps
-the error because the derivative of $gz+H\log z$ is at least $g>0$.
-\end{proof}
-
-\begin{corollary}[invisibility of subcritical rare counts]
-\label{cor:simplex-rare-invisibility}
-Under the hypotheses of Theorem~\ref{thm:simplex-boundary-crossover}, if
-all $a_j=o(N/(\log N)^2)$, the sum involving $\Phi$ in
-\eqref{eq:simplex-boundary-root} is $o(1)$. Thus, at fixed actual large
-composition $\beta$, the rare counts do not affect the expansion through
-its constant term. Their number $\ell$ still changes both its leading
-and its logarithmic coefficients.
-\end{corollary}
-
-The scale $N/(\log N)^2$ applies near a face with at least two coordinates
-of order $N$. It does not apply at a binary endpoint, where only one
-coordinate is large and $g=0$. That case is treated below and in
-Section~\ref{sec:vertex-completion}.
-Theorem~\ref{thm:simplex-boundary-crossover} gives no error bound when some
-$\rho_j$ is unbounded.
-
-\begin{lemma}[exact insertion of a singleton color]
-\label{lem:singleton-insertion}
-Let $n$ have total size $M$ and let $\mathcal D=u\,d/du$. Then
-\[
-S_{(n,1)}(u)=\bigl[2u+(M-1)u^2\bigr]S_n(u)
-+(u-u^2)\mathcal D S_n(u).
-\]
-\end{lemma}
-
-\begin{proof}
-Insert the new color into a word of length $M$ with $j$ changes.
-The two end positions contribute a factor $2u$, the $j$ change gaps
-contribute $ju$, and the $M-1-j$ repeat gaps contribute
-$(M-1-j)u^2$. Removing the unique new letter reverses this construction.
-Summing the resulting identity over all words proves the formula.
-\end{proof}
-
-The singleton identity gives an exact finite-size check of the factor
-$A^2z^2/N$ that one very small coordinate contributes in
-\eqref{eq:simplex-boundary-profile}.
-
-\subsection{Fixed rare counts near a vertex}
-
-With only one large coordinate, the limit is a finite polynomial instead.
-In this result the rare counts are fixed, and the large coordinate $b$,
-not the total count, is the asymptotic parameter.
-
-\begin{theorem}[a multicolor Laguerre limit at a vertex]
-\label{thm:simplex-fixed-vertex}
-Fix $\ell\ge1$ and positive integers $a_1,\ldots,a_\ell$. Define
-\[
-H(y)=\prod_{i=1}^\ell B_{a_i}(y),\qquad
-Q(y)=\sum_{i<j}B'_{a_i}(y)B'_{a_j}(y)
-\prod_{h\ne i,j}B_{a_h}(y).
-\]
-The sum defining $Q$ is zero when $\ell=1$. Uniformly on compact
-subsets of $y>0$, as $b\to\infty$,
-\begin{equation}\label{eq:simplex-vertex-ratio}
-S_{(b,a)}\!\left(\sqrt{y/b}\right)
-=H(y)+\frac{2\sqrt y}{\sqrt b}\bigl(H'(y)+yQ(y)\bigr)
-+O_a(b^{-1}).
-\end{equation}
-Let $y_a>0$ be the unique root of $H(y_a)=1$, and put $c_a=\sqrt{y_a}$.
-The unique endpoint-crossing odds satisfy
-\begin{equation}\label{eq:simplex-vertex-root}
-u_{b,a}=\frac{c_a}{\sqrt b}
--\frac{1+y_aQ(y_a)/H'(y_a)}{b}
-+O_a(b^{-3/2}).
-\end{equation}
-For one rare color this recovers the binary fixed-edge correction $-1/b$.
-For at least two rare colors the coefficient of $1/b$ is strictly less
-than $-1$.
-\end{theorem}
-
-\begin{proof}
-Fix rare-run counts $m_i\in\{1,\ldots,a_i\}$, put $m=\sum_i m_i$,
-and let $q$ be the number of runs of the large color. The rare run lengths
-can be chosen in $\prod_i\binom{a_i-1}{m_i-1}$ ways. Since successive
-large-color runs must be separated, $q\le m+1$, and the large run lengths
-have $\binom{b-1}{q-1}$ choices. At $u=\sqrt{y/b}$, configurations with
-these run counts contribute $O_a(b^{(q-m-1)/2})$. There are finitely many
-possible $m_i,q$, independently of $b$, so only $q=m+1$ and $q=m$ affect
-the expansion through order $b^{-1/2}$.
-
-If $q=m+1$, the run word starts and ends in the large color and alternates
-between large and rare colors. There are $m!/\prod_i m_i!$ rare orders.
-Using $\binom{b-1}{m}=b^m/m!+O_a(b^{m-1})$ and summing gives $H(y)$,
-with an $O_a(b^{-1})$ error.
-
-If $q=m$, there are two possibilities. One endpoint is rare and the run
-word otherwise alternates, giving $2m!/\prod_i m_i!$ orders. These
-terms sum to $2\sqrt y\,H'(y)/\sqrt b$. Otherwise both endpoints are
-large and exactly one pair of consecutive rare runs is present. The
-members of that pair must have different colors. For an ordered pair
-of colors $i,j$, contracting the marked adjacent pair shows that there
-are $(m-1)!/[(m_i-1)!(m_j-1)!\prod_{h\ne i,j}m_h!]$ orders.
-Summing over the two orientations and all $i<j$ gives
-$2y^{3/2}Q(y)/\sqrt b$. Terms with $q\le m-1$ and the next terms of
-the binomial expansions are $O_a(b^{-1})$, uniformly for $y$ in a
-positive compact set. This proves~\eqref{eq:simplex-vertex-ratio}.
-
-The polynomial $H$ has positive coefficients, tends to zero at zero,
-and grows to infinity, so $y_a$ exists uniquely and $H'(y_a)>0$.
-The same positivity argument gives the unique crossing for each $b$.
-First bracket it using~\eqref{eq:simplex-vertex-ratio} to obtain
-$bu_{b,a}^2\to y_a$. The finite run expansion may also be differentiated
-uniformly on this compact neighborhood, and its derivative tends to
-$H'(y_a)>0$. Substitution of
-$u=c_a/\sqrt b+\alpha/b$ into~\eqref{eq:simplex-vertex-ratio}
-then forces $\alpha=-1-y_aQ(y_a)/H'(y_a)$, and the uniform remainder
-gives~\eqref{eq:simplex-vertex-root}. If $\ell\ge2$, all terms in $Q(y)$
-are positive for $y>0$, proving the strict inequality.
-\end{proof}
-
-If all $\ell$ rare colors occur once, then $H(y)=y^\ell$ and
-$y_a=1$, giving the explicit specialization
-\[
-u_{b,1,\ldots,1}=b^{-1/2}-\frac{\ell+1}{2b}
-+O_\ell(b^{-3/2}).
-\]
-An independent exact formula in this case is
-\[
-S_{(b,1,\ldots,1)}(u)=\ell!
-\sum_{q=1}^{\min(b,\ell+1)}
-\binom{\ell+1}{q}\binom{b-1}{q-1}u^{q+\ell-1}.
-\]
-Indeed, order the $\ell$ distinct rare letters, choose the $q$ gaps among
-their $\ell+1$ end and interior gaps that contain large-color runs,
-and choose the positive lengths of those runs.
-In particular two singleton rare colors give
-\[
-u_{b,1,1}=b^{-1/2}-\tfrac32b^{-1}+O(b^{-3/2}).
-\]
-This agrees with the exact polynomial
-$S_{(b,1,1)}(u)=6u^2+6(b-1)u^3+(b-1)(b-2)u^4$.
-Theorem~\ref{thm:simplex-fixed-vertex} is not uniform in the rare counts.
-Section~\ref{sec:vertex-completion} gives the leading crossing uniformly
-for total rare count $A=o(b)$.
+We have also found the next term of $u_{b,a}$ for fixed rare counts, which
+for one rare count is the 2-state fixed-edge expansion of Paper~A, the growth
+$u_{b,a}\sim\ell\log|a|/(2A\sqrt{|a|b})$ with $A=\sum_i\sqrt{a_i/|a|}$ when
+$|a|\to\infty$ with proportions $a_i/|a|$ bounded away from $0$, and an example
+with $|a|=o(b)$ where $S_{(b,a)}(u)\sim H(bu^2)$ fails although the root is
+still correct (proofs omitted, checked numerically).

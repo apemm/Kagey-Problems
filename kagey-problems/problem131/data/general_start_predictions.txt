@@ -1,0 +1,47 @@
+# predict_general_start.py output (formula evaluation only)
+
+## constants
+k=2  a_k=-0.4673558279  D_k=1.5957691216  exp(-(k-1)a_k)=1.5957691216
+k=3  a_k=-0.6570593817  D_k=3.7214700441  exp(-(k-1)a_k)=3.7214700441
+k=4  a_k=-0.8139294182  D_k=11.4935758160  exp(-(k-1)a_k)=11.4935758160
+k=5  a_k=-0.9474650061  D_k=44.2502058955  exp(-(k-1)a_k)=44.2502058955
+k=6  a_k=-1.0637751865  D_k=204.1542697998  exp(-(k-1)a_k)=204.1542697998
+k=7  a_k=-1.1668755628  D_k=1098.0085149544  exp(-(k-1)a_k)=1098.0085149544
+K3 mu=(1/2,1/2,0): t_ve = a_2 = -0.4673558279; t_ef = log(3/2)+2a_3-a_2 = -0.4412978273; (1/2)log(32pi/243) = -0.4412978273
+  width = 0.0260580006;  log(16/(9 sqrt3)) = 0.0260580006
+
+## T4: K3, mu=(1/2,1/2,0), window t = z - L + (1/2) log L, z = N u, u = r/p
+lower: z - L + (1/2)log z = a_2 + 1/(8z);  upper: = t_ef + 1/(12z)  [1/12 = 1/8 - 1/24];  upper_noshift: = t_ef + 1/(8z)
+N=      90  L=4.499810  z_low=3.449566 t_low=-0.298226  z_up=3.461704 t_up=-0.286088  width=0.012138  [noshift t_up=-0.275663 width=0.022563]  n3hat~27.1  tol(0.5/z^2+z^2/N)=0.1742
+N=    1002  L=6.909753  z_low=5.603051 t_low=-0.340235  z_up=5.620108 t_up=-0.323179  width=0.017057  [noshift t_up=-0.316395 width=0.023841]  n3hat~314.2  tol(0.5/z^2+z^2/N)=0.0473
+N=   10002  L=9.210540  z_low=7.736375 t_low=-0.363991  z_up=7.755769 t_up=-0.344597  width=0.019393  [noshift t_up=-0.339560 width=0.024431]  n3hat~3190.7  tol(0.5/z^2+z^2/N)=0.0143
+N=  100002  L=11.512945  z_low=9.911361 t_low=-0.379849  z_up=9.932149 t_up=-0.359060  width=0.020789  [noshift t_up=-0.355071 width=0.024778]  n3hat~32215.3  tol(0.5/z^2+z^2/N)=0.0061
+N= 1000002  L=13.815513  z_low=12.111404 t_low=-0.391213  z_up=12.133114 t_up=-0.369503  width=0.021710  [noshift t_up=-0.366207 width=0.025005]  n3hat~324176.3  tol(0.5/z^2+z^2/N)=0.0036
+
+## T3: general-start crossings, d = 4, mu = (2/5, 3/10, 1/5, 1/10)
+A: face {1,2,3} (k=3) vs vertex 1: a_k(mu) = -0.5132183455; exact identity: crossing solves S_n(u) = 1.3333333333
+  N=3 exact: u = sqrt(mu_1/(mu(F) 2!)) = 0.471404520791, z = 1.414213562373
+  N=    30  z_pred(3-term)=2.478091  z_pred(implicit)=2.483481  heuristic ahat-a ~ ((k-1)/2) z^2/N = 0.20559  tol 1/z^2+z^2/N = 0.36772
+  N=   300  z_pred(3-term)=4.463219  z_pred(implicit)=4.469852  heuristic ahat-a ~ ((k-1)/2) z^2/N = 0.06660  tol 1/z^2+z^2/N = 0.11665
+  N=  3000  z_pred(3-term)=6.565650  z_pred(implicit)=6.570851  heuristic ahat-a ~ ((k-1)/2) z^2/N = 0.01439  tol 1/z^2+z^2/N = 0.03755
+  N= 30000  z_pred(3-term)=8.722823  z_pred(implicit)=8.726855  heuristic ahat-a ~ ((k-1)/2) z^2/N = 0.00254  tol 1/z^2+z^2/N = 0.01567
+B: face {2,3} (k=2) vs vertex 4: a_k(mu) = -1.3836465598; exact identity: crossing solves S_n(u) = 0.4000000000
+  N=2 exact: u = mu_4/mu(F) = 0.200000000000, z = 0.4
+  N=    20  z_pred(3-term)=1.427716  z_pred(implicit)=1.494737  heuristic ahat-a ~ ((k-1)/2) z^2/N = 0.05586  tol 1/z^2+z^2/N = 0.55929
+  N=   200  z_pred(3-term)=3.313818  z_pred(implicit)=3.347849  heuristic ahat-a ~ ((k-1)/2) z^2/N = 0.02802  tol 1/z^2+z^2/N = 0.14526
+  N=  2000  z_pred(3-term)=5.377298  z_pred(implicit)=5.397452  heuristic ahat-a ~ ((k-1)/2) z^2/N = 0.00728  tol 1/z^2+z^2/N = 0.04889
+  N= 20000  z_pred(3-term)=7.513757  z_pred(implicit)=7.527187  heuristic ahat-a ~ ((k-1)/2) z^2/N = 0.00142  tol 1/z^2+z^2/N = 0.02048
+
+## rounding (k=2, odd N): omega_big - omega_small ~ 1/(N A^2) = 1/(2N)
+  N=21: predicted N*(omega_big-omega_small) in [0.40, 0.60] (heuristic value 0.5(1-1/(4z)))
+  N=201: predicted N*(omega_big-omega_small) in [0.40, 0.60] (heuristic value 0.5(1-1/(4z)))
+  N=2001: predicted N*(omega_big-omega_small) in [0.40, 0.60] (heuristic value 0.5(1-1/(4z)))
+## omega lemma, k=2, alpha=(0.6,0.4): omega_1 -> sqrt(.6)/(sqrt(.6)+sqrt(.4)) = 0.550510
+
+## T4' (registered after T4 was killed): add the discrete terms ((k-1)^2/2) z^2/N
+lower: z - L + (1/2)log z = a_2 + 1/(8z) + (1/2) z^2/N
+upper: z - L + (1/2)log z = t_ef + 1/(12z) + (3/2) z^2/N   [2 z^2/N (k=3) - (1/2) z^2/N (k=2)]
+upper_noshift: same with 1/(8z) in place of 1/(12z)
+N=   3000  t_low=-0.346109  t_up=-0.314003  width=0.032106  [noshift t_up=-0.308157 width=0.037953]  tol(0.2/z^2+3z/N)=0.01118
+N=  30000  t_low=-0.371064  t_up=-0.348481  width=0.022582  [noshift t_up=-0.344001 width=0.027062]  tol(0.2/z^2+3z/N)=0.00348
+N= 300000  t_low=-0.385511  t_up=-0.363855  width=0.021656  [noshift t_up=-0.360228 width=0.025283]  tol(0.2/z^2+3z/N)=0.00177

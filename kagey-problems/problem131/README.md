@@ -5,65 +5,85 @@ direction with probability p. Kagey asks for the distribution of the bins, the l
 his numerator tables, when the middle bin is as likely as the endpoints, the normal limit, and what
 changes on a cylinder or a tetrahedron.
 
-Status: answered, in two papers. Paper A (`problem131.tex`) is the binary problem. Paper B
-(`problem131_multistate.tex`) is the version with d directions and is still a draft.
+Status. Answered, in 4 papers by A. Pemmasani (preprint, 2026). Paper A solves the binary problem
+at every N, Paper B treats d directions on the complete graph, Paper C gives the general theory for
+slowly switching chains, and Paper D asks what memory changes. The 4 papers share the notation N,
+L = log N, T, z_N, lambda_F and K_F and cite each other by description. `PUBLICATION.md` has notes
+on where to send them.
 
-Conventions: N is the number of bounces, so Kagey's row n has N = n-1. For p = a/(a+b) his numerator
-is 2(a+b)^(N-1) P_N(k). Write u = (1-p)/p for the switching odds.
+Conventions. N is the number of bounces, so Kagey's row n has N = n-1. For p = a/(a+b) his numerator
+is 2(a+b)^(N-1) P_N(k). Write u = (1-p)/p for the switching odds, T = N(1-p) for the switching scale
+and z_N = N(1-p_N) for the value of T at the central crossing p_N.
 
-## Paper A: binary crossings
+## Paper A: Uniform Bessel bounds for endpoint crossings in the persistent random walk
 
-- Exact law by run counts, generating function and recurrence. The p = 2/3 table is A035002 (rook
-  paths) and the p = 1/3 table is A348595 (Mathar's blocked walks), both by bijection.
-- Variance, normal limit, and the cylinder (uniform limit, no normal shape).
-- For every N there is exactly one p_N where the middle bin equals the endpoints, and p_N increases
-  strictly to 1. The adjacent bin equals the endpoints at p = (1 + sqrt(N-1))/(2 + sqrt(N-1)).
-- Bessel approximation with relative error at most N u^2/2 + u for every bin. This gives
-  N(1-p_N) = log N - (1/2) log log N + (1/2) log(pi/8) + o(1), with the next 1/log N term.
-- The same kind of expansion for every bin whose distance a from the edge grows, a Laguerre law at
-  fixed distance with correction -1/b for every a, and a theorem matching the two.
-- Periodic boundaries: relative error at most N u^2/2, and the periodic and free central crossings
-  differ by N(u_P - u_F) = log 2 + o(1).
-- Under both boundaries the ratio near the center has the profile exp(t - 2y^2), and the scaled
-  number of bins above the endpoints tends to sqrt(2 max(t,0)).
+Paper A treats the walk with 2 states, which is the zero-field 1D Ising chain with free boundaries.
+It gives the exact law and explicit uniform Bessel bounds for every bin, with relative error at most
+N u^2/2 + u at every N. At the center these bracket the crossing p_N for every N >= 2. With
+zeta_N = W_0(pi N^2/4)/2, the value z_N lies below zeta_N + 1/(8 zeta_N) and within
+zeta_N(zeta_N + 1)/N + 1/(16 zeta_N^2) of it. The proof is analytic for N >= 175 and uses exact
+integer certificates below that, and all of it is checked in Lean. This gives the crossing equation
+z_N + (1/2) log z_N = L + c_0 + 1/(8 z_N) + R_N with c_0 = (1/2) log(pi/8) and
+|R_N| <= 1/(4L^2) + (L^2 + L)/N. The paper also expands the crossing of every other bin, with a
+Laguerre law for fixed bins, compares free and periodic boundaries, and proves a uniform local law
+for every q <= 1/2, from the diffusive to the ballistic regime. Kagey's side questions are answered
+there too. His p = 2/3 and p = 1/3 tables are OEIS A035002 and A348595 by bijection, the walk has a
+normal limit, and on a cylinder the limit is uniform.
 
-## Paper B: d directions
+Files. `problem131.tex` and `problem131.pdf`, with the sections `sec_exact.tex`, `sec_crossing.tex`,
+`allbin_thresholds.tex`, `periodic_window.tex` and `sec_llt.tex`, and the appendices
+`app_every_n.tex`, `app_llt.tex` and `app_tables.tex`.
 
-- Exact finite sum for the bin probabilities, covariance and normal limit (d = 3 is the tetrahedral
-  board). Other rules at the walls of a board give different models, which are not covered.
-- Unique crossings for the balanced center of each face, with explicit constants, and the global
-  modes in the critical window. At d = 3, N = 4 an edge center is the global mode, so the asymptotic
-  result does not hold for every N.
-- A Bessel bound with relative error at most k(k+1)v + k^2 N v^2/2, v = u/(1-u), for every positive
-  composition, and a crossover when some coordinates have size N/(log N)^2.
-- Near a vertex: a product of Laguerre polynomials gives the crossing, first for fixed rare counts
-  and then uniformly for total rare count A = o(b), with relative error O(sqrt((A+1)/b)). An example
-  shows that the probabilities themselves need not be approximated uniformly in that range.
-- Volumes of the superlevel sets on each face, and a weak field h_i = -(i-1)^2 under which every
-  support size is the mode in turn.
+## Paper B: Vertex crossings in a symmetric Markov multinomial model
 
-Open: a uniform higher-order expansion near a vertex for all A = o(b), a growing number of
-directions, and the full mode diagram at finite N.
+Paper B treats the complete graph on d states, which is the 1D d-state Potts chain. Every face of
+the simplex ties with the vertices at first order when T is near log N, and Paper B resolves the
+tie at second order. A balanced bin with k states crosses a vertex at T = z, where
+z + (1/2) log z = L + a_k + 1/(8z) + O(L^-2). The constants a_k come from the mass of a face over a
+Gaussian volume, and Paper B writes them with square roots of weighted spanning-tree sums on K_k.
+Since a_2 > a_3 > ..., the mode changes exactly once, from the vertices straight to the full
+centers. A start law or a weak Potts field shifts the constants, so a start can make an edge win
+on 3 states and a field can make every support size win in turn. The paper also gives a Bessel
+majorant for every count vector and the crossing near a vertex, uniformly over rare counts of
+total o(b).
 
-The exact law, the normal limit, interior log-concavity, the Bessel scaling and the periodic
-endpoint/center comparison are all in earlier papers (Renshaw and Henderson 1981, Dekking and Kong
-2011, Stepanyan et al. 2024 and others). What is new here is the uniform error control when p and
-the bin vary with N. See `literature_review.md` for what each source covers.
+Files. `problem131_multistate.tex` and `problem131_multistate.pdf`, with the sections
+`multistate_model.tex`, `simplex_thresholds.tex`, `general_start.tex`, `frontier_modes.tex` and
+`frontier_boundary.tex`, and the appendices `app_thresholds.tex`, `app_start_field.tex`,
+`app_boundary.tex` and `vertex_completion.tex`.
 
-## Files
+## Papers C and D
 
-- `problem131.tex`, `problem131.pdf`: Paper A. Includes `allbin_thresholds.tex` and
-  `periodic_window.tex`.
-- `problem131_multistate.tex`, `problem131_multistate.pdf`: Paper B. Includes
-  `simplex_thresholds.tex`, `frontier_boundary.tex`, `vertex_completion.tex` and
-  `frontier_modes.tex`.
-- `verify*.py`, `check_bessel.py`: checks for both papers; `SUPPLEMENT.md` says what each one covers.
-- `figures/`: the figures in both papers, made by `figures/make_figures.py`.
-- `animations/`: a Galton board with persistence at 4 values of p (`galton.gif`, `galton.mp4`),
+Papers C and D will be added here when they are posted.
+
+## Earlier work
+
+The exact law, the normal limit, interior log-concavity, the Bessel scaling at a fixed scale and the
+periodic endpoint/center comparison are all in earlier papers (Renshaw and Henderson 1981, Dekking
+and Kong 2011, Stepanyan et al. 2024 and others). Our results give uniform error control when p and
+the bin vary with N. `literature_review.md` says what each source covers, and each paper has its own
+section on related work.
+
+## Shared files
+
+- `SUPPLEMENT.md` is the one verification supplement for the 4 papers. It lists each result that
+  rests on computation with the script that checks it.
+- `verify_all.py` runs the checks with `--paper a`, `b`, `c`, `d` or `all` (the default). For
+  Papers C and D it calls `paperC/verify_all.py` and `paperD/verify_all.py`.
+- `verify*.py` and `check_bessel.py` are the checks for Papers A and B (standard library only).
+- `figures/` holds the figures of Papers A and B, made by `figures/make_figures.py`, and the program
+  figure shared by all 4 papers (`program_A` to `program_D`), made by
+  `figures/make_program_figure.py`.
+- `animations/` shows a Galton board with persistence at 4 values of p (`galton.gif`, `galton.mp4`),
   made by `figures/animate.py`.
-- `lean/`: Lean 4 proofs of the finite algebraic steps (not the asymptotics).
-- `data/ledger.md`: predictions written down before the computations, and what happened to them.
-- `data/`: recorded output of the checks.
+- `lean/` holds the Lean 4 proofs, one library per paper (not the large-argument asymptotics).
+  `lean/README.md` says what each library covers.
+- `data/ledger.md` holds the predictions written down before the computations, what happened to
+  them, and an index of the ledgers of all 4 papers.
+- `data/` holds the recorded output of the checks for Papers A and B.
+- `literature_review.md` says what each earlier source proves.
 
-Run `python -B verify_all.py` (standard library only), or add `--paper a` or `--paper b`. Build a
-paper with `pdflatex problem131.tex` twice, or `problem131_multistate.tex`.
+Run `python -B verify_all.py --paper a` (or `b`, `c`, `d`, `all`). Add `--full` for the long runs
+and `--dry-run` to list the commands. Build Paper A with `pdflatex problem131.tex` and Paper B with
+`pdflatex problem131_multistate.tex`, 3 times each. Papers C and D build the same way in their
+folders.

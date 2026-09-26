@@ -4,7 +4,7 @@
 \usepackage{booktabs,microtype,xcolor,graphicx}
 \usepackage[shortlabels]{enumitem}
 \usepackage[colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
-\hypersetup{pdftitle={Vertex crossings and boundary regimes in a symmetric Markov multinomial model},pdfauthor={Arjun Pemmasani}}
+\hypersetup{pdftitle={Vertex crossings in a symmetric Markov multinomial model},pdfauthor={Arjun Pemmasani}}
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{proposition}[theorem]{Proposition}
@@ -19,315 +19,311 @@
 \newcommand{\Prob}{\mathbb P}
 \newcommand{\Var}{\operatorname{Var}}
 \newcommand{\Cov}{\operatorname{Cov}}
-\title{Vertex crossings and boundary regimes\\
- in a symmetric Markov multinomial model}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\tree}{\operatorname{tree}}
+\title{Vertex crossings in a symmetric
+ Markov multinomial model}
 \author{Arjun Pemmasani}
-\date{September 22, 2026\\[0.5ex]
- \small Draft}
+\date{September 26, 2026}
 \begin{document}
 \maketitle
 
 \begin{abstract}
-Take a Markov chain on $d$ states that starts uniformly, stays in its
-current state with probability $p$, and otherwise moves to one of the other
-$d-1$ states at random. We count how often it visits each state and compare
-the probability of a given count vector with the probability of a vertex,
-where every visit is to the same state. Writing the law as a sum with
-positive terms, we get a Bessel approximation whose relative error is
-bounded for every positive count vector, even near the boundary of the
-simplex. From it we find the crossing points for balanced faces and for
-interior points, with explicit constants. When at least two coordinates
-are of order $N$, a small coordinate starts to matter once it has size
-$N/(\log N)^2$. Near a vertex, where one count $b$ is much larger than the
-total $A=o(b)$ of the others, the crossing is given by a product of
-Laguerre polynomials up to a relative error $O_\ell(\sqrt{(A+1)/b})$, and
-this can be true even when the matching approximation to the probabilities
-fails. We also find the volumes of the superlevel sets, and a weak field
-under which every support size is the mode in turn. The exact law and the
-normal limit were known before, and we include them for reference.
+We study the Markov chain on the complete graph with $d$ states, which is the
+one-dimensional $d$-state Potts chain. It stays in its state with probability
+$p$ and otherwise moves to each other state with probability $r=T/N$. We
+compare the most likely count vector on each face of the simplex with a vertex.
+Every face ties with the vertices at first order when $T$ is near $\log N$, and
+we resolve the tie at second order. A balanced bin with $k$ states crosses a
+vertex at $T=z$, where $z+\frac12\log z=\log N+a_k+1/(8z)+O((\log N)^{-2})$.
+The factor $e^{-(k-1)a_k}$ equals the mass of a face divided by a Gaussian
+volume, and we write it with square roots of weighted spanning-tree sums on
+$K_k$.
+Since $a_2>a_3>\cdots$, for large $N$ and $T=O(\log N)$ the mode changes
+exactly once, from the vertices straight to the full centers. A start law or a
+weak Potts field shifts the constants. A start can make an edge win on 3
+states, and a field can make every support size win in turn. A Bessel majorant
+holds for every positive count vector, and near a vertex with a large count $b$
+a product of Laguerre-type polynomials gives the crossing uniformly over rare
+counts of total $o(b)$.
 \end{abstract}
 
-\section{Introduction}
+\section{Introduction}\label{sec:intro}
 
-When $p$ is close to $1$ the chain rarely switches, so the most likely
-count vector is a vertex. As $p$ decreases, at some point a vector in the
-interior becomes more likely instead. We want to know where that happens.
-Note that we compare the probability of one vector, not of a whole face,
-and this makes the answer depend a lot on coordinates that are small
-compared with $N$. We keep the number of states fixed but let the count
-vector approach a vertex at any rate.
+Problem 131 of Kagey's Open Problem Collection~\cite{kagey131} asks about a
+Galton board where the ball tends to keep going the same way, and in
+particular when the middle bin becomes as likely as an endpoint. In this paper
+the ball has $d$ directions. We run a Markov chain $X_1,\ldots,X_N$ on $d$
+states that starts uniformly, stays in its state with probability $p$ and
+otherwise moves to each of the other $d-1$ states with probability
+$r=(1-p)/(d-1)$. The count vector $K_N$ records how often each state is
+visited, and it plays the role of the bin. A bin with $k$ positive coordinates
+lies on a face of the simplex with $k$ states. A vertex $Ne_i$ has only one
+path, which never switches. When $p$ is close to $1$ the vertices are the most
+likely bins. We ask where the best bin on each face overtakes the vertices, and
+which face holds the global mode. We write $L=\log N$ and $T=Nr$, so that the
+transition matrix is $I+(T/N)Q$ with $Q=J-dI$, where $J$ is the all-ones
+matrix. Then $T$ will be of order $L$.
 
-This is the version of Kagey's Problem 131~\cite{kagey131} with $d$
-directions instead of 2. The binary case, including free and periodic
-boundaries, is in a companion paper~\cite{companion}, but we do not use it
-here and we prove every estimate we need. One way to picture the model is
-a board shaped like a simplex, where each bounce goes in one of $d$ fixed
-directions and a switch goes to each other direction equally often. A
-board with different rules at its walls would give a different process.
+In this model every face ties with the vertices at first order. Let $C_{N,k}$
+be the probability of a
+balanced bin with $k$ positive coordinates, which means that they differ by at
+most $1$, and let $V_N=p^{N-1}/d$ be the probability of a vertex.
+Theorem~\ref{thm:simplex-window} shows that, uniformly for $cL\le T\le CL$,
+\[
+\log\frac{C_{N,k}}{V_N}=(k-1)\Bigl[T-L+\frac12\log T-a_k\Bigr]
+-\frac{k-1}{8T}+O\Bigl(\frac1{T^2}+\frac{T^2}N\Bigr),\qquad
+a_k=\frac12\log(4\pi)-\frac{k+\frac12}{k-1}\log k .
+\]
+So with $T=\tau L$ a face $F$ with $k$ states has
+$\log C_{N,k}=-L[\tau\lambda_F+k-1]+O(\log L)$, where $\lambda_F=d-k$ is the
+rate at which the chain leaves $F$. The general theory of Paper~C~\cite{paperC}
+selects the faces that minimize $\tau\lambda_F+|F|-1$. On the complete graph
+every face attains the minimum $d-1$ at $\tau=1$, so the first-order theory
+cannot choose. Even the terms in $\log T$ are proportional to $k-1$, and only
+the constants $a_k$ separate the faces. Adding a state to a face has 2 effects
+of the same size. The chain no longer has to
+avoid that state, which gains a factor of about $e^T$, since a path avoids a
+given state for $N$ steps with probability about $(1-r)^N\approx e^{-T}$. But
+the mass of the face is now spread over one more direction with about
+$N/\sqrt T$ bins, so a single bin loses a factor of about $\sqrt T/N$. At
+$T=L$ the factors $e^T$ and $1/N$ cancel, and the factor $\sqrt T$ is the same
+for every new state.
 
-There are three regimes. On a fixed face of the simplex, the balanced
-crossing is at $Nu=\log N-\tfrac12\log\log N+O(1)$, with a constant that
-depends on the size of the support. A Bessel bound that holds for all
-positive count vectors then handles the case where some coordinates have
-size $N/(\log N)^2$. Finally, if one count is $b$ and the remaining counts have
-total $A=o(b)$, a single polynomial equation gives the crossing with
-relative error $O_\ell(\sqrt{(A+1)/b})$, uniformly over their individual
-sizes. This holds even in a regime where the corresponding approximation
-to the probabilities is not uniform. For the modes, we find the volumes of
-the spatial superlevel sets and give an explicit weak field under which
-every support size occurs in turn.
+This paper resolves the tie at second order. By
+Theorem~\ref{thm:simplex-crossing}, for every $N\ge k$ the balanced bin of a
+face with $k$ states crosses the vertices at exactly one $p_{N,k}$, which
+increases with $N$, and the value $z=z_{N,k}$ of $T$ there satisfies
+\[
+z+\frac12\log z=L+a_k+\frac1{8z}+O(L^{-2}).
+\]
+For $k=2$, $a_2=\frac12\log(\pi/8)$ is the constant $c_0$ of
+Paper~A~\cite{paperA}. Since $a_2>a_3>\cdots>a_d$, the full center crosses
+first as $p$ decreases. Corollary~\ref{cor:simplex-modes} shows that for large
+$N$ and all $T\le CL$ the global mode changes exactly once, from the $d$
+vertices straight to the balanced bins with $d$ positive coordinates, and that
+all face-center crossings lie in a $p$-interval of length
+$(d-1)(a_2-a_d+o(1))/N$. At small $N$ this can fail
+(Example~\ref{ex:simplex-edge-mode}).
 
-\paragraph{Relation to established results.}
-The law belongs to the theory of Markov multinomial distributions
-\cite{wangyang1995,wangtang2003}, and the exact finite sum and the normal
-limit below are included for reference. We cite the Wang--Yang article
-through Wang and Tang, since we have not been able to obtain it.
+The same method gives the crossing at every interior composition $\alpha$ of a
+face (Theorem~\ref{thm:simplex-interior}), with a constant $D(\alpha)$ that
+equals $D_k=e^{-(k-1)a_k}$ at the center. Proposition~\ref{prop:kirchhoff}
+writes it as
+\[
+D(\alpha)=\frac{A^2}{\sqrt{\det(2\pi\Sigma_\alpha)}}
+=\frac{A^2}{(4\pi)^{(k-1)/2}}\,\frac{\sqrt{\tree(\alpha)}}{\prod_i\alpha_i},
+\qquad A=\sum_i\sqrt{\alpha_i},
+\]
+where $\Sigma_\alpha$ is the occupation covariance of a tilted chain and
+$\tree(\alpha)=(\prod_i\sqrt{\alpha_i})A^{k-2}$ is the sum over the spanning
+trees of $K_k$ of the products of the edge weights $\sqrt{\alpha_i\alpha_j}$.
+At the center each of Cayley's $k^{k-2}$ trees has weight $k^{1-k}$, so
+$\tree=1/k$ and the tree count enters $D_k$ under a square root.
+Proposition~\ref{prop:mass-balance} reads $D_k=k\det(2\pi\Sigma_k)^{-1/2}$ as
+the mass of the face divided by the Gaussian volume of its fluctuations.
+
+A start law $\mu$ changes the constants to
+$a_k(\mu)=a_k+\frac1{k-1}\log(k\mu_i/\mu(F))$ for a face $F$ and a vertex $i$
+(Theorem~\ref{thm:start-crossings}), and the modes in the window follow from
+explicit lines (Remark~\ref{rem:start-modes}). On 3 states with
+$\mu=(\frac12,\frac12,0)$ an edge holds the mode on a window of width
+$\log(16/(9\sqrt3))=0.026$ in $T$, whose lower end is Paper~A's crossing for
+large $N$ (Remarks~\ref{ex:K3-start} and~\ref{rem:K3-finite}). Paper~C proves this window from its general
+tie-window theorem. So the start can decide which face wins. A Potts
+field of size $h/N$ per site is an exponential tilt of the law of $K_N/N$
+(Proposition~\ref{prop:field-tilt}). It adds to the line of each face the
+field averaged over the face (Theorem~\ref{thm:weakfield-phases}), and one
+field makes every support size win in turn
+(Corollary~\ref{cor:weakfield-full-hierarchy}).
+
+Near the boundary of the simplex a Bessel majorant has relative error
+$O(L^2/N)$ for every positive count vector when $T=O(L)$
+(Theorem~\ref{thm:uniform-simplex-majorant}). When at least 2 coordinates are
+of order $N$, a small coordinate starts to matter once it has size $N/L^2$
+(Theorem~\ref{thm:simplex-boundary-crossover}). Near a vertex, where one count
+$b$ is large and the other counts $a_1,\ldots,a_\ell$ have total $|a|=o(b)$, the
+crossing has $u=r/p=\sqrt{y_a/b}\,(1+O(\sqrt{(|a|+1)/b}))$, where $y_a$ is the
+root of a product of Laguerre-type polynomials
+(Theorem~\ref{thm:vertex-uniform-root}).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/program_B}
+\caption{(a) The crossing on each model's switching scale against $L=\log N$
+for Papers~A to~D. The scale is $T$ for Papers~A to~C, $x=n\varepsilon$ for the
+elephant walk and the expected number of switches for the aging walk of
+Paper~D. The bold curves are the face-center crossings of this paper for faces
+with $k=2,3,4$ states. They nearly coincide at this scale, since
+$a_2-a_4<0.35$. (b) The exponent $e(\alpha)=1-\alpha+1/\alpha$ of Paper~D for
+runs with heavy tails and a stationary start, which changes sign at the golden
+ratio $\varphi$.}
+\label{fig:program}
+\end{figure}
+
+This is the second of 4 papers on Problem 131, and Figure~\ref{fig:program}
+shows the crossings of all 4. The present paper treats the complete graph,
+which is the one-dimensional $d$-state Potts chain. Paper~A~\cite{paperA}
+treats the walk with 2 states, which is the zero-field one-dimensional Ising
+chain with free boundaries. It gives explicit uniform Bessel bounds for every
+bin and brackets the crossing $p_N$ for every $N\ge2$. The bracket is analytic
+for $N\ge175$ and rests on exact certificates below that, and all of it is
+checked in Lean. This gives the crossing equation
+$z_N+\frac12\log z_N=L+c_0+1/(8z_N)+R_N$ with an explicit $R_N$, where
+$z_N=N(1-p_N)$. Paper~A also proves a uniform local law for every switching
+probability $q\le\frac12$, from the diffusive to the ballistic regime. For
+$d=2$ our $z_{N,2}$ is this $z_N$. Paper~C~\cite{paperC} gives the general
+theory for a chain with transition matrix $P=I+(T/N)Q$ and $T=\tau L$. To first
+order the mode sits on a face $F$ that minimizes $\tau\lambda_F+|F|-1$, where
+$\lambda_F$ is the principal Dirichlet eigenvalue of $-Q$ on $F$. At second
+order a strongly connected face has a constant $K_F$, and the crossings satisfy
+a crossing equation. The present paper is the case where the first-order
+selection is silent, with $K_F=\mu(F)k^{k-1/2}(4\pi)^{-(k-1)/2}$ for a face with
+$k$ states. The application in Paper~C is the planar persistent walk.
+Paper~D~\cite{paperD} asks what memory changes. The elephant random walk
+crosses at $x_n=2z_n-\log(2\pi)+o(1)$, where $z_n$ is Paper~A's crossing at
+$N=n$. This is about twice the Markov value, and the profile at the crossing
+has 2 humps. Runs with heavy tails have a threshold at the golden ratio, and a
+short remark treats aging walks. The 4 papers share the notation $N$, $L$,
+$T$, $z_N$, $\lambda_F$ and $K_F$ of Section~\ref{sec:multistate-model}.
+
+Section~\ref{sec:multistate-model} sets up the model with a general start and
+writes the exact law in 3 forms. Section~\ref{sec:simplex-thresholds} proves
+the tie and resolves it, writes the constants as Gaussian volumes and tree
+sums, and finds the global mode. Section~\ref{sec:general-start} treats a
+general start and Section~\ref{sec:frontier-modes} a weak field.
+Section~\ref{sec:frontier-boundary} drops the assumption that the coordinates
+are of order $N$. Section~\ref{sec:verify} describes the checks and lists open
+questions, and the longer proofs are in Appendices~\ref{app:thresholds}
+to~\ref{app:vertex}. We do not treat a growing number of states, the modes
+when $T$ is much larger than $L$, or the global modes at finite $N$ below the
+$N_0$ of Corollary~\ref{cor:simplex-modes}.
+
+\subsection{Related work}\label{sec:related}
+
+The law belongs to the theory of Markov multinomial distributions. Wang and
+Yang~\cite{wangyang1995} extended the Markov Bernoulli model of
+Edwards~\cite{edwards1960} to finitely many states. We have seen neither paper,
+and we describe both through Wang and Tang~\cite{wangtang1997,wangtang2003}.
+The chain of Wang and Yang starts from a law $\mu$ and moves from $i$ to $j$
+with probability
+$\theta\delta_{ij}+(1-\theta)\mu_j$, and the generating function of the sum of
+its states is a product of matrices. Our chain with the uniform start is the
+case where $\mu$ is uniform and $\theta=\sigma=(dp-1)/(d-1)$. So the exact law
+for the uniform start is a special case of this theory, and we do not claim it
+as new. Our general start changes only the initial law and keeps the uniform
+switching, so it is a Wang--Yang chain only when $\mu$ is uniform.
+Hsiau~\cite{hsiau1997} and Wang and Tang~\cite{wangtang2003} prove compound
+Poisson limits for sums over multistate chains. Whittle~\cite{whittle1955} gave
+the exact law of the transition counts of a finite chain. The count vector is
+determined by the transition counts and the first state, so $P_N$ could also
+be summed from his formula.
+
 Brydges, van der Hofstad and K\"onig~\cite{brydges2007} give occupation
 densities for continuous-time chains on the visited faces of the simplex.
-The square-root quantity that appears below is also classical: if $Q$ is
-the continuous-time generator of the complete graph with off-diagonal
-entries one, then its symmetric occupation rate is
-\[
- I_Q(\alpha)=-\langle\sqrt\alpha,Q\sqrt\alpha\rangle
- =d-\left(\sum_i\sqrt{\alpha_i}\right)^2.
-\]
-Hence the exponent $(\sum_i\sqrt{\alpha_i})^2-1$ is the difference
-between the rate at a vertex and the rate at $\alpha$. We take the
-Bessel expansions from~\cite{dlmf} and prove the rest ourselves. What we
-add is that the estimates hold uniformly when $p$ depends on $N$, and what
-that says near the boundary and about the modes.
+Huang, Kious, Sidoravicius and Tarr\'es~\cite[Theorem~1]{huang2018} give the
+joint density of the local times, the last-exit spanning tree and the net
+crossing numbers of a walk with symmetric conductances, with Bessel functions.
+So in continuous time the trees appear directly, but we do not use their
+formula.
+Stadje~\cite{stadje1999} gives generating
+functions for the joint numbers of visits of a discrete chain and limit laws
+when one state is nearly absorbing. Dietz and Sethuraman~\cite{dietz2007} study
+chains that switch from $i$ to $j$ at time $n$ with probability $G(i,j)/n$,
+where every $G(i,j)>0$. Their chains make about $\log N$ switches by time $N$
+but only $O(1)$ of them after time $N/2$, and their occupation fractions have a
+limit law with full support on the simplex, which is a Dirichlet law when
+$G(i,j)$ depends only on $j$. Near our crossings the chain makes about
+$(d-1)\log N$ switches, spread evenly in time. Dupuis and
+Liu~\cite{dupuisliu2015} give the rate function of the occupation measure,
+which we compare with our exponent in Section~\ref{sec:simplex-thresholds}.
+Kassan-Ogly and Filippov~\cite{kassanogly2003} solve the Potts chain in a
+field in the thermodynamic limit. For Whittle, Hsiau, Stadje and Kassan-Ogly
+and Filippov we have read only the abstracts, and we use nothing beyond them.
+None of these works compare one count vector with a vertex when $p$ depends on
+$N$, and we did not find the face-center crossings or the tie in the
+literature. We take the Bessel expansions from~\cite{dlmf}.
 
-\paragraph{Organization.}
-In Section~\ref{sec:multistate-model} we write down the exact law, a few
-simple bounds, the covariance and the normal limit for fixed $p$.
-Section~\ref{sec:simplex-thresholds} has the face crossings and the
-balancing theorem. Sections~\ref{sec:frontier-boundary}
-and~\ref{sec:vertex-completion} deal with small coordinates and the
-near-vertex law, and Section~\ref{sec:frontier-modes} with superlevel
-sets and weak fields. We do not find every global mode at finite $N$, and
-the number of states stays fixed. In fact, at finite $N$ the mode does not
-have to be a vertex or a full center (Example~\ref{ex:simplex-edge-mode}).
-
-\section{The model and exact formulas}\label{sec:multistate-model}
-
-Fix $d\ge2$ and let $(X_j)_{j\ge1}$ be a Markov chain on
-$\{1,\ldots,d\}$. The initial state is uniform.
-At each subsequent step the chain repeats its state with probability
-$p\in[0,1]$ and moves to each other state with probability
-$r=(1-p)/(d-1)$. Put $q=1-p$ and
-$\sigma=p-r=(dp-1)/(d-1)$. Let $K_N=(K_{N,1},\ldots,K_{N,d})$
-be the occupation vector over $N$ visits, and write
-$P_N(k)=\Prob(K_N=k)$. For a word $w$ of length $N\ge1$ with
-$j$ changes, its probability is $d^{-1}p^{N-1-j}r^j$.
-The vertex probability is $V_N=p^{N-1}/d$.
-For $p>0$ put $u=r/p$, and for a positive vector
-$n=(n_1,\ldots,n_k)$ with total $N$, write
-\[
- S_n(u)=\frac{P_N(n_1,\ldots,n_k,0,\ldots,0)}{V_N}
- =\sum_j W_n(j)u^j,
-\]
-where $W_n(j)$ is the number of words on the $k$ states with these
-counts and $j$ changes. Note that this ratio does not depend on $d$,
-only on the positive coordinates.
-Set $P_0(0,\ldots,0)=1$ separately.
-
-\begin{proposition}[$d$ directions]\label{prop:dgf}
-Let $P_N(k_1,\dots,k_d)$ be the probability that direction $i$ is taken $k_i$ times. Put
-$\sigma=p-\frac{q}{d-1}=\frac{dp-1}{d-1}$ and $\mathcal R=\sum_{i=1}^d\frac{x_it}{1-\sigma x_it}$. Then
-\[
-\sum_{N\ge0}\sum_{k_1+\dots+k_d=N}P_N(k_1,\dots,k_d)\,x_1^{k_1}\cdots x_d^{k_d}\,t^N
-=1+\frac{\mathcal R/d}{1-\frac{q}{d-1}\mathcal R}.
-\]
-\end{proposition}
-
-\begin{proof}
-Let $F_i$ be the generating function of words ending in state $i$, and $S=\sum_iF_i$.
-Conditioning on the last bounce, $F_i=x_it\bigl(\tfrac1d+pF_i+\tfrac{q}{d-1}(S-F_i)\bigr)$, that is
-$F_i(1-\sigma x_it)=x_it\bigl(\tfrac1d+\tfrac{q}{d-1}S\bigr)$. Summing over $i$ gives
-$S=\mathcal R\bigl(\tfrac1d+\tfrac{q}{d-1}S\bigr)$, and the generating function is $1+S$.
-\end{proof}
-
-For $d=2$, setting $x_1=x$ and $x_2=1$ gives the binary generating function studied in the companion~\cite{companion}.
-
-\begin{proposition}[finite bin probabilities in $d$ directions]\label{prop:dpmf}
-Put $r=q/(d-1)$ and $\sigma=p-r$. For $N\ge1$, let $k=(k_1,\ldots,k_d)$ have
-nonnegative integer coordinates summing to $N$, and put $H=\{i:k_i>0\}$. Sum over
-$m_i=0$ for $i\notin H$ and $1\le m_i\le k_i$ for $i\in H$, and set $M=\sum_i m_i$.
-Then
-\[
-P_N(k)=\frac1d\sum_m\frac{M!}{\prod_i m_i!}\,
-r^{M-1}\sigma^{N-M}\prod_{i\in H}\binom{k_i-1}{m_i-1}.
-\]
-All exponents are nonnegative, and $0^0=1$. Set $P_0(0,\ldots,0)=1$ separately.
-\end{proposition}
-\begin{proof}
-With $z_i=x_it$, Proposition~\ref{prop:dgf} becomes the formal power series
-\[
-1+\frac1d\sum_{M\ge1}r^{M-1}
-\left(\sum_i\frac{z_i}{1-\sigma z_i}\right)^M.
-\]
-Expand by the multinomial theorem and use, for $k\ge m\ge1$,
-\[
-[z^k]\left(\frac{z}{1-\sigma z}\right)^m
-=\binom{k-1}{m-1}\sigma^{k-m}.
-\]
-For $m=0$ only $k=0$ contributes. Multiplying the coefficients proves the formula.
-\end{proof}
-
-At $d=3$ this is a triple sum, with the support convention covering edge bins.
-At $p=1/d$, $\sigma=0$ and only $M=N$ survives, giving the ordinary multinomial law.
-At $p=1$, only $M=1$ survives, giving mass $1/d$ at each $Ne_i$.
-The formula also holds at $p=0$. For $\sigma<0$ its terms can cancel, so for numerical work we
-use dynamic programming or exact arithmetic. This model assumes fixed global directions and
-uniform switching to the other directions, and a board with a different rule need not have
-this law.
-
-
-
-\subsection{Elementary bounds used below}
-
-For $x\ge0$, the modified Bessel function used here is
-\[
- I_1(x)=\sum_{j\ge0}\frac{(x/2)^{2j+1}}{j!(j+1)!}.
-\]
-Its coefficients give $I_1(x)\le\sinh x\le e^x$.
-We also use the standard expansion~\cite[Eq.~10.40.1]{dlmf}
-\[
- I_1(x)=\frac{e^x}{\sqrt{2\pi x}}
- \left(1-\frac{3}{8x}+O(x^{-2})\right),\qquad x\to\infty.
-\]
-The Laguerre--Bessel comparison needed near the boundary is proved in
-Lemma~\ref{lem:uniform-laguerre-bessel}.
-
-\begin{lemma}[clipped product deficit]\label{lem:clipped-product}
-For any finite list of nonnegative real numbers $t_1,\ldots,t_m$,
-with $(x)_+=\max(x,0)$,
-\[
- 0\le1-\prod_{j=1}^m(1-t_j)_+\le\sum_{j=1}^m t_j.
-\]
-\end{lemma}
-\begin{proof}
-If some $t_j\ge1$, the product is zero and the sum is at least one.
-Otherwise all factors lie in $[0,1]$ and induction follows from
-$1-(1-a)(1-b)=a+b-ab\le a+b$. The empty product gives equality.
-\end{proof}
-
-\subsection{Covariance and the fixed-persistence normal limit}
-
-We record these formulas for comparison with the later sections. Note
-that the normal limit at fixed $p$ says nothing about individual
-occupation probabilities when $p$ depends on $N$.
-
-\begin{remark}[covariance and the tetrahedral case]\label{rem:tetra}
-For the board with $d$ directions of Proposition~\ref{prop:dgf} let $K_a$ be the number of bounces in
-direction $a$. The direction chain has transition matrix $\sigma I+(1-\sigma)\tfrac1dJ$ with $J$ the
-all-ones matrix, so the indicator of direction $a$ at time $i$ and of direction $b$ at time $i+m$ have
-covariance $\sigma^m\bigl(\tfrac{\delta_{ab}}d-\tfrac1{d^2}\bigr)$. Summing over the
-two time indices and evaluating the finite geometric sum gives
-\[
-\Cov(K_a,K_b)=\Bigl(\frac{\delta_{ab}}d-\frac1{d^2}\Bigr)
-\Bigl(N\,\frac{1+\sigma}{1-\sigma}-\frac{2\sigma(1-\sigma^N)}{(1-\sigma)^2}\Bigr),
-\qquad \frac{1+\sigma}{1-\sigma}=\frac{d-2+dp}{d\,(1-p)} .
-\]
-These formulas hold for $p<1$, and at $p=1$ the covariance is
-$N^2(\delta_{ab}/d-1/d^2)$. The asymptotic multiplier of the multinomial covariance is
-$(d-2+dp)/(d(1-p))$, which is $(1+3p)/(3(1-p))$ for the tetrahedral board, $d=3$.
-\end{remark}
-
-\begin{theorem}[simplex normal limit]\label{thm:dclt}
-Let $d\ge3$ and $0\le p<1$, or $d=2$ and $0<p<1$. Set
-\[
-\pi=(1/d,\ldots,1/d),\quad C=\frac1d I-\frac1{d^2}J,
-\quad c=\frac{1+\sigma}{1-\sigma}=\frac{d-2+dp}{d(1-p)}.
-\]
-Then $(K_N-N\pi)/\sqrt N$ converges in distribution to $\mathcal N_d(0,cC)$.
-This Gaussian is supported on the sum-zero hyperplane and is nondegenerate there.
-\end{theorem}
-\begin{proof}
-Let $\Pi=\mathbf1\pi$ and $T=\sigma I+(1-\sigma)\Pi$. Fix a real vector $a$ and
-put $f_i=a_i-d^{-1}\sum_j a_j$, so $\pi f=0$ and $Tf=\sigma f$.
-For $D(t)=\operatorname{diag}(e^{itf_i})$ and $B(t)=TD(t)$, stationarity gives
-\[
-\E\exp\left(it\sum_{j=1}^N f(X_j)\right)
-=\pi D(t)B(t)^{N-1}\mathbf1.
-\]
-At zero, $B(0)=T$ has the simple eigenvalue $1$ and all other eigenvalues equal
-$\sigma$, with $|\sigma|<1$. Analytic perturbation gives an eigenvalue $\lambda(t)$
-and right eigenvector $h(t)$ with $\lambda(0)=1$, $h(0)=\mathbf1$ and $\pi h(t)=1$.
-The rest of the spectrum is uniformly exponentially small for small enough $t$. To see
-this, take a circle of radius $\eta<1$ around the rest of the spectrum but not around
-$\lambda(t)$, and use the resolvent formula for matrix powers. Thus the characteristic
-function equals $b(t)\lambda(t)^{N-1}+O(\eta^N)$ with $b(t)\to1$.
-
-Differentiate $Bh=\lambda h$ at zero. Since $B'(0)=iT\operatorname{diag}(f)$,
-\[
-\lambda'(0)=0,\qquad (I-T)h'(0)=i\sigma f,
-\qquad h'(0)=\frac{i\sigma}{1-\sigma}f.
-\]
-Differentiating again and multiplying by $\pi$ gives
-\[
-\lambda''(0)=\pi B''(0)\mathbf1+2\pi B'(0)h'(0)
-=-\frac{1+\sigma}{1-\sigma}\pi(f^2)=-c\,\pi(f^2).
-\]
-Hence $\lambda(t)=1-c\pi(f^2)t^2/2+O(t^3)$. Substitute $t=s/\sqrt N$ to obtain
-the scalar normal characteristic function with variance $c\pi(f^2)=ca^{\mathsf T}Ca$.
-L\'evy's theorem and the Cram\'er--Wold device give the result.
-\end{proof}
-
-For $d=3$ the first two centered coordinates have limiting covariance
-\[
-\frac{1+3p}{27(1-p)}\begin{pmatrix}2&-1\\-1&2\end{pmatrix};
-\]
-the third is minus their sum. Unlike the binary case, $p=0$ is included for $d\ge3$.
-At $d=2,p=0$ bounded alternation gives the zero limit after division by $\sqrt N$.
-At $p=1$ the centered sequence on this scale is not tight.
-
-
-
+\input{multistate_model.tex}
 \input{simplex_thresholds.tex}
-\input{frontier_boundary.tex}
-\input{vertex_completion.tex}
+\input{general_start.tex}
 \input{frontier_modes.tex}
+\input{frontier_boundary.tex}
 
-\section{Verification and open questions}
+\section{Verification and open questions}\label{sec:verify}
 
-The proofs above do not rely on computation. The Python scripts for this
-paper use only the standard library and check the results at finite size.
-\texttt{verify\_geometry.py} compares 6,733 exact rational probabilities in
-237 distributions with a dynamic program, and 158 of the distributions also
-with exhaustive enumeration. It checks normalization, means, covariances,
-and the values at $p=0,1$ for $d=2,3,4$. \texttt{verify\_simplex\_threshold.py}
-checks the positive refresh formula, the balancing transfers, the finite-size
-edge mode, and the crossing expansions. \texttt{verify\_frontier\_boundary.py}
-and \texttt{verify\_frontier\_modes.py} check the uniform comparison, the
-rare-coordinate formulas, the spatial profiles, and the weak-field results
-against finite calculations. Finally, \texttt{verify\_vertex\_completion.py}
-makes 462 exact identity comparisons, 200 exact checks of the elasticity
-bounds, 16 root-bracket checks, and 4 large cases with growing rare counts.
-Everything they print is saved in \texttt{data/}. The decimal checks are
-only numerical, and none of the proofs rely on them.
+The proofs in this paper do not rely on computation. All 4 papers on
+Problem 131 share one verification supplement, \texttt{SUPPLEMENT.md} in the
+Problem 131 folder of \url{https://github.com/apemm/Kagey-Problems}. It
+describes the checks, and \texttt{python -B verify\_all.py --paper b} in that
+folder runs the ones for this paper (\texttt{--full} adds a run of about 3
+minutes). The scripts use only the standard library. They compare the exact
+law with dynamic programs and with enumeration of all words, and they check the
+crossings, the constants and their tree forms, the factor $e^{\mathcal E}$ of
+Theorem~\ref{thm:simplex-boundary-crossover} and the statements that we mark
+as numerically verified or with the proof omitted, where possible in 2
+independent ways. Before the newer
+computations we wrote the predictions in ledgers, which keep the 2 predictions
+that failed. Many exact identities and finite bounds, among them the exact
+law for the uniform start, balancing, the order of the constants $a_k$ and the
+bracket near a vertex,
+are also proved in Lean~4 in the folder \texttt{lean/PaperB}. The asymptotic
+results are not in Lean.
 
-Some things are still open. We know the leading near-vertex crossing for
-all of $A=o(b)$, but not the next term uniformly in that range. We also
-have not looked at a growing number of colors, at switching that is not
-uniform, or at the full mode diagram for finite $N$ outside the critical
-window. Example~\ref{ex:simplex-edge-mode} and
-Proposition~\ref{prop:vertex-probability-failure} show that the simplest
-strengthenings of our results are false.
+Several questions remain open. We have not proved the discrete term
+$-\frac{(k-1)^2}2z^2/N$, the second-order ends of the $K_3$ window in
+Remark~\ref{rem:K3-finite}, or that balancing fails at all large $N$ for every
+start that is not constant on the face. Corollary~\ref{cor:simplex-modes} has no effective
+$N_0$, and we say nothing about the modes when $T$ is much larger than $L$. Near
+a vertex we know the leading crossing uniformly for $|a|=o(b)$, but not the
+next term uniformly in that range, and not with a start that is not uniform. We
+have not treated the crossover with a start that is not constant on the
+support, in particular one that sits only on the rare coordinates, or a growing
+number of states. Switching that is not uniform is the subject of
+Paper~C. Example~\ref{ex:simplex-edge-mode} shows that
+Corollary~\ref{cor:simplex-modes} does not extend to every $N$.
 
-\begin{thebibliography}{9}
+\paragraph{Acknowledgment.}
+The Lean code for this paper was generated by AI. AI was also used to revise
+some of the writing and to help cross-verify the code.
+
+\appendix
+\input{app_thresholds.tex}
+\input{app_start_field.tex}
+\input{app_boundary.tex}
+\input{vertex_completion.tex}
+
+\begin{thebibliography}{99}
 \bibitem{kagey131}
 P.~Kagey, \emph{Problem 131}, Open Problem Collection,
 \url{https://peterkagey.com/problems/131/} (accessed September 2026).
 
-\bibitem{companion}
-A.~Pemmasani, \emph{Endpoint crossings in the persistent random walk:
-uniform Bessel bounds and boundary effects}, preprint, 2026.
+\bibitem{paperA}
+A.~Pemmasani, \emph{Uniform Bessel bounds for endpoint crossings in the
+persistent random walk}, preprint, 2026.
+
+\bibitem{paperC}
+A.~Pemmasani, \emph{Face selection for slowly switching Markov chains and the
+planar persistent walk}, preprint, 2026.
+
+\bibitem{paperD}
+A.~Pemmasani, \emph{Endpoint crossings for random walks with memory},
+preprint, 2026.
 
 \bibitem{wangyang1995}
 Y.~H.~Wang and Z.~J.~Yang, \emph{On a Markov multinomial distribution},
-Mathematical Scientist \textbf{20} (1995), 40--49. Cited
-in~\cite{wangtang2003}.
+Mathematical Scientist \textbf{20} (1995), 40--49. Not seen by us. Described
+in~\cite{wangtang1997,wangtang2003}.
+
+\bibitem{edwards1960}
+A.~W.~F.~Edwards, \emph{The meaning of binomial distribution}, Nature
+\textbf{186} (1960), 1074. \url{https://doi.org/10.1038/1861074a0}. Not seen
+by us. Described in~\cite{wangtang1997,wangtang2003}.
+
+\bibitem{wangtang1997}
+Y.~H.~Wang and L.~Tang, \emph{A completely stationary Markov chain with
+infinite state space}, Taiwanese J.~Math.~\textbf{1} (1997), 517--525.
+\url{https://doi.org/10.11650/twjm/1500406126}.
 
 \bibitem{wangtang2003}
 Y.~H.~Wang and L.~Tang, \emph{Poisson style convergence theorems for
@@ -335,11 +331,52 @@ additive processes defined on Markov chains},
 Statistica Sinica \textbf{13} (2003), 227--242.
 \url{https://www3.stat.sinica.edu.tw/statistica/oldpdf/A13n114.pdf}.
 
+\bibitem{hsiau1997}
+S.-R.~Hsiau, \emph{Compound Poisson limit theorems for Markov chains},
+J.~Appl.~Probab.~\textbf{34} (1997), 24--34.
+\url{https://doi.org/10.2307/3215171}.
+
+\bibitem{whittle1955}
+P.~Whittle, \emph{Some distribution and moment formulae for the Markov
+chain}, J.\ R.\ Stat.\ Soc.\ Ser.~B \textbf{17} (1955), 235--242.
+\url{https://doi.org/10.1111/j.2517-6161.1955.tb00197.x}.
+
 \bibitem{brydges2007}
 D.~Brydges, R.~van der Hofstad and W.~K\"onig,
 \emph{Joint density for the local times of continuous-time Markov chains},
 Ann.~Probab.~\textbf{35} (2007), 1307--1332.
 \url{https://arxiv.org/abs/math/0611525}.
+
+\bibitem{huang2018}
+R.~Huang, D.~Kious, V.~Sidoravicius and P.~Tarr\'es, \emph{Explicit formula for
+the density of local times of Markov jump processes},
+Electron.~Commun.~Probab.~\textbf{23} (2018), 1--7.
+\url{https://arxiv.org/abs/1803.06930}.
+
+\bibitem{stadje1999}
+W.~Stadje, \emph{Joint distributions of the numbers of visits for finite-state
+Markov chains}, J.~Multivariate Anal.~\textbf{70} (1999), 157--176.
+\url{https://doi.org/10.1006/jmva.1999.1814}.
+
+\bibitem{dietz2007}
+Z.~Dietz and S.~Sethuraman, \emph{Occupation laws for some
+time-nonhomogeneous Markov chains}, Electron.~J.~Probab.~\textbf{12}
+(2007), 661--683. \url{https://doi.org/10.1214/EJP.v12-413}.
+
+\bibitem{dupuisliu2015}
+P.~Dupuis and Y.~Liu, \emph{On the large deviation rate function for the
+empirical measures of reversible jump Markov processes},
+Ann.~Probab.~\textbf{43} (2015), 1121--1156.
+\url{https://doi.org/10.1214/13-AOP883}.
+
+\bibitem{kassanogly2003}
+F.~A.~Kassan-Ogly and B.~N.~Filippov, \emph{Exact solutions of one-dimensional
+Potts models in magnetic field}, J.~Magn.~Magn.~Mater.~\textbf{258--259} (2003),
+219--221. \url{https://doi.org/10.1016/S0304-8853(02)01017-X}.
+
+\bibitem{bollobas1998}
+B.~Bollob\'as, \emph{Modern Graph Theory}, Springer, New York, 1998.
+\url{https://doi.org/10.1007/978-1-4612-0619-4}.
 
 \bibitem{dlmf}
 NIST, \emph{Digital Library of Mathematical Functions},

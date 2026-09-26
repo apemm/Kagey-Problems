@@ -1,48 +1,69 @@
-\section{Face-center thresholds on a simplex}\label{sec:simplex-thresholds}
+\section{The tie and its resolution}\label{sec:simplex-thresholds}
 
-We keep the symmetric $d$-direction model of Proposition~\ref{prop:dgf}. The
-initial direction is uniform, a repeat has probability $p$, and each particular
-change has probability $r=(1-p)/(d-1)$. Other ways of modeling a tetrahedral
-board ($d=3$) give different laws, which we do not treat.
-For $2\le k\le d$ and $N\ge k$, let $C_{N,k}(p)$ denote the probability of
-one \emph{balanced face bin}, meaning that its $k$ positive coordinates differ by
-at most one and its other coordinates are zero. All such bins have the same
-probability.
-Let $V_N(p)=p^{N-1}/d$ be the probability of one vertex bin, and put
+For $2\le k\le d$ and $N\ge k$ let
+$C_{N,k}(p)$ be the probability of one \emph{balanced} bin with $k$ positive
+coordinates, which means that these coordinates differ by at most $1$. All such
+bins have the same probability. Put
 \[
-u=\frac{1-p}{(d-1)p},\qquad
-a_k=\frac12\log(4\pi)-\frac{k+1/2}{k-1}\log k.
+a_k=\frac12\log(4\pi)-\frac{k+1/2}{k-1}\log k,\qquad
+D_k=e^{-(k-1)a_k}=\frac{k^{k+1/2}}{(4\pi)^{(k-1)/2}},\qquad
+\Psi_N(T)=T-L+\frac12\log T .
 \]
-The ratio $C_{N,k}/V_N$, viewed as a function of $u$, depends on $k$ and $N$
-but not on the ambient number $d$ of directions.
+By Proposition~\ref{prop:dpmf}(b) the ratio $C_{N,k}/V_N=S_n(u)$, as a function of
+$u$, does not depend on $d$.
 
-\begin{theorem}[face-center crossings]\label{thm:simplex-crossing}
-For every $2\le k\le d$ and $N\ge k$, there is exactly one
-$p=p_{N,k}^{(d)}\in(0,1)$ for which $C_{N,k}(p)=V_N(p)$.
-The face center is more likely below this persistence and less likely above it.
-The sequence $p_{N,k}^{(d)}$ is strictly increasing in $N$, and
+\subsection{Every face ties at first order}
+
+\begin{theorem}[every face ties at first order]\label{thm:simplex-window}
+Fix $d\ge2$ and $0<c<C$.
+\begin{enumerate}[(i)]
+\item Uniformly for $cL\le T\le CL$ and $2\le k\le d$,
 \[
-p_{k,k}^{(d)}=\frac1{1+(d-1)(k!)^{-1/(k-1)}}.
+\log\frac{C_{N,k}}{V_N}=(k-1)\bigl[\Psi_N(T)-a_k\bigr]-\frac{k-1}{8T}
++O\Bigl(\frac1{T^2}+\frac{T^2}N\Bigr).
 \]
-Writing $L=\log N$ and
-$u_{N,k}=(1-p_{N,k}^{(d)})/((d-1)p_{N,k}^{(d)})$, for fixed $k$ we have
-\begin{equation}\label{eq:simplex-root-expansion}
-Nu_{N,k}=L-\frac12\log L+a_k
-+\frac{\frac14\log L-\frac12a_k+\frac18}{L}
-+O_k\!\left(\frac{(\log L)^2}{L^2}\right).
+\item Put $T=\tau L$ and $C_{N,1}=V_N$. Uniformly for $c\le\tau\le C$ and
+$1\le k\le d$, a face $F$ with $k$ states has
+\[
+\log C_{N,k}=-L\bigl[\tau\lambda_F+k-1\bigr]+O(\log L),\qquad\lambda_F=d-k .
+\]
+At $\tau=1$ the right side is $-(d-1)L+O(\log L)$ for every $k$.
+\item Put $T=L-\frac12\log L+t$. Uniformly for $t$ in a compact interval, for
+each $2\le k\le d$,
+\begin{equation}\label{eq:simplex-window}
+\frac{C_{N,k}}{V_N}\longrightarrow e^{(k-1)(t-a_k)} .
 \end{equation}
-Consequently, $N(1-p_{N,k}^{(d)})$ equals $(d-1)$ times the right-hand side
-of~\eqref{eq:simplex-root-expansion}, with the same error order for fixed $d$.
+\item $a_2>a_3>\cdots$.
+\end{enumerate}
 \end{theorem}
 
-In particular, for the full center $k=d$,
+Paper~C describes such tie windows in general, and Remark~\ref{rem:sticky}
+explains why among symmetric kernels only the uniform one ties on every face.
+
+\begin{theorem}[face-center crossings]\label{thm:simplex-crossing}
+For every $2\le k\le d$ and $N\ge k$ there is exactly one $p=p_{N,k}\in(0,1)$
+with $C_{N,k}(p)=V_N(p)$. The balanced bin is more likely than a vertex below
+$p_{N,k}$ and less likely above it. The crossing $p_{N,k}$ is strictly
+increasing in $N$,
 \[
-N(1-p_{N,d}^{(d)})=(d-1)\log N-\frac{d-1}{2}\log\log N+c_d+o(1),
-\qquad c_d=\frac{d-1}{2}\log(4\pi)-\frac{2d+1}{2}\log d.
+p_{k,k}=\frac1{1+(d-1)(k!)^{-1/(k-1)}},
 \]
-For $d=2$, $a_2=\tfrac12\log(\pi/8)$, and the expansion agrees with the
-binary one in~\cite{companion}. The proof below does not use the binary
-case and treats every face dimension at once.
+and every crossing has $u\le(k!)^{-1/(k-1)}<1$. For fixed $k$ the value
+$z_{N,k}=N(1-p_{N,k})/(d-1)$ of $T$ at the crossing satisfies
+\[
+z_{N,k}+\frac12\log z_{N,k}=L+a_k+\frac1{8z_{N,k}}+O(L^{-2}),
+\]
+and
+\begin{equation}\label{eq:simplex-root-expansion}
+z_{N,k}=L-\frac12\log L+a_k
++\frac{\frac14\log L-\frac12a_k+\frac18}{L}
++O\Bigl(\frac{(\log L)^2}{L^2}\Bigr).
+\end{equation}
+\end{theorem}
+
+For $d=2$, $z_{N,2}=N(1-p_N)$ is the crossing $z_N$ of~\cite{paperA}, and
+$a_2=\frac12\log(\pi/8)$ is its constant $c_0$. The proofs here do not use the
+binary case. We write $p^{(d)}_{N,k}$ when the number of states matters.
 Figure~\ref{fig:simplex} shows the full-center crossing on the triangle at
 $N=24$.
 
@@ -58,424 +79,235 @@ nonvertex bin is below the vertex height.}
 \label{fig:simplex}
 \end{figure}
 
-\begin{theorem}[common critical window]\label{thm:simplex-window}
-Fix $d$ and put
-\[
-u_N(t)=\frac{\log N-\frac12\log\log N+t}{N},\qquad
-p_N(t)=\frac1{1+(d-1)u_N(t)}.
-\]
-Uniformly for $t$ in any fixed compact interval, for each $2\le k\le d$,
-\begin{equation}\label{eq:simplex-window}
-\frac{C_{N,k}(p_N(t))}{V_N(p_N(t))}
-\longrightarrow \exp\bigl((k-1)(t-a_k)\bigr).
-\end{equation}
-Moreover $a_2>a_3>\cdots$. Thus the face centers cross the vertex height
-at distinct constant offsets within a common window of persistence width
-$O(1/N)$.
-\end{theorem}
-
-It might seem strange that faces of every size cross in the same window. A
-word ending at a balanced vector on a face with $k$ states has to visit all
-$k$ of them. Each extra state needs its own runs, which means more switches,
-but those runs have about $N$ places to go, and together this gives roughly
-a factor of $e^{Nu}/N$ per state. So the ratio to a vertex is about
-$(e^{Nu}/N)^{k-1}$, which is $1$ near $Nu\approx\log N$ no matter what $k$ is.
-The size of the face only changes the constant $a_k$.
-
-We first prove the exact assertions, and then prove a uniform local
-estimate from which both asymptotic theorems follow.
-
-\begin{proof}[Proof of the exact assertions in Theorem~\ref{thm:simplex-crossing}]
-For a positive count vector $n=(n_1,\ldots,n_k)$, let $W_n(j)$ be the number
-of words with those counts and exactly $j$ changes. Its ratio to a vertex
-probability is
-\[
-S_n(u)=\sum_jW_n(j)u^j.
-\]
-To count $W_n(j)$, choose a proper word of $j+1$ run colors, meaning that
-successive colors differ. If color $i$ appears $m_i$ times, its run lengths
-can be chosen in $\binom{n_i-1}{m_i-1}$ ways. Thus $W_n(j)$ is a sum of
-products of these binomial coefficients. Every coefficient is nonnegative,
-and the first nonzero one is $W_n(k-1)=k!$. Hence $S_n$ is strictly increasing
-from zero to infinity on $u\ge0$ and crosses one exactly once. At $p=0$,
-cycling through the $k$ colors and truncating after $N$ positions gives a
-word with balanced counts and no successive repeat, so its probability is
-positive while the vertex probability is zero. At $p=1$ the reverse strict
-inequality holds.
-
-Choose the balanced count vectors as $N$ increases by incrementing one of
-their minimum coordinates. Each coefficient $W_n(j)$ is then nondecreasing.
-The coefficient of $u^k$ is
-\[
-W_n(k)=\frac{k!(k-1)}2\sum_i(n_i-1)
-=\frac{k!(k-1)}2(N-k).
-\]
-Indeed, exactly one run color appears twice, and for each such color there are
-$(k+1)!/2-k!=k!(k-1)/2$ proper arrangements of the multiset of run colors.
-This coefficient increases strictly with $N$, so the positive root decreases
-strictly with $N$. The substitution $p=1/(1+(d-1)u)$ proves the claimed
-monotonicity. If $N=k$, every coordinate equals one and
-$S_n(u)=k!u^{k-1}$, giving the initial value. Note also that every root
-satisfies $u\le(k!)^{-1/(k-1)}<1$, so all crossings lie in the positive
-refresh regime used below.
-\end{proof}
-
-\begin{lemma}[positive integral and discrete comparison]\label{lem:simplex-integral}
-For fixed $k\ge2$, define
-\begin{equation}\label{eq:simplex-F}
-F_k(x)=\sum_{m_1,\ldots,m_k\ge1}
-M!\prod_{i=1}^k\frac{x^{m_i}}{m_i!(m_i-1)!}
-=\int_0^\infty e^{-t}\bigl[\sqrt{xt}\,I_1(2\sqrt{xt})\bigr]^k\,dt,
-\quad M=\sum_i m_i.
-\end{equation}
-Let $n$ be a balanced positive count vector of total $N$, put $h=N/k$,
-and, for $0<u<1$, put $x=hu/(1-u)$. With $\mathcal D=x\,d/dx$,
-\begin{equation}\label{eq:simplex-discrete-comparison}
-0\le 1-\frac{S_n(u)}{(1-u)^{N-1}h^{1-k}F_k(x)/x}
-\le\frac{\mathcal D^2F_k(x)}{hF_k(x)}
-=O_k\!\left(\frac{(1+x)^2}{h}\right).
-\end{equation}
-In particular the relative error is $O_k((\log N)^2/N)$ when $x=O(\log N)$.
-\end{lemma}
-
-\begin{proof}
-The equality in~\eqref{eq:simplex-F} follows from the Bessel power series
-and Tonelli's theorem, using $M!=\int_0^\infty e^{-t}t^Mdt$.
-The integral is finite for every positive $x$, since the bound $I_1(y)\le e^y$
-for $y\ge0$ reduces its tail to a polynomial times
-$\exp(-t+2k\sqrt{xt})$. Thus the positive series and all its termwise
-derivatives converge on compact subsets of $x>0$.
-
-Set $\sigma=p-r=p(1-u)$ and $v=r/\sigma=u/(1-u)$.
-Proposition~\ref{prop:dpmf}, restricted to the positive coordinates, gives
-\begin{equation}\label{eq:simplex-positive-sum}
-S_n(u)=(1-u)^{N-1}\sum_{m_i\ge1}M!v^{M-1}
-\prod_i\frac{\binom{n_i-1}{m_i-1}}{m_i!}.
-\end{equation}
-Define
-\[
-A_{i,m}=\frac{(m-1)!}{h^{m-1}}\binom{n_i-1}{m-1}
-=\prod_{j=1}^{m-1}\left(1-\frac{h-n_i+j}{h}\right)_+.
-\]
-Since $h-n_i>-1$, these are products of factors in $[0,1]$, including beyond
-their finite support. The elementary product-deficit bound in
-Lemma~\ref{lem:clipped-product} gives
-\[
-0\le1-\prod_iA_{i,m_i}
-\le\frac1h\sum_i\frac{m_i(m_i+1)}2\le\frac{M^2}{h}.
-\]
-Replacing the binomial factors in~\eqref{eq:simplex-positive-sum} by
-$h^{m_i-1}/(m_i-1)!$ gives the denominator in
-\eqref{eq:simplex-discrete-comparison}. Summing the deficit bound proves
-its first inequality and the displayed explicit upper bound.
-
-To bound the quotient of derivatives, for $x\ge1$ use
-$M^2\le3x^2(1+1/x)^M$. Indeed,
-$\log(1+1/x)\ge1/(2x)$ and
-$\sup_{y\ge0}y^2e^{-y/2}=16/e^2<3$. Positivity of the coefficients gives
-\[
-\frac{\mathcal D^2F_k(x)}{F_k(x)}
-\le3x^2\frac{F_k(x+1)}{F_k(x)}=O_k(x^2),
-\]
-where the last step follows from Lemma~\ref{lem:simplex-laplace} below.
-For $0<x\le1$, the quotient extends continuously to $x=0$ with value
-$k^2$, since $F_k(x)=k!x^k+O_k(x^{k+1})$. This proves the bound.
-\end{proof}
-
-\begin{lemma}[Laplace expansion]\label{lem:simplex-laplace}
-For each fixed $k\ge2$, as $x\to\infty$,
-\begin{equation}\label{eq:simplex-laplace}
-F_k(x)=\frac{k^{k/2+1}}{(4\pi)^{(k-1)/2}}
-x^{(k+1)/2}e^{k^2x}
-\left(1-\frac{k-1}{8kx}+O_k(x^{-2})\right).
-\end{equation}
-\end{lemma}
-
-\begin{proof}
-In~\eqref{eq:simplex-F} set $w=\sqrt t$ and $a=k\sqrt x$.
-The exponent becomes $-w^2+2k\sqrt x\,w=k^2x-(w-a)^2$.
-First restrict to $|w-a|\le\sqrt x/2$. There $2\sqrt x\,w$ is bounded
-below by $(2k-1)x$, so the standard Bessel expansion
-\cite[Eq.~10.40.1]{dlmf} applies uniformly and gives
-\[
-\bigl[\sqrt x\,w I_1(2\sqrt x\,w)\bigr]^k
-=\frac{x^{k/4}w^{k/2}e^{2k\sqrt x\,w}}{(4\pi)^{k/2}}
-\left(1-\frac{3k}{16\sqrt x\,w}+O_k(x^{-2})\right).
-\]
-On the complementary set, the elementary exponential bound for $I_1$
-dominates the integrand by
-$2x^{k/2}w^{k+1}e^{k^2x-(w-a)^2}$.
-Gaussian tail estimates therefore show that its integral is at most
-$e^{k^2x-cx}$ times a fixed power of $x$, for some $c>0$.
-It is exponentially smaller than the main term.
-
-Put $\alpha=k/2+1$. Apart from that negligible tail, the integral is
-\[
-\frac{2x^{k/4}e^{k^2x}}{(4\pi)^{k/2}}
-\int_{|w-a|\le\sqrt x/2} e^{-(w-a)^2}w^\alpha
-\left(1-\frac{3k}{16\sqrt x\,w}+O_k(x^{-2})\right)dw.
-\]
-Now Taylor expand $w^\alpha$ about $a$. On this symmetric interval the odd
-terms integrate to zero. The quadratic term gives a relative correction of
-$\alpha(\alpha-1)/(4a^2)$, and the fourth-order remainder is $O_k(a^{-4})$,
-since the interval stays a fixed fraction of $a$ away from zero and the
-Gaussian moments are finite. If we extend the Gaussian integrals to the whole
-line, they change by an exponentially small amount.
-For the term involving $w^{\alpha-1}/\sqrt x$, keeping its constant term
-suffices, because its quadratic correction has relative order $x^{-2}$.
-Since $\int e^{-y^2}dy=\sqrt\pi$ and
-$\int y^2e^{-y^2}dy=\sqrt\pi/2$, the total relative correction is
-\[
-\frac{\alpha(\alpha-1)}{4k^2x}-\frac3{16x}
-=-\frac{k-1}{8kx}.
-\]
-The leading constant simplifies to the one in
-\eqref{eq:simplex-laplace}, completing the proof.
-\end{proof}
-
-\begin{proof}[Proof of the asymptotic assertions in
-Theorems~\ref{thm:simplex-crossing} and~\ref{thm:simplex-window}]
-Set $s=k-1$, $z=Nu$, and $D_k=k^{k+1/2}/(4\pi)^{(k-1)/2}$.
-The preceding lemmas imply, uniformly on
-$c\log N\le z\le C\log N$ for fixed $0<c<C$,
+Theorems~\ref{thm:simplex-window} and~\ref{thm:simplex-crossing} are proved in
+Appendix~\ref{app:thresholds}. For the exact part, $S_n$ has nonnegative
+coefficients and its first nonzero coefficient is $W_n(k-1)=k!$, so it crosses
+$1$ exactly once. Its next coefficient $W_n(k)=k!(k-1)(N-k)/2$ grows with $N$,
+which moves the root. For the asymptotic part, Proposition~\ref{prop:dpmf}(c)
+writes $S_n$ as a positive sum. This sum is close to a Bessel integral
+(Theorem~\ref{thm:uniform-simplex-majorant}), and the Laplace expansion of this
+integral (Lemma~\ref{lem:no-rare}) gives, for a balanced bin $n$ with $k$
+positive coordinates and uniformly on $c\log N\le z\le C\log N$,
 \begin{equation}\label{eq:simplex-uniform-ratio}
-S_n(z/N)=D_k\frac{z^{s/2}e^{sz}}{N^s}
-\left(1-\frac{s}{8z}+O_{k,c,C}(z^{-2}+z^2/N)\right).
+S_n(z/N)=D_k\frac{z^{(k-1)/2}e^{(k-1)z}}{N^{k-1}}
+\Bigl(1-\frac{k-1}{8z}+O\Bigl(\frac1{z^2}+\frac{z^2}N\Bigr)\Bigr).
 \end{equation}
-Indeed, $x=z/(k(1-u))$, and
+Then $\log V_N=-(d-1)T-\log d+O(T^2/N)$ and $z-T=O(L^2/N)$ give parts (i) to
+(iii) and the expansions of the crossing. Part (iv) follows from the
+monotonicity of $(x+\frac12)\log x/(x-1)$.
+
+\subsection{The constants as Gaussian volumes}
+
+The same method gives a crossing at every interior point of a face. We evaluate
+the constants at the actual fractions $\alpha_i=n_i/N$, since we do not assume
+that the count vector converges at any rate.
+
+\begin{theorem}[interior compositions]\label{thm:simplex-interior}
+Fix $k\ge2$ and $\varepsilon>0$. Let $n_1+\cdots+n_k=N$ with
+$\alpha_i=n_i/N\ge\varepsilon$, and put
 \[
-k^2x+(N-1)\log(1-u)-sz=O_k(z^2/N).
-\]
-The prefactor changes by $1+O_k(z/N)$ when we replace $x$ by $z/k$, and
-rounding of the balanced coordinates is covered by
-\eqref{eq:simplex-discrete-comparison}.
-
-At $z=(1-\varepsilon)\log N$ the ratio in
-\eqref{eq:simplex-uniform-ratio} tends to zero, whereas at
-$z=(1+\varepsilon)\log N$ it tends to infinity. The unique root therefore
-has $z/\log N\to1$. Taking logarithms at the root and dividing by $s$ gives
-\[
-z+\tfrac12\log z=L+a_k+\frac1{8z}+O_k(z^{-2}+z^2/N).
-\]
-For an explicit inversion, put
-\[
-d_L=-\tfrac12\log L+a_k,\qquad e_L=\tfrac18-\tfrac12d_L,
-\qquad z_*=L+d_L+e_L/L.
-\]
-Taylor expansion gives
-$z_*+\tfrac12\log z_*-1/(8z_*)=L+a_k+
-O_k((\log L)^2/L^2)$. The derivative of
-$z+\tfrac12\log z-1/(8z)$ is at least one for $z>0$.
-The preceding root equation, with $z\sim L$, therefore gives
-$z-z_*=O_k((\log L)^2/L^2)$, proving
-\eqref{eq:simplex-root-expansion}. The conversion to physical persistence
-uses $N(1-p)=(d-1)z/(1+(d-1)z/N)=(d-1)z+O_d(z^2/N)$.
-Substituting $z=L-\tfrac12\log L+t$ in
-\eqref{eq:simplex-uniform-ratio} proves~\eqref{eq:simplex-window}, uniformly
-on compact $t$ intervals.
-
-For the ordering of constants, extend
-$g(x)=(x+1/2)\log x/(x-1)$ to $x\ge2$.
-The sign of $g'(x)$ is the sign of
-$H(x)=2x^2-x-1-3x\log x$.
-Here $H(2)=5-6\log2>0$, and
-$H'(x)=4x-4-3\log x>0$ for $x\ge2$, since its derivative is
-$4-3/x>0$ and $H'(2)>0$. Thus $g$ increases strictly, so $a_k$ decreases
-strictly.
-\end{proof}
-
-\subsection{Thresholds throughout the interior of a face}
-
-The same argument gives a threshold at every point in the interior of a
-face, not just at its center. The constants below are evaluated at the
-actual fractions $\alpha_i=n_i/N$, since we do not assume that the count
-vector converges at any rate.
-
-\begin{theorem}[interior composition thresholds]\label{thm:simplex-interior}
-Fix $k\ge2$ and $\varepsilon>0$. Let $n_1+\cdots+n_k=N$, with
-$\alpha_i=n_i/N\ge\varepsilon$, and define
-\[
-A=\sum_{i=1}^k\sqrt{\alpha_i},\qquad g=A^2-1,\qquad s=k-1,
-\qquad
+A=\sum_{i=1}^k\sqrt{\alpha_i},\qquad g=A^2-1,\qquad s=k-1,\qquad
 D(\alpha)=\frac{A^{k/2+1}(\prod_i\alpha_i)^{-3/4}}{(4\pi)^{s/2}}.
 \]
-Uniformly for these count vectors and $c\log N\le z\le C\log N$, with
-fixed $0<c<C$,
+Uniformly for these count vectors and $c\log N\le z\le C\log N$, with fixed
+$0<c<C$,
 \begin{equation}\label{eq:simplex-interior-ratio}
 S_n(z/N)=D(\alpha)\frac{z^{s/2}e^{gz}}{N^s}
-\left(1+O_{k,\varepsilon,c,C}(z^{-1}+z^2/N)\right).
+\Bigl(1+O_{k,\varepsilon,c,C}\bigl(z^{-1}+z^2/N\bigr)\Bigr).
 \end{equation}
-Let $u_n>0$ be the unique root of $S_n(u)=1$. Writing $L=\log N$,
+The unique positive root $u_n$ of $S_n(u)=1$ satisfies
 \begin{equation}\label{eq:simplex-interior-root}
-Nu_n=\frac{s}{g}L-\frac{s}{2g}\log L
--\frac{\log D(\alpha)+(s/2)\log(s/g)}{g}
-+O_{k,\varepsilon}\!\left(\frac{\log L}{L}+\frac{L^2}{N}\right).
+Nu_n=\frac sgL-\frac s{2g}\log L
+-\frac{\log D(\alpha)+(s/2)\log(s/g)}g
++O_{k,\varepsilon}\Bigl(\frac{\log L}L+\frac{L^2}N\Bigr).
 \end{equation}
-These estimates are uniform on every compact subset of the relative
-interior of the face. For a fixed target $\alpha$ and integer counts
-$n_i=N\alpha_i+O(1)$, the constants may equivalently be evaluated at that
-target, without changing the error order.
+For a fixed target $\alpha$ and counts $n_i=N\alpha_i+O(1)$, the constants may be
+evaluated at the target without changing the error order.
 \end{theorem}
 
+Since $z-T=O(L^2/N)$, the right side of~\eqref{eq:simplex-interior-ratio} may
+also be written with $T$ in place of $z$, and~\eqref{eq:simplex-interior-root}
+also holds with the value of $T$ at the root in place of $Nu_n$. At the center $A=\sqrt k$, $g=k-1$ and $D(\alpha)=D_k$, which gives the leading
+term of~\eqref{eq:simplex-uniform-ratio}. By Cauchy--Schwarz $g\le k-1$, with
+equality only at the center, so the coefficient $s/g$ of $L$ is smallest there.
+For $k=2$, $g=2\sqrt{\alpha_1\alpha_2}$.
+
+By Dupuis and Liu~\cite[Eq.~(3.2)]{dupuisliu2015}, the occupation measure of
+the chain with generator $Q=J-dI$ has rate function
+$I(\alpha)=-\langle\sqrt\alpha,Q\sqrt\alpha\rangle=d-(\sum_i\sqrt{\alpha_i})^2$.
+So the exponent is $g(\alpha)=I(e_1)-I(\alpha)$, the drop in the rate from a
+vertex to $\alpha$. Paper~C proves that the inverse Hessian of the rate
+is the occupation covariance of a tilted chain, on every face where the chain is
+irreducible. So $D(\alpha)$ should be a Gaussian factor, and we now show this
+directly and write it as a spanning-tree sum.
+
+\begin{lemma}[occupation covariance]\label{lem:occupation-covariance}
+Let $G$ be an irreducible generator on $\{1,\ldots,k\}$, reversible with respect
+to $\pi>0$, with conductances $c_{ij}=\pi_iG_{ij}=c_{ji}$. For
+$\theta\in\mathbb R^k$ let $f=\theta-\pi(\theta)\mathbf1$, and let $\chi$ solve
+$-G\chi=f$ with $\pi(\chi)=0$. Let $\Sigma$ be the matrix of the quadratic form
+$\theta\mapsto2\sum_i\pi_if_i\chi_i$ on the vectors with $\theta_1=0$, in the
+coordinates $\theta_2,\ldots,\theta_k$. Let $\mathcal L_{(1)}$ be the Laplacian
+$\mathcal L=-\operatorname{diag}(\pi)G$ without its first row and column. Then
+\[
+\det\Sigma=\frac{2^{k-1}(\prod_i\pi_i)^2}{\det\mathcal L_{(1)}}
+=\frac{2^{k-1}(\prod_i\pi_i)^2}{\tree(c)},\qquad
+\tree(c)=\sum_{\mathcal T}\prod_{\{i,j\}\in\mathcal T}c_{ij},
+\]
+where the sum is over the spanning trees $\mathcal T$ of the complete graph on
+$\{1,\ldots,k\}$.
+\end{lemma}
+
+The form $2\sum_i\pi_if_i\chi_i$ is the usual asymptotic variance per unit time of
+$\int_0^t\theta(Y_s)\,ds$ for the chain $Y$ with generator $G$, but we use it only
+as a definition. The proof in Appendix~\ref{app:thresholds} writes $\Sigma$ with
+$\mathcal L_{(1)}^{-1}$ and uses the matrix determinant lemma and the matrix-tree
+theorem~\cite{bollobas1998}.
+
+\begin{lemma}[weighted Cayley formula]\label{lem:weighted-cayley}
+For $x_1,\ldots,x_k>0$ and conductances $c_{ij}=x_ix_j$,
+\[
+\tree(c)=x_1x_2\cdots x_k\,(x_1+\cdots+x_k)^{k-2}.
+\]
+With every $x_i=1$ this is Cayley's count $k^{k-2}$ of the spanning trees of
+$K_k$.
+\end{lemma}
+
 \begin{proof}
-The proper-run polynomial used above has nonnegative coefficients and
-first coefficient $k!u^{k-1}$ for every positive count vector, which gives
-the unique positive root. To obtain the approximation, put
-$v=u/(1-u)$ and $y=Nv$, and introduce
-\[
-G_{\alpha}(y)=\int_0^\infty e^{-t}
-\prod_i\left[\sqrt{\alpha_i y t}\,
-I_1(2\sqrt{\alpha_i y t})\right]dt.
-\]
-Replacing each binomial coefficient in~\eqref{eq:simplex-positive-sum}
-by $n_i^{m_i-1}/(m_i-1)!$ gives
-\[
-S_n(u)=\frac{(1-u)^{N-1}}{v\prod_i n_i}\,G_{\alpha}(y)
-\left(1+O_{k,\varepsilon}((1+y)^2/N)\right).
-\tag{*}
-\]
-To see that the error is uniform, note that the falling-factorial deficit
-is bounded by
-$\sum_i m_i(m_i-1)/(2n_i)\le M^2/(2\varepsilon N)$.
-The positive-series argument in Lemma~\ref{lem:simplex-integral} bounds
-the weighted second moment of $M$ by a constant times $(1+y)^2$.
-Uniformity follows from the uniform saddle expansion below, which bounds
-$G_{\alpha}(y+1)/G_{\alpha}(y)$ on the compact set
-$\{\alpha_i\ge\varepsilon,\ \sum_i\alpha_i=1\}$. For bounded $y$,
-continuity and the positive leading coefficient give the same conclusion.
-
-Set $w=\sqrt t$. The exponential factor of the integrand is
-\[
-\exp(-w^2+2A\sqrt y\,w)
-=\exp(A^2y-(w-A\sqrt y)^2).
-\]
-Every $\alpha_i$ stays bounded away from zero, so the Bessel expansions,
-Gaussian tail estimates, and Taylor remainders in
-Lemma~\ref{lem:simplex-laplace} are uniform here. Keeping their leading
-terms yields
-\[
-G_{\alpha}(y)=
-\frac{A^{k/2+1}(\prod_i\alpha_i)^{1/4}}{(4\pi)^{s/2}}
-y^{(k+1)/2}e^{A^2y}\left(1+O_{k,\varepsilon}(y^{-1})\right).
-\]
-Substitute this into (*) and use
-$v\prod_i n_i=yN^{k-1}\prod_i\alpha_i$.
-For $u=z/N$ in the stated range, $y=z+O(z^2/N)$ and
-$(N-1)\log(1-u)=-z+O(z^2/N)$. This proves
-\eqref{eq:simplex-interior-ratio} with the specified constant.
-
-On the compact set of compositions, both $g$ and $D(\alpha)$ have positive
-lower and finite upper bounds. Testing the ratio at suitable constant
-multiples of $\log N$ brackets the unique root uniformly. Taking logarithms
-there gives
-\[
-gz+\frac{s}{2}\log z=sL-\log D(\alpha)
-+O_{k,\varepsilon}(z^{-1}+z^2/N).
-\]
-First $z=(s/g)L+O_{k,\varepsilon}(\log L)$; one substitution then gives
-\eqref{eq:simplex-interior-root}. The derivative of its left-hand side is
-at least $g$, bounded uniformly away from zero, so the stated error is
-preserved on inversion. Finally, the functions of $\alpha$ appearing in
-the formula have bounded derivatives on a slightly smaller compact set, so
-changing $\alpha$ by $O(1/N)$ changes the expression by $O(L/N)$, which
-is absorbed by its error term.
+Put $X=\sum_ix_i$. The Laplacian is $\operatorname{diag}(Xx_i)-xx^\top$, so
+$\mathcal L_{(1)}=\operatorname{diag}(Xx_2,\ldots,Xx_k)-x'x'^\top$ with
+$x'=(x_2,\ldots,x_k)$. The matrix determinant lemma gives
+$\det\mathcal L_{(1)}=X^{k-1}\prod_{i\ge2}x_i\,(1-\sum_{i\ge2}x_i/X)
+=X^{k-2}\prod_ix_i$, and this is $\tree(c)$ by the matrix-tree theorem. For a
+second proof, note that a tree $\mathcal T$ has weight
+$\prod_ix_i^{\deg_{\mathcal T}(i)}$. The Pr\"ufer code is a bijection from the
+labeled trees on $\{1,\ldots,k\}$ to the words of length $k-2$ in which $i$
+occurs $\deg_{\mathcal T}(i)-1$ times, so the sum is $\prod_ix_i\cdot X^{k-2}$.
 \end{proof}
 
-At a balanced composition, $A=\sqrt k$, $g=k-1$, and
-$D(\alpha)=D_k$, recovering the preceding center formula through its
-constant term. For $k=2$, $g=2\sqrt{\alpha_1\alpha_2}$, recovering the
-binary bulk scale. Cauchy--Schwarz gives $g\le k-1$, with equality only at
-the balanced composition, so the leading threshold coefficient $s/g$
-is minimized exactly at the center of each face.
+\begin{proposition}[the tree form of the constants]\label{prop:kirchhoff}
+Fix $k\ge2$ and $\alpha$ in the open simplex. Put $h=\sqrt\alpha$ entrywise and
+$A=\sum_ih_i$.
+\begin{enumerate}[(1)]
+\item The chain $G^\alpha$ with rates $G^\alpha_{ij}=h_j/h_i$ for $i\ne j$ is
+reversible with stationary law $\alpha$ and conductances $h_ih_j$. Let
+$Q_k=J-kI$ and $\theta_\alpha=-(Q_kh)/h$ entrywise. Then
+$Q_k+\operatorname{diag}(\theta_\alpha)$ is symmetric with Perron root $0$ and
+Perron vector $h$, and $G^\alpha$ is its Doob transform
+$\operatorname{diag}(h)^{-1}(Q_k+\operatorname{diag}(\theta_\alpha))
+\operatorname{diag}(h)$. It is not a Doob transform of $Q_k$ itself unless
+$\alpha$ is uniform.
+\item $\tree(\alpha):=\sum_{\mathcal T}\prod_{\{i,j\}\in\mathcal T}
+\sqrt{\alpha_i\alpha_j}=\bigl(\prod_i\sqrt{\alpha_i}\bigr)A^{k-2}$.
+\item With $\Sigma_\alpha$ the occupation covariance of $G^\alpha$ from
+Lemma~\ref{lem:occupation-covariance}, the constant of
+Theorem~\ref{thm:simplex-interior} is
+\[
+D(\alpha)=\frac{A^2}{(4\pi)^{(k-1)/2}}\,\frac{\sqrt{\tree(\alpha)}}{\prod_i\alpha_i}
+=\frac{A^2}{\sqrt{\det(2\pi\Sigma_\alpha)}} .
+\]
+\item At the center $G^\alpha=Q_k$, each of the $k^{k-2}$ spanning trees has
+weight $k^{1-k}$, and $\tree(\alpha)=1/k$. In the coordinates
+$\alpha_2,\ldots,\alpha_k$, $\Sigma_k=(2/k^2)(I-J/k)$ and
+$\det\Sigma_k=2^{k-1}k^{1-2k}$. So
+\[
+D_k=\frac{k\cdot k^k}{(4\pi)^{(k-1)/2}}\sqrt{k^{k-2}\cdot k^{1-k}}=e^{-(k-1)a_k}.
+\]
+\item The same holds for the constant $D_{k_1}(\beta)$ of
+Theorem~\ref{thm:simplex-boundary-crossover}, with $k_1$ and $\beta$ in place of
+$k$ and $\alpha$.
+\end{enumerate}
+\end{proposition}
 
-\subsection{Balanced bins and global modes}
+The proof is a direct check, given in Appendix~\ref{app:thresholds}. For the
+uniform start the factors in (3) read as follows. First
+$A^2=d(\mu\cdot h)(h\cdot\mathbf1)$, one factor for the start of the path and one
+for its free end, and Remark~\ref{rem:start-weights} gives the start factor.
+Next, $(4\pi)^{-(k-1)/2}$ is the Gaussian normalization $(2\pi)^{-(k-1)/2}$ times
+$2^{-(k-1)/2}$, from the $2$ in the variance $2\langle f,(-G)^{-1}f\rangle_\pi$.
+And $\sqrt{\tree(\alpha)}/\prod_i\alpha_i=2^{(k-1)/2}(\det\Sigma_\alpha)^{-1/2}$ by
+Lemma~\ref{lem:occupation-covariance}. On other reversible faces this square
+root of a weighted tree sum is the form that survives~\cite{paperC}.
 
-The idea is that once we fix how many runs each state gets, splitting the
-visits evenly gives the most ways to choose the run lengths. The
-log-concavity of $B_n$ in the proof below makes this precise.
+\begin{proposition}[mass balance]\label{prop:mass-balance}
+Fix $k\ge2$, and let the sums run over the positive vectors $n\in\Z^k$ with
+$n_1+\cdots+n_k=N$.
+\begin{enumerate}[(1)]
+\item For every $N\ge k$ and every $u$,
+\[
+\sum_nS_n(u)=\sum_{j=1}^k(-1)^{k-j}\binom kj\,j\,(1+(j-1)u)^{N-1}.
+\]
+\item For fixed $0<c<C$, uniformly for $cL\le z\le CL$ and $u=z/N$, this sum is
+$k\,e^{(k-1)z}(1+o(1))$, and it is also
+$D_k(2\pi)^{(k-1)/2}(\det\Sigma_k)^{1/2}e^{(k-1)z}(1+o(1))$.
+\item Hence $D_k=k\det(2\pi\Sigma_k)^{-1/2}$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Proof of (1)]
+A word of length $N$ over a set of $q$ letters with exactly $j$ changes is fixed
+by its first letter, the positions of the changes and the new letter at each
+change. So there are $q(q-1)^j\binom{N-1}j$ of them. By inclusion and exclusion
+over the set $G\subseteq\{1,\ldots,k\}$ of allowed letters, the number of such
+words that use all $k$ letters is
+$\sum_G(-1)^{k-|G|}|G|(|G|-1)^j\binom{N-1}j$, and this is $\sum_nW_n(j)$. Multiply
+by $u^j$ and sum over $j$.
+\end{proof}
+
+Parts (2) and (3) are proved in Appendix~\ref{app:thresholds}. The term $j=k$ in
+(1) is $P_N(\supp K_N\subseteq F)/V_N$ for a face $F$ with $k$ states, and it
+gives the leading term. Proposition~\ref{prop:mass-balance} is a consistency
+identity and an interpretation, not an independent derivation of $a_k$, since
+part (2) uses the shape of Theorem~\ref{thm:simplex-interior} near the center.
+It shows that $D_k$ is the mass $k$ of the face divided by the Gaussian volume
+$\det(2\pi\Sigma_k)^{1/2}$ of the occupation fluctuations.
+
+\subsection{Balanced bins and the global mode}
 
 \begin{theorem}[balancing within a support]\label{thm:simplex-balance}
-For $1/d\le p<1$, among bins with a prescribed set of positive coordinates
-and total $N$, probability is maximized precisely by the balanced count
-vectors. More precisely, transferring one unit from a coordinate $b$ to
-another coordinate $a$, where $b\ge a+2$ and $a\ge1$, strictly increases
-the bin probability.
+For $1/d\le p<1$, among bins with a prescribed set of positive coordinates and
+total $N$, the probability is largest exactly at the balanced bins. More
+precisely, moving one unit from a coordinate $b$ to another coordinate $a$, where
+$b\ge a+2$ and $a\ge1$, strictly increases the probability of the bin.
 \end{theorem}
 
-\begin{proof}
-At $p=1/d$ this follows from the ordinary multinomial formula. For
-$1/d<p<1$, put $\sigma=p-r>0$ and $v=r/\sigma>0$.
-The positive refresh sum has the integral form
-\begin{equation}\label{eq:simplex-balance-integral}
-P_N(n)=\frac{\sigma^{N-1}}{dv}\int_0^\infty e^{-t}
-\prod_i B_{n_i}(vt)\,dt,\qquad
-B_n(y)=\sum_{m=1}^n\binom{n-1}{m-1}\frac{y^m}{m!}.
-\end{equation}
-For each $y>0$, the sequence $B_n(y)$, $n\ge1$, is strictly log-concave.
-This is a case of the fact that the binomial transform preserves
-log-concavity, and we give a direct proof. Write
-\[
-\frac{B_n(y)}y=b_{n-1},\qquad
-b_j=\sum_{i=0}^j\binom ji a_i,\quad
-a_i=\frac{y^i}{(i+1)!},\qquad
-c_j=\sum_{i=0}^j\binom ji a_{i+1}.
-\]
-Pascal's identity gives $b_{j+1}=b_j+c_j$.
-The ratio $c_j/b_j$ is the expectation of the strictly decreasing sequence
-$a_{i+1}/a_i=y/(i+2)$ under weights proportional to $\binom ji a_i$.
-When $j$ increases to $j+1$, the likelihood ratio of the new and old
-unnormalized weights on the old support is
-$(j+1)/(j+1-i)$, which increases in $i$, and a new positive weight
-appears at $i=j+1$. Thus these weights shift strictly toward larger
-indices, so the expectation of the strictly decreasing sequence decreases
-strictly. To check this last step, cross-multiply the two expectations and
-pair the terms with indices $i<\ell$. Hence
-$b_{j+1}/b_j=1+c_j/b_j$ decreases strictly with $j$, proving the asserted
-strict log-concavity.
+Once the number of runs of each state is fixed, splitting the visits evenly gives
+the most ways to choose the run lengths. In the proof in
+Appendix~\ref{app:thresholds} this becomes the log-concavity in $n$ of the
+polynomials $B_n$ of~\eqref{eq:simplex-balance-integral}.
 
-It follows that
-$B_{a+1}(y)B_{b-1}(y)>B_a(y)B_b(y)$ whenever $b\ge a+2$.
-Apply this inequality pointwise for $y=vt>0$ in
-\eqref{eq:simplex-balance-integral} and integrate. Repeated transfers give
-the conclusion.
-\end{proof}
-
-\begin{corollary}[global modes in the critical window]\label{cor:simplex-modes}
-Fix $d$. In the window of Theorem~\ref{thm:simplex-window}, if $t<a_d$,
-then for all sufficiently large $N$ the only global maxima are the $d$
-vertices. If $t>a_d$, then the only global maxima are the fully supported
-balanced bins. These assertions are uniform on compact sets of $t$
-separated from $a_d$. At the exact full-center/vertex crossing, for all
-sufficiently large $N$ the global maxima are exactly the vertices and the
-fully supported balanced bins, with both classes present.
+\begin{corollary}[exactly one mode change]\label{cor:simplex-modes}
+Fix $d\ge2$ and $C>1$. There is $N_0$ such that for $N\ge N_0$ and every $p$ with
+$0<T\le CL$ the following hold.
+\begin{enumerate}[(i)]
+\item If $p>p_{N,d}$, the global modes are exactly the $d$ vertices.
+\item If $p<p_{N,d}$, they are exactly the balanced bins with $d$ positive
+coordinates.
+\item If $p=p_{N,d}$, they are these 2 classes and nothing else.
+\end{enumerate}
+Moreover $p_{N,2}<p_{N,3}<\cdots<p_{N,d}$ and
+$p_{N,d}-p_{N,k}=(d-1)(a_k-a_d+o(1))/N$. So all face-center crossings lie in a
+$p$-interval of length $(d-1)(a_2-a_d+o(1))/N$, and as $p$ decreases the full
+center crosses first.
 \end{corollary}
 
-\begin{proof}
-Theorem~\ref{thm:simplex-balance} reduces the possible modes to balanced
-face bins of support sizes $1,\ldots,d$. For $2\le k\le d$ their limiting log ratios to a
-vertex are $(k-1)(t-a_k)$. If $t<a_d$, these are all negative. If $t>a_d$,
-the full-center ratio exceeds the vertex ratio, and for $2\le k<d$ its limiting log ratio exceeds the $k$-face
-one by
-\[
-(d-k)(t-a_d)+(k-1)(a_k-a_d)>0.
-\]
-Uniformity in Theorem~\ref{thm:simplex-window} gives both assertions.
-At the exact full-center crossing, its window parameter tends to $a_d$
-by Theorem~\ref{thm:simplex-crossing}, and every proper face-center ratio then
-has a limit strictly less than one. The same reduction proves the final
-claim.
-\end{proof}
+By Theorem~\ref{thm:simplex-balance} every global mode is a vertex or a
+balanced bin. By Theorem~\ref{thm:simplex-window}(i) a balanced bin with $k$
+positive coordinates has log ratio $(k-1)(\Psi_N(T)-a_k)+o(1)$ to a vertex, and
+$a_d$ is the smallest constant. So the full center reaches the vertices first,
+while every proper face is still below them. The proof is in
+Appendix~\ref{app:thresholds}. Corollary~\ref{cor:simplex-modes} extends the
+window statement~\eqref{eq:simplex-window} to all of $T\le CL$.
 
-\begin{example}[an intermediate face can be a finite-size mode]\label{ex:simplex-edge-mode}
-Corollary~\ref{cor:simplex-modes} does not hold for every $N$.
-Take $d=3$, $N=4$, and $p=10/17$, so $u=7/20$.
-For an edge center and a full center respectively,
+\begin{example}[an intermediate face can be a finite-size mode]
+\label{ex:simplex-edge-mode}
+Corollary~\ref{cor:simplex-modes} does not hold for every $N$. Take $d=3$, $N=4$
+and $p=10/17$, so $u=7/20$. For an edge center and a full center,
 \[
 \frac{P_4(2,2,0)}{V_4}=2u+2u^2+2u^3=\frac{4123}{4000}>1,
 \qquad
 \frac{P_4(2,1,1)}{V_4}=6u^2+6u^3=\frac{3969}{4000}<1.
 \]
-By Theorem~\ref{thm:simplex-balance}, the three edge centers are the
-only global modes. So at finite $N$ the modes can lie on an intermediate
-face.
+By Theorem~\ref{thm:simplex-balance} the 3 edge centers are the only global
+modes. Here $T=14/17<\log4$, so $N_0>4$ when $d=3$.
 \end{example}
