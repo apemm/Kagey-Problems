@@ -1,0 +1,171 @@
+\section{The model and the exact law}\label{sec:model}
+
+Fix $d\ge2$ and a generator $Q$ on $[d]=\{1,\dots,d\}$, with rates $q_{ij}\ge0$ for $i\ne j$,
+exit rates $q_i=\sum_{j\ne i}q_{ij}$, $Q_{ii}=-q_i$ and $q_{\max}=\max_iq_i$. The start $\mu$ is
+a probability law on $[d]$, and $\mu(F)=\sum_{i\in F}\mu_i$. For $N\ge2$ and $T>0$ put $h=T/N$,
+$L=\log N$ and $\tau=T/L$. The chain $X_1,\dots,X_N$ has $X_1\sim\mu$ and transition matrix
+$I+hQ$. So it switches from $i$ to $j$ with probability $hq_{ij}$ and stays with probability
+$1-hq_i$. We assume $hq_{\max}\le\frac12$ unless we say otherwise, and the exact identities below
+only need $hq_{\max}\le1$. The composition is $n=(n_1,\dots,n_d)$, where $n_i$ is the number of
+$t\le N$ with $X_t=i$. We write $P_N(n)$ for its probability and $\alpha=n/N$. We are interested
+in $T$ of order $\log N$, so that the switching probabilities are of order $(\log N)/N$.
+
+A face is a nonempty set $F\subseteq[d]$, of size $k=k_F=\lvert F\rvert$. We use $F$ and $G$ for
+faces. Let $\Delta_F$ be the set of probability vectors on $[d]$ that vanish off $F$, and
+$\Delta_F^\circ$ the set of those that are positive on $F$. So $n/N\in\Delta_F^\circ$ exactly when
+$\supp n=F$. For coordinates we number the states of $F$ as $1,\dots,k$ and use
+$(\alpha_2,\dots,\alpha_k)$ on $\Delta_F$ and $(t_2,\dots,t_k)$ on $\{t\in\R^F:\sum_it_i=T\}$.
+Any other $k-1$ coordinates give the same Lebesgue measure. For $x,y\in\R^F$ we write
+$\langle x,y\rangle=\sum_{i\in F}x_iy_i$ and $x\circ y=(x_iy_i)_{i\in F}$. Let
+$A_F=(q_{ij})_{i,j\in F}$ with zero diagonal, and let $Q_F=A_F-\operatorname{diag}(q_i)_{i\in F}$
+be the principal submatrix of $Q$ on $F$. Note that $q_i$ includes the rates of leaving $F$, so
+$Q_F$ generates the chain killed when it leaves $F$. The switching graph $G_F$ is the directed
+graph on $F$ with an edge $i\to j$ whenever $i\ne j$ and $q_{ij}>0$. A matrix is Metzler if its
+off-diagonal entries are nonnegative. The Perron root $\varrho(B)$ of a Metzler matrix $B$ is its
+largest real eigenvalue. It exists, and if $B$ is irreducible it is a simple eigenvalue with
+positive left and right eigenvectors, by the Perron--Frobenius theorem for $B+cI\ge0$ with $c$
+large~\cite{bermanplemmons1994}.
+
+\begin{definition}[faces]\label{def:faces}
+Let $F$ be a face. We call $F$ \emph{irreducible} if $G_F$ is strongly connected, so every
+singleton is irreducible. We call $F$ \emph{admissible} if for some $N$ some path
+$x_1\cdots x_N$ of positive probability has support exactly $F$. We say that $F$ satisfies
+\textup{(H)} if $F$ is irreducible and $\mu(F)>0$. The \emph{exit rate} of $F$ is
+$\lambda_F=-\varrho(Q_F)$, so $\lambda_{\{i\}}=q_i$. If $F$ is irreducible, $r_F$ and $l_F$ are
+right and left eigenvectors of $Q_F$ for $-\lambda_F$ with positive entries and
+$\langle l_F,r_F\rangle=1$, and $\alpha^*_F=l_F\circ r_F$ is the \emph{quasi-ergodic law} of
+$F$~\cite{darrochseneta1965,darrochseneta1967}. The \emph{face maximum} is
+$M_F=\max\{P_N(n):\supp n=F\}$.
+\end{definition}
+
+The pair $(r_F,l_F)$ is unique up to $(cr_F,l_F/c)$, and $\alpha^*_F\in\Delta_F^\circ$ does not
+depend on $c$. When $hq_{\max}<1$, a path has positive probability exactly when $\mu_{x_1}>0$ and
+$q_{x_tx_{t+1}}>0$ at every switch, and repeating its last state keeps it positive. So $M_F>0$ for
+all large $N$ if $F$ is admissible, and $M_F=0$ otherwise. If $F$ is reducible, we order the
+strongly connected components $C_1,\dots,C_r$ of $G_F$ so that every edge between different
+components goes forward. Then $Q_F$ is block triangular with diagonal blocks $Q_{C_j}$ (its
+Frobenius normal form~\cite{bermanplemmons1994}), so $\lambda_F=\min_j\lambda_{C_j}$. If $F$ is
+irreducible, the row sums of $e^{TQ_F}\ge0$ are the probabilities that the continuous-time chain
+started in $F$ stays in $F$ up to time $T$, and $e^{TQ_F}r_F=e^{-T\lambda_F}r_F$. Comparing $\ones$
+with $r_F$ shows that these probabilities are $e^{-T\lambda_F}$ up to a factor between
+$\min r_F/\max r_F$ and its inverse. So $\lambda_F$ is the rate at which the chain leaves $F$.
+
+\begin{lemma}[admissible faces]\label{lem:admissible}
+Let $F$ be a face and $C_1,\dots,C_r$ the strongly connected components of $G_F$. \textup{(a)} $F$
+is admissible if and only if the components can be numbered so that $\mu(C_1)>0$ and, for each $j<r$,
+$q_{xy}>0$ for some $x\in C_j$ and $y\in C_{j+1}$. \textup{(b)} An irreducible face is admissible
+if and only if $\mu(F)>0$. So \textup{(H)} holds exactly for the irreducible admissible faces.
+\textup{(c)} If $Q$ has symmetric support, that is $q_{ij}>0$ exactly when $q_{ji}>0$, then every
+admissible face is irreducible.
+\end{lemma}
+
+\begin{proof}
+The states of the maximal runs of a path of positive probability with support $F$ form a walk in
+$G_F$ that starts in $\supp\mu$ and visits every state of $F$. For $N$ at least its length, every
+such walk arises in this way. So $F$ is admissible if and only if $G_F$ has such a walk. (a) Along
+such a walk, a component $C$ cannot be visited again after a state $y\notin C$, since then $y$ and
+$C$ would be reachable from each other. So the walk passes through each component in one block.
+The first block contains the start, and consecutive blocks are joined by an edge.
+Conversely, given the numbering and edges $x_j\to y_{j+1}$ from $C_j$ to $C_{j+1}$, take
+$y_1\in C_1$ with $\mu_{y_1}>0$ and any $x_r\in C_r$. Since $C_j$ is strongly connected, some walk
+from $y_j$ to $x_j$ visits every state of $C_j$. Joining these walks by the edges
+$x_j\to y_{j+1}$ gives the required walk. (b) is (a) with $r=1$. (c) With symmetric support an
+edge from $C_1$ to $C_2$ gives an edge back, which would merge $C_1$ and $C_2$. So (a) forces
+$r=1$.
+\end{proof}
+
+For a face $F$ and $m\in\Z_{\ge1}^F$ put $M=\sum_{i\in F}m_i$ and
+$W(m)=\sum_c\mu_{c_1}\prod_{j<M}q_{c_jc_{j+1}}$, where the sum runs over the words
+$c=c_1\cdots c_M$ in $F$ with $c_j\ne c_{j+1}$ for $j<M$ in which each $i\in F$ occurs $m_i$ times.
+We do not show the dependence on $F$ in $W$, or in $H$ and $f_T$ below.
+
+\begin{lemma}[run expansion]\label{lem:runs}
+Let $hq_{\max}\le1$ and let $n$ have support $F$. Then, with $\binom{n_i-1}{m_i-1}=0$ for
+$m_i>n_i$ and $0^0=1$,
+\[
+P_N(n)=\sum_{m\in\Z_{\ge1}^F}W(m)\,h^{M-1}\prod_{i\in F}\binom{n_i-1}{m_i-1}(1-hq_i)^{n_i-m_i}.
+\]
+\end{lemma}
+
+\begin{proof}
+Split a path with support $F$ into maximal runs. Their states $c_1\cdots c_M$ form a word as in
+$W(m)$, where $m_i$ is the number of runs of state $i$. The path has $M-1$ switches, of
+probabilities $hq_{c_jc_{j+1}}$, and $n_i-m_i$ stays in state $i$, of probability $1-hq_i$ each.
+So its probability is $\mu_{c_1}h^{M-1}\prod_{j<M}q_{c_jc_{j+1}}\prod_{i\in F}(1-hq_i)^{n_i-m_i}$.
+For a fixed $c$ the path is determined by the run lengths, and the lengths of the runs of state
+$i$ form one of the $\binom{n_i-1}{m_i-1}$ compositions of $n_i$ into $m_i$ positive parts,
+independently over $i$. Summing over $c$ gives the claim.
+\end{proof}
+
+The continuous-time analogue replaces the binomial coefficients by powers. For
+$t\in(0,\infty)^F$ put
+$H(t)=\sum_{m\in\Z_{\ge1}^F}W(m)\prod_{i\in F}t_i^{m_i-1}/(m_i-1)!$. There are at most $k^M$
+words of length $M$, so $W(m)\le k^Mq_{\max}^{M-1}$ and
+$H(t)\le k^kq_{\max}^{k-1}e^{kq_{\max}\sum_it_i}<\infty$.
+
+\begin{lemma}[the continuum density]\label{lem:continuum}
+Let $(Y_s)_{s\ge0}$ be the continuous-time chain with generator $Q$ and $Y_0\sim\mu$, let
+$\mathcal O_i=\int_0^T\mathbf 1\{Y_s=i\}\,ds$, and let $E_F$ be the event that $Y$ stays in $F$
+during $[0,T]$ and visits every state of $F$. Then $\Prob(E_F,\ \mathcal O\in\cdot\,)$ has the
+density $e^{-\langle q,t\rangle}H(t)$ in $(t_2,\dots,t_k)$ on $\{t\in(0,\infty)^F:\sum_it_i=T\}$,
+and $\Prob(E_F,\ \mathcal O/T\in\cdot\,)$ has the density
+\[
+f_T(\alpha)=T^{k-1}e^{-T\langle q,\alpha\rangle}H(T\alpha)
+\]
+in $(\alpha_2,\dots,\alpha_k)$. For $n$ with support $F$ and $t=hn$,
+$N^{-(k-1)}f_T(n/N)=h^{k-1}e^{-\langle q,t\rangle}H(t)$. For $F=\{i\}$,
+$f_T=\Prob(E_F)=\mu_ie^{-q_iT}$.
+\end{lemma}
+
+\begin{proof}
+For a word $c=c_1\cdots c_M$ in $F$ with $c_j\ne c_{j+1}$ that contains every state of $F$, let
+$E_c$ be the event that $Y$ visits exactly $c_1,\dots,c_M$ in this order during $[0,T]$. Since $Y$
+jumps finitely often in $[0,T]$ almost surely, $E_F$ is the disjoint union of the events $E_c$ up
+to a null set. Fix $c$, let $s_1,\dots,s_{M-1}$ be the first $M-1$ holding times and
+$s_M=T-\sum_{j<M}s_j$. The holding time in $c_j$ is exponential with rate $q_{c_j}$, the jump to
+$c_{j+1}$ has probability $q_{c_jc_{j+1}}/q_{c_j}$, and the last holding time is censored. It
+only has to exceed $s_M$, which has probability $e^{-q_{c_M}s_M}$. So on
+$\{s_j>0\text{ for }j\le M\}$ the event $E_c$ has density
+$\mu_{c_1}\prod_{j<M}q_{c_jc_{j+1}}e^{-\langle q,\mathcal O\rangle}$ in $(s_1,\dots,s_{M-1})$,
+where $\mathcal O_i=\sum_{j:c_j=i}s_j$. (If $q_{c_j}=0$ for some $j<M$, then $E_c$ is null and the formula gives $0$.) Let
+$j_i$ be the position of the last letter $i$ in $c$, so $j_{c_M}=M$. Replacing $s_{j_i}$ by
+$\mathcal O_i$ for $i\ne c_M$ is a triangular linear change of variables with unit diagonal. For
+fixed $\mathcal O=t$ the other $m_i-1$ holding times in state $i$ range over
+$\{x\in(0,\infty)^{m_i-1}:\sum x<t_i\}$, for every $i\in F$. For $i=c_M$ this is the condition
+$s_M>0$, with $t_{c_M}=T-\sum_{i\ne c_M}t_i$. The set has volume $t_i^{m_i-1}/(m_i-1)!$ and is
+empty unless $t_i>0$. Integrating out these variables gives the density of $\mathcal O$ on $E_c$
+in $(t_i)_{i\ne c_M}$, and hence in $(t_2,\dots,t_k)$. Summing over $c$ by monotone convergence
+gives $e^{-\langle q,t\rangle}H(t)$. The rest follows from the change of variables $t=T\alpha$, with Jacobian
+$T^{k-1}$, and from $T/N=h$. For $k=1$ the only word is $c=i$, so $H=\mu_i$.
+\end{proof}
+
+\begin{example}[the 4 models]\label{ex:models}
+(i) For $d=2$, $q_{12}=q_{21}=1$ and uniform $\mu$ the chain is the persistent walk
+of~\cite{paperA} with $p=1-h$, so $T=N(1-p)$. Bin $k$ is the composition $(k,N-k)$, and
+Lemma~\ref{lem:runs} is the run count of~\cite[Thm.~2.1]{paperA}. (ii) For $Q=J-dI$, with $J$
+the all-ones matrix, and uniform $\mu$ the chain is the model of~\cite{paperB} with its
+parameters $r=h$ and $p=1-(d-1)h$. So $T=Nr$, and its crossing variable $Nu=Nr/p$ is
+$T(1+O(T/N))$. Here $\lambda_F=d-\lvert F\rvert$ and $\alpha^*_F$ is uniform on $F$. (iii) For
+$Q=\Pi-I$, with $\Pi=(\pi_{ij})$ stochastic with zero diagonal, $I+hQ=(1-h)I+h\Pi$ and
+$\lambda_F=1-\varrho(\Pi_F)$, where $\Pi_F$ is the principal submatrix of $\Pi$ on $F$. This is
+the sticky chain of Section~\ref{sec:sticky}. (iv) Let $d=4$, number the directions east, north,
+west and south as $0,1,2,3$ modulo $4$, and put $q_{j,j\pm1}=r$, $q_{j,j+2}=s$ and $\mu$ uniform.
+Then $X_t$ is the direction of step $t$ of a walk on $\Z^2$ that turns left or right with
+probability $rh$ each and reverses with probability $sh$. Its position $(n_0-n_2,n_1-n_3)$ is a
+linear function of the composition (Section~\ref{sec:planar}). In (i), (ii) and (iv), $Q$ has
+symmetric support and $\mu$ has full support. So by Lemma~\ref{lem:admissible} the admissible
+faces are the irreducible ones, and they all satisfy \textup{(H)}.
+\end{example}
+
+\begin{remark}[the power of $N$]\label{rem:lattice-term}
+Since $\sum_{i\in F}(m_i-1)=M-k$, we can write $h^{M-1}=h^{k-1}\prod_ih^{m_i-1}$ in
+Lemma~\ref{lem:runs}. With $t=hn$,
+$h^{m_i-1}\binom{n_i-1}{m_i-1}=\frac{t_i^{m_i-1}}{(m_i-1)!}\prod_{l<m_i}\bigl(1-\frac l{n_i}\bigr)$,
+and $(1-hq_i)^{n_i-m_i}$ is close to $e^{-q_it_i}$. So each term with every $m_i^2$ small compared
+with $n_i$ is close to the matching term of
+$h^{k-1}e^{-\langle q,t\rangle}H(t)=N^{-(k-1)}f_T(n/N)$. The terms that matter have $M$ of order
+$T$, and under \textup{(H)} Lemma~\ref{lem:discrete} shows that the relative error is $O(T^2/N)$
+on compact subsets of $\Delta_F^\circ$. So a run after the first in state $i$ brings a factor $h$
+for its switch and a factor of order $n_i$ for its placement, and together these give a factor of
+order $T$. Only the $k-1$ switches that enter a new state leave a factor $h=T/N$ each.
+\end{remark}

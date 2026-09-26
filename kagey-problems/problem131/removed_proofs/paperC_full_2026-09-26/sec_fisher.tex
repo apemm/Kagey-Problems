@@ -1,0 +1,226 @@
+\section{The information in the endpoint}\label{sec:fisher}
+
+In this section we return to the walk of Paper~A, and the notation is local
+to the section. The first step is left or right with probability $\frac12$
+each, and each later step repeats the one before it with probability
+$p=1-q$, where $0<q<1$. Put
+\[
+ \rho=1-2q,\qquad u=\frac qp,\qquad x=Nq,\qquad y=Nu=\frac{Nq}p .
+\]
+Let $J$ be the number of switches in the $N$ steps, $K$ the number of right
+steps, $X=2K-N$ the endpoint and $W=X/N$. This is Example~\ref{ex:models}(i)
+with $h=q$, so $x$ is the time horizon $T$. A path with $J$ switches has
+probability $\frac12p^{N-1-J}q^J$. So $J\sim\operatorname{Bin}(N-1,q)$, the
+score of the path is $(J-(N-1)q)/(pq)$, and the path carries the Fisher
+information $\Var J/(pq)^2=(N-1)/(pq)$ about $q$. The endpoint carries
+$I_K(q)=\sum_{k=0}^N(\partial_q\Prob(K=k))^2/\Prob(K=k)$, and we call
+$e_N(q)=I_K(q)\,pq/(N-1)$ the \emph{efficiency} of the endpoint. It is the
+fraction of the information in the path that is left when we only see where
+the walk ends.
+
+The endpoint sees the switches only through how far the walk spreads. If
+$X$ were normal with mean $0$ and variance $Np/q$, which is close to
+$\Var X$ when $x$ is large, it would carry the information
+$\frac12(\partial_q\log(Np/q))^2=1/(2p^2q^2)$. This is the fraction
+$1/(2(N-1)pq)\approx1/(2x)$ of the information in the path. It is only a
+heuristic, but Theorem~\ref{thm:fisher} confirms the leading term $1/(2x)$.
+The leading term in the Gaussian approximation of Smiga, Radaelli, Binder
+and Landi~\cite{smiga2023} vanishes here, since the stationary law
+$(\frac12,\frac12)$ does not depend on $q$. So in that approximation all of
+the endpoint information comes from the variance term that their
+leading-order formula drops.
+
+\begin{proposition}[a correlation ratio]\label{prop:eta}
+For $N\ge2$ and $0<q<1$,
+\[
+ e_N(q)=\frac{\Var(\E[J\mid K])}{\Var J}.
+\]
+For $0<k<N$ we have $\E[J\mid K=k]=\frac{d}{dt}\log S_{k,N-k}(e^t)$ at
+$t=\log(q/p)$, where $S_{a,b}$ is the polynomial of
+Section~\ref{sec:papersAB}. For $k\in\{0,N\}$ we have $J=0$.
+\end{proposition}
+
+\begin{proof}
+For each $k$, $\Prob(K=k)$ is the sum of the probabilities of the paths
+with $k$ right steps. Differentiating each term gives
+$\partial_q\log\Prob(K=k)=\E[(J-(N-1)q)/(pq)\mid K=k]$. Since
+$\E J=(N-1)q$, this gives $I_K(q)=\Var(\E[J\mid K])/(pq)^2$, and we divide
+by $(N-1)/(pq)=\Var J/(pq)^2$. By~\cite[Thm.~2.1]{paperA}, for $0<k<N$ we
+have $\Prob(K=k,J=j)=\frac12p^{N-1}W(N,k,j)u^j$, where $W(N,k,j)$ is the
+number of words with $k$ letters $R$, $N-k$ letters $L$ and $j$ switches.
+Summing over $j$ gives $\Prob(K=k)=\frac12p^{N-1}S_{k,N-k}(u)$. Hence
+$\E[J\mid K=k]=uS'_{k,N-k}(u)/S_{k,N-k}(u)$, which is the stated
+derivative. The only paths with $K\in\{0,N\}$ are the 2 constant paths.
+\end{proof}
+
+So $e_N$ is the correlation ratio of $J$ on $K$, and $e_N\le1$. Since
+$\E[J\mid K]$ is the orthogonal projection of $J$ onto the functions of $K$
+in $L^2$, we have $\Cov(J,g(K))=\Cov(\E[J\mid K],g(K))$ for every function
+$g$. Then the Cauchy--Schwarz inequality gives
+\begin{equation}\label{eq:fisher-proj}
+ e_N(q)\ge\frac{\Cov(J,g(K))^2}{\Var J\,\Var g(K)}
+ \qquad\text{whenever }\Var g(K)>0.
+\end{equation}
+
+\begin{proposition}[few switches]\label{prop:smallx}
+For $N\ge2$ and $0<q<1$,
+\[
+ 1-(N-2)q\le p^{N-2}\le\frac{(N-1)qp^{N-2}}{1-p^{N-1}}\le e_N(q)
+ \le1-\frac{(N-2)qp^{N-3}}{2p+(N-2)q}.
+\]
+Hence $e_N(q)=1-\frac{N-2}2q+O_N(q^2)$ as $q\to0$ with $N$ fixed. If $q\to0$
+and $Nq$ stays bounded, then $e_N(q)\to1$ if and only if $Nq\to0$.
+\end{proposition}
+
+\begin{proof}
+The first 2 inequalities are Bernoulli's inequality, in the forms
+$p^{N-2}\ge1-(N-2)q$ and $p^{N-1}\ge1-(N-1)q$. For the third, let
+$A=\mathbf 1\{K\in\{0,N\}\}$. Only the constant paths have $K\in\{0,N\}$,
+so $A=\mathbf 1\{J=0\}$. Then $\Cov(J,A)=-\E J\,\E A=-(N-1)qp^{N-1}$ and
+$\Var A=p^{N-1}(1-p^{N-1})$, and \eqref{eq:fisher-proj} with $g(K)=A$ gives
+the third inequality.
+
+For the upper bound, $1-e_N=\E[\Var(J\mid K)]/\Var J$ by the law of total
+variance, and $\Prob(K=k)\Var(J\mid K=k)$ is the least value of
+$\E[(J-c)^2\mathbf 1\{K=k\}]$ over real $c$. For $0<k<N$ there are 2 words
+with 1 switch and $N-2$ words with 2 switches~\cite[Thm.~2.1]{paperA}.
+So $a=\Prob(K=k,J=1)=qp^{N-2}$ and $b=\Prob(K=k,J=2)=\frac12(N-2)q^2p^{N-3}$
+do not depend on $k$. For every $c$ we have
+$\E[(J-c)^2\mathbf 1\{K=k\}]\ge a(1-c)^2+b(2-c)^2\ge ab/(a+b)$, and summing
+over the $N-1$ interior bins gives
+\[
+ \E[\Var(J\mid K)]\ge\frac{(N-1)ab}{a+b}=\frac{(N-1)(N-2)q^2p^{N-2}}{2p+(N-2)q},
+\]
+and we divide by $\Var J=(N-1)pq$.
+
+For fixed $N$, $1-p^{N-1}=(N-1)q\bigl(1-\frac{N-2}2q+O(q^2)\bigr)$, so both
+bounds are $1-\frac{N-2}2q+O(q^2)$. If $Nq\to0$, then $e_N\ge1-(N-2)q\to1$.
+Otherwise some subsequence has $Nq\to x\in(0,\infty)$ and $N\to\infty$, and
+along it the upper bound tends to $1-xe^{-x}/(2+x)<1$.
+\end{proof}
+
+The reason is that 1 switch and 2 switches both leave the endpoint uniform
+on the interior bins. So the endpoint cannot tell them apart, and some
+information is lost as soon as 2 switches are likely.
+
+\begin{theorem}[many switches]\label{thm:fisher}
+Let $R^2_N(q)=\Cov(J,X^2)^2/(\Var J\,\Var X^2)$ be the squared correlation
+of $J$ and $X^2$. For $N\ge2$ and $0<q<1$,
+\[
+ R^2_N(q)=\frac1{2(N-1)pq}\cdot
+ \frac{\bigl[1+\rho^N-p(1-\rho^N)/x\bigr]^2}{V},
+\]
+where
+\[
+ V=1-\frac{1+8\rho+\rho^2+8\rho^{N+1}}{4px}
+ +\frac{\rho(1-\rho^N)\bigl[2(1+2\rho)(2+\rho)-\rho(1-\rho^N)\bigr]}{8p^2x^2}.
+\]
+There are absolute constants $C$ and $N_0$ such that for $N\ge N_0$,
+$0<q\le\frac12$ and $1\le x\le N^{1/4}$,
+\[
+ 0\le e_N(q)-R^2_N(q)\le C\Bigl(\frac1{x^3}+\frac{x^3}N\Bigr).
+\]
+Consequently, in the same range and with an absolute implied constant,
+\[
+ e_N(q)=\frac1{2x}+\frac1{4x^2}+O\Bigl(\frac1{x^3}+\frac{x^3}N\Bigr).
+\]
+\end{theorem}
+
+The lower bound $e_N\ge R^2_N$ is \eqref{eq:fisher-proj} with $g(K)=X^2$,
+and it holds for all $N\ge2$ and $0<q<1$. The closed form and the upper
+bound are proved in Appendix~\ref{app:fisher}. The quadratic does well
+because Proposition~\ref{prop:eta} and Paper~A's uniform Bessel estimate for
+every bin~\cite[Thm.~6.2]{paperA} make $\E[J\mid K]$ close to
+$y\sqrt{1-W^2}+\frac12\approx y(1-W^2/2)+\frac12$. We do not compute $C$,
+and the error term we prove is small only for very large $N$, but
+numerically $e_N-R^2_N$ is already of order $x^{-3}$ at $N=50$
+(Table~\ref{tab:fisher}).
+
+\begin{proof}[Proof of the expansion in Theorem~\ref{thm:fisher}]
+If $x\le18$, then $\lvert e_N-\frac1{2x}-\frac1{4x^2}\rvert\le1\le18^3x^{-3}$,
+since $e_N$ and $\frac1{2x}+\frac1{4x^2}$ lie in $[0,1]$. Let $x\ge18$. Then $p\ge\frac12$,
+$0\le\rho<1$ and $\rho^N\le e^{-2x}\le x^{-2}$. The middle term of $V$ lies
+in $[0,9/x]$, and since $1+8\rho+\rho^2=10-20q+4q^2$ it equals
+$\frac5{2x}+O(q/x+x^{-2})$. The last term lies in $[0,9/x^2]$. So
+$V\ge\frac12$, $1/V=1+\frac5{2x}+O(q/x+x^{-2})$, the squared bracket is
+$1-\frac2x+O(q/x+x^{-2})$, and $1/(2(N-1)pq)=(1+O(q+1/N))/(2x)$. Multiplying,
+$R^2_N=\frac1{2x}+\frac1{4x^2}+O(x^{-3}+q/x+1/(Nx))$, and every implied
+constant is absolute. Since $q/x=1/N\le x^3/N$, the bound on $e_N-R^2_N$
+gives the expansion.
+\end{proof}
+
+\begin{corollary}[at Kagey's crossing]\label{cor:fisher-crossing}
+Let $p_N$ be the value of $p$ at which the middle bin and the endpoints are
+equally likely (Section~\ref{sec:papersAB}), and put $q_N=1-p_N$ and
+$L=\log N$. Then
+\[
+ e_N(q_N)=\frac1{2L}+\frac{\log L+1+\log(8/\pi)}{4L^2}
+ +O\Bigl(\frac{(\log L)^2}{L^3}\Bigr).
+\]
+\end{corollary}
+
+\begin{proof}
+By~\cite[Thm.~5.1]{paperA}, $p_N\ge\frac23$, so $q_N\le\frac13$. By
+\cite[Thm.~5.2, Eq.~(7)]{paperA},
+$x_N=Nq_N=L-\frac12\log L+c_0+O(\log L/L)$.
+So $1\le x_N\le N^{1/4}$ for large $N$, and Theorem~\ref{thm:fisher} gives
+$e_N(q_N)=\frac1{2x_N}+\frac1{4x_N^2}+O(L^{-3})$. Write
+$x_N=L(1-\varepsilon)$ with $\varepsilon=(\frac12\log L-c_0)/L+O(\log L/L^2)$.
+Then $\frac1{2x_N}=\frac1{2L}+\frac{\log L-2c_0}{4L^2}+O((\log L)^2/L^3)$ and
+$\frac1{4x_N^2}=\frac1{4L^2}+O(\log L/L^3)$. Since $-2c_0=\log(8/\pi)$,
+adding the 2 gives the claim.
+\end{proof}
+
+So $e_N\sim1/(2\log N)$ at Kagey's crossing, but the limit is approached
+slowly. The relative correction is of order $(\log\log N)/\log N$, and
+Table~\ref{tab:fisher} shows that it is large at every $N$ we computed.
+The product $2e_N\log N$ is $1.74$ at $N=100$ and still $1.35$ at
+$N=3200$. Both $R^2_N$ and
+$\frac1{2x_N}+\frac1{4x_N^2}$ lie below $e_N$ by an amount comparable to
+$x_N^{-3}$.
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{@{}rcccccc@{}}
+\toprule
+$N$ & $x_N$ & $e_N(q_N)$ & $2x_Ne_N$ & $2Le_N$ & $R^2_N(q_N)$
+ & $\frac1{2x_N}+\frac1{4x_N^2}$\\
+\midrule
+50 & 2.8998 & 0.24117 & 1.3987 & 1.8869 & 0.20873 & 0.20216\\
+100 & 3.5034 & 0.18869 & 1.3221 & 1.7379 & 0.16642 & 0.16309\\
+400 & 4.7501 & 0.12681 & 1.2047 & 1.5196 & 0.11715 & 0.11634\\
+1600 & 6.0246 & 0.09433 & 1.1366 & 1.3919 & 0.09007 & 0.08988\\
+3200 & 6.6684 & 0.08361 & 1.1151 & 1.3496 & 0.08070 & 0.08060\\
+\bottomrule
+\end{tabular}
+\caption{The efficiency of the endpoint at Kagey's crossing $q_N=1-p_N$,
+computed from the exact law, with $x_N=Nq_N$ and $L=\log N$. The last 2
+columns are the squared correlation of Theorem~\ref{thm:fisher} and its
+two-term expansion.}
+\label{tab:fisher}
+\end{table}
+
+\begin{remark}[fixed $q$ and fixed $x$]\label{rem:fisher-regimes}
+Let $Nq\to\infty$ with $q\le q_0$ for a fixed $q_0<1$. Then
+$\liminf2(N-1)pq\,e_N(q)\ge1$. Indeed $e_N\ge R^2_N$, and
+$2(N-1)pq\,R^2_N$ is the squared bracket over $V$. Here
+$px\ge(1-q_0)x\to\infty$, and $\lvert\rho\rvert^N\to0$ because
+$\rho^N\le e^{-2x}$ when $q\le\frac12$ and $\lvert\rho\rvert\le2q_0-1$ when
+$q>\frac12$. The middle and last terms of $V$ are at most $18/(4px)$ and
+$40/(8p^2x^2)$ in absolute value, so $V\to1$. The bracket tends to $1$
+since $p(1-\rho^N)/x\le2/x$.
+We have not proved the matching upper bound, but numerically the ratio
+tends to $1$. At $q=0.1$ it is $1.0113$, $1.0055$ and $1.0027$ for $N=400$,
+$800$ and $1600$. So at fixed $q$ the efficiency is about $1/(2(N-1)pq)$,
+and $1/(2Nq)$ is too small by the factor $1/p$.
+
+If instead $x=Nq$ is fixed and $N\to\infty$, Proposition~\ref{prop:smallx}
+gives $x/(e^x-1)\le\liminf e_N\le\limsup e_N\le1-xe^{-x}/(2+x)$. We do not
+prove that $e_N$ converges. Numerically it is close to the same efficiency
+$e_\infty(x)$ for the telegraph process on $[0,1]$ that changes direction at
+rate $x$ and is observed through the time it spends moving right. Along the
+crossing, $e_N/e_\infty(x_N)$ is $1.025$ at $N=100$ and $1.002$ at
+$N=3200$. The product $2xe_\infty(x)$ is $1.18$, $1.40$ and $1.34$ at $x=1$,
+$2$ and $3$, so for moderate $x$ neither $1$ nor $1/(2x)$ is a good
+approximation.
+\end{remark}

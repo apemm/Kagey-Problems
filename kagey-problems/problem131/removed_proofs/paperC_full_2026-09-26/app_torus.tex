@@ -1,0 +1,437 @@
+\section{The torus representation and the local law}\label{app:torus}
+
+This appendix proves Lemma~\ref{lem:upper}, Theorem~\ref{thm:local} and
+Lemma~\ref{lem:discrete}. All 3 rest on a formula that writes the run sum
+$H(t)$ of Lemma~\ref{lem:continuum} as an integral over a torus.
+
+Throughout, $F$ is a face with $k\ge2$ states, numbered $1,\dots,k$. For
+$x\in\mathbb C^F$ we write $x'=(x_2,\dots,x_k)$, and $\ones$ is the all-ones
+vector of the appropriate size. We write $\mathrm i$ for the imaginary unit,
+since $i$ denotes a state, and $\mathbb T^m=(\R/2\pi\Z)^m$. We split
+\[
+A_F=\begin{pmatrix}0&a_1^\top\\ b_1&A'\end{pmatrix},\qquad
+\mu_F=(\mu_1,\mu'),
+\]
+so $a_1=(q_{1j})_{j\ge2}$, $b_1=(q_{i1})_{i\ge2}$ and
+$A'=(q_{ij})_{i,j\ge2}$. For $z'\in\mathbb C^{k-1}$ let
+$Z'=\operatorname{diag}(z')$. Where $Z'-A'$ is invertible we put
+\[
+X(z')=(Z'-A')^{-1},\qquad g(z')=a_1^\top X(z')b_1,\qquad
+b(z')=\bigl(\mu_1+\mu'^\top X(z')b_1\bigr)\bigl(1+a_1^\top X(z')\ones\bigr).
+\]
+We use 2 standard facts. First, let $B\ge0$ be a square matrix and $S$ a
+diagonal matrix with positive diagonal. Then $\varrho(B-S)<0$ holds if and
+only if $\varrho(S^{-1}B)<1$, and also if and only if $(S-B)v>0$ for some
+vector $v>0$. In that case
+$(S-B)^{-1}=\sum_{j\ge0}(S^{-1}B)^jS^{-1}\ge0$. These are among the standard
+characterizations of nonsingular M-matrices~\cite[Ch.~6]{bermanplemmons1994}.
+Second, if $M$ is an irreducible Metzler matrix, then $\varrho(M)$ is larger
+than the Perron root of each proper principal submatrix of $M$, and every
+nonnegative eigenvector of $M$ is positive and belongs to
+$\varrho(M)$~\cite{bermanplemmons1994}.
+
+\begin{lemma}[torus representation]\label{lem:torus}
+Let $s'\in(0,\infty)^{k-1}$ satisfy
+$\varrho(A'-\operatorname{diag}s')<0$. On the set of $z'\in\mathbb C^{k-1}$
+with $\lvert z_i\rvert\ge s_i$ for every $i\ge2$, the matrix $Z'-A'$ is
+invertible, and $X$, $g$ and $b$ are given by absolutely convergent power
+series in $1/z_2,\dots,1/z_k$ with nonnegative coefficients. In particular
+$\lvert g(z')\rvert\le g(s')$ and $\lvert b(z')\rvert\le b(s')$ there. For
+every $t\in(0,\infty)^F$,
+\[
+H(t)=\frac1{(2\pi)^{k-1}}\int_{\mathbb T^{k-1}}
+\exp\Bigl(t_1g(z')+\sum_{i\ge2}t_iz_i\Bigr)\,b(z')\prod_{i\ge2}z_i\,d\varphi,
+\qquad z_i=s_ie^{\mathrm i\varphi_i}.
+\]
+\end{lemma}
+
+\begin{proof}
+Put $S'=\operatorname{diag}(s')$. By the first fact,
+$\varrho(S'^{-1}A')<1$. So the series
+\[
+X(z')=\sum_{j\ge0}(Z'^{-1}A')^jZ'^{-1}
+\]
+converges absolutely for $\lvert z_i\rvert\ge s_i$, since its terms are
+bounded entrywise in modulus by those of the same series at $z'=s'$. This
+gives the claims about $X$, $g$ and $b$, because $a_1$, $b_1$ and $\mu$ are
+nonnegative.
+
+Choose $s_1>g(s')$, put $s=(s_1,s')$ and $S=\operatorname{diag}(s)$. We show
+that $\varrho(S^{-1}A_F)<1$. This is the Schur complement criterion for
+M-matrices, and we check it directly. For $\varepsilon>0$ let $v=(1,v')$
+with $v'=X(s')(b_1+\varepsilon\ones)$. Then $v'\ge
+S'^{-1}(b_1+\varepsilon\ones)>0$, and
+\[
+\bigl((S-A_F)v\bigr)_i=\bigl((S'-A')v'\bigr)_i-(b_1)_i=\varepsilon\quad(i\ge2),
+\qquad
+\bigl((S-A_F)v\bigr)_1=s_1-g(s')-\varepsilon\,a_1^\top X(s')\ones .
+\]
+For small $\varepsilon$ both are positive, so the first fact gives the
+claim.
+
+Now let $\mathcal Z=\operatorname{diag}(z)$ with $\lvert z_i\rvert=s_i$ for
+every $i\in F$. Expanding
+$(\mathcal Z-A_F)^{-1}=\mathcal Z^{-1}(I-A_F\mathcal Z^{-1})^{-1}$ in powers
+of $A_F\mathcal Z^{-1}$ gives
+\[
+\mu_F^\top(\mathcal Z-A_F)^{-1}\ones=\sum_c\mu_{c_1}\prod_{j<M}q_{c_jc_{j+1}}
+\prod_{i\in F}z_i^{-m_i(c)},
+\]
+where $c=c_1\cdots c_M$ runs over all words in $F$ with $M\ge1$ and
+$c_j\ne c_{j+1}$, and $m_i(c)$ is the number of letters $i$ in $c$. Since
+$\varrho(A_FS^{-1})=\varrho(S^{-1}A_F)<1$, the expansion is valid and the
+sum converges absolutely and uniformly on the torus. For an integer $m$, $t_i>0$ and
+$z_i=s_ie^{\mathrm i\varphi_i}$,
+\[
+\frac1{2\pi}\int_0^{2\pi}e^{t_iz_i}z_i^{1-m}\,d\varphi_i
+=\frac1{2\pi\mathrm i}\oint_{\lvert z_i\rvert=s_i}e^{t_iz_i}z_i^{-m}\,dz_i
+=\begin{cases}t_i^{m-1}/(m-1)!,&m\ge1,\\ 0,&m\le0.\end{cases}
+\]
+We integrate term by term. The words that miss a state of $F$ give $0$, and
+grouping the others by $m=(m_i(c))_{i\in F}$ gives
+$W(m)\prod_it_i^{m_i-1}/(m_i-1)!$. Hence
+\begin{equation}\label{eq:A-full}
+H(t)=\frac1{(2\pi)^k}\int_{\mathbb T^k}e^{\langle t,z\rangle}\,
+\mu_F^\top(\mathcal Z-A_F)^{-1}\ones\prod_{i\in F}z_i\,d\varphi .
+\end{equation}
+We do the integral over $\varphi_1$ first. Put $\zeta=z_1-g(z')$, the Schur
+complement of $Z'-A'$ in $\mathcal Z-A_F$. It is not $0$, because
+$\lvert g(z')\rvert\le g(s')<s_1$. With $X=X(z')$, block inversion gives
+$(\mathcal Z-A_F)^{-1}$ with first row $\zeta^{-1}(1,a_1^\top X)$, first
+column $\zeta^{-1}(1,Xb_1)^\top$ and lower right block
+$X+\zeta^{-1}Xb_1a_1^\top X$. So
+\[
+\mu_F^\top(\mathcal Z-A_F)^{-1}\ones=\frac{b(z')}{z_1-g(z')}+\mu'^\top X(z')\ones .
+\]
+The second term does not depend on $z_1$. So by Cauchy's integral formula the integral over
+$\varphi_1$ in~\eqref{eq:A-full}, divided by $2\pi$, equals
+$e^{t_1g(z')}b(z')$ times the factors that do not involve $z_1$. In other
+words $b(z')$ is the residue at the pole $z_1=g(z')$. This proves the
+formula.
+\end{proof}
+
+The reason for this form is positivity. All coefficients are nonnegative, so
+on the torus the modulus of the integrand is at most
+$\exp(t_1g(s')+\sum_{i\ge2}t_is_i)\,b(s')\prod_{i\ge2}s_i$, which is its
+value at $\varphi=0$. This bound gives Lemma~\ref{lem:upper}, and a Laplace
+expansion around $\varphi=0$ gives Theorem~\ref{thm:local}.
+
+\subsection{Proof of Lemma~\texorpdfstring{\ref{lem:upper}}{3.2}}
+
+Let $F$ be irreducible and $\theta\in V_F$. Then $A_F-\operatorname{diag}\theta$
+is an irreducible Metzler matrix with Perron root $0$. So it has a right
+eigenvector $u>0$ for the eigenvalue $0$, and
+$\theta_i=(A_Fu)_i/u_i$. Since $G_F$ is strongly connected and $k\ge2$, each
+row of $A_F$ has a positive entry, so $\theta>0$. By the second fact,
+$\varrho(A'-\operatorname{diag}\theta')<0$. The rows $i\ge2$ of
+$(A_F-\operatorname{diag}\theta)u=0$ read
+$(\operatorname{diag}\theta'-A')u'=u_1b_1$, so $u'=u_1X(\theta')b_1$. Then
+row $1$ gives $\theta_1u_1=a_1^\top u'=u_1g(\theta')$. Hence
+\begin{equation}\label{eq:A-radii}
+\theta>0,\qquad \varrho(A'-\operatorname{diag}\theta')<0,\qquad
+g(\theta')=\theta_1\qquad\text{for every }\theta\in V_F .
+\end{equation}
+
+Now fix $n$ with support $F$ and $h$ with $hq_{\max}\le\frac12$, and put
+$\lvert n\rvert=\sum_in_i$ and $t=hn$. Lemma~\ref{lem:runs}, applied with
+$\lvert n\rvert$ in place of $N$ and the same $h$, gives the probability
+$P_{\lvert n\rvert}(n)$ that the first $\lvert n\rvert$ visits have
+composition $n$. Only terms with $m_i\le n_i$ for every $i$ are nonzero. In
+them we use $h^{m_i-1}\binom{n_i-1}{m_i-1}\le t_i^{m_i-1}/(m_i-1)!$ and
+$(1-hq_i)^{n_i-m_i}\le e^{-q_it_i}\sigma^{m_i}$, where
+$\sigma=e^{hq_{\max}}$. Note that $h^{M-1}=h^{k-1}\prod_ih^{m_i-1}$, and
+that $\sigma^MW(m)=\sigma W_\sigma(m)$, where $W_\sigma$ is $W$
+computed with $A_F$ replaced by $\sigma A_F$. So
+\begin{equation}\label{eq:A-sigma}
+P_{\lvert n\rvert}(n)\le\sigma\,h^{k-1}e^{-\langle q,t\rangle}H_\sigma(t),
+\end{equation}
+where $H_\sigma$ is $H$ computed with $\sigma A_F$ in place of $A_F$.
+We bound $H_\sigma(t)$ by Lemma~\ref{lem:torus} for $\sigma A_F$ with the
+radii $\sigma\theta'$. They satisfy its hypothesis, since
+$\varrho(\sigma A'-\operatorname{diag}\sigma\theta')
+=\sigma\varrho(A'-\operatorname{diag}\theta')<0$. The functions of
+Lemma~\ref{lem:torus} for $\sigma A_F$ satisfy
+$X_\sigma(\sigma z')=\sigma^{-1}X(z')$, so
+$g_\sigma(\sigma z')=\sigma g(z')$ and
+$b_\sigma(\sigma z')=b(z')$. By~\eqref{eq:A-radii} and the bounds in
+Lemma~\ref{lem:torus}, the integrand for $\sigma A_F$ has modulus at most
+$e^{\sigma\langle t,\theta\rangle}b(\theta')\sigma^{k-1}\prod_{i\ge2}\theta_i$.
+With~\eqref{eq:A-sigma} this gives
+\[
+P_{\lvert n\rvert}(n)\le\sigma^kb(\theta')\prod_{i\ge2}\theta_i\;
+h^{k-1}\exp\bigl(-h\langle n,q-\theta\rangle+(\sigma-1)h\langle n,\theta\rangle\bigr).
+\]
+Finally $\sigma\le e^{1/2}$ and $\sigma-1\le2hq_{\max}$, so
+$(\sigma-1)h\langle n,\theta\rangle\le2q_{\max}(\max_i\theta_i)h^2\lvert n\rvert$.
+This proves the lemma with
+$C_\theta=\max\bigl(e^{k/2}b(\theta')\prod_{i\ge2}\theta_i,\ 2q_{\max}\max_i\theta_i\bigr)$.
+For the bound stated after the lemma take
+$\theta=q-\lambda_F\ones$. It lies in $V_F$ because
+$\varrho(A_F-\operatorname{diag}\theta)=\varrho(Q_F)+\lambda_F=0$. Then
+$\langle n,q-\theta\rangle=\lambda_F\lvert n\rvert$, and for
+$\lvert n\rvert=N$ we have $h\lvert n\rvert=T$ and
+$h^2\lvert n\rvert=T^2/N$. \qed
+
+\subsection{Proof of Theorem~\texorpdfstring{\ref{thm:local}}{4.3}}
+
+For $k=1$ the formula is part of Lemma~\ref{lem:continuum}. Let $k\ge2$, fix
+$\alpha\in\Delta_F^\circ$, and write $\theta=\theta(\alpha)$, $r=r_\alpha$
+and $l=l_\alpha$ as in Definition~\ref{def:tilt}, and
+$\Theta'=\operatorname{diag}(\theta')$. By~\eqref{eq:A-radii} we may use
+Lemma~\ref{lem:torus} with the radii $\theta'$ and $t=T\alpha$. With
+Lemma~\ref{lem:continuum} this gives
+\begin{equation}\label{eq:A-fT}
+f_T(\alpha)=\frac{T^{k-1}e^{-T\langle q,\alpha\rangle}}{(2\pi)^{k-1}}
+\int_{\mathbb T^{k-1}}e^{T\Psi(\alpha,\varphi)}\chi(\alpha,\varphi)\,d\varphi,
+\end{equation}
+where $z_i=\theta_ie^{\mathrm i\varphi_i}$ and
+\[
+\Psi(\alpha,\varphi)=\alpha_1g(z')+\sum_{i\ge2}\alpha_iz_i,\qquad
+\chi(\alpha,\varphi)=b(z')\prod_{i\ge2}z_i .
+\]
+We check the hypotheses of Lemma~\ref{lem:laplace} with $m=k-1$, phase $\Psi$
+and amplitude $\chi$, and then compute the constant.
+
+We first show that $\varphi=0$ is the only maximum of
+$\operatorname{Re}\Psi(\alpha,\cdot)$ on $\mathbb T^{k-1}$.
+By~\eqref{eq:A-radii}, $\Psi(\alpha,0)=\alpha_1\theta_1+\sum_{i\ge2}\alpha_i\theta_i
+=\langle\alpha,\theta\rangle$, which is real. By Lemma~\ref{lem:torus},
+$\lvert g(z')\rvert\le g(\theta')=\theta_1$ on the torus, so
+\[
+\operatorname{Re}\Psi(\alpha,\varphi)\le\alpha_1\theta_1+\sum_{i\ge2}\alpha_i\theta_i\cos\varphi_i
+=\Psi(\alpha,0)-\sum_{i\ge2}\alpha_i\theta_i(1-\cos\varphi_i).
+\]
+Every $\alpha_i$ is positive, and every $\theta_i$ is positive
+by~\eqref{eq:A-radii}. So the last sum is positive unless $\varphi=0$ in
+$\mathbb T^{k-1}$, which is hypothesis (iii) of Lemma~\ref{lem:laplace}. Note
+that the gain comes from the angles and not from $g$. For $k=2$,
+$g(z_2)=q_{12}q_{21}/z_2$ has constant modulus on the circle. No
+aperiodicity condition is needed.
+
+Next we compute the derivatives at $\varphi=0$. For $z\in\R^F$ near $\theta$
+let $\lambda(z)=\varrho(A_F-\operatorname{diag}z)$, and for $\eta\in\R^F$ near
+$0$ let $\Lambda(\eta)=\varrho(\widehat Q_\alpha+\operatorname{diag}\eta)$.
+Since $A_F-\operatorname{diag}(\theta-\eta)
+=R(\widehat Q_\alpha+\operatorname{diag}\eta)R^{-1}$ with
+$R=\operatorname{diag}r$, we have $\lambda(\theta-\eta)=\Lambda(\eta)$. The
+Perron root of the irreducible matrix $\widehat Q_\alpha+\operatorname{diag}\eta$
+is a simple eigenvalue. So by the implicit function theorem, applied to the
+characteristic polynomial, $\Lambda$ and the right eigenvector $v(\eta)$ with
+$\alpha^\top v(\eta)=1$ are real-analytic near $0$, with $\Lambda(0)=0$ and
+$v(0)=\ones$. Recall $Z\ones=0$, $\alpha^\top Z=0$ and
+$-\widehat Q_\alpha Z=I-\ones\alpha^\top$ for the matrix $Z$ of
+Definition~\ref{def:tilt}. These follow from
+$(\ones\alpha^\top-\widehat Q_\alpha)\ones=\ones$ and
+$\alpha^\top(\ones\alpha^\top-\widehat Q_\alpha)=\alpha^\top$. Differentiating
+$(\widehat Q_\alpha+\operatorname{diag}\eta)v=\Lambda v$ at $\eta=0$ gives
+$e_j+\widehat Q_\alpha\partial_jv=(\partial_j\Lambda)\ones$. Multiplying by
+$\alpha^\top$ gives $\partial_j\Lambda=\alpha_j$. Then $\partial_jv=Ze_j$,
+because both vectors solve $\widehat Q_\alpha x=\alpha_j\ones-e_j$ with
+$\alpha^\top x=0$, and the kernel of $\widehat Q_\alpha$ is spanned by $\ones$.
+Differentiating twice and multiplying by $\alpha^\top$ gives
+$\partial_i\partial_j\Lambda(0)=\alpha_iZ_{ij}+\alpha_jZ_{ji}$. Hence
+\[
+\nabla\lambda(\theta)=-\alpha,\qquad\nabla^2\lambda(\theta)=\Gamma_\alpha .
+\]
+For real $z'$ near $\theta'$ we have $\varrho(A'-\operatorname{diag}z')<0$ by
+continuity, so the vector $(1,X(z')b_1)$ is nonnegative by the first fact. The
+definition of $g$ shows that this vector lies in the kernel of
+$A_F-\operatorname{diag}(g(z'),z')$, so $\lambda(g(z'),z')=0$ by the second
+fact. Write $g_j$ and $g_{ij}$ for the first and second
+partial derivatives of $g$ at $\theta'$, and put
+$w_j=e_j-(\alpha_j/\alpha_1)e_1\in\R^F$ for $j\ge2$. Differentiating
+$\lambda(g(z'),z')=0$ once and twice at $z'=\theta'$ gives
+\[
+g_j=-\frac{\alpha_j}{\alpha_1},\qquad
+\alpha_1g_{ij}=w_i^\top\Gamma_\alpha w_j .
+\]
+So $\partial\Psi/\partial z_j=\alpha_1g_j+\alpha_j=0$ at $\theta'$, and the
+matrix $\mathcal H=(\partial^2\Psi/\partial z_i\partial z_j)_{i,j\ge2}$ at
+$\theta'$ equals $V^\top\Gamma_\alpha V$, where $V$ has columns
+$w_2,\dots,w_k$. Since $\partial/\partial\varphi_j=\mathrm iz_j\,\partial/\partial z_j$,
+at $\varphi=0$ we get $\nabla_\varphi\Psi=0$ and
+$\nabla_\varphi^2\Psi=-\Theta'\mathcal H\Theta'$, because the extra term
+involves only first derivatives, which vanish there. So hypothesis (i) of
+Lemma~\ref{lem:laplace} holds, and $-\nabla^2_\varphi\Psi(\alpha,0)=\Theta'\mathcal H\Theta'$
+is real and symmetric.
+
+Now we show that $\mathcal H$ is positive definite and find its determinant.
+Let $\Sigma_\alpha$ be $\Gamma_\alpha$ without the row and column of state
+$1$, and $B=I+\ones\alpha'^\top/\alpha_1$. For $y\in\R^{k-1}$ we have
+$Vy+(\alpha'^\top y/\alpha_1)\ones=(0,By)$. Since $\Gamma_\alpha\ones=0$,
+adding a multiple of $\ones$ does not change the quadratic form, so
+$y^\top\mathcal Hy=(By)^\top\Sigma_\alpha(By)$. The matrix determinant lemma
+gives $\det B=1+(1-\alpha_1)/\alpha_1=1/\alpha_1$. Hence
+\[
+\det\mathcal H=\frac{\det\Sigma_\alpha}{\alpha_1^2},
+\]
+and $\mathcal H$ is positive definite if $\Sigma_\alpha$ is. Let
+$y\in\R^{k-1}$ be nonzero and $x=(0,y)\in\R^F$. Put
+$f=x-(\alpha^\top x)\ones$ and $u=Zf$. Then $\alpha^\top f=0$,
+$\alpha^\top u=0$ and $-\widehat Q_\alpha u=f$. With
+$D=\operatorname{diag}\alpha$, using $\Gamma_\alpha\ones=0$ again,
+\[
+y^\top\Sigma_\alpha y=f^\top\Gamma_\alpha f=2f^\top DZf
+=2\sum_i\alpha_iu_i(-\widehat Q_\alpha u)_i
+=\sum_{i\ne j}\alpha_i(\widehat Q_\alpha)_{ij}(u_i-u_j)^2 .
+\]
+The last step uses $\widehat Q_\alpha\ones=0$ and
+$\alpha^\top\widehat Q_\alpha=0$. For $i\ne j$,
+$(\widehat Q_\alpha)_{ij}=q_{ij}r_j/r_i$ is positive exactly on the edges of
+$G_F$, which is strongly connected. So the sum vanishes only if $u$ is
+constant. Then $u=0$ since $\alpha^\top u=0$, so $f=0$ and $x$ is a multiple
+of $\ones$. This is impossible, since $x_1=0$ and $x\ne0$. Hence
+$\Sigma_\alpha$ and $\mathcal H$ are positive definite, and hypothesis (ii)
+of Lemma~\ref{lem:laplace} holds.
+
+Next we check the regularity. First, $\alpha\mapsto\theta(\alpha)$ is
+real-analytic on $\Delta_F^\circ$. Indeed, since
+$I_F(\alpha)=\langle q,\alpha\rangle-\inf_{u>0}\sum_i\alpha_i(A_Fu)_i/u_i$,
+Proposition~\ref{prop:rate}(b) says that $r_\alpha$ is the unique minimizer
+of this function up to scaling. With $u=e^w$ and $w_1=0$ the function is
+$\mathcal U(\alpha,w)=\sum_{i\ne j}\alpha_iq_{ij}e^{w_j-w_i}$. Its Hessian in
+$(w_2,\dots,w_k)$ is the quadratic form
+$y\mapsto\sum_{i\ne j}\alpha_iq_{ij}e^{w_j-w_i}(y_j-y_i)^2$ with $y_1=0$,
+which is positive definite because $G_F$ is strongly connected. So the
+analytic implicit function theorem, applied to
+$\nabla_w\mathcal U(\alpha,w)=0$, shows that $r_\alpha$ and
+$\theta(\alpha)=A_Fr_\alpha/r_\alpha$ are real-analytic in $\alpha$. Now fix
+$\alpha_0\in\mathcal K$. By~\eqref{eq:A-radii} and continuity of the Perron
+root there is $\delta\in(0,\min_i\theta_i(\alpha_0))$ with
+$\varrho(A'-\operatorname{diag}(\theta'(\alpha_0)-\delta\ones))<0$. By
+Lemma~\ref{lem:torus}, $X$, $g$ and $b$ are holomorphic on the set where
+$\lvert z_i\rvert>\theta_i(\alpha_0)-\delta$ for every $i\ge2$, as locally
+uniform limits of their series. For $\alpha$ near $\alpha_0$ we have
+$\theta_i(\alpha)>\theta_i(\alpha_0)-\delta$. So $\Psi$ and $\chi$ are
+real-analytic in $(\alpha,\varphi)$ on a neighborhood of
+$\{\alpha_0\}\times\mathbb T^{k-1}$. Covering $\mathcal K$ by finitely many
+such neighborhoods, we see that $\Psi$ and $\chi$ are jointly real-analytic
+near $\mathcal K\times\mathbb T^{k-1}$, and all their $\varphi$-derivatives
+are jointly continuous on $\mathcal K\times\mathbb T^{k-1}$.
+
+Lemma~\ref{lem:laplace} now gives, uniformly for $\alpha\in\mathcal K$ and
+$T\ge1$,
+\[
+\int_{\mathbb T^{k-1}}e^{T\Psi}\chi\,d\varphi
+=e^{T\langle\alpha,\theta\rangle}\Bigl(\frac{2\pi}T\Bigr)^{\frac{k-1}2}
+\det(\Theta'\mathcal H\Theta')^{-1/2}
+\Bigl[\chi(\alpha,0)+\frac{c_1(\alpha)}T+O(T^{-3/2})\Bigr],
+\]
+where $c_1$ is the coefficient given there. Here
+$\det(\Theta'\mathcal H\Theta')=(\prod_{i\ge2}\theta_i)^2\det\Sigma_\alpha/\alpha_1^2$
+and $\chi(\alpha,0)=b(\theta')\prod_{i\ge2}\theta_i$. To evaluate
+$b(\theta')$, which is the residue of the generating function at
+$z_1=g(\theta')$, we use the Perron vectors. As in the derivation
+of~\eqref{eq:A-radii}, $r'=r_1X(\theta')b_1$. In the same way the columns
+$j\ge2$ of $l^\top(A_F-\operatorname{diag}\theta)=0$ give
+$l'=l_1X(\theta')^\top a_1$. Hence $\mu\cdot r=r_1(\mu_1+\mu'^\top X(\theta')b_1)$
+and $l\cdot\ones=l_1(1+a_1^\top X(\theta')\ones)$. Since $l_1r_1=\alpha_1$,
+\[
+b(\theta')=\frac{(\mu\cdot r_\alpha)(l_\alpha\cdot\ones)}{\alpha_1},
+\qquad\text{so}\qquad
+\frac{\chi(\alpha,0)}{\det(\Theta'\mathcal H\Theta')^{1/2}}
+=\frac{(\mu\cdot r_\alpha)(l_\alpha\cdot\ones)}{(\det\Sigma_\alpha)^{1/2}} .
+\]
+Here we use $\mu(F)>0$. Since $r_\alpha,l_\alpha>0$, the value
+$\chi(\alpha,0)$ is positive exactly when $\mu(F)>0$, which holds by
+\textup{(H)}. It is continuous in $\alpha$, so it is bounded below on
+$\mathcal K$, and we may divide by it. (If $\mu(F)=0$, then $f_T=0$ and the
+relative form makes no sense.) With $c(\alpha)=c_1(\alpha)/\chi(\alpha,0)$,
+equation~\eqref{eq:A-fT} becomes
+\[
+f_T(\alpha)=T^{\frac{k-1}2}(2\pi)^{-\frac{k-1}2}
+\frac{(\mu\cdot r_\alpha)(l_\alpha\cdot\ones)}{(\det\Sigma_\alpha)^{1/2}}\,
+e^{-T\langle q-\theta,\alpha\rangle}\Bigl(1+\frac{c(\alpha)}T+O(T^{-3/2})\Bigr),
+\]
+uniformly on $\mathcal K$. Since $I_F(\alpha)=\langle q-\theta(\alpha),\alpha\rangle$,
+this is the claim. The function $c$ is real-analytic, since $c_1$ is by
+Lemma~\ref{lem:laplace} and $\chi(\alpha,0)>0$ is. It is real, because
+$f_T(\alpha)$ and the main term are real, so
+$\operatorname{Im}c(\alpha)=O(T^{-1/2})$ for every $T\ge1$, which forces
+$\operatorname{Im}c(\alpha)=0$. \qed
+
+\subsection{Proof of Lemma~\texorpdfstring{\ref{lem:discrete}}{4.4}}
+
+We compare Lemma~\ref{lem:runs} with its continuum version term by term. Under the continuum weights a path has at most of order $T$ runs,
+and each run after the first in state $i$ changes the number of placements by
+a factor $1-O(m_i/n_i)$. So the relative error is of order $T^2/N$.
+
+For $k=1$ we have $P_N(Ne_i)=\mu_i(1-hq_i)^{N-1}$ and $f_T=\mu_ie^{-q_iT}$.
+Since $hq_i\le\frac12$, $(N-1)\log(1-hq_i)+q_iT=O(T/N+T^2/N)=O(T^2/N)$, and
+$T^2/N\le1$, so the ratio is $1+O(T^2/N)$. Let
+$k\ge2$, and write $t=hn$ and $\alpha=n/N\in\mathcal K$. By
+Lemma~\ref{lem:continuum},
+$N^{-(k-1)}f_T(n/N)=h^{k-1}e^{-\langle q,t\rangle}H(t)=\sum_mv_m$ with
+\[
+v_m=W(m)\,h^{k-1}\prod_{i\in F}e^{-q_it_i}\frac{t_i^{m_i-1}}{(m_i-1)!},
+\qquad m\in\Z_{\ge1}^F .
+\]
+Since $h^{m_i-1}\binom{n_i-1}{m_i-1}=\frac{t_i^{m_i-1}}{(m_i-1)!}\prod_{1\le j<m_i}(1-j/n_i)$
+and $h^{M-1}=h^{k-1}\prod_ih^{m_i-1}$, the $m$-th term of
+Lemma~\ref{lem:runs} is $\kappa_mv_m$ with
+\[
+\kappa_m=\prod_{i\in F}\Bigl[\prod_{1\le j<m_i}\Bigl(1-\frac j{n_i}\Bigr)\Bigr]
+(1-hq_i)^{n_i-m_i}e^{hq_in_i}.
+\]
+We bound $\kappa_m$. Since $(1-hq_i)^{n_i-m_i}\le e^{-hq_i(n_i-m_i)}$, we
+get $\kappa_m\le e^{hq_{\max}M}$. For the lower bound,
+$\log(1-x)\ge-x-x^2$ for $0\le x\le\frac12$ gives
+$(1-hq_i)^{n_i-m_i}e^{hq_in_i}\ge(1-hq_i)^{n_i}e^{hq_in_i}\ge e^{-n_ih^2q_i^2}$,
+and the product of these over $i$ is at least $e^{-q_{\max}^2T^2/N}$. If
+$m_i\le n_i$ for every $i$, then all factors $1-j/n_i$ lie in $[0,1]$, and
+their product is at least
+$1-\sum_im_i^2/(2n_i)\ge1-M^2/(2n_{\min})$, where $n_{\min}=\min_in_i$. If
+some $m_i>n_i$, then $\kappa_m=0$, while $M\ge n_{\min}+1$ gives
+$M^2/(2n_{\min})\ge2$. In all cases
+\begin{equation}\label{eq:A-kappa}
+\Bigl(1-\frac{M^2}{2n_{\min}}\Bigr)e^{-q_{\max}^2T^2/N}\le\kappa_m\le e^{hq_{\max}M}.
+\end{equation}
+
+Let $w_m=v_m/\sum_{m'}v_{m'}$. This is a probability on $\Z^F_{\ge1}$,
+since $H(t)>0$ under \textup{(H)}. By Lemma~\ref{lem:runs} the ratio in the
+lemma is $\E_w\kappa_m$. So by~\eqref{eq:A-kappa} we need
+$\E_we^{hq_{\max}M}$ and $\E_wM^2$. Since $W$ for $e^cA_F$ is
+$e^{c(M-1)}W(m)$, we have, in the notation of the proof of
+Lemma~\ref{lem:upper},
+\[
+\psi(c):=\log\E_we^{c(M-1)}=\log H_{e^c}(t)-\log H(t).
+\]
+The function $\psi$ is convex with $\psi(0)=0$, so $\psi(c)\le c\,\psi(1)$
+for $0\le c\le1$. Also $\psi(1)\ge1$, since $M\ge k\ge2$. We show that
+$\psi(1)\le C_{\mathcal K}T$. The bound for $H_\sigma$ in the proof of
+Lemma~\ref{lem:upper} holds for every $\sigma>0$, and with $\sigma=e$ it
+gives
+$H_e(T\alpha)\le e^{k-1}b(\theta')\prod_{i\ge2}\theta_i\,e^{eT\langle\alpha,\theta\rangle}$
+with $\theta=\theta(\alpha)$. For the lower bound, Theorem~\ref{thm:local}
+gives $T_1$ such that, for $T\ge T_1$ and $\alpha\in\mathcal K$,
+\[
+H(T\alpha)=T^{-(k-1)}e^{T\langle q,\alpha\rangle}f_T(\alpha)
+\ge\tfrac12(2\pi T)^{-\frac{k-1}2}(\mu\cdot r_\alpha)(l_\alpha\cdot\ones)
+(\det\Sigma_\alpha)^{-1/2}e^{T\langle\alpha,\theta\rangle}.
+\]
+For $1\le T\le T_1$, the function $H(T\alpha)e^{-T\langle\alpha,\theta(\alpha)\rangle}$
+is continuous and positive on the compact set $[1,T_1]\times\mathcal K$, so
+it is bounded below there. The prefactor in the display is also continuous
+and positive on $\mathcal K$. So in both cases
+$H(T\alpha)\ge c_{\mathcal K}T^{-(k-1)/2}e^{T\langle\alpha,\theta\rangle}$.
+Since $\theta(\alpha)$ and $b(\theta'(\alpha))$ are bounded on $\mathcal K$,
+this gives $\psi(1)\le C_{\mathcal K}T$ for $T\ge1$.
+
+Now let $x=hq_{\max}\le\frac12$. Then
+$\E_we^{xM}=e^xe^{\psi(x)}\le e^{x(1+C_{\mathcal K}T)}=1+O(T^2/N)$, because
+$x(1+C_{\mathcal K}T)=O(T^2/N)$ and $T^2/N\le1$. The Chernoff bound
+$\Prob_w(M-1\ge y)\le e^{\psi(1)-y}$ gives
+\[
+\E_w(M-1)^2=\int_0^\infty2y\,\Prob_w(M-1\ge y)\,dy
+\le\psi(1)^2+\int_{\psi(1)}^\infty2ye^{\psi(1)-y}\,dy
+=\psi(1)^2+2\psi(1)+2,
+\]
+so $\E_wM^2=O(T^2)$. Finally $n_{\min}\ge\varepsilon_{\mathcal K}N$ with
+$\varepsilon_{\mathcal K}=\min_{\alpha\in\mathcal K}\min_i\alpha_i>0$.
+By~\eqref{eq:A-kappa},
+\[
+1-O\Bigl(\frac{T^2}N\Bigr)\le e^{-q_{\max}^2T^2/N}
+\Bigl(1-\frac{\E_wM^2}{2\varepsilon_{\mathcal K}N}\Bigr)
+\le\E_w\kappa_m\le\E_we^{hq_{\max}M}\le1+O\Bigl(\frac{T^2}N\Bigr),
+\]
+uniformly for $\alpha\in\mathcal K$ and $1\le T\le N^{1/2}$. \qed

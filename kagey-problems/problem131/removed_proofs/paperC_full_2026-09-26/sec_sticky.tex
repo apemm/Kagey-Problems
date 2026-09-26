@@ -1,0 +1,363 @@
+\section{Sticky priors for hidden Markov models}\label{sec:sticky}
+
+Fox, Sudderth, Jordan and Willsky~\cite{fox2011} add a self-transition bias
+$\kappa\ge0$ to the hierarchical Dirichlet process hidden Markov model
+(HDP-HMM), so that the hidden chain stays in a state for long stretches.
+With a finite vector $\beta$ of base weights on $d$ states, row $j$ of the
+transition matrix has the Dirichlet law with parameters
+$\omega\beta_1,\dots,\omega\beta_j+\kappa,\dots,\omega\beta_d$ in the
+weak-limit approximation of~\cite{fox2011}. Here $\omega>0$ is the
+concentration. By the neutrality of the Dirichlet law (write it as independent gamma variables divided by
+their sum), the off-diagonal part of row $j$ divided by $1-\pi_{jj}$ is
+independent of $\pi_{jj}$ and has the Dirichlet law with parameters
+$(\omega\beta_l)_{l\ne j}$. So $\kappa$ only sets how sticky the chain is,
+and the switching kernel is a random stochastic matrix with zero diagonal
+whose law does not involve $\kappa$. We idealize by fixing the exit
+probability of every state at $h=cL/N$, the scale of Kagey's crossing. In
+the prior itself $1-\pi_{jj}$ has a Beta law and mixes all scales. That is a
+different regime, and we do not treat it.
+
+Throughout this section $\Pi=(\pi_{ij})$ is a stochastic matrix on $[d]$
+with zero diagonal, $c>0$, and $h=cL/N$ with $0<h<1$. The transition matrix
+$(1-h)I+h\Pi$ equals $I+hQ$ with $Q=\Pi-I$. So every exit rate is $q_i=1$,
+$T=cL$ and $\tau=c$ (Example~\ref{ex:models}(iii)). We fix $\Pi$, which we
+think of as one draw from the prior, and we assume that the start $\mu$ has
+full support and that
+\[
+ \pi_{ij}>0\qquad\text{for all } i\ne j. \tag{A+}
+\]
+Under the prior, (A+) holds with probability $1$. For a face $F$ let $\Pi_F$
+be the principal submatrix of $\Pi$ on $F$ and $\rho_F=\varrho(\Pi_F)$. Then
+$Q_F=\Pi_F-I$, so $\lambda_F=1-\rho_F$, and $Q_F$ and $\Pi_F$ have the same
+Perron vectors. A vertex has $\rho_F=0$, and $\rho_{[d]}=1$. If
+$\lvert F\rvert\ge2$, then $\Pi_F$ is irreducible by (A+), and $\rho_F>0$
+since $\rho_F$ is at least the smallest row sum of $\Pi_F$. If also
+$F\ne[d]$, then $\rho_F<1$, because the Perron root of an irreducible
+nonnegative matrix exceeds that of each proper principal
+submatrix~\cite{bermanplemmons1994}. With $\tau=c$ the exponent of a face is
+$\Phi_c(F)=c(1-\rho_F)+\lvert F\rvert-1$, and we put
+\[
+ c_-=\min_{\lvert F\rvert\ge2}\frac{\lvert F\rvert-1}{\rho_F},\qquad
+ c_+=\max_{F\ne[d]}\frac{d-\lvert F\rvert}{1-\rho_F}.
+\]
+We call a global mode of $P_N$ a \emph{MAP composition}. With no data the
+posterior is the prior, so a MAP composition is the most likely value of the
+occupation counts under the prior.
+
+\begin{corollary}[support and location of the MAP]\label{cor:map}
+Assume \textup{(A+)}, let $\mu$ have full support, and fix $c>0$. Let
+$\mathcal F^*_c$ be the set of faces that minimize $\Phi_c$. There is
+$N_0(c)$ such that for $N\ge N_0(c)$ every MAP composition $n^*$ satisfies
+$\supp n^*\in\mathcal F^*_c$ and $n^*/N=\alpha^*_F+O(1/L)$ with
+$F=\supp n^*$. If $\mathcal F^*_c=\{F^*\}$, then
+$n^*/N\to\alpha^*_{F^*}=l\circ r$, where $l$ and $r$ are the left and right
+Perron vectors of $\Pi_{F^*}$ with $l\cdot r=1$. No reversibility is needed.
+\end{corollary}
+
+\begin{proof}
+Every face is irreducible, since $G_F$ is complete by (A+) when
+$\lvert F\rvert\ge2$. Every face is also admissible, since a path that
+visits the states of $F$ one after another has positive probability when
+$\mu$ has full support and $0<h<1$. So
+Theorem~\ref{thm:first}(iii) with $\tau=c$ gives $\supp n^*\in\mathcal F^*_c$
+for large $N$. Its assumption $hq_{\max}\le\frac12$ holds for large $N$. The
+faces of $\mathcal F^*_c$ are irreducible (as Theorem~\ref{thm:hull}(c) also
+says), so Theorem~\ref{thm:first}(iv) gives $n^*/N=\alpha^*_F+O(1/L)$. For
+$\lvert F\rvert\ge2$ the Perron vectors of $Q_F$ are those of $\Pi_F$, so
+$\alpha^*_F=l\circ r$. For a vertex $\{i\}$, $n^*=Ne_i$. If
+$\mathcal F^*_c=\{F^*\}$, then $\supp n^*=F^*$ and the error tends to $0$.
+\end{proof}
+
+The corollary is pointwise in $c$. At $c=c_-$ the vertices tie with the faces
+that attain the minimum in $c_-$. Every face is irreducible, so
+Theorem~\ref{thm:window} applies. Part (iii) of that theorem, with a
+fixed large $t=K$, shows that for large $N$ the MAP is not a single state at
+$c=c_-\bigl(1-\frac{\log L-2K}{2L}\bigr)$, which is below $c_-$. So
+$N_0(c)\to\infty$ as $c\uparrow c_-$. Theorem~\ref{thm:window} also describes
+the window at $c_+$, with the coefficient $\frac12$ of $\log\log N$.
+
+\begin{proposition}[thresholds and the direct jump]\label{prop:thresholds}
+Assume \textup{(A+)} and $d\ge3$.
+\begin{enumerate}[(a)]
+\item If $0<c<c'$, $F$ minimizes $\Phi_c$ and $G$ minimizes $\Phi_{c'}$,
+then $\lvert F\rvert\le\lvert G\rvert$ and $\lambda_F\ge\lambda_G$.
+\item The minimizers of $\Phi_c$ are exactly the vertices if and only if
+$c<c_-$, and no vertex minimizes $\Phi_c$ if $c>c_-$. The face $[d]$ is the
+unique minimizer if and only if $c>c_+$, and $[d]$ does not minimize $\Phi_c$
+if $c<c_+$.
+\item $1<c_-\le d-1\le c_+$.
+\item $c_-=d-1$ if and only if $c_+=d-1$, and both hold if and only if
+\begin{equation}\label{eq:directjump}
+ \rho_F\le\frac{\lvert F\rvert-1}{d-1}\qquad\text{for every face } F.
+\end{equation}
+If \eqref{eq:directjump} fails, then $c_-<d-1<c_+$, and for
+$c\in(c_-,c_+)$ every minimizer $F$ of $\Phi_c$ has
+$2\le\lvert F\rvert\le d-1$.
+\end{enumerate}
+Consequently, let $\mu$ have full support, fix $c$ and let $N\ge N_0(c)$. If
+$c<c_-$, the MAP compositions are the $Ne_i$ with $\mu_i=\max_l\mu_l$. If
+$c>c_+$, every MAP composition has full support. If $c_-<c<c_+$, every MAP
+composition has a support $F$ with $2\le\lvert F\rvert\le d-1$, and $F=F^*$
+if $F^*$ is the unique minimizer of $\Phi_c$.
+\end{proposition}
+
+\begin{proof}
+(a) Every face is admissible, so this is Theorem~\ref{thm:hull}(b).
+
+(b) A vertex has $\Phi_c=c$. For $\lvert F\rvert\ge2$,
+$\Phi_c(F)-c=\rho_F\bigl((\lvert F\rvert-1)/\rho_F-c\bigr)$ with
+$\rho_F>0$. So if $c<c_-$, every face of size at least $2$ is worse than the
+vertices, which all tie. The face attaining the minimum in $c_-$ ties with
+the vertices at $c=c_-$ and beats them for $c>c_-$. In the same way, for
+$F\ne[d]$ we have $\Phi_c(F)-(d-1)=(1-\rho_F)\bigl(c-(d-\lvert F\rvert)/
+(1-\rho_F)\bigr)$ with $1-\rho_F>0$, and $\Phi_c([d])=d-1$. This gives the
+claims about $[d]$, using the face that attains the maximum in $c_+$.
+
+(c) If $2\le\lvert F\rvert\le d-1$, then $\rho_F<1$ gives
+$(\lvert F\rvert-1)/\rho_F>\lvert F\rvert-1\ge1$, and $F=[d]$ gives
+$d-1\ge2$. So $c_->1$. The face $[d]$ gives $c_-\le d-1$, and a vertex gives
+$c_+\ge d-1$.
+
+(d) By (c), $c_+=d-1$ if and only if $(d-\lvert F\rvert)/(1-\rho_F)\le d-1$
+for all $F\ne[d]$, and $c_-=d-1$ if and only if
+$(\lvert F\rvert-1)/\rho_F\ge d-1$ for all $F$ with $\lvert F\rvert\ge2$.
+Both inequalities say $(d-1)\rho_F\le\lvert F\rvert-1$, which holds for
+every vertex ($\rho_F=0$) and for $[d]$ ($\rho_F=1$). This proves the
+equivalences. If \eqref{eq:directjump} fails, (c) gives $c_-<d-1<c_+$, and
+for $c\in(c_-,c_+)$ part (b) excludes the vertices and $[d]$.
+
+The consequences follow from Corollary~\ref{cor:map}, since
+$P_N(Ne_i)=\mu_i(1-h)^{N-1}$.
+\end{proof}
+
+We say that $\Pi$ has a \emph{direct jump} when \eqref{eq:directjump} holds.
+Then at first order the MAP goes from one state straight to all $d$ states
+at $c=d-1$. The chance that $m$ switches in a row from inside $F$ all land in
+$F$ is of order $\rho_F^m$. For the uniform kernel
+$\pi_{ij}=1/(d-1)$ every row sum of $\Pi_F$, and hence $\rho_F$, equals
+$(\lvert F\rvert-1)/(d-1)$. So \eqref{eq:directjump} says that no set of
+states is more closed than under the uniform kernel. For that kernel all
+faces tie at $c=d-1$, which is the degeneracy of
+Proposition~\ref{prop:complete}(a), since $Q=(J-dI)/(d-1)$ is the generator
+of Paper~B~\cite{paperB} divided by $d-1$ (Example~\ref{ex:models}(ii)).
+
+\begin{proposition}[when the direct jump happens]\label{prop:directjump}
+\begin{enumerate}[(a)]
+\item Let $d\ge3$, assume \textup{(A+)}, and let $\Pi$ be symmetric. Then
+$\Pi$ has a direct jump if and only if $\pi_{ij}=1/(d-1)$ for all $i\ne j$.
+\item Let $d=3$ and assume \textup{(A+)}. Then $\Pi$ has a direct jump if and
+only if $\pi_{ij}\pi_{ji}\le\frac14$ for all $3$ pairs. For example, the
+cyclic kernel $\pi_{i,i+1}=a$, $\pi_{i,i-1}=1-a$ (indices mod $3$) has a
+direct jump for every $0<a<1$.
+\item Let $d=3$ and let the base weights be uniform. In the weak-limit sticky
+HDP-HMM the rows of $\Pi$ are then independent, and the first off-diagonal
+entry of each row has the law $\mathrm{Beta}(\omega/3,\omega/3)$. Write
+$\Prob_\omega$ for this law of $\Pi$ and $D$ for the event that $\Pi$ has a
+direct jump. Then $\Prob_\omega(D)\to\frac14$ as $\omega\to0$.
+\item In the setting of \textup{(c)},
+$\Prob_\omega(D)=\frac{3\sqrt3}{8\pi\omega}\bigl(1+o(1)\bigr)$ as
+$\omega\to\infty$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+For a pair $\{i,j\}$ the eigenvalues of $\Pi_{\{i,j\}}$ are
+$\pm\sqrt{\pi_{ij}\pi_{ji}}$, so $\rho_{\{i,j\}}=\sqrt{\pi_{ij}\pi_{ji}}$.
+
+(a) Here $\rho_{\{i,j\}}=\pi_{ij}$. The rows sum to $1$, so
+$\sum_{i<j}\pi_{ij}=d/2$, and the average of $\pi_{ij}$ over the $\binom d2$
+pairs is $1/(d-1)$. Unless all $\pi_{ij}$ are equal, some pair has
+$\rho_{\{i,j\}}>1/(d-1)$, and \eqref{eq:directjump} fails. The uniform kernel
+satisfies \eqref{eq:directjump} with equality, as shown above.
+
+(b) For $d=3$ the condition \eqref{eq:directjump} is automatic for vertices
+and for $[3]$, and for a pair it reads $\pi_{ij}\pi_{ji}\le\frac14$. The
+cyclic kernel satisfies (A+) since $0<a<1$, and every pair has
+$\pi_{i,i+1}\pi_{i+1,i}=a(1-a)\le\frac14$.
+
+(c) The law of $\Pi$ comes from the neutrality property above. Let
+$B_1,B_2,B_3$ be independent with law $\mathrm{Beta}(\omega/3,\omega/3)$ and
+put $\pi_{12}=B_1$, $\pi_{13}=1-B_1$, $\pi_{21}=B_2$, $\pi_{23}=1-B_2$,
+$\pi_{31}=B_3$ and $\pi_{32}=1-B_3$. Then (A+) holds with probability $1$,
+and by (b) the event $D$ is
+$\{B_1B_2\le\frac14,\ (1-B_1)B_3\le\frac14,\ (1-B_2)(1-B_3)\le\frac14\}$. As
+$\omega\to0$ each $B_j$ converges in law to a fair coin on $\{0,1\}$. Under
+the limit law the 3 products take only the values $0$ and $1$, so the
+boundary of $D$ has limit probability $0$, and $\Prob_\omega(D)$ converges
+to the limit probability of $D$. Of the $8$ points of $\{0,1\}^3$, only
+$(1,0,1)$ and $(0,1,0)$ make all 3 products $0$. So the limit is $\frac14$.
+
+(d) This is proved in Appendix~\ref{app:hdp}.
+\end{proof}
+
+The 2 points in (c) are the directed $3$-cycles, the only deterministic
+kernels in which no pair of states traps the chain. By (a) and (d), the tie
+of all faces that comes from the uniform kernel is not typical. Numerically
+$\Prob_\omega(D)=0.115$ at $\omega=1$ (Monte Carlo with $10^6$ draws). So with
+probability about $0.88$ a random kernel has a window of $c$ in which the MAP
+sits on a pair of states (Proposition~\ref{prop:thresholds}(d)).
+Figure~\ref{fig:sticky} shows $\Prob_\omega(D)$ against $\omega$. Quadrature
+values suggest $\Prob_\omega(D)=\frac{3\sqrt3}{8\pi\omega}\bigl(1-\frac9
+{8\omega}+O(\omega^{-2})\bigr)$, but we have not proved the second term.
+
+\begin{figure}[t]
+\centering
+\includegraphics{fig_sticky}
+\caption{The probability $\Prob_\omega(D)$ that a random sticky kernel on $3$
+states with uniform base weights has a direct jump
+(Proposition~\ref{prop:directjump}), against the concentration $\omega$. The
+open circles are Monte Carlo estimates with $10^6$ draws, and their error bars
+of one standard error are smaller than the circles. The filled squares are
+quadrature values for $\omega\ge100$. The dotted line is the limit $\frac14$ as
+$\omega\to0$, and the dashed line is the asymptote $3\sqrt3/(8\pi\omega)$ of
+Proposition~\ref{prop:directjump}(d).}
+\label{fig:sticky}
+\end{figure}
+
+When the first switch of the MAP goes from one state to a symmetric pair, it
+has an exact description at every $N$. We use $S_{a,b}$, $S_N$, $u_N$, $p_N$
+and $c_0$ from Section~\ref{sec:papersAB}.
+
+\begin{proposition}[an exact link to Kagey's crossing]\label{prop:sticky-pair}
+Let $i\ne j$ satisfy $\pi_{ij}=\pi_{ji}=\pi_0>0$ and $\mu_i=\mu_j$. We do not
+assume \textup{(A+)}. For $1\le m\le N-1$,
+\[
+ \frac{P_N(me_i+(N-m)e_j)}{P_N(Ne_i)}=S_{m,N-m}(u'),\qquad
+ u'=\frac{h\pi_0}{1-h}.
+\]
+\begin{enumerate}[(a)]
+\item Among the compositions with support exactly $\{i,j\}$, the most likely
+ones are the balanced ones, with $m=\lfloor N/2\rfloor$ or
+$m=\lceil N/2\rceil$.
+\item The balanced composition $\lfloor N/2\rfloor e_i+\lceil N/2\rceil e_j$
+is more likely than $Ne_i$ if and only if $u'>u_N$, that is, if and only if
+$c>c^{\rm pair}(N):=Nu_N/((\pi_0+u_N)L)$.
+\item If also $\mu_i=\mu_j=\max_l\mu_l$, then for every $N\ge2$ and every
+$c$ with $c^{\rm pair}(N)<c<N/L$, no MAP composition is a single state.
+\end{enumerate}
+Moreover,
+\[
+ c^{\rm pair}(N)=\frac1{\pi_0}\Bigl[1-\frac{\frac12\log L-c_0}{L}
+ +O\Bigl(\frac{\log L}{L^2}\Bigr)\Bigr],
+\]
+which tends to the first-order value $1/\rho_{\{i,j\}}=1/\pi_0$.
+\end{proposition}
+
+\begin{proof}
+Every exit rate is $1$, so the identity is Proposition~\ref{prop:pair} with
+$a=\pi_0$ and $q=1$, whose condition $qh<1$ is $h<1$. Note that
+$P_N(Ne_i)=\mu_i(1-h)^{N-1}>0$ and $u'>0$.
+
+(a) By \cite[Proposition~6.1]{paperA}, if $a<b-1$, then $S_{a+1,b-1}$
+dominates $S_{a,b}$ coefficientwise with at least one strict coefficient.
+So $S_{m+1,N-m-1}(u')>S_{m,N-m}(u')$ whenever $2m<N-1$, and $S_{m,N-m}(u')$
+strictly increases in $m$ up to $m=\lfloor N/2\rfloor$. The run formula is
+symmetric, so $S_{a,b}=S_{b,a}$, and $S_{m,N-m}(u')$ strictly decreases from
+$m=\lceil N/2\rceil$ on.
+
+(b) For $m=\lfloor N/2\rfloor$ the ratio is $S_N(u')$. By
+\cite[Theorem~5.1]{paperA} and its proof, $S_N$ is strictly increasing on
+$[0,\infty)$ with the unique root $u_N$ of $S_N(u)=1$. So the balanced
+composition wins if and only if $u'>u_N$, that is $h\pi_0>u_N(1-h)$, which
+is $c>c^{\rm pair}(N)$.
+
+(c) Every vertex has $P_N(Ne_l)=\mu_l(1-h)^{N-1}\le P_N(Ne_i)$, and by (b)
+$P_N(Ne_i)$ is less than the probability of the balanced composition. The
+range of $c$ is not empty since $u_N/(\pi_0+u_N)<1$.
+
+For the expansion, \cite[Theorem~5.2]{paperA} gives
+$N(1-p_N)=L-\frac12\log L+c_0+O(\log L/L)$. Since $u_N=(1-p_N)/p_N$ and
+$1-p_N=O(L/N)$, also $Nu_N=L-\frac12\log L+c_0+O(\log L/L)$ and
+$u_N=O(L/N)$. Then
+$c^{\rm pair}(N)=\frac{Nu_N}{\pi_0L}(1+u_N/\pi_0)^{-1}$ gives the claim,
+since $L/N=O(\log L/L^2)$.
+\end{proof}
+
+So for a sticky prior, one state against one pair with $\pi_{ij}=\pi_{ji}$
+is exactly Kagey's crossing, at every $N$. With a uniform start, part
+(c) says that the MAP stops being a single state no later than
+$c^{\rm pair}(N)$.
+
+The last result says where the prior mass is. Put $\Lambda_F=1-h\lambda_F$.
+
+\begin{proposition}[face masses]\label{prop:mass}
+Assume \textup{(A+)} and $0<h<1$. For every face $F$ with
+$\lvert F\rvert\ge2$,
+\[
+ \frac{\min r_F}{\max r_F}\,\mu(F)\,\Lambda_F^{N-1}
+ \le\Prob(\supp n\subseteq F)\le
+ \frac{\max r_F}{\min r_F}\,\mu(F)\,\Lambda_F^{N-1},
+\]
+and for fixed $c$, $\Lambda_F^{N-1}=N^{-c\lambda_F}e^{O(L^2/N)}$. Also
+$\Prob(\text{one state})=(1-h)^{N-1}\sim N^{-c}$ and
+$\Prob(\supp n=[d])\to1$.
+\end{proposition}
+
+\begin{proof}
+Let $U_F=(1-h)I+h\Pi_F$, which is nonnegative since $h<1$. Then
+$\Prob(\supp n\subseteq F)=\mu_F^{\top}U_F^{N-1}\ones$, where $\mu_F$ is the
+restriction of $\mu$ to $F$. The Perron vector $r_F>0$ of $\Pi_F$ satisfies
+$U_Fr_F=\Lambda_Fr_F$. Entrywise $r_F/\max r_F\le\ones\le r_F/\min r_F$, and
+$U_F^{N-1}$ preserves these inequalities. So $U_F^{N-1}\ones$ lies between
+$\Lambda_F^{N-1}r_F/\max r_F$ and $\Lambda_F^{N-1}r_F/\min r_F$, and pairing
+with $\mu_F$ gives the bounds. Next,
+$(N-1)\log(1-h\lambda_F)=-(N-1)h\lambda_F+O(Nh^2)=-c\lambda_FL+O(L^2/N)$.
+A vertex composition is a single path, so
+$\Prob(\text{one state})=\sum_i\mu_i(1-h)^{N-1}=(1-h)^{N-1}$. Finally, every
+$F\ne[d]$ has $\lambda_F>0$, so $\Prob(\supp n\ne[d])$ is at most a finite
+sum of terms $O(N^{-c\lambda_F})$.
+\end{proof}
+
+\begin{remark}[MAP versus mass]\label{rem:mapmass}
+Let $d\ge3$. For fixed $c<c_+$ the face $[d]$ does not minimize $\Phi_c$, so
+for large $N$ every MAP composition has a proper support, while
+$\Prob(\supp n=[d])\to1$. For $c<c_-$ the most likely composition uses one
+state, and yet that event has probability about $N^{-c}$. The reason is that
+a composition on a face of size $k$ is one of about $N^{k-1}$ lattice points.
+So a face can carry most of the mass while each of its compositions is less
+likely than a vertex. Table~\ref{tab:sticky} shows this for the kernel
+$\Pi_1$ with rows $(0,0.9,0.1)$, $(0.9,0,0.1)$, $(0.5,0.5,0)$ and the
+uniform start. Its pair $\{1,2\}$ is a well-separated community with
+$\rho_{\{1,2\}}=0.9$. In part (a) the first switch of the MAP agrees with
+$c^{\rm pair}(N)$ to the digits shown. In part (b), at $c=0.8$, the MAP is a
+single state (all 3 vertices tie), yet $\Prob(\text{one state})=0.0122$. At
+$c=8$ the first order puts the MAP on $\{1,2\}$, but at $N=240$ the second
+switch has already happened. So the MAP is a poor summary of a sticky prior,
+and face selection says when it misleads.
+\end{remark}
+
+\begin{table}[t]
+\centering\small
+\begin{tabular}{@{}lcccc@{}}
+\multicolumn{5}{@{}l}{(a) Switches of the MAP support along $c$}\\
+\toprule
+$N$ & 60 & 120 & 240 & 480\\
+\midrule
+first switch, vertex to $\{1,2\}$ & 0.8248 & 0.8477 & 0.8673 & 0.8838\\
+$c^{\rm pair}(N)$ & 0.8248 & 0.8477 & 0.8673 & 0.8838\\
+second switch, $\{1,2\}$ to $[3]$ & 4.804 & 5.340 & 5.779 & 6.139\\
+\bottomrule
+\end{tabular}
+
+\medskip
+\begin{tabular}{@{}rlcccc@{}}
+\multicolumn{6}{@{}l}{(b) The MAP and the prior mass at $N=240$}\\
+\toprule
+$c$ & MAP composition & one state & $\{1,2\}$ & other pairs & $[3]$\\
+\midrule
+0.5 & one state (3-way tie) & 0.0643 & 0.465 & 0.092 & 0.379\\
+0.8 & one state (3-way tie) & 0.0122 & 0.423 & 0.034 & 0.531\\
+3 & $(120,120,0)$ & $4.3\times10^{-8}$ & 0.129 & $3.3\times10^{-6}$ & 0.871\\
+8 & $(111,111,18)$ & $1.2\times10^{-21}$ & 0.0081 & $2.1\times10^{-16}$ &
+0.992\\
+\bottomrule
+\end{tabular}
+\caption{The sticky chain with kernel $\Pi_1$ and the uniform start, for
+which $c_-=10/9$ and $c_+=10$. (a) The 2 switches of the MAP support along
+$c$, from exact dynamic programming, and the exact value $c^{\rm pair}(N)$ of
+Proposition~\ref{prop:sticky-pair}. In these computations the faces
+$\{1,3\}$ and $\{2,3\}$ never hold the MAP. (b) At $N=240$, the MAP
+composition and the prior probabilities of the possible supports. The column
+for the other pairs gives the total for $\{1,3\}$ and $\{2,3\}$.}
+\label{tab:sticky}
+\end{table}
