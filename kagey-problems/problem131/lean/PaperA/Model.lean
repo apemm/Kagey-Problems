@@ -3,7 +3,7 @@ import Mathlib
 /-!
 # Paper A, Section `sec:exact`: the persistent walk and its exact law
 
-This file sets up the model of Paper A (`problem131.tex`, Section `sec:exact`).
+This file sets up the model of Paper A (`paperA/problem131.tex`, Section `sec:exact`).
 A run with `N` bounces is a word `w : Fin N → Bool` (`true` is `R`, `false` is `L`).
 `chg w` counts the indices `i < N-1` with `w i ≠ w (i+1)`, `rep w` counts the others, and
 the word has probability `(1/2) p^rep q^chg` (eq. `eq:wordprob`), with the empty word
