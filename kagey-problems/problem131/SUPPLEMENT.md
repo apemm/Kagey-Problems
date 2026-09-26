@@ -1,11 +1,11 @@
 # Verification supplement for the 4 papers on Problem 131
 
-This supplement serves 4 papers on Kagey's Problem 131, all by A. Pemmasani (preprint, 2026).
+This supplement serves the 4 papers on Kagey's Problem 131, the series The middle and the ends I-IV by A. Pemmasani (preprint, 2026).
 
 | Paper | Title | Source |
 | --- | --- | --- |
-| A | Uniform Bessel bounds for endpoint crossings in the persistent random walk | `problem131.tex` |
-| B | Vertex crossings in a symmetric Markov multinomial model | `problem131_multistate.tex` |
+| A | Uniform Bessel bounds for endpoint crossings in the persistent random walk | `paperA/problem131.tex` |
+| B | Vertex crossings in a symmetric Markov multinomial model | `paperB/problem131_multistate.tex` |
 | C | Face selection for slowly switching Markov chains and the planar persistent walk | `paperC/problem131_switching.tex` |
 | D | Endpoint crossings for random walks with memory | `paperD/problem131_memory.tex` |
 
@@ -15,18 +15,19 @@ we first list the results whose proofs rest on a computation, with the script th
 the 2 methods, and then say what each script checks.
 
 Run `python -B verify_all.py --paper a` in this folder, or use `b`, `c`, `d` or `all`. Add `--full`
-for the long runs and `--dry-run` to print the commands without running them. For Papers C and D
-the runner calls `paperC/verify_all.py` and `paperD/verify_all.py` with `--quick`, or with `--full`,
-and it skips a paper whose folder is missing. The scripts for Papers A and B use only the standard
-library of Python 3. Those for Papers C and D need numpy, scipy and mpmath, and Paper C also needs
-sympy. Before most computations we wrote a prediction and a condition that would refute it in a
-ledger, and we recorded the outcome below it. `data/ledger.md` indexes the ledgers of all 4 papers.
+for the long runs and `--dry-run` to print the commands without running them. For each paper the
+runner calls the paper's own runner, `paperA/verify_all.py` to `paperD/verify_all.py`, with
+`--quick`, or with `--full`, and it skips a paper whose folder is missing. The scripts for Papers A
+and B use only the standard library of Python 3. Those for Papers C and D need numpy, scipy and
+mpmath, and Paper C also needs sympy. Before most computations we wrote a prediction and a
+condition that would refute it in a ledger, and we recorded the outcome below it. `ledger.md`
+indexes the ledgers of all 4 papers.
 
 ## Paper A: the two-state walk
 
-`python -B verify_all.py --paper a` takes about 2 minutes. Add `--full` to include
-`verify_every_n.py` and `verify_every_n_sign.py` (about 21 minutes more), which run before
-`verify_every_n_guards.py`.
+`python -B verify_all.py --paper a` runs `paperA/verify_all.py`, which takes about 2 minutes. The
+scripts below are in `paperA/`. Add `--full` to include `verify_every_n.py` and
+`verify_every_n_sign.py` (about 21 minutes more), which run before `verify_every_n_guards.py`.
 
 | Result that rests on computation | Script | The 2 methods |
 | --- | --- | --- |
@@ -49,7 +50,7 @@ proofs but does not replace them.
 | `verify_adjacent.py` | Adjacent-bin ratio and global extrema in 474 exact distributions up to N = 80, exact adjacent thresholds, and the cubic gap between the central and adjacent polynomials by word enumeration up to N = 12. |
 | `verify_allbin.py` | 5,476 exact coefficient comparisons, 264 all-bin Bessel inequalities, 28 Laguerre-Bessel inequalities, and the crossing and edge expansions at 80 digits. |
 | `verify_periodic_window.py` | 66 cyclic run polynomials against enumeration, 120 relative-error inequalities, and root and critical-window samples up to N = 10^12. |
-| `verify_every_n.py` | The crossing at every N (about 8 minutes, only with `--full`). The bounds on I_0 + I_1 at 2,000 points, with the Bessel values by power series and by quadrature, the certificates for 2 <= N <= 174 and as a cross-check up to N = 1000, the margins of the analytic proof, and a table of z_N by 2 bisections. Writes `data/every_n_certificates.csv` and `data/every_n_output.txt`. |
+| `verify_every_n.py` | The crossing at every N (about 8 minutes, only with `--full`). The bounds on I_0 + I_1 at 2,000 points, with the Bessel values by power series and by quadrature, the certificates for 2 <= N <= 174 and as a cross-check up to N = 1000, the margins of the analytic proof, and a table of z_N by 2 bisections. Writes `paperA/data/every_n_certificates.csv` and `paperA/data/every_n_output.txt`. |
 | `verify_every_n_sign.py` | The sign of z_N - zeta_N for 1001 <= N <= 2773 (about 13 minutes, only with `--full`). |
 | `verify_every_n_guards.py` | The rounding guards of the 2 scripts above, the signs of z_N - zeta_N and of R_N for N <= 1000, and the checks at N = 2773 and 2774 (about 25 seconds). |
 | `verify_uniform_llt.py` | The uniform local law in 3 runs. With no argument, the exact identity for P_N(k) in 3,900 cases and the errors of the tilted Bessel form over all bins. With `--run2`, the lemmas and the error bound at 217 sampled points. With `--run3`, the central crossing from the tilted form against p_N. |
@@ -58,13 +59,14 @@ proofs but does not replace them.
 `verify.py` checks the exact law against enumeration for N <= 16 at 20 rational values of p. The
 polynomials have degree less than N, so for those N this proves the polynomial identities. The last
 4 scripts in the table report their checks in their output rather than through the exit code, so
-the output has to be read. It is also saved in `data/`. The predictions are in `data/ledger.md`,
-`data/ledger_every_n.md` and `data/ledger_llt.md`.
+the output has to be read. It is also saved in `paperA/data/`. The predictions are in `ledger.md`,
+`paperA/data/ledger_every_n.md` and `paperA/data/ledger_llt.md`.
 
 ## Paper B: the complete graph
 
-`python -B verify_all.py --paper b` takes about 2 minutes. Add `--full` to include
-`verify_B_tie_repair.py` (about 3 minutes more).
+`python -B verify_all.py --paper b` runs `paperB/verify_all.py`, which takes about 2 minutes. The
+scripts below are in `paperB/`. Add `--full` to include `verify_B_tie_repair.py` (about 3 minutes
+more).
 
 No proof in Paper B rests on computation. The statements that the paper marks as numerically
 verified or with the proof omitted are checked as follows.
@@ -84,17 +86,18 @@ verified or with the proof omitted are checked as follows.
 | `verify_frontier_boundary.py` | The majorant for all count vectors, the mixed-face crossover, and the fixed rare-count formulas and crossings. |
 | `verify_frontier_modes.py` | Spatial profiles, lattice-volume limits, exact finite-N mode comparisons, and the weak-field support hierarchy. |
 | `verify_vertex_completion.py` | 462 exact identities for the near-vertex representation, 200 rational concavity checks, 16 uniform root brackets, and 4 examples with growing rare counts where the probabilities are not approximated although the roots are, each at 2 series cutoffs. |
-| `verify_general_start.py` | The tie, the law with a start and the tree form of the constants (about 20 seconds). The weighted Cayley formula by the matrix-tree theorem and by listing all trees for k <= 7, the law with a start against word enumeration for 357 bins, the crossings with a start by 3 methods, and the K_3 window at finite N. Writes `data/general_start_output.txt`. |
-| `verify_B_tie_repair.py` | The exact identity Hess I times Sigma_alpha = identity at rational points for k = 2 to 6, and dynamic programs over all bins at N = 300 and N = 1002 (about 3 minutes, only with `--full`). Writes `data/B_tie_repair_output.txt`. |
+| `verify_general_start.py` | The tie, the law with a start and the tree form of the constants (about 20 seconds). The weighted Cayley formula by the matrix-tree theorem and by listing all trees for k <= 7, the law with a start against word enumeration for 357 bins, the crossings with a start by 3 methods, and the K_3 window at finite N. Writes `paperB/data/general_start_output.txt`. |
+| `verify_B_tie_repair.py` | The exact identity Hess I times Sigma_alpha = identity at rational points for k = 2 to 6, and dynamic programs over all bins at N = 300 and N = 1002 (about 3 minutes, only with `--full`). Writes `paperB/data/B_tie_repair_output.txt`. |
 | `verify_crossover_factor.py` | The factor e^E of the crossover theorem (about 50 seconds). Exact S_n by the proper-run formula, a quadrature of the refresh integral and the positive refresh sum at 60 digits, checked against word enumeration for small N. With the argument `repair` (under 1 second) it computes psi by a series and by a continued fraction and checks 3 further examples. |
 
 `verify_general_start.py` and `verify_B_tie_repair.py` report their checks in their output rather
 than through the exit code. Some of their lines show failures on purpose, since they belong to the 2
 registered predictions that failed (T1(e) and T4), so the output cannot be judged by searching for
-"False". The predictions are in `data/ledger_B_tie.md` and `data/ledger_B_crossover.md`.
+"False". The predictions are in `paperB/data/ledger_B_tie.md` and
+`paperB/data/ledger_B_crossover.md`.
 `predict_general_start.py` and `verify_crossover_factor.py predict` only evaluate formulas for those
-registrations and check nothing, so `verify_all.py` does not run them. The dated logs in `data/`
-are from earlier versions of the manuscripts, before they were split.
+registrations and check nothing, so `paperB/verify_all.py` does not run them. The dated logs in
+`early_runs/` are from earlier versions of the manuscripts, before they were split.
 
 ## Paper C: slowly switching Markov chains
 

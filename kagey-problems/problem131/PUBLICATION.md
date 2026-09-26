@@ -2,10 +2,10 @@
 
 Updated September 24, 2026.
 
-Paper A (`problem131.tex`) is the binary paper: uniform Bessel bounds, the crossings for every bin,
-the Laguerre edge law, periodic boundaries, and the critical window. Paper B
-(`problem131_multistate.tex`) is the d-direction paper and is still a draft. Paper B cites Paper A
-as a preprint.
+Paper A (`paperA/problem131.tex`) is the binary paper: uniform Bessel bounds, the crossings for
+every bin, the Laguerre edge law, periodic boundaries, and the critical window. Paper B
+(`paperB/problem131_multistate.tex`) is the d-direction paper and is still a draft. Paper B cites
+Paper A as a preprint.
 
 The crossing question itself is not new (Stepanyan et al. 2024 study the periodic case), and neither
 are the exact law or the normal limit. The results that seem to be new are the uniform estimates
