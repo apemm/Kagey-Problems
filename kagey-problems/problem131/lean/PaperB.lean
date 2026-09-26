@@ -19,7 +19,7 @@ import PaperB.Randomization
 import PaperB.ChainCovariance
 
 /-!
-# Paper B (`problem131_multistate.tex`), root module
+# Paper B (`paperB/problem131_multistate.tex`), root module
 
 Imports every module of the Lean proofs for the multistate paper.
 

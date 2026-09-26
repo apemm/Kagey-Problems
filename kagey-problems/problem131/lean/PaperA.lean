@@ -19,7 +19,7 @@ import PaperA.BesselIntegral
 import PaperA.EveryNLarge
 
 /-!
-# Paper A (`problem131.tex`), root module
+# Paper A (`paperA/problem131.tex`), root module
 
 Imports every module of the Lean proofs for the binary paper.
 
