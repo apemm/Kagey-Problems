@@ -1,9 +1,9 @@
 # Captions for the program figure
 
 The 4 variants are made by `make_program_figure.py` in this folder. Each one is 6.4 in wide and can be
-included at its natural size. Papers A and B sit next to this folder and use `figures/program_A` and
-`figures/program_B`. Papers C and D sit one level down and use `../figures/program_C` and
-`../figures/program_D`. Each caption below is LaTeX for `\caption{...}`.
+included at its natural size. The 4 papers sit in the folders `paperA` to `paperD` next to this
+folder and use `../figures/program_A` to `../figures/program_D`. Each caption below is LaTeX for
+`\caption{...}`.
 
 ## Paper A, `program_A`
 

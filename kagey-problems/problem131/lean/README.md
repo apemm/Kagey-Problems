@@ -5,7 +5,7 @@ with a root file (`PaperA.lean`) and a folder of modules (`PaperA/`). We use Lea
 Mathlib v4.33.1. Each module starts with a docstring that lists what it proves. For Papers C and
 D the files `PaperC/MAP.md` and `PaperD/MAP.md` match each statement to its Lean theorems.
 
-## Paper A (`problem131.tex`)
+## Paper A (`paperA/problem131.tex`)
 
 `PaperA/` is about the binary walk. It proves the following.
 
@@ -32,7 +32,7 @@ D the files `PaperC/MAP.md` and `PaperD/MAP.md` match each statement to its Lean
   explicit bounds on `√(πz/2) e^{-z} (I_0(z) + I_1(z))` (`EveryN`, `BesselIntegral`,
   `EveryNLarge`).
 
-## Paper B (`problem131_multistate.tex`)
+## Paper B (`paperB/problem131_multistate.tex`)
 
 `PaperB/` is about the walk with `d` states. It proves the following.
 
