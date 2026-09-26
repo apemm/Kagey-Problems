@@ -1,0 +1,229 @@
+\section{Sticky priors for hidden Markov models}\label{sec:sticky}
+
+Fox et al.~\cite{fox2011} add a self-transition bias $\kappa\ge0$ to the HDP
+hidden Markov model, so that the hidden chain stays in each state
+longer. In their weak-limit approximation with base weights $\bar\beta$ and
+concentration $\omega$, row $j$ of the transition matrix is Dirichlet with
+parameters $\omega\bar\beta_1,\dots,\omega\bar\beta_j+\kappa,\dots,\omega\bar\beta_d$. By
+neutrality, row $j$ off the diagonal, divided by $1-\pi_{jj}$, is Dirichlet
+with parameters $(\omega\bar\beta_l)_{l\ne j}$ and independent of $\pi_{jj}$. So
+$\kappa$ only sets how sticky the chain is. We fix every exit probability at
+$h=\tau L/N$, the scale of Kagey's crossing, although the prior mixes all
+scales of $h$.
+
+So let $\Pi=(\pi_{ij})$ be a stochastic matrix on $[d]$ with zero diagonal,
+$\tau>0$ and $h=\tau L/N<1$. Then $(1-h)I+h\Pi=I+hQ$ with $Q=\Pi-I$, so
+$q_i=1$ and $T=\tau L$ (Example~\ref{ex:models}(iii)). We assume that
+$\pi_{ij}>0$ for all $i\ne j$, which we call (A+), and that $\mu$ has full
+support. Under the prior (A+) holds almost surely. Let $\rho_F=\varrho(\Pi_F)$
+for the principal submatrix $\Pi_F$ on $F$. Then $\lambda_F=1-\rho_F$, and
+$Q_F$ and $\Pi_F$ have the same Perron vectors. A vertex has $\rho_F=0$, and
+$\rho_{[d]}=1$. If $2\le|F|\le d-1$, then $\Pi_F$ is irreducible by (A+), and
+$0<\rho_F<1$ since $\rho_F$ is at least the least row sum of $\Pi_F$ and the
+Perron root of the irreducible $\Pi$ exceeds that of each proper principal
+submatrix~\cite{bermanplemmons1994}. So
+$\Phi_\tau(F)=\tau(1-\rho_F)+|F|-1$, and we put
+\[
+ \tau_-=\min_{|F|\ge2}\frac{|F|-1}{\rho_F},\qquad
+ \tau_+=\max_{F\ne[d]}\frac{d-|F|}{1-\rho_F}.
+\]
+We call a global mode of $P_N$, the most likely value of the counts under the
+prior, a \emph{prior mode}.
+
+\begin{corollary}[support and location of the prior mode]\label{cor:map}
+Assume \textup{(A+)}, let $\mu$ have full support, and fix $\tau>0$. Let
+$\mathcal F_\tau$ be the set of faces that minimize $\Phi_\tau$. There is
+$N_0(\tau)$ such that for $N\ge N_0(\tau)$ every prior mode $n^*$
+satisfies $\supp n^*\in\mathcal F_\tau$ and $n^*/N=\alpha^*_F+O(1/L)$ with
+$F=\supp n^*$. If $\mathcal F_\tau=\{F^*\}$, then
+$n^*/N\to\alpha^*_{F^*}=l\circ r$, where $l$ and $r$ are the left and right
+Perron vectors of $\Pi_{F^*}$ with $l\cdot r=1$. No reversibility is needed.
+\end{corollary}
+
+\begin{proof}
+By (A+) every face is irreducible and, as $\mu$ has full support,
+admissible. So Theorem~\ref{thm:first}(iii) and~(iv) give the claims, with
+$\alpha^*_F=l\circ r$.
+\end{proof}
+
+At $\tau=\tau_-$ the vertices tie with the faces that attain $\tau_-$, and
+Theorem~\ref{thm:window}(iii) with $\tau^*=\tau_-$ and a fixed large $t=t_0$
+shows that for large $N$ the prior mode is not a single state at
+$\tau=\tau_-(1-\frac{\log L-2t_0}{2L})<\tau_-$. So $N_0(\tau)\to\infty$ as
+$\tau\uparrow\tau_-$.
+
+\begin{proposition}[thresholds]\label{prop:thresholds}
+Assume \textup{(A+)} and $d\ge3$.
+\begin{enumerate}[(a)]
+\item The minimizers of $\Phi_\tau$ are exactly the vertices if and only if
+$\tau<\tau_-$, and no vertex minimizes $\Phi_\tau$ if $\tau>\tau_-$. The face
+$[d]$ is the unique minimizer if and only if $\tau>\tau_+$, and $[d]$ does not
+minimize $\Phi_\tau$ if $\tau<\tau_+$.
+\item $1<\tau_-\le d-1\le\tau_+$.
+\item $\tau_-=d-1$ if and only if $\tau_+=d-1$, and both hold if and only if
+\begin{equation}\label{eq:directjump}
+ \rho_F\le\frac{|F|-1}{d-1}\qquad\text{for every face } F.
+\end{equation}
+If \eqref{eq:directjump} fails, then $\tau_-<d-1<\tau_+$, and for
+$\tau\in(\tau_-,\tau_+)$ every minimizer $F$ of $\Phi_\tau$ has
+$2\le|F|\le d-1$.
+\end{enumerate}
+Consequently, fix $\tau$ and let $N\ge N_0(\tau)$. If $\tau<\tau_-$, the prior
+modes are the $Ne_i$ with $\mu_i=\max_l\mu_l$. If $\tau>\tau_+$, every
+prior mode has full support. If $\tau_-<\tau<\tau_+$, every prior
+mode has a support $F$ with $2\le|F|\le d-1$, and $F=F^*$ if $F^*$ is
+the unique minimizer of $\Phi_\tau$.
+\end{proposition}
+
+\begin{proof}
+(a) A vertex has $\Phi_\tau=\tau$. For $|F|\ge2$,
+$\Phi_\tau(F)-\tau=\rho_F((|F|-1)/\rho_F-\tau)$ with $\rho_F>0$, and for
+$F\ne[d]$, $\Phi_\tau(F)-(d-1)=(1-\rho_F)(\tau-(d-|F|)/(1-\rho_F))$ with
+$1-\rho_F>0$, while $\Phi_\tau([d])=d-1$. (b) For $2\le|F|\le d-1$,
+$\rho_F<1$ gives $(|F|-1)/\rho_F>1$, and $[d]$ gives $d-1\ge2$, so
+$\tau_->1$. Also $[d]$ gives $\tau_-\le d-1$, and a vertex gives
+$\tau_+\ge d-1$. (c) By (b), $\tau_-=d-1$ exactly when
+$(|F|-1)/\rho_F\ge d-1$ for all $|F|\ge2$, and $\tau_+=d-1$ exactly when
+$(d-|F|)/(1-\rho_F)\le d-1$ for all $F\ne[d]$. Both say
+$(d-1)\rho_F\le|F|-1$, which holds for the vertices and $[d]$. If
+\eqref{eq:directjump} fails, we get $\tau_-<d-1<\tau_+$, and (a) excludes the
+vertices and $[d]$ on $(\tau_-,\tau_+)$. The consequence follows from Corollary~\ref{cor:map} and
+$P_N(Ne_i)=\mu_i(1-h)^{N-1}$. Parts (a) to (c) are checked in Lean.
+\end{proof}
+
+We say that $\Pi$ has a \emph{direct jump} when \eqref{eq:directjump} holds.
+Then at first order the prior mode goes from one state straight to all $d$ states at
+$\tau=d-1$. The uniform kernel $\pi_{ij}=1/(d-1)$ has constant row sums on
+$F$, so $\rho_F=(|F|-1)/(d-1)$. So
+\eqref{eq:directjump} says that no set of states is more closed than under the
+uniform kernel. That kernel has $Q=(J-dI)/(d-1)$, and all its faces tie at
+$\tau=d-1$, the degeneracy of~\cite{paperB} (Corollary~\ref{cor:paperB}).
+
+\begin{corollary}[only the uniform kernel]\label{cor:uniform-kernel}
+Let $d\ge3$ and assume \textup{(A+)}. \textup{(a)} If $\Pi$ is symmetric,
+then $\Pi$ has a direct jump if and only if $\pi_{ij}=1/(d-1)$ for all
+$i\ne j$. \textup{(b)} If $d=3$, then $\Pi$ has a direct jump if and only if
+$\pi_{ij}\pi_{ji}\le\frac14$ for all $3$ pairs. In particular every cyclic
+kernel $\pi_{i,i+1}=a$, $\pi_{i,i-1}=1-a$ (indices mod $3$) has a direct
+jump.
+\end{corollary}
+
+\begin{proof}
+A pair has $\rho_{\{i,j\}}=\sqrt{\pi_{ij}\pi_{ji}}$. (a) Here
+$\rho_{\{i,j\}}=\pi_{ij}$, and since the rows sum to $1$ the average of
+$\pi_{ij}$ over the pairs is $1/(d-1)$. So \eqref{eq:directjump} fails unless
+all $\pi_{ij}$ are equal, and the uniform kernel satisfies it with equality.
+(b) For $d=3$, \eqref{eq:directjump} is automatic for the vertices and $[3]$,
+and for a pair it reads $\pi_{ij}\pi_{ji}\le\frac14$. The cyclic kernel has
+$a(1-a)\le\frac14$. Both parts are checked in Lean.
+\end{proof}
+
+\begin{proposition}[the direct jump under the prior]\label{prop:directjump}
+Let $d=3$ and let the base weights be uniform. In the weak-limit sticky
+HDP-HMM the rows of $\Pi$ are then independent, and the first off-diagonal
+entry of each row has the law $\mathrm{Beta}(\omega/3,\omega/3)$. Write
+$\Prob_\omega$ for this law of $\Pi$ and $D$ for the event that $\Pi$ has a
+direct jump. Then \textup{(a)} $\Prob_\omega(D)\to\frac14$ as $\omega\to0$,
+and \textup{(b)} $\Prob_\omega(D)=\frac{3\sqrt3}{8\pi\omega}(1+o(1))$ as
+$\omega\to\infty$.
+\end{proposition}
+
+\begin{proof}
+Let $B_1,B_2,B_3$ be independent with law $\mathrm{Beta}(\omega/3,\omega/3)$,
+and put $\pi_{12}=B_1$, $\pi_{21}=B_2$ and $\pi_{31}=B_3$, so that the other
+off-diagonal entries are $1-B_j$. By Corollary~\ref{cor:uniform-kernel}(b),
+$D$ is the event that $B_1B_2$, $(1-B_1)B_3$ and $(1-B_2)(1-B_3)$ are all at
+most $\frac14$. (a) As $\omega\to0$ each $B_j$ tends in law to a fair coin on $\{0,1\}$, and
+the 3 products then take only the values $0$ and $1$. So $\partial D$ has
+limit probability $0$, and $\Prob_\omega(D)$ tends to the limit probability of
+$D$. Only $(1,0,1)$ and $(0,1,0)$ make all 3 products $0$
+(checked in Lean), so the limit is $\frac14$. Part (b) is proved in
+Appendix~\ref{app:hdp}.
+\end{proof}
+
+For (b), for large $\omega$ the set $D$ is a thin tube around the
+cyclic kernels, with cross-section of area about $\frac98t^4$ at the logit coordinate
+$t$ along the cyclic kernels (Appendix~\ref{app:hdp}), which gives the order
+$1/\omega$. So the
+uniform tie is not typical. At $\omega=1$, Monte Carlo with
+$10^6$ draws gives $\Prob_\omega(D)=0.115$, so about $0.88$ of random kernels
+have a window of $\tau$ in which the prior mode sits on a pair
+(Proposition~\ref{prop:thresholds}(c)).
+
+\begin{corollary}[an exact link to Kagey's crossing]\label{cor:sticky-pair}
+Let $i\ne j$ satisfy $\pi_{ij}=\pi_{ji}=\pi_0>0$ and $\mu_i=\mu_j>0$. We do not
+assume \textup{(A+)}. Then for every $N\ge2$ the balanced compositions are the
+most likely ones with support $\{i,j\}$, and they are more likely than $Ne_i$
+if and only if $\tau>\tau^{\rm pair}(N):=Nu_N/((\pi_0+u_N)L)$. If also
+$\mu_i=\mu_j=\max_l\mu_l$, then for every $\tau$ with
+$\tau^{\rm pair}(N)<\tau<N/L$ no prior mode is a single state. Moreover,
+\[
+ \tau^{\rm pair}(N)=\frac1{\pi_0}\Bigl[1-\frac{\frac12\log L-c_0}{L}
+ +O\Bigl(\frac{\log L}{L^2}\Bigr)\Bigr],
+\]
+which tends to the first-order value $1/\rho_{\{i,j\}}=1/\pi_0$.
+\end{corollary}
+
+\begin{proof}
+Every exit rate is $1$, so this is Proposition~\ref{prop:pair} with $a=\pi_0$
+and $q=1$, where $u=\pi_0h/(1-h)>u_N$ exactly when $h>u_N/(\pi_0+u_N)$. For
+the prior modes, $P_N(Ne_l)=\mu_l(1-h)^{N-1}\le P_N(Ne_i)$ for every $l$, and the range
+of $\tau$ is not empty as $u_N/(\pi_0+u_N)<1$. Finally $Nu_N=z_N/p_N$ and
+$u_N=O(L/N)$, so $\tau^{\rm pair}(N)=\frac{z_N}{\pi_0L}(1+O(L/N))$, and the
+second-order expansion of $z_N$ in~\cite{paperA} gives the claim.
+\end{proof}
+
+
+\begin{proposition}[face masses]\label{prop:mass}
+Assume \textup{(A+)} and $0<h<1$. For every face $F$ with $|F|\ge2$ and
+$\Lambda_F=1-h\lambda_F$,
+\[
+ \frac{\min r_F}{\max r_F}\mu(F)\Lambda_F^{N-1}
+ \le\Prob(\supp n\subseteq F)\le
+ \frac{\max r_F}{\min r_F}\mu(F)\Lambda_F^{N-1},
+\]
+and for fixed $\tau$, $\Lambda_F^{N-1}=N^{-\tau\lambda_F}e^{O(L^2/N)}$. Also
+$\Prob(\text{one state})=(1-h)^{N-1}\sim N^{-\tau}$ and
+$\Prob(\supp n=[d])\to1$.
+\end{proposition}
+
+\begin{proof}
+Let $U_F=(1-h)I+h\Pi_F\ge0$. Then
+$\Prob(\supp n\subseteq F)=\mu_F^{\top}U_F^{N-1}\ones$ and
+$U_Fr_F=\Lambda_Fr_F$. As $r_F/\max r_F\le\ones\le r_F/\min r_F$ entrywise,
+this gives the bounds, and $(N-1)\log(1-h\lambda_F)=-\tau\lambda_FL+O(L^2/N)$. A
+vertex composition is a single path, and every $F\ne[d]$ has $\lambda_F>0$,
+which gives the last 2 claims. The finite bounds are checked in Lean.
+\end{proof}
+
+\begin{remark}[prior mode versus mass]\label{rem:mapmass}
+Let $d\ge3$. For fixed $\tau<\tau_+$ and large $N$ every prior mode has a
+proper support, while $\Prob(\supp n=[d])\to1$. For $\tau<\tau_-$ the prior mode uses
+one state, an event of probability about $N^{-\tau}$. A face of size $k$ holds
+about $N^{k-1}$ compositions, so it can carry most of the mass while each of
+them is less likely than a vertex. Table~\ref{tab:sticky} shows this. At
+$\tau=0.8$ the prior mode is a single state, yet $\Prob(\text{one state})=0.0122$. At
+$\tau=8$ first
+order puts the prior mode on $\{1,2\}$, but at $N=240$ it has full support. So the
+prior mode is a poor summary of a sticky prior, and face selection says when it
+misleads.
+\end{remark}
+
+\begin{table}[t]
+\centering\small
+\begin{tabular}{@{}rlccc@{}}
+\toprule
+$\tau$ & prior mode & one state & $\{1,2\}$ & $[3]$\\
+\midrule
+0.5 & one state & 0.0643 & 0.465 & 0.379\\
+0.8 & one state & 0.0122 & 0.423 & 0.531\\
+3 & $(120,120,0)$ & $4.3\times10^{-8}$ & 0.129 & 0.871\\
+8 & $(111,111,18)$ & $1.2\times10^{-21}$ & 0.0081 & 0.992\\
+\bottomrule
+\end{tabular}
+\caption{The kernel $\Pi$ with rows $(0,0.9,0.1)$, $(0.9,0,0.1)$,
+$(0.5,0.5,0)$, the uniform start and $N=240$, where $\tau_-=10/9$ and
+$\tau_+=10$. The prior mode (from exact dynamic programming, with a 3-way
+tie at $\tau=0.5$ and $0.8$) and the prior probabilities of the supports.}
+\label{tab:sticky}
+\end{table}

@@ -1,0 +1,148 @@
+\section{The information in the endpoint}\label{sec:fisher}
+
+We return to the walk of Paper~A, with notation local to this section. The
+first step is left or right with probability $\frac12$
+each, and each later step repeats the one before it with probability
+$p=1-q$, where $0<q<1$. This is Example~\ref{ex:models}(i) with $h=q$, so
+$T=Nq$. Put $\rho=1-2q$, $u=q/p$ and $y=Nu=T/p$. Let $J$ be the number of
+switches, $K$ the number of right steps, $X=2K-N$ the endpoint and $W=X/N$. A path with $J$ switches has probability
+$\frac12p^{N-1-J}q^J$. So $J\sim\operatorname{Bin}(N-1,q)$, and the path
+carries the Fisher information $(N-1)/(pq)$ about $q$. The endpoint carries
+$I_K(q)=\sum_{k=0}^N(\partial_q\Prob(K=k))^2/\Prob(K=k)$, and we call
+$e_N(q)=I_K(q)\,pq/(N-1)$ the \emph{efficiency} of the endpoint. It is the
+fraction of the information left when we see only the endpoint.
+
+The endpoint sees the switches only through how far the walk spreads. A
+normal $X$ with mean $0$ and variance $Np/q$, close to $\Var X$ for large
+$T$, would carry the information $\frac12(\partial_q\log(Np/q))^2=1/(2p^2q^2)$,
+which is the fraction $1/(2(N-1)pq)\approx1/(2T)$. Theorem~\ref{thm:fisher}
+confirms this.
+
+\begin{proposition}[a correlation ratio]\label{prop:eta}
+For $N\ge2$ and $0<q<1$,
+\[
+ e_N(q)=\frac{\Var(\E[J\mid K])}{\Var J}.
+\]
+For $0<k<N$ we have $\E[J\mid K=k]=\frac{d}{dt}\log S_{k,N-k}(e^t)$ at
+$t=\log(q/p)$, where $S_{a,b}$ is the polynomial of
+Section~\ref{sec:papersAB}. For $k\in\{0,N\}$ we have $J=0$.
+\end{proposition}
+
+\begin{proof}
+The score of a path is $(J-(N-1)q)/(pq)$. Since $\Prob(K=k)$ is a sum of path
+probabilities, $\partial_q\log\Prob(K=k)=\E[(J-(N-1)q)/(pq)\mid K=k]$. As
+$\E J=(N-1)q$, this gives $I_K(q)=\Var(\E[J\mid K])/(pq)^2$, and we divide by
+$(N-1)/(pq)=\Var J/(pq)^2$. By the run count of~\cite{paperA}, for $0<k<N$
+the probability $\Prob(K=k,J=j)$ is $\frac12p^{N-1}u^j$ times the number of
+words with $k$ right steps, $N-k$ left steps and $j$ switches. Summing over
+$j$ gives $\Prob(K=k)=\frac12p^{N-1}S_{k,N-k}(u)$, so
+$\E[J\mid K=k]=uS'_{k,N-k}(u)/S_{k,N-k}(u)$. Only the 2 constant paths have
+$K\in\{0,N\}$.
+\end{proof}
+
+This identity, checked in Lean, says that $e_N$ is the correlation ratio of
+$J$ on $K$. Since $\E[J\mid K]$ is the orthogonal projection of $J$ onto
+the functions of $K$ in $L^2$, the Cauchy--Schwarz inequality gives
+\begin{equation}\label{eq:fisher-proj}
+ e_N(q)\ge\frac{\Cov(J,g(K))^2}{\Var J\,\Var g(K)}
+ \qquad\text{whenever }\Var g(K)>0.
+\end{equation}
+
+\begin{remark}[few switches, proof omitted]\label{rem:fisher-small}
+For fixed $N$ we have $e_N(q)=1-\frac{N-2}2q+O_N(q^2)$ as $q\to0$. If $q\to0$
+and $T=Nq$ stays bounded, then $e_N(q)\to1$ if and only if $T\to0$. The
+reason is that 1 switch and 2 switches both leave the endpoint uniform on the
+interior bins. The proof applies \eqref{eq:fisher-proj} to the indicator of
+$K\in\{0,N\}$ and compares the 2 words with 1 switch with the $N-2$ words
+with 2 switches in each interior bin. We omit the details.
+\end{remark}
+
+\begin{theorem}[many switches]\label{thm:fisher}
+Let $R^2_N(q)=\Cov(J,X^2)^2/(\Var J\,\Var X^2)$ be the squared correlation
+of $J$ and $X^2$. For $N\ge2$ and $0<q<1$,
+\[
+ R^2_N(q)=\frac1{2(N-1)pq}\cdot
+ \frac{\bigl[1+\rho^N-p(1-\rho^N)/T\bigr]^2}{V},
+\]
+where
+\[
+ V=1-\frac{1+8\rho+\rho^2+8\rho^{N+1}}{4pT}
+ +\frac{\rho(1-\rho^N)\bigl[2(1+2\rho)(2+\rho)-\rho(1-\rho^N)\bigr]}{8p^2T^2}.
+\]
+There are absolute constants $C$ and $N_0$ such that for $N\ge N_0$,
+$0<q\le\frac12$ and $1\le T\le N^{1/4}$,
+\[
+ 0\le e_N(q)-R^2_N(q)\le C\Bigl(\frac1{T^3}+\frac{T^3}N\Bigr).
+\]
+Consequently, in the same range and with an absolute implied constant,
+\[
+ e_N(q)=\frac1{2T}+\frac1{4T^2}+O\Bigl(\frac1{T^3}+\frac{T^3}N\Bigr).
+\]
+\end{theorem}
+
+The lower bound $e_N\ge R^2_N$ is \eqref{eq:fisher-proj} with $g(K)=X^2$,
+for all $N\ge2$ and $0<q<1$. For the upper bound, Proposition~\ref{prop:eta}
+and the uniform Bessel estimate for every bin in~\cite{paperA} make
+$\E[J\mid K]$ close to $y\sqrt{1-W^2}+\frac12$. As $W$ is of order
+$T^{-1/2}$, this is close to $y(1-W^2/2)+\frac12$, which lies in the span of
+$1$ and $X^2$. Appendix~\ref{app:fisher} proves the closed form and the
+bound.
+
+\begin{proof}[Proof of the expansion in Theorem~\ref{thm:fisher}]
+If $T\le18$, then $\lvert e_N-\frac1{2T}-\frac1{4T^2}\rvert\le1\le18^3T^{-3}$,
+since $e_N$ and $\frac1{2T}+\frac1{4T^2}$ lie in $[0,1]$. Let $T\ge18$. Then $p\ge\frac12$,
+$0\le\rho<1$ and $\rho^N\le e^{-2T}\le T^{-2}$. The middle term of $V$ lies
+in $[0,9/T]$, and since $1+8\rho+\rho^2=10-20q+4q^2$ it equals
+$\frac5{2T}+O(q/T+T^{-2})$. The last term lies in $[0,9/T^2]$. So
+$V\ge\frac12$, $1/V=1+\frac5{2T}+O(q/T+T^{-2})$, the squared bracket is
+$1-\frac2T+O(q/T+T^{-2})$, and $1/(2(N-1)pq)=(1+O(q+1/N))/(2T)$. Multiplying,
+$R^2_N=\frac1{2T}+\frac1{4T^2}+O(T^{-3}+q/T+1/(NT))$ with absolute
+constants. Since $q/T=1/N\le T^3/N$, the bound on $e_N-R^2_N$ gives the
+expansion.
+\end{proof}
+
+\begin{corollary}[at Kagey's crossing]\label{cor:fisher-crossing}
+Let $p_N$ be the value of $p$ at which the middle bin and the endpoints are
+equally likely, and let $q_N=1-p_N$ and $z_N=Nq_N$
+(Section~\ref{sec:papersAB}). Then
+\[
+ e_N(q_N)=\frac1{2L}+\frac{\log L+1+\log(8/\pi)}{4L^2}
+ +O\Bigl(\frac{(\log L)^2}{L^3}\Bigr).
+\]
+\end{corollary}
+
+\begin{proof}
+Since $S_N(u)\ge2u$, we have $u_N\le\frac12$, so $p_N\ge\frac23$ and
+$q_N\le\frac13$. By the second-order expansion of $z_N$ in~\cite{paperA},
+$z_N=L(1-\varepsilon)$ with
+$\varepsilon=(\frac12\log L-c_0)/L+O(\log L/L^2)$. So Theorem~\ref{thm:fisher}
+applies with $T=z_N$ for large $N$ and gives
+$e_N(q_N)=\frac1{2z_N}+\frac1{4z_N^2}+O(L^{-3})$. Here
+$\frac1{2z_N}=\frac1{2L}+\frac{\log L-2c_0}{4L^2}+O((\log L)^2/L^3)$,
+$\frac1{4z_N^2}=\frac1{4L^2}+O(\log L/L^3)$ and $-2c_0=\log(8/\pi)$.
+\end{proof}
+
+So $e_N\sim1/(2\log N)$ there, but the relative correction is of order
+$(\log\log N)/\log N$ and is large at every $N$ we computed. The product
+$2Le_N$ is $1.74$ at $N=100$ and $1.35$ at $N=3200$ (Table~\ref{tab:fisher}).
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{@{}rcccccc@{}}
+\toprule
+$N$ & $z_N$ & $e_N(q_N)$ & $2z_Ne_N$ & $2Le_N$ & $R^2_N(q_N)$
+ & $\frac1{2z_N}+\frac1{4z_N^2}$\\
+\midrule
+50 & 2.8998 & 0.24117 & 1.3987 & 1.8869 & 0.20873 & 0.20216\\
+100 & 3.5034 & 0.18869 & 1.3221 & 1.7379 & 0.16642 & 0.16309\\
+400 & 4.7501 & 0.12681 & 1.2047 & 1.5196 & 0.11715 & 0.11634\\
+1600 & 6.0246 & 0.09433 & 1.1366 & 1.3919 & 0.09007 & 0.08988\\
+3200 & 6.6684 & 0.08361 & 1.1151 & 1.3496 & 0.08070 & 0.08060\\
+\bottomrule
+\end{tabular}
+\caption{The efficiency of the endpoint at Kagey's crossing $q_N=1-p_N$,
+computed from the exact law, with $z_N=Nq_N$ and $L=\log N$. The last 2
+columns are the squared correlation of Theorem~\ref{thm:fisher} and its
+2-term expansion.}
+\label{tab:fisher}
+\end{table}
