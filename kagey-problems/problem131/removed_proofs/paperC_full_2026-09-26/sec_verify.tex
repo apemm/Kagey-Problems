@@ -1,0 +1,129 @@
+\section{Verification and open questions}\label{sec:verify}
+
+Three steps of the proofs rest on exact computer calculations. Apart from
+these and from decimal values of closed forms, the proofs are done by hand.
+In the proof of Lemma~\ref{lem:fisher-moments}, each moment that we need lies
+in a space of sequences in $N$ of dimension at most 10, so its closed form
+follows from its values at $N=1,\dots,10$. The script
+\texttt{verify\_sticky\_fisher.py} computes these moments exactly for
+$N=1,\dots,12$, with $q$ as a symbol, and checks with sympy the identities
+for $\Var X^2$ and $R^2_N$ that follow from them. The proof of
+Proposition~\ref{prop:triangles} uses 2 characteristic polynomials and 3
+resultants of such polynomials, which \texttt{verify\_examples.py} computes
+with sympy. The
+formula of Proposition~\ref{prop:thirdorder}(i) is proved by hand, and
+\texttt{verify\_second\_order.py} evaluates it exactly on the arc of 3 states
+and on the whole 4-cycle, which gives the values $\frac54\sqrt2-2$ and
+$-\frac9{16}$ in Remark~\ref{rem:C4}.
+
+All other computations are checks at finite size, in Python and in double
+precision unless we say otherwise. None of the proofs use them, and the
+statements that we call numerical rest on them alone. There is one script
+for each part of the paper. The script \texttt{verify\_first\_order.py}
+covers Sections~\ref{sec:model} and~\ref{sec:firstorder}. The script
+\texttt{verify\_second\_order.py} covers Section~\ref{sec:secondorder},
+Proposition~\ref{prop:K3start} and Appendices~\ref{app:torus}
+and~\ref{app:laplace}, and \texttt{verify\_examples.py} covers the rest of
+Section~\ref{sec:examples}. Sections~\ref{sec:sticky} and~\ref{sec:fisher}
+and Appendices~\ref{app:hdp} and~\ref{app:fisher} are checked by
+\texttt{verify\_sticky\_fisher.py}, and Section~\ref{sec:planar} and
+Appendix~\ref{app:planar} by \texttt{verify\_planar.py}. Each script computes
+the numbers in the paper in 2 independent ways where it can, and compares
+both with the printed values. For example, the run expansion of
+Lemma~\ref{lem:runs} agrees with a list of all words and with a dynamic
+program of the chain in exact rational arithmetic, and the torus
+representation behind Theorem~\ref{thm:local} agrees with the run sum to
+$7\times10^{-13}$. On faces with 2, 3 and 4 states of a random generator the
+local law of Theorem~\ref{thm:local} is accurate to $1\%$ by $T=40$, and the
+ratio in Lemma~\ref{lem:discrete} is $1-2.7\times10^{-5}$ at $T=10$ and
+$N=10^6$. The constants $K_F$ are computed from the tilted generator in
+double precision and from the Hessian of the Perron root in 30-digit
+arithmetic. We located the crossings $M_F=M_G$ on the 4-cycle from the exact
+face maxima up to $N=10^{14}$, and they agree with
+Theorem~\ref{thm:crossing} and with the next term in
+Proposition~\ref{prop:thirdorder}. For a vertex against an arc of 3 states at
+$N=10^{14}$, the remainder in the crossing equation times $T_N$ is
+$-0.2333$, while $c_F-c_G=\frac54\sqrt2-2=-0.2322$. The window of
+Proposition~\ref{prop:K3start} was computed exactly up to $N=10^{20}$, and its
+left end agrees to $3\times10^{-5}$ with the second-order equation. For the
+directed 3-cycle of Proposition~\ref{prop:threecycle} the script follows the
+first crossing up to $N=10^{12}$ and the second up to $N=10^8$, and an exact
+dynamic program at $N=300$ shows the 3 successive modes.
+
+On the graphs of Section~\ref{sec:examples} the exact law of the composition
+comes from a dynamic program of the whole chain, which agrees with an
+enumeration of all $d^N$ words in exact arithmetic to about $10^{-15}$, and
+the face maxima come from the run expansion. For the planar walk the
+three-level form of Lemma~\ref{lem:threelevel}, Fourier inversion, a dynamic
+program and an enumeration of all $4^N$ words agree to $2\times10^{-13}$ for
+$N\le10$, and the crossings up to $N=10240$ come from the three-level form.
+The sticky dynamic program agrees with an enumeration of all paths to
+$10^{-16}$, and the probabilities of the direct jump come from Monte Carlo
+with $10^6$ draws and from quadrature in 2 coordinate systems. The Fisher
+information is computed from the run formula of Paper~A and from its
+recurrence with a complex step, and the 2 agree with exact rational
+arithmetic for $N\le14$ and with 30-digit arithmetic for $N\le400$. The
+script \texttt{verify\_all.py} runs all 5 scripts in a few minutes, and with
+the option \texttt{--full} it also runs the largest cells. The scripts are in
+the folder \texttt{paperC} of the Problem 131 folder, and their output is in
+\texttt{paperC/data}. Before each new computation we wrote a prediction, and
+a condition that would refute it, in the ledgers \texttt{ledger\_C1.md} to
+\texttt{ledger\_C5.md} in \texttt{paperC/data}. The outcome is recorded below
+each prediction, also when it refuted the prediction. None of the refuted
+predictions concerns a statement that we call a theorem.
+
+Some of the finite and algebraic steps are also proved in Lean 4, in the
+folder \texttt{lean/PaperC} of the Problem 131 folder. For
+Sections~\ref{sec:model} and~\ref{sec:firstorder} these are the run
+expansion of Lemma~\ref{lem:runs}, the zero set in Example~\ref{ex:star}, the
+lower bound and the value at $\alpha^*_F$ in Proposition~\ref{prop:rate}(a),
+the form in part (c) for symmetric $Q$ at interior points, and the finite
+statements behind Theorem~\ref{thm:hull}(b) and
+Lemma~\ref{lem:symmetric}(c). For Section~\ref{sec:secondorder} they are the
+identity of Proposition~\ref{prop:pair}, the exact parts of
+Proposition~\ref{prop:threecycle}(i) and~(ii), and the offsets $b_{FG}$ in
+Corollaries~\ref{cor:paperA} and~\ref{cor:paperB}. For
+Section~\ref{sec:examples} they are the exit rates of the faces of $K_d$, of
+the arcs of cycles and of the end-arcs of paths,
+Proposition~\ref{prop:complete}(b)--(d), the window of
+Proposition~\ref{prop:K3start}(a) and~(b), Lemma~\ref{lem:arcs}(b) and~(c),
+the cascade of Theorem~\ref{thm:cycle}(b) and~(c) among the arcs and the
+whole cycle, the constants $K_{\rm pair}$ and $K_{\rm arc3}$ of
+Remark~\ref{rem:C4}, parts of Proposition~\ref{prop:triangles}, and the
+winners on the paw in Remark~\ref{rem:nonnested}. For
+Sections~\ref{sec:sticky} to~\ref{sec:fisher} they are
+Propositions~\ref{prop:thresholds}(b)--(d) and~\ref{prop:directjump}(a)
+and~(b), the finite bounds of Proposition~\ref{prop:mass}, the identity
+$o^{(0)}_N=2S_N(u)c_N$ of Proposition~\ref{prop:decomp}, and
+Proposition~\ref{prop:eta}. The header of each Lean file lists what it
+proves. The local laws, the crossings and the other asymptotic results are not
+in Lean.
+
+Several questions remain open. Theorem~\ref{thm:local} holds on compact
+subsets of the open face. When some $T\alpha_i$ is $O(1)$ there is a
+boundary layer, and the rare-coordinate crossover of Paper~B is the case of
+the complete graph. A local law that holds uniformly up to the boundary of
+a face is open (Example~\ref{ex:star}). For a reducible face,
+Theorem~\ref{thm:first}(ii) only places the power of $T$ in $M_F$ between
+$k_F-k^*$ and $k_F-1$. Heuristically it is $(k^*-1)/2+k_F-k^*$, and
+Proposition~\ref{prop:threecycle} shows that the coefficient of
+$\log\log N$ in a crossing then changes. We have no formula for $c_F$ in
+terms of trees or cycles of the graph, and for non-reversible faces we have
+no tree formula for $K_F$ like Proposition~\ref{prop:constant}(b).
+Theorem~\ref{thm:crossing} puts all zeros in an interval of length
+$O(1/L)$ but does not show that there is only one. Papers~A and~B and
+Proposition~\ref{prop:decomp} prove uniqueness with polynomial arguments
+that do not extend to general faces. For linear functions of the
+composition, such as the other endpoints of the planar walk, face selection
+is only heuristic here. At finite $N$ the order of the phases can differ
+from first order when a face that never wins lies close to the hull, as on
+the path with 4 states (Remark~\ref{rem:paths}). We do not know a condition
+on the hull that rules this out. For the planar walk a heuristic expansion
+suggests that the next term of Theorem~\ref{thm:fourdir} comes from
+replacing $T$ by $T+\frac1{4r}-\frac1{2(r+s)}$, and the crossover near
+$s=2r$, where $\lvert s-2r\rvert\log N=O(1)$, is open. For sticky priors we
+do not treat exit probabilities drawn at random as in~\cite{fox2011}, or the
+probability of the direct jump for $d\ge4$, where triples of states enter
+the criterion. Finally, we do not compute the constant in
+Theorem~\ref{thm:fisher}, and at fixed $q$ we prove only a lower bound for
+$2(N-1)pq\,e_N(q)$.

@@ -1,0 +1,468 @@
+\section{First-order face selection}\label{sec:firstorder}
+
+In this section $T=\tau L$ with $\tau>0$ fixed, and we find the face that
+carries the mode. For a face $F$ put
+\[
+ \Phi_\tau(F)=\tau\lambda_F+\lvert F\rvert-1 .
+\]
+We call $\Phi_\tau(F)$ the exponent of $F$. Theorem~\ref{thm:first} shows that
+for every start the mode lies on an admissible face that minimizes
+$\Phi_\tau$, and Theorem~\ref{thm:hull} describes these faces by a convex
+hull. First we need the rate inside a face. For a face $F$ and $\alpha\in\Delta_F$ let
+\[
+ I_F(\alpha)=\sup_{u\in(0,\infty)^F}\sum_{i\in F}\alpha_i\Bigl(-\frac{(Q_Fu)_i}{u_i}\Bigr)
+ =\sup_{u\in(0,\infty)^F}\sum_{i\in F}\alpha_i\Bigl(q_i-\sum_{j\in F\setminus\{i\}}q_{ij}\frac{u_j}{u_i}\Bigr),
+\]
+and let $q_i^{\rm out}(F)=\sum_{j\notin F}q_{ij}$. Taking $u=\ones$ gives
+$I_F(\alpha)\ge\sum_i\alpha_iq_i^{\rm out}(F)$, and dropping the terms with
+$q_{ij}$ gives $I_F(\alpha)\le\sum_i\alpha_iq_i$. As we said in the
+introduction, $I_F$ is the Donsker--Varadhan rate of the occupation times of
+the chain killed on leaving $F$. Dupuis and Liu~\cite{dupuisliu2015} give it
+explicitly for reversible jump processes, and Guillin, Nectoux and
+Wu~\cite{gnw2024} relate it to the rate of their conditional large deviation
+principle when the process is reversible. We need its properties without
+reversibility, and for a finite chain the proofs are short.
+
+\begin{proposition}[the rate on a face]\label{prop:rate}
+Let $F$ be irreducible with $k=\lvert F\rvert\ge2$.
+\begin{enumerate}[(a)]
+\item $I_F\ge\lambda_F$ on $\Delta_F$, with equality exactly at
+$\alpha^*_F=l_F\circ r_F$.
+\item $I_F$ is convex on $\Delta_F$ and strictly convex on $\Delta_F^\circ$. For
+$\alpha\in\Delta_F^\circ$ the supremum defining $I_F(\alpha)$ is attained at a
+vector $u=r_\alpha$, which is unique up to a positive factor, and $\alpha$ is
+the stationary law of the generator on $F$ with off-diagonal entries
+$q_{ij}r_{\alpha,j}/r_{\alpha,i}$.
+\item If there is $\nu\in(0,\infty)^F$ with $\nu_iq_{ij}=\nu_jq_{ji}$ for all
+$i,j\in F$, then for every $\alpha\in\Delta_F$
+\[
+ I_F(\alpha)=\sum_{\{i,j\}\subseteq F,\ i\ne j}\bigl(\sqrt{\alpha_iq_{ij}}-\sqrt{\alpha_jq_{ji}}\bigr)^2
+ +\sum_{i\in F}\alpha_iq_i^{\rm out}(F).
+\]
+\item For every nonempty face $F'\subsetneq F$ and every
+$\alpha\in\Delta_{F'}$, $I_F(\alpha)=I_{F'}(\alpha)\ge\lambda_{F'}>\lambda_F$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Write $u=e^\psi$, so that $I_F(\alpha)=\sup_{\psi\in\R^F}\Psi_\alpha(\psi)$
+with
+$\Psi_\alpha(\psi)=\sum_i\alpha_iq_i-\sum_{i\ne j}\alpha_iq_{ij}e^{\psi_j-\psi_i}$,
+where $i,j$ run over $F$. Note that $\Psi_\alpha$ is concave in $\psi$, affine in
+$\alpha$, and unchanged when a constant is added to $\psi$. Let $G^\psi$ be the
+generator on $F$ with off-diagonal entries $q_{ij}e^{\psi_j-\psi_i}$. Then
+$\nabla_\psi\Psi_\alpha(\psi)=-\alpha^\top G^\psi$, so $\psi$ maximizes
+$\Psi_\alpha$ exactly when $\alpha$ is stationary for $G^\psi$. The switching
+graph of $G^\psi$ is $G_F$, so $G^\psi$ is irreducible and has one stationary
+law.
+
+\emph{The lower bound in (a), for every face.} Let $F'$ be a nonempty face and
+write $Q_{F'}=B-cI$ with $B\ge0$. For $s>\varrho(Q_{F'})$ we have
+$s+c>\varrho(B)$, the spectral radius of $B$. So
+$(sI-Q_{F'})^{-1}=\sum_{n\ge0}B^n(s+c)^{-n-1}\ge(s+c)^{-1}I$ entrywise, and
+$u=(sI-Q_{F'})^{-1}\ones$ is positive with $Q_{F'}u=su-\ones<su$. This $u$
+shows that $I_{F'}>-s$ on $\Delta_{F'}$. Letting $s\downarrow\varrho(Q_{F'})$
+gives $I_{F'}\ge\lambda_{F'}$.
+
+\emph{The value at $\alpha^*_F$.} Let $\psi=\log r_F$ and
+$R=\operatorname{diag}(r_F)$. Since $Q_Fr_F=-\lambda_Fr_F$, we get
+$G^\psi=R^{-1}(Q_F+\lambda_FI)R$, and then
+$(\alpha^*_F)^\top G^\psi=l_F^\top(Q_F+\lambda_FI)R=0$. So $\log r_F$
+maximizes $\Psi_{\alpha^*_F}$, and $I_F(\alpha^*_F)=\Psi_{\alpha^*_F}(\log
+r_F)=\lambda_F$.
+
+(b) Convexity holds because $I_F$ is a supremum of affine functions. Let
+$\alpha\in\Delta_F^\circ$ and let $a$ be the least positive rate $q_{ij}$ with
+$i,j\in F$. Normalize $\min_i\psi_i=0$ and put $M=\max_i\psi_i$. Some edge
+$i\to j$ of a shortest path in $G_F$ from a minimum of $\psi$ to a maximum has
+$\psi_j-\psi_i\ge M/(k-1)$, so
+$\Psi_\alpha(\psi)\le\sum_i\alpha_iq_i-a(\min_i\alpha_i)e^{M/(k-1)}$, which
+tends to $-\infty$ as $M\to\infty$. Hence the supremum is attained at some
+$\psi$, and $\alpha$ is stationary for $G^\psi$.
+If $\psi+\delta$ also attains it, then $\Psi_\alpha(\psi+t\delta)$ is constant
+for $0\le t\le1$ by concavity. It is a constant minus a sum of convex functions
+of $t$, so each term $\alpha_iq_{ij}e^{\psi_j-\psi_i+t(\delta_j-\delta_i)}$ is
+affine in $t$. So $\delta_j=\delta_i$ for every edge $i\to j$ of $G_F$, and
+$\delta$ is constant. For strict convexity let $\alpha^0\ne\alpha^1$ lie in
+$\Delta_F^\circ$, let $\alpha^t=(1-t)\alpha^0+t\alpha^1$ with $0<t<1$, and let
+$\psi$ attain $I_F(\alpha^t)$. Then
+\[
+ I_F(\alpha^t)=(1-t)\Psi_{\alpha^0}(\psi)+t\Psi_{\alpha^1}(\psi)\le(1-t)I_F(\alpha^0)+tI_F(\alpha^1),
+\]
+and equality would make both $\alpha^0$ and $\alpha^1$ stationary for $G^\psi$,
+which is impossible.
+
+(d) For $\alpha\in\Delta_{F'}$ only rows $i\in F'$ enter, and there the terms
+with $j\in F\setminus F'$ are nonnegative and subtracted. Dropping them gives
+$I_F(\alpha)\le I_{F'}(\alpha)$, and $u_j=\varepsilon\to0$ for $j\notin F'$
+gives equality. The lower bound gives $I_{F'}(\alpha)\ge\lambda_{F'}$. Finally
+$\lambda_{F'}>\lambda_F$, because the Perron root of an irreducible nonnegative
+matrix, here $Q_F+cI$ for a large $c$, is larger than that of each proper
+principal submatrix~\cite[Ch.~2]{bermanplemmons1994}.
+
+(a) Let $\alpha\ne\alpha^*_F$. If $\alpha$ lies on the boundary of $\Delta_F$,
+then (d) with $F'=\supp\alpha$ gives $I_F(\alpha)>\lambda_F$. If
+$\alpha\in\Delta_F^\circ$ and $I_F(\alpha)=\lambda_F$, strict convexity gives
+$I_F(\frac12(\alpha+\alpha^*_F))<\lambda_F$, which contradicts the lower bound.
+
+(c) Since $q_i=\sum_{j\in F\setminus\{i\}}q_{ij}+q_i^{\rm out}(F)$, the
+objective equals $\sum_i\alpha_iq_i^{\rm out}(F)$ plus a sum over pairs
+$\{i,j\}$ of
+$\alpha_iq_{ij}(1-u_j/u_i)+\alpha_jq_{ji}(1-u_i/u_j)$. By the AM--GM
+inequality each such term is at most
+$(\sqrt{\alpha_iq_{ij}}-\sqrt{\alpha_jq_{ji}})^2$. For the reverse inequality
+put $u_i=\sqrt{\alpha_i/\nu_i}$ if $\alpha_i>0$ and $u_i=\varepsilon$ if
+$\alpha_i=0$. If $\alpha_i,\alpha_j>0$, reversibility gives
+$\alpha_iq_{ij}u_j/u_i=\alpha_jq_{ji}u_i/u_j=\sqrt{\alpha_i\alpha_jq_{ij}q_{ji}}$,
+and the term equals its bound.
+If $\alpha_i>0=\alpha_j$ the term tends to $\alpha_iq_{ij}$ as
+$\varepsilon\to0$, and if $\alpha_i=\alpha_j=0$ both sides are $0$.
+\end{proof}
+
+When $Q_F$ is symmetric, $l_F=r_F$ and the minimizer $\alpha^*_F$ is the
+entrywise square of the Perron vector normalized in $\ell^2$.
+
+Away from $\alpha^*_F$ we need a bound that holds for all compositions on a
+face at once. For an irreducible face $F$ put
+$V_F=\{\theta\in\R^F:\varrho(A_F-\operatorname{diag}\theta)=0\}$. Note that
+$q-\lambda_F\ones\in V_F$, since
+$A_F-\operatorname{diag}(q-\lambda_F\ones)=Q_F+\lambda_FI$.
+
+\begin{lemma}[a uniform upper bound]\label{lem:upper}
+Let $F$ be irreducible with $k=\lvert F\rvert\ge2$, and let $\theta\in V_F$.
+There is $C_\theta$, depending on $\theta$, $Q$ and $\mu$, such that for every
+$n\in\Z_{\ge0}^F$ with $\supp n=F$ and every $h$ with $hq_{\max}\le\frac12$,
+the probability that the first $\lvert n\rvert$ visits of the chain have
+composition $n$ is at most
+$C_\theta h^{k-1}\exp\bigl(-h\langle n,q-\theta\rangle+C_\theta h^2\lvert
+n\rvert\bigr)$.
+\end{lemma}
+
+The proof is in Appendix~\ref{app:torus}. With $\theta=q-\lambda_F\ones$ it
+gives $P_N(n)\le Ch^{k-1}e^{-T\lambda_F+CT^2/N}$ for every $n$ with support
+$F$. The bound depends only on $n$ and $h$, and not on $N$, which we use for
+the blocks of a path below.
+
+\begin{theorem}[first-order face selection]\label{thm:first}
+Fix $Q$ and $\mu$.
+\begin{enumerate}[(i)]
+\item Let $F$ satisfy (H), let $k=\lvert F\rvert$, and let
+$\mathcal K\subset\Delta_F^\circ$ be compact. There is $N_0$ such that,
+uniformly for $N\ge N_0$, $1\le T\le N^{1/3}$ and $\supp n=F$ with
+$n/N\in\mathcal K$,
+\[
+ \log P_N(n)=-(k-1)L-T\,I_F(n/N)+O_{\mathcal K}(1+\log T).
+\]
+\item Let $F$ be admissible with components $C_1,\dots,C_r$, and let $k^*$ be
+the size of a component $C_j$ with $\lambda_{C_j}=\lambda_F$. There are
+$\kappa$, $T_0$ and $N_0$ such that for $N\ge N_0$ and $T_0\le T\le N^{1/3}$
+\begin{align*}
+ \log M_F&\ge-(k_F-1)L+(k_F-k^*)\log T-T\lambda_F-\kappa,\\
+ \log M_F&\le-(k_F-1)L+(k_F-1)\log T-T\lambda_F+\kappa.
+\end{align*}
+If $F$ is not admissible, $M_F=0$.
+\item Let $T=\tau L$ with $\tau>0$ fixed, and let $\mathcal F_\tau$ be the set
+of admissible faces that minimize $\Phi_\tau$. Then
+$\log\max_nP_N(n)=-L\min_F\Phi_\tau(F)+O(\log L)$, with the minimum over
+admissible faces, and for large $N$ every global mode $\hat n$ has
+$\supp\hat n\in\mathcal F_\tau$. This holds for every start $\mu$.
+\item If in (iii) every face in $\mathcal F_\tau$ is irreducible, then every
+global mode $\hat n$ satisfies $\hat n/N=\alpha^*_F+O(1/L)$ with
+$F=\supp\hat n$. This is the case when $Q$ has symmetric support or $\mu$ has
+full support (Theorem~\ref{thm:hull}(c)).
+\end{enumerate}
+\end{theorem}
+
+Theorem~\ref{thm:local} and Lemma~\ref{lem:discrete} sharpen the error term
+in (i) to $\frac{k-1}2\log T+\log C_F(n/N)+O(1/T+T^2/N)$, with $C_F$ from
+Definition~\ref{def:tilt}.
+
+\begin{remark}[the exponents and reducible faces]\label{rem:cost}
+The factor $N^{-(k-1)}$ in (i) and (ii) comes from the $k-1$ switches that
+enter new states (Remark~\ref{rem:lattice-term}), and $e^{-T\lambda_F}$ is
+the chance of staying in $F$ for a time $T$. For a reducible face, the path in
+our lower bound spends about $N/T$ visits, a time of order one, in every
+component except one with the least exit rate. For such faces we only give bounds, and Proposition~\ref{prop:threecycle}
+shows that the power of $T$ can differ from $(k_F-1)/2$.
+\end{remark}
+
+We prove (ii) and (iii) here. Parts (i) and (iv) follow from the second-order
+results, Theorems~\ref{thm:local} and~\ref{thm:facemax} and
+Lemma~\ref{lem:discrete}, and we derive them at the end of the proof.
+
+\begin{proof}
+(ii) If $F$ is not admissible, $M_F=0$ by definition. Let $F$ be admissible, let
+$a$ be the least positive rate $q_{ij}$, and take $N_0$ so large that
+$h\le N^{-2/3}$ is as small as we need. Note that $T^2/N\le1$. A path of
+positive probability with support $F$ cannot leave a component and come back
+to it, since the states visited in between would then belong to that
+component. So it visits each component in one block of consecutive times and
+passes from one block to the next by one switch. We call the order of the
+blocks, the first state and these switches the pattern of the path. There are
+finitely many patterns.
+
+\emph{Upper bound.} Fix a pattern with blocks on
+$C_{\pi(1)},\dots,C_{\pi(r)}$, first states $y_j$ and switches
+$x_j\to y_{j+1}$, and let $\supp n=F$. Block $j$ has length
+$N_j=\sum_{i\in C_{\pi(j)}}n_i$. The paths with this pattern and composition $n$
+have total probability $\mu_{y_1}\prod_{j<r}hq_{x_jy_{j+1}}$ times the
+product over $j$ of the total weight of the block paths from $y_j$ to $x_j$
+inside $C=C_{\pi(j)}$ with the right composition. Without the condition on the last
+state, this weight is the probability that the chain started at $y_j$ has that
+composition in its first $N_j$ visits. By Lemma~\ref{lem:upper} with start $y_j$
+and $\theta=q-\lambda_C\ones$ it is at most
+$\kappa_1h^{\lvert C\rvert-1}e^{-h\lambda_CN_j+\kappa_1h^2N_j}$ when
+$\lvert C\rvert\ge2$.
+For $C=\{i\}$ it is $(1-hq_i)^{N_j-1}\le e^{1/2-h\lambda_CN_j}$. Since
+$\sum_j(\lvert C_{\pi(j)}\rvert-1)+r-1=k_F-1$, $\sum_jN_j=N$ and
+$\lambda_C\ge\lambda_F$ for every component, summing over the patterns gives
+$P_N(n)\le\kappa_2(T/N)^{k_F-1}e^{-T\lambda_F+\kappa_1}$.
+
+\emph{Lower bound.} By Lemma~\ref{lem:admissible}(a) we can order the
+components as $C_1,\dots,C_r$ and choose $y_1\in C_1$ with $\mu_{y_1}>0$ and
+$x_j\in C_j$, $y_{j+1}\in C_{j+1}$ with $q_{x_jy_{j+1}}>0$ for $j<r$. Take any
+$x_r\in C_r$, let $\lambda_{C_{j^*}}=\lambda_F$ and $k^*=\lvert C_{j^*}\rvert$,
+and put $m=\lceil N/T\rceil$, so that $1\le hm\le2$.
+
+\emph{Claim A.} There is $c_A>0$ such that for every component $C$ and all
+$y,x\in C$, the chain started at $y$ stays in $C$ for its first $m$ visits,
+visits every state of $C$ and has $X_m=x$ with probability at least $c_A$.
+Indeed, take a walk $y=v_0,\dots,v_J=x$ through every state of $C$ with
+$q_{v_sv_{s+1}}>0$ and $J\le\lvert C\rvert^2$. The paths that make exactly these
+switches, at any $J$ of the $m-1$ transition times, have total probability at
+least $\binom{m-1}J(ha)^J(1-hq_{\max})^m\ge(1-Jh)^Ja^Je^{-4q_{\max}}/J!$,
+since $1\le hm\le2$. Also $(1-Jh)^J\ge2^{-J}$ for small $h$.
+
+\emph{Claim B.} There is $c_B>0$ such that for all $y,x\in C_{j^*}$ and
+$\ell\ge2m$, the same event with $C_{j^*}$ and $\ell$ visits has probability at
+least $c_Be^{-h\lambda_F\ell-h^2\lambda_F^2\ell}$. Indeed, let $w>0$ satisfy
+$Q_{C_{j^*}}w=-\lambda_Fw$ and let $B=I+hQ_{C_{j^*}}\ge0$. Then $(B^s)_{zz'}$ is
+the probability of going from $z$ to $z'$ in $s$ steps inside $C_{j^*}$, and
+$\sum_{z'}(B^s)_{zz'}\ge(B^sw)_z/\max w\ge(1-h\lambda_F)^s\min w/\max w$. We
+use Claim A for the first $m$ visits, from $y$ back to $y$, then $s=\ell-2m+1$
+steps inside $C_{j^*}$, then Claim A for the last $m$ visits, ending at $x$.
+This gives at least $c_A^2(\min w/\max w)(1-h\lambda_F)^\ell$. Also
+$\lambda_F\le q_{\max}$, because the Perron root of $Q_{C_{j^*}}$ is at least
+each diagonal entry. So $h\lambda_F\le\frac12$ and
+$\log(1-h\lambda_F)\ge-h\lambda_F-h^2\lambda_F^2$.
+
+Give block $j\ne j^*$ the length $m$ and block $j^*$ the length $N-(r-1)m$,
+which is at least $2m$ for $T\ge T_0=r+2$ and $N\ge N_0$. The paths that go
+from $y_j$ to $x_j$ in block $j$ as in the claims and pass from block $j$ to
+block $j+1$ by the switch $x_j\to y_{j+1}$ all have support $F$. By the Markov
+property their total probability is at least
+$\mu_{y_1}(ha)^{r-1}c_A^{r-1}c_Be^{-T\lambda_F-q_{\max}^2}$. Their compositions
+are fixed by the restrictions to the blocks, so there are at most
+$(N+1)^{k^*-1}\prod_{j\ne j^*}(m+1)^{\lvert C_j\rvert-1}$ of them, and
+$m+1\le3N/T$. Since $\sum_{j\ne j^*}(\lvert C_j\rvert-1)=k_F-k^*-(r-1)$,
+dividing the probability by this number gives
+$M_F\ge c\,N^{-(k_F-1)}T^{k_F-k^*}e^{-T\lambda_F}$.
+
+(iii) Let $T=\tau L$. For large $N$ we have $T_0\le T\le N^{1/3}$, and by (ii)
+$\log M_F=-L\,\Phi_\tau(F)+O(\log L)$ for every admissible face, while
+$M_F=0$ for the others. Since $\max_nP_N(n)=\max_FM_F$ over finitely many
+faces, the first claim follows. Let $m_\tau=\min_F\Phi_\tau(F)$ and let
+$\varepsilon_0>0$ be the least value of $\Phi_\tau(F)-m_\tau$ over admissible
+$F\notin\mathcal F_\tau$. Each such face has
+$M_F\le N^{-m_\tau-\varepsilon_0+o(1)}$, which is smaller than
+$\max_nP_N(n)=N^{-m_\tau+o(1)}$ for large $N$. A global mode has positive
+probability, so its support is admissible, and hence it is in
+$\mathcal F_\tau$.
+
+\emph{Proof of (i) and (iv).} For (i) with $k=1$,
+$P_N(Ne_i)=\mu_i(1-hq_i)^{N-1}$ with $\mu_i>0$ and $I_{\{i\}}=q_i$, so (i)
+holds because $Nh^2\le1$. Let $k\ge2$, and let $f_T$ be the density of
+Lemma~\ref{lem:continuum}. It is continuous and positive in $(T,\alpha)$, as
+we note after Theorem~\ref{thm:local}. Also $C_F$ is positive and continuous on $\Delta_F^\circ$. So the
+ratio of $f_T(\alpha)$ to $T^{(k-1)/2}C_F(\alpha)e^{-TI_F(\alpha)}$ is positive
+and continuous, and by Theorem~\ref{thm:local} it tends to $1$ uniformly on
+$\mathcal K$. Hence it is bounded above and below by positive constants for
+$T\ge1$ and $\alpha\in\mathcal K$, and $\log f_T(\alpha)=-TI_F(\alpha)+O_{\mathcal
+K}(1+\log T)$. By Lemma~\ref{lem:discrete},
+$P_N(n)=N^{-(k-1)}f_T(n/N)(1+O(T^2/N))$, and the last factor lies in
+$[\frac12,2]$ for $N\ge N_0$ since $T^2/N\le N^{-1/3}$. This proves (i).
+
+For (iv), let $F\in\mathcal F_\tau$. It is admissible and irreducible, so
+$\mu(F)>0$ by Lemma~\ref{lem:admissible}(b), and $F$ satisfies (H). By (iii),
+for large $N$ a global mode $\hat n$ has its support $F$ in $\mathcal F_\tau$,
+and it maximizes $P_N$ over the compositions with support $F$. Since
+$T=\tau L\le N^{1/3}$ for large $N$, Theorem~\ref{thm:facemax} gives
+$\hat n/N=\alpha^*_F+O(1/T)$, and there are finitely many faces.
+\end{proof}
+
+The law in (i) holds only on compact subsets of the open face, and the next
+example shows that the boundary really is different.
+
+\begin{example}[the boundary of a face]\label{ex:star}
+Let $d=\ell+1$ with $\ell\ge3$, and let the only positive rates be $q_{jd}$ and
+$q_{dj}$ for $j\le\ell$. So the switching graph is a star with center $d$ and
+leaves $1,\dots,\ell$. Let $\mu$ have full support and $F=[d]$, so that $F$
+satisfies (H). A leaf can only switch to the center, so the runs of a path
+alternate between the center and the leaves. A path with support $F$ has at
+least $\ell$ runs at leaves, and hence at least $\ell-1$ runs at the center.
+So $P_N(n)=0$ whenever $\supp n=F$ and $n_d<\ell-1$, although $n/N$ lies in
+$\Delta_F^\circ$ and $-(k-1)L-TI_F(n/N)$ is finite. Hence the law in
+Theorem~\ref{thm:first}(i) cannot hold uniformly up to the boundary of
+$\Delta_F$.
+\end{example}
+
+By Theorem~\ref{thm:first}(iii), first-order face selection is a finite
+minimization. For an admissible face $F$ put
+$P_F=(\lambda_F,\lvert F\rvert-1)\in\R^2$, and let $S$ be the set of these
+points. Then $\Phi_\tau(F)=\tau x+y$ at $(x,y)=P_F$, so $\mathcal F_\tau$ is
+the set of faces whose points minimize $\tau x+y$ on $S$. For each $\tau>0$
+the points of $\operatorname{conv}S$ where $\tau x+y$ is least form a vertex
+or an edge of $\operatorname{conv}S$. We call the union of these vertices and
+edges over all $\tau>0$ the lower-left boundary of $\operatorname{conv}S$.
+
+\begin{theorem}[geometry of the winners]\label{thm:hull}
+Let $\mathcal F_\tau$ be the set of admissible faces that minimize
+$\Phi_\tau$.
+\begin{enumerate}[(a)]
+\item The lower-left boundary of $\operatorname{conv}S$ is a path whose
+vertices lie in $S$. Read from right to left, they are
+$v_i=(\lambda^{(i)},y^{(i)})$, $0\le i\le m$, with
+$\lambda^{(0)}>\dots>\lambda^{(m)}$ and $y^{(0)}<\dots<y^{(m)}$. Put
+$\tau_i=(y^{(i)}-y^{(i-1)})/(\lambda^{(i-1)}-\lambda^{(i)})$ for $1\le i\le m$,
+$\tau_0=0$ and $\tau_{m+1}=\infty$. Then $\tau_1<\dots<\tau_m$. For
+$\tau_i<\tau<\tau_{i+1}$, $\mathcal F_\tau$ is the set of faces $F$ with
+$P_F=v_i$. At $\tau=\tau_i$ it is the set of faces whose point lies on the
+closed edge $[v_{i-1},v_i]$.
+\item If $0<\tau<\tau'$, $F\in\mathcal F_\tau$ and $G\in\mathcal F_{\tau'}$,
+then $\lambda_F\ge\lambda_G$ and $\lvert F\rvert\le\lvert G\rvert$. Both
+inequalities are strict when $\mathcal F_\tau\cap\mathcal F_{\tau'}=\emptyset$.
+\item If $Q$ has symmetric support, or $\mu$ has full support, then every face
+in $\mathcal F_\tau$ is irreducible, for every $\tau>0$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(a) Let $g(\tau)=\min_{(x,y)\in S}(\tau x+y)$ for $\tau>0$. It is a minimum of
+finitely many affine functions, so it is concave and piecewise affine. Let
+$0<\tau_1<\dots<\tau_m$ be the points where its slope changes, with
+$\tau_0=0$ and $\tau_{m+1}=\infty$. On $(\tau_i,\tau_{i+1})$ we have
+$g(\tau)=\tau\lambda^{(i)}+y^{(i)}$ for some
+$v_i=(\lambda^{(i)},y^{(i)})\in S$. If $p=(x,y)\in S$ has $\tau x+y=g(\tau)$
+for some $\tau$ in this interval, then $\tau'\mapsto\tau'x+y-g(\tau')$ is
+affine and nonnegative on the interval and vanishes inside it. So it vanishes
+on the interval and $p=v_i$. The slope of $g$ decreases, so
+$\lambda^{(0)}>\dots>\lambda^{(m)}$, and continuity at $\tau_i$ gives
+$\tau_i\lambda^{(i-1)}+y^{(i-1)}=\tau_i\lambda^{(i)}+y^{(i)}$. This is the
+formula for $\tau_i$, and it gives $y^{(i)}>y^{(i-1)}$. Now let $p=(x,y)\in S$
+with $\tau_ix+y=g(\tau_i)$. It lies on the line $\tau_ix+y=g(\tau_i)$, which
+contains $v_{i-1}$ and $v_i$. Comparing $\tau x+y$ with $g(\tau)$ just below
+and just above $\tau_i$ gives $\lambda^{(i)}\le x\le\lambda^{(i-1)}$, so $p$
+lies on the closed edge $[v_{i-1},v_i]$. Conversely every point of $S$ on
+this edge attains $g(\tau_i)$. For each $\tau$ the minimizers of $\tau x+y$ on
+$\operatorname{conv}S$ form the convex hull of its minimizers on $S$, which is
+$v_i$ or $[v_{i-1},v_i]$. So the lower-left boundary is the path
+$v_0v_1\cdots v_m$. Its edges are exposed by different values of $\tau$, so
+they have different directions and the $v_i$ are its vertices.
+
+(b) By optimality $\Phi_\tau(F)\le\Phi_\tau(G)$ and
+$\Phi_{\tau'}(G)\le\Phi_{\tau'}(F)$. Adding them gives
+$(\tau'-\tau)(\lambda_F-\lambda_G)\ge0$, so $\lambda_F\ge\lambda_G$, and then
+the first inequality gives
+$\lvert F\rvert-\lvert G\rvert\le\tau(\lambda_G-\lambda_F)\le0$. If the
+sets are disjoint and $\lambda_F=\lambda_G$, the inequalities give
+$\lvert F\rvert=\lvert G\rvert$, so $\Phi_{\tau'}(F)=\Phi_{\tau'}(G)$ and
+$F\in\mathcal F_{\tau'}$, which is a contradiction. So $\lambda_F>\lambda_G$,
+and then $\lvert F\rvert<\lvert G\rvert$.
+
+(c) With symmetric support every admissible face is irreducible by
+Lemma~\ref{lem:admissible}(c). Let $\mu$ have full support, and let $F$ be
+admissible and reducible. Take a component $C$ of $F$ with
+$\lambda_C=\lambda_F$. It is irreducible with $\mu(C)>0$, so it is admissible
+by Lemma~\ref{lem:admissible}(b). Since $\lvert C\rvert\le\lvert F\rvert-1$,
+we get $\Phi_\tau(C)\le\Phi_\tau(F)-1$, so $F$ is not a minimizer.
+\end{proof}
+
+A face with small $\lambda_F$ for its size is a set of states that the chain
+rarely leaves, a well-separated community. As $\tau$ grows the exit rate
+counts for more against the size, and the mode moves to larger communities
+that hold the chain better. It need not grow around its first vertex, and it
+can move to a different community (Remark~\ref{rem:nonnested}).
+Figure~\ref{fig:cycles}(a) shows $S$ and its lower-left boundary for the
+6-cycle.
+
+\begin{figure}[t]
+\centering
+\includegraphics{fig_cycles}
+\caption{(a) The points $(\lambda_F,\lvert F\rvert-1)$ of the connected faces
+of the 6-cycle $C_6$. These are the arcs of $1$ to $5$ states and $C_6$
+itself, and all arcs of one size give the same point. The line is the
+lower-left boundary of the convex hull. The winners are the arcs of $1$ to $4$
+states and then $C_6$ (filled), while the arc of $5$ states never wins (open).
+The switch values $1$, $1+\sqrt2$, $4.906$ and $3+\sqrt5$ are minus the slopes
+of the hull edges. (b) The support of the exact mode on $C_5$ with the uniform
+start, against $T$, at $N=40$ and $N=72$. The digits give the number of states
+in the support. The mode changes at $T=2.538$, $5.123$ and $6.884$ for $N=40$
+and at $T=3.078$, $6.389$ and $8.602$ for $N=72$. The triangles mark the
+first-order switch points $\tau\log N$ with $\tau=1$, $1+\sqrt2$ and
+$2+\sqrt2$ (Theorem~\ref{thm:cycle}).}
+\label{fig:cycles}
+\end{figure}
+
+For symmetric generators the exit rates have a variational form. For
+$1\le s\le d$ let
+$\underline\lambda_s=\min\{\lambda_F:F\text{ admissible},\ \lvert F\rvert=s\}$
+when such a face exists. A face of size $s$ with
+$\lambda_F>\underline\lambda_s$ has a larger value of $\Phi_\tau$ than one
+with $\lambda_F=\underline\lambda_s$, for every $\tau>0$, so only the points
+$(\underline\lambda_s,s-1)$ matter. In part (c) of the next lemma we plot them
+with the axes swapped, as $(s-1,\underline\lambda_s)$, so that the winners are
+read off a lower convex hull.
+We call a face connected if its switching graph is connected.
+
+\begin{lemma}[symmetric generators]\label{lem:symmetric}
+Let $Q$ be symmetric and irreducible, and put
+$\mathcal E(f)=\sum_{i<j}q_{ij}(f_i-f_j)^2$ for $f\in\R^d$.
+\begin{enumerate}[(a)]
+\item For every face $F$,
+$\lambda_F=\min\{\mathcal E(f):\supp f\subseteq F,\ \lVert f\rVert_2=1\}$, and
+the minimum is attained at some $f\ge0$.
+\item If $F\subsetneq G$ and $G$ is connected, then $\lambda_G<\lambda_F$.
+\item If $\mu$ has full support, then
+$\underline\lambda_1>\underline\lambda_2>\dots>\underline\lambda_d=0$. Let
+$1=s_0<s_1<\dots<s_m=d$ be the sizes $s$ at which $(s-1,\underline\lambda_s)$
+is a vertex of the lower convex hull of these $d$ points, and put
+$\tau_i=(s_i-s_{i-1})/(\underline\lambda_{s_{i-1}}-\underline\lambda_{s_i})$
+for $1\le i\le m$, $\tau_0=0$ and $\tau_{m+1}=\infty$. Then $\tau_1<\dots<\tau_m$, and for
+$\tau_i<\tau<\tau_{i+1}$ the set $\mathcal F_\tau$ consists of the faces $F$
+with $\lvert F\rvert=s_i$ and $\lambda_F=\underline\lambda_{s_i}$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) Since $Q$ is symmetric with zero row sums, $\langle
+f,-Qf\rangle=\mathcal E(f)$. If $\supp f\subseteq F$ this equals $\langle
+f_F,-Q_Ff_F\rangle$, and the least eigenvalue of the symmetric matrix $-Q_F$ is
+$\lambda_F$. So (a) is the Rayleigh--Ritz principle, together with $\mathcal
+E(\lvert f\rvert)\le\mathcal E(f)$.
+
+(b) Monotonicity follows from (a). Let $\varphi\ge0$ attain the minimum for
+$F$, and suppose that $\lambda_G=\lambda_F$. Then $\varphi$ also minimizes the
+Rayleigh quotient of $-Q_G$, so $-Q_G\varphi=\lambda_G\varphi$ on $G$. Since
+$\supp\varphi\subseteq F\ne G$ and $G$ is connected, some
+$j\in G\setminus\supp\varphi$ has $q_{ji}>0$ for an $i\in\supp\varphi$. Then
+$(-Q_G\varphi)_j=-\sum_{i'}q_{ji'}\varphi_{i'}<0=\lambda_G\varphi_j$, which is
+a contradiction.
+
+(c) Here the admissible faces are the connected faces, by
+Lemma~\ref{lem:admissible}(b),(c). Also $\lambda_{[d]}=0$ because $Q\ones=0$
+and $\ones>0$, so $\underline\lambda_d=0$. Let $s<d$ and let $F$ be connected
+with $\lvert F\rvert=s$ and $\lambda_F=\underline\lambda_s$. The switching
+graph of $Q$ is connected, so some $j\notin F$ has a neighbor in $F$. Then
+$F\cup\{j\}$ is connected, and (b) gives
+$\underline\lambda_{s+1}\le\lambda_{F\cup\{j\}}<\underline\lambda_s$. The
+lower convex hull of the points $(s-1,\underline\lambda_s)$ is the graph of a
+convex piecewise linear function with corners at the points
+$(s_i-1,\underline\lambda_{s_i})$. Its slopes
+$\sigma_i=(\underline\lambda_{s_i}-\underline\lambda_{s_{i-1}})/(s_i-s_{i-1})
+=-1/\tau_i$ increase with $i$, and they are negative because
+$\underline\lambda_s$ decreases. Minimizing $\tau\underline\lambda_s+s-1$
+over $s$ means finding where a line of slope $-1/\tau<0$ supports this graph.
+With $\sigma_0=-\infty$ and $\sigma_{m+1}=0$, the line touches only the corner
+at $s_i$ exactly when $\sigma_i<-1/\tau<\sigma_{i+1}$, that is when
+$\tau_i<\tau<\tau_{i+1}$.
+\end{proof}

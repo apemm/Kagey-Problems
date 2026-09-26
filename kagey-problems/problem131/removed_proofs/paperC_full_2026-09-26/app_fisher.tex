@@ -1,0 +1,358 @@
+\section{Proof of the Fisher information theorem}\label{app:fisher}
+
+We keep the notation of Section~\ref{sec:fisher}. So $0<q<1$, $p=1-q$,
+$\rho=1-2q$, $u=q/p$, $x=Nq$ and $y=Nu=x/p$. Let $\sigma_i\in\{-1,1\}$ be the
+direction of step $i$, with $\sigma_i=1$ for a step to the right. Then
+$X=\sigma_1+\dots+\sigma_N$, and $J$ is the number of $i<N$ with
+$\sigma_{i+1}\ne\sigma_i$. Put $Z=\E[J\mid K]$. By
+Proposition~\ref{prop:eta}, $e_N=\Var Z/\Var J$.
+
+For an interior bin, Paper~A's Bessel estimate makes $Z$ close to
+$y\sqrt{1-W^2}+\frac12$. When $W$ is small this is close to the quadratic
+$y(1-W^2/2)+\frac12$, and $W$ is of order $x^{-1/2}$. So $Z$ is close to its
+projection on the span of $1$ and $X^2$, and $e_N$ is close to $R^2_N$. We
+first prove the exact moments behind the closed form of $R^2_N$.
+
+\paragraph{Exact moments.}
+
+\begin{lemma}[exact moments]\label{lem:fisher-moments}
+For $N\ge1$ and $0<q<1$,
+\begin{align*}
+ \E X^2&=\frac{Np}q-\frac{\rho(1-\rho^N)}{2q^2},\\
+ \Cov(J,X^2)&=-\frac p{q^2}\bigl[Nq(1+\rho^N)-p(1-\rho^N)\bigr],\\
+ \E X^4&=\frac{3N^2p^2}{q^2}-\frac{Np(1+10\rho+\rho^2)}{2q^3}
+ +\frac{\rho(1+2\rho)(2+\rho)(1-\rho^N)}{2q^4}
+ -\frac{3Np\rho^{N+1}}{q^3},
+\end{align*}
+and $\Var X^2=2N^2p^2V/q^2$, with $V$ as in Theorem~\ref{thm:fisher}.
+\end{lemma}
+
+\begin{proof}
+\emph{Step 1.} For real $\phi$ and $\chi$ put
+$m_N(\phi,\chi)=\E e^{\phi X+\chi J}$. Let $A$ be the $2\times2$ matrix with
+entries $A_{ab}=\Prob(\sigma_2=b\mid\sigma_1=a)\,e^{\phi b+\chi\mathbf
+1[a\ne b]}$ for $a,b\in\{-1,1\}$, and let $v_a=\frac12e^{\phi a}$. Then
+$m_N=v^\top A^{N-1}\ones$ with $\ones=(1,1)^\top$. So, as formal power
+series in $z$,
+\[
+ \sum_{N\ge1}m_Nz^N=zv^\top(I-zA)^{-1}\ones=\frac{U(z)}{D(z)},\qquad
+ U(z)=zv^\top\operatorname{adj}(I-zA)\ones,\quad D(z)=\det(I-zA).
+\]
+Both $U$ and $D$ are polynomials in $z$ of degree at most $2$, and their
+coefficients are smooth functions of $(\phi,\chi)$. Let $\partial$ be a
+partial derivative in $(\phi,\chi)$ of total order $m$. By induction on $m$
+and the quotient rule, $\partial(U/D)=U_\partial/D^{m+1}$, where $U_\partial$
+is a polynomial in $z$ of degree at most $2m+2$. Indeed each derivative
+multiplies the numerator by $D$ or by a derivative of $D$, and this raises
+its degree by at most $2$. At $\phi=\chi=0$ the matrix $A$ has
+trace $2p=1+\rho$ and determinant $p^2-q^2=\rho$, so
+$D(z)=(1-z)(1-\rho z)$. Now let $q\ne\frac12$. Then $\rho\notin\{0,1\}$, and
+the roots $1$ and $1/\rho$ of $D$ are distinct. Partial fractions write
+$U_\partial/D^{m+1}$ as a constant plus a combination of $(1-z)^{-j}$ and
+$(1-\rho z)^{-j}$ with $1\le j\le m+1$. The constant only changes the
+coefficient of $z^0$. The coefficient of $z^N$ in $(1-z)^{-j}$ is
+$\binom{N+j-1}{j-1}$, a polynomial in $N$ of degree $j-1$, and in
+$(1-\rho z)^{-j}$ it is the same polynomial times $\rho^N$. Hence, as a
+sequence in $N\ge1$, the derivative $\partial m_N$ at $\phi=\chi=0$ lies in
+\[
+ \mathcal S_m=\operatorname{span}\{N^i,\ N^i\rho^N:0\le i\le m\},
+\]
+which has dimension at most $2m+2$.
+
+\emph{Step 2.} Every sequence in $\mathcal S_m$ satisfies the linear
+recurrence with characteristic polynomial $(t-1)^{m+1}(t-\rho)^{m+1}$, which
+has order $2m+2$. So a sequence in $\mathcal S_m$ is determined, for
+$N\ge1$, by its values at $N=1,\dots,2m+2$. In particular, if these values
+are $0$, the sequence is $0$ for every $N\ge1$.
+
+\emph{Step 3.} The moments $\E X^2$, $\E[JX^2]$ and $\E X^4$ are the
+derivatives $\partial_\phi^2m_N$, $\partial_\chi\partial_\phi^2m_N$ and
+$\partial_\phi^4m_N$ at $0$, so they lie in $\mathcal S_4$. The claimed
+formulas for $\E X^2$ and $\E X^4$ lie in $\mathcal S_2\subset\mathcal S_4$.
+Since $\E J=(N-1)q$, the claimed formula for
+$\E[JX^2]=\Cov(J,X^2)+(N-1)q\,\E X^2$ also lies in $\mathcal S_2$. Hence the
+difference between each moment and its claimed formula lies in
+$\mathcal S_4$, which has dimension at most $10$. By Step~2 it is enough to
+check that the difference vanishes at $N=1,\dots,10$. This is a finite exact
+computation. The script \texttt{verify\_sticky\_fisher.py} computes the 3
+moments exactly for $N=1,\dots,12$ by a dynamic program over paths, with $q$
+kept as a symbol, and every difference is identically $0$. This proves the 3
+formulas for $q\ne\frac12$. For fixed $N$ both sides are rational functions
+of $q$ with no pole at $q=\frac12$, so the case $q=\frac12$ follows by
+continuity.
+
+\emph{Step 4.} We have $\Var X^2=\E X^4-(\E X^2)^2$. With the formulas of
+Step~3, the claim $\Var X^2=2N^2p^2V/q^2$ becomes an identity between
+rational functions of 3 independent variables $N$, $q$ and $R$, where $R$
+stands for $\rho^N$ and $\rho^{N+1}=\rho R$. The same script checks this
+identity with sympy.
+\end{proof}
+
+\begin{proof}[Proof of the closed form in Theorem~\ref{thm:fisher}]
+Let $N\ge2$. Then $X^2$ takes the value $N^2$ on the constant paths and the
+smaller value $(N-2)^2$ on the paths that switch only at the last step. So
+$\Var X^2>0$, and $V>0$ by Lemma~\ref{lem:fisher-moments}. The same lemma
+gives
+\[
+ \Cov(J,X^2)=-\frac{Np}q\Bigl[1+\rho^N-\frac{p(1-\rho^N)}x\Bigr],
+\]
+so $\Cov(J,X^2)^2/\Var X^2$ is the squared bracket divided by $2V$. Dividing
+by $\Var J=(N-1)pq$ gives the formula for $R^2_N$.
+\end{proof}
+
+\paragraph{Three lemmas.}
+
+\begin{lemma}[convexity]\label{lem:fisher-convex}
+Let $\delta>0$, and let $f$ and $g$ be convex and differentiable on
+$[t-\delta,t+\delta]$ with $0\le g-f\le\eta$ there. Suppose also that $g$ is
+twice differentiable with $g''\le\kappa$ on this interval. Then
+\[
+ \lvert f'(t)-g'(t)\rvert\le\frac\eta\delta+\frac{\kappa\delta}2 .
+\]
+\end{lemma}
+
+\begin{proof}
+By the convexity of $f$ and then the bounds on $g-f$, we have
+$f'(t)\le(f(t+\delta)-f(t))/\delta\le(g(t+\delta)-g(t)+\eta)/\delta$. By
+Taylor's theorem $g(t+\delta)\le g(t)+\delta g'(t)+\kappa\delta^2/2$, so
+$f'(t)\le g'(t)+\eta/\delta+\kappa\delta/2$. In the same way
+\[
+ f'(t)\ge\frac{f(t)-f(t-\delta)}\delta\ge\frac{g(t)-g(t-\delta)-\eta}\delta
+ \ge g'(t)-\frac\eta\delta-\frac{\kappa\delta}2 .\qedhere
+\]
+\end{proof}
+
+\begin{lemma}[a Bessel ratio]\label{lem:fisher-bessel}
+For $t>0$ let $R(t)=I_1(t)/I_0(t)$. Then
+\[
+ \frac{\sqrt{1+t^2}-1}t\le R(t)<1 .
+\]
+In particular $0<1-R(t)\le1/t$.
+\end{lemma}
+
+\begin{proof}
+Since $I_0'=I_1$ and $I_1'(t)=I_0(t)-I_1(t)/t$, the function $R$ satisfies
+$R'=1-R/t-R^2$. From the power series, $R>0$ and
+$R(t)=t/2-t^3/16+O(t^5)$ as $t\to0$. If $R(t_0)=1$ for a first $t_0>0$, then
+$R'(t_0)\ge0$, but the equation gives $R'(t_0)=-1/t_0$. So $R<1$.
+
+Put $s=\sqrt{1+t^2}$ and $\ell(t)=(s-1)/t=t/(s+1)$. A short computation
+gives $1-\ell/t-\ell^2=\ell/t=1/(s+1)$ and $\ell'=1/(s(s+1))$. Hence
+$\ell'-(1-\ell/t-\ell^2)=(1-s)/(s(s+1))\le0$. For $d=R-\ell$ this gives
+\[
+ d'\ge-\frac dt-(R^2-\ell^2)=-d\Bigl(\frac1t+R+\ell\Bigr).
+\]
+Let $\Theta(t)=t\exp\int_0^t(R+\ell)$. Then
+$(\Theta d)'=\Theta\bigl(d'+d(1/t+R+\ell)\bigr)\ge0$. Since
+$\ell(t)=t/2-t^3/8+O(t^5)$, we have $d(t)=O(t^3)$, so $\Theta(t)d(t)\to0$ as
+$t\to0$. Hence $\Theta d\ge0$ and $d\ge0$. Finally
+$1-\ell(t)=(t+1-s)/t\le1/t$, since $s\ge t$.
+\end{proof}
+
+\begin{lemma}[moments of the endpoint]\label{lem:fisher-W}
+\begin{enumerate}[(a)]
+\item For each $m\ge1$ there is a constant $C_m$ such that
+$\E W^{2m}\le C_mx^{-m}$ whenever $0<q<1$ and $x\ge1$.
+\item If $0<q\le\frac12$, then $\E W^4\le3p^2/x^2+9/(2x^4)$.
+\end{enumerate}
+\end{lemma}
+
+The reason for the order $x^{-m}$ is that $X$ is roughly a sum of about $x$
+runs with alternating signs and lengths of order $1/q$. So $X$ is of order
+$\sqrt x/q$ and $W$ is of order $x^{-1/2}$.
+
+\begin{proof}
+(a) Extend the walk by a further step $\sigma_{N+1}$ with the same rule, and
+let $\mathcal F_i$ be generated by $\sigma_1,\dots,\sigma_i$. Since
+$\E[\sigma_{i+1}\mid\mathcal F_i]=(p-q)\sigma_i=\rho\sigma_i$, the variables
+$\xi_{i+1}=\sigma_{i+1}-\rho\sigma_i$ are martingale differences. Summing
+$\sigma_{i+1}-\sigma_i=-2q\sigma_i+\xi_{i+1}$ over $i=1,\dots,N$ gives
+\[
+ X=\frac{\sigma_1-\sigma_{N+1}+\Xi}{2q},\qquad
+ \Xi=\sum_{i=2}^{N+1}\xi_i .
+\]
+If step $i+1$ repeats step $i$, then $\xi_{i+1}^2=(1-\rho)^2=4q^2$.
+Otherwise $\xi_{i+1}^2=(1+\rho)^2=4p^2\le4$. So
+\[
+ \sum_{i=2}^{N+1}\xi_i^2\le4q^2N+4J',
+\]
+where $J'\sim\operatorname{Bin}(N,q)$ is the number of switches among the
+$N+1$ steps. Burkholder's inequality~\cite[Ch.~2]{hallheyde1980} bounds the
+moment of order $2m$ of a martingale by a constant $c_m$ times the $m$-th
+moment of the sum of its squared differences. So
+\[
+ \E\,\Xi^{2m}\le c_m\E\bigl(4q^2N+4J'\bigr)^m
+ \le c_m8^m\bigl((q^2N)^m+\E J'^m\bigr).
+\]
+Here $q^2N=qx\le x$. The factorial moments of $J'$ are
+$\E[J'(J'-1)\cdots(J'-j+1)]=N(N-1)\cdots(N-j+1)q^j\le x^j$, and $J'^m$ is a
+combination of the falling factorials $J'(J'-1)\cdots(J'-j+1)$, $1\le j\le
+m$, with nonnegative coefficients (the Stirling numbers of the second kind).
+So $\E J'^m\le b_mx^m$ for $x\ge1$, where $b_m$ is the sum of these
+coefficients. Hence $\E\,\Xi^{2m}\le c_m8^m(1+b_m)x^m$. Since
+$\lvert\sigma_1-\sigma_{N+1}\rvert\le2$ and $x\ge1$,
+\[
+ \E X^{2m}\le(2q)^{-2m}2^{2m-1}\bigl(2^{2m}+\E\,\Xi^{2m}\bigr)
+ \le C_mq^{-2m}x^m ,
+\]
+and $\E W^{2m}=N^{-2m}\E X^{2m}\le C_mx^{-m}$.
+
+(b) Dividing the formula for $\E X^4$ in Lemma~\ref{lem:fisher-moments} by
+$N^4$ gives
+\[
+ \E W^4=\frac{3p^2}{x^2}-\frac{p(1+10\rho+\rho^2)}{2x^3}
+ +\frac{\rho(1+2\rho)(2+\rho)(1-\rho^N)}{2x^4}-\frac{3p\rho^{N+1}}{x^3}.
+\]
+For $q\le\frac12$ we have $0\le\rho<1$. Then the second and the last terms
+are at most $0$, and the third is at most $1\cdot3\cdot3/(2x^4)$.
+\end{proof}
+
+\paragraph{Proof of the bound in Theorem~\ref{thm:fisher}.}
+Let $\mathcal P$ be the orthogonal projection in $L^2$ onto the span of $1$
+and $X^2$. Since $X^2$ is a function of $K$, we have $\E Z=\E J$ and
+$\Cov(Z,X^2)=\Cov(J,X^2)$. So
+$\mathcal PZ=\E Z+\Cov(J,X^2)(X^2-\E X^2)/\Var X^2$, and $Z-\mathcal PZ$ is orthogonal
+to $1$ and to $X^2$. Hence
+\[
+ \Var Z=\frac{\Cov(J,X^2)^2}{\Var X^2}+\E(Z-\mathcal PZ)^2 ,
+\]
+and dividing by $\Var J$ gives $e_N-R^2_N=\E(Z-\mathcal PZ)^2/\Var J\ge0$. Also
+$\E(Z-\mathcal PZ)^2\le\E(Z-G)^2$ for every $G$ in the span of $1$ and $X^2$. We
+take
+\[
+ G=y\Bigl(1-\frac{W^2}2\Bigr)+\frac12 .
+\]
+From now on $0<q\le\frac12$ and $1\le x\le N^{1/4}$, and $C$ denotes an
+absolute constant that may change from line to line. Then $p\ge\frac12$,
+$x\le y\le2x$, and $\Var J=(N-1)pq\ge x/4$ for $N\ge2$. So it is enough to
+show that $\E(Z-G)^2\le C(x^{-2}+x^4/N)$.
+
+For an interior bin $0<k<N$ put $s_k=\sqrt{k(N-k)}$, $c_k=N/(2s_k)$ and
+$z_k=s_ku$. On the event $K=k$ we have $k(N-k)=N^2(1-W^2)/4$, so
+$c_k=(1-W^2)^{-1/2}\ge1$, $2z_k=y\sqrt{1-W^2}$ and $c_kz_k=y/2$. Let
+$\mathcal I_k(z)=I_0(2z)+c_kI_1(2z)$ and
+$\widetilde S_k(v)=2v\,\mathcal I_k(s_kv)$. This is Paper~A's Bessel
+approximation to $S_{k,N-k}(v)$, which is called $T_{a,b}$
+in~\cite{paperA}. By~\cite[Thm.~6.2]{paperA},
+\begin{equation}\label{eq:fisher-bessel-bound}
+ 0\le1-\frac{S_{k,N-k}(v)}{\widetilde S_k(v)}\le\frac{Nv^2}2+v
+ \qquad\text{for all }v>0 .
+\end{equation}
+Let $\Lambda_k(t)=\log S_{k,N-k}(e^t)$ and
+$\beta_k(t)=\log\widetilde S_k(e^t)$. By Proposition~\ref{prop:eta},
+$Z=\Lambda_K'(\log u)$ on the event $0<K<N$.
+
+\emph{Step 1.} We compare $\Lambda_k'$ with $\beta_k'$ at $\log u$. Both
+functions are convex, since each is the logarithm of a series in $e^t$ with
+nonnegative coefficients. Let $0<\delta\le1$ and $\lvert t-\log u\rvert\le
+\delta$, so that $v=e^t\le eu$. Then
+\[
+ \frac{Nv^2}2+v\le\frac{e^2y^2/2+ey}N\le\frac{2e^2+2e}{\sqrt N},
+\]
+using $y\le2N^{1/4}$. The right side is at most $\frac12$ for $N\ge1700$.
+Since $-\log(1-\varepsilon)\le2\varepsilon$ for
+$0\le\varepsilon\le\frac12$, the bound \eqref{eq:fisher-bessel-bound} gives
+$0\le\beta_k-\Lambda_k\le\eta$ on this interval, with
+$\eta=(e^2y^2+2ey)/N$.
+
+Next, $\beta_k(t)=\log2+t+\log\mathcal I_k(s_ke^t)$, and
+$\mathcal I_k(s_ke^t)=\sum_na_ne^{nt}$ with $a_n\ge0$. So $\beta_k''(t)$ is
+the variance of $n$ under the weights $a_ne^{nt}$, which is at most the mean
+of $n^2$. From the power series,
+$(z\frac d{dz})^2I_0(2z)=4z^2I_0(2z)$ and
+$(z\frac d{dz})^2I_1(2z)=(4z^2+1)I_1(2z)$. So the mean of $n^2$ is at most
+$4z^2+1$ with $z=s_ke^t\le ey/2$, since $s_k\le N/2$. Hence
+$\beta_k''\le\kappa=e^2y^2+1$ on the interval.
+
+Now take $\delta=\sqrt{2\eta/\kappa}$. It is at most $1$, since for $N\ge4$
+we have $2\eta\le\frac12(e^2y^2+2ey)\le\kappa$. Lemma~\ref{lem:fisher-convex}
+with $f=\Lambda_k$ and $g=\beta_k$ gives, for every $0<k<N$,
+\begin{equation}\label{eq:fisher-step1}
+ \bigl\lvert\Lambda_k'(\log u)-\beta_k'(\log u)\bigr\rvert
+ \le\frac\eta\delta+\frac{\kappa\delta}2=\sqrt{2\eta\kappa}
+ \le\frac{2e^2y^2+2ey+1}{\sqrt{2N}}\le\frac{11(1+y)^2}{\sqrt N} .
+\end{equation}
+The second inequality is $\sqrt{ab}\le\frac12(a+b)$.
+
+\emph{Step 2.} We compute $\beta_k'(\log u)$. Write $z=s_ke^t$, $w=2z$ and
+$R=R(w)$ as in Lemma~\ref{lem:fisher-bessel}. Using $I_0'=I_1$ and
+$I_1'(w)=I_0(w)-I_1(w)/w$,
+\[
+ \beta_k'(t)=1+\frac{z\mathcal I_k'(z)}{\mathcal I_k(z)}
+ =1+\frac{wR+c_kw-c_kR}{1+c_kR}=w+\frac{1+w(c_k-1)(1-R)}{1+c_kR}.
+\]
+At $t=\log u$ we have $w=2z_k$. Call the last fraction $B_k$ at this point.
+So $\beta_k'(\log u)=2z_k+B_k$. By Lemma~\ref{lem:fisher-bessel},
+$0<R<1$ and $w(1-R)\le1$. Since $c_k\ge1$, the numerator of $B_k$ lies
+between $1$ and $c_k$. The numerator is also at most $1+wc_k=1+y$, and the
+denominator is at least $1$, so $0<B_k\le1+y$. Moreover
+\[
+ B_k-\frac12\le\frac{c_k}{1+c_kR}-\frac12
+ =\frac{(c_k-1)+c_k(1-R)}{2(1+c_kR)}\le\frac{c_k-1}2+\frac{c_k(1-R)}2 ,
+\]
+and $B_k-\frac12\ge\frac{1-c_kR}{2(1+c_kR)}\ge-\frac{c_k-1}2$. By
+Lemma~\ref{lem:fisher-bessel}, $c_k(1-R)\le c_k/w=c_k^2/y$. Hence
+\[
+ \Bigl\lvert B_k-\frac12\Bigr\rvert\le\frac{c_k-1}2+\frac{c_k^2}{2y}.
+\]
+If $W^2\le\frac12$ on $K=k$, then $c_k^2\le2$ and $c_k-1\le W^2$, because
+$(1-v)^{-1/2}-1$ is convex in $v$, vanishes at $v=0$ and is less than
+$\frac12$ at $v=\frac12$, so it is at most $v$ for $0\le v\le\frac12$. Hence
+$\lvert B_k-\frac12\rvert\le W^2/2+1/y$ there.
+
+The term $B_k$ is the part of the score that does not grow with $x$. It is
+close to $\frac12$ in the middle of the row, and this is the $\frac12$ in
+$G$.
+
+\emph{Step 3.} Let $\psi(w)=1-w^2/2-\sqrt{1-w^2}$ for $\lvert w\rvert\le1$.
+The power series of $\sqrt{1-v}$ is $1-v/2$ minus a series
+$\sum_{j\ge2}a_jv^j$ with $a_j\ge0$, and $\sum_ja_j=\frac12$ since
+$\sqrt{1-v}$ vanishes at $v=1$. So $0\le\psi(w)\le w^4/2$. On $K=k$ we have
+$2z_k=y\sqrt{1-W^2}=y(1-W^2/2)-y\psi(W)$. So on the event $0<K<N$, Steps~1
+and~2 give
+\[
+ Z-G=\bigl(Z-\beta_K'(\log u)\bigr)+\Bigl(B_K-\frac12\Bigr)-y\psi(W).
+\]
+On the 2 atoms $K\in\{0,N\}$ we have $Z=0$ and $W^2=1$, so
+$Z-G=-(y+1)/2$.
+
+\emph{Step 4.} We collect the moments we need. By
+Lemma~\ref{lem:fisher-W}, $\E W^4\le3/x^2+9/(2x^4)\le8/x^2$ and
+$\E W^8\le Cx^{-4}$. By Markov's inequality,
+$\Prob(W^2>\frac12)\le16\,\E W^8\le Cx^{-4}$. Also
+$\Prob(K\in\{0,N\})=\Prob(J=0)=p^{N-1}\le e^{-q(N-1)}\le e^{1/2}e^{-x}$.
+
+\emph{Step 5.} Write $\lVert\cdot\rVert$ for the norm of $L^2$ and
+$\mathbf 1_{\rm int}$ for the indicator of $0<K<N$. By Step~3 and
+Minkowski's inequality,
+\[
+ \lVert Z-G\rVert\le
+ \bigl\lVert(Z-\beta_K'(\log u))\mathbf 1_{\rm int}\bigr\rVert
+ +\bigl\lVert(B_K-\tfrac12)\mathbf 1_{\rm int}\bigr\rVert
+ +\lVert y\psi(W)\rVert
+ +\tfrac{y+1}2\,\Prob(K\in\{0,N\})^{1/2}.
+\]
+By \eqref{eq:fisher-step1} the first term is at most
+$11(1+y)^2/\sqrt N\le99x^2/\sqrt N$, since $(1+y)^2\le(1+2x)^2\le9x^2$. For
+the second term we use Step~2 on the event $W^2\le\frac12$, and
+$\lvert B_K-\frac12\rvert\le1+y$ on the rest of the interior. This gives
+\[
+ \E\bigl[(B_K-\tfrac12)^2\mathbf 1_{\rm int}\bigr]
+ \le\E\Bigl(\frac{W^2}2+\frac1y\Bigr)^2+(1+y)^2\Prob\Bigl(W^2>\frac12\Bigr)
+ \le\frac{\E W^4}2+\frac2{y^2}+\frac{C(1+y)^2}{x^4}\le\frac C{x^2}.
+\]
+By Step~3 the third term is at most $\frac y2(\E W^8)^{1/2}\le C/x$. By
+Step~4 the last term is at most $Cxe^{-x/2}\le C/x$. Therefore
+\[
+ \E(Z-G)^2\le C\Bigl(\frac{x^4}N+\frac1{x^2}\Bigr),
+\]
+and dividing by $\Var J\ge x/4$ gives
+$e_N-R^2_N\le C(x^{-3}+x^3/N)$.
+
+We used $N\ge1700$ only in Step~1, so we may take $N_0=1700$. Every other
+constant is absolute, since each bound above holds uniformly in
+$0<q\le\frac12$ and $1\le x\le N^{1/4}$. This proves the bound in
+Theorem~\ref{thm:fisher}. The expansion of $e_N$ in
+Theorem~\ref{thm:fisher}, Corollary~\ref{cor:fisher-crossing} and the lower
+bound in Remark~\ref{rem:fisher-regimes} follow from this bound and the
+closed form, and their proofs are given in Section~\ref{sec:fisher}.

@@ -1,0 +1,324 @@
+\section{The planar persistent walk}\label{sec:planar}
+
+Kagey's Galton board has a natural version in 2 dimensions. A ball moves on $\Z^2$ in the
+directions east, north, west and south, numbered $0,1,2,3$ modulo $4$, with unit vectors
+$e_0=(1,0)$, $e_1=(0,1)$, $e_2=-e_0$ and $e_3=-e_1$. Let $r,s\ge0$ with $\beta=2r+s>0$, and let
+$0<h<1/\beta$. The first direction is uniform. After that the ball keeps its direction with
+probability $p_0=1-\beta h$, turns left or right with probability $rh$ each, and reverses with
+probability $sh$. If $D_t$ is the direction of step $t$, the position is
+$Y_N=\sum_{t=1}^Ne_{D_t}$. This is the chain of Example~\ref{ex:models}(iv), with $q_{j,j\pm1}=r$
+and $q_{j,j+2}=s$, and $Y_N=(n_0-n_2,n_1-n_3)$. In this section we allow every $h<1/\beta$, and $N$
+is even. Only the path that always goes east reaches the corner $Ne_0$, so
+$c_N=\Prob(Y_N=Ne_0)=\frac14p_0^{N-1}$. We compare it with $o_N=\Prob(Y_N=0)$. We write
+$u=sh/p_0$, $v=rh/p_0$ and $w=\beta h/p_0=2v+u$, so $1+w=1/p_0$. We use $S_N$, $u_N$, $p_N$
+and $c_0$ from Section~\ref{sec:papersAB}. So $S_N(u)$ is the sum of $u^j$ over the words of
+length $N$ with $N/2$ letters of each of 2 kinds, where $j$ is the number of switches. It has
+nonnegative coefficients and no constant term, so it increases strictly on $[0,\infty)$.
+
+We first guess the answer from the face exponents of Section~\ref{sec:firstorder}, up to powers of
+$\log N$. Let $h=\tau\log N/N$. The corner is the vertex $\{0\}$, which has exit rate $\beta$, so
+$c_N$ is about $N^{-\beta\tau}$. A vertex, a face with 3 directions, or a face with 2 adjacent ones
+misses the opposite of one of its directions, so it cannot reach the origin. On the axis $\{0,2\}$, which has exit rate
+$2r$, the origin is the single composition $(N/2,0,N/2,0)$, of probability about $N^{-(2r\tau+1)}$.
+On the full face a single composition has probability about $N^{-3}$, but about $N/2$ compositions
+$(a,b,a,b)$ end at the origin, and together they give about $N^{-2}$. So the origin should beat the
+corner when $\beta\tau>\min(2r\tau+1,2)$, that is when $\tau>\tau^*=\min(2/\beta,1/s)$. At $\tau^*$
+the axes win if $s>2r$ and the full face wins if $s<2r$. This applies Theorem~\ref{thm:first} to a
+linear function of the composition, which we have not proved in general, so it is only a heuristic.
+Theorem~\ref{thm:planar-first} proves the conclusion directly.
+
+\begin{lemma}[three levels]\label{lem:threelevel}
+Write a sequence of directions as its number $m$ of switches, its skeleton $Z=(Z_0,\dots,Z_m)$,
+which lists the directions of the runs so that $Z_t\ne Z_{t-1}$, and its run lengths
+$\ell=(\ell_0,\dots,\ell_m)$, which form a composition of $N$ into $m+1$ positive parts. This is a
+bijection, and $Y_N=\sum_{t=0}^m\ell_te_{Z_t}$. Under the walk, \textup{(a)} $m$ has the law
+$\mathrm{Bin}(N-1,\beta h)$. Given $m$, \textup{(b)} $Z$ and $\ell$ are independent, \textup{(c)}
+$Z$ is the random walk on $\Z_4$ with uniform $Z_0$ whose independent increments are $\pm1$ with
+probability $r/\beta$ each and $2$ with probability $s/\beta$, and \textup{(d)} $\ell$ is uniform on
+the $\binom{N-1}m$ compositions.
+\end{lemma}
+
+\begin{proof}
+Put $q(\pm1)=r$ and $q(2)=s$. The sequence with data $(m,Z,\ell)$ has probability
+\[
+ \frac14p_0^{N-1-m}\prod_{t=1}^mh\,q(Z_t-Z_{t-1})
+ =\binom{N-1}m(\beta h)^mp_0^{N-1-m}\cdot\frac14\prod_{t=1}^m\frac{q(Z_t-Z_{t-1})}\beta
+ \cdot\binom{N-1}m^{-1}.
+\]
+For fixed $m$ the middle factor is the probability of $Z$ under the walk in (c), so it sums to $1$
+over the skeletons, and the last factor sums to $1$ over the compositions. So the 3 factors are the
+laws in (a), (c) and (d), and the product form gives (b).
+\end{proof}
+
+\begin{proposition}[exact decomposition and a unique crossing]\label{prop:decomp}
+Let $N\ge2$ be even and $0<h<1/\beta$. Let $o^{(0)}_N$ and $o^{(4)}_N$ be the probabilities that
+$Y_N=0$ and the walk never turns, and that $Y_N=0$ and the walk uses all 4 directions. Then
+$o_N=o^{(0)}_N+o^{(4)}_N$,
+\[
+ o^{(0)}_N=2S_N(u)\,c_N,\qquad 0\le o^{(4)}_N\le\frac{w^2}{2p_0}\bigl(1-p_0^N\bigr).
+\]
+Equivalently, $o_N/c_N=2S_N(u)+R_N$ with $0\le R_N\le2w^2\bigl((1+w)^N-1\bigr)$. Moreover $o_N/c_N$
+is a polynomial in $v$ and $u$ with nonnegative coefficients and no constant term. If $s>0$, or if
+$s=0$ and $N\ge4$, it increases strictly in $h$ from $0$ at $h=0$ to $\infty$ as $h\uparrow1/\beta$.
+So there is exactly one $h^*_N\in(0,1/\beta)$ with $o_N=c_N$, and the corner is more likely than the
+origin exactly when $h<h^*_N$.
+\end{proposition}
+
+\begin{proof}
+An origin path with no turn stays on the axis of its first step. An origin path that turns uses both
+axes, and since $n_0=n_2$ and $n_1=n_3$ at the origin, it uses all 4 directions. So every origin
+path is of exactly one of the 2 kinds. A horizontal origin
+path with $j$ switches, all of them reversals, has probability $\frac14p_0^{N-1-j}(sh)^j=c_Nu^j$.
+So these paths give $c_NS_N(u)$, and the vertical ones give the same. This is also
+Proposition~\ref{prop:pair} for the pairs $\{0,2\}$ and $\{1,3\}$. The bound on $o^{(4)}_N$ follows
+from Lemma~\ref{lem:threelevel} and a count of the run lengths that bring a skeleton back to the
+origin. We prove it in Appendix~\ref{app:planar}. Dividing by $c_N=\frac14p_0^{N-1}$ gives the form
+with $R_N$.
+
+A path with $a$ turns and $b$ reversals has probability $\frac14p_0^{N-1-a-b}(rh)^a(sh)^b=c_Nv^au^b$.
+So $o_N/c_N$ is the sum of $v^au^b$ over the origin paths, and $a+b\ge1$ for each of them. Both $u$
+and $v$ are nondecreasing in $h$, and each of them with a positive rate increases strictly to
+$\infty$ as $h\uparrow1/\beta$. If $s>0$, the path that goes east $N/2$ times and then west $N/2$
+times gives the term $u$. If $s=0$ and $N\ge4$, then $r>0$, and a path with 4 runs going east,
+north, west and south, of lengths $a,b,a,b\ge1$, gives the term $v^3$. This proves the claims on
+monotonicity and the limits. For $s=0$ and $N=2$ the origin cannot be reached.
+\end{proof}
+
+We write $T^*_N=Nh^*_N$ and $u^*_N=sh^*_N/(1-\beta h^*_N)$. Since $o_N=c_N$ at the crossing,
+$2S_N(u^*_N)=o^{(0)}_N/o_N$ there. We call it the zero-turn share of the origin mass.
+
+\begin{theorem}[first order]\label{thm:planar-first}
+Fix $r>0$ and $s\ge0$, put $\tau^*=\min(2/\beta,1/s)$ with $1/0=\infty$, and let $N\to\infty$
+through even integers.
+\begin{enumerate}[(a)]
+\item Fix $\tau>0$ and put $h=\tau\log N/N$. If $\tau<\tau^*$, then $o_N/c_N\le N^{-\gamma}$ for
+some $\gamma>0$ and all large $N$. If $\tau>\tau^*$, then $o_N/c_N\ge N^{\gamma}$ for some
+$\gamma>0$ and all large $N$.
+\item $T^*_N/\log N\to\tau^*$.
+\item If $s>2r$, then $2S_N(u^*_N)\to1$, so the origin mass at the crossing comes from the 2 axes,
+half from each. If $s<2r$, then $2S_N(u^*_N)\le N^{-\gamma}$ for some $\gamma>0$ and all large $N$,
+so it comes from the paths that use all 4 directions.
+\end{enumerate}
+\end{theorem}
+
+The proof is in Appendix~\ref{app:planar}. Part (b) follows from (a) and the monotonicity in
+Proposition~\ref{prop:decomp}. The upper bound in (a) comes from \cite[Eq.~(6)]{paperA} and
+Proposition~\ref{prop:decomp}, and the lower bound also uses Lemma~\ref{lem:threelevel} for the
+paths that turn.
+
+When reversals dominate, the crossing is Paper~A's with one change. Put
+\[
+ \mathcal A(\Lambda)=\Lambda-\tfrac12\log\Lambda+c_0
+ +\frac{\frac14\log\Lambda-\frac12c_0+\frac18}{\Lambda},
+\]
+so that \cite[Eq.~(8)]{paperA} reads $N(1-p_N)=\mathcal A(L)+O((\log L)^2/L^2)$.
+
+\begin{theorem}[reversals dominate]\label{thm:planar-rev}
+\begin{enumerate}[(a)]
+\item Let $s>0$. For all even $N\ge2$ and $0<h<1/\beta$,
+\[
+ \frac{o_N}{c_N}=2S_N(u)\bigl(1+\varepsilon_N(h)\bigr),\qquad
+ 0\le\varepsilon_N(h)\le\frac{w^2(1+w)^N}{S_N(u)}.
+\]
+\item Let $r\ge0$ and $s>2r$, and let $N\to\infty$ through even integers. Let $z_N$ be the root of
+$z(I_0(z)+I_1(z))=N/4$. Then $Nu^*_N=z_N+O(N^{-\gamma})$ for some $\gamma>0$, and
+\[
+ \varepsilon_N(h^*_N)=O\bigl((\log N)^{3/2-r/s}N^{-(s-2r)/s}\bigr),\qquad
+ z_N+\tfrac12\log z_N=(L-\log2)+c_0+\frac1{8z_N}+O(z_N^{-2}).
+\]
+\item Under the hypotheses of (b),
+\[
+ sT^*_N=\mathcal A(L-\log2)+O\Bigl(\frac{(\log L)^2}{L^2}\Bigr),\qquad
+ sT^*_N-N(1-p_N)=-\log2+\frac{\log2}{2L}+O\Bigl(\frac{(\log L)^2}{L^2}\Bigr).
+\]
+\end{enumerate}
+\end{theorem}
+
+The equation in (b) is the one that Paper~A solves for its crossing
+\cite[proof of Thm.~5.2]{paperA}, with $L$ replaced by $L-\log2$. The reason is that the 2 axes
+double the mass at the origin, so $e^{sT}$ must be smaller by a factor of about $2$. Paper~A also
+finds a shift of $\log2$, between its periodic and free crossings~\cite[Thm.~7.2]{paperA}, but it
+has the opposite sign and a different cause. There a cyclic word must switch an even number of
+times, which makes the periodic ratio about half the free one near the crossing.
+
+\begin{proof}
+(a) Since $s>0$, $S_N(u)\ge2u>0$. Divide Proposition~\ref{prop:decomp} by $2S_N(u)$. Then
+$\varepsilon_N(h)=R_N/(2S_N(u))$ and $R_N\le2w^2(1+w)^N$.
+
+(b) Put $\psi(z)=z(I_0(z)+I_1(z))$. Since $I_0'=I_1$ and $(zI_1)'=zI_0$, we have $\psi'=\psi+I_0$.
+So $(\log\psi)'\ge1$, $\psi$ increases from $0$ to $\infty$, and $z_N$ is well defined. Paper~A
+writes $h$ for $N/2$ in \cite[Eq.~(6)]{paperA}, while $h=T/N$ here. With $x=z/2$ that bound reads
+\begin{equation}\label{eq:planar-bessel}
+ \Bigl(1-\frac{z(z+2)}{2N}\Bigr)\psi(z)\le\frac N2\,S_N\Bigl(\frac zN\Bigr)\le\psi(z)
+ \qquad(z>0).
+\end{equation}
+Write $u^*=u^*_N$, $w^*=\beta u^*/s$ and $R^*=R_N(h^*_N)$. At the crossing
+Proposition~\ref{prop:decomp} gives $2S_N(u^*)+R^*=1$. So $S_N(u^*)\le\frac12<S_N(u_N)$, and
+$u^*<u_N$. Put $w_N=\beta u_N/s$. Since $w\mapsto2w^2(1+w)^N$ is increasing,
+$R^*\le\eta_N:=2w_N^2(1+w_N)^N$. By \cite[Eq.~(7)]{paperA}, $Nu_N=N(1-p_N)/p_N=L-\frac12\log L+O(1)$.
+So $(1+w_N)^N\le e^{Nw_N}=O(N^{\beta/s}L^{-\beta/(2s)})$ and $w_N^2=O(L^2/N^2)$. As
+$\beta/s-2=-(s-2r)/s$ and $2-\beta/(2s)=\frac32-\frac rs$, this gives
+$\eta_N=O(L^{3/2-r/s}N^{-(s-2r)/s})$, which tends to $0$. Then
+$\varepsilon_N(h^*_N)=R^*/(1-R^*)\le\eta_N/(1-\eta_N)$.
+
+Next let $z^*=Nu^*$ and $\delta_N=Nu_N(Nu_N+2)/(2N)=O(L^2/N)$. Since $z^*<Nu_N$ and
+$\frac12(1-\eta_N)\le S_N(u^*)\le\frac12$, \eqref{eq:planar-bessel} gives
+$\frac N4(1-\eta_N)\le\psi(z^*)\le\frac N4(1-\delta_N)^{-1}$. As $\psi(z_N)=N/4$ and
+$(\log\psi)'\ge1$, we get $z_N+\log(1-\eta_N)\le z^*\le z_N-\log(1-\delta_N)$. So
+$z^*-z_N=O(\eta_N+\delta_N)$, which is $O(N^{-\gamma})$ for every $\gamma<\min(1,(s-2r)/s)$. Finally
+$I_0(z)+I_1(z)=\frac{2e^z}{\sqrt{2\pi z}}\bigl(1-\frac1{8z}+O(z^{-2})\bigr)$
+\cite[Eq.~10.40.1]{dlmf}, so
+\begin{equation}\label{eq:planar-psi}
+ \log\psi(z)=z+\tfrac12\log z+\tfrac12\log\frac2\pi-\frac1{8z}+O(z^{-2}).
+\end{equation}
+Since $c_0=\frac12\log\pi-\frac32\log2$, we have $\log(N/4)-\frac12\log(2/\pi)=(L-\log2)+c_0$. So by
+\eqref{eq:planar-psi} the identity $\log\psi(z_N)=\log(N/4)$ is the equation in (b).
+
+(c) Put $\Lambda=L-\log2$, $d=-\frac12\log\Lambda+c_0$ and
+$\tilde z=\mathcal A(\Lambda)=\Lambda+d+(\frac18-\frac d2)/\Lambda$. As in Paper~A we use
+$\frac12\log\tilde z=\frac12\log\Lambda+\frac d{2\Lambda}+O((\log L)^2/L^2)$ and
+$1/(8\tilde z)=1/(8\Lambda)+O(\log L/L^2)$. By \eqref{eq:planar-psi} and the identity above, the
+terms of order $1$ and $1/\Lambda$ in $\log\psi(\tilde z)-\log(N/4)$ are
+$d+\frac12\log\Lambda-c_0=0$ and $(\frac18-\frac d2+\frac d2-\frac18)/\Lambda=0$. So
+$\log\psi(\tilde z)=\log(N/4)+O((\log L)^2/L^2)$, and $(\log\psi)'\ge1$ gives
+$z_N=\tilde z+O((\log L)^2/L^2)$. Also $h^*_N=u^*/(s+\beta u^*)$, so
+$sT^*_N=Nu^*/(1+\beta u^*/s)=Nu^*+O(L^2/N)$ since $u^*<u_N=O(L/N)$. With (b) this proves the first
+formula. For the second we subtract \cite[Eq.~(8)]{paperA}. The last term of $\mathcal A$ has
+derivative $O(\log L/L^2)$ near $L$, so
+\[
+ \mathcal A(L-\log2)-\mathcal A(L)=-\log2-\tfrac12\log\Bigl(1-\frac{\log2}L\Bigr)
+ +O\Bigl(\frac{\log L}{L^2}\Bigr)=-\log2+\frac{\log2}{2L}+O\Bigl(\frac{\log L}{L^2}\Bigr).
+\qedhere
+\]
+\end{proof}
+
+Numerically, for $(r,s)=(0.1,1)$ the difference $sT^*_N-N(1-p_N)$ is $-0.6317$ at $N=640$ and
+$-0.6493$ at $N=10240$, while the first 2 terms in (c) give $-0.6395$ and $-0.6556$
+(Figure~\ref{fig:planar}(a)). When turns dominate, the origin mass comes from the paths with all 4
+directions, and we need their local limit.
+
+\begin{theorem}[four-direction local limit]\label{thm:fourdir}
+Fix $r>0$ and $s\ge0$. Let $N\to\infty$ through even integers, let $T=T_N\to\infty$ with
+$T_N\le N^{1/8}$, and put $h=T/N$. Then
+\[
+ N^2o^{(4)}_N=\frac{2(r+s)}\pi\,T\,\bigl(1+o(1)\bigr).
+\]
+\end{theorem}
+
+The proof is in Appendix~\ref{app:planar}. It uses Lemma~\ref{lem:threelevel}, a local limit for
+the run lengths given the skeleton, and a central limit theorem for the skeleton. The functions
+$\cos(\pi j/2)$ and $\sin(\pi j/2)$ are eigenvectors of $Q$ with eigenvalue $-2(r+s)$, so in this
+range the 2 coordinates of $Y_N$ are uncorrelated with variance close to $N^2/(2(r+s)T)$. So
+Theorem~\ref{thm:fourdir} says that $o^{(4)}_N$ is the Gaussian density at $0$ with this variance,
+times $2$ because $Y_N$ lies on a sublattice of index $2$. It also gives the true size of the
+correction in Theorem~\ref{thm:planar-rev}(b). If $r>0$ and $s>2r$, then $T^*_N\sim L/s$ and
+$c_N^{-1}=4e^{\beta T^*_N}(1+o(1))$, so $\varepsilon_N(h^*_N)\sim o^{(4)}_N/c_N\sim
+\frac{8(r+s)}\pi T^*_Ne^{\beta T^*_N}N^{-2}$. Since
+$e^{sT^*_N}=\frac N2\sqrt{\pi/(8sT^*_N)}\,(1+o(1))$ by \eqref{eq:planar-psi} and the proof above,
+this is of exact order $(\log N)^{1/2-r/s}N^{-(s-2r)/s}$. So the bound in
+Theorem~\ref{thm:planar-rev}(b) is too large only by a factor of order $\log N$.
+
+\begin{corollary}[turns dominate, and the switch]\label{cor:planar-turn}
+Let $r>0$ and let $N\to\infty$ through even integers.
+\begin{enumerate}[(a)]
+\item If $0\le s<2r$, then $2S_N(u^*_N)\le N^{-(2r-s)/\beta+o(1)}$, and the equivalent formulas
+\[
+ \beta T^*_N+\log T^*_N=2L+\log\frac\pi{8(r+s)}+o(1),\qquad
+ \beta T^*_N=2N(1-p_N)+\log\frac\beta{2(r+s)}+o(1)
+\]
+hold.
+\item If $s=2r$, then $2S_N(u^*_N)\to\frac{2\sqrt2}{\sqrt2+\sqrt5}=0.774852\ldots$ and
+\[
+ \beta T^*_N+\log T^*_N=2L+\log\frac\pi{8(r+s)}
+ +\log\frac{\sqrt5-\sqrt2}{\sqrt5+\sqrt2}+o(1).
+\]
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Let $0\le s\le2r$. Then $\tau^*=2/\beta$, so $T^*_N/L\to2/\beta$ by
+Theorem~\ref{thm:planar-first}(b), and Theorem~\ref{thm:fourdir} applies with $T_N=T^*_N$. At the
+crossing Proposition~\ref{prop:decomp} gives $o^{(4)}_N=c_N(1-2S_N(u^*_N))$, and both sides are
+positive. Also $\log c_N=-\log4+(N-1)\log(1-\beta h^*_N)=-\log4-\beta T^*_N+O(T^{*2}_N/N)$. Taking
+logarithms and using Theorem~\ref{thm:fourdir},
+\begin{equation}\label{eq:planar-star}
+ \beta T^*_N+\log T^*_N=2L+\log\frac\pi{8(r+s)}+\log\bigl(1-2S_N(u^*_N)\bigr)+o(1).
+\end{equation}
+
+(a) Since $I_1\le I_0\le e^z$ for $z\ge0$, we have $\psi(z)\le2ze^z$, and \eqref{eq:planar-bessel}
+gives $2S_N(u)\le8ue^{Nu}$. At the crossing $Nu^*_N=sT^*_N/(1-\beta h^*_N)=\frac{2s}\beta L(1+o(1))$
+and $u^*_N=O(L/N)$. So $2S_N(u^*_N)\le N^{2s/\beta-1+o(1)}$, and $1-2s/\beta=(2r-s)/\beta$. Hence the
+last logarithm in \eqref{eq:planar-star} is $o(1)$. The equivalent form follows from
+$\log T^*_N=\log(2L/\beta)+o(1)$ and $2N(1-p_N)=2L-\log L+\log(\pi/8)+o(1)$
+\cite[Eq.~(7)]{paperA}.
+
+(b) Now $\beta=2s$ and $2(r+s)=3s$. Put $z^*=Nu^*_N$, so $z^*=sT^*_N+o(1)\to\infty$. By
+\eqref{eq:planar-bessel} and \eqref{eq:planar-psi},
+$2S_N(u^*_N)=\frac4N\psi(z^*)(1+o(1))=\frac8N\sqrt{z^*/(2\pi)}\,e^{z^*}(1+o(1))$. Let
+$q_N=Ne^{-sT^*_N}/\sqrt{T^*_N}$, $a=8\sqrt{s/(2\pi)}$ and $b=12s/\pi$. Then
+$2S_N(u^*_N)=(a/q_N)(1+o(1))$, and Theorem~\ref{thm:fourdir} with
+$c_N^{-1}=4e^{2sT^*_N}(1+o(1))$ gives $o^{(4)}_N/c_N=(b/q_N^2)(1+o(1))$. These 2 positive terms add
+up to $1$. So $q_N$ is bounded and bounded away from $0$, and each limit point $\tilde q$ solves
+$\tilde q^2-a\tilde q-b=0$. As $a^2=32s/\pi$ and $a^2+4b=80s/\pi$, the only positive root is
+$\tilde q=2\sqrt{s/\pi}(\sqrt2+\sqrt5)$. Hence $2S_N(u^*_N)\to a/\tilde q=2\sqrt2/(\sqrt2+\sqrt5)$,
+so $1-2S_N(u^*_N)\to(\sqrt5-\sqrt2)/(\sqrt5+\sqrt2)$, and \eqref{eq:planar-star} gives the display.
+\end{proof}
+
+In (a) the coefficient of $\log T^*_N$ is $1$, while Paper~A has $\frac12\log T$. The reason is
+that the origin is a point of a two-dimensional local limit. In 1 dimension the density at the
+center is of order $T^{1/2}/N$, and in 2 dimensions it is of order $T/N^2$. Dividing by 2 gives
+$T^*_N=\frac2\beta[L-\frac12\log L+O(1)]$. With Theorem~\ref{thm:planar-rev}(c) this shows that
+$T^*_N=\tau^*[L-\frac12\log L+O(1)]$ for all $r>0$ and $s\ge0$. So the coefficient $\frac12$ of
+$\log\log N$ in Theorem~\ref{thm:crossing} appears here too, even when the origin mass comes from a
+line of compositions and not from a single one. At the switch $s=2r$ neither kind of path wins, and
+the 2 shares tend to explicit constants. The approach is slow. For $(r,s)=(0.5,1)$ the zero-turn
+share is $0.7650$ at $N=10240$, and for $(1,1)$ it is still $0.1051$ (Figure~\ref{fig:planar}(b)).
+The errors in Theorem~\ref{thm:fourdir} and Corollary~\ref{cor:planar-turn} are only $o(1)$. We
+state a heuristic next term in Section~\ref{sec:verify}.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_planar}
+\caption{(a) The exact crossing of the planar walk with $(r,s)=(0.1,1)$,
+written as $sT^*_N-N(1-p_N)$, for $N=40,80,\dots,10240$. Here $p_N$ is the
+crossing of Paper~A. The dashed curve is $-\log2+\log2/(2L)$ from
+Theorem~\ref{thm:planar-rev}(c), and the dotted line is its limit $-\log2$.
+(b) The zero-turn share $2S_N(u^*_N)$ of the origin mass at the crossing. It
+tends to $1$ for $s>2r$, to $0$ for $s<2r$, and to
+$2\sqrt2/(\sqrt2+\sqrt5)=0.7749$ at the switch $s=2r$
+(Theorem~\ref{thm:planar-first} and Corollary~\ref{cor:planar-turn}). For
+$(r,s)=(1,0)$ there are no reversals and the share is $0$ for every $N$. The
+pair $(0.3,1)$ was computed up to $N=640$.}
+\label{fig:planar}
+\end{figure}
+
+With turns only there is an exact reduction to Paper~A. Rotate the lattice by $45^\circ$, that is,
+use $U=Y^{(1)}+Y^{(2)}$ and $V=Y^{(1)}-Y^{(2)}$, where $Y_N=(Y^{(1)},Y^{(2)})$. Each step changes $U$
+and $V$ by $\pm1$. From any direction, a left turn changes the sign of the step of one of $U$ and $V$
+and a right turn changes the other, while a reversal changes both. So when $s=0$ the sign words of
+$U$ and $V$ are 2 copies of Paper~A's walk that never switch at the same step, and $Y_N=0$ exactly
+when both are balanced. This is the lattice form of the factorization
+in~\cite[Eq.~(36)]{angelani2022}.
+
+\begin{proposition}[turns only]\label{prop:pureturns}
+Let $s=0<r$, let $N$ be even, and put $x=rh/(1-2rh)$. For a word of length $N$ in the letters $\pm$
+with first letter $\sigma$, let $A\subseteq\{1,\dots,N-1\}$ be its set of switches, and call the word
+balanced if it has $N/2$ letters of each sign. Then $o_N/c_N=S_N(x)^2-\Delta_N(x)$, where
+$\Delta_N(x)=\sum x^{\lvert A\rvert+\lvert B\rvert}$ over the pairs of balanced words $(\sigma,A)$ and
+$(\sigma',B)$ with $A\cap B\ne\emptyset$, and
+\[
+ 4x^2\le\Delta_N(x)\le4x^2+16x^3(1+x)^{N-2}+16(N-1)x^4(1+x)^{2(N-2)}.
+\]
+If $x^*_N$ is the value of $x$ at $h^*_N$ \textup{(}$N\ge4$\textup{)}, then as $N\to\infty$
+\[
+ 1\le\frac{x^*_N}{u_N}\le1+\frac{\pi(\log N)^3}N\bigl(1+o(1)\bigr),\qquad
+ rT^*_N=N(1-p_N)+O\Bigl(\frac{(\log N)^4}N\Bigr).
+\]
+\end{proposition}
+
+The proof is in Appendix~\ref{app:planar}. The term $4x^2$ comes from the 4 pairs with
+$A=B=\{N/2\}$, and the upper bound is a union bound over a common switch. At $s=0$,
+Corollary~\ref{cor:planar-turn}(a) gives $rT^*_N=N(1-p_N)+o(1)$, and
+Proposition~\ref{prop:pureturns} improves the error to $O((\log N)^4/N)$. Note that $x^*_N$ and
+$rT^*_N=Nx^*_N/(1+2x^*_N)$ do not depend on $r$. Numerically the bound is far from sharp. At
+$N=10240$, $x^*_N/u_N-1=4.0\times10^{-4}$ and $rT^*_N-N(1-p_N)=-0.0027$.
