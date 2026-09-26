@@ -1,76 +1,64 @@
-\section{Uniform completion of the near-vertex regime}
-\label{sec:vertex-completion}
+\section{Proofs near a vertex}
+\label{app:vertex}
 
-For the leading term of the crossing, the fixed-count hypothesis in
-Theorem~\ref{thm:simplex-fixed-vertex} can be removed, and the result is
-uniform over all rare counts with total $o(b)$.
-Proposition~\ref{prop:vertex-probability-failure} shows that the
-corresponding approximation to the probabilities is not uniform. Its
-error can blow up while the relative error of the crossing tends to zero.
-
-Throughout this section, $\ell\ge1$ is fixed, $a_1,\ldots,a_\ell$
-are positive integers, $A=\sum_i a_i$, and
-\[
- H(y)=\prod_{i=1}^{\ell}B_{a_i}(y),\qquad
- \kappa(y)=\frac{yH'(y)}{H(y)}.
-\]
-Write $y_a$ for the unique positive solution of $H(y_a)=1$.
+We use the notation of Subsection~\ref{sec:vertex-completion} and prove
+Theorem~\ref{thm:vertex-uniform-root}.
 
 \begin{lemma}[elasticity and concavity of the rare-count polynomial]
 \label{lem:vertex-elasticity}
 The polynomial $H$ is convex, $\log H$ is concave on $(0,\infty)$,
-and $\kappa$ is nondecreasing. Moreover,
+and $\kappa$ is nondecreasing. Also
 \begin{equation}\label{eq:vertex-elasticity}
- \frac1{A+1}\le y_a\le1,\qquad
- \kappa(y)\le \ell+\sqrt{\ell Ay},
- \qquad \kappa(y)\ge \max\{\ell,\tfrac12\sqrt{Ay}\}
+ \frac1{|a|+1}\le y_a\le1,\qquad
+ \kappa(y)\le \ell+\sqrt{\ell|a|y},
+ \qquad \kappa(y)\ge \max\{\ell,\tfrac12\sqrt{|a|y}\}
  \quad(0<y\le1).
 \end{equation}
 \end{lemma}
 
 \begin{proof}
 Convexity follows directly from the nonnegative coefficients. For one
-factor, give $J\in\{0,\ldots,a-1\}$ probabilities proportional to
+factor $B_a$, let $J$ take values in $\{0,\ldots,a-1\}$ with
+$\Prob(J=j)$ proportional to $\binom{a-1}{j}y^j/(j+1)!$. The ratio
 \[
- r_j=\binom{a-1}{j}\frac{y^j}{(j+1)!}.
+R(j)=\frac{(j+1)\Prob(J=j+1)}{\Prob(J=j)}=\frac{y(a-1-j)}{j+2},
+\qquad R(a-1)=0,
 \]
-The successive ratio
-$R(j)=(j+1)r_{j+1}/r_j=y(a-1-j)/(j+2)$, with $R(a-1)=0$,
-is nonincreasing. Summing the ratio identity gives
-$\mathbb E J=\mathbb E R(J)$ and
-$\mathbb E J^2=\mathbb E[(J+1)R(J)]$. Therefore
+is nonincreasing in $j$. Summing the ratio identity gives
+$\E J=\E R(J)$ and $\E J^2=\E[(J+1)R(J)]$. Therefore
 \[
- \operatorname{Var}J=\mathbb E J+\operatorname{Cov}(J,R(J))
- \le \mathbb E J.
+ \Var J=\E J+\Cov(J,R(J))\le \E J.
 \]
 The covariance is nonpositive because, for an independent copy $J'$,
-twice the covariance equals
-$\mathbb E[(J-J')(R(J)-R(J'))]\le0$.
-Putting $M=J+1$ and $\kappa_a=yB_a'/B_a=\mathbb E M$, we obtain
+twice the covariance equals $\E[(J-J')(R(J)-R(J'))]\le0$. Also
+$\kappa_a=yB_a'/B_a=\E[J+1]$. Hence
 \[
- (\log B_a)''=\frac{\operatorname{Var}M-\mathbb E M}{y^2}\le0,
- \qquad y\kappa_a'=\operatorname{Var}M\ge0.
+ (\log B_a)''=\frac{\Var J-\E[J+1]}{y^2}<0,
+ \qquad y\kappa_a'=\Var J\ge0.
 \]
 This proves the concavity of $\log H$ and the monotonicity of $\kappa$.
 
-The elementary differential equation $yB_a''+yB_a'=aB_a$ gives
+The differential equation $yB_a''+yB_a'=aB_a$, which we check on the
+coefficients, gives
 \[
- ay=\kappa_a^2+\operatorname{Var}M+(y-1)\kappa_a.
+ ay=\kappa_a^2+\Var J+(y-1)\kappa_a.
 \]
-Using $0\le\operatorname{Var}M\le\kappa_a-1$ yields
-$\kappa_a\le1+\sqrt{ay}$ and
-$\kappa_a^2+y\kappa_a\ge ay+1$.
-For $0<y\le1$, these imply
-$\kappa_a\ge\max\{1,\sqrt{ay}-1/2\}
-\ge\tfrac12\sqrt{ay}$.
-Summing over the factors and applying Cauchy--Schwarz proves the
-elasticity bounds. Finally, $B_a(1)\ge1$ and
+Using $0\le\Var J\le\kappa_a-1$ we get
+\[
+ \kappa_a\le1+\sqrt{ay},\qquad \kappa_a^2+y\kappa_a\ge ay+1.
+\]
+For $0<y\le1$ these imply
+$\kappa_a\ge\max\{1,\sqrt{ay}-1/2\}\ge\tfrac12\sqrt{ay}$.
+Summing over the factors proves the elasticity bounds, using
+Cauchy--Schwarz for the upper bound and
+$\sqrt{\sum_ix_i}\le\sum_i\sqrt{x_i}$ for the lower one. Finally,
+$B_a(1)\ge1$, and Lemma~\ref{lem:uniform-laguerre-bessel} gives
 \[
  B_a(y)\le y\Phi(ay)\le y e^{ay/2},
 \]
 where $(j+1)!\ge2^j$ proves the last inequality term by term.
 Thus $H(1)\ge1$, whereas
-$H(1/(A+1))\le(A+1)^{-\ell}e^{A/(2(A+1))}<1$.
+$H(1/(|a|+1))\le(|a|+1)^{-\ell}e^{|a|/(2(|a|+1))}<1$.
 \end{proof}
 
 \begin{lemma}[an exact compound-binomial representation]
@@ -81,195 +69,85 @@ rate-one exponential variables, and let $Z_1,\ldots,Z_{b-1}$ be
 independent Bernoulli variables with parameter $u$. Take all these
 variables independent and set
 \[
- T=G+\sum_{j=1}^{b-1}Z_jE_j.
+ \mathcal T=G+\sum_{j=1}^{b-1}Z_jE_j.
 \]
 Then
 \begin{equation}\label{eq:vertex-randomization}
- S_{(b,a)}(u)=(1-u)^A\mathbb E[H(vT)],\qquad
- \mathbb E e^{sT}=(1-s)^{-2}
+ S_{(b,a)}(u)=(1-u)^{|a|}\E[H(v\mathcal T)],\qquad
+ \E e^{s\mathcal T}=(1-s)^{-2}
  \left(1+\frac{us}{1-s}\right)^{b-1}\quad(s<1).
 \end{equation}
 In particular, set $y=bu^2$, $\kappa=\kappa(y)$ and
 $s=\kappa/[bu(1-u)]$. Whenever $s<1$,
 \begin{align}
- (1-u)^A H(y)&\le S_{(b,a)}(u),\label{eq:vertex-jensen-lower}\\
- S_{(b,a)}(u)&\le (1-u)^A H(y)e^{-\kappa}(1-s)^{-2}
+ (1-u)^{|a|} H(y)&\le S_{(b,a)}(u),\label{eq:vertex-jensen-lower}\\
+ S_{(b,a)}(u)&\le (1-u)^{|a|} H(y)e^{-\kappa}(1-s)^{-2}
  \left(1+\frac{us}{1-s}\right)^{b-1}.
  \label{eq:vertex-tangent-upper}
 \end{align}
 \end{lemma}
 
 \begin{proof}
-The exact positive-refresh integral is
+By \eqref{eq:boundary-integral-form},
 \[
- S_{(b,a)}(u)=\frac{(1-u)^{b+A-1}}v
+ S_{(b,a)}(u)=\frac{(1-u)^{b+|a|-1}}v
  \int_0^\infty e^{-t}B_b(vt)H(vt)\,dt.
 \]
 The integral of $e^{-t}B_b(vt)$ is $v(1+v)^{b-1}$.
 After normalization its density is a mixture of gamma densities with
 shape $J+2$, where $J\sim\operatorname{Bin}(b-1,u)$. This is exactly
-the distribution of $T$, proving the identity and its moment generating
-function. Since $\mathbb ET=2+(b-1)u$,
-$v\mathbb ET\ge bu^2=y$. Convexity and monotonicity of $H$ prove
-\eqref{eq:vertex-jensen-lower}. Concavity of $\log H$ gives, for $w>0$,
+the distribution of $\mathcal T$, which proves the identity and its moment
+generating function. Since $\E\mathcal T=2+(b-1)u$, we have
+$v\E\mathcal T-bu^2=u(2-u+bu^2)/(1-u)>0$, so $v\E\mathcal T\ge y$.
+Convexity and monotonicity of $H$ prove \eqref{eq:vertex-jensen-lower}.
+Concavity of $\log H$ gives, for $w>0$,
 \[
  H(w)\le H(y)\exp\!\left(\frac{\kappa}{y}(w-y)\right).
 \]
-Insert $w=vT$ and use the moment generating function to prove
-\eqref{eq:vertex-tangent-upper}.
+Insert $w=v\mathcal T$, note that $\kappa v/y=s$, and use the moment
+generating function to prove \eqref{eq:vertex-tangent-upper}.
 \end{proof}
 
-\begin{theorem}[all growing rare counts near a vertex]
-\label{thm:vertex-uniform-root}
-For fixed $\ell$, uniformly over all positive rare counts with $A=o(b)$,
-the unique positive crossing odds satisfy
-\begin{equation}\label{eq:vertex-uniform-root}
- u_{b,a}=\sqrt{\frac{y_a}{b}}
- \left(1+O_\ell\!\left(\sqrt{\frac{A+1}{b}}\right)\right),
- \qquad \prod_i B_{a_i}(y_a)=1.
-\end{equation}
-Explicitly, put
-\[
- K=\ell+\sqrt\ell+1,\quad
- \varepsilon=\sqrt{\frac{A+1}{b}},\quad \delta=16K\varepsilon.
-\]
-If $\delta\le1/2$, then
-\begin{equation}\label{eq:vertex-uniform-bracket}
- (1-\delta)\sqrt{y_a/b}\ \le u_{b,a}\le
- (1+\delta)\sqrt{y_a/b}.
-\end{equation}
-The constants are not optimized. No condition such as $A(\log A)^2=o(b)$
-is needed.
-\end{theorem}
-
-\begin{proof}
-The proper-run polynomial has positive coefficients, zero constant
-coefficient, and is unbounded at infinity, so its crossing is unique.
-Put $u_0=\sqrt{y_a/b}$ and $\kappa_0=\kappa(y_a)$.
-Since $\delta\le1/2$ forces $\varepsilon\le1/(32K)$ and $y_a\le1$, at
+\begin{proof}[Proof of Theorem~\ref{thm:vertex-uniform-root}]
+Write $S=S_{(b,a)}$. Put $u_0=\sqrt{y_a/b}$ and $\kappa_0=\kappa(y_a)$.
+Since $\delta\le1/2$ forces $\varepsilon\le1/(32c_\ell)$ and $y_a\le1$, at
 $u_+=(1+\delta)u_0$ we have $u_+\le\tfrac32\varepsilon<1/4$.
 Monotonicity of $\kappa$ and the lower bound in
 Lemma~\ref{lem:vertex-elasticity} give
 \[
  \log H(bu_+^2)\ge2\kappa_0\log(1+\delta),\qquad
- \frac{Au_0}{\kappa_0}\le2\sqrt{A/b}\le2\varepsilon.
+ \frac{|a|u_0}{\kappa_0}\le2\sqrt{|a|/b}\le2\varepsilon.
 \]
-Consequently, by~\eqref{eq:vertex-jensen-lower},
+Hence, by~\eqref{eq:vertex-jensen-lower},
 \[
  \log S(u_+)\ge
- 2\kappa_0\log(1+\delta)-\frac{Au_+}{1-u_+}
+ 2\kappa_0\log(1+\delta)-\frac{|a|u_+}{1-u_+}
  \ge\kappa_0\left(\frac43\delta-4\varepsilon\right)>0.
 \]
 
-At $u_-=(1-\delta)u_0$, write $y=bu_-^2$ and
-$\kappa=\kappa(y)$. The inequalities $y_a\ge1/(A+1)$,
-$\delta\le1/2$, and~\eqref{eq:vertex-elasticity} imply
+At $u_-=(1-\delta)u_0$, write $y=bu_-^2$ and $\kappa=\kappa(y)$. The
+inequalities $y_a\ge1/(|a|+1)$, $\delta\le1/2$ and~\eqref{eq:vertex-elasticity}
+imply
 \[
  u_-\le\varepsilon,\qquad bu_-\ge\frac1{2\varepsilon},\qquad
  s=\frac{\kappa}{bu_-(1-u_-)}
- \le 2(2\ell+\sqrt\ell)\varepsilon\le4K\varepsilon\le\frac18.
+ \le 2(2\ell+\sqrt\ell)\varepsilon\le4c_\ell\varepsilon\le\frac18.
 \]
-Using $\log(1+x)\le x$, $-\log(1-s)\le s/(1-s)$ and
-$u_-,s\le1/4$ in~\eqref{eq:vertex-tangent-upper}, and dropping the
-nonpositive term $A\log(1-u_-)$, gives
+We use $\log(1+x)\le x$, $-\log(1-s)\le s/(1-s)$ and
+$u_-,s\le1/4$ in~\eqref{eq:vertex-tangent-upper}, and we drop the
+nonpositive term $|a|\log(1-u_-)$. This gives
 \begin{align*}
  \log\frac{S(u_-)}{H(y)}
  &\le -\kappa+\frac{2s}{1-s}+\frac{bu_-s}{1-s}\\
  &=\kappa\left(\frac1{(1-u_-)(1-s)}-1\right)
        +\frac{2s}{1-s}\\
- &\le 5\kappa(u_-+s)\le25K\kappa\varepsilon.
+ &\le 5\kappa(u_-+s)\le25c_\ell\kappa\varepsilon.
 \end{align*}
-Here $\kappa\ge\ell\ge1$ was used in the last two inequalities.
+Here $\kappa\ge\ell\ge1$ was used in the last 2 inequalities.
 Again by monotonicity of $\kappa$,
 \[
  \log H(y)\le2\kappa\log(1-\delta)\le-2\kappa\delta.
 \]
-Thus $\log S(u_-)\le\kappa(-32K+25K)\varepsilon<0$.
-The two strict inequalities and uniqueness bracket the crossing.
-\end{proof}
-
-\begin{corollary}[an explicit shape law for growing rare counts]
-\label{cor:vertex-shape-law}
-Suppose $A\to\infty$, $A=o(b)$, and the actual proportions
-$\alpha_i=a_i/A$ stay in a fixed compact subset of the positive
-$\ell$-simplex. Put $h=\sum_i\sqrt{\alpha_i}$. Then
-\[
- u_{b,a}\sim\frac{\ell\log A}{2h\sqrt{Ab}}.
-\]
-More precisely, the polynomial root satisfies
-\begin{align*}
- 2h\sqrt{Ay_a}
- ={}&\ell\log A-\frac\ell2\log\log A
- +\frac\ell2\log\!\left(\frac{8\pi h}{\ell}\right)
- +\frac34\sum_i\log\alpha_i
- +O_\ell\!\left(\frac{\log\log A}{\log A}
-                  +\frac{(\log A)^2}{A}\right).
-\end{align*}
-Replacing $\sqrt{Ay_a}$ on the left by $\sqrt{Ab}\,u_{b,a}$ incurs
-an additional $O_\ell(\log A\sqrt{A/b})$ error.
-\end{corollary}
-
-\begin{proof}
-Lemma~\ref{lem:uniform-laguerre-bessel}, uniformly when $y\to0$, gives
-$H(y)=y^\ell\prod_i\Phi(a_i y)(1+O_\ell(y))$.
-Write $x=\sqrt{Ay}$. Bracketing first at fixed small and large
-multiples of $\log A$ shows that the root has $x\asymp\log A$.
-The standard large-argument expansion of $I_1$ then gives uniformly
-over the stated proportions
-\[
- H(x^2/A)=
- \frac{x^{\ell/2}e^{2hx}}
- {A^\ell(4\pi)^{\ell/2}(\prod_i\alpha_i)^{3/4}}
- \left(1+O_\ell(x^{-1}+x^2/A)\right).
-\]
-Taking logarithms, substituting
-$x=(\ell/(2h))\log A+O_\ell(\log\log A)$ in the logarithmic term,
-and using Theorem~\ref{thm:vertex-uniform-root} proves the claims.
-The constants also depend on the fixed compact set of proportions.
-\end{proof}
-
-\begin{proposition}[probability approximation can fail while roots agree]
-\label{prop:vertex-probability-failure}
-Let $a=\lfloor b/\log b\rfloor$, let $y_a$ solve $B_a(y_a)=1$,
-and set $u_0=\sqrt{y_a/b}$. Then
-\[
- H(y_a)=B_a(y_a)^2=1,\qquad
- S_{(b,a,a)}(u_0)\longrightarrow\infty,
- \qquad \frac{u_{b,a,a}}{u_0}\longrightarrow1.
-\]
-Hence the crossing can be approximated uniformly even where
-$S(u)\sim H(bu^2)$ fails, so that approximation is not uniform over
-$A=o(b)$.
-\end{proposition}
-
-\begin{proof}
-Retain only run words that start and end in the large color and have
-exactly one adjacent pair of distinct rare colors. The run enumeration
-in Theorem~\ref{thm:simplex-fixed-vertex} shows that their contribution
-is the polynomial $2uyB_a'(y)^2$, with each term of total rare-run
-count $m$ additionally multiplied by
-$\prod_{j=1}^{m-1}(1-j/b)_+$.
-Give $J$ probabilities proportional to
-$\binom{a-1}{j}y^j/j!$, the coefficients of $B_a'(y)$.
-Its differential equation
-$y(B_a')''+(1+y)(B_a')'-(a-1)B_a'=0$ implies
-$\mathbb E J^2+y\mathbb E J=(a-1)y$, and hence
-$\mathbb E J\le\sqrt{ay}$ and $\mathbb E J^2\le ay$.
-For two independent copies, $m=J_1+J_2+2$, so
-\[
- \mathbb E[m(m-1)]\le4ay+6\sqrt{ay}+2.
-\]
-The clipped-product deficit bound therefore proves
-\[
- S_{(b,a,a)}(u_0)\ge
- \frac{2\kappa_a(y_a)^2}{bu_0}
- \left(1-\frac{4ay_a+6\sqrt{ay_a}+2}{2b}\right).
-\]
-The preceding corollary for one rare color gives
-$\sqrt{ay_a}\sim\tfrac12\log a$, and the elasticity bounds give
-$\kappa_a(y_a)\sim\sqrt{ay_a}$.
-The last display is asymptotic to a lower bound
-$\sqrt{a/b}\log a\sim\sqrt{\log b}$, which diverges.
-The root assertion follows directly from
-Theorem~\ref{thm:vertex-uniform-root}, since $2a=o(b)$.
+Thus $\log S(u_-)\le\kappa(-32c_\ell+25c_\ell)\varepsilon<0$. Since $S$ is
+increasing on $u>0$, the 2 strict inequalities bracket the crossing.
 \end{proof}

@@ -1,0 +1,180 @@
+\section{A uniform local law}\label{sec:llt}
+
+So far we compared each bin with an endpoint. Now we approximate $P_N(k)$ itself by a single
+formula, uniformly in $q\le\frac12$, from the diffusive regime ($q$ fixed) to the ballistic
+regime ($T=Nq$ bounded). Throughout, $n_1=k-1$, $n_2=N-k-1$ and $n_{\min}=\min(n_1,n_2)$.
+
+\begin{theorem}[a difference of 2 binomials]\label{thm:llt-identity}
+Let $N\ge2$, $1\le k\le N-1$ and $0<q<1$. Let $Y_1\sim\mathrm{Bin}(n_1,q)$ and
+$Y_2\sim\mathrm{Bin}(n_2,q)$ be independent, and put $D=Y_1-Y_2$. Then
+\begin{equation}\label{eq:llt-identity}
+P_N(k)=\frac q2\bigl[2\Prob(D=0)+\Prob(D=1)+\Prob(D=-1)\bigr].
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+We rewrite Theorem~\ref{thm:pmf}, where $a-1=n_1$ and $b-1=n_2$. Note that
+$\Prob(Y_1=r)\Prob(Y_2=r')=\binom{n_1}r\binom{n_2}{r'}q^{r+r'}p^{N-2-r-r'}$. The term $j=2r+1$ of
+Theorem~\ref{thm:pmf} is $\binom{n_1}r\binom{n_2}rp^{N-2-2r}q^{2r+1}=q\Prob(Y_1=r)\Prob(Y_2=r)$,
+and summing over $r$ gives $q\Prob(D=0)$. The term $j=2r+2$ is
+\[
+\tfrac12\Bigl[\tbinom{n_1}{r+1}\tbinom{n_2}r+\tbinom{n_1}r\tbinom{n_2}{r+1}\Bigr]p^{N-3-2r}q^{2r+2}
+=\tfrac q2\bigl[\Prob(Y_1=r+1)\Prob(Y_2=r)+\Prob(Y_1=r)\Prob(Y_2=r+1)\bigr],
+\]
+and summing over $r$ gives $\frac q2[\Prob(D=1)+\Prob(D=-1)]$.
+\end{proof}
+
+For $k=1$ we have $n_1=0$ and $D=-Y_2$, so $\Prob(D=0)=p^{N-2}$, $\Prob(D=-1)=(N-2)qp^{N-3}$ and
+$\Prob(D=1)=0$. By \eqref{eq:llt-identity} and symmetry,
+\begin{equation}\label{eq:llt-edge}
+P_N(1)=P_N(N-1)=qp^{N-2}+\tfrac12(N-2)q^2p^{N-3}.
+\end{equation}
+With $P_N(0)=P_N(N)=\frac12p^{N-1}$, the 4 bins $0,1,N-1,N$ are exact, and from now on $N\ge4$
+and $2\le k\le N-2$.
+
+Next we tilt $D$ to mean $0$. For $s>0$ put
+\[
+r_1=\frac{qs}{p+qs},\qquad r_2=\frac q{ps+q},\qquad v_i=r_i(1-r_i),\qquad
+\Lambda(s)=(p+qs)^{n_1}(p+q/s)^{n_2}.
+\]
+Under the tilted law $\Prob_s$, $Y_1\sim\mathrm{Bin}(n_1,r_1)$ and
+$Y_2\sim\mathrm{Bin}(n_2,r_2)$ are independent, and $\Prob(D=j)=\Lambda(s)s^{-j}\Prob_s(D=j)$
+(Lemma~\ref{lem:llt-tilt}). Since $n_1,n_2\ge1$, there is a unique $s>0$ with $n_1r_1=n_2r_2=:m$,
+so that $\E_sD=0$ (Lemma~\ref{lem:llt-saddle}). We fix this $s$, let $x=n_1v_1+n_2v_2$ be the
+variance of $D$ under $\Prob_s$, and define
+\begin{equation}\label{eq:llt-U}
+U_N(k)=\frac q2\Lambda(s)e^{-x}\bigl[2I_0(x)+(s+s^{-1})I_1(x)\bigr].
+\end{equation}
+At the center of an even row, $n_1=n_2$ gives $s=1$, $r_1=r_2=q$ and $\Lambda=1$, so
+\begin{equation}\label{eq:llt-center}
+U_N(N/2)=q\,e^{-x}\bigl(I_0(x)+I_1(x)\bigr),\qquad x=(N-2)pq.
+\end{equation}
+
+Note that by \eqref{eq:llt-identity} and the tilt,
+$P_N(k)=\frac q2\Lambda(s)\bigl[2\Prob_s(D=0)+s^{-1}\Prob_s(D=1)+s\Prob_s(D=-1)\bigr]$. The law
+$e^{-x}I_{|j|}(x)$ on $\Z$ is the symmetric Skellam law, the law of a difference of 2 independent
+Poisson variables with mean $x/2$, and it has mean $0$ and variance $x$. So $U_N(k)$ replaces the
+tilted $D$ by the Skellam law with the same mean and variance. This law is exact for a Poisson
+difference, which $D$ resembles when $q$ is small, and close to Gaussian when $x$ is large. At the
+center $D$ is a sum of $N/2-1$ independent variables with $\Prob(\pm1)=pq$, and replacing it by
+this Skellam law is the approximation that \v{C}ekanavi\v{c}ius and
+Liaudanskait\.{e}~\cite[Eq.~(3)]{cekanavicius2024} attribute to Presman. The tilt extends it off
+the center.
+
+Let $\kappa=1-\cos t$ and write $\langle h\rangle$ for the average of $h(t)$ against the density
+proportional to $e^{x\cos t}$ on $[-\pi,\pi]$. With $\mathcal R=\mathcal R(x)=I_1(x)/I_0(x)$,
+Lemma~\ref{lem:llt-moments} gives
+\[
+\langle\kappa^2\rangle=2-2\mathcal R-\frac{\mathcal R}x,\qquad
+\langle\kappa^3\rangle=4-4\mathcal R-\frac{3\mathcal R}x-\frac{2\mathcal R}{x^2}+\frac1x.
+\]
+Put $V=n_1v_1^2+n_2v_2^2$ and $M=m\max(r_1,r_2)$.
+
+\begin{theorem}[uniform local law]\label{thm:llt}
+Let $N\ge4$, $2\le k\le N-2$ and $0<q<1$. Then $P_N(k)=U_N(k)(1+\theta)$ with
+\[
+|\theta|\le\mathcal E:=\frac1{\mathcal R(x)}\Bigl[\Bigl(4V+\frac{64}3M\Bigr)\langle\kappa^2\rangle
++\frac{1024}9M^2\langle\kappa^3\rangle\Bigr].
+\]
+\end{theorem}
+
+We sketch the proof. By Fourier inversion, $P_N(k)$ and $U_N(k)$ are
+$\frac q2\Lambda(s)\frac1{2\pi}\int_{-\pi}^{\pi}f\omega\,dt$ with
+$\omega(t)=2+se^{it}+s^{-1}e^{-it}$, where $f$ is $\chi(t)=\E_se^{itD}$ for $P_N(k)$ and the
+Skellam characteristic function $g(t)=e^{x(\cos t-1)}$ for $U_N(k)$. Since
+$|1-r+re^{it}|^2=1-2v\kappa=e^{-2v\kappa}(1+O(v^2\kappa^2))$ with $v=r(1-r)$, $|\chi|\le g$
+and $g-|\chi|=O(V\kappa^2)\,g$. The phase of $\chi$ has no linear term since $\E_sD=0$, so it is
+$O(M|t|^3)$. Hence $|\theta|$ is at most a constant times
+$\bigl((V+M)\langle\kappa^2\rangle+M^2\langle\kappa^3\rangle\bigr)/\mathcal R(x)$, where
+$\langle\kappa^j\rangle=O(\min(1,x^{-j}))$ and $1/\mathcal R(x)\le1+2/x$. The proof with explicit
+constants is in Appendix~\ref{app:llt}.
+
+\begin{corollary}\label{cor:llt}
+Let $N\ge4$, $2\le k\le N-2$ and $0<q\le\frac12$, and put $r_{\max}=\max(r_1,r_2)$. Then
+\[
+|\theta|\le\min\Bigl\{\frac{22334}{n_{\min}},\ 221\,r_{\max}+5825\,r_{\max}^2\Bigr\}.
+\]
+Also $r_{\max}\le\delta_T:=2T/\sqrt N+4T^2/N$, so $|\theta|\le221\,\delta_T+5825\,\delta_T^2$ for
+every bin $2\le k\le N-2$. At the center of an even row, $r_{\max}=q$ and $n_{\min}=N/2-1$.
+\end{corollary}
+
+So the relative error tends to $0$ uniformly in $0<q\le\frac12$ as $n_{\min}\to\infty$, and
+uniformly over $2\le k\le N-2$ as $T/\sqrt N\to0$, which covers the ballistic regime $T=O(1)$ up
+to the edges. The constants are crude. The largest $n_{\min}|\theta|$ we observed is $0.686$, at
+$N=10^4$ and $q=\frac12$. It is the largest over $2\le k\le400$ at $N=10^4$ with $q=\frac12$ or
+$0.3$, and over every bin of our grid with $N\le1000$ and $10^{-5}\le q\le\frac12$. The first
+bound has the constant $22334$ instead, so it exceeds $1$ unless $n_{\min}>22334$. Near an edge the largest error we
+observed is $|\theta|=0.1617$ ($k=3$, $N=10^4$, $q=\frac12$), an observation and not a bound. For
+$q>\frac12$ Theorem~\ref{thm:llt} still holds, but $\mathcal E$ need not be small, and a uniform
+form is open. Near $q=1$ the symmetric kernel fails once $n_1\ne n_2$. We found $\theta=0.578$ at
+the middle bin $k=50$ of the odd row $N=101$ with $q=0.999$, while $\theta\approx0$ at $N=100$,
+$k=50$.
+
+Replacing $e^{-x}I_j(x)$ in \eqref{eq:llt-U} by $(2\pi x)^{-1/2}$ gives the Gaussian saddle point
+$G_N(k)=\frac q2\Lambda(s)(2+s+s^{-1})(2\pi x)^{-1/2}$. We also define the transfer-matrix
+form $\mathrm{TM}_N=2(2\pi(N-1)p/q)^{-1/2}$, the Gaussian local form for $\Prob(X_N=0)$ with the
+variance $(N-1)p/q$ that $\lambda_+^{N-1}$ gives in the proof of Theorem~\ref{thm:clt}. The
+factor $2$ is the span of the lattice of $X_N=2k-N$.
+
+\begin{proposition}[Gaussian saddle points]\label{prop:llt-gauss}
+Fix an even $N\ge4$. As $q\to0$,
+\[
+\frac{P_N(N/2)}q\to1,\qquad
+\frac{G_N(N/2)}{P_N(N/2)}\sim\frac2{\sqrt{2\pi(N-2)q}}\to\infty,\qquad
+\frac{\mathrm{TM}_N}{P_N(N/2)}\sim\frac2{\sqrt{2\pi(N-1)q}}\to\infty.
+\]
+\end{proposition}
+
+\begin{proof}
+The term $j=1$ of Theorem~\ref{thm:pmf} is $qp^{N-2}$ and the other terms are $O(q^2)$, so
+$P_N(N/2)=q+O(q^2)$. At the center $s=1$, $\Lambda=1$ and $x=(N-2)pq$, so
+$G_N(N/2)=2q/\sqrt{2\pi(N-2)pq}$. Also $\mathrm{TM}_N=2q/\sqrt{2\pi(N-1)pq}$. Let $q\to0$.
+\end{proof}
+
+More generally, since $P_N(N/2)/q\to1$, any approximation $A_N(q)$ of the center with
+$A_N(q)/q\to\infty$ has relative error $P_N(N/2)/A_N(q)-1\to-1$. Both saddle points are of this
+kind. We make no claim about other Gaussian forms. The Bessel form avoids this because
+$e^{-x}I_j(x)$ is exact for the Poisson difference that $D$ approaches in the ballistic regime.
+
+\begin{remark}[the center crossing]\label{rem:llt-center}
+For even $N\ge4$ let $\mathcal G(q)$ be the logarithm of the ratio of $U_N(N/2)$ to
+$P_N(0)=\frac12p^{N-1}$. By $I_0'=I_1$, $I_1'=I_0-I_1/x$ \cite[Eqs.~10.29.2, 10.29.3]{dlmf} and
+$I_1\le I_0$, we get $\mathcal G'(q)\ge\frac1{2pq}+\frac{N-1}p>N-1$ on $(0,\frac12]$. Also $\mathcal G\to-\infty$ as
+$q\to0$ and $\mathcal G(\frac12)\ge(N-1)\log2-\frac{N-2}4>0$, so $\mathcal G$ has a unique root $q_U$ there, an
+approximate crossing. In Table~\ref{tab:llt-center}, which is purely numerical, the relative error
+of $q_U$ is 16 to 36 times smaller than that of the Bessel root $u_B$ of Theorem~\ref{thm:bessel}.
+Put $\vartheta_N=221q_N+5825q_N^2$. If $\vartheta_N<1$, Corollary~\ref{cor:llt} gives
+$|\mathcal G(q_N)|\le\vartheta_N/(1-\vartheta_N)$, and the mean value theorem gives
+$|q_U-q_N|\le\vartheta_N/((1-\vartheta_N)(N-1))$. By our computation $\vartheta_N\ge1$ for every
+even $N<1454$, and beyond it this bound is weaker than Theorem~\ref{thm:bessel}(ii) at every $N$
+we computed.
+\end{remark}
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{@{}rcccc@{}}
+\toprule
+$N$ & $p_N$ & $q_U/q_N-1$ & $u_B/u_N-1$ & ratio\\
+\midrule
+100 & 0.9649663263 & $-1.477\times10^{-3}$ & $-2.39\times10^{-2}$ & 0.062\\
+400 & 0.9881246429 & $-3.083\times10^{-4}$ & $-7.61\times10^{-3}$ & 0.041\\
+1600 & 0.9962346137 & $-6.469\times10^{-5}$ & $-2.31\times10^{-3}$ & 0.028\\
+\bottomrule
+\end{tabular}
+\caption{The root $q_U$ of $U_N(N/2)=P_N(0)$ against the Bessel root $u_B$ of
+Theorem~\ref{thm:bessel}. The ratio is $(q_U/q_N-1)/(u_B/u_N-1)$. Numerical values, not bounds.}
+\label{tab:llt-center}
+\end{table}
+
+At the center our kernel is the Skellam law of \cite[Eq.~(3)]{cekanavicius2024}, as noted above.
+\v{C}ekanavi\v{c}ius and
+Liaudanskait\.{e}~\cite{cekanavicius2024} and \v{C}ekanavi\v{c}ius and
+Vellaisamy~\cite{cekanavicius2010} give total-variation, local and Wasserstein bounds with
+unspecified absolute constants for chains outside our regime. One is a symmetric 3-state chain
+whose step is $0$ with probability at least $\frac{14}{15}$. The other is a 2-state chain with
+$\Prob(1\mid1)\le\frac12$, and some of its bounds also need $\Prob(1\mid0)\le\frac1{30}$. Neither
+allows both states to persist, as our $p\to1$ does. Jensen~\cite{jensen2013}
+conditions the count $S_n$ on $0<S_n<n$ and patches small tilted variances, and his relative
+error stays bounded (about $0.18$, found partly by numerics) but does not tend to $0$. In the
+literature we searched we did not find a tilted Skellam kernel off the center with a relative
+local error, explicit constants and uniformity in $q\le\frac12$.

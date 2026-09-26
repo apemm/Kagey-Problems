@@ -17,7 +17,7 @@ Paper A (problem131.tex):
   window    the critical window R_{N,k}(u_N + t/N) against exp(t - 2y^2)
 Paper B (problem131_multistate.tex):
   simplex   P_N(n)/V_N on the triangle (d = 3) below, at and above the crossing
-  phases    the weak-field lines lambda_k(t) for h_i = -(i-1)^2
+  phases    the weak-field lines ell_k(t) for h_i = -(i-1)^2
 
 Small cases use exact rational arithmetic (fractions.Fraction). The crossings
 for large N are roots of polynomials with positive coefficients, found by
@@ -243,7 +243,7 @@ def check():
             assert abs(pc - 1 / (1 + 2 * 6 ** -0.5)) < 1e-12
         C, V = simplex_ratio_at(n, pc)
         assert abs(C / V - 1) < 1e-9
-    # Paper B, Corollary 6.3: tau_k are the intersections of consecutive lines
+    # Paper B, cor:weakfield-full-hierarchy: t_k are the intersections of consecutive lines
     for d in (3, 4, 5, 6):
         for k in range(1, d):
             t = tau(k)
@@ -304,27 +304,27 @@ def fig_crossing():
     fig, (a, b) = plt.subplots(1, 2, figsize=(FULL, 2.3))
     m = ns >= 3
     a.axhline(1.0, color="0.6", lw=0.6, ls=":")
-    a.plot(ns[m], two[m] / L[m], "-.", color=cols[0], label="two terms")
-    a.plot(ns[m], three[m] / L[m], ":", color=cols[1], lw=1.2, label="three terms")
-    a.plot(ns, bessel / L, "--", color=cols[2], label="Bessel root $x_B$")
-    a.plot(ns, exact / L, "-", color="k", lw=1.1, label="exact $p_N$")
+    a.plot(ns[m], two[m] / L[m], "-.", color=cols[0], label=r"$\nu_N$")
+    a.plot(ns[m], three[m] / L[m], ":", color=cols[1], lw=1.2, label=r"$\nu_N$ + $1/L$ term")
+    a.plot(ns, bessel / L, "--", color=cols[2], label="Bessel root $u_B$")
+    a.plot(ns, exact / L, "-", color="k", lw=1.1, label="exact $z_N$")
     a.set_xscale("log")
     a.set_xlim(2, 1e4)
     a.set_ylim(0.45, 1.05)
     a.set_xlabel(r"$N$")
-    a.set_ylabel(r"$N(1-p_N)/\log N$")
+    a.set_ylabel(r"$z_N/\log N$")
     a.legend(frameon=False, loc="lower right", handlelength=2.2)
     panel(a, "a")
 
     b.axhline(0.0, color="0.6", lw=0.6, ls=":")
-    b.plot(ns[m], (exact - two)[m], "-.", color=cols[0], label="minus two terms")
-    b.plot(ns[m], (exact - three)[m], ":", color=cols[1], lw=1.2, label="minus three terms")
+    b.plot(ns[m], (exact - two)[m], "-.", color=cols[0], label=r"minus $\nu_N$")
+    b.plot(ns[m], (exact - three)[m], ":", color=cols[1], lw=1.2, label=r"minus $\nu_N$ + $1/L$ term")
     b.plot(ns, exact - bessel, "--", color=cols[2], label="minus Bessel root")
     b.set_xscale("log")
     b.set_xlim(2, 1e4)
     b.set_ylim(-0.1, 0.32)
     b.set_xlabel(r"$N$")
-    b.set_ylabel(r"error in $N(1-p_N)$")
+    b.set_ylabel(r"error in $z_N$")
     b.legend(frameon=False, loc="upper right", handlelength=2.2)
     panel(b, "b", y=0.12)
     fig.subplots_adjust(left=0.075, right=0.985, wspace=0.26)
@@ -424,7 +424,7 @@ def fig_lattice():
         s.set_visible(False)
     ax.set_xlabel("R steps")
     ax.set_ylabel("L steps")
-    ax.set_title(rf"rook paths to $({a},{b})$: $2^{{{rep}}}={2 ** rep}$ for {WORD}", fontsize=8)
+    ax.set_title(rf"$2^{{{rep}}}={2 ** rep}$ rook paths to $({a},{b})$ for {WORD}", fontsize=8)
     ax.plot([], [], "s", ms=6, mfc="k", mec="k", label="forced cut")
     ax.plot([], [], "s", ms=6, mfc="white", mec="k", label="optional cut")
     ax.legend(frameon=False, loc="upper left", bbox_to_anchor=(-0.02, 1.0), handletextpad=0.3)
@@ -454,7 +454,7 @@ def fig_lattice():
     bx.set_ylabel(r"$y$")
     for s in bx.spines.values():
         s.set_visible(False)
-    bx.set_title(rf"blocked walks to $({3 * a},{3 * b})$: $2^{{{chg}}}={2 ** chg}$ for {WORD}", fontsize=8)
+    bx.set_title(rf"$2^{{{chg}}}={2 ** chg}$ blocked walks to $({3 * a},{3 * b})$ for {WORD}", fontsize=8)
     panel(ax, "a", x=-0.12, y=1.08)
     panel(bx, "b", x=-0.12, y=1.08)
     fig.subplots_adjust(left=0.06, right=0.995, wspace=0.18)
@@ -541,7 +541,7 @@ def fig_window(N=10 ** 6):
         ax.set_xlabel(r"$y=(k-N/2)\sqrt{\log N}/N$")
         ax.set_title(f"{name} boundary", fontsize=8)
         panel(ax, letter)
-    axs[0].set_ylabel(r"$R_{N,k}(u_N+t/N)$")
+    axs[0].set_ylabel(r"$R^X_{N,k}(u^X_N+t/N)$")
     axs[1].plot([], [], "--", color="k", lw=0.6, label=r"$e^{t-2y^2}$")
     axs[1].legend(frameon=False, loc="upper right", handlelength=1.8)
     fig.subplots_adjust(left=0.075, right=0.995, wspace=0.06)
@@ -677,7 +677,7 @@ def c_k(k):
 
 
 def lam(k, t):
-    """lambda_k(t) of Theorem 6.2 in Paper B with h_i = -H (i-1)^2."""
+    """ell_k(t) of eq:weakfield-lines in Paper B with h_i = -H (i-1)^2."""
     return (k - 1) * t + c_k(k) - H * (k - 1) * (2 * k - 1) / 6
 
 
@@ -710,11 +710,11 @@ def fig_phases(d=5):
         ax.text(mid, ymax - 0.15, str(k), ha="center", va="top")
     for i, k in enumerate(range(1, d + 1)):
         j = int(0.97 * len(t)) if k > 1 else int(0.03 * len(t))
-        ax.text(t[-1] + 0.08, Lk[i][-1], rf"$\lambda_{k}$", va="center", fontsize=8)
+        ax.text(t[-1] + 0.08, Lk[i][-1], rf"$\ell_{k}$", va="center", fontsize=8)
     ax.set_xlim(t[0], t[-1])
     ax.set_ylim(ymin, ymax)
     ax.set_xlabel(r"window parameter $t$")
-    ax.set_ylabel(r"score $\lambda_k(t)$")
+    ax.set_ylabel(r"score $\ell_k(t)$")
     ax.text(t[0] + 0.05, ymax - 0.15, "size", ha="left", va="top", color="0.35")
     save(fig, "phases")
     return taus

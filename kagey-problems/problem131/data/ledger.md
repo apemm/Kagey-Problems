@@ -84,3 +84,43 @@ x > 0, for both parities and including the terms past the degree of S_N. Hence
 0 <= u_N - u_B = O(log(N)^2/N^2), which gives the log log term, the constant, and one more term in
 1/log N. `check_bessel.py` checks the bound and the roots numerically; the output is in
 `bessel_verification.txt`.
+
+## Later ledgers for Paper A
+
+Two later computations for Paper A have their own ledgers, kept the same way (predictions first,
+then the outcome, with nothing deleted).
+
+- [ledger_every_n.md](ledger_every_n.md): the crossing at every N. Predictions P1 to P8 were
+  written before any code ran, and guards G1 to G6 were added after a second check of the proofs.
+  Outcome: P1 to P6 and G1 to G6 confirmed. P7 is partly refuted (its bounds on R_N hold, but R_N
+  turns negative at N = 4, not near N = 15), and the runtime estimates of P8 were partly missed.
+- [ledger_llt.md](ledger_llt.md): the uniform local law. Predictions P1 to P18. Outcome: all
+  confirmed except the numeric window of P12 (at N = 101, q = 0.999 the error is +0.578, outside
+  the predicted window, although it has the predicted sign).
+
+## Later ledgers for Paper B
+
+Two later computations for Paper B have their own ledgers, kept the same way (predictions first,
+then the outcome, with nothing deleted).
+
+- [ledger_B_tie.md](ledger_B_tie.md): the tie on the complete graph, the law with a start, and the
+  tree form of the constants a_k (`verify_general_start.py` and `verify_B_tie_repair.py`).
+  Predictions T1 to T4, then T4', T1(e'), T4'' and T4''' after a repair pass. Outcome: T1(e) is
+  refuted on its tolerance (a finite-difference check that was not precise enough, and the exact test
+  T1(e') later covers the same identity), and T4 is refuted at N = 90 and N = 1002 because its
+  window equations left out the discrete z^2/N terms. The corrected T4' on new cells and all the
+  other predictions are confirmed.
+- [ledger_B_crossover.md](ledger_B_crossover.md): the complete first-order factor in the crossover
+  theorem for coordinates of order N/(log N)^2 (`verify_crossover_factor.py`). Predictions R1 to
+  R8, the scan (a) to (c), L1 and L2, and the repair checks X1 to X3. Outcome: all confirmed (R7
+  after a correction to its diagnostic). A side claim in the notes about the leading behavior of
+  the correction for 2 or more rare counts is refuted by X1 and was removed.
+
+## Rerun after the move to 4 papers (2026-09-26)
+
+No new prediction is registered here. After `verify_all.py` and `SUPPLEMENT.md` were set up for the
+4 papers, we ran `python -B verify_all.py --paper a` and `python -B verify_all.py --paper b` without
+`--full`. Both finished with exit code 0. In the scripts that report their checks in their output,
+the guards G1 to G7 all held, the smallest distance from zeta_N to a certified interval was again
+1.6562e-5 at N = 218, and the only lines marked False belong to T4, the registered prediction in
+`ledger_B_tie.md` that failed.
