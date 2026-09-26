@@ -23,14 +23,14 @@ is x_n = n eps, and for the aging walk of D it is the expected number of
 switches. Above each curve the middle beats the ends. The curves are
   A  the root z of z + (1/2) log z = L + c_0 + 1/(8z) with c_0 = (1/2) log(pi/8).
      This is the crossing equation of Paper A (the proposition on the crossing
-     equation, sec_crossing.tex) with its remainder R_N dropped. There
+     equation, paperA/sec_crossing.tex) with its remainder R_N dropped. There
      |R_N| <= 1/(4L^2) + (L^2 + L)/N for every N >= 2, and the root follows the
      third-order expansion of z_N = N(1 - p_N) in the corollary on the crossing
      at every N.
   B  the root z of z + (1/2) log z = L + a_k + 1/(8z) for k = 2, 3, 4, where
      a_k = (1/2) log(4 pi) - ((k + 1/2)/(k - 1)) log k. This is the crossing
      equation of the face-center crossing theorem of Paper B
-     (simplex_thresholds.tex), which holds for z_{N,k} = N(1 - p_{N,k})/(d - 1)
+     (paperB/simplex_thresholds.tex), which holds for z_{N,k} = N(1 - p_{N,k})/(d - 1)
      up to O(L^-2). check() compares it with the exact roots N u_{N,k}, which
      differ from z_{N,k} by O(L^2/N). Since a_2 = c_0, the curve for k = 2 is
      curve A, and the 3 curves nearly coincide because every face ties with the
@@ -171,7 +171,7 @@ def third_order(L, a):
 # The exact crossings come from the data files of the papers.
 #   Paper A  N(1 - p_N) for N = 40, ..., 10240 (key "nq" of paperC/data/figdata_planar_0p1_1.json)
 #            and z_n for n = 50, ..., 51200 (key "z" of paperD/data/figdata_crossing.json)
-#   Paper B  a_k and the roots N u_{N,k} (data/simplex-verification.json)
+#   Paper B  a_k and the roots N u_{N,k} (paperB/data/simplex-verification.json)
 #   Paper C  T*_N for (r, s) = (1, 1) and N = 40, ..., 10240 (paperC/data/figdata_planar_1_1.json)
 #   Paper D  x_n for n = 50, ..., 51200 (key "x" of paperD/data/figdata_crossing.json)
 # D_G and D_DIFF hold the roots g_n and the differences D(n) printed in the table of exact
@@ -194,7 +194,7 @@ def load_exact():
     rev = read("paperC/data/figdata_planar_0p1_1.json")
     turn = read("paperC/data/figdata_planar_1_1.json")
     ele = read("paperD/data/figdata_crossing.json")
-    simplex = read("data/simplex-verification.json")
+    simplex = read("paperB/data/simplex-verification.json")
     simplex = None if simplex is None else simplex["threshold_checks"]
     return {
         "A": None if rev is None else {r["N"]: r["nq"] for r in rev},
