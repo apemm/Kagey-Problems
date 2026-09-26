@@ -4,7 +4,7 @@ import Mathlib
 # Paper B, Section `sec:multistate-model`: the symmetric `d`-state model
 
 This file sets up the model of Section `sec:multistate-model` ("The model and the
-exact law") of Paper B (`problem131_multistate.tex`) with the uniform start: words
+exact law") of Paper B (`paperB/problem131_multistate.tex`) with the uniform start: words
 `Fin N → Fin d`, their changes, the word probability `(1/d) p^(N-1-j) r^j` with
 `r = (1-p)/(d-1)`, the occupation vector, the occupation law `P_N(k)`, total mass one,
 the vertex probability `p^(N-1)/d`, and the ratio `P_N(k)/V_N = ∑_w u^(changes w)`.

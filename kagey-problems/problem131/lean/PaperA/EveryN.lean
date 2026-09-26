@@ -20,7 +20,7 @@ gives `Φ(w) = F(w/2) = w (I_0(w) + I_1(w))`. The number `ζ_N` is the positive 
   `ζ_N + 1/(8ζ_N) - ε_N < N(1 - p_N) < ζ_N + 1/(8ζ_N)` (`every_N_crossing_small`).
 
 The case `N ≤ 174` is computer-assisted. For each `N` the table `everyNTable` gives
-`u_lo = x_lo/10⁹` and `u_hi = x_hi/10⁹` (the certificates of `data/every_n_certificates.csv`)
+`u_lo = x_lo/10⁹` and `u_hi = x_hi/10⁹` (the certificates of `paperA/data/every_n_certificates.csv`)
 and `q = s/10⁴`, `Q = S/10⁴`. The kernel checks integer inequalities in exact
 natural-number arithmetic (`decide +kernel`, no `native_decide`). From them the proofs get
 `S_N(u_lo) < 1 < S_N(u_hi)`, `q < ζ_N < Q`, and the two comparisons of the certificate step
@@ -523,7 +523,7 @@ theorem every_N_of_cert {N xl xh s S : ℕ} (hN : 2 ≤ N) (hc : EveryNCert N xl
     linarith
 
 /-- Certificates `(N, 10⁹ u_lo, 10⁹ u_hi, 10⁴ q, 10⁴ Q)` for `2 ≤ N ≤ 174`. The first three
-columns are those of `data/every_n_certificates.csv`; `q` and `Q` are `ζ_N` rounded down and
+columns are those of `paperA/data/every_n_certificates.csv`; `q` and `Q` are `ζ_N` rounded down and
 up to the grid `10⁻⁴`, with a gap of at least `0.5 · 10⁻⁴`. -/
 def everyNTable : List (ℕ × ℕ × ℕ × ℕ × ℕ) := [
   (2, 499999999, 500000001, 5367, 5369), (3, 414213562, 414213563, 7650, 7652),
