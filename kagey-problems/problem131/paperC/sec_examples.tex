@@ -1,0 +1,198 @@
+\section{The 4-cycle and other graphs}\label{sec:examples}
+
+In this section $Q$ is symmetric. So the admissible faces are the connected
+faces with positive start mass, and they satisfy (H)
+(Lemma~\ref{lem:admissible}). By Theorem~\ref{thm:hull}(c),
+Theorem~\ref{thm:window} applies at every tie. We call the faces in
+$\mathcal F_\tau$ the \emph{winners} at $\tau$. We work out one example in
+full and then list the outcomes for other graphs.
+
+\begin{corollary}[the 4-cycle cascade]\label{cor:C4}
+Let $Q$ be the 4-cycle $C_4$ with $q_{i,i\pm1}=1$ (indices mod $4$), and let
+$\mu$ be uniform.
+\begin{enumerate}[(a)]
+\item The admissible faces are the vertices, the adjacent pairs, the arcs of
+$3$ states and $C_4$, with exit rates $2$, $1$, $2-\sqrt2$ and $0$. The
+winners are the vertices for $\tau<1$, the adjacent pairs for $1<\tau<2$ and
+$C_4$ for $\tau>2$. The arcs of $3$ states never win.
+\item $K_{\rm vertex}=\frac14$, $K_{\rm pair}=1/\sqrt{2\pi}$,
+$K_{\rm arc3}=(4+3\sqrt2)/(4\pi)$ and $K_{C_4}=8/\pi^{3/2}$, and
+$\det\Sigma=1/512$ on $C_4$.
+\item For every $N\ge2$ and $0<h<\frac12$, $M_{\rm pair}=M_{\rm vertex}S_N(u)$
+with $u=h/(1-2h)$. So the face maxima of a vertex and an adjacent pair cross
+exactly at $u=u_N$, the crossing of~\cite{paperA}. For large $N$ this
+crossing satisfies $T+\frac12\log T=L+c_0+O(1/L)$.
+\item For large $N$, every crossing $T_N\in[1,N^{1/3}]$ of the face maxima of
+an adjacent pair and $C_4$ satisfies $T_N+\log T_N=2L-\log(8\sqrt2/\pi)+O(1/L)$.
+\item Put $b=-\frac12\log2-\frac12\log(8\sqrt2/\pi)$. In the tie window at
+$\tau=1$ the face that carries the global mode changes from the vertices to
+the adjacent pairs only at $T=L-\frac12\log L+c_0+o(1)$. In the tie window at
+$\tau=2$ it changes from the adjacent pairs to $C_4$ only at
+$T=2(L-\frac12\log L+b)+o(1)$.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+(a) A proper face that is not an arc is disconnected, so it is not
+admissible. For an adjacent pair $-Q_F$ has rows $(2,-1)$ and $(-1,2)$, with
+least eigenvalue $1$. For an arc of $3$ states $-Q_F=2I-A$, where $A$ is the
+adjacency matrix of the path on $3$ states, and $r=(1/\sqrt2,1,1/\sqrt2)$ is a
+positive eigenvector with eigenvalue $2-\sqrt2$. Also $Q\ones=0$. So
+$\Phi_\tau$ equals $2\tau$, $\tau+1$, $(2-\sqrt2)\tau+2$ and $3$, and comparing
+the first, second and fourth gives the winners. Since $2-\sqrt2>\frac12$, the
+3-arc has $\Phi_\tau>\frac12(\tau+1)+\frac12\cdot3$, which is at least the
+smaller of the exponents of the pair and of $C_4$. So it never wins.
+
+(b) A vertex has $K=\mu_i=\frac14$. The pair and $C_4$ have symmetric $Q_F$
+with constant row sums, so Corollary~\ref{cor:symface} applies, with
+$\mu(F)=\frac12$ and one spanning tree for the pair, and $\mu(F)=1$ and $4$
+spanning trees for $C_4$. On $C_4$ the law $\alpha^*$ is uniform and every edge
+has conductance $\frac14$, so Proposition~\ref{prop:constant}(b) gives
+$\det\Sigma=2^3\cdot4^{-8}/(4\cdot4^{-3})=1/512$. The 3-arc has unequal row
+sums, and we use Proposition~\ref{prop:constant}(b) with $\nu=\ones$. Here
+$\alpha^*=r\circ r/\lvert r\rvert^2=(\frac14,\frac12,\frac14)$ and
+$r_\alpha=l_\alpha=\sqrt{\alpha^*}$, so
+$(\mu\cdot r_\alpha)(l_\alpha\cdot\ones)=\frac14(1+1/\sqrt2)^2=(3+2\sqrt2)/8$.
+The only spanning tree is the path, with $\tree(c)=c_{12}c_{23}=\frac18$, and
+$\prod_i\alpha^*_i=\frac1{32}$. So
+$K_{\rm arc3}=\frac{3+2\sqrt2}8\cdot\frac{32}{2\sqrt2}\cdot\frac1{4\pi}
+=\frac{4+3\sqrt2}{4\pi}$.
+
+(c) This is Proposition~\ref{prop:pair} with $a=1$ and $q=2$. As
+$K_{\rm pair}/K_{\rm vertex}=2\sqrt{2/\pi}=e^{-c_0}$, Theorem~\ref{thm:crossing}
+with $\Delta=\delta=1$ gives the equation.
+
+(d) This is Theorem~\ref{thm:crossing} with $F=C_4$, $G$ an adjacent pair,
+$\Delta=2$, $\delta=1$ and $K_F/K_G=8\sqrt{2\pi}/\pi^{3/2}=8\sqrt2/\pi$.
+
+(e) At $\tau=1$ the tied faces are the vertices and the adjacent pairs, and
+at $\tau=2$ they are the adjacent pairs and $C_4$. Faces of one type have the
+same line. By Remark~\ref{rem:half} the kink of $E$ is at $t=b_{FG}$, which is
+$c_0$ at $\tau=1$ by (c) and $b$ at $\tau=2$ by (d). So
+Theorem~\ref{thm:window} gives (e).
+\end{proof}
+
+The finite parts of (a) are checked in Lean. Lean also checks that a closed
+form for the constants of all arcs, which we do not use, gives the values of
+$K_{\rm pair}$ and $K_{\rm arc3}$ above. Remark~\ref{rem:nextterm} gives
+$c_{\rm pair}=-\frac18$ without proof, and an exact computer evaluation of the
+next Laplace term gives $c_{\rm arc3}=\frac54\sqrt2-2$ and
+$c_{C_4}=-\frac9{16}$. So if Remark~\ref{rem:nextterm} holds, then at the
+crossings in (d) the quantity $T_N(2L-\log T_N-T_N-\log(8\sqrt2/\pi))$ tends to
+$-\frac9{16}+\frac18=-\frac7{16}$ (computer-assisted, proof omitted).
+
+Theorem~\ref{thm:crossing} also applies to a face that never carries the mode,
+and this is a good test of the implicit equation~\eqref{eq:crossing}. Take the
+3-arc $F$ against a vertex $G$, so that $\Delta=2$, $\delta=\sqrt2$ and
+$\log(K_F/K_G)=\log((4+3\sqrt2)/\pi)=0.964591$. At $N=10^{14}$ a numerical
+computation of the face maxima, over the symmetric compositions $(a,N-2a,a)$,
+puts the crossing at $T_N=42.2633$, where
+$\Delta L-\frac\Delta2\log T_N-\delta T_N=0.959070$. The root of the implicit
+equation is within $0.004$ of $T_N$, while the explicit form in
+Theorem~\ref{thm:crossing} gives $42.2059$. Also
+$T_N(0.959070-0.964591)=-0.2333$, close to the value
+$c_{\rm arc3}-c_{\rm vertex}=-0.2322$ that Remark~\ref{rem:nextterm} predicts.
+
+By Corollary~\ref{cor:symface} the start enters $K_F$ only through $\mu(F)$, and this can
+change which face wins inside a tie window.
+
+\begin{corollary}[the start on $K_3$]\label{cor:K3start}
+Let $d=3$ and $Q=J-3I$, put $T=L-\frac12\log L+t$, and let
+$w=\log\frac{16}{9\sqrt3}=0.026$.
+\begin{enumerate}[(a)]
+\item Let $\mu=(\frac12,\frac12,0)$. For every $\eta>0$ and large $N$, if
+$c_0+\eta\le t\le c_0+w-\eta$, then every global mode lies on the face $\{1,2\}$.
+\item Let $\mu$ be uniform. For every compact set of $t$ and large $N$, no global mode lies on a
+face of $2$ states.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+All faces tie at $\tau^*=1$ (Corollary~\ref{cor:paperB}), and Theorem~\ref{thm:window} applies
+since $Q$ is symmetric. By Corollary~\ref{cor:symface} the lines of a vertex $i$, an edge
+$\{i,j\}$ and $[3]$ are $\log\mu_i-2t$, $\log((\mu_i+\mu_j)\sqrt{2/\pi})-t$ and $\log K_{[3]}$ with
+$K_{[3]}=3^{5/2}/(4\pi)$. In (a) the line of $\{1,2\}$ lies strictly above the lines of the other
+admissible faces exactly when $c_0<t<\frac12\log\frac2\pi-\log K_{[3]}=c_0+w$. So $E$ has no kink
+in this interval, and the consequence in Theorem~\ref{thm:window} gives (a). In (b) the gap between
+$\max(\log\frac13-2t,\log K_{[3]})$ and an edge line is least where the first 2 lines meet, and there
+it is $\frac12\log(3^{7/2}/32)>0.18$. So Theorem~\ref{thm:window}(i) gives (b).
+\end{proof}
+
+The left end $c_0$ is the crossing of Paper~A. Indeed Proposition~\ref{prop:pair} with $a=1$ and
+$q=2$ shows that for every $N$ the face maxima of $\{1,2\}$ and of a vertex cross exactly at
+$u=u_N$. The comparison of the lines in (a) and the value of $w$ are checked in Lean. With the
+uniform start the mode jumps from the vertices straight to $[3]$, as~\cite{paperB} shows for every
+complete graph. Paper~B~\cite{paperB} also compares the window in (a) with exact computations at
+finite $N$, where it approaches its width $w$ slowly.
+
+\begin{table}[t]
+\centering\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.1cm}
+>{\raggedright\arraybackslash}p{10.2cm}
+>{\raggedright\arraybackslash}p{2.6cm}@{}}
+\toprule
+graph & winners in order, with the value of $\tau$ where each one starts &
+status\\
+\midrule
+$K_d$ & $\lambda_F=d-\lvert F\rvert$. Vertices for $\tau<1$ and $[d]$ for
+$\tau>1$. Every face ties at $\tau=1$, and~\cite{paperB} resolves the tie at
+second order. & Lean\\
+symmetric $Q$ & $\lambda_{[d]\setminus\{x\}}\le q_x/(d-1)$, with equality
+exactly when $q_{yx}=q_x/(d-1)$ for all $y\ne x$. With unit rates on a
+connected graph, the winners go from vertices straight to $[d]$ exactly when
+the graph is complete. & Lean\\
+$C_d$, $d\ge4$ & Arcs of $k=1,\dots,k_d$ states with $k_d=\lfloor2d/3\rfloor$,
+then $C_d$. The arc of $k\ge2$ states wins from $1/(\lambda_{k-1}-\lambda_k)$
+with $\lambda_k=2-2\cos\frac\pi{k+1}$, and $C_d$ from
+$\lceil d/3\rceil/\lambda_{k_d}$. These values are $1$, $1+\sqrt2$, $4.906$ and
+$8.771$ for $k=2,\dots,5$, and they grow like $k^3/(2\pi^2)$. Arcs of $k\ge3$
+states win exactly when $d\ge\lceil3k/2\rceil$. & Lean, asymptotics by hand\\
+$P_d$, $d\ge3$ & End-arcs of $1,\dots,\lfloor2d/3\rfloor$ states, then $P_d$.
+The end-arc of $k$ states has exit rate $2-2\cos\frac\pi{2k+1}$, and the first
+switch is at the golden ratio $(1+\sqrt5)/2$. & Lean in part, proof
+omitted\\
+$P_4$ at finite $N$ & The end-arc of $3$ states never wins, and its exit rate is
+only $0.0071$ too large to win. Yet it is the exact mode for
+$T\in(9.381,12.502)$ at $N=40$, and on a window at every $N$ tested up to
+$300$. & numerical\\
+$\Theta_\varepsilon$ & Triangles $\{1,2,3\}$ and $\{4,5,6\}$ joined by a link
+$3$--$4$ of rate $\varepsilon<\varepsilon_1=(64+\sqrt{46})/60$. The states
+$1,2,5,6$, then $\{1,2\}$ and $\{5,6\}$ from $1$, the triangles from
+$1+\varepsilon/3+O(\varepsilon^2)$, and $[6]$ from
+$9/\varepsilon+2+O(\varepsilon)$. & Lean in part, 3 exact resultants,
+proof omitted\\
+paw & A triangle $\{1,2,3\}$ with a leaf $4$ at $1$. $\{4\}$, then $\{1,4\}$
+from $1+\sqrt2$, $\{1,2,3\}$ from $\sqrt2+\sqrt3$, and all $4$ states from
+$2+\sqrt3$. & Lean\\
+house & The square $1,2,3,4$ with a roof state $5$ joined to $1,2$.
+$\{3\},\{4\},\{5\}$, then $\{3,4\}$ from $1$, $\{1,2,5\}$ from $1+\sqrt2$, and
+all $5$ states from $2+\sqrt2$. & Lean\\
+$K_4$ plus a vertex & A state $5$ joined to $1,2$ of $K_4$. $\{5\}$, then
+$\{1,2,3,4\}$ from $3(\sqrt{17}+1)/8=1.921$, and all $5$ states from
+$(5+\sqrt{17})/4=2.281$. & Lean\\
+\bottomrule
+\end{tabular}
+\caption{First-order winners on some graphs with unit rates and a start of full
+support (the second row allows any symmetric $Q$). The last column says how
+each row is established (Remark~\ref{rem:outcomes}).}
+\label{tab:outcomes}
+\end{table}
+
+\begin{remark}[the outcomes table]\label{rem:outcomes}
+Table~\ref{tab:outcomes} lists the outcomes for other graphs. Each row comes
+from Theorem~\ref{thm:hull} applied to the exit rates of the connected faces. On $C_d$ a proper face
+that is not an arc is disconnected, hence not admissible, and the growth of
+its switch values follows from $2-2\cos x=x^2+O(x^4)$. The rows marked ``proof omitted'' use the same
+hull argument, and we omit the details. A well-separated community wins for a
+long range of $\tau$, such as a triangle of $\Theta_\varepsilon$ from
+$\tau\approx1$ to $\tau\approx9/\varepsilon$. The mode need not grow around its
+first vertex. It leaves the leaf of the paw, and on the house and on $K_4$ plus
+a vertex it jumps to a disjoint community. The second row explains the last
+one. The state $5$ feeds $\{1,2,3,4\}$ unequally, so the point of
+$\{1,2,3,4\}$ lies strictly left of the chord from $\{5\}$ to $[5]$, and the
+winners cannot jump from $\{5\}$ straight to $[5]$. At
+feasible $N$ the switch values are approached slowly
+(Figure~\ref{fig:cycles}(b)), and on $P_4$ even the order of the phases
+differs.
+\end{remark}

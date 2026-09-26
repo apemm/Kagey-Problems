@@ -2,8 +2,8 @@
 
 This folder has the Lean 4 proofs for the Problem 131 papers. Each paper is a separate library
 with a root file (`PaperA.lean`) and a folder of modules (`PaperA/`). We use Lean 4.33.1 and
-Mathlib v4.33.1. Each module starts with a docstring that lists what it proves. Libraries for
-Papers C and D will be added when those papers are posted.
+Mathlib v4.33.1. Each module starts with a docstring that lists what it proves. For Papers C and
+D the files `PaperC/MAP.md` and `PaperD/MAP.md` match each statement to its Lean theorems.
 
 ## Paper A (`problem131.tex`)
 
@@ -52,6 +52,40 @@ Papers C and D will be added when those papers are posted.
 - The ordering of the window constants `a_k`, the exact parts of the weak-field phase diagram and
   the covolume `√k` behind the superlevel volumes (`Constants`, `Modes`).
 
+## Paper C (`paperC/problem131_switching.tex`)
+
+`PaperC/` is about the chain `P = I + (T/N)Q` and the planar walk. It proves the following.
+
+- The exact composition law through runs, and the switch-count relations (`ChainLaw`).
+- The principal Dirichlet eigenvalue `λ_F` of a face, Barta's bound, and `λ_F` for complete
+  graphs, cycle arcs and path end-arcs (`Rayleigh`, `Spectra`).
+- The minimum of the Donsker-Varadhan rate over a face is `λ_F` (`DVRate`).
+- The single-jump criterion, the cycle cascade and its thresholds, the two triangles, and the
+  finite hull theorem for the winners (`SingleJump`, `CycleCascade`, `TwoTriangles`, `Winners`).
+- The winners for the paw, the house and `K_4` plus a vertex, over every face (`Paw`,
+  `DisjointJumps`).
+- The planar walk to first order, the exact origin/corner identity and the unique crossing
+  (`Planar`).
+- The direct-jump criterion and the other finite facts about sticky priors, and the Fisher
+  efficiency identity (`Sticky`, `Fisher`).
+- The second-order constants in finite form, namely the directed 3-cycle, the tree formula for small
+  faces, the constants of Papers A and B and the `K_3` edge window (`Constants`, `ChainApps`).
+
+## Paper D (`paperD/problem131_memory.tex`)
+
+`PaperD/` is about walks with memory. It proves the following.
+
+- The law of the elephant walk, `c_1 = 4/(n+2)`, the monotone likelihood ratio and the unique
+  crossing of every bin, the endpoint dip and unimodality with a fixed first step (`Elephant`,
+  `ElephantAlgebra`, `ElephantFirstOrder`, `ElephantCrossing`, `ElephantEndpoint`,
+  `ElephantUnimodal`).
+- The subtree counts behind the elephant profile (`RecursiveTree`).
+- The exponent of the heavy-tailed runs and the golden ratio, `K_α = -Γ(1-α)` and the Lamperti
+  value at `1/2` (`HeavyRuns`).
+- The aging walk, with unique crossings, the uniform law at `c = 1` with a fixed first step, the
+  fair-start values and the arcsine law at `c = 1/2` (`Aging`, `AgingExact`, `AgingCrossing`,
+  `AgingSmall`, `AgingAveraging`, `AgingSwitches`, `BetaBinomial`).
+
 ## What is not in Lean
 
 The general large-argument asymptotics of the Bessel functions are not formalized. The one
@@ -63,7 +97,9 @@ leading ones. The crossing equation, the corollary on the crossing at every `N` 
 (a), the sign remark, the spatial window and the uniform local law of Paper A are also not in
 Lean. In Paper B the window, the Gaussian volumes and the frontier limits are left out. `PaperB`
 proves the exact law for the uniform start only, so the law with a general start and the tree
-form of the constants are not in it.
+form of the constants are not in it, but the arithmetic of the `K_3` window with a start and the
+tree formula for 3 states are checked in `PaperC`. For Papers C and D every statement about large
+`N` or large `n` is left out, and `MAP.md` lists the reason for each.
 
 ## Building and checking
 
