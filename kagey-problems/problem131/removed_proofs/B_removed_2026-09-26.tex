@@ -1,0 +1,851 @@
+% Paper B (problem131_multistate.tex): material removed from the paper on
+% 2026-09-26 while trimming the appendix. Every piece below is verbatim from
+% the file and lines named in its header, before the trim. Labels and
+% cross-references refer to that earlier version, so this file is not meant
+% to be compiled.
+%
+% What replaced each piece in the paper:
+%  1-2.  Lemma start-weights(3) became Remark rem:start-weights (proof omitted).
+%        Its proof and the 2 integral forms it used are below.
+%  3.    Corollary cor:start-modes became Remark rem:start-modes, which cites
+%        Paper C's face-maxima and tie-window theorems. Its old proof is below.
+%  4.    Example ex:K3-start became a short remark of the same label, and
+%        Remark rem:K3-finite became a short remark in general_start.tex. The
+%        long remark and Table tab:K3-window are below.
+%  5.    Theorem thm:frontier-superlevel became Remark rem:frontier-superlevel
+%        in frontier_modes.tex (proof omitted). Its proof is below.
+%  6.    The covariance remark rem:tetra was folded into the proof of
+%        Proposition prop:field-tilt(3) (variance only).
+%  7-10. Lemmas lem:simplex-integral and lem:simplex-laplace, the first
+%        paragraph of the proof of the asymptotic assertions, and the first
+%        part of the proof of Theorem thm:simplex-interior were replaced by
+%        Lemma lem:no-rare, which reads the proof of the crossover theorem with
+%        no rare counts. The moment bound in the proof of Lemma
+%        lem:start-weights(2), which used lem:simplex-integral, was reproved
+%        with the integration by parts of the majorant proof. The old versions
+%        are below.
+%  11.   Remark rem:last-exit-trees became one sentence in the related work.
+%  12.   Lemma lem:singleton-insertion (not used by any proof) was removed.
+%  13-14. The near-vertex side results (Theorem thm:simplex-fixed-vertex, the
+%        all-singleton case, Corollary cor:vertex-shape-law and Proposition
+%        prop:vertex-probability-failure) were removed, and one sentence in
+%        frontier_boundary.tex mentions them (proofs omitted).
+%  15.   Sentences in the main file that pointed to removed results.
+
+%======================================================================
+% 1. Lemma start-weights(3): statement and the paragraph after the lemma
+% Source: general_start.tex, lines 27-39 of the version before 2026-09-26 trim.
+%======================================================================
+\item Fix a compact set $\mathcal K$ in the open face and $0<c<C$, and put
+$\alpha=n/N$ and $A=\sum_{b\in F}\sqrt{\alpha_b}$. Uniformly for
+$\alpha\in\mathcal K$ and $cL\le T\le CL$,
+$\omega_a(n)=\sqrt{\alpha_a}/A+O(1/L)$.
+\end{enumerate}
+\end{lemma}
+
+Under the uniform start, $\omega_a(n)$ is the probability that the chain starts
+in $a$ given $K_N=n$. So by (3) a path conditioned to have fractions $\alpha$
+starts in $a$ with probability close to $\sqrt{\alpha_a}/A$, and not $\alpha_a$.
+In the notation of Proposition~\ref{prop:kirchhoff}, $\sqrt\alpha$ is the Perron
+vector $h$ of the tilted generator. The proof is in
+Appendix~\ref{app:start-field}.
+
+%======================================================================
+% 2. Appendix B: the integral forms eq:startw-integral and eq:startw-nu, used only in the proof of (3)
+% Source: app_start_field.tex, lines 6-31 of the version before 2026-09-26 trim.
+%======================================================================
+We prove Lemma~\ref{lem:start-weights}. Throughout $1/d<p<1$, so $\sigma=p-r>0$
+and $v=r/\sigma=u/(1-u)$, and $B_m$ is the polynomial of
+Lemma~\ref{lem:uniform-laguerre-bessel}. First we write the law in 2 more forms.
+The refresh form in Proposition~\ref{prop:dpmf}(a) is linear in $\mu$, and with
+$\mu=\delta_a$ it gives $p^{N-1}S^{(a)}_n(u)$. So, with sums over
+$1\le m_b\le n_b$ for $b\in F$ and $M=\sum_bm_b$,
+\begin{equation}\label{eq:startw-weights}
+ \omega_a(n)=\E_w\Bigl[\frac{m_a}M\Bigr],\qquad
+ w(m)\propto\frac{M!}{\prod_bm_b!}\,v^M\prod_{b\in F}\binom{n_b-1}{m_b-1}.
+\end{equation}
+Next write $(M-1)!=\int_0^\infty e^{-t}t^{M-1}dt$ in the refresh form and use
+$\sum_m m\binom{n-1}{m-1}y^m/m!=yB_n'(y)$. All terms are positive, so Tonelli's
+theorem gives
+\begin{equation}\label{eq:startw-integral}
+ P^\mu_N(n)=\sigma^{N-1}\int_0^\infty e^{-t}\sum_{a\in F}\mu_a
+ B_{n_a}'(vt)\prod_{b\ne a}B_{n_b}(vt)\,dt.
+\end{equation}
+For the uniform start an integration by parts turns this
+into~\eqref{eq:simplex-balance-integral}. Put $\kappa_m(y)=yB_m'(y)/B_m(y)$. Then
+$B_{n_a}'\prod_{b\ne a}B_{n_b}=(\kappa_{n_a}/y)\prod_bB_{n_b}$, and
+\eqref{eq:startw-integral} gives
+\begin{equation}\label{eq:startw-nu}
+ \omega_a(n)=\E_\nu\Bigl[\frac{\kappa_{n_a}(vt)}{\sum_b\kappa_{n_b}(vt)}\Bigr],
+ \qquad
+ \nu(dt)\propto e^{-t}\prod_bB_{n_b}(vt)\,\frac{\sum_b\kappa_{n_b}(vt)}{vt}\,dt.
+\end{equation}
+
+%======================================================================
+% 2 (cont). Proof of Lemma start-weights(3)
+% Source: app_start_field.tex, lines 74-111 of the version before 2026-09-26 trim.
+%======================================================================
+(3) Let $\alpha_b\ge\varepsilon>0$ on $\mathcal K$, put $Y=Nv$, and note that
+$Y=T(1+O(L/N))$. The proof of Lemma~\ref{lem:vertex-elasticity} gives
+$\kappa_m(y)=\E[J+1]\ge1$, with $J$ as in that proof, $\kappa_m\le1+\sqrt{my}$ and
+$\kappa_m^2+y\kappa_m\ge my+1$ for all $y>0$. The last inequality gives
+$\kappa_m\ge\sqrt{my+y^2/4}-y/2\ge\sqrt{my}-y/2$, so
+$|\kappa_m(y)-\sqrt{my}|\le1+y$. Since $\sqrt{n_by}=\sqrt{\alpha_b}\sqrt{Ny}$,
+the ratio $\rho_a=\kappa_{n_a}/\sum_b\kappa_{n_b}$ satisfies
+\[
+ \Bigl|\rho_a-\frac{\sqrt{\alpha_a}}A\Bigr|
+ \le\frac{2k(1+y)}{A\sqrt{Ny}-k(1+y)}
+ \qquad\text{when }A\sqrt{Ny}>k(1+y).
+\]
+Let $I=[A^2Y/4,4A^2Y]$. For $t\in I$ and $y=vt$ we have $Ny=Yt\ge A^2Y^2/4$ and
+$y\le4kY^2/N$, so $|\rho_a-\sqrt{\alpha_a}/A|=O(1/L)$ on $I$. Off $I$ we use
+$|\rho_a-\sqrt{\alpha_a}/A|\le1$ and show that $\nu$ gives $I^c$ mass $o(1/L)$.
+
+For the upper bound, Lemma~\ref{lem:uniform-laguerre-bessel} and
+$\Phi(x)\le e^{2\sqrt x}$ give $B_m(y)\le y\Phi(my)\le ye^{2\sqrt{my}}$, and
+$\sum_b\kappa_{n_b}\le k+A\sqrt{Yt}$. With $\sum_b\sqrt{n_bvt}=A\sqrt{Yt}$, the
+density of $\nu$ before normalizing is at most
+\[
+ (vt)^{k-1}(k+A\sqrt{Yt})\exp\bigl(A^2Y-(\sqrt t-A\sqrt Y)^2\bigr).
+\]
+Off $I$ we have $(\sqrt t-A\sqrt Y)^2\ge A^2Y/4$. Splitting the square in half
+and integrating the other half shows that the mass of $I^c$ before normalizing
+is at most $C_3v^{k-1}Y^{C_4}e^{A^2Y-A^2Y/8}$. For the lower bound take
+$|\sqrt t-A\sqrt Y|\le1$, an interval of length about $4A\sqrt Y$ inside $I$.
+There $y=O(L^2/N)$ and $\alpha_bYt\ge1$ for large $N$. By
+Lemma~\ref{lem:uniform-laguerre-bessel}, $B_m(y)\ge y\Phi(my)(1-y/2)$, and the
+expansion of $I_1$ in Section~\ref{sec:multistate-model} gives
+$\Phi(x)\ge c_0x^{-3/4}e^{2\sqrt x}$ for $x\ge1$, since $\Phi$ is positive and
+continuous. With $\sum_b\kappa_{n_b}\ge k$ the density is at least
+$c_1v^{k-1}Y^{-C_5}e^{A^2Y-1}$ on this interval, so the normalizing constant is
+at least $c_2v^{k-1}Y^{-C_5}e^{A^2Y}$. As $A\ge1$, the mass of $I^c$ is
+$O(Y^{C_4+C_5}e^{-Y/8})=o(1/L)$. So $\omega_a(n)=\E_\nu\rho_a
+=\sqrt{\alpha_a}/A+O(1/L)$, and all constants depend only on $k$,
+$\varepsilon$, $c$ and $C$.
+\end{proof}
+
+%======================================================================
+% 3. Corollary cor:start-modes (statement and the paragraph after it)
+% Source: general_start.tex, lines 118-144 of the version before 2026-09-26 trim.
+%======================================================================
+\[
+ \ell^\mu_1(t)=\log\mu_{(1)},\qquad
+ \ell^\mu_k(t)=\log\frac{M_k}k+(k-1)(t-a_k)\quad(2\le k\le d).
+\]
+\begin{enumerate}[(1)]
+\item For every support $S$ with $|S|=k\ge2$ and $\mu(S)>0$,
+$\max\{P^\mu_N(n)/p^{N-1}:\supp n=S\}\to\frac{\mu(S)}ke^{(k-1)(t-a_k)}$,
+uniformly on compact sets of $t$.
+\item Let $J$ be a compact set of $t$ on which $\max_k\ell^\mu_k(t)$ is attained
+only at $k=k^*$. For all large $N$ and all $t\in J$, every global mode of
+$P^\mu_N$ has exactly $k^*$ positive coordinates, and its support $S$ has
+$\mu(S)=M_{k^*}$. The winning size is nondecreasing in $t$.
+\item Let $t^*=a_d+\frac1{d-1}\log(d\mu_{(1)})$, where $\ell^\mu_1$ and
+$\ell^\mu_d$ cross. No size $2\le k\le d-1$ is the unique winner on an open
+interval of $t$ if and only if
+$\log\frac{M_k}{k\mu_{(1)}}+(k-1)(t^*-a_k)\le0$ for every $2\le k\le d-1$.
+\end{enumerate}
+For the uniform start the left side in (3) is $(k-1)(a_d-a_k)<0$, and (2) gives
+Corollary~\ref{cor:simplex-modes} in the window.
+\end{corollary}
+
+Part (1) follows from Lemma~\ref{lem:confinement} and
+Lemma~\ref{lem:start-weights}(3), and (2) and (3) are facts about the upper
+envelope of the lines. The proof is in Appendix~\ref{app:start-field}.
+
+\begin{example}[the start decides which face wins]\label{ex:K3-start}
+Let $d=3$ and $\mu=(\frac12,\frac12,0)$. The lines are $\log\frac12$ for the
+
+%======================================================================
+% 3 (cont). Proof of Corollary cor:start-modes
+% Source: app_start_field.tex, lines 216-236 of the version before 2026-09-26 trim.
+%======================================================================
+\begin{proof}[Proof of Corollary~\ref{cor:start-modes}]
+(1) The balanced bins give the lower bound, by
+Theorems~\ref{thm:start-crossings}(2) and~\ref{thm:simplex-window}. For the upper
+bound put $y=\sqrt L\,(n/N-\frac1k\mathbf 1)$ and fix $R$ with
+$e^{-k^2R^2/4}\le1/(2k)$. If $|y|>R$, then $\sum_a\mu_a\omega_a(n)\le\mu(S)$,
+and Lemma~\ref{lem:confinement}(b) bounds $P^\mu_N(n)/p^{N-1}$ by
+$\frac{\mu(S)}{2k}e^{(k-1)(t-a_k)+o(1)}$. If $|y|\le R$,
+Lemma~\ref{lem:start-weights}(3) gives
+$\sum_a\mu_a\omega_a(n)=\mu(S)/k+O(R/\sqrt L)$, and $S_n(u)$ is at most its
+value at a balanced bin by Theorem~\ref{thm:simplex-balance}.
+(2) A vertex gives exactly $\mu_i$, a support with $\mu(S)=0$ gives 0, and among
+supports of size $k$ the largest $\mu(S)$ is $M_k$. So by (1) the largest bin
+with $k$ positive coordinates, divided by $p^{N-1}$, has logarithm
+$\ell^\mu_k(t)+o(1)$, uniformly on $J$, and on $J$ the line $\ell^\mu_{k^*}$ beats
+the others by a positive gap. If $k_1$ wins at $t_1$ and $k_2$ at $t_2>t_1$,
+adding the 2 comparisons gives $(k_2-k_1)(t_2-t_1)\ge0$.
+(3) The function $E=\max(\ell^\mu_1,\ell^\mu_d)$ is convex with its only kink at
+$t^*$. A line with slope strictly between 0 and $d-1$ that is at most $E$ at
+$t^*$ is below $E$ everywhere else. Otherwise it is above $E$ near $t^*$, and
+some proper line is then the unique maximum on an open interval.
+\end{proof}
+
+%======================================================================
+% 4. Example ex:K3-start (full version) and the paragraph after it
+% Source: general_start.tex, lines 146-172 of the version before 2026-09-26 trim.
+%======================================================================
+$\log\frac14+t-a_2$ for the edges through 3 and $\log\frac13+2(t-a_3)$ for the
+full face. Put $t_{\rm ef}=\log\frac32+2a_3-a_2=\frac12\log\frac{32\pi}{243}$. By
+Corollary~\ref{cor:start-modes}, and Theorem~\ref{thm:simplex-balance} on the
+edge, for every fixed $t\in(a_2,t_{\rm ef})$ and all large $N$ the global modes
+are the balanced bins of $\{1,2\}$. This window is $(-0.4673558,-0.4412978)$, of
+width $\log\frac{16}{9\sqrt3}=0.0260580$. Below it the modes are $(N,0,0)$ and
+$(0,N,0)$, and above it they have 3 positive counts. With the uniform start no
+proper face wins in the window (Corollary~\ref{cor:simplex-modes}). More
+generally, by Corollary~\ref{cor:start-modes}(3) an edge wins on an open window
+on $K_3$ if and only if $(\mu_{(1)}+\mu_{(2)})^2>\frac{3^{5/2}}8\mu_{(1)}$. Here
+$1>0.974$, a thin margin, while the uniform start has $\frac49<0.650$.
+
+The lower end is Paper~A's crossing, exactly and for every $N\ge2$, in the
+sense that the balanced bins of the edge overtake the vertices exactly there.
+Indeed $\mu$ is constant on $\{1,2\}$, so
+$P^\mu_N(n_1,n_2,0)/P^\mu_N(N,0,0)=S_{(n_1,n_2)}(u)$, which is the polynomial of
+Paper~A~\cite{paperA} at $u=r/p$. So the crossing is at Paper~A's root $u_N$,
+that is at $T=Nu_N/(1+2u_N)$, which differs from Paper~A's $z_N=Nu_N/(1+u_N)$ by
+$O(L^2/N)$.
+\end{example}
+
+Remark~\ref{rem:K3-finite} in Appendix~\ref{app:start-field} describes the
+window at finite $N$. Its second-order ends are predictions that we do not
+prove, and Table~\ref{tab:K3-window} compares them with exact computations.
+
+
+%======================================================================
+% 4 (cont). Remark rem:K3-finite and Table tab:K3-window
+% Source: app_start_field.tex, lines 113-167 of the version before 2026-09-26 trim.
+%======================================================================
+\subsection{\texorpdfstring{The window on $K_3$ at finite $N$}{The window on K3 at finite N}}
+
+\begin{remark}[the window at finite $N$, not proved]\label{rem:K3-finite}
+Here $z=Nu=T/p$, since the finite-size terms depend on the variable. The gain
+of the largest bin on a face over the balanced bins, predicted in Section~\ref{sec:general-start}, is
+$\frac12\gamma^{\mathsf T}\Sigma\gamma/z$ in Paper~C's terms, where $\gamma$ is
+the gradient of $\log\sum_a\mu_a\sqrt{\alpha_a}$ at the center, along the plane
+$\sum_a\alpha_a=1$, and $\Sigma$ is the occupation covariance there. For the full face, in all 3 coordinates,
+$\gamma=(\frac14,\frac14,-\frac12)$ and $\Sigma=\frac29(I-\frac13J)$, so the gain
+is $\frac1{24z}$. The quadratic model behind it puts the largest bin near
+$n_3/N=\frac13-\frac1{9z}$, with $n_1=n_2$ up to parity. With the terms
+$-\frac1{8z}$ of the edge and $-\frac2{8z}$ of the full face from
+Theorem~\ref{thm:start-crossings}, the term at the upper end becomes
+$\frac2{8z}-\frac1{8z}-\frac1{24z}=\frac1{12z}$. For a balanced $k$-face bin a
+heuristic calculation, which exact computations support, adds a discrete term
+$-\frac{(k-1)^2}2\frac{z^2}N$ to the logarithm
+of~\eqref{eq:simplex-uniform-ratio}. So the 2 ends should satisfy
+\[
+ z-L+\tfrac12\log z=a_2+\frac1{8z}+\frac{z^2}{2N}+\cdots,\qquad
+ z-L+\tfrac12\log z=t_{\rm ef}+\frac1{12z}+\frac{3z^2}{2N}+\cdots,
+\]
+where only $a_2+\frac1{8z}$ is proved (by Theorem~\ref{thm:simplex-crossing}).
+Without the $z^2/N$ terms the width in $t$ is $0.0260580-0.0546957/L+\cdots$,
+and below $N$ of about $10^4$ the $z^2/N$ terms are larger than the $1/L$ terms.
+Table~\ref{tab:K3-window} compares these predictions with exact computations.
+\end{remark}
+
+\begin{table}[t]
+\centering\small
+\begin{tabular}{@{}rcccc@{}}
+\toprule
+$N$ & width & predicted width & $z(\frac13-\frac{n_3}N)$ &
+$z\log(M_{\rm full}/P_{\rm bal})$\\
+\midrule
+300 & 0.0843 & 0.0802 & 0.139 & --\\
+3000 & 0.03236 & 0.03211 & 0.1242 & 0.0453\\
+30000 & 0.02231 & 0.02258 & 0.1208 & 0.0442\\
+300000 & 0.02141 & 0.02166 & 0.1187 & 0.0436\\
+limit & 0.02606 & & $1/9$ & $1/24$\\
+\bottomrule
+\end{tabular}
+\caption{The edge window of Example~\ref{ex:K3-start} in $z=Nu=T/p$, with
+$t=z-L+\frac12\log L$ (at $N=300$ the difference from $T$ matters), and the
+prediction of Remark~\ref{rem:K3-finite}. The last 2 columns are at the upper
+end, for the largest bin $n$ with 3 positive counts, of probability
+$M_{\rm full}$, and $P_{\rm bal}=P^\mu_N(\frac N3,\frac N3,\frac N3)$. The limit
+of the width is proved, and $1/9$ and $1/24$ are predictions. The ends come from
+the refresh formula, confirmed by the run formula resolved by the first state,
+and the lower end equals Paper~A's root. The largest bin was found by a line
+search along $n_1=n_2$ checked on a neighborhood, so for $N\ge3000$ we assume it
+lies on or next to that line. A dynamic program over all bins confirmed the
+modes at $N=90$, $300$ and $1002$. The predictions were written before the
+computations.}
+\label{tab:K3-window}
+\end{table}
+
+%======================================================================
+% 5. Theorem thm:frontier-superlevel, its proof and the paragraphs around it
+% Source: app_start_field.tex, lines 270-328 of the version before 2026-09-26 trim.
+%======================================================================
+The same profile counts the bins that beat a vertex. Put $h_*=\max_ih_i$,
+$\widetilde V_{N,h}=\max_i\widetilde P_{N,h}(Ne_i)$ and, for a support $S$ with
+$|S|=k\ge2$,
+\[
+ B_S(t,h)=\ell_S(t,h)-h_*=(k-1)(t-a_k)+\bar h_S-h_*.
+\]
+Let $|\mathbb B_{k-1}|=\pi^{(k-1)/2}/\Gamma(\frac{k+1}2)$ be the volume of the
+unit ball of $H_S$.
+
+\begin{theorem}[Gaussian superlevel geometry]\label{thm:frontier-superlevel}
+Put $T=L-\frac12\log L+t$ and, for a count vector with support exactly $S$,
+$y_i=\sqrt L\,(n_i/N-1/k)$ for $i\in S$. Uniformly when $t$, $h$ and $y\in H_S$
+range over fixed compact sets,
+\begin{equation}\label{eq:frontier-profile}
+ \frac{\widetilde P_{N,h}(n)}{\widetilde V_{N,h}}
+ =\exp\left(B_S(t,h)-\frac{k^2}{4}\sum_{i\in S}y_i^2+o(1)\right).
+\end{equation}
+Let $M_{N,S}(t,h)$ be the number of bins with support exactly $S$ whose tilted
+probability is strictly greater than $\widetilde V_{N,h}$. Then, uniformly for
+$(t,h)$ in compact sets,
+\begin{equation}\label{eq:frontier-volume}
+ \frac{L^{(k-1)/2}}{N^{k-1}}M_{N,S}(t,h)
+ \longrightarrow
+ \frac{|\mathbb B_{k-1}|}{\sqrt k}
+ \left(\frac{4\,[B_S(t,h)]_+}{k^2}\right)^{(k-1)/2},
+ \qquad [x]_+=\max(x,0).
+\end{equation}
+If $B_S(t,h)<0$, there are no such bins for all large $N$. At $B_S(t,h)=0$ the
+normalized count tends to 0, but we do not claim that the set is eventually
+empty.
+\end{theorem}
+
+\begin{proof}
+The field factor relative to the best vertex is $e^{h\cdot\alpha-h_*}$, so
+$\log(\widetilde P_{N,h}(n)/\widetilde V_{N,h})=\log S_n(u)+h\cdot\alpha-h_*$. For
+$y$ in a compact set $h\cdot\alpha=\bar h_S+o(1)$, and
+Lemma~\ref{lem:confinement}(a) gives~\eqref{eq:frontier-profile}. Since
+$h\cdot\alpha\le h_*$, Lemma~\ref{lem:confinement}(b) with $R$ so large that
+$(k-1)(t-a_k)-k^2R^2/4<-1$ on the compact set shows that every bin above
+$\widetilde V_{N,h}$ has $|y|\le R$ for large $N$. On this ball the profile
+converges uniformly. So for every $\delta>0$ and large $N$ the superlevel set
+lies between the balls of squared radii $4[B_S-\delta]_+/k^2$ and
+$4[B_S+\delta]_+/k^2$, the inner one empty when $B_S\le\delta$. The vectors $y$
+form a translate of the lattice $(\sqrt L/N)\{z\in\Z^S:\sum_iz_i=0\}$ in $H_S$.
+Its covolume is $\sqrt k(\sqrt L/N)^{k-1}$, since the basis $e_i-e_k$,
+$1\le i<k$, has Gram determinant $k$. Its cells have diameter
+$O(\sqrt L/N)\to0$, so a ball of bounded radius $\rho$ holds
+$(|\mathbb B_{k-1}|\rho^{k-1}/\sqrt k+o(1))(N/\sqrt L)^{k-1}$ lattice points,
+uniformly in the translate and in $\rho$. Letting $\delta\downarrow0$
+gives~\eqref{eq:frontier-volume}, also when $B_S=0$. If $B_S<0$, the profile is
+below 1 on the whole ball for large $N$, so there are no such bins.
+\end{proof}
+
+At zero field all supports of the same size have the same count, so the right
+side of~\eqref{eq:frontier-volume} is multiplied by $\binom dk$ when we count all
+bins with $k$ positive coordinates. For $k=2$, writing $y=(y_1,-y_1)$ gives the
+profile $\exp(t-a_2-2y_1^2)$ and the count constant $\sqrt{2[t-a_2]_+}$, which
+agrees with the binary window of~\cite{paperA} once the different centering is
+taken into account. The covolume $\sqrt k$ is checked in Lean.
+
+%======================================================================
+% 5 (cont). The sentence in frontier_modes.tex that pointed to it
+% Source: frontier_modes.tex, lines 90-93 of the version before 2026-09-26 trim.
+%======================================================================
+is $e^{\bar h_S+o(1)}$ near the center of the face. So the best bin on $S$
+scores $\ell_S(t,h)$, and taking the $k$ largest fields gives the lines. The
+proof is in Appendix~\ref{app:start-field}, which also counts the bins that
+beat a vertex (Theorem~\ref{thm:frontier-superlevel}).
+
+%======================================================================
+% 6. Remark rem:tetra (the covariance)
+% Source: app_start_field.tex, lines 347-364 of the version before 2026-09-26 trim.
+%======================================================================
+\subsection{The covariance}
+
+\begin{remark}[the covariance]\label{rem:tetra}
+Let the start be uniform, and let $K_{N,a}$ be the number of visits to state
+$a$. The chain is stationary with transition matrix $\sigma I+(1-\sigma)\frac1dJ$,
+whose $m$-th power is $\sigma^mI+(1-\sigma^m)\frac1dJ$. So the indicators of
+state $a$ at time $s$ and of state $b$ at time $s+m$ have covariance
+$\sigma^m(\frac{\delta_{ab}}d-\frac1{d^2})$. Summing over the 2 times and
+evaluating the finite geometric sum gives, for $p<1$,
+\[
+ \Cov(K_{N,a},K_{N,b})=\Bigl(\frac{\delta_{ab}}d-\frac1{d^2}\Bigr)
+ \Bigl(N\,\frac{1+\sigma}{1-\sigma}-\frac{2\sigma(1-\sigma^N)}{(1-\sigma)^2}\Bigr).
+\]
+Since $1-\sigma=dr$, for $1/d\le p<1$ the second term in the bracket is not
+positive and $\Var(K_{N,a}/N)\le2/(d^2T)$. For $p<1/d$ the bracket is at most
+$N+4$ while $T\le N$. So $\Var(K_{N,a}/N)=O(1/T)$ for every $p<1$, which is
+what Proposition~\ref{prop:field-tilt}(3) uses.
+\end{remark}
+
+%======================================================================
+% 7. Old moment bound in the proof of Lemma start-weights(2)
+% Source: app_start_field.tex, lines 61-73 of the version before 2026-09-26 trim.
+%======================================================================
+It remains to bound the moments. Put $h_0=N/k$ and $x=h_0v$. The summands
+of~\eqref{eq:simplex-positive-sum} are proportional to $w(m)$, and the proof of
+Lemma~\ref{lem:simplex-integral} writes them as a constant times
+$c(m)A(m)$. Here $c(m)=M!\prod_bx^{m_b}/(m_b!(m_b-1)!)$ are the weights of the
+series $F_k(x)$, and $A(m)\in[0,1]$ with $1-A(m)\le M^2/h_0$. By
+Lemma~\ref{lem:simplex-integral}, $\E_cM^2=\mathcal D^2F_k(x)/F_k(x)\le
+C_2(1+x)^2$ for all $x>0$, with $C_2$ depending on $k$. Since $\sigma\ge\frac12$
+we have $x=T/(k\sigma)\le2CL$, so $\E_cM^2\le h_0/2$ for $N\ge N_0$. Hence
+\[
+ \E_wM\le\E_wM^2\le\frac{\E_cM^2}{1-\E_cM^2/h_0}\le2C_2(1+x)^2.
+\]
+With $g\ge N/(2k)$ and $x\le2T$ this gives $\delta\le C_1(1+T)^2/N$.
+
+
+%======================================================================
+% 8. The remark after Lemma gaussian-phi-average on the case l=0
+% Source: app_thresholds.tex, lines 102-104 of the version before 2026-09-26 trim.
+%======================================================================
+With $\ell=0$ the lemma is the Taylor step
+$\frac1{\sqrt\pi}\int_{-w_0/2}^{w_0/2}e^{-y^2}(w_0+y)^q\,dy
+=w_0^q\bigl(1+q(q-1)/(4w_0^2)+O(w_0^{-4})\bigr)$ of the Laplace expansions below.
+
+%======================================================================
+% 9. Lemma lem:simplex-integral and Lemma lem:simplex-laplace with their proofs
+% Source: app_thresholds.tex, lines 135-220 of the version before 2026-09-26 trim.
+%======================================================================
+\begin{lemma}[positive integral and discrete comparison]\label{lem:simplex-integral}
+For fixed $k\ge2$ define
+\begin{equation}\label{eq:simplex-F}
+F_k(x)=\sum_{m_1,\ldots,m_k\ge1}
+M!\prod_{i=1}^k\frac{x^{m_i}}{m_i!(m_i-1)!}
+=\int_0^\infty e^{-t}\bigl[\sqrt{xt}\,I_1(2\sqrt{xt})\bigr]^k\,dt,
+\quad M=\sum_im_i.
+\end{equation}
+Let $n$ be a balanced positive count vector with total $N$, put $h=N/k$, and for
+$0<u<1$ put $x=hu/(1-u)$. With $\mathcal D=x\,d/dx$,
+\begin{equation}\label{eq:simplex-discrete-comparison}
+0\le 1-\frac{S_n(u)}{(1-u)^{N-1}h^{1-k}F_k(x)/x}
+\le\frac{\mathcal D^2F_k(x)}{hF_k(x)}
+=O_k\Bigl(\frac{(1+x)^2}{h}\Bigr).
+\end{equation}
+In particular the relative error is $O_k((\log N)^2/N)$ when $x=O(\log N)$.
+\end{lemma}
+
+\begin{proof}
+The equality in~\eqref{eq:simplex-F} follows from the series of $I_1$ and
+Tonelli's theorem, using $M!=\int_0^\infty e^{-t}t^M\,dt$. The integral is finite
+for every $x>0$, since $I_1(y)\le e^y$ reduces its tail to a polynomial times
+$\exp(-t+2k\sqrt{xt})$. So the positive series and all its termwise derivatives
+converge on compact subsets of $x>0$.
+
+By Proposition~\ref{prop:dpmf}(c), $S_n$ is the positive
+sum~\eqref{eq:simplex-positive-sum}. Define
+\[
+A_{i,m}=\frac{(m-1)!}{h^{m-1}}\binom{n_i-1}{m-1}
+=\prod_{j=1}^{m-1}\Bigl(1-\frac{h-n_i+j}{h}\Bigr)_+ .
+\]
+Since $h-n_i>-1$, these are products of factors in $[0,1]$, also beyond their
+finite support. Lemma~\ref{lem:clipped-product} gives
+\[
+0\le1-\prod_iA_{i,m_i}\le\frac1h\sum_i\frac{m_i(m_i+1)}2\le\frac{M^2}{h}.
+\]
+Replacing the binomial factors in~\eqref{eq:simplex-positive-sum} by
+$h^{m_i-1}/(m_i-1)!$ gives the denominator
+in~\eqref{eq:simplex-discrete-comparison}. Summing the deficit bound proves its
+first inequality and the explicit upper bound.
+
+For the quotient of derivatives with $x\ge1$ we use $M^2\le3x^2(1+1/x)^M$, which
+holds since $\log(1+1/x)\ge1/(2x)$ and $\sup_{y\ge0}y^2e^{-y/2}=16/e^2<3$.
+Positivity of the coefficients gives
+\[
+\frac{\mathcal D^2F_k(x)}{F_k(x)}\le3x^2\frac{F_k(x+1)}{F_k(x)}=O_k(x^2),
+\]
+where the last step follows from Lemma~\ref{lem:simplex-laplace} below. For
+$0<x\le1$ the quotient extends continuously to $x=0$ with value $k^2$, since
+$F_k(x)=k!x^k+O_k(x^{k+1})$.
+\end{proof}
+
+\begin{lemma}[Laplace expansion]\label{lem:simplex-laplace}
+For each fixed $k\ge2$, as $x\to\infty$,
+\begin{equation}\label{eq:simplex-laplace}
+F_k(x)=\frac{k^{k/2+1}}{(4\pi)^{(k-1)/2}}\,x^{(k+1)/2}e^{k^2x}
+\Bigl(1-\frac{k-1}{8kx}+O_k(x^{-2})\Bigr).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+In~\eqref{eq:simplex-F} put $t=w^2$ and $w_0=k\sqrt x$. The exponent becomes
+$-w^2+2k\sqrt x\,w=k^2x-(w-w_0)^2$. On $|w-w_0|\le w_0/2$ we have
+$2\sqrt x\,w\ge kx$, so the expansion of $I_1$ in
+Section~\ref{sec:multistate-model} applies uniformly and gives
+\[
+\bigl[\sqrt x\,wI_1(2\sqrt x\,w)\bigr]^k
+=\frac{x^{k/4}w^{k/2}e^{2k\sqrt x\,w}}{(4\pi)^{k/2}}
+\Bigl(1-\frac{3k}{16\sqrt x\,w}+O_k(x^{-2})\Bigr).
+\]
+With $q=k/2+1$ and $w=w_0+y$, this range contributes
+\[
+\frac{2x^{k/4}e^{k^2x}}{(4\pi)^{k/2}}\int_{|y|\le w_0/2}e^{-y^2}
+\Bigl(w^q-\frac{3k}{16\sqrt x}\,w^{q-1}+O_k(x^{-2})\,w^q\Bigr)dy .
+\]
+Lemma~\ref{lem:gaussian-phi-average} with $\ell=0$ evaluates the integrals of
+$w^q$ and $w^{q-1}$. Since $q(q-1)/(4w_0^2)=(k+2)/(16kx)$ and
+$3k/(16\sqrt x\,w_0)=3/(16x)$, the relative correction is
+$(k+2)/(16kx)-3/(16x)=-(k-1)/(8kx)$. The leading term is
+$2\sqrt\pi\,x^{k/4}w_0^q(4\pi)^{-k/2}e^{k^2x}
+=k^{k/2+1}x^{(k+1)/2}(4\pi)^{-(k-1)/2}e^{k^2x}$. On the rest of $w>0$ the bound
+$I_1(y)\le e^y$ makes the integrand at most
+$2x^{k/2}w^{k+1}e^{k^2x-(w-w_0)^2}$, and $(w-w_0)^2\ge k^2x/4$ there. So this part
+is at most $e^{7k^2x/8}$ times a power of $x$, which is exponentially smaller than
+the main term.
+\end{proof}
+
+%======================================================================
+% 10. Old first paragraph of the proof of the asymptotic assertions in Theorems simplex-window and simplex-crossing
+% Source: app_thresholds.tex, lines 222-236 of the version before 2026-09-26 trim.
+%======================================================================
+\begin{proof}[Proof of the asymptotic assertions in
+Theorems~\ref{thm:simplex-window} and~\ref{thm:simplex-crossing}]
+Put $s=k-1$, let $n$ be balanced, and let $u=z/N$ with $c\log N\le z\le C\log N$.
+Then $x=hu/(1-u)=z/(k(1-u))$, and Lemmas~\ref{lem:simplex-integral}
+and~\ref{lem:simplex-laplace} give
+\[
+S_n(u)=(1-u)^{N-1}h^{-s}\frac{F_k(x)}x\Bigl(1+O\Bigl(\frac{z^2}N\Bigr)\Bigr),
+\qquad
+\frac{F_k(x)}x=\frac{k^{k/2+1}x^{s/2}e^{k^2x}}{(4\pi)^{s/2}}
+\Bigl(1-\frac s{8kx}+O(x^{-2})\Bigr).
+\]
+Here $k^2x+(N-1)\log(1-u)-sz=O(z^2/N)$, $x^{s/2}=(z/k)^{s/2}(1+O(z/N))$ and
+$s/(8kx)=s/(8z)+O(1/N)$. With $h^{-s}=k^sN^{-s}$ the powers of $k$ collect to
+$k^{k+1/2}$, which gives~\eqref{eq:simplex-uniform-ratio}.
+
+
+%======================================================================
+% 10 (cont). Old first part of the proof of Theorem thm:simplex-interior
+% Source: app_thresholds.tex, lines 263-305 of the version before 2026-09-26 trim.
+%======================================================================
+\begin{proof}[Proof of Theorem~\ref{thm:simplex-interior}]
+The polynomial $S_n$ has nonnegative coefficients and lowest term $k!u^{k-1}$,
+so $S_n(u)=1$ has a unique positive root. Put $v=u/(1-u)$, $y=Nv$ and
+\[
+G_\alpha(y)=\int_0^\infty e^{-t}\prod_i\bigl[\sqrt{\alpha_iyt}\,
+I_1(2\sqrt{\alpha_iyt})\bigr]dt
+=\sum_{m_i\ge1}M!\prod_i\frac{(\alpha_iy)^{m_i}}{m_i!(m_i-1)!}.
+\]
+Replacing each binomial coefficient in~\eqref{eq:simplex-positive-sum} by
+$n_i^{m_i-1}/(m_i-1)!$ turns the sum into $G_\alpha(y)/(v\prod_in_i)$. Since
+$(m-1)!\binom{n_i-1}{m-1}/n_i^{m-1}=\prod_{j<m}(1-j/n_i)_+$,
+Lemma~\ref{lem:clipped-product} bounds the relative deficit of each term by
+$\sum_im_i(m_i-1)/(2n_i)\le M^2/(2\varepsilon N)$. Let $\E_y$ be the mean under
+weights proportional to the terms of $G_\alpha(y)$. As in the proof of
+Lemma~\ref{lem:simplex-integral}, $\E_yM^2\le3y^2G_\alpha(y+1)/G_\alpha(y)$ for
+$y\ge1$, and this is $O(y^2)$ uniformly by the expansion of $G_\alpha$ below. For
+$y\le1$, $\E_yM^2$ is continuous in $(\alpha,y)$ and tends to $k^2$ as $y\to0$.
+Hence
+\[
+S_n(u)=\frac{(1-u)^{N-1}}{v\prod_in_i}\,G_\alpha(y)
+\Bigl(1+O_{k,\varepsilon}\Bigl(\frac{(1+y)^2}N\Bigr)\Bigr).
+\]
+
+Put $t=w^2$ and $w_0=A\sqrt y$, so the exponent is
+$-w^2+2A\sqrt y\,w=A^2y-(w-w_0)^2$. On $|w-w_0|\le w_0/2$ every Bessel argument
+has $2\sqrt{\alpha_iy}\,w\ge\sqrt\varepsilon\,y$, since $A\ge1$. So the expansion
+of $I_1$ gives, uniformly,
+\[
+\prod_i\bigl[\sqrt{\alpha_iy}\,wI_1(2\sqrt{\alpha_iy}\,w)\bigr]
+=\frac{(\prod_i\alpha_i)^{1/4}(\sqrt y\,w)^{k/2}e^{2A\sqrt y\,w}}{(4\pi)^{k/2}}
+\bigl(1+O_{k,\varepsilon}(y^{-1})\bigr).
+\]
+Lemma~\ref{lem:gaussian-phi-average} with $\ell=0$ and $q=k/2+1$ evaluates the
+remaining Gaussian integral, and the rest of $w>0$ is bounded as in the proof of
+Lemma~\ref{lem:simplex-laplace}. So
+\[
+G_\alpha(y)=\frac{A^{k/2+1}(\prod_i\alpha_i)^{1/4}}{(4\pi)^{s/2}}\,
+y^{(k+1)/2}e^{A^2y}\bigl(1+O_{k,\varepsilon}(y^{-1})\bigr).
+\]
+Substitute this and $v\prod_in_i=yN^s\prod_i\alpha_i$ into the previous display.
+For $u=z/N$ in the stated range, $y=z+O(z^2/N)$ and
+$(N-1)\log(1-u)=-z+O(z^2/N)$. This proves~\eqref{eq:simplex-interior-ratio}.
+
+
+%======================================================================
+% 10 (cont). Old sentence in simplex_thresholds.tex describing the asymptotic proof
+% Source: simplex_thresholds.tex, lines 86-90 of the version before 2026-09-26 trim.
+%======================================================================
+which moves the root. For the asymptotic part, Proposition~\ref{prop:dpmf}(c)
+writes $S_n$ as a positive sum. This sum is close to a Bessel integral $F_k$
+(Lemma~\ref{lem:simplex-integral}), and the Laplace expansion of $F_k$
+(Lemma~\ref{lem:simplex-laplace}) gives, for a balanced bin $n$ with $k$
+positive coordinates and uniformly on $c\log N\le z\le C\log N$,
+
+%======================================================================
+% 11. Remark rem:last-exit-trees
+% Source: app_thresholds.tex, lines 399-409 of the version before 2026-09-26 trim.
+%======================================================================
+\begin{remark}[last-exit trees]\label{rem:last-exit-trees}
+In continuous time the trees appear directly. Huang, Kious, Sidoravicius and
+Tarr\'es~\cite[Theorem~1]{huang2018} give the joint density of the local times,
+the last-exit tree and the net crossing numbers of a walk with symmetric
+conductances. Read on the slice of fixed total time and summed over the crossing
+numbers by the generating function of the $I_m$~\cite[Eq.~10.35.1]{dlmf}, it is
+an exact sum over spanning trees, each times a theta function. A Laplace step,
+which we only sketch, turns each theta function into a common term proportional
+to $\tree^{-1/2}$, and the trees then leave $\sqrt{\tree(\alpha)}$. Nothing in
+this paper uses this remark.
+\end{remark}
+
+%======================================================================
+% 12. Lemma lem:singleton-insertion and the sentence after it
+% Source: app_boundary.tex, lines 353-372 of the version before 2026-09-26 trim.
+%======================================================================
+\begin{lemma}[exact insertion of a singleton state]
+\label{lem:singleton-insertion}
+Let $n$ have total size $M\ge1$ and let $\mathcal D=u\,d/du$. Then
+\[
+S_{(n,1)}(u)=\bigl[2u+(M-1)u^2\bigr]S_n(u)
++(u-u^2)\mathcal D S_n(u).
+\]
+\end{lemma}
+
+\begin{proof}
+Insert the new state into a word of length $M$ with $j$ changes. The 2 end
+positions contribute $2u$, the $j$ change gaps contribute $ju$, and the
+$M-1-j$ repeat gaps contribute $(M-1-j)u^2$. Removing the unique new letter
+reverses this construction. Summing
+$u^j[2u+(M-1)u^2+j(u-u^2)]$ over all words proves the formula.
+\end{proof}
+
+The singleton identity gives an exact finite-size check of the factor
+$A^2z^2/N$ that one very small coordinate contributes in
+\eqref{eq:simplex-boundary-profile}.
+
+%======================================================================
+% 13. Old motivation sentence and side-results remark in Subsection sec:vertex-completion
+% Source: frontier_boundary.tex, lines 94-101 of the version before 2026-09-26 trim.
+%======================================================================
+Each rare run again needs about 2 switches and has about $b$ places, so the
+rare counts enter through $bu^2$. For fixed rare counts,
+$S_{(b,a)}(\sqrt{y/b})\to H(y)$ as $b\to\infty$
+(Theorem~\ref{thm:simplex-fixed-vertex}). So the crossing is near
+$\sqrt{y_a/b}$, and $Nu$ is of order $\sqrt N$ instead of $L$. The next
+theorem shows that this leading term stays correct uniformly as long as
+$|a|=o(b)$.
+
+
+%======================================================================
+% 13 (cont).
+% Source: frontier_boundary.tex, lines 136-149 of the version before 2026-09-26 trim.
+%======================================================================
+\begin{remark}
+Appendix~\ref{app:vertex} also proves 3 side results. For fixed rare counts,
+Theorem~\ref{thm:simplex-fixed-vertex} gives the next term
+$u_{b,a}=\sqrt{y_a/b}-(1+y_aQ(y_a)/H'(y_a))/b+O(b^{-3/2})$ with an explicit
+polynomial $Q$, and for one rare count this is the 2-state fixed-edge
+expansion of~\cite{paperA}. When $|a|\to\infty$ with $|a|=o(b)$ and
+proportions $a_i/|a|$ bounded away from $0$,
+Corollary~\ref{cor:vertex-shape-law} gives
+$u_{b,a}\sim\ell\log|a|/(2A\sqrt{|a|b})$ with $A=\sum_i\sqrt{a_i/|a|}$.
+Proposition~\ref{prop:vertex-probability-failure} shows that
+$S_{(b,a)}(u)\sim H(bu^2)$ is not uniform over $|a|=o(b)$, while by
+Theorem~\ref{thm:vertex-uniform-root} the root is.
+\end{remark}
+
+
+%======================================================================
+% 14. Old opening of Appendix app:vertex
+% Source: vertex_completion.tex, lines 1-6 of the version before 2026-09-26 trim.
+%======================================================================
+\section{Proofs near a vertex}
+\label{app:vertex}
+
+We use the notation of Subsection~\ref{sec:vertex-completion}. We first
+prove Theorem~\ref{thm:vertex-uniform-root} and then the 3 side results
+for fixed and for growing rare counts.
+
+%======================================================================
+% 14 (cont). Theorem thm:simplex-fixed-vertex, the all-singleton case, Corollary cor:vertex-shape-law and Proposition prop:vertex-probability-failure, with proofs
+% Source: vertex_completion.tex, lines 156-326 of the version before 2026-09-26 trim.
+%======================================================================
+\begin{theorem}[a multistate Laguerre limit at a vertex]
+\label{thm:simplex-fixed-vertex}
+Fix $\ell\ge1$ and positive integers $a_1,\ldots,a_\ell$. Define
+\[
+Q(y)=\sum_{i<j}B'_{a_i}(y)B'_{a_j}(y)
+\prod_{h\ne i,j}B_{a_h}(y).
+\]
+The sum defining $Q$ is zero when $\ell=1$. Uniformly on compact
+subsets of $y>0$, as $b\to\infty$,
+\begin{equation}\label{eq:simplex-vertex-ratio}
+S_{(b,a)}\!\left(\sqrt{y/b}\right)
+=H(y)+\frac{2\sqrt y}{\sqrt b}\bigl(H'(y)+yQ(y)\bigr)
++O_a(b^{-1}).
+\end{equation}
+Put $c_a=\sqrt{y_a}$. The crossing odds satisfy
+\begin{equation}\label{eq:simplex-vertex-root}
+u_{b,a}=\frac{c_a}{\sqrt b}
+-\frac{1+y_aQ(y_a)/H'(y_a)}{b}
++O_a(b^{-3/2}).
+\end{equation}
+For one rare count the coefficient of $1/b$ is $-1$, as in the 2-state
+fixed-edge expansion of~\cite{paperA}. For at least 2 rare counts it is
+strictly less than $-1$.
+\end{theorem}
+
+\begin{proof}
+We count words by their runs. Fix rare-run counts
+$m_i\in\{1,\ldots,a_i\}$, put $m=\sum_im_i$, and let $q$ be the number of
+runs of the large state. The rare run lengths can be chosen in
+$\prod_i\binom{a_i-1}{m_i-1}$ ways. Successive large runs must be
+separated, so $q\le m+1$, and the large run lengths have
+$\binom{b-1}{q-1}$ choices. At $u=\sqrt{y/b}$, words with these run counts
+contribute $O_a(b^{(q-m-1)/2})$. There are finitely many possible $m_i,q$,
+independently of $b$, so only $q=m+1$ and $q=m$ matter through order
+$b^{-1/2}$.
+
+If $q=m+1$, the run word starts and ends in the large state and alternates
+between the large state and rare states. There are $m!/\prod_im_i!$ rare
+orders. Using $\binom{b-1}{m}=b^m/m!+O_a(b^{m-1})$ and summing gives
+$H(y)$, with an $O_a(b^{-1})$ error.
+
+If $q=m$, there are 2 possibilities. First, one endpoint is rare and the
+run word otherwise alternates, which gives $2m!/\prod_im_i!$ orders. These
+terms sum to $2\sqrt y\,H'(y)/\sqrt b$. Second, both endpoints are large
+and exactly one pair of consecutive rare runs is present. The members of
+that pair must be different states. For an ordered pair of states $i,j$,
+contracting the marked adjacent pair shows that there are
+$(m-1)!/[(m_i-1)!(m_j-1)!\prod_{h\ne i,j}m_h!]$ orders. Summing over the 2
+orientations and all $i<j$ gives $2y^{3/2}Q(y)/\sqrt b$. Terms with
+$q\le m-1$ and the next terms of the binomial expansions are $O_a(b^{-1})$,
+uniformly for $y$ in a compact subset of $(0,\infty)$. This
+proves~\eqref{eq:simplex-vertex-ratio}.
+
+The polynomial $H$ has positive coefficients, so $H'(y_a)>0$. First
+bracket the crossing using~\eqref{eq:simplex-vertex-ratio} to obtain
+$bu_{b,a}^2\to y_a$. The finite run expansion may also be differentiated
+uniformly on a compact neighborhood of $y_a$, and its derivative tends to
+$H'(y_a)>0$. Then substitution of $u=c_a/\sqrt b+\theta/b$
+into~\eqref{eq:simplex-vertex-ratio} forces
+$\theta=-1-y_aQ(y_a)/H'(y_a)$, and the uniform remainder
+gives~\eqref{eq:simplex-vertex-root}. If $\ell\ge2$, all terms of $Q(y)$
+are positive for $y>0$, which proves the strict inequality.
+\end{proof}
+
+If all $\ell$ rare counts equal $1$, then $H(y)=y^\ell$ and $y_a=1$. This
+gives the explicit case
+\[
+u_{b,1,\ldots,1}=b^{-1/2}-\frac{\ell+1}{2b}
++O_\ell(b^{-3/2}).
+\]
+An independent exact formula in this case is
+\[
+S_{(b,1,\ldots,1)}(u)=\ell!
+\sum_{q=1}^{\min(b,\ell+1)}
+\binom{\ell+1}{q}\binom{b-1}{q-1}u^{q+\ell-1}.
+\]
+To see this, order the $\ell$ distinct rare letters, choose the $q$ gaps
+among their $\ell+1$ end and interior gaps that contain large runs, and
+choose the positive lengths of those runs. In particular 2 singleton rare
+states give $u_{b,1,1}=b^{-1/2}-\tfrac32b^{-1}+O(b^{-3/2})$. This agrees
+with the exact polynomial
+$S_{(b,1,1)}(u)=6u^2+6(b-1)u^3+(b-1)(b-2)u^4$.
+Theorem~\ref{thm:simplex-fixed-vertex} is not uniform in the rare counts.
+For growing rare counts, Theorem~\ref{thm:vertex-uniform-root} gives the
+leading term uniformly for $|a|=o(b)$, and the next result gives its shape.
+
+\begin{corollary}[an explicit shape law for growing rare counts]
+\label{cor:vertex-shape-law}
+Suppose $|a|\to\infty$, $|a|=o(b)$, and the actual proportions
+$\alpha_i=a_i/|a|$ stay in a fixed compact subset of the positive
+$\ell$-simplex. Put $A=\sum_i\sqrt{\alpha_i}$. Then
+\[
+ u_{b,a}\sim\frac{\ell\log|a|}{2A\sqrt{|a|b}}.
+\]
+In more detail, the root $y_a$ satisfies
+\begin{align*}
+ 2A\sqrt{|a|y_a}
+ ={}&\ell\log|a|-\frac\ell2\log\log|a|
+ +\frac\ell2\log\!\left(\frac{8\pi A}{\ell}\right)
+ +\frac34\sum_i\log\alpha_i
+ +O_\ell\!\left(\frac{\log\log|a|}{\log|a|}
+                  +\frac{(\log|a|)^2}{|a|}\right).
+\end{align*}
+Replacing $\sqrt{|a|y_a}$ on the left by $\sqrt{|a|b}\,u_{b,a}$ adds an
+error $O_\ell(\log|a|\sqrt{|a|/b})$.
+\end{corollary}
+
+\begin{proof}
+Lemma~\ref{lem:uniform-laguerre-bessel} gives
+$H(y)=y^\ell\prod_i\Phi(a_iy)(1+O_\ell(y))$, uniformly as $y\to0$.
+Write $x=\sqrt{|a|y}$. Bracketing first at fixed small and large
+multiples of $\log|a|$ shows that the root has $x\asymp\log|a|$.
+The expansion of $I_1$ in Section~\ref{sec:multistate-model} then gives,
+uniformly over the stated proportions,
+\[
+ H(x^2/|a|)=
+ \frac{x^{\ell/2}e^{2Ax}}
+ {|a|^\ell(4\pi)^{\ell/2}(\prod_i\alpha_i)^{3/4}}
+ \left(1+O_\ell(x^{-1}+x^2/|a|)\right).
+\]
+Take logarithms, substitute $x=(\ell/(2A))\log|a|+O_\ell(\log\log|a|)$ in
+the term $(\ell/2)\log x$, and use Theorem~\ref{thm:vertex-uniform-root}.
+This proves the claims. The constants also depend on the fixed compact set
+of proportions.
+\end{proof}
+
+\begin{proposition}[probability approximation can fail while roots agree]
+\label{prop:vertex-probability-failure}
+Let $a=\lfloor b/\log b\rfloor$, let $y_a$ solve $B_a(y_a)=1$,
+and set $u_0=\sqrt{y_a/b}$. Then
+\[
+ H(y_a)=B_a(y_a)^2=1,\qquad
+ S_{(b,a,a)}(u_0)\longrightarrow\infty,
+ \qquad \frac{u_{b,a,a}}{u_0}\longrightarrow1.
+\]
+Hence the crossing can be approximated uniformly even where
+$S(u)\sim H(bu^2)$ fails, so that approximation is not uniform over
+$|a|=o(b)$.
+\end{proposition}
+
+\begin{proof}
+We keep only the run words that start and end in the large state and have
+exactly one adjacent pair of distinct rare states. The run count in the
+proof of Theorem~\ref{thm:simplex-fixed-vertex} shows that their
+contribution is the polynomial $2uyB_a'(y)^2$, with each term of total
+rare-run count $m$ also multiplied by $\prod_{j=1}^{m-1}(1-j/b)_+$.
+Give $J$ probabilities proportional to $\binom{a-1}{j}y^j/j!$, the
+coefficients of $B_a'(y)$. Its differential equation
+$y(B_a')''+(1+y)(B_a')'-(a-1)B_a'=0$ implies
+$\E J^2+y\E J=(a-1)y$, and hence
+$\E J\le\sqrt{ay}$ and $\E J^2\le ay$.
+For 2 independent copies, $m=J_1+J_2+2$, so
+\[
+ \E[m(m-1)]\le4ay+6\sqrt{ay}+2.
+\]
+Lemma~\ref{lem:clipped-product} gives
+$1-\prod_{j=1}^{m-1}(1-j/b)_+\le m(m-1)/(2b)$, and therefore
+\[
+ S_{(b,a,a)}(u_0)\ge
+ \frac{2\kappa_a(y_a)^2}{bu_0}
+ \left(1-\frac{4ay_a+6\sqrt{ay_a}+2}{2b}\right),
+\]
+where $\kappa_a=yB_a'/B_a$ as in the proof of
+Lemma~\ref{lem:vertex-elasticity}. Corollary~\ref{cor:vertex-shape-law}
+with $\ell=1$ gives $\sqrt{ay_a}\sim\tfrac12\log a$, and the bounds on
+$\kappa_a$ in the proof of Lemma~\ref{lem:vertex-elasticity} give
+$\kappa_a(y_a)\sim\sqrt{ay_a}$. So the lower bound is asymptotic to
+$\sqrt{a/b}\log a\sim\sqrt{\log b}$, which diverges, although slowly.
+The root assertion follows from Theorem~\ref{thm:vertex-uniform-root},
+since $2a=o(b)$.
+\end{proof}
+
+%======================================================================
+% 15. Main-text sentences that pointed to removed results (introduction, related work, open questions)
+% Source: problem131_multistate.tex, lines 141-146 of the version before 2026-09-26 trim.
+%======================================================================
+(Theorem~\ref{thm:simplex-boundary-crossover}). Near a vertex, where one count
+$b$ is large and the other counts $a_1,\ldots,a_\ell$ have total $|a|=o(b)$, the
+crossing has $u=r/p=\sqrt{y_a/b}\,(1+O(\sqrt{(|a|+1)/b}))$, where $y_a$ is the
+root of a
+product of Laguerre-type polynomials (Theorem~\ref{thm:vertex-uniform-root}). This holds
+uniformly even where the matching approximation to the probabilities fails.
+
+%======================================================================
+% 15 (cont).
+% Source: problem131_multistate.tex, lines 209-211 of the version before 2026-09-26 trim.
+%======================================================================
+Huang, Kious, Sidoravicius and Tarr\'es~\cite{huang2018} give a Bessel formula
+for the density of local times on finite graphs, and
+Remark~\ref{rem:last-exit-trees} relates it to our tree sums.
+
+%======================================================================
+% 15 (cont).
+% Source: problem131_multistate.tex, lines 279-281 of the version before 2026-09-26 trim.
+%======================================================================
+Paper~C. Example~\ref{ex:simplex-edge-mode} and
+Proposition~\ref{prop:vertex-probability-failure} show that the simplest
+strengthenings of our results are false.

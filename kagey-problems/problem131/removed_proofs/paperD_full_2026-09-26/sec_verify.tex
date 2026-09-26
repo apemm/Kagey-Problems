@@ -1,0 +1,125 @@
+\section{Verification and open questions}\label{sec:verify}
+
+We computed in Python, in double precision unless stated otherwise. For
+the elephant walk, a forward dynamic program for the law of $M_n$ and a
+backward recursion for $V_s$, folded by the symmetry $V_s(b)=V_s(s-b)$,
+agree to $1.6\cdot10^{-14}$ at $n=12800$. They also agree with exact
+rational arithmetic for $n\le60$ and with 40-digit arithmetic at
+$n=400$. A recursion for Taylor coefficients in $\varepsilon$ gives $c_1$
+and $k_2(n)$. For the Markov crossing we count words by their number of
+switches, and this reproduces the values of $p_n$ in~\cite{paperA}.
+Section~\ref{sec:shape} uses exact recursions for $f_n$ and $\CP_n$.
+Truncating the chain at a level $m_0$ does not change $f_n(m)$ for
+$m\le m_0$, since $M_t$ never decreases. For heavy tails we compared 3
+methods. These are the two-renewal formula of
+Proposition~\ref{prop:tworenewal}, a recursion on the first run with exact
+Hurwitz zeta tails, and a sum over all $2^{n-1}$ run compositions in
+30-digit arithmetic. All 3 agree to $7\cdot10^{-16}$ for $n\le14$, and the
+first 2 agree to $10^{-14}$ up to $n=3200$. For aging,
+a forward recursion with nonnegative terms and a transfer matrix
+evaluated at roots of unity agree to at least 12 digits on the crossings,
+and small cases were done in exact rationals. The constants of the Landau
+density come from quadrature with 25 digits. Programs written separately
+reproduced the main numbers, including values of $x_n$, of $D(n)$, of
+$R_n$ and of $c_n$.
+
+There is one check script for each part of the paper.
+\texttt{verify\_elephant\_crossing.py} covers Section~\ref{sec:erw},
+Table~\ref{tab:erw-crossing} and Appendix~\ref{app:erw}.
+\texttt{verify\_elephant\_shape.py} covers Section~\ref{sec:shape} and
+Appendix~\ref{app:shape}. \texttt{verify\_heavy\_runs.py} covers
+Section~\ref{sec:heavy}, Table~\ref{tab:heavy} and
+Appendix~\ref{app:heavy}, and \texttt{verify\_aging.py} covers
+Remark~\ref{rem:aging} and Appendix~\ref{app:aging}. Each script
+recomputes the numbers printed in its part and compares them with the
+printed values. Where 2 independent methods were used when a number was
+first found, the script runs both. \texttt{verify\_all.py} runs the 4
+scripts. The quick run takes a few minutes, and the full run adds the
+largest cells and takes less than an hour. All 297 checks of the full run
+pass. The scripts need numpy, scipy and mpmath, and their output is in
+\texttt{paperD/data}.
+
+Many of the exact and finite statements are also proved in Lean~4, in
+\texttt{lean/PaperD} in the Problem 131 folder. For the elephant walk
+these are Lemma~\ref{lem:erw-reduction}, Proposition~\ref{prop:mlr}, the
+value $C_n'(0)=4/(n+2)$ of Proposition~\ref{prop:first-mutation}, the 2
+sums of Lemma~\ref{lem:subtree} (for the urn that gives the subtree
+sizes), Lemma~\ref{lem:unimodal} for $k_0=1$, Theorem~\ref{thm:dip},
+Corollary~\ref{cor:dip} and Lemma~\ref{lem:B-D}. For heavy tails they are
+Proposition~\ref{prop:edge}, the identities for $e(\alpha)$ and
+$K_\alpha$ behind Corollary~\ref{cor:golden}, and the value
+$\ell_\alpha(\frac12)$ in Theorem~\ref{thm:lamperti}. For aging they are
+Propositions~\ref{prop:D-paths} and~\ref{prop:D-uniform},
+Corollary~\ref{cor:D-fixed}, Lemma~\ref{lem:D-average} and the finite
+part of Theorem~\ref{thm:D-bracket}. The file \texttt{MAP.md} in that
+folder lists the Lean theorems. The asymptotic statements are not in
+Lean.
+
+The proofs do not use these computations, with 2 exceptions. The
+existence of $\kappa_L$ in Theorem~\ref{thm:landau}(c) uses the sign of
+$f_L''(\lambda_0)$, which we computed but did not certify. Also some
+constants in the proofs are values of explicit series and integrals, which
+we evaluated numerically. Conjecture~\ref{conj:convex}, the checked ranges
+after Corollary~\ref{cor:dip}, and the numerical parts of
+Remarks~\ref{rem:refined}, \ref{rem:fresh}, \ref{rem:crossover}
+and~\ref{rem:heat} rest on computation alone.
+
+Before computing a new case we wrote down, in the ledgers
+\texttt{ledger\_D1.md} to \texttt{ledger\_D4.md} in \texttt{paperD/data},
+a prediction and a condition that would refute it. Outcomes are recorded
+below each prediction, refuted predictions were kept, and observations
+made after a computation are marked as such. Most predictions survived,
+and 8 failed. The law $f_n$ given the first step is not convex between
+$2m^*$ and $n-2m^*$ (item D2-P9), which led us to
+Conjecture~\ref{conj:convex} for the full law. At $n=10^6$ and $x=320$
+the mode of $f_n$ is 3 below the mode of $\CP_n$, where we allowed 2
+(D2-P11). The endpoint dip already holds at $n=4$ and $5$, where we
+predicted that it fails (D2-P12). Two scaling laws for the finite-$n$
+shift between these 2 modes were both wrong (D2-P15). The form of
+Conjecture~\ref{conj:convex} on the closed range $[2m^*,n-2m^*]$ fails
+for 18 values of $n\le51$, which a separate check of $10\le n\le99$, also
+written down in advance, found. For heavy tails, one tolerance was too
+small because of an arithmetic slip in the prediction (D3-P2), and one
+predicted value of $n^*(1.60)$ was off by 2 because we misread a rounded
+number (D3-V1). For aging, we predicted $nC_n=d_c(1+(c-1)/n+O(n^{-2}))$,
+with $d_c$ the density of $\mathrm{Beta}(c,c)$ at $\frac12$, and at
+$c=0.3$ the remainder is larger (D4-P7). None of the failures concerns a
+statement that we call a theorem.
+
+Several questions remain open. For the elephant walk, the refined
+crossing of Remark~\ref{rem:refined} needs an upper bound
+$\log C_n\le\log(\varepsilon c_1)+\varepsilon k_2(n)
++O(\varepsilon^2(\log n)^k)$, which we do not have. We have no explicit
+$n$ beyond which $g_n>x_n$ (Theorem~\ref{thm:erw-crossing}). Evaluating
+the lower bound of Theorem~\ref{thm:erw-bounds}(c) at $g_n$ suggests that
+$n\ge2^{17}$ is enough, and $x_n<g_n$ at every $n$ in
+Table~\ref{tab:erw-crossing}, but we have not proved it.
+Theorem~\ref{thm:shape} says nothing in a window around the center, and
+closing it needs second differences of the law, as in
+Conjecture~\ref{conj:convex}. Also open are the tail of
+Theorem~\ref{thm:profile} for $m$ between $x\log x$ and $x\log^2x$, a
+sharp upper bound on the mirror term for $m$ of order $n$, and effective
+constants in Theorems~\ref{thm:landau}(c) and~\ref{thm:shape}, starting
+with a certified value of $\kappa_L$. For heavy tails we have no rate of
+convergence in Theorem~\ref{thm:center}. The monotonicity of $R_n$, and
+the fact that $R_n-1$ changes sign only once, at $n^*(\alpha)$, are only
+observed on the computed range (Remark~\ref{rem:crossover}). The case
+$\alpha=1$ is only heuristic (Remark~\ref{rem:fresh}). We have not
+studied the whole law for $1<\alpha<2$, for example whether the end atoms
+are isolated maxima. For $\alpha<1$ we know the shape of $\ell_\alpha$
+only near $y=\frac12$, and we do not know whether the center bin at
+finite $n$ is a local minimum for $\alpha<\alpha_c$ and a local maximum
+for $\alpha>\alpha_c$. For aging, we checked that at $c=c_n$ the center
+is the unique interior minimum and bins $1$ and $n-1$ are the largest,
+for every even $n$ from 4 to 1000 and for $n=1600,3200,6400$, but we
+have not proved this.
+
+\paragraph{Acknowledgment.}
+The Lean code for this paper was generated by AI. AI was also used to
+revise some of the writing and to help cross-verify the code.
+
+\paragraph{Data and code availability.}
+The manuscript source, verification scripts, recorded results and the
+prediction ledgers are in the Problem 131 folder of
+\url{https://github.com/apemm/Kagey-Problems}, under \texttt{paperD}. The
+Lean files are in \texttt{lean/PaperD} in the same folder.

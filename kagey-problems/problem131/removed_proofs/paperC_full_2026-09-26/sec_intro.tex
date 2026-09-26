@@ -1,0 +1,264 @@
+\section{Introduction}\label{sec:intro}
+
+Problem 131 of Kagey's Open Problem Collection~\cite{kagey131} asks about
+a Galton board where the ball tends to keep going the same way. Each bounce
+repeats the one before it with probability $p$, and the question is when
+the middle bin becomes as likely as an endpoint. The companion papers treat
+this question for 2 directions~\cite{paperA} and for $d$ directions with
+uniform switching~\cite{paperB}. In both, the crossing comes when $N$ times
+the probability of switching to a given other direction is
+$\log N-\frac12\log\log N+O(1)$, with an explicit constant in the $O(1)$
+term. In this paper we ask the same question when the switching rule is a
+general finite Markov chain.
+
+\paragraph{The model.}
+Let $Q$ be a generator on $[d]=\{1,\dots,d\}$, with rates $q_{ij}\ge0$ for
+$i\ne j$ and exit rates $q_i=\sum_{j\ne i}q_{ij}$, and let $\mu$ be a
+starting law on $[d]$. We run the chain $X_1,\dots,X_N$ with $X_1\sim\mu$
+and transition matrix $I+hQ$, where
+\[
+ h=\frac TN,\qquad T=\tau\log N,\qquad \tau>0 .
+\]
+So at each step the chain leaves state $i$ with probability $hq_i$, and
+$N$ steps look like the continuous-time chain with generator $Q$ run for
+time $T$. The composition $n=(n_1,\dots,n_d)$ counts the visits to each
+state, and it plays the role of the bin. For $d=2$, $q_{12}=q_{21}=1$ and a
+uniform start, this is the walk of Paper~A with $h=1-p$. With $q_{ij}=1$ for
+all $i\ne j$ and a uniform start it is the model of Paper~B
+(Example~\ref{ex:models}). The
+support of $n$ is a face $F$ of the simplex, and Kagey's question becomes
+which face holds the most likely composition, and at which $T$ the mode
+moves from one face to another. The middle bin against an endpoint is the
+full face against a vertex.
+
+\paragraph{The switching graph.}
+Let $G_Q$ be the switching graph, with an edge $i\to j$ when $q_{ij}>0$.
+For a face $F$ let $Q_F$ be the principal submatrix of $Q$ on $F$, and put
+$\lambda_F=-\varrho(Q_F)$, where $\varrho$ is the largest real eigenvalue.
+This is the exit rate of $F$. The continuous-time chain stays in $F$ up to
+time $t$ with probability about $e^{-t\lambda_F}$. We show that if some
+path of positive probability has support exactly $F$, then the most likely
+composition with support $F$ has probability $N^{-\Phi_\tau(F)+o(1)}$, where
+\[
+ \Phi_\tau(F)=\tau\lambda_F+\lvert F\rvert-1 .
+\]
+The reason is that a path with support $F$ must enter each of the other
+$\lvert F\rvert-1$ states of $F$, and each first entry is a switch of
+probability about $h=T/N$. So entering the new states is a factor of about
+$N^{-(\lvert F\rvert-1)}$, up to powers of $T$. A later run in a state needs
+another switch,
+but it also multiplies the number of ways to split the visits to that
+state into runs by a factor of order $N$, so it is not penalized. Staying
+inside $F$ for the whole time $T$ is a factor about $e^{-T\lambda_F}$. With
+$T=\tau\log N$ both factors are powers of $N$. So a sticky walk prefers to
+sit in a well-separated community, a set of states with a small exit rate
+for its size. The winning faces are read off from the lower-left boundary
+of the convex hull of the points $(\lambda_F,\lvert F\rvert-1)$, and the
+winning face changes at
+values of $\tau$ equal to minus the slopes of its edges
+(Theorem~\ref{thm:hull} and Figure~\ref{fig:cycles}).
+
+\paragraph{Results.}
+Theorem~\ref{thm:first} proves this for every start $\mu$. Call a
+face admissible if some path of positive probability has support exactly
+$F$. With $L=\log N$ we prove
+\[
+ \log\max_nP_N(n)=-L\min_F\Phi_\tau(F)+O(\log L),
+\]
+where the minimum is over admissible faces, and that for large $N$ every
+global mode has its support on a minimizing face. Note that $\Phi_\tau$
+does not depend on $\mu$, so to first order the start enters only through
+the set of admissible faces. If the minimizing faces are irreducible, meaning that
+their switching graphs are strongly connected, the mode lies within
+$O(1/L)$ of the quasi-ergodic law of the chain killed on leaving the face.
+This holds for example when $Q$ has symmetric support or $\mu$ has full
+support (Theorem~\ref{thm:hull}).
+
+Section~\ref{sec:secondorder} finds the $\log\log N$ term. Say that $F$
+satisfies (H) if it is irreducible and $\mu(F)>0$, write $k=\lvert F\rvert$,
+and let $M_F$ be the largest probability of a composition with support $F$.
+We prove a local law for the compositions in the interior of $F$
+(Theorem~\ref{thm:local} and Lemma~\ref{lem:discrete}) and deduce that
+\[
+ M_F=N^{-(k-1)}\,T^{(k-1)/2}K_F\,e^{-T\lambda_F}\bigl(1+O(1/T+T^2/N)\bigr)
+\]
+uniformly for $1\le T\le N^{1/3}$, with an explicit constant $K_F$
+(Theorem~\ref{thm:facemax}). The factor $T^{(k-1)/2}$ appears because the
+occupation fractions fluctuate on the scale $T^{-1/2}$ in $k-1$ directions
+inside the face. Now take 2 faces $F$ and $G$ with (H), and put
+$\Delta=\lvert F\rvert-\lvert G\rvert\ge1$ and $\delta=\lambda_G-\lambda_F>0$.
+Then every $T_N\in[1,N^{1/3}]$ with $M_F=M_G$ satisfies
+\[
+ \delta T_N+\frac\Delta2\log T_N=\Delta L-\log\frac{K_F}{K_G}
+ +O\Bigl(\frac1L\Bigr)
+\]
+(Theorem~\ref{thm:crossing}). Hence
+$T_N=\frac\Delta\delta\bigl[L-\frac12\log L+O(1)\bigr]$, and the
+coefficient $\frac12$ of $\log\log N$ in Papers~A and~B holds for every such
+pair, whatever the graph, the rates, the sizes or the start, and without
+reversibility. When all the faces that tie to first order satisfy (H), the
+global mode follows the upper envelope of explicit lines in a window of
+this form (Theorem~\ref{thm:window}). Papers~A and~B are special cases
+(Corollaries~\ref{cor:paperA} and~\ref{cor:paperB}). For reversible faces
+$K_F$ involves the square root of a weighted count of spanning trees
+(Proposition~\ref{prop:constant}), and for Paper~B a weighted form of
+Cayley's formula evaluates it. Without (H) the coefficient can change. On a
+directed 3-cycle the mode passes through a reducible face, and the 2
+crossings have coefficients 1 and 0 (Proposition~\ref{prop:threecycle}).
+
+Section~\ref{sec:examples} works out examples. On the complete graph every
+face has the same first-order exponent at $\tau=1$, which is the
+degeneracy of Paper~B, and the second order decides. There the start
+matters. On $K_3$ with $\mu=(\frac12,\frac12,0)$ an edge is the mode on a
+window of width about $0.026$ in the offset of Theorem~\ref{thm:window},
+and with a uniform start this window is empty
+(Proposition~\ref{prop:K3start}). On the cycle $C_d$ with $d\ge4$ the
+winners are arcs of $1,2,\dots,\lfloor2d/3\rfloor$ states and then the
+whole cycle (Theorem~\ref{thm:cycle}). Once an arc covers two thirds of the
+cycle, closing the cycle beats growing the arc. Two triangles joined by a
+link of small rate $\varepsilon$ form 2 communities, and a triangle wins
+from $\tau\approx1$ to $\tau\approx9/\varepsilon$
+(Proposition~\ref{prop:triangles}).
+
+Section~\ref{sec:sticky} applies face selection to sticky priors for hidden
+Markov models. We fix the exit probability of every state at
+$h=c\log N/N$ and let the
+switching kernel $\Pi$ be a stochastic matrix with zero diagonal and
+positive off-diagonal entries. Then for large $N$ the most likely
+composition under the prior, which we call the MAP composition, has its
+support on a minimizing face, with no reversibility needed
+(Corollary~\ref{cor:map}). For $d\ge3$ the minimizing faces go from single
+states straight to all $d$ states exactly when
+$\varrho(\Pi_F)\le(\lvert F\rvert-1)/(d-1)$ for every face $F$
+(Proposition~\ref{prop:thresholds}). For a symmetric kernel this happens
+only for the uniform kernel of Paper~B. Under the weak-limit sticky HDP-HMM
+prior with 3 states and uniform base weights, it has probability
+$\frac{3\sqrt3}{8\pi\omega}(1+o(1))$ as the concentration $\omega\to\infty$
+(Proposition~\ref{prop:directjump}). So the degeneracy of Paper~B is not
+typical. For a symmetric pair of states with equal start weights, a single
+state against the pair is exactly Kagey's crossing
+(Proposition~\ref{prop:sticky-pair}). The MAP composition can also mislead.
+Below the first threshold it uses a single state, while the event that the
+chain uses a single state has probability about $N^{-c}$
+(Proposition~\ref{prop:mass}).
+
+Section~\ref{sec:planar} treats the planar persistent walk, which is
+Kagey's Galton board in 2 dimensions. The walk moves in the directions
+$E,N,W,S$. At each step it keeps its direction with probability
+$1-(2r+s)h$, turns left or right with probability $rh$ each, and reverses
+with probability $sh$. For even $N$ we compare the corner $(N,0)$, which is
+reached only by going east at every step, with the origin. The crossing is
+unique (Proposition~\ref{prop:decomp}). For $r>0$ it happens at
+$h=T^*_N/N$ with $T^*_N/\log N\to\min\bigl(2/(2r+s),1/s\bigr)$
+(Theorem~\ref{thm:planar-first}). The first value comes from paths that use
+all 4 directions and the second from paths along a single axis, so the
+regime switches at $s=2r$. When reversals dominate ($s>2r$), $sT^*_N$
+follows the expansion of Paper~A with $\log N$ replaced by $\log N-\log2$,
+since the 2 axes double the mass at the origin
+(Theorem~\ref{thm:planar-rev}). When turns dominate ($s<2r$), a
+two-dimensional local limit (Theorem~\ref{thm:fourdir}) gives
+\[
+ (2r+s)T^*_N+\log T^*_N=2\log N+\log\frac{\pi}{8(r+s)}+o(1)
+\]
+(Corollary~\ref{cor:planar-turn}). With turns only ($s=0$), $rT^*_N$ agrees
+with the crossing $N(1-p_N)$ of Paper~A up to $O((\log N)^4/N)$
+(Proposition~\ref{prop:pureturns}).
+
+Section~\ref{sec:fisher} asks how much the endpoint alone tells us about the
+switching rate. For the walk of Paper~A with flip probability $q$, let
+$e_N(q)$ be the Fisher information about $q$ in the endpoint divided by the
+Fisher information in the whole path. With $x=Nq$ we prove
+$e_N(q)=\frac1{2x}+\frac1{4x^2}+O(x^{-3}+x^3/N)$ for $1\le x\le N^{1/4}$
+(Theorem~\ref{thm:fisher}). At Kagey's crossing this gives
+$e_N\approx1/(2\log N)$ (Corollary~\ref{cor:fisher-crossing}), but the
+correction is large. At $N=3200$ the product $2e_N\log N$ is still about
+$1.35$.
+
+\paragraph{Relation to established results.}
+The rate $I_F$ of Section~\ref{sec:firstorder} is the Donsker--Varadhan
+rate of the occupation measure of the chain killed on leaving $F$. For
+reversible jump processes Dupuis and Liu give the Donsker--Varadhan rate
+explicitly~\cite[Eq.~(3.2)]{dupuisliu2015}. On a finite reversible chain it
+reads $\sum_i\alpha_iq_i-\sum_{i\ne j}\sqrt{\alpha_i\alpha_jq_{ij}q_{ji}}$ for
+a law $\alpha$ on the states, and for $\alpha$ carried by $F$ this is
+$I_F(\alpha)$. Guillin, Nectoux and Wu~\cite{gnw2024} prove a large
+deviation principle for the occupation measure of a process conditioned to
+stay in a set (their Thm~2), and its rate vanishes only at the
+quasi-ergodic law (their (2.13)). When the process is reversible they prove
+that the exit rate of the set is the least value of the Donsker--Varadhan
+rate over laws on the set (their Cor.~2). In general they prove an
+inequality between their rate, the Donsker--Varadhan rate and the exit rate
+(their (4.6)), and they conjecture equality in (4.6) (their (2.15)). For a
+finite chain their condition (C5) requires $Q_F$ to be irreducible. For such
+a chain the exit rate is the least value of $I_F$ also without
+reversibility. We give a short self-contained proof in
+Proposition~\ref{prop:rate}(a), because we also need the other properties of
+$I_F$ proved there. It does not address their conjecture (2.15), which
+concerns their conditional rate. The quasi-ergodic law goes back to Darroch and
+Seneta~\cite{darrochseneta1965,darrochseneta1967} for irreducible absorbing
+chains in discrete and continuous time, and Colonius and
+Rasmussen~\cite{coloniusrasmussen2021} treat the reducible case.
+
+Dietz and Sethuraman~\cite{dietz2007} study chains that switch from $i$ to
+$j$ at time $n$ with probability $G(i,j)/n$, where every $G(i,j)>0$. Their
+occupation fractions converge in law to a distribution with full support on
+the simplex, and it is a Dirichlet law when $G(i,j)$ depends only on $j$.
+Their chains also make about $\log n$ switches by time $n$, but the
+switches are spread log-uniformly in time and the switching graph is
+complete. In an earlier paper~\cite{dietz2005} they prove large deviations
+at speed $n$ for chains whose transition matrices converge to a reducible
+matrix, and they remark that scales up to $\log n$ are of a different kind.
+
+Exact distributions of transition counts go back to
+Whittle~\cite{whittle1955}, Dawson and Good~\cite{dawsongood1957} and
+Goodman~\cite{goodman1958}. Polettini~\cite{polettini2015} and Carugno,
+Vivo and Coghi~\cite{cvc2022} derive such counts from the BEST theorem and
+the matrix-tree theorem and study the statistics of transition counts when
+every count grows linearly with the length of the path. We group the words
+by runs instead (Lemma~\ref{lem:runs}), which suits a regime with only
+$O(\log N)$ switches. Bertini, Gabrielli and Landim~\cite{bgl2024}, and
+Landim~\cite{landim2023} for non-reversible chains, expand the level-two
+large deviation rate functions of finite chains whose rates depend on a
+parameter. They describe the time scales of such chains but do not ask
+where the mode of the composition sits. The sticky HDP-HMM of Fox,
+Sudderth, Jordan and Willsky~\cite{fox2011} adds a self-transition bias to
+the hierarchical Dirichlet process hidden Markov model, and
+Section~\ref{sec:sticky} studies an idealized form of its prior.
+
+On the lattice the correlated random walk goes back to
+Gillis~\cite{gillis1955}. Chen and Renshaw study the Gillis--Domb--Fisher
+walk and its $n$-step characteristic function~\cite{chenrenshaw1992}, and
+they show that the characteristic function of any correlated random walk
+satisfies a recurrence~\cite{chenrenshaw1994}, so in principle the law of
+our planar walk is known. Marris and Giuggioli~\cite{marris2024} give
+lattice propagators for walks with forward, backward and lateral steps and
+solve their first-passage problem. In the continuum, Santra, Basu and
+Sabhapandit~\cite{santra2020} find the exact marginals of a run-and-tumble
+particle with 4 directions that turns by $\pm\pi/2$ and never reverses,
+and they describe from simulations how its mass moves from the boundary to
+the center. Angelani~\cite{angelani2022} treats general switching among 4
+orthogonal directions, and his walk with turns only factorizes in
+coordinates rotated by $45^\circ$~\cite[Eq.~(36)]{angelani2022}.
+Proposition~\ref{prop:pureturns} uses a lattice analogue of this
+factorization. In the continuum the corners carry atoms and the origin only
+a density, so the comparison of a corner with the origin is a lattice
+question. Smiga, Radaelli, Binder and Landi~\cite{smiga2023} compute the
+Fisher information of the empirical distribution of a stationary process
+under a Gaussian approximation. Their leading term depends on how the
+stationary law moves with the parameter. For the symmetric chain of
+Paper~A the stationary law does not depend on $q$, so their leading term
+vanishes here. We did not find the face-selection question or the planar
+crossing of the corner and the origin in the literature.
+
+\paragraph{Organization.}
+Section~\ref{sec:model} sets up the model and the exact law.
+Section~\ref{sec:firstorder} proves first-order face selection and
+describes the winners, and Section~\ref{sec:secondorder} gives the local
+law, the face maxima and the crossing equation.
+Sections~\ref{sec:examples}, \ref{sec:sticky}, \ref{sec:planar}
+and~\ref{sec:fisher} treat the examples, the sticky priors, the planar walk
+and the Fisher information. Section~\ref{sec:verify} describes the
+numerical checks and lists open questions, and the longer proofs are in the
+appendices. We do not treat compositions near the boundary of a face,
+where a local law that holds uniformly is open (Example~\ref{ex:star}), and
+we do not prove in general that a crossing is unique.
