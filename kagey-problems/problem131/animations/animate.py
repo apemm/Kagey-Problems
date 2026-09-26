@@ -11,12 +11,14 @@ above the ends, and at 0.95 the ends dominate.
 
   python animate.py
 
-Writes ../animations/galton.gif always, and galton.mp4 when an ffmpeg binary
-is available (through the imageio-ffmpeg package if it is installed).
+Writes galton.gif next to this script always, and galton.mp4 when an ffmpeg
+binary is available (through the imageio-ffmpeg package if it is installed).
+It takes pmf_exact and shades from ../paperA/figures/make_figures.py.
 """
 
 from __future__ import annotations
 
+import sys
 from fractions import Fraction
 from pathlib import Path
 
@@ -27,9 +29,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.animation import FFMpegWriter, FuncAnimation, PillowWriter
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "paperA" / "figures"))
 from make_figures import pmf_exact, shades
 
-OUT = Path(__file__).resolve().parents[1] / "animations"
+OUT = Path(__file__).resolve().parent
 
 N = 10                  # bounces, so N + 1 = 11 bins (Kagey's row 11)
 PS = [Fraction(1, 2), Fraction(2, 3), Fraction(5, 6), Fraction(19, 20)]

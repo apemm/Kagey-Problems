@@ -140,6 +140,7 @@ grows.
 - `data/figdata_*.json` holds cached data for the figures.
 - `data/verify_output.txt` and `data/verify_output_full.txt` hold the output of the quick run and
   the full run of the checks.
+- `removed_proofs/` keeps Paper D as first written, before it was cut to its current length.
 - `../lean/PaperD/` holds the Lean 4 proofs of the exact statements (not the asymptotics). `MAP.md`
   there gives the Lean name of each statement, with its number in the paper.
 

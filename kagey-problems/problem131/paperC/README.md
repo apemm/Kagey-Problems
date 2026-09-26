@@ -8,18 +8,18 @@ the mode moves to another face. The title is "Face selection for slowly switchin
 the planar persistent walk". It is the third of 4 papers on Problem 131, all A. Pemmasani,
 preprint, 2026.
 
-- Paper A (`../problem131.tex`), "Uniform Bessel bounds for endpoint crossings in the persistent
-  random walk", treats the walk with 2 states (the zero-field Ising chain in 1 dimension with free
-  boundaries). It proves explicit uniform Bessel bounds for every bin and brackets the crossing
-  p_N for every N >= 2 (analytic for N >= 175, exact certificates below, all checked in Lean). This
-  gives the crossing equation z_N + (1/2) log z_N = L + c_0 + 1/(8 z_N) + R_N with an explicit R_N.
-  It also proves a uniform local law for every switching probability up to 1/2.
-- Paper B (`../problem131_multistate.tex`), "Vertex crossings in a symmetric Markov multinomial
-  model", treats the complete graph (the d-state Potts chain in 1 dimension). Every face ties with
-  the vertices at first order, and Paper B resolves the tie at second order. Its constants a_k are
-  the mass of a face over a Gaussian volume, square roots of weighted spanning-tree sums, and the
-  mode changes exactly once, from the vertices to the full centers. A start law or a weak field
-  shifts the constants.
+- Paper A (`../paperA/problem131.tex`), "Uniform Bessel bounds for endpoint crossings in the
+  persistent random walk", treats the walk with 2 states (the zero-field Ising chain in 1 dimension
+  with free boundaries). It proves explicit uniform Bessel bounds for every bin and brackets the
+  crossing p_N for every N >= 2 (analytic for N >= 175, exact certificates below, all checked in
+  Lean). This gives the crossing equation z_N + (1/2) log z_N = L + c_0 + 1/(8 z_N) + R_N with an
+  explicit R_N. It also proves a uniform local law for every switching probability up to 1/2.
+- Paper B (`../paperB/problem131_multistate.tex`), "Vertex crossings in a symmetric Markov
+  multinomial model", treats the complete graph (the d-state Potts chain in 1 dimension). Every face
+  ties with the vertices at first order, and Paper B resolves the tie at second order. Its constants
+  a_k are the mass of a face over a Gaussian volume, square roots of weighted spanning-tree sums,
+  and the mode changes exactly once, from the vertices to the full centers. A start law or a weak
+  field shifts the constants.
 - Paper C, this paper, gives the general theory for the transition matrix I + (T/N)Q, with face
   selection at first order, the constants K_F and the crossing equation at second order for
   strongly connected faces, and the planar persistent walk as the application.
@@ -113,6 +113,7 @@ constant in the Fisher theorem with the limits at fixed q and at fixed Nq.
   before most of the computations, and what happened to them.
 - `data/verify_output.txt` is the output of `verify_all.py`, and `data/figdata_*.json` holds the
   plotted data.
+- `removed_proofs/` keeps Paper C as first written, before it was cut to its current length.
 - `../lean/PaperC/` holds Lean 4 proofs of many of the finite and algebraic steps, and
   `../lean/PaperC/MAP.md` matches each statement of the paper (by number and `\label` key) to its
   Lean theorems. The asymptotic results are not in Lean.

@@ -5,7 +5,7 @@ direction with probability p. Kagey asks for the distribution of the bins, the l
 his numerator tables, when the middle bin is as likely as the endpoints, the normal limit, and what
 changes on a cylinder or a tetrahedron.
 
-Status. Answered, in 4 papers by A. Pemmasani (preprint, 2026). Paper A solves the binary problem
+Status. Answered, in a series of 4 papers by A. Pemmasani, The middle and the ends I-IV (preprint, 2026). Paper A solves the binary problem
 at every N, Paper B treats d directions on the complete graph, Paper C gives the general theory for
 slowly switching chains, and Paper D asks what memory changes. The 4 papers share the notation N,
 L = log N, T, z_N, lambda_F and K_F and cite each other by description. `PUBLICATION.md` has notes
@@ -30,9 +30,10 @@ for every q <= 1/2, from the diffusive to the ballistic regime. Kagey's side que
 there too. His p = 2/3 and p = 1/3 tables are OEIS A035002 and A348595 by bijection, the walk has a
 normal limit, and on a cylinder the limit is uniform.
 
-Files. `problem131.tex` and `problem131.pdf`, with the sections `sec_exact.tex`, `sec_crossing.tex`,
-`allbin_thresholds.tex`, `periodic_window.tex` and `sec_llt.tex`, and the appendices
-`app_every_n.tex`, `app_llt.tex` and `app_tables.tex`.
+Files. The folder `paperA`, with `problem131.tex` and `problem131.pdf`, the sections
+`sec_exact.tex`, `sec_crossing.tex`, `allbin_thresholds.tex`, `periodic_window.tex` and
+`sec_llt.tex`, the appendices `app_every_n.tex`, `app_llt.tex` and `app_tables.tex`, the check
+scripts and `paperA/README.md`.
 
 ## Paper B: Vertex crossings in a symmetric Markov multinomial model
 
@@ -47,10 +48,11 @@ on 3 states and a field can make every support size win in turn. The paper also 
 majorant for every count vector and the crossing near a vertex, uniformly over rare counts of
 total o(b).
 
-Files. `problem131_multistate.tex` and `problem131_multistate.pdf`, with the sections
-`multistate_model.tex`, `simplex_thresholds.tex`, `general_start.tex`, `frontier_modes.tex` and
-`frontier_boundary.tex`, and the appendices `app_thresholds.tex`, `app_start_field.tex`,
-`app_boundary.tex` and `vertex_completion.tex`.
+Files. The folder `paperB`, with `problem131_multistate.tex` and `problem131_multistate.pdf`, the
+sections `multistate_model.tex`, `simplex_thresholds.tex`, `general_start.tex`,
+`frontier_modes.tex` and `frontier_boundary.tex`, the appendices `app_thresholds.tex`,
+`app_start_field.tex`, `app_boundary.tex` and `vertex_completion.tex`, the check scripts and
+`paperB/README.md`.
 
 ## Paper C: Face selection for slowly switching Markov chains and the planar persistent walk
 
@@ -88,25 +90,28 @@ section on related work.
 
 ## Shared files
 
+Each paper has its own folder, `paperA` to `paperD`, with its source and PDF, its figures, its check
+scripts and runner, their recorded output and ledgers in `data/`, and a `README.md`. Papers B, C and
+D also keep the proofs cut while shortening them in `removed_proofs/`, for reference. The files
+below are shared.
+
 - `SUPPLEMENT.md` is the one verification supplement for the 4 papers. It lists each result that
   rests on computation with the script that checks it.
-- `verify_all.py` runs the checks with `--paper a`, `b`, `c`, `d` or `all` (the default). For
-  Papers C and D it calls `paperC/verify_all.py` and `paperD/verify_all.py`.
-- `verify*.py` and `check_bessel.py` are the checks for Papers A and B (standard library only).
-- `figures/` holds the figures of Papers A and B, made by `figures/make_figures.py`, and the program
-  figure shared by all 4 papers (`program_A` to `program_D`), made by
-  `figures/make_program_figure.py`.
+- `verify_all.py` runs the checks with `--paper a`, `b`, `c`, `d` or `all` (the default). It calls
+  `paperA/verify_all.py` to `paperD/verify_all.py`, each in its own folder.
+- `figures/` holds the program figure shared by all 4 papers (`program_A` to `program_D`), made by
+  `figures/make_program_figure.py`, with the captions in `figures/program_captions.md`.
 - `animations/` shows a Galton board with persistence at 4 values of p (`galton.gif`, `galton.mp4`),
-  made by `figures/animate.py`.
+  made by `animations/animate.py`.
 - `lean/` holds the Lean 4 proofs, one library per paper (not the large-argument asymptotics).
   `lean/README.md` says what each library covers.
-- `data/ledger.md` holds the predictions written down before the computations, what happened to
-  them, and an index of the ledgers of all 4 papers.
-- `data/` holds the recorded output of the checks for Papers A and B.
+- `ledger.md` holds the predictions written down before the first computations for Papers A and B,
+  what happened to them, and an index of the ledgers of all 4 papers.
+- `early_runs/` holds the recorded output of the joint checks of Papers A and B from 21 and 22
+  September 2026, before the papers were split.
 - `literature_review.md` says what each earlier source proves.
-- `removed_proofs/` keeps the proofs cut from Papers B, C and D while shortening them, for reference.
 
 Run `python -B verify_all.py --paper a` (or `b`, `c`, `d`, `all`). Add `--full` for the long runs
-and `--dry-run` to list the commands. Build Paper A with `pdflatex problem131.tex` and Paper B with
-`pdflatex problem131_multistate.tex`, 3 times each. Papers C and D build the same way in their
-folders.
+and `--dry-run` to list the commands. Build each paper in its folder with pdflatex, 3 times, for
+example `pdflatex problem131.tex` in `paperA` and `pdflatex problem131_multistate.tex` in
+`paperB`.
