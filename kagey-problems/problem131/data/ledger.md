@@ -116,6 +116,11 @@ then the outcome, with nothing deleted).
   after a correction to its diagnostic). A side claim in the notes about the leading behavior of
   the correction for 2 or more rare counts is refuted by X1 and was removed.
 
+## Ledgers of Papers C and D
+
+- [../paperC/data/ledger.md](../paperC/data/ledger.md) indexes the ledgers of Paper C.
+- [../paperD/data/ledger.md](../paperD/data/ledger.md) indexes the ledgers of Paper D.
+
 ## Rerun after the move to 4 papers (2026-09-26)
 
 No new prediction is registered here. After `verify_all.py` and `SUPPLEMENT.md` were set up for the

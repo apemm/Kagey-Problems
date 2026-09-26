@@ -1,0 +1,145 @@
+\section{Proof of Theorem~\texorpdfstring{\ref{thm:center}}{4.4}}\label{app:heavy}
+
+We use the notation of Section~\ref{sec:heavy}, with $1<\alpha<2$, $a_m=m^{1/\alpha}$
+and $\tau_0=0$. For a first run $D$ let $\tau^D_m=D+\tau'_{m-1}$, where $(\tau'_m)$ is
+an independent copy of $(\tau_m)$, and $\tau^D_0=0$. Then $u^D_m(k)=\Prob(\tau^D_m=k)$
+and $q^D_m(k)=\Prob(\tau^D_{m-1}<k\le\tau^D_m)$. Conditioning on the last run gives, for
+$m,k\ge1$,
+\begin{equation}\label{eq:C-conv}
+\begin{gathered}
+q_m(k)=\sum_{j\ge1}\bar F(j)\,u_{m-1}(k-j),\qquad
+q^D_{m+1}(k)=\sum_{j\ge1}\bar F(j)\,u^D_m(k-j),\\
+u^D_m(k)=\sum_{d\ge1}\Prob(D=d)\,u_{m-1}(k-d).
+\end{gathered}
+\end{equation}
+Since $\tau_m$ and $\tau^D_m$ increase strictly, $\sum_mq_m(k)=\sum_mq^D_m(k)=1$,
+$\sum_mu^D_m(k)\le1$ and $\sum_{m\le m'}q_m(k)=\Prob(\tau_{m'}\ge k)$. We put
+$z_{m,k}=(k-m\mu)/a_m$ and $\delta_m=\sup_k\lvert a_mu_m(k)-g(z_{m,k})\rvert$, so that
+$\delta_m\to0$ by Lemma~\ref{lem:stable}(iii). Let $\omega$ be the modulus of continuity
+of $g$ and $\bar g(x)=\sup_{\lvert y\rvert\ge x}g(y)$. By Lemma~\ref{lem:stable}(ii),
+$\omega(\eta)\to0$ as $\eta\to0$ and $\bar g(x)\to0$ as $x\to\infty$.
+
+\begin{lemma}\label{lem:C-bigjump}
+There is a constant $C_B=C_B(\alpha)$ such that $u_m(k)\le C_B\,m\,k^{-\alpha-1}$ for
+all $m\ge1$ and $k\ge2m\mu$.
+\end{lemma}
+
+\begin{proof}
+Here $C$ depends only on $\alpha$ and may change from line to line. Let
+$r=4+4/(\alpha-1)$ and $y=k/r$.
+
+\emph{One big jump.} By the mean value theorem $p_\ell\le\alpha\ell^{-\alpha-1}$. So for
+each $i$ the probability
+$\Prob(\tau_m=k,\,\xi_i\ge y)=\sum_{\ell\ge y}p_\ell\,\Prob(\tau_m-\xi_i=k-\ell)$ is at
+most $\alpha r^{\alpha+1}k^{-\alpha-1}$, and the $m$ indices give at most
+$\alpha r^{\alpha+1}mk^{-\alpha-1}$.
+
+\emph{No big jump.} We may take $y\ge1$, since otherwise $\max_i\xi_i<y$ is impossible.
+Let $x_0>0$ and $\lambda=s/y$ with $s\ge0$. Markov's inequality and
+$e^x\le1+x+\frac{x^2}2e^x$ for $x\ge0$ give
+\begin{equation}\label{eq:C-chernoff}
+\Prob\bigl(\tau_m\ge x_0,\ \max_{i\le m}\xi_i<y\bigr)
+\le\exp\Bigl(-\frac{sx_0}y+m\Bigl(\frac sy\,\E[\xi;\xi<y]
++\frac{s^2e^s}{2y^2}\,\E[\xi^2;\xi<y]\Bigr)\Bigr).
+\end{equation}
+We take $x_0=k$ and use $\E[\xi;\xi<y]\le\mu$,
+$\E[\xi^2;\xi<y]\le\alpha\sum_{\ell<y}\ell^{1-\alpha}\le Cy^{2-\alpha}$ and
+$k-m\mu\ge k/2$. The exponent is then at most $-sr/2+Cr^\alpha s^2e^sm/k^\alpha$. With
+$s=\frac12\log(k^\alpha/m)$, which is positive since $m\le k/2<k^\alpha$, we have
+$e^sm/k^\alpha=e^{-s}$ and $s^2e^{-s}\le1$. So the bound is $C(m/k^\alpha)^{r/4}$. As
+$r/4=1+1/(\alpha-1)$ and $m\le k$, this is at most
+$C(m/k^\alpha)(k^{1-\alpha})^{1/(\alpha-1)}=Cmk^{-\alpha-1}$.
+\end{proof}
+
+\begin{lemma}\label{lem:C-firstpassage}
+Let $D$ be any a.s.\ finite first run. Then
+\[
+\sup_k\Bigl\lvert\frac{a_m}\mu q_m(k)-g(z_{m,k})\Bigr\rvert,\qquad
+\sup_k\bigl\lvert a_mu^D_m(k)-g(z_{m,k})\bigr\rvert,\qquad
+\sup_k\Bigl\lvert\frac{a_m}\mu q^D_{m+1}(k)-g(z_{m,k})\Bigr\rvert
+\]
+tend to $0$ as $m\to\infty$. For $m\ge2$, $\sup_kq_m(k)\le\mu \bar u/a_{m-1}$ and
+$\sup_ku^D_m(k)\le \bar u/a_{m-1}$.
+\end{lemma}
+
+\begin{proof}
+By \eqref{eq:C-conv}, $q_m$ and $u^D_m$ are mixtures of shifts of $u_{m-1}$ with total
+weights $\mu$ and $1$. This gives the bounds for $m\ge2$.
+
+Fix $J\ge1$ and $Z>0$, put $\sigma_J=\sum_{j>J}\bar F(j)$ and write $z=z_{m,k}$. In the
+sum for $q_m(k)$ the terms with $j>J$ add up to at most $\bar u\sigma_J/a_{m-1}$. For
+$j\le J$ we have $\lvert a_{m-1}u_{m-1}(k-j)-g(z_{m-1,k-j})\rvert\le\delta_{m-1}$ and
+$z_{m-1,k-j}=z\,a_m/a_{m-1}+(\mu-j)/a_{m-1}$. If $\lvert z\rvert\le Z$, then
+$\lvert z_{m-1,k-j}-z\rvert\le\eta_m=Z(a_m/a_{m-1}-1)+(J+\mu)/a_{m-1}$. If
+$\lvert z\rvert>Z$ and $(J+\mu)/a_{m-1}\le Z/2$, then $g(z)$ and $g(z_{m-1,k-j})$ both
+lie in $[0,\bar g(Z/2)]$. Since $\mu-\sum_{j\le J}\bar F(j)=\sigma_J$, we get, uniformly
+in $k$ for large $m$,
+\[
+\bigl\lvert a_{m-1}q_m(k)-\mu g(z)\bigr\rvert
+\le\mu\bigl(\delta_{m-1}+\omega(\eta_m)+\bar g(Z/2)\bigr)
++(\bar u+\lVert g\rVert_\infty)\sigma_J .
+\]
+We let $m\to\infty$, then $J,Z\to\infty$, and use $a_m/a_{m-1}\to1$. This gives the
+first limit. The second follows in the same way from the sum for $u^D_m$, with the
+weights $\Prob(D=d)$ and with $\Prob(D>J)$ in place of $\sigma_J$. The third follows
+from the sum for $q^D_{m+1}$, with $a_mu^D_m$ in place of $a_{m-1}u_{m-1}$, the second
+limit in place of $\delta_{m-1}\to0$, and the shift $z_{m,k-j}-z_{m,k}=-j/a_m$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:center}]
+Put $b_h=(h/\mu)^{1/\alpha}$. By Lemma~\ref{lem:stable}(iv) it suffices to show that
+$C_n\sim2b_h^{-1}\int g^2$. Note that $b_h=o(h)$, that $a_m\ge b_h/8$ for
+$m\ge h/(8\mu)$ and $a_m\ge b_h/2$ for $m\ge h/(2\mu)$, and that $a_m/b_h\to1$ uniformly
+in $m$ with $\lvert m\mu-h\rvert\le2Mb_h$, for each fixed $M$. By
+Proposition~\ref{prop:tworenewal},
+$C_n=\sum_{m\ge1}\bigl[u_m(h)q^D_{m+1}(h)+u^D_m(h)q_m(h)\bigr]$. Fix $M>1$, put
+$m_\pm=(h\pm Mb_h)/\mu$, and let $\Sigma_1,\dots,\Sigma_4$ be the parts of this sum over
+the regions $\mathcal R_1=\{m\le h/(4\mu)\}$, $\mathcal R_2=\{h/(4\mu)<m<m_-\}$,
+$\mathcal R_3=\{m_-\le m\le m_+\}$ and $\mathcal R_4=\{m>m_+\}$.
+
+\emph{Region $\mathcal R_1$.} Here $h\ge4m\mu$, so
+$u_m(h)\le C_Bmh^{-\alpha-1}\le C_Bh^{-\alpha}/(4\mu)$ by Lemma~\ref{lem:C-bigjump}.
+Also $q_1(h)=h^{-\alpha}$. For $m\ge2$ we split the sum for $q_m(h)$ at $j=h/2$. The
+terms with $j\ge h/2$ add up to at most $(h/2)^{-\alpha}$. For $j<h/2$ we have
+$h-j>h/2\ge2\mu(m-1)$, so the other terms add up to at most
+$\mu C_B(m-1)(h/2)^{-\alpha-1}\le2^{\alpha-1}C_Bh^{-\alpha}$. Since
+$\sum_mq^D_{m+1}(h)\le1$ and $\sum_mu^D_m(h)\le1$, we get $\Sigma_1=O(h^{-\alpha})$.
+This is $o(1/b_h)$, since $1/\alpha<1<\alpha$.
+
+\emph{Region $\mathcal R_2$.} For large $h$ we have $m-1\ge h/(8\mu)$ here, so
+$u_m(h),u^D_m(h)\le \bar u/a_{m-1}\le8\bar u/b_h$ by Lemmas~\ref{lem:stable}(iii)
+and~\ref{lem:C-firstpassage}. Let $m'=\lfloor m_-\rfloor$. Then
+$\sum_{m\in\mathcal R_2}q_m(h)\le\Prob(\tau_{m'}\ge h)$ and
+$\sum_{m\in\mathcal R_2}q^D_{m+1}(h)\le\Prob(D+\tau'_{m'}\ge h)$, which is at most
+$\Prob(D\ge b_h)+\Prob(\tau_{m'}\ge h-b_h)$. Since $m'\mu\le h-Mb_h$ and
+$a_{m'}\le b_h$, the event $\{\tau_{m'}\ge h-b_h\}$ implies
+$(\tau_{m'}-m'\mu)/a_{m'}\ge M-1$. As $D$ is a.s.\ finite and
+$(\tau_{m'}-m'\mu)/a_{m'}\Rightarrow G$, we get
+$\limsup_hb_h\Sigma_2\le16\bar u\,\Prob(G\ge M-1)$.
+
+\emph{Region $\mathcal R_4$.} For large $h$ we have $m-1\ge h/(2\mu)$ here, so
+$u_m(h),u^D_m(h)\le2\bar u/b_h$. Let $k=\lfloor m_+\rfloor$. Then
+$\sum_{m\in\mathcal R_4}q_m(h)=\Prob(\tau_k<h)$ and
+$\sum_{m\in\mathcal R_4}q^D_{m+1}(h)=\Prob(D+\tau'_k<h)\le\Prob(\tau_k<h)$. Now
+$(h-k\mu)/a_k\le(\mu-Mb_h)/a_k\to-M$, and the law of $G$ is continuous, so
+$\limsup_hb_h\Sigma_4\le4\bar u\,\Prob(G\le-M)$.
+
+\emph{Region $\mathcal R_3$.} Here $m\to\infty$ and $a_m=b_h(1+o(1))$ uniformly. By
+Lemma~\ref{lem:C-firstpassage} and $\delta_m\to0$, uniformly in $m\in\mathcal R_3$,
+\[
+u_m(h)q^D_{m+1}(h)+u^D_m(h)q_m(h)=\frac{2\mu}{a_m^2}\bigl(g(z_{m,h})^2+o(1)\bigr).
+\]
+Put $y_m=(h-m\mu)/b_h$. Then $\lvert z_{m,h}-y_m\rvert\le M\lvert b_h/a_m-1\rvert\to0$,
+so $g(z_{m,h})^2=g(y_m)^2+o(1)$. The $y_m$ with $m\in\mathcal R_3$ are the points of an
+arithmetic progression with step $\mu/b_h$ that lie in $[-M,M]$. Hence
+\[
+b_h\Sigma_3=2\bigl(1+o(1)\bigr)\frac\mu{b_h}
+\sum_{m\in\mathcal R_3}\bigl(g(y_m)^2+o(1)\bigr)\to2\int_{-M}^Mg^2 .
+\]
+Adding the 4 regions,
+\[
+\limsup_{h\to\infty}\Bigl\lvert b_hC_n-2\int g^2\Bigr\rvert
+\le2\int_{\lvert z\rvert>M}g^2+16\bar u\bigl(\Prob(G\ge M-1)+\Prob(G\le-M)\bigr),
+\]
+and letting $M\to\infty$ gives $C_n\sim2b_h^{-1}\int g^2$.
+\end{proof}
