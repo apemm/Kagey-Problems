@@ -1,32 +1,19 @@
 \section{The full hierarchy of endpoint crossings}\label{sec:allbin}
 
-The middle and adjacent bins are the two ends of a larger family of crossing
-thresholds. In this section, $a,b$ are positive integers, $N=a+b$, and
-\[
- S_{a,b}(u)=\frac{P_{a+b}(a)}{P_{a+b}(0)},\qquad u=\frac{1-p}{p}.
-\]
-This ratio is defined for $p>0$. The run-count formula can be written as
+Let $a,b\ge1$ be integers, $N=a+b$, $u=(1-p)/p$ with $p>0$, and
+$S_{a,b}(u)=P_N(a)/P_N(0)$. Theorem~\ref{thm:pmf} and
+$\binom{m-1}{r+1}=\frac{m-1-r}{r+1}\binom{m-1}{r}$ for $m=a,b$ give
 \begin{equation}\label{eq:allbin-polynomial}
  S_{a,b}(u)=\sum_{r\ge0}\binom{a-1}{r}\binom{b-1}{r}
- \left(2u^{2r+1}+\frac{N-2-2r}{r+1}u^{2r+2}\right).
+ \Bigl(2u^{2r+1}+\frac{N-2-2r}{r+1}u^{2r+2}\Bigr).
 \end{equation}
-Indeed, the even coefficient follows from
-\[
- \binom{a-1}{r+1}\binom{b-1}{r}
- +\binom{a-1}{r}\binom{b-1}{r+1}
- =\frac{N-2-2r}{r+1}\binom{a-1}{r}\binom{b-1}{r}.
-\]
-The summation is finite and all its coefficients are nonnegative. Since the
-linear coefficient is $2$, there is a unique $u_{a,b}>0$ satisfying
-$S_{a,b}(u_{a,b})=1$. Write
-\[
- p_{a,b}=\frac1{1+u_{a,b}}.
-\]
-Thus every interior bin has exactly one endpoint crossing in $0<p<1$.
-We exclude $p=0$, where a noncentral bin and an endpoint can both have
-probability zero.
+Its coefficients are nonnegative, as $N-2-2r\ge|b-a|$ for $r<\min(a,b)$,
+and the linear one is $2$. So there is a unique $u_{a,b}>0$ with
+$S_{a,b}(u_{a,b})=1$, and we put $p_{a,b}=1/(1+u_{a,b})$. As $S_{a,b}(u)\ge2u$,
+$u_{a,b}\le\frac12$ and $p_{a,b}\in[\frac23,1)$, with $p_{a,b}=\frac23$ only for
+$a=b=1$.
 
-\begin{proposition}[ordering the thresholds]\label{prop:allbin-order}
+\begin{proposition}[ordering the crossings]\label{prop:allbin-order}
 If $a<b-1$, then
 \[
  u_{a+1,b-1}<u_{a,b},\qquad p_{a+1,b-1}>p_{a,b}.
@@ -37,122 +24,119 @@ $S_{a+1,b-1}$ and $S_{a,b}$, or $S_{a,b+1}$ and $S_{a,b}$, hold
 coefficientwise, with at least one strict coefficient.
 \end{proposition}
 \begin{proof}
-For fixed $N$ and $r\le a-1$, write
-\[
- \binom{a-1}{r}\binom{b-1}{r}
- =\frac1{(r!)^2}\prod_{j=0}^{r-1}(a-1-j)(b-1-j).
-\]
-Every factor increases after $(a,b)$ is replaced by $(a+1,b-1)$, since
-\[
- (a-j)(b-2-j)-(a-1-j)(b-1-j)=b-a-1>0.
-\]
-Any new summand is nonnegative, and the cubic coefficient increases strictly.
-Equation~\eqref{eq:allbin-polynomial} therefore gives the first assertion.
-Increasing $b$ with $a$ fixed increases the binomial coefficients in the
-original run formula, and increases the quadratic coefficient $N-2$ strictly.
-Comparing the unique roots proves the remaining assertions.
+For fixed $N$ and $r\le a-1$,
+$\binom{a-1}{r}\binom{b-1}{r}=(r!)^{-2}\prod_{j=0}^{r-1}(a-1-j)(b-1-j)$, and
+each factor grows when $(a,b)$ becomes $(a+1,b-1)$, by
+$(a-j)(b-2-j)-(a-1-j)(b-1-j)=b-a-1>0$. The even multiplier $(N-2-2r)/(r+1)$
+is unchanged, and nonnegative where either product is nonzero, since then
+$r\le a$ and $N-2-2r\ge b-a-2\ge0$. New summands are nonnegative, and the
+cubic coefficient grows strictly. Increasing $b$ with $a$
+fixed increases the binomial coefficients of Theorem~\ref{thm:pmf}, and the
+quadratic coefficient $N-2$ strictly. Comparing the unique roots proves the rest.
 \end{proof}
 
-\paragraph{Relation to interior log-concavity.}
-The ordering of the bin heights also follows from the interior
-log-concavity proved by Dekking and Kong~\cite[Proposition~4.3]{dekkingkong2011}.
-We use the coefficient argument above instead, in Proposition~\ref{prop:adjacent}.
-The results below locate all the crossings, including those of bins whose
-distance from the edge changes with $N$.
+The ordering of the bin heights below also follows from the interior
+log-concavity of Dekking and Kong~\cite[Proposition~4.3]{dekkingkong2011}.
+We use the coefficients.
+
+\begin{proposition}[adjacent bins and global extrema]\label{prop:adjacent}
+For $N\ge2$ and $0<p<1$, an adjacent bin has the same probability as an endpoint precisely at
+\[
+p_N^{\mathrm{adj}}=\frac{1+\sqrt{N-1}}{2+\sqrt{N-1}}.
+\]
+For $0<p<1$, the endpoints are the least likely bins if $p<p_N^{\mathrm{adj}}$, bins
+$1$ and $N-1$ are if $p>p_N^{\mathrm{adj}}$, and they tie at equality.
+For $N\ge4$, the central crossing satisfies $p_N>p_N^{\mathrm{adj}}$.
+At $p=p_N$, the middle and endpoints attain the global maximum and bins
+$1,N-1$ attain the global minimum. For $N=2,3$,
+$p_N=p_N^{\mathrm{adj}}$ and every bin ties at the crossing.
+\end{proposition}
+\begin{proof}
+By \eqref{eq:allbin-polynomial}, $S_{1,N-1}(u)=2u+(N-2)u^2$, with positive root
+$u^{\mathrm{adj}}=1/(1+\sqrt{N-1})$. This gives $p_N^{\mathrm{adj}}$ and the sign
+change. For $0<p<1$ we have $P_N(k)=P_N(0)S_{k,N-k}(u)$ with $P_N(0)>0$, so if
+$1\le k<N-k-1$ Proposition~\ref{prop:allbin-order} gives $P_N(k)<P_N(k+1)$. By
+symmetry the middle is the largest interior bin and bins $1,N-1$ are the
+smallest, which gives the claims about the global minimum. For $N\ge4$ the
+cubic coefficient $2(\lfloor N/2\rfloor-1)(\lceil N/2\rceil-1)$ of $S_N$ is
+positive, so $2u_N+(N-2)u_N^2<S_N(u_N)=1$, hence $u_N<u^{\mathrm{adj}}$ and
+$p_N>p_N^{\mathrm{adj}}$. At $p_N$ the middle ties with the endpoints, which
+gives the global maximum. For $N=2,3$ we have $S_N=S_{1,N-1}$, and symmetry
+gives the ties.
+\end{proof}
+
+So $1-p_N^{\mathrm{adj}}\sim N^{-1/2}$, much larger than $1-p_N\sim(\log N)/N$.
+Away from the ends the single $\sR$ of bin $1$ needs $2$ switches, so
+$S_{1,N-1}\approx Nu^2$ reaches $1$ only at $u\approx N^{-1/2}$ (at $p=0,1$
+there are also ties between bins of probability $0$).
 
 \subsection{A Bessel estimate uniform in the bin}
 
-In bin $a$, there are about $(a^r/r!)(b^r/r!)$ words with $r$ runs of each letter, and each
-has weight about $u^{2r}$. Together this only depends on $abu^2$, so the right variable is
-$\sqrt{ab}\,u$. In other words a bin near the edge acts like the middle of a shorter row, with
-$\sqrt{ab}$ in place of $N/2$.
-
+Bin $a$ has about $(a^r/r!)(b^r/r!)$ words with $r$ runs of each letter, each
+of weight about $u^{2r}$. The sum depends only on $abu^2$, so a bin near the
+edge acts like the middle of a shorter row with $\sqrt{ab}$ in place of $N/2$.
 Put
 \[
- s=\sqrt{ab},\qquad A=\frac{ab}{a+b},\qquad
- c=\frac{a+b}{2\sqrt{ab}},\qquad
- \eta=\frac1c=\frac{2\sqrt{ab}}{a+b},\qquad x=su.
+ s=\sqrt{ab},\quad A=\frac{ab}{a+b},\quad
+ c=\frac{a+b}{2\sqrt{ab}},\quad
+ \eta=\frac1c,\quad x=su,\quad J_c(x)=I_0(2x)+cI_1(2x),
 \]
-Define
-\[
- J_c(x)=I_0(2x)+cI_1(2x),\qquad T_{a,b}(u)=2uJ_c(su).
-\]
+and $\widehat S_{a,b}(u)=2uJ_c(su)$.
 
 \begin{theorem}[uniform estimate for every bin]\label{thm:allbin-bessel}
 For all positive integers $a,b$ and all $u>0$,
 \begin{equation}\label{eq:allbin-bessel}
- 0\le 1-\frac{S_{a,b}(u)}{T_{a,b}(u)}
+ 0\le 1-\frac{S_{a,b}(u)}{\widehat S_{a,b}(u)}
  \le \frac{(a+b)u^2}{2}+u
  =\frac{x^2}{2A}+\frac xs.
 \end{equation}
 In particular, for fixed $N$ and $u$ the bound does not depend on the bin.
-The inequality still holds when the right side exceeds one, but then it
+The inequality still holds when the right side exceeds 1, but then it
 gives no lower bound on $S_{a,b}$.
 \end{theorem}
 \begin{proof}
-Set
-\[
- U_r=\frac{r!}{a^r}\binom{a-1}{r},\qquad
- V_r=\frac{r!}{b^r}\binom{b-1}{r},\qquad H=\frac1a+\frac1b.
-\]
-These numbers lie in $[0,1]$. Their product representations, using positive
-parts beyond the finite support, and
-$1-\prod_i(1-t_i)_+\le\sum_i t_i$ for $t_i\ge0$, give
+Let $U_r=U_r(a)$ and $V_r=U_r(b)$ as in Lemma~\ref{lem:clipped}(b), and
+$H=1/a+1/b=1/A$. Lemma~\ref{lem:clipped}(a), applied to the $2r$ clipped
+factors of $U_rV_r$, gives
 \begin{equation}\label{eq:allbin-odd-deficit}
  0\le1-U_rV_r\le\frac H2r(r+1).
 \end{equation}
-For the even terms define
-\[
- E_r=\frac{aU_{r+1}V_r+bU_rV_{r+1}}{a+b}.
-\]
-The same argument, with the indicated weights, gives
+The same argument for $E_r=(aU_{r+1}V_r+bU_rV_{r+1})/(a+b)$ gives
 \begin{align}
  0\le1-E_r
  &\le\frac{(r+1)(r+2)}{a+b}
- +\frac{r(r+1)}{2(a+b)}\left(\frac ab+\frac ba\right)\notag\\
+ +\frac{r(r+1)}{2(a+b)}\Bigl(\frac ab+\frac ba\Bigr)\notag\\
  &=\frac H2r(r+1)+\frac{2(r+1)}{a+b}.\label{eq:allbin-even-deficit}
 \end{align}
-The exact polynomial is
+Since $\binom{a-1}r=a^rU_r/r!$, \eqref{eq:allbin-polynomial} becomes
 \begin{equation}\label{eq:allbin-normalized-series}
- S_{a,b}(u)=2u\left[
+ S_{a,b}(u)=2u\Bigl[
  \sum_{r\ge0}\frac{x^{2r}}{(r!)^2}U_rV_r
- +c\sum_{r\ge0}\frac{x^{2r+1}}{r!(r+1)!}E_r\right].
+ +c\sum_{r\ge0}\frac{x^{2r+1}}{r!(r+1)!}E_r\Bigr],
 \end{equation}
-Dropping the product factors gives $T_{a,b}$. Index shifts in the Bessel
-series yield
-\begin{align*}
- \sum_{r\ge0}r(r+1)\frac{x^{2r}}{(r!)^2}
- &=x^2I_0(2x)+xI_1(2x),\\
- \sum_{r\ge0}r(r+1)\frac{x^{2r+1}}{r!(r+1)!}
- &=x^2I_1(2x),\\
- \sum_{r\ge0}(r+1)\frac{x^{2r+1}}{r!(r+1)!}
- &=xI_0(2x).
-\end{align*}
-Consequently the error in \eqref{eq:allbin-normalized-series}, after division
-by $2u$, is at most
+and dropping $U_rV_r$ and $E_r$ gives $\widehat S_{a,b}(u)$. So by
+Lemma~\ref{lem:clipped}(c), with $I_j=I_j(2x)$,
+$(\widehat S_{a,b}-S_{a,b})/(2u)$ lies between $0$ and
 \[
- \frac H2x^2J_c(x)
- +x\left\{\frac H2I_1(2x)+\frac{2c}{a+b}I_0(2x)\right\}
- =\left(\frac{x^2}{2A}+\frac xs\right)J_c(x).
+ \frac H2(x^2I_0+xI_1+cx^2I_1)+\frac{2c\,xI_0}{a+b}
+ =\Bigl(\frac{x^2}{2A}+\frac xs\Bigr)J_c(x),
 \]
-Here $H/2=c/s=1/(2A)$ and $2c/(a+b)=1/s$. This proves the result, including
-the infinite tail beyond the polynomial's finite support.
+since $H/2=c/s=1/(2A)$ and $2c/(a+b)=1/s$.
 \end{proof}
 
-Let $x_{a,b}=su_{a,b}$, and let $x_B$ be the unique positive root of
+Let $x_{a,b}=su_{a,b}$ and let $x_B$ be the positive root of
 \begin{equation}\label{eq:allbin-bessel-root}
  G_\eta(x_B)=A,\qquad
  G_\eta(x)=x\{I_1(2x)+\eta I_0(2x)\}.
 \end{equation}
-The positive series makes $G_\eta$ strictly increasing. Standard Bessel
-identities also give
+Differentiating term by term gives
 \begin{equation}\label{eq:allbin-logderivative}
  G_\eta'(x)-2G_\eta(x)
- =2x(1-\eta)\{I_0(2x)-I_1(2x)\}+\eta I_0(2x)\ge0.
+ =2x(1-\eta)\{I_0(2x)-I_1(2x)\}+\eta I_0(2x)\ge0,
 \end{equation}
-The sign $I_0(2x)>I_1(2x)>0$ follows from their integral representations.
-Hence $(\log G_\eta)'\ge2$, which controls the inverse of $G_\eta$
-uniformly in $\eta$.
+since $I_0(2x)-I_1(2x)=\frac1\pi\int_0^\pi e^{2x\cos\theta}(1-\cos\theta)\,d\theta>0$
+by \cite[Eq.~10.32.3]{dlmf}. So $(\log G_\eta)'\ge2$ for $x>0$ and
+$0\le\eta\le1$.
 
 \begin{corollary}[quantitative crossing bound]\label{cor:allbin-root-bound}
 We have $x_{a,b}\ge x_B$. If
@@ -165,10 +149,55 @@ then
 \end{equation}
 \end{corollary}
 \begin{proof}
-At the exact crossing, Theorem~\ref{thm:allbin-bessel} gives
-$A\le G_\eta(x_{a,b})\le A/(1-\delta_{a,b})$.
-Integrate $(\log G_\eta)'\ge2$, which follows from
-\eqref{eq:allbin-logderivative}.
+Since $c\eta=1$ and $2c/s=1/A$, we have $\widehat S_{a,b}(u)=G_\eta(su)/A$. At
+the crossing $S_{a,b}=1$, so Theorem~\ref{thm:allbin-bessel} gives
+$A\le G_\eta(x_{a,b})\le A/(1-\delta_{a,b})$. As $G_\eta(x_B)=A$, this gives
+$x_{a,b}\ge x_B$, and integrating $(\log G_\eta)'\ge2$ from $x_B$ to $x_{a,b}$
+gives \eqref{eq:allbin-root-bound}. For $\eta=1$, where $2G_1=F$, this is the
+proof of Theorem~\ref{thm:bessel}(ii).
+\end{proof}
+
+\begin{remark}[Jacobi polynomials]\label{rem:jacobi}
+The Bessel forms in this paper come from the confluence of Jacobi, Laguerre
+and Bessel functions near the point $1$. For $a\le b$ and $0\le t<1$,
+\[
+ \sum_{r\ge0}\binom{a-1}{r}\binom{b-1}{r}t^r
+ ={}_2F_1(1-a,1-b;1;t)
+ =(1-t)^{a-1}P_{a-1}^{(0,\,b-a)}\Bigl(\frac{1+t}{1-t}\Bigr),
+\]
+and for $b>a$ and $0\le u<1$,
+\[
+ \sum_{r\ge0}\binom{a-1}{r}\binom{b-1}{r+1}u^{2r+2}
+ =\frac{(b-1)u^2}{a}(1-u^2)^{a-1}P_{a-1}^{(1,\,b-a-1)}\Bigl(\frac{1+u^2}{1-u^2}\Bigr).
+\]
+Near $1$, Jacobi polynomials of large degree behave like Bessel functions
+(the Mehler--Heine formula \cite[Eq.~18.11.5]{dlmf}), and Elliott~\cite{elliott1971}
+gives expansions in modified Bessel functions uniform near $1$. For fixed $a$
+and $y=bu^2$, as $b\to\infty$, \cite[Eq.~18.7.21]{dlmf} turns the last sum into
+$(y/a)L_{a-1}^{(1)}(-y)=H_a(y)$ of \eqref{eq:edge-polynomial}, and the other
+terms tend to $0$. Temme~\cite{temme1990} gives asymptotic estimates of
+Gegenbauer, Laguerre and Jacobi polynomials. These forms are classical. But Elliott's expansions
+have fixed parameters and no error bounds, while here $b-a$ can be as large as
+$N-2$, and Theorem~\ref{thm:allbin-bessel} gives an explicit relative error at
+every $N$.
+\end{remark}
+
+\begin{lemma}[inverting $z+\frac12\log z$]\label{lem:inversion}
+Fix $K>0$. Let $z\ge1$ and $\ell\ge2$, and suppose that
+$z+\tfrac12\log z=\ell+C+B/z+\omega$ with $|C|,|B|\le K$ and $|\omega|\le1$. Then
+\[
+z=\ell-\tfrac12\log\ell+C+\frac{\frac14\log\ell-\frac12C+B}{\ell}
++O_K\Bigl(\frac{(\log\ell)^2}{\ell^2}+|\omega|\Bigr).
+\]
+\end{lemma}
+\begin{proof}
+Put $w=z-\ell$. As $z\ge1$, $\log z\ge0$ and $|B/z|\le K$, so $z\le\ell+2K+1$
+and $|w|\le2K+1+\frac12\log(\ell+2K+1)=O_K(\log\ell)$, proving the claim for
+$\ell$ bounded in terms of $K$. For larger $\ell$, $|w|\le\ell/2$, so
+$\log z=\log\ell+w/\ell+O((w/\ell)^2)$ and $B/z=B/\ell+O_K(|w|/\ell^2)$, and
+$w=C-\frac12\log\ell-w/(2\ell)+B/\ell+\omega+O_K((\log\ell)^2/\ell^2)$. This
+gives first $w=d+O_K(\log\ell/\ell+|\omega|)$ with $d=C-\frac12\log\ell$, and
+then $w=d+(B-d/2)/\ell+O_K((\log\ell)^2/\ell^2+|\omega|)$.
 \end{proof}
 
 \subsection{Every growing distance from an edge}
@@ -177,94 +206,62 @@ Integrate $(\log G_\eta)'\ge2$, which follows from
 Suppose $1\le a\le b$ and $a\to\infty$, with no restriction on the relative
 growth of $a$ and $b$. Put
 \[
- L=\log A,\qquad
+ \ell=\log A,\qquad
  C(\eta)=\tfrac12\log(8\pi)-\log(1+\eta),\qquad
  B(\eta)=\frac{3-\eta}{8(1+\eta)}.
 \]
 Uniformly over $b\ge a$,
 \begin{align}
  2\sqrt{ab}\,u_{a,b}
- ={}&L-\tfrac12\log L+C(\eta)\notag\\
- &+\frac{\tfrac14\log L-\tfrac12C(\eta)+B(\eta)}{L}
- +O\left(\frac{(\log L)^2}{L^2}+\frac{(\log a)^2}{a}\right).
+ ={}&\ell-\tfrac12\log\ell+C(\eta)\notag\\
+ &+\frac{\tfrac14\log\ell-\tfrac12C(\eta)+B(\eta)}{\ell}
+ +O\left(\frac{(\log\ell)^2}{\ell^2}+\frac{(\log a)^2}{a}\right).
  \label{eq:allbin-expansion}
 \end{align}
 The same expansion and error order hold with $1-p_{a,b}$ in place of $u_{a,b}$.
 \end{theorem}
 \begin{proof}
-We have $a/2\le A\le a$, $s\ge a$, and $0<\eta\le1$. At $x=\log a$,
-the relative error in Theorem~\ref{thm:allbin-bessel} tends to zero uniformly,
-whereas
-\[
- \frac{G_\eta(x)}A\ge\frac{xI_1(2x)}a\longrightarrow\infty.
-\]
-The limit follows from the large-argument expansion of $I_1$.
-Hence $x_{a,b}\le\log a$ for all sufficiently large $a$, uniformly over $b$.
-Corollary~\ref{cor:allbin-root-bound} now implies
+Here $a/2\le A\le a$, $s\ge a$ and $0<\eta\le1$. At $x=\log a$ the bound
+of Theorem~\ref{thm:allbin-bessel} is at most $2(\log a)^2/a$, while
+$G_\eta(x)/A\ge xI_1(2x)/a\to\infty$. So $S_{a,b}>1$ there, $x_{a,b}\le\log a$
+for large $a$, uniformly in $b$, and Corollary~\ref{cor:allbin-root-bound} gives
 \begin{equation}\label{eq:allbin-root-error}
  x_{a,b}-x_B=O((\log a)^2/a).
 \end{equation}
-
-Write $z=2x_B$. The usual large-argument expansions
-\cite[Eq.~10.40.1]{dlmf}, combined with $0\le\eta\le1$, give uniformly
-\[
- I_1(z)+\eta I_0(z)
- =\frac{(1+\eta)e^z}{\sqrt{2\pi z}}
- \left\{1+\frac{\eta-3}{8(1+\eta)z}+O(z^{-2})\right\}.
-\]
-Thus \eqref{eq:allbin-bessel-root} becomes
-\[
- z+\tfrac12\log z=L+C(\eta)+\frac{B(\eta)}z+O(z^{-2}).
-\]
-Initially this gives $z=L+O(\log L)$ uniformly. Substitution of
-$z=L+d+e/L$ then gives
-\[
- d=-\tfrac12\log L+C(\eta),\qquad
- e=\tfrac14\log L-\tfrac12C(\eta)+B(\eta).
-\]
-The residual is $O((\log L)^2/L^2)$, and the derivative of
-$z+\tfrac12\log z$ is at least one. Combining this inversion with
-\eqref{eq:allbin-root-error} proves \eqref{eq:allbin-expansion}.
-Finally,
-\[
- 2s\left(u-\frac{u}{1+u}\right)
- =O(su^2)=O((\log a)^2/s)=O((\log a)^2/a),
-\]
-which proves the assertion about $1-p_{a,b}$.
+Write $z=2x_B$, so $z\to\infty$ as $A\to\infty$. By
+\cite[Eq.~10.40.1]{dlmf},
+$I_1(z)+\eta I_0(z)=(1+\eta)e^z(2\pi z)^{-1/2}(1-B(\eta)/z+O(z^{-2}))$
+uniformly in $0\le\eta\le1$, so \eqref{eq:allbin-bessel-root} becomes
+$z+\frac12\log z=\ell+C(\eta)+B(\eta)/z+O(z^{-2})$. As $|C(\eta)|\le2$ and
+$0<B(\eta)\le\frac38$, Lemma~\ref{lem:inversion} expands $z$, and
+\eqref{eq:allbin-root-error} moves this to $2x_{a,b}=2\sqrt{ab}\,u_{a,b}$.
+Finally $2s(u-u/(1+u))\le2x^2/s=O((\log a)^2/a)$ at $u=u_{a,b}$.
 \end{proof}
 
-In particular,
+Hence, uniformly in $b$,
 \begin{equation}\label{eq:allbin-leading}
  1-p_{a,b}\sim\frac{\log a}{2\sqrt{ab}}
- \qquad(a\to\infty,\ b\ge a),
+ \qquad(a\to\infty,\ b\ge a).
 \end{equation}
-uniformly in $b$. If $a=o(b)$, the more precise form is
+If $a=o(b)$, then $\eta\to0$ and $\log A=\log a+o(1)$, so
 \begin{equation}\label{eq:allbin-growing-edge}
  2\sqrt{ab}(1-p_{a,b})
  =\log a-\tfrac12\log\log a+\tfrac12\log(8\pi)+o(1).
 \end{equation}
-For a fixed bulk fraction $a/N\to\alpha\in(0,1/2]$, the corresponding formula is
-\begin{align*}
+If $a/N\to\alpha\in(0,\frac12]$ at any rate, then
+\[
  2\sqrt{a(N-a)}(1-p_{a,N-a})
- ={}&\log N-\tfrac12\log\log N+\log\{\alpha(1-\alpha)\}\\
- &+\tfrac12\log(8\pi)-\log\{1+2\sqrt{\alpha(1-\alpha)}\}+o(1).
-\end{align*}
-We keep $2\sqrt{a(N-a)}$ on the left instead of $2N\sqrt{\alpha(1-\alpha)}$,
-since no rate of convergence of $a/N$ is assumed. At the center this gives
-the constant $\tfrac12\log(\pi/8)$
-in Theorem~\ref{thm:bessel}. More precisely, setting $a=b=N/2$ gives
-$A=N/4$ and $\eta=1$, and changing from $\log A$ to $\log N$ in
-Theorem~\ref{thm:allbin-expansion} gives its inverse-logarithm term as well.
-No condition such as $a\gg\log^2N$ is needed, since the Bessel argument at
-an edge is of order $\log a$ and the depletion error is $O(\log^2(a)/a)$
-for every growing $a$.
+ =\log N-\tfrac12\log\log N+\log\{\alpha(1-\alpha)\}+C(2\sqrt{\alpha(1-\alpha)})+o(1).
+\]
+At the center, $a=b=N/2$ gives $A=N/4$ and $\eta=1$, and changing from
+$\log A$ to $\log N$ recovers \eqref{eq:thirdorder}.
 
 \begin{figure}[t]
 \centering
 \includegraphics{figures/allbin}
-\caption{The threshold $1-p_{a,N-a}$ of every bin against its distance $a$
-from the nearer edge. The dotted lines are the leading law
-\eqref{eq:allbin-leading}, and the circles are the edge law
+\caption{The crossing $1-p_{a,N-a}$ of each bin against its distance $a$
+from the nearer edge, for $N=100$, $1000$ and $10^4$. The dotted lines are the
+leading law \eqref{eq:allbin-leading}, and the circles are the edge law
 \eqref{eq:edge-q-expansion} for $a\le6$. The right end of each line is the
 central crossing $1-p_N$.}
 \label{fig:allbin}
@@ -272,19 +269,17 @@ central crossing $1-p_N$.}
 
 \subsection{Fixed bins and the Laguerre edge law}
 
-If $a$ stays fixed while $b\to\infty$, the $a$ letters $R$ sit in a long string of $L$'s. A run
-of $R$'s away from the ends needs two switches, which gives a factor $u^2$, and it can go in
-about $b$ places. So what matters is $y=bu^2$, and the crossing is at $u\approx c_a/\sqrt b$.
-
-For a positive integer $a$, define
+If $a$ is fixed and $b\to\infty$, each run of $\sR$'s away from the ends needs
+$2$ switches, giving $u^2$, and can go in about $b$ places. So we use
+$y=bu^2$. Define
 \begin{equation}\label{eq:edge-polynomial}
  H_a(y)=\sum_{r=0}^{a-1}\binom{a-1}{r}\frac{y^{r+1}}{(r+1)!}
  =\frac ya L_{a-1}^{(1)}(-y),
 \end{equation}
-where $L_{a-1}^{(1)}$ is the generalized Laguerre polynomial in its standard
-normalization. Let $y_a$ be the unique positive
-root of $H_a(y_a)=1$, and put $c_a=\sqrt{y_a}$. We have $y_1=1$,
-$y_2=\sqrt3-1$, and $y_a$ decreases strictly with $a$, by coefficient comparison.
+with the standard Laguerre polynomial $L_{a-1}^{(1)}$.
+Let $y_a$ be the positive root of $H_a(y_a)=1$ and $c_a=\sqrt{y_a}$. Then
+$y_1=1$, $y_2=\sqrt3-1$, and $y_a$ decreases strictly in $a$, by coefficient
+comparison.
 
 \begin{theorem}[fixed-edge expansion]\label{thm:edge-laguerre}
 For each fixed positive integer $a$, as $b\to\infty$,
@@ -304,44 +299,31 @@ bin. For the switching probability,
 \end{equation}
 \end{theorem}
 \begin{proof}
-Put $\epsilon=b^{-1/2}$, $y=bu^2$, and
-$V_r=\prod_{j=1}^r(1-j/b)$. With $a$ fixed and $b\ge a$, the exact run
-polynomial can be written
+Put $\epsilon=b^{-1/2}$, $y=bu^2$ and $V_r=U_r(b)$. For $b\ge a$,
+\eqref{eq:allbin-polynomial} reads
 \begin{align}
  S_{a,b}(u)={}&2\sqrt{y/b}\sum_r\binom{a-1}{r}\frac{y^r}{r!}V_r\notag\\
  &+\frac yb\sum_r\binom{a-1}{r+1}\frac{y^r}{r!}V_r
  +y\sum_r\binom{a-1}{r}\frac{y^r}{(r+1)!}V_{r+1}.
  \label{eq:edge-exact-series}
 \end{align}
-All these sums have bounded length. Expanding
-$V_r=1-r(r+1)/(2b)+O_a(b^{-2})$ gives, uniformly near $y=y_a$,
+These sums have at most $a$ terms, and with $V_r=1$ they are $H_a'(y)$,
+$H_a''(y)$ and $H_a(y)$. Expanding $V_r=1-r(r+1)/(2b)+O_a(b^{-2})$ and using
+$\sum_r(r+1)(r+2)\binom{a-1}{r}\frac{y^{r+1}}{(r+1)!}=y^2H_a''(y)+2yH_a'(y)$
+gives, uniformly near $y=y_a$,
 \begin{align}
  S_{a,b}(u)={}&H_a(y)+2\sqrt y\,H_a'(y)\epsilon\notag\\
  &+\{(y-y^2/2)H_a''(y)-yH_a'(y)\}\epsilon^2+O_a(\epsilon^3).
  \label{eq:edge-implicit-expansion}
 \end{align}
-In particular, the second-order term uses the identity
-\[
- \sum_r(r+1)(r+2)\binom{a-1}{r}\frac{y^{r+1}}{(r+1)!}
- =y^2H_a''(y)+2yH_a'(y).
-\]
-The finite-product expression \eqref{eq:edge-exact-series} extends analytically
-in $(\epsilon,y)$ near $(0,y_a)$, and $H_a'(y_a)>0$. The implicit-function
-theorem therefore gives the unique crossing as
-\[
- y=y_a+d_1\epsilon+d_2\epsilon^2+O_a(\epsilon^3).
-\]
-Matching coefficients in \eqref{eq:edge-implicit-expansion} gives
-\[
- d_1=-2c_a,\qquad
- d_2=2+y_a+(y_a+y_a^2/2)\frac{H_a''(y_a)}{H_a'(y_a)}.
-\]
-Expanding $u=\epsilon\sqrt y$ proves \eqref{eq:edge-crossing-expansion}.
-Expanding $u/(1+u)$ gives \eqref{eq:edge-q-expansion}.
+With $b=\epsilon^{-2}$ the right side of \eqref{eq:edge-exact-series} is
+analytic in $(\epsilon,y)$ near $(0,y_a)$, and $H_a'(y_a)>0$. So the
+implicit-function theorem and the uniqueness of the crossing give
+$y=y_a+d_1\epsilon+d_2\epsilon^2+O_a(\epsilon^3)$ at $u=u_{a,b}$, and matching
+coefficients in \eqref{eq:edge-implicit-expansion} gives $d_1=-2c_a$ and
+$d_2=2+y_a+(y_a+y_a^2/2)H_a''(y_a)/H_a'(y_a)$. Expanding $u=\epsilon\sqrt y$
+and then $u/(1+u)$ proves both expansions.
 \end{proof}
-
-The next theorem shows that the edge law and the growing-bin law agree,
-without interchanging the two limits.
 
 \begin{theorem}[matching the edge and Bessel regimes]\label{thm:edge-matching}
 For every positive integer $a$ and every $x>0$,
@@ -358,45 +340,35 @@ Consequently, with $\ell=\log a$ and $C_0=\tfrac12\log(8\pi)$,
 \end{align}
 \end{theorem}
 \begin{proof}
-With $U_r=(r!/a^r)\binom{a-1}{r}$ as before,
-\[
- H_a(x^2/a)=\frac xa\sum_{r\ge0}\frac{x^{2r+1}}{r!(r+1)!}U_r.
-\]
-Apply $0\le1-U_r\le r(r+1)/(2a)$ and the identity
-\[
- \sum_{r\ge0}r(r+1)\frac{x^{2r+1}}{r!(r+1)!}=x^2I_1(2x)
-\]
-to obtain \eqref{eq:laguerre-bessel-bound}. The same root comparison as in
-Corollary~\ref{cor:allbin-root-bound} compares $\sqrt{a y_a}$ with the root
-of $xI_1(2x)=a$, with error $O(\log^2(a)/a)$. Invert that equation as in
-Theorem~\ref{thm:allbin-expansion}, now with $\eta=0$ and $A=a$.
-Here $C(0)=C_0$ and $B(0)=3/8$, which proves the expansion.
+With $U_r=U_r(a)$, $aH_a(x^2/a)=x\sum_{r\ge0}U_rx^{2r+1}/(r!(r+1)!)$, so
+Lemma~\ref{lem:clipped}(b) and the second identity of
+Lemma~\ref{lem:clipped}(c) give \eqref{eq:laguerre-bessel-bound}. Put
+$x_a=\sqrt{ay_a}$, so $aH_a(x_a^2/a)=a$, and $x_a<\log a$ for large $a$ by
+\eqref{eq:laguerre-bessel-bound}. So $a\le G_0(x_a)\le a/(1-x_a^2/(2a))$, and as in
+Corollary~\ref{cor:allbin-root-bound},
+$x_a-x_0=O((\log a)^2/a)$, where $G_0(x_0)=a$. So $z=2x_0$ satisfies
+$z+\frac12\log z=\ell+C_0+3/(8z)+O(z^{-2})$ by \cite[Eq.~10.40.1]{dlmf}, as in
+the proof of Theorem~\ref{thm:allbin-expansion} with $\eta=0$, $A=a$, and
+Lemma~\ref{lem:inversion} gives the expansion.
 \end{proof}
 
-Figure~\ref{fig:allbin} compares the exact thresholds with
-\eqref{eq:allbin-leading} and \eqref{eq:edge-q-expansion}.
+Figure~\ref{fig:allbin} compares these laws with the exact crossings.
 
 \subsection{The moving boundary layer}
 
-The all-bin threshold theorem also describes the shape of a row at a
-prescribed switching probability. Let $v_N>0$ be the chosen odds, so
-$p=1/(1+v_N)$, and define
+The all-bin expansion also gives the shape of a row at odds $u=v_N>0$. Let
 \[
- \mathcal L_N=\#\{1\le k\le\lfloor N/2\rfloor:
-                         P_N(k)<P_N(0)\}.
+ \mathcal L_N=\#\{1\le k\le\lfloor N/2\rfloor:P_N(k)<P_N(0)\}.
 \]
-By Proposition~\ref{prop:allbin-order}, these bins form an initial interval
-adjacent to the endpoint.
-
 \begin{corollary}[boundary-layer width]\label{cor:boundary-layer}
 Suppose
 \[
- T_N=\frac1{\sqrt N\,v_N}\longrightarrow\infty,
- \qquad \frac{\log T_N}{Nv_N}\longrightarrow0.
+ \Omega_N=\frac1{\sqrt N\,v_N}\longrightarrow\infty,
+ \qquad \frac{\log\Omega_N}{Nv_N}\longrightarrow0.
 \]
 Then
 \begin{equation}\label{eq:boundary-layer-width}
- \mathcal L_N\sim T_N^2\log^2T_N
+ \mathcal L_N\sim\Omega_N^2\log^2\Omega_N
  =\frac{\log^2(1/(\sqrt N\,v_N))}{Nv_N^2}.
 \end{equation}
 In particular, if $v_N=N^{-\gamma}$ with $1/2<\gamma<1$, then
@@ -407,22 +379,14 @@ By symmetry, the total number of interior bins below the endpoint height
 is $2\mathcal L_N$ for all sufficiently large $N$.
 \end{corollary}
 \begin{proof}
-Set $d_N=T_N^2\log^2T_N$. The assumptions give $d_N\to\infty$ and
-\[
- \frac{d_N}N=\left(\frac{\log T_N}{Nv_N}\right)^2\longrightarrow0.
-\]
-For each fixed $\varepsilon\in(0,1)$, choose integers
-$a_\pm=(1\pm\varepsilon)d_N+O(1)$. Theorem~\ref{thm:allbin-expansion},
-or its leading form \eqref{eq:allbin-leading}, gives
-\[
- \frac{u_{a_\pm,N-a_\pm}}{v_N}
- \sim\frac{\log a_\pm}{2\sqrt{a_\pm N}\,v_N}
- \longrightarrow\frac1{\sqrt{1\pm\varepsilon}}.
-\]
-Here $\log a_\pm\sim2\log T_N$ was used. Thus bin $a_-$ lies below the
-endpoint height, while bin $a_+$ lies above it, for all sufficiently large
-$N$. Strict ordering then bounds $\mathcal L_N$ between these indices.
-Letting $\varepsilon\downarrow0$ proves the result. Finally
-$\mathcal L_N=o(N)$, so the reflected intervals are disjoint and contain
-every bin below the endpoints.
+Set $d_N=\Omega_N^2\log^2\Omega_N$. Then $d_N\to\infty$ and
+$d_N/N=(\log\Omega_N/(Nv_N))^2\to0$. Fix $\varepsilon\in(0,1)$ and integers
+$a_\pm=(1\pm\varepsilon)d_N+O(1)$. Then $\log a_\pm\sim2\log\Omega_N$ and
+$\sqrt{a_\pm(N-a_\pm)}\,v_N\sim\sqrt{1\pm\varepsilon}\,\log\Omega_N$, so
+Theorem~\ref{thm:allbin-expansion} gives $u_{a_\pm,N-a_\pm}/v_N\to1/\sqrt{1\pm\varepsilon}$.
+Bin $k$ is below the endpoint exactly when $v_N<u_{k,N-k}$, and $u_{k,N-k}$
+decreases strictly for $k\le N/2$ by Proposition~\ref{prop:allbin-order}. So
+$a_-\le\mathcal L_N<a_+$ for large $N$, and we let $\varepsilon\downarrow0$.
+Finally $\mathcal L_N=o(N)$, so the
+reflected intervals are disjoint.
 \end{proof}

@@ -1,48 +1,109 @@
-# Checks for the two Problem 131 papers
+# Verification supplement for the 4 papers on Problem 131
 
-The proofs are in the papers. The scripts below check the finite statements exactly and the
-asymptotic ones numerically. The high-precision checks are not interval arithmetic, so they support
-the proofs but do not replace them. Everything uses standard-library Python 3.
+This supplement serves 4 papers on Kagey's Problem 131, all by A. Pemmasani (preprint, 2026).
 
-## Paper A: binary crossings
+| Paper | Title | Source |
+| --- | --- | --- |
+| A | Uniform Bessel bounds for endpoint crossings in the persistent random walk | `problem131.tex` |
+| B | Vertex crossings in a symmetric Markov multinomial model | `problem131_multistate.tex` |
 
-Run `python -B verify_all.py --paper a`.
+The proofs are in the papers. The scripts check the finite statements exactly and the asymptotic
+ones numerically, and where possible each number is computed in 2 independent ways. For each paper
+we first list the results whose proofs rest on a computation, with the script that checks them and
+the 2 methods, and then say what each script checks.
+
+Run `python -B verify_all.py --paper a` in this folder, or use `b`, `c`, `d` or `all`. Add `--full`
+for the long runs and `--dry-run` to print the commands without running them. For Papers C and D
+the runner calls `paperC/verify_all.py` and `paperD/verify_all.py` with `--quick`, or with `--full`,
+and it skips a paper whose folder is missing. The scripts for Papers A and B use only the standard
+library of Python 3. Those for Papers C and D need numpy, scipy and mpmath, and Paper C also needs
+sympy. Before most computations we wrote a prediction and a condition that would refute it in a
+ledger, and we recorded the outcome below it. `data/ledger.md` indexes the ledgers of all 4 papers.
+
+## Paper A: the two-state walk
+
+`python -B verify_all.py --paper a` takes about 2 minutes. Add `--full` to include
+`verify_every_n.py` and `verify_every_n_sign.py` (about 21 minutes more), which run before
+`verify_every_n_guards.py`.
+
+| Result that rests on computation | Script | The 2 methods |
+| --- | --- | --- |
+| The crossing at every N (theorem), for 2 <= N <= 174 | `verify_every_n.py`, rechecked by `verify_every_n_guards.py` | The certificate integers come from the run-count sum and from the recursion with integer weights. zeta_N comes from a Decimal Newton iteration and from a float Lambert W iteration. The Lean kernel also checks these certificates (`lean/PaperA/EveryN.lean`). |
+| The crossing equation (proposition), for N <= 174 | the same 2 scripts | The same certificates. The guards also get the sign of R_N from the certificate integers for N <= 1000 and check z_2 = 2/3 < log 2. |
+| Part (d) of the corollary on the crossing at every N | `verify_every_n_guards.py` | One evaluation with a proved bracket. f(zeta_2774) - 1 = 2.1e-4 and f(zeta_2773) - 1 < 0 in 60-digit decimal arithmetic, with zeta_N known to within 10^-45. The function decreases in zeta, so the signs hold on the whole bracket. |
+| The remark on the sign of z_N - zeta_N (computer-assisted throughout) | `verify_every_n.py` and `verify_every_n_sign.py` | Up to N = 1000 the certificate integers, and for 1001 <= N <= 2773 exact integers S_N(v) < 1 at a rational v just above zeta_N/(N - zeta_N). The run-count sum and the recursion agree at N = 401, 1000, 1008, 2000 and 2773, and 2 float methods agree up to N = 3000. |
+
+The integer tests are exact, and every comparison with zeta_N is made in 60-digit decimal
+arithmetic with zeta_N bracketed to within 10^-45. The margins are above 0.03 for the crossing and
+the crossing equation. For the sign remark the smallest distance from zeta_N to a certified interval
+is 1.66e-5 (at N = 218), and for 1001 <= N <= 2773 the test point exceeds zeta_N/(N - zeta_N) by at
+least 1.2e-11. Every other high-precision check is not interval arithmetic, so it supports the
+proofs but does not replace them.
 
 | Script | What it checks |
 | --- | --- |
-| `verify.py` | Run-count probabilities against a dynamic program and against word enumeration; normalization; generating functions; the two lattice-path bijections; variance and normal approximation; central crossings by exact bracketing, and coefficient monotonicity. It also has a few checks of the d-direction law. |
+| `verify.py` | Run-count probabilities against a dynamic program and against word enumeration, normalization, generating functions, the 2 lattice-path bijections, variance and normal approximation, and the table of central crossings by exact rational signs at the neighboring decimals. |
 | `check_bessel.py` | The central Bessel bound at 1,400 points, and crossing comparisons at high precision up to N = 10^8. |
-| `verify_adjacent.py` | Adjacent-bin ratio and global extrema in 474 exact distributions up to N = 80; exact adjacent thresholds; the cubic gap between the central and adjacent polynomials by word enumeration up to N = 12, the ties at N = 2, 3, and the exception at p = 0. |
+| `verify_adjacent.py` | Adjacent-bin ratio and global extrema in 474 exact distributions up to N = 80, exact adjacent thresholds, and the cubic gap between the central and adjacent polynomials by word enumeration up to N = 12. |
 | `verify_allbin.py` | 5,476 exact coefficient comparisons, 264 all-bin Bessel inequalities, 28 Laguerre-Bessel inequalities, and the crossing and edge expansions at 80 digits. |
 | `verify_periodic_window.py` | 66 cyclic run polynomials against enumeration, 120 relative-error inequalities, and root and critical-window samples up to N = 10^12. |
+| `verify_every_n.py` | The crossing at every N (about 8 minutes, only with `--full`). The bounds on I_0 + I_1 at 2,000 points, with the Bessel values by power series and by quadrature, the certificates for 2 <= N <= 174 and as a cross-check up to N = 1000, the margins of the analytic proof, and a table of z_N by 2 bisections. Writes `data/every_n_certificates.csv` and `data/every_n_output.txt`. |
+| `verify_every_n_sign.py` | The sign of z_N - zeta_N for 1001 <= N <= 2773 (about 13 minutes, only with `--full`). |
+| `verify_every_n_guards.py` | The rounding guards of the 2 scripts above, the signs of z_N - zeta_N and of R_N for N <= 1000, and the checks at N = 2773 and 2774 (about 25 seconds). |
+| `verify_uniform_llt.py` | The uniform local law in 3 runs. With no argument, the exact identity for P_N(k) in 3,900 cases and the errors of the tilted Bessel form over all bins. With `--run2`, the lemmas and the error bound at 217 sampled points. With `--run3`, the central crossing from the tilted form against p_N. |
+| `verify_uniform_llt_cor5.py` | Where the proved central bound of the local law stops being vacuous (the smallest even N is 1454, found 2 ways), and the closed form for bins 1 and N - 1 in 390 exact cases (about 30 seconds). |
 
 `verify.py` checks the exact law against enumeration for N <= 16 at 20 rational values of p. The
-polynomials have degree less than N, so for those N this proves the polynomial identities. The table
-of central roots is checked by exact rational signs at the neighboring decimals. The larger roots and
-the asymptotic residuals use floating point.
+polynomials have degree less than N, so for those N this proves the polynomial identities. The last
+4 scripts in the table report their checks in their output rather than through the exit code, so
+the output has to be read. It is also saved in `data/`. The predictions are in `data/ledger.md`,
+`data/ledger_every_n.md` and `data/ledger_llt.md`.
 
-## Paper B: d directions
+## Paper B: the complete graph
 
-Run `python -B verify_all.py --paper b`.
+`python -B verify_all.py --paper b` takes about 2 minutes. Add `--full` to include
+`verify_B_tie_repair.py` (about 3 minutes more).
+
+No proof in Paper B rests on computation. The statements that the paper marks as numerically
+verified or with the proof omitted are checked as follows.
+
+| Statement | Script | The 2 methods |
+| --- | --- | --- |
+| Where a path conditioned on its counts starts (remark) | `verify_general_start.py` | The start weights from the run formula and from the refresh formula, against the limit at N = 2000. |
+| The global modes of the K_3 example with the start (1/2, 1/2, 0) at N = 90, 300 and 1002 | `verify_general_start.py` (N = 90) and `verify_B_tie_repair.py` (N = 300 and 1002, with `--full`) | A dynamic program over all bins, against the lines of the example. |
+| The widths of the K_3 window at finite N (remark) | `verify_general_start.py` (N = 3000 to 300000) and `verify_B_tie_repair.py` (N = 300, with `--full`) | The lower end from the run formula and from Paper A's S_N = 1. The upper end from the run formula, with its sign change confirmed by a second method. |
+| How many bins beat a vertex (remark) | `verify_frontier_modes.py` | The profile from the refresh series in 65-digit arithmetic, and lattice counts against the volume formula. |
+| Near a vertex, the next term for fixed rare counts, the growth as the rare total tends to infinity, and the example where S_(b,a)(u) ~ H(b u^2) fails | `verify_frontier_boundary.py` and `verify_vertex_completion.py` | Exact identities in rational arithmetic against word enumeration, and positive sums in 70-digit or 100-digit arithmetic compared at 2 series cutoffs. |
 
 | Script | What it checks |
 | --- | --- |
-| `verify_geometry.py` | 6,733 exact bin probabilities in 237 distributions against a dynamic program, 158 of the distributions also by word enumeration; normalization, moments, and the values at p = 0, 1. |
+| `verify_geometry.py` | 6,733 exact bin probabilities in 237 distributions against a dynamic program, 158 of the distributions also by word enumeration, and normalization, moments and the values at p = 0, 1. |
 | `verify_simplex_threshold.py` | The positive refresh formula, balancing transfers, the edge-mode example at N = 4, and the balanced-face crossings at high precision. |
-| `verify_frontier_boundary.py` | The bound for all compositions, the mixed-face crossover, and the fixed rare-count formulas and crossings. |
+| `verify_frontier_boundary.py` | The majorant for all count vectors, the mixed-face crossover, and the fixed rare-count formulas and crossings. |
 | `verify_frontier_modes.py` | Spatial profiles, lattice-volume limits, exact finite-N mode comparisons, and the weak-field support hierarchy. |
-| `verify_vertex_completion.py` | 462 exact identities for the gamma representation, 200 exact elasticity checks, 16 root brackets, and 4 large cases with growing rare counts, each at two series cutoffs. |
+| `verify_vertex_completion.py` | 462 exact identities for the near-vertex representation, 200 rational concavity checks, 16 uniform root brackets, and 4 examples with growing rare counts where the probabilities are not approximated although the roots are, each at 2 series cutoffs. |
+| `verify_general_start.py` | The tie, the law with a start and the tree form of the constants (about 20 seconds). The weighted Cayley formula by the matrix-tree theorem and by listing all trees for k <= 7, the law with a start against word enumeration for 357 bins, the crossings with a start by 3 methods, and the K_3 window at finite N. Writes `data/general_start_output.txt`. |
+| `verify_B_tie_repair.py` | The exact identity Hess I times Sigma_alpha = identity at rational points for k = 2 to 6, and dynamic programs over all bins at N = 300 and N = 1002 (about 3 minutes, only with `--full`). Writes `data/B_tie_repair_output.txt`. |
+| `verify_crossover_factor.py` | The factor e^E of the crossover theorem (about 50 seconds). Exact S_n by the proper-run formula, a quadrature of the refresh integral and the positive refresh sum at 60 digits, checked against word enumeration for small N. With the argument `repair` (under 1 second) it computes psi by a series and by a continued fraction and checks 3 further examples. |
 
-`python -B verify_all.py` runs both groups. The output is in `data/`; the dated logs are from
-earlier versions of the manuscripts, before the split into two papers.
+`verify_general_start.py` and `verify_B_tie_repair.py` report their checks in their output rather
+than through the exit code. Some of their lines show failures on purpose, since they belong to the 2
+registered predictions that failed (T1(e) and T4), so the output cannot be judged by searching for
+"False". The predictions are in `data/ledger_B_tie.md` and `data/ledger_B_crossover.md`.
+`predict_general_start.py` and `verify_crossover_factor.py predict` only evaluate formulas for those
+registrations and check nothing, so `verify_all.py` does not run them. The dated logs in `data/`
+are from earlier versions of the manuscripts, before they were split.
+
+## Papers C and D
+
+Papers C and D will be added to this supplement when they are posted.
 
 ## Lean
 
-`python -B lean/verify_lean.py` compiles the three Lean files with Lean 4.33.1 and `Std` (use
-`--lean /path/to/lean` if `lean` is not on PATH). The 27 theorems cover the clipped-product
-deficits, finite coefficient identities and monotonicity, and the algebra that follows from given
-Taylor coefficients. The build output, source hashes and axioms are in `lean/build-log.txt` and
+The Lean 4 proofs are in `lean/`, one library for each paper (`lean/PaperA` and `lean/PaperB`), with
+Lean 4.33.1 and Mathlib. `python -B lean/verify_lean.py` builds them with Lake and checks that every
+theorem and lemma uses only the axioms `propext`, `Classical.choice` and `Quot.sound`. The last run
+checked 481 declarations for Paper A and 307 for Paper B. The
+build output, source hashes and axioms are in `lean/build-log.txt` and
 `lean/verification-manifest.json`.
-
-The probability model, the infinite Bessel series, the asymptotic inversions, the saddle-point
-estimates and the limit theorems are not in Lean. See `lean/README.md`.
+`lean/README.md` says what each library covers and what is not in Lean.

@@ -1,0 +1,205 @@
+\section{The uniform local law}\label{app:llt}
+
+We keep the notation of Section~\ref{sec:llt}, with $\tilde I_j(x)=e^{-x}I_j(x)$.
+
+\begin{lemma}[tilting]\label{lem:llt-tilt}
+For $s>0$ let $Y_1\sim\mathrm{Bin}(n_1,r_1)$ and $Y_2\sim\mathrm{Bin}(n_2,r_2)$ be independent
+under $\Prob_s$. Then $\Prob(D=j)=\Lambda(s)s^{-j}\Prob_s(D=j)$ for every $j\in\Z$.
+\end{lemma}
+
+\begin{proof}
+Note that $\Prob(Y_1=r)s^r=\binom{n_1}r(qs)^rp^{n_1-r}=(p+qs)^{n_1}\Prob_s(Y_1=r)$, and
+likewise $\Prob(Y_2=r)s^{-r}=(p+q/s)^{n_2}\Prob_s(Y_2=r)$. Hence
+$\Prob(D=j)=s^{-j}\sum_r\Prob(Y_1=r)s^r\,\Prob(Y_2=r-j)s^{j-r}=\Lambda(s)s^{-j}\Prob_s(D=j)$.
+\end{proof}
+
+\begin{lemma}[saddle]\label{lem:llt-saddle}
+If $n_1,n_2\ge1$, then $\E_sD=n_1r_1-n_2r_2$ increases strictly from $-n_2$ to $n_1$ as $s$ goes
+from $0$ to $\infty$. So it vanishes at a unique $s>0$, the positive root of
+$n_1ps^2+(n_1-n_2)qs-n_2p=0$, and $s\ge1$ if and only if $n_1\le n_2$.
+\end{lemma}
+
+\begin{proof}
+Note that $r_1$ increases from $0$ to $1$ and $r_2$ decreases from $1$ to $0$. Clearing
+denominators in $n_1qs/(p+qs)=n_2q/(ps+q)$ gives the quadratic, and at $s=1$ the difference is
+$(n_1-n_2)q$.
+\end{proof}
+
+From now on $2\le k\le N-2$ and $s$ is this root.
+
+\begin{lemma}[Fourier form]\label{lem:llt-fourier}
+Let $\chi(t)=\E_se^{itD}=(1-r_1+r_1e^{it})^{n_1}(1-r_2+r_2e^{-it})^{n_2}$,
+$g(t)=e^{x(\cos t-1)}$ and $\omega(t)=2+se^{it}+s^{-1}e^{-it}$. Then
+\[
+P_N(k)=\frac q2\Lambda(s)\frac1{2\pi}\int_{-\pi}^{\pi}\chi\omega\,dt,\qquad
+U_N(k)=\frac q2\Lambda(s)\frac1{2\pi}\int_{-\pi}^{\pi}g\omega\,dt.
+\]
+\end{lemma}
+
+\begin{proof}
+By Theorem~\ref{thm:llt-identity} and Lemma~\ref{lem:llt-tilt},
+$P_N(k)=\frac q2\Lambda(s)[2\Prob_s(D=0)+s^{-1}\Prob_s(D=1)+s\Prob_s(D=-1)]$, and
+$\Prob_s(D=j)=\frac1{2\pi}\int\chi e^{-ijt}dt$. Since $g$ is even and
+$I_j(x)=\frac1\pi\int_0^\pi e^{x\cos t}\cos(jt)\,dt$~\cite[Eq.~10.32.3]{dlmf}, we have
+$\frac1{2\pi}\int g\,dt=\tilde I_0(x)$ and $\frac1{2\pi}\int ge^{\pm it}dt=\tilde I_1(x)$.
+\end{proof}
+
+\begin{lemma}[modulus]\label{lem:llt-modulus}
+We have $|\chi|\le g$ and $g-|\chi|\le g\min(1,4\kappa^2V)$.
+\end{lemma}
+
+\begin{proof}
+Note that $|1-r+re^{\pm it}|^2=1-2r(1-r)\kappa$. Put $f(z)=\sqrt{1-z}\,e^{z/2}$ and
+$z_i=2v_i\kappa\in[0,1]$ ($v_i\le\frac14$, $\kappa\le2$). As $x=n_1v_1+n_2v_2$, we get
+$|\chi|/g=f(z_1)^{n_1}f(z_2)^{n_2}$. Now $f(0)=1$ and $f'(z)=-\frac z2e^{z/2}(1-z)^{-1/2}\le0$, so
+$0\le f\le1$. Also $f(z)\ge1-z^2$, since for $z<1$ this says $e^z\ge(1-z)(1+z)^2=1+z-z^2-z^3$,
+which follows from $e^z\ge1+z$. So Lemma~\ref{lem:clipped}(a), with the $n_1+n_2$ numbers
+$1-f(z_i)\le z_i^2$, gives $1-|\chi|/g\le n_1z_1^2+n_2z_2^2=4\kappa^2V$.
+\end{proof}
+
+\begin{lemma}[phase]\label{lem:llt-phase}
+For $|t|<\pi$ write $\chi(t)=|\chi(t)|e^{i\Theta(t)}$ with $\Theta$ continuous and $\Theta(0)=0$.
+Then $|\Theta(t)|\le c_\varphi M|t|^3$ with $c_\varphi=128/(3\pi^3)=1.3761\ldots$.
+\end{lemma}
+
+\begin{proof}
+For $0\le r\le1$ and $|t|<\pi$, $w_r(t)=1-r+re^{it}$ lies on the segment from $1$ to $e^{it}$, so
+$w_r\ne0$ and $\arg w_r(t)$ lies between $0$ and $t$. Writing
+$w_r(t)=e^{it/2}[\cos\frac t2+i(2r-1)\sin\frac t2]$ gives
+$\arg w_r(t)=\frac t2-\arctan\bigl((1-2r)\tan\frac t2\bigr)$. As the factor for $-Y_2$ is
+$\overline{w_{r_2}}$, $\Theta=n_1\arg w_{r_1}-n_2\arg w_{r_2}$. Subtracting
+$(n_1r_1-n_2r_2)\sin t=0$ gives $\Theta=n_1\varphi(r_1,t)-n_2\varphi(r_2,t)$ with
+$\varphi(r,t)=\arg w_r(t)-r\sin t$. Both are odd in $t$, so let $0<t<\pi$. We show that
+$0\le\varphi(r,t)\le c_\varphi r^2t^3$.
+
+Put $\tau=\tan\frac t2$, $b_0=1-2r$ and $\gamma(b)=\arctan(b\tau)-b\tau/(1+\tau^2)$. Since
+$\frac t2=\arctan\tau$ and $\sin t=2\tau/(1+\tau^2)$, we get $\varphi=\gamma(1)-\gamma(b_0)$. Also
+$\gamma$ is odd and $\gamma'(b)=\tau^3(1-b^2)/[(1+\tau^2)(1+b^2\tau^2)]\ge0$ on $[-1,1]$. Hence
+\[
+\varphi=\frac{\tau^3}{1+\tau^2}\int_{b_0}^1\frac{1-b^2}{1+b^2\tau^2}\,db\ge0,\qquad
+\int_{b_0}^1(1-b^2)\,db=4r^2-\tfrac83r^3\le4r^2.
+\]
+There are 4 cases.
+(a) If $t\le\frac\pi2$, then $\tau\le2t/\pi\le1$ by convexity of $\tan$ on $[0,\frac\pi4]$, so
+$\varphi\le4r^2\tau^3\le\frac{32}{\pi^3}r^2t^3$.
+(b) If $t>\frac\pi2$ and $r\le\frac14$, then $b_0\ge\frac12$, so $1+b^2\tau^2\ge1+\tau^2/4$ and
+$\varphi\le16r^2\tau^3/[(1+\tau^2)(4+\tau^2)]$. As $(1+\tau^2)(4+\tau^2)\ge\max(9\tau^2,\tau^4)$,
+this is at most $16r^2\min(\tau/9,1/\tau)\le\frac{16}3r^2\le c_\varphi r^2t^3$, as $t^3>\pi^3/8$.
+(c) If $t>\frac\pi2$ and $\frac14<r\le\frac12$, then $\gamma(b_0)\ge\gamma(0)=0$, so
+$\varphi\le\gamma(1)=\frac12(t-\sin t)\le\frac{t^3}{12}<\frac43r^2t^3$.
+(d) If $r>\frac12$, then
+$\varphi=\gamma(1)+\gamma(|b_0|)\le2\gamma(1)=t-\sin t\le\frac{t^3}6<\frac23r^2t^3$.
+As $\frac{32}{\pi^3},\frac43,\frac23<c_\varphi$, the claim follows. Finally
+$\varphi(r_1,t)$ and $\varphi(r_2,t)$ have the same sign, so
+$|\Theta|\le\max_in_i\varphi(r_i,t)\le c_\varphi|t|^3\max_in_ir_i^2=c_\varphi M|t|^3$.
+\end{proof}
+
+\begin{lemma}[moments]\label{lem:llt-moments}
+For every $x>0$, with $\mathcal R=\mathcal R(x)$,
+\begin{enumerate}[(i)]
+\item $\langle\kappa^2\rangle=2-2\mathcal R-\mathcal R/x$ and
+$\langle\kappa^3\rangle=4-4\mathcal R-3\mathcal R/x-2\mathcal R/x^2+1/x$,
+\item $1/\mathcal R(x)\le1+2/x$,
+\item $\langle\kappa^2\rangle\le\min(\frac32,2/x^2)$ and $\langle\kappa^3\rangle\le\min(\frac52,8/x^3)$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) Note that $\kappa^2=\frac32-2\cos t+\frac12\cos2t$,
+$\kappa^3=\frac52-\frac{15}4\cos t+\frac32\cos2t-\frac14\cos3t$ and
+$\langle\cos jt\rangle=I_j(x)/I_0(x)$~\cite[Eq.~10.32.3]{dlmf}. The recurrence
+$I_{\nu-1}-I_{\nu+1}=(2\nu/x)I_\nu$~\cite[Eq.~10.29.1]{dlmf} gives $I_2/I_0=1-2\mathcal R/x$ and
+$I_3/I_0=\mathcal R-4/x+8\mathcal R/x^2$.
+
+(ii), (iii) By \cite[Eqs.~10.29.2, 10.29.3]{dlmf}, $I_0'=I_1$ and $I_1'=I_0-I_1/x$, so
+$\mathcal R'=1-\mathcal R/x-\mathcal R^2$. For a $C^1$ function $h$ put $d_h=1-h/x-h^2-h'$. If
+$d_h>0$ on $[x_*,\infty)$ and $\mathcal R(x_*)>h(x_*)$, then $\mathcal R>h$ on $[x_*,\infty)$.
+Indeed, at a first $x_1$ with $\mathcal R(x_1)=h(x_1)$ we would have
+$(\mathcal R-h)'(x_1)\le0$, but it is $d_h(x_1)>0$. Each $d_h$ below follows by clearing
+denominators.
+
+First, $h_0=x/(x+2)$ has $d_{h_0}=3x/(x+2)^2>0$, and $\mathcal R-h_0=\frac{x^2}4+O(x^3)$ as $x\to0$
+since $\mathcal R=\frac x2-\frac{x^3}{16}+O(x^5)$. So $\mathcal R>h_0$ for all $x>0$, which is
+(ii). It also gives $\langle\kappa^2\rangle\le2-(2+\frac1x)h_0=\frac3{x+2}\le\frac32$.
+
+Second, by (i), $\langle\kappa^2\rangle<2/x^2$ means $\mathcal R>h_2=(2x^2-2)/(x(2x+1))$. Here
+$d_{h_2}=(5x^2-4x-4)/(x^2(2x+1)^2)>0$ for $x>1.3798$, and at $x_*=1.38$ we have
+$\mathcal R>h_0=0.40828>h_2=0.34860$. For $x<1.38$, $\frac3{x+2}\le\frac2{x^2}$ since
+$3x^2-2x-4\le0$ for $x\le1.535$.
+
+Third, $\langle\kappa^3\rangle<8/x^3$ means $\mathcal R>h_3=(4x^3+x^2-8)/(x(4x^2+3x+2))$. Here
+$d_{h_3}=(49x^3-48x^2-24x-64)/(x^2(4x^2+3x+2)^2)>0$ for $x\ge1.72$, and at $x_*=1.72$ we have
+$\mathcal R>h_2=0.51289>h_3=0.46870$. For $x<1.72$,
+$\langle\kappa^3\rangle\le2\langle\kappa^2\rangle\le4/x^2\le8/x^3$.
+
+Finally, the density is proportional to $e^{-x\kappa}$, so
+$\frac d{dx}\langle\kappa^j\rangle
+=\langle\kappa^j\rangle\langle\kappa\rangle-\langle\kappa^{j+1}\rangle\le0$ by Chebyshev's sum
+inequality for the increasing functions $\kappa^j$ and $\kappa$. As $x\to0$ the averages tend to
+$\frac1{2\pi}\int(1-\cos t)^2dt=\frac32$ and $\frac1{2\pi}\int(1-\cos t)^3dt=\frac52$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:llt}]
+By Lemma~\ref{lem:llt-fourier}, $\theta=\Delta/(2\tilde I_0+(s+s^{-1})\tilde I_1)$ with
+$\Delta=\frac1{2\pi}\int(\chi-g)\omega\,dt$. Both integrals there are real, so $\Delta$ integrates
+\[
+\mathrm{Re}[(\chi-g)\omega]=(|\chi|\cos\Theta-g)\bigl(2+(s+s^{-1})\cos t\bigr)
+-|\chi|\sin\Theta\,(s-s^{-1})\sin t .
+\]
+Now $g-|\chi|\cos\Theta=(g-|\chi|)+|\chi|(1-\cos\Theta)$ lies between $0$ and $g\mu$ with
+$\mu=\min(1,4\kappa^2V)+\frac12\Theta^2$, by Lemma~\ref{lem:llt-modulus} and
+$1-\cos\Theta\le\frac12\Theta^2$. Also
+$|\chi\sin\Theta|\le g|\Theta|$ and $|s-s^{-1}|\le s+s^{-1}$. Since
+$\frac1{2\pi}\int gh\,dt=\tilde I_0\langle h\rangle$,
+\[
+|\Delta|\le2\tilde I_0\langle\mu\rangle+(s+s^{-1})\tilde I_0\bigl[\langle\mu|\cos t|\rangle
++\langle|\Theta||\sin t|\rangle\bigr].
+\]
+Since $|\cos t|\le1$ and $\tilde I_0/\tilde I_1=1/\mathcal R\ge1$, the mediant inequality gives
+\[
+|\theta|\le\mathcal E_0:=\frac{\langle\min(1,4\kappa^2V)\rangle+\frac12\langle\Theta^2\rangle
++\langle|\Theta||\sin t|\rangle}{\mathcal R(x)}.
+\]
+For $\mathcal E_0\le\mathcal E$ we use $\min(1,4\kappa^2V)\le4\kappa^2V$,
+Lemma~\ref{lem:llt-phase}, $|t|\le\pi|\sin\frac t2|=\pi(\kappa/2)^{1/2}$ and
+$|\sin t|\le2(\kappa/2)^{1/2}$. Since $c_\varphi\pi^3=\frac{128}3$, we get
+$\frac12\Theta^2\le\frac12c_\varphi^2\pi^6M^2(\kappa/2)^3=\frac{1024}9M^2\kappa^3$ and
+$|\Theta||\sin t|\le2c_\varphi\pi^3M(\kappa/2)^2=\frac{64}3M\kappa^2$.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:llt}]
+Note that $r_1=r_2=q$ at $s=1$, $r_2\le q$ if $s\ge1$, and $r_1\le q$ if $s\le1$. So
+$\min(r_1,r_2)\le q\le\frac12$ and $x=m(1-r_1)+m(1-r_2)\ge m/2$. Also $n_iv_i\le x$, so
+$v_i\le\min(x/n_{\min},r_{\max})$ and $V\le x\max_iv_i\le\min(x^2/n_{\min},xr_{\max})$. Since
+$r_i=m/n_i$, $M=mr_{\max}=m^2/n_{\min}\le\min(4x^2/n_{\min},2xr_{\max})$. We put these and
+Lemma~\ref{lem:llt-moments} into $\mathcal E$.
+
+For the $n_{\min}$ form, the first term of $\mathcal E$ is at most
+$\frac{4+256/3}{n_{\min}}(x^2+2x)\min(\frac32,\frac2{x^2})\le\frac{(4+256/3)(2+2\sqrt3)}{n_{\min}}
+\le\frac{488.13}{n_{\min}}$, with the supremum at $x^2=\frac43$ (the product is $488.126\ldots$).
+If $x\le1$, the $M^2$ term is at most
+$\frac3x\cdot\frac{1024}9\cdot\frac{16x^4}{n_{\min}^2}\cdot\frac52\le\frac{13654}{n_{\min}^2}$. If
+$x\ge1$, then $M^2\le\min(16x^4/n_{\min}^2,4x^2)$, and the term is at most
+\[
+3\cdot\frac{1024}9\min\Bigl(\frac{16x^4}{n_{\min}^2},4x^2\Bigr)\frac8{x^3}
+=\frac{1024}3\min\Bigl(\frac{128x}{n_{\min}^2},\frac{32}x\Bigr)\le\frac{1024}3\cdot\frac{64}{n_{\min}}
+=\frac{65536/3}{n_{\min}}\le\frac{21845.34}{n_{\min}},
+\]
+since a minimum is at most the geometric mean. So both cases give at most
+$21845.34/n_{\min}$, and $488.13+21845.34=22333.47\le22334$.
+
+For the $r_{\max}$ form, the first term is at most
+$(4+\frac{128}3)r_{\max}\sup_x(x+2)\min(\frac32,\frac2{x^2})=(4+\frac{128}3)(3+\sqrt3)r_{\max}
+\le220.83\,r_{\max}$ (the product is $220.829\ldots$, with the supremum at $x^2=\frac43$). The
+$M^2$ term is at most $\frac{4096}9r_{\max}^2\sup_x(x^2+2x)\min(\frac52,\frac8{x^3})$, where the
+supremum is $12.7968\ldots$ at $x^3=3.2$. So the term is at most
+$\frac{4096}9\cdot12.797\,r_{\max}^2\le5825\,r_{\max}^2$.
+
+Finally, by symmetry let $n_1\le n_2$, and put $u=q/p\le2q$. Then $s\ge1$, so
+$r_{\max}=r_1\le qs/p=us$. By Lemma~\ref{lem:llt-saddle},
+\[
+s=\frac{(n_2-n_1)u}{2n_1}+\sqrt{\frac{(n_2-n_1)^2u^2}{4n_1^2}+\frac{n_2}{n_1}}
+\le\frac{(n_2-n_1)u}{n_1}+\sqrt{\frac{n_2}{n_1}}.
+\]
+With $n_1\ge1$ and $n_2\le N$ this gives $r_{\max}\le2q\sqrt N+4q^2N=\delta_T$.
+\end{proof}
