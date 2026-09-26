@@ -1,0 +1,176 @@
+\section{Introduction}\label{sec:intro}
+
+Problem 131 of Kagey's Open Problem Collection~\cite{kagey131} asks about a
+Galton board where the ball tends to keep going the same way. In particular
+it asks when the middle bin and the ends are equally likely. We count $n$
+steps, so the bins are Kagey's row $n+1$, and we write $A_n$ for the number
+of right steps. Unless we say otherwise, the first step is left or right
+with probability $\frac12$ each. So the law of $A_n$ is symmetric about
+$n/2$. For even $n$ put $h=n/2$, $C_n=\Prob(A_n=h)$ and
+$E_n=\Prob(A_n=n)=\Prob(A_n=0)$.
+Our companion paper~\cite{paperA}, which we call Paper~A, treats the Markov
+walk. This walk repeats its last step with probability $p=1-q$. Paper~A
+shows that there is exactly one $p_n$ with $C_n=E_n$ and that
+\[
+ n(1-p_n)=\log n-\tfrac12\log\log n+\tfrac12\log\frac{\pi}{8}+o(1).
+\]
+So a Markov walk needs about $\log n$ switches before the middle catches up
+with the ends. We write $q_n=1-p_n$ and $z_n=nq_n$. A second companion
+paper~\cite{paperB}, Paper~B, asks the same question for a Markov chain with
+more than 2 directions.
+
+The Markov walk remembers only its last step. We compare it with 2 walks
+that have a longer memory. The elephant random walk of Sch\"utz and
+Trimper~\cite{schutz2004} remembers its whole past. Each step copies a
+uniformly chosen earlier step and flips it with probability $\varepsilon$.
+In the second walk the steps come in runs of alternating direction, and the
+runs after the first one have i.i.d.\ lengths $L$ with
+$\Prob(L\ge k)=k^{-\alpha}$ for $k\ge1$. Its memory is the time since the
+last switch. The first run is either a fresh run or, for $\alpha>1$, the
+remaining part of a run in progress. We call these the fresh and the
+stationary start. A remark and Appendix~\ref{app:aging} treat a third kind
+of memory, aging, where the walk switches at step $k$ with probability
+$c/k$.
+Table~\ref{tab:compare} compares the answers.
+
+\begin{table}[t]
+\centering\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{1.65cm}
+ >{\raggedright\arraybackslash}p{2.35cm}
+ >{\raggedright\arraybackslash}p{4.9cm}
+ >{\raggedright\arraybackslash}p{1.9cm}
+ >{\raggedright\arraybackslash}p{4.3cm}@{}}
+\toprule
+Walk & Rule & Crossing & Center at the crossing & Shape at the crossing\\
+\midrule
+Markov \cite{paperA}
+ & switch with probability $q$
+ & $nq_n=\log n-\frac12\log\log n+\frac12\log\frac\pi8+o(1)$
+ & order $(\log n)^{1/2}/n$
+ & the middle and the ends are the largest bins, bins $1$ and $n-1$ the
+ smallest\\
+\addlinespace
+Elephant (Sections \ref{sec:erw}, \ref{sec:shape})
+ & copy a uniform earlier step, flip it with probability $\varepsilon$
+ & $x_n=2\log n-\log\log n-{}$\newline
+ $\log16+o(1)$, and\newline
+ $x_n=2nq_n-\log(2\pi)+o(1)$
+ & $\sim4x_n/n^2\sim8\log n/n^2$
+ & each end below its neighbor, modes about $x_n\log x_n$ from the ends
+ (for very large $n$, using one computed sign), the center below all
+ interior bins outside a window (all of them if
+ Conjecture~\ref{conj:convex} holds)\\
+\addlinespace
+Heavy-tailed runs (Section \ref{sec:heavy})
+ & alternating runs with $\Prob(L\ge k)=k^{-\alpha}$
+ & $R_n=E_n/C_n\sim C(\alpha)n^{1-\alpha+1/\alpha}$ for $1<\alpha<2$ and
+ a stationary start, so the ends win for large $n$ exactly when
+ $\alpha<\varphi=(1+\sqrt5)/2$. With a fresh start they win for $\alpha<1$ and lose for
+ $\alpha>1$.
+ & order $n^{-1/\alpha}$ for $1<\alpha<2$
+ & a stable bulk of width $n^{1/\alpha}$ and 2 end atoms
+ \cite{godrecheluck2001,zdk2015} (the full profile is not studied here)\\
+\bottomrule
+\end{tabular}
+\caption{The 3 walks near the point where the middle bin and the ends
+are equally likely. For the Markov and elephant walks, $n$ is the number of
+steps and the crossing is a value of the switch or flip probability, with
+$x_n=n\varepsilon_n$ for the elephant walk. For the heavy-tailed walk the
+exponent $\alpha$ is fixed and we compare $E_n$ with $C_n$ as $n$ grows.}
+\label{tab:compare}
+\end{table}
+
+\paragraph{Results.}
+For the elephant walk, $C_n/E_n$ is strictly increasing in $\varepsilon$, so
+the crossing $\varepsilon_n$ exists and is unique
+(Proposition~\ref{prop:mlr}). The derivative of $C_n$ at $\varepsilon=0$ is
+exactly $4/(n+2)$ (Proposition~\ref{prop:first-mutation}).
+Theorem~\ref{thm:erw-bounds} gives explicit bounds for $C_n$. In particular
+$\log C_n=\log\frac{4\varepsilon}{n+2}+2\varepsilon\log n+O(\varepsilon)$
+when $\varepsilon(1+\log n)\le\frac1{100}$. Hence $x_n=n\varepsilon_n$
+satisfies $x_n+\log x_n=2\log n-\log8+O((\log n)^2/n)$
+(Theorem~\ref{thm:erw-crossing}). The reason for the factor 2 is that in
+the elephant walk a single early flip already moves a large family of
+steps. So the middle is reached with probability of order $\varepsilon/n$,
+and the ends must fall to about $n^{-2}$ before they lose, instead of about
+$n^{-1}$ for the Markov walk. Since $E_n\approx\frac12e^{-n\varepsilon}$,
+the crossing is near $2\log n$ and not $\log n$. Using the third-order
+expansion of Paper~A, Theorem~\ref{thm:erw-markov} shows that
+$x_n-(2z_n-\log(2\pi))=c_*/\log n+O((\log\log n)^2/(\log n)^2)$ with
+$c_*=\frac12\log(2\pi)-\frac14$. By Theorem~\ref{thm:K2} the second
+coefficient of $C_n$ in $\varepsilon$ divided by the first is
+$2\log n+K_2+o(1)$, where $K_2=2\gamma-2-\log2$ and $\gamma$ is Euler's
+constant.
+
+At the crossing and for large $n$, each end is below its neighbor
+(Theorem~\ref{thm:dip} and Corollary~\ref{cor:dip}), so the law is not
+unimodal. With $x=n\varepsilon$,
+the number of steps that differ from the first step is close to a compound
+Poisson law (Theorem~\ref{thm:cp}), with a Landau limit near $x\log x$ on
+the scale $x$ (Theorem~\ref{thm:landau}). For very large $n$, and using one
+numerically computed sign, the same theorem puts the modes near
+$x\log x-0.2228x$. We also show $\Prob(A_n=n-m)\sim x/(2m^2)$ for
+$x\log^2x\ll m\ll n$ (Theorem~\ref{thm:profile}). At the crossing and for
+large $n$, the center is below every interior bin outside a window of width of order
+$n^{3/4}(\log n)^{3/4}$ (Theorem~\ref{thm:shape}).
+Conjecture~\ref{conj:convex} would close this window, and we checked it for
+every $10\le n\le600$ and for 5 larger $n$.
+
+For heavy-tailed runs with $1<\alpha<2$ and any first run,
+Theorem~\ref{thm:center} gives $C_n$ to leading order, and it is of order
+$n^{-1/\alpha}$. With a stationary start the end is of order $n^{1-\alpha}$,
+so $R_n=E_n/C_n\sim C(\alpha)n^{1-\alpha+1/\alpha}$
+(Corollary~\ref{cor:golden}). The reason is that the end needs one first run
+that covers all $n$ steps, while the center needs the renewal processes of
+$+$ and $-$ runs to meet, and these fluctuate on the scale $n^{1/\alpha}$.
+The exponent vanishes at the golden ratio $\varphi=(1+\sqrt5)/2$, and there
+$R_n\to C(\varphi)=0.7761317206\ldots$, so the center still wins.
+Theorems~\ref{thm:alpha2} and~\ref{thm:lamperti} treat $\alpha\ge2$ and
+$0<\alpha<1$. Remark~\ref{rem:crossover} gives computed crossover sizes for
+$\alpha$ just below $\varphi$, and Remark~\ref{rem:heat} discusses
+$\alpha=5/3$, the value used for anomalous heat conduction.
+Remark~\ref{rem:aging} treats aging. The crossing is exactly $c=1$ when the
+first step is fixed, and for a fair first step it is
+$c_n=1-\log2/(\log n+\gamma+2-2\log2)+O((\log n)^{-3})$.
+
+\paragraph{Prior work.}
+The steps of the elephant walk split into clusters, since a step either
+copies an earlier step exactly or starts a new cluster with a fair sign. This
+is K\"ursten's coupling with bond percolation on random recursive
+trees~\cite{kursten2016}, and Baur and Bertoin~\cite{baurbertoin2016} relate
+the walk to P\'olya-type urns. Our regime $n\varepsilon\asymp\log n$ lies in
+the strongly supercritical percolation regime of Baur~\cite{baur2016} (see
+also Bertoin~\cite{bertoin2014}). Those results describe cluster sizes and
+do not cover the center probability, which is a large deviation of the root
+cluster. Gu\'erin, Laulin, Raschel and
+Simon~\cite[proof of Theorem~1.1]{glrs2025} prove that the law with a fixed
+first step is unimodal for every $n$ and every memory parameter. Their other
+results fix the memory parameter as $n$ grows. We did not find an asymptotic
+formula for the center probability in the literature when $\varepsilon\to0$
+as $n$ grows.
+
+For heavy-tailed runs, Godr\`eche and Luck~\cite{godrecheluck2001} give the
+transform of the occupation time of an alternating renewal process and the
+scalings of the center and of both edges. They also give Lamperti's law and
+its critical value $\alpha_c$, which they credit to Baldassarri, Bouchaud,
+Dornic and Godr\`eche. Zaburdaev, Denisov and Klafter~\cite{zdk2015} and
+Dhar, Saito and Derrida~\cite{dsd2013} describe the profile of a L\'evy
+walk. Wang, Li and H\"anggi~\cite{wlh2016} already observe that equal decay
+of the central peak and the side peaks gives the golden ratio, as a
+heuristic for the continuum model of heat conduction. Here we prove the
+lattice statement with a local limit at the center, keep the 2 starts apart,
+and compute $C(\alpha)$ and the crossover sizes. For aging, Dietz and
+Sethuraman~\cite{ds2007} proved the limit law of $A_n/n$, Engl\"ander and
+Volkov~\cite{ev2018} gave a second proof, and Engl\"ander, Volkov and
+Wang~\cite{evw2020} found the scaling limit of the walk (see
+Remark~\ref{rem:aging} and Appendix~\ref{app:aging}).
+
+\paragraph{Organization.}
+Sections~\ref{sec:erw} and~\ref{sec:shape} treat the crossing and the shape
+of the elephant walk. Section~\ref{sec:heavy} treats heavy-tailed runs and
+ends with the remark on aging. Section~\ref{sec:verify} describes the
+computations and lists open questions. Appendices~\ref{app:erw},
+\ref{app:shape} and~\ref{app:heavy} hold the longer proofs for
+Sections~\ref{sec:erw} to~\ref{sec:heavy}, and Appendix~\ref{app:aging}
+proves the aging crossing.

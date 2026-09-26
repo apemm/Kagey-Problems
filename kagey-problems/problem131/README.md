@@ -104,6 +104,7 @@ section on related work.
   them, and an index of the ledgers of all 4 papers.
 - `data/` holds the recorded output of the checks for Papers A and B.
 - `literature_review.md` says what each earlier source proves.
+- `removed_proofs/` keeps the proofs cut from Papers B, C and D while shortening them, for reference.
 
 Run `python -B verify_all.py --paper a` (or `b`, `c`, `d`, `all`). Add `--full` for the long runs
 and `--dry-run` to list the commands. Build Paper A with `pdflatex problem131.tex` and Paper B with

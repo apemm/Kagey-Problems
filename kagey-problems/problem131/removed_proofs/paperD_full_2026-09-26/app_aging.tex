@@ -1,0 +1,296 @@
+\section{Proof of the aging crossing}\label{app:aging}
+
+We use the setting of Remark~\ref{rem:aging}. So $0<c<2$, $X_1$ is a fair sign, $\Prob_+$ is
+the law given $X_1=+1$, and the switch indicators $\xi_k=\mathbf 1\{X_k\ne X_{k-1}\}$,
+$2\le k\le n$, are independent Bernoulli$(c/k)$ variables, independent of $X_1$. Put
+\[
+\rho(a,b)=\prod_{k=a+1}^{b}\Bigl(1-\frac ck\Bigr)
+=\frac{\Gamma(b+1-c)\,\Gamma(a+1)}{\Gamma(b+1)\,\Gamma(a+1-c)},\qquad
+\omega_t=\frac{c}{t-c},\qquad
+\lambda_{t,n}=\frac ct\,\rho(t,n),
+\]
+so $\lambda_{t,n}$ is the probability of a switch at time $t$ and none in $(t,n]$. Let $T^+_s$
+be the time of the $s$-th step equal to $+1$. Let $B$ be a Beta$(c,c)$ variable,
+$d_c=4^{1-c}/\mathrm B(c,c)$ its density at $\frac12$, and
+$\Theta(c)=\log\bigl(2\Gamma(2-c)\,d_c\bigr)$. For even $n$ let $h=n/2$, $C_n=\Prob(A_n=h)$ and
+$E_n=\Prob(A_n=n)$. Changing the sign of every step preserves the law of the walk and sends
+$A_n$ to $n-A_n$. We call this flip symmetry. Gautschi's inequality \cite{gautschi1959} says
+that $x^{1-s}<\Gamma(x+1)/\Gamma(x+s)<(x+1)^{1-s}$ for $x>0$ and $0<s<1$. We apply it with
+$x=y$ and $s=1-c$ if $c<1$. If $c>1$ we apply it with $s=2-c$ and use
+$\Gamma(y+1-c)=\Gamma(y+2-c)/(y+1-c)$ and $1\le y/(y+1-c)\le1+2/y$. This gives
+\begin{equation}\label{eq:D-gamma}
+\frac{\Gamma(y+1-c)}{\Gamma(y+1)}=y^{-c}(1+\theta)\quad\text{with}\quad
+-\frac1y\le\theta\le\frac2y\qquad(y\ge2),
+\end{equation}
+and $\theta=0$ if $c=1$.
+
+\subsection{Path weights and the exact law at \texorpdfstring{$c=1$}{c=1}}
+
+\begin{proposition}[path weights]\label{prop:D-paths}
+Let $\mathcal T(x)=\{2\le t\le n:x_t\ne x_{t-1}\}$ be the set of switch times of
+$x\in\{\pm1\}^n$. Then
+\begin{equation}\label{eq:D-path}
+\Prob(X=x)=\tfrac12\,\rho(1,n)\prod_{t\in\mathcal T(x)}\omega_t .
+\end{equation}
+So $E_n=\frac12\rho(1,n)$. For $1\le s\le n-1$ the ratios $\Prob(A_n=s)/E_n$ and
+$\Prob_+(A_n=s)/\Prob_+(A_n=n)$ are continuous and strictly increasing in $c\in(0,2)$, and they
+tend to $0$ as $c\downarrow0$.
+\end{proposition}
+
+\begin{proof}
+The first step contributes the factor $\frac12$, and step $k\ge2$ contributes $c/k$ if
+$k\in\mathcal T(x)$ and $1-c/k$ otherwise. Factoring
+out $\rho(1,n)$ leaves $(c/t)/(1-c/t)=\omega_t$ for each switch. Only the path with every step
+$+1$ has $A_n=n$, and it has no switch. So $\Prob(A_n=s)/E_n$ is the sum of
+$\prod_{t\in\mathcal T(x)}\omega_t$ over the paths $x$ with $s$ steps equal to $+1$. For
+$1\le s\le n-1$ each of these paths switches at least once, and each $\omega_t$ is positive,
+strictly increasing in $c$ and tends to $0$ as $c\downarrow0$. Under $\Prob_+$ the factor
+$\frac12$ disappears and only paths with $x_1=+1$ occur.
+\end{proof}
+
+\begin{proposition}[exact law at $c=1$]\label{prop:D-uniform}
+Let $c=1$, $n\ge2$ and $1\le s\le n$. Then $\Prob_+(A_n=s,\,X_n=+1)=\frac{s-1}{n(n-1)}$ and
+$\Prob_+(A_n=s,\,X_n=-1)=\frac{n-s}{n(n-1)}$, so $\Prob_+(A_n=s)=\frac1n$. With a fair first
+step, $\Prob(A_n=s)=\frac1n$ for $1\le s\le n-1$ and $E_n=\frac1{2n}$.
+\end{proposition}
+
+\begin{proof}
+Let $u^\pm_n(s)=\Prob_+(A_n=s,\,X_n=\pm1)$, which is $0$ unless $1\le s\le n$. At $c=1$ step
+$n+1$ switches with probability $1/(n+1)$, so $(n+1)u^+_{n+1}(s+1)=n\,u^+_n(s)+u^-_n(s)$ and
+$(n+1)u^-_{n+1}(s)=u^+_n(s)+n\,u^-_n(s)$ for every $s$. We use induction on $n$. For $n=2$ we
+have $u^+_2(2)=u^-_2(1)=\frac12$ and the other values vanish, as claimed. If the claim holds for
+$n$, the identities $n(s-1)+(n-s)=s(n-1)$ and $(s-1)+n(n-s)=(n-1)(n+1-s)$ give it for $n+1$.
+Summing over $X_n$ gives $\Prob_+(A_n=s)=\frac1n$. By flip symmetry
+$\Prob(A_n=s)=\frac12\bigl(\Prob_+(A_n=s)+\Prob_+(A_n=n-s)\bigr)$.
+\end{proof}
+
+Given $X_1=+1$ and $c=1$, the steps $X_2,\dots,X_n$ start with a fair sign and then switch at
+their own step $j\ge2$ with probability $1/(j+1)$. So after a shift of one step the uniform law
+above is the exercise in footnote~1 of \cite{evw2020}. Read the other way, it says that a walk
+of $N$ steps with a fair first step that switches at step $k\ge2$ with probability $1/(k+1)$ has
+exactly $N+1$ equally likely values $0,\dots,N$ for its number of $+1$ steps.
+
+\begin{corollary}[crossings]\label{cor:D-fixed}
+Let $n\ge2$ and $1\le s\le n-1$. \textup{(a)} The ratio $\Prob_+(A_n=s)/\Prob_+(A_n=n)$ is
+strictly increasing in $c$ and equals $1$ at $c=1$. So given $X_1=+1$, bin $n$ is more likely
+than each of the bins $1,\dots,n-1$ when $c<1$ and less likely when $c>1$, while bin $0$ has
+probability $0$. \textup{(b)} With a fair first step there is exactly one
+$c_n(s)\in(0,2)$ with $\Prob(A_n=s)=E_n$, and $c_n(s)<1$. For even $n$ the crossing of
+Remark~\ref{rem:aging} is $c_n=c_n(h)$.
+\end{corollary}
+
+\begin{proof}
+Part (a) follows from Propositions~\ref{prop:D-paths} and~\ref{prop:D-uniform}. In (b) the
+ratio $\Prob(A_n=s)/E_n$ is continuous and strictly increasing, tends to $0$ as $c\downarrow0$,
+and equals $2$ at $c=1$. So it equals $1$ exactly once, at some $c<1$.
+\end{proof}
+
+\subsection{Averaging at the center and a bracket}
+
+\begin{lemma}[averaging at the center]\label{lem:D-average}
+Let $n\ge2$ be even and $T=T^+_h$. Then
+\begin{equation}\label{eq:D-average}
+C_n=2\sum_{r=h}^{n-1}\Prob(T=r)\,\lambda_{r+1,n}\qquad\text{and}\qquad
+\sum_{r=h}^{n-1}\Prob(T=r)=\frac12 .
+\end{equation}
+If $0<c\le1$, then $c/n\le C_n\le\lambda_{h+1,n}$.
+\end{lemma}
+
+\begin{proof}
+On the event $\{A_n=h,\,X_n=-1\}$ the last step equal to $+1$ is the $h$-th one, at a time
+$T=r\le n-1$, and it is followed by a switch at $r+1$ and no switch in $(r+1,n]$. Conversely,
+these conditions give $A_n=h$ and $X_n=-1$. As $\{T=r\}$ depends only on
+$X_1,\xi_2,\dots,\xi_r$, we get
+$\Prob(A_n=h,\,X_n=-1)=\sum_{r=h}^{n-1}\Prob(T=r)\,\lambda_{r+1,n}$, and flip symmetry gives the
+same value for $X_n=+1$. Next, $T\le n-1$ exactly when $A_{n-1}\ge h$, which has probability
+$\frac12$ because $n-1$ is odd and $A_{n-1}$ is symmetric about $(n-1)/2$. Finally
+$\lambda_{t+1,n}/\lambda_{t,n}=t/(t+1-c)\le1$ for $c\le1$. So
+$\lambda_{n,n}=c/n\le\lambda_{t,n}\le\lambda_{h+1,n}$ for $h+1\le t\le n$, and by
+\eqref{eq:D-average} $C_n$ is a weighted average of these values.
+\end{proof}
+
+For $N\ge2$ put $\eta_N(c)=N\rho(1,N)/(2c)$. Since $\rho(1,N)$ decreases in $c$ and equals
+$1/N$ at $c=1$, $\eta_N$ decreases strictly on $(0,1]$, from $\infty$ at $0$ to
+$\eta_N(1)=\frac12$. Let $c^{(N)}\in(0,1)$ be the root of $\eta_N=1$.
+
+\begin{theorem}[bracket]\label{thm:D-bracket}
+The numbers $c^{(N)}$ increase with $N$, and
+$1-c^{(N)}=\frac{\log2}{\log N+1+\gamma}+O\bigl((\log N)^{-3}\bigr)$. For every even $n\ge2$
+we have $c^{(h+1)}\le c_n\le c^{(n)}$. In particular $(1-c_n)\log n\to\log2$, and
+$c_n\ge c^{(3)}=(9-\sqrt{57})/2>0.725$ for $n\ge4$.
+\end{theorem}
+
+\begin{proof}
+For $c<1$ we have $\eta_{N+1}/\eta_N=(N+1-c)/N>1$. So $\eta_{N+1}(c^{(N)})>1$ and
+$c^{(N+1)}>c^{(N)}$. By Corollary~\ref{cor:D-fixed}(b) it is enough to compare $C_n$ with $E_n$
+for $0<c<1$. If $c>c^{(n)}$, then $\eta_n(c)<1$, that is $E_n=\frac12\rho(1,n)<c/n\le C_n$ by
+Lemma~\ref{lem:D-average}. So $c_n\le c^{(n)}$. If $c<c^{(h+1)}$, then $\eta_{h+1}(c)>1$, and
+with $\rho(1,n)=\rho(1,h+1)\rho(h+1,n)$ this gives
+$E_n>\frac{c}{h+1}\rho(h+1,n)=\lambda_{h+1,n}\ge C_n$. So $c_n\ge c^{(h+1)}$.
+
+By \eqref{eq:D-gamma} with $y=N$, the equation $\eta_N(c)=1$ reads
+$(1-c)\log N=\Theta_0(c)+O(1/N)$ with $\Theta_0(c)=\log\bigl(2c\,\Gamma(2-c)\bigr)$, uniformly
+for $0<c\le1$. For $N\ge3$ we have $c^{(N)}\in[c^{(3)},1)$, where $\Theta_0$ is bounded. So
+$1-c^{(N)}=O(1/\log N)$, and we may expand at $c=1$. With $\Theta_0(1)=\log2$,
+$\Theta_0'(1)=1-\psi(1)=1+\gamma$ and $e=1-c^{(N)}$, Taylor's theorem gives
+$e(\log N+1+\gamma)=\log2+O(e^2)+O(1/N)$, which is the expansion. The limit of
+$(1-c_n)\log n$ follows since $\log(h+1)\sim\log n$. Finally $c^{(3)}$ solves
+$3\rho(1,3)=(2-c)(3-c)/2=2c$.
+\end{proof}
+
+The reason for the $\log2$ is already visible at $c=1$. There every interior bin is $1/n$ and
+the end is $1/(2n)$. The factor 2 comes from the fair start under switching probability $c/k$,
+since only the start $+1$ can reach bin $n$. With switching probability $c/(k+1)$ and a fair
+start, the end and the interior bins are equal at $c=1$ by the paragraph after
+Proposition~\ref{prop:D-uniform}. For $c$ a little below $1$ the end is of order $n^{-c}$ while the center stays of
+order $1/n$. So the 2 are equal when $n^{1-c}$ is about 2.
+
+\subsection{The continuum occupation and a local limit at the center}
+
+\begin{proposition}[continuum occupation]\label{prop:D-beta}
+Let $\Pi$ be a Poisson process on $(0,\infty)$ with intensity $c\,dt/t$, and let $Y(1)$ be a
+fair sign independent of $\Pi$. Put $Y(t)=Y(1)(-1)^{\Pi((1,t])}$ for $t\ge1$ and
+$Y(t)=Y(1)(-1)^{\Pi((t,1])}$ for $0<t<1$. Then for every $r>0$ the fraction
+$Z_r=\frac1r\int_0^r\mathbf 1\{Y(t)=+1\}\,dt$ has exactly the Beta$(c,c)$ law.
+\end{proposition}
+
+This agrees with \cite[Remark~6.2]{evw2020}, which obtains the Beta$(c,c)$ one-dimensional
+marginals of the zigzag process of \cite[Definition~6.1]{evw2020} from a scaling limit and
+mentions a direct proof by E.~Crane that is not written there. We give a direct proof.
+
+\begin{proof}
+The points $\log t$, $t\in\Pi$, form a Poisson process $\tilde\Pi$ of rate $c$ on $\mathbb R$,
+and $W(u)=Y(e^u)$ satisfies $W(v)=W(u)(-1)^{\tilde\Pi((u,v])}$ for $u<v$. For each $a$, $W(a)$
+is $W(0)$ times a function of $\tilde\Pi$, so it is a fair sign independent of $\tilde\Pi$. As
+$\tilde\Pi-a$ has the law of $\tilde\Pi$, the pair $(W(a),\tilde\Pi-a)$ has the law of
+$(W(0),\tilde\Pi)$, and so $W(a+\cdot)$ has the law of $W$. Hence
+$Z_r=\int_0^1\mathbf 1\{Y(rt)=+1\}\,dt$ has the law of
+$Z_1=\int_0^\infty e^{-s}\mathbf 1\{V_s=+1\}\,ds$, where $V_s=W(-s)$ starts at a fair sign and
+switches at rate $c$. Let $\mu_\pm$ be the law of $Z_1$ given $V_0=\pm1$, let $\tau$ be the
+first switch of $V$, and let $U=e^{-\tau}$. Then $\Prob(U\le u)=u^c$, so $U$ is Beta$(c,1)$.
+After $\tau$ the process starts afresh from $-V_0$, independently of $\tau$. Splitting the
+integral at $\tau$ shows that $(\mu_+,\mu_-)$ is a fixed point of the map $\Psi$ that sends a
+pair $(\nu_+,\nu_-)$ of laws on $[0,1]$ to the laws of $1-U+UZ_-$ and $UZ_+$, where
+$Z_\pm\sim\nu_\pm$ are independent of $U$. Coupling $Z_\pm$ optimally with $Z'_\pm\sim\nu'_\pm$,
+independently of $U$, gives $\E|UZ_\pm-UZ'_\pm|=\E U\,\E|Z_\pm-Z'_\pm|$. So $\Psi$ contracts the
+larger of the 2 Wasserstein distances by the factor $\E U=c/(c+1)$, and it has only one fixed
+point.
+
+Let $G_a,G_b,G_d$ be independent Gamma variables with shapes $a,b,d$ and unit scale. A change of
+variables shows that $G_a/(G_a+G_b)$ is Beta$(a,b)$ and independent of $G_a+G_b$, hence of the
+pair $(G_a+G_b,G_d)$ and of $(G_a+G_b)/(G_a+G_b+G_d)$, which is Beta$(a+b,d)$. Their product
+$G_a/(G_a+G_b+G_d)$ is Beta$(a,b+d)$. With $(a,b,d)=(c,1,c)$ this says that $UZ$ is
+Beta$(c,c+1)$ whenever $Z$ is Beta$(c+1,c)$ and independent of $U$. Applying it to $Z=Z_+$ and
+to $Z=1-Z_-$, and using $1-U+UZ_-=1-U(1-Z_-)$, we see that $\Psi$ maps the pair
+Beta$(c+1,c)$, Beta$(c,c+1)$ to itself. So $Z_1$ is the equal mixture of these 2 laws. As
+$\mathrm B(c+1,c)=\mathrm B(c,c+1)=\frac12\mathrm B(c,c)$, the mixture has density
+$x^{c-1}(1-x)^{c-1}(x+1-x)/\mathrm B(c,c)$, which is the Beta$(c,c)$ density.
+\end{proof}
+
+\begin{lemma}[coupling]\label{lem:D-coupling}
+Let $J\subset(0,2)$ be compact and $\kappa_J=\min_{c\in J}\frac{\min(c,1)}{1+\min(c,1)}$. There
+is $C_J$ such that for $c\in J$ and every integer $r\ge2$,
+$\sup_{y\in\mathbb R}\bigl|\Prob(A_r\ge y)-\Prob(rB\ge y)\bigr|\le C_J\,(\log r)\,r^{-\kappa_J}$.
+\end{lemma}
+
+\begin{proof}
+Take $\Pi$ and $Y$ as in Proposition~\ref{prop:D-beta} and an integer $1\le K\le r$. The
+variables $\xi'_k=\mathbf 1\{\Pi((k-1,k])\text{ is odd}\}$, $k>K$, are independent of each
+other and of $Y(K)$, and $\Prob(\xi'_k=1)=p'_k=\frac12\bigl(1-(1-1/k)^{2c}\bigr)$. By Taylor's
+theorem $|p'_k-c/k|=\frac12c|2c-1|(1-\vartheta)^{2c-2}k^{-2}$ for some $0<\vartheta<1/k$. This
+is at most $3k^{-2}$. Indeed $\frac12c|2c-1|<3$ and the power of $1-\vartheta$ is at most $1$
+if $c\ge1$, while for $c<1$ the power is at most $4$ and $\frac12c|2c-1|\le\frac12$. For
+$K<k\le r$ we couple $\xi_k\sim\text{Bernoulli}(c/k)$ with $\xi'_k$ so that
+$\Prob(\xi_k\ne\xi'_k)=|p'_k-c/k|$, using independent extra randomness. We put $X_K=Y(K)$ and
+$X_k=X_{k-1}(-1)^{\xi_k}$ for $K<k\le r$, and we draw $X_1,\dots,X_{K-1}$ from the law of the
+walk given $X_K$, again with independent randomness. In the walk $X_K$ is a fair sign and
+$(\xi_k)_{k>K}$ is independent of $(X_1,\dots,X_K)$, so this is the law of the walk.
+
+On the event $\mathcal A$ that $\xi_k=\xi'_k$ for $K<k\le r$ we have $X_k=Y(k)$ for
+$K\le k\le r$, and $\Prob(\mathcal A^c)\le\sum_{k>K}3k^{-2}\le3/K$. If also
+$\Pi((k-1,k])=0$, then $Y=Y(k)$ on $(k-1,k]$, so step $k$ adds the same amount to $A_r$ as the
+interval $(k-1,k]$ adds to $rZ_r$. The other steps $k\le r$ number at most $K+\Pi((K,r])$, and
+each changes the difference by at most $1$. Hence $|A_r-rZ_r|\le K+\Pi((K,r])$ on $\mathcal A$.
+The variable $\Pi((K,r])$ is Poisson with mean $c\log(r/K)\le2\log r$, so it exceeds $K$ with
+probability at most $2\log r/K$. With $b_K=(3+2\log r)/K$ we get
+$\Prob(rZ_r\ge y+2K)-b_K\le\Prob(A_r\ge y)\le\Prob(rZ_r\ge y-2K)+b_K$, and $rZ_r$ has the law
+of $rB$. So the left side of the lemma is at most $b_K+\sup_x\Prob(x\le B\le x+2K/r)$.
+
+For $c\le1$ the density of $B$ is at most
+$2^{1-c}\bigl(x^{c-1}+(1-x)^{c-1}\bigr)/\mathrm B(c,c)$, and $x^{c-1}$ has integral at most
+$\delta^c/c$ over an interval of length $\delta$. For $c\ge1$ the density is at most $d_c$. So
+with $a_J=\min(\min J,1)$, and as the mass is also at most $1$, an interval of length $\delta$
+has mass at most $C'_J\delta^{a_J}$ for all $\delta>0$ and $c\in J$. Take
+$K=\lceil r^{\kappa_J}\rceil$. Then $b_K\le(3+2\log r)r^{-\kappa_J}$, $2K/r\le4r^{\kappa_J-1}$, and
+$(r^{\kappa_J-1})^{a_J}=r^{-\kappa_J}$ because $\kappa_J=a_J/(1+a_J)$.
+\end{proof}
+
+\begin{theorem}[local limit at the center]\label{thm:D-llt}
+For each compact $J\subset(0,2)$ there is $C_J$ such that
+$\bigl|nC_n-d_c\bigr|\le C_J\,(\log n)\,n^{-\kappa_J}$ for $c\in J$ and even $n\ge4$.
+\end{theorem}
+
+\begin{proof}
+Let $T=T^+_h$, $F(r)=\Prob(T\le r)=\Prob(A_r\ge h)$, $\Phi(r)=\Prob(rB\ge h)$ and
+$\Lambda_r=n\lambda_{r+1,n}$. Then $F(h-1)=\Phi(h-1)=\Phi(h)=0$, and Lemma~\ref{lem:D-coupling}
+gives $|F(r)-\Phi(r)|\le\delta_n:=C_J(\log n)n^{-\kappa_J}$ for $h\le r\le n-1$, after
+enlarging $C_J$. By Lemma~\ref{lem:D-average},
+$nC_n=2\sum_{r=h}^{n-1}\bigl(F(r)-F(r-1)\bigr)\Lambda_r$. The ratio
+$\lambda_{t+1,n}/\lambda_{t,n}=t/(t+1-c)$ shows that $\Lambda_r$ is monotone in $r$. Also
+$\Lambda_{n-1}=c$ and $0<\Lambda_h<2c$, for $c\le1$ because $\rho\le1$ and $n<2(h+1)$, and for
+$c>1$ because $\Lambda_r$ increases. So summation by parts shows that replacing $F$ by $\Phi$
+changes $nC_n$ by at most $2\delta_n\bigl(\Lambda_{n-1}+|\Lambda_{n-1}-\Lambda_h|\bigr)\le4c\,\delta_n$.
+For $h<r\le n-1$ we have $\Phi(r)-\Phi(r-1)=\Prob(h/r\le B<h/(r-1))$, and there
+$\lceil h/B\rceil=r$. So the new main term is
+$2\,\E\bigl[\Lambda_{\lceil h/B\rceil};\,B\ge h/(n-1)\bigr]$.
+
+By \eqref{eq:D-gamma} with $y=n$ and $y=r+1$, $\Lambda_r=c\bigl((r+1)/n\bigr)^{c-1}(1+O(1/n))$
+for $h\le r\le n-1$. On the event above $(r+1)/n$ lies in $[\frac12,2]$ and within $2/n$ of
+$1/(2B)$, and $x^{c-1}$ is $4$-Lipschitz on $[\frac12,2]$. So
+$\Lambda_{\lceil h/B\rceil}=c(2B)^{1-c}+O(1/n)$. Also
+$\Prob\bigl(\frac12\le B<h/(n-1)\bigr)=O_J(1/n)$, since the density of $B$ is bounded near
+$\frac12$ uniformly on $J$. So $nC_n$ is within $4c\,\delta_n$ of
+\[
+2c\,\E\bigl[(2B)^{1-c};\,B\ge\tfrac12\bigr]+O_J(1/n)
+=\frac{2c\,2^{1-c}}{\mathrm B(c,c)}\int_{1/2}^1(1-b)^{c-1}\,db+O_J(1/n)=d_c+O_J(1/n).\qedhere
+\]
+\end{proof}
+
+\subsection{The expansion of the crossing}
+
+Theorem~\ref{thm:D-bracket} gives the first term of the expansion in Remark~\ref{rem:aging}.
+The constant in $M$ needs the center to a relative error $o(1/\log n)$, which
+Theorem~\ref{thm:D-llt} provides.
+
+\begin{theorem}[the aging crossing]\label{thm:D-crossing}
+For even $n$, with $M=\log n+\Theta'(1)=\log n+\gamma+2-2\log2$,
+\[
+c_n=1-\frac{\log2}{M}+O\bigl(M^{-3}\bigr).
+\]
+\end{theorem}
+
+\begin{proof}
+Let $J=[c^{(3)},1]$. Then $\kappa_J=c^{(3)}/(1+c^{(3)})>0.42$, and $d_c$ is bounded below on
+$J$ by a positive constant. By Proposition~\ref{prop:D-paths} and \eqref{eq:D-gamma} with
+$y=n$, $\log E_n=-\log2-\log\Gamma(2-c)-c\log n+O(1/n)$. By Theorem~\ref{thm:D-llt},
+$\log C_n=\log d_c-\log n+O(n^{-0.4})$ for large $n$. Both hold uniformly for $c\in J$, so
+\begin{equation}\label{eq:D-logratio}
+\log C_n-\log E_n=(c-1)\log n+\Theta(c)+O(n^{-0.4})\qquad(c\in J).
+\end{equation}
+Here $\Theta(1)=\log2$ because $d_1=1$, and
+$\Theta'(c)=-\psi(2-c)-\log4-2\psi(c)+2\psi(2c)$ with $\psi(1)=-\gamma$ and $\psi(2)=1-\gamma$
+gives $\Theta'(1)=\gamma+2-2\log2$. By Theorem~\ref{thm:D-bracket}, $c_n\in J$ for $n\ge4$ and
+$e=1-c_n=O(1/\log n)$. The left side of \eqref{eq:D-logratio} vanishes at $c=c_n$. As $\Theta$
+is smooth on $J$, Taylor's theorem gives $eM=\log2+O(e^2)+O(n^{-0.4})=\log2+O(M^{-2})$. So
+$e=\log2/M+O(M^{-3})$.
+\end{proof}
+
+With one more term in Taylor's theorem and $e^2=(\log2)^2/M^2+O(M^{-4})$, the same argument
+adds the term $-\Theta''(1)(\log2)^2/(2M^3)$ to the expansion, with error $O(M^{-4})$. Here
+$\Theta''(1)=\psi'(1)-2\psi'(1)+4\psi'(2)=\pi^2/2-4$, since
+$\Theta''(c)=\psi'(2-c)-2\psi'(c)+4\psi'(2c)$, $\psi'(1)=\zeta(2)$ and $\psi'(2)=\zeta(2)-1$.
+At $n=200$ the bracket of Theorem~\ref{thm:D-bracket} is
+$[0.88749,0.89878]$, Theorem~\ref{thm:D-crossing} gives $0.89319$, and with the $M^{-3}$ term
+we get $0.89236$. The high-precision value is $c_{200}=0.89253$ (Section~\ref{sec:verify}). The
+convergence is slow, since $(1-c_{200})\log200=0.569$ while the limit is $\log2=0.693$. The
+constants $C_J$ and the constants in the $O$-terms of this appendix are not computed.

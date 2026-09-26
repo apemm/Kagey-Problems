@@ -1,0 +1,847 @@
+\section{Proofs for \texorpdfstring{Section~\ref{sec:shape}}{Section 3}}\label{app:shape}
+
+We keep the conventions of Section~\ref{sec:shape}. Unless stated
+otherwise, $n\ge64$, $0<\varepsilon\le\frac14$ and $x=n\varepsilon\ge1$.
+Since $M$ is independent of $X_1$, $f_n(m)=\Prob(M_n=m)$. We write
+$\bar\beta_v(s)=\Prob(\lvert T_v\rvert\ge s)$, with $\bar\beta_v(s)=1$ for
+$s\le1$. Every path of a chain $M^{[k_0]}$ is nondecreasing in time, since
+its steps are $0$ or $1$. Recall that in a random recursive tree on $[n]$
+vertex $k+1$ is joined to a uniform vertex of $[k]$. So the tree is uniform
+over the $(n-1)!$ increasing trees on $[n]$, that is, the trees rooted at
+$1$ in which labels increase away from the root.
+
+\subsection{Trees, subtrees and the first flip}\label{app:shape-trees}
+
+\begin{lemma}[splitting]\label{lem:B-split}
+Let $T$ be a random recursive tree on $[n]$, let $2\le v\le n$ and let
+$S\subseteq[n]$ with $\min S=v$. Given that $T_v$ has vertex set $S$, the
+restrictions of $T$ to $S$ and to $[n]\setminus S$, relabeled in
+increasing order, are independent random recursive trees. They are
+independent of the parent of $v$, which is uniform on $[v-1]$.
+\end{lemma}
+
+\begin{proof}
+The subtree $T_v$ has vertex set $S$ exactly when every $u\in S\setminus\{v\}$
+has its parent in $S$ and every $u\notin S$ with $u\ge2$ has its parent
+outside $S$. Indeed, then the ancestors of a vertex of $S$ stay in $S$ until
+they reach $v$, whose parent is below $\min S$, and the ancestors of a
+vertex outside $S$ never enter $S$. The converse is clear. So these trees
+are given by free and independent choices. The $i$-th smallest element of
+$S$, for $i\ge2$, picks one of the $i-1$ smaller elements of $S$. The vertex
+$v$ picks any element of $[v-1]$. The $i$-th smallest element of
+$[n]\setminus S$, for $i\ge2$, picks one of the $i-1$ smaller elements of
+$[n]\setminus S$. All increasing trees on $[n]$ are equally likely, so the
+conditional law is uniform on this product of choices, which is the claim.
+\end{proof}
+
+\begin{proof}[Proof of Lemma~\ref{lem:tree}]
+Vertex $k+1$ is joined to $U_k$, which is uniform on $[k]$ and independent
+of the earlier choices, so $T$ is a random recursive tree. The marks are the
+flip indicators of steps $2,\dots,n$, so they are i.i.d.\
+Bernoulli$(\varepsilon)$ and independent of $T$. We use induction on $k$.
+The path from $k+1$ to the root is $k+1$ followed by the path from $U_k$.
+So $\sigma(k+1)=\mu_{k+1}+\sigma(U_k)$, and
+$X_{k+1}=X_{U_k}(-1)^{\mu_{k+1}}=X_1(-1)^{\sigma(k+1)}$. Now set
+$\mu_2=\dots=\mu_{k_0}=0$. Then the vertices $1,\dots,k_0$ are even. If $b$
+of the vertices in $[k]$ are odd, $k\ge k_0$, then vertex $k+1$ is odd with
+conditional probability $(1-\varepsilon)\frac bk+\varepsilon(1-\frac bk)=r_k(b)$,
+whatever else is known about $[k]$. So the odd count is a copy of
+$M^{[k_0]}$.
+\end{proof}
+
+\begin{proof}[Proof of Lemma~\ref{lem:subtree}]
+Fix $v$. For $k\ge v$, if $T_v$ contains $s$ of the vertices in $[k]$, then
+$k+1$ joins $T_v$ with probability $s/k$. This is P\'olya's urn started at
+time $v$ with $1$ ball inside and $v-1$ outside. A given order of $i$ joins
+among the $n-v$ later vertices has probability
+\[
+ \frac{i!\,(v-1)v\cdots(n-i-2)}{v(v+1)\cdots(n-1)}
+ =\frac{(v-1)\,i!\,(n-i-2)!}{(n-1)!}.
+\]
+We multiply by $\binom{n-v}{i}$ and put $d=i+1$. This gives
+$\beta_v(d)=\frac{(v-1)(n-v)!\,(n-d-1)!}{(n-v-d+1)!\,(n-1)!}$, which equals
+$\binom{n-d-1}{v-2}/\binom{n-1}{v-1}$. By Pascal's rule
+$\binom{n-s}{v-1}-\binom{n-s-1}{v-1}=\binom{n-s-1}{v-2}$ the tail
+telescopes. So, for $1\le s\le n-1$,
+\begin{equation}\label{eq:B-subtail}
+ \bar\beta_v(s)=\binom{n-s}{v-1}\bigg/\binom{n-1}{v-1}
+ =\prod_{i=1}^{v-1}\Bigl(1-\frac{s-1}{n-i}\Bigr)\le e^{-(v-1)(s-1)/(n-1)},
+ \qquad\beta_v(s)=\frac{v-1}{n-s}\,\bar\beta_v(s),
+\end{equation}
+where the product vanishes as soon as one factor does. Where they are
+defined, the ratios are
+\begin{equation}\label{eq:B-ratio}
+ \frac{\beta_v(d)}{\beta_v(d-1)}=1-\frac{v-2}{n-d},\qquad
+ \frac{\bar\beta_v(s-1)}{\bar\beta_v(s)}=1+\frac{v-1}{n-s-v+2}.
+\end{equation}
+So $\beta_v$ is nonincreasing. Also $\E\lvert T_v\rvert=n/v$, since the
+fraction of $[k]$ that lies in $T_v$ is a martingale in $k\ge v$ that
+starts at $1/v$. For the 2 sums put $i=n-v$. Then
+\begin{align*}
+ (v-1)\frac{(n-v)!}{(n-v-d+1)!}&=(d-1)!\binom{i}{d-1}\binom{n-1-i}{1},\\
+ (v-1)(v-2)\frac{(n-v)!}{(n-v-d+1)!}&=2(d-1)!\binom{i}{d-1}\binom{n-1-i}{2}.
+\end{align*}
+By the Chu--Vandermonde identity,
+$\sum_i\binom{i}{d-1}\binom{n-1-i}{1}=\binom{n}{d+1}$ and
+$\sum_i\binom{i}{d-1}\binom{n-1-i}{2}=\binom{n}{d+2}$. Multiplying by
+$(n-d-1)!/(n-1)!$ gives $\frac{n}{d(d+1)}$ and
+$\frac{2n(n-d-1)}{d(d+1)(d+2)}$.
+\end{proof}
+
+\begin{proof}[Proof of Lemma~\ref{lem:firstmark}]
+Marks and tree are independent, so
+$\Prob(V=j,\lvert T_j\rvert=d)=\varepsilon(1-\varepsilon)^{j-2}\beta_j(d)$.
+Condition on $V=j$ and on the vertex set $S$ of $T_j$, with $\lvert S\rvert=d$.
+Then the marks on $j+1,\dots,n$ are still i.i.d.\ Bernoulli$(\varepsilon)$,
+and by Lemma~\ref{lem:B-split} the trees on $S$ and on $[n]\setminus S$ are
+independent random recursive trees. The vertices $1,\dots,j-1$ carry no
+mark, so the parent of $j$ is even and $j$ is odd. A vertex $u\in S$ is
+therefore odd exactly when the path from $u$ up to $j$, with $j$ excluded,
+has an even number of marks. By Lemma~\ref{lem:tree}, applied to the tree
+on $S$ rooted at $j$, the number of $u\in S$ for which this number is odd
+is distributed as $Y_d$. So $S$ contains $d-Y_d$ odd vertices. The path
+from a vertex outside $S$ to the root stays outside $S$. The tree on
+$[n]\setminus S$ has the unmarked vertices $1,\dots,j-1$ first and i.i.d.\
+marks after them, so by Lemma~\ref{lem:tree} its odd count is distributed as
+$M^{[j-1]}_{n-d}=Z^{(j)}_{n-d}$. The 2 counts are independent, and their law
+depends on $S$ only through $d$. Summing over $j$ and $d$ gives the formula,
+since $M_n=0$ when there is no mark.
+\end{proof}
+
+Only the law of each pair $(Y_d,Z^{(j)}_{n-d})$ enters
+Lemma~\ref{lem:firstmark}. So from now on we take $(Y_d)_{d\ge1}$ to be one
+path of $M^{[1]}$ and $(Z^{(j)}_t)_{t\ge j-1}$ one path of $M^{[j-1]}$,
+independent of each other and of $(V,D)$. Then $D-Y_D+Z^{(V)}_{n-D}$ on
+$\{V<\infty\}$, and $0$ otherwise, has the law of $M_n$. Given $V=j$, $D$
+has law $\beta_j$.
+
+\begin{proof}[Proof of Lemma~\ref{lem:unimodal}]
+We follow the induction in the proof of Theorem~1.1 of~\cite{glrs2025}. Let
+$\phi_k(c)=\Prob(M^{[k_0]}_k=c)$, with $\phi_k(c)=0$ outside
+$\{0,\dots,k-k_0\}$, and put $d_k(c)=\phi_k(c+1)-\phi_k(c)$ for $c\ge0$.
+From $\phi_{k+1}(c)=(1-r_k(c))\phi_k(c)+r_k(c-1)\phi_k(c-1)$ and
+$r_k(c+1)+r_k(c-1)=2r_k(c)$ we get
+\begin{align*}
+ d_{k+1}(c)&=\bigl(1-r_k(c+1)\bigr)d_k(c)+r_k(c-1)\,d_k(c-1)\qquad(c\ge1),\\
+ d_{k+1}(0)&=\bigl(1-r_k(1)\bigr)d_k(0)+\Bigl(\varepsilon-\frac{1-2\varepsilon}{k}\Bigr)\phi_k(0).
+\end{align*}
+Note that $0\le r_k(b)\le1$ for $0\le b\le k$, and $d_k(c)=0$ for
+$c>k-k_0$. So in the first identity each coefficient is nonnegative
+whenever it multiplies a nonzero term. We show by induction on $k$ that
+there is $c_k$ with $d_k(c)\ge0$ for $c<c_k$ and $d_k(c)\le0$ for $c\ge c_k$.
+For $k=k_0$ take $c_{k_0}=0$. Suppose it holds for $k$. The first identity
+keeps the sign of $d_{k+1}(c)$ for $1\le c\le c_k-1$ and for $c\ge c_k+1$.
+If $c_k=0$ we may take $c_{k+1}\in\{0,1\}$. Let $c_k\ge1$, so $d_k(0)\ge0$.
+If $\varepsilon(k+2)<1$, then $\varepsilon-\frac{1-2\varepsilon}{i}<0$ for all
+$i\le k$, and the second identity with $d_{k_0}(0)=-1$ and $\phi_i(0)>0$
+gives $d_i(0)<0$ for $k_0\le i\le k$. This contradicts $d_k(0)\ge0$. So
+$\varepsilon(k+2)\ge1$, the last term is nonnegative, and $d_{k+1}(0)\ge0$.
+Then $c_{k+1}=c_k$ or $c_k+1$ works, according to the sign of
+$d_{k+1}(c_k)$.
+\end{proof}
+
+\subsection{A priori bounds}\label{app:shape-apriori}
+
+\begin{lemma}[tail]\label{lem:B-tail}
+Let $0<\varepsilon<1$, $k_0\ge1$ and $N\ge k_0$. For every integer $z\ge1$,
+\[
+ \Prob\bigl(M^{[k_0]}_N\ge z\bigr)\le\frac{\varepsilon NH_z}{z},\qquad
+ \E M^{[k_0]}_N\le\varepsilon N\log\frac N{k_0}.
+\]
+In particular $\Prob(M_n\ge z)\le xH_z/z$, and
+$\Prob(Z^{(j)}_t\ge z)\le xH_z/z$ for $t\le n$.
+\end{lemma}
+
+\begin{proof}
+We use the tree of Lemma~\ref{lem:tree} on $[N]$, with marks only on
+$v>k_0$. Every odd vertex lies in the subtree of a marked vertex, so
+$M^{[k_0]}_N\le\sum_{v\text{ marked}}\lvert T_v\rvert$. If no marked subtree
+has $z$ or more vertices, the sum equals the sum of
+$\lvert T_v\rvert\mathbf 1\{\lvert T_v\rvert<z\}$. By the union bound, Markov's
+inequality and the independence of marks and tree,
+\[
+ \Prob\bigl(M^{[k_0]}_N\ge z\bigr)\le\varepsilon\sum_{v=2}^N\Prob(\lvert T_v\rvert\ge z)
+ +\frac\varepsilon z\sum_{v=2}^N\E\bigl[\lvert T_v\rvert;\lvert T_v\rvert<z\bigr].
+\]
+By Lemma~\ref{lem:subtree} the first sum is
+$\sum_{d=z}^{N-1}\frac N{d(d+1)}\le\frac Nz$ and the second is
+$\sum_{d=1}^{z-1}\frac N{d+1}=N(H_z-1)$. For the mean,
+$\E M^{[k_0]}_N\le\varepsilon\sum_{v=k_0+1}^N\E\lvert T_v\rvert
+=\varepsilon\sum_{v=k_0+1}^N\frac Nv\le\varepsilon N\log\frac N{k_0}$.
+\end{proof}
+
+\begin{lemma}[late start]\label{lem:B-late}
+Let $j\ge2$, $N\ge j-1$ and $z\ge0$. Then
+\[
+ \Prob\bigl(M^{[j-1]}_N\ge z\bigr)\le\exp\Bigl\{-\frac{j-1}{2}\Bigl(\frac zN-\varepsilon\log\frac{2N}{j-1}\Bigr)\Bigr\}.
+\]
+\end{lemma}
+
+\begin{proof}
+Write $C_k=M^{[j-1]}_k$ and $\nu=(j-1)/2$. For $k>\nu$ let
+$\theta_k=\log\frac k{k-\nu}$, so that $e^{\theta_k}-1=\frac\nu{k-\nu}$.
+Since $r_k(c)\le\varepsilon+c/k$ and $1+v\le e^v$,
+\[
+ \E\bigl[e^{\theta_{k+1}C_{k+1}}\mid C_k=c\bigr]
+ \le\exp\Bigl\{c\Bigl(\theta_{k+1}+\frac{\nu}{k(k+1-\nu)}\Bigr)+\frac{\varepsilon\nu}{k+1-\nu}\Bigr\}.
+\]
+Now $\theta_k-\theta_{k+1}=\log(1+w)$ with $w=\frac\nu{(k-\nu)(k+1)}$, and
+$\log(1+w)\ge\frac w{1+w}=\frac\nu{k(k+1-\nu)}$. So
+$\E e^{\theta_{k+1}C_{k+1}}\le e^{\varepsilon\nu/(k+1-\nu)}\,\E e^{\theta_kC_k}$
+for $k\ge j-1$. Starting from $C_{j-1}=0$,
+\[
+ \E e^{\theta_NC_N}\le\exp\Bigl\{\varepsilon\nu\sum_{k=j}^N\frac1{k-\nu}\Bigr\}
+ \le\exp\Bigl\{\varepsilon\nu\log\frac{N-\nu}{\nu}\Bigr\}
+ \le\exp\Bigl\{\varepsilon\nu\log\frac{2N}{j-1}\Bigr\}.
+\]
+Markov's inequality with $\theta_N\ge\nu/N$ gives the claim.
+\end{proof}
+
+\begin{lemma}[the first flipped family]\label{lem:B-D}
+For $1\le d\le n-1$,
+\[
+ \frac{x}{d(d+1)}\Bigl(1-\frac{2x(n-d-1)}{n(d+2)}\Bigr)\le\Prob(D=d)\le\frac{x}{d(d+1)},
+ \qquad\Prob(D\ge d)\le x\Bigl(\frac1d-\frac1n\Bigr).
+\]
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:firstmark},
+$\Prob(D=d)=\sum_j\varepsilon(1-\varepsilon)^{j-2}\beta_j(d)$, and
+$1-(j-2)\varepsilon\le(1-\varepsilon)^{j-2}\le1$. Apply the 2 sums of
+Lemma~\ref{lem:subtree}, and sum the upper bound over $d'\ge d$.
+\end{proof}
+
+\subsection{Proof of \texorpdfstring{Theorem~\ref{thm:cp}}{Theorem 3.7}}\label{app:shape-cp}
+
+Let $\Psi_n(\theta)=\sum_{d=1}^{n-1}\frac{e^{i\theta d}-1}{d(d+1)}$, so that
+$\CP_n$ has characteristic function $\widehat{\CP}_n(\theta)=e^{x\Psi_n(\theta)}$.
+Here only $n\ge2$ and $\varepsilon\le\frac14$ are assumed.
+
+\emph{Step 1.} Let $Z_+=\sum_{v\ge2}\mu_v\lvert T_v\rvert$. Subtrees are
+nested or disjoint. If no marked vertex has a marked strict descendant, the
+marked subtrees are disjoint, each of their vertices has exactly one mark
+on its path, and the other vertices have none. Then $M_n=Z_+$. Hence
+\[
+ \Prob(M_n\ne Z_+)\le\varepsilon^2\,\E\sum_{v=2}^n\bigl(\lvert T_v\rvert-1\bigr)
+ =\varepsilon^2\sum_{v=2}^n\Bigl(\frac nv-1\Bigr)\le\frac{x^2\log n}{n}.
+\]
+
+\emph{Step 2.} Fix $\theta\in[-\pi,\pi]$. Given $T$,
+$\E[e^{i\theta Z_+}\mid T]=\prod_{v\ge2}(1+a_v)$ with
+$a_v=\varepsilon(e^{i\theta\lvert T_v\rvert}-1)$. Here $\lvert a_v\rvert\le2\varepsilon\le\frac12$
+and $\operatorname{Re}a_v\le0$. Put $W=\sum_va_v$. Since
+$\lvert\log(1+a)-a\rvert\le\lvert a\rvert^2$ for $\lvert a\rvert\le\frac12$ and
+$\lvert e^w-1\rvert\le\lvert w\rvert e^{\lvert w\rvert}$,
+\[
+ \Bigl\lvert\prod_v(1+a_v)-e^W\Bigr\rvert\le e^{\operatorname{Re}W}\cdot4\varepsilon^2(n-1)\,e^{4\varepsilon^2(n-1)}
+ \le\frac{4x^2}ne^{4x^2/n}.
+\]
+
+\emph{Step 3.} Write $W=\varepsilon F$ with
+$F=\sum_{v\ge2}(e^{i\theta\lvert T_v\rvert}-1)$. By Lemma~\ref{lem:subtree},
+$\E W=x\Psi_n(\theta)=\log\widehat{\CP}_n(\theta)$. Put $\delta=W-\E W$.
+Since $\operatorname{Re}W\le0$ and $\operatorname{Re}\E W\le0$,
+$e^W-e^{\E W}-e^{\E W}\delta=\delta^2\int_0^1(1-s)e^{\E W+s\delta}ds$ has
+modulus at most $\frac12\lvert\delta\rvert^2$. As $\E\delta=0$,
+$\lvert\E e^W-e^{\E W}\rvert\le\frac12\varepsilon^2\Var F$, where
+$\Var F=\E\lvert F-\E F\rvert^2$.
+
+\emph{Step 4.} $F$ is a function of the independent parents
+$U_1,\dots,U_{n-1}$. Let $F^{(k)}$ be $F$ with $U_k$ replaced by an
+independent copy $U_k'$. The Efron--Stein inequality~\cite{efronstein1981}
+gives $\Var F\le\frac12\sum_k\E\lvert F-F^{(k)}\rvert^2$. (We use it for a
+complex function of independent variables that are not identically
+distributed. It follows by writing $F-\E F$ as the sum of the martingale
+differences $\zeta_k=\E[F-\E_kF\mid U_1,\dots,U_k]$, where $\E_k$ averages
+over $U_k$ alone, and by
+$\E\lvert\zeta_k\rvert^2\le\E\lvert F-\E_kF\rvert^2=\frac12\E\lvert F-F^{(k)}\rvert^2$.)
+Replacing $U_k$ moves the subtree of $k+1$ from $U_k$ to $U_k'$. So
+$\lvert T_v\rvert$ changes only for vertices $v\ge2$ on the path from $U_k$
+or from $U_k'$ to the root, and these paths do not depend on $U_k$, since
+$U_k,U_k'\le k$. There are at most $\mathrm{dp}(U_k)+\mathrm{dp}(U_k')$ such
+vertices, where $\mathrm{dp}(u)$ is the depth of $u$, and each term of $F$
+moves by at most $2$. Hence
+$\E\lvert F-F^{(k)}\rvert^2\le8\E[\mathrm{dp}(U_k)^2+\mathrm{dp}(U_k')^2]=16\E\,\mathrm{dp}(U_k)^2$.
+Since $\mathrm{dp}(u+1)=1+\mathrm{dp}(U_u)$, the generating function
+$g_u(s)=\E s^{\mathrm{dp}(u)}$ satisfies $g_2(s)=s$ and
+$u\,g_{u+1}(s)=(u-1+s)\,g_u(s)$. So $g_u(s)=\prod_{i=1}^{u-1}\frac{i-1+s}{i}$,
+$\mathrm{dp}(u)$ is a sum of independent Bernoulli$(1/i)$ variables with
+$i<u$, and $\E\,\mathrm{dp}(u)^2\le H_{u-1}^2+H_{u-1}$. As $U_k$ is independent
+of the depths of $1,\dots,k$, we get
+$\Var F\le\frac12(n-1)\cdot16(H_n^2+H_n)\le8n(H_n^2+H_n)$. So the bound of
+Step 3 is at most $4x^2(H_n^2+H_n)/n$.
+
+\emph{Step 5.} By Fourier inversion on $\Z$,
+$\lvert\Prob(Z_+=m)-\CP_n(m)\rvert\le\sup_\theta\lvert\E e^{i\theta Z_+}-\widehat{\CP}_n(\theta)\rvert$,
+which is at most the sum of the bounds of Steps 2 to 4. With Step 1 this
+proves Theorem~\ref{thm:cp}.\hfill$\square$
+
+\subsection{Local and cumulative bounds}\label{app:shape-local}
+
+\begin{theorem}[local lower bound]\label{thm:B-local-lower}
+\begin{enumerate}[(a)]
+\item For $2\le m\le n/4$,
+\begin{gather*}
+ f_n(m)\ge\frac{x}{m(m+1)}\bigl[1-e_1(m)\bigr],\\
+ e_1(m)=\frac{2x}{m+2}+\frac{xH_m}m+2\varepsilon H_{m+1}+11\varepsilon H_{2m}+4(m+2)e^{-(m-1)/9}.
+\end{gather*}
+\item For $n/4<m\le n-16$, with $r=n-m$,
+\begin{gather*}
+ f_n(m)\ge\frac{x}{m(m+1)}\bigl[1-e_2(m)\bigr],\\
+ e_2(m)=\frac{2x}{m+2}+\frac{xH_m}m+\frac{8xH_n}r+\frac{3xH_n}{m+2}+\tau(r),
+\end{gather*}
+where $\tau(r)=\frac nr(0.7r+31)e^{-(r-8)/40}$.
+\end{enumerate}
+We write $e(m)$ for $e_1(m)$ if $m\le n/4$ and for $e_2(m)$ if $m>n/4$.
+\end{theorem}
+
+\begin{proof}
+(a) Fix $2\le j\le J:=\lfloor n/8\rfloor$ and put
+$\Gamma_d=d-Y_d+Z^{(j)}_{n-d}$ for $1\le d\le n-j+1$. With the paths chosen
+after Lemma~\ref{lem:firstmark}, the inner sum in Lemma~\ref{lem:firstmark}
+is $Q_j(m):=\E\sum_d\beta_j(d)\mathbf 1\{\Gamma_d=m\}$, and every step of
+$\Gamma$ lies in $\{-1,0,1\}$. On the event
+$\{Z^{(j)}_{n-1}\le m-1,\ Y_{2m}\le m\}$ we have
+$\Gamma_1=1+Z^{(j)}_{n-1}\le m$, and at $d^\circ=m+Y_{2m}\le2m$ we have
+$\Gamma_{d^\circ}\ge d^\circ-Y_{d^\circ}\ge d^\circ-Y_{2m}=m$, since $Y$ is
+nondecreasing. Note that $2m+j\le n$, so these
+indices are in range. So $\Gamma_{d_1}=m$ for some $d_1\le d^\circ$, and as
+$\beta_j$ is nonincreasing the sum is at least $\beta_j(m+Y_{2m})$. By
+independence,
+\[
+ Q_j(m)\ge\beta_j(m)\,F_j\,G,\qquad
+ F_j=\E\Bigl[\frac{\beta_j(m+Y_{2m})}{\beta_j(m)};Y_{2m}\le m\Bigr],\quad
+ G=\Prob\bigl(Z^{(j)}_{n-1}\le m-1\bigr),
+\]
+with $F_j,G\in[0,1]$, so $Q_j(m)\ge\beta_j(m)(F_j+G-1)$. By
+\eqref{eq:B-ratio}, $\beta_j(m+y)/\beta_j(m)=\prod_{i=1}^y(1-\frac{j-2}{n-m-i})$.
+For $y\le m$ each fraction is at most $\frac{2(j-2)}n\le\frac14$, and
+$1-u\ge e^{-4u/3}$ for $0\le u\le\frac14$. So
+$\beta_j(m+y)\ge\beta_j(m)(1-\frac{8y(j-2)}{3n})$. Lemma~\ref{lem:B-tail}
+gives $\Prob(Y_{2m}>m)\le2\varepsilon H_{m+1}$, $\E Y_{2m}\le2\varepsilon mH_{2m}$ and
+$\Prob(Z^{(j)}_{n-1}\ge m)\le xH_m/m$. Hence
+\[
+ Q_j(m)\ge\beta_j(m)\Bigl[1-2\varepsilon H_{m+1}-\frac{xH_m}m\Bigr]
+ -\frac{16\varepsilon mH_{2m}}{3n}(j-2)\beta_j(m).
+\]
+We multiply by $\Prob(V=j)\le\varepsilon$ and sum over $2\le j\le J$. By
+Lemma~\ref{lem:subtree} the last terms add up to at most
+$\frac{16\varepsilon mH_{2m}}{3n}\cdot\frac{2x(n-m-1)}{m(m+1)(m+2)}\le\frac{x}{m(m+1)}\,11\varepsilon H_{2m}$.
+For the first terms we may assume that the bracket is nonnegative, since
+otherwise $e_1(m)>1$ and there is nothing to prove. By Lemma~\ref{lem:B-D},
+\[
+ \sum_{j=2}^J\Prob(V=j)\beta_j(m)\ge\frac{x}{m(m+1)}\Bigl(1-\frac{2x}{m+2}\Bigr)
+ -\varepsilon\sum_{j>J}\beta_j(m).
+\]
+By \eqref{eq:B-subtail}, $\beta_j(m)\le\frac{j-1}{n-m}e^{-(j-1)a}$ with
+$a=\frac{m-1}{n-1}\le\frac14$. Since $1-e^{-a}\ge\frac78a$,
+\[
+ \sum_{i\ge J}ie^{-ai}=e^{-aJ}\Bigl[\frac J{1-e^{-a}}+\frac{e^{-a}}{(1-e^{-a})^2}\Bigr]
+ \le e^{-aJ}\Bigl[\frac{8J}{7a}+\frac{64}{49a^2}\Bigr],
+\]
+and $aJ\ge\frac{m-1}9$ because $\lfloor n/8\rfloor\ge\frac{n-1}9$ for $n\ge64$.
+With $n-m\ge\frac34n$ and $8J\le n$ this gives
+\[
+ \varepsilon\sum_{j>J}\beta_j(m)\le\frac{x}{m(m+1)}
+ \Bigl[\frac{4m(m+1)}{21(m-1)}+\frac{256\,m(m+1)}{147(m-1)^2}\Bigr]e^{-(m-1)/9}
+ \le\frac{x}{m(m+1)}\,4(m+2)\,e^{-(m-1)/9},
+\]
+where we used $\frac{m(m+1)}{m-1}\le m+4$ and $\frac{m(m+1)}{(m-1)^2}\le6$ for
+$m\ge2$. Finally $ab\ge a+b-1$ for $a,b\le1$ combines the factors into
+$1-e_1(m)$.
+
+(b) The same argument works with $J=w=\lfloor r/8\rfloor\ge2$, the event
+$\{Z^{(j)}_{n-1}\le m-1,\ Y_{m+w}\le w\}$ and $d^\circ=m+Y_{m+w}\le m+w$.
+Note that $m+w+j\le n$. For $y\le w$ and $j\le J$ we have
+$n-m-i\ge\frac78r$, so each fraction is at most
+$\frac{8(j-2)}{7r}\le\frac17$. As $1-u\ge e^{-7u/6}$ for $0\le u\le\frac17$,
+$\beta_j(m+y)\ge\beta_j(m)(1-\frac{4y(j-2)}{3r})$. Since $w+1\ge r/8$,
+Lemma~\ref{lem:B-tail} gives $\Prob(Y_{m+w}>w)\le\frac{8xH_n}r$ and
+$\E Y_{m+w}\le xH_n$. The correction term is at most
+\[
+ \frac{4xH_n}{3r}\,\varepsilon\sum_j(j-2)\beta_j(m)
+ \le\frac{x}{m(m+1)}\cdot\frac{8xH_n(r-1)}{3r(m+2)}\le\frac{x}{m(m+1)}\cdot\frac{3xH_n}{m+2}.
+\]
+For the dropped terms, $a=\frac{m-1}{n-1}\ge\frac15$ since $n\ge16$. Then
+$\frac1{1-e^{-a}}\le5.6$ and $\frac{e^{-a}}{(1-e^{-a})^2}\le31$, so
+$\sum_{i\ge J}ie^{-ai}\le e^{-J/5}(5.6J+31)$. With $m(m+1)\le n^2$,
+$5.6J\le0.7r$ and $J\ge\frac{r-7}8$ the dropped part is at most
+$\frac{x}{m(m+1)}\tau(r)$.
+\end{proof}
+
+A lower bound with $e(m)\ge1$ is true but empty. The term
+$4(m+2)e^{-(m-1)/9}$ is at least $1$ exactly for $m\le48$, and $\tau(r)\ge1$
+for $r$ up to about $8+40\log(0.7n)$, for example $r\le294$ at $n=1600$.
+This is why the bound is empty at small sizes (see the discussion after
+Theorem~\ref{thm:profile}).
+
+\begin{theorem}[cumulative upper bound]\label{thm:B-cum-upper}
+Let $6\le m\le n/2$ with $m\ge16x\log m$. Then
+\begin{gather*}
+ \Prob(M_n\ge m)\le x\Bigl(\frac1m-\frac1n\Bigr)+\frac xm\,\delta_c(m),\\
+ \delta_c(m)=\frac xm\Bigl[36\log m+256H_m\log\frac mx+33\Bigr]+\frac mx\,e^{\varepsilon+0.11x-0.093m}.
+\end{gather*}
+\end{theorem}
+
+\begin{proof}
+Let $J=\lfloor n/4\rfloor$ and $Z_j=Z^{(j)}_{n-1}$. On $\{V=j\}$ we have
+$M_n=D-Y_D+Z^{(j)}_{n-D}\le D+Z_j$, since the path of $Z^{(j)}$ is
+nondecreasing, and $D$ is independent of $Z_j$ with law $\beta_j$. On
+$\{V>J\}$ there is no mark on $2,\dots,J$, so $M_n$ is distributed as
+$M^{[J]}_n$ by Lemma~\ref{lem:tree}. Hence
+\[
+ \Prob(M_n\ge m)\le\sum_{j=2}^J\Prob(V=j)\,\E\,\bar\beta_j(m-Z_j)
+ +\Prob(V>J)\,\Prob\bigl(M^{[J]}_n\ge m\bigr).
+\]
+
+(i) For $0\le z\le m/8$, \eqref{eq:B-ratio} gives
+$\bar\beta_j(m-z)\le\bar\beta_j(m)\varrho_j^z$ with
+$\varrho_j=1+\frac{j-1}{n-m-j+2}\le1+\frac{4(j-1)}n$. Since
+$\varrho^z-1\le z(\varrho-1)\varrho^z$,
+\[
+ \E\,\bar\beta_j(m-Z_j)\le\bar\beta_j(m)\bigl(1+(\varrho_j-1)\varrho_j^{m/8}\,\E Z_j\bigr)+\Prob(Z_j>m/8).
+\]
+
+(ii) The main term is
+$\sum_j\Prob(V=j)\bar\beta_j(m)\le\Prob(D\ge m)\le x(\frac1m-\frac1n)$ by
+Lemma~\ref{lem:B-D}.
+
+(iii) For the shift term we use $\Prob(V=j)\le\varepsilon$,
+$\bar\beta_j(m)\le e^{-(j-1)(m-1)/(n-1)}$ from \eqref{eq:B-subtail},
+$\varrho_j^{m/8}\le e^{(j-1)m/(2n)}$, and $\E Z_j\le x\log\frac n{j-1}$
+from Lemma~\ref{lem:B-tail}. As $m\ge6$,
+$\frac{m-1}{n-1}-\frac m{2n}\ge\frac{m-2}{2n}\ge\frac m{3n}$. With $i=j-1$
+and $a=\frac m{3n}\le\frac16$ the shift term is at most
+\[
+ \frac{4\varepsilon x}n\sum_{i=1}^{n}i\log\frac ni\,e^{-ai}
+ \le\frac{4\varepsilon x}n\Bigl[\log\frac m3\sum_{i\ge1}ie^{-ai}
+ +\sum_{i\le1/a}i\log\frac1{ai}\Bigr].
+\]
+Here $\sum_iie^{-ai}\le a^{-2}$. The function $t\mapsto t\log\frac1{at}$
+rises and then falls on $(0,1/a]$, with maximum $\frac1{ea}$, so the last
+sum is at most $\int_0^{1/a}t\log\frac1{at}\,dt+\frac1{ea}=\frac1{4a^2}+\frac1{ea}\le\frac{0.32}{a^2}$.
+Since $\log\frac m3+0.32\le\log m$, the shift term is at most
+$\frac{36x^2\log m}{m^2}$.
+
+(iv) For the big-$Z$ term let $K=32\log(m/x)$ and
+$j_K=\lfloor Kn/m\rfloor+1$. Note that $m\ge16x\log6>28x$, so $K\ge2$. For
+$j\le j_K$, Lemma~\ref{lem:B-tail} with $z=\lfloor m/8\rfloor+1$ gives
+$\Prob(Z_j>m/8)\le8xH_m/m$, and
+these $j$ contribute at most
+$\varepsilon\frac{Kn}m\cdot\frac{8xH_m}m=\frac xm\cdot\frac{256xH_m\log(m/x)}m$.
+For $j>j_K$ we have $\frac{2(n-1)}{j-1}\le\frac{2m}K\le m$, so
+$\varepsilon\log\frac{2(n-1)}{j-1}\le\frac{x\log m}n\le\frac m{16n}$. Then
+Lemma~\ref{lem:B-late} with $N=n-1$ gives
+$\Prob(Z_j\ge m/8)\le e^{-(j-1)m/(32n)}$. Summing over $j-1\ge j_K\ge Kn/m$
+gives at most
+$\varepsilon\frac{e^{-K/32}}{1-e^{-m/(32n)}}\le\varepsilon\bigl(\frac{32n}m+1\bigr)\frac xm\le\frac xm\cdot\frac{33x}m$.
+
+(v) Finally $\Prob(V>J)=(1-\varepsilon)^{J-1}\le e^{-\varepsilon(3n/16-1)}$,
+since $J\ge3n/16$. Lemma~\ref{lem:B-late} with $j-1=J\in[\frac{3n}{16},\frac n4]$
+and $N=n$ gives
+$\Prob(M^{[J]}_n\ge m)\le\exp\{-\frac{3m}{32}+\frac x8\log\frac{32}3\}$. So
+the last term is at most
+$e^{\varepsilon+0.109x-0.09375m}\le\frac xm\cdot\frac mx\,e^{\varepsilon+0.11x-0.093m}$.
+Adding (ii) to (v) proves the theorem.
+\end{proof}
+
+The constants are crude. When $x\approx20$, $\delta_c(m)$ is small only for
+$m$ of order $10^6$ and beyond.
+
+\begin{lemma}[mode bound]\label{lem:B-mode}
+\begin{enumerate}[(a)]
+\item If $\ell\le n/4$ and $f_n(\ell)\ge\frac x{2\ell(\ell+1)}$, then
+$m_h\le(\ell+1)(1+2H_\ell)$.
+\item Let $\ell_0=\lceil8x(3+\log x)\rceil+100$, and suppose that
+$\ell_0\le n/4$ and $13\varepsilon(1+H_n)\le\frac18$. Then $e_1(\ell)\le\frac12$
+for $\ell_0\le\ell\le n/4$, and
+$m_h\le m_1(x):=(\ell_0+1)(1+2H_{\ell_0})$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) Suppose $m_h\ge\ell$. By Lemma~\ref{lem:unimodal}, $f_n$ is
+nondecreasing on $[0,m_h]$, so
+$\Prob(M_n\ge\ell)\ge(m_h-\ell+1)f_n(\ell)$. By Lemma~\ref{lem:B-tail},
+$\Prob(M_n\ge\ell)\le xH_\ell/\ell$. So $m_h-\ell+1\le2(\ell+1)H_\ell$.
+
+(b) Let $\ell_0\le\ell\le n/4$. First
+$\frac{2x}{\ell+2}\le\frac{2x}{\ell_0}\le\frac{2x}{24x}=\frac1{12}$. Next,
+$\ell_0\le8x(3+\log x)+101\le e^5x^2$ for $x\ge1$, so
+$H_{\ell_0}\le1+\log\ell_0\le2(3+\log x)$. As $H_\ell/\ell$ decreases, this
+gives $\frac{xH_\ell}\ell\le\frac{xH_{\ell_0}}{\ell_0}\le\frac14$. The
+$\varepsilon$ terms are at most $13\varepsilon H_n\le\frac18$. The last term
+decreases for $\ell\ge7$, and $\ell_0\ge124$, so it is at most
+$4\cdot126\,e^{-123/9}<0.01$. So $e_1(\ell)\le\frac12$, and (a) with
+$\ell=\ell_0$ gives the bound on $m_h$.
+\end{proof}
+
+This bound is crude. For example $m_1(10.24)\approx8\cdot10^3$, while
+$m_h=21$ at the crossing for $n=1600$.
+
+\begin{theorem}[local upper bound]\label{thm:B-local-upper}
+Let $n\ge1000$ and $13\varepsilon(1+H_n)\le\frac18$. Let $12\le m\le n/2$
+with $\lfloor2m/3\rfloor\ge\max(m_1(x),16x\log m,e^2x)$, and suppose that
+$\Delta(m):=\delta_c(\lfloor2m/3\rfloor)+\delta_\ell(m)\le\frac1{16}$, where
+\begin{multline*}
+ \delta_\ell(m)=\Bigl[\frac{2x}{m+3}+\frac{xH_{m+1}}{m+1}+4(m+3)e^{-m/9}+13\varepsilon H_n\Bigr]\mathbf 1\{m<n/4\}\\
+ +\frac{x(17+33H_n+65H_n^2)+32+40.1\log(11n)}n.
+\end{multline*}
+Then
+\[
+ f_n(m)\le\frac{x}{m(m+1)}\Bigl(1+3\sqrt{\Delta(m)}+\frac3m\Bigr).
+\]
+\end{theorem}
+
+\begin{proof}
+\emph{Step 0.} Since $H_{\ell_0}\ge H_{124}>5.4$, we have
+$m_1(x)\ge11.8(\ell_0+1)$. With $m_1(x)\le\lfloor2m/3\rfloor\le n/3$ this
+gives $\ell_0\le n/35$, so Lemma~\ref{lem:B-mode} applies and
+$m_h\le m_1(x)$.
+
+\emph{Step 1.} Let $1\le k<m$ with $m-k\ge m_h$. By Lemma~\ref{lem:unimodal},
+$f_n$ is nonincreasing on $[m_h,n]$, so $f_n(m)\le f_n(\ell)$ for
+$m-k\le\ell\le m$. Hence
+\[
+ (k+1)f_n(m)\le\Prob(M_n\ge m-k)-\Prob(M_n\ge m+1).
+\]
+
+\emph{Step 2.} If $m'=m-k$ satisfies $6\le m'\le n/2$ and
+$m'\ge16x\log m'$, Theorem~\ref{thm:B-cum-upper} bounds the first term by
+$x(\frac1{m'}-\frac1n)+\frac x{m'}\delta_c(m')$.
+
+\emph{Step 3.} Let $r_1=\lceil8+40\log(11n)\rceil$. For $n\ge1000$ we have
+$381\le r_1\le n/2$. For every $\ell\in[m+1,n-r_1]$,
+Theorem~\ref{thm:B-local-lower} gives $f_n(\ell)\ge\frac{x}{\ell(\ell+1)}(1-e(\ell))$,
+also when $e(\ell)>1$. Summing,
+\[
+ \Prob(M_n\ge m+1)\ge x\Bigl(\frac1{m+1}-\frac1n\Bigr)-\mathrm{I}-\mathrm{II}-\mathrm{III},
+\]
+where $\mathrm{III}=x(\frac1{n-r_1+1}-\frac1n)\le\frac{2x(r_1-1)}{n^2}\le\frac{2x(8+40\log(11n))}{n^2}$,
+and I and II collect the terms $\frac{xe(\ell)}{\ell(\ell+1)}$ with
+$\ell\le n/4$ and $\ell>n/4$. The sum I is empty unless $m<n/4$. For
+$\ell\ge m+1\ge13$ we have $\frac{2x}{\ell+2}\le\frac{2x}{m+3}$,
+$\frac{xH_\ell}\ell\le\frac{xH_{m+1}}{m+1}$ (as $H_\ell/\ell$ decreases,
+because $H_\ell\ge\frac\ell{\ell+1}$), $4(\ell+2)e^{-(\ell-1)/9}\le4(m+3)e^{-m/9}$
+(as this term decreases for $\ell\ge7$), and
+$2\varepsilon H_{\ell+1}+11\varepsilon H_{2\ell}\le13\varepsilon H_n$. With
+$\sum_{\ell>m}\frac x{\ell(\ell+1)}=\frac x{m+1}$ this bounds I by
+$\frac x{m+1}$ times the bracket in $\delta_\ell(m)$. In II we have
+$r=n-\ell\in[r_1,\frac34n)$, $\frac1{\ell(\ell+1)}<\frac{16}{n^2}$ and
+$\sum_{\ell>n/4}\frac1{\ell(\ell+1)}<\frac4n$. The terms
+$\frac{2x}{\ell+2}+\frac{xH_\ell}\ell+\frac{3xH_n}{\ell+2}\le\frac{4x(2+4H_n)}n$
+contribute at most $\frac{16x^2(2+4H_n)}{n^2}$. The terms $\frac{8xH_n}r$
+contribute at most $\frac{16x}{n^2}\cdot8xH_n\sum_{r\le n}\frac1r\le\frac{128x^2H_n^2}{n^2}$.
+Finally $\tau(r)\le n(0.7+\frac{31}{381})e^{-(r-8)/40}$ and
+$\sum_{r\ge r_1}e^{-(r-8)/40}\le\frac{e^{-(r_1-8)/40}}{1-e^{-1/40}}\le\frac{40.51}{11n}$,
+so $\sum_{r\ge r_1}\tau(r)\le2.88$ and these terms contribute at most
+$\frac{46.1x}{n^2}$. Since $\frac{m+1}x\le\frac{0.501n}x$,
+\[
+ \frac{m+1}x(\mathrm{II}+\mathrm{III})
+ \le\frac{x(16.04+32.07H_n+64.13H_n^2)+23.1+1.002(8+40\log(11n))}n,
+\]
+which is at most the last term of $\delta_\ell(m)$. So
+$\Prob(M_n\ge m+1)\ge x(\frac1{m+1}-\frac1n)-\frac x{m+1}\delta_\ell(m)$.
+
+\emph{Step 4.} Steps 1 to 3 give
+\[
+ f_n(m)\le\frac{x}{(m-k)(m+1)}+\frac x{k+1}\Bigl[\frac{\delta_c(m-k)}{m-k}+\frac{\delta_\ell(m)}{m+1}\Bigr].
+\]
+Take $k=\lceil m\sqrt{\Delta(m)}\rceil\le\frac m4+1$. Then
+$m-k\ge\frac{3m}4-1\ge\lfloor\frac{2m}3\rfloor$ as $m\ge12$. So
+$m-k\ge m_1(x)\ge m_h$ and $m-k\ge16x\log m\ge16x\log(m-k)$, and Steps 1
+and 2 apply. Next, $\delta_c$ is nonincreasing on the integers
+$m'\ge\max(11,e^2x)$. Indeed $\frac{\log m'}{m'}$, $\frac1{m'}$ and
+$m'e^{-0.093m'}$ decrease there, and $q(m')=H_{m'}\log(m'/x)/m'$ satisfies
+$q(m'+1)\le q(m')$. For the last claim put $\lambda=\log(m'/x)\ge2$ and
+$H=H_{m'}\ge H_{11}>3$. Then
+$(m'+1)H\lambda-m'(H+\frac1{m'+1})(\lambda+\frac1{m'})\ge(H-1)(\lambda-1)-2\ge0$.
+Since $\lfloor2m/3\rfloor\ge\max(e^2x,16x\log12)\ge11$, we get
+$\delta_c(m-k)\le\delta_c(\lfloor2m/3\rfloor)$. Finally
+$\frac km\le\sqrt\Delta+\frac1m\le\frac13$, so
+$\frac m{m-k}\le1+\frac32(\sqrt\Delta+\frac1m)$ and $\frac{m+1}{m-k}\le\frac32(1+\frac1m)$.
+The bracket term is at most
+$\frac{x\Delta}{(k+1)(m-k)}\le\frac{x\sqrt\Delta}{m(m-k)}\le\frac{x}{m(m+1)}\cdot\frac32\sqrt\Delta\bigl(1+\frac1m\bigr)$.
+Adding,
+$f_n(m)\le\frac{x}{m(m+1)}\bigl(1+3\sqrt\Delta+\frac3{2m}+\frac{3\sqrt\Delta}{2m}\bigr)\le\frac{x}{m(m+1)}\bigl(1+3\sqrt\Delta+\frac3m\bigr)$.
+\end{proof}
+
+\subsection{Proof of \texorpdfstring{Theorem~\ref{thm:profile}}{Theorem 3.9} and the center}\label{app:shape-profile}
+
+\begin{proof}[Proof of Theorem~\ref{thm:profile}]
+Put $\Lambda=\log(x+1)\ge\log2$, and recall
+$\Prob(A_n=n-m)=\frac12[f_n(m)+f_n(n-m)]$. Since $x\log^2n/n\to0$, for
+large $n$ we have $\varepsilon\le\frac14$, $n\ge1000$ and
+$13\varepsilon(1+H_n)\le\frac18$.
+
+\emph{Step 1 (bookkeeping, uniform in $x\ge1$).} (i) Since $\log x\le\Lambda$
+and $1\le\Lambda/\log2$, we have $\ell_0+1\le x(126+8\Lambda)\le190x\Lambda$.
+So $1+2H_{\ell_0}\le3+2\log\ell_0\le13.5+2\log x+2\log\Lambda\le13.5+4\Lambda\le23.5\Lambda$,
+and $m_1(x)\le4500x\Lambda^2$.
+(ii) Let $\omega\ge16$ and $m\ge\omega x\Lambda^2$. Then $m\ge e^2x$ and
+$m\ge e^2$, since $16\log^22>e^2$. On this range $\frac{\log m}m$ and
+$\frac{\log m\log(m/x)}m$ decrease in $m$, the second because
+$(\log m-1)(\log\frac mx-1)\ge1$. Evaluating at $m=\omega x\Lambda^2$ and
+using $\log(\omega x\Lambda^2)\le\log\omega+3\Lambda$,
+\[
+ \frac{x\log m}m\le\frac{\log\omega}{\omega\log^22}+\frac3{\omega\log2},\qquad
+ \frac{x\log m\,\log(m/x)}m\le\frac1\omega\Bigl(\frac{\log\omega}{\log2}+3\Bigr)\Bigl(\frac{\log\omega}{\log2}+2\Bigr).
+\]
+Also $\frac xm\le\frac1{\omega\log^22}$ and $m\ge\omega\log^22$. As
+$\omega\to\infty$ these bounds tend to $0$ and to $\infty$, uniformly in
+$x\ge1$. On the range of the theorem,
+$\lfloor2m/3\rfloor\ge\frac23m-1\ge(\frac23\omega_n-3)x\Lambda^2$, because
+$x\Lambda^2\ge\log^22>\frac13$. So (i) and (ii), with $\omega=\omega_n$ for
+$m$ and $\omega=\frac23\omega_n-3$ for $\lfloor2m/3\rfloor$, show that once
+$\omega_n$ is large, $m\ge12$ and
+$\lfloor2m/3\rfloor\ge\max(m_1(x),16x\log m,e^2x)$ for every $m$ in the
+range. (For $16x\log m$ note that $\log m\le2\log\lfloor2m/3\rfloor$.)
+
+\emph{Step 2 (lower bound for $f_n(m)$).} For $m\le n/4$,
+\[
+ e_1(m)\le\frac{2x}m+\frac{x(1+\log m)}m+13\varepsilon(1+\log n)+4(m+2)e^{-(m-1)/9},
+\]
+which tends to $0$ uniformly on the range by Step 1(ii) and
+$x\log n/n\to0$. For $n/4<m\le n/2$ we have $r=n-m\ge n/2$ and
+$e_2(m)\le\frac{8x}n+\frac{32xH_n}n+n(0.7+\frac{62}n)e^{-(n/2-8)/40}\to0$.
+
+\emph{Step 3 (lower bound for the mirror term).} Let
+$\delta_n=(xH_n/n)^{1/2}\to0$. If $m\ge\delta_nn$, we apply
+Theorem~\ref{thm:B-local-lower}(b) at $n-m\in[n/2,n-16]$, with $r=m$. Note
+that $\delta_nn=(xnH_n)^{1/2}\ge\sqrt n\ge16$. Then
+$\frac{8xH_n}m\le8\delta_n$,
+$\tau(m)\le n(0.7+\frac{31}{\sqrt n})e^{-(\sqrt n-8)/40}\to0$, and the
+other terms of $e_2(n-m)$ are $O(xH_n/n)$. If $m<\delta_nn$, we use
+$f_n(n-m)\ge0$. Then $m(m+1)\le2\delta_n^2n^2$, so
+$\frac1{(n-m)(n-m+1)}\le\frac4{n^2}\le\frac{8\delta_n^2}{m(m+1)}$ and
+\[
+ \frac{1-e(m)}{m(m+1)}\ge\bigl(1-e(m)-8\delta_n^2\bigr)
+ \Bigl[\frac1{m(m+1)}+\frac1{(n-m)(n-m+1)}\Bigr].
+\]
+In both cases the lower bound of the theorem holds with
+$\eta_n=\sup_m\bigl(e(m)+e_2(n-m)\mathbf 1\{m\ge\delta_nn\}\bigr)+8\delta_n^2$,
+the supremum taken over the range, and $\eta_n\to0$ by Step 2 and the
+above.
+
+\emph{Step 4 (upper bound).} By Step 1 the hypotheses of
+Theorem~\ref{thm:B-local-upper} other than $\Delta(m)\le\frac1{16}$ hold at
+every $m$ of the range for large $n$. We show that $\Delta(m)\to0$
+uniformly. At $m'=\lfloor2m/3\rfloor$ the first part of $\delta_c(m')$
+tends to $0$ by Step 1(ii) with $\omega=\frac23\omega_n-3$, using
+$H_{m'}\le1+\log m'$ and $\log(m'/x)\le\log m'$. Its exponential part is
+$c\,e^\varepsilon e^{x(0.11-0.093c)}\le c\,e^{1/4}e^{0.11-0.093c}\to0$, where
+$c=m'/x\ge(\frac23\omega_n-3)\log^22\to\infty$ and we used $x\ge1$. The
+bracket in $\delta_\ell(m)$ tends to $0$ as in Step 2, and its last term is
+$O((xH_n^2+\log n)/n)\to0$. So Theorem~\ref{thm:B-local-upper} gives
+$f_n(m)\le\frac{x(1+o(1))}{m(m+1)}$ uniformly on the range. For the mirror
+term, $m_h\le m_1(x)\le4500x\log^2(n+1)=o(n)$ by Lemma~\ref{lem:B-mode} and
+Step 1(i). So $n-m\ge\lceil n/2\rceil\ge m_h$, and $f_n(n-m)\le f_n(\lceil n/2\rceil)$
+by Lemma~\ref{lem:unimodal}. For even $n$, Theorem~\ref{thm:B-local-upper}
+applies at $m=n/2$ for all large $n$, whatever $\omega_n$ is. Indeed, the
+estimates of Step 1 and of this step go through with
+$\omega=n/(2x\Lambda^2)$, which tends to infinity because
+$x\Lambda^2\le x\log^2(n+1)=o(n)$. This gives
+$f_n(n/2)\le\frac{4x}{n(n+2)}(1+o(1))$. For odd $n$ we have
+$\lfloor n/2\rfloor\ge m_h$, so
+$f_n(\lceil n/2\rceil)\le f_n(\lfloor n/2\rfloor)\le\frac{4x}{(n-1)(n+1)}(1+o(1))$
+in the same way. Both are $\frac{4x}{n^2}(1+o(1))$, and enlarging $\eta_n$
+gives the upper bounds of the theorem.
+
+\emph{Step 5 (consequences).} If $\delta'_n\to0$ and $m\le\delta'_nn$, then
+$\frac{4x}{n^2}\le\frac{8\delta_n'^2x}{m(m+1)}$, so the upper bound is
+$\frac{x(1+o(1))}{2m(m+1)}$. Also $m(m+1)=m^2(1+o(1))$, since
+$m\ge\omega_n\log^22\to\infty$. For $m=un$ with $u\in[u_0,\frac12]$, the
+hypothesis $\omega_nx\log^2(x+1)=o(n)$ puts $m$ in the range for large $n$,
+and substituting $m=un$ gives the last claim.
+\end{proof}
+
+\begin{corollary}[the center]\label{cor:B-center}
+Let $n\ge64$ be even. Then $C_n\ge\frac{4x}{n(n+2)}\bigl(1-e_2(h)\bigr)$. If
+the hypotheses of Theorem~\ref{thm:B-local-upper} hold at $m=h$, then
+\[
+ C_n\le\frac{4x}{n(n+2)}\Bigl(1+3\sqrt{\Delta(h)}+\frac6n\Bigr).
+\]
+If $x\log^2n/n\to0$, these hypotheses hold for all large even $n$, and
+$C_n=\frac{4x}{n^2}\bigl(1+O(\sqrt{x\log^2n/n})\bigr)$.
+\end{corollary}
+
+\begin{proof}
+By Lemma~\ref{lem:erw-reduction}, $C_n=f_n(h)$, and $h(h+1)=n(n+2)/4$. The
+2 bounds are Theorems~\ref{thm:B-local-lower}(b) and~\ref{thm:B-local-upper}
+at $m=h$. The hypotheses hold for large $n$ by Step 4 of the proof of
+Theorem~\ref{thm:profile}. Since $h\ge n/4$, $\delta_\ell(h)$ is its last
+term, which is $O(x\log^2n/n)$. At $m'=\lfloor n/3\rfloor$ the first part of
+$\delta_c(m')$ is $O(x\log^2n/n)$ as well, and its exponential part is at
+most $n\,e^{1/4+0.11x-0.093m'}$, which is smaller because $x=o(n)$. So
+$\Delta(h)=O(x\log^2n/n)$. Also $e_2(h)=O(x\log n/n)$ and $\frac{4x}{n(n+2)}=\frac{4x}{n^2}(1+O(\frac1n))$.
+\end{proof}
+
+At the crossing (computed with $x=g_n$), the lower factor $1-e_2(h)$ is
+positive from $n\approx2.2\cdot10^3$ on. It is $0.67$ at $n=10^4$ and $0.95$
+at $n=10^5$. At $m=h$ all hypotheses of Theorem~\ref{thm:B-local-upper}
+except $\Delta(h)\le\frac1{16}$ hold from $n=10^5$ on, but
+$\Delta(h)\le\frac1{16}$ first holds near $n=1.107\cdot10^8$. There the
+upper factor is about $1.75$, and it is $1.30$ at $n=10^9$ and $1.11$ at
+$n=10^{10}$.
+
+\subsection{Proof of \texorpdfstring{Theorem~\ref{thm:landau}}{Theorem 3.8}}\label{app:shape-landau}
+
+(a) Let $\Psi_n$ be as in Section~\ref{app:shape-cp}, and let
+$\Psi_\infty(\theta)=\sum_{d\ge1}\frac{e^{i\theta d}-1}{d(d+1)}=\chi(e^{i\theta})$.
+Fourier inversion and the substitution $\theta=t/x$ give
+\[
+ x\,\CP_n(m)=\frac1{2\pi}\int_{-\pi x}^{\pi x}e^{-i\lambda_mt}e^{A(t)}\,dt,\qquad
+ A(t)=x\Psi_n(t/x)-it\log x .
+\]
+The Landau law has characteristic function $e^{B(t)}$, where
+$B(t)=(-it)\log(-it)=-it\log\lvert t\rvert-\frac\pi2\lvert t\rvert$ is the
+value of $u\log u$ at $u=-it$. So
+$f_L(\lambda)=\frac1{2\pi}\int_{\mathbb R}e^{-i\lambda t}e^{B(t)}dt$. We use
+3 facts.
+
+(1) $\lvert\Psi_n-\Psi_\infty\rvert\le\sum_{d\ge n}\frac2{d(d+1)}=\frac2n$.
+
+(2) For $0<\lvert\theta\rvert\le\pi$, $\Psi_\infty(\theta)=-i\theta\log(-i\theta)+R(\theta)$
+with $\lvert R(\theta)\rvert\le\theta^2(0.631\lvert\log\lvert\theta\rvert\rvert+1.53)$.
+To see this, write $1-e^{i\theta}=(-i\theta)u$ with
+$u=\operatorname{sinc}(\theta/2)\,e^{i\theta/2}$, where
+$\operatorname{sinc}y=\sin y/y>0$ for $\lvert y\rvert\le\frac\pi2$. Then
+$\log(1-e^{i\theta})=\log(-i\theta)+\log u$ for principal logarithms, since
+the 2 arguments add up to a number in $(-\frac\pi2,\frac\pi2)$. As
+$\chi(s)=(1-s)\log(1-s)/s$,
+\[
+ R=-i\theta\log(-i\theta)\bigl(ue^{-i\theta}-1\bigr)-i\theta\,ue^{-i\theta}\log u .
+\]
+With $y=\theta/2$,
+$\lvert ue^{-i\theta}-1\rvert=\lvert\operatorname{sinc}y-e^{iy}\rvert\le(1-\operatorname{sinc}y)+\lvert1-e^{iy}\rvert\le\frac{y^2}6+\lvert y\rvert\le(\frac12+\frac\pi{24})\lvert\theta\rvert$.
+Next, $\lvert\log u\rvert^2=\log^2\operatorname{sinc}(\theta/2)+\theta^2/4$,
+and $-\log\operatorname{sinc}y=\sum_{k\ge1}\frac{\zeta(2k)}{k\pi^{2k}}y^{2k}$ has
+positive coefficients. So $\lvert\log\operatorname{sinc}(\theta/2)\rvert/\lvert\theta\rvert$
+increases in $\lvert\theta\rvert$, and
+$\lvert\log u\rvert\le(\frac14+\frac{\log^2(\pi/2)}{\pi^2})^{1/2}\lvert\theta\rvert\le0.53\lvert\theta\rvert$.
+Finally $\lvert\log(-i\theta)\rvert\le\lvert\log\lvert\theta\rvert\rvert+\frac\pi2$
+and $\lvert u\rvert\le1$. Since $\frac12+\frac\pi{24}\le0.631$ and
+$0.631\cdot\frac\pi2+0.53\le1.53$, the bound follows.
+
+(3) For $\lvert\theta\rvert\le\pi$,
+$-\operatorname{Re}\Psi_\infty(\theta)=\sum_d\frac{1-\cos\theta d}{d(d+1)}\ge\frac{\lvert\theta\rvert}{2\pi}$.
+Keep only $d\le D:=\lfloor\pi/\lvert\theta\rvert\rfloor$ and use
+$1-\cos v\ge2v^2/\pi^2$ for $\lvert v\rvert\le\pi$. This gives at least
+$\frac{2\theta^2}{\pi^2}\sum_{d\le D}\frac d{d+1}\ge\frac{\theta^2D}{\pi^2}\ge\frac{\lvert\theta\rvert}{2\pi}$,
+since $D\ge\frac\pi{2\lvert\theta\rvert}$.
+
+By (2), $x\Psi_\infty(t/x)-it\log x=B(t)+xR(t/x)$. So for
+$\lvert t\rvert\le\pi x$, facts (1) and (2) and
+$\lvert\log(\lvert t\rvert/x)\rvert\le\lvert\log\lvert t\rvert\rvert+\log x$ give
+\[
+ \lvert A(t)-B(t)\rvert\le\frac{t^2}x\bigl(0.631(\lvert\log\lvert t\rvert\rvert+\log x)+1.53\bigr)+\frac{2x}n,
+\]
+and facts (1) and (3) give
+$\max(\operatorname{Re}A,\operatorname{Re}B)\le-\frac{\lvert t\rvert}{2\pi}+\frac{2x}n$.
+We use $\lvert e^A-e^B\rvert\le\lvert A-B\rvert e^{\max(\operatorname{Re}A,\operatorname{Re}B)}$
+on $\lvert t\rvert\le\pi x$ and $\lvert e^B\rvert=e^{-\pi\lvert t\rvert/2}$
+beyond. We have $\int_{\mathbb R}t^2e^{-\lvert t\rvert/2\pi}dt=992.20$,
+$\int_{\mathbb R}t^2\lvert\log\lvert t\rvert\rvert e^{-\lvert t\rvert/2\pi}dt=2739.54$
+and $\int_{\mathbb R}e^{-\lvert t\rvert/2\pi}dt=4\pi$. After division by
+$2\pi$ the coefficient of $\frac{\log x}x$ is
+$0.631\cdot992.20/2\pi=99.64$, that of $\frac1x$ is
+$(0.631\cdot2739.54+1.53\cdot992.20)/2\pi=516.73$, and that of $\frac xn$
+is $4$. The part beyond $\pi x$ is
+$\frac1{2\pi}\int_{\lvert t\rvert>\pi x}e^{-\pi\lvert t\rvert/2}dt=\frac2{\pi^2}e^{-\pi^2x/2}$.
+This proves (a).
+
+(b) By Theorem~\ref{thm:cp},
+$\lvert xf_n(m)-x\CP_n(m)\rvert\le x\delta_B$, which gives the bound. For
+the limit, let $U$ be uniform on $[0,1)$ and independent of $M_n$. Then
+$(M_n+U-x\log x)/x$ has the density $g$ with $g(\lambda)=xf_n(m)$ for
+$\lambda_m\le\lambda<\lambda_m+\frac1x$. If $x\to\infty$ and
+$x^3\log^2n/n\to0$, then $E_L+x\delta_B\to0$. On a compact set of
+$\lambda$ the relevant $m$ are nonnegative once $x$ is large, and
+$\lvert\lambda-\lambda_m\rvert<\frac1x$. As $f_L$ is uniformly continuous,
+$g\to f_L$ uniformly on compact sets. By Scheff\'e's lemma
+$g\to f_L$ in $L^1$, and since $U/x\to0$ this gives the convergence in law.
+At the crossing $x_n\sim2\log n$ by Theorem~\ref{thm:erw-crossing}, so both
+conditions hold.
+
+(c) By the argument after Theorem~\ref{thm:landau}, a constant $\kappa_L$
+exists if the computed sign $f_L''(\lambda_0)<0$ is right. Note that $f_L''$ is bounded, since $t^2e^{B(t)}$ is integrable. Let $m'$ be
+the integer nearest to $x\log x+\lambda_0x$, which is at least $-0.23$, so
+$m'\ge0$. Then $\lvert\lambda_{m'}-\lambda_0\rvert\le\frac1{2x}$, and since
+$f_L'(\lambda_0)=0$,
+$f_L(\lambda_{m'})\ge f_L(\lambda_0)-\lVert f_L''\rVert_\infty/(8x^2)$. Let
+$\tilde m$ be a mode of $f_n$ or $\tilde m=m^*$. We claim that
+$f_n(\tilde m)\ge f_n(m')-16xH_n/n^2$. For a mode of $f_n$ this is clear.
+For $m^*$ we have
+$f_n(m^*)+f_n(n-m^*)=2\Prob(A_n=n-m^*)\ge2\Prob(A_n=n-m')\ge f_n(m')$. Here
+$n-m^*\ge\lceil n/2\rceil\ge\lceil n/4\rceil\ge m_h$. So by
+Lemma~\ref{lem:unimodal} $f_n$ is nonincreasing on
+$[\lceil n/4\rceil,n]$, and by Lemma~\ref{lem:B-tail}
+\[
+ f_n(n-m^*)\le f_n(\lceil n/2\rceil)\le\frac{\Prob(M_n\ge\lceil n/4\rceil)}{n/4}\le\frac{16xH_n}{n^2}.
+\]
+Now part (b), used at $\tilde m$ and at $m'$, gives
+$f_L(\lambda_{\tilde m})\ge f_L(\lambda_{m'})-2(E_L+x\delta_B)-\frac{16x^2H_n}{n^2}\ge f_L(\lambda_0)-2E'$.
+Since $2E'<\kappa_L$, the defining property of $\kappa_L$ gives
+$(\lambda_{\tilde m}-\lambda_0)^2\le2E'/\kappa_L$, which proves (c).
+
+At the crossing, $x_n\sim2\log n$ by Theorem~\ref{thm:erw-crossing}. Then
+$x\delta_B$, $16x^2H_n/n^2$ and $\lVert f_L''\rVert_\infty/(8x^2)$ are
+$o(\log x/x)$, so $E'=O(\log x/x)$. Also $m_h\le m_1(x)\le n/4$ for large
+$n$ by Lemma~\ref{lem:B-mode}. Hence, once $E'<\kappa_L/2$, part (c) gives
+$m^*=x\log x+\lambda_0x+O(\sqrt{x\log x})$.\hfill$\square$
+
+\subsection{Proof of \texorpdfstring{Theorem~\ref{thm:shape}(b)}{Theorem 3.11(b)}}\label{app:shape-shape}
+
+Since $x\le n^{1/4}$, we have $x\log^2n/n\le n^{-3/4}\log^2n$, and every
+$o(1)$ below is bounded by a function of $n$ alone. Let $n_0$ be so large
+that for $n\ge n_0$ the following hold. First, $\varepsilon\le\frac14$,
+$n\ge1000$ and $13\varepsilon(1+H_n)\le\frac18$. Second,
+$\ell_0\le m_1(x)\le4500x\log^2(x+1)\le n/8$, using Step 1 of the proof
+of Theorem~\ref{thm:profile}. So $m_h\le m_1(x)$ and $e_1(\ell)\le\frac12$
+for $\ell_0\le\ell\le n/4$ by Lemma~\ref{lem:B-mode}.
+Third, the hypotheses of Theorem~\ref{thm:B-local-upper} hold at $m=h$,
+and Corollary~\ref{cor:B-center} gives $C_n\le\frac{4x}{n(n+2)}(1+\eta)$
+with $\eta=3\sqrt{\Delta(h)}+\frac6n\le C\sqrt{x\log^2n/n}$ for an absolute
+constant $C$. This follows from the proof of Corollary~\ref{cor:B-center},
+since for $x\le n^{1/4}$ all its estimates hold with absolute constants and
+$m_1(x)\le4500n^{1/4}\log^2(n+1)$. By
+symmetry it suffices to take $a=n-m$ with $1\le m\le h$.
+
+\emph{Near the end, $m\le m_h$.} By Lemma~\ref{lem:unimodal},
+$f_n(m)\ge f_n(1)$. The proof of Theorem~\ref{thm:dip} shows
+$f_n(1)\ge\frac x{2(1-\varepsilon)}f_n(0)$, and $f_n(0)=2E_n=2C_n$ at the
+crossing. So
+$\Prob(A_n=n-m)\ge\frac12f_n(m)\ge\frac x{2(1-\varepsilon)}C_n>C_n$, as
+$x\ge2$.
+
+\emph{The range $m_h\le m\le n/8$.} By Lemma~\ref{lem:unimodal},
+$f_n(m)\ge f_n(\max(m,\ell_0))$. With $e_1\le\frac12$ on $[\ell_0,n/8]$,
+Theorem~\ref{thm:B-local-lower}(a) gives
+$f_n(m)\ge\frac{x}{2(n/8)(n/8+1)}$. So
+$\Prob(A_n=n-m)\ge\frac{16x}{n(n+8)}>\frac{4x}{n(n+2)}(1+\eta)\ge C_n$ for
+large $n$.
+
+\emph{The range $n/8<m\le h$.} Put
+$\Pi(m)=\frac12[\frac1{m(m+1)}+\frac1{(n-m)(n-m+1)}]$, so
+$\Pi(h)=\frac4{n(n+2)}=\frac1{h(h+1)}$. Theorem~\ref{thm:B-local-lower}
+at $m$ and at $n-m$ gives $\Prob(A_n=n-m)\ge x\Pi(m)(1-\bar e)$ with
+$\bar e=\max(e(m),e(n-m))$. Since $m,n-m\ge n/8$, every term of $e(m)$ and
+$e(n-m)$ is $O(xH_n/n)$ except $4(m+2)e^{-(m-1)/9}$ and $\tau$, which are
+smaller than any power of $n$. So $\bar e\le C'x\log n/n$. Put $N=n+1$ and
+$t=h-m$. Then $m+\frac12=\frac N2-t$ and $n-m+\frac12=\frac N2+t$. Since
+$(k+\frac12)^{-2}\le\frac1{k(k+1)}$ and $\frac1{h(h+1)}=(\frac N2)^{-2}(1-N^{-2})^{-1}$,
+\[
+ \frac{\Pi(m)}{\Pi(h)}\ge\frac12\Bigl[\Bigl(1-\frac{2t}N\Bigr)^{-2}+\Bigl(1+\frac{2t}N\Bigr)^{-2}\Bigr]\bigl(1-N^{-2}\bigr)
+ \ge\Bigl(1+\frac{12t^2}{N^2}\Bigr)\bigl(1-N^{-2}\bigr),
+\]
+because $\frac12[(1-s)^{-2}+(1+s)^{-2}]=\sum_{k\ge0}(2k+1)s^{2k}\ge1+3s^2$
+for $\lvert s\rvert<1$. Let $b=\bar e+N^{-2}$, which is at most $\frac12$
+for large $n$. Then
+$\Prob(A_n=n-m)\ge x\Pi(h)(1+\frac{12t^2}{N^2})(1-b)$, and this exceeds
+$x\Pi(h)(1+\eta)\ge C_n$ as soon as $\frac{12t^2}{N^2}>2(\eta+b)$. Since
+$x\log^2n/n\le1$, we have $\eta+b\le C''\sqrt{x\log^2n/n}$ with an absolute
+$C''$. As $N\le2n$, the condition holds when
+$t\ge C_{\rm w}n^{3/4}(x\log^2n)^{1/4}$ with $C_{\rm w}=\sqrt{C''}$, because then
+$\frac{12t^2}{N^2}\ge3C''\sqrt{x\log^2n/n}$. This proves
+part (b) of Theorem~\ref{thm:shape}.\hfill$\square$
