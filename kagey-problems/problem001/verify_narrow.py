@@ -90,6 +90,63 @@ def four_row_upper_candidates(cols):
                     yield mask(fixed | set(zip(single_cols, single_rows)), cols)
 
 
+def short_cycle_free_sets(rows, cols):
+    """All blackouts whose incidence graph has no 4- or 6-cycle, grouped by size."""
+    cells = [(x, y) for y in range(rows) for x in range(cols)]
+    found = defaultdict(list)
+
+    def extend(i, black):
+        if i == len(cells):
+            found[black.bit_count()].append(black)
+            return
+        extend(i + 1, black)
+        bigger = black | mask([cells[i]], cols)
+        if no_short_cycles(rows, cols, bigger):
+            extend(i + 1, bigger)
+
+    extend(0, 0)
+    return found
+
+
+def square_images(black, n):
+    """The 8 images of a blackout on an n x n grid under the symmetries of the square."""
+    points = [(x, y) for y in range(n) for x in range(n) if black >> (y * n + x) & 1]
+    maps = [lambda x, y: (x, y), lambda x, y: (n - 1 - y, x),
+            lambda x, y: (n - 1 - x, n - 1 - y), lambda x, y: (y, n - 1 - x),
+            lambda x, y: (n - 1 - x, y), lambda x, y: (x, n - 1 - y),
+            lambda x, y: (y, x), lambda x, y: (n - 1 - y, n - 1 - x)]
+    return [mask([f(x, y) for x, y in points], n) for f in maps]
+
+
+def check_five_by_five():
+    """Theorem on the 5 x 5 grid: value 10, 8 optima in one orbit, 8-cycle graphs."""
+    rects = rectangles(5, 5)
+    assert len(rects) == 130
+    found = short_cycle_free_sets(5, 5)
+    assert max(found) == 10                  # the lemma on 10 vertices, by brute force
+    candidates = found[10]
+    assert len(candidates) == 44640
+    optima = [b for b in candidates if collision(rects, b) is None]
+    assert len(optima) == 8
+    # the representative of the paper, rows top to bottom, '#' = blacked out
+    picture = ['..###', '..#..', '.##..', '##...', '#...#']
+    rep = mask([(x, y) for y in range(5) for x in range(5) if picture[y][x] == '#'], 5)
+    images = square_images(rep, 5)
+    assert len(set(images)) == 8 and set(images) == set(optima)
+
+    def degrees(b):
+        rows = [((b >> (5 * y)) & 31).bit_count() for y in range(5)]
+        cols = [sum(b >> (5 * y + x) & 1 for y in range(5)) for x in range(5)]
+        return rows, cols
+
+    ten_cycles = [b for b in candidates if degrees(b) == ([2] * 5, [2] * 5)]
+    assert not any(collision(rects, b) is None for b in ten_cycles)
+    for b in optima:                          # an 8-cycle plus 2 pendant edges
+        rows, cols = degrees(b)
+        assert sorted(rows + cols) == [1, 1] + [2] * 6 + [3, 3]
+    return len(candidates), len(ten_cycles)
+
+
 def main():
     tested = 0
     for rows, cols in ((2, 3), (3, 3), (3, 4), (4, 3), (4, 4)):
@@ -133,6 +190,10 @@ def main():
         assert collision(rects, cross) is None
         print(f'PASS: all {expected} upper-bound candidates fail on 4x{cols}; '
               f'valid blackout of size {cols + 3}; collision axis counts {dict(types)}.')
+    total, ten = check_five_by_five()
+    print(f'PASS: 5x5 has no valid blackout of size 11; of the {total} 10-point sets with no '
+          f'short cycle, exactly 8 are valid, one D4 orbit of the paper\'s representative, each an '
+          f'8-cycle with 2 pendant edges; none of the {ten} 10-cycles is valid.')
     print('All narrow-grid checks passed. The general-width claims use the accompanying proofs.')
 
 
