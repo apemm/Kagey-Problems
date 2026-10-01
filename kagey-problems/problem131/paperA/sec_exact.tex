@@ -1,11 +1,11 @@
 \section{The exact law}\label{sec:exact}
 
-A run of the experiment with $N\ge1$ steps is a word $w\in\{\sL,\sR\}^N$. Let $\chg(w)$ be the number of
-indices $i<N$ with $w_i\ne w_{i+1}$, and let $\rep(w)=N-1-\chg(w)$. By the definition of the model,
-\begin{equation}\label{eq:wordprob}
-\Prob(w)=\tfrac12\,p^{\rep(w)}q^{\chg(w)} .
-\end{equation}
-In this section we also write $\rho=2p-1$.
+This section answers Kagey's questions about the law of the bins, his
+numerator tables and the normal limit. The results are classical in
+substance~\cite{renshaw1981,dekkingkong2011}, and we prove them because the
+later sections use the count of words by their number of switches. Recall \eqref{eq:wordprob}: a word with $j$ switches has
+probability $\frac12p^{N-1-j}q^j$. We also write $\rho=2p-1=p-q$, the
+correlation $\E\sigma_i\sigma_{i+1}$ of 2 consecutive steps.
 
 \begin{theorem}[bin probabilities]\label{thm:pmf}
 Let $N\ge1$. Then $P_N(0)=P_N(N)=\tfrac12p^{N-1}$, and for $1\le k\le N-1$
@@ -17,29 +17,33 @@ where, writing $a=k$ and $b=N-k$,
 W(N,k,2i-1)=2\binom{a-1}{i-1}\binom{b-1}{i-1},\qquad
 W(N,k,2i)=\binom{a-1}{i}\binom{b-1}{i-1}+\binom{a-1}{i-1}\binom{b-1}{i}
 \]
-is the number of words with $a$ letters $\sR$, $b$ letters $\sL$ and exactly $j$ direction changes.
+is the number of words with $a$ letters $\sR$, $b$ letters $\sL$ and exactly
+$j$ switches.
 \end{theorem}
 
 \begin{proof}
-By \eqref{eq:wordprob} it suffices to count words. A word with $j$ changes consists of $j+1$ maximal
-runs, alternately of $\sR$'s and of $\sL$'s. If $k\in\{0,N\}$ there is one word and it has no change.
-Let $a,b\ge1$. If $j+1=2i$ there are $i$ runs of each letter and the first letter is free. The run
-lengths form a composition of $a$ into $i$ parts and a composition of $b$ into $i$ parts, and there
-are $\binom{a-1}{i-1}\binom{b-1}{i-1}$ such pairs. If $j+1=2i+1$ the word starts and ends with the
-same letter. Starting with $\sR$ gives $i+1$ runs of $\sR$ and $i$ runs of $\sL$, so
-$\binom{a-1}{i}\binom{b-1}{i-1}$ words, and starting with $\sL$ gives the other summand.
+By \eqref{eq:wordprob} it suffices to count words. A word with $j$ switches
+consists of $j+1$ maximal runs, alternately of $\sR$'s and of $\sL$'s. If
+$k\in\{0,N\}$ there is 1 word and it has no switch. Let $a,b\ge1$. If $j+1=2i$
+there are $i$ runs of each letter and the first letter is free. The run lengths
+form a composition of $a$ into $i$ parts and a composition of $b$ into $i$
+parts, and there are $\binom{a-1}{i-1}\binom{b-1}{i-1}$ such pairs. If
+$j+1=2i+1$ the word starts and ends with the same letter. Starting with $\sR$
+gives $i+1$ runs of $\sR$ and $i$ runs of $\sL$, so
+$\binom{a-1}{i}\binom{b-1}{i-1}$ words, and starting with $\sL$ gives the
+other summand.
 \end{proof}
 
-For instance $P_2=(\tfrac p2,\,q,\,\tfrac p2)$, $P_3(1)=\tfrac12(1-p^2)$ and $P_4(2)=q(1-p+p^2)$.
-Note that the only word that ends in bin $0$ is $\sL\cdots\sL$, which never switches, while each
-interior bin needs at least 1 switch. So the endpoints win when $p$ is close to $1$, and
+For instance $P_2=(\tfrac p2,\,q,\,\tfrac p2)$, $P_3(1)=\tfrac12(1-p^2)$ and
+$P_4(2)=q(1-p+p^2)$. Each interior bin needs at least 1 switch, while the
+endpoints need none. So the endpoints win when $p$ is close to $1$, and
 Section~\ref{sec:middle} asks how close.
 
 \begin{proposition}[recurrence and generating function]\label{prop:gf}
-Let $P_N^{\sR}(k)$ and $P_N^{\sL}(k)$ be the probabilities of being in bin $k$ after $N$
-steps with last step $\sR$, respectively $\sL$, and set them to $0$ outside $0\le k\le N$. Then
-$P_1^{\sR}(1)=P_1^{\sL}(0)=\tfrac12$, $P_1^{\sR}(0)=P_1^{\sL}(1)=0$, and for
-$N\ge2$
+Let $P_N^{\sR}(k)$ and $P_N^{\sL}(k)$ be the probabilities of being in bin $k$
+after $N$ steps with last step $\sR$, respectively $\sL$, and set them to $0$
+outside $0\le k\le N$. Then $P_1^{\sR}(1)=P_1^{\sL}(0)=\tfrac12$,
+$P_1^{\sR}(0)=P_1^{\sL}(1)=0$, and for $N\ge2$
 \begin{equation}\label{eq:dp}
 P_N^{\sR}(k)=p\,P_{N-1}^{\sR}(k-1)+q\,P_{N-1}^{\sL}(k-1),\qquad
 P_N^{\sL}(k)=p\,P_{N-1}^{\sL}(k)+q\,P_{N-1}^{\sR}(k).
@@ -59,38 +63,42 @@ The recursion \eqref{eq:dp} follows by conditioning on the last 2 steps. Let
 $H^{\sR}=\sum_{N,k}P_N^{\sR}(k)x^kt^N$ and define $H^{\sL}$ alike. By
 \eqref{eq:dp} and the initial values, $H^{\sR}=xt(\tfrac12+pH^{\sR}+qH^{\sL})$
 and $H^{\sL}=t(\tfrac12+pH^{\sL}+qH^{\sR})$. The determinant of this linear
-system is $\Delta=1-p(1+x)t+\rho xt^2$, since $p^2-q^2=\rho$. Cramer's rule gives
-$H^{\sR}=\tfrac12xt(1-\rho t)/\Delta$ and $H^{\sL}=\tfrac12t(1-\rho xt)/\Delta$, and
-$1+H^{\sR}+H^{\sL}$ simplifies to \eqref{eq:gf}. Multiplying \eqref{eq:gf} by $\Delta$
-and comparing the coefficients of $x^kt^N$ with $N\ge2$ gives \eqref{eq:rec}.
+system is $\Delta=1-p(1+x)t+\rho xt^2$, since $p^2-q^2=\rho$. Cramer's rule
+gives $H^{\sR}=\tfrac12xt(1-\rho t)/\Delta$ and
+$H^{\sL}=\tfrac12t(1-\rho xt)/\Delta$, and $1+H^{\sR}+H^{\sL}$ simplifies to
+\eqref{eq:gf}. Multiplying \eqref{eq:gf} by $\Delta$ and comparing the
+coefficients of $x^kt^N$ with $N\ge2$ gives \eqref{eq:rec}.
 \end{proof}
 
-At $p=\tfrac12$ the last term of \eqref{eq:rec} vanishes, and \eqref{eq:rec} is Pascal's rule with
-weights $\tfrac12$.
+At $p=\tfrac12$ the last term of \eqref{eq:rec} vanishes, and \eqref{eq:rec}
+is Pascal's rule with weights $\tfrac12$.
 
 \begin{remark}[numerator tables]\label{rem:tables}
-For $p=\alpha/(\alpha+\beta)$ with integers $\alpha,\beta\ge0$, not both $0$, Kagey's numerator
-tables are
+For $p=\alpha/(\alpha+\beta)$ with integers $\alpha,\beta\ge0$, not both $0$,
+Kagey's numerator tables are
 \[
 n_N(k)=2(\alpha+\beta)^{N-1}P_N(k)\quad(N\ge1),\qquad n_0(0)=1,
 \]
-not reduced. By \eqref{eq:wordprob}, $n_N(k)$ is the sum of $\alpha^{\rep(w)}\beta^{\chg(w)}$ over
-the words with $k$ letters $\sR$ and $N-k$ letters $\sL$, so it is an integer, and by \eqref{eq:rec}
-$n_N(k)=\alpha(n_{N-1}(k)+n_{N-1}(k-1))-(\alpha^2-\beta^2)n_{N-2}(k-1)$ for $N\ge3$. If we read a
-word as a monotone lattice path to $(k,N-k)$, then $n_N(k)$ counts these paths with each straight
-continuation colored in one of $\alpha$ ways and each corner in one of $\beta$ ways. For
-$p=\tfrac23$ the table counts rook paths (A035002 read by antidiagonals), and for $p=\tfrac13$ it
-counts Mathar's blocked walks (A348595). The OEIS entries already record the generating functions
-(by Kruchinin, Somos and Mathar)~\cite{oeisA035002,oeisA348595}, and our bijections explain them.
-The proofs are in Appendix~\ref{app:tables}, and these identities are also proved in Lean
-(Section~\ref{sec:verify}).
+not reduced. By \eqref{eq:wordprob}, $n_N(k)$ is the sum of
+$\alpha^{\rep(w)}\beta^{\chg(w)}$ over the words with $k$ letters $\sR$ and
+$N-k$ letters $\sL$, so it is an integer. By \eqref{eq:rec},
+$n_N(k)=\alpha(n_{N-1}(k)+n_{N-1}(k-1))-(\alpha^2-\beta^2)n_{N-2}(k-1)$ for
+$N\ge3$. Read a word as a monotone lattice path to $(k,N-k)$. Then $n_N(k)$
+counts these paths with each straight continuation colored in 1 of $\alpha$
+ways and each corner in 1 of $\beta$ ways. For $p=\tfrac23$ the table counts
+rook paths (A035002 read by antidiagonals), and for $p=\tfrac13$ it counts
+Mathar's blocked walks (A348595). The OEIS entries already record the
+generating functions (by Kruchinin, Somos and
+Mathar)~\cite{oeisA035002,oeisA348595}, and our bijections explain them.
+Appendix~\ref{app:tables} has the proofs.
 \end{remark}
 
 \subsection{Variance and the normal limit}\label{sec:clt}
 
-Let $\sigma_i=+1$ if step $i$ is $\sR$ and $\sigma_i=-1$ otherwise, as in the introduction, and put
-$X_N=\sigma_1+\dots+\sigma_N$ and $K_N=(N+X_N)/2$ for the bin. Then $\sigma_{i+1}=\sigma_is_i$, where
-$s_1,s_2,\dots$ are independent of each other and of $\sigma_1$, with $\Prob(s_i=1)=p$ and $\Prob(s_i=-1)=q$. So $\E s_i=\rho$.
+Recall the spins $\sigma_i$, the position $X_N=\sigma_1+\dots+\sigma_N$ and the
+bin $K_N=(N+X_N)/2$. The step rule says that $\sigma_{i+1}=\sigma_is_i$, where
+$s_1,s_2,\dots$ are independent of each other and of $\sigma_1$, with
+$\Prob(s_i=1)=p$ and $\Prob(s_i=-1)=q$. So $\E s_i=\rho$.
 
 \begin{proposition}[mean and variance]\label{prop:var}
 $\E K_N=N/2$, and for $p<1$
@@ -102,77 +110,96 @@ For $p=1$, $\Var K_N=N^2/4$.
 \end{proposition}
 
 \begin{proof}
-Note that $\E\sigma_1=0$ and $\sigma_{i+m}=\sigma_is_i\cdots s_{i+m-1}$, so $\E\sigma_i=0$ and
-$\E\sigma_i\sigma_{i+m}=\rho^m$.
-Hence, $\Var X_N=N+2\sum_{m=1}^{N-1}(N-m)\rho^m$. Summing the 2 geometric series gives the first
-form, and the second follows from $(1+\rho)/(1-\rho)=p/q$ and $1-\rho=2q$.
+Note that $\E\sigma_1=0$ and $\sigma_{i+m}=\sigma_is_i\cdots s_{i+m-1}$, so
+$\E\sigma_i=0$ and $\E\sigma_i\sigma_{i+m}=\rho^m$. Hence
+$\Var X_N=N+2\sum_{m=1}^{N-1}(N-m)\rho^m$. Summing the 2 geometric series
+gives the first form, and the second follows from $(1+\rho)/(1-\rho)=p/q$ and
+$1-\rho=2q$.
 \end{proof}
 
 \begin{theorem}[normal limit]\label{thm:clt}
-Let $0<p<1$. Then $(K_N-N/2)/\sqrt N$ converges in distribution to the normal law with mean $0$ and
-variance $p/(4(1-p))$.
+Let $0<p<1$ be fixed. Then $(K_N-N/2)/\sqrt N$ converges in distribution, as
+$N\to\infty$, to the normal law with mean $0$ and variance $p/(4(1-p))$.
 \end{theorem}
 
+So persistence keeps the bell shape but widens it by the factor $\sqrt{p/q}$
+compared with the ordinary board. The idea of the proof is that the
+characteristic function is a power of a $2\times2$ transfer matrix, whose
+largest eigenvalue near $\theta=0$ is $1-\frac p{2q}\theta^2+O(\theta^4)$.
+
 \begin{proof}
-Let $\varphi_N(\theta)=\E e^{i\theta X_N}$, and let $v_N$ be the vector with entries
-$\E[e^{i\theta X_N};\sigma_N=\pm1]$. By \eqref{eq:dp}, $v_{N+1}=Mv_N$ with
+Let $\varphi_N(\theta)=\E e^{i\theta X_N}$, and let $v_N$ be the vector with
+entries $\E[e^{i\theta X_N};\sigma_N=\pm1]$. By \eqref{eq:dp}, $v_{N+1}=Mv_N$
+with
 \[
 M=\begin{pmatrix}pe^{i\theta}&qe^{i\theta}\\qe^{-i\theta}&pe^{-i\theta}\end{pmatrix},\qquad
 \operatorname{tr}M=2p\cos\theta,\quad\det M=\rho .
 \]
-The eigenvalues are $\lambda_\pm(\theta)=p\cos\theta\pm\sqrt{q^2-p^2\sin^2\theta}$. For
-$|\sin\theta|<q/p$ they are real and distinct, so $\varphi_N=c_+\lambda_+^{N-1}+c_-\lambda_-^{N-1}$
-for $N\ge1$. The values $\varphi_1=\cos\theta$ and $\varphi_2=p\cos2\theta+q$ give
-$c_+=(\varphi_2-\lambda_-\cos\theta)/(\lambda_+-\lambda_-)$ and $c_-=\cos\theta-c_+$. As
-$\theta\to0$ we have $\lambda_-\to\rho$, $c_+\to1$, $c_-\to0$ and
+The eigenvalues are $\lambda_\pm(\theta)=p\cos\theta\pm\sqrt{q^2-p^2\sin^2\theta}$.
+For $|\sin\theta|<q/p$ they are real and distinct, so
+$\varphi_N=c_+\lambda_+^{N-1}+c_-\lambda_-^{N-1}$ for $N\ge1$. The values
+$\varphi_1=\cos\theta$ and $\varphi_2=p\cos2\theta+q$ give
+$c_+=(\varphi_2-\lambda_-\cos\theta)/(\lambda_+-\lambda_-)$ and
+$c_-=\cos\theta-c_+$. As $\theta\to0$ we have $\lambda_-\to\rho$, $c_+\to1$,
+$c_-\to0$ and
 \[
 \lambda_+(\theta)=p\bigl(1-\tfrac{\theta^2}2\bigr)+q\Bigl(1-\frac{p^2\theta^2}{2q^2}\Bigr)+O(\theta^4)
 =1-\frac{p}{2q}\,\theta^2+O(\theta^4).
 \]
 Put $\theta=s/\sqrt N$ with $s$ fixed. Since $|\rho|<1$, we get
-$\varphi_N(s/\sqrt N)\to\exp(-\tfrac{p}{2q}s^2)$. By L\'evy's continuity theorem
-\cite[Theorem~26.3]{billingsley1995}, $X_N/\sqrt N$ converges to the normal law with variance $p/q$.
-Finally $K_N-N/2=X_N/2$.
+$\varphi_N(s/\sqrt N)\to\exp(-\tfrac{p}{2q}s^2)$. By L\'evy's continuity
+theorem \cite[Theorem~26.3]{billingsley1995}, $X_N/\sqrt N$ converges to the
+normal law with variance $p/q$. Finally $K_N-N/2=X_N/2$.
 \end{proof}
 
-For $p=1$ the walk ends in bin $0$ or bin $N$, and for $p=0$ in a middle bin, so these 2 cases have
-no normal limit.
+For $p=1$ the walk ends in bin $0$ or bin $N$, and for $p=0$ in a middle bin,
+so these 2 cases have no normal limit.
 
 \begin{remark}[zeros of the generating polynomial]\label{rem:bernoulli}
-Let $N\ge2$ and $g_N(x)=\sum_kP_N(k)x^k$. First let $0<p\le\tfrac12$. By \eqref{eq:rec},
-$g_N=p(1+x)g_{N-1}+(1-2p)xg_{N-2}$ with a nonnegative last coefficient. Then every $g_N$ has only
-real zeros, as in the proof of \cite[Proposition~4.2]{dekkingkong2011}, and they are negative since
-$g_N$ has positive coefficients. By a classical result recalled by
-Pitman~\cite[Proposition~1]{pitman1997}, $K_N$ then has the law of a sum of $N$ independent
-Bernoulli variables. So each row is log-concave and no bin is less likely than the endpoints, which
-fits with Section~\ref{sec:allbin}, where every endpoint crossing is at least $\tfrac23$.
+Let $N\ge2$ and $g_N(x)=\sum_kP_N(k)x^k$. The zeros of $g_N$ behave
+differently on the 2 sides of $p=\frac12$. First let $0<p\le\tfrac12$. By \eqref{eq:rec},
+$g_N=p(1+x)g_{N-1}+(1-2p)xg_{N-2}$ with a nonnegative last coefficient. Then
+every $g_N$ has only real zeros, as in the proof
+of~\cite[Proposition~4.2]{dekkingkong2011}, and they are negative since $g_N$
+has positive coefficients. By a classical result recalled by
+Pitman~\cite[Proposition~1]{pitman1997}, $K_N$ then has the law of a sum of
+$N$ independent Bernoulli variables. So each row is log-concave and no bin is
+less likely than the endpoints. This fits with Section~\ref{sec:allbin}, where
+every endpoint crossing is at least $\tfrac23$.
 
-Now let $\tfrac12\le p<1$, so that $u\le1$. Put $x_{i,i+1}=x_{i+1,i}=u$ for $1\le i<N$ and
-$x_{ij}=1$ for the other pairs $i\ne j$. For $S\subseteq\{1,\dots,N\}$ let $w$ be the word with $\sR$
-exactly at the positions in $S$. Each switch of $w$ is a pair of neighbors split by $S$, so
-$\prod_{i\in S,\,j\notin S}x_{ij}=u^{\chg(w)}$, and \eqref{eq:wordprob} gives the lattice-gas form
+Now let $\tfrac12\le p<1$, so that $u\le1$. Put $x_{i,i+1}=x_{i+1,i}=u$ for
+$1\le i<N$ and $x_{ij}=1$ for the other pairs $i\ne j$. For
+$S\subseteq\{1,\dots,N\}$ let $w$ be the word with $\sR$ exactly at the
+positions in $S$. Each switch of $w$ is a pair of neighbors split by $S$, so
+$\prod_{i\in S,\,j\notin S}x_{ij}=u^{\chg(w)}$, and \eqref{eq:wordprob} gives
 \[
 g_N(x)=\frac{p^{N-1}}2\sum_{S\subseteq\{1,\dots,N\}}x^{|S|}\prod_{i\in S,\,j\notin S}x_{ij}.
 \]
-The $x_{ij}$ are real and symmetric with $|x_{ij}|\le1$, so by the Lee--Yang circle
-theorem~\cite{leeyang1952}, in the form quoted by Ghosh~\cite{ghosh2012}, every zero of $g_N$ lies
-on the circle $|x|=1$. It applies because the boundaries are free, so only the $N-1$ bonds of the
-path carry a factor $u$, and the first step is uniform, so there is no boundary field. Also
-$u=e^{-2J}\le1$ means $J\ge0$, which holds exactly when $p\ge\tfrac12$.
+The $x_{ij}$ are real and symmetric with $|x_{ij}|\le1$, so by the Lee--Yang
+circle theorem~\cite{leeyang1952}, in the form quoted by
+Ghosh~\cite{ghosh2012}, every zero of $g_N$ lies on the circle $|x|=1$. It
+applies because the boundaries are free and the first step is uniform, so
+there is no boundary field, and because $u\le1$ (that is, $J\ge0$).
 
-At $p=\tfrac12$ we have $g_N=\bigl((1+x)/2\bigr)^N$, and both statements hold. For $\tfrac12<p<1$
-the zeros are never all real. Otherwise $K_N$ would again have such a law, with variance at most
-$N/4$. But the proof of Proposition~\ref{prop:var} gives
+At $p=\tfrac12$ we have $g_N=\bigl((1+x)/2\bigr)^N$, and both statements hold.
+For $\tfrac12<p<1$ the zeros are never all real. Suppose they were. Then $K_N$
+would again be a sum of $N$ independent Bernoulli variables, with variance at
+most $N/4$. But the proof of Proposition~\ref{prop:var} gives
 $\Var X_N=N+2\sum_{m=1}^{N-1}(N-m)\rho^m>N$, so $\Var K_N>N/4$.
 \end{remark}
 
 \begin{remark}[cylinder]\label{rem:cyl}
-On a cylinder whose rows have $c$ pegs the local rule is unchanged, so the position is $X_N$ modulo
-$2c$ in half-peg units. The Fourier coefficients of its law are $\varphi_N(\pi l/c)$, $0\le l<2c$,
-equal to $1$ and $(-1)^N$ at $l=0$ and $l=c$. For $0<p<1$ and $\theta\notin\pi\Z$ both eigenvalues
-of $M$ have modulus less than $1$, since real ones satisfy $|\lambda_\pm|\le p|\cos\theta|+q$ and
-complex ones have modulus $\sqrt\rho$. So $\varphi_N(\theta)\to0$ geometrically, also for a double
-eigenvalue $\lambda=p\cos\theta$, since then $(M-\lambda I)^2=0$ by the Cayley--Hamilton theorem and
-$M^n=\lambda^nI+n\lambda^{n-1}(M-\lambda I)$. Hence the law tends geometrically fast to the uniform
-law on the $c$ positions of the correct parity, with no normal shape in the limit.
+Kagey also asks about a board wrapped into a cylinder. Suppose each row has $c$
+pegs around the cylinder and the local rule is unchanged. Then the position is
+$X_N$ modulo $2c$ in half-peg units. The Fourier coefficients of its law are
+$\varphi_N(\pi l/c)$, $0\le l<2c$, and they equal $1$ and $(-1)^N$ at $l=0$
+and $l=c$. Let $0<p<1$ and $\theta\notin\pi\Z$. Then both eigenvalues of $M$
+have modulus less than $1$. Real ones satisfy
+$|\lambda_\pm|\le p|\cos\theta|+q<1$, and complex ones have modulus
+$\sqrt\rho<1$. So $\varphi_N(\theta)\to0$ geometrically. This also holds for a
+double eigenvalue $\lambda=p\cos\theta$, since then $(M-\lambda I)^2=0$ by the
+Cayley--Hamilton theorem and $M^n=\lambda^nI+n\lambda^{n-1}(M-\lambda I)$.
+Hence the law tends geometrically fast to the uniform law on the $c$ positions
+of the correct parity. In words, on a cylinder the ball forgets where it
+started, and there is no normal shape in the limit.
 \end{remark}

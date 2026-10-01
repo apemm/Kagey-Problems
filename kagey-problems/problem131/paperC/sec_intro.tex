@@ -1,107 +1,153 @@
 \section{Introduction}\label{sec:intro}
 
-Problem 131 of Kagey's Open Problem Collection~\cite{kagey131} asks about
-a Galton board where the ball tends to keep going the same way. Each bounce
-repeats the one before it with probability $p$, and the question is when
-the middle bin becomes as likely as an endpoint. In this paper we ask the
-same question when the direction follows a general finite Markov chain that
-rarely switches.
+Suppose you drop a ball through a Galton board with $N$ rows of pegs. At the
+first peg the ball goes left or right with probability $\frac12$. At every
+later peg it repeats its previous direction with probability $p$ and switches
+with probability $q=1-p$. Problem~131 of Kagey's Open Problem
+Collection~\cite{kagey131} asks for the law of the bin where the ball lands,
+and in particular when the middle bin is exactly as likely as an endpoint. An
+endpoint is reached by a single path, the one that never switches, so it has
+probability $\frac12p^{N-1}$. When $p$ is close to $1$ this path wins, and when
+$p$ is smaller the middle wins. Paper~A of this series~\cite{paperA} answers the
+question at every $N$. The 2 are equally likely when the expected number of
+switches $T=Nq$ is close to $\log N$. More precisely, the crossing value
+$z_N$ of $T$ satisfies $z_N+\frac12\log z_N=\log N+\frac12\log\frac\pi8+o(1)$.
 
-Let $Q$ be a generator on $[d]=\{1,\dots,d\}$, with rates $q_{ij}\ge0$ for
-$i\ne j$ and exit rates $q_i=\sum_{j\ne i}q_{ij}$, and let $\mu$ be a
-starting law. We run the chain $X_1,\dots,X_N$ with $X_1\sim\mu$ and
-transition matrix $I+(T/N)Q$, and we write $L=\log N$ and $T=\tau L$. So at
-each step the chain leaves state $i$ with probability $Tq_i/N$, and $N$
-steps look like the continuous-time chain with generator $Q$ run for time
-$T$. The composition $n=(n_1,\dots,n_d)$ counts the visits to each state,
-and it plays the role of the bin. Its support is a face $F$ of the simplex.
-Kagey's question becomes which face holds the most likely composition, and
-at which $T$ the mode moves from one face to another. For $d=2$,
-$q_{12}=q_{21}=1$ and a uniform start this is the walk of Paper~A~\cite{paperA}
-with $T=N(1-p)$, and the middle bin against an endpoint is the edge against a
-vertex. With $q_{ij}=1$ for all $i\ne j$ and a uniform start it is the model of
-Paper~B~\cite{paperB}.
-
-For a face $F$ let $\lambda_F$ be the principal Dirichlet eigenvalue of
-$-Q$ on $F$, which is the rate at which the chain leaves $F$, and put
+Kagey also asks what changes on other boards. In this paper the ball can move
+in more than 2 directions. Our main example is Kagey's board in 2 dimensions.
+A ball moves on the square lattice $\Z^2$, one step east, north, west or south
+at a time. It starts in a uniform direction, and at each step it keeps its
+direction, turns left or right, or reverses. Turns and reversals are rare: a
+turn to each side has probability $rT/N$ and a reversal has probability $sT/N$.
+After $N$ steps, which is more likely: the corner $(N,0)$, which only the path
+that never turns can reach, or the origin? We show that for every even $N\ge4$
+there is exactly one value $T^*_N$ of $T$ at which the 2 are equally likely,
+and that
 \[
- \Phi_\tau(F)=\tau\lambda_F+\lvert F\rvert-1 .
+ \frac{T^*_N}{\log N}\to\min\Bigl(\frac2{2r+s},\frac1s\Bigr)
 \]
-Theorem~\ref{thm:first} shows for every start that if some path of
-positive probability has support exactly $F$, then the most likely
-composition with support $F$ has probability $N^{-\Phi_\tau(F)+o(1)}$, and
-that every global mode lies on a face that minimizes $\Phi_\tau$. Note that
-a path with support $F$ must enter the $\lvert F\rvert-1$ other states of
-$F$, and each first entry is a switch of probability about $T/N$. A later run in a state needs another
-switch, but it also multiplies the number of ways to place the runs by a
-factor of order $N$, so it is not penalized. Staying inside $F$ for time
-$T$ has probability about $e^{-T\lambda_F}$. With $T=\tau\log N$ both
-factors are powers of $N$. So a sticky walk prefers a well-separated
-community, a set of states with a small exit rate for its size. The
-winners are read off the lower-left boundary of the convex hull of the
-points $(\lambda_F,\lvert F\rvert-1)$, and the winner changes at values of
-$\tau$ equal to minus the slopes of the edges of this boundary
-(Theorem~\ref{thm:hull}).
+(Proposition~\ref{prop:decomp} and Theorem~\ref{thm:planar-first}). When
+reversals dominate ($s>2r$) the origin is reached mostly by paths that stay on
+one axis, and then $sT^*_N$ is the crossing $z_{N/2}$ of Kagey's board with
+$N/2$ steps, up to $O(N^{-\gamma})$ (Theorem~\ref{thm:planar-rev}). When turns
+dominate ($s<2r$) the origin is reached mostly by paths that use all 4
+directions.
 
-Say that $F$ satisfies (H) if its switching graph is strongly connected
-and $\mu(F)>0$, write $k=\lvert F\rvert$, and let $M_F$ be the largest
-probability of a composition with support $F$. We prove a local law inside
-the face (Theorem~\ref{thm:local}) and deduce that
+\subsection{Face selection}\label{sec:intro-faces}
+
+The planar result is an instance of a general principle, which is the main
+subject of this paper. Let the direction be a Markov chain on $d$ states that
+switches from state $i$ to state $j$ with probability $q_{ij}T/N$ at each step,
+and count the visits to each state. This count vector, the
+\emph{composition}, plays the role of the bin. Its support is a set $F$ of
+states, which we call a \emph{face} (it indexes a face of the simplex of
+visit fractions). Which face carries the most likely composition, and at which
+$T$ does the mode move to another face? On Kagey's board there are 2 states,
+the faces of 1 state are the 2 endpoints and the face of 2 states is the set of
+interior bins.
+
+Put $T=\tau\log N$ and let $\lambda_F$ be the rate at which the chain leaves
+$F$, that is, the principal Dirichlet eigenvalue on $F$ of $-Q$, where $Q$ is
+the matrix of the rates $q_{ij}$. How likely the best composition with
+support $F$ is depends on 2 effects.
+\begin{itemize}
+\item \emph{The cost of staying.} The chain must stay inside $F$ for all $N$
+steps. This has probability about $e^{-T\lambda_F}=N^{-\tau\lambda_F}$. A
+larger face is harder to leave, so staying on it is cheaper.
+\item \emph{The cost of spreading.} The mass of $F$ is shared among the
+compositions with support $F$, and there are about $N^{\lvert F\rvert-1}$ of
+them, one factor $N$ for each free coordinate. Up to powers of $\log N$, the
+best single composition gets a share $N^{-(\lvert F\rvert-1)}$.
+\end{itemize}
+So the most likely composition with support $F$ has probability
+$N^{-\Phi_\tau(F)+o(1)}$, where
+\[
+ \Phi_\tau(F)=\tau\lambda_F+\lvert F\rvert-1,
+\]
+and every mode sits on a face that minimizes $\Phi_\tau$
+(Theorem~\ref{thm:first}). In words, a sticky walk prefers a well-separated
+community, a set of states that is hard to leave for its size. As $\tau$ grows
+the cost of staying counts for more, and the mode moves to larger faces. On
+Kagey's board an endpoint has $\Phi_\tau=\tau$ and the interior has
+$\Phi_\tau=1$, so the middle takes over at $\tau=1$, which is the first-order
+form of the answer of Paper~A. Section~\ref{sec:worked} works out 4 states on
+a cycle by hand, and Theorem~\ref{thm:hull} reads the winners off the convex
+hull of the points $(\lambda_F,\lvert F\rvert-1)$.
+
+The planar walk fits this picture. The corner is the face of the single
+direction east, with exit rate $2r+s$, so it has probability about
+$N^{-(2r+s)\tau}$. The origin is reached either along an axis, with exit rate
+$2r$, or with all 4 directions, with exit rate $0$. Comparing the 3 exponents
+gives the limit above (Section~\ref{sec:planar}).
+
+First order fixes the crossing only up to a factor $1+o(1)$. To locate it up to
+$o(1)$ we need the constant in front. Say that a face $F$ satisfies (H) if the
+chain can move between any 2 states of $F$ without leaving $F$, and the start
+gives $F$ positive mass. For such faces we prove a local limit theorem inside
+the face (Theorem~\ref{thm:local}). It shows (Theorem~\ref{thm:facemax}) that
+the best composition with support $F$, with $k=\lvert F\rvert$ states, has
+probability
 \[
  M_F=N^{-(k-1)}\,T^{(k-1)/2}K_F\,e^{-T\lambda_F}\bigl(1+O(1/T+T^2/N)\bigr)
 \]
-uniformly for $1\le T\le N^{1/3}$, with an explicit constant $K_F$
-(Theorem~\ref{thm:facemax}). Now take 2 faces $F$ and $G$ with (H), and put
-$\Delta=\lvert F\rvert-\lvert G\rvert\ge1$ and $\delta=\lambda_G-\lambda_F>0$.
-Then every $T_N\in[1,N^{1/3}]$ with $M_F=M_G$ satisfies
+uniformly for $1\le T\le N^{1/3}$, with an explicit constant $K_F$. The factor
+$T^{(k-1)/2}$ appears because the visit fractions fluctuate on the scale
+$T^{-1/2}$ in each of the $k-1$ free directions. Now let $F$ and $G$ satisfy
+(H), and suppose that $F$ has $\Delta\ge1$ more states than $G$ and an exit rate
+smaller by $\delta>0$. Then for large $N$ every $T\in[1,N^{1/3}]$ with $M_F=M_G$ satisfies
 \[
- \delta T_N+\frac\Delta2\log T_N=\Delta L-\log\frac{K_F}{K_G}
- +O\Bigl(\frac1L\Bigr)
+ \delta T+\frac\Delta2\log T=\Delta\log N-\log\frac{K_F}{K_G}
+ +O\Bigl(\frac1{\log N}\Bigr)
 \]
-(Theorem~\ref{thm:crossing}), and in each first-order tie window where every
-tied face satisfies (H), for example when $Q$ has symmetric support or $\mu$
-has full support, the global mode follows the upper envelope of explicit lines
-(Theorem~\ref{thm:window}). So the coefficient $\frac12$ of $\log\log N$ in
-Papers~A and~B holds for every such pair, whatever the graph, the rates,
-the sizes or the start, and without reversibility. For reversible faces
-$K_F$ involves the square root of a weighted count of spanning trees
-(Proposition~\ref{prop:constant}). The constant $c_0=\frac12\log(\pi/8)$ of
-Paper~A and the constants $a_k$ of Paper~B are short corollaries, and the
-$a_k$ come from the $k^{k-2}$ spanning trees of the complete graph $K_k$
-(Corollaries~\ref{cor:paperA} and~\ref{cor:paperB}). Without (H) the
-coefficient can change. On a directed 3-cycle the mode passes through a
-reducible face, and the 2 crossings have coefficients $1$ and $0$
-(Proposition~\ref{prop:threecycle}).
+(Theorem~\ref{thm:crossing}). So the coefficient $\frac12$ of $\log\log N$ that
+Papers~A and~B found holds for every such pair, whatever the graph, the rates,
+the sizes or the start, and without reversibility. For reversible faces $K_F$
+involves the square root of a weighted count of spanning trees
+(Proposition~\ref{prop:constant}), and the constants of Papers~A and~B are short
+corollaries (Corollaries~\ref{cor:paperA} and~\ref{cor:paperB}). Without (H)
+the coefficient can change. On a directed 3-cycle it is $1$ at one crossing and
+$0$ at the next (Proposition~\ref{prop:threecycle}). Section~\ref{sec:examples}
+computes all the constants on the 4-cycle, shows that the start can decide which
+face wins, and lists the winners on other graphs.
 
-Section~\ref{sec:examples} works out the 4-cycle with all its constants.
-A vertex, then an adjacent pair, then the whole cycle carry the mode, the
-first step is the crossing of Paper~A, and the arc of 3 states never wins
-(Corollary~\ref{cor:C4}). On $K_3$ with the start $(\frac12,\frac12,0)$ an edge
-carries the mode on a window of width $\log(16/(9\sqrt3))=0.026$ in $T$, which
-the uniform start does not allow (Corollary~\ref{cor:K3start}). So the start
-can decide which face wins. Table~\ref{tab:outcomes} lists the winners on
-other graphs. On the paw the mode leaves its first vertex, and on the house
-it jumps to a disjoint community. Section~\ref{sec:planar} treats the
-planar persistent walk, which is Kagey's board in 2 dimensions. At each
-step the walk turns left or right with probability $rT/N$ each and reverses
-with probability $sT/N$. The corner $(N,0)$ and the origin cross exactly
-once (Proposition~\ref{prop:decomp}), at a value $T^*_N$ with
-$T^*_N/\log N\to\min(2/(2r+s),1/s)$ (Theorem~\ref{thm:planar-first}). When
-reversals dominate, $sT^*_N$ is the crossing of Paper~A for $N/2$ steps up
-to $O(N^{-\gamma})$, since the 2 axes double the mass at the origin
-(Theorem~\ref{thm:planar-rev}). When turns dominate, a 2-dimensional local
-limit changes the coefficient of $\log T$ to $1$
-(Remark~\ref{rem:planar-turns}, where we omit the proofs).
+The paper closes with 2 applications, and nothing before them depends on them.
 Section~\ref{sec:sticky} applies face selection to sticky priors for hidden
-Markov models. It finds the support of the most likely composition under
-the prior, shows that among symmetric kernels only the uniform kernel of
-Paper~B jumps from 1 state straight to all of them, and finds the
-probability of such a jump under the sticky HDP prior with 3 states and
-uniform base weights, about
-$3\sqrt3/(8\pi\omega)$ for a large concentration $\omega$.
-Section~\ref{sec:fisher} shows that the endpoint of Paper~A's walk keeps
-about $1/(2T)$ of the Fisher information about the switching rate, so about
-$1/(2\log N)$ at Kagey's crossing, with a large correction.
+Markov models, and Section~\ref{sec:fisher} asks how much of the Fisher
+information about the switching rate is left when we only see the bin of
+Kagey's board. Section~\ref{sec:model} fixes the notation,
+Section~\ref{sec:verify} describes the computer checks and open questions, and
+the longer proofs are in the appendices.
+
+\subsection{The series}\label{sec:series}
+
+This is the third of 4 papers on Problem~131, \emph{The middle and the ends
+I--IV}. We call them Papers~A to~D, so that Paper~A~\cite{paperA} is part~I,
+Paper~B~\cite{paperB} is part~II, this paper is part~III and
+Paper~D~\cite{paperD} is part~IV. They share the following notation.
+\begin{itemize}[leftmargin=1.5em,itemsep=1pt,topsep=3pt]
+\item Kagey's board has $N$ steps (his row $n$ has $N=n-1$). The first step is
+left or right with probability $\frac12$, and each later step repeats the
+previous one with probability $p$. We write $q=1-p$ and $u=q/p$, the odds of a
+switch.
+\item $P_N(k)$ is the probability of $k$ right steps, that is, that the ball
+lands in bin $k$. The endpoints have $P_N(0)=P_N(N)=p^{N-1}/2$.
+\item $L=\log N$, and $T=Nq$ is the expected number of switches (up to the
+first step).
+\item The crossing is the value of $p$ (or $T$) at which a bin is exactly as
+likely as an endpoint. For the middle bin it is $p_N$, and $z_N=N(1-p_N)$.
+\item With $d$ states, a face $F$ is a nonempty set of states, and the vertices
+are the faces of size $1$. $\lambda_F$ is the principal Dirichlet eigenvalue of
+$-Q$ on $F$, and $K_F$ is the second-order constant.
+\end{itemize}
+Paper~A solves Kagey's board: uniform Bessel bounds bracket $z_N$ for every
+$N\ge2$ and give $z_N+\frac12\log z_N=L+c_0+1/(8z_N)+R_N$ with
+$c_0=\frac12\log(\pi/8)$ and an explicit $R_N$. Paper~B lets the ball switch to
+each of $d-1$ other directions at the same rate; there every face ties at first
+order, and constants $a_k$ break the tie at second order. Paper~D asks what
+memory changes. The present paper treats every rate matrix $Q$. It explains
+which face carries the mode and why, computes the constants $K_F$, recovers
+$c_0$ and $a_k$ as special cases, and applies all this to the planar walk.
+Figure~\ref{fig:program} compares the crossings of the 4 papers.
 
 \begin{figure}[t]
 \centering
@@ -111,42 +157,12 @@ for Papers~A to~D. The scale is $T$ for Papers~A to~C, $x=n\varepsilon$ for the
 elephant walk and the expected number of switches for the aging walk of
 Paper~D. The bold curve solves the first crossing equation of
 Remark~\ref{rem:planar-turns} for the planar walk with $r=s=1$, without its
-$o(1)$ term.
+$o(1)$ term. The curve A is $z_N$, and the curves B are the face crossings of
+Paper~B.
 (b) The exponent $e(\alpha)=1-\alpha+1/\alpha$ of Paper~D for runs with heavy
 tails, which changes sign at the golden ratio $\varphi$.}
 \label{fig:program}
 \end{figure}
-
-This is the third of 4 papers on Problem 131 (Figure~\ref{fig:program}).
-Paper~A~\cite{paperA} treats the walk with 2 states, which is the zero-field
-Ising chain in 1 dimension with free boundaries. It proves explicit uniform
-Bessel bounds for every bin and brackets the crossing $p_N$ for every $N\ge2$,
-analytically for $N\ge175$ and with exact certificates below that, all checked
-in Lean. This gives the crossing equation
-$z_N+\frac12\log z_N=L+c_0+1/(8z_N)+R_N$ for $z_N=N(1-p_N)$, with an explicit
-$R_N$. Paper~A also proves a uniform local law for every switching probability
-$1-p\le\frac12$, from the diffusive to the ballistic regime.
-Paper~B~\cite{paperB} treats the complete graph, which is the $d$-state Potts
-chain in 1 dimension. There every face ties with the vertices at first order,
-and Paper~B resolves the tie at second order. Its constants $a_k$ are the mass
-of a face over a Gaussian volume, square roots of weighted spanning-tree sums,
-and the mode changes exactly once, from the vertices to the full centers. A
-start law or a weak field shifts the constants. The present paper gives the
-general theory for the transition matrix $I+(T/N)Q$, with face selection at
-first order, the constants $K_F$ and the crossing equation at second order for
-strongly connected faces, and the planar persistent walk as the application. Paper~D~\cite{paperD} asks what
-memory changes. The elephant random walk with $n$ steps crosses at
-$x_n=2z_n-\log(2\pi)+o(1)$, about twice the Markov value, and its profile has 2
-humps. Runs with heavy tails have a threshold at the golden ratio, and aging
-walks get a short remark. The
-4 papers share the notation $N$, $L$, $T$, $z_N$, $\lambda_F$ and $K_F$.
-
-Section~\ref{sec:model} sets up the model and the exact
-law, Sections~\ref{sec:firstorder} and~\ref{sec:secondorder} prove the
-first-order and second-order results, Sections~\ref{sec:examples}
-to~\ref{sec:fisher} treat the examples and the applications, and
-Section~\ref{sec:verify} describes the checks and lists open questions. The
-longer proofs are in the appendices.
 
 \subsection{Related work}\label{sec:related}
 
@@ -163,18 +179,17 @@ prove an inequality between their rate, the Donsker--Varadhan rate and the
 exit rate, and they conjecture equality (their (2.15)). For a finite chain
 with $Q_F$ irreducible, the fact that $\lambda_F$ is the least value of $I_F$
 is the variational formula of Donsker and Varadhan~\cite{dv1975}, which needs
-no reversibility. Proposition~\ref{prop:rate}(a) gives a short proof in our
+no reversibility; Proposition~\ref{prop:rate}(a) gives a short proof in our
 notation. This does not address the conjecture of Guillin, Nectoux and Wu,
-which concerns their conditional rate. The
-quasi-ergodic law goes back to Darroch and
-Seneta~\cite{darrochseneta1965,darrochseneta1967}, and Colonius and
+which concerns their conditional rate. The quasi-ergodic law goes back to
+Darroch and Seneta~\cite{darrochseneta1965,darrochseneta1967}, and Colonius and
 Rasmussen~\cite{coloniusrasmussen2021} treat the reducible case. Dietz and
 Sethuraman~\cite{dietz2007} study chains that switch from $i$ to $j$ at
-time $n$ with probability $G(i,j)/n$, where every $G(i,j)>0$. Their chains also make about $\log n$
-switches, but spread log-uniformly in time, and their occupation fractions
-have a limit law with full support on the simplex. In~\cite{dietz2005} they
-prove large deviations for chains whose transition matrices converge to a
-reducible matrix.
+time $n$ with probability $G(i,j)/n$, where every $G(i,j)>0$. Their chains
+also make about $\log n$ switches, but spread log-uniformly in time, and their
+occupation fractions have a limit law with full support on the simplex.
+In~\cite{dietz2005} they prove large deviations for chains whose transition
+matrices converge to a reducible matrix.
 
 Exact laws of transition counts go back to Whittle~\cite{whittle1955},
 Dawson and Good~\cite{dawsongood1957} and Goodman~\cite{goodman1958}.
@@ -182,13 +197,12 @@ Polettini~\cite{polettini2015} and Carugno, Vivo and Coghi~\cite{cvc2022}
 derive them from the BEST theorem and the matrix-tree theorem when every
 count grows linearly. We group the words by runs instead
 (Lemma~\ref{lem:runs}), which suits a regime with $O(\log N)$ switches.
-Bertini, Gabrielli and Landim~\cite{bgl2024} and
-Landim~\cite{landim2023} expand the level-two rate functions of finite
-chains whose rates depend on a parameter. They describe the time scales of
-such chains but do not ask where the mode of the composition sits. The
-sticky HDP-HMM of Fox, Sudderth, Jordan and Willsky~\cite{fox2011} adds a
-self-transition bias to the hierarchical Dirichlet process hidden Markov
-model.
+Bertini, Gabrielli and Landim~\cite{bgl2024} and Landim~\cite{landim2023}
+expand the level-two rate functions of finite chains whose rates depend on a
+parameter. They describe the time scales of such chains but do not ask where
+the mode of the composition sits. The sticky HDP-HMM of Fox, Sudderth, Jordan
+and Willsky~\cite{fox2011} adds a self-transition bias to the hierarchical
+Dirichlet process hidden Markov model.
 
 On the lattice the correlated random walk goes back to
 Gillis~\cite{gillis1955}. Chen and Renshaw~\cite{chenrenshaw1992} treat the

@@ -1,25 +1,30 @@
 \section{A general start}\label{sec:general-start}
 
-In this section the start law $\mu$ is arbitrary, and the chain moves as
-before. For a count vector $n$ with support $F$, Proposition~\ref{prop:dpmf}(b)
-gives
+Kagey's ball picks its first direction uniformly. Suppose instead that it
+starts in state $a$ with probability $\mu_a$, and moves as before. The start
+only affects the first run, so one might expect it to matter little. It does
+matter: it changes the constants $a_k$ by an amount of order $1$, which is
+exactly the order at which the faces are separated. So a start can decide which
+face wins.
+
+For a count vector $n$ with support $F$, Proposition~\ref{prop:dpmf}(b) gives
 \[
  P^\mu_N(n)=p^{N-1}\sum_{a\in F}\mu_aS^{(a)}_n(u)
  =p^{N-1}S_n(u)\sum_{a\in F}\mu_a\omega_a(n),\qquad
  \omega_a(n)=\frac{S^{(a)}_n(u)}{S_n(u)}.
 \]
-So the start enters only through the weights $\omega_a(n)$, which sum to 1. A
-vertex has $V^\mu_i=\mu_ip^{N-1}$. Throughout, $F$ is a face with $k=|F|\ge2$
-states and $\mu(F)=\sum_{a\in F}\mu_a>0$ (if $\mu(F)=0$, every bin with support
-$F$ has probability 0), and $i$ is a vertex with $\mu_i>0$.
+So the start enters only through the weights $\omega_a(n)$, which sum to $1$. A
+vertex has $V^\mu_i=\mu_ip^{N-1}$. Throughout this section, $F$ is a face with
+$k=|F|\ge2$ states and $\mu(F)>0$ (if $\mu(F)=0$, every bin with support $F$ has
+probability $0$), and $i$ is a vertex with $\mu_i>0$.
 
 \begin{lemma}[start weights]\label{lem:start-weights}
 Let $n$ be a positive count vector on $F$.
 \begin{enumerate}[(1)]
 \item If $n_a=n_b$, then $\omega_a(n)=\omega_b(n)$. So $\omega_a(n)=1/k$ for
 all $a\in F$ when $n$ is balanced and $k$ divides $N$.
-\item Fix $C>0$. There are $C_1$ and $N_0$, depending on $d$, $k$ and $C$, such that
-for $N\ge N_0$, $0<T\le CL$ and every balanced bin $n$ of $F$,
+\item Fix $C>0$. There are $C_1$ and $N_0$, depending only on $d$, $k$ and $C$,
+such that for $N\ge N_0$, $0<T\le CL$ and every balanced bin $n$ of $F$,
 \[
  \Bigl|\sum_{a\in F}\mu_a\omega_a(n)-\frac{\mu(F)}k\Bigr|
  \le\mu(F)\,C_1\frac{(1+T)^2}N.
@@ -27,18 +32,21 @@ for $N\ge N_0$, $0<T\le CL$ and every balanced bin $n$ of $F$,
 \end{enumerate}
 \end{lemma}
 
-The proof is in Appendix~\ref{app:start-field}.
+In words, a balanced bin forgets where the path started, up to a relative error
+$O(T^2/N)$. The proof is in Appendix~\ref{app:start-field}. For bins that are
+not balanced the weights are not uniform, and the next remark says what they
+are.
 
 \begin{remark}[where a conditioned path starts]\label{rem:start-weights}
 Under the uniform start, $\omega_a(n)$ is the probability that the chain starts
 in $a$ given $K_N=n$. Fix a compact set $\mathcal K$ in the open face and
 $0<c<C$, and put $\alpha=n/N$ and $A=\sum_{b\in F}\sqrt{\alpha_b}$. Then
 $\omega_a(n)=\sqrt{\alpha_a}/A+O(1/L)$, uniformly for $\alpha\in\mathcal K$ and
-$cL\le T\le CL$ (proof omitted, and checked numerically). So a path
-conditioned to have fractions $\alpha$ starts in $a$ with probability close to
-$\sqrt{\alpha_a}/A$, and not $\alpha_a$. In the notation of
-Proposition~\ref{prop:kirchhoff}, $\sqrt\alpha$ is the Perron vector $h$ of the
-tilted generator.
+$cL\le T\le CL$ (proof omitted; checked numerically, see
+Section~\ref{sec:verify}). So a path conditioned to have fractions $\alpha$
+starts in $a$ with probability close to $\sqrt{\alpha_a}/A$, and not
+$\alpha_a$. In the notation of Proposition~\ref{prop:kirchhoff}, $\sqrt\alpha$
+is the Perron vector $h$ of the tilted generator.
 \end{remark}
 
 \begin{theorem}[face-center crossings with a start]\label{thm:start-crossings}
@@ -46,16 +54,16 @@ Let $n$ be a balanced bin of $F$.
 \begin{enumerate}[(1)]
 \item For every $N\ge k$, the ratio $P^\mu_N(n)/V^\mu_i$ is a polynomial in $u$
 with nonnegative coefficients, zero constant term and lowest term
-$(\mu(F)/\mu_i)(k-1)!\,u^{k-1}$. So it equals 1 at exactly one $p\in(0,1)$, and
+$(\mu(F)/\mu_i)(k-1)!\,u^{k-1}$. So it equals $1$ at exactly one $p\in(0,1)$, and
 the bin is more likely than the vertex below this $p$. If $k$ divides $N$, then
-$P^\mu_N(n)=\frac{\mu(F)}k\,p^{N-1}S_n(u)=\frac{d\mu(F)}k\,P^{\rm unif}_N(n)$.
+$P^\mu_N(n)=\frac{\mu(F)}k\,p^{N-1}S_n(u)=\frac{d\mu(F)}k\,P_N(n)$.
 So the crossing solves $S_n(u)=k\mu_i/\mu(F)$, its $u$ decreases strictly along
 $N\in k\Z$, and at $N=k$ it is $u=(\mu_i/(\mu(F)(k-1)!))^{1/(k-1)}$.
 \item Fix $C>0$ and let $N_0$ be as in Lemma~\ref{lem:start-weights}(2). For
-$N\ge N_0$, uniformly for $0<T\le CL$,
+$N\ge N_0$, uniformly for $0<T\le CL$ and over all $\mu$,
 $P^\mu_N(n)=\frac{\mu(F)}k\,p^{N-1}S_n(u)\bigl(1+O((1+T)^2/N)\bigr)$.
-\item Put $a_k(\mu)=a_k+\frac1{k-1}\log\frac{k\mu_i}{\mu(F)}$. For large $N$,
-uniformly for $cL\le T\le CL$,
+\item Put $a_k(\mu)=a_k+\frac1{k-1}\log\frac{k\mu_i}{\mu(F)}$. Fix $0<c<C$. For
+large $N$, uniformly for $cL\le T\le CL$ and over all $\mu$,
 \[
  \log\frac{P^\mu_N(n)}{V^\mu_i}=(k-1)\bigl[\Psi_N(T)-a_k(\mu)\bigr]
  -\frac{k-1}{8T}+O\Bigl(\frac1{T^2}+\frac{T^2}N\Bigr).
@@ -68,20 +76,27 @@ compact sets of $t$.
 \end{enumerate}
 \end{theorem}
 
+In words, a start changes only the constant of each crossing, by the logarithm
+of the start mass of the face against that of the vertex, per new state. The
+error terms do not depend on $\mu$, but the expansions of the crossing do,
+through $a_k(\mu)$.
+
 \begin{proof}
 (1) Each $S^{(a)}_n$ has nonnegative coefficients, zero constant term and lowest
 term $(k-1)!\,u^{k-1}$, from the $(k-1)!$ orders of the states that start with
-$a$, with each state in a single run. So the ratio increases strictly from 0 to
-$\infty$ in $u$, and $u=r/p$ decreases from $\infty$ to 0 on $(0,1)$. If $k$
-divides $N$, Lemma~\ref{lem:start-weights}(1) gives
+$a$, with each state in a single run. So the ratio increases strictly from $0$
+to $\infty$ in $u$, and $u=r/p$ decreases from $\infty$ to $0$ on $(0,1)$. If
+$k$ divides $N$, Lemma~\ref{lem:start-weights}(1) gives
 $\sum_a\mu_a\omega_a(n)=\mu(F)/k$. The rest of (1) is about $S_n$, which
 increases strictly along $N\in k\Z$ at every $u>0$ and equals $k!\,u^{k-1}$ at
 $N=k$, by the proof of the exact part of Theorem~\ref{thm:simplex-crossing}.
-(2) is Lemma~\ref{lem:start-weights}(2). (3) By (1) and (2),
-$\log(P^\mu_N(n)/V^\mu_i)=\log S_n(u)-\log(k\mu_i/\mu(F))+O(T^2/N)$, and
-$S_n(u)=C_{N,k}/V_N$. So Theorem~\ref{thm:simplex-window} gives the display, and
-the rest follows as in the proof of Theorem~\ref{thm:simplex-crossing}, since
-only the constant has changed.
+
+(2) is Lemma~\ref{lem:start-weights}(2), divided by $\mu(F)/k$.
+
+(3) By (2), $\log(P^\mu_N(n)/V^\mu_i)=\log S_n(u)-\log(k\mu_i/\mu(F))+O(T^2/N)$,
+and $S_n(u)=C_{N,k}/V_N$. So Theorem~\ref{thm:simplex-window}(i) gives the
+display. The rest follows as in the proof of Theorem~\ref{thm:simplex-crossing},
+since only the constant has changed.
 \end{proof}
 
 In the notation of Paper~C~\cite{paperC}, where $K_F$ is the second-order
@@ -117,9 +132,13 @@ predicts that the largest bin on $F$ beats the balanced bins by a factor
 $1+\frac1{4\mu(F)^2T}\sum_{a\in F}(\mu_a-\mu(F)/k)^2+o(1/T)$. So balancing should
 fail there. We do not prove this.
 
+Now we compare all faces at once. Each face gets a line in the window
+coordinate $t$, and the highest line wins.
+
 \begin{remark}[global modes with a start]\label{rem:start-modes}
-Order the start weights as $\mu_{(1)}\ge\cdots\ge\mu_{(d)}$, put
-$M_k=\mu_{(1)}+\cdots+\mu_{(k)}$ and $T=L-\frac12\log L+t$, and define the lines
+This remark uses a result of Paper~C. Order the start weights as
+$\mu_{(1)}\ge\cdots\ge\mu_{(d)}$, put $M_k=\mu_{(1)}+\cdots+\mu_{(k)}$ and
+$T=L-\frac12\log L+t$, and define the lines
 \[
  \ell^\mu_1(t)=\log\mu_{(1)},\qquad
  \ell^\mu_k(t)=\log\frac{M_k}k+(k-1)(t-a_k)\quad(2\le k\le d).
@@ -131,31 +150,36 @@ face maxima and tie windows with the constants $K_F$ above, that the best bin of
 each face has the same limit and that the lines decide the modes. So if
 $\max_k\ell^\mu_k(t)$ is attained only at $k=k^*$, then for this $t$ and all
 large $N$ every global mode of $P^\mu_N$ has exactly $k^*$ positive coordinates,
-and its support $S$ has $\mu(S)=M_{k^*}$. Adding 2 comparisons shows that the
-winning size is nondecreasing in $t$. Put $t^*=a_d+\frac1{d-1}\log(d\mu_{(1)})$,
-where $\ell^\mu_1$ and $\ell^\mu_d$ cross. Their maximum is convex with its only
-kink at $t^*$, and the other lines have slopes strictly between $0$ and $d-1$.
-So some size $2\le k\le d-1$ is the unique winner on an open interval of $t$ if
-and only if $\ell^\mu_k(t^*)>\ell^\mu_1(t^*)$ for some such $k$. For the uniform
-start $\ell^\mu_k(t^*)-\ell^\mu_1(t^*)=(k-1)(a_d-a_k)<0$, which agrees with
+and its support $S$ has $\mu(S)=M_{k^*}$.
+
+The winning size is nondecreasing in $t$. Indeed, if $k_1$ wins at $t_1$ and
+$k_2$ at $t_2>t_1$, adding the 2 comparisons gives $(k_2-k_1)(t_2-t_1)\ge0$. Put
+$t^*=a_d+\frac1{d-1}\log(d\mu_{(1)})$, where $\ell^\mu_1$ and $\ell^\mu_d$
+cross. Their maximum is convex with its only kink at $t^*$, and the other lines
+have slopes strictly between $0$ and $d-1$. So some size $2\le k\le d-1$ is the
+unique winner on an open interval of $t$ if and only if
+$\ell^\mu_k(t^*)>\ell^\mu_1(t^*)$ for some such $k$. For the uniform start
+$\ell^\mu_k(t^*)-\ell^\mu_1(t^*)=(k-1)(a_d-a_k)<0$, which agrees with
 Corollary~\ref{cor:simplex-modes}.
 \end{remark}
 
 \begin{remark}[the start decides which face wins]\label{ex:K3-start}
 Let $d=3$ and $\mu=(\frac12,\frac12,0)$, and put
-$t_{\rm ef}=\log\frac32+2a_3-a_2=\frac12\log\frac{32\pi}{243}$. For every fixed
-$t\in(a_2,t_{\rm ef})$ and all large $N$, the global modes are the balanced bins
-of the edge $\{1,2\}$. Below this window the modes are $(N,0,0)$ and $(0,N,0)$,
-and above it they have 3 positive counts. The window is
-$(-0.4673558,-0.4412978)$, of width $\log\frac{16}{9\sqrt3}=0.0260580$, while
-with the uniform start no proper face wins (Corollary~\ref{cor:simplex-modes}).
-Paper~C proves this window from its general tie-window theorem. In the terms of
-Remark~\ref{rem:start-modes}, the lines are $\log\frac12$ for the vertices 1
-and 2, $\log\frac12+t-a_2$ for the edge $\{1,2\}$, $\log\frac14+t-a_2$ for the
-edges through 3 and $\log\frac13+2(t-a_3)$ for the full face, and
-Theorem~\ref{thm:simplex-balance} applies on the edge since $\mu$ is constant
-there. Dynamic programs over all bins at $N=90$, $300$ and $1002$ confirm these
-modes at finite $N$ (numerically verified).
+$t_{\rm ef}=\log\frac32+2a_3-a_2=\frac12\log\frac{32\pi}{243}$. In the terms of
+Remark~\ref{rem:start-modes}, the lines are $\log\frac12$ for the vertices $1$
+and $2$, $\log\frac12+t-a_2$ for the edge $\{1,2\}$, $\log\frac14+t-a_2$ for the
+edges through $3$, and $\log\frac13+2(t-a_3)$ for the full face. The edge
+$\{1,2\}$ has the highest line exactly when $a_2<t<t_{\rm ef}$. So for every
+fixed $t$ in this window and all large $N$, the global modes are the balanced
+bins of the edge $\{1,2\}$, since Theorem~\ref{thm:simplex-balance} applies on
+the edge, where $\mu$ is constant. For fixed $t<a_2$ the modes are $(N,0,0)$ and
+$(0,N,0)$, and for fixed $t>t_{\rm ef}$ they have 3 positive counts. The window
+is $(-0.4673558,-0.4412978)$, of width $\log\frac{16}{9\sqrt3}=0.0260580$,
+while with the uniform start no proper face wins
+(Corollary~\ref{cor:simplex-modes}). Paper~C proves this window from its
+general tie-window theorem. Dynamic programs over all bins at $N=90$, $300$ and
+$1002$ confirm these modes at finite $N$ (numerically verified, see
+Section~\ref{sec:verify}).
 \end{remark}
 
 \begin{remark}[the window at finite $N$]\label{rem:K3-finite}
@@ -164,9 +188,10 @@ $u_N$, for every $N\ge2$, since $\mu$ is constant on $\{1,2\}$. Indeed
 $P^\mu_N(n_1,n_2,0)/P^\mu_N(N,0,0)=S_{(n_1,n_2)}(u)$, which is the polynomial of
 Paper~A~\cite{paperA} at $u=r/p$. This crossing is at $T=Nu_N/(1+2u_N)$, which
 differs from Paper~A's $z_N=Nu_N/(1+u_N)$ by $O(L^2/N)$. Near $t=a_2$ the lines
-of the full face and of the edges through 3 stay below those of the vertices, so
-for large $N$ this crossing is the lower end of the window. For the 2 ends at
-finite $N$ we use $z=Nu=T/p$. A heuristic calculation, which we do not prove, gives
+of the full face and of the edges through $3$ stay below those of the vertices,
+so for large $N$ this crossing is the lower end of the window. For the 2 ends at
+finite $N$ we use $z=Nu=T/p$. A heuristic calculation, which we do not prove,
+gives
 \[
  z-L+\tfrac12\log z=a_2+\frac1{8z}+\frac{z^2}{2N}+\cdots,\qquad
  z-L+\tfrac12\log z=t_{\rm ef}+\frac1{12z}+\frac{3z^2}{2N}+\cdots,
@@ -178,6 +203,6 @@ $\frac1{24z}$ of the best full-face bin over the balanced one. Without the terms
 $z^2/N$ the width is $0.0260580-0.0546957/L+\cdots$. Exact computations give
 the widths $0.0843$, $0.0324$, $0.0223$ and $0.0214$ at $N=300$, $3000$,
 $30000$ and $300000$, and the prediction gives $0.0802$, $0.0321$, $0.0226$ and
-$0.0217$ (numerically verified). Below $N$ of about $10^4$ the terms $z^2/N$ are
-larger than the terms $1/L$.
+$0.0217$ (numerically verified, see Section~\ref{sec:verify}). Below $N$ of
+about $10^4$ the terms $z^2/N$ are larger than the terms $1/L$.
 \end{remark}
