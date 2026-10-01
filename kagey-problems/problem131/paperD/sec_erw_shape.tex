@@ -48,10 +48,9 @@ then $k+1$ is odd with conditional probability $(1-\varepsilon)\frac
 bk+\varepsilon(1-\frac bk)=r_k(b)$, whatever else is known about $[k]$.
 \end{proof}
 
-So a single flip at $v$ turns every step of its family. The coupling with a
-random recursive tree is due to K\"ursten~\cite{kursten2016}, who uses bond
-percolation with retention probability $1-2\varepsilon$. The marks above give
-the same law of the walk. For $k\ge v$, if $\mathcal T_v$ contains $s$ of the
+So a single flip at $v$ turns every step of its family. K\"ursten's
+coupling~\cite{kursten2016} uses bond percolation with retention probability
+$1-2\varepsilon$ instead, which gives the same law of the walk. For $k\ge v$, if $\mathcal T_v$ contains $s$ of the
 vertices in $[k]$, then $k+1$ joins $\mathcal T_v$ with probability $s/k$.
 This is the urn of Lemma~\ref{lem:urn}, so $\lvert\mathcal T_v\rvert$ has the
 law $\beta_v$ and mean $N/v$, and on average there are $N/(d(d+1))$ families
@@ -63,9 +62,7 @@ $1\le m\le N-1$ (at $m=h$ this is $c_1\varepsilon$ of
 Proposition~\ref{prop:first-mutation}). This is also proved in Lean
 (Section~\ref{sec:verify}).
 
-To go beyond first order we cut the tree at the first flip. The next lemma
-says that the family of a vertex and the rest of the tree are independent
-random recursive trees.
+To go beyond first order we cut the tree at the first flip.
 
 \begin{lemma}[splitting]\label{lem:split}
 Let $\mathcal T$ be a random recursive tree on $[N]$, let $2\le v\le N$ and
@@ -276,22 +273,18 @@ and let $\delta'_N\to0$. Then
 uniformly for $\omega_Nx\log^2(x+1)\le m\le\delta'_NN$.
 \end{theorem}
 
-In words, far enough from the ends and from the middle, the chance of
-landing at distance $m$ from an end is the chance that exactly 1 flipped
-family has $m$ steps, halved because the first step must point to that end.
+In words, the chance of landing at distance $m$ from an end is the chance
+that a flipped family has $m$ steps, halved because the first step must point
+to that end.
 
 \paragraph{Idea of the proof.}
 The proof is in Appendix~\ref{app:shape}. For the lower bound we use the
 first flipped family, which has size $m$ with probability about
-$x/(m(m+1))$ by Lemma~\ref{lem:B-D}, while the other flips change the count
-only by a relative amount of order $x\log m/m$
-(Proposition~\ref{thm:B-local-lower}). For the upper bound we show
-$\Prob(M_N\ge m)\le\frac xm(1+O(x\log^2m/m))$
-(Proposition~\ref{thm:B-cum-upper}), and the unimodality of $f_N$ turns this
-into a local bound (Proposition~\ref{thm:B-local-upper}). The mirror term
-$f_N(N-m)$ is at most $C_N=O(x/N^2)$ by Lemma~\ref{lem:unimodal} and
-Theorem~\ref{thm:erw-bounds}(b). So bin $N-m$ is reached through a family of
-size $m$ only when $X_1=+1$, and this gives the constant $\frac12$.
+$x/(m(m+1))$ (Lemma~\ref{lem:B-D}), while the other flips change the count
+only by a relative amount of order $x\log m/m$. For the upper bound we show
+$\Prob(M_N\ge m)\le\frac xm(1+O(x\log^2m/m))$, and the unimodality of $f_N$
+turns this into a local bound. The mirror term $f_N(N-m)$ is at most
+$C_N=O(x/N^2)$, which gives the constant $\frac12$.
 
 At $N=10^6$, $x=22.4407$ and $m=10^4$ the exact ratio $P_N(N-m)/(x/m^2)$ is
 $0.51889$. At moderate $m$, $\CP_N$ suggests
