@@ -71,8 +71,8 @@ section and appendix files, the check scripts and `paperC/README.md`.
 ## Paper D: Endpoint crossings for random walks with memory
 
 Paper D asks what memory changes. In the elephant random walk each step copies a uniformly chosen
-earlier step and flips it with probability eps. The crossing x_n = n eps_n is unique and
-x_n = 2 z_n - log(2 pi) + o(1), about twice the Markov value. The law at the crossing has 2 humps,
+earlier step and flips it with probability eps. The crossing x_N = N eps_N is unique and
+x_N = 2 z_N - log(2 pi) + o(1), about twice the Markov value. The law at the crossing has 2 humps,
 one near each end. For alternating runs with P(xi >= k) = k^(-alpha) and 1 < alpha < 2, the ends win
 for large n exactly when alpha is below the golden ratio. A short remark treats aging walks, where
 the crossing with a fixed first step is exactly c = 1.
