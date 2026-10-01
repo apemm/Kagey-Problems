@@ -26,8 +26,10 @@ corners.
 - Three rows solved (2026-09-21): max blackout m+2 for every m>=3.
 - Four rows solved (2026-09-21): max blackout m+4 for every m>=6. For 4x4 and 4x5 it is 7 and 8,
   by checking every blackout that could reach the upper bound.
+- 5 x 5 solved (2026-10-01): max blackout 10. A bipartite graph on 10 vertices with no C4 or C6
+  has at most 10 edges. The 8 optima (one D4 orbit) are computational.
 - Upper bound: max blackout <= m+floor(n^2/4) for m>=3, and the transposed bound when n>=3.
   Proof: the row-column incidence graph has no C4 or C6, then Mantel.
 - Proofs in `paper/narrow_rows.tex`; checks in `verify_narrow.py`.
 - Still open: classifying and counting optima beyond strips; Excess-1 when both dimensions are
-  >= 5; comparing the incidence-graph formulation with the literature.
+  >= 5, beyond 5 x 5; comparing the incidence-graph formulation with the literature.

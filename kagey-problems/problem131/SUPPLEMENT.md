@@ -133,12 +133,12 @@ and integrals and that the remark on the bulk uses a computed sign.
 
 | Result that rests on computation | Script | The 2 methods |
 | --- | --- | --- |
-| The upper bound on C_n in the bounds theorem for the elephant walk (the constant 5200) | `verify_elephant_crossing.py` | The series sum over t of t^2 log(t+1) 2^(-t/2) = 102.59 by mpmath and by a direct sum, so 3 + 50.4 times it is below 5200. |
+| The upper bound on C_N in the bounds theorem for the elephant walk (the constant 5200) | `verify_elephant_crossing.py` | The series sum over t of t^2 log(t+1) 2^(-t/2) = 102.59 by mpmath and by a direct sum, so 3 + 50.4 times it is below 5200. |
 | The golden-ratio corollary, C(phi) = 0.7761317206 and the factor 1.2884 | `verify_heavy_runs.py` | The general formula for C(alpha) and the closed form at the golden ratio. |
 | The remark on the bulk, f_L''(lambda_0) = -0.0789 (computed, not certified) | `verify_elephant_shape.py` | The Landau density by a real integral and by Fourier inversion. |
-| The convexity conjecture, checked for 10 <= n <= 600 and n = 1600, 3200, ..., 25600 | `verify_elephant_shape.py` | The law from the minority-count chain and from the law of A_n directly. |
-| The ranges after the dip corollary (x_n >= 2(1 - eps_n) for 8 <= n <= 600 and on the grid n = 50 * 2^k <= 51200) | `verify_elephant_shape.py` and `verify_elephant_crossing.py` | The crossing from the minority-count chain and from the full law of A_n. |
-| The numbers in the remarks on the refined crossing, on other exponents and on crossover sizes | `verify_elephant_crossing.py` and `verify_heavy_runs.py` | For the elephant walk the 2 methods above. For heavy tails the two-renewal formula and a spectral method, and for small n a first-run recursion and a sum over all run compositions. |
+| The convexity conjecture, checked for 10 <= N <= 600 and N = 1600, 3200, ..., 25600 | `verify_elephant_shape.py` | The law from the minority-count chain and from the law of A_N directly. |
+| The ranges after the dip corollary (x_N >= 2(1 - eps_N) for 8 <= N <= 600 and on the grid N = 50 * 2^k <= 51200) | `verify_elephant_shape.py` and `verify_elephant_crossing.py` | The crossing from the minority-count chain and from the full law of A_N. |
+| The numbers in the remarks on the refined crossing, on other exponents and on crossover sizes | `verify_elephant_crossing.py` and `verify_heavy_runs.py` | For the elephant walk the 2 methods above. For heavy tails the two-renewal formula and a spectral method, and for small N a first-run recursion and a sum over all run compositions. |
 | The aging remark | `verify_aging.py` | A forward recursion, transfer matrices at roots of unity, and the path-weight form in exact rationals. |
 
 `verify_elephant_crossing.py` checks the crossing of the elephant walk, `verify_elephant_shape.py`

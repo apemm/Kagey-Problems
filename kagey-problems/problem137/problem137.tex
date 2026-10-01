@@ -37,6 +37,7 @@
 \newcommand{\Qneg}{\Q_{<0}}
 \newcommand{\hj}[1]{[#1]^{-}}                 % negative (HJ) continued fraction
 \newcommand{\lang}{\mathcal{L}}
+\newcommand{\old}[2]{\textcolor{black!50}{#1}_{\textcolor{black!50}{[#2]}}} % value seen before, with its rank
 
 % tree figure styles
 \tikzset{
@@ -46,6 +47,7 @@
   rk/.style={font=\tiny,text=black!55},
   ef/.style={draw=fred!75,thick},
   eg/.style={draw=gblue!75,thick},
+  eold/.style={->,>=stealth,densely dashed,draw=black!40,semithick},
   st/.style={circle,draw,minimum size=11mm,inner sep=0pt,font=\small},
 }
 
@@ -59,77 +61,135 @@
 \maketitle
 
 \begin{abstract}
-Start at $0$ and keep applying $f(x)=x+1$ and $g(x)=-1/x$. Every rational number shows up
-eventually, and sorting them by the first step at which they appear gives the tree in OEIS
-A226247/A226248. Let $a(n)$ be the number of rationals that first appear after $n$ steps.
-Kagey asks whether $a(n)=a(n-1)+a(n-3)$ for $n\ge 4$, whether the vertices reached last by $g$
-are exactly the negative ones, and whether the rationals at a given step can be described
-directly.
-
-We answer all 3 questions. The main tool is a formula for the rank $d(x)$ of a rational $x$,
-the step at which it first appears. We define a \emph{parent map} by $P(x)=x-1$ for $x>0$ and
-$P(x)=-1/x$ for $x<0$, and show that it takes $x$ back to $0$ in exactly $d(x)$ steps. If
-$x>0$ has negative (Hirzebruch--Jung) continued fraction $x=\hj{c_1,\dots,c_k}$, this gives
-$d(x)=c_1+\dots+c_k+k-1$, and there is a similar formula with the ordinary continued
-fraction. From here the tree structure follows. The generating function of $a(n)$ is
-$(1+t^2-t^3)/(1-t-t^3)$, so the recurrence holds for $n\ge4$ and fails at $n=3$. A vertex is
-reached last by $g$ exactly when it is negative, and the rationals of rank $n$ correspond to
-compositions of integers. This also fills the gap in the accepted Math.SE answer, which counted
-words in $f$ and $g$ but did not show that words and rationals match up one to one.
+Start at $0$ and keep applying the maps $x\mapsto x+1$ and $x\mapsto -1/x$, the second one only to
+nonzero numbers. Every rational is reached, and its rank is the least number of steps needed.
+Sorting the rationals by rank gives the tree in OEIS A226247/A226248. Kagey asks whether the number
+$a(n)$ of rationals of rank $n$ satisfies $a(n)=a(n-1)+a(n-3)$ for $n\ge4$, whether the vertices
+reached last by $x\mapsto-1/x$ are exactly the negative ones, and whether the rationals of a given
+rank can be described directly. We answer all 3 questions, and each answer is yes. The main tool is
+an exact formula for the rank: a positive rational with negative (Hirzebruch--Jung) continued
+fraction digits $c_1,\dots,c_k$ has rank $c_1+\dots+c_k+k-1$, and a negative $x$ has rank one more
+than $-1/x$. From this we get the tree structure, a description of each rank by compositions, and
+the generating function $(1+t^2-t^3)/(1-t-t^3)$ of $a(n)$. This also fills the gap in the accepted
+Math.SE answer, which counted words in the 2 maps but did not show that these words match the
+rationals one to one.
 \end{abstract}
 
 \section{Introduction}\label{sec:intro}
 
-In 2013 Kimberling \cite{oeisA226247} observed that the rational numbers can be generated from $0$ by the
-two maps
-\[
-f(x)=x+1, \qquad g(x)=-\frac1x ,
-\]
-and organized them into generations. Generation $1$ is $(0)$, and generation $n+1$ is made of
-the values $c+1$ and $-1/c$ (for $c\neq0$), over all $c$ in generation $n$, that have not
-appeared before. The resulting array is in OEIS as A226247 (denominators) and A226248
-(numerators) \cite{oeisA226247,oeisA226248}. It is not surprising that \emph{every} rational
-appears, since $f$ and $g$ generate the modular group $\mathrm{PSL}_2(\Z)\cong C_2 * C_3$ acting
-on the projective rational line \cite{serre1980,alperin1993}. We prove it again directly in
-Theorem~\ref{thm:dist}.
+\subsection{Kagey's questions}
 
-Writing $a(n)$ for the number of rationals appearing at the $n$-th step (with $a(0)=1$ for the root $0$),
-the observed values
+Suppose we start at $0$ and may make 2 kinds of moves: add $1$, or replace a nonzero number $x$
+by $-1/x$. We write
 \[
-1,\;1,\;2,\;2,\;3,\;5,\;7,\;10,\;15,\;22,\;32,\;47,\;69,\;101,\;\dots
+f(x)=x+1, \qquad g(x)=-\frac1x .
 \]
-suggest the recurrence $a(n)=a(n-1)+a(n-3)$. Kimberling's entry says, without a proof, that these
-counts are OEIS A097333 \cite{oeisA097333}. Kagey asked about this on Mathematics Stack Exchange in
-April 2025 \cite{kagey-mse}, and it is Problem 137 of his Open Problem Collection \cite{kagey137},
-together with two related questions.
+From $0$ the only move is $f$, to $1$. From $1$ we can move to $2$ or to $-1$, and so on. Every
+number we reach is rational, and every rational is reached (Theorem~\ref{thm:dist}). This is not a
+surprise, since $f$ and $g$ generate the modular group $\mathrm{PSL}_2(\Z)\cong C_2*C_3$, which acts
+on the rational projective line \cite{serre1980,alperin1993}. The \emph{rank} of a rational $x$ is
+the least number of moves that takes $0$ to $x$. Kimberling \cite{oeisA226247} sorted the
+rationals by rank in 2013. The result is the tree of OEIS A226247 (denominators) and A226248
+(numerators) \cite{oeisA226247,oeisA226248}, drawn in Figure~\ref{fig:tree}. Let $a(n)$ be the
+number of rationals of rank $n$. The sequence starts
+$1,1,2,2,3,5,7,10,15,22,32,47,69,101,\dots$, and Kimberling's entry says, without a proof, that it
+is A097333 shifted by one \cite{oeisA097333}.
 
+Kagey asked about this sequence on Mathematics Stack Exchange in April 2025 \cite{kagey-mse}, and
+it is Problem 137 of his Open Problem Collection \cite{kagey137}. He colors a rational
+\textcolor{fred}{red} if the last move on the way to it is $f$, and \textcolor{gblue}{blue} if it
+is $g$, and asks 3 questions.
 \begin{itemize}[leftmargin=2.2em]
 \item[\textbf{Q1.}] Is $a(n)=a(n-1)+a(n-3)$ for all $n\ge4$?
-\item[\textbf{Q2.}] Color a vertex \textcolor{gblue}{blue} if the last map applied to reach it is $g$, and
-\textcolor{fred}{red} if it is $f$.  Is a vertex blue if and only if its value is negative?
-\item[\textbf{Q3.}] Is there a way to characterize the rank-$n$ rational numbers?
+\item[\textbf{Q2.}] Is a vertex blue if and only if its value is negative?
+\item[\textbf{Q3.}] Is there a way to characterize the rationals of rank $n$?
 \end{itemize}
+We answer all 3 questions, and each answer is yes. The recurrence holds for every $n\ge4$, and it
+fails at $n=3$ (Theorem~A). A shortest way to reach a positive $x$ always ends with the move from
+$x-1$, and one to reach a negative $x$ always ends with the move from $-1/x$, so blue means
+negative (Theorem~C). The rank of a rational can be read off its continued fraction, so each rank
+can be listed directly (Theorem~B).
 
-The accepted answer to \cite{kagey-mse}, by the user mathmasterzach \cite{mmz}, got most of the
-way on Q1. Using $g^2=\mathrm{id}$ and $(g\circ f)^3=\mathrm{id}$, it noted that shortest words in
-$f$ and $g$ have to avoid certain patterns. It then counted the words that avoid them with a
-$14$-state transfer matrix and got the generating function $(1+t^2-t^3)/(1-t-t^3)$. But that
-counts \emph{words}, not \emph{rationals}. The answer does not show that every word avoiding the
-patterns is a shortest word, that different such words end at different rationals, or that every
-rational is reached. Those are the hard steps, and we prove them here. Our main tool is a formula
-for the rank of a single rational, which also answers Q3.
+\subsection{The first ranks by hand}\label{sec:hand}
 
-We write $d(x)$ for the rank of $x$, the least number of steps from $0$ to $x$
-(Definition~\ref{def:dist}). Rationals are always in lowest terms $p/q$ with $q\ge1$.
+Before any theory, here are ranks $0$ to $5$, worked out by hand. Rank $0$ is just $0$. To get
+rank $n$, we apply $f$ and $g$ to every rational of rank $n-1$ and keep the values we have not
+seen before. Table~\ref{tab:hand} shows the work, and Figure~\ref{fig:tree} shows ranks $0$ to $7$
+as a tree.
 
-\begin{thmA}[= Theorem~\ref{thm:main}]
-Let $a(n)$ be the number of rationals of rank $n$.  Then
+\begin{table}[ht]
+\centering\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}c l l c@{}}
+\toprule
+$n$ & moves from the rationals of rank $n-1$ & rank $n$ & $a(n)$\\
+\midrule
+0 & (start) & $0$ & 1\\
+1 & $0\mapsto 1$ \quad ($g(0)$ is not defined) & $1$ & 1\\
+2 & $1\mapsto 2,\ -1$ & $2,\ -1$ & 2\\
+3 & $2\mapsto 3,\ -\tfrac12$;\quad $-1\mapsto \old{0}{0},\ \old{1}{1}$ & $3,\ -\tfrac12$ & 2\\
+4 & $3\mapsto 4,\ -\tfrac13$;\quad $-\tfrac12\mapsto \tfrac12,\ \old{2}{2}$ &
+  $4,\ -\tfrac13,\ \tfrac12$ & 3\\
+5 & $4\mapsto 5,\ -\tfrac14$;\quad $-\tfrac13\mapsto\tfrac23,\ \old{3}{3}$;\quad
+  $\tfrac12\mapsto\tfrac32,\ -2$ & $5,\ -\tfrac14,\ \tfrac23,\ \tfrac32,\ -2$ & 5\\
+\bottomrule
+\end{tabular}
+\caption{Ranks $0$ to $5$. In row $n$, ``$x\mapsto u,\ v$'' means $f(x)=u$ and $g(x)=v$ for a
+rational $x$ of rank $n-1$. Gray values were found earlier, and the subscript in brackets is their
+rank.}
+\label{tab:hand}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\resizebox{0.88\textwidth}{!}{\input{fig_tree}}
+\caption{Ranks $0$--$7$ of the tree. \textcolor{fred}{Red} edges apply $f(x)=x+1$ and
+\textcolor{gblue}{blue} edges apply $g(x)=-1/x$. Every positive vertex is entered by an $f$-edge
+and every negative vertex by a $g$-edge (Theorem~C), and the vertices $\le-1$ are leaves. The
+dashed gray arrows show $f$ applied to the leaves $x<-1$: the value $x+1$ is not new, and its rank
+is $3$ less than that of $x$. The numbers on the left are ranks. The rows are Kimberling's
+generations \cite{oeisA226247}, with his generation $j$ being rank $j-1$.}
+\label{fig:tree}
+\end{figure}
+
+Already in these small cases we can see the answers.
+\begin{enumerate}[(a),itemsep=1pt,topsep=3pt]
+\item (Q2) Every positive rational in Table~\ref{tab:hand} is reached from $x-1$ by $f$, and every
+negative one from $-1/x$ by $g$. So red means positive and blue means negative.
+\item (Q1) A positive rational has 2 new images, a rational in $(-1,0)$ has 1, and a rational
+$\le-1$ has none. Since $g(g(x))=x$, the $g$-image of a negative $x$ is the rational $x$ came from.
+The other old values come from applying $f$ to some $x\le-1$: $f(-1)=0$ is the root, and
+$f(-2)=-1$ has rank $2$, which is $3$ ranks before $-2$ (Figure~\ref{fig:tree} shows 2 more such
+pairs). This jump back by $3$ ranks is where the term $a(n-3)$ comes from.
+\item (Q1) The counts $1,1,2,2,3,5$ satisfy $a(4)=a(3)+a(1)$ and $a(5)=a(4)+a(2)$, but $a(3)=2$ is
+one less than $a(2)+a(0)$. The defect comes from the root, the only rational where $g$ cannot be
+applied (Remark~\ref{rem:sharp}).
+\item (Q3) The positive rationals of rank $5$ are $5$, $\tfrac23=1-\tfrac13$ and
+$\tfrac32=2-\tfrac12$. Expansions of this kind are the key to Q3.
+\end{enumerate}
+The rest of the paper proves that these patterns hold at every rank. Theorem~C below is the
+precise form of (a) and (b).
+
+\subsection{Results}
+
+We write $d(x)$ for the rank of $x$ and $X_n$ for the set of rationals of rank $n$, so that
+$a(n)=|X_n|$ (Definition~\ref{def:dist}). Rationals are always in lowest terms $p/q$ with $q\ge1$.
+For integers $c_1,\dots,c_k$ the \emph{negative continued fraction} is
+\[
+\hj{c_1,c_2,\dots,c_k}=c_1-\cfrac{1}{c_2-\cfrac{1}{\ddots-\cfrac{1}{c_k}}},
+\]
+so that $\hj{1,3}=\tfrac23$ and $\hj{2,2}=\tfrac32$. The ordinary continued fraction
+$[b_0;b_1,\dots,b_m]$ is the same with plus signs instead of minus signs, with $b_0\ge0$ and
+$b_1,\dots,b_m\ge1$.
+
+\begin{thmA}[answers Q1; = Theorem~\ref{thm:main} and Proposition~\ref{prop:asymp}]
+The generating function of $a(n)$ is
 \[
 \sum_{n\ge0}a(n)\,t^n \;=\; \frac{1+t^2-t^3}{1-t-t^3}.
 \]
 Hence $a(n)=a(n-1)+a(n-3)$ for all $n\ge4$. It is false at $n=3$, since $a(3)-a(2)-a(0)=-1$, so we
-cannot lower the $4$. Also $a(n)=\mathrm{A097333}(n-1)$ for $n\ge1$, the number of \emph{positive}
-rationals of rank $n$ is Narayana's cows sequence $\mathrm{A000930}(n-1)$, and
+cannot lower the $4$. Also $a(n)=\mathrm{A097333}(n-1)$ for $n\ge1$, the number of
+\emph{positive} rationals of rank $n$ is Narayana's cows sequence $\mathrm{A000930}(n-1)$, and
 \[
 a(n)\;=\;C\,\psi^{\,n}+O\!\left(\psi^{-n/2}\right),\qquad
 C=\frac{\psi^2+\psi}{\psi^2+3}=0.7019310679\ldots,
@@ -137,65 +197,69 @@ C=\frac{\psi^2+\psi}{\psi^2+3}=0.7019310679\ldots,
 where $\psi=1.4655712318\ldots$ (the ``supergolden ratio'') is the real root of $\psi^3=\psi^2+1$.
 \end{thmA}
 
-\begin{thmB}[= Theorems~\ref{thm:dist}, \ref{thm:hj} and \ref{thm:reg}]
-Define the parent map $P(x)=x-1$ for $x>0$ and $P(x)=-1/x$ for $x<0$.  Then for every rational $x$ the
-iteration of $P$ reaches $0$, and $d(x)$ is the number of steps it takes. More precisely,
+\begin{thmB}[the rank formula, answers Q3; = Theorems~\ref{thm:dist}, \ref{thm:hj} and \ref{thm:reg}]
+Define the parent map $P(x)=x-1$ for $x>0$ and $P(x)=-1/x$ for $x<0$. For every rational $x$,
+iterating $P$ leads to $0$, and $d(x)$ is the number of steps it takes. More precisely,
 \begin{enumerate}[(i)]
 \item $d(0)=0$, and $d(x)=d(-1/x)+1$ for $x<0$,
 \item if $x>0$ has negative continued fraction expansion
-$x=\hj{c_1,\dots,c_k}$ with $c_1\ge1$ and $c_2,\dots,c_k\ge2$ (Lemma~\ref{lem:hjexist}), then
+$x=\hj{c_1,\dots,c_k}$ with $c_1\ge1$ and $c_2,\dots,c_k\ge2$ (it exists and is unique by
+Lemma~\ref{lem:hjexist}), then
 \[
 d(x)\;=\;c_1+c_2+\dots+c_k\;+\;k-1,
 \]
-\item if $x>0$ is written as the unique ordinary continued fraction $x=[b_0;b_1,\dots,b_m]$ with $m$
-\emph{odd} (Lemma~\ref{lem:regstruct}), then
+\item if $x>0$ is written as the unique ordinary continued fraction $x=[b_0;b_1,\dots,b_m]$ with
+$m$ \emph{odd} (Lemma~\ref{lem:regstruct}), then
 \[
 d(x)\;=\;\sum_{i\;\mathrm{even}} b_i \;+\; 3\sum_{i\;\mathrm{odd}} b_i \;-\;2 .
 \]
 \end{enumerate}
-In particular the rank-$n$ rationals are enumerated by integer compositions
-(Corollary~\ref{cor:enum}), answering Q3.
+In particular the rank-$n$ rationals are listed by integer compositions
+(Corollary~\ref{cor:enum}), which answers Q3.
 \end{thmB}
 
-\begin{thmC}[= Corollary~\ref{cor:tree}]
-The only neighbour of $x\neq0$ that is closer to the root is $P(x)$. So Kimberling's construction
-really is a tree, and no value shows up twice, not even twice in the same generation.  The edge into
-$x$ is an $f$-edge when $x>0$ and a $g$-edge when $x<0$, so \emph{a vertex is blue if and only
-if its value is negative}, which answers Q2. A vertex $x>0$ has two children, $x+1$ and $-1/x$. A
-vertex $-1<x<0$ has one child, $x+1$. A vertex $x\le-1$ is a leaf, and for $x<-1$ the value $x+1$ is
-not new but appeared exactly \emph{three} ranks earlier.
+In words: to find the rank of a positive rational, expand it as a negative continued fraction.
+Each digit $c$ costs $c$ moves, and each of the $k-1$ places where one digit ends and the next
+begins costs $1$ more. For example $\tfrac32=\hj{2,2}$ has rank $2+2+1=5$. In terms of
+compositions, the positive rationals of rank $n$ match the ordered sums $n=s_1+\dots+s_k$ with
+$s_1\ge1$ and $s_2,\dots,s_k\ge3$, via $s_1=c_1$ and $s_i=c_i+1$; for $n=5$ the sums $5$, $1+4$ and
+$2+3$ give $5$, $\tfrac23$ and $\tfrac32$.
+
+\begin{thmC}[the tree, answers Q2; = Corollaries~\ref{cor:innbr} and \ref{cor:tree}]
+The only in-neighbour of $x\neq0$ that is closer to the root is $P(x)$. So Kimberling's
+construction really is a tree, and no value shows up twice, not even twice in the same generation.
+The edge into $x$ is an $f$-edge when $x>0$ and a $g$-edge when $x<0$, so \emph{a vertex is blue if
+and only if its value is negative}, which answers Q2. A vertex $x>0$ has 2 children, $x+1$ and
+$-1/x$. A vertex $-1<x<0$ has 1 child, $x+1$. A vertex $x\le-1$ is a leaf, and for $x<-1$ the
+value $x+1$ is not new but appeared exactly \emph{3 ranks earlier}.
 \end{thmC}
 
-The value $x+1$ coming back three ranks early is what gives the $a(n-3)$ term in the recurrence, and
-we will see that it comes from the relation $(gf)^3=\mathrm{id}$ in $\mathrm{PSL}_2(\Z)$.
+\subsection{How the proof goes, and what was missing before}
 
-\begin{figure}[t]
-\centering
-\resizebox{\textwidth}{!}{\input{fig_tree}}
-\caption{Ranks $0$--$7$ of the tree. \textcolor{fred}{Red} edges apply $f(x)=x+1$ and
-\textcolor{gblue}{blue} edges apply $g(x)=-1/x$. Every positive vertex is entered by an $f$-edge and
-every negative vertex by a $g$-edge (Theorem C), and vertices $\le-1$ are leaves. The numbers on the
-left are ranks. The rows are Kimberling's generations \cite{oeisA226247}, with his generation $j$
-being rank $j-1$.}
-\label{fig:tree}
-\end{figure}
+The parent map $P$ of Theorem~B undoes the last move guessed in observation (a).
+Section~\ref{sec:parent} shows that $P$ traces a shortest path back to $0$ and answers Q2,
+Section~\ref{sec:cf} counts its steps with continued fractions and answers Q3, and
+Section~\ref{sec:count} counts the ranks and answers Q1.
 
-\paragraph{Plan of the paper.}
-Section~\ref{sec:setup} checks that Kimberling's generations, Kagey's figure and the sets $X_n$ of
-\cite{kagey-mse} all give the same ranks. The main work is in Section~\ref{sec:parent}, where we
-define the parent map and prove the distance formula (Theorem~\ref{thm:dist}). The tree structure
-and Q2 follow right away. Section~\ref{sec:cf} puts the formula in terms of continued fractions to
-answer Q3, and Section~\ref{sec:count} counts the ranks to prove Theorem A. In
-Section~\ref{sec:words} we go back to the words counted in \cite{mmz} and show they are exactly the
-shortest words. The last two sections have the computer checks and a few remarks. We do not rely on
-any of the references for the proofs.
+The accepted answer to \cite{kagey-mse}, by the user mathmasterzach \cite{mmz}, got most of the
+way on Q1: it counted the words in $f$ and $g$ that avoid certain patterns, and got the right
+generating function. But that counts \emph{words}, not \emph{rationals}, and the answer does not
+show that the 2 match one to one. Section~\ref{sec:words} supplies this step. Section~\ref{sec:setup} fixes the notation, Section~\ref{sec:verify} lists the
+computer checks and Section~\ref{sec:remarks} has a few remarks. None of the proofs relies on the
+references.
 
-\section{The graph, ranks and generations}\label{sec:setup}
+\section{Setting and notation}\label{sec:setup}
+
+Rationals are written in lowest terms $p/q$ with $q\ge1$, and $q$ is the \emph{denominator}. For a
+real $x$, $\lceil x\rceil$ is the least integer $\ge x$ and $\lfloor x\rfloor$ the greatest integer
+$\le x$. We write $\Qpos$ and $\Qneg$ for the positive and negative rationals and $|S|$ for the
+number of elements of a finite set $S$.
 
 \begin{definition}\label{def:dist}
 Let $G$ be the directed graph on $\Q$ with an \emph{$f$-edge} $x\to x+1$ for every $x$, and a
 \emph{$g$-edge} $x\to-1/x$ for every $x\neq0$. There is no $g$-edge out of $0$, since $g(0)$ is
-not defined. For $x\in\Q$ let
+not defined. If $y\to x$ is an edge, $y$ is an \emph{in-neighbour} of $x$ and $x$ an
+\emph{out-neighbour} of $y$. For $x\in\Q$ let
 \[
 d(x)\;=\;\text{length of a shortest directed path from $0$ to $x$ in }G \;\in\;\Z_{\ge0}\cup\{\infty\},
 \]
@@ -203,54 +267,64 @@ and call $d(x)$ the \emph{rank} of $x$. In other words, $d(x)$ is the smallest n
 have to apply $f$ and $g$ to get from $0$ to $x$, never applying $g$ to $0$. As in
 \cite{kagey-mse}, we write
 \[
-X_n=\{x\in\Q\mid d(x)=n\},\qquad a(n)=|X_n| .
+X_n=\{x\in\Q\mid d(x)=n\},\qquad a(n)=|X_n|,\qquad r(n)=|X_n\cap\Qpos| .
 \]
-Theorem~\ref{thm:dist} will show that $d(x)<\infty$ for all $x$.
+Theorem~\ref{thm:dist} will show that $d(x)<\infty$ for all $x$, and Corollary~\ref{cor:enum} that
+every $X_n$ is finite.
 \end{definition}
 
 Note that $d(0)=0$ and $X_0=\{0\}$, since the only path of length $0$ is the empty one.
 
-Kimberling \cite{oeisA226247} builds the rows as follows. Row $1$ is $(0)$. If row $n$ is
+\paragraph{Words.}
+We write a path as a word in $f$ and $g$, read left to right in the order the moves are made, so
+$fg$ takes $0$ to $1$ and then to $-1$. (As a composition, $\ell_1\ell_2\cdots\ell_j$ is
+$\ell_j\circ\dots\circ\ell_1$.) A word is \emph{admissible at $0$} if it never applies $g$ to $0$.
+These words are the paths in $G$ from $0$, so $d(x)$ is the length of a shortest admissible word
+that takes $0$ to $x$.
+
+\paragraph{Kimberling's generations.}
+Kimberling \cite{oeisA226247} builds rows as follows. Row $1$ is $(0)$. If row $n$ is
 $(c_1,\dots,c_z)$, write down $\left(c_1+1,\ -1/c_1,\ c_2+1,\ -1/c_2,\ \dots\right)$, leaving out
 $-1/c_i$ when $c_i=0$, and delete anything that is already in rows $1,\dots,n$. What is left is
-row $n+1$. This is breadth-first search from $0$, so his rows should be our sets $X_n$, and the
-next proposition checks this. Kagey's ranks \cite{kagey137} are the same as well.
+row $n+1$. Each value in row $n+1$ gets the color of the map that produced it. This is
+breadth-first search from $0$, so the rows should be our sets $X_n$. The next proposition checks
+this. Kagey's ranks \cite{kagey137} are the same as well.
 
 \begin{proposition}[generations are metric spheres]\label{prop:rows}
 For every $n\ge0$, the set of values in Kimberling's row $n+1$ equals $X_n$.
 \end{proposition}
 
 \begin{proof}
-We use induction on $n$. For $n=0$ this is the definition. Suppose rows $1,\dots,n$ contain the values
-in $X_0,\dots,X_{n-1}$. Take $y$ in row $n+1$. Then $y$ comes from some $x$ in row $n$, that is
-$x\in X_{n-1}$, so $d(y)\le n$. Since $y$ was not deleted, it is not in $X_0,\dots,X_{n-1}$, so
-$d(y)\ge n$. Hence $y\in X_n$.  Conversely let $y\in X_n$ with $n\ge1$ and let $x$ be the predecessor of $y$ on a
-shortest path from $0$. A prefix of a shortest path is a shortest path, so $d(x)=n-1$ and $x$ is in
-row $n$. So $y$ is written down when we form row $n+1$, and it is not deleted because $d(y)=n$.
+We use induction on $n$. For $n=0$ both sides are $\{0\}$. Let $n\ge1$ and suppose that, for every
+$j<n$, the values in row $j+1$ form the set $X_j$. Take $y$ in row $n+1$. Then $y$ is $f(x)$ or
+$g(x)$ for some $x$ in row $n$, that is, for some $x\in X_{n-1}$, so $d(y)\le n$. Since $y$ was not
+deleted, it is not in $X_0\cup\dots\cup X_{n-1}$, so $d(y)\ge n$. Hence $y\in X_n$. Conversely, let
+$y\in X_n$ and let $x\to y$ be the last edge of a shortest path from $0$ to $y$. The rest of the path
+is a path of length $n-1$ from $0$ to $x$, so $d(x)\le n-1$, and $d(x)\ge n-1$ because $d(y)\le
+d(x)+1$. So $x\in X_{n-1}$ is in row $n$, and $y$ is written down when we form row $n+1$. It is not
+deleted, because $d(y)=n$ means that $y$ is not in $X_0\cup\dots\cup X_{n-1}$.
 \end{proof}
 
 \begin{remark}\label{rem:dupes}
-There is one thing to be careful about. A value $y$ could in principle be written down \emph{twice}
-when forming row $n+1$, once as $c+1$ and once as $-1/c'$ for two different entries $c,c'$ of row
-$n$, and the construction does not say what to do with the second copy. Corollary~\ref{cor:tree}(a)
-shows that this never happens, because each $y\neq0$ has only one in-neighbour at rank $d(y)-1$. So
-the rows have no repeats and $|$row $n+1|=a(n)$. Our computer check in Section~\ref{sec:verify} also
-matches the published A226247/A226248 data, including the order within each row.
+A value $y$ could in principle be written down \emph{twice} when forming row $n+1$, say as $c+1$
+and as $-1/c'$. The construction does not say what to do with the second copy, and the color of $y$
+would not be well defined. Corollary~\ref{cor:tree}(a) shows that this never happens, so the rows
+have no repeats, $|$row $n+1|=a(n)$, and the colors are well defined.
 \end{remark}
 
-\paragraph{Words.}
-We will often write paths as words in $f$ and $g$, read left to right in the order the maps are
-applied. For example $fg$ sends $0$ to $f(0)=1$ and then to $g(1)=-1$. (As a composition, the word
-$\ell_1\ell_2\cdots\ell_j$ is $\ell_j\circ\dots\circ\ell_1$.) We call a word \emph{admissible at $0$} if it
-never applies $g$ to $0$. The admissible words are the paths in $G$ that start at $0$, so $d(x)$ is the
-length of the shortest admissible word ending at $x$.
+\section{The parent map and the exact distance formula (Q2)}\label{sec:parent}
 
-\section{The parent map and the exact distance formula}\label{sec:parent}
-
-We want a shortest path from $0$ to each $x$ that we can write down. Looking at Figure~\ref{fig:tree},
-it seems that a positive vertex is always entered by the $f$-edge from $x-1$ and a negative vertex by
-the $g$-edge from $-1/x$. If that is right, then undoing the last step gives a ``parent'' for each
-vertex, and following parents should lead back to $0$. This section proves it.
+Here is the idea of this section. Observation (a) of Section~\ref{sec:hand} suggests a guess for a
+shortest path to $x$: undo the last move, from $x-1$ if $x>0$ and from $-1/x$ if $x<0$, and repeat.
+Let $D(x)$ be the number of undo steps needed to get back to $0$. The guessed path has length
+$D(x)$, so $d(x)\le D(x)$. For the reverse inequality it is enough to check that \emph{$D$ goes up by
+at most $1$ along every edge of $G$}: then a path of length $n$ from $0$, where $D=0$, ends at a
+point with $D\le n$. Along the guessed edges $D$ goes up by exactly $1$, by definition. A $g$-edge
+into a positive number is easy, because $g$ undoes itself. The heart of the matter is an $f$-edge
+into a negative $x$. It comes from $x-1$, and we will see that $D(x-1)=D(x)+3$. For example
+$D(-\tfrac12)=3$, from $-\tfrac12\to2\to1\to0$, and $D(-\tfrac32)=6$, from
+$-\tfrac32\to\tfrac23\to-\tfrac13\to3\to2\to1\to0$. This is the jump back by $3$ ranks from
+observation (b).
 
 \begin{definition}\label{def:parent}
 The \emph{parent map} $P:\Q\setminus\{0\}\to\Q$ is
@@ -268,27 +342,29 @@ $f$-edge $(x-1)\to x$ when $x>0$ and the $g$-edge $(-1/x)\to x$ when $x<0$. The 
 because $-1/x\neq0$.
 
 \begin{lemma}[termination]\label{lem:term}
-For every $x\in\Q$ the iteration $x,\,P(x),\,P^2(x),\dots$ reaches $0$ after finitely many steps.
+For every $x\in\Q$ the sequence $x,\,P(x),\,P^2(x),\dots$ reaches $0$ after finitely many steps.
 \end{lemma}
 
 \begin{proof}
-First let $x>0$. Subtracting $1$ a total of $\lceil x\rceil$ times gives $x-\lceil x\rceil$, which
-is $0$ if $x\in\Z$ and is in $(-1,0)$ otherwise. Next, if $z\in(-1,0)$, write $z=-r/q$ in lowest
-terms with $0<r<q$. Then $P(z)=-1/z=q/r$ is bigger than $1$ and has the smaller denominator $r$.
+First let $x>0$. The values $x,x-1,\dots,x-\lceil x\rceil+1$ are positive, so $P$ subtracts $1$ a
+total of $\lceil x\rceil$ times and reaches $x-\lceil x\rceil$. This is $0$ if $x\in\Z$ and lies in
+$(-1,0)$ otherwise, and it has the same denominator as $x$. Next, if $z\in(-1,0)$, write $z=-r/q$
+in lowest terms with $0<r<q$. Then $P(z)=-1/z=q/r$ is bigger than $1$ and has the smaller
+denominator $r$.
 
-Now we induct on the denominator $q$ of $x$, for $x\in\Qpos\cup(-1,0)$. If $q=1$, there is nothing
-in $(-1,0)$ with denominator $1$, and a positive integer $x$ reaches $0$ after $x$ steps. If $q\ge2$
-and $x>0$, then $x$ is not an integer, so its orbit reaches a point of $(-1,0)$ with the same
-denominator $q$. The next point is positive with denominator less than $q$, so we are done by
-induction. If $q\ge2$ and $x\in(-1,0)$, then $P(x)$ is positive with denominator less than $q$, and
+Now we use induction on the denominator $q$ to prove the lemma for $x\in\Qpos\cup(-1,0)$. If $q=1$,
+then $x$ is a positive integer (no element of $(-1,0)$ has denominator $1$), and it reaches $0$
+after $x$ steps. Let $q\ge2$. If $x>0$, then $x$ is not an integer, so its sequence reaches a point
+of $(-1,0)$ with denominator $q$. The next point is positive with denominator less than $q$, so we
+are done by induction. If $x\in(-1,0)$, then $P(x)$ is positive with denominator less than $q$, and
 again we use induction.
 
 Finally, if $x\le-1$ then $P(x)=-1/x>0$, which is the positive case, and $x=0$ is clear.
 \end{proof}
 
 \begin{definition}\label{def:D}
-For $x\in\Q$ let $D(x)$ be the number of steps in which the $P$-orbit of $x$ reaches $0$.  Thus $D(0)=0$
-and
+For $x\in\Q$ let $D(x)$ be the number of steps after which the sequence $x$, $P(x)$,
+$P^2(x)$, \dots{} first reaches $0$. Thus $D(0)=0$ and
 \begin{equation}\label{eq:Drec}
 D(x)=D(P(x))+1 \qquad (x\neq0),
 \end{equation}
@@ -296,16 +372,18 @@ and these two properties determine $D$, as the next lemma shows.
 \end{definition}
 
 \begin{lemma}[uniqueness principle]\label{lem:unique}
-If $F:\Q\to\Z_{\ge0}$ satisfies $F(0)=0$ and $F(x)=F(P(x))+1$ for all $x\neq0$, then $F=D$.
+If $F:\Q\to\Z$ satisfies $F(0)=0$ and $F(x)=F(P(x))+1$ for all $x\neq0$, then $F=D$.
 \end{lemma}
 
 \begin{proof}
-By Lemma~\ref{lem:term} the orbit $x,P(x),\dots,P^{D(x)}(x)=0$ is finite. Using the recursion for $F$
-along it gives $F(x)=D(x)+F(0)=D(x)$.
+We show $F(x)=D(x)$ by induction on $D(x)$, which is finite by Lemma~\ref{lem:term}. If $D(x)=0$
+then $x=0$ and $F(0)=0$. If $D(x)\ge1$ then $x\neq0$ and $D(P(x))=D(x)-1$, so by induction
+$F(x)=F(P(x))+1=D(P(x))+1=D(x)$.
 \end{proof}
 
-Next we see how $D$ changes along each of the four kinds of edges in $G$, including the two that $P$ does
-not undo. The first three are easy, and (D4) is where the work is.
+Next we see how $D$ changes along each of the 4 kinds of edges of $G$: $f$-edges and $g$-edges,
+each into a positive or a negative number (the only edge into $0$, from $-1$, is trivial). (D1) and (D2) are the 2 kinds that $P$ undoes, and (D3)
+and (D4) are the other 2. The first 3 are easy, and (D4) is where the work is.
 
 \begin{lemma}[increment identities]\label{lem:incr}
 For all $x\in\Q$ the following hold.
@@ -321,8 +399,8 @@ For all $x\in\Q$ the following hold.
 (D1) and (D2) are just \eqref{eq:Drec}. For (D3), $-1/x<0$, so (D2) applied to $-1/x$ gives
 $D(-1/x)=D\!\left(-\tfrac{1}{-1/x}\right)+1=D(x)+1$.
 
-For (D4), put $z=x-1$. Since $x<0$, we have $z<-1$. We follow the orbit of $z$ for four steps,
-checking the sign each time to see which case of $P$ applies. The orbit is
+For (D4), put $z=x-1$. Since $x<0$, we have $z<-1$. We follow the sequence of $z$ for 4 steps,
+checking the sign each time to see which case of $P$ applies. The sequence is
 \[
 z \;\xmapsto{\;P\;}\; \frac{1}{1-x}
 \;\xmapsto{\;P\;}\; \frac{x}{1-x}
@@ -330,56 +408,47 @@ z \;\xmapsto{\;P\;}\; \frac{1}{1-x}
 \;\xmapsto{\;P\;}\; -\frac1x \;=\;P(x).
 \]
 Indeed, $z<0$, so $P(z)=-1/z=1/(1-x)$, which is in $(0,1)$ because $1-x>1$. Then
-$P^2(z)=\tfrac{1}{1-x}-1=\tfrac{x}{1-x}$, which is negative, and in fact in $(-1,0)$ since it equals
-$-u/(1+u)$ with $u=-x>0$. Then $P^3(z)=-\tfrac{1-x}{x}=1-\tfrac1x$, which is bigger than $1$ because
-$-1/x>0$. Finally $P^4(z)=-\tfrac1x$, and this is $P(x)$ because $x<0$. Therefore
+$P^2(z)=\tfrac{1}{1-x}-1=\tfrac{x}{1-x}$, which is negative because $x<0<1-x$. Then
+$P^3(z)=-\tfrac{1-x}{x}=1-\tfrac1x$, which is bigger than $1$ because $-1/x>0$. Finally
+$P^4(z)=-\tfrac1x$, and this is $P(x)$ because $x<0$. None of these 4 points is $0$, so
 $D(z)=4+D(P(x))=4+\bigl(D(x)-1\bigr)=D(x)+3$.
 \end{proof}
-
-\begin{remark}\label{rem:relation}
-Read backwards, the computation in (D4) gives the path
-\[
--\tfrac1x \xrightarrow{\,f\,} 1-\tfrac1x \xrightarrow{\,g\,} \tfrac{x}{1-x}
-\xrightarrow{\,f\,} \tfrac{1}{1-x} \xrightarrow{\,g\,} x-1 ,
-\]
-so $x-1=(g\circ f\circ g\circ f\circ g)(x)$. This is the relation $f^{-1}=g\circ f\circ g\circ f\circ g$
-from \cite{kagey137}, or equivalently $(g\circ f)^3=\mathrm{id}$, which together with
-$g^2=\mathrm{id}$ presents $\mathrm{PSL}_2(\Z)\cong C_2*C_3$ \cite{serre1980,alperin1993}. The $3$ in
-(D4) is the $5$ letters of the relator minus the $2$ that cancel in $g\cdot g=\mathrm{id}$, and this
-$3$ is what later gives the $t^3$ in Theorem A. We did not need any group theory for the proof,
-though, since it is a direct check.
-\end{remark}
 
 \begin{theorem}[exact distance formula, dynamic form]\label{thm:dist}
 Every rational is reachable from $0$ in $G$, and $d(x)=D(x)$ for all $x\in\Q$.
 \end{theorem}
 
-\begin{proof}
-\emph{Upper bound $d\le D$.}
-The reversed $P$-orbit $\;0=P^{D(x)}(x),\;P^{D(x)-1}(x),\;\dots,\;P(x),\;x\;$ is a directed path in $G$,
-because each consecutive pair $(P(y),y)$ is an edge, as noted after Definition~\ref{def:parent}. It
-has length $D(x)$, so $x$ is reachable and $d(x)\le D(x)$.
+In words: the path traced by the parent map is a shortest path. So the rank of $x$ is the number of
+parent steps from $x$ back to $0$, and this number is easy to compute. The idea of the proof was
+given at the start of this section.
 
-\emph{Lower bound $d\ge D$.}
-We first check that
+\begin{proof}
+\emph{Step 1: the parent path, so $d\le D$.}
+Let $x\in\Q$. The reversed sequence $0=P^{D(x)}(x)$, $P^{D(x)-1}(x)$, \dots, $P(x)$, $x$ is a
+directed path in $G$, because each consecutive pair $(P(y),y)$ is an edge, as noted after
+Definition~\ref{def:parent}. It has length $D(x)$, so $x$ is reachable and $d(x)\le D(x)$.
+
+\emph{Step 2: $D$ goes up by at most $1$ along each edge.} We check that
 \begin{equation}\label{eq:bellman}
 D(x)\le D(y)+1 \qquad\text{for every edge } y\to x \text{ of } G .
 \end{equation}
-There are five cases.
-\begin{itemize}
+There are 5 cases.
+\begin{itemize}[itemsep=0pt,topsep=2pt]
 \item For an $f$-edge into $x>0$, $y=x-1$ and (D1) gives $D(x)=D(y)+1$.
 \item For an $f$-edge into $x=0$, $y=-1$ and $D(0)=0\le D(-1)+1$.
 \item For an $f$-edge into $x<0$, $y=x-1$ and (D4) gives $D(x)=D(y)-3\le D(y)+1$.
 \item For a $g$-edge into $x<0$, $y=-1/x$ and (D2) gives $D(x)=D(y)+1$.
 \item For a $g$-edge into $x>0$, $y=-1/x<0$ and (D3) gives $D(y)=D(x)+1$, so $D(x)=D(y)-1$.
 \end{itemize}
-There is no $g$-edge into $0$. Now we induct on $n=d(x)$. For $n=0$ we have $x=0$ and $D(0)=0$. For
-$n\ge1$, let $y\to x$ be the last edge of a shortest path. Then $d(y)=n-1$, so $D(y)\le d(y)$ by
-induction, and \eqref{eq:bellman} gives $D(x)\le D(y)+1\le d(y)+1=d(x)$.
+There is no $g$-edge into $0$, since $-1/y\neq0$.
+
+\emph{Step 3: $d\ge D$.} Let $x\in\Q$. By Step 1, $n=d(x)$ is finite, so there is a path
+$0=y_0\to y_1\to\dots\to y_n=x$. By \eqref{eq:bellman}, $D(y_i)\le D(y_{i-1})+1$ for
+$i=1,\dots,n$, and so $D(x)\le D(0)+n=d(x)$.
 \end{proof}
 
-From now on we use $d$ and $D$ interchangeably. The next two corollaries describe what the tree
-looks like near each vertex, and together they prove Theorem C.
+From now on we use $d$ and $D$ interchangeably. The next 2 corollaries describe the tree near each
+vertex, and together they prove Theorem~C.
 
 \begin{corollary}[in-neighbour distances]\label{cor:innbr}
 Let $x\neq0$. The in-neighbours of $x$ in $G$ are $x-1$ (by $f$) and $-1/x$ (by $g$), with ranks
@@ -398,92 +467,121 @@ In particular $P(x)$ is the only in-neighbour of $x$ that is closer to the root 
 \end{corollary}
 
 \begin{proof}
-These are the in-neighbours because $f^{-1}(x)=x-1$ always exists and $g(y)=x$ only has the
-solution $y=-1/x$. The table is (D1)--(D4) together with Theorem~\ref{thm:dist}. Note that
-$x-1\neq-1/x$ for rational $x$, since $x^2-x+1$ has no rational root, so the two in-neighbours are
-different.
+These are the in-neighbours because $f(y)=x$ only for $y=x-1$, and $g(y)=x$ only for $y=-1/x$,
+which is nonzero. The table is (D1)--(D4) together with Theorem~\ref{thm:dist}. Since the 2
+in-neighbours have different ranks, they are different.
 \end{proof}
 
 \begin{corollary}[tree structure, answering Q2]\label{cor:tree}
 \begin{enumerate}[(a)]
-\item Each $x\neq0$ is produced at stage $d(x)$ by exactly one element of $X_{d(x)-1}$, its parent
-$P(x)$. So no value is produced twice, not even twice in one generation, and the construction gives
-a rooted tree without any choices.
-\item The edge into $x$ is an $f$-edge when $x>0$ and a $g$-edge when $x<0$. With the colors of Q2,
-\emph{a vertex is blue if and only if its value is negative}. The root has no color.
-\item A vertex $x>0$ has the two children $x+1$ and $-1/x$. A vertex $x\in(-1,0)$ has the one child
-$x+1\in(0,1)$. Every vertex $x\le-1$ is a leaf. Moreover, for $x<-1$ the value $x+1$ is not new but
-\emph{three ranks old}, with $d(x+1)=d(x)-3$, and for $x=-1$ the value $x+1=0$ is the root.
+\item For every $x\neq0$, the parent $P(x)$ is the only rational of rank $d(x)-1$ from which a
+single move reaches $x$. In Kimberling's construction each $x\neq0$ is written down exactly once,
+by $P(x)$, when row $d(x)+1$ is formed. So no value is produced twice, not even twice in one
+generation. The construction gives,
+without any choices, the tree on $\Q$ in which the parent of each $x\neq0$ is $P(x)$.
+\item Every shortest path from $0$ to $x\neq0$ ends with an $f$-edge if $x>0$ and with a $g$-edge
+if $x<0$. So the colors of Q2 are well defined, and \emph{a vertex is blue if and only if its value
+is negative}. The root has no color.
+\item The \emph{children} of $x$, that is, the $y$ with $P(y)=x$, are as follows. A vertex $x>0$
+has the 2 children $x+1$ and $-1/x$. A vertex $x\in(-1,0)$ has the 1 child $x+1\in(0,1)$, and
+the root has the 1 child $1$. Every vertex $x\le-1$ is a leaf. Every child of $x$ has rank
+$d(x)+1$. Moreover, for $x<-1$ the value $x+1$ is not new but \emph{3 ranks old}, with
+$d(x+1)=d(x)-3$, and for $x=-1$ the value $x+1=0$ is the root.
 \end{enumerate}
 \end{corollary}
 
 \begin{proof}
-(a) When we form generation $d(y)+1$, the value $y$ is written down once for each of its
-in-neighbours in $X_{d(y)-1}$. By Corollary~\ref{cor:innbr} there is only one, $P(y)$.
+(a) The first sentence is Corollary~\ref{cor:innbr}. Now we show by induction on $n$ that row
+$n+1$ lists each element of $X_n$ exactly once. For $n=0$ this is clear. Let $n\ge1$, suppose that
+row $n$ lists each element of $X_{n-1}$ once, and let $x\in X_n$. When row $n+1$ is formed, $x$ is
+written down once for each entry $c$ of row $n$ and each move taking $c$ to $x$. Such a $c$ is an
+in-neighbour of $x$ of rank $n-1$, so $c=P(x)$, which appears once in row $n$. And $c$ reaches $x$
+by only one move, since $c+1=-1/c$ would mean $c^2+c+1=0$. So $x$ is written down exactly once and
+kept. The other values written down are in earlier rows (Proposition~\ref{prop:rows}) and are
+deleted.
 
-(b) The unique parent edge is the $f$-edge from $x-1$ when $x>0$ and the $g$-edge from $-1/x$ when $x<0$.
+(b) If $y\to x$ is the last edge of a shortest path, then $d(y)=d(x)-1$, so $y=P(x)$ by (a). The
+edge $P(x)\to x$ is an $f$-edge when $x>0$ and a $g$-edge when $x<0$.
 
-(c) Let $x>0$. Its out-neighbours are $x+1$ and $-1/x$. By (D1) applied to $x+1$, and by (D3), both
-have rank $d(x)+1$, so both are children. Now let $x\in(-1,0)$. Then $x+1\in(0,1)$ is positive, and
-(D1) applied to $x+1$ gives $d(x+1)=d(x)+1$, so it is a child, while $-1/x$ is the parent. Next let
-$x<-1$. Then $-1/x$ is the parent. Also $x=(x+1)-1$ with $x+1<0$, so (D4) applied to $x+1$ gives
-$d(x)=d(x+1)+3$. So $x+1$ is three ranks older than $x$ and is not a child. Finally, the
-out-neighbours of $x=-1$ are $0$, the root, and $1$, its parent, so it is a leaf.
+(c) We solve $P(y)=x$. If $y>0$, it says $y=x+1$, which is possible exactly when $x+1>0$. If $y<0$,
+it says $-1/y=x$, which is possible exactly when $x>0$, with $y=-1/x$. This gives the list of
+children. Each child $y$ has $d(y)=d(P(y))+1=d(x)+1$ by \eqref{eq:Drec}. If $x<-1$, then $x+1<0$,
+and (D4) applied to $x+1$ gives $d(x)=d(x+1)+3$.
 \end{proof}
 
+\begin{remark}\label{rem:relation}
+Read backwards, the computation in (D4) gives the path
+\[
+-\tfrac1x \xrightarrow{\,f\,} 1-\tfrac1x \xrightarrow{\,g\,} \tfrac{x}{1-x}
+\xrightarrow{\,f\,} \tfrac{1}{1-x} \xrightarrow{\,g\,} x-1 ,
+\]
+so $x-1=(g\circ f\circ g\circ f\circ g)(x)$. This is the relation $f^{-1}=g\circ f\circ g\circ f\circ g$
+from \cite{kagey137}, or equivalently $(g\circ f)^3=\mathrm{id}$, which together with
+$g^2=\mathrm{id}$ presents $\mathrm{PSL}_2(\Z)\cong C_2*C_3$ \cite{serre1980,alperin1993}. The $3$ in
+(D4) is the $5$ letters of the relator minus the $2$ that cancel in $g\cdot g=\mathrm{id}$: the
+shortest path to $x<0$ ends with $g$, and the path to $x-1$ replaces that $g$ by $gfgfg$. This $3$
+gives the $t^3$ in Theorem~A. The proof of (D4) needs no group theory.
+\end{remark}
+
 \begin{example}\label{ex:orbit}
-Take $x=-\tfrac72$.  The $P$-orbit is
+Take $x=-\tfrac72$. The parent sequence is
 \[
 -\tfrac72 \to \tfrac27 \to -\tfrac57 \to \tfrac75 \to \tfrac25 \to -\tfrac35 \to \tfrac53 \to \tfrac23
 \to -\tfrac13 \to 3 \to 2 \to 1 \to 0,
 \]
-so $d(-7/2)=12$. Reversing the orbit gives the shortest word $fffgffgffgfg$, which means we apply
+so $d(-7/2)=12$. Reversing it gives the shortest word $fffgffgffgfg$, which means we apply
 $f,f,f,g,f,f,g,f,f,g,f,g$ to $0$ in this order.
 \end{example}
 
-\section{Continued-fraction forms of the distance formula}\label{sec:cf}
+\section{The rank from continued fractions (Q3)}\label{sec:cf}
 
-Starting from a positive rational, $P$ subtracts $1$ a total of $\lceil x\rceil$ times and then
-flips. This is the algorithm for the \emph{negative} (Hirzebruch--Jung, or ``minus'') continued
-fraction \cite{hirzebruch1953,popescu2007}, so the length of the orbit can be read off from the
-expansion. We prove what we need from scratch.
+Theorem~\ref{thm:dist} reduces the rank to counting parent steps. Here is why continued fractions
+count them. The parent sequence of $\tfrac27$ in Example~\ref{ex:orbit} makes $1$ subtraction, a
+flip, $2$ subtractions, a flip, $2$ subtractions, a flip, and $3$ subtractions, so
+$d(\tfrac27)=(1+2+2+3)+3=11$. In general, from a positive $x$ the map $P$ subtracts $1$ exactly
+$c=\lceil x\rceil$ times, and if $x$ is not an integer one flip then gives $1/(c-x)>1$. The numbers
+$c$ we meet are the digits of the negative continued fraction (here $\tfrac27=\hj{1,2,2,3}$), so
+the rank is the sum of the digits plus the number of flips. The negative continued fraction is also
+called the Hirzebruch--Jung or ``minus'' continued fraction \cite{hirzebruch1953,popescu2007}. We
+prove what we need from scratch.
 
-\begin{definition}
-For integers $c_1,\dots,c_k$ define, when the right sides are defined and nonzero where required,
+For integers $c_1,\dots,c_k$ the negative continued fraction is defined by
 \[
 \hj{c_1}=c_1, \qquad
-\hj{c_1,c_2,\dots,c_k}=c_1-\cfrac{1}{\hj{c_2,\dots,c_k}} .
+\hj{c_1,c_2,\dots,c_k}=c_1-\cfrac{1}{\hj{c_2,\dots,c_k}} ,
 \]
-\end{definition}
+whenever the denominators are nonzero. We call $(c_1,\dots,c_k)$ a \emph{digit string}.
 
 \begin{lemma}[existence and uniqueness of the expansion]\label{lem:hjexist}
 Every rational $x>0$ has exactly one representation
 \[
 x=\hj{c_1,c_2,\dots,c_k},\qquad k\ge1,\ \ c_1\ge1,\ \ c_i\ge2\ (2\le i\le k),
 \]
-and in it $c_1=\lceil x\rceil$.  Moreover every tail satisfies $\hj{c_j,\dots,c_k}>1$ for $j\ge2$.
+and in it $c_1=\lceil x\rceil$. Moreover every tail satisfies $\hj{c_j,\dots,c_k}>1$ for $j\ge2$.
 \end{lemma}
 
 \begin{proof}
 \emph{Existence.} Given $x>0$, write down $c=\lceil x\rceil$. If $x=c$ we stop, and otherwise we
-repeat with $x'=1/(c-x)$. If $x=p/q$ in lowest terms is not an integer, then $cq-p$ is between $1$ and
-$q-1$, and $x'=q/(cq-p)$. This is again in lowest terms, since a common divisor of $q$ and $cq-p$
-divides $p$, and its denominator $cq-p$ is less than $q$. So the process stops. Also $x'>1$, so every
-digit after the first is $\lceil x'\rceil\ge2$, and $c_1=\lceil x\rceil\ge1$ because $x>0$. Using
-$x=c-1/x'$ at each step shows that $x=\hj{c_1,\dots,c_k}$.
+repeat with $x'=1/(c-x)$. Suppose $x=p/q$ in lowest terms is not an integer. Then $(c-1)q<p<cq$, so
+$cq-p$ is between $1$ and $q-1$, and $x'=q/(cq-p)$. This is again in lowest terms, since a common
+divisor of $q$ and $cq-p$ divides $p$, and its denominator $cq-p$ is less than $q$. So the process
+stops. Also $x'>1$, so every digit after the first is $\lceil x'\rceil\ge2$, and
+$c_1=\lceil x\rceil\ge1$ because $x>0$. Using $x=c-1/x'$ at each step shows that
+$x=\hj{c_1,\dots,c_k}$.
 
-\emph{Tails are bigger than $1$.} We use downward induction. First $\hj{c_k}=c_k\ge2>1$. If
-$y=\hj{c_{j+1},\dots,c_k}>1$, then $\hj{c_j,\dots,c_k}=c_j-1/y>c_j-1\ge1$.
+\emph{Tails are bigger than $1$.} We use downward induction. First $\hj{c_k}=c_k\ge2>1$ when
+$k\ge2$. If $y=\hj{c_{j+1},\dots,c_k}>1$ and $j\ge2$, then $\hj{c_j,\dots,c_k}=c_j-1/y>c_j-1\ge1$.
 
-\emph{Uniqueness.} Suppose $x=\hj{c_1,\dots,c_k}$ is any representation with these digit conditions. If
-$k=1$ then $x=c_1\in\Z$.  If $k\ge2$ then $x=c_1-1/y$ with $y=\hj{c_2,\dots,c_k}>1$ by the previous
-paragraph, so $x\in(c_1-1,c_1)$. Then $x$ is not an integer, $c_1$ has to be $\lceil x\rceil$, and
-$y=1/(c_1-x)$ is fixed. By induction on $k$, an integer only has the representation with $k=1$, and for
-a non-integer both the first digit and the tail are determined.
+\emph{Uniqueness.} Take any representation $x=\hj{c_1,\dots,c_k}$ with these digit conditions. If
+$k=1$ then $x=c_1\in\Z$. If $k\ge2$ then $x=c_1-1/y$ with $y=\hj{c_2,\dots,c_k}>1$, so
+$x\in(c_1-1,c_1)$ is not an integer, $c_1=\lceil x\rceil$, and $y=1/(c_1-x)$. So an integer has only
+the representation with $k=1$, and for a non-integer the first digit and the value $y$ of the tail
+are determined. The tail is a representation of $y$ of the same kind, so by induction on $k$ it is
+unique too.
 \end{proof}
 
 \begin{theorem}[distance formula, negative-continued-fraction form]\label{thm:hj}
-Let $x>0$ have the expansion of Lemma~\ref{lem:hjexist}.  Then
+Let $x>0$ have the expansion of Lemma~\ref{lem:hjexist}. Then
 \[
 d(x)=c_1+c_2+\dots+c_k+k-1 .
 \]
@@ -491,14 +589,15 @@ Together with $d(0)=0$ and $d(x)=d(-1/x)+1$ for $x<0$, which is (D2), this gives
 \end{theorem}
 
 \begin{proof}
-By Theorem~\ref{thm:dist} we can compute $D$ instead. We induct on $k$. If $k=1$ then $x=c_1$ is a
-positive integer, and its orbit is $c_1$ subtractions. Now let $k\ge2$. Since $c_1=\lceil x\rceil$,
-the orbit first subtracts $1$ a total of $c_1$ times and gets to
+By Theorem~\ref{thm:dist} we can compute $D$ instead. We use induction on $k$. If $k=1$ then
+$x=c_1$ is a positive integer, and its parent sequence is $c_1$ subtractions. Now let $k\ge2$. Since
+$c_1=\lceil x\rceil$, the sequence first subtracts $1$ a total of $c_1$ times and gets to
 \[
 x-c_1=-\frac{1}{\hj{c_2,\dots,c_k}}\;\in\;(-1,0),
 \]
-which is in $(-1,0)$ because the tail is bigger than $1$. One flip then gives $\hj{c_2,\dots,c_k}$.
-By induction the rest of the orbit takes $\bigl(\sum_{i\ge2}c_i\bigr)+(k-1)-1$ steps, so the total is
+which is in $(-1,0)$ because the tail is bigger than $1$. One flip then gives $\hj{c_2,\dots,c_k}$,
+whose digits satisfy the conditions of Lemma~\ref{lem:hjexist}. By induction the rest of the
+sequence takes $\bigl(\sum_{i\ge2}c_i\bigr)+(k-1)-1$ steps, so the total is
 $c_1+1+\sum_{i\ge2}c_i+k-2=\sum_i c_i+k-1$.
 \end{proof}
 
@@ -514,73 +613,93 @@ rationals and $y\mapsto-1/y$ is injective. In particular rank $n$ is finite, and
 correspond to integer compositions.
 \end{corollary}
 
+In words: put $s_1=c_1$ and $s_i=c_i+1$ for $i\ge2$. Then the positive rationals of rank $n$ match
+the ordered sums $n=s_1+\dots+s_k$ with $s_1\ge1$ and $s_2,\dots,s_k\ge3$, and the negative ones are
+$-1/y$ for the positive $y$ one rank lower. There are finitely many such sums, so $X_n$ is finite.
+
 \begin{proof}
 The first line follows from Lemma~\ref{lem:hjexist}, which says each positive rational has exactly
 one digit string, and Theorem~\ref{thm:hj}, which says its rank is $\sum c_i+k-1$. For the second
 line, if $x<0$ then $-1/x>0$ and (D2) gives $d(-1/x)=d(x)-1$. Conversely, if $y>0$ then $-1/y<0$
 and (D3) gives $d(-1/y)=d(y)+1$. So $x\mapsto-1/x$ is a bijection from $X_n\cap\Qneg$ to
-$X_{n-1}\cap\Qpos$.
+$X_{n-1}\cap\Qpos$. Finally $X_n\subseteq\Qpos\cup\Qneg$ for $n\ge1$, and each $c_i\ge1$ forces
+$k\le n$ and $c_i\le n$, so both lines are finite.
 \end{proof}
 
 \begin{example}\label{ex:rank5}
-Take $n=5$. The digit strings of weight $5$ are $(5)$, $(1,3)$ and $(2,2)$, with values $5$,
-$\hj{1,3}=\tfrac23$ and $\hj{2,2}=\tfrac32$. The positive rationals of rank $4$ are $4$ and $\tfrac12$,
-from the strings $(4)$ and $(1,2)$, and they give the negatives $-\tfrac14$ and $-2$. So
-$X_5=\{5,\tfrac23,\tfrac32,-\tfrac14,-2\}$, as in Figure~\ref{fig:tree}.
+Take $n=5$. The digit strings with $\sum_ic_i+k-1=5$ are $(5)$, $(1,3)$ and $(2,2)$, with values
+$5$, $\hj{1,3}=\tfrac23$ and $\hj{2,2}=\tfrac32$. A string of length $3$ would need
+$c_1+c_2+c_3=3$, which is impossible with $c_2,c_3\ge2$. The positive rationals of rank $4$ are $4$
+and $\tfrac12$, from the strings $(4)$ and $(1,2)$, and they give the negatives $-\tfrac14$ and
+$-2$. So $X_5=\{5,\tfrac23,\tfrac32,-\tfrac14,-2\}$, as in Table~\ref{tab:hand}.
 \end{example}
 
 \begin{example}\label{ex:27}
-For $x=\tfrac27$ the algorithm gives $\tfrac27=\hj{1,2,2,3}$. To check, $\hj{3}=3$,
-$\hj{2,3}=\tfrac53$, $\hj{2,2,3}=\tfrac75$ and $1-\tfrac57=\tfrac27$. So $d(2/7)=(1+2+2+3)+4-1=11$
-and $d(-7/2)=12$, as in Example~\ref{ex:orbit}.
+For $x=\tfrac27$ the algorithm in the proof of Lemma~\ref{lem:hjexist} passes through
+$\tfrac27,\tfrac75,\tfrac53,3$ and gives $\tfrac27=\hj{1,2,2,3}$. So $d(2/7)=(1+2+2+3)+4-1=11$ and
+$d(-7/2)=12$, as in Example~\ref{ex:orbit}.
 \end{example}
 
 \subsection{The ordinary continued fraction form}
 
-Recall the ordinary (regular) continued fraction notation
+The ordinary (regular) continued fraction is more familiar. Recall the notation
 \[
 [b_0;b_1,\dots,b_m]=b_0+\cfrac{1}{b_1+\cfrac{1}{\ddots+\cfrac{1}{b_m}}},
 \qquad b_0\ge0,\ b_i\ge1\ (1\le i\le m),\ b_i\in\Z .
 \]
-We call $m$ the \emph{length}. It is well known that a positive rational has exactly two such
-expansions (see \cite[Ch.~X]{hardywright}), but we prove the version we need to keep the paper
-self-contained.
+We call $m$ the \emph{length}, and a finite sequence of integers $\ge1$ (possibly empty) a
+\emph{tail}. It is well known that a positive rational has exactly 2 such expansions
+\cite[Ch.~X]{hardywright}, of lengths differing by $1$. We prove the version we need to keep the
+paper self-contained.
+
+Here is where the weights $1$ and $3$ in Theorem~B(iii) come from. One can check that if
+$x=[b_0;b_1,\dots,b_m]$ with $m$ odd, then the negative continued fraction of $x$ is
+\[
+\hj{\,b_0+1,\ 2^{(b_1-1)},\ b_2+2,\ 2^{(b_3-1)},\ \dots,\ b_{m-1}+2,\ 2^{(b_m-1)}\,},
+\]
+where $2^{(j)}$ means $j$ digits equal to $2$; for example $\tfrac27=[0;3,1,1]$ gives
+$\hj{1,2,2,3}$. By Theorem~\ref{thm:hj} a digit $2$ costs $3$ moves ($2$ subtractions and $1$
+flip), so each unit of an odd-position digit costs $3$, and each unit of an even-position digit
+costs $1$. We do not use this conversion: the proof below checks directly that the formula
+satisfies the same recursion as $D$.
 
 \begin{lemma}[odd-length normalization]\label{lem:regstruct}
 \begin{enumerate}[(a)]
-\item For a digit string as above with $m\ge1$, the value $v=[b_1;b_2,\dots,b_m]$ of the tail satisfies
-$v>1$, except that $v=1$ exactly when $m=1$ and $b_1=1$.
+\item For an expansion as above with $m\ge1$, the value $v=[b_1;b_2,\dots,b_m]$ of the tail satisfies
+$v\ge1$, with $v=1$ exactly when $m=1$ and $b_1=1$.
 \item Every rational $x>0$ has exactly one expansion $x=[b_0;b_1,\dots,b_m]$ of \emph{odd} length $m$.
 \item In the odd-length expansion, $b_0\ge1$ if and only if $x>1$.
 \end{enumerate}
 \end{lemma}
 
 \begin{proof}
-(a) If $m=1$ then $v=b_1\ge1$ with equality iff $b_1=1$.  If $m\ge2$ then
-$v=b_1+1/[b_2;\dots;b_m]>b_1\ge1$.
+(a) If $m=1$ then $v=b_1\ge1$, with equality if and only if $b_1=1$. If $m\ge2$ then
+$v=b_1+1/[b_2;\dots,b_m]>b_1\ge1$, since $[b_2;\dots,b_m]\ge b_2>0$.
 
-(b) \emph{Uniqueness.} We show by strong induction on the denominator that $x$ has at most one
-expansion of each parity of $m$. Let $x=[b_0;b_1,\dots,b_m]$. If $m=0$ then $x=b_0\in\Z$. If
-$m\ge1$, write $x=b_0+1/v$ with $v=[b_1;\dots,b_m]$. By (a) there are two cases. If $v>1$, then
-$x\in(b_0,b_0+1)$ is not an integer, so $b_0=\lfloor x\rfloor$ and $v=1/(x-b_0)$ are forced, and the
-tail is an expansion of $v$ of length $m-1$. Otherwise $(m,b_1)=(1,1)$ and $x=b_0+1\in\Z$. So an
-integer $x\ge1$ only has the expansions $[x]$ of length $0$ and $[x-1;1]$ of length $1$, one of each
-parity. For a non-integer $x$, the expansions of $x$ of length $m$ match up with the expansions of
-$v=1/(x-\lfloor x\rfloor)>1$ of length $m-1$. Since $v$ has a smaller denominator than $x$, it has at
-most one expansion of each parity by induction, and so does $x$.
+(b) We show, by strong induction on the denominator, that every rational $x>0$ has exactly one
+expansion of each parity of the length. Let $x>0$ be arbitrary.
 
-\emph{Existence.} The Euclidean algorithm gives one expansion. If its length has the wrong parity,
-we can change it by one using $[\,\dots,b_m]=[\,\dots,b_m-1,1]$ when $b_m\ge2$,
-$[\,\dots,b_{m-1},1]=[\,\dots,b_{m-1}+1]$ when $b_m=1$, or $[x]=[x-1;1]$ for integers.
+\emph{Case 1: $x\in\Z$.} The only expansion of length $0$ is $[x]$. An expansion of length $m\ge1$
+has $x=b_0+1/v$ with $v\ge1$ by (a). Then $1/v=x-b_0$ is an integer in $(0,1]$, so $v=1$, which by
+(a) means $m=1$ and $b_1=1$, and then $b_0=x-1\ge0$. So $x$ has exactly the expansions $[x]$ and
+$[x-1;1]$, one of each parity. This case includes all $x$ with denominator $1$.
+
+\emph{Case 2: $x\notin\Z$.} There is no expansion of length $0$. An expansion of length $m\ge1$ has
+$x=b_0+1/v$ with $v=[b_1;\dots,b_m]\ge1$, and $v\neq1$ because $x$ is not an integer. So $0<1/v<1$,
+which forces $b_0=\lfloor x\rfloor$ and $v=1/(x-\lfloor x\rfloor)$. Conversely, every expansion of
+$v$ has first digit at least $1$, because an expansion with first digit $0$ has value at most $1$
+by (a), and $v>1$. So the expansions of $x$ of length $m$ are exactly the expansions of $v$ of
+length $m-1$ with $\lfloor x\rfloor$ put in front. If $x=p/q$, then
+$v=q/(p-\lfloor x\rfloor q)$ is in lowest terms with denominator $p-\lfloor x\rfloor q<q$. By
+induction $v$ has exactly one expansion of each parity, and hence so does $x$.
 
 (c) Since $m$ is odd, $m\ge1$, so $x=b_0+1/v$ with $v\ge1$. If $b_0\ge1$ then $x>b_0\ge1$, and if
-$b_0=0$ then $x=1/v\le1$ by (a). Hence $b_0\ge1$ exactly when $x>1$. Note that $x=1$ itself has the
+$b_0=0$ then $x=1/v\le1$. Hence $b_0\ge1$ exactly when $x>1$. Note that $x=1$ itself has the
 odd-length form $[0;1]$.
 \end{proof}
 
 \begin{lemma}[complement identity]\label{lem:compl}
-Let $b\ge1$, let $\mathrm{t}$ be an admissible tail, possibly empty, and put
-$u=[b;\mathrm{t}]\ge1$.  Then
+Let $b\ge1$, let $\mathrm{t}$ be a tail, possibly empty, and put $u=[b;\mathrm{t}]\ge1$. Then
 \[
 [0;1,b,\mathrm{t}]=\frac{u}{1+u},\qquad [0;b+1,\mathrm{t}]=\frac{1}{1+u},
 \]
@@ -594,29 +713,34 @@ $[b+1;\mathrm{t}]=1+[b;\mathrm{t}]=1+u$, so $[0;b+1,\mathrm{t}]=1/(1+u)$.
 
 \begin{theorem}[distance formula, ordinary-continued-fraction form]\label{thm:reg}
 Let $x>0$ and let $x=[b_0;b_1,\dots,b_m]$ be its unique odd-length expansion
-(Lemma~\ref{lem:regstruct}).  Then
+(Lemma~\ref{lem:regstruct}). Then
 \[
 d(x)\;=\;\sum_{i\ \mathrm{even}} b_i\;+\;3\sum_{i\ \mathrm{odd}} b_i\;-\;2 .
 \]
 \end{theorem}
 
-\begin{proof}
-Let $E(x)$ be the right-hand side for $x>0$, and extend $E$ to all of $\Q$ by $E(0)=0$ and
-$E(x)=E(-1/x)+1$ for $x<0$. By the uniqueness principle (Lemma~\ref{lem:unique}) it is enough to
-show $E(x)=E(P(x))+1$ for every $x\neq0$. For $x<0$ this is the definition, so there are three cases
-left, all with $x>0$.
+In words: in the odd-length expansion, each unit of a digit in an even position costs $1$ move and
+each unit of a digit in an odd position costs $3$ moves, and then we subtract $2$. For example
+$\tfrac27=[0;3,2]=[0;3,1,1]$ has rank $(0+1)+3(3+1)-2=11$, as in Example~\ref{ex:27}, and
+$\tfrac35=[0;1,1,2]$ has rank $(0+1)+3(1+2)-2=8$.
 
-\emph{Case $x>1$.} By Lemma~\ref{lem:regstruct}(c), $b_0\ge1$, and $x-1=[b_0-1;b_1,\dots,b_m]$ is
-again an odd-length expansion, where the first digit may now be $0$. By uniqueness it is \emph{the}
-odd-length expansion of $x-1$. Only the digit $b_0$, in an even position, changed, so
+\begin{proof}
+\emph{Step 1: reduction.} Let $E(x)$ be the right-hand side for $x>0$, and extend $E$ to all of
+$\Q$ by $E(0)=0$ and $E(x)=E(-1/x)+1$ for $x<0$. By the uniqueness principle
+(Lemma~\ref{lem:unique}) and Theorem~\ref{thm:dist}, it is enough to show $E(x)=E(P(x))+1$ for
+every $x\neq0$. For $x<0$ this is the definition, so there are 3 cases left, all with $x>0$.
+
+\emph{Step 2: $x>1$.} By Lemma~\ref{lem:regstruct}(c), $b_0\ge1$, and $x-1=[b_0-1;b_1,\dots,b_m]$
+is again an odd-length expansion, where the first digit may now be $0$. By uniqueness it is
+\emph{the} odd-length expansion of $x-1>0$. Only the digit $b_0$, in an even position, changed, so
 $E(x)=E(x-1)+1$.
 
-\emph{Case $x=1$.} Here $E(1)=E([0;1])=0+3\cdot1-2=1=E(0)+1$.
+\emph{Step 3: $x=1$.} Here $E(1)=E([0;1])=0+3\cdot1-2=1=E(0)+1$.
 
-\emph{Case $0<x<1$.} Here $b_0=0$ and $P(x)=x-1\in(-1,0)$, so $E(x-1)=E\bigl(\tfrac{1}{1-x}\bigr)+1$,
+\emph{Step 4: $0<x<1$.} Here $b_0=0$ and $P(x)=x-1\in(-1,0)$, so $E(x-1)=E\bigl(\tfrac{1}{1-x}\bigr)+1$,
 and we have to show $E(x)=E\bigl(\tfrac{1}{1-x}\bigr)+2$. Note that $m\ge1$, and if $b_1=1$ then
 $m\ge3$, since $[0;1]=1$ is not in this case. We use Lemma~\ref{lem:compl}.
-\begin{itemize}
+\begin{itemize}[itemsep=1pt,topsep=2pt]
 \item Suppose $b_1=1$, so $x=[0;1,b_2,\mathrm{t}]$ with tail $\mathrm{t}=b_3,\dots,b_m$. Then
 $1-x=[0;b_2+1,\mathrm{t}]$, and hence
 \[
@@ -624,28 +748,32 @@ $1-x=[0;b_2+1,\mathrm{t}]$, and hence
 \]
 which is an expansion of odd length $m-2$. Compared with the digits of $x$, position $0$ went up by
 $1$, which has weight $1$, and the digit $b_1=1$ in an odd position is gone, which had weight $3$.
-All the other digits moved by two places, so they kept the parity of their position. Hence
+All the other digits moved by 2 places, so they kept the parity of their position. Hence
 $E\bigl(\tfrac1{1-x}\bigr)=E(x)+1-3=E(x)-2$.
-\item Suppose $b_1\ge2$, so $x=[0;(b_1-1)+1,\mathrm{t}]$. Then $1-x=[0;1,b_1-1,\mathrm{t}]$, and hence
+\item Suppose $b_1\ge2$, so $x=[0;(b_1-1)+1,\mathrm{t}]$ with tail $\mathrm{t}=b_2,\dots,b_m$. Then
+$1-x=[0;1,b_1-1,\mathrm{t}]$, and hence
 \[
 \tfrac{1}{1-x}=[\,1;\,b_1-1,\,b_2,\dots,b_m\,],
 \]
 which has the same odd length $m$. Position $0$ went up by $1$ and position $1$ went down by $1$,
 which has weight $3$, and nothing else moved. Hence again $E\bigl(\tfrac1{1-x}\bigr)=E(x)+1-3=E(x)-2$.
-\qedhere
 \end{itemize}
+In both cases the new expansion is the odd-length expansion of $\tfrac1{1-x}$, by uniqueness, so
+the digit count above computes $E\bigl(\tfrac1{1-x}\bigr)$.
 \end{proof}
 
-\begin{example}
-The rational $\tfrac27=[0;3,2]$ has odd-length form $[0;3,1,1]$, so $d(2/7)=(0+1)+3(3+1)-2=11$, as
-in Example~\ref{ex:27}. Similarly $\tfrac35=[0;1,1,2]$ already has odd length, and
-$d(3/5)=(0+1)+3(1+2)-2=8$.
-\end{example}
+\section{Counting the ranks (Q1)}\label{sec:count}
 
-\section{Counting the ranks}\label{sec:count}
+Here is why $a(n-3)$ appears. Corollary~\ref{cor:tree}(c) says where the children of the 4
+classes $(1,\infty)$, $(0,1]$, $(-1,0)$, $(-\infty,-1]$ go (Figure~\ref{fig:automaton}). A positive
+$z$ produces new positive rationals in 2 ways: $z+1$ a rank later, and the end of the detour
+$z\to z+1\to-1/(z+1)\to z/(z+1)$ (moves $f,g,f$) 3 ranks later. After a $g$-move this detour is
+the only way back to the positives. So the positive counts satisfy $r(n)=r(n-1)+r(n-3)$, and the
+negative rationals copy the positive ones a rank later. Adding these gives Kagey's recurrence.
 
 \begin{theorem}[main count]\label{thm:main}
-Let $r(n)=|X_n\cap\Qpos|$.  Then $a(0)=1$, $a(n)=r(n)+r(n-1)$ for $n\ge1$, and, as formal power series,
+Recall $r(n)=|X_n\cap\Qpos|$. Then $a(0)=1$, $a(n)=r(n)+r(n-1)$ for $n\ge1$, and, as formal power
+series,
 \[
 R(t):=\sum_{n\ge1}r(n)\,t^n=\frac{t}{1-t-t^3},
 \qquad
@@ -659,62 +787,83 @@ Consequently
 \end{enumerate}
 \end{theorem}
 
-\begin{proof}
-The equation $a(n)=r(n)+r(n-1)$ for $n\ge1$ comes from the bijection in Corollary~\ref{cor:enum}
-between negatives of rank $n$ and positives of rank $n-1$, and $0$ is only in $X_0$.
+In words: this answers Q1, and $a(n)$ is the sequence that Kimberling's entry names.
 
-By Corollary~\ref{cor:enum}, $r(n)$ is the number of digit strings $(c_1,\dots,c_k)$ with $c_1\ge1$
-and $c_i\ge2$ for $i\ge2$, and with weight $\sum_ic_i+k-1=n$. We give a string the weight
-$t^{c_1}\prod_{i\ge2}t^{c_i+1}$ and sum, which gives
+\begin{proof}
+We set $r(m)=0$ for $m\le0$; this agrees with the definition for $m=0$, since $X_0=\{0\}$.
+
+\emph{Step 1: negatives.} For $n\ge1$, $X_n$ contains no $0$, and $x\mapsto-1/x$ is a bijection from
+$X_n\cap\Qneg$ to $X_{n-1}\cap\Qpos$ (proof of Corollary~\ref{cor:enum}). So $a(n)=r(n)+r(n-1)$.
+
+\emph{Step 2: positives.} We show $r(n)=r(n-1)+r(n-3)$ for all $n\ge2$. Let $n\ge2$. Since
+$d(1)=1$ ($1=f(0)$), every $x\in X_n\cap\Qpos$ lies in $(1,\infty)$ or in $(0,1)$.
+\begin{itemize}[itemsep=1pt,topsep=2pt]
+\item The map $x\mapsto x-1$ is a bijection from $X_n\cap(1,\infty)$ to $X_{n-1}\cap\Qpos$. Indeed,
+if $x>1$ then $x-1>0$ and $d(x-1)=d(x)-1$ by (D1). Conversely, if $y>0$ then $y+1>1$ and
+$d(y+1)=d(y)+1$ by (D1).
+\item The map $x\mapsto x/(1-x)$ is a bijection from $X_n\cap(0,1)$ to $X_{n-3}\cap\Qpos$, with
+inverse $z\mapsto z/(1+z)$. Indeed, let $x\in(0,1)$. Then $d(x)=d(x-1)+1$ by (D1). Next
+$x-1\in(-1,0)$, so $d(x-1)=d\bigl(\tfrac1{1-x}\bigr)+1$ by (D2). Finally $\tfrac1{1-x}>1$ and
+$\tfrac1{1-x}-1=\tfrac{x}{1-x}>0$, so $d\bigl(\tfrac1{1-x}\bigr)=d\bigl(\tfrac{x}{1-x}\bigr)+1$ by
+(D1). Together, $d\bigl(\tfrac{x}{1-x}\bigr)=d(x)-3$. Conversely, every $z>0$ is
+$\tfrac{x}{1-x}$ for $x=\tfrac{z}{1+z}\in(0,1)$, and then $d(x)=d(z)+3$.
+\end{itemize}
+Adding the 2 counts gives $r(n)=r(n-1)+r(n-3)$ (for $n=2,3$ the second set is empty).
+
+\emph{Step 3: the recurrence.} Let $n\ge4$. Using Step 1 at $n$, $n-1$ and $n-3$ (all $\ge1$) and
+Step 2 at $n$ and $n-1$ (both $\ge2$),
 \[
-R(t)=\sum_{k\ge1}\Bigl(\sum_{c\ge1}t^{c}\Bigr)\Bigl(\sum_{c\ge2}t^{c+1}\Bigr)^{k-1}
-=\frac{t}{1-t}\sum_{k\ge1}\Bigl(\frac{t^{3}}{1-t}\Bigr)^{k-1}
-=\frac{t}{1-t}\cdot\frac{1}{1-\frac{t^3}{1-t}}
-=\frac{t}{1-t-t^{3}} ,
+a(n)=r(n)+r(n-1)=\bigl[r(n-1)+r(n-3)\bigr]+\bigl[r(n-2)+r(n-4)\bigr]=a(n-1)+a(n-3).
 \]
-where the geometric series is fine as a formal power series because $t^3/(1-t)$ has no constant
-term. Hence
+This is (a). For (b), $a(3)=2$ while $a(2)+a(0)=3$ (Table~\ref{tab:hand}).
+
+\emph{Step 4: generating functions.} The coefficient of $t^n$ in $(1-t-t^3)R(t)$ is
+$r(n)-r(n-1)-r(n-3)$. It is $0$ for $n\ge2$ by Step 2, it is $r(1)=1$ for $n=1$, and it is $0$ for
+$n=0$. So $(1-t-t^3)R(t)=t$, which is the formula for $R$. By Step 1,
 \[
-A(t)=1+R(t)+tR(t)=1+\frac{(1+t)t}{1-t-t^3}=\frac{(1-t-t^3)+t+t^2}{1-t-t^3}=\frac{1+t^2-t^3}{1-t-t^3},
+A(t)=1+R(t)+tR(t)=1+\frac{(1+t)t}{1-t-t^3}=\frac{(1-t-t^3)+t+t^2}{1-t-t^3}=\frac{1+t^2-t^3}{1-t-t^3}.
 \]
-using $\sum_{n\ge1}r(n-1)t^n=tR(t)$, since $r(0)=0$. Multiplying out gives
-$(1-t-t^3)A(t)=1+t^2-t^3$, and comparing coefficients of $t^n$ gives
-\[
-a(n)-a(n-1)-a(n-3)=[t^n]\bigl(1+t^2-t^3\bigr)=
-\begin{cases}
-0,& n\ge4,\\
--1,& n=3,
-\end{cases}
-\]
-which proves (a) and (b). For example $a(3)=2$ while $a(2)+a(0)=3$. For (c), A000930 has generating
-function $1/(1-t-t^3)$ and A097333 has generating function $(1+t)/(1-t-t^3)$
-\cite{oeisA000930,oeisA097333}, so $R(t)=t\cdot\frac1{1-t-t^3}$ and $A(t)-1=t\cdot\frac{1+t}{1-t-t^3}$
-give the stated shifts.
+For (c), A000930 has
+generating function $1/(1-t-t^3)$ and A097333 has generating function $(1+t)/(1-t-t^3)$
+\cite{oeisA000930,oeisA097333}, so $R(t)=t\cdot\frac1{1-t-t^3}$ and
+$A(t)-1=t\cdot\frac{1+t}{1-t-t^3}$ give the stated shifts.
 \end{proof}
 
+\paragraph{Another way to see $R(t)$.}
+Corollary~\ref{cor:enum} connects Q3 with Q1. By it, $r(n)$ counts the compositions of $n$ whose
+first part is $\ge1$ and whose other parts are $\ge3$. The first part contributes $t/(1-t)$ and
+each other part $t^3/(1-t)$, so
+$R(t)=\sum_{k\ge1}\frac{t}{1-t}\bigl(\frac{t^{3}}{1-t}\bigr)^{k-1}=\frac{t}{1-t-t^{3}}$, a geometric
+series that makes sense formally because $t^3/(1-t)$ has no constant term.
+
 \begin{proposition}[asymptotics]\label{prop:asymp}
-Let $\psi=1.4655712318\ldots$ be the real root of $\psi^3=\psi^2+1$.  Then
+Let $\psi=1.4655712318\ldots$ be the real root of $\psi^3=\psi^2+1$. Then
 \[
 a(n)=C\,\psi^{\,n}+O\!\bigl(\psi^{-n/2}\bigr),
 \qquad
-C=\frac{\psi^{2}+\psi}{\psi^{2}+3}=0.7019310679\ldots
+C=\frac{\psi^{2}+\psi}{\psi^{2}+3}=0.7019310679\ldots,
 \]
+with an absolute implied constant.
 \end{proposition}
 
 \begin{proof}
-The polynomial $x^{3}-x^{2}-1$ has one real root $\psi>1$ and a pair of complex conjugate roots
-$\lambda,\bar\lambda$. By Vieta the product of the three roots is $1$, so $\psi\,|\lambda|^{2}=1$ and
-$|\lambda|=\psi^{-1/2}<1$. Substituting $t=1/x$ shows that the roots of $1-t-t^{3}$ are the simple
-roots $1/\psi$, $1/\lambda$ and $1/\bar\lambda$. So the pole of $A(t)=N(t)/(1-t-t^{3})$, with
-$N(t)=1+t^{2}-t^{3}$, closest to $0$ is $t_{0}=1/\psi$. Using partial fractions,
+\emph{The roots.} The polynomial $h(x)=x^3-x^2-1$ has derivative $3x^2-2x$, which vanishes at $0$
+and $\tfrac23$, where $h$ is $-1$ and $-\tfrac{31}{27}$. So $h$ has exactly one real root $\psi$,
+which lies in $(1,2)$ since $h(1)<0<h(2)$, and a pair of complex conjugate roots
+$\lambda,\bar\lambda$. By Vieta $\psi\,|\lambda|^{2}=1$, so $|\lambda|=\psi^{-1/2}<1$. Since
+$Q(t):=1-t-t^3=t^3h(1/t)$, the roots of $Q$ are the 3 distinct, hence simple, numbers $t_0=1/\psi$,
+$1/\lambda$ and $1/\bar\lambda$.
+
+\emph{Partial fractions.} Since $1+t^2-t^3=Q(t)+t+t^2$, we have $A(t)=1+(t+t^2)/Q(t)$. A simple pole
+at $t_1$ with residue $\rho$ contributes $\rho/(t-t_1)=-(\rho/t_1)\sum_n t_1^{-n}t^n$, so for every
+$n\ge1$
 \[
-a(n)=\frac{N(t_{0})}{t_{0}\,\bigl(1+3t_{0}^{2}\bigr)}\,\psi^{\,n}
-+O\bigl(|\lambda|^{\,n}\bigr),
+a(n)=C\,t_0^{-n}+c\,\lambda^{n}+\bar c\,\bar\lambda^{\,n},\qquad
+C=\frac{t_0+t_0^2}{t_0\,\bigl(-Q'(t_0)\bigr)},
 \]
-since the constant at the simple pole $t_{0}$ is $N(t_{0})/\bigl(-Q'(t_{0})\,t_{0}\bigr)$ with
-$Q(t)=1-t-t^{3}$ and $-Q'(t)=1+3t^{2}$. The other two poles have modulus $\psi^{1/2}$, so they give
-terms that shrink like $\psi^{-n/2}$. From $t_{0}^{3}+t_{0}-1=0$ we get
-$N(t_{0})=1+t_{0}^{2}-t_{0}^{3}=t_{0}+t_{0}^{2}$, and hence
+for some constant $c$. Since $t_0^{-n}=\psi^n$ and $|\lambda^n|=\psi^{-n/2}$, this proves the
+asymptotic formula, with implied constant $\max\bigl(2|c|,|a(0)-C|\bigr)$. Finally
+$-Q'(t)=1+3t^2$, so
 \[
 C=\frac{t_{0}+t_{0}^{2}}{t_{0}\,(1+3t_{0}^{2})}=\frac{1+t_{0}}{1+3t_{0}^{2}}
 =\frac{\psi^{2}+\psi}{\psi^{2}+3},
@@ -741,25 +890,24 @@ The transfer matrix has characteristic polynomial $t\,(t^{3}-t^{2}-1)$.
 \end{proposition}
 
 \begin{proof}
-By Corollary~\ref{cor:tree}, $X_{n+1}$ is made of the children of $X_n$, and we just have to see
-where they land. For $f$-children, if $x>1$ then $x+1>2$, if $x\in(0,1]$ then $x+1\in(1,2]$, and if
-$x\in(-1,0)$ then $x+1\in(0,1]$. Vertices $\le-1$ have no children. So the elements of $X_{n+1}$ in
-$(1,\infty)$ are the $f$-children of the positive vertices, and there are $\alpha_n+\beta_n$ of them,
-while the ones in $(0,1]$ are the $f$-children of the vertices in $(-1,0)$. Only positive vertices
-have $g$-children. If $x>1$ then $-1/x\in(-1,0)$, and if $x\in(0,1]$ then $-1/x\in(-\infty,-1]$. This
-proves the four rules. The matrix of the linear map
+By Corollary~\ref{cor:tree}, $X_{n+1}$ is the set of children of the elements of $X_n$, and each
+element of $X_{n+1}$ is the child of exactly one of them. The $f$-child $x+1$ lies in $(1,\infty)$
+if $x>0$ and in $(0,1)$ if $x\in(-1,0)$. The $g$-child $-1/x$ of a positive $x$ lies in $(-1,0)$ if
+$x>1$ and in $(-\infty,-1]$ if $x\le1$. Vertices $\le-1$ have no children. Counting the children
+that land in each class gives the 4 rules. The matrix of the linear map
 $(\alpha,\beta,\gamma,\delta)\mapsto(\alpha+\beta,\ \gamma,\ \alpha,\ \beta)$ is
 \[
 M=\begin{pmatrix}1&1&0&0\\0&0&1&0\\1&0&0&0\\0&1&0&0\end{pmatrix},
 \qquad
 \det(tI-M)=t\,(t^{3}-t^{2}-1),
 \]
-by expanding along the last column, which is zero because the $\delta$-class has no children.
+by expanding along the last column, which is zero in $M$ because the $\delta$-class has no
+children.
 \end{proof}
 
 \begin{figure}[t]
 \centering
-\begin{tikzpicture}[>=stealth,scale=0.9,
+\begin{tikzpicture}[>=stealth,scale=0.8,
   st/.style={draw,rounded corners=3pt,inner xsep=6pt,inner ysep=4pt,font=\small,thick}]
 \node[st,draw=fred] (A) at (0,0) {$(1,\infty)$};
 \node[st,draw=gblue] (C) at (4.6,1.0) {$(-1,0)$};
@@ -773,7 +921,7 @@ by expanding along the last column, which is zero because the $\delta$-class has
 \node[font=\small\itshape,text=black!55] at (8.6,-2.35) {leaves};
 \node[font=\small\itshape,text=black!55] at (3.0,-0.35) {three-step cycle $\Rightarrow t^{3}$};
 \end{tikzpicture}
-\caption{Where the children of each of the four classes go (Proposition~\ref{prop:classes}). After a
+\caption{Where the children of each of the 4 classes go (Proposition~\ref{prop:classes}). After a
 $g$-step, the only way back to the positives is the three-step cycle
 $(1,\infty)\to(-1,0)\to(0,1]\to(1,\infty)$. This cycle gives the $t^{3}$ in the recurrence, and it is
 the counting version of $(gf)^{3}=\mathrm{id}$ (Remark~\ref{rem:relation}).}
@@ -782,11 +930,10 @@ the counting version of $(gf)^{3}=\mathrm{id}$ (Remark~\ref{rem:relation}).}
 
 \section{Geodesic words, and completion of the transfer-matrix argument}\label{sec:words}
 
-If we reverse the $P$-orbit of a rational we get a shortest word for it. In this section we find the set
-of all these words and compare it with the words counted in \cite{mmz}.
+This section is not needed for Theorems A--C. It compares the parent-map words with \cite{mmz}.
 
 \begin{proposition}[canonical normal forms]\label{prop:normalform}
-For $x\in\Q$ let $w(x)$ be the word we read along the reversed $P$-orbit of $x$, as in
+For $x\in\Q$ let $w(x)$ be the word we read along the reversed parent sequence of $x$, as in
 Example~\ref{ex:orbit}, with $w(0)$ empty. Then
 \begin{enumerate}[(a)]
 \item $w(x)$ is admissible at $0$, ends at $x$, and has length $|w(x)|=d(x)$,
@@ -796,21 +943,24 @@ Example~\ref{ex:orbit}, with $w(0)$ empty. Then
 \Bigl\{\,f^{m_1}g\,f^{m_2}g\cdots f^{m_j}g^{\,\epsilon}\ \Big|\ j\ge1,\ \epsilon\in\{0,1\},\
 m_1,\dots,m_{j-1}\ge2,\ m_j\ge1\Bigr\},
 \]
+where $\varepsilon$ is the empty word,
 \item under this bijection $\epsilon=1$ exactly when $x<0$, and for $x>0$ the run lengths are the
 digits of the negative continued fraction in reverse order, $(m_1,\dots,m_j)=(c_k,\dots,c_1)$.
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-Part (a) is the upper bound in the proof of Theorem~\ref{thm:dist}, together with $d=D$. For (b)
-and (c), applying $w(x)$ to $0$ gives back $x$, so the map is injective. Let $x>0$ have digits
-$(c_1,\dots,c_k)$. By the proof of Theorem~\ref{thm:hj}, its orbit is $c_1$ subtractions, a flip,
-$c_2$ subtractions, and so on, ending with $c_k$ subtractions. Reversing this, the word is
+Part (a) is Step 1 of the proof of Theorem~\ref{thm:dist}, together with $d=D$. For (b) and (c),
+applying $w(x)$ to $0$ gives back $x$, so the map is injective. Let $x>0$ have digits
+$(c_1,\dots,c_k)$. By the proof of Theorem~\ref{thm:hj}, its parent sequence is $c_1$ subtractions,
+a flip, $c_2$ subtractions, and so on, ending with $c_k$ subtractions. Reversing this, the word is
 $f^{c_k}\,g\,f^{c_{k-1}}\,g\cdots g\,f^{c_1}$, so the runs are $(m_1,\dots,m_j)=(c_k,\dots,c_1)$ with
 $j=k$ and $\epsilon=0$. The conditions $c_1\ge1$ and $c_i\ge2$ for $i\ge2$ become $m_j\ge1$ and
-$m_i\ge2$ for $i\le j-1$. For $x<0$ we have $w(x)=w(-1/x)\,g$, which has the same runs and
-$\epsilon=1$. Conversely, by Lemma~\ref{lem:hjexist} and Corollary~\ref{cor:enum}, every choice of
-$(j,\epsilon,m_1,\dots,m_j)$ allowed in $\lang$ comes from exactly one digit string and sign.
+$m_i\ge2$ for $i\le j-1$. For $x<0$ we have $w(x)=w(-1/x)\,g$, which has the same runs as
+$w(-1/x)$ and $\epsilon=1$. Conversely, given $(j,\epsilon,m_1,\dots,m_j)$ allowed in $\lang$, let
+$y=\hj{m_j,\dots,m_1}>0$. Then $w(y)$ has runs $(m_1,\dots,m_j)$, so the word is $w(y)$ if
+$\epsilon=0$ and $w(-1/y)$ if $\epsilon=1$. (By Lemma~\ref{lem:hjexist}, $(m_j,\dots,m_1)$ is
+the digit string of $y$, so this follows from the first part of the proof.)
 \end{proof}
 
 \begin{proposition}[pattern-avoidance description]\label{prop:lang}
@@ -819,124 +969,118 @@ $fgfgf$, not beginning with $g$, and not beginning with $fgf$.
 \end{proposition}
 
 \begin{proof}
-A word with no $gg$ that does not start with $g$ can be written in exactly one way as
+The empty word is in both sets. A nonempty word with no $gg$ that does not start with $g$ can be
+written in exactly one way as
 \[
-f^{m_1}g\,f^{m_2}g\cdots f^{m_j}g^{\,\epsilon},\qquad m_i\ge1,\ \ \epsilon\in\{0,1\},
+f^{m_1}g\,f^{m_2}g\cdots f^{m_j}g^{\,\epsilon},\qquad j\ge1,\ m_i\ge1,\ \ \epsilon\in\{0,1\},
 \]
-since the $g$'s in the middle are single and the word may end in $g$. In such a word, $fgfgf$ appears
-exactly when some run of length $1$ has a $g$ on each side and an $f$ beyond each of those $g$'s. The
-run $m_i$ has a $g$ on each side when $2\le i\le j-1$, or when $i=j$ and $\epsilon=1$, but in the second
-case nothing comes after the last $g$. So having no $fgfgf$ is the same as $m_i\ge2$ for
-$2\le i\le j-1$. In the same way, the word starts with $fgf$ exactly when $m_1=1$ and $j\ge2$. Putting
-these together, the four conditions say $m_i\ge2$ for $1\le i\le j-1$ and $m_j\ge1$, which is the
-definition of $\lang$.
+since every $g$ is preceded by an $f$ and the word may end in $g$. In such a word, an occurrence of
+$fgfgf$ has its middle $f$ forming a whole run of length $1$, with a $g$ on each side and an $f$
+after the right-hand $g$. A run $m_i$ has a $g$ on each side when $2\le i\le j-1$, or when $i=j\ge2$
+and $\epsilon=1$, but in the second case nothing comes after the last $g$. So having no $fgfgf$ is
+the same as $m_i\ge2$ for $2\le i\le j-1$. In the same way, the word starts with $fgf$ exactly when
+$m_1=1$ and $j\ge2$. Putting these together, the 4 conditions say $m_i\ge2$ for $1\le i\le j-1$ and
+$m_j\ge1$, which is the definition of $\lang$.
 \end{proof}
 
 \begin{remark}[the Math.SE argument]\label{rem:mmz}
-The accepted answer \cite{mmz} argued as follows. Since $g^{2}=\mathrm{id}$ and $fgfgf=g$, which follow
-from the relations in $\mathrm{PSL}_2(\Z)$, a \emph{shortest} word cannot contain $gg$ or $fgfgf$. A word
-also cannot start with $g$, which is not defined at $0$, or with $fgf$, which goes back to $0$. The answer
-then counted the words with these restrictions, which is the language $\lang$ of
-Proposition~\ref{prop:lang}, using a $14$-state automaton, and got the generating function
-$(1+t^{2}-t^{3})/(1-t-t^{3})$. This is correct and agrees with Theorem~\ref{thm:main}, but it does not
-show that the number of words of length $n$ in $\lang$ is $a(n)$. That is what
-Propositions~\ref{prop:normalform} and~\ref{prop:lang} add. They show that \emph{every} word in $\lang$
-is a shortest word, and not just that shortest words avoid the patterns. They also show that
-different words in $\lang$ end at different rationals, and that every rational is reached. With this,
-the transfer matrix count is a second proof of Theorem~\ref{thm:main}(a). We also checked by
-computer that the tree words, $\lang$ and the pattern-avoiding words are the same up to length $14$.
+The answer \cite{mmz} showed that shortest words avoid the 4 patterns of
+Proposition~\ref{prop:lang} (using $g^{2}=\mathrm{id}$, $fgfgf=g$ and the start at $0$), and counted
+the words of $\lang$ with a $14$-state automaton. Proposition~\ref{prop:normalform} adds what was missing: \emph{every}
+word of $\lang$ is a shortest word, and $\lang$ matches $\Q$ one to one. So that count is a second
+proof of Theorem~\ref{thm:main}(a). The script \texttt{verify.py} also checks that the tree
+words, $\lang$ and the pattern-avoiding words are the same up to length $14$
+(Section~\ref{sec:verify}).
 \end{remark}
 
 \section{Computational verification}\label{sec:verify}
 
-We also ran a breadth-first search over $\Q$ in exact integer arithmetic, keeping fractions in lowest
-terms (the maps preserve this). This rebuilds Kimberling's construction up to rank $41$, which is
-$14{,}144{,}885$ vertices. We checked the following, and none of them failed.
+The script \texttt{verify.py} (plain Python, exact integer arithmetic) runs Kimberling's
+construction with each rational stored as a reduced pair $(p,q)$, which $f(p/q)=(p+q)/q$ and
+$g(p/q)=-q/p$ keep reduced. Up to rank $41$ ($14{,}144{,}885$ vertices) it checks the following,
+and none of the checks failed.
 
-\begin{enumerate}[itemsep=1pt]
+\begin{enumerate}[itemsep=0pt,topsep=3pt]
 \item The rank sizes $a(0),\dots,a(41)$ in Table~\ref{tab:counts} satisfy $a(n)=a(n-1)+a(n-3)$ for
 $4\le n\le41$, fail it at $n=3$, and agree with A097333 shifted by one.
-\item At every vertex, the edge in is an $f$-edge exactly when the value is positive (Q2).
-\item At every vertex $x$, if $x>0$ then $d(x-1)=d(x)-1$, if $x<0$ then $d(-1/x)=d(x)-1$, and if $x<-1$
-then $d(x+1)=d(x)-3$. The numbers of children are $2$, $1$ and $0$ for $x>0$, $x\in(-1,0)$ and
-$x\le-1$, and no value is produced twice in a generation.
-\item The rank formulas of Theorems~\ref{thm:hj} and~\ref{thm:reg} hold at all $453{,}457$ vertices of
-rank at most $32$, with the continued fractions computed separately from the search.
-\item The rules of Proposition~\ref{prop:classes} hold at every rank.
-\item The rows put together agree term by term with the published data of A226247 and A226248,
-including the order within each row (84 terms of each).
+\item At every vertex, the map that produced it is $f$ exactly when the value is positive (Q2).
+\item Corollaries~\ref{cor:innbr} and~\ref{cor:tree}: $d(P(x))=d(x)-1$, children have rank $d(x)+1$
+(below rank $41$), $d(x+1)=d(x)-3$ for $x<-1$, and no value appears twice in a generation.
+\item The rank formulas of Theorems~\ref{thm:hj} and~\ref{thm:reg} hold at all $453{,}456$ nonzero
+vertices of rank at most $32$, with both continued fractions computed directly from $p/q$, not
+from the search.
+\item The rules of Proposition~\ref{prop:classes} hold for $1\le n\le40$.
+\item The rows, in order, agree with the first $73$ terms of A226248 and A226247 as stored in the
+script (ranks $0$ to $9$ and the start of rank $10$).
+\item Propositions~\ref{prop:normalform} and~\ref{prop:lang} up to length $14$: the words read off
+the tree, the words of $\lang$ and the words avoiding the 4 patterns are the same $465$ words, and
+each of them, applied to $0$, gives a different rational whose rank is its length.
 \end{enumerate}
 
-\begin{table}[h]
+\begin{table}[ht]
 \centering\small
-\begin{tabular}{@{}rr@{\hskip 2.2em}rr@{\hskip 2.2em}rr@{}}
+\begin{tabular}{@{}rr@{\hskip 1.6em}rr@{\hskip 1.6em}rr@{\hskip 1.6em}rr@{\hskip 1.6em}rr@{\hskip 1.6em}rr@{}}
 \toprule
-$n$ & $a(n)$ & $n$ & $a(n)$ & $n$ & $a(n)$\\
+$n$ & $a(n)$ & $n$ & $a(n)$ & $n$ & $a(n)$ & $n$ & $a(n)$ & $n$ & $a(n)$ & $n$ & $a(n)$\\
 \midrule
-0 & 1 & 14 & 148 & 28 & 31{,}224\\
-1 & 1 & 15 & 217 & 29 & 45{,}761\\
-2 & 2 & 16 & 318 & 30 & 67{,}066\\
-3 & 2 & 17 & 466 & 31 & 98{,}290\\
-4 & 3 & 18 & 683 & 32 & 144{,}051\\
-5 & 5 & 19 & 1{,}001 & 33 & 211{,}117\\
-6 & 7 & 20 & 1{,}467 & 34 & 309{,}407\\
-7 & 10 & 21 & 2{,}150 & 35 & 453{,}458\\
-8 & 15 & 22 & 3{,}151 & 36 & 664{,}575\\
-9 & 22 & 23 & 4{,}618 & 37 & 973{,}982\\
-10 & 32 & 24 & 6{,}768 & 38 & 1{,}427{,}440\\
-11 & 47 & 25 & 9{,}919 & 39 & 2{,}092{,}015\\
-12 & 69 & 26 & 14{,}537 & 40 & 3{,}065{,}997\\
-13 & 101 & 27 & 21{,}305 & 41 & 4{,}493{,}437\\
+0 & 1 & 7 & 10 & 14 & 148 & 21 & 2{,}150 & 28 & 31{,}224 & 35 & 453{,}458\\
+1 & 1 & 8 & 15 & 15 & 217 & 22 & 3{,}151 & 29 & 45{,}761 & 36 & 664{,}575\\
+2 & 2 & 9 & 22 & 16 & 318 & 23 & 4{,}618 & 30 & 67{,}066 & 37 & 973{,}982\\
+3 & 2 & 10 & 32 & 17 & 466 & 24 & 6{,}768 & 31 & 98{,}290 & 38 & 1{,}427{,}440\\
+4 & 3 & 11 & 47 & 18 & 683 & 25 & 9{,}919 & 32 & 144{,}051 & 39 & 2{,}092{,}015\\
+5 & 5 & 12 & 69 & 19 & 1{,}001 & 26 & 14{,}537 & 33 & 211{,}117 & 40 & 3{,}065{,}997\\
+6 & 7 & 13 & 101 & 20 & 1{,}467 & 27 & 21{,}305 & 34 & 309{,}407 & 41 & 4{,}493{,}437\\
 \bottomrule
 \end{tabular}
-\caption{Verified rank sizes $a(n)=|X_n|$ for $0\le n\le41$.}
+\caption{Verified rank sizes $a(n)=|X_n|$ for $0\le n\le41$.}\vspace{-1ex}
 \label{tab:counts}
 \end{table}
 
 \section{Further remarks}\label{sec:remarks}
 
 \begin{remark}[negative integers]
-The formulas are easy to use on special values. For $n\ge1$, induction shows that $\hj{2,2,\dots,2}$
-with $j$ twos is $(j+1)/j$. So $\tfrac1n=\hj{1,2^{\,(n-1)}}$, one $1$ followed by $n-1$ twos, and
-$d(1/n)=\bigl(1+2(n-1)\bigr)+n-1=3n-2$ and
-\[
-d(-n)=3n-1 .
-\]
-Thus $-1,-2,-3,\dots$ appear at ranks $2,5,8,\dots$, three apart, which again comes from the
-three-step cycle.
+For $j\ge1$, induction on $j$ shows that $\hj{2,\dots,2}$ with $j$ twos is $(j+1)/j$. So
+$\tfrac1n=\hj{1,2^{\,(n-1)}}$, one $1$ followed by $n-1$ twos, for every $n\ge1$. Hence
+$d(1/n)=\bigl(1+2(n-1)\bigr)+n-1=3n-2$ and $d(-n)=3n-1$. Thus $-1,-2,-3,\dots$ appear at ranks
+$2,5,8,\dots$, $3$ apart, which again comes from the three-step cycle.
 \end{remark}
 
-\begin{remark}[sharpness at $n=3$]
-The one failure, $a(3)=a(2)+a(0)-1$, comes from the root. The word $fgf$ would be allowed by the
-automaton of Section~\ref{sec:words} if it did not go back to $0$. Put another way, $g$ is not
-defined at $0$, so the tree has no vertex ``$\infty$'', and $fgf$ is not allowed at the start. This
-removes one word of length $3$, which is the $-t^{3}$ in the numerator of $A(t)$.
+\begin{remark}[sharpness at $n=3$]\label{rem:sharp}
+The one failure, $a(3)=a(2)+a(0)-1$, comes from the root. Step 3 of the proof of
+Theorem~\ref{thm:main} writes $a(n-3)$ as $r(n-3)+r(n-4)$, which needs $n-3\ge1$; at $n=3$ the term
+$a(0)=1$ counts the root, which is neither positive nor of the form $-1/y$. Put another way, the
+detour $f,g,f$ takes a positive $z$ to the new vertex $z/(1+z)$, but takes the root back to $0$. In
+Section~\ref{sec:words} this is the rule that a word may not begin with $fgf$.
 \end{remark}
 
 \begin{remark}[positions of the nonpositive entries]
 If we list Kimberling's rows one after another, the nonpositive values are at positions
-$n+\mathrm{A005374}(n)$, where A005374 is Hofstadter's $H$-sequence. This was noted in A226249 by
-G\'omez Calder\'on (2025) \cite{oeisA226249}. We do not prove it here. It fits with
-Proposition~\ref{prop:classes}, since the negatives of rank $n$ match the positives of rank $n-1$, and
-both counts grow by the same rule $t^{3}=t^{2}+1$ that is behind A005374.
+$n+\mathrm{A005374}(n)$, where A005374 is Hofstadter's $H$-sequence, as G\'omez Calder\'on noted in
+A226249 \cite{oeisA226249}. We do not prove this, but it fits with Proposition~\ref{prop:classes},
+whose counts grow by the rule $t^{3}=t^{2}+1$ that is behind A005374.
 \end{remark}
 
 \begin{remark}[variants]
-Kimberling's entry also has a second ordering $S'$ of the rationals, built from the same two maps with
-different conventions (A226130), and the matching count is conjectured in A226136 (see also the note
-in \cite{kagey-mse}). The parent-map method should work there too. We would first guess $P$ from the
-small ranks and then prove the versions of (D1)--(D4).
+Kimberling's entry also has a second ordering $S'$ of the rationals, built from the same 2 maps
+with different conventions (A226130), with a conjectured count in A226136 (see also
+\cite{kagey-mse}). The parent-map method should work there too: guess $P$ from the small ranks,
+then prove the versions of (D1)--(D4).
 \end{remark}
 
 \subsection*{Data and code availability}
-The verification script (\texttt{verify.py}, plain Python, $\approx35$ s) and the full solution notes
-are in the Problem 137 folder of \url{https://github.com/apemm/Kagey-Problems}.
+The script \texttt{verify.py} (about $1$--$2$ minutes, $2$ GB of memory) and the solution notes
+are in the Problem 137 folder of \url{https://github.com/apemm/Kagey-Problems}. In the same
+repository, the Lean~4 file \texttt{lean/KageyProblems/Problem137.lean} formalizes Lemma~\ref{lem:term},
+Theorem~\ref{thm:dist}, Corollaries~\ref{cor:innbr}--\ref{cor:tree}, Theorem~\ref{thm:hj},
+Corollary~\ref{cor:enum} (without the uniqueness in Lemma~\ref{lem:hjexist}),
+Proposition~\ref{prop:classes}, Theorem~\ref{thm:main}(a)--(c) in recurrence form, and
+$d(-n)=3n-1$.
 
 \subsection*{Acknowledgment}
 The Lean code for this paper was generated by AI. AI was also used to revise some of the
 writing and to help cross-verify the code.
 
-\begin{thebibliography}{99}\small
+\begin{thebibliography}{99}\small\setlength{\itemsep}{1pt}
 
 \bibitem{kagey137}
 P.~Kagey, \emph{Problem 137}, Open Problem Collection,
@@ -953,8 +1097,8 @@ $x\mapsto-\frac1x$''}, Mathematics Stack Exchange (April 2025),
 \url{https://math.stackexchange.com/a/5058406}.
 
 \bibitem{oeisA226247}
-C.~Kimberling, Sequence A226247 (with A226248, A226249, A226250), in: OEIS Foundation Inc.,
-\emph{The On-Line Encyclopedia of Integer Sequences} (2013), \url{https://oeis.org/A226247}.
+C.~Kimberling, Sequence A226247 (with A226248, A226249, A226250), in: \emph{The On-Line
+Encyclopedia of Integer Sequences} (2013), \url{https://oeis.org/A226247}.
 
 \bibitem{oeisA226248}
 C.~Kimberling, Sequence A226248, in: OEIS, \url{https://oeis.org/A226248}.

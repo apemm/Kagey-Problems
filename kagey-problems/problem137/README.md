@@ -13,5 +13,5 @@ Files:
 - solution.md: the same solution as plain notes
 - verify.py: BFS verification through rank 41, reproduces Table 1
 
-Run `python verify.py` (about 35 s, roughly 2 GB of memory at rank 41; lower MAX at the top of the
+Run `python verify.py` (about 1 to 2 minutes, roughly 2 GB of memory at rank 41; lower MAX at the top of the
 file for a quicker run).

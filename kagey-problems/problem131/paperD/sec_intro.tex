@@ -1,163 +1,219 @@
 \section{Introduction}\label{sec:intro}
 
-Problem 131 of Kagey's Open Problem Collection~\cite{kagey131} asks about a
-Galton board where the ball tends to keep going the same way, and in
-particular when the middle bin and the ends are equally likely. We count $n$
-steps, so the bins are Kagey's row $n+1$, and we put $L=\log n$. Let $A_n$
-be the number of right steps. Unless we say otherwise, the first step is left
-or right with probability $\frac12$ each, so the law of $A_n$ is symmetric
-about $n/2$. For even $n$ put $h=n/2$, $C_n=\Prob(A_n=h)$ and
-$E_n=\Prob(A_n=n)=\Prob(A_n=0)$. The crossing is the parameter value at which
-$C_n=E_n$.
-
-The Markov walk switches direction with probability $T/n$ at each step.
-This is the persistent random walk, and Paper~A~\cite{paperA} brackets its
-crossing value $z_n$ of $T$ for every $n\ge2$. From this bracket Paper~A
-derives the crossing equation
-\begin{equation}\label{eq:markov-crossing}
- z_n+\tfrac12\log z_n=L+c_0+\frac1{8z_n}+R_n,\qquad
- c_0=\tfrac12\log\tfrac\pi8,
-\end{equation}
-with an explicit remainder that satisfies
-$\lvert R_n\rvert\le\frac1{4L^2}+\frac{L^2+L}n$ for every $n\ge2$. So
-$z_n=L-\frac12\log L+c_0+o(1)$, and a Markov walk needs about $\log n$
-switches before the middle catches up with the ends.
-
-The Markov walk remembers only its last step. We compare it with 2 walks
-that have a longer memory. The elephant random walk of Sch\"utz and
-Trimper~\cite{schutz2004} remembers its whole past. Each step copies a
-uniformly chosen earlier step and flips it with probability $\varepsilon$,
-and we put $x=n\varepsilon$. In the second walk the steps come in runs of
-alternating direction, and the runs after the first one have i.i.d.\ lengths
-$\xi$ with $\Prob(\xi\ge k)=k^{-\alpha}$. Its memory is the time since the
-last switch. The first run is either a fresh run or, for $\alpha>1$, the
-remaining part of a run in progress. We call these the fresh and the
-stationary start. A remark treats a third kind of memory, aging, where the
-walk switches at step $k$ with probability $c/k$.
-
-\paragraph{The elephant walk.}
-The ratio $C_n/E_n$ is strictly increasing in $\varepsilon$, so the
-crossing $\varepsilon_n$ exists and is unique
-(Proposition~\ref{prop:mlr}). The derivative of $C_n$ at $\varepsilon=0$ is
-exactly $4/(n+2)$ (Proposition~\ref{prop:first-mutation}), and
-$\frac{4\varepsilon}{n+2}(1-2\varepsilon)\le C_n\le
-\frac{4\varepsilon}{n+2}\,n^{2\varepsilon}e^{5200\varepsilon}$ when $n\ge64$
-and $\varepsilon(1+\log n)\le\frac1{100}$ (Theorem~\ref{thm:erw-bounds}).
-Hence $x_n=n\varepsilon_n$ satisfies
-$x_n+\log x_n=2\log n-\log8+O((\log n)^2/n)$
-(Theorem~\ref{thm:erw-crossing}). The factor 2 appears because a single
-early flip already turns a large family of steps. So the middle is reached
-with probability of order $\varepsilon/n$, and the ends must fall to about
-$n^{-2}$ before they lose, instead of about $n^{-1}$ for the Markov walk.
-As $E_n\approx\frac12e^{-x}$, the crossing is near $2\log n$, not $\log n$.
-From~\eqref{eq:markov-crossing} we get
-$x_n=2z_n-\log(2\pi)+c_*/\log n+O(\log\log n/(\log n)^2)$ with
-$c_*=\frac12\log(2\pi)-\frac14$ (Theorem~\ref{thm:erw-markov}).
-
-At the crossing each end is below its neighbor, so the law is not unimodal.
-We prove this for every even $n\ge1688$ (Theorem~\ref{thm:dip} and
-Corollary~\ref{cor:dip}), and a computation gives it for every even
-$8\le n<1688$. The number of steps that differ from the first step is close
-to a compound Poisson law, with a Landau limit near $x\log x$ on the scale
-$x$ (Remark~\ref{rem:bulk}, proofs omitted). Farther out,
-$\Prob(A_n=n-m)\sim x/(2m^2)$ for $x\log^2x\ll m\ll n$
-(Theorem~\ref{thm:profile}). At the crossing and for large $n$, the center is
-below every interior bin outside a window of width of order
-$(nx_n\log n)^{1/2}$, that is $n^{1/2}\log n$ (Theorem~\ref{thm:shape}), and
-the modes lie within $O(x_n\log^2x_n)$ of the ends
-(Corollary~\ref{cor:modes}). Conjecture~\ref{conj:convex} would close this
-window, and we checked it for every $10\le n\le600$ and for 6 larger $n$.
-
-\paragraph{Heavy-tailed runs and aging.}
-For $1<\alpha<2$ and any first run, Theorem~\ref{thm:center} gives $C_n$ to
-leading order, and it is of order $n^{-1/\alpha}$. With a stationary start
-the end is of order $n^{1-\alpha}$, so
-$R_n=E_n/C_n\sim C(\alpha)n^{1-\alpha+1/\alpha}$
-(Corollary~\ref{cor:golden}). The end needs one first run that covers all
-$n$ steps, while the center needs the renewal processes of $+$ and $-$ runs
-to meet, and these fluctuate on the scale $n^{1/\alpha}$. The exponent
-vanishes at the golden ratio $\varphi=(1+\sqrt5)/2$, and there
-$R_n\to C(\varphi)=0.7761\ldots$, so the center still wins. With a fresh
-start the center wins for every $1<\alpha<2$. Remark~\ref{rem:other} lists
-the other exponents, with the proofs omitted (for $\alpha=1$ we only have a
-heuristic). For aging with a fixed first step the crossing is exactly $c=1$
-for every $n$ (Remark~\ref{rem:aging}).
-
-\paragraph{Prior work.}
-The steps of the elephant walk split into clusters, since a step either
-copies an earlier step exactly, with probability $1-2\varepsilon$, or starts
-a new cluster with a fair sign. This is K\"ursten's coupling with bond
-percolation on random recursive trees~\cite{kursten2016}, and Baur and Bertoin~\cite{baurbertoin2016} relate
-the walk to P\'olya-type urns. Our regime $n\varepsilon\asymp\log n$ lies in
-the strongly supercritical percolation regime of Baur~\cite{baur2016} (see
-also Bertoin~\cite{bertoin2014}). Those results describe cluster sizes and
-do not cover the center probability, which is a large deviation of the root
-cluster. Gu\'erin, Laulin, Raschel and
-Simon~\cite[proof of Theorem~1.1]{glrs2025} prove that the law with a fixed
-first step is unimodal for every $n$ and every memory parameter, and their
-other results fix this parameter as $n$ grows. We did not find an asymptotic
-formula for the center probability in the literature when $\varepsilon\to0$
-as $n$ grows.
-
-For heavy-tailed runs, Godr\`eche and Luck~\cite{godrecheluck2001} give the
-transform of the occupation time of an alternating renewal process and the
-scalings of the center and of both edges. Zaburdaev, Denisov and
-Klafter~\cite{zdk2015} and Dhar, Saito and Derrida~\cite{dsd2013} describe
-the profile of a L\'evy walk. Wang, Li and H\"anggi~\cite{wlh2016} already
-observe that equal decay of the central peak and the side peaks gives the
-golden ratio, as a heuristic for heat conduction. We
-prove the lattice statement with a local limit at the center, keep the 2
-starts apart, and compute $C(\alpha)$. For aging, Dietz and
-Sethuraman~\cite{ds2007} proved the limit law of $A_n/n$, Engl\"ander and
-Volkov~\cite{ev2018} gave a second proof, and Engl\"ander, Volkov and
-Wang~\cite{evw2020} found the scaling limit of the walk.
-
-\paragraph{The 4 papers.}
-This is the last of 4 papers on Problem 131, and they share one notation.
-The walk takes $N$ steps, $L=\log N$, and a Markov walk on $d$ states has
-transition matrix $P=I+(T/N)Q$. We write $z_N$ for the crossing value of
-$T$ in Paper~A~\cite{paperA}. That paper treats the 2-state walk, which is
-the zero-field Ising chain with free boundaries. It gives explicit uniform
-Bessel bounds for every bin, brackets the crossing $p_N=1-z_N/N$ for every
-$N\ge2$ and derives the crossing equation~\eqref{eq:markov-crossing}. It
-also proves a uniform local law for every switching probability
-$q\le\frac12$, from the diffusive to the ballistic regime.
-Paper~B~\cite{paperB} treats the complete graph, which is the $d$-state
-Potts chain. There every face (set of states) ties with the vertices at
-first order. Paper~B resolves the tie at second order. Its constants $a_k$
-are a face's mass over a Gaussian volume, given by square roots of weighted
-spanning-tree sums, and the mode changes exactly once, from the vertices to
-the full centers. A start law or a weak field shifts the constants.
-Paper~C~\cite{paperC} gives the general theory for $P=I+(T/N)Q$ with
-$T=\tau L$. To first order the mode sits on a face $F$ that minimizes
-$\tau\lambda_F+\lvert F\rvert-1$, where $\lambda_F$ is the principal
-Dirichlet eigenvalue of $-Q$ on $F$. For strongly connected faces Paper~C
-finds the second order, with constants $K_F$ and a crossing equation, and
-it applies the theory to the planar persistent walk. This paper asks what
-memory changes. We write $n$ for $N$, and $x_n$ plays the role of $z_n$.
-The elephant walk crosses at $x_n=2z_n-\log(2\pi)+o(1)$, about twice the
-Markov value, and its law at the crossing has a hump near each end.
-Heavy-tailed runs have the golden-ratio threshold, and aging walks get a
-short remark. As in Paper~B the start matters. For heavy-tailed runs the
-threshold is $\varphi$ for a stationary start (Corollary~\ref{cor:golden})
-and $1$ for a fresh start (Remark~\ref{rem:other}, proofs omitted).
-Figure~\ref{fig:program} shows the crossings of all 4 papers.
+Suppose you drop a ball through a Galton board with $N$ rows of pegs. At the
+first peg the ball goes left or right with probability $\frac12$ each. At every
+later peg it repeats its previous direction with probability $p$ and switches
+with probability $q=1-p$. This is the board of Problem 131 in Kagey's Open
+Problem Collection~\cite{kagey131}, and one of his questions is when the middle
+bin is exactly as likely as each of the 2 end bins. If $p$ is close to 1 the
+ball rarely switches, so the ends win. If $p=\frac12$ the ball does a simple
+random walk, so the middle wins. Paper~I of this series~\cite{paperA} finds the
+crossing in between: the middle catches up with the ends when the expected
+number of switches $T=Nq$ is about $\log N$.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\textwidth]{../figures/program_D}
+\includegraphics[width=0.8\textwidth]{../figures/program_D}
 \caption{The crossing on each model's switching scale against $L=\log N$
 (a), and the heavy-tailed exponent $e(\alpha)=1-\alpha+1/\alpha$ of this
-paper for a stationary start (b). The scale is $T$ for Papers A to C,
-$x=n\varepsilon$ for the elephant walk (drawn through the root $g_n$ of
+paper for a stationary start (b). The scale is $T$ for Papers I to III,
+$x=N\varepsilon$ for the elephant walk (drawn through the root $g_N$ of
 Theorem~\ref{thm:erw-crossing}), and the expected number $H_N-1$ of
-switches at the fixed-start crossing $c=1$ for the aging walk. The curves of this paper are in
-bold.}
+switches at the fixed-start crossing $c=1$ for the aging walk. The curves of
+this paper are in bold.}
 \label{fig:program}
 \end{figure}
 
-\paragraph{Organization.}
-Sections~\ref{sec:erw} and~\ref{sec:shape} treat the elephant walk,
-Section~\ref{sec:heavy} treats heavy-tailed runs and aging,
-Section~\ref{sec:verify} describes the computations, and
+Kagey's ball remembers 1 step, since its next direction depends only on its
+last one. In this paper we ask what happens to the middle-versus-ends question
+if the ball remembers more. We study 3 kinds of memory.
+\begin{itemize}[nosep]
+\item In the elephant random walk of Sch\"utz and Trimper~\cite{schutz2004}
+the ball remembers its whole past. At each peg it picks one of its earlier
+directions uniformly at random and repeats it, except that with probability
+$\varepsilon$ it reverses it. We write $x=N\varepsilon$, which is the expected
+number of reversals up to $\varepsilon$.
+\item In a walk with heavy-tailed runs the ball remembers how long it has
+gone in its current direction. Its path is a sequence of runs of alternating
+direction, and the run lengths $\xi$ are independent with
+$\Prob(\xi\ge k)=k^{-\alpha}$ for $k\ge1$.
+\item In an aging walk the ball remembers how old it is. It switches at peg
+$k\ge2$ with probability $c/k$.
+\end{itemize}
+The answer depends on the kind of memory. For the elephant walk the middle
+needs about twice as many reversals as Kagey's board needs switches: the
+crossing value of $x$ is about $2\log N$, not $\log N$. For heavy-tailed runs
+started in equilibrium the ends win for large $N$ if $\alpha$ is below the
+golden ratio $\varphi=(1+\sqrt5)/2$, and the middle wins if $\alpha$ is above
+$\varphi$. For the aging walk with a fixed first step the crossing is exactly
+$c=1$, for every $N$.
+
+\paragraph{Why the elephant needs twice as many reversals.}
+The ends are easy. The ball lands in the right end bin exactly when its first
+step goes right and it never changes direction. This has probability
+$\frac12(1-\varepsilon)^{N-1}\approx\frac12e^{-x}$ for the elephant walk, and
+the same with $q$ in place of $\varepsilon$ for Kagey's board. So only the
+middle differs. On Kagey's board the $T$ switches are spread over the whole
+walk, and each moves the final position by about a run length $N/T$. So the
+number of right steps spreads over about $N/\sqrt T$ bins, the middle bin has
+probability of order $\sqrt T/N$, and the ends lose when $e^{-T}$ falls to
+about $1/N$, that is, when $T\approx\log N$.
+
+The elephant walk spreads a reversal in a different way. A reversal at step
+$t+1$ is copied by later steps, those copies are copied, and so on. The steps
+that descend from it form a family, whose share of the walk behaves like the
+share of 1 ball in P\'olya's urn started with 1 ball against $t$. So a late
+reversal has a small family and hardly moves the ball.
+To land exactly in the middle, the walk needs a family that fills half the
+walk, so it needs a reversal among its first few steps. This costs a factor
+$\varepsilon$, and hitting the exact middle costs another factor of order
+$1/N$. So the middle bin has probability of order $\varepsilon/N=x/N^2$ (in
+fact about $4x/N^2$), and the ends lose only when $e^{-x}$ falls to about
+$1/N^2$, that is, when $x\approx2\log N$. More precisely, at Kagey's crossing
+$\frac12e^{-T}\approx\sqrt{2T/\pi}/N$, and squaring this relation turns it
+into the elephant relation $\frac12e^{-x}\approx4x/N^2$ with
+$x\approx2T-\log(2\pi)$.
+
+The small families also give the shape of the law. About $x/m^2$ reversals
+have a family of $m$ steps, so the bin at distance $m$ from an end has
+probability about $x/(2m^2)$ over a wide range of $m$. So the law has a hump
+near each end, and the middle is where the 2 tails meet: twice $x/(2m^2)$ at
+$m=N/2$ is the $4x/N^2$ above.
+
+\paragraph{Why the golden ratio.}
+For heavy-tailed runs take $1<\alpha<2$, so a run has a finite mean $\mu$ but
+an infinite variance. Start the walk in equilibrium, at a typical time of a
+long sequence of runs. Then the first run is already in progress, and long runs
+are more likely to be in progress. The chance that this run covers all $N$
+steps is of order $N^{1-\alpha}$, and this is the end. For the middle, the runs
+to the right and the runs to the left form 2 independent renewal processes,
+each making about $N/(2\mu)$ runs, and the ball ends in the middle when they
+meet at level $N/2$. Each process fluctuates on the scale $N^{1/\alpha}$ of a
+stable law, so they meet exactly with probability of order $N^{-1/\alpha}$. Hence the ratio of end to middle is
+of order $N^{1-\alpha}/N^{-1/\alpha}=N^{1-\alpha+1/\alpha}$. The exponent
+vanishes when $\alpha^2-\alpha-1=0$, that is, at $\alpha=\varphi$. Below
+$\varphi$ the ends win, and above $\varphi$ the middle wins. If the first run
+is a fresh run instead, the end is of order $N^{-\alpha}$, a factor $N$
+smaller, and the middle wins for every $1<\alpha<2$.
+
+\subsection{The series}\label{sec:series}
+
+This is Paper~IV of the series \emph{The middle and the ends}. Paper~I
+\cite{paperA} solves Kagey's board, Paper~II~\cite{paperB} treats $d$
+directions on the complete graph, Paper~III~\cite{paperC} gives the general
+theory for slowly switching chains, and Paper~IV asks what memory changes. The
+4 papers use the same notation.
+\begin{itemize}[nosep]
+\item Kagey's board: $N$ steps (Kagey's row $n$ has $N=n-1$). The first step
+is left or right with probability $\frac12$, and each later step repeats the
+previous one with probability $p$. We put $q=1-p$ and $u=q/p$ (the odds of a
+switch).
+\item $P_N(k)$: the probability of $k$ right steps, that is, that the ball
+lands in bin $k$. The endpoints have $P_N(0)=P_N(N)=p^{N-1}/2$.
+\item $L=\log N$, and $T=Nq$ is the expected number of switches (up to the
+first step). The crossing is $p_N$, and $z_N=N(1-p_N)$.
+\item ``The crossing'': the value of $p$ (or $T$) where a bin is exactly as
+likely as an endpoint.
+\item Multistate walks (Papers~II and~III): $d$ states, a ``face'' $F$ is a
+nonempty set of states, and the ``vertices'' are the faces of size 1. For a
+chain with transition matrix $I+(T/N)Q$, $\lambda_F$ is the principal
+Dirichlet eigenvalue of $-Q$ on $F$, and $K_F$ is a second-order constant.
+\end{itemize}
+Papers~I to~III study Markov walks, whose next step depends only on the
+current one, and their answer is that the middle (or a face) ties with the
+vertices when $T$ is of order $\log N$. This paper keeps Kagey's question and
+changes the walk. For the elephant walk $x=N\varepsilon$ plays the role of $T$
+and its crossing $x_N$ plays the role of $z_N$. We compare the 2 through the
+crossing equation of Paper~I, which says that for every $N\ge2$
+\begin{equation}\label{eq:markov-crossing}
+ z_N+\tfrac12\log z_N=L+c_0+\frac1{8z_N}+O(L^{-2}),\qquad
+ c_0=\tfrac12\log\tfrac\pi8,
+\end{equation}
+where the error term is at most $\frac1{4L^2}+\frac{L^2+L}N$ in absolute
+value, and that $L/2\le z_N\le L$. As in Paper~II the start law matters: for
+heavy-tailed runs it decides whether the threshold is $\varphi$ or $1$.
+Figure~\ref{fig:program} shows the crossings of all 4 papers.
+
+\subsection{Setting and notation}\label{sec:notation}
+
+Every walk in this paper takes $N$ steps $X_1,\dots,X_N\in\{+1,-1\}$, where
+$+1$ means right. Let $A_N=\#\{i\le N:X_i=+1\}$ be the number of right steps,
+and keep writing $P_N(k)=\Prob(A_N=k)$ for the probability that the ball lands
+in bin $k$, now for whichever walk we study. Unless we say otherwise the first
+step is fair, $\Prob(X_1=+1)=\frac12$, and the rules treat the 2 directions
+alike, so $P_N(k)=P_N(N-k)$. We write $\Prob_+$ and $\E_+$ for probability and
+expectation given $X_1=+1$. For even $N$ we put $h=N/2$ and call
+$C_N=P_N(h)$ the center and $E_N=P_N(N)=P_N(0)$ the end. Whenever $C_N$
+appears, $N$ is even. The crossing is the value of the parameter at which
+$C_N=E_N$. All logarithms are natural, $L=\log N$,
+$H_k=\sum_{j\le k}1/j$ is the $k$-th harmonic number, and $\gamma$ is Euler's
+constant. Limits, $O(\cdot)$ and $o(\cdot)$ refer to $N\to\infty$, over even
+$N$ when $C_N$ appears. The constants implied by $O(\cdot)$ are absolute
+unless we name what they depend on.
+
+The elephant walk (Definition~\ref{def:erw}) has the reversal probability
+$\varepsilon\in(0,1)$ and $x=N\varepsilon$. Its crossing is $\varepsilon_N$,
+and $x_N=N\varepsilon_N$. Heavy-tailed runs (Section~\ref{sec:heavy}) have
+the exponent $\alpha$, the mean run length $\mu=\E\xi=\zeta(\alpha)$ for
+$\alpha>1$, and the length $D$ of the first run. A fresh start has $D$
+distributed as $\xi$, and the stationary start has
+$\Prob(D=d)=\Prob(\xi\ge d)/\mu$. We put $R_N=E_N/C_N$, so the ends win
+exactly when $R_N>1$. The aging walk (Remark~\ref{rem:aging}) has the constant
+$c\in(0,2)$. The symbols that only one section uses are defined at the start
+of that section. The letters $p$, $q$ and $u$ have their meaning for Kagey's
+board only in this introduction, and later sections reuse them locally.
+
+\subsection{Results}\label{sec:results}
+
+\paragraph{The elephant walk.}
+For every even $N\ge2$ the crossing $\varepsilon_N$ exists, is unique and is
+below $\frac12$ (Proposition~\ref{prop:mlr}). The center has derivative
+exactly $4/(N+2)$ at $\varepsilon=0$, and
+$C_N=\frac{4\varepsilon}{N+2}(1+O(\varepsilon\log N))$ for even $N\ge64$ and
+$\varepsilon(1+\log N)\le\frac1{100}$, with explicit constants
+(Proposition~\ref{prop:first-mutation} and Theorem~\ref{thm:erw-bounds}).
+This gives $x_N+\log x_N=2L-\log8+O(L^2/N)$ (Theorem~\ref{thm:erw-crossing})
+and $x_N=2z_N-\log(2\pi)+c_*/L+O(\log L/L^2)$ with
+$c_*=\frac12\log(2\pi)-\frac14$ (Theorem~\ref{thm:erw-markov}). At the
+crossing the end is below its neighbor for every even $N\ge8$
+(Corollary~\ref{cor:dip}), bin $N-m$ has probability
+$\frac x{2m^2}(1+o(1))$ for $x\log^2x\ll m\ll N$ (Theorem~\ref{thm:profile}),
+and for large $N$ the center is below every interior bin outside a window of
+width of order $N^{1/2}\log N$ (Theorem~\ref{thm:shape}), while the modes lie
+within $O(x_N\log^2x_N)$ of the ends (Corollary~\ref{cor:modes}).
+
+\paragraph{Heavy-tailed runs and aging.}
+For $1<\alpha<2$ and any first run, $C_N$ is an explicit constant times
+$N^{-1/\alpha}$ (Theorem~\ref{thm:center}). With the stationary start
+$R_N\sim C(\alpha)N^{1-\alpha+1/\alpha}$, and $C(\varphi)=0.7761\ldots$, so at
+$\alpha=\varphi$ the center still wins. With a fresh start $R_N\to0$
+(Corollary~\ref{cor:golden}). The aging walk is in Remark~\ref{rem:aging}.
 Appendices~\ref{app:erw} to~\ref{app:heavy} hold the longer proofs.
+
+\subsection{Prior work}\label{sec:prior}
+
+The steps of the elephant walk split into clusters, since a step either
+copies an earlier step exactly, with probability $1-2\varepsilon$, or starts
+a new cluster with a fair sign. This is K\"ursten's coupling with bond
+percolation on random recursive trees~\cite{kursten2016}, and Baur and
+Bertoin~\cite{baurbertoin2016} relate the walk to P\'olya-type urns. Our
+regime $N\varepsilon\asymp\log N$ is the strongly supercritical regime of
+Baur~\cite{baur2016} and Bertoin~\cite{bertoin2014}, whose results describe
+cluster sizes, not the center probability, which is a large deviation of the
+root cluster.
+Gu\'erin, Laulin, Raschel and Simon~\cite[proof of Theorem~1.1]{glrs2025}
+prove that the law with a fixed first step is unimodal, and their other
+results fix the memory parameter as $N$ grows. We did not find an asymptotic
+formula for the center probability when $\varepsilon\to0$ as $N$ grows.
+
+For heavy-tailed runs, Godr\`eche and Luck~\cite{godrecheluck2001} give the
+transform of the occupation time of an alternating renewal process and the
+scalings of the center and of both edges, and~\cite{zdk2015,dsd2013} describe
+the profile of a L\'evy walk. Wang, Li and H\"anggi~\cite{wlh2016} already observe,
+as a heuristic for heat conduction, that equal decay of the central peak and
+the side peaks gives the golden ratio. We prove the lattice statement with a
+local limit at the center, keep the 2 starts apart, and compute $C(\alpha)$.
+For aging walks, Dietz and Sethuraman~\cite{ds2007} proved the limit law of
+$A_N/N$, Engl\"ander and Volkov~\cite{ev2018} gave a second proof, and
+Engl\"ander, Volkov and Wang~\cite{evw2020} found the scaling limit of the
+walk.

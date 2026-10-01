@@ -3,6 +3,10 @@ and~\ref{sec:simplex-thresholds}}{Proofs for Sections 2 and 3}}\label{app:thresh
 
 \subsection{Facts about Bessel series}
 
+The weights $x^m/(m!(m+1)!)$ of the series $\Phi$ define a probability law on
+the integers $m\ge0$. Its moments control every Laplace expansion in this
+paper.
+
 \begin{lemma}[the Bessel law]\label{lem:bessel-law}
 For $x\ge0$ let $J$ be a random variable with
 $\Prob(J=m)=x^m/[m!(m+1)!\,\Phi(x)]$ for $m\ge0$ (so $J=0$ when $x=0$), and put
@@ -43,8 +47,9 @@ $(x)_+=\max(x,0)$,
 
 \begin{proof}
 If some $t_j\ge1$, the product is zero and the sum is at least one. Otherwise all
-factors lie in $[0,1]$, and induction follows from
-$1-(1-a)(1-b)=a+b-ab\le a+b$. The empty product gives equality.
+factors lie in $[0,1]$, and induction on $m$ follows from
+$1-(1-a)(1-b)=a+b-ab\le a+b$ for $a,b\in[0,1]$. The empty product gives
+equality.
 \end{proof}
 
 \begin{lemma}[Gaussian averages of the factors $\Phi$]\label{lem:gaussian-phi-average}
@@ -66,15 +71,17 @@ $\ell$ and $X$. Moreover
 \end{lemma}
 
 \begin{proof}
-Expanding each $\Phi$ gives $F(w)=\sum_m\kappa_mw^{q+2|m|}$, where
-$m=(m_1,\ldots,m_\ell)$ runs over vectors of nonnegative integers, $|m|=\sum_jm_j$
-and $\kappa_m=\prod_jc_j^{m_j}/[m_j!(m_j+1)!]\ge0$. The weights
+\emph{Step 1: derivatives as moments.} Expanding each $\Phi$ gives
+$F(w)=\sum_m\kappa_mw^{q+2|m|}$, where $m=(m_1,\ldots,m_\ell)$ runs over vectors
+of nonnegative integers, $|m|=\sum_jm_j$ and
+$\kappa_m=\prod_jc_j^{m_j}/[m_j!(m_j+1)!]\ge0$. The weights
 $\kappa_mw_0^{q+2|m|}/F(w_0)$ are the joint law of $(J_1,\ldots,J_\ell)$. Hence
 $F^{(i)}(w_0)=F(w_0)\,\E[(q+2|J|)_i]\,w_0^{-i}$, where
 $(y)_i=y(y-1)\cdots(y-i+1)$. In particular $F''(w_0)=\mu_qw_0^{-2}F(w_0)$.
 
-Let $w=w_0+y$ with $|y|\le w_0/2$. For every $\eta\ge0$ we have
-$w^{\eta-4}\le16(3/2)^\eta w_0^{\eta-4}$ and $|(\eta)_4|\le\eta^4+1$. Applying this
+\emph{Step 2: the fourth derivative.} Let $w=w_0+y$ with $|y|\le w_0/2$. For
+every $\eta\ge0$ we have $w^{\eta-4}\le16(3/2)^\eta w_0^{\eta-4}$ (consider
+$\eta\ge4$ and $\eta<4$ separately) and $|(\eta)_4|\le\eta^4+1$. Applying this
 with $\eta=q+2|m|$ termwise gives
 \[
 |F''''(w)|\le16\Bigl(\frac32\Bigr)^qw_0^{q-4}
@@ -88,13 +95,14 @@ terms of $q$, $\ell$ and $X$. Since $\Phi\ge1$ we have $F(w_0)\ge w_0^q$, so
 $F''''(w)=O(w_0^{-4}F(w_0))$. The same argument without derivatives bounds
 $F(w_0+y)$.
 
-Now expand $F(w_0+y)$ to third order in $y$ with the Lagrange remainder. The odd
-terms integrate to zero over the symmetric interval. The integrals of $e^{-y^2}$
-and $y^2e^{-y^2}$ over $|y|\le w_0/2$ differ from $\sqrt\pi$ and $\sqrt\pi/2$ by
-$O(w_0e^{-w_0^2/4})$, the number $\mu_q$ is bounded, and the remainder term is
-$O(w_0^{-4}F(w_0))$. This proves the expansion.
+\emph{Step 3: Taylor expansion.} Expand $F(w_0+y)$ to third order in $y$ with
+the Lagrange remainder. The odd terms integrate to zero over the symmetric
+interval. The integrals of $e^{-y^2}$ and $y^2e^{-y^2}$ over $|y|\le w_0/2$
+differ from $\sqrt\pi$ and $\sqrt\pi/2$ by $O(w_0e^{-w_0^2/4})$, the number
+$\mu_q$ is bounded, and the remainder term is $O(w_0^{-4}F(w_0))$. This proves
+the expansion.
 
-For the last formula put $\psi_j=\psi(\xi_j)=\E J_j$. Then
+\emph{Step 4: the formula for $\mu_q$.} Put $\psi_j=\psi(\xi_j)=\E J_j$. Then
 $\E J_j^2=\xi_j-\psi_j$ by Lemma~\ref{lem:bessel-law}(i), and independence gives
 $\E[(q+2|J|)^2]=q^2+4q\sum_j\psi_j+4\sum_j(\xi_j-\psi_j)+8\sum_{i<j}\psi_i\psi_j$.
 Subtracting $\E[q+2|J|]=q+2\sum_j\psi_j$ proves it.
@@ -103,30 +111,38 @@ Subtracting $\E[q+2|J|]=q+2\sum_j\psi_j$ proves it.
 \subsection{Proofs for Section~\ref{sec:simplex-thresholds}}
 
 \begin{proof}[Proof of the exact assertions in Theorem~\ref{thm:simplex-crossing}]
-Let $n$ be a balanced bin with $k$ positive coordinates, so that
-$C_{N,k}/V_N=S_n(u)$ with $u=(1-p)/((d-1)p)$. To count $W_n(j)$, choose a
-sequence of $j+1$ run colors in which successive colors differ. If color $i$
-appears $m_i$ times, its run lengths can be chosen in $\binom{n_i-1}{m_i-1}$
-ways. So every coefficient of $S_n$ is nonnegative, and the first nonzero one is
-$W_n(k-1)=k!$. Hence $S_n$ increases strictly from $0$ to $\infty$ on $u>0$ and
-equals $1$ exactly once. As $p$ increases over $(0,1)$, $u$ decreases over
-$(0,\infty)$, which gives the unique $p_{N,k}$ and the 2 inequalities.
+Let $n$ be a balanced vector with $k$ positive coordinates, so that
+$C_{N,k}/V_N=S_n(u)$ with $u=(1-p)/((d-1)p)$.
 
-Choose the balanced bins for increasing $N$ by adding $1$ to one of the smallest
-coordinates. Each coefficient $W_n(j)$ is then nondecreasing. To see this, put an
-extra copy of the incremented color just before its first occurrence. This keeps
-the number of changes, and different words give different words. The coefficient
-of $u^k$ is
+\emph{Step 1: one crossing.} To count $W_n(j)$, choose a sequence of $j+1$ run
+colors in which successive colors differ. If color $i$ appears $m_i$ times, its
+run lengths can be chosen in $\binom{n_i-1}{m_i-1}$ ways. So every coefficient
+of $S_n$ is nonnegative, and the first nonzero one is $W_n(k-1)=k!$, from the
+$k!$ orders of $k$ single runs. Hence $S_n$ increases strictly from $0$ to
+$\infty$ on $u>0$ and equals $1$ exactly once. As $p$ increases over $(0,1)$,
+$u$ decreases over $(0,\infty)$, which gives the unique $p_{N,k}$ and the 2
+inequalities.
+
+\emph{Step 2: monotonicity in $N$.} Choose the balanced vectors for increasing
+$N$ by adding $1$ to one of the smallest coordinates. Each coefficient $W_n(j)$
+is then nondecreasing. To see this, map a word to the word with an extra copy of
+the incremented color just before its first occurrence. This keeps the number
+of changes, and it is injective, since deleting the first letter of the first
+run of that color inverts it. The coefficient of $u^k$ is
 \[
 W_n(k)=\frac{k!(k-1)}2\sum_i(n_i-1)=\frac{k!(k-1)}2(N-k).
 \]
 Indeed, exactly one run color appears twice. For each choice of it there are
 $(k+1)!/2-k!=k!(k-1)/2$ sequences of run colors in which successive colors
-differ, and $n_i-1$ ways to split its $n_i$ visits into 2 runs. This coefficient
-increases strictly with $N$, so the root of $S_n(u)=1$ decreases strictly with
-$N$, and $p=1/(1+(d-1)u)$ increases. If $N=k$, every coordinate is $1$ and
+differ (all orders, minus those with the 2 copies adjacent), and $n_i-1$ ways to
+split its $n_i$ visits into 2 runs. This coefficient increases strictly with
+$N$. So at every $u>0$ the value $S_n(u)$ increases strictly with $N$, the root
+of $S_n(u)=1$ decreases strictly with $N$, and $p=1/(1+(d-1)u)$ increases.
+
+\emph{Step 3: the first crossing.} If $N=k$, every coordinate is $1$ and
 $S_n(u)=k!u^{k-1}$, which gives $p_{k,k}$. Since the root decreases with $N$,
-every root has $u\le(k!)^{-1/(k-1)}<1$.
+every root has $u\le(k!)^{-1/(k-1)}<1$, and $u<1$ means $r<p$, that is,
+$p>1/d$.
 \end{proof}
 
 The asymptotic assertions rest on a Laplace expansion of the positive
@@ -160,58 +176,70 @@ Section~\ref{sec:simplex-thresholds}.
 
 \begin{proof}[Proof of the asymptotic assertions in
 Theorems~\ref{thm:simplex-window} and~\ref{thm:simplex-crossing}]
-Put $s=k-1$ and let $n$ be balanced, so that $\beta_i=n_i/N=1/k+O(1/N)$. At the
+Put $s=k-1$ and let $n$ be balanced, so that $\beta_i=n_i/N=1/k+O(1/N)$.
+
+\emph{Step 1: the balanced ratio~\eqref{eq:simplex-uniform-ratio}.} At the
 center $A^2-1=s$, $D(\beta)=D_k$ and $\gamma_0=(k+2)/16-3k/16=-s/8$. On the
 plane $\sum_i\beta_i=1$ the function $A^2$ has a critical point at the center,
 so $A^2-1=s+O(N^{-2})$, while $D(\beta)$ and $\gamma_0(\beta)$ change by
-$O(1/N)$. Since $z=O(L)$, Lemma~\ref{lem:no-rare} gives
-\eqref{eq:simplex-uniform-ratio}.
+$O(1/N)$. Since $z=O(L)$, Lemma~\ref{lem:no-rare} with $\varepsilon=1/(2k)$ and
+$e^{-s/(8z)}=1-s/(8z)+O(z^{-2})$ gives~\eqref{eq:simplex-uniform-ratio}.
 
-Now let $cL\le T\le CL$ and $u=r/p$, so that $z=T/p$ lies in $[cL,2CL]$ for large
-$N$ and $z-T=(d-1)Tz/N=O(L^2/N)$. Take logarithms
-in~\eqref{eq:simplex-uniform-ratio} and replace $z$ by $T$. This changes each term
-by $O(T^2/N)$, and $\log D_k=-sa_k$, so we get (i). For (ii),
+\emph{Step 2: parts (i) to (iii).} Let $cL\le T\le CL$ and $u=r/p$, so that
+$z=T/p$ lies in $[cL,2CL]$ for large $N$ and $z-T=(d-1)Tz/N=O(L^2/N)$. Take
+logarithms in~\eqref{eq:simplex-uniform-ratio}, with $c$ and $2C$ in place of $c$
+and $C$, and replace $z$ by $T$. This changes each term by $O(T^2/N)$, and
+$\log D_k=-sa_k$, so we get (i). For (ii),
 $\log V_N=(N-1)\log(1-(d-1)T/N)-\log d=-(d-1)T-\log d+O(T^2/N)$. With $T=\tau L$
 and (i) we get $\log C_{N,k}=-(d-1)\tau L+(k-1)(\tau-1)L+O(\log L)$, which is (ii),
 and the case $k=1$ is the formula for $\log V_N$. For (iii),
-$T=L-\frac12\log L+t$ gives $\Psi_N(T)=t+O(\log L/L)$ uniformly on compact $t$
-sets.
+$T=L-\frac12\log L+t$ gives $\Psi_N(T)=t+\frac12\log(T/L)=t+O(\log L/L)$
+uniformly on compact $t$ sets, and the terms $1/(8T)$ and the error tend to $0$.
 
-For the crossing, (i) at $T=(1-\varepsilon)L$ and at $T=(1+\varepsilon)L$ shows
-that the ratio tends to $0$ and to $\infty$. Since $S_n(u)$ increases with $u$
-and $u$ increases with $T$, the root has $z_{N,k}/L\to1$. At the root the left
-side of (i) is $0$, and dividing by $s$ gives the implicit equation, since
-$T^2/N=o(L^{-2})$. For the explicit form put
-$z_*=L-\frac12\log L+a_k+e_L/L$ with $e_L=\frac14\log L-\frac12a_k+\frac18$.
-Taylor expansion gives $z_*+\frac12\log z_*-1/(8z_*)=L+a_k+O((\log L)^2/L^2)$.
-The derivative of $z+\frac12\log z-1/(8z)$ is at least $1$ for $z>0$, so
+\emph{Step 3: the crossing.} Part (i) at $T=L/2$ and at $T=2L$ shows that the
+ratio tends to $0$ and to $\infty$. Since $S_n(u)$ increases with $u$ and $u$
+increases with $T$, the root lies in $[L/2,2L]$ for large $N$, and (i) applies
+there with $c=\frac12$ and $C=2$. The same argument at $T=(1\pm\varepsilon)L$
+gives $z_{N,k}/L\to1$. At the root the left side of (i) is $0$, and dividing by
+$s$ gives the implicit equation, since $T^2/N=o(L^{-2})$. For the explicit form
+put $z_*=L-\frac12\log L+a_k+e_L/L$ with $e_L=\frac14\log L-\frac12a_k+\frac18$.
+Since $\log z_*=\log L-\frac{\log L}{2L}+\frac{a_k}L+O(\frac{(\log L)^2}{L^2})$,
+we get $z_*+\frac12\log z_*-1/(8z_*)=L+a_k+O((\log L)^2/L^2)$. The derivative of
+$z+\frac12\log z-1/(8z)$ is at least $1$ for $z>0$, so
 $z_{N,k}-z_*=O((\log L)^2/L^2)$, which is~\eqref{eq:simplex-root-expansion}.
 
-For (iv), $a_k=\frac12\log(4\pi)-f(k)$ with $f(x)=(x+\frac12)\log x/(x-1)$. For
-$x\ge2$ the sign of $f'(x)$ is the sign of $\Delta(x)=2x^2-x-1-3x\log x$. Here
-$\Delta(2)=5-6\log2>0$, and $\Delta'(x)=4x-4-3\log x>0$ for $x\ge2$, since
-$\Delta'(2)>0$ and $\Delta''(x)=4-3/x>0$. So $f$ increases strictly and $a_k$
-decreases strictly.
+\emph{Step 4: part (iv).} We have $a_k=\frac12\log(4\pi)-f(k)$ with
+$f(x)=(x+\frac12)\log x/(x-1)$. For $x\ge2$ the sign of $f'(x)$ is the sign of
+$\Delta(x)=2x^2-x-1-3x\log x$. Here $\Delta(2)=5-6\log2>0$, and
+$\Delta'(x)=4x-4-3\log x>0$ for $x\ge2$, since $\Delta'(2)>0$ and
+$\Delta''(x)=4-3/x>0$. So $f$ increases strictly and $a_k$ decreases strictly.
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{thm:simplex-interior}]
 The polynomial $S_n$ has nonnegative coefficients and lowest term $k!u^{k-1}$,
 so $S_n(u)=1$ has a unique positive root. Lemma~\ref{lem:no-rare} with
 $\beta=\alpha$ gives~\eqref{eq:simplex-interior-ratio}, since $\gamma_0(\alpha)$
-is bounded when every $\alpha_i\ge\varepsilon$.
+is bounded when every $\alpha_i\ge\varepsilon$ and $e^{\gamma_0/z}=1+O(1/z)$.
 
-On the compact set of compositions, $g\ge2\varepsilon$ and $D(\alpha)$ has
-positive lower and finite upper bounds. Testing the ratio at suitable constant
-multiples of $\log N$ brackets the root uniformly. Taking logarithms there gives
+For the root, note that $A^2=1+2\sum_{i<j}\sqrt{\alpha_i\alpha_j}$, so
+$g\in[2\varepsilon,s]$, and $D(\alpha)$ has positive lower and finite upper
+bounds depending on $k$ and $\varepsilon$. Put $c_0=\frac12$ and
+$C_0=s/\varepsilon$. By~\eqref{eq:simplex-interior-ratio},
+$\log S_n(c_0L/N)\le(gc_0-s)L+O(\log L)\le-\frac s2L+O(\log L)<0$ and
+$\log S_n(C_0L/N)\ge(gC_0-s)L+O(\log L)\ge sL+O(\log L)>0$ for large $N$. So the
+root has $Nu_n\in[c_0L,C_0L]$, and taking logarithms
+in~\eqref{eq:simplex-interior-ratio} there gives
 \[
-gz+\frac s2\log z=sL-\log D(\alpha)+O_{k,\varepsilon}(z^{-1}+z^2/N).
+gz+\frac s2\log z=sL-\log D(\alpha)+O_{k,\varepsilon}(z^{-1}+z^2/N),
+\qquad z=Nu_n.
 \]
-First $z=(s/g)L+O_{k,\varepsilon}(\log L)$, and one substitution then
-gives~\eqref{eq:simplex-interior-root}. The derivative of the left side is at
-least $g$, so the error is preserved on inversion. Finally, the functions of
-$\alpha$ in the formula have bounded derivatives on a slightly smaller compact
-set. So moving $\alpha$ by $O(1/N)$ changes the expression by $O(L/N)$, which the
-error term absorbs.
+First $z=(s/g)L+O_{k,\varepsilon}(\log L)$. Then
+$\frac s2\log z=\frac s2\log L+\frac s2\log(s/g)+O(\log L/L)$, and solving for
+$z$ gives~\eqref{eq:simplex-interior-root}. The derivative of the left side is
+at least $g\ge2\varepsilon$, so the error is preserved on inversion. Finally,
+the functions of $\alpha$ in the formula have bounded derivatives on the set
+$\{\alpha_i\ge\varepsilon/2\}$. So moving $\alpha$ by $O(1/N)$ changes the
+expression by $O(L/N)$, which the error term absorbs.
 \end{proof}
 
 \begin{proof}[Proof of Lemma~\ref{lem:occupation-covariance}]
@@ -221,10 +249,10 @@ $\sum_i\zeta_i=0$, $\mathcal L\chi=\zeta$ and the form is $2\zeta^\top\chi$. The
 vector $\tilde\chi=\chi-\chi_1\mathbf1$ also solves $\mathcal L\tilde\chi=\zeta$,
 with $\zeta^\top\tilde\chi=\zeta^\top\chi$ and $\tilde\chi_1=0$. So rows $2$ to
 $k$ give $\mathcal L_{(1)}\tilde\chi'=\zeta'$, where primes delete the first
-coordinate, and
-the form is $2\zeta'^\top\mathcal L_{(1)}^{-1}\zeta'$. As $\theta_1=0$, we have
-$\zeta'=(D'-\pi'\pi'^\top)\theta'$ with $D'=\operatorname{diag}(\pi_2,\ldots,\pi_k)$.
-Hence $\Sigma=2(D'-\pi'\pi'^\top)\mathcal L_{(1)}^{-1}(D'-\pi'\pi'^\top)$. The
+coordinate, and the form is $2\zeta'^\top\mathcal L_{(1)}^{-1}\zeta'$. As
+$\theta_1=0$, we have $\zeta'=(D'-\pi'\pi'^\top)\theta'$ with
+$D'=\operatorname{diag}(\pi_2,\ldots,\pi_k)$. Hence
+$\Sigma=2(D'-\pi'\pi'^\top)\mathcal L_{(1)}^{-1}(D'-\pi'\pi'^\top)$. The
 matrix determinant lemma gives
 $\det(D'-\pi'\pi'^\top)=\prod_{i\ge2}\pi_i\,(1-\sum_{i\ge2}\pi_i)=\prod_i\pi_i$,
 and the matrix-tree theorem~\cite{bollobas1998} gives
@@ -254,16 +282,20 @@ substitution.
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:mass-balance}(2) and (3)]
-Let $u=z/N$ with $cL\le z\le CL$, and put $s=k-1$. In (1) the term $j=k$ is
+Let $u=z/N$ with $cL\le z\le CL$, and put $s=k-1$.
+
+\emph{Step 1: the mass.} In (1) the term $j=k$ is
 $k(1+(k-1)z/N)^{N-1}=k\,e^{(k-1)z+O(z^2/N)}$, and each term with $j<k$ is smaller
 by a factor $O(e^{-z})$. This gives the first expression.
 
-For the second, write $\alpha'=(\alpha_2,\ldots,\alpha_k)$ and $g(\alpha)=A^2-1$ as
-in Theorem~\ref{thm:simplex-interior}. In full coordinates the Hessian of $A^2$ at
-the center is $(k/2)J-(k^2/2)I$. Pulling it back along $w=(-\sum_iv_i,v)$ gives
-$-\nabla^2g=(k^2/2)(I+J)$ in the coordinates $\alpha'$, and its inverse is
-$(2/k^2)(I-J/k)=\Sigma_k$. Fix a small $\eta>0$ and let $K_\eta$ be the set of
-$\alpha$ with $|\alpha_i-1/k|\le\eta$ for all $i$. On $K_\eta$,
+\emph{Step 2: the Hessian.} Write $\alpha'=(\alpha_2,\ldots,\alpha_k)$ and
+$g(\alpha)=A^2-1$ as in Theorem~\ref{thm:simplex-interior}. In full coordinates
+the Hessian of $A^2$ at the center is $(k/2)J-(k^2/2)I$. Pulling it back along
+$w=(-\sum_iv_i,v)$ gives $-\nabla^2g=(k^2/2)(I+J)$ in the coordinates
+$\alpha'$, and its inverse is $(2/k^2)(I-J/k)=\Sigma_k$.
+
+\emph{Step 3: the bins near the center.} Fix a small $\eta>0$ and let $K_\eta$ be
+the set of $\alpha$ with $|\alpha_i-1/k|\le\eta$ for all $i$. On $K_\eta$,
 Theorem~\ref{thm:simplex-interior} gives
 $S_n=D(\alpha)z^{s/2}e^{g(\alpha)z}N^{-s}(1+O(z^{-1}+z^2/N))$ uniformly, with
 $\alpha=n/N$. The points $\alpha'$ form a lattice with cells of volume $N^{-s}$,
@@ -278,33 +310,42 @@ $D=D_k$. So Laplace's method gives
 =D_ke^{(k-1)z}\Bigl(\frac{2\pi}z\Bigr)^{s/2}(\det\Sigma_k)^{1/2}(1+o(1)).
 \]
 Multiplied by $z^{s/2}$ this is the second expression, provided the bins off
-$K_\eta$ are negligible. For them, Theorem~\ref{thm:uniform-simplex-majorant} and
-$\Phi(x)\le e^{2\sqrt x}$ give, with $Y=Nv$ and $A_n=\sum_i\sqrt{n_i/N}$,
+$K_\eta$ are negligible.
+
+\emph{Step 4: the other bins.} For them, Theorem~\ref{thm:uniform-simplex-majorant}
+and $\Phi(x)\le e^{2\sqrt x}$ give, with $Y=Nv$ and $A_n=\sum_i\sqrt{n_i/N}$,
 \[
 S_n(u)\le(1-u)^{N-1}v^s\int_0^\infty e^{-t+2A_n\sqrt{Yt}}\,t^k\,dt
-\le C\,\frac{(1+z)^{2k}}{N^s}\,e^{(A_n^2-1)z+O(z^2/N)} .
+\le C'\,\frac{(1+z)^{2k}}{N^s}\,e^{(A_n^2-1)z+O(z^2/N)},
 \]
-Here $A_n^2\le k-c'_\eta$ for some $c'_\eta>0$, since $A^2$ is continuous on the
+where we wrote $-t+2A_n\sqrt{Yt}=A_n^2Y-(\sqrt t-A_n\sqrt Y)^2$. Here
+$A_n^2\le k-c'_\eta$ for some $c'_\eta>0$, since $A^2$ is continuous on the
 closed simplex and equals $k$ only at the center. There are at most $N^s$ bins,
 so they contribute $O(z^{2k}e^{(k-1-c'_\eta)z})=o(e^{(k-1)z})$. This proves (2).
 
-For (3), equate the 2 expressions in (2) and let $N\to\infty$. This gives
-$k=D_k(2\pi)^{s/2}(\det\Sigma_k)^{1/2}$, that is, $D_k=k\det(2\pi\Sigma_k)^{-1/2}$.
-As a check, $\det\bigl((k^2/2)(I+J)\bigr)=(k^2/2)^sk$, which gives
+\emph{Step 5: part (3).} Equate the 2 expressions in (2) and let $N\to\infty$.
+This gives $k=D_k(2\pi)^{s/2}(\det\Sigma_k)^{1/2}$, that is,
+$D_k=k\det(2\pi\Sigma_k)^{-1/2}$. As a check,
+$\det\bigl((k^2/2)(I+J)\bigr)=(k^2/2)^sk$, which gives
 $D_k=k^{k+1/2}(4\pi)^{-s/2}$ again.
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{thm:simplex-balance}]
-At $p=1/d$ this follows from the multinomial formula. For $1/d<p<1$ we have
-$\sigma>0$ and $v=r/\sigma>0$. Writing $M!=\int_0^\infty e^{-t}t^M\,dt$ in the
+At $p=1/d$ the chain is a sequence of independent uniform states, and the claim
+follows from the multinomial formula: the move multiplies the probability by
+$n_b/(n_a+1)>1$. For $1/d<p<1$ we have $\sigma>0$ and $v=r/\sigma>0$.
+
+\emph{Step 1: an integral form.} Writing $M!=\int_0^\infty e^{-t}t^M\,dt$ in the
 uniform case of Proposition~\ref{prop:dpmf}(a) gives
 \begin{equation}\label{eq:simplex-balance-integral}
 P_N(n)=\frac{\sigma^{N-1}}{dv}\int_0^\infty e^{-t}
 \prod_iB_{n_i}(vt)\,dt,\qquad
 B_n(y)=\sum_{m=1}^n\binom{n-1}{m-1}\frac{y^m}{m!},
 \end{equation}
-where the product runs over the positive coordinates. For each $y>0$ the sequence
-$B_n(y)$, $n\ge1$, is strictly log-concave, and we give a direct proof. Write
+where the product runs over the positive coordinates.
+
+\emph{Step 2: log-concavity.} We show that for each $y>0$ the sequence $B_n(y)$,
+$n\ge1$, is strictly log-concave. Write
 \[
 \frac{B_n(y)}y=b_{n-1},\qquad
 b_j=\sum_{i=0}^j\binom ji a_i,\quad
@@ -312,35 +353,48 @@ a_i=\frac{y^i}{(i+1)!},\qquad
 c_j=\sum_{i=0}^j\binom ji a_{i+1}.
 \]
 Pascal's identity gives $b_{j+1}=b_j+c_j$. The ratio $c_j/b_j$ is the mean of the
-strictly decreasing sequence $a_{i+1}/a_i=y/(i+2)$ under weights proportional to
-$\binom jia_i$. When $j$ increases to $j+1$, the ratio of the new and old
-unnormalized weights on the old support is $(j+1)/(j+1-i)$, which increases in
-$i$, and a new positive weight appears at $i=j+1$. So these weights shift
-strictly toward larger indices, and the mean of the strictly decreasing sequence
-decreases strictly. To check this last step, cross-multiply the 2 means and pair
-the terms with indices $i<\ell$. Hence $b_{j+1}/b_j=1+c_j/b_j$ decreases strictly
-with $j$, which is the strict log-concavity.
+strictly decreasing sequence $f_i=a_{i+1}/a_i=y/(i+2)$ under the weights
+$\pi_i=\binom jia_i$, $0\le i\le j$, normalized. Let $\pi'_i=\binom{j+1}ia_i$,
+$0\le i\le j+1$, be the weights for $j+1$, and put $\pi_{j+1}=0$. On
+$0\le i\le j$ the ratio $\pi'_i/\pi_i=(j+1)/(j+1-i)$ increases in $i$. So for
+$i<l$ we have $\pi'_i\pi_l-\pi'_l\pi_i\le0$, with strict inequality when
+$l=j+1$. Hence
+\[
+\sum_i\pi'_if_i\sum_l\pi_l-\sum_i\pi'_i\sum_l\pi_lf_l
+=\sum_{i<l}(\pi'_i\pi_l-\pi'_l\pi_i)(f_i-f_l)<0,
+\]
+since $f_i>f_l$ for $i<l$. So the mean decreases strictly, $c_{j+1}/b_{j+1}<c_j/b_j$,
+and $b_{j+1}/b_j=1+c_j/b_j$ decreases strictly with $j$. This is the strict
+log-concavity.
 
-It follows that $B_{a+1}(y)B_{b-1}(y)>B_a(y)B_b(y)$ whenever $b\ge a+2$. Apply
-this for $y=vt>0$ in~\eqref{eq:simplex-balance-integral} and integrate. Repeated
-transfers give the conclusion.
+\emph{Step 3: the transfer.} Let $b\ge a+2$. It follows that
+$B_{a+1}(y)/B_a(y)>B_b(y)/B_{b-1}(y)$, that is,
+$B_{a+1}(y)B_{b-1}(y)>B_a(y)B_b(y)$. Apply this
+for $y=vt>0$ in~\eqref{eq:simplex-balance-integral} and integrate. So the move
+strictly increases $P_N(n)$. Repeated moves reach a balanced bin from any bin
+with the same support, and all balanced bins with this support have the same
+probability by symmetry. This proves the theorem.
 \end{proof}
 
 \begin{proof}[Proof of Corollary~\ref{cor:simplex-modes}]
-For large $N$, $T\le CL$ forces $p>1/d$. So by Theorem~\ref{thm:simplex-balance}
-every global mode is a vertex or a balanced bin, and all balanced bins with the
-same number of positive coordinates have the same probability. Fix $0<c<1$. The
-ratio $C_{N,k}/V_N=S_n(u)$ increases with $u$, and $u$ increases with $T$. So for
-$T\le cL$ it is at most its value at $T=cL$, which is
-$\exp(-(k-1)(1-c)L+O(\log L))\to0$ by Theorem~\ref{thm:simplex-window}(i). There
-the vertices are the only modes, and $p>p_{N,d}$. For $cL\le T\le CL$ we use
-Theorem~\ref{thm:simplex-window}(i) in the form
+For large $N$, $T\le CL$ forces $r\to0$ and so $p>1/d$. By
+Theorem~\ref{thm:simplex-balance} every global mode is a vertex or a balanced
+bin, and all balanced bins with the same number of positive coordinates have the
+same probability. So we compare the ratios $C_{N,k}/V_N=S_n(u)$, $2\le k\le d$,
+with $1$ and with each other. Fix $0<c<1$.
+
+\emph{Case $T\le cL$.} The ratio $S_n(u)$ increases with $u$, and $u$ increases
+with $T$. So it is at most its value at $T=cL$, which is
+$\exp(-(k-1)(1-c)L+O(\log L))\to0$ by Theorem~\ref{thm:simplex-window}(i). So the
+vertices are the only modes, and $p>p_{N,d}$.
+
+\emph{Case $cL\le T\le CL$.} Theorem~\ref{thm:simplex-window}(i) gives
 $\log(C_{N,k}/V_N)=(k-1)(\Psi_N(T)-a_k)+o(1)$, uniformly. Fix $\delta>0$, with
 $\delta<(a_{d-1}-a_d)/2$ when $d\ge3$. This is possible since $a_2>\cdots>a_d$.
 If $\Psi_N(T)\le a_d-\delta$, every face ratio is at most
 $e^{-(k-1)\delta+o(1)}<1$, so only the vertices are modes. If
 $\Psi_N(T)\ge a_d+\delta$, the full center beats the vertices, and it beats a
-balanced bin with $k<d$ positive coordinates by
+balanced bin with $2\le k<d$ positive coordinates by
 \[
 (d-k)(\Psi_N(T)-a_d)+(k-1)(a_k-a_d)+o(1)>0 .
 \]
@@ -348,7 +402,8 @@ If $|\Psi_N(T)-a_d|<\delta$, a proper face with $k\ge2$ states has
 $(k-1)(\Psi_N(T)-a_k)+o(1)\le-(k-1)\delta+o(1)<0$, since $a_k-a_d>2\delta$. So it
 loses to the vertices, and the comparison of the vertices with the full centers
 is decided by the unique crossing $p_{N,d}$ of Theorem~\ref{thm:simplex-crossing}.
-This proves (i) to (iii) for large $N$. The last claim follows
-from~\eqref{eq:simplex-root-expansion} and $p_{N,k}=1-(d-1)z_{N,k}/N$, since
-$a_2>\cdots>a_d$.
+In each subcase the conclusion agrees with (i) to (iii).
+
+The last claim follows from~\eqref{eq:simplex-root-expansion} and
+$p_{N,k}=1-(d-1)z_{N,k}/N$, since $a_2>\cdots>a_d$.
 \end{proof}
