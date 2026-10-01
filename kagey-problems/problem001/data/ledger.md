@@ -121,3 +121,15 @@ more point (from 18 of them on 5 x 6 up to 173,716 on 10 x 10). So blackout(n,m)
 open cell up to 10 x 10, which is the lower half of Excess-1. The game stores one checked example
 per size. This has only been checked by one program so far, so it still needs a second check
 (engine or brute) before it goes in the paper.
+
+## Second check of the n+m lower bound and the 5 x 5 value (2026-10-01)
+
+The 21 staircase-plus-one blackouts stored in `game/game.js` (5 x 5 to 10 x 10, n+m points each)
+were rechecked by `verify_narrow.py`, which enumerates rectangles from equal diagonals with a
+common midpoint and shares no code with the game. All 21 are valid, and the rectangle counts on
+the squares (130, 313, 640, 1192, 2044, 3305) match OEIS A085582. So blackout(n,m) >= n+m on every
+cell up to 10 x 10 with both sides at least 5, now by 2 independent programs.
+
+5 x 5 is proved: a bipartite graph on 10 vertices with no C4 or C6 has at most 10 edges, so the
+upper bound is 10 by hand. The same script lists all 44,640 ten-point blackouts of the 5 x 5 grid
+with no short cycle and finds exactly the 8 optima, one D4 orbit.
