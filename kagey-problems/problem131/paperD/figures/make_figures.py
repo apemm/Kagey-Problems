@@ -12,10 +12,11 @@ dark and line styles alternate, so the figures still read in greyscale.
   crossing  (no longer printed in the paper) x_n/log n for the elephant walk against g_n, the second-order
             formula, 2 z_n - log(2 pi) from the Markov walk and the leading terms,
             and D(n) log n against c_*
-  shape     (Figure 2) the law of A_n at the crossing n = 3200 relative to the end,
-            the bulk x f_n(m) against the Landau density, and the tail over x/(2 m^2)
-  heavy     (Figure 3) R_n/(C(alpha) n^e(alpha)) for the stationary start, and R_n
-            just below the golden ratio with the crossover sizes n*(alpha)
+  shape     (Figure 2) the law of A_N at the crossing N = 3200 relative to the end,
+            the bulk x f_N(m) against the Landau density, and the tail over x/(2 m^2)
+  heavy     (Figure 3) R_N/(C(alpha) N^e(alpha)) for the stationary start, and R_N
+            just below the golden ratio with the crossover sizes N*(alpha)
+  (The paper writes N for the number of steps; the code below keeps n.)
 Figure 1 of the paper is the program figure problem131/figures/program_D.pdf,
 included directly as ../figures/program_D and made by
 problem131/figures/make_program_figure.py, not here.
@@ -666,13 +667,13 @@ def fig_shape(s):
     k = np.arange(n + 1)
     a.plot(k, r, "-", color="k", lw=0.9)
     a.plot([n // 2], [1.0], "o", ms=3.5, mfc="white", mec="k", mew=0.8, zorder=3)
-    a.annotate(r"$C_n=E_n$", (n // 2, 1.0), xytext=(n // 2, 0.17), ha="center", va="bottom")
+    a.annotate(r"$C_N=E_N$", (n // 2, 1.0), xytext=(n // 2, 0.17), ha="center", va="bottom")
     a.set_yscale("log")
     a.set_xlim(-60, n + 60)
     a.set_ylim(0.1, 1e4)
     a.set_xticks([0, 1600, 3200])
-    a.set_xlabel(r"bin $a$ ($n=3200$)")
-    a.set_ylabel(r"$\mathbb{P}(A_n=a)/E_n$")
+    a.set_xlabel(r"bin $a$ ($N=3200$)")
+    a.set_ylabel(r"$P_N(a)/E_N$")
     panel(a, "a", x=0.09)
     ins = a.inset_axes([0.36, 0.47, 0.38, 0.35])
     mm = np.arange(0, 61)
@@ -687,7 +688,7 @@ def fig_shape(s):
     ins.set_yticks([1, 1e3])
     ins.minorticks_off()
     ins.tick_params(length=2, pad=1.5)
-    ins.set_xlabel(r"$n-a$", labelpad=0.5)
+    ins.set_xlabel(r"$N-a$", labelpad=0.5)
 
     # (b) the bulk against the Landau density
     lam = np.array(ld["lam"])
@@ -697,16 +698,16 @@ def fig_shape(s):
     x6 = b6["x"]
     l6 = (m6 - x6 * np.log(x6)) / x6
     w = l6 <= 9
-    b.plot(l6[w], x6 * f6[w], "--", color=col_b, lw=1.1, label=r"$n=10^6$")
+    b.plot(l6[w], x6 * f6[w], "--", color=col_b, lw=1.1, label=r"$N=10^6$")
     f3 = np.array(a3["f"])
     m3 = np.arange(len(f3))
     l3 = (m3 - x * np.log(x)) / x
-    b.plot(l3, x * f3, "-.", color=col_s, lw=1.1, label=r"$n=3200$")
+    b.plot(l3, x * f3, "-.", color=col_s, lw=1.1, label=r"$N=3200$")
     b.axvline(ld["mode"], color="0.6", lw=0.5, ls=":")
     b.set_xlim(-3, 9)
     b.set_ylim(0, 0.235)
     b.set_xlabel(r"$\lambda_m=(m-x\log x)/x$")
-    b.set_ylabel(r"$x\,f_n(m)$")
+    b.set_ylabel(r"$x\,f_N(m)$")
     b.legend(frameon=False, loc="upper right", handlelength=1.8)
     panel(b, "b")
 
@@ -720,14 +721,14 @@ def fig_shape(s):
         mh = np.geomspace(2 * xx * log(xx), min(nn / xx, 1e4), 100)
         c.plot(mh, 1 + xx * (2 * np.log(mh) + 2 * EULER - 3) / mh, ":", color=cc, lw=1.3)
     c.plot([], [], ":", color="0.3", lw=1.3, label="heuristic")
-    c.text(40, 2.3, r"$n=3200$", ha="right", va="center")
-    c.text(200, 2.72, r"$n=10^6$", ha="left", va="center")
+    c.text(40, 2.3, r"$N=3200$", ha="right", va="center")
+    c.text(200, 2.72, r"$N=10^6$", ha="left", va="center")
     c.axhline(1.0, color="k", lw=0.6, ls="--")
     c.set_xscale("log")
     c.set_xlim(1, 1e4)
     c.set_ylim(0, 3.1)
     c.set_xlabel(r"distance $m$ from the end")
-    c.set_ylabel(r"$\mathbb{P}(A_n=n-m)\cdot 2m^2/x$")
+    c.set_ylabel(r"$P_N(N-m)\cdot 2m^2/x$")
     c.legend(frameon=False, loc="lower right", handlelength=1.6)
     panel(c, "c")
     fig.subplots_adjust(left=0.07, right=0.99, wspace=0.42)
@@ -752,8 +753,8 @@ def fig_heavy(h):
     a.set_xscale("log")
     a.set_xlim(100, 1e5)
     a.set_ylim(0.3, 1.75)
-    a.set_xlabel(r"$n$")
-    a.set_ylabel(r"$R_n\,/\,C(\alpha)\,n^{e(\alpha)}$")
+    a.set_xlabel(r"$N$")
+    a.set_ylabel(r"$R_N\,/\,C(\alpha)\,N^{e(\alpha)}$")
     a.legend(frameon=False, loc="upper right", ncol=3, handlelength=1.8, columnspacing=0.9)
     panel(a, "a", x=0.9, y=0.1)
 
@@ -763,7 +764,7 @@ def fig_heavy(h):
         N = np.array(d["N"], dtype=float)
         ns = NSTAR[al]
         b.plot(N, d["R"], "-" if i % 2 == 0 else "--", color=cols[i], lw=1.1,
-               label=rf"$\alpha={al}$, $n^*={ns}$")
+               label=rf"$\alpha={al}$, $N^*={ns}$")
         b.plot([ns], [1.0], "o", ms=3.4, mfc="white", mec="k", mew=0.8, zorder=3)
     b.axhline(1.0, color="k", lw=0.6, ls="--")
     b.set_xscale("log")
@@ -773,8 +774,8 @@ def fig_heavy(h):
     b.set_yticks([0.5, 1, 2, 4])
     b.set_yticklabels(["0.5", "1", "2", "4"])
     b.minorticks_off()
-    b.set_xlabel(r"$n$")
-    b.set_ylabel(r"$R_n=E_n/C_n$")
+    b.set_xlabel(r"$N$")
+    b.set_ylabel(r"$R_N=E_N/C_N$")
     b.legend(frameon=False, loc="upper left", handlelength=1.6)
     panel(b, "b", x=0.9, y=0.1)
     fig.subplots_adjust(left=0.075, right=0.985, wspace=0.26)
