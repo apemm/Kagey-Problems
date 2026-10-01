@@ -984,36 +984,32 @@ $m_j\ge1$, which is the definition of $\lang$.
 \end{proof}
 
 \begin{remark}[the Math.SE argument]\label{rem:mmz}
-The accepted answer \cite{mmz} noted that a \emph{shortest} word cannot contain $gg$ or $fgfgf$
-(since $g^{2}=\mathrm{id}$ and $fgfgf=g$) and cannot start with $g$ or with $fgf$ (which returns to
-$0$). It counted these words, which form $\lang$ by Proposition~\ref{prop:lang}, with a $14$-state
-automaton, and got $(1+t^{2}-t^{3})/(1-t-t^{3})$. To conclude that $\lang$ has $a(n)$ words of
-length $n$ one needs Proposition~\ref{prop:normalform}: \emph{every} word in $\lang$ is a shortest
-word, different words in $\lang$ end at different rationals, and every rational is reached. With
-this, the transfer matrix count is a second proof of Theorem~\ref{thm:main}(a).
+The answer \cite{mmz} showed that shortest words avoid the 4 patterns of
+Proposition~\ref{prop:lang} (as $g^{2}=\mathrm{id}$ and $fgfgf=g$), and counted the words of $\lang$
+with a $14$-state automaton. Proposition~\ref{prop:normalform} adds what was missing: \emph{every}
+word of $\lang$ is a shortest word, and $\lang$ matches $\Q$ one to one. So that count is a second
+proof of Theorem~\ref{thm:main}(a).
 \end{remark}
 
 \section{Computational verification}\label{sec:verify}
 
 The script \texttt{verify.py} (plain Python, exact integer arithmetic) runs Kimberling's
-construction as a breadth-first search, with each rational stored as a reduced pair $(p,q)$; the
-maps keep pairs reduced, since $f(p/q)=(p+q)/q$ and $g(p/q)=-q/p$. It goes up to rank $41$, which is
-$14{,}144{,}885$ vertices, and checks the following. None of the checks failed.
+construction with each rational stored as a reduced pair $(p,q)$, which $f(p/q)=(p+q)/q$ and
+$g(p/q)=-q/p$ keep reduced. Up to rank $41$ ($14{,}144{,}885$ vertices) it checks the following,
+and none of the checks failed.
 
 \begin{enumerate}[itemsep=0pt,topsep=3pt]
 \item The rank sizes $a(0),\dots,a(41)$ in Table~\ref{tab:counts} satisfy $a(n)=a(n-1)+a(n-3)$ for
 $4\le n\le41$, fail it at $n=3$, and agree with A097333 shifted by one.
 \item At every vertex, the map that produced it is $f$ exactly when the value is positive (Q2).
-\item At every vertex $x\neq0$: if $x>0$ then $d(x-1)=d(x)-1$; if $x<0$ then $d(-1/x)=d(x)-1$; if
-$x<-1$ then $d(x+1)=d(x)-3$. Below rank $41$, both images of an $x>0$ and the $f$-image of an
-$x\in(-1,0)$ have rank $d(x)+1$. No value is produced twice in a generation.
+\item Corollaries~\ref{cor:innbr} and~\ref{cor:tree}: $d(P(x))=d(x)-1$, children have rank $d(x)+1$
+(below rank $41$), $d(x+1)=d(x)-3$ for $x<-1$, and no value appears twice in a generation.
 \item The rank formulas of Theorems~\ref{thm:hj} and~\ref{thm:reg} hold at all $453{,}456$ nonzero
 vertices of rank at most $32$, with both continued fractions computed directly from $p/q$, not
 from the search.
 \item The rules of Proposition~\ref{prop:classes} hold for $1\le n\le40$.
-\item The rows put together agree term by term, including the order within each row, with the
-first $73$ terms of A226248 and A226247 as stored in the script (ranks $0$ to $9$ and the start of
-rank $10$).
+\item The rows, in order, agree with the first $73$ terms of A226248 and A226247 as stored in the
+script (ranks $0$ to $9$ and the start of rank $10$).
 \end{enumerate}
 
 \begin{table}[ht]
@@ -1046,11 +1042,10 @@ $2,5,8,\dots$, three apart, which again comes from the three-step cycle.
 
 \begin{remark}[sharpness at $n=3$]\label{rem:sharp}
 The one failure, $a(3)=a(2)+a(0)-1$, comes from the root. Step 3 of the proof of
-Theorem~\ref{thm:main} writes $a(n-3)$ as $r(n-3)+r(n-4)$, which needs $n-3\ge1$. At $n=3$ the term
-$a(0)=1$ counts the root, which is neither positive nor of the form $-1/y$. Put another way: from a
-positive $z$ the detour $f,g,f$ leads to the new vertex $z/(1+z)$, but from the root it leads to
-$1$, $-1$ and back to $0$. In the language of Section~\ref{sec:words} this is the rule that a word
-may not begin with $fgf$; at length $3$ it removes exactly the word $fgf$.
+Theorem~\ref{thm:main} writes $a(n-3)$ as $r(n-3)+r(n-4)$, which needs $n-3\ge1$; at $n=3$ the term
+$a(0)=1$ counts the root, which is neither positive nor of the form $-1/y$. Put another way, the
+detour $f,g,f$ takes a positive $z$ to the new vertex $z/(1+z)$, but takes the root back to $0$. In
+Section~\ref{sec:words} this is the rule that a word may not begin with $fgf$.
 \end{remark}
 
 \begin{remark}[positions of the nonpositive entries]
@@ -1068,12 +1063,12 @@ then prove the versions of (D1)--(D4).
 \end{remark}
 
 \subsection*{Data and code availability}
-The script \texttt{verify.py} (about $1$--$2$ minutes, $2$ GB of memory) and the solution
-notes are in the Problem 137 folder of \url{https://github.com/apemm/Kagey-Problems}. The file \texttt{Problem137.lean} in its folder
-\texttt{lean/KageyProblems} formalizes, in Lean~4 with Mathlib, Lemma~\ref{lem:term}, Theorem~\ref{thm:dist},
-Corollaries~\ref{cor:innbr} and~\ref{cor:tree}, Theorem~\ref{thm:hj} and Corollary~\ref{cor:enum}
-(with the existence but not the uniqueness part of Lemma~\ref{lem:hjexist}),
-Proposition~\ref{prop:classes}, parts (a)--(c) of Theorem~\ref{thm:main} in recurrence form, and
+The script \texttt{verify.py} (about $1$--$2$ minutes, $2$ GB of memory) and the solution notes
+are in the Problem 137 folder of \url{https://github.com/apemm/Kagey-Problems}. The Lean~4 file
+\texttt{Problem137.lean} in the folder \texttt{lean/KageyProblems} formalizes Lemma~\ref{lem:term},
+Theorem~\ref{thm:dist}, Corollaries~\ref{cor:innbr}--\ref{cor:tree}, Theorem~\ref{thm:hj},
+Corollary~\ref{cor:enum} (without the uniqueness in Lemma~\ref{lem:hjexist}),
+Proposition~\ref{prop:classes}, Theorem~\ref{thm:main}(a)--(c) in recurrence form, and
 $d(-n)=3n-1$.
 
 \subsection*{Acknowledgment}
@@ -1097,8 +1092,8 @@ $x\mapsto-\frac1x$''}, Mathematics Stack Exchange (April 2025),
 \url{https://math.stackexchange.com/a/5058406}.
 
 \bibitem{oeisA226247}
-C.~Kimberling, Sequence A226247 (with A226248, A226249, A226250), in: OEIS Foundation Inc.,
-\emph{The On-Line Encyclopedia of Integer Sequences} (2013), \url{https://oeis.org/A226247}.
+C.~Kimberling, Sequence A226247 (with A226248, A226249, A226250), in: \emph{The On-Line
+Encyclopedia of Integer Sequences} (2013), \url{https://oeis.org/A226247}.
 
 \bibitem{oeisA226248}
 C.~Kimberling, Sequence A226248, in: OEIS, \url{https://oeis.org/A226248}.
