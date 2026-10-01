@@ -38,6 +38,9 @@ connected and it has start mass.
 
 ## What is proved
 
+- A worked example opens Section 3. On the 4-cycle (the planar walk without reversals) the cost of
+  staying on a face, N^(-tau lambda_F), and the cost of spreading over it, N^(-(|F| - 1)), are
+  computed by hand, and they explain the rule below (Figure 2).
 - First order, for every start (Theorem 3.3). The mode lies on a face F that minimizes
   tau lambda_F + |F| - 1. The winners are read off the lower-left boundary of the convex hull of
   the points (lambda_F, |F| - 1) (Theorem 3.4), so a sticky walk prefers a well-separated community.
@@ -96,9 +99,10 @@ constant in the Fisher theorem with the limits at fixed q and at fixed Nq.
 - `problem131_switching.tex` is the paper. It includes `sec_*.tex` (Sections 1 to 9) and the
   appendices `app_torus.tex`, `app_laplace.tex`, `app_planar.tex`, `app_hdp.tex` and
   `app_fisher.tex` (Appendices A to E).
-- `figures/` holds Figures 2 and 3 (`fig_cycles`, `fig_planar`), made by `figures/make_figures.py`,
+- `figures/` holds Figures 3 and 5 (`fig_cycles`, `fig_planar`), made by `figures/make_figures.py`,
   with the captions in `figures/captions.md`. Figure 1 is the program figure
-  `../figures/program_C.pdf`, made by `../figures/make_program_figure.py`. The files `fig_window` and
+  `../figures/program_C.pdf`, made by `../figures/make_program_figure.py`. Figures 2 and 4 (the
+  worked example on the 4-cycle and the 3 kinds of planar paths) are drawn in the source with TikZ. The files `fig_window` and
   `fig_sticky` are no longer included in the paper.
 - `verify_first_order.py` checks the exact law, the rate on a face and first-order selection
   (Sections 2 and 3).
