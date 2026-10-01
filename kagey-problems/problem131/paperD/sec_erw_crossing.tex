@@ -1,32 +1,35 @@
 \section{The elephant walk and its crossing}\label{sec:erw}
 
-We reduce the elephant walk to a chain with a fixed first step, prove that
-the crossing is unique, and locate it. Throughout,
-$n$ is even whenever $C_n$ appears, $h=n/2$ and $L=\log n$.
+We reduce the elephant walk to a counting chain, prove that the crossing is
+unique, compute the center to first and second order in $\varepsilon$, and
+locate the crossing.
 
 \begin{definition}[elephant walk]\label{def:erw}
 Fix $0<\varepsilon<1$. Let $X_1$ be uniform on $\{\pm1\}$. For $t\ge1$ let
 $U_t$ be uniform on $\{1,\dots,t\}$, and put $X_{t+1}=X_{U_t}$ with
 probability $1-\varepsilon$ and $X_{t+1}=-X_{U_t}$ with probability
 $\varepsilon$. All these choices are independent. We call the event
-$X_{t+1}=-X_{U_t}$ a flip. As before, $A_n=\#\{i\le n:X_i=+1\}$. The
-crossing $\varepsilon_n$ is the value of $\varepsilon$ with $C_n=E_n$, and
-$x_n=n\varepsilon_n$.
+$X_{t+1}=-X_{U_t}$ a flip. As in Section~\ref{sec:notation},
+$A_N=\#\{i\le N:X_i=+1\}$ and $P_N(k)=\Prob(A_N=k)$. The crossing
+$\varepsilon_N$ is the value of $\varepsilon$ with $C_N=E_N$, and
+$x_N=N\varepsilon_N$.
 \end{definition}
 
-In the notation of \cite{schutz2004} the memory parameter is
-$p=1-\varepsilon$, and \cite{glrs2025} write $a=2p-1=1-2\varepsilon$. We
-write $\Prob_+$ and $\E_+$ for the law and expectation given $X_1=+1$. Let
-$M_t$ be the number of $i\le t$ with $X_i\ne X_1$, and put
-$r_t(b)=\varepsilon+(1-2\varepsilon)b/t$ and $f_n(m)=\Prob_+(M_n=m)$.
+A flip is what the introduction called a reversal. In the notation
+of~\cite{schutz2004} the memory parameter is $1-\varepsilon$,
+and~\cite{glrs2025} write $a=1-2\varepsilon$. Given the first step, all that
+matters is how many steps disagree with it. So let $M_t$ be the number of
+$i\le t$ with $X_i\ne X_1$, and put
+\[
+ r_t(b)=\varepsilon+(1-2\varepsilon)\frac bt,\qquad f_N(m)=\Prob_+(M_N=m).
+\]
 
 \begin{lemma}\label{lem:erw-reduction}
 The process $(M_t)_{t\ge1}$ is a Markov chain with $M_1=0$ and
 $\Prob(M_{t+1}=b+1\mid M_t=b)=r_t(b)=1-\Prob(M_{t+1}=b\mid M_t=b)$, and it
-is independent of $X_1$. For $0\le k\le n$,
-$\Prob(A_n=k)=\frac12[f_n(n-k)+f_n(k)]$. In particular $C_n=f_n(h)$,
-$E_n=\frac12(1-\varepsilon)^{n-1}$, and the law of $A_n$ is symmetric about
-$h$.
+is independent of $X_1$. For $0\le k\le N$,
+$P_N(k)=\frac12[f_N(N-k)+f_N(k)]$. In particular $C_N=f_N(h)$,
+$E_N=\frac12(1-\varepsilon)^{N-1}$, and $P_N(k)=P_N(N-k)$.
 \end{lemma}
 
 \begin{proof}
@@ -34,88 +37,98 @@ Given $X_1,\dots,X_t$, the copied step $X_{U_t}$ differs from $X_1$ with
 probability $M_t/t$. So $X_{t+1}\ne X_1$ with conditional probability
 $(1-\varepsilon)M_t/t+\varepsilon(1-M_t/t)=r_t(M_t)$. This depends only on
 $M_t$ and not on $X_1$, which proves the first claim. On $\{X_1=+1\}$ we
-have $A_n=n-M_n$, and on $\{X_1=-1\}$ we have $A_n=M_n$. Averaging over
-$X_1$ gives the formula for $\Prob(A_n=k)$, which does not change under
-$k\mapsto n-k$. Finally $M_n\le n-1$, so $f_n(n)=0$, and
-$f_n(0)=\prod_{t=1}^{n-1}(1-r_t(0))=(1-\varepsilon)^{n-1}$.
+have $A_N=N-M_N$, and on $\{X_1=-1\}$ we have $A_N=M_N$. Averaging over
+$X_1$ gives the formula for $P_N(k)$, which does not change under
+$k\mapsto N-k$. Finally $M_N\le N-1$, so $f_N(N)=0$, and
+$f_N(0)=\prod_{t=1}^{N-1}(1-r_t(0))=(1-\varepsilon)^{N-1}$.
 \end{proof}
 
+So the end is Kagey's end $p^{N-1}/2$ with $p=1-\varepsilon$. More flips
+always help the middle against the end:
+
 \begin{proposition}\label{prop:mlr}
-Let $n\ge2$ and $1\le k\le n-1$. Then $f_n(k)/f_n(0)$ and
-$\Prob(A_n=k)/E_n$ are strictly increasing in $\varepsilon\in(0,1)$. In
-particular $C_n/E_n$ is strictly increasing, the crossing $\varepsilon_n$
-exists and is unique, and $\varepsilon_n<\frac12$. Also $C_n\ge2E_n$ for
-$\varepsilon\ge\frac12$.
+Let $N\ge2$ and $1\le k\le N-1$. Then $f_N(k)/f_N(0)$ and $P_N(k)/E_N$ are
+strictly increasing in $\varepsilon\in(0,1)$. In particular $C_N/E_N$ is
+strictly increasing, the crossing $\varepsilon_N$ exists and is unique, and
+$\varepsilon_N<\frac12$. Also $C_N\ge2E_N$ for $\varepsilon\ge\frac12$.
 \end{proposition}
 
 \begin{proof}
-The probability of a path of $M$ is a product of $n-1$ factors, namely
-$r_s(b_s)$ for an up step at time $s$ and $1-r_s(b_s)$ otherwise, where
-$b_s$ is the state at time $s$. We divide it by the probability
-$f_n(0)=(1-\varepsilon)^{n-1}$ of the path that never flips. With $y=b_s/s\in[0,1)$ the factors become
+The probability of a path of $M$ is a product of $N-1$ factors, namely
+$r_s(b_s)$ for an up step at time $s$ and $1-r_s(b_s)$ otherwise, where $b_s$
+is the state at time $s$. We divide it by the probability
+$f_N(0)=(1-\varepsilon)^{N-1}$ of the path that never flips. With
+$y=b_s/s\in[0,1)$ the factors become
 $\frac{\varepsilon+(1-2\varepsilon)y}{1-\varepsilon}$ and
-$1-y\frac{1-2\varepsilon}{1-\varepsilon}$, with derivatives
-$\frac{1-y}{(1-\varepsilon)^2}>0$ and $\frac y{(1-\varepsilon)^2}\ge0$ in
-$\varepsilon$. Both factors are positive, since
+$1-y\frac{1-2\varepsilon}{1-\varepsilon}$, whose derivatives in
+$\varepsilon$ are $\frac{1-y}{(1-\varepsilon)^2}>0$ and
+$\frac y{(1-\varepsilon)^2}\ge0$. Both factors are positive, since
 $r_s(b_s)=\varepsilon(1-y)+(1-\varepsilon)y$ lies strictly between 0 and 1.
 So the ratio for each path is nondecreasing in $\varepsilon$, and strictly
 increasing if the path has an up step. Summing over the paths with $k\ge1$
-up steps proves the first claim, and the second follows by
-Lemma~\ref{lem:erw-reduction}. As $\varepsilon\to0$, $C_n\to0$ and
-$E_n\to\frac12$. For $\varepsilon\ge\frac12$ every $r_s(b)$ lies in
+up steps proves the claim for $f_N(k)/f_N(0)$, and the claim for $P_N(k)/E_N$
+follows by Lemma~\ref{lem:erw-reduction}. As $\varepsilon\to0$, $C_N\to0$
+and $E_N\to\frac12$. For
+$\varepsilon\ge\frac12$ every $r_s(b)$ and every $1-r_s(b)$ lies in
 $[1-\varepsilon,\varepsilon]$, so each path of $M$ that ends at $h$ has
-probability at least $(1-\varepsilon)^{n-1}=2E_n$. Hence $C_n\ge2E_n$. The
-ratio $C_n/E_n$ is continuous and strictly increasing, so it equals 1 at
+probability at least $(1-\varepsilon)^{N-1}=2E_N$. Hence $C_N\ge2E_N$. The
+ratio $C_N/E_N$ is continuous and strictly increasing, so it equals 1 at
 exactly one $\varepsilon$, and this $\varepsilon$ lies in $(0,\frac12)$.
 \end{proof}
 
-After the first flip, and to first order in $\varepsilon$, the chain $M$ is
-P\'olya's urn.
+\subsection{First order: one early flip}
+
+When $\varepsilon=0$ the chain $M$ never leaves 0. After a first flip, and to
+first order in $\varepsilon$, it is P\'olya's urn.
 
 \begin{lemma}[P\'olya's urn]\label{lem:urn}
-Let $2\le v\le n$. At time $v$ an urn holds 1 ball of one color and $v-1$
-of the other. At each time $k=v,\dots,n-1$ we draw a ball uniformly and
+Let $2\le v\le N$. At time $v$ an urn holds 1 ball of one color and $v-1$
+of the other. At each time $k=v,\dots,N-1$ we draw a ball uniformly and
 return it with 1 more ball of its color. Let $\beta_v(d)$ be the
-probability that at time $n$ there are $d$ balls of the first color. Then
-$\beta_v(d)=\binom{n-d-1}{v-2}/\binom{n-1}{v-1}$ for $1\le d\le n-v+1$, and
+probability that at time $N$ there are $d$ balls of the first color. Then
+$\beta_v(d)=\binom{N-d-1}{v-2}/\binom{N-1}{v-1}$ for $1\le d\le N-v+1$, and
 $\beta_v(d)=0$ for other $d$. Also $\beta_v$ is nonincreasing in $d$ and
-$\sum_dd\,\beta_v(d)=n/v$. For $1\le d\le n-1$,
+$\sum_dd\,\beta_v(d)=N/v$. For $1\le d\le N-1$,
 \[
- \sum_{v=2}^n\beta_v(d)=\frac{n}{d(d+1)},\qquad
- \sum_{v=2}^n(v-2)\,\beta_v(d)=\frac{2n(n-d-1)}{d(d+1)(d+2)} .
+ \sum_{v=2}^N\beta_v(d)=\frac{N}{d(d+1)},\qquad
+ \sum_{v=2}^N(v-2)\,\beta_v(d)=\frac{2N(N-d-1)}{d(d+1)(d+2)} .
 \]
 \end{lemma}
 
 \begin{proof}
 If the urn holds $s$ balls of the first color at time $k$, the next draw
 is of that color with probability $s/k$. So a given order of $i$ draws of
-the first color among the $n-v$ draws has probability
-$\frac{i!\,(v-1)v\cdots(n-i-2)}{v(v+1)\cdots(n-1)}=\frac{(v-1)\,i!\,(n-i-2)!}{(n-1)!}$.
-Multiplying by $\binom{n-v}{i}$ and putting $d=i+1$ gives
-$\beta_v(d)=a_d(v-1)\binom{n-v}{d-1}$ with $a_d=\frac{(d-1)!(n-d-1)!}{(n-1)!}$,
-which equals $\binom{n-d-1}{v-2}/\binom{n-1}{v-1}$. Hence
-$\beta_v(d)/\beta_v(d-1)=1-\frac{v-2}{n-d}$ for $2\le d\le n-v+1$, and
+the first color among the $N-v$ draws has probability
+$\frac{i!\,(v-1)v\cdots(N-i-2)}{v(v+1)\cdots(N-1)}=\frac{(v-1)\,i!\,(N-i-2)!}{(N-1)!}$.
+Multiplying by $\binom{N-v}{i}$ and putting $d=i+1$ gives
+$\beta_v(d)=a_d(v-1)\binom{N-v}{d-1}$ with $a_d=\frac{(d-1)!(N-d-1)!}{(N-1)!}$,
+which equals $\binom{N-d-1}{v-2}/\binom{N-1}{v-1}$. Hence
+$\beta_v(d)/\beta_v(d-1)=1-\frac{v-2}{N-d}$ for $2\le d\le N-v+1$, and
 $\beta_v$ is nonincreasing. The fraction of balls of the first color is a
 martingale that starts at $1/v$, which gives the mean. For the 2 sums put
-$i=n-v$, so that $v-1=\binom{n-1-i}1$ and $(v-1)(v-2)=2\binom{n-1-i}2$. By
+$i=N-v$, so that $v-1=\binom{N-1-i}1$ and $(v-1)(v-2)=2\binom{N-1-i}2$. By
 the Chu--Vandermonde identity,
-$\sum_i\binom{i}{d-1}\binom{n-1-i}{1}=\binom{n}{d+1}$ and
-$\sum_i\binom{i}{d-1}\binom{n-1-i}{2}=\binom{n}{d+2}$. Multiplying by $a_d$
+$\sum_i\binom{i}{d-1}\binom{N-1-i}{1}=\binom{N}{d+1}$ and
+$\sum_i\binom{i}{d-1}\binom{N-1-i}{2}=\binom{N}{d+2}$. Multiplying by $a_d$
 and $2a_d$ gives the 2 sums.
 \end{proof}
 
-Let $V_s(b)=\Prob_+(M_n=h\mid M_s=b)$. For $1\le t\le h$ let
-$\pi_t=\beta_{t+1}(h)=\frac t{n-t}\prod_{i=1}^{t-1}\frac{h-i}{n-i}$,
-$c_1=\sum_{t=1}^h\pi_t$ and $w_t=\pi_t/c_1$, so that $(w_t)_{1\le t\le h}$
-is a probability vector.
+We need 3 more pieces of notation. Let $V_s(b)=\Prob_+(M_N=h\mid M_s=b)$ be
+the chance of ending at the center from state $b$ at time $s$. For $1\le t\le
+h$ let
+\[
+ \pi_t=\beta_{t+1}(h)=\frac t{N-t}\prod_{i=1}^{t-1}\frac{h-i}{N-i},\qquad
+ c_1=\sum_{t=1}^h\pi_t,\qquad w_t=\frac{\pi_t}{c_1},
+\]
+so that $(w_t)_{1\le t\le h}$ is a probability vector.
 
 \begin{proposition}\label{prop:first-mutation}
-Let $n\ge2$ be even.
+Let $N\ge2$ be even.
 \begin{enumerate}[(a)]
-\item $C_n=\sum_{t=1}^h\varepsilon(1-\varepsilon)^{t-1}V_{t+1}(1)$.
-\item $C_n$ is a polynomial in $\varepsilon$ with $C_n(0)=0$. At
+\item $C_N=\sum_{t=1}^h\varepsilon(1-\varepsilon)^{t-1}V_{t+1}(1)$.
+\item $C_N$ is a polynomial in $\varepsilon$ with $C_N(0)=0$. At
 $\varepsilon=0$ we have $V_{t+1}(1)=\pi_t$, and
-$C_n'(0)=c_1=\frac4{n+2}$ exactly.
+$C_N'(0)=c_1=\frac4{N+2}$ exactly.
 \item $\sum_tw_tt=3-\frac6{h+2}$, and $w_t\le2t2^{-t}$ for $1\le t\le h$.
 \end{enumerate}
 \end{proposition}
@@ -128,95 +141,71 @@ the chain then ends at $h$ with probability $V_{t+1}(1)$. At time $t+1$
 there are $t$ steps equal to $X_1$, and this number never decreases. So
 $V_{t+1}(1)=0$ for $t>h$. Paths with no flip end at $0\ne h$.
 
-(b) Every transition probability is affine in $\varepsilon$, so $C_n$ and
-$V_{t+1}(1)$ are polynomials in $\varepsilon$. By (a), $C_n(0)=0$ and
-$C_n'(0)=\sum_tV_{t+1}(1)|_{\varepsilon=0}$. At $\varepsilon=0$ we have
+(b) Every transition probability is affine in $\varepsilon$, so $C_N$ and
+$V_{t+1}(1)$ are polynomials in $\varepsilon$. By (a), $C_N(0)=0$ and
+$C_N'(0)=\sum_tV_{t+1}(1)|_{\varepsilon=0}$. At $\varepsilon=0$ we have
 $r_s(b)=b/s$. So from time $t+1$ on, $M$ counts the balls of the first
 color in the urn of Lemma~\ref{lem:urn} with $v=t+1$, and
 $V_{t+1}(1)=\beta_{t+1}(h)=\pi_t$. Since $\beta_v(h)=0$ for $v>h+1$,
 Lemma~\ref{lem:urn} with $d=h$ gives
-$c_1=\sum_{v=2}^n\beta_v(h)=\frac n{h(h+1)}=\frac4{n+2}$.
+$c_1=\sum_{v=2}^N\beta_v(h)=\frac N{h(h+1)}=\frac4{N+2}$.
 
 (c) In the same way the second sum of Lemma~\ref{lem:urn} gives
-$\sum_t(t-1)\pi_t=\frac{2n(h-1)}{h(h+1)(h+2)}$, so
-$\sum_tw_t(t-1)=\frac{2(h-1)}{h+2}$. Next $\frac{h-i}{n-i}\le\frac12$, so
-$w_t=\frac{n+2}4\pi_t\le\frac{n+2}{2(n-t)}\,t2^{-t}\le2t2^{-t}$ for $t\le h$.
+$\sum_t(t-1)\pi_t=\frac{2N(h-1)}{h(h+1)(h+2)}$, so
+$\sum_tw_t(t-1)=\frac{2(h-1)}{h+2}$. Next $\frac{h-i}{N-i}\le\frac12$, so
+$w_t=\frac{N+2}4\pi_t\le\frac{N+2}{2(N-t)}\,t2^{-t}\le2t2^{-t}$ for $t\le h$.
 \end{proof}
 
-So to first order the walk flips once, at some step $t+1$, and then runs as
-P\'olya's urn from $t$ balls of one color and 1 of the other. For large $n$
-the minority fraction is close to a Beta$(1,t)$ variable, whose density at
+In words, to first order the walk flips once, at some step $t+1$, and then
+runs as P\'olya's urn from $t$ balls of one color and 1 of the other. The
+minority fraction is then close to a Beta$(1,t)$ variable, whose density at
 $\frac12$ is $t2^{1-t}$, and $\sum_tt2^{1-t}=4$ explains the constant
-$4/(n+2)$.
+$4/(N+2)$. Since $w_t\le2t2^{-t}$, only an early flip counts.
+
+\subsection{Second order}
 
 \begin{theorem}\label{thm:erw-bounds}
-Let $n\ge2$ be even.
+Let $N\ge2$ be even.
 \begin{enumerate}[(a)]
 \item For $0<\varepsilon<\frac12$,
-$C_n\ge\frac{4\varepsilon}{n+2}(1-2\varepsilon)$.
-\item $C_n\le\frac{4\varepsilon}{n+2}\,n^{2\varepsilon}e^{5200\varepsilon}$
-whenever $n\ge64$ and $0<\varepsilon(1+\log n)\le\frac1{100}$.
+$C_N\ge\frac{4\varepsilon}{N+2}(1-2\varepsilon)$.
+\item $C_N\le\frac{4\varepsilon}{N+2}\,N^{2\varepsilon}e^{5200\varepsilon}$
+whenever $N\ge64$ and $0<\varepsilon(1+\log N)\le\frac1{100}$.
 \end{enumerate}
-In particular $\log C_n=\log\frac{4\varepsilon}{n+2}+O(\varepsilon\log n)$
-in the range of (b).
+In particular $\log C_N=\log\frac{4\varepsilon}{N+2}+O(\varepsilon\log N)$
+in the range of (b), with an absolute implied constant.
 \end{theorem}
 
-After the first flip, $M$ at time $s$ is P\'olya's urn with $\beta s$ extra
-balls of each color, where $\beta=\varepsilon/(1-2\varepsilon)$
-(Lemma~\ref{lem:A-polya}). They pull the minority fraction toward
-$\frac12$, which adds about $2\varepsilon/s$ to the log-probability of a
-path to the center at time $s$, and summing over $s\le n$ gives
-$n^{2\varepsilon}$. The lower bound (a) compares $M$ with P\'olya's urn
-itself, and the upper bound (b) with an urn whose pseudo-count
-$\kappa(s+10)$ grows linearly, where $\kappa=2\varepsilon/(1-4\varepsilon)$
-(Appendix~\ref{app:erw}).
+In words, the first-order term is correct up to a factor
+$1+O(\varepsilon\log N)$, which is $1+O(L^2/N)$ at the crossing.
 
-We now locate the crossing. By Theorem~\ref{thm:erw-bounds},
-$C_n\approx4x/n^2$ when $\varepsilon=x/n$ and $x$ is of order $\log n$.
-Also $E_n=\frac12(1-x/n)^{n-1}\approx\frac12e^{-x}$. Setting them equal
-gives $x+\log x\approx2\log n-\log8$. So let $\Lambda_n=2L-\log8$ and
-$G(x)=x+\log x$, and let $g_n$ be the root of $G(g_n)=\Lambda_n$.
+\paragraph{Idea of the proof.}
+The proof is in Appendix~\ref{app:erw}. After the first flip, $M$ at time $s$
+is P\'olya's urn with $\beta s$ extra balls of each color, where
+$\beta=\varepsilon/(1-2\varepsilon)$ (Lemma~\ref{lem:A-polya}). They pull the
+minority fraction toward $\frac12$. For (a) we drop them. For (b) we compare
+$M$ with an urn with $\kappa(s+10)$ extra balls,
+$\kappa=2\varepsilon/(1-4\varepsilon)$; the step at time $s$ costs a factor of
+about $e^{\kappa/s}$, and the product is about $e^{\kappa H_N}\approx
+N^{2\varepsilon}$.
 
-\begin{theorem}\label{thm:erw-crossing}
-As $n\to\infty$ over even $n$, the following hold.
-\begin{enumerate}[(a)]
-\item $x_n+\log x_n=\Lambda_n+O((\log n)^2/n)$, so
-$x_n=g_n+O((\log n)^2/n)$.
-\item $x_n=2\log n-\log\log n-\log16+O(\log\log n/\log n)$.
-\end{enumerate}
-\end{theorem}
+\subsection{The crossing}
 
-\begin{proof}
-(a) Put $F(x)=\log C_n(x/n)-\log E_n(x/n)$ for $0<x<n$. By
-Proposition~\ref{prop:mlr}, $F$ is strictly increasing and $x_n$ is its
-only zero. Let $1\le x\le2\Lambda_n$. Then $x/n\le4L/n$, so for large $n$
-Theorem~\ref{thm:erw-bounds} applies with $\varepsilon=x/n$ and gives
-$\log C_n=\log x+\log4-2L+O(xL/n)$. Also $\log(1-y)=-y+O(y^2)$ for
-$0\le y\le\frac12$, so $\log E_n=-\log2-x+O(x^2/n)$. Since
-$\log4+\log2=\log8$, we get $|F(x)-G(x)+\Lambda_n|\le\rho_n$ on
-$[1,2\Lambda_n]$, with $\rho_n=O(L^2/n)$. Now $G'\ge1$ and
-$G(g_n)=\Lambda_n$. So $F(x)<0$ for $1\le x<g_n-\rho_n$ and $F(x)>0$ for
-$g_n+\rho_n<x\le2\Lambda_n$. As $\Lambda_n-\log\Lambda_n\le g_n\le\Lambda_n$,
-for large $n$ both ranges are nonempty. Hence $|x_n-g_n|\le\rho_n$, and
-$F(x_n)=0$ gives $|G(x_n)-\Lambda_n|\le\rho_n$.
-
-(b) Since $g_n=\Lambda_n-\log g_n$ and
-$\Lambda_n-\log\Lambda_n\le g_n\le\Lambda_n$, we have
-$\log g_n=\log\Lambda_n+O(\log\Lambda_n/\Lambda_n)$, and
-$\log\Lambda_n=\log2+\log\log n+O(1/\log n)$. This gives (b) for $g_n$, and
-so for $x_n$ by (a).
-\end{proof}
-
-Table~\ref{tab:erw-crossing} gives exact crossings on the grid
-$n=50\cdot2^k$, computed from the recursion for $f_n$ in
-Lemma~\ref{lem:erw-reduction}. The limit 2 of $x_n/\log n$ is approached
-slowly.
+By Theorem~\ref{thm:erw-bounds},
+$C_N\approx4x/N^2$ when $\varepsilon=x/N$ and $x$ is of order $\log N$. Also
+$E_N=\frac12(1-x/N)^{N-1}\approx\frac12e^{-x}$. Setting them equal gives
+$x+\log x\approx2\log N-\log8$. So let
+\[
+ \Lambda_N=2L-\log8,\qquad G(x)=x+\log x,
+\]
+and let $g_N$ be the root of $G(g_N)=\Lambda_N$. It exists and is unique for
+$\Lambda_N>1$, since $G$ increases from $-\infty$ to $\infty$ on $(0,\infty)$.
 
 \begin{table}[t]
 \centering\small
 \begin{tabular}{@{}rlllll@{}}
 \toprule
-$n$ & $x_n$ & $g_n$ & $x_n-x_{\mathrm{2nd}}$ & $x_n/\log n$ & $D(n)\log n$\\
+$N$ & $x_N$ & $g_N$ & $x_N-x_{\mathrm{2nd}}$ & $x_N/\log N$ & $D(N)\log N$\\
 \midrule
 50 & 3.940487 & 4.288636 & $+0.3452$ & 1.007 & $-0.083$\\
 400 & 7.629217 & 7.843768 & $+0.0621$ & 1.273 & $-0.199$\\
@@ -226,67 +215,116 @@ $n$ & $x_n$ & $g_n$ & $x_n-x_{\mathrm{2nd}}$ & $x_n/\log n$ & $D(n)\log n$\\
 51200 & 16.778468 & 16.786946 & $+0.0008$ & 1.547 & $+0.707$\\
 \bottomrule
 \end{tabular}
-\caption{Exact elephant crossings, the root $g_n$ of $G(g)=\Lambda_n$, and
-the difference $D(n)$ of Theorem~\ref{thm:erw-markov} times $\log n$. Here
+\caption{Exact elephant crossings, the root $g_N$ of $G(g)=\Lambda_N$, and
+the difference $D(N)$ of Theorem~\ref{thm:erw-markov} times $\log N$. Here
 $x_{\mathrm{2nd}}$ is the second-order formula of Remark~\ref{rem:refined}
 without its error term.}
 \label{tab:erw-crossing}
 \end{table}
 
-Now we compare with the Markov walk. Doubling the crossing
-equation~\eqref{eq:markov-crossing} gives
-$2z_n+\log(2z_n)\approx\Lambda_n+\log(2\pi)$.
+\begin{theorem}\label{thm:erw-crossing}
+As $N\to\infty$ over even $N$, the following hold.
+\begin{enumerate}[(a)]
+\item $x_N+\log x_N=\Lambda_N+O(L^2/N)$, so $x_N=g_N+O(L^2/N)$.
+\item $x_N=2\log N-\log\log N-\log16+O(\log\log N/\log N)$.
+\end{enumerate}
+\end{theorem}
+
+In words, the root $g_N$ locates the crossing to within $O(L^2/N)$, and the
+expected number of flips at the crossing is about $2\log N$.
+
+\begin{proof}
+(a) \emph{Step 1: both sides near the crossing.} Put
+$F(x)=\log C_N(x/N)-\log E_N(x/N)$ for $0<x<N$, where $C_N(\varepsilon)$ and
+$E_N(\varepsilon)$ are the center and the end at flip probability
+$\varepsilon$. By Proposition~\ref{prop:mlr}, $F$ is strictly increasing and
+$x_N$ is its only zero. Let $1\le x\le2\Lambda_N$. Then $x/N\le4L/N$, so for
+large $N$ Theorem~\ref{thm:erw-bounds} applies with $\varepsilon=x/N$. As
+$\log\frac{4\varepsilon}{N+2}=\log x+\log4-2L-\log(1+2/N)$ and $x\ge1$, it
+gives $\log C_N=\log x+\log4-2L+O(xL/N)$. Also $\log(1-y)=-y+O(y^2)$ for
+$0\le y\le\frac12$, so $\log E_N=-\log2-(N-1)x/N+O(x^2/N)=-\log2-x+O(x^2/N)$.
+Since $\log4+\log2=\log8$ and $x\le2\Lambda_N\le4L$, we get
+$|F(x)-G(x)+\Lambda_N|\le\rho_N$ on $[1,2\Lambda_N]$, with $\rho_N=O(L^2/N)$.
+
+\emph{Step 2: trap the zero.} Now $G'\ge1$ and $G(g_N)=\Lambda_N$. So
+$F(x)<0$ for $1\le x<g_N-\rho_N$ and $F(x)>0$ for $g_N+\rho_N<x\le2\Lambda_N$.
+As $\Lambda_N-\log\Lambda_N\le g_N\le\Lambda_N$ (because
+$G(\Lambda_N-\log\Lambda_N)\le\Lambda_N\le G(\Lambda_N)$), both ranges are
+nonempty for large $N$. Since $F$ is increasing, $|x_N-g_N|\le\rho_N$. Then
+$F(x_N)=0$ gives $|G(x_N)-\Lambda_N|\le\rho_N$.
+
+(b) Since $g_N=\Lambda_N-\log g_N$ and
+$\Lambda_N-\log\Lambda_N\le g_N\le\Lambda_N$, we have
+$\log g_N=\log\Lambda_N+O(\log\Lambda_N/\Lambda_N)$, and
+$\log\Lambda_N=\log2+\log\log N+O(1/\log N)$. So
+$g_N=2\log N-\log8-\log2-\log\log N+O(\log\log N/\log N)$, which is (b) for
+$g_N$, and (a) gives it for $x_N$.
+\end{proof}
+
+Table~\ref{tab:erw-crossing} gives exact crossings on the grid
+$N=50\cdot2^k$, computed from the recursion for $f_N$ in
+Lemma~\ref{lem:erw-reduction}. The limit 2 of $x_N/\log N$ is approached
+slowly, because of the term $-\log\log N$.
+
+Now we compare with Kagey's board. Doubling \eqref{eq:markov-crossing}
+without its last 2 terms gives $2z_N+\log(2z_N)=\Lambda_N+\log(2\pi)$, so
+$2z_N-\log(2\pi)$ nearly solves $G(x)=\Lambda_N$. What is left is of order
+$1/L$.
 
 \begin{theorem}\label{thm:erw-markov}
-Let $z_n$ be the crossing value of $T$ for the persistent random walk
-of~\cite{paperA} with $n$ steps. As $n\to\infty$ over even $n$,
+Let $z_N$ be the crossing value of $T$ for Kagey's board with $N$ steps, as
+in Section~\ref{sec:series}. As $N\to\infty$ over even $N$,
 \[
- D(n):=x_n-\bigl(2z_n-\log(2\pi)\bigr)=\frac{c_*}{\log n}
- +O\Bigl(\frac{\log\log n}{(\log n)^2}\Bigr),\qquad
+ D(N):=x_N-\bigl(2z_N-\log(2\pi)\bigr)=\frac{c_*}{\log N}
+ +O\Bigl(\frac{\log\log N}{(\log N)^2}\Bigr),\qquad
  c_*=\tfrac12\log(2\pi)-\tfrac14=0.668939\ldots
 \]
 \end{theorem}
 
+In words, the elephant needs twice as many flips as Kagey's board needs
+switches, less $\log(2\pi)=1.84$.
+
 \begin{proof}
-Write $\ell=\log(2\pi)$. The crossing equation~\eqref{eq:markov-crossing} of
-Paper~A~\cite{paperA} holds with
-$\lvert R_n\rvert\le\frac1{4L^2}+\frac{L^2+L}n$ for every $n\ge2$, and
-Paper~A also shows $L/2\le z_n\le L$. So $R_n=O(L^{-2})$ and $z_n=L-\frac12\log L+O(1)$.
-Since $z_n\ge L/2$, this gives
-$\frac1{8z_n}-\frac1{8L}=\frac{L-z_n}{8Lz_n}=O(\log L/L^2)$. Put $Y=2z_n$. Since
-$2c_0+\log2=\log\frac\pi4$, we get
+Write $\ell=\log(2\pi)$. By Section~\ref{sec:series}, the error term in
+\eqref{eq:markov-crossing} is $O(L^{-2})$ and $L/2\le z_N\le L$. So
+\eqref{eq:markov-crossing} gives $z_N+\frac12\log z_N=L+O(1)$ with
+$\log z_N=\log L+O(1)$, hence $z_N=L-\frac12\log L+O(1)$. Since $z_N\ge L/2$,
+this gives $\frac1{8z_N}-\frac1{8L}=\frac{L-z_N}{8Lz_N}=O(\log L/L^2)$. Put
+$Y=2z_N$. Twice \eqref{eq:markov-crossing} plus $\log2$, together with
+$2c_0+\log2=\log\frac\pi4$, gives
 $Y+\log Y=2L+\log\frac\pi4+\frac1{4L}+O(\log L/L^2)$. Also
-$Y=2L-\log L+O(1)$, so $\log(1-\ell/Y)=-\ell/(2L)+O(\log L/L^2)$. Using
-$\log\frac\pi4-\ell=-\log8$, we get
+$Y=2L-\log L+O(1)$, so $1/Y=1/(2L)+O(\log L/L^2)$ and
+$\log(1-\ell/Y)=-\ell/(2L)+O(\log L/L^2)$. Using $\log\frac\pi4-\ell=-\log8$,
+we get
 \[
  G(Y-\ell)=Y+\log Y-\ell+\log\Bigl(1-\frac\ell Y\Bigr)
- =\Lambda_n+\frac1{4L}-\frac\ell{2L}+O\Bigl(\frac{\log L}{L^2}\Bigr)
- =\Lambda_n-\frac{c_*}L+O\Bigl(\frac{\log L}{L^2}\Bigr).
+ =\Lambda_N+\frac1{4L}-\frac\ell{2L}+O\Bigl(\frac{\log L}{L^2}\Bigr)
+ =\Lambda_N-\frac{c_*}L+O\Bigl(\frac{\log L}{L^2}\Bigr).
 \]
-By Theorem~\ref{thm:erw-crossing}(a), $G(x_n)=\Lambda_n+O(L^2/n)$. Both
-$x_n$ and $Y-\ell=2z_n-\log(2\pi)$ are $2L+O(\log L)$, so $G'=1+O(1/L)$
+By Theorem~\ref{thm:erw-crossing}(a), $G(x_N)=\Lambda_N+O(L^2/N)$. Both
+$x_N$ and $Y-\ell=2z_N-\log(2\pi)$ are $2L+O(\log L)$, so $G'=1+1/x=1+O(1/L)$
 between them, and the mean value theorem gives
-$x_n-(Y-\ell)=c_*/L+O(\log L/L^2)$.
+$x_N-(Y-\ell)=c_*/L+O(\log L/L^2)$.
 \end{proof}
 
-We computed $z_n$ from the exact law of the Markov walk~\cite{paperA}. The
-difference $D(n)$ changes sign between $n=400$ and $n=800$, and
-$D(n)\log n$ is $0.707$ at $n=51200$ against the limit $c_*=0.669$. So the
-asymptotic regime is reached slowly.
+We computed $z_N$ from the exact law of Kagey's board~\cite{paperA}. The
+difference $D(N)$ changes sign between $N=400$ and $N=800$, and
+$D(N)\log N$ is $0.707$ at $N=51200$ against the limit $c_*=0.669$
+(Table~\ref{tab:erw-crossing}). So the asymptotic regime is reached slowly.
 
 \begin{remark}[second order, proofs omitted]\label{rem:refined}
 Write $V_{t+1}(1)/\pi_t$ as the mean of a product of factors
 $1+O(\varepsilon)$ along P\'olya's urn conditioned to end at $h$. Jensen's
 inequality then gives a lower bound that matches
 Theorem~\ref{thm:erw-bounds}(b), so
-$\log C_n=\log\frac{4\varepsilon}{n+2}+2\varepsilon\log n+O(\varepsilon)$ in
+$\log C_N=\log\frac{4\varepsilon}{N+2}+2\varepsilon\log N+O(\varepsilon)$ in
 the range of that theorem. With this the proof of
 Theorem~\ref{thm:erw-crossing} gives
-$x_n=g_n-\frac{2g_n\log n+g_n^2/2}{n(1+1/g_n)}+O(\frac{\log n}n)$, so
-$x_n<g_n$ for large $n$. Write $C_n=c_1\varepsilon+c_2\varepsilon^2
-+O(\varepsilon^3)$ and $k_2(n)=c_2/c_1$. A longer computation shows that
-$k_2(n)-2\log n\to2\gamma-2-\log2=-1.5387\ldots$, where $\gamma$ is Euler's
-constant. We omit the details of these 3 results. We do not know an upper bound
-$\log C_n\le\log(c_1\varepsilon)+\varepsilon k_2(n)+O(\varepsilon^2(\log n)^k)$,
-or an explicit $n$ beyond which $g_n>x_n$.
+$x_N=g_N-\frac{2g_N\log N+g_N^2/2}{N(1+1/g_N)}+O(\frac{\log N}N)$, so
+$x_N<g_N$ for large $N$. Write $C_N=c_1\varepsilon+c_2\varepsilon^2
++O(\varepsilon^3)$ and $k_2(N)=c_2/c_1$. Then $k_2(N)-2\log N$ tends to
+$2\gamma-2-\log2$, which is $-1.5387$ to 4 decimals. We omit the details of
+these 3 results. We do not know an upper bound
+$\log C_N\le\log(c_1\varepsilon)+\varepsilon k_2(N)+O(\varepsilon^2(\log N)^k)$,
+or an explicit $N$ beyond which $g_N>x_N$.
 \end{remark}
