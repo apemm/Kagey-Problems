@@ -135,6 +135,24 @@ that is never copied. A flip at step $j$ is never copied with probability
 about $j/N$. Summing $\varepsilon j/N$ over $j$ gives a factor of about $x/2$
 in favor of the neighbor.
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/shape}
+\caption{The elephant walk at its crossing. (a) The law $P_N$ at $N=3200$ and
+its crossing $x=11.5468$, divided by the end $E_N$. The center equals the end,
+and the law rises from each end to a mode and falls to the center. The inset
+shows the last 60 bins, with dots at bins $N$, $N-1$ and $N-2$. The end is
+below its neighbor, and the modes are 25 steps from each end (dashed). (b) The
+law of $M_N$, scaled as $xf_N(m)$, against $\lambda_m=(m-x\log x)/x$, with the
+Landau density $f_L$. The dotted line is its mode $\lambda_0$. (c) The tail
+$P_N(N-m)$ divided by $x/(2m^2)$. The dashed line is the limit 1 of
+Theorem~\ref{thm:profile}, and the dotted curves are the heuristic correction
+$1+x(2\log m+2\gamma-3)/m$ for $2x\log x\le m\le N/x$. The rise of the
+$N=3200$ curve near $m=N/2$ is the mirror term $f_N(N-m)$. At $N=10^6$ we use
+$x=g_N=22.4407$.}
+\label{fig:shape}
+\end{figure}
+
 \begin{theorem}[endpoint dip]\label{thm:dip}
 Let $N\ge3$ and $0<\varepsilon\le\frac12$, and put $\rho_1=P_N(N-1)/E_N$.
 Then
@@ -196,34 +214,15 @@ $E_N=\frac12(1-\frac2N)^{N-1}\ge\frac12e^{-2-2/N}>0.06$. So $C_N<E_N$ at
 $\varepsilon=2/N$, and Proposition~\ref{prop:mlr} gives $\varepsilon_N>2/N$.
 Hence $x_N>2\ge2(1-\varepsilon_N)$.
 
-Below $N=1688$ we use a computation. The hypothesis says
-$\varepsilon_N\ge2/(N+2)$, so by Proposition~\ref{prop:mlr} it holds exactly
-when $C_N\le E_N$ at $\varepsilon=2/(N+2)$. We evaluated $C_N/E_N$ there for
-every $8\le N<1688$, in double precision, with 2 independent recursions for
-the law of $M_N$ (\texttt{verify\_elephant\_shape.py}). The 2 agree, and the
-largest value is $0.947$, so the margin is far above the rounding error. So
-Corollary~\ref{cor:dip} holds for every even $N\ge8$, and below $N=1688$ it is
-computer-assisted. By Lemma~\ref{lem:unimodal}, $P_N$ is a mixture of 2
+Below $N=1688$ we compute. The hypothesis says $\varepsilon_N\ge2/(N+2)$, so
+by Proposition~\ref{prop:mlr} it holds exactly when $C_N\le E_N$ at
+$\varepsilon=2/(N+2)$. We evaluated $C_N/E_N$ there for every $8\le N<1688$
+in double precision, by 2 independent recursions for the law of $M_N$
+(\texttt{verify\_elephant\_shape.py}). They agree, and the largest value is
+$0.947$, far from 1. So Corollary~\ref{cor:dip} holds for every even $N\ge8$,
+computer-assisted below $N=1688$. By Lemma~\ref{lem:unimodal}, $P_N$ is a mixture of 2
 unimodal laws with different modes, as is the limit law
 in~\cite[eq.~(1)]{glrs2025}.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{figures/shape}
-\caption{The elephant walk at its crossing. (a) The law $P_N$ at $N=3200$ and
-its crossing $x=11.5468$, divided by the end $E_N$. The center equals the end,
-and the law rises from each end to a mode and falls to the center. The inset
-shows the last 60 bins, with dots at bins $N$, $N-1$ and $N-2$. The end is
-below its neighbor, and the modes are 25 steps from each end (dashed). (b) The
-law of $M_N$, scaled as $xf_N(m)$, against $\lambda_m=(m-x\log x)/x$, with the
-Landau density $f_L$. The dotted line is its mode $\lambda_0$. (c) The tail
-$P_N(N-m)$ divided by $x/(2m^2)$. The dashed line is the limit 1 of
-Theorem~\ref{thm:profile}, and the dotted curves are the heuristic correction
-$1+x(2\log m+2\gamma-3)/m$ for $2x\log x\le m\le N/x$. The rise of the
-$N=3200$ curve near $m=N/2$ is the mirror term $f_N(N-m)$. At $N=10^6$ we use
-$x=g_N=22.4407$.}
-\label{fig:shape}
-\end{figure}
 
 \subsection{The bulk}
 
@@ -233,7 +232,9 @@ $\sum_{d=1}^{N-1}dN_d$, where the $N_d$ are independent Poisson variables with
 means $x/(d(d+1))$. On average $x/(d(d+1))$ flipped vertices have a family of
 size $d$. If no 2 flips fall in the same family, which is likely when
 $x^2\log N/N$ is small, then $M_N$ is the total size of the flipped families,
-and this is close to the compound Poisson sum.
+and this is close to the compound Poisson sum. The families of size up to
+about $x$ add up to nearly $x\log x$, and the few of size of order $x$ give
+fluctuations of order $x$.
 
 \begin{remark}[compound Poisson and Landau limits, proofs omitted]\label{rem:bulk}
 For $N\ge2$ and $0<\varepsilon\le\frac14$, Fourier inversion, the tree of
@@ -242,15 +243,11 @@ give
 $\sup_m\lvert f_N(m)-\CP_N(m)\rvert\le\delta_B:=\frac{x^2\log N}{N}
 +\frac{4x^2}{N}e^{4x^2/N}+\frac{4x^2(H_N^2+H_N)}{N}$. Let $f_L$ be the Landau
 density, with $\int e^{-u\lambda}f_L(\lambda)\,d\lambda=u^u$ for $u>0$, and put
-$\lambda_m=(m-x\log x)/x$. Families of size $d$ are flipped at rate about
-$x/d^2$, so the families of size up to about $x$ add up to nearly $x\log x$,
-and the few families of size of order $x$ give fluctuations of order $x$.
-Under the standing assumptions of this section, comparing characteristic
-functions then gives $\sup_m\lvert xf_N(m)-f_L(\lambda_m)\rvert\le
+$\lambda_m=(m-x\log x)/x$. Under the standing assumptions of this section,
+comparing characteristic functions gives $\sup_m\lvert xf_N(m)-f_L(\lambda_m)\rvert\le
 C(\frac{1+\log x}x+\frac xN)+x\delta_B$ with an absolute constant $C$. So
 $(M_N-x\log x)/x$ tends to the Landau law when $x\to\infty$ and
-$x^3\log^2N/N\to0$, in particular at the crossing. We omit the details of
-these 2 bounds. At $N=10^6$ and $x=22.4407$ the bound $\delta_B$ is still
+$x^3\log^2N/N\to0$, in particular at the crossing. At $N=10^6$ and $x=22.4407$ the bound $\delta_B$ is still
 about $0.46$, but there $\lvert f_N(m)/\CP_N(m)-1\rvert\le3.5\cdot10^{-4}$ for
 $1\le m\le10^4$. At every tested crossing $m^*$ equals the mode of $\CP_N$. If
 $f_L''(\lambda_0)<0$ at the mode $\lambda_0=-0.2228$ of $f_L$, then the
@@ -396,8 +393,8 @@ and $H_\ell=O(\log x)$.
 \end{proof}
 
 The conjecture holds for every $10\le N\le600$ and for
-$N=800,1600,\dots,25600$. On the closed range $[2m^*,N-2m^*]$ it fails only
-at the 2 endpoints and only for some $N\le51$. Heuristically, a concave
+$N=800,1600,\dots,25600$, and on $[2m^*,N-2m^*]$ it fails only at the 2
+endpoints for some $N\le51$. Heuristically, a concave
 stretch of $f_N$ far from its mode is added to the tail $x/(2r^2)$ of the
 other branch, with $r=N-a$, and the second difference $3x/r^4$ of this tail
 beats the concave curvature, which is of order $x^2/(N^2r^3)$. We leave open
