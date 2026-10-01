@@ -1,31 +1,64 @@
 \section{The planar persistent walk}\label{sec:planar}
 
-Kagey's Galton board has a version in 2 dimensions. A ball moves on $\Z^2$ in the
-directions east, north, west and south, numbered $0,1,2,3$ modulo $4$, with unit vectors
-$e_0=(1,0)$, $e_1=(0,1)$, $e_2=-e_0$ and $e_3=-e_1$. Let $r,s\ge0$ with $\beta=2r+s>0$, and let
-$0<h<1/\beta$. The first direction is uniform. After that the ball keeps its direction with
-probability $p_0=1-\beta h$, turns left or right with probability $rh$ each, and reverses with
-probability $sh$. This is the chain of Example~\ref{ex:models}(iv), with $q_{j,j\pm1}=r$ and
-$q_{j,j+2}=s$, and its position after $N$ steps is $Y_N=(n_0-n_2,n_1-n_3)$. In this section $N$ is
-even and we allow every $h<1/\beta$. Only the path that always goes east reaches the corner $Ne_0$,
-so $c_N=\Prob(Y_N=Ne_0)=\frac14p_0^{N-1}$. We compare it with $o_N=\Prob(Y_N=0)$. We write
-$u=sh/p_0$, $v=rh/p_0$ and $w=\beta h/p_0=2v+u$, so $1+w=1/p_0$. We use $S_N$, $u_N$, $p_N$,
-$z_N=N(1-p_N)$ and $c_0$ from Section~\ref{sec:papersAB}. As $N$ is even, $S_N(u)$ is the sum of
-$u^j$ over the words with $N/2$ letters of each of 2 kinds, where $j$ is the number of switches. It
-has nonnegative coefficients and no constant term, so it increases strictly on $[0,\infty)$.
+We now return to the question of the introduction, Kagey's board in 2
+dimensions. A ball moves on $\Z^2$ in the directions east, north, west and
+south, numbered $0,1,2,3$ modulo $4$, with unit vectors $e_0=(1,0)$, $e_1=(0,1)$,
+$e_2=-e_0$ and $e_3=-e_1$. Let $r,s\ge0$ with $\beta=2r+s>0$, and let
+$0<h<1/\beta$. The first direction is uniform. After that the ball keeps its
+direction with probability $p_0=1-\beta h$, turns left or right with
+probability $rh$ each, and reverses with probability $sh$. This is the chain of
+Example~\ref{ex:models}(iv), with $q_{j,j\pm1}=r$ and $q_{j,j+2}=s$, and its
+position after $N$ steps is $Y_N=(n_0-n_2,n_1-n_3)$. So the bin is now a linear
+function of the composition. In this section $N$ is even, since otherwise the
+origin cannot be reached, and we allow every $h<1/\beta$. Only the path that
+always goes east reaches the corner $Ne_0$, so
+\[
+ c_N=\Prob(Y_N=Ne_0)=\tfrac14p_0^{N-1}.
+\]
+We compare it with $o_N=\Prob(Y_N=0)$. Figure~\ref{fig:planarpaths} shows the
+3 kinds of paths that matter.
 
-We first guess the answer, up to powers of $\log N$, from the face exponents of
-Section~\ref{sec:firstorder}. Let $h=\tau\log N/N$. The corner is the vertex $\{0\}$, which has exit
-rate $\beta$, so $c_N$ is about $N^{-\beta\tau}$. A vertex, a face with 3 directions, or a face with
-2 adjacent ones misses the opposite of one of its directions, so it cannot reach the origin. On the
-axis $\{0,2\}$, which has exit rate $2r$, the origin is the single composition $(N/2,0,N/2,0)$, of
-probability about $N^{-(2r\tau+1)}$. On the full face a single composition has probability about
-$N^{-3}$, but about $N/2$ compositions $(a,b,a,b)$ end at the origin, and together they give about
-$N^{-2}$. So the origin should beat the corner when $\beta\tau>\min(2r\tau+1,2)$, that is, when
-$\tau>\tau^*=\min(2/\beta,1/s)$. At $\tau^*$ the axes win if $s>2r$ and the full face wins if
-$s<2r$. This is only a heuristic, since it applies Theorem~\ref{thm:first} to a linear function of
-the composition, which we have not proved in general. Theorem~\ref{thm:planar-first} proves the
-conclusion directly.
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[scale=0.62,font=\small]
+ \foreach \x in {-1,...,9} \foreach \y in {-1,...,2} \fill[gray!45] (\x,\y) circle (1.2pt);
+ \draw[very thick,->] (0,0) -- (8,0);
+ \draw[thick,dashed,->] (0,-0.25) -- (4,-0.25) -- (4,-0.45) -- (0.15,-0.45);
+ \draw[thick,dotted,->] (0,0.2) -- (3,0.2) -- (3,1) -- (0,1) -- (0,0.35);
+ \fill (0,0) circle (3pt) node[below left] {$0$};
+ \fill (8,0) circle (3pt) node[below] {$(N,0)$};
+\end{tikzpicture}
+\caption{Paths of $N=8$ steps. The only path to the corner $(N,0)$ never
+switches (solid). A path to the origin either stays on one axis and only
+reverses (dashed), or it turns and then uses all 4 directions (dotted).}
+\label{fig:planarpaths}
+\end{figure}
+
+We write $u=sh/p_0$, $v=rh/p_0$ and $w=\beta h/p_0=2v+u$, so $1+w=1/p_0$. These
+are the odds of a reversal, of a turn to a given side and of any switch, as in
+the shared notation $u=q/p$. We use $S_N$, $u_N$, $p_N$, $z_N=N(1-p_N)$ and
+$c_0$ from Section~\ref{sec:notation}. As $N$ is even, $S_N(u)$ is the sum of
+$u^j$ over the words with $N/2$ letters of each of 2 kinds, where $j$ is the
+number of switches. It has nonnegative coefficients and no constant term, so it
+increases strictly on $[0,\infty)$.
+
+\emph{The answer at first order.} Face selection predicts the answer, up to
+powers of $\log N$. Let $h=\tau\log N/N$. The corner is the vertex $\{0\}$,
+which has exit rate $\beta$, so $c_N$ is about $N^{-\beta\tau}$. A vertex, a
+face with 3 directions, or a face with 2 adjacent ones misses the opposite of
+one of its directions, so it cannot reach the origin. On the axis $\{0,2\}$,
+which has exit rate $2r$, the origin is the single composition
+$(N/2,0,N/2,0)$, of probability about $N^{-(2r\tau+1)}$. On the full face a
+single composition has probability about $N^{-3}$, but about $N/2$
+compositions $(a,b,a,b)$ end at the origin, and together they give about
+$N^{-2}$. So the origin should beat the corner when $\beta\tau>\min(2r\tau+1,2)$,
+that is, when $\tau>\tau^*=\min(2/\beta,1/s)$. At $\tau^*$ the axes win if
+$s>2r$ and the full face wins if $s<2r$. This is only a heuristic, since it
+applies Theorem~\ref{thm:first} to a linear function of the composition, which
+we have not proved in general. Theorem~\ref{thm:planar-first} proves the
+conclusion directly, and Theorem~\ref{thm:planar-rev} finds the crossing up to
+$O(N^{-\gamma})$ when reversals dominate. The tool is a decomposition of a path
+into 3 independent levels.
 
 \begin{lemma}[3 levels]\label{lem:threelevel}
 Write a sequence of directions as its number $m$ of switches, its skeleton $Z=(Z_0,\dots,Z_m)$,
@@ -63,6 +96,12 @@ $s=0$ and $N\ge4$, it increases strictly in $h$ from $0$ at $h=0$ to $\infty$ as
 So there is exactly one $h^*_N\in(0,1/\beta)$ with $o_N=c_N$, and the corner is more likely than the
 origin exactly when $h<h^*_N$.
 \end{proposition}
+
+In words: the origin mass splits exactly into the axis part, which is twice the
+middle bin of Kagey's board measured against its endpoint, and a part from
+paths with all 4 directions, which is small when $w$ is small. The ratio
+$o_N/c_N$ grows with the switching rate, so the corner and the origin cross
+exactly once, at every even $N\ge4$.
 
 \begin{proof}
 An origin path with no turn stays on the axis of its first step. An origin path that turns uses both
@@ -108,11 +147,16 @@ so it comes from the paths that use all 4 directions.
 \end{enumerate}
 \end{theorem}
 
-The proof is in Appendix~\ref{app:planar}. The upper bound in (a) follows from
-Proposition~\ref{prop:decomp} and \eqref{eq:planar-bessel}. For the lower bound when
-$\beta\tau>2$ we count balanced skeletons with Lemma~\ref{lem:threelevel}, and they give
-$o^{(4)}_N$ of order at least $N^{-2}T^{-1/2}$. Part (b) follows from (a) and the monotonicity in
-Proposition~\ref{prop:decomp}. For $r=0$ the same limit $1/s$ follows from
+In words, the heuristic above is right: the crossing sits at $T\approx\tau^*\log
+N$, and at the crossing the origin is reached through the axes when reversals
+dominate and through all 4 directions when turns dominate.
+
+\emph{Idea of the proof.} The proof is in Appendix~\ref{app:planar}. The upper
+bound in (a) follows from Proposition~\ref{prop:decomp} and
+\eqref{eq:planar-bessel}. For the lower bound when $\beta\tau>2$ we count
+balanced skeletons with Lemma~\ref{lem:threelevel}, and they give $o^{(4)}_N$ of
+order at least $N^{-2}T^{-1/2}$. Part (b) follows from (a) and the monotonicity
+in Proposition~\ref{prop:decomp}. For $r=0$ the same limit $1/s$ follows from
 Theorem~\ref{thm:planar-rev}(c).
 
 When reversals dominate, the crossing is the crossing of~\cite{paperA} for $N/2$ steps. We write
@@ -145,9 +189,13 @@ $0<\gamma<\min(1,(s-2r)/s)$. Then
 \end{enumerate}
 \end{theorem}
 
-The reason is that the 2 axes double the mass at the origin. By \eqref{eq:planar-bessel},
-$\frac N2S_N(z/N)$ is close to a function of $z$ alone, so doubling $S_N$ has the same effect as
-halving $N$.
+In words: when reversals dominate, the planar walk at its crossing behaves like
+Kagey's board with half as many steps, and its crossing is smaller than
+Kagey's by $\log2$ in the limit. Here is why. At the crossing $o_N\approx
+o^{(0)}_N=2S_N(u)c_N$, so the 2 axes double the mass at the origin. By
+\eqref{eq:planar-bessel}, applied with $N$ and with $N/2$ steps, the equations
+$2S_N(z/N)=1$ and $S_{N/2}(z/(N/2))=1$ both say that $\psi(z)\approx N/4$. So
+doubling $S_N$ has the same effect as halving $N$.
 
 \begin{proof}
 (a) Since $s>0$, $S_N(u)\ge2u>0$. Divide Proposition~\ref{prop:decomp} by $2S_N(u)$. Then
