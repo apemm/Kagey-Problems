@@ -3,6 +3,20 @@
 In this section coordinates start at zero: columns are $0,\ldots,m-1$ and rows
 are $0,\ldots,n-1$.
 
+The plan is as follows. Most rectangles are axis-aligned, and for those the
+question turns into a question about a graph: Lemma~\ref{lem:girth} says
+exactly which blackouts keep the axis-aligned rectangles apart. A classical
+extremal bound on that graph gives the upper bound (Theorem~\ref{thm:rowbound}).
+On three and four rows there are only a few kinds of tilted rectangles
+(Lemma~\ref{lem:tilted}), so for the lower bound we can write down a blackout
+and check the tilted rectangles by hand.
+
+To see where the graph comes from, think of a black point $(x,y)$ as a link
+between row $y$ and column $x$. An axis-aligned rectangle uses 2 rows and 2
+columns, and its 4 corners are the 4 possible links between them. If all 4 are
+black, the 4 links form a closed loop of length $4$, and the next lemma shows
+that such loops, and loops of length $6$, are exactly what causes confusion.
+
 \begin{lemma}[axis-aligned identification and short cycles]\label{lem:girth}
 Suppose $m\ge3$. Form a bipartite graph $G_S$ whose vertices are the rows and
 columns, with an edge between row $y$ and column $x$ exactly when $(x,y)\in S$.
@@ -18,13 +32,16 @@ $a,x,b,y,c,z,a$, the rectangles with row/column pairs
 $(\{a,b\},\{x,y\})$ and $(\{a,c\},\{y,z\})$ have every corner black
 except possibly their common corner $(y,a)$. Their presentations coincide.
 
-Conversely, assume both cycles are absent. No rectangle is entirely black,
-since its four edges would form a four-cycle. Two rectangles with a common
-presentation of at least three points coincide, since three rectangle corners
-determine the fourth. If two visible points are opposite axis-aligned corners,
-they determine the axis-aligned rectangle. If they lie in one row or column,
-two distinct completions require a black four-cycle at the two other rows or
-columns. Finally, suppose the common presentation is the single corner $(x,a)$.
+Conversely, assume both cycles are absent. Let $R_1\ne R_2$ be axis-aligned
+rectangles with the same presentation $P$; we derive a contradiction by
+cases on $|P|$. If $|P|\ge3$, Lemma~\ref{lem:threecorners} gives $R_1=R_2$.
+If $|P|=0$, then $R_1$ is entirely black, and its 4 corners are the 4
+edges of a four-cycle. Suppose $|P|=2$. If the 2 visible points are in different rows and
+different columns, they are opposite corners of both rectangles, and 2
+opposite corners determine an axis-aligned rectangle. If they lie in one row
+$a$, at columns $x$ and $y$, then $R_1$ and $R_2$ use rows $\{a,b\}$ and
+$\{a,c\}$ with $b\ne c$, and the 4 points $(x,b),(y,b),(x,c),(y,c)$ are black, a
+four-cycle. The case of one column is the same with rows and columns exchanged. Finally, suppose $|P|=1$, so the common presentation is the single corner $(x,a)$.
 Write the other row and column of the two rectangles as $(b,y)$ and $(c,z)$.
 If $b=c$ or $y=z$, their black corners contain a four-cycle. Otherwise the six
 black edges form the cycle $a,y,b,x,c,z,a$. Every possibility contradicts the
@@ -76,7 +93,15 @@ E_x&=\{(x,1),(x+2,3),(x+1,0),(x+3,2)\}.
 \end{align*}
 \end{lemma}
 \begin{proof}
-At the unique leftmost corner, write the side vectors as $(a,b)$ and $(c,-d)$,
+A tilted rectangle has a unique leftmost corner. Indeed, suppose 2 corners
+have the smallest $x$-coordinate $x_0$. They are not adjacent, since no side is
+vertical, so they are opposite and the midpoint of the rectangle has
+$x$-coordinate $x_0$. The other 2 corners have the same midpoint, so their
+$x$-coordinates add up to $2x_0$; both are at least $x_0$, so both equal $x_0$,
+and all 4 corners lie on one vertical line, which is impossible.
+Both sides at the leftmost corner point strictly to the right, and
+since they are orthogonal one points up and one points down.
+At the leftmost corner, write the side vectors as $(a,b)$ and $(c,-d)$,
 where $a,b,c,d$ are positive integers. Orthogonality says $ac=bd$, and the
 vertical span is $b+d$. If this span is at most two, all four integers are one.
 If it is three, $\{b,d\}=\{1,2\}$ and $\{a,c\}=\{1,2\}$, giving the four
@@ -164,7 +189,10 @@ those three. There can be at most one such column: two with the same row pair
 give a four-cycle in $G_S$, and two with different row pairs give a six-cycle.
 The total excess is then at most $2+1=3$. Thus all nonsingleton columns have
 size two. They give a simple triangle-free graph with four vertices and four
-edges, necessarily a four-cycle.
+edges (the graph $H$ in the proof of Theorem~\ref{thm:rowbound}). Such a graph is
+a four-cycle: its complement has 2 edges, and if they shared a vertex $v$, the
+other 3 vertices would form a triangle; so the 2 missing edges are disjoint,
+and what remains is a four-cycle.
 \end{proof}
 
 \begin{corollary}[finite boundary cases, computer-assisted]\label{cor:fourboundary}
