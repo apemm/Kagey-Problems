@@ -156,6 +156,38 @@ for i in range(min(len(A226247), len(A226248))):
 A097333 = [1,2,2,3,5,7,10,15,22,32,47,69,101,148,217,318,466,683,1001,1467,2150,3151,4618,6768,9919,14537,21305,31224,45761,67066,98290,144051,211117,309407,453458,664575,973982,1427440,2092015,3065997,4493437,6585452]
 a97_ok = all(counts[n] == A097333[n - 1] for n in range(1, min(MAX + 1, len(A097333) + 1)))
 
+# ---- check 9: tree words = the language L = the pattern-avoiding words, up to length WORDLEN ----
+# The tree word of x is read along its reversed parent sequence (letters in the order applied to 0):
+# an f-child (p, q) has parent (p - q, q), and a g-child has parent g(x), since g is an involution.
+import re
+from itertools import product
+WORDLEN = 14
+def tree_word(v):
+    letters = []
+    while v != (0, 1):
+        if tag_of[v] == 'f':
+            letters.append('f'); v = (v[0] - v[1], v[1])
+        else:
+            letters.append('g'); v = gmap(*v)
+    return ''.join(reversed(letters))
+tree_words = {tree_word(v) for v in order if rank_of[v] <= WORDLEN}
+L_re = re.compile(r'(f{2,}g)*f+g?')          # f^m1 g ... f^mj g^eps, m1..m(j-1) >= 2, mj >= 1
+all_words = [''.join(w) for k in range(WORDLEN + 1) for w in product('fg', repeat=k)]
+L_words = {w for w in all_words if w == '' or L_re.fullmatch(w)}
+avoid_words = {w for w in all_words
+               if 'gg' not in w and 'fgfgf' not in w and not w.startswith('g') and not w.startswith('fgf')}
+def apply_word(w):
+    p, q = 0, 1
+    for c in w:
+        p, q = (p + q, q) if c == 'f' else gmap(p, q)
+    return (p, q)
+words_ok = (tree_words == L_words == avoid_words
+            and all(rank_of[apply_word(w)] == len(w) for w in L_words)
+            and len({apply_word(w) for w in L_words}) == len(L_words))
+if not words_ok:
+    fails.append(('WORDS', len(tree_words), len(L_words), len(avoid_words)))
+n_oeis = min(len(A226247), len(A226248))
+
 print("=" * 70)
 print("counts a(0..%d): %s" % (MAX, counts))
 print("recurrence a(n)=a(n-1)+a(n-3) for 4<=n<=%d : %s" % (MAX, "PASS" if rec_ok else "FAIL"))
@@ -165,8 +197,10 @@ print("structure (parents/children/uncle-3), all vertices: %s (%d fails)" % ("PA
 print("neg-CF distance formula, all vertices rank<=%d: %s (%d fails)" % (CFCHECK, "PASS" if cf_fails == 0 else "FAIL", cf_fails))
 print("reg-CF distance formula (odd-r form), rank<=%d: %s (%d fails)" % (CFCHECK, "PASS" if reg_fails == 0 else "FAIL", reg_fails))
 print("4-class automaton transitions: %s" % ("PASS" if auto_ok else "FAIL"))
-print("OEIS A226247/A226248 first %d terms incl. order: %s" % (len(A226247), "PASS" if oeis_ok else "FAIL"))
+print("OEIS A226247/A226248 first %d terms incl. order: %s" % (n_oeis, "PASS" if oeis_ok else "FAIL"))
 print("counts match A097333 shift: %s" % ("PASS" if a97_ok else "FAIL"))
+print("tree words = L = pattern-avoiding words up to length %d (%d words each): %s"
+      % (WORDLEN, len(L_words), "PASS" if words_ok else "FAIL"))
 print("total anomalies: %d" % len(fails))
 for x in fails[:20]:
     print("  FAIL:", x)

@@ -1,12 +1,22 @@
 \section{Near the boundary of the simplex}
 \label{sec:frontier-boundary}
 
-Theorem~\ref{thm:simplex-interior} needs every positive coordinate to be
-at least $\varepsilon N$. In this section we drop that assumption. The start
-is uniform, but note that $S_n(u)$ does not involve the start.
+So far every positive coordinate was of order $N$
+(Theorem~\ref{thm:simplex-interior} needs each to be at least $\varepsilon N$).
+What about bins with some small coordinates, near an edge or a vertex of the
+triangle? In this section we drop that assumption. We first give an upper bound
+that holds for every positive count vector (Theorem~\ref{thm:uniform-simplex-majorant}).
+Then we find the scale at which a small coordinate starts to matter. It is
+$N/L^2$ when at least 2 coordinates are of order $N$
+(Remark~\ref{rem:crossover-scale}). Near a vertex the picture changes: the
+crossing moves to odds of order $N^{-1/2}$, and the small coordinates alone
+decide it (Subsection~\ref{sec:vertex-completion}).
+
+The start is uniform, but note that $S_n(u)$ does not involve the start.
 Proposition~\ref{prop:dpmf} gives
 $P^\mu_N(n)\le(\max_i\mu_i)\,p^{N-1}S_n(u)$ for every start $\mu$, so every
-upper bound below also holds for a general start.
+upper bound below also holds for a general start. The basic tool compares the
+Laguerre-type polynomials of the ratio form with the Bessel series $\Phi$.
 
 \begin{lemma}[a uniform Laguerre--Bessel inequality]
 \label{lem:uniform-laguerre-bessel}
@@ -39,20 +49,23 @@ Thus this approximation has relative error $O_k(L^2/N)$ whenever
 $u=O(L/N)$, uniformly over every positive composition of $N$.
 \end{theorem}
 
-The proof is in Appendix~\ref{app:boundary}. We apply
+In words, $\mathcal Q_n$ is an upper bound for every bin, and it is sharp up to
+a relative error $O(L^2/N)$ in the range of the crossings. Here is the idea of
+the proof, which is in Appendix~\ref{app:boundary}. We apply
 Lemma~\ref{lem:uniform-laguerre-bessel} to each factor of an integral form
 of $S_n$. Then the relative error is at most $kv/2$ times the mean of $t$
 under the probability density proportional to
-$e^{-t}t^k\prod_i\Phi(n_ivt)$, and integration by parts bounds this mean by
+$e^{-t}t^k\prod_i\Phi(n_ivt)$, and an integration by parts bounds this mean by
 $2(k+1)+v(\sum_i\sqrt{n_i})^2$.
 
 \begin{remark}[the scale $N/(\log N)^2$]\label{rem:crossover-scale}
-A small coordinate $a$ adds its own runs. Each run needs about 2 switches,
-which gives a factor $u^2$, and it can go in about $N$ places. So what
-matters is $aNu^2$. At the crossings of Section~\ref{sec:simplex-thresholds}
-the value $Nu=T/p$ is of order $L$, and then $aNu^2$ is of order $aL^2/N$.
-So when at least 2 coordinates are of order $N$, a rare count starts to
-matter once it has size $\rho N/L^2$ with $\rho$ fixed.
+Here is the heuristic. A small coordinate $a$ adds its own runs. Each run needs
+about 2 switches, which gives a factor $u^2$, and it can go in about $N$ places.
+So what matters is $aNu^2$. At the crossings of
+Section~\ref{sec:simplex-thresholds} the value $Nu=T/p$ is of order $L$, and
+then $aNu^2$ is of order $aL^2/N$. So when at least 2 coordinates are of order
+$N$, a rare count starts to matter once it has size $\rho N/L^2$ with $\rho$
+fixed.
 
 Appendix~\ref{app:boundary} proves this. Take $k_1\ge2$ large coordinates with
 fractions $\beta_i$ among themselves and $\ell$ rare counts
@@ -101,8 +114,8 @@ $|a|=o(b)$.
 
 \begin{theorem}[all growing rare counts near a vertex]
 \label{thm:vertex-uniform-root}
-For fixed $\ell$, uniformly over all positive rare counts with $|a|=o(b)$,
-the unique positive crossing odds satisfy
+Fix $\ell\ge1$. Uniformly over all positive rare counts with $|a|=o(b)$, the
+unique positive crossing odds satisfy
 \begin{equation}\label{eq:vertex-uniform-root}
  u_{b,a}=\sqrt{\frac{y_a}{b}}
  \left(1+O_\ell\!\left(\sqrt{\frac{|a|+1}{b}}\right)\right),
@@ -121,6 +134,12 @@ If $\delta\le1/2$, then
 The constants are not optimized.
 \end{theorem}
 
+In words, near a vertex the crossing is decided by the polynomial $H$ of the
+rare counts alone, evaluated at $bu^2$, as long as the rare counts have total
+$o(b)$. The bracket~\eqref{eq:vertex-uniform-bracket} holds for all $b$ and all
+positive rare counts with $\delta\le1/2$, and it
+implies~\eqref{eq:vertex-uniform-root}.
+
 The proof is in Appendix~\ref{app:vertex}. It rests on 2 facts. First,
 $\log H$ is concave, and for $0<y\le1$ its elasticity $\kappa(y)$ lies
 between $\max\{\ell,\frac12\sqrt{|a|y}\}$ and $\ell+\sqrt{\ell|a|y}$
@@ -138,4 +157,5 @@ for one rare count is the 2-state fixed-edge expansion of Paper~A, the growth
 $u_{b,a}\sim\ell\log|a|/(2A\sqrt{|a|b})$ with $A=\sum_i\sqrt{a_i/|a|}$ when
 $|a|\to\infty$ with proportions $a_i/|a|$ bounded away from $0$, and an example
 with $|a|=o(b)$ where $S_{(b,a)}(u)\sim H(bu^2)$ fails although the root is
-still correct (proofs omitted, checked numerically).
+still correct (proofs omitted, checked numerically, see
+Section~\ref{sec:verify}).

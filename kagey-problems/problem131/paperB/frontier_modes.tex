@@ -1,7 +1,11 @@
 \section{A weak Potts field as a tilt}\label{sec:frontier-modes}
 
-In this section the start is uniform again. For $h=(h_1,\ldots,h_d)\in\mathbb R^d$
-define the \emph{tilted occupation law}
+In this section the start is uniform again, and we tilt the board slightly.
+Give each visit to state $i$ the extra weight $e^{h_i/N}$, for a fixed vector
+$h=(h_1,\ldots,h_d)\in\mathbb R^d$. Over $N$ steps these weights multiply to
+$e^{h\cdot n/N}$, a factor of order $1$. Again order $1$ is exactly the scale of
+the constants $a_k$, so the field can reorder the faces. Formally we study the
+\emph{tilted occupation law}
 \begin{equation}\label{eq:weakfield-law}
  \widetilde P_{N,h}(n)=
  \frac{e^{h\cdot n/N}P_N(n)}
@@ -30,24 +34,27 @@ Part (1) is~\eqref{eq:weakfield-law} with its denominator written as
 $e^{\Lambda_N(h)}$. For (2), a word $x_1\cdots x_N$ has probability
 $\frac1dr^{N-1}(p/r)^{\sum_{s<N}\delta(x_s,x_{s+1})}$, and
 $\sum_sh_{x_s}=\langle h,n\rangle$ depends on the word only through its counts
-$n$. So tilting the words and then counting gives (1). For (3), the chain is
-stationary with transition matrix $\sigma I+(1-\sigma)\frac1dJ$, whose $m$-th
-power is $\sigma^mI+(1-\sigma^m)\frac1dJ$. So $\E K_{N,a}=N/d$, and the
-indicators of state $a$ at times $s$ and $s+m$ have covariance
-$\sigma^m(\frac1d-\frac1{d^2})$. Summing over the 2 times gives, for $p<1$,
+$n$. So tilting the words and then counting gives (1).
+
+For (3), the chain is stationary with transition matrix
+$\sigma I+(1-\sigma)\frac1dJ$, whose $m$-th power is
+$\sigma^mI+(1-\sigma^m)\frac1dJ$. So $\E K_{N,a}=N/d$, and the indicators of
+state $a$ at times $s$ and $s+m$ have covariance $\sigma^m(\frac1d-\frac1{d^2})$.
+Summing over the 2 times gives, for $p<1$,
 \[
  \Var K_{N,a}=\Bigl(\frac1d-\frac1{d^2}\Bigr)
  \Bigl(N\,\frac{1+\sigma}{1-\sigma}-\frac{2\sigma(1-\sigma^N)}{(1-\sigma)^2}\Bigr).
 \]
-Since $1-\sigma=dr$, for $1/d\le p<1$ the second term in the bracket is not
-positive and $\Var(K_{N,a}/N)\le2/(d^2T)$. For $p<1/d$ the bracket is at most
-$N+4$ while $T\le N$. So $\Var(K_{N,a}/N)=O(1/T)$, and $K_N/N$ tends to the
-uniform vector in probability. Since $\exp\langle h,K_N/N\rangle$ is bounded,
-bounded convergence gives the limit.
+We bound this in 2 cases. Note that $1-\sigma=dr$. If $1/d\le p<1$, then
+$0\le\sigma<1$, the second term in the bracket is not positive, and
+$\Var(K_{N,a}/N)\le2/(d^2T)$. If $p<1/d$, then $-1\le\sigma<0$, the bracket is
+at most $N+4$, and $T\le N$, so $\Var(K_{N,a}/N)\le5/T$. In both cases
+$K_N/N$ tends to the uniform vector in probability as $T\to\infty$. Since
+$\exp\langle h,K_N/N\rangle$ is bounded, bounded convergence gives the limit.
 \end{proof}
 
 Note the scale. By (1), $|\log\widetilde P_{N,h}(n)-\log P_N(n)|\le2\max_i|h_i|$
-for every $n$. In the window this is of order 1, the same order as the
+for every $n$. In the window this is of order $1$, the same order as the
 constants $a_k$ that break the tie. At first order, with $T=\tau L$, it is
 invisible, so a field of total size $o(\log N)$ does not change the first-order
 face selection of Paper~C~\cite{paperC}. The Potts chain in a field is exactly
@@ -64,8 +71,9 @@ Put $T=L-\frac12\log L+t$ and define the face scores
  (|S|-1)(t-a_{|S|})+\bar h_S,& |S|\ge2.
  \end{cases}
 \]
-The largest bin weight, taken relative to the untilted vertex before
-normalizing~\eqref{eq:weakfield-law}, satisfies
+The largest bin weight, taken relative to the untilted vertex and before the
+normalization in~\eqref{eq:weakfield-law}, satisfies, uniformly for $(t,h)$ in
+compact sets,
 \begin{equation}\label{eq:weakfield-maximum}
  \log\max_n\left\{e^{h\cdot n/N}\frac{P_N(n)}{V_N}\right\}
  \longrightarrow \max_{\varnothing\ne S\subseteq\{1,\ldots,d\}}
@@ -95,11 +103,13 @@ winning size on an open interval of $t$ for suitable fixed fields. So
 proper-face phases persist under a field of order $1/N$ per step.
 \end{theorem}
 
-On a support $S$ the tilt multiplies the Gaussian profile of
-the ratio to a vertex (Lemma~\ref{lem:confinement}) by $e^{h\cdot n/N}$, which
-is $e^{\bar h_S+o(1)}$ near the center of the face. So the best bin on $S$
-scores $\ell_S(t,h)$, and taking the $k$ largest fields gives the lines. The
-proof is in Appendix~\ref{app:start-field}.
+In words, the field shifts the line of each face by the field averaged over the
+face. Here is why. On a support $S$ the ratio of a bin to a vertex has a
+Gaussian profile around the center of the face, of width $1/\sqrt L$
+(Lemma~\ref{lem:confinement}). The tilt multiplies it by $e^{h\cdot n/N}$, which
+is $e^{\bar h_S+o(1)}$ near the center. So the best bin on $S$ scores
+$\ell_S(t,h)$, and taking the $k$ largest fields gives the lines. The proof is
+in Appendix~\ref{app:start-field}.
 
 \begin{remark}[how many bins beat a vertex]\label{rem:frontier-superlevel}
 The same profile counts the bins that beat a vertex. Put $h_*=\max_ih_i$ and,
@@ -119,14 +129,13 @@ $y=\sqrt L\,(n/N-\frac1k\mathbf1)$ these bins fill a ball of squared radius
 $4B_S/k^2$, and $\sqrt k\,(\sqrt L/N)^{k-1}$ is the covolume of the lattice of
 the points $y$. For $k=2$ the constant is $\sqrt{2[t-a_2]_+}$, which agrees with
 the binary window of Paper~A once the different centering is taken into
-account. The profile and the lattice volumes are checked numerically, and the
-covolume $\sqrt k$ is checked in Lean.
+account. The profile and the lattice volumes are checked numerically (see
+Section~\ref{sec:verify}), and the covolume $\sqrt k$ is checked in Lean.
 \end{remark}
 
-So the field shifts each face line by the field averaged over the face. On
-$K_d$ the quasi-ergodic law of a face, the product of its left and right Perron
-vectors in Paper~C, is uniform on the face, and $\bar h_S$ is the average of $h$
-under it. For a general generator $Q$ we have
+On $K_d$ the quasi-ergodic law of a face, the product of its left and right
+Perron vectors in Paper~C, is uniform on the face, and $\bar h_S$ is the average
+of $h$ under it. For a general generator $Q$ we have
 $P_N\operatorname{diag}(e^{h/N})=I+\frac TN(Q+\operatorname{diag}(h)/T)+O(T/N^2)$,
 so the field acts as a potential $h/T$ added to $Q$. First-order perturbation of
 the Perron root then lowers $T\lambda_F$ by $\langle h,\alpha^*_F\rangle+O(1/T)$,
@@ -154,10 +163,12 @@ plus the logarithm of the arithmetic mean of $d\mu$ on $S$ under the start, and
 plus the logarithm of the geometric mean under the field. The arithmetic mean is
 at least the geometric mean, with equality only when $\mu$ is constant on $S$.
 So a start favors mixed faces more than the field with the same vertex scores.
-For example, in Remark~\ref{ex:K3-start} state 3 has start weight 0, which as
-a field would mean $H=\infty$, and yet the edge window has width only $0.026$.
-We have not written out the lines for a start and a field together.
+For example, in Remark~\ref{ex:K3-start} state $3$ has start weight $0$, which
+as a field would mean $H=\infty$, and yet the edge window has width only
+$0.026$. We have not written out the lines for a start and a field together.
 \end{remark}
+
+One field can make every support size win in turn, from $1$ state to all $d$.
 
 \begin{corollary}[one field realizes the full face hierarchy]
 \label{cor:weakfield-full-hierarchy}
@@ -201,14 +212,15 @@ order. The tie then resolves as a direct jump
 $O(1/N)$ in $p$. If the path is observed through a likelihood with
 log-likelihood $\langle h,n\rangle/N$, then $\widetilde P_{N,h}$ is the posterior
 law of the counts. Kernels that are not uniform act at first order in Paper~C, on
-the scale $L$ in $T$, and the field and the start only at order 1, so they are
+the scale $L$ in $T$, and the field and the start only at order $1$, so they are
 not interchangeable.
 \end{remark}
 
 \begin{remark}[mass versus mode]\label{rem:mass-mode}
 From each state of a face $F$ with $k$ states the chain stays in $F$ with
 probability $1-(d-k)r$, so $\Prob(\supp K_N\subseteq F)=\mu(F)(1-(d-k)r)^{N-1}$.
-So the bins with full support have mass at least
+Every bin without full support lies on a face with $d-1$ states. So the bins
+with full support have mass at least
 $1-\sum_{|F|=d-1}\mu(F)(1-r)^{N-1}=1-O(e^{-T})$, while for the uniform start,
 $t<a_d$ and large $N$ the modes are single states
 (Corollary~\ref{cor:simplex-modes}).
