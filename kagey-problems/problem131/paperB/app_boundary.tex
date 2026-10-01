@@ -8,11 +8,12 @@ Remark~\ref{rem:crossover-scale}. The start is uniform.
 \subsection{The majorant}
 
 \begin{proof}[Proof of Lemma~\ref{lem:uniform-laguerre-bessel}]
-The coefficient of $(aw)^j/[j!(j+1)!]$ in $B_a(w)/w$ is
-$\prod_{h=1}^j(1-h/a)_+$, also for $j\ge a$, where it is $0$. By
-Lemma~\ref{lem:clipped-product} its deficit from $1$ lies between $0$ and
-$j(j+1)/(2a)$. Since $\sum_jj(j+1)x^j/[j!(j+1)!]=x\Phi(x)$
-(Lemma~\ref{lem:bessel-law}), we get
+By definition, $B_a(w)/w=\sum_{j=0}^{a-1}\binom{a-1}j w^j/(j+1)!$. So the
+coefficient of $(aw)^j/[j!(j+1)!]$ in $B_a(w)/w$ is
+$\binom{a-1}jj!/a^j=\prod_{h=1}^j(1-h/a)_+$, also for $j\ge a$, where it is $0$.
+By Lemma~\ref{lem:clipped-product} its deficit from $1$ lies between $0$ and
+$\sum_{h\le j}h/a=j(j+1)/(2a)$. Since $\sum_jj(j+1)x^j/[j!(j+1)!]=x\Phi(x)$
+(Lemma~\ref{lem:bessel-law}(i)), we get
 \[
 0\le\Phi(aw)-\frac{B_a(w)}w
 \le\frac1{2a}\sum_{j\ge0}\frac{j(j+1)(aw)^j}{j!(j+1)!}
@@ -21,17 +22,18 @@ $j(j+1)/(2a)$. Since $\sum_jj(j+1)x^j/[j!(j+1)!]=x\Phi(x)$
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{thm:uniform-simplex-majorant}]
-Let $0<u<1$ and $v=u/(1-u)$. Put $M!=\int_0^\infty e^{-t}t^M\,dt$ into
-\eqref{eq:simplex-positive-sum} and sum over each $m_i$ separately. All
-terms are nonnegative, so
+\emph{Step 1: an integral form.} Let $0<u<1$ and $v=u/(1-u)$. Put
+$M!=\int_0^\infty e^{-t}t^M\,dt$ into \eqref{eq:simplex-positive-sum} and sum
+over each $m_i$ separately. All terms are nonnegative, so
 \begin{equation}\label{eq:boundary-integral-form}
 S_n(u)=\frac{(1-u)^{N-1}}{v}\int_0^\infty e^{-t}\prod_{i=1}^kB_{n_i}(vt)\,dt,
 \end{equation}
-with $B_a$ as in Lemma~\ref{lem:uniform-laguerre-bessel}. For $t>0$ put
-$f_i(t)=B_{n_i}(vt)/(vt\,\Phi(n_ivt))$. By
-Lemma~\ref{lem:uniform-laguerre-bessel} we have
-$f_i(t)=(1-t_i)_+$ with $0\le t_i\le vt/2$, so
-Lemma~\ref{lem:clipped-product} gives
+with $B_a$ as in Lemma~\ref{lem:uniform-laguerre-bessel}.
+
+\emph{Step 2: comparison of the factors.} For $t>0$ put
+$f_i(t)=B_{n_i}(vt)/(vt\,\Phi(n_ivt))\in[0,1]$. By
+Lemma~\ref{lem:uniform-laguerre-bessel} we have $f_i(t)=(1-t_i)_+$ with
+$0\le t_i\le vt/2$, so Lemma~\ref{lem:clipped-product} gives
 $0\le1-\prod_if_i(t)\le kvt/2$. Write $\langle g\rangle$ for the mean of
 $g(t)$ under the probability density on $(0,\infty)$ proportional to
 $e^{-t}t^k\prod_i\Phi(n_ivt)$. Then \eqref{eq:boundary-integral-form} reads
@@ -44,14 +46,14 @@ The bound $\Phi(x)\le e^{2\sqrt x}$ of Section~\ref{sec:multistate-model}
 bounds the density by a polynomial times
 $\exp(-t+2\sqrt{vt}\sum_i\sqrt{n_i})$, so all moments below exist.
 
-To bound $\langle t\rangle$ we use $\psi(x)=x\Phi'(x)/\Phi(x)$ from
-Lemma~\ref{lem:bessel-law}. Then
+\emph{Step 3: the mean of $t$.} We use $\psi(x)=x\Phi'(x)/\Phi(x)$ from
+Lemma~\ref{lem:bessel-law}. Since $\frac d{dt}\log\Phi(n_ivt)=\psi(n_ivt)/t$,
 \[
 \frac{d}{dt}\Bigl[e^{-t}t^{k+1}\prod_i\Phi(n_ivt)\Bigr]
 =e^{-t}t^k\prod_i\Phi(n_ivt)\Bigl(k+1-t+\sum_i\psi(n_ivt)\Bigr).
 \]
-The function in brackets vanishes at $t=0$ and as $t\to\infty$, so
-integration gives
+The function in square brackets vanishes at $t=0$ and tends to $0$ as
+$t\to\infty$, so integration gives
 $\langle t\rangle=k+1+\sum_i\langle\psi(n_ivt)\rangle$. By
 Lemma~\ref{lem:bessel-law}, $\psi(x)\le\sqrt x$. With
 $\langle\sqrt t\rangle\le\sqrt{\langle t\rangle}$ and
@@ -102,8 +104,8 @@ $0<\rho_j\le R$. For $z>0$ put $x_j=A^2a_jz^2/N$ and
 +\frac{1}{A^2z}\Bigl(\eta\sum_{j=1}^\ell\psi(x_j)
 +2\sum_{1\le i<j\le\ell}\psi(x_i)\psi(x_j)\Bigr)+\frac{\gamma_0}{z},
 \]
-so that $\mathcal E(z)=\gamma_0/z$ when $\ell=0$. Let $0<c_0<C_0<\infty$ be fixed. Then, uniformly for such count vectors and
-$c_0L\le z\le C_0L$,
+so that $\mathcal E(z)=\gamma_0/z$ when $\ell=0$. Let $0<c_0<C_0<\infty$ be
+fixed. Then, uniformly for such count vectors and $c_0L\le z\le C_0L$,
 \begin{equation}\label{eq:simplex-boundary-profile}
 S_{(n,a)}(z/N)
 =D_{k_1}(\beta)A^{2\ell}\frac{z^\eta e^{gz}}{N^{k-1}}
@@ -140,10 +142,13 @@ only on $\varepsilon$, $R$, $k_1$, $\ell$, $c_0$ and $C_0$. Those in
 only on $\varepsilon$, $R$, $k_1$ and $\ell$.
 \end{theorem}
 
-At $u=z/N$ we have $T=Nr=z/(1+(d-1)z/N)=z+O(L^2/N)$. The logarithms of
-the right sides have bounded derivatives in $z$, and all errors contain
-$L^2/N$. So the theorem holds verbatim with $T$ in place of $z$ and of
-$Nu_{n,a}$.
+In words, each rare count multiplies the profile of the large counts by
+$A^2z^2/N$ (through $A^{2\ell}$, $z^\eta$ and $N^{k-1}$) and by a Bessel factor
+$\Phi(x_j)$, and the 3 terms of $\mathcal E$ give all corrections of relative
+order $1/L$. At
+$u=z/N$ we have $T=Nr=z/(1+(d-1)z/N)=z+O(L^2/N)$. The logarithms of the right
+sides have bounded derivatives in $z$, and all errors contain $L^2/N$. So the
+theorem holds verbatim with $T$ in place of $z$ and of $Nu_{n,a}$.
 
 \begin{proof}
 Let $u=z/N$ with $c_0L\le z\le C_0L$, and take $N$ large. Put
@@ -154,8 +159,11 @@ $\ell=0$ we have $M=N$ and $s_a=0$, and the steps that involve the $\xi_j$ and
 $X$ are empty. Note that $A^2=1+2\sum_{i<i'}\sqrt{\beta_i\beta_{i'}}$ lies in
 $[1+2\varepsilon,k_1]$.
 
-By Theorem~\ref{thm:uniform-simplex-majorant}, with relative error
-$O(v+Nv^2)=O(L^2/N)$, the ratio $S_{(n,a)}(u)$ equals
+\emph{Step 1: the Bessel integral.} By
+Theorem~\ref{thm:uniform-simplex-majorant}, with relative error
+$O(v+Nv^2)=O(L^2/N)$, the ratio $S_{(n,a)}(u)$ equals $\mathcal Q_{(n,a)}(u)$.
+Writing $\Phi(\beta_iYt)=I_1(2\sqrt{\beta_iYt})/\sqrt{\beta_iYt}$ for the large
+counts, this is
 \begin{equation}\label{eq:simplex-mixed-integral}
 \frac{(1-u)^{N-1}v^{\ell-1}}{\prod_{i=1}^{k_1} n_i}
 \int_0^\infty e^{-t}t^\ell
@@ -169,11 +177,12 @@ Substitute $t=w^2$. The integrand becomes
 I_1\bigl(2\sqrt{\beta_iY}\,w\bigr)\Bigr]\prod_{j=1}^\ell\Phi(a_jvw^2).
 \]
 Put $F(w)=w^{q_0}\prod_j\Phi(a_jvw^2)$, so that
-$F(w_0)=A^{q_0}Y^{q_0/2}\prod_j\Phi(\xi_j)$. On
-$I=\{|w-w_0|\le w_0/2\}$ the Bessel arguments $2\sqrt{\beta_iY}\,w$ are at
-least $A\sqrt\varepsilon\,Y$. The expansion of $I_1$ in
-Section~\ref{sec:multistate-model} then shows that on $I$ the integrand
-equals
+$F(w_0)=A^{q_0}Y^{q_0/2}\prod_j\Phi(\xi_j)$.
+
+\emph{Step 2: the main part.} On $I=\{|w-w_0|\le w_0/2\}$ the Bessel arguments
+$2\sqrt{\beta_iY}\,w$ are at least $A\sqrt\varepsilon\,Y$. The expansion of
+$I_1$ in Section~\ref{sec:multistate-model}, and
+$-w^2+2A\sqrt Y\,w=A^2Y-(w-w_0)^2$, then show that on $I$ the integrand equals
 \[
 \frac{2(\prod_i\beta_i)^{1/4}Y^{k_1/4}}{(4\pi)^{k_1/2}}\,
 e^{A^2Y-(w-w_0)^2}\,F(w)
@@ -192,16 +201,17 @@ e^{A^2Y}F(w_0)
 \]
 with $\mu_{q_0}$ as in the lemma.
 
-The part outside $I$ is negligible. The bounds $I_1(x)\le e^x$ and
-$\Phi(x)\le e^{2\sqrt x}$ bound the integrand there by a polynomial in $w$
-and $Y$ times $\exp(A^2Y-(w-w_0)^2+2\delta w)$, where
+\emph{Step 3: the tails.} The part outside $I$ is negligible. The bounds
+$I_1(x)\le e^x$ and $\Phi(x)\le e^{2\sqrt x}$ bound the integrand there by a
+polynomial in $w$ and $Y$ times $\exp(A^2Y-(w-w_0)^2+2\delta w)$, where
 $\delta=\sum_j\sqrt{a_jv}$, and $\delta w_0=\sum_j\sqrt{\xi_j}$ is
 bounded. Completing the square gives $-(w-w_0-\delta)^2+2\delta w_0+\delta^2$,
 and outside $I$ we have $|w-w_0-\delta|\ge3w_0/8$ for large $N$. Hence this
 part is at most a power of $Y$ times $e^{A^2Y-9A^2Y/64}$, which is
 $O(L^{-2})$ relative to the main term.
 
-Since $v^{\ell-1}/\prod_in_i=Y^{\ell-1}M^{-(k-1)}/\prod_i\beta_i$ and
+\emph{Step 4: collecting the constants.} Since
+$v^{\ell-1}/\prod_in_i=Y^{\ell-1}M^{-(k-1)}/\prod_i\beta_i$ and
 $\ell-1+k_1/4+q_0/2=\eta$, the constants collect to
 $D_{k_1}(\beta)A^{2\ell}Y^\eta M^{-(k-1)}$. Since $4q_0-6=4\eta$ and
 $q_0(q_0-1)=(2\eta+1)(2\eta+3)/4$, the formula for $\mu_q$ in
@@ -213,7 +223,7 @@ Lemma~\ref{lem:gaussian-phi-average} gives
 +2\sum_{i<j}\psi(\xi_i)\psi(\xi_j)\Bigr)+\gamma_0.
 \]
 Note that $\sum_j\xi_j/(A^2Y)=v\sum_ja_j$. Both $\sum_j\xi_j/A^2$ and
-$\Theta(\xi)$ are bounded, so the bracket above equals
+$\Theta(\xi)$ are bounded, so the bracket in Step 2 equals
 $\exp(v\sum_ja_j+\Theta(\xi)/Y)(1+O(Y^{-2}))$. We have proved
 \begin{equation}\label{eq:simplex-boundary-M-form}
 S_{(n,a)}(u)=D_{k_1}(\beta)A^{2\ell}\frac{Y^\eta}{M^{k-1}}(1-u)^{N-1}
@@ -221,8 +231,8 @@ e^{v(A^2M+\sum_ja_j)}\prod_j\Phi(\xi_j)\,e^{\Theta(\xi)/Y}
 \left(1+O\!\left(L^{-2}+\frac{L^2}{N}\right)\right).
 \end{equation}
 
-Now use $u=z/N$. Since $A^2M+\sum_ja_j=N(A^2-gs_a)$ and $vN=z+O(L^2/N)$,
-the exponent is
+\emph{Step 5: from $(M,Y)$ to $(N,z)$.} Now use $u=z/N$. Since
+$A^2M+\sum_ja_j=N(A^2-gs_a)$ and $vN=z+O(L^2/N)$, the exponent is
 \[
 v\Bigl(A^2M+\sum_ja_j\Bigr)+(N-1)\log(1-u)=gz-gzs_a+O(L^2/N).
 \]
@@ -232,15 +242,16 @@ $(\log\Phi)'(x)=\psi(x)/x\le1/2$, replacing $\xi_j$ by $x_j$ in $\Phi$
 changes the product by a relative $O(L^{-2}+L/N)$. Since
 $0\le\psi'\le1$, replacing $\Theta(\xi)/Y$ by $\Theta(x)/z$ changes it by
 $O(L^{-3}+1/N)$. Finally $\mathcal E(z)=-gzs_a+\Theta(x)/z$, which proves
-\eqref{eq:simplex-boundary-profile}. For the bound on $\mathcal E$, note
-that $\psi(x_j)\le\sqrt{x_j}$ and $2\psi(x_i)\psi(x_j)\le x_i+x_j$, and
-that $A\ge1$. So
+\eqref{eq:simplex-boundary-profile}.
+
+\emph{Step 6: the bound on $\mathcal E$.} Note that $\psi(x_j)\le\sqrt{x_j}$,
+$2\psi(x_i)\psi(x_j)\le\psi(x_i)^2+\psi(x_j)^2\le x_i+x_j$, and $A\ge1$. So
 $|\mathcal E(z)|\le gzs_a+(\eta\sum_j\sqrt{x_j}+(\ell-1)\sum_jx_j+|\gamma_0|)/z$.
 Here $gzs_a\le(k_1-1)C_0\ell R/L$, $x_j=A^2\rho_j(z/L)^2\le k_1C_0^2R$,
 $z\ge c_0L$ and $\sqrt R\le1+R$, and $|\gamma_0|$ is bounded in terms of
 $\varepsilon$, $k_1$ and $\ell$.
 
-For the crossing, apply \eqref{eq:simplex-boundary-profile} with
+\emph{Step 7: the crossing.} Apply \eqref{eq:simplex-boundary-profile} with
 $c_0=(k-1)/(2(k_1-1))$ and $C_0=(k-1)/\varepsilon$. Since
 $g\in[2\varepsilon,k_1-1]$, we have $gc_0-(k-1)\le-(k-1)/2$ and
 $gC_0-(k-1)\ge k-1$. Let $f(z)$ be the logarithm of
@@ -248,17 +259,17 @@ the right side of \eqref{eq:simplex-boundary-profile} without its error
 factor. Then $f'(z)=g+(\eta+2\sum_j\psi(x_j))/z+\mathcal E'(z)$, since
 $x_j'=2x_j/z$. Also $\mathcal E'(z)=O(L^{-2})$, because $gs_a=O(L^{-2})$,
 $0\le\psi'\le1$ and the $x_j$ are bounded. So $f'\ge g/2\ge\varepsilon$
-on $[c_0L,C_0L]$ for large $N$. Hence $f(c_0L)=(gc_0-(k-1))L+O(\log L)$ is negative and
-$f(C_0L)=(gC_0-(k-1))L+O(\log L)$ is positive, and $f$ has exactly one zero
-$\zeta_N$ in the interval. By \eqref{eq:simplex-boundary-profile} the same
-signs hold for $\log S_{(n,a)}(z/N)$. The polynomial $S_{(n,a)}$ has
+on $[c_0L,C_0L]$ for large $N$. Hence $f(c_0L)=(gc_0-(k-1))L+O(\log L)$ is
+negative and $f(C_0L)=(gC_0-(k-1))L+O(\log L)$ is positive, and $f$ has exactly
+one zero $\zeta_N$ in the interval. By \eqref{eq:simplex-boundary-profile} the
+same signs hold for $\log S_{(n,a)}(z/N)$. The polynomial $S_{(n,a)}$ has
 nonnegative coefficients, zero constant term and the positive coefficient
 $k!$ at $u^{k-1}$, so the crossing is unique and lies in the interval. There
 $|f(Nu_{n,a})|=O(L^{-2}+L^2/N)$, and $f'\ge\varepsilon$ gives
 \eqref{eq:simplex-boundary-implicit-root}.
 
-For \eqref{eq:simplex-boundary-root}, take $f(\zeta_N)=0$ and use
-$\mathcal E=O(L^{-1})$. This gives
+\emph{Step 8: the explicit expansion.} For \eqref{eq:simplex-boundary-root},
+take $f(\zeta_N)=0$ and use $\mathcal E=O(L^{-1})$. This gives
 \[
 g\zeta_N+\eta\log\zeta_N=(k-1)L-\log(D_{k_1}(\beta)A^{2\ell})
 -\sum_j\log\Phi\bigl(A^2\rho_j(\zeta_N/L)^2\bigr)+O(L^{-1}).
@@ -326,13 +337,14 @@ are $15.41$, $17.86$, $17.85$ and $17.86$. The loss is caused by expanding
 around $z=cL$. Here $c=2$, while $Nu_{n,a}/L$ is only $1.08$ for $\rho=8$
 and $1.29$ for $\rho=1$.
 
-For $N\le2\cdot10^6$ we computed $S_{(n,a)}$ in 3 ways. We used the
-proper-run formula and a quadrature of \eqref{eq:boundary-integral-form},
-both in double precision, and the sum \eqref{eq:simplex-positive-sum} in
-60-digit arithmetic. The values at $N=10^{12}$ and the crossings come from
-the quadrature and the sum only. These agree to about $10^{-14}$ in $\log S$,
-and the crossings, found by bisection with the sum, agree with the
-quadrature to about $10^{-7}$.
+These numbers come from \texttt{verify\_crossover\_factor.py}. For
+$N\le2\cdot10^6$ it computes $S_{(n,a)}$ in 3 ways: by the proper-run formula
+and by a quadrature of \eqref{eq:boundary-integral-form}, both in double
+precision, and by the sum \eqref{eq:simplex-positive-sum} in 60-digit decimal
+arithmetic. The values at $N=10^{12}$ and the crossings come from the
+quadrature and the sum only. These agree to about $10^{-14}$ in $\log S$, and
+the crossings, found by bisection with the sum, agree with the quadrature to
+about $10^{-7}$.
 \end{remark}
 
 \begin{corollary}[invisibility of subcritical rare counts]
