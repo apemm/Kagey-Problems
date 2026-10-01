@@ -14,6 +14,8 @@ For m columns:
 - Four rows, m = 4, 5: maximum blackout m+3, by an exhaustive computer check of all 72 and 1,440
   blackouts that could reach the upper bound.
 - Any n, m >= 3: maximum blackout at most m + floor(n^2/4).
+- 5 x 5: maximum blackout 10, by hand: the incidence graph has 10 vertices and no 4- or 6-cycle,
+  so at most 10 edges. By computer, the optimum is unique up to the 8 symmetries of the square.
 
 The key step is that the axis-aligned rectangles are identifiable exactly when the row-column
 incidence graph of the blackout has no 4-cycle and no 6-cycle (m >= 3). Replacing each column by a

@@ -4,6 +4,21 @@
 \usepackage{booktabs}
 \usepackage{graphicx}
 \usepackage{url}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\definecolor{cyccol}{RGB}{31,94,168}
+\definecolor{pencol}{RGB}{150,150,150}
+\definecolor{keptcol}{RGB}{226,236,247}
+% a 5 x 5 thumbnail: #1 = horizontal shift, #2 = rows top to bottom, 1 = blacked out
+\newcommand{\minigrid}[2]{%
+  \begin{scope}[xshift=#1 cm]
+    \foreach \row [count=\y] in {#2} {
+      \foreach \c [count=\x] in \row {
+        \ifnum\c=1 \fill[black] (\x,-\y) circle (0.36);
+        \else \draw[black!55,line width=0.3pt] (\x,-\y) circle (0.36); \fi
+      }
+    }
+  \end{scope}}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
@@ -34,12 +49,14 @@ four rows for $m\ge6$, and obtain the general upper bound
 $m+\lfloor n^2/4\rfloor$ for $m\ge3$. The structural step characterizes
 axis-aligned identification by the absence of four- and six-cycles in the black
 row--column incidence graph, and a separate geometric argument handles tilted rectangles.
+On the $5\times5$ grid the same characterization gives the value $10$ by hand,
+since a bipartite graph on $10$ vertices with no four- or six-cycle has at most $10$ edges.
 We also report the computations, the uniqueness of the $5\times5$ optimum up to
 symmetry (by computer), and the remaining conjecture for larger grids.
 \end{abstract}
 
 \section{Introduction}
-The problem is posed with some alterations chosen for clarity as the following: Suppose you, the player, are shown an $n \times m$ grid of vertices. Each vertex has two states, 'white' or 'blacked out'. A vertex that is blacked out is unable to convey any information. The game master asks us to 'black out', or turn off as many of the vertices as we like. Once we choose the 'blackout', which is simply the set of all vertices that are blacked out, the game master will draw a rectangle that we cannot see but know the corners of given that the corners are on a white vertex. The rectangle's sides are not necessarily parallel to the grid axes. We must be able to guess what the rectangle's corners are from this information with complete confidence. The question posed by Kagey \cite{kagey} is how many vertices can be blacked out while every rectangle the game master might draw remains distinctly identifiable. 
+The problem is posed with some alterations chosen for clarity as the following: Suppose you, the player, are shown an $n \times m$ grid of vertices. Each vertex has two states, 'white' or 'blacked out'. A vertex that is blacked out is unable to convey any information. The game master asks us to 'black out', or turn off, as many of the vertices as we like. Once we choose the 'blackout', which is simply the set of all vertices that are blacked out, the game master draws a rectangle with its corners on grid vertices. We cannot see the rectangle itself. We are only told which of its corners are white, so a corner on a blacked-out vertex tells us nothing. The rectangle's sides are not necessarily parallel to the grid axes. We must be able to guess what the rectangle's corners are from this information with complete confidence. The question posed by Kagey \cite{kagey} is how many vertices can be blacked out while every rectangle the game master might draw remains distinctly identifiable. 
 
 The order of play is important here. Because the blackout is chosen by us
 before the rectangle is chosen, a blackout is valid only if \emph{no} two
@@ -56,7 +73,9 @@ width at least 6. The four-row grids of width 4 and 5 are settled by an
 exhaustive computer check (Corollary~\ref{cor:fourboundary}). The general row
 bound and the short-cycle characterization are Theorem~\ref{thm:rowbound} and
 Lemma~\ref{lem:girth}.
-Optimum counts beyond strips and the $5\times5$ uniqueness statement remain
+The $5\times5$ value is $10$ (Theorem~\ref{thm:fivefive}); the
+proof is a short counting argument on the same graph, plus a check of one
+construction. Optimum counts beyond strips and the $5\times5$ uniqueness statement remain
 computational. The higher-dimensional Excess-1 formula remains conjectural
 (Conjecture~\ref{conj:excess}). The old guess that the kept set always has size
 $(n-1)(m-1)$ was first refuted at $5\times5$ and also fails on $4\times m$
@@ -74,7 +93,7 @@ consequences. Section \ref{sec:preprocessing} describes the pruning of the diffe
 hypergraph. Section \ref{sec:strip} proves the Strip Theorem and Section~\ref{sec:narrow}
 proves the row bound and the results for three and four rows. Section
 \ref{sec:computations} reports the computations and the verification. Section
-\ref{sec:uniqueness} treats uniqueness at $5 \times 5$. Section \ref{sec:conjectures}
+\ref{sec:uniqueness} proves the value at $5 \times 5$ and describes its unique optimum. Section \ref{sec:conjectures}
 records the refuted and live conjectures and states open questions.
 
 \section{Conventions and the presentation map}\label{sec:conventions}
@@ -126,10 +145,41 @@ blackout is the complement of a minimum hitting set of the \emph{difference hype
 By definition, $S$ is valid if and only if $\pres(R_1) \neq \pres(R_2)$, i.e. $C(R_1)\setminus S \neq C(R_2)\setminus S$, for every pair of distinct rectangles. From Lemma~\ref{lem:reduction}, this holds if and only if $C(R_1)\,\triangle\,C(R_2) \not\subseteq S$, which is exactly the statement that at least 1 point of the difference set lies in $K$.
 \end{proof}
 
-\section{Preprocessing}\label{sec:preprocessing}
-Prior to any computation, we prune the hypergraph for convenience and clarity. The first technique is deduplication, since identical difference sets impose identical constraints on the allowed $K$, so we only need to keep one copy. The second technique is a containment rule: if $D_1$ and $D_2$ are two difference sets and $D_1 \subset D_2$, any $K$ intersecting $D_1$ automatically intersects $D_2$ as well, so $D_2$ can be omitted from the hypergraph without any impact on which $K$ are valid. Third, an empty row remark: an empty difference set would mean that $C_1 \triangle C_2 = \emptyset$, hence $C_1 = C_2$, no $K$ can intersect this difference set, so its presence would signal that the rectangle list was not deduplicated rather than a genuine constraint.
+Two simple facts about rectangles are used throughout.
 
-With these pruning techniques, the hypergraph can be replaced by its pruned antichain of minimal rows. All of the following computations in Section~\ref{sec:computations} run on the pruned version of the hypergraph.
+\begin{lemma}[three corners suffice]\label{lem:threecorners}
+Three corners of a rectangle determine the rectangle. Consequently, if two
+rectangles have the same presentation under some blackout and that presentation
+has at least $3$ points, the two rectangles are equal.
+\end{lemma}
+\begin{proof}
+Let $p,q,r$ be 3 corners of a rectangle. Exactly one of them, say $q$, is
+adjacent to the other 2, and the angle at $q$ in the triangle $pqr$ is a right
+angle. A triangle has at most 1 right angle, so $q$ is determined by the 3
+points alone, and then the fourth corner is $p+r-q$. For the second claim, a
+presentation with at least $3$ points contains $3$ corners of each rectangle,
+and these are the same $3$ points, so the corner sets agree.
+\end{proof}
+
+In particular, two rectangles can only be confused if they have the same
+number of visible corners, and that number is at most $2$. So when we check a
+blackout, only rectangles with at least $2$ black corners need attention.
+
+\section{Preprocessing}\label{sec:preprocessing}
+Before any computation we shrink the difference hypergraph. Think of it as a
+table with one line for each pair of distinct rectangles, listing their
+difference set; a kept set $K$ is valid when it meets every line. To avoid a
+clash with the rows of the grid, we call these lines \emph{constraints}.
+The first step is deduplication: identical constraints say the same thing, so
+we keep one copy. The second step is a containment rule: if $D_1\subsetneq D_2$
+are constraints, any $K$ meeting $D_1$ automatically meets $D_2$, so $D_2$ can be
+deleted without changing which $K$ are valid. Finally, no constraint is empty:
+$C_1\triangle C_2=\emptyset$ would mean $C_1=C_2$, and distinct rectangles have
+distinct corner sets.
+
+After these steps the hypergraph is replaced by the antichain of its minimal
+constraints, and a set $K$ meets every original constraint if and only if it
+meets every minimal one. All of the following computations in Section~\ref{sec:computations} run on the pruned version of the hypergraph.
 
 \section{The Strip Theorem}\label{sec:strip}
 \begin{theorem}[Strip Theorem]\label{thm:strip}
@@ -153,20 +203,21 @@ corners of $R$ and $j$ is the column containing the right corners, $1\leq i < j 
 
 If two distinct rectangles share exactly one column, say $R_{z,p}$ and $R_{z,q}$, the
 shared column's corners overlap, and $C(R_{z,p}) \,\triangle\, C(R_{z,q})$ is exactly
-the 4 points of columns $p$ and $q$; we call this the pair row on $\{p,q\}$. If they
+the 4 points of columns $p$ and $q$; we call this the pair constraint on $\{p,q\}$. If they
 share no column, the difference set is all 8 points of 4 distinct columns, which
-contains a pair row and is deleted in preprocessing
+contains a pair constraint and is deleted in preprocessing
 (Section~\ref{sec:preprocessing}). Every pair $\{p,q\}$ arises this way: two
 rectangles sharing a column span at least 3 distinct columns between them, and
 $m\geq 3$ guarantees a third column $z$ from which to build $R_{z,p}$ and $R_{z,q}$.
-Hence, the pruned hypergraph consists of exactly the $\binom{m}{2}$ pair rows.
+Hence, the pruned hypergraph consists of exactly the $\binom{m}{2}$ pair constraints.
 
 Then, from Lemma~\ref{lem:reduction}, a valid visible set $K$ is one that intersects
-every pair row. Conditioning on $T$, this constrains $T$ to contain every column
-except at most one: if two distinct columns $p$ and $q$ are excluded, the pair row on
-$\{p,q\}$ contains no point of $K$, and $K$ would not intersect every pair row. Each
+every pair constraint. Conditioning on $T$, this constrains $T$ to contain every column
+except at most one: if two distinct columns $p$ and $q$ are excluded, the pair constraint on
+$\{p,q\}$ contains no point of $K$, and $K$ would not intersect every pair constraint. Each
 column of $T$ contributes at least 1 point, so $\vert K\vert \geq \vert T\vert \geq
-m-1$, and hence $K_0 = m-1$ and $\vert S\vert \leq 2m-(m-1)=m+1$. If no column is
+m-1$, and hence $\vert S\vert \leq 2m-(m-1)=m+1$. (The construction below shows
+that $m-1$ is attained, so $K_0=m-1$.) If no column is
 fully blacked out, $T$ would contain every column and $K$ would need $m$ points, so
 $\vert S\vert \leq m$. If any column of $T$ kept both of its points, $\vert K \vert
 \geq m$ as well. Hence, at the maximum, exactly one column is excluded from $T$, and
@@ -174,7 +225,7 @@ in the other $m-1$ columns, exactly 1 of the 2 points in each column is blacked 
 
 
 Every such construction is valid: any pair of columns includes at least one column of
-$T$, whose surviving point meets the pair row. There are $m$ ways to choose which
+$T$, whose surviving point meets the pair constraint. There are $m$ ways to choose which
 column to exclude from $T$ and $2^{m-1}$ ways to choose which 1 of the 2 points to
 black out in the remaining $m-1$ columns. Hence, $m\cdot 2^{m-1}$ such distinct
 maximum blackouts exist, characterized as in the statement.
@@ -224,29 +275,105 @@ $6\times 6$ & 313 & 12 & 24 & --- & engine only (value) \\
 ``engine only'' = the exhaustive check is infeasible at that size.}
 \end{table}
 
-\section{Uniqueness at $5\times 5$}\label{sec:uniqueness}
-\begin{theorem}[computational]\label{thm:fivefive}
-The $5\times 5$ grid has maximum blackout $10$, attained by exactly $8$ blackouts, and
-the maximum blackout is unique up to the symmetries of the square: the $8$ optima form
-a single orbit of the dihedral group $D_4$, with trivial stabilizer.
+\section{The $5\times 5$ grid}\label{sec:uniqueness}
+\input{fig_fivefive.tex}
+The $5\times5$ grid is the first square where the old guess of $n+m-1$ black
+points fails, and it fails by exactly 1. It is also the smallest grid where
+both dimensions are at least $5$, the case Conjecture~\ref{conj:excess} is
+about. The row bound (Theorem~\ref{thm:rowbound}) only gives $5+\lfloor25/4\rfloor=11$
+here. In this section we show that the true value is $10$, and we describe the
+optimum.
+
+The idea is to look at the blackout as a graph, as in Lemma~\ref{lem:girth}:
+one vertex for each row, one for each column, and an edge for each black point.
+On a $5\times5$ grid this graph has only $10$ vertices. Lemma~\ref{lem:girth}
+forbids cycles of length $4$ and $6$, and the graph is bipartite, so every
+cycle has length at least $8$. On $10$ vertices there is room for 1 such cycle
+but not for 2 that overlap, and 2 that do not overlap need at least $16$
+vertices. So the graph has at most as many edges as vertices. The next lemma
+makes this precise.
+
+\begin{lemma}[few edges without short cycles]\label{lem:tenvertices}
+Let $G$ be a bipartite graph with $v\le 10$ vertices and no cycle of length $4$
+or $6$. Then $G$ has at most $v$ edges. If it has exactly $v$ edges, then every
+connected component of $G$ contains exactly 1 cycle, so $G$ is connected and its
+only cycle has length $8$ or $10$.
+\end{lemma}
+\begin{proof}
+Since $G$ is bipartite, all of its cycles have even length, so every cycle has
+length at least $8$.
+
+\emph{Step 1: no component has more edges than vertices.} Suppose some
+component $G'$ does. Delete vertices of degree $1$ from $G'$ one at a time,
+each together with its edge, until none is left. Each deletion removes 1 vertex
+and 1 edge, so the result $H$ still has more edges than vertices, and $H$ is
+nonempty with every degree at least $2$. If every degree in $H$ were exactly
+$2$, $H$ would have as many edges as vertices. So some vertex $x$ of $H$ has
+degree at least $3$.
+
+Let $D_i$ be the set of vertices of $H$ at distance $i$ from $x$. Two
+different paths from $x$ to the same vertex, each of length at most $3$, would
+together contain a cycle of length at most $6$, which is impossible. So for
+$i=1,2,3$ every vertex of $D_i$ has exactly 1 neighbour in $D_{i-1}$, its
+\emph{parent}. It has no neighbour in $D_i$, because $D_i$ lies on one side of
+the bipartition. Since its degree is at least $2$, it therefore has a
+neighbour in $D_{i+1}$. Two different vertices of $D_i$ ($i\le2$) cannot share
+such a neighbour, since that neighbour would then have 2 parents. Hence
+$|D_1|\ge3$, $|D_2|\ge|D_1|\ge3$, $|D_3|\ge|D_2|\ge3$ and $|D_4|\ge1$, and $H$
+has at least $1+3+3+3+1=11$ vertices, more than $v\le10$. This
+contradiction proves Step 1.
+
+\emph{Step 2: the equality case.} By Step 1, every component has at most as
+many edges as vertices, so the total number of edges is at most $v$. If it
+equals $v$, every component has exactly as many edges as vertices, and a
+connected graph with as many edges as vertices contains exactly 1 cycle. Two
+components would then hold 2 vertex-disjoint cycles of length at least $8$,
+which needs $16>10$ vertices. So $G$ is connected, and its cycle is even with
+length between $8$ and $v\le10$.
+\end{proof}
+
+\begin{theorem}[the $5\times5$ grid]\label{thm:fivefive}
+The maximum blackout on the $5\times5$ grid is $10$. For every maximum
+blackout $S$, the graph $G_S$ is connected and contains exactly 1 cycle, of
+length $8$ or $10$. By computer, there are exactly $8$ maximum blackouts. They
+form a single orbit of the symmetry group $D_4$ of the square, with trivial
+stabilizer, and each of their graphs is an $8$-cycle with 2 pendant edges
+(Figure~\ref{fig:fivefive}).
 \end{theorem}
-The value and the count were produced independently by the engine and by the exhaustive
-definitional check; the orbit claim was verified by applying the 8 symmetries of the
-grid to one optimum and recovering all 8. The unique extremal blackout is the 9-point
-anti-diagonal staircase, the old $n+m-1$ pattern, plus 1 detached corner: the $+1$
-made visible.
-\par\noindent\begin{minipage}{\linewidth}
-A representative (`\#' blacked out, `.' kept):
-\begin{verbatim}
-    ..###
-    ..#..
-    .##..
-    ##...
-    #...#
-\end{verbatim}
-\end{minipage}\par\medskip
-The kept set is two triangular blocks of 5 and 10 points on either side of the band,
-and the extremal object is unique up to symmetry while having no symmetry of its own.
+\begin{proof}
+\emph{Upper bound.} Let $S$ be a valid blackout. By Lemma~\ref{lem:girth}
+(which applies since $m=5\ge3$), the graph $G_S$ has no cycle of length $4$ or $6$. It
+is bipartite with $5+5=10$ vertices and $|S|$ edges, so
+Lemma~\ref{lem:tenvertices} gives $|S|\le10$, and if $|S|=10$ it gives the
+structure stated.
+
+\emph{Lower bound.} The blackout of Figure~\ref{fig:fivefive}(a) has $10$
+points. Its graph is an $8$-cycle with 2 pendant edges, so by
+Lemma~\ref{lem:girth} no 2 axis-aligned rectangles are confused. The remaining
+$130-100=30$ rectangles are tilted, and \texttt{verify\_narrow.py} checks all
+$130$ presentations directly and finds them distinct.
+
+\emph{The count.} By the upper bound, a maximum blackout has a graph with
+exactly $10$ edges and no $4$- or $6$-cycle. The script lists all $44{,}640$
+such sets of $10$ points (a search that only adds a point when no short cycle
+appears) and checks each against all $130$ rectangles. Exactly $8$ are valid, and each
+has degrees $3,3$ at 2 vertices, $1,1$ at 2 others and $2$ elsewhere, so its graph is an
+$8$-cycle with 2 pendant edges.
+Applying the $8$ symmetries of the square to the blackout in
+Figure~\ref{fig:fivefive}(a) gives $8$ different blackouts, and these are the $8$
+found. The count of $8$ was found earlier, independently, by the ILP engine and
+by an exhaustive check of all blackouts from the definition (Table~1).
+\end{proof}
+
+In words, the extremal blackout is a staircase of $9$ points running from the
+top right corner to the bottom left, the old $n+m-1$ pattern, plus the
+corner $(5,5)$. The staircase alone has a graph that is a tree. The
+extra corner closes a cycle of length $8$, the shortest the lemma allows. Of the $1{,}440$ sets of $10$ points
+whose graph is a single $10$-cycle (2 black points in every row and column),
+none is valid; there the tilted rectangles are what goes wrong. The kept set is
+2 blocks of $5$ and $10$ points on either side of the staircase, and the
+extremal blackout is unique up to symmetry while having no symmetry of its own.
+
 
 \section{Refuted and live conjectures}\label{sec:conjectures}
 \begin{table}[h]\centering
@@ -274,14 +401,18 @@ $4\times5$ up to transposition, where it is $n+m-1$.
 \end{conjecture}
 We checked this on seven cells ($4\times 6$ through $6\times 6$), including the
 prediction of $12$ at $6\times 6$, which was written down before the
-$1063$-second computation. The four-row cases are now proved, and the case where
-both dimensions are at least 5 is open. The row bound does not imply Excess-1 there.
+$1063$-second computation. The four-row cases are now proved, and so is
+$5\times5$ (Theorem~\ref{thm:fivefive}). The other cases where both dimensions
+are at least 5 are open. There the row bound does not imply Excess-1, and
+neither does Lemma~\ref{lem:tenvertices}, which needs $n+m\le10$.
 
 Beyond the remaining conjecture, three questions strike us as the natural next ones: why
 the number of optima collapses at $4\times 6$ ($26$, against neighbors in the
 hundreds and thousands); whether the excess ever grows past $1$, with $5\times 8$ and
 $6\times 7$ registered at $13$ as the next kill attempts; and whether the
 $5\times 5$ uniqueness admits a structural proof rather than a computational one.
+Theorem~\ref{thm:fivefive} reduces that question to $10$-point blackouts whose graph is
+connected with a single cycle of length $8$ or $10$.
 
 \section*{Data and code availability}
 The code, tables, and ledger are at
