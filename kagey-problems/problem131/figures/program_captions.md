@@ -8,7 +8,7 @@ folder and use `../figures/program_A` to `../figures/program_D`. Each caption be
 ## Paper A, `program_A`
 
 (a) The crossing on each model's switching scale against $L=\log N$ for Papers~A to~D. The scale is
-$T$ for Papers~A to~C, $x=n\varepsilon$ for the elephant walk and the expected number of switches for
+$T$ for Papers~A to~C, $x=N\varepsilon$ for the elephant walk and the expected number of switches for
 the aging walk of Paper~D. The bold curve is the 2-state crossing $z_N=N(1-p_N)$ of this paper, and
 the curves B are the crossings of Paper~B for faces of $k=2,3,4$ states. (b) The exponent
 $e(\alpha)=1-\alpha+1/\alpha$ of Paper~D for runs with heavy tails, which changes sign at the golden
@@ -33,6 +33,6 @@ runs with heavy tails, which changes sign at the golden ratio $\varphi$.
 
 The crossing on each model's switching scale against $L=\log N$ (a), and the heavy-tailed exponent
 $e(\alpha)=1-\alpha+1/\alpha$ of this paper for a stationary start (b). The scale is $T$ for Papers A
-to C, $x=n\varepsilon$ for the elephant walk (drawn through the root $g_n$ of
+to C, $x=N\varepsilon$ for the elephant walk (drawn through the root $g_N$ of
 Theorem~\ref{thm:erw-crossing}), and the expected number $H_N-1$ of switches at $c=1$ for the aging
 walk. The curves of this paper are in bold.
