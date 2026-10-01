@@ -147,6 +147,28 @@ def check_five_by_five():
     return len(candidates), len(ten_cycles)
 
 
+def check_game_witnesses():
+    """Second check of the staircase-plus-one blackouts stored in game/game.js (n+m points)."""
+    import os
+    import re
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'game', 'game.js')
+    if not os.path.exists(path):
+        return None
+    src = open(path).read()
+    start = src.index('var WITNESS = {')
+    block = src[start:src.index('};', start)]
+    checked = []
+    for key, body in re.findall(r"'(\d+x\d+)': \[([^\]]*)\]", block):
+        rows, cols = map(int, key.split('x'))
+        picture = re.findall(r"'([.#]+)'", body)
+        assert len(picture) == rows and all(len(r) == cols for r in picture)
+        black = mask([(x, y) for y in range(rows) for x in range(cols) if picture[y][x] == '#'], cols)
+        assert black.bit_count() == rows + cols, key
+        assert collision(rectangles(rows, cols), black) is None, key
+        checked.append(key)
+    return checked
+
+
 def main():
     tested = 0
     for rows, cols in ((2, 3), (3, 3), (3, 4), (4, 3), (4, 4)):
@@ -194,6 +216,15 @@ def main():
     print(f'PASS: 5x5 has no valid blackout of size 11; of the {total} 10-point sets with no '
           f'short cycle, exactly 8 are valid, one D4 orbit of the paper\'s representative, each an '
           f'8-cycle with 2 pendant edges; none of the {ten} 10-cycles is valid.')
+    for rows in range(2, 11):
+        for cols in range(rows, 11):
+            cross = mask({(x, 0) for x in range(cols)} | {(0, y) for y in range(rows)}, cols)
+            assert collision(rectangles(rows, cols), cross) is None, (rows, cols)
+    print('PASS: row 1 plus column 1 (n+m-1 points) is valid on every grid up to 10x10.')
+    checked = check_game_witnesses()
+    if checked:
+        print(f'PASS: the {len(checked)} blackouts of n+m points stored in game/game.js '
+              f'({checked[0]} to {checked[-1]}) are valid.')
     print('All narrow-grid checks passed. The general-width claims use the accompanying proofs.')
 
 
