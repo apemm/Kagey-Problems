@@ -1,0 +1,68 @@
+\section{The free case \texorpdfstring{$m\ge4$}{m >= 4}}\label{sec:free}
+
+For $m\ge4$ the map $g_m\circ f$ has infinite order (Lemma~\ref{lem:order}), so there is no relation
+to shorten words, and every string is reduced. We work directly in $x$-coordinates. Call a string
+$(c_1,\dots,c_k)$ with $k\ge1$, $c_1\ge0$ and $c_2,\dots,c_k\ge1$ a \emph{free string}. Its value is
+\[
+x=c_1+g_m\Bigl(c_2+g_m\bigl(c_3+\dots+g_m(c_k)\bigr)\Bigr),
+\]
+its tails are $T_j=c_j+g_m(T_{j+1})$ with $T_k=c_k$, and its weight is $c_1+\dots+c_k+k-1$.
+
+\begin{theorem}[Theorem~E]\label{thm:free}
+Let $m\ge4$, $f(x)=x+1$ and $g_m(x)=-1/(mx)$.
+\begin{enumerate}[(a)]
+\item Every tail $T_j$ with $j\ge2$ of a free string is greater than $\tfrac12$, so $g_m$ is never applied
+at $0$. A free string with $c_1\ge1$ has value in $(c_1-2/m,\,c_1]$, and one with $c_1=0$ and $k\ge2$ has
+value in $(-2/m,\,0)$. Distinct free strings have distinct values.
+\item The points of the $m$-tree are exactly the values of free strings, and the rank of a point is the
+weight of its string.
+\item $a(n)=F_{n+1}$ for every $n\ge0$, and the number of positive points of rank $n\ge1$ is $F_n$.
+The generating function is $1/(1-t-t^2)$.
+\item A vertex is blue if and only if it is negative, and every point has exactly one shortest word.
+\item No rational in $(-\infty,-2/m]$ is in the tree, and for each integer $c\ge1$ no rational in
+$(c-1,\,c-2/m]$ is in the tree. In particular $-1$ and $\tfrac12$ are never reached.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(a) First $T_k=c_k\ge1>\tfrac12$. If $T>\tfrac12$ and $c\ge1$, then
+$c+g_m(T)=c-1/(mT)>1-2/m\ge\tfrac12$. By downward induction every tail $T_j$ with $j\ge2$ is greater
+than $\tfrac12$, and in particular $g_m$ is applied only at positive numbers. For $k\ge2$ the value is
+$c_1-1/(mT_2)$ with $0<1/(mT_2)<2/m$, which gives the two intervals. For $k=1$ the value is $c_1$.
+Since $2/m\le\tfrac12<1$, the intervals $(c-2/m,c]$ for $c=1,2,\dots$ and $(-2/m,0)$ are disjoint,
+and none contains $0$. So the value $x$ decides whether $c_1=0$, and if $c_1\ge1$ then
+$c_1=\lceil x\rceil$, and $k=1$ exactly when $x$ is an integer. When $k\ge2$ the tail value $T_2$ is
+$g_m(x-c_1)$. So the value determines $c_1$, whether $k=1$, and $T_2$, and induction on $k$ shows that
+distinct free strings have distinct values. The string $(0)$ has the value $0$.
+
+(b) Let $V$ be the set of values and $W(x)$ the weight of the string of $x\in V$. Each string is a word
+of length $W(x)$ that reaches $x$, so $d\le W$ on $V$. Next, $V$ is closed under the moves, and each
+move raises $W$ by at most $1$. Indeed, $f(0)=1$ has the string $(1)$. If $y>0$ has the string
+$(c_1,\dots,c_k)$, then $f(y)$ has the string $(c_1+1,c_2,\dots,c_k)$ and $g_m(y)$ has the string
+$(0,c_1,\dots,c_k)$, both of weight $W(y)+1$. If $y<0$ has the string $(0,c_2,\dots,c_k)$, then
+$g_m(y)$ is the value of $(c_2,\dots,c_k)$, of weight $W(y)-1$, and $f(y)$ has the string
+$(1,c_2,\dots,c_k)$, of weight $W(y)+1$. Since $W(0)=0$, every point reached by $n$ moves lies in $V$
+and has $W\le n$. So the tree is $V$ and $d=W$.
+
+(c) For the positive points, $c_1\ge1$ contributes $t/(1-t)$, and each later digit $c\ge1$ together
+with its $g_m$ contributes $t^{c+1}$, which sums to $t^2/(1-t)$. So
+\[
+\sum_{n\ge1}r(n)\,t^n=\frac{t}{1-t}\cdot\frac{1}{1-t^2/(1-t)}=\frac{t}{1-t-t^2}.
+\]
+The map $g_m$ is a bijection from the positive points of rank $n-1$ onto the negative points of rank
+$n$, by (b), since $g_m(y)$ has the string $(0,c_1,\dots,c_k)$. So
+$\sum_n a(n)t^n=1+(1+t)t/(1-t-t^2)=1/(1-t-t^2)$.
+
+(d) Let $x<0$ be in the tree. Its in-neighbors are $x-1$ and $g_m(x)$. Since $x-1<-1\le-2/m$, the
+point $x-1$ is not in the tree by (a) and (b). So the last move of every path to $x$ is $g_m$. Let
+$x>0$. Its in-neighbors are $x-1$ and $g_m(x)$, and $g_m(x)$ has rank $d(x)+1$ by the proof of (c).
+So the last move of a shortest path to $x$ is $f$. Uniqueness of the shortest word follows by
+induction on the rank.
+
+(e) This is (a) and (b). Note that $-1\le-2/m$, and $\tfrac12\in(0,1-2/m]$ since $m\ge4$.
+\end{proof}
+
+For $m=4$ the parent map of Section~\ref{sec:parent} does not terminate everywhere. It sends
+$\tfrac12$ to $-\tfrac12$ and $-\tfrac12$ back to $g_4(-\tfrac12)=\tfrac12$, and both points are
+outside the tree by (e). With $x=ky$, the tree of $x\mapsto x+k$ and $x\mapsto-1/x$ is the $k^2$-tree,
+so Theorem~E applies to it for every $k\ge2$.

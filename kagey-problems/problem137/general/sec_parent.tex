@@ -1,0 +1,358 @@
+\section{Setting and notation}\label{sec:setup}
+
+Fix $q\ge3$ and put $\theta=\pi/q$ and $\lambda=\lambda_q=2\cos\theta$, so that $1\le\lambda<2$. Let
+\[
+F(X)=X+\lambda,\qquad G(X)=-\frac1X\quad(X\neq0).
+\]
+
+\begin{definition}\label{def:tree}
+Let $\Gamma_q$ be the directed graph on $\R$ with an \emph{$F$-edge} $X\to X+\lambda$ for every $X$
+and a \emph{$G$-edge} $X\to-1/X$ for every $X\neq0$. Let $\Orb=\Orb_q$ be the set of points that can
+be reached from $0$ along a directed path, and for $X\in\Orb$ let the \emph{rank} $d(X)$ be the
+length of a shortest such path. We call $\Orb$ with the ranks the \emph{$\lambda_q$-tree}, and put
+\[
+a_q(n)=\bigl|\{X\in\Orb\mid d(X)=n\}\bigr|,\qquad r_q(n)=\bigl|\{X\in\Orb\mid X>0,\ d(X)=n\}\bigr| .
+\]
+\end{definition}
+
+We write a path from $0$ as a composition of maps, applied from right to left. So $GF(0)=-1/\lambda$
+means that we first apply $F$ and then $G$. (In \cite{P137} words were read from left to right in
+the order the moves are made, so the words there are the reverses of the ones here.) A word may
+never apply $G$ at $0$. Following Kagey, a vertex $X\neq0$ is \emph{red} if the last move of a
+shortest path to it is $F$ and \emph{blue} if it is $G$. Corollary~\ref{cor:Cq} shows that this is
+well defined.
+
+\begin{definition}\label{def:mtree}
+For an integer $m\ge1$, the \emph{$m$-tree} is defined in the same way on $\Q$, with the maps
+$f(x)=x+1$ and $g_m(x)=-1/(mx)$ and root $0$. Its rank function is also written $d$, and $a(n)$ is
+the number of its points of rank $n$.
+\end{definition}
+
+\begin{lemma}\label{lem:coords}
+Let $(m,q)$ be $(1,3)$, $(2,4)$ or $(3,6)$. Then $x\mapsto\sqrt m\,x$ is an isomorphism from the
+graph of the $m$-tree, extended to $\R$, onto $\Gamma_q$. It takes $f$-edges to $F$-edges and
+$g_m$-edges to $G$-edges. In particular the $m$-tree and the $\lambda_q$-tree have the same counts,
+the same ranks at corresponding points, and the same colors.
+\end{lemma}
+
+\begin{proof}
+Note that $\lambda_3=1$, $\lambda_4=\sqrt2$ and $\lambda_6=\sqrt3$, so $\lambda_q=\sqrt m$. For
+$X=\sqrt m\,x$ we have $\sqrt m\,(x+1)=X+\lambda_q$ and $\sqrt m\,g_m(x)=-\sqrt m/(mx)=-1/X$.
+\end{proof}
+
+So the case $q=3$ is the tree of \cite{P137}, and everything proved below for the $\lambda_q$-tree
+holds for the $m$-tree when $m=1,2,3$, with $\lambda$ replaced by $1$. Table~\ref{tab:hand} works out
+the first ranks of the $2$-tree by hand, in the same way as \cite[Table~1]{P137}.
+
+\begin{table}[ht]
+\centering\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}c l l c@{}}
+\toprule
+$n$ & moves from the rationals of rank $n-1$ & rank $n$ & $a(n)$\\
+\midrule
+0 & (start) & $0$ & 1\\
+1 & $0\mapsto 1$ \quad ($g_2(0)$ is not defined) & $1$ & 1\\
+2 & $1\mapsto 2,\ -\tfrac12$ & $2,\ -\tfrac12$ & 2\\
+3 & $2\mapsto 3,\ -\tfrac14$;\quad $-\tfrac12\mapsto \tfrac12,\ \old{1}{1}$ & $3,\ -\tfrac14,\ \tfrac12$ & 3\\
+4 & $3\mapsto 4,\ -\tfrac16$;\quad $-\tfrac14\mapsto \tfrac34,\ \old{2}{2}$;\quad
+  $\tfrac12\mapsto\tfrac32,\ -1$ & $4,\ -\tfrac16,\ \tfrac34,\ \tfrac32,\ -1$ & 5\\
+5 & $4\mapsto 5,\ -\tfrac18$;\quad $-\tfrac16\mapsto\tfrac56,\ \old{3}{3}$;\quad
+  $\tfrac34\mapsto\tfrac74,\ -\tfrac23$; & & \\
+  & $\tfrac32\mapsto\tfrac52,\ -\tfrac13$;\quad $-1\mapsto\old{0}{0},\ \old{\tfrac12}{3}$ &
+  $5,\ -\tfrac18,\ \tfrac56,\ \tfrac74,\ -\tfrac23,\ \tfrac52,\ -\tfrac13$ & 7\\
+\bottomrule
+\end{tabular}
+\caption{Ranks $0$ to $5$ of the $2$-tree. In row $n$, ``$x\mapsto u,\ v$'' means $f(x)=u$ and
+$g_2(x)=v$ for a rational $x$ of rank $n-1$. Gray values were found earlier, and the subscript in
+brackets is their rank.}
+\label{tab:hand}
+\end{table}
+
+Already here the patterns of \cite{P137} show up with new numbers. Positive values are reached by $f$
+and negative ones by $g_2$. The leaf $-1$ appears at rank $4$, and $f(-1)=0$ goes back to the root.
+In general $-1$ has rank $2q-4$ (Proposition~\ref{prop:closed}(c)), which is $2$ for $m=1$ and $4$
+for $m=2$.
+
+\section{The parent map and the distance formula}\label{sec:parent}
+
+\subsection{The orbit of infinity}
+
+Let $\tau=F\circ G$, so that $\tau(Y)=\lambda-1/Y$, with $\tau(0)=\infty$ and $\tau(\infty)=\lambda$.
+Put
+\[
+\beta_i=\tau^{\,i}(\infty)\quad(i\ge0),\qquad U_i=\frac{\sin((i+1)\theta)}{\sin\theta}\quad(i\ge-1).
+\]
+
+\begin{lemma}\label{lem:orbit}
+\begin{enumerate}[(a)]
+\item $\beta_i=\sin((i+1)\theta)/\sin(i\theta)$ for $1\le i\le q-1$.
+\item $\infty=\beta_0>\beta_1=\lambda>\beta_2>\dots>\beta_{q-2}=1/\lambda>\beta_{q-1}=0$.
+\item $\tau^q$ is the identity, and $\tau(1/\lambda)=0$.
+\item For $0\le i\le q-3$, $\tau$ maps $(\beta_{i+1},\beta_i]$ increasingly onto
+$(\beta_{i+2},\beta_{i+1}]$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+We have $U_{-1}=0$, $U_0=1$, $U_1=\lambda$ and $U_{i+1}=\lambda U_i-U_{i-1}$, by the identity
+$\sin((i+2)\theta)+\sin(i\theta)=2\cos\theta\,\sin((i+1)\theta)$. The matrix of $\tau$ is
+$\left(\begin{smallmatrix}\lambda&-1\\1&0\end{smallmatrix}\right)$, and by induction the matrix of
+$\tau^i$ is
+\[
+\begin{pmatrix}U_i&-U_{i-1}\\U_{i-1}&-U_{i-2}\end{pmatrix}\qquad(i\ge1).
+\]
+Indeed, multiplying this by the matrix of $\tau$ on the right gives first column
+$(\lambda U_i-U_{i-1},\ \lambda U_{i-1}-U_{i-2})=(U_{i+1},U_i)$ and second column $(-U_i,-U_{i-1})$.
+Hence $\beta_i=U_i/U_{i-1}$ whenever $U_{i-1}\neq0$, which holds for $1\le i\le q-1$ since then
+$0<i\theta<\pi$. This is (a).
+
+For $1\le i\le q-1$ we have $\sin(i\theta)>0$ and $\sin((i+1)\theta)\ge0$, with equality only at
+$i=q-1$. So $\beta_{q-1}=0$, and $\beta_i>0$ for $1\le i\le q-2$. For $1\le i\le q-2$,
+\[
+\beta_i-\beta_{i+1}=\frac{U_i^2-U_{i-1}U_{i+1}}{U_{i-1}U_i}=\frac{\sin^2\theta}{\sin(i\theta)\,\sin((i+1)\theta)}>0,
+\]
+by the identity $\sin^2a-\sin(a-b)\sin(a+b)=\sin^2b$ with $a=(i+1)\theta$ and $b=\theta$. Also
+$\beta_1=\lambda$ and $\beta_{q-2}=\sin((q-1)\theta)/\sin((q-2)\theta)=\sin\theta/\sin2\theta=1/\lambda$.
+This is (b).
+
+Since $U_{q-1}=0$, $U_q=-1$ and $U_{q-2}=1$, the matrix of $\tau^q$ is $-I$, so $\tau^q$ is the
+identity. Also $\tau(1/\lambda)=\lambda-\lambda=0$. This is (c). For (d), note that $\tau$ is continuous
+and strictly increasing on $(0,\infty]$, and that $(\beta_{i+1},\beta_i]$ lies in $(0,\infty]$ when
+$i+1\le q-2$. Since $\tau(\beta_j)=\beta_{j+1}$, the image is $(\beta_{i+2},\beta_{i+1}]$.
+\end{proof}
+
+\begin{lemma}\label{lem:order}
+The map $G\circ F$ has order exactly $q$. For $m=1,2,3$ the map $g_m\circ f$ has order $3$, $4$ and
+$6$, and for $m\ge4$ it has infinite order.
+\end{lemma}
+
+\begin{proof}
+Since $G\circ G$ is the identity, $G\circ F=G\circ\tau\circ G$, so $G\circ F$ has the same order as
+$\tau$. By Lemma~\ref{lem:orbit}, $\tau^q$ is the identity, and $\tau^i(\infty)=\beta_i\neq\infty$ for
+$1\le i\le q-1$. So $\tau$ has order $q$. For $m\le3$ the claim follows by Lemma~\ref{lem:coords}.
+Now let $m\ge4$. The matrix of $g_m\circ f(x)=-1/(m(x+1))$ is
+$\left(\begin{smallmatrix}0&-1\\m&m\end{smallmatrix}\right)$, and dividing by $\sqrt m$ gives a matrix
+$N$ of determinant $1$ and trace $\sqrt m\ge2$. Its eigenvalues are $\mu$ and $1/\mu$ with
+$\mu+1/\mu=\sqrt m$, so $\mu$ is real and positive. If $N^n=\pm I$ for some $n\ge1$, then $\mu^n=\pm1$,
+so $\mu=1$ and $m=4$. Then $N$ has the double eigenvalue $1$ but is not the identity, because its
+upper right entry is $-1/\sqrt m$. So $N$ is conjugate to
+$\left(\begin{smallmatrix}1&1\\0&1\end{smallmatrix}\right)$, whose powers are never $\pm I$. Hence
+$g_m\circ f$ has infinite order.
+\end{proof}
+
+\subsection{The parent map}
+
+\begin{definition}\label{def:parent}
+The \emph{parent map} $P\colon\R\setminus\{0\}\to\R$ is $P(X)=X-\lambda$ for $X>0$ and $P(X)=-1/X$ for
+$X<0$. Let $\Term$ be the set of $X\in\R$ whose sequence $X,P(X),P^2(X),\dots$ reaches $0$, and for
+$X\in\Term$ let $D(X)$ be the number of steps it takes. So $D(0)=0$, and for $X\in\Term$ with
+$X\neq0$ we have $P(X)\in\Term$ and $D(X)=D(P(X))+1$.
+\end{definition}
+
+Note that for every $X\neq0$ there is an edge $P(X)\to X$ in $\Gamma_q$. It is the $F$-edge from
+$X-\lambda$ when $X>0$, and the $G$-edge from $-1/X\neq0$ when $X<0$. For $q=3$ this is the parent
+map of \cite[Definition~3.1]{P137}.
+
+The heart of \cite{P137} is the identity $d(x-1)=d(x)+3$ for $x<0$. The next lemma is its analogue.
+Its proof follows a path that winds once through the orbit of $\infty$.
+
+\begin{lemma}[the long in-edge]\label{lem:long}
+Let $Z<0$ and $Y=-1/Z>0$. Put $P_1=Y+\lambda$, and for $1\le i\le q-2$ put $N_i=-1/P_i$ and
+$P_{i+1}=N_i+\lambda=\tau(P_i)$. Put $N_{q-1}=-1/P_{q-1}$. Then every $P_i$ is positive, every $N_i$
+is negative, $N_{q-1}=Z-\lambda$, and $P$ maps each point of the path
+\[
+Y\xrightarrow{\,F\,}P_1\xrightarrow{\,G\,}N_1\xrightarrow{\,F\,}P_2\xrightarrow{\,G\,}\cdots
+\xrightarrow{\,F\,}P_{q-1}\xrightarrow{\,G\,}N_{q-1}
+\]
+to the point before it. Hence $Z\in\Term$ if and only if $Z-\lambda\in\Term$, and in that case
+$D(Z-\lambda)=D(Z)+2q-3$.
+\end{lemma}
+
+\begin{proof}
+Since $P_1>\lambda=\beta_1$, $P_1$ lies in $(\beta_1,\beta_0]$. By Lemma~\ref{lem:orbit}(d) and
+induction, $P_i\in(\beta_i,\beta_{i-1}]$ for $1\le i\le q-1$. Since $\beta_{q-1}=0$, every $P_i$ is
+positive, so every $N_i$ is defined and negative. The path applies $(GF)^{q-1}$ to $Y$. Now
+$G\circ F=G\circ\tau\circ G$, so $(GF)^q=G\tau^qG$ is the identity by Lemma~\ref{lem:orbit}(c). Hence
+$(GF)^{q-1}=(GF)^{-1}=F^{-1}G$, and $N_{q-1}=F^{-1}(G(Y))=Z-\lambda$. The map $G$ is applied only at the
+points $P_i$, which are not $0$.
+
+For the parent map, $P(N_i)=-1/N_i=P_i$ since $N_i<0$, $P(P_{i+1})=P_{i+1}-\lambda=N_i$ and
+$P(P_1)=Y$ since the $P_i$ are positive. So the path has $2q-2$ edges and
+$P^{2q-2}(Z-\lambda)=Y=P(Z)$. If $Z\in\Term$, then $Y\in\Term$, so $Z-\lambda\in\Term$ and
+$D(Z-\lambda)=2q-2+D(Y)=2q-2+D(Z)-1$. Conversely, if $Z-\lambda\in\Term$, then its parent sequence passes
+through $Y$, so $Y\in\Term$, and $Z\in\Term$ because $P(Z)=Y$.
+\end{proof}
+
+For $q=3$ the path has four edges and this is (D4) of \cite[Lemma~3.5]{P137}. For example, in the
+$2$-tree take $z=-\tfrac12$, so that $y=g_2(z)=1$. The path is
+\[
+1\xrightarrow{f}2\xrightarrow{g_2}-\tfrac14\xrightarrow{f}\tfrac34\xrightarrow{g_2}-\tfrac23
+\xrightarrow{f}\tfrac13\xrightarrow{g_2}-\tfrac32=z-1,
+\]
+and $d(-\tfrac32)=d(-\tfrac12)+5=7$.
+
+\begin{proposition}\label{prop:closed}
+\begin{enumerate}[(a)]
+\item $\Orb=\Term$.
+\item $\Term$ is closed under $F$, under $F^{-1}$, and under $G$ at nonzero points.
+\item $-\lambda\in\Term$ and $D(-\lambda)=2q-4$.
+\item $\Orb\cup\{\infty\}$ is the orbit of $0$ under the group generated by $F$ and $G$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+First we show that $\Term$ is closed under $F$ and $G$.
+
+\emph{$G$.} Let $X\in\Term$ with $X\neq0$. If $X>0$, then $G(X)<0$ and $P(G(X))=X$, so
+$G(X)\in\Term$. If $X<0$, then $G(X)=P(X)\in\Term$.
+
+\emph{$F$.} Let $X\in\Term$ and $W=X+\lambda$. If $W>0$, then $P(W)=X$, so $W\in\Term$. If $W=0$, it is
+the root. If $W<0$, then $X=W-\lambda$, and Lemma~\ref{lem:long} with $Z=W$ gives $W\in\Term$.
+
+Now (a) follows. Since $0\in\Term$ and $\Term$ is closed under both moves, $\Orb\subseteq\Term$. For
+$X\in\Term$, the reversed parent sequence of $X$ is a path from $0$ to $X$, so $\Term\subseteq\Orb$.
+
+For (c), note that $P(-\lambda)=1/\lambda=\beta_{q-2}$. For $2\le i\le q-2$ we have
+$\beta_i-\lambda=-1/\beta_{i-1}<0$, so $P(\beta_i)=-1/\beta_{i-1}$ and $P(-1/\beta_{i-1})=\beta_{i-1}$.
+Finally $P(\beta_1)=0$. So the parent sequence of $-\lambda$ is
+\[
+-\lambda,\ \beta_{q-2},\ -1/\beta_{q-3},\ \beta_{q-3},\ \dots,\ -1/\beta_1,\ \beta_1,\ 0,
+\]
+which has $1+2(q-3)+1=2q-4$ steps.
+
+For $F^{-1}$ in (b), let $X\in\Term$. If $X>0$, then $X-\lambda=P(X)\in\Term$. If $X<0$, use
+Lemma~\ref{lem:long} with $Z=X$. If $X=0$, use (c).
+
+For (d), the set $\Orb\cup\{\infty\}$ is closed under $F$, $F^{-1}$ and $G$, since $F$ fixes $\infty$
+and $G$ swaps $0$ and $\infty$. So it contains the orbit of $0$. Conversely every point of $\Orb$ is the
+image of $0$ under a word in $F$ and $G$, and $\infty=G(0)$.
+\end{proof}
+
+\subsection{The distance formula}
+
+\begin{theorem}\label{thm:dist}
+For every $X\in\Orb$ we have $d(X)=D(X)$. Moreover, for $X\in\Orb$,
+\begin{enumerate}[label={(D\arabic*)}]
+\item if $X>0$, then $D(X)=D(X-\lambda)+1$,
+\item if $X<0$, then $D(X)=D(-1/X)+1$,
+\item if $X>0$, then $D(-1/X)=D(X)+1$,
+\item[(D4$_q$)] if $X<0$, then $D(X-\lambda)=D(X)+2q-3$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+All the points involved are in $\Term$ by Proposition~\ref{prop:closed}. (D1) and (D2) are the
+definition of $D$. (D3) is (D2) applied to $-1/X<0$. (D4$_q$) is Lemma~\ref{lem:long}.
+
+The reversed parent sequence of $X$ is a path of length $D(X)$, so $d(X)\le D(X)$. For the reverse
+inequality we check that $D(W)\le D(V)+1$ for every edge $V\to W$ with $V\in\Orb$. There are five
+cases.
+\begin{itemize}[itemsep=0pt,topsep=2pt]
+\item An $F$-edge into $W>0$ comes from $V=W-\lambda$, and $D(W)=D(V)+1$ by (D1).
+\item An $F$-edge into $W=0$ gives $D(W)=0$.
+\item An $F$-edge into $W<0$ comes from $V=W-\lambda$, and $D(V)=D(W)+2q-3$ by (D4$_q$).
+\item A $G$-edge into $W<0$ comes from $V=-1/W$, and $D(W)=D(V)+1$ by (D2).
+\item A $G$-edge into $W>0$ comes from $V=-1/W<0$, and $D(V)=D(W)+1$ by (D3).
+\end{itemize}
+A $G$-edge never ends at $0$. Now take a shortest path $0=V_0\to V_1\to\dots\to V_n=X$. Then
+$D(V_i)\le D(V_{i-1})+1$ for each $i$, so $D(X)\le n=d(X)$.
+\end{proof}
+
+For $q=3$ this is \cite[Theorem~3.6]{P137}. The next corollary is Theorem~C$_q$ of the introduction.
+
+\begin{corollary}\label{cor:Cq}
+Let $X\in\Orb$ with $X\neq0$.
+\begin{enumerate}[(a)]
+\item The in-neighbors of $X$ are $X-\lambda$ and $-1/X$, and both lie in $\Orb$. If $X>0$, their ranks
+are $d(X)-1$ and $d(X)+1$. If $X<0$, they are $d(X)+2q-3$ and $d(X)-1$. So $P(X)$ is the only
+in-neighbor of rank $d(X)-1$.
+\item $X$ has exactly one shortest word, which spells the reversed parent sequence. In the row
+construction of Kimberling \cite{oeisA226247}, carried out with $F$ and $G$ as in
+\cite[Section~2]{P137}, each point is written down exactly once.
+\item The last move of the shortest word is $F$ if $X>0$ and $G$ if $X<0$. So a vertex is blue if and
+only if it is negative.
+\item The root has the one child $\lambda$. A vertex $X>0$ has the two children $X+\lambda$ and $-1/X$.
+A vertex in $(-\lambda,0)$ has the one child $X+\lambda$, and a vertex $X\le-\lambda$ is a leaf. Every
+child of $X$ has rank $d(X)+1$. For $X<-\lambda$ the value $X+\lambda$ appeared exactly $2q-3$ ranks
+earlier, that is $d(X+\lambda)=d(X)-(2q-3)$, and for $X=-\lambda$ it is the root.
+\end{enumerate}
+\end{corollary}
+
+Here the \emph{children} of $X$ are the points $Y$ with $P(Y)=X$.
+
+\begin{proof}
+(a) Only $X-\lambda$ is mapped to $X$ by $F$, and only $-1/X$ by $G$. Both are in $\Orb$ by
+Proposition~\ref{prop:closed}, and their ranks are given by Theorem~\ref{thm:dist}. Since
+$2q-3\ge3$, the two ranks differ.
+
+(b) By induction on $d(X)$. The last edge of a shortest path comes from an in-neighbor of rank
+$d(X)-1$, which is $P(X)$ by (a). For the rows, the proof of \cite[Corollary~3.8(a)]{P137} applies
+word for word. The only extra point is that a parent $c$ cannot reach $X$ by both moves, since
+$c+\lambda=-1/c$ would give $c^2+\lambda c+1=0$, which has no real root because $\lambda<2$.
+
+(c) The edge $P(X)\to X$ is an $F$-edge for $X>0$ and a $G$-edge for $X<0$.
+
+(d) We solve $P(Y)=X$. If $Y>0$, then $Y=X+\lambda$, which is possible exactly when $X>-\lambda$. If
+$Y<0$, then $X=-1/Y$, which is possible exactly when $X>0$. Each child has rank $d(X)+1$ by
+Theorem~\ref{thm:dist}. For $X<-\lambda$, apply (D4$_q$) to $X+\lambda<0$.
+\end{proof}
+
+In $x$-coordinates for $m=2,3$, a vertex $x>0$ has the children $x+1$ and $g_m(x)$, a vertex in
+$(-1,0)$ has the child $x+1$, and a vertex $x\le-1$ is a leaf. For $x<-1$ the value $x+1$ appeared five
+ranks earlier when $m=2$, and nine ranks earlier when $m=3$.
+
+\begin{remark}[the groups]\label{rem:group}
+By Proposition~\ref{prop:closed}(d), the $\lambda_q$-tree is the orbit of $0$ under the Hecke group
+$H_q=\langle F,G\rangle$, with $\infty$ removed. It is known that $H_q$ is isomorphic to the free
+product $C_2*C_q$, with $G$ and $G\circ F$ as generators \cite[p.~1]{short-walker}, \cite[p.~4]{winsor}.
+Im and Lee note that for $q=4$ and $q=6$ the Hecke group coincides with the group of all
+matrices $\left(\begin{smallmatrix}a&b\sqrt N\\c\sqrt N&d\end{smallmatrix}\right)$ and
+$\left(\begin{smallmatrix}a\sqrt N&b\\c&d\sqrt N\end{smallmatrix}\right)$ of determinant $1$ with
+$a,b,c,d\in\Z$, where $N=2$ and $N=3$ \cite[Section~2]{im-lee}. Conjugating by $X=\sqrt m\,x$ turns these into
+$\Gamma_0(m)$ together with its coset of the Fricke involution $g_m$. So for $m=2,3$ the maps $f$ and $g_m$
+generate the Fricke group $\Gamma_0(m)^+$, whose orbit of $\infty$ is $\Q\cup\{\infty\}$
+\cite[Proposition~2]{fairchild-hanusa}, \cite[p.~4]{winsor}. Theorem~D below says more, since the tree
+uses only forward moves. None of these facts is used in our proofs.
+\end{remark}
+
+\section{Every rational is reached when \texorpdfstring{$m\le3$}{m <= 3}}\label{sec:reach}
+
+\begin{theorem}[Theorem~D]\label{thm:reach}
+For $m=1,2,3$ every rational number lies in the $m$-tree. For every rational $x$, the parent map
+$x\mapsto x-1$ for $x>0$ and $x\mapsto g_m(x)$ for $x<0$ reaches $0$ in exactly $d(x)$ steps.
+\end{theorem}
+
+\begin{proof}
+Let $\Term_m$ be the set of points of the $m$-tree. By Lemma~\ref{lem:coords} and
+Proposition~\ref{prop:closed}, $\Term_m$ contains $0$ and is closed under $x\mapsto x+1$, under
+$x\mapsto x-1$, and under $g_m$ at nonzero points.
+
+For a rational $x=u/v$ in lowest terms with $v\ge1$ put
+\[
+h(x)=\frac{v^2}{\gcd(v,m)} .
+\]
+Since $m$ is $1$ or a prime, $\gcd(v,m)$ is $1$ or $m$. Clearly $h(x+n)=h(x)$ for every integer
+$n$. We claim that
+\[
+h(g_m(x))=m\,x^2\,h(x)\qquad(x\neq0).
+\]
+If $m$ does not divide $v$, then $g_m(x)=-v/(mu)$ is in lowest terms up to sign, since $\gcd(v,mu)=1$.
+Its denominator $m|u|$ is divisible by $m$, so $h(g_m(x))=m^2u^2/m=mu^2=m\,x^2v^2$. If $m$ divides
+$v$, write $v=mv'$. Then $\gcd(u,m)=1$, since $\gcd(u,v)=1$ and $m$ is $1$ or a prime dividing $v$.
+So $g_m(x)=-v'/u$ is in lowest terms with a denominator prime to $m$, and
+$h(g_m(x))=u^2=m\,x^2\,(v^2/m)$. This proves the claim.
+
+Since $\gcd(v,m)$ divides $v^2$, the value $h(x)$ is a positive integer, so we may use strong
+induction on $h(x)$. Given $x$, choose an integer $n$ with $|x-n|\le\tfrac12$ and put $y=x-n$. Then $x\in\Term_m$ if
+and only if $y\in\Term_m$, and $h(y)=h(x)$. If $y=0$ we are done. Otherwise
+\[
+h(g_m(y))=m\,y^2\,h(y)\le\frac m4\,h(x)<h(x),
+\]
+since $m\le3$. By induction $g_m(y)\in\Term_m$, and then $y=g_m(g_m(y))\in\Term_m$. The last sentence
+of the theorem is Theorem~\ref{thm:dist} together with Lemma~\ref{lem:coords}.
+\end{proof}
+
+The bound $m/4<1$ is the only place where $m\le3$ is used. For $m=4$ the set $\Term_4$ is not closed
+under $x\mapsto x-1$, since it contains $0$ but not $-1$ (Theorem~\ref{thm:free}). So the argument
+breaks down there, as it must.
