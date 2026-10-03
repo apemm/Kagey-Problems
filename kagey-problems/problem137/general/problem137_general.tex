@@ -1,0 +1,107 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage{tikz}
+\usepackage[shortlabels]{enumitem}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+
+% ---------- colors for the two maps (as in the paper on Problem 137) ----------
+\definecolor{fred}{RGB}{178,58,46}
+\definecolor{gblue}{RGB}{51,96,143}
+
+% ---------- theorem environments ----------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{question}[theorem]{Question}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{thmA}{Theorem A$_q$}
+\newtheorem*{thmB}{Theorem B$_q$}
+\newtheorem*{thmC}{Theorem C$_q$}
+\newtheorem*{thmD}{Theorem D}
+\newtheorem*{thmE}{Theorem E}
+
+% ---------- notation ----------
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Orb}{\mathcal{O}}
+\newcommand{\Term}{\mathcal{T}}
+\newcommand{\rf}[1]{[#1]_{\lambda}}
+\newcommand{\hj}[1]{[#1]^{-}}
+\newcommand{\old}[2]{\textcolor{black!50}{#1}_{\textcolor{black!50}{[#2]}}}
+
+\tikzset{
+  vpos/.style={draw=fred,fill=fred!8,rounded corners=2.5pt,inner xsep=2pt,inner ysep=1.5pt},
+  vneg/.style={draw=gblue,fill=gblue!8,rounded corners=2.5pt,inner xsep=2pt,inner ysep=1.5pt},
+  vroot/.style={draw=black!70,fill=black!6,rounded corners=2.5pt,inner xsep=2pt,inner ysep=1.5pt},
+  rk/.style={font=\tiny,text=black!55},
+  ef/.style={draw=fred!75,thick},
+  eg/.style={draw=gblue!75,thick},
+  eold/.style={->,>=stealth,densely dashed,draw=black!40,semithick},
+}
+
+\title{Why three? Trees of rationals from $x\mapsto x+1$ and an involution}
+\author{Arjun Pemmasani\\
+\textit{[Placeholder for the author: affiliation and email address]}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Start at $0$ and apply the maps $x\mapsto x+1$ and $x\mapsto-1/x$. Problem 137 of Kagey's Open Problem
+Collection asks why the number $a(n)$ of rationals first reached after $n$ steps satisfies
+$a(n)=a(n-1)+a(n-3)$. We show that the $3$ is the order of the map $x\mapsto-1/(x+1)$. To see this we
+replace $-1/x$ by $g_m(x)=-1/(mx)$. For $m=2$ and $m=3$ the composite $g_m(x+1)$ has order $q=4$ and
+$q=6$, every rational is still reached, and the counts satisfy
+$a(n)=a(n-1)+a(n-3)+\dots+a(n-2q+3)$ for $n\ge 2q-2$. More generally, for every $q\ge3$ the tree of
+$X\mapsto X+2\cos(\pi/q)$ and $X\mapsto-1/X$ has rank generating function
+$(1+t^2+\dots+t^{2q-4}-t^{2q-3})/(1-t-t^3-\dots-t^{2q-3})$. The proof gives the rank of each point
+from a continued fraction whose digits obey one rule. No $q-2$ digits in a row after the first may
+equal $1$, with one exception at the root. For
+$m\ge4$ the composite has infinite order, the counts are Fibonacci numbers, and some rationals are
+never reached.
+\end{abstract}
+
+\noindent\textbf{2020 Mathematics Subject Classification:} 11B37, 05A15, 11A55, 20H10.
+
+\noindent\textbf{Keywords:} tree of rationals, linear recurrence, Hecke group, Rosen continued
+fraction, generating function.
+
+\input{sec_intro}
+\input{sec_parent}
+\input{sec_words}
+\input{sec_count}
+\input{sec_free}
+\input{sec_final}
+
+\paragraph{Acknowledgment.} I thank Peter Kagey for posing the problem.
+
+\section*{A note on the use of AI}
+The following ideas were suggested by an AI model (Claude, made by Anthropic, model Opus 5.5, used
+through Claude Code in October 2026). These are the generalization to $x\mapsto-1/(mx)$, the reading of
+the $3$ in Problem 137 as the order of $g\circ f$, the run rule of Theorem~B$_q$, the reduction of
+$x\mapsto x+k$ with $x\mapsto-1/x$ to the case $m=k^2$, the title, the directions on $q=5$ and on
+the growth constants $\psi_q$ and $C_q$, the question on other involutions, and a proof route
+through normal forms in free products that this paper does not use (Remark~\ref{rem:relation}). The
+model also wrote the verification scripts \texttt{verify\_general.py} and \texttt{make\_figures.py},
+and it drafted the proofs, the literature survey and the text, which the author then revised. [Placeholder for the author: say
+here how you checked the proofs.] All claims and proofs in this paper are the responsibility of the
+author.
+
+\input{bib}
+
+\end{document}

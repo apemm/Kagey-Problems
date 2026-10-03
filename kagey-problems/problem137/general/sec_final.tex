@@ -1,0 +1,137 @@
+\section{Computational verification}\label{sec:verify}
+
+The proofs above do not depend on any computation. As a check, the script
+\texttt{verify\_general.py} (Python with the standard \texttt{fractions} module, \texttt{sympy} for the
+transfer matrix, and \texttt{mpmath} with $40$ digits for the constants of Table~\ref{tab:growth}, about
+five minutes) recomputes every
+number in this paper by two independent methods. The first is breadth-first search from $0$ in exact
+arithmetic, which is Kimberling's row construction. The second enumerates the reduced strings of
+Theorem~\ref{thm:Bq} and evaluates each word at $0$. Rationals are Python fractions, and the
+$\lambda_5$-tree uses exact arithmetic in $\Q(\sqrt5)$ with $\lambda_5=(1+\sqrt5)/2$. The script checks the
+following, and none of the checks fails.
+
+\begin{enumerate}[itemsep=1pt,topsep=3pt]
+\item For $m=1$ to rank $24$ ($21{,}304$ points), $m=2$ to rank $28$ ($638{,}804$ points), $m=3$ to
+rank $30$ ($3{,}228{,}541$ points), $q=5$ to rank $20$ ($24{,}514$ points) and $m=4,5,6$ to rank $22$
+($75{,}024$ points each), the two methods give the same points with the same ranks. No reduced word
+applies $g$ at $0$, no two reduced strings have the same value, and every point found by the search
+has a reduced string. The counts equal the coefficients of $N_q/D_q$, or of $1/(1-t-t^2)$ in the free
+case.
+\item In the same ranges, the recurrence of Theorem~\ref{thm:Aq} holds from $n=2q-2$ on and fails at
+$n=2q-3$ with defect $-1$, and $a(n)=r(n)+r(n-1)$.
+\item At every point found by the search, the parent map, run from the value alone, reaches $0$ in
+exactly $d(x)$ steps, and the digits it reads off equal the reduced string. Each point is reached at
+its rank by exactly one edge, and it is reached by $g$ exactly when it is negative. For $x<-1$ in range,
+$d(x+1)=d(x)-(2q-3)$, and $d(-1)=2q-4$.
+\item For $m=1,2,3$ the parent map reaches $0$ from all $4{,}407$ rationals $u/v$ with $|u|,v\le60$, and
+for $m=4$ it fails from $3{,}726$ of them. The identities $h(x+1)=h(x)$ and $h(g_m(x))=mx^2h(x)$ of the
+proof of Theorem~\ref{thm:reach} hold for $|u|,v\le200$. For $m=4,5,6$ the points lie in the intervals of
+Theorem~\ref{thm:free}(a), and $-1$ and $\tfrac12$ are not reached.
+\item A transfer matrix for the run rule, solved symbolically, gives the generating function $N_q/D_q$
+with $\gcd(N_q,D_q)=1$ for $3\le q\le8$, without using the formula of Theorem~\ref{thm:Aq}.
+\item The constants of Table~\ref{tab:growth} agree when computed from the residue
+$-N_q(t_0)/(t_0D_q'(t_0))$, from the formula of Proposition~\ref{prop:growth}, and from
+$a_q(400)/\psi_q^{400}$. Every other root of $D_q$ has modulus greater than $1$. Remark~\ref{rem:nearest}
+is checked here.
+\item Table~\ref{tab:hand}, the examples, the identity with A060961 for $1\le n\le21$, and the
+numbers of vertices in Figure~\ref{fig:trees} ($31$ and $48$).
+\end{enumerate}
+
+Table~\ref{tab:counts} lists the first counts. The script \texttt{make\_figures.py} draws
+Figures~\ref{fig:trees} and~\ref{fig:growth}.
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{@{}r r r r r r@{}}
+\toprule
+$n$ & $q=3$ ($m=1$) & $q=4$ ($m=2$) & $q=5$ & $q=6$ ($m=3$) & $q=\infty$ ($m\ge4$)\\
+\midrule
+0 & 1 & 1 & 1 & 1 & 1\\
+1 & 1 & 1 & 1 & 1 & 1\\
+2 & 2 & 2 & 2 & 2 & 2\\
+3 & 2 & 3 & 3 & 3 & 3\\
+4 & 3 & 5 & 5 & 5 & 5\\
+5 & 5 & 7 & 8 & 8 & 8\\
+6 & 7 & 11 & 13 & 13 & 13\\
+7 & 10 & 18 & 20 & 21 & 21\\
+8 & 15 & 28 & 32 & 34 & 34\\
+9 & 22 & 44 & 52 & 54 & 55\\
+10 & 32 & 69 & 83 & 87 & 89\\
+11 & 47 & 108 & 133 & 141 & 144\\
+12 & 69 & 170 & 213 & 227 & 233\\
+13 & 101 & 267 & 341 & 366 & 377\\
+14 & 148 & 419 & 546 & 590 & 610\\
+15 & 217 & 658 & 874 & 951 & 987\\
+16 & 318 & 1{,}033 & 1{,}400 & 1{,}533 & 1{,}597\\
+17 & 466 & 1{,}622 & 2{,}242 & 2{,}471 & 2{,}584\\
+18 & 683 & 2{,}547 & 3{,}590 & 3{,}983 & 4{,}181\\
+19 & 1{,}001 & 3{,}999 & 5{,}749 & 6{,}420 & 6{,}765\\
+20 & 1{,}467 & 6{,}279 & 9{,}206 & 10{,}349 & 10{,}946\\
+\bottomrule
+\end{tabular}
+\caption{The counts $a_q(n)$ for $0\le n\le20$. The columns for $q=3,4,6$ count rationals, the column
+for $q=5$ counts points of $\Q(\sqrt5)$, and the last column is the Fibonacci numbers $F_{n+1}$.}
+\label{tab:counts}
+\end{table}
+
+\section{Related work and open questions}\label{sec:final}
+
+\paragraph{Related work.} The groups $H_q=\langle F,G\rangle$ were defined by Hecke \cite{hecke1936}, and
+the continued fractions of Section~\ref{sec:words} go back to Rosen \cite{rosen1954}. The full texts of
+these two papers were not available to us, and we rely on the later sources cited here for their
+content. Rosen's fractions, as described in \cite[Section~1.2]{rosen-schmidt} and \cite{short-walker},
+use the nearest multiple of $\lambda$ and digits of both signs, so his normal form is not ours. The closest work
+we know is by Short and Walker \cite{short-walker}. They show that Rosen fractions correspond to paths in
+a Farey-type graph and characterize the \emph{geodesic} expansions, those with the fewest terms, by
+forbidden blocks of digits \cite[Theorem~1.3 for even $q$ and Theorem~7.1 for odd $q$]{short-walker}. Their condition and our run rule both come
+from the relation $(GF)^q=\mathrm{id}$. But they count terms and allow digits of both signs, while we
+count moves and use only forward moves, so the forbidden blocks differ. For example, for $q=6$ they
+forbid three consecutive digits $1$ and we forbid four. Janvresse, Rittaud and de la Rue study the
+positive all-minus $\lambda$-fractions of Section~\ref{sec:words} as a dynamical system conjugate to a
+$\beta$-shift \cite{jrr}. Their count is by number of digits, which gives a different sequence. Taha
+builds a Stern--Brocot process for the Hecke groups \cite{taha}, which inserts mediants and does not
+count by word length.
+
+For free products there is a classical formula for growth series \cite{paris-varghese}, but it needs a
+generating set that is a union of generating sets of the factors. Our generators $f$ and $g$ are not of
+that form, since $f=g\circ(g\circ f)$ mixes the two factors. Also we use only forward moves, and we
+count points, not group elements.
+
+Kimberling and Moses \cite{kimberling-moses} studied several trees of this kind. Their Theorem~3.2 shows
+that the tree of $x\mapsto x+k$ and $x\mapsto k/x$ with root $1$ has Fibonacci counts. Their
+Example~4.2 states the recurrence $a(n)=a(n-1)+a(n-3)$ for the tree of $x+1$ and $-1/x$ with root
+$1$. Their Example~4.4, with $x\mapsto x+1$ and $x\mapsto-m/x$, is not in our family, since there the
+composite has trace squared over determinant equal to $1/m$, which is not $4\cos^2(\pi/q)$ for any $q$.
+
+As far as we know, the counts $a(n)$ for $m=2$ and $m=3$, the run rule, Theorem~D, and the fact that the
+rank generating function depends only on $q$ are new. The group theory around them is classical.
+
+\paragraph{The cusp set.} By Proposition~\ref{prop:closed}(d), the $\lambda_q$-tree is the orbit of
+$\infty$ under $H_q$ with $\infty$ removed, since $G(\infty)=0$. This orbit is the set of cusps of $H_q$.
+For $q=5,8,10,12$, Leutbecher showed that the cusps are $\lambda_q\Q(\lambda_q^2)$ together with $\infty$
+(Satz~2, as stated in the introduction of \cite{leutbecher1974}). Winsor also attributes this case to
+Leutbecher and McMullen \cite{winsor}. Hence the $\lambda_5$-tree is
+all of $\Q(\sqrt5)$. For most $q\ge7$ the cusp set is not known \cite{rosen-schmidt,winsor}. Our
+Theorems~A$_q$, B$_q$ and C$_q$ hold for every $q$ all the same, because they never use the cusp set.
+
+\paragraph{Open questions.}
+\begin{enumerate}[itemsep=2pt,topsep=3pt]
+\item \emph{Other involutions.} Any rational M\"obius involution $g(x)=(ax+b)/(cx-a)$ can be paired with
+$f(x)=x+1$. Then $g\circ f$ has trace $c$ and determinant $-(a^2+bc)$, and it has finite order $q$
+exactly when $c^2/(-(a^2+bc))$ is $0$, $1$, $2$ or $3$, with $q=2,3,4,6$, assuming $-(a^2+bc)>0$. Is the rank generating function
+then always $N_q/D_q$, perhaps up to a correction at the root? A fixed point of $g$ or a pole inside
+the tree may change the small ranks.
+\item \emph{The free case.} Describe exactly which rationals the $m$-tree reaches for $m\ge4$.
+Theorem~\ref{thm:free} gives only necessary conditions.
+\item \emph{Rounding.} Prove that $a_q(n)$ is the nearest integer to $C_q\psi_q^{\,n}$ for every $n\ge1$
+and every $q$, or give a rigorous proof for $q=4,6$ (Remark~\ref{rem:nearest}).
+\item \emph{Ordinary continued fractions.} For $q=3$ the rank also has a formula in terms of the
+ordinary continued fraction \cite[Theorem~4.8]{P137}. Is there a similar formula for $m=2$ and $m=3$?
+\item \emph{The constants.} Is there a closed form for the share of negative points, or for $C_q$, that
+explains why $C_q$ is not monotone in $q$?
+\end{enumerate}
+
+\subsection*{Data and code availability}
+The scripts \texttt{verify\_general.py} and \texttt{make\_figures.py} are in the repository
+\url{https://github.com/apemm/Kagey-Problems}, in the folder\\
+\texttt{kagey-problems/problem137/general}.

@@ -1,0 +1,163 @@
+\section{The run rule and the rank formula}\label{sec:words}
+
+For $q=3$, \cite[Section~4]{P137} reads the rank off the negative continued fraction of $x$. Here we
+do the same with $\lambda$ in place of $1$. For integers $d_1,\dots,d_n$ write
+\[
+\rf{d_1,\dots,d_n}=d_1\lambda-\cfrac{1}{d_2\lambda-\cfrac{1}{\ddots-\cfrac{1}{d_n\lambda}}}\,,
+\]
+whenever the denominators are nonzero. Its \emph{tails} are $Y_j=\rf{d_j,\dots,d_n}$ for
+$1\le j\le n$, together with $Y_{n+1}=\infty$, so that $Y_j=d_j\lambda-1/Y_{j+1}$. Expansions of this
+kind with $\lambda=\lambda_q$ are Rosen's $\lambda$-continued fractions \cite{rosen1954}, as
+described in \cite[Section~1.2]{rosen-schmidt} and \cite{short-walker}. Ours have
+all signs negative and all digits positive, as in \cite{jrr}. At $q=3$ this is the negative continued
+fraction $\hj{d_1,\dots,d_n}$ of \cite{P137}.
+
+\begin{lemma}\label{lem:tails}
+Let $d_1,\dots,d_n\ge1$. All tails are defined and greater than $1/\lambda$ if and only if no $q-2$
+consecutive digits equal $1$. In that case every tail is positive.
+\end{lemma}
+
+\begin{proof}
+We use one observation. If $Y=\infty$ or $Y>1/\lambda$, then $-1/Y\in(-\lambda,0]$, so
+$d\lambda-1/Y>(d-1)\lambda\ge\lambda$ for $d\ge2$. Also $\lambda-1/Y=\tau(Y)$.
+
+Suppose first that no $q-2$ consecutive digits equal $1$. We go from $j=n$ down to $j=1$. Let $i_j$ be
+the number of $1$'s at the start of $d_j,\dots,d_n$, so $i_j\le q-3$. We show that $Y_j$ is defined and
+$Y_j\in(\beta_{i_j+1},\beta_{i_j}]$. To start, $Y_{n+1}=\infty$ lies in $(\beta_1,\beta_0]$, and we
+treat it as having $i_{n+1}=0$. Suppose the claim holds for $Y_{j+1}$, or $j=n$. If $d_j\ge2$, then
+$Y_{j+1}$ is $\infty$ or greater than $\beta_{i_{j+1}+1}\ge\beta_{q-2}=1/\lambda$. So $Y_j>\lambda=\beta_1$
+by the observation, and $i_j=0$. If $d_j=1$, then $i_j=i_{j+1}+1$
+and $Y_j=\tau(Y_{j+1})\in(\beta_{i_j+1},\beta_{i_j}]$ by Lemma~\ref{lem:orbit}(d), which applies since
+$i_{j+1}\le q-4$. In both cases $Y_j>\beta_{i_j+1}\ge\beta_{q-2}=1/\lambda$, since $i_j+1\le q-2$.
+
+Conversely, suppose all tails are defined and greater than $1/\lambda$, and let $d_a=\dots=d_b=1$ be a
+maximal run with $b-a+1\ge q-2$. Then $Y_{b+1}\in(\beta_1,\beta_0]$. Indeed, $Y_{b+1}=\infty$ if
+$b=n$, and otherwise $d_{b+1}\ge2$ and $Y_{b+2}>1/\lambda$, so $Y_{b+1}>\lambda$. By
+Lemma~\ref{lem:orbit}(d), $Y_{b+1-s}\in(\beta_{s+1},\beta_s]$ for $0\le s\le q-2$. At $s=q-2$ this
+gives $Y_{b+3-q}\in(0,1/\lambda]$. Since $b+3-q\ge a$, this is a tail of our string, and it is at most
+$1/\lambda$, a contradiction.
+\end{proof}
+
+\begin{lemma}\label{lem:expansion}
+Every $X\in\Orb$ with $X>0$ has exactly one expansion $X=\rf{c_1,\dots,c_k}$ with $k\ge1$, all
+$c_j\ge1$ and all tails $Y_j>1/\lambda$ for $2\le j\le k$. Its digits can be read off the parent
+sequence of $X$, and
+\[
+D(X)=c_1+c_2+\dots+c_k+k-1 .
+\]
+\end{lemma}
+
+\begin{proof}
+\emph{Existence.} Let $c_1=\lceil X/\lambda\rceil\ge1$. The parent sequence of $X$ subtracts $\lambda$
+exactly $c_1$ times and reaches $X-c_1\lambda\in(-\lambda,0]$. If this is $0$, then $X=c_1\lambda$ and
+$k=1$. Otherwise one more step gives $Y_2=-1/(X-c_1\lambda)>1/\lambda$, which lies in $\Orb$ and is
+positive, and $X=c_1\lambda-1/Y_2$. We repeat with $Y_2$ in place of $X$. Each round takes $c_j+1$
+steps of the parent sequence, except the last, which takes $c_k$ steps. So the process stops, and
+counting steps gives $D(X)=c_1+\dots+c_k+k-1$.
+
+\emph{Uniqueness.} Take any expansion of this kind. If $k\ge2$, then $Y_2>1/\lambda$ gives
+$0<1/Y_2<\lambda$, so $X\in((c_1-1)\lambda,c_1\lambda)$. Hence $X/\lambda$ is not an integer,
+$c_1=\lceil X/\lambda\rceil$ and $Y_2=1/(c_1\lambda-X)$. If $k=1$, then $X/\lambda=c_1$ is an integer.
+So the value of $X$ decides whether $k=1$, and it determines $c_1$ and $Y_2$. The tail
+$(c_2,\dots,c_k)$ is an expansion of $Y_2$ of the same kind, so induction on $k$ finishes the proof.
+\end{proof}
+
+Recall from the introduction that a string $(c_1,\dots,c_k)$ with $k\ge1$, $c_1\ge0$ and
+$c_2,\dots,c_k\ge1$ is \emph{reduced} if no $q-2$ consecutive digits among $c_2,\dots,c_k$ equal $1$,
+except that a run of exactly $q-2$ ones starting at $c_2$ is allowed when $c_1=0$. Its word is
+$f^{c_1}gf^{c_2}g\cdots gf^{c_k}$ (with $F$ and $G$ in place of $f$ and $g$ for the $\lambda_q$-tree),
+and its weight is $c_1+\dots+c_k+k-1$.
+
+\begin{theorem}[Theorem~B$_q$]\label{thm:Bq}
+The map sending a reduced string to the value of its word at $0$ is a bijection from the reduced
+strings onto $\Orb$. No reduced word applies $G$ at $0$, the rank of the value is the weight, and the
+reduced word of a point is its unique shortest word. The value of $(c_1,\dots,c_k)$ is
+$\rf{c_1,\dots,c_k}$, where $0\lambda-1/Y$ means $-1/Y$. For $m=2,3$, every rational $x$ has exactly
+one reduced string, with
+\[
+x=c_1+g_m\Bigl(c_2+g_m\bigl(c_3+\dots+g_m(c_k)\bigr)\Bigr)
+=c_1-\cfrac{1}{mc_2-\cfrac{1}{c_3-\cfrac{1}{mc_4-\cdots}}}\,,
+\]
+and $d(x)=c_1+\dots+c_k+k-1$.
+\end{theorem}
+
+\begin{proof}
+Applying the word to $0$ from right to left gives $F^{c_k}(0)=c_k\lambda=Y_k$, then $-1/Y_k$, then
+$Y_{k-1}$, and so on. So the value is $\rf{c_1,\dots,c_k}$ whenever the tails $Y_2,\dots,Y_k$ are
+nonzero, and $G$ is applied exactly at these tails.
+
+\emph{Case $c_1\ge1$.} By Lemma~\ref{lem:tails} applied to $(c_2,\dots,c_k)$, the run rule holds if and
+only if the tails $Y_j$, $j\ge2$, are defined and greater than $1/\lambda$. Then $G$ is applied only at
+positive points, and the value $X$ is greater than $(c_1-1)\lambda\ge0$. So $X$ is a positive point of
+$\Orb$, and by the uniqueness in Lemma~\ref{lem:expansion} its expansion is $(c_1,\dots,c_k)$, with
+$D(X)$ equal to the weight. Conversely, every positive $X\in\Orb$ arises in this way by
+Lemma~\ref{lem:expansion}. So the reduced strings with $c_1\ge1$ match the positive points of $\Orb$
+one to one, and the rank is the weight by Theorem~\ref{thm:dist}.
+
+\emph{Case $c_1=0$, $k\ge2$.} A run of $1$'s starting at $c_2$ of length $L$ leaves a run of length
+$L-1$ at the start of $c_3,\dots,c_k$. So the rule says exactly that $(c_2,\dots,c_k)$ is a reduced
+string with first digit $c_2\ge1$. By the first case it is the string of a unique positive $Y\in\Orb$
+with $d(Y)=c_2+\dots+c_k+k-2$. The value of $(0,c_2,\dots,c_k)$ is $G(Y)=-1/Y$. The map $G$ is a
+bijection from the positive points of $\Orb$ onto the negative ones (Proposition~\ref{prop:closed}),
+and $d(-1/Y)=d(Y)+1$ by (D3), which is the weight.
+
+\emph{Case $c_1=0$, $k=1$.} This is the empty word, with value $0$.
+
+The three cases give the positive points, the negative points and $0$, each exactly once. In each
+case the reduced word spells the reversed parent sequence (Lemma~\ref{lem:expansion} and (D2)), which
+is the unique shortest word by Corollary~\ref{cor:Cq}(b). For $m=2,3$, Theorem~\ref{thm:reach} and
+Lemma~\ref{lem:coords} turn this into a statement about all of $\Q$, and $X=\sqrt m\,x$ turns
+$\rf{c_1,\dots,c_k}$ into the expression in $g_m$.
+\end{proof}
+
+At $q=3$ the rule says $c_2,\dots,c_k\ge2$, except that $c_2=1$ is allowed when $c_1=0$, and
+Theorem~\ref{thm:Bq} is \cite[Lemma~4.1 and Theorem~4.2]{P137}. The next corollary is the analogue of
+\cite[Corollary~4.3]{P137}.
+
+\begin{corollary}\label{cor:compositions}
+Let $n\ge1$. The positive points of rank $n$ match the compositions $n=s_1+\dots+s_k$ with $s_1\ge1$
+and $s_2,\dots,s_k\ge2$ in which no $q-2$ consecutive parts among $s_2,\dots,s_k$ equal $2$, via
+$s_1=c_1$ and $s_j=c_j+1$ for $j\ge2$. The negative points of rank $n$ are the $-1/Y$ for the positive
+points $Y$ of rank $n-1$.
+\end{corollary}
+
+\begin{proof}
+The weight of a string is $c_1+(c_2+1)+\dots+(c_k+1)$. Now apply Theorem~\ref{thm:Bq} and (D2), (D3).
+\end{proof}
+
+\begin{example}
+Take $m=2$, so $q=4$, and $n=5$. The compositions of $5$ with $s_1\ge1$ and later parts at least $2$
+are $5$, $1+4$, $2+3$, $3+2$ and $1+2+2$. The last one has two consecutive parts equal to $2$ after
+the first part, so it is not allowed. The other four give the strings $(5)$, $(1,3)$, $(2,2)$ and
+$(3,1)$, with values $5$, $1+g_2(3)=\tfrac56$, $2+g_2(2)=\tfrac74$ and $3+g_2(1)=\tfrac52$. The positive
+points of rank $4$ are $4$, $\tfrac34$ and $\tfrac32$, and their images under $g_2$ are $-\tfrac18$,
+$-\tfrac23$ and $-\tfrac13$. Together these are the seven rationals of rank $5$ in
+Table~\ref{tab:hand}.
+\end{example}
+
+\begin{remark}[where the run rule comes from]\label{rem:relation}
+The proofs above do not need the following explanation. By Lemma~\ref{lem:order},
+$(G\circ F)^{q-1}=(G\circ F)^{-1}=F^{-1}\circ G$. Hence, for $a,b\ge1$,
+\[
+F^{a}\,G\,(FG)^{q-2}\,F^{b}=F^{a-1}\,G\,F^{b-1}
+\]
+wherever both sides are defined. The left side is the word of a string with an interior run of
+$q-2$ digits equal to $1$, between the digits $a$ and $b$. The right side is $2q-2$ moves shorter. So
+such a word is never a shortest word, and this is the run rule. At $q=3$ it is the relation
+$fgfgf=g$ used in \cite[Remark~3.9]{P137} and \cite{mmz}. The other rearrangements
+$(GF)^jG=(F^{-1}G)^{q-j}G$ of the relation put $q-j$ copies of $F^{-1}$ into the word.
+Heuristically, a path can absorb an $F^{-1}$ only into the blocks at the two ends of the run, so only
+$q-j=2$ gives a shortcut of this kind. This suggests why shorter runs of $1$'s survive, and
+Theorem~\ref{thm:Bq} proves it.
+
+The exception at the root has the same source. By Proposition~\ref{prop:closed}(c),
+$(GF)^{q-2}(0)=-\lambda=F^{-1}(0)$, so $F^{a}(GF)^{q-2}(0)=F^{a-1}(0)$ for $a\ge1$. A run of $q-2$ ones
+at $c_2$ followed by $c_1\ge1$ can therefore be shortened, while the word $(GF)^{q-2}$ itself, with
+$c_1=0$, is the shortest word for $-\lambda$.
+
+In the language of the free product $C_2*C_q$ of Remark~\ref{rem:group}, put $u=G\circ F$, so $F=G\circ
+u$. Then an interior run of $j$ digits equal to $1$ becomes the syllable $u^{j+2}$, which is trivial
+exactly when $j\equiv-2\pmod q$. The shortest such run has $j=q-2$. One could prove
+Theorem~\ref{thm:Bq} from the normal form theorem for free products, but the elementary proof above
+avoids the group theory.
+\end{remark}

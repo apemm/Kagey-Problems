@@ -1,0 +1,199 @@
+\section{Introduction}\label{sec:intro}
+
+\subsection{The question}
+
+Let $f(x)=x+1$ and $g(x)=-1/x$. Start at $0$ and apply $f$ and $g$ in any order, never applying $g$
+to $0$. Every rational is reached, and the \emph{rank} of a rational is the least number of moves
+needed to reach it. Kimberling sorted the rationals by rank in OEIS A226247 \cite{oeisA226247}, and
+Kagey asked whether the number $a(n)$ of rationals of rank $n$ satisfies $a(n)=a(n-1)+a(n-3)$
+\cite{kagey-mse,kagey137}. In earlier work \cite{P137} we proved this for $n\ge4$, together with a
+formula for the rank and a description of the tree. Kimberling and Moses had stated the same
+recurrence for the version of the tree with root $1$ \cite[Example~4.2]{kimberling-moses}.
+
+This paper asks where the $3$ comes from. The answer is short. The map
+\[
+g(f(x))=-\frac{1}{x+1}
+\]
+has order $3$, since $x\mapsto-1/(x+1)\mapsto-(x+1)/x\mapsto x$. To test this reading we change $g$
+so that $g\circ f$ has a different order and see what happens to the recurrence. Keep $f(x)=x+1$ and
+the root $0$, and for an integer $m\ge1$ put
+\[
+g_m(x)=-\frac{1}{mx}.
+\]
+Problem 137 is the case $m=1$. The composite $g_m(f(x))=-1/(m(x+1))$ is a M\"obius map with
+trace $m$ and determinant $m$. It has order $3$, $4$ and $6$ for $m=1$, $2$ and $3$, and infinite
+order for $m\ge4$ (Lemma~\ref{lem:order}). We write $q$ for this order. Table~\ref{tab:family}
+summarizes what we prove about each case.
+
+\begin{table}[ht]
+\centering\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}c c c l l@{}}
+\toprule
+$m$ & $q$ & points of the tree & generating function of $a(n)$ & recurrence\\
+\midrule
+$1$ & $3$ & all of $\Q$ & $\dfrac{1+t^2-t^3}{1-t-t^3}$ & $a(n)=a(n-1)+a(n-3)$, $n\ge4$\\[8pt]
+$2$ & $4$ & all of $\Q$ & $\dfrac{1+t^2+t^4-t^5}{1-t-t^3-t^5}$ & $a(n)=a(n-1)+a(n-3)+a(n-5)$, $n\ge6$\\[8pt]
+$3$ & $6$ & all of $\Q$ & $\dfrac{1+t^2+t^4+t^6+t^8-t^9}{1-t-t^3-t^5-t^7-t^9}$ &
+  $a(n)=\sum_{j=0}^{4}a(n-2j-1)$, $n\ge10$\\[8pt]
+$\ge4$ & $\infty$ & not all of $\Q$ & $\dfrac{1}{1-t-t^2}$ & $a(n)=a(n-1)+a(n-2)$, $n\ge2$\\
+\bottomrule
+\end{tabular}
+\caption{The trees of $f(x)=x+1$ and $g_m(x)=-1/(mx)$ with root $0$. The row $m=1$ is
+\cite{P137}. In the third row the sum is $a(n-1)+a(n-3)+a(n-5)+a(n-7)+a(n-9)$. For $m\le3$ each
+recurrence fails at the first $n$ below the stated range.}
+\label{tab:family}
+\end{table}
+
+So the $3$ in Problem 137 is the order of $g\circ f$, and the recurrence for order $q$ has the
+$q-1$ lags $1,3,5,\dots,2q-3$. The family also shows why the more obvious generalization
+$x\mapsto x+k$ with $x\mapsto-1/x$ is not interesting. Putting $x=ky$ turns it into the tree of
+$y\mapsto y+1$ and $y\mapsto-1/(k^2y)$, which is the case $m=k^2\ge4$, and its counts are
+Fibonacci numbers.
+
+The cases $m=2$ and $m=3$ give new trees of rationals. They are the only other values of $m$ for
+which the tree is all of $\Q$ (Theorem~D and Theorem~E). Their counts start
+\begin{align*}
+(m=2)&\qquad 1, 1, 2, 3, 5, 7, 11, 18, 28, 44, 69, 108, 170, 267, 419, 658, 1033, \dots,\\
+(m=3)&\qquad 1, 1, 2, 3, 5, 8, 13, 21, 34, 54, 87, 141, 227, 366, 590, 951, 1533, \dots,
+\end{align*}
+and neither sequence is in the OEIS. Figure~\ref{fig:trees} shows the first ranks of the trees for
+$m=1$ and $m=2$.
+
+\begin{figure}[p]
+\centering
+\resizebox{0.86\textwidth}{!}{\input{figures/fig_tree_m1}}
+
+\medskip
+{\small (a) $m=1$, the tree of Problem 137.}
+
+\bigskip
+\resizebox{\textwidth}{!}{\input{figures/fig_tree_m2}}
+
+\medskip
+{\small (b) $m=2$.}
+\caption{Ranks $0$ to $7$ of the trees of $f(x)=x+1$ (\textcolor{fred}{red} edges) and
+$g_m(x)=-1/(mx)$ (\textcolor{gblue}{blue} edges) for $m=1$ and $m=2$. Positive vertices are entered
+by $f$ and negative ones by $g_m$ (Theorem~C$_q$). The vertices $x\le-1$ are leaves. A dashed arrow
+shows $f$ applied to a leaf $x<-1$. The value $x+1$ is not new and its rank is lower by $2q-3$, which
+is $3$ for $m=1$ and $5$ for $m=2$. The numbers on the left are ranks.}
+\label{fig:trees}
+\end{figure}
+
+\subsection{The trees for every \texorpdfstring{$q$}{q}}
+
+The proofs do not use $m$ at all. They use only the order $q$. With $X=\sqrt m\,x$ the maps become
+$X\mapsto X+\sqrt m$ and $X\mapsto-1/X$, and for $m=1,2,3$ we have $\sqrt m=2\cos(\pi/q)$. So for
+every $q\ge3$ we put
+\[
+\lambda=\lambda_q=2\cos\frac{\pi}{q},\qquad F(X)=X+\lambda,\qquad G(X)=-\frac1X ,
+\]
+and study the tree of $F$ and $G$ with root $0$, which we call the \emph{$\lambda_q$-tree}. For
+$q=3,4,6$ it is the tree of $f$ and $g_m$ with $m=1,2,3$, scaled by $\sqrt m$
+(Lemma~\ref{lem:coords}). For $q=5$ it lives in $\Q(\sqrt5)$, and for most larger $q$ in a number
+field of higher degree. The maps $F$ and $G$ generate Hecke's group $H_q$ \cite{hecke1936}, and
+$G\circ F$ has order $q$.
+
+We write $d(X)$ for the rank of a point $X$ of the $\lambda_q$-tree, $a_q(n)$ for the number of points
+of rank $n$, and $r_q(n)$ for the number of positive ones. We also put
+\[
+D_q(t)=1-t-t^3-t^5-\dots-t^{2q-3},\qquad
+N_q(t)=1+t^2+t^4+\dots+t^{2q-4}-t^{2q-3}.
+\]
+Theorems A$_q$, B$_q$ and C$_q$ below hold for every $q\ge3$, and at $q=3$ they give the
+corresponding parts of Theorems A, B(ii) and C of \cite{P137}.
+
+\subsection{Results}
+
+A string of integers $(c_1,\dots,c_k)$ with $k\ge1$, $c_1\ge0$ and $c_2,\dots,c_k\ge1$ is
+\emph{reduced} if no $q-2$ consecutive digits among $c_2,\dots,c_k$ equal $1$, with one exception. If
+$c_1=0$, the run of $1$'s that starts at $c_2$ may have length exactly $q-2$. Its \emph{word} is
+$f^{c_1}gf^{c_2}g\cdots gf^{c_k}$, applied to $0$ from right to left, and its \emph{weight} is
+$c_1+\dots+c_k+k-1$, the length of the word. For $q=3$ a reduced string has $c_2,\dots,c_k\ge2$, except
+that $c_2=1$ is allowed when $c_1=0$. This is the rule of \cite[Theorem~B]{P137}.
+
+\begin{thmB}[the rank formula, Theorem~\ref{thm:Bq}]
+Let $q\ge3$. Every point of the $\lambda_q$-tree is reached by the word of exactly one reduced string,
+and its rank is the weight of that string. This word is the only shortest word for the point. In
+coordinates, the string $(c_1,\dots,c_k)$ gives
+\[
+X=c_1\lambda-\cfrac{1}{c_2\lambda-\cfrac{1}{\ddots-\cfrac{1}{c_k\lambda}}}\,,
+\]
+read as $-1/(\cdots)$ when $c_1=0$. For $m=2,3$ every rational $x$ has exactly one reduced string,
+$x=c_1+g_m\bigl(c_2+g_m(\cdots+g_m(c_k))\bigr)$, and
+\[
+d(x)=c_1+c_2+\dots+c_k+k-1 .
+\]
+\end{thmB}
+
+For example, take $m=2$ and $x=\tfrac35$. Then
+\[
+\tfrac35=1-\cfrac{1}{4-\cfrac{1}{1-\cfrac{1}{4-\cfrac11}}}\,,
+\]
+which is $1+g_2(2+g_2(1+g_2(2+g_2(1))))$. Its string is $(1,2,1,2,1)$, which is reduced for $q=4$
+because no two consecutive digits after the first equal $1$. So $d(\tfrac35)=7+4=11$.
+
+\begin{thmA}[the counts, Theorem~\ref{thm:Aq}]
+Let $q\ge3$. Then
+\[
+\sum_{n\ge0}a_q(n)\,t^n=\frac{N_q(t)}{D_q(t)},
+\]
+and this fraction is in lowest terms. Hence
+\[
+a_q(n)=a_q(n-1)+a_q(n-3)+a_q(n-5)+\dots+a_q(n-2q+3)\qquad\text{for all }n\ge2q-2,
+\]
+and this fails at $n=2q-3$, where the left side minus the right side is $-1$. The positive points
+have $\sum_n r_q(n)t^n=t(1+t^2+\dots+t^{2q-6})/D_q(t)$, and $a_q(n)=r_q(n)+r_q(n-1)$ for $n\ge1$.
+\end{thmA}
+
+The denominator depends only on $q$, and so does the whole count. For $m=2$ the positive counts
+are $r(n)=\mathrm{A060961}(n-1)+\mathrm{A060961}(n-3)$, where A060961 counts compositions into
+parts $1$, $3$ and $5$ \cite{oeisA060961}.
+
+\begin{thmC}[the tree, Corollary~\ref{cor:Cq}]
+Let $q\ge3$ and define the parent map $P(X)=X-\lambda$ for $X>0$ and $P(X)=-1/X$ for $X<0$. For
+every point $X\neq0$ of the $\lambda_q$-tree, $P(X)$ is the only point of rank $d(X)-1$ from which
+one move reaches $X$, and iterating $P$ reaches $0$ in exactly $d(X)$ steps. The last move of every
+shortest word for $X$ is $F$ if $X>0$ and $G$ if $X<0$. So in Kagey's coloring, where a vertex is blue
+when it is reached last by $G$, a vertex is blue if and only if it is negative. A
+vertex $X>0$ has the two children $X+\lambda$ and $-1/X$, a vertex in $(-\lambda,0)$ has the one child
+$X+\lambda$, and a vertex $X\le-\lambda$ is a leaf. For $X<-\lambda$ the value $X+\lambda$ appeared
+exactly $2q-3$ ranks earlier.
+\end{thmC}
+
+In $x$-coordinates the leaves are the $x\le-1$, and for $x<-1$ the value $x+1$ appeared five ranks
+earlier when $m=2$ and nine ranks earlier when $m=3$. This jump of $2q-3$ ranks is where the lag
+$2q-3$ of the recurrence comes from.
+
+\begin{thmD}[reachability, Theorem~\ref{thm:reach}]
+For $m=1,2,3$ every rational number is in the tree of $f(x)=x+1$ and $g_m(x)=-1/(mx)$.
+\end{thmD}
+
+For $m=1$ this is \cite[Theorem~3.6]{P137}. The group generated by $f$ and $g_m$ is known to move $0$
+to every rational for $m=2,3$ (Remark~\ref{rem:group}). Theorem~D is stronger, because the tree uses
+only the forward moves $f$ and $g_m$ and never $f^{-1}$.
+
+\begin{thmE}[the free case, Theorem~\ref{thm:free}]
+Let $m\ge4$. The tree of $f(x)=x+1$ and $g_m(x)=-1/(mx)$ has $a(n)=F_{n+1}$ points of rank $n$,
+where $F_n$ is the Fibonacci sequence with $F_1=F_2=1$. Every finite string $(c_1,\dots,c_k)$ with
+$c_1\ge0$ and $c_2,\dots,c_k\ge1$ (a free string) gives a point, distinct strings give distinct
+points, and the rank of the point is the weight of the string. A vertex is blue if and only if it is negative, and no
+rational in $(-\infty,-2/m]$ is reached. In particular $-1$ and $\tfrac12$ are never reached. This
+covers the tree of $x\mapsto x+k$ and $x\mapsto-1/x$ for every $k\ge2$.
+\end{thmE}
+
+The growth rate of $a_q(n)$ is the largest root $\psi_q$ of
+$\psi^{2q-3}=\psi^{2q-4}+\psi^{2q-6}+\dots+1$. These numbers increase with $q$ and tend to the
+golden ratio (Proposition~\ref{prop:growth}).
+
+\subsection{How the proofs go}
+
+The proofs follow \cite{P137} step by step. Section~\ref{sec:parent} proves that the parent map
+traces a shortest path, which gives Theorem~C$_q$. The key step is the analogue of the identity
+$d(x-1)=d(x)+3$ for $x<0$, which becomes $d(X-\lambda)=d(X)+2q-3$. Its proof follows a path of $2q-2$
+steps through the orbit of $\infty$ under $F\circ G$, which has length $q$. Section~\ref{sec:reach}
+proves Theorem~D with a height that drops when we shift $x$ to the nearest integer and apply $g_m$. Section~\ref{sec:words} proves
+Theorem~B$_q$ and explains the run rule. Section~\ref{sec:count} counts reduced strings and proves
+Theorem~A$_q$, and Section~\ref{sec:free} treats $m\ge4$. Section~\ref{sec:verify} lists the
+computer checks, and Section~\ref{sec:final} discusses related work and open questions. None of the
+proofs depends on the computations or on facts about Hecke groups.
