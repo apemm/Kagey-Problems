@@ -5,9 +5,9 @@ direction with probability p. Kagey asks for the distribution of the bins, the l
 his numerator tables, when the middle bin is as likely as the endpoints, the normal limit, and what
 changes on a cylinder or a tetrahedron.
 
-Status. Answered, in a series of 4 papers by A. Pemmasani, The middle and the ends I-IV (preprint, 2026). Paper A solves the binary problem
-at every N, Paper B treats d directions on the complete graph, Paper C gives the general theory for
-slowly switching chains, and Paper D asks what memory changes. The 4 papers share the notation N,
+Status. Answered in two papers by A. Pemmasani (preprint, 2026), with two more in draft. Paper A
+solves the binary problem at every N and Paper B treats d directions on the complete graph. The
+drafts in `paperC` (slowly switching chains) and `paperD` (walks with memory) are in preparation. The papers share the notation N,
 L = log N, T, z_N, lambda_F and K_F and cite each other by description. `PUBLICATION.md` has notes
 on where to send them.
 
@@ -25,15 +25,15 @@ zeta_N(zeta_N + 1)/N + 1/(16 zeta_N^2) of it. The proof is analytic for N >= 175
 integer certificates below that, and all of it is checked in Lean. This gives the crossing equation
 z_N + (1/2) log z_N = L + c_0 + 1/(8 z_N) + R_N with c_0 = (1/2) log(pi/8) and
 |R_N| <= 1/(4L^2) + (L^2 + L)/N. The paper also expands the crossing of every other bin, with a
-Laguerre law for fixed bins, compares free and periodic boundaries, and proves a uniform local law
-for every q <= 1/2, from the diffusive to the ballistic regime. Kagey's side questions are answered
-there too. His p = 2/3 and p = 1/3 tables are OEIS A035002 and A348595 by bijection, the walk has a
-normal limit, and on a cylinder the limit is uniform.
+Laguerre law for fixed bins, and compares free and periodic boundaries. It also gives the normal
+limit and reads Kagey's numerator tables as weighted counts of words. The uniform local law for
+every q <= 1/2 is in `paperA/llt_note` (the start of a separate paper), and the bijections of the
+p = 2/3 and p = 1/3 tables with OEIS A035002 and A348595 are in `paperA/tables_note`.
 
 Files. The folder `paperA`, with `problem131.tex` and `problem131.pdf`, the sections
-`sec_exact.tex`, `sec_crossing.tex`, `allbin_thresholds.tex`, `periodic_window.tex` and
-`sec_llt.tex`, the appendices `app_every_n.tex`, `app_llt.tex` and `app_tables.tex`, the check
-scripts and `paperA/README.md`.
+`sec_exact.tex`, `sec_crossing.tex`, `allbin_thresholds.tex` and `periodic_window.tex`, the
+appendix `app_every_n.tex`, the check scripts, `paperA/README.md`, and the notes `llt_note` and
+`tables_note`.
 
 ## Paper B: Vertex crossings in a symmetric Markov multinomial model
 

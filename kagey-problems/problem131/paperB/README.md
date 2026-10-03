@@ -8,7 +8,7 @@ Gaussian volume, and Paper B writes them with square roots of weighted spanning-
 Since a_2 > a_3 > ..., the mode changes exactly once, from the vertices straight to the full
 centers. A start law or a weak Potts field shifts the constants. The paper also gives a Bessel
 majorant for every count vector and the crossing near a vertex, uniformly over rare counts of
-total o(b). It is the second of 4 papers on Problem 131, and `../README.md` describes the series.
+total o(b). It is the second paper on Problem 131, and `../README.md` describes the others.
 
 ## Files
 
