@@ -1,6 +1,6 @@
 # Verification supplement for the 4 papers on Problem 131
 
-This supplement serves the 4 papers on Kagey's Problem 131, the series The middle and the ends I-IV by A. Pemmasani (preprint, 2026).
+This supplement serves the papers on Kagey's Problem 131 by A. Pemmasani: Papers A and B (preprint, 2026) and the drafts of Papers C and D.
 
 | Paper | Title | Source |
 | --- | --- | --- |
@@ -33,7 +33,7 @@ scripts below are in `paperA/`. Add `--full` to include `verify_every_n.py` and
 | --- | --- | --- |
 | The crossing at every N (theorem), for 2 <= N <= 174 | `verify_every_n.py`, rechecked by `verify_every_n_guards.py` | The certificate integers come from the run-count sum and from the recursion with integer weights. zeta_N comes from a Decimal Newton iteration and from a float Lambert W iteration. The Lean kernel also checks these certificates (`lean/PaperA/EveryN.lean`). |
 | The crossing equation (proposition), for N <= 174 | the same 2 scripts | The same certificates. The guards also get the sign of R_N from the certificate integers for N <= 1000 and check z_2 = 2/3 < log 2. |
-| Part (d) of the corollary on the crossing at every N | `verify_every_n_guards.py` | One evaluation with a proved bracket. f(zeta_2774) - 1 = 2.1e-4 and f(zeta_2773) - 1 < 0 in 60-digit decimal arithmetic, with zeta_N known to within 10^-45. The function decreases in zeta, so the signs hold on the whole bracket. |
+| Part (d) of the corollary on the crossing at every N | `verify_every_n_guards.py` | One evaluation with a proved bracket. f(zeta_2774) - 1 = 2.1e-4 and f(zeta_2773) - 1 < 0 in 60-digit decimal arithmetic, with zeta_N known to within 10^-45. The function increases in zeta, so the signs hold on the whole bracket. |
 | The remark on the sign of z_N - zeta_N (computer-assisted throughout) | `verify_every_n.py` and `verify_every_n_sign.py` | Up to N = 1000 the certificate integers, and for 1001 <= N <= 2773 exact integers S_N(v) < 1 at a rational v just above zeta_N/(N - zeta_N). The run-count sum and the recursion agree at N = 401, 1000, 1008, 2000 and 2773, and 2 float methods agree up to N = 3000. |
 
 The integer tests are exact, and every comparison with zeta_N is made in 60-digit decimal
@@ -69,15 +69,14 @@ scripts below are in `paperB/`. Add `--full` to include `verify_B_tie_repair.py`
 more).
 
 No proof in Paper B rests on computation. The statements that the paper marks as numerically
-verified or with the proof omitted are checked as follows.
+verified are checked as follows.
 
 | Statement | Script | The 2 methods |
 | --- | --- | --- |
-| Where a path conditioned on its counts starts (remark) | `verify_general_start.py` | The start weights from the run formula and from the refresh formula, against the limit at N = 2000. |
-| The global modes of the K_3 example with the start (1/2, 1/2, 0) at N = 90, 300 and 1002 | `verify_general_start.py` (N = 90) and `verify_B_tie_repair.py` (N = 300 and 1002, with `--full`) | A dynamic program over all bins, against the lines of the example. |
-| The widths of the K_3 window at finite N (remark) | `verify_general_start.py` (N = 3000 to 300000) and `verify_B_tie_repair.py` (N = 300, with `--full`) | The lower end from the run formula and from Paper A's S_N = 1. The upper end from the run formula, with its sign change confirmed by a second method. |
-| How many bins beat a vertex (remark) | `verify_frontier_modes.py` | The profile from the refresh series in 65-digit arithmetic, and lattice counts against the volume formula. |
-| Near a vertex, the next term for fixed rare counts, the growth as the rare total tends to infinity, and the example where S_(b,a)(u) ~ H(b u^2) fails | `verify_frontier_boundary.py` and `verify_vertex_completion.py` | Exact identities in rational arithmetic against word enumeration, and positive sums in 70-digit or 100-digit arithmetic compared at 2 series cutoffs. |
+| Proposition 4.3 (where a conditioned path starts) is proved. Its numerical check is the error -0.0020 quoted after it, for d = 2, alpha_1 = 0.6, z = L - (1/2) log L and N = 2000 | `verify_general_start.py` | The start weights from the run formula and from the refresh formula in double precision, against the limit sqrt(alpha_a)/A. |
+| The three phases after Example 4.9 (the K_3 example with the start (1/2, 1/2, 0)) at N = 90, 300 and 1002 | `verify_general_start.py` (N = 90) and `verify_B_tie_repair.py` (N = 300 and 1002, with `--full`) | A dynamic program over all bins, against the lines of the example. |
+| The widths of the K_3 window at finite N (Remark 4.10) | `verify_general_start.py` (N = 3000 to 300000) and `verify_B_tie_repair.py` (N = 300, with `--full`) | The lower end from the run formula and from Paper A's S_N = 1. The upper end from the run formula, with its sign change confirmed by a second method. |
+| The numbers in Remark C.2 (the factor e^E of the crossover theorem) | `verify_crossover_factor.py` | S_(n,a) by the run formula, by a quadrature of the integral form (21) in double precision and by the positive sum (3) at 60 digits for N <= 2 * 10^6, and by the last two for larger N. They agree to about 10^-14 in log S. |
 
 | Script | What it checks |
 | --- | --- |

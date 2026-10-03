@@ -13,7 +13,7 @@ alternate, so the figures still read in greyscale.
   crossing  N(1 - p_N)/log N against N, with the Bessel root and the expansions
   lattice   the rook paths and blocked walks for the word RRLRLL
   allbin    1 - p_{a,N-a} against a, with the leading law and the edge law
-  window    the critical window R_{N,k}(u_N + t/N) against exp(t - 2y^2)
+  window    the critical window S^X_{N,k}(u^X_N + t/N) against exp(t - 2y^2)
 
 The figures of Paper B are made by paperB/figures/make_figures.py, and the
 program figure by figures/make_program_figure.py in the Problem 131 folder.
@@ -60,8 +60,9 @@ plt.rcParams.update({
 
 
 def save(fig, name):
-    fig.savefig(HERE / f"{name}.pdf")
-    fig.savefig(HERE / f"{name}.png", dpi=600)
+    out = HERE.parent / "tables_note" / "figures" if name == "lattice" else HERE
+    fig.savefig(out / f"{name}.pdf")
+    fig.savefig(out / f"{name}.png", dpi=600)
     plt.close(fig)
     print(f"wrote {name}.pdf and {name}.png")
 
@@ -110,7 +111,7 @@ def pmf_dp(n, p):
 
 
 def free_ratio(a, b, u, rmax=400):
-    """S_{a,b}(u) = P_{a+b}(a)/P_{a+b}(0) (Section 6), for arrays a, b, u (float)."""
+    """S_{a,b}(u) = P_{a+b}(a)/P_{a+b}(0) (Section 4), for arrays a, b, u (float)."""
     a, b, u = (np.asarray(v, dtype=float) for v in np.broadcast_arrays(a, b, u))
     u2 = u * u
     term = np.ones_like(u)
@@ -124,7 +125,7 @@ def free_ratio(a, b, u, rmax=400):
 
 
 def periodic_ratio(a, b, u, rmax=400):
-    """R^P_{N,k}(u), the cyclic count of Section 7, for arrays a, b, u (float)."""
+    """S^P_{N,k}(u), the cyclic count of Section 5, for arrays a, b, u (float)."""
     a, b, u = (np.asarray(v, dtype=float) for v in np.broadcast_arrays(a, b, u))
     u2 = u * u
     term = u2.copy()                      # C(a-1,r-1) C(b-1,r-1) u^{2r} at r = 1
@@ -520,7 +521,7 @@ def fig_window(N=10 ** 6):
         ax.set_xlabel(r"$y=(k-N/2)\sqrt{\log N}/N$")
         ax.set_title(f"{name} boundary", fontsize=8)
         panel(ax, letter)
-    axs[0].set_ylabel(r"$R^X_{N,k}(u^X_N+t/N)$")
+    axs[0].set_ylabel(r"$S^X_{N,k}(u^X_N+t/N)$")
     axs[1].plot([], [], "--", color="k", lw=0.6, label=r"$e^{t-2y^2}$")
     axs[1].legend(frameon=False, loc="upper right", handlelength=1.8)
     fig.subplots_adjust(left=0.075, right=0.995, wspace=0.06)
@@ -531,6 +532,7 @@ if __name__ == "__main__":
     check()
     fig_row10()
     fig_crossing()
+    # The lattice figure belongs to tables_note/, so it is saved there.
     fig_lattice()
     fig_allbin()
     fig_window()

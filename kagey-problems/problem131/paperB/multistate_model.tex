@@ -1,14 +1,12 @@
 \section{The model and the exact law}\label{sec:multistate-model}
 
-This section writes $P^\mu_N$ in 3 forms, each from a different way of reading
-a word $X_1\cdots X_N$. The \emph{run form} counts the switches. It gives all
-our exact statements, such as the uniqueness of each crossing. The
-\emph{refresh form} reads the chain in another way. Its transition matrix is
-$\sigma I+rJ$, so when $p\ge1/d$ the chain keeps its state with probability
-$\sigma$ and otherwise draws a fresh state uniformly from all $d$ states,
-possibly the same one. The \emph{ratio form} is the refresh form divided by a
-vertex. For $p>1/d$ it is a sum of positive terms, and all our asymptotics start
-from it. The notation is that of Section~\ref{sec:setting}.
+We write $P^\mu_N$ in three forms. The \emph{run form} counts the switches,
+and it gives all our exact statements. The \emph{refresh form} uses the
+transition matrix $\sigma I+rJ$. When $p\ge1/d$ the chain keeps its state with
+probability $\sigma$ and otherwise draws a fresh state uniformly from all $d$
+states, possibly the same one. The \emph{ratio form} is the refresh form
+divided by a vertex. For $p>1/d$ it is a sum of positive terms, and all our
+asymptotics start from it.
 
 For a positive count vector $n=(n_1,\ldots,n_k)$ with total $N$ and a state
 $a$, let $W^{(a)}_n(j)$ be the number of words with counts $n$ and $j$ changes
@@ -17,15 +15,15 @@ that start with $a$, and let $W_n(j)=\sum_aW^{(a)}_n(j)$. Put
 S^{(a)}_n(u)=\sum_jW^{(a)}_n(j)u^j,\qquad
 S_n(u)=\sum_aS^{(a)}_n(u)=\sum_jW_n(j)u^j .
 \]
-These polynomials depend only on the positive coordinates, and not on $d$. For
-a bin $k$ with $d$ coordinates we use them with $n$ the vector of positive
-coordinates of $k$.
+These polynomials do not depend on $d$. For a bin $n$ with some zero
+coordinates, $S_n$ and $S^{(a)}_n$ mean the polynomials of its positive
+coordinates.
 
 \begin{proposition}[the generating function]\label{prop:dgf}
 Put $y_i=x_it/(1-\sigma x_it)$ and $P^\mu_0(0,\ldots,0)=1$. As formal power
 series,
 \[
-\sum_{N\ge0}\sum_{k_1+\cdots+k_d=N}P^\mu_N(k)\,x_1^{k_1}\cdots x_d^{k_d}\,t^N
+\sum_{N\ge0}\sum_{n_1+\cdots+n_d=N}P^\mu_N(n)\,x_1^{n_1}\cdots x_d^{n_d}\,t^N
 =1+\frac{\sum_i\mu_iy_i}{1-r\sum_iy_i}.
 \]
 \end{proposition}
@@ -40,23 +38,22 @@ $S=\sum_i\mu_iy_i+rS\sum_iy_i$, and the generating function is $1+S$.
 \end{proof}
 
 \begin{proposition}[the exact law]\label{prop:dpmf}
-Let $N\ge1$, let $k$ have nonnegative integer coordinates with sum $N$, and put
-$F=\supp k$. Sums over $m$ run over the integer vectors with $m_i=0$ for
-$i\notin F$ and $1\le m_i\le k_i$ for $i\in F$, and $M=\sum_im_i$.
+Let $N\ge1$, let $n$ be a bin, and put $F=\supp n$. Sums over $m$ run over the
+integer vectors with $m_i=0$ for $i\notin F$ and $1\le m_i\le n_i$ for
+$i\in F$, and $M=\sum_im_i$.
 \begin{enumerate}[(a)]
 \item (refresh form) With $0^0=1$,
 \[
-P^\mu_N(k)=\sum_m\Bigl(\sum_{i\in F}\mu_im_i\Bigr)\frac{(M-1)!}{\prod_im_i!}\,
-r^{M-1}\sigma^{N-M}\prod_{i\in F}\binom{k_i-1}{m_i-1}.
+P^\mu_N(n)=\sum_m\Bigl(\sum_{i\in F}\mu_im_i\Bigr)\frac{(M-1)!}{\prod_im_i!}\,
+r^{M-1}\sigma^{N-M}\prod_{i\in F}\binom{n_i-1}{m_i-1}.
 \]
 For the uniform start this reads
 \[
-P_N(k)=\frac1d\sum_m\frac{M!}{\prod_im_i!}\,
-r^{M-1}\sigma^{N-M}\prod_{i\in F}\binom{k_i-1}{m_i-1}.
+P_N(n)=\frac1d\sum_m\frac{M!}{\prod_im_i!}\,
+r^{M-1}\sigma^{N-M}\prod_{i\in F}\binom{n_i-1}{m_i-1}.
 \]
-\item (run form) Let $p>0$ and let $n$ be the vector of positive coordinates of
-$k$. Then $P^\mu_N(k)=p^{N-1}\sum_{a\in F}\mu_aS^{(a)}_n(u)$. In particular
-$P_N(k)/V_N=S_n(u)$.
+\item (run form) If $p>0$, then $P^\mu_N(n)=p^{N-1}\sum_{a\in F}\mu_aS^{(a)}_n(u)$.
+In particular $P_N(n)/V_N=S_n(u)$.
 \item (ratio form) If $1/d<p<1$, so that $0<u<1$ and $v>0$, then
 \begin{equation}\label{eq:simplex-positive-sum}
 S_n(u)=(1-u)^{N-1}\sum_mM!\,v^{M-1}\prod_{i\in F}\frac1{m_i!}\binom{n_i-1}{m_i-1},
@@ -70,7 +67,7 @@ blocks at the $M-1$ refreshes. Each refresh lands on a prescribed state with
 probability $r$, and each of the other $N-M$ steps keeps the state with
 probability $\sigma$. If $m_i$ blocks carry state $i$, there are
 $m_i(M-1)!/\prod_jm_j!$ orders of the block labels that start with $i$, and
-$\binom{k_i-1}{m_i-1}$ ways to choose the lengths of the $m_i$ blocks of state
+$\binom{n_i-1}{m_i-1}$ ways to choose the lengths of the $m_i$ blocks of state
 $i$. The proof below does not need $\sigma\ge0$.
 
 \begin{proof}
@@ -79,12 +76,12 @@ $S=\sum_{M\ge1}r^{M-1}\bigl(\sum_i\mu_iy_i\bigr)\bigl(\sum_iy_i\bigr)^{M-1}$. By
 multinomial theorem the coefficient of $\prod_iy_i^{m_i}$ in
 $(\sum_i\mu_iy_i)(\sum_iy_i)^{M-1}$ is $\sum_i\mu_im_i(M-1)!/\prod_jm_j!$. With
 $w_i=x_it$ we have $y_i=w_i/(1-\sigma w_i)$, and
-$[w^{k}](w/(1-\sigma w))^m=\binom{k-1}{m-1}\sigma^{k-m}$ for $k\ge m\ge1$. For
-$m=0$ only $k=0$ contributes. Multiplying the coefficients proves (a), and for
+$[w^j](w/(1-\sigma w))^m=\binom{j-1}{m-1}\sigma^{j-m}$ for $j\ge m\ge1$. For
+$m=0$ only $j=0$ contributes. Multiplying the coefficients proves (a), and for
 the uniform start $\sum_i\mu_im_i=M/d$.
 
 (b) A word that starts with $a$ and has $j$ changes has probability
-$\mu_ap^{N-1-j}r^j=\mu_ap^{N-1}u^j$. Sum over the words with counts $k$.
+$\mu_ap^{N-1-j}r^j=\mu_ap^{N-1}u^j$. Sum over the words with counts $n$.
 
 (c) Divide the uniform case of (a) by $V_N=p^{N-1}/d$. Since $r/p=u$ and
 $\sigma/p=1-u$, we have
@@ -101,7 +98,7 @@ numerical work we then use exact arithmetic or dynamic programming.
 For $x\ge0$ the modified Bessel function of order $1$ is
 $I_1(x)=\sum_{j\ge0}(x/2)^{2j+1}/(j!(j+1)!)$. Since
 $\binom{2j+1}j\le4^j$, comparing coefficients gives $I_1(x)\le\sinh x\le e^x$.
-We also use the expansion~\cite[Eq.~10.40.1]{dlmf}
+We also use the expansion~\cite[Eqs.~10.40.1 and~10.17.1]{dlmf}
 \[
 I_1(x)=\frac{e^x}{\sqrt{2\pi x}}\Bigl(1-\frac3{8x}+O(x^{-2})\Bigr),
 \qquad x\to\infty,
@@ -115,6 +112,4 @@ Since $\binom{2j}j\le4^j$, we have $1/(j!(j+1)!)\le4^j/(2j)!$, and comparing ter
 by term with the even part of the series of $e^{2\sqrt x}$ gives
 $\Phi(x)\le e^{2\sqrt x}$. Lemmas~\ref{lem:bessel-law}, \ref{lem:clipped-product}
 and~\ref{lem:gaussian-phi-average} in Appendix~\ref{app:thresholds} give the
-other facts about $\Phi$ that we use, a bound for products, and an expansion of
-Gaussian averages. The comparison of Laguerre-type polynomials with $\Phi$ that
-we need near the boundary is Lemma~\ref{lem:uniform-laguerre-bessel}.
+other facts about $\Phi$ that we use.

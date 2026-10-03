@@ -1,0 +1,25 @@
+Values quoted in the text of Paper A that are not printed by another check.
+Decimal arithmetic with precision 80 (numerical, not interval arithmetic).
+Run time under one second.
+
+1. Section 3, ratio u_B/u_N of the Bessel root to the free central odds at N = 200.
+   Method 1: bisect, exact_polynomial and bessel_f of check_bessel.py.
+   Method 2: root, ratio and bessel of verify_allbin.py
+             (x_N = h * root(ratio(a,b,.)) / sqrt(ab), x_B = root of 2x(I0(2x)+I1(2x)) = h).
+   u_B/u_N (method 1) = 0.9864111174
+   u_B/u_N (method 2) = 0.9864111174
+   Quoted in the text: 0.9864.
+
+2. Section 5, periodic central crossing as a coupling J = -(1/2) log u_N^P.
+   Method: root and periodic_ratio of verify_periodic_window.py (exact cyclic
+   run polynomial (eq:periodicratio)). As a sanity check, the root of the
+   Bessel form periodic_bessel is also shown (it is not a second exact method).
+   N = 100:    u_N^P = 4.292803720573503e-2   J = 1.574115   (Bessel form 1.583297)
+   N = 100000: u_N^P = 1.059624633001858e-4   J = 4.576213   (Bessel form 4.576238)
+   Comparison values at N = 100000:
+     (eq:isingtemperature) without its error term   4.577981
+     Stepanyan et al. Eq. (16), (2 log N - 1)/5     4.405170
+     Stepanyan et al. Fig. 1(b) line,
+       0.3864 log N - 0.21055                       4.238044
+   At N = 100 the Fig. 1(b) line gives 1.568888.
+   Quoted in the text: 4.576, 4.578, 4.405, 4.238, and 1.569 against 1.574 at N = 100.
