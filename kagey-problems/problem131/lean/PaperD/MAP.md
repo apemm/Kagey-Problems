@@ -1,9 +1,10 @@
 # Paper D: map from the research notes to the Lean proofs
 
-Paper D is `paperD/problem131_memory.tex`. The tables cite the statement labels of the 4
-research notes D1 to D4, and the column Paper gives the number in the paper (for example D1 S9 is
-Proposition 2.3, D2 Theorem 1 is Theorem 3.5, D3 Prop 1 is Proposition 4.1, and D4 Prop 9 is in
-Remark 4.8). "Not in the paper" marks results of the notes that the paper does not state. The Lean
+Paper D is `paperD/problem131_memory.tex`, the last of the four papers A, B, C and D on Problem 131.
+The tables cite the statement labels of the 4 research notes D1 to D4, and the column Paper gives
+the number in the paper, in the build of October 9, 2026 (for example D1 S9 is Proposition 2.3, D2
+Theorem 1 is Theorem 3.5, D3 Prop 1 is Proposition 4.1, and D4 Prop 9 is Proposition 5.1). "Not in
+the paper" marks results of the notes that the paper does not state. The Lean
 library is `PaperD` (root `PaperD.lean`, 16 modules in `PaperD/`, namespace `Kagey131.PaperD`),
 built against Lean 4 v4.33.1 and Mathlib v4.33.1.
 
@@ -62,10 +63,10 @@ the elephant walk, `law ε n` and `ewBin ε n` use the number of steps `n` direc
 |---|---|---|---|
 | Cor 7: `e(α) = 1-α+1/α = -(α-φ)(α-ψ)/α`; `e = 0 ⟺ α = φ`; `e > 0 ⟺ α < φ` | Corollary 4.5 | `runExp_eq`, `runExp_eq_zero_iff`, `runExp_pos_iff`, `runExp_golden` | `HeavyRuns.lean` |
 | Cor 7: golden identities `1+1/φ = φ`, `φ-1 = 1/φ`, `2-φ = φ⁻²`; fresh start `e-1 < 0` | Corollary 4.5 | `golden_identities`, `fresh_exponent_neg` | `HeavyRuns.lean` |
-| Rem 13 `e(5/3) = -1/15`; Thm 8 `e(2) = -1/2 = 3/2-2` | Remark 4.7, Table 3 | `runExp_five_thirds`, `runExp_two` | `HeavyRuns.lean` |
-| Rem 12: `e'(φ) = -√5/φ`, `e''(φ) = 2/φ³` | Remark 4.7 | `hasDerivAt_runExp`, `hasDerivAt_runExp_golden`, `hasDerivAt_runExp_deriv_golden` | `HeavyRuns.lean` |
+| Rem 13 `e(5/3) = -1/15`; Thm 8 `e(2) = -1/2 = 3/2-2` | Remark 4.6, Theorem 4.7, Table 3 | `runExp_five_thirds`, `runExp_two` | `HeavyRuns.lean` |
+| Rem 12: `e'(φ) = -√5/φ`, `e''(φ) = 2/φ³` | Remark 4.6 (the heuristic for `N*` uses `e'(φ)`, and `e''(φ)` is not in the paper) | `hasDerivAt_runExp`, `hasDerivAt_runExp_golden`, `hasDerivAt_runExp_deriv_golden` | `HeavyRuns.lean` |
 | Lemma 3(i): `K_α = Γ(2-α)/(α-1) = -Γ(1-α) > 0` | Lemma 4.3 | `gammaK_eq`, `gammaK_pos` | `HeavyRuns.lean` |
-| Thm 9: `f_L(1/2) = (2/π) tan(πα/2)`; constant `π/(4 tan(πα/2))` of `R_N` | Remark 4.6, Table 3 | `lamperti_half`, `lamperti_ratio_constant` | `HeavyRuns.lean` |
+| Thm 9: `f_L(1/2) = (2/π) tan(πα/2)`; constant `π/(4 tan(πα/2))` of `R_N` | Theorem 4.8, Table 3 | `lamperti_half`, `lamperti_ratio_constant` | `HeavyRuns.lean` |
 | Prop 1, fresh start: `E_N = ½ N^(-α)` (telescoping survival) | Proposition 4.1 | `fresh_edge` | `HeavyRuns.lean` |
 | Prop 1, stationary start: `N^(1-α)/(α-1) ≤ ζ(α,N) ≤ N^(1-α)/(α-1) + N^(-α)` | Proposition 4.1 | `zeta_tail_bounds` (`rpow_step_upper`, `rpow_step_lower`) | `HeavyRuns.lean` |
 | §1 stationarity check `π(k) = π(k+1) + π(1)p_k` | Section 4 | `residual_stationary` | `HeavyRuns.lean` |
@@ -74,28 +75,28 @@ the elephant walk, `law ε n` and `ewBin ε n` use the number of steps `n` direc
 
 | Note statement | Paper | Lean theorem(s) | File |
 |---|---|---|---|
-| Prop 1, path weights `P(x) = ½ρ(1,n)∏_{t∈T(x)} w_t`, `w_t = p_t/(1-p_t)` (`= c/(t-c)`) | Remark 4.8 | `agWeight_eq_rho_mul`, `agBin_ratio`, `agBin_top` | `Aging.lean`, `AgingCrossing.lean` |
-| Prop 1, `R_{n,s}` strictly increasing on `(0,2)` for every interior bin | Remark 4.8 | `agBin_ratio_strictMonoOn` | `AgingCrossing.lean` |
-| Prop 1, unique `c_n(s) ∈ (0,2)`, and `c_n(s) < 1`; sides of the crossing | Remark 4.8 | `aging_crossing_exists_unique`, `aging_crossing_sides` | `AgingCrossing.lean` |
+| Prop 1, path weights `P(x) = ½ρ(1,n)∏_{t∈T(x)} w_t`, `w_t = p_t/(1-p_t)` (`= c/(t-c)`) | Section 5, equations (4) and (9) | `agWeight_eq_rho_mul`, `agBin_ratio`, `agBin_top` | `Aging.lean`, `AgingCrossing.lean` |
+| Prop 1, `R_{n,s}` strictly increasing on `(0,2)` for every interior bin | Proposition 5.6(b) | `agBin_ratio_strictMonoOn` | `AgingCrossing.lean` |
+| Prop 1, unique `c_n(s) ∈ (0,2)`, and `c_n(s) < 1`; sides of the crossing | Proposition 5.6(b) | `aging_crossing_exists_unique`, `aging_crossing_sides` | `AgingCrossing.lean` |
 | Prop 1, `c₂ = 2/3` | not in the paper | `two_steps_crossing` | `AgingSmall.lean` |
 | Prop 1, `R_{4,2} - 1 = 3p(c)/((2-c)(3-c)(4-c))`, `p = c³-5c²+14c-8`; `c₄` its unique real root, `0.7367009 < c₄ < 0.7367010` | not in the paper | `four_steps_values`, `four_steps_ratio`, `four_steps_crossing`, `cubic4_strictMono`, `c4_bounds` | `AgingSmall.lean` |
-| Prop 2 (averaging identity, arbitrary switching probabilities) | not in the paper | `agEnd_false_eq_sum`, `agTail_cum`, `agTail_compl`, `agBin_averaging` | `AgingAveraging.lean` |
-| Prop 2(a) and Prop 3, fair start, `c = 1`: interior `1/n`, ends `1/(2n)` | Remark 4.8 | `agBin_one_interior`, `agBin_one_top`, `agBin_one_bottom` | `AgingExact.lean` |
-| Prop 2(b): `c/n ≤ P(S_n=s) ≤ q_{j+1,n}` for `c ≤ 1` | not in the paper | `agBin_ge`, `agBin_le` | `AgingAveraging.lean` |
-| Prop 2(c): `P(S_n = n/2) = 2E[q; T ≤ n-1]`, `P(T ≤ n-1) = ½` | not in the paper | `agBin_center_averaging` | `AgingAveraging.lean` |
-| Prop 3, fixed start, `c = 1`: joint law, `S_n` uniform on `{1..n}` | Remark 4.8 | `plusEnd_one`, `plusBin_one` | `AgingExact.lean` |
-| Thm 7 (finite part): end below every interior bin for `c ∈ (c^{(n)}, 2)`; lower bracket `c_n ≥ c^{(n/2+1)}`; `c^{(N)}` increasing | not in the paper | `end_below_all_bins`, `end_below_all_bins_of_gt_one`, `end_above_center`, `hN_mono`, `hN_mono'` | `AgingAveraging.lean` |
-| Prop 9 (fixed start: ratio increasing, `= 1` at `c = 1`; `+` end strict max for `c<1`, strict min on `{1..n}` for `c>1`; crossing exactly `1`) | Remark 4.8 | `plusBin_ratio_strictMonoOn`, `plusBin_ratio_one`, `plus_top_strict_max`, `plus_top_strict_min`, `plusBin_zero_bin`, `plus_crossing_eq_one` | `AgingCrossing.lean` |
+| Prop 2 (averaging identity, arbitrary switching probabilities) | Lemma E.1, which states the center case for the rule `c/k` (equation (19)) | `agEnd_false_eq_sum`, `agTail_cum`, `agTail_compl`, `agBin_averaging` | `AgingAveraging.lean` |
+| Prop 2(a) and Prop 3, fair start, `c = 1`: interior `1/n`, ends `1/(2n)` | Proposition 5.6(a) | `agBin_one_interior`, `agBin_one_top`, `agBin_one_bottom` | `AgingExact.lean` |
+| Prop 2(b): `c/n ≤ P(S_n=s) ≤ q_{j+1,n}` for `c ≤ 1` | Lemma E.1 (last sentence), which states the center case | `agBin_ge`, `agBin_le` | `AgingAveraging.lean` |
+| Prop 2(c): `P(S_n = n/2) = 2E[q; T ≤ n-1]`, `P(T ≤ n-1) = ½` | Lemma E.1, equation (19) | `agBin_center_averaging` | `AgingAveraging.lean` |
+| Prop 3, fixed start, `c = 1`: joint law, `S_n` uniform on `{1..n}` | Proposition 5.1(a) | `plusEnd_one`, `plusBin_one` | `AgingExact.lean` |
+| Thm 7 (finite part): end below every interior bin for `c ∈ (c^{(n)}, 2)`; lower bracket `c_n ≥ c^{(n/2+1)}`; `c^{(N)}` increasing | Proposition E.2, in part (the bracket `c^{(h+1)} ≤ c_N ≤ c^{(N)}` and the monotonicity of `c^{(M)}`; the paper compares the end with the center only) | `end_below_all_bins`, `end_below_all_bins_of_gt_one`, `end_above_center`, `hN_mono`, `hN_mono'` | `AgingAveraging.lean` |
+| Prop 9 (fixed start: ratio increasing, `= 1` at `c = 1`; `+` end strict max for `c<1`, strict min on `{1..n}` for `c>1`; crossing exactly `1`) | Proposition 5.1(b) (the strict maximum and minimum are not stated in the paper) | `plusBin_ratio_strictMonoOn`, `plusBin_ratio_one`, `plus_top_strict_max`, `plus_top_strict_min`, `plusBin_zero_bin`, `plus_crossing_eq_one` | `AgingCrossing.lean` |
 | Prop 10, identity `P(n-1)/P(n) = c(1+c)/(2-c) + c(1-c)/(n-c)`, `> 1` for `√3-1 < c ≤ 1` | not in the paper | `neighbour_ratio`, `neighbour_ratio_gt_one` | `AgingSmall.lean` |
-| Prop 10, `√3-1 < c_n < 1` and end below neighbor at the crossing, every even `n ≥ 4` | not in the paper | `cubic4_sqrt3`, `c4_gt_sqrt3_sub_one`, `h4_sqrt3`, `crossing_bounds`, `end_below_neighbour_at_crossing`, `four_steps_end_below_neighbour` | `AgingSmall.lean`, `AgingAveraging.lean` |
-| Cor 12 (exact part): `E N_n = c(H_n - 1)` | Figure 1 (the aging curve) | `expected_switches`, `expected_switches_aging` | `AgingSwitches.lean` |
+| Prop 10, `√3-1 < c_n < 1` and end below neighbor at the crossing, every even `n ≥ 4` | not in the paper (Proposition E.2 has the weaker bound `c_N ≥ (9-√57)/2 > 0.725`) | `cubic4_sqrt3`, `c4_gt_sqrt3_sub_one`, `h4_sqrt3`, `crossing_bounds`, `end_below_neighbour_at_crossing`, `four_steps_end_below_neighbour` | `AgingSmall.lean`, `AgingAveraging.lean` |
+| Cor 12 (exact part): `E N_n = c(H_n - 1)` | Section 5 (first paragraph) and Figure 1 (the aging curve) | `expected_switches`, `expected_switches_aging` | `AgingSwitches.lean` |
 | Prop 14(a): ratios strictly increasing on `(0, 2+b)` for `c/(k+b)` | not in the paper | `agBin_ratio_strictMonoOn_shift`, `shiftP_odds` | `AgingCrossing.lean` |
 | Prop 14(b): at `c = 1`, interior `1/(n+b)`, ends `(1+b)/(2(n+b))` | not in the paper | `agEnd_shift_one`, `agBin_shift_one_interior`, `agBin_shift_one_top`, `agBin_shift_one_bottom`, `shift_ratio_one` | `AgingExact.lean`, `AgingCrossing.lean` |
 | Prop 14(c): `b = 1` all-bin crossing exactly `1`; `b<1` crossings `<1`; `b>1` crossings `>1` | not in the paper | `shift_one_crossing`, `shift_crossing_lt_one`, `shift_crossing_gt_one` | `AgingCrossing.lean` |
-| Prop 16: joint beta-binomial law for `c/(k-1+2c)` | not in the paper | `agEnd_dls`, `agBin_dls`, `betaBin_up`, `betaBin_stay` | `BetaBinomial.lean` |
+| Prop 16: joint beta-binomial law for `c/(k-1+2c)` | Proposition 5.4 with `d = 2` and `θ = c` (equation (7)) | `agEnd_dls`, `agBin_dls`, `betaBin_up`, `betaBin_stay` | `BetaBinomial.lean` |
 | Prop 16(i): the `c/k` walk at `c = ½` has the discrete arcsine law | not in the paper | `dlsP_half`, `poch_half`, `aging_half_arcsine` | `BetaBinomial.lean` |
-| Prop 16(ii): uniform law at `c = 1` | not in the paper | `agBin_dls_one` | `BetaBinomial.lean` |
-| Prop 16(iii): ratio increasing in `c`, crossing exactly `1` | not in the paper | `dls_ratio_strictMonoOn`, `dls_crossing` | `BetaBinomial.lean` |
+| Prop 16(ii): uniform law at `c = 1` | Proposition 5.4 with `d = 2` and `θ = 1` (a special case, not stated separately) | `agBin_dls_one` | `BetaBinomial.lean` |
+| Prop 16(iii): ratio increasing in `c`, crossing exactly `1` | Proposition 5.4 with `d = 2` (equation (8), which the paper states for the center bin and Lean proves for every bin) | `dls_ratio_strictMonoOn`, `dls_crossing` | `BetaBinomial.lean` |
 
 ## Not formalized, and why
 
@@ -103,26 +104,26 @@ The asymptotic statements are out of scope. They need the Laplace method, stable
 local limit theorems, Bessel or Landau limits, and `o(1)` and `O(·)` error terms. They are the
 following.
 
-* D1 S8 (uniform asymptotic), S10 (the crossing `x_n`, Theorem 2.7 and Remark 2.9), S11 (the
+* D1 S8 (uniform asymptotic), S10 (the crossing `x_n`, Theorem 2.7 and Proposition 2.10), S11 (the
   comparison with the crossing of Paper A, Theorem 2.8, where only the constants are checked),
-  S13 (limit `K₂`, which needs series over `t` and `u`), S14, S16 (heuristic), S3(c) (limit
-  weights `t 2^{-t-1}`).
-* D2 Theorem 2 (compound Poisson bulk, Remark 3.7), Theorem 3 and Corollaries 6.2, 6.3
+  S13 (limit `K₂`, Proposition 2.11, which needs series over `t` and `u`), S14, S16 (heuristic),
+  S3(c) (limit weights `t 2^{-t-1}`, Lemma A.6).
+* D2 Theorem 2 (compound Poisson bulk, Theorem 3.9), Theorem 3 and Corollaries 6.2, 6.3
   (explicit but very long error terms, and the profile statements are asymptotic), Theorem 4
-  (Landau limit, Remark 3.7), Theorem 5, Conjecture 5.1 (Conjecture 3.10), Heuristics H1, H1',
+  (Landau limit, Theorem 3.10), Theorem 5, Conjecture 5.1 (Conjecture 3.16), Heuristics H1, H1',
   H2, H3.
 * D3 Lemmas 3 to 5, Theorem 6 (Theorem 4.4), the asymptotic halves of Corollary 7 and
-  Theorems 8, 9 (including the local min/max test at `α_c`), Heuristics 10, 11, Remarks 12, 13
-  (numerics, Remark 4.7).
+  Theorems 8, 9 (Theorems 4.7 and 4.8, including the local min/max test at `α_c`), Heuristics 10,
+  11, Remarks 12, 13 (numerics, Remark 4.6).
 * D4 Theorem 4, Lemma 5, Theorems 6 and 8 (Beta limit, Kolmogorov rate, local limit, crossing
-  expansion), the asymptotic half of Theorem 7 and of Corollary 12, Proposition 14(d),
-  Statements 11 and 13 (heuristic or numerical).
+  expansion, which are Proposition 5.7 and the rest of Appendix E), the asymptotic half of
+  Theorem 7 and of Corollary 12, Proposition 14(d), Statements 11 and 13 (heuristic or numerical).
 
 Some exact or finite statements are not formalized either.
 
 * D1 S3(a) (first-mutation decomposition, Proposition 2.5(a)), S4 (Duhamel identity),
-  S5(a),(b),(d) (Pólya(`c`) hitting functions, bridge), S6 (supersolution bound,
-  Proposition A.4), S7 (bridge product formula), S12. These need the Pólya hitting function
+  S5(a),(b),(d) (Pólya(`c`) hitting functions, bridge, Lemma A.1), S6 (supersolution bound,
+  Proposition A.4), S7 (bridge product formula, Proposition A.5), S12. These need the Pólya hitting function
   `Φ^c` (Beta functions of real arguments), a comparison lemma for backward recursions, and
   digamma bounds, which would be a separate project. The exact first
   coefficient `c₁ = 4/(n+2)` of S3(b) is proved here by a different route (a first-order
@@ -141,6 +142,9 @@ Some exact or finite statements are not formalized either.
   (Godrèche and Luck 2001, Section 7). A formal proof would need a composition model of the run
   walk, and it was not attempted.
 * The records interpretation of D4 Proposition 3 (Rényi) was not attempted.
+* Results that the paper gained in October 2026 are not in Lean. They are Lemma 3.7,
+  Proposition 3.8 and Lemma 3.11 (certified computations, see `paperD/certify_elephant.py`),
+  Theorem 5.2 (the aging chain on `d` states) and Proposition 5.4 for `d ≥ 3`.
 
 ## Gaps and remarks found while formalizing
 

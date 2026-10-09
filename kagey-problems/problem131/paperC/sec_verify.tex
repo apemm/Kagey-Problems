@@ -1,50 +1,103 @@
 \section{Verification and open questions}\label{sec:verify}
 
-No proof in this paper rests on a floating-point computation. Exact computer
-algebra enters in 3 places. (1) In Lemma~\ref{lem:fisher-moments} each moment
-lies in a space of sequences of dimension at most 10. The script
-\texttt{verify\_sticky\_fisher.py} computes the 3 moments exactly for $N\le12$
-by a dynamic program in rational arithmetic with $q$ as a symbol, and checks the
-identity for $\Var X^2$ in sympy. (2) The row $\Theta_\varepsilon$ of
-Table~\ref{tab:outcomes} rests on 3 exact resultants of characteristic
-polynomials, computed in sympy by \texttt{verify\_examples.py} (this row is
-marked ``proof omitted''). (3) The values of $c_F$ on the 4-cycle after
-Corollary~\ref{cor:C4} are exact evaluations, by
-\texttt{verify\_second\_order.py}, of the next Laplace term of
-Remark~\ref{rem:nextterm}, whose proof we omit. Every other number in the paper
-is a closed form or a computation at finite size, done in 2 independent ways
-where possible (for example by the run expansion and by a torus integral, or by
-a dynamic program and an exact formula). All 4 papers on Problem~131 share one
-verification supplement, \texttt{SUPPLEMENT.md} in the Problem~131 folder of
-\url{https://github.com/apemm/Kagey-Problems}. It lists each check and the 2
-methods behind it, and \texttt{python verify\_all.py --paper c} in that folder
-runs the checks for this paper. Before most computations we wrote a prediction
-and a condition that would refute it in a ledger, and the outcome is recorded
-below it. Many finite and algebraic steps, and the rows of
-Table~\ref{tab:outcomes} marked Lean, are proved in Lean~4 in the folder
-\texttt{lean/PaperC}, and its file \texttt{MAP.md} matches each statement of
-the paper to its Lean theorems. The asymptotic results are not in Lean.
+The theorems, propositions, lemmas and corollaries of this paper are proved in
+the text or in the appendices, with two kinds of outside input. We quote
+results of Papers~A and~B where we say so (for example the uniform Bessel
+bound~\eqref{eq:planar-bessel}, and the expansion behind the value for the
+complete graph in Proposition~\ref{prop:nextterm}(iv)). And the rows of
+Table~\ref{tab:outcomes} marked Lean are proved in Lean and not in the text.
+No proof rests on a floating-point computation. Exact computer algebra enters
+in two places. First,
+Proposition~\ref{prop:triangles}, which proves the row $\Theta_\varepsilon$ of
+Table~\ref{tab:outcomes}, rests on two exact resultants of characteristic
+polynomials, computed in sympy by \texttt{verify\_examples.py}
+(Section~\ref{app:examples-checks}). Second, the values of $c_F$ for the 3-arc
+and for $C_4$ after Corollary~\ref{cor:C4} are exact evaluations, by
+\texttt{verify\_second\_order.py}, of the formula for $c_F$ in
+Proposition~\ref{prop:nextterm}(ii). The proposition is proved, and only these
+two values are computed.
 
-Several questions remain open. Theorem~\ref{thm:local} holds on compact
+The other numbers in the paper are of three kinds. Some are closed forms. Some
+are computations of the law at a finite $N$, namely the finite-$N$ row
+of $P_4$ in Table~\ref{tab:outcomes}, Figure~\ref{fig:cycles}(b), the crossing
+of the 3-arc at $N=10^{14}$ in Section~\ref{sec:examples}, the planar crossings
+and zero-turn shares in Section~\ref{sec:planar} and Figure~\ref{fig:planar},
+and Table~\ref{tab:sticky}. These are done in two independent ways where
+possible (for example by the run expansion and by a torus integral, or by a
+dynamic program and an exact formula). They illustrate the theorems, and no
+statement is deduced from them. Finally, the value $0.115$ in
+Section~\ref{sec:sticky} is a Monte Carlo estimate.
+
+For the planar walk, \texttt{verify\_planar.py} computes $o_N$ in four ways and
+finds the crossings. The script \texttt{verify\_planar\_product.py} checks the
+product formula of Proposition~\ref{prop:product} in exact rational arithmetic
+for $N=4,6,8$. In floating point it also checks the inequality
+$F(y/2)\le2F(y)$ of Appendix~\ref{app:planar}, the bound on the number of
+switches in Lemma~\ref{lem:oneswitch}, and Theorem~\ref{thm:pureturns}(a)
+and~(b) for $N$ up to $96$. These checks guard against slips. The proofs do
+not use them.
+
+Many finite and algebraic steps, and the rows of
+Table~\ref{tab:outcomes} marked Lean, are proved in Lean~4 in the folder
+\nolinkurl{kagey-problems/problem131/lean/PaperC}, and its file
+\nolinkurl{MAP.md} matches each statement of
+the paper to its Lean theorems. For the planar walk Lean covers the identity
+and the unique crossing for $s>0$ in Proposition~\ref{prop:decomp}. The
+asymptotic results, the product curve and the theorem on turns only are not in
+Lean.
+
+\paragraph{Data and code availability.} Everything is in the folder
+\nolinkurl{kagey-problems/problem131} of
+\url{https://github.com/apemm/Kagey-Problems}, at the release
+\nolinkurl{paperC-arxiv-v1}. To rerun the checks, run
+\texttt{python -B verify\_all.py -{}-paper c} in that folder. The file
+\nolinkurl{SUPPLEMENT.md} lists each check, the two methods behind it and the
+predictions that we wrote down before most of the computations. The scripts
+are in the subfolder \nolinkurl{paperC} and need numpy, scipy, sympy and
+mpmath. The largest cases, such as the planar crossings for $N\ge1280$, run
+only with the option \texttt{-{}-full}.
+
+\paragraph{Open questions.} We list them in the order of the paper.
+
+\emph{The local law at the boundary.} Theorem~\ref{thm:local} holds on compact
 subsets of the open face, and a local law up to the boundary is open. The
 same formula cannot hold there. Take a star with center $d$ and
 $\ell=d-1\ge3$ leaves, and a start of full support. Then $P_N(n)=0$ whenever
-$\supp n=[d]$ and $n_d<\ell-1$, since a path visits the center between any 2
+$\supp n=[d]$ and $n_d<\ell-1$, since a path visits the center between any two
 runs at the leaves, although $n/N$ lies in the open face. This zero set is
-checked in Lean. For a reducible face, Theorem~\ref{thm:first}(ii) places
+checked in Lean.
+
+\emph{Reducible faces.} For a reducible face, Theorem~\ref{thm:first}(ii) places
 the power of $T$ in $M_F$ between $k_F-k^*$ and $k_F-1$, and heuristically it
-is $(k^*-1)/2+k_F-k^*$. Theorem~\ref{thm:crossing} puts all crossings of 2
-faces in an interval of length $O(1/L)$, but uniqueness is proved only in
+is $(k^*-1)/2+k_F-k^*$. We do not prove this.
+
+\emph{Uniqueness and constants.} Theorem~\ref{thm:crossing} puts all crossings
+of two faces in an interval of length $O(1/L)$, but uniqueness is proved only in
 special cases, such as Papers~A and~B, the pairs of Proposition~\ref{prop:pair}
 and the planar walk. We have no tree formula
 for $K_F$ on non-reversible faces like Proposition~\ref{prop:constant}(b),
 and no closed form for $c_F$. At finite $N$ the order of the phases can
 differ from first order when a face lies close to the hull, as on the path
-$P_4$ (Table~\ref{tab:outcomes}). For the planar walk the next term of the
-crossing equation in Remark~\ref{rem:planar-turns} and the crossover near
-$s=2r$ are open. A heuristic suggests that the next term comes from
-replacing $T$ by $T+\frac1{4r}-\frac1{2(r+s)}$. For sticky priors we do not
+$P_4$ (Table~\ref{tab:outcomes}).
+
+\emph{The planar walk.} The first-order heuristic at the start of
+Section~\ref{sec:planar} applies face selection to a linear function of the
+composition. We prove its conclusion for the planar walk, but not such a rule
+in general. The errors in Theorem~\ref{thm:fourdir} and
+Corollary~\ref{cor:planar-turn} are only $o(1)$, and
+Theorem~\ref{thm:fourdir} needs $T\le N^{1/8}$. The next term of the crossing
+equation when turns dominate is open, and so is the crossover when $s-2r$ tends
+to $0$ as $N$ grows. A heuristic suggests that the next term comes from
+replacing $T$ by $T+\frac1{4r}-\frac1{2(r+s)}$ in Theorem~\ref{thm:fourdir}.
+For $s=0$ this agrees with the term $1/(8z_N)$ of Paper~A, through
+Theorem~\ref{thm:pureturns}(c). Off the product curve of
+Proposition~\ref{prop:product} we have no closed form for $o_N$ or for the
+crossing, and Corollary~\ref{cor:productcompare} only brackets the crossing.
+With turns only, the computations give $N(v^*_N-u_N)=0.37\,L^2/N$ at
+$N=96$ and $0.38\,L^2/N$ at $N=10240$. So the order $L^2/N$ in
+Theorem~\ref{thm:pureturns}(c) seems to be right, but we do not prove a lower
+bound of this order.
+
+\emph{Sticky priors.} We do not
 treat random exit probabilities as in~\cite{fox2011}, or the probability of
-a direct jump for $d\ge4$. Finally, we do not compute the constant in
-Theorem~\ref{thm:fisher}, and the limits of $e_N$ at fixed $q$ and at fixed
-$Nq$ are open.
+a direct jump for $d\ge4$.

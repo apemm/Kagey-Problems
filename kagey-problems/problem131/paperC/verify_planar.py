@@ -366,9 +366,9 @@ def check_bounds():
 
 
 def check_crossings(full):
-    print('\nTheorem 6.4, Figure 3 and the table of crossings', flush=True)
+    print('\nTheorem 6.4, Figure 5 and the table of crossings', flush=True)
     pairs = [(0.1, 1.0), (0.3, 1.0), (0.5, 1.0), (1.0, 1.0), (1.0, 0.0)]
-    # T* and the zero-turn share 2 S_N(u*) as recorded in ledger_C3.md (the data of Figure 3)
+    # T* and the zero-turn share 2 S_N(u*) as recorded in ledger_C3.md (the data of Figure 5)
     Nall = (40, 80, 160, 320, 640, 1280, 2560, 5120, 10240)
     recorded = {(1.0, 0.0, 40): '2.6427593', (1.0, 0.0, 80): '3.2524385', (1.0, 0.0, 160): '3.8810744', (1.0, 0.0, 320): '4.5189207',
                 (1.0, 0.0, 640): '5.1612511', (1.0, 0.0, 1280): '5.80620711', (1.0, 0.0, 2560): '6.45327647',
@@ -436,7 +436,7 @@ def check_crossings(full):
     lim = 2 * sqrt(2) / (sqrt(2) + sqrt(5))
     agree('limit of the zero-turn share at s = 2r', '0.774852', {'closed': lim})
     check('the share at s = 2r stays below its limit (N = 640)', 2 * exp(logS(320, 320, Tstar[(0.5, 1.0, 640)] / 640 / (1 - 2 * Tstar[(0.5, 1.0, 640)] / 640))) < lim, '')
-    # Remark 6.5 (turns only) at the (1,0) crossings
+    # Turns only at the (1,0) crossings (finite-N bounds from the research notes; see Theorem 6.9)
     for N in ((640, 10240) if full else (640,)):
         T = Tstar[(1.0, 0.0, N)]
         h = T / N
@@ -456,7 +456,7 @@ def check_crossings(full):
 
 
 def check_pure_turns():
-    print('\nRemark 6.5: turns only, in exact arithmetic', flush=True)
+    print('\nTurns only, in exact arithmetic (finite-N bounds from the research notes; see Theorem 6.9)', flush=True)
     viol = 0
     mism = 0
     for N in range(2, 31, 2):

@@ -5,7 +5,7 @@ Figure 1 is the program figure `program_D.pdf` in the `figures` folder of Proble
 here, and the paper includes the shared file directly with
 `\includegraphics[width=0.8\textwidth]{../figures/program_D}` (the path is relative to `paperD`), so
 there is no copy in this folder. It is in the introduction with label `fig:program` and the caption
-"The crossing on each model's switching scale against $L=\log N$ (a), and the heavy-tailed exponent $e(\alpha)=1-\alpha+1/\alpha$ of this paper for a stationary start (b). The scale is $T$ for Papers I to III, $x=N\varepsilon$ for the elephant walk (drawn through the root $g_N$ of Theorem~\ref{thm:erw-crossing}), and the expected number $H_N-1$ of switches at the fixed-start crossing $c=1$ for the aging walk. The curves of this paper are in bold."
+"The crossing on each model's switching scale against $L=\log N$ (a), and the heavy-tailed exponent $e(\alpha)=1-\alpha+1/\alpha$ of this paper for a stationary start (b). The scale is $T$ for Papers~A to~C, $x=N\varepsilon$ for the elephant walk (drawn through the root $g_N$ of Theorem~\ref{thm:erw-crossing}), and the expected number $H_N-1$ of switches at the fixed-start crossing $c=1$ for the aging walk. The curves of this paper are in bold, and a version of this figure also appears in Paper~C."
 
 Figures 2 and 3 are made by `make_figures.py` in this folder. Each is 6.4 in wide. Figure 2 is
 included with `\includegraphics[width=\textwidth]{figures/shape}` and Figure 3 at its natural size with

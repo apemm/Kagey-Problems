@@ -1,7 +1,8 @@
-\section{A Laplace lemma with a parameter}\label{app:laplace}
+\section{A Laplace lemma with a parameter, and the next term}\label{app:laplace}
 
 This appendix proves the Laplace lemma that Appendix~\ref{app:torus} uses
-for Theorem~\ref{thm:local}. On $\mathbb T^m=(\R/2\pi\Z)^m$ we use
+for Theorem~\ref{thm:local}. It then carries the lemma one step further
+(Lemma~\ref{lem:laplace2}) and proves Proposition~\ref{prop:nextterm}. On $\mathbb T^m=(\R/2\pi\Z)^m$ we use
 $\lVert\varphi\rVert=\max_i\operatorname{dist}(\varphi_i,2\pi\Z)$. For
 $x\in\R^m$ we write $\lVert x\rVert=\max_i|x_i|$ and $|x|$ for the Euclidean
 norm. Repeated indices are summed from $1$ to $m$.
@@ -26,6 +27,17 @@ Then, uniformly for $\alpha\in\mathcal K$ and $T\ge1$,
 \Bigl(a(\alpha,0)+O\Bigl(\frac1T\Bigr)\Bigr).
 \]
 \end{lemma}
+
+In words, the integral is the value of the integrand at $\varphi=0$ times the
+volume of a Gaussian peak, which is $(2\pi/T)^{m/2}\det\mathcal J^{-1/2}$. The
+error is uniform in the parameter $\alpha$.
+
+\emph{Idea of the proof.} By (iii) and compactness the part of the torus away
+from $\varphi=0$ is exponentially small. Near $0$ we substitute
+$\varphi=x/\sqrt T$ and expand. The integrand becomes a Gaussian weight times
+$a(\alpha,0)$, plus a term of order $T^{-1/2}$ that is odd in $x$ and
+integrates to $0$, plus a remainder of order $1/T$. All constants depend on
+$\alpha$ only through bounds that hold on the whole of $\mathcal K$.
 
 \begin{proof}
 By compactness
@@ -82,7 +94,7 @@ e^{w}a(\alpha,x/\sqrt T)=a_0+T^{-1/2}\bigl(a_0P(x)+a_ix^i\bigr)+\omega(x),
 \emph{Integration.} Since $x^\top\mathcal Jx\ge h_{\min}|x|^2$, the term
 $\omega$ contributes at most $CT^{-1}$ to the integral, because
 $(1+|x|)^6e^{-h_{\min}|x|^2/4}$ is integrable. Outside the cube
-$|x|>\varepsilon\sqrt T$, so extending the integrals of the other 2 terms to
+$|x|>\varepsilon\sqrt T$, so extending the integrals of the other two terms to
 $\R^m$ changes them by at most $Ce^{-h_{\min}\varepsilon^2T/4}\le CT^{-1}$. On
 $\R^m$ we have
 $\int e^{-\frac12x^\top\mathcal Jx}dx=(2\pi)^{m/2}\det\mathcal J^{-1/2}$, and
@@ -94,3 +106,377 @@ $e^{T\Psi(\alpha,0)}T^{-m/2}\bigl[(2\pi)^{m/2}\det\mathcal J^{-1/2}a_0
 one from the localization are $O(1/T)$ relative to
 $e^{T\Psi(\alpha,0)}(2\pi/T)^{m/2}\det\mathcal J^{-1/2}$.
 \end{proof}
+
+\subsection{The next term of the Laplace lemma}\label{app:laplace-next}
+
+With two more derivatives the same proof gives the term of order $1/T$ and an
+error $O(T^{-2})$.
+
+\begin{lemma}[the next term]\label{lem:laplace2}
+Let $\mathcal K$, $m$, $\Psi$ and $a$ satisfy the hypotheses of
+Lemma~\ref{lem:laplace}. Assume also that the $\varphi$-derivatives of $\Psi$
+up to order $6$ and of $a$ up to order $4$ exist and are jointly continuous on
+$\mathcal K\times\mathbb T^m$. Write $a_0=a(\alpha,0)$, write
+$\mathcal J^{ij}$ for the entries of $\mathcal J(\alpha)^{-1}$, and write
+$\Psi_{ijk}$, $\Psi_{ijkl}$, $a_i$ and $a_{ij}$ for the $\varphi$-derivatives
+at $(\alpha,0)$. Put
+\begin{equation}\label{eq:laplace-c1}
+\begin{aligned}
+c_1(\alpha)={}&\tfrac12a_{ij}\mathcal J^{ij}
++\tfrac12a_i\Psi_{jkl}\mathcal J^{ij}\mathcal J^{kl}\\
+&+a_0\Bigl[\tfrac18\Psi_{ijkl}\mathcal J^{ij}\mathcal J^{kl}
++\tfrac1{12}\Psi_{ijk}\Psi_{lrs}\mathcal J^{il}\mathcal J^{jr}\mathcal J^{ks}
++\tfrac18\Psi_{ijk}\Psi_{lrs}\mathcal J^{ij}\mathcal J^{kl}\mathcal J^{rs}\Bigr].
+\end{aligned}
+\end{equation}
+Then $c_1$ is continuous on $\mathcal K$, and uniformly for
+$\alpha\in\mathcal K$ and $T\ge1$,
+\[
+\int_{\mathbb T^m}e^{T\Psi(\alpha,\varphi)}a(\alpha,\varphi)\,d\varphi
+=e^{T\Psi(\alpha,0)}\Bigl(\frac{2\pi}T\Bigr)^{m/2}\det\mathcal J(\alpha)^{-1/2}
+\Bigl(a_0+\frac{c_1(\alpha)}T+O\Bigl(\frac1{T^2}\Bigr)\Bigr).
+\]
+\end{lemma}
+
+In words, $c_1$ is the mean of an explicit polynomial of degree $6$ under the
+Gaussian law with covariance $\mathcal J^{-1}$. A quick test
+of~\eqref{eq:laplace-c1} is the integrand
+$e^{T(e^{\mathrm i\varphi}-1-\mathrm i\varphi)}$ with $m=1$, $a=1$ and integer
+$T$. Its integral is $2\pi e^{-T}T^T/T!$, and Stirling's formula gives the
+factor $1-\frac1{12T}$. Here $\mathcal J=1$, $\Psi_{111}=-\mathrm i$ and
+$\Psi_{1111}=1$, so \eqref{eq:laplace-c1} gives
+$c_1=\frac18-\frac1{12}-\frac18=-\frac1{12}$ as well.
+
+\emph{Idea of the proof.} After the substitution $\varphi=x/\sqrt T$ the
+integrand is a Gaussian weight times a power series in $T^{-1/2}$ whose
+coefficients are polynomials in $x$. The coefficients of the odd powers of
+$T^{-1/2}$ are odd polynomials and integrate to $0$. The coefficient of
+$T^{-1}$ has the Gaussian mean $c_1$, by Wick's formula.
+
+\begin{proof}
+We follow the proof of Lemma~\ref{lem:laplace} with its notation, and expand
+further. Now $B_\Psi$ and $B_a$ are the maxima over $|\beta|\le6$ and
+$|\beta|\le4$. The localization and the scaling are as before. The integral
+over $\lVert\varphi\rVert\ge\varepsilon$ is at most
+$(2\pi)^mB_ae^{T(\Psi(\alpha,0)-\eta)}\le CT^{-2-m/2}e^{T\Psi(\alpha,0)}$.
+
+\emph{Taylor expansion.} Put $s=T^{-1/2}$, so $0<s\le1$. For $j=3,4,5$ let
+$P_j(x)$ be the part of degree $j$ of the Taylor polynomial of
+$\Psi(\alpha,\cdot)$ at $0$. So $P_3=P$ and
+$P_4(x)=\frac1{24}\Psi_{ijkl}x^ix^jx^kx^l$. For $j=1,2,3$ let $A_j(x)$ be the
+part of degree $j$ of the Taylor polynomial of $a(\alpha,\cdot)$, so
+$A_1(x)=a_ix^i$ and $A_2(x)=\frac12a_{ij}x^ix^j$. Taylor's theorem to order
+$6$ for $\Psi$ and to order $4$ for $a$ gives, on the cube
+$\lVert x\rVert\le\varepsilon\sqrt T$,
+\[
+w=w_0+\omega_1,\qquad w_0=sP_3+s^2P_4+s^3P_5,\qquad
+a(\alpha,sx)=a_0+sA_1+s^2A_2+s^3A_3+\omega_2,
+\]
+with $|\omega_1|\le Cs^4|x|^6$ and $|\omega_2|\le Cs^4|x|^4$. Let
+$\mathsf p(v)=1+v+\frac12v^2+\frac16v^3$. We compare $e^w$ with
+$\mathsf p(w)$, then with $\mathsf p(w_0)$, and then with
+\[
+Y=1+sP_3+s^2\bigl(P_4+\tfrac12P_3^2\bigr)
++s^3\bigl(P_5+P_3P_4+\tfrac16P_3^3\bigr),
+\]
+which collects the terms of $\mathsf p(w_0)$ of degree at most $3$ in $s$.
+First, $|e^v-\mathsf p(v)|\le\frac1{24}|v|^4e^{|v|}$, and we know that
+$|w|\le Cs|x|^3$ and $|w|\le\frac14h_{\min}|x|^2$. So
+$|e^w-\mathsf p(w)|\le Cs^4|x|^{12}e^{h_{\min}|x|^2/4}$. Second,
+$\mathsf p(w)-\mathsf p(w_0)
+=\omega_1\bigl[1+\frac12(w+w_0)+\frac16(w^2+ww_0+w_0^2)\bigr]$, and $|w|$ and
+$|w_0|$ are at most $C(1+|x|)^5$, by $|w|\le Cs|x|^3$ and $s\le1$. So
+$|\mathsf p(w)-\mathsf p(w_0)|\le Cs^4(1+|x|)^{16}$. Third,
+$\mathsf p(w_0)-Y$ is a sum of terms $s^j$ with $4\le j\le9$ times
+polynomials in $x$ of degree at most $15$ with bounded coefficients, so
+$|\mathsf p(w_0)-Y|\le Cs^4(1+|x|)^{15}$. Together,
+\[
+|e^w-Y|\le Cs^4(1+|x|)^{16}e^{h_{\min}|x|^2/4}.
+\]
+Now write $e^wa=Y(a_0+sA_1+s^2A_2+s^3A_3)+Y\omega_2+(e^w-Y)a$. Here
+$|Y|\le C(1+|x|)^9$ and $|a|\le B_a$. In the first product the terms of
+degree at least $4$ in $s$ are at most $Cs^4(1+|x|)^{12}$. Hence
+\[
+e^{w}a(\alpha,sx)=a_0+s\,\mathcal Q_1(x)+s^2\mathcal Q_2(x)+s^3\mathcal Q_3(x)
++\omega(x),\qquad
+|\omega(x)|\le CT^{-2}(1+|x|)^{16}e^{h_{\min}|x|^2/4},
+\]
+where
+\begin{align*}
+\mathcal Q_1&=a_0P_3+A_1,\qquad
+\mathcal Q_2=a_0\bigl(P_4+\tfrac12P_3^2\bigr)+A_1P_3+A_2,\\
+\mathcal Q_3&=a_0\bigl(P_5+P_3P_4+\tfrac16P_3^3\bigr)
++A_1\bigl(P_4+\tfrac12P_3^2\bigr)+A_2P_3+A_3 .
+\end{align*}
+Every term of $\mathcal Q_1$ and of $\mathcal Q_3$ has odd degree, so
+$\mathcal Q_1$ and $\mathcal Q_3$ are odd functions.
+
+\emph{Integration.} As before, $\omega$ contributes at most $CT^{-2}$ to the
+integral over the cube, since $(1+|x|)^{16}e^{-h_{\min}|x|^2/4}$ is
+integrable. Extending the integrals of the four polynomial terms to $\R^m$
+changes them by at most $Ce^{-h_{\min}\varepsilon^2T/4}\le CT^{-2}$. On $\R^m$
+the odd terms $\mathcal Q_1$ and $\mathcal Q_3$ integrate to $0$ against
+$e^{-\frac12x^\top\mathcal Jx}$. This is why the error is $O(T^{-2})$ and not
+$O(T^{-3/2})$. So the integral over the cube is
+\[
+e^{T\Psi(\alpha,0)}T^{-m/2}\Bigl[(2\pi)^{m/2}\det\mathcal J^{-1/2}
+\Bigl(a_0+\frac{\E\mathcal Q_2(x)}T\Bigr)+O(T^{-2})\Bigr],
+\]
+where $x$ is a centered Gaussian vector with $\E[x^ix^j]=\mathcal J^{ij}$. As
+in the proof of Lemma~\ref{lem:laplace}, the errors are $O(T^{-2})$ relative
+to the main factor, because $\det\mathcal J\le(mB_\Psi)^m$.
+
+It remains to show that $\E\mathcal Q_2=c_1$. By Wick's formula a Gaussian
+moment of order $4$ or $6$ is the sum, over the three or fifteen ways to pair the
+indices, of the products of the covariances of the pairs. The derivatives are
+symmetric in their indices. So $\E[A_2]=\frac12a_{ij}\mathcal J^{ij}$,
+$\E[A_1P_3]=\frac16\cdot3\,a_i\Psi_{jkl}\mathcal J^{ij}\mathcal J^{kl}$ and
+$\E[P_4]=\frac1{24}\cdot3\,\Psi_{ijkl}\mathcal J^{ij}\mathcal J^{kl}$. In
+$\E[P_3^2]=\frac1{36}\Psi_{ijk}\Psi_{lrs}\E[x^ix^jx^kx^lx^rx^s]$, six pairings
+join each index of the first factor to an index of the second, and each gives
+$\Psi_{ijk}\Psi_{lrs}\mathcal J^{il}\mathcal J^{jr}\mathcal J^{ks}$. The other
+nine pair two indices inside each factor and join the remaining two, and each
+gives $\Psi_{ijk}\Psi_{lrs}\mathcal J^{ij}\mathcal J^{kl}\mathcal J^{rs}$. So
+$\frac12\E[P_3^2]$ gives the last two terms of~\eqref{eq:laplace-c1}. Finally
+$c_1$ is a polynomial in $a_0$, in the derivatives at $\varphi=0$ and in the
+entries of $\mathcal J^{-1}$, which are continuous on $\mathcal K$.
+\end{proof}
+
+\subsection{Proof of \texorpdfstring{Proposition~\ref{prop:nextterm}}{the
+next term}}\label{app:nextterm}
+
+Throughout, $F$ satisfies (H). If $F=\{i\}$, then
+\eqref{eq:vertexmax} gives $\log M_F=\log\mu_i-q_iT+O(T^2/N)$, which
+is~\eqref{eq:logmaxnext} with $c_F=0$. So let $k\ge2$ until the proof of
+(iii).
+
+\emph{Part \textup{(i)}.} We use the proof of Theorem~\ref{thm:local} in
+Appendix~\ref{app:torus}. It shows that $\Psi$ and $\chi$ in~\eqref{eq:A-fT}
+satisfy the hypotheses of Lemma~\ref{lem:laplace} with $m=k-1$, and that their
+$\varphi$-derivatives of every order are jointly continuous on
+$\mathcal K\times\mathbb T^{k-1}$. So Lemma~\ref{lem:laplace2} applies with
+$a=\chi$. Let $c_1(\alpha)$ be the function~\eqref{eq:laplace-c1} for this
+$\Psi$ and $a=\chi$, with
+$\mathcal J(\alpha)=-\nabla^2_\varphi\Psi(\alpha,0)$, and put
+\begin{equation}\label{eq:c-alpha}
+c(\alpha)=\frac{c_1(\alpha)}{\chi(\alpha,0)},\qquad
+\chi(\alpha,0)=b(\theta'(\alpha))\prod_{i\ge2}\theta_i(\alpha)>0 .
+\end{equation}
+Then the bracket $\chi(\alpha,0)+O(1/T)$ in the last step of that proof
+becomes $\chi(\alpha,0)+c_1(\alpha)/T+O(T^{-2})$. Since $\chi(\alpha,0)$ is
+bounded below on $\mathcal K$, this is
+$\chi(\alpha,0)(1+c(\alpha)/T+O(T^{-2}))$, and the rest of that proof gives
+the expansion in (i). By the regularity step of that proof, $\Psi$ and $\chi$
+are real-analytic in $(\alpha,\varphi)$ near
+$\{\alpha_0\}\times\mathbb T^{k-1}$ for every $\alpha_0\in\Delta_F^\circ$. So
+their $\varphi$-derivatives at $\varphi=0$ are real-analytic in $\alpha$, and
+so are the entries of $\mathcal J(\alpha)^{-1}$ and $c$. Finally (i) gives
+$c(\alpha)=\lim_{T\to\infty}T\bigl[f_T(\alpha)T^{-(k-1)/2}C_F(\alpha)^{-1}
+e^{TI_F(\alpha)}-1\bigr]$. So $c$ is real, and it does not depend on which
+state of $F$ we number $1$.
+
+\emph{Part \textup{(ii)}, the constants.} Write $\Sigma=\Sigma_F$,
+$\gamma=\gamma_F$, $c^*=c(\alpha^*_F)$,
+$X=N^{-(k-1)}T^{(k-1)/2}K_Fe^{-T\lambda_F}$ and
+$x=\alpha'-\alpha^{*\prime}_F$. By Propositions~\ref{prop:rate}(a)
+and~\ref{prop:constant}(a) and by (i), the functions $I_F$, $\log C_F$ and
+$c$ are real-analytic near $\alpha^*_F$, and $I_F$ has its minimum
+$\lambda_F$ at $\alpha^*_F$ with Hessian $\Sigma^{-1}$. So there are a closed
+ball $U=\{|x|\le\rho_0\}\subset\Delta_F^\circ$ and constants $c_U>0$ and
+$L_1$ such that on $U$
+\begin{gather*}
+\Bigl|\log\frac{C_F(\alpha)}{K_F}-\gamma\cdot x\Bigr|\le L_1|x|^2,\qquad
+\Bigl|I_F(\alpha)-\lambda_F-\tfrac12x^\top\Sigma^{-1}x\Bigr|\le L_1|x|^3,\\
+|c(\alpha)-c^*|\le L_1|x|,\qquad|c(\alpha)|\le L_1,\qquad
+I_F(\alpha)-\lambda_F\ge c_U|x|^2 .
+\end{gather*}
+Put $L_2=|\gamma|+L_1\rho_0$, so that $|\log(C_F(\alpha)/K_F)|\le L_2|x|$ on
+$U$. Fix $\rho_1$ so large that
+\[
+\rho_1\ge\frac{L_2}{c_U},\qquad\rho_1\ge|\Sigma\gamma|+k,\qquad
+c_U\rho_1^2-L_2\rho_1-L_1\ge|c_F|+1 .
+\]
+For $\alpha\in U$ let
+\[
+G_T(\alpha)=\log\frac{C_F(\alpha)}{K_F}-T\bigl(I_F(\alpha)-\lambda_F\bigr)
++\frac{c(\alpha)}T .
+\]
+By (i) with $\mathcal K=U$ and Lemma~\ref{lem:discrete}, there are $T_0$ and
+$N_0$ such that for $N\ge N_0$, $T_0\le T\le N^{1/3}$ and $\supp n=F$ with
+$\alpha=n/N\in U$,
+\begin{equation}\label{eq:GT}
+\log\frac{P_N(n)}X=G_T(\alpha)+O\Bigl(\frac1{T^2}+\frac{T^2}N\Bigr).
+\end{equation}
+Here we used $\log(1+c/T+O(T^{-2}))=c/T+O(T^{-2})$, which holds because
+$|c|\le L_1$ on $U$. We take $T_0\ge\rho_1/\rho_0$, and we increase $T_0$ and
+$N_0$ finitely many times below.
+
+\emph{Part \textup{(ii)}, two bounds for $G_T$.} First let $\alpha\in U$ with
+$|x|\ge\rho_1/T$. Then
+$G_T(\alpha)\le L_2|x|-c_UT|x|^2+L_1/T$. The function
+$v\mapsto L_2v-c_UTv^2$ decreases for $v\ge L_2/(2c_UT)$, and
+$\rho_1/T$ lies in this range. So
+\begin{equation}\label{eq:GTfar}
+G_T(\alpha)\le\frac{L_2\rho_1-c_U\rho_1^2+L_1}T\le\frac{c_F-1}T
+\qquad(\alpha\in U,\ |x|\ge\rho_1/T).
+\end{equation}
+Next let $|x|\le\rho_1/T$, and put $y=x-\Sigma\gamma/T$. Then $\alpha\in U$,
+and the bounds on $U$ give
+$G_T(\alpha)=\gamma\cdot x-\frac T2x^\top\Sigma^{-1}x+c^*/T+\epsilon$ with
+$|\epsilon|\le L_1|x|^2+L_1T|x|^3+L_1|x|/T\le L_1(\rho_1^2+\rho_1^3+\rho_1)T^{-2}$.
+Completing the square gives
+$\gamma\cdot x-\frac T2x^\top\Sigma^{-1}x
+=\frac1{2T}\gamma^\top\Sigma\gamma-\frac T2y^\top\Sigma^{-1}y$. So
+\begin{equation}\label{eq:GTnear}
+G_T(\alpha)=\frac{c_F}T-\frac T2y^\top\Sigma^{-1}y+O\Bigl(\frac1{T^2}\Bigr)
+\qquad(|x|\le\rho_1/T),
+\end{equation}
+uniformly in $x$. Since $\Sigma^{-1}$ is positive definite,
+\eqref{eq:GTfar} and~\eqref{eq:GTnear} give
+$G_T\le c_F/T+O(T^{-2})$ on $U$.
+
+\emph{Part \textup{(ii)}, the upper bound.} The part of the proof of
+Theorem~\ref{thm:facemax} that treats compositions outside $U$ uses only that
+$U$ is a closed ball around $\alpha^*_F$ inside $\Delta_F^\circ$. So there is
+$\eta>0$ with $P_N(n)\le X\cdot O(T^{(k-1)/2}e^{-2\eta T})$ for $\supp n=F$ and
+$n/N\notin U$. After increasing $T_0$ this is at most
+$Xe^{-\eta T}\le Xe^{(c_F-1)/T}$. For $n/N\in U$ we use~\eqref{eq:GT} and the
+bound on $G_T$. Hence $\log(M_F/X)\le c_F/T+O(T^{-2}+T^2/N)$.
+
+\emph{Part \textup{(ii)}, the lower bound.} Let $\alpha^0$ be the point with
+$x=\Sigma\gamma/T$. Let $n^0_i$ be an integer nearest to $N\alpha^0_i$ for
+$i\ge2$, and $n^0_1=N-\sum_{i\ge2}n^0_i$. Then
+$|n^0_i-N\alpha^0_i|\le k$ for every $i$. Since $\alpha^0\to\alpha^*_F$ as
+$T\to\infty$ and every $\alpha^*_{F,i}$ is positive, $n^0$ has support $F$
+after increasing $T_0$ and $N_0$. For $\alpha=n^0/N$ we have $|y|\le k/N$ and
+$|x|\le|\Sigma\gamma|/T+k/N\le\rho_1/T$, because $T\le N$. So
+\eqref{eq:GTnear} gives $G_T(n^0/N)\ge c_F/T-O(T/N^2+T^{-2})$,
+and~\eqref{eq:GT} gives
+$\log(M_F/X)\ge\log(P_N(n^0)/X)\ge c_F/T-O(T^{-2}+T^2/N)$. Note that a lattice
+point near $\alpha^0$ loses only $O(T/N^2)$, because $G_T$ is flat to first
+order at its maximizer.
+
+The two bounds give~\eqref{eq:logmaxnext} for $N\ge N_0$ and
+$T_0\le T\le N^{1/3}$. For $1\le T\le T_0$ it follows from~\eqref{eq:logmax},
+since $c_F/T$ and $1/T$ are $O(T^{-2})$ there, with a constant that depends
+on $T_0$. This proves (ii).
+
+\emph{Part \textup{(iii)}.} Now $F$ and $G$ are as in
+Theorem~\ref{thm:crossing}, and $k_G=1$ is allowed. Let $T_N\in[1,N^{1/3}]$ be
+a zero of $D_N$. The proof of Theorem~\ref{thm:crossing}(ii) shows that
+$\frac\Delta{2\delta}L<T_N\le\frac{2\Delta}\delta L$ for large $N$.
+Subtracting~\eqref{eq:logmaxnext} for $G$ from~\eqref{eq:logmaxnext} for $F$
+at $T=T_N$ gives
+\[
+0=-\Delta L+\frac\Delta2\log T_N+\delta T_N+\log\frac{K_F}{K_G}
++\frac{c_F-c_G}{T_N}+O\Bigl(\frac1{T_N^2}+\frac{T_N^2}N\Bigr).
+\]
+We multiply by $T_N$. The error becomes $O(1/T_N+T_N^3/N)=O(1/L)$, which
+is~\eqref{eq:crossingnext}.
+
+\emph{Part \textup{(iv)}, a symmetric pair.} Let $F=\{i,j\}$ with
+$q_{ij}=q_{ji}=a>0$, $q_i=q_j=q$ and $\mu_i=\mu_j>0$. Then $F$ satisfies (H).
+We first prove~\eqref{eq:pairnext}, without the Laplace lemma. Let
+$1\le T\le N^{1/3}$ and let $N$ be so large that $qh\le\frac12$ and $I+hQ$ is
+stochastic. By Proposition~\ref{prop:pair}, $M_F=\mu_i(1-qh)^{N-1}S_N(u)$ with
+$u=ah/(1-qh)$. Put $z=Nu=aT/(1-qh)$. Then $aT\le z\le2aT$ and
+$0\le z-aT\le2aqT^2/N$. By~\eqref{eq:planar-bessel},
+\[
+\log S_N(u)=\log\frac2N+\log\psi(z)+O\Bigl(\frac{T^2}N\Bigr),
+\]
+since $z(z+2)/(2N)=O(T^2/N)$ and this is at most $\frac12$ for large $N$. By
+\cite[Eq.~10.40.1]{dlmf}, as $z\to\infty$,
+$I_0(z)=e^z(2\pi z)^{-1/2}(1+\frac1{8z}+O(z^{-2}))$ and
+$I_1(z)=e^z(2\pi z)^{-1/2}(1-\frac3{8z}+O(z^{-2}))$. So
+$I_0(z)+I_1(z)=2e^z(2\pi z)^{-1/2}(1-\frac1{8z}+O(z^{-2}))$ and
+\[
+\log\psi(z)=z+\tfrac12\log z+\tfrac12\log\frac2\pi-\frac1{8z}+\rho(z),
+\qquad|\rho(z)|\le C_az^{-2}\quad\text{for }z\ge a .
+\]
+The bound on $\rho$ holds for all $z\ge a$, and not only for large $z$,
+because $\rho$ is continuous on $(0,\infty)$. The function
+$z+\frac12\log z-\frac1{8z}$ has a bounded derivative on $[a,\infty)$. So
+replacing $z$ by $aT$ in it changes it by $O(T^2/N)$, and
+\[
+\log\psi(z)=aT+\tfrac12\log T+\tfrac12\log\frac{2a}\pi-\frac1{8aT}
++O\Bigl(\frac1{T^2}+\frac{T^2}N\Bigr).
+\]
+Also $(N-1)\log(1-qh)=-qT+O(T^2/N)$. Adding the three parts,
+\[
+\log M_F=-L+\tfrac12\log T+\log\Bigl(2\mu_i\sqrt{\frac{2a}\pi}\Bigr)-(q-a)T
+-\frac1{8aT}+O\Bigl(\frac1{T^2}+\frac{T^2}N\Bigr).
+\]
+By Corollary~\ref{cor:symface} with $k=2$, $\mu(F)=2\mu_i$ and
+$\tree(q_F)=a$, we have $\lambda_F=q-a$ and
+$K_F=2\mu_i\cdot2^{3/2}\sqrt a\,(4\pi)^{-1/2}=2\mu_i\sqrt{2a/\pi}$. This
+is~\eqref{eq:pairnext}. Now we compare it with~\eqref{eq:logmaxnext} at
+$T=L$. Both expand $\log M_F$, so their difference
+$(c_F+\frac1{8a})/L$ is $O(L^{-2}+L^2/N)=O(L^{-2})$. Letting
+$N\to\infty$ gives $c_F=-1/(8a)$.
+
+As a check we compute the same value from~\eqref{eq:c-alpha}. Number the
+states so that $i$ is state $1$. Then $A'=0$, so in the notation of
+Appendix~\ref{app:torus} we have $g(z_2)=a^2/z_2$ and
+$b(z_2)=\mu_i(1+a/z_2)^2$. At $\alpha=\alpha^*_F=(\frac12,\frac12)$ the radius
+is $\theta_2=a$, so $\Psi=a\cos\varphi$ and
+$\chi=\mu_ia(1+e^{-\mathrm i\varphi})^2e^{\mathrm i\varphi}
+=2\mu_ia(1+\cos\varphi)$. Hence $\mathcal J=a$, $\Psi_{111}=0$,
+$\Psi_{1111}=a$, $\chi(\alpha^*_F,0)=4\mu_ia$, $\chi_1=0$ and
+$\chi_{11}=-2\mu_ia$, and~\eqref{eq:laplace-c1} gives
+$c_1=-\mu_i+\frac12\mu_i=-\frac12\mu_i$ and $c(\alpha^*_F)=-1/(8a)$. Also
+$\gamma_F=0$, because $C_F$ is unchanged when the two states are swapped
+(Proposition~\ref{prop:constant}(b) with $\nu=\ones$). So the two values
+agree.
+
+\emph{Part \textup{(iv)}, the complete graph.} Let $Q=J-dI$, let $F$ have
+$k\ge2$ states and let $\mu_i=\mu_0>0$ for $i\in F$. Then $F$ satisfies (H),
+and Corollary~\ref{cor:symface} with $\mu(F)=k\mu_0$ and
+$\tree(q_F)=k^{k-2}$ gives $\lambda_F=d-k$, $\alpha^*_F$ uniform on $F$ and
+$K_F=\mu_0k^{k+1/2}(4\pi)^{-(k-1)/2}$.
+
+We first show that $\gamma_F=0$, so that $c_F=c(\alpha^*_F)$. By
+Proposition~\ref{prop:constant}(b) with $\nu=\ones$ we may take
+$r_\alpha=l_\alpha=\sqrt\alpha$, and then
+\[
+C_F(\alpha)=\frac{\mu_0\bigl(\sum_{i\in F}\sqrt{\alpha_i}\bigr)^2}
+{(4\pi)^{(k-1)/2}}\,\frac{\sqrt{\mathcal T(\alpha)}}{\prod_{i\in F}\alpha_i},
+\]
+where $\mathcal T(\alpha)$ is the tree sum of Proposition~\ref{prop:constant}(b) for the
+conductances $\sqrt{\alpha_i\alpha_j}$, $i,j\in F$. A permutation of $F$ permutes
+the spanning trees of the complete graph on $F$. So $C_F$ is a symmetric
+function of $(\alpha_i)_{i\in F}$. Take $j\ge2$
+and swap the states $1$ and $j$. This maps the point
+$\alpha^*_F+v(e_j-e_1)$ to $\alpha^*_F-v(e_j-e_1)$, so
+$v\mapsto\log C_F(\alpha^*_F+v(e_j-e_1))$ is even and its derivative at $v=0$
+vanishes. In the coordinates $\alpha'$ this derivative is the $j$-th entry of
+$\gamma_F$.
+
+Now we compare with~\cite{paperB}. That paper treats the uniform start. It
+writes $r$ for our $h$, so its $T=Nr$ is ours, and $p=1-(d-1)h$. Its $V_N$ is
+$p^{N-1}/d$, and its $C_{N,k}$ is the probability, for the uniform start, of
+a balanced bin with $k$ positive coordinates. Let $n$ be such a bin with
+support $F$, so that $|n_i-N/k|<1$ for $i\in F$. A path inside $F$ has
+probability $\mu_0$ times a product of transition probabilities, so for our
+start $P_N(n)=d\mu_0C_{N,k}$. By~\cite[Theorem~3.1(i)]{paperB}, for large $N$
+and uniformly for $\frac12L\le T\le2L$,
+\[
+\log\frac{C_{N,k}}{V_N}=(k-1)\Bigl[T-L+\tfrac12\log T-a_k\Bigr]
+-\frac{k-1}{8T}+O\Bigl(\frac1{T^2}+\frac{T^2}N\Bigr),
+\]
+with $a_k$ as in Corollary~\ref{cor:paperB}. Also
+$\log V_N=-\log d-(d-1)T+O(T^2/N)$, and
+$\log\mu_0-(k-1)a_k=\log K_F$. So
+\begin{equation}\label{eq:Kd-paperB}
+\log P_N(n)=-(k-1)L+\frac{k-1}2\log T+\log K_F-(d-k)T-\frac{k-1}{8T}
++O\Bigl(\frac1{T^2}+\frac{T^2}N\Bigr).
+\end{equation}
+On the other hand $\alpha=n/N$ has $|x|\le k/N$, so~\eqref{eq:GT} applies to
+$n$. The bounds on $U$ give
+$G_T(n/N)=c(\alpha^*_F)/T+O(1/N)$, since $\log(C_F/K_F)=O(|x|)$,
+$T(I_F-\lambda_F)=O(T|x|^2)$ and $c(\alpha)-c(\alpha^*_F)=O(|x|)$. Hence
+$\log(P_N(n)/X)=c(\alpha^*_F)/T+O(T^{-2}+T^2/N)$. Comparing
+with~\eqref{eq:Kd-paperB} at $T=L$, which lies in $[T_0,N^{1/3}]$ and in
+$[\frac12L,2L]$ for large $N$, gives
+$(c(\alpha^*_F)+\frac{k-1}8)/L=O(L^{-2})$. So
+$c_F=c(\alpha^*_F)=-(k-1)/8$. This value rests on the cited theorem
+of~\cite{paperB}. \qed

@@ -24,7 +24,8 @@ args = parser.parse_args()
 scripts = ('verify_first_order.py',      # C1: exact law, the rate on a face, first-order selection
            'verify_examples.py',         # C2: complete graphs, cycles, paths, 2 triangles, the paw and the house
            'verify_planar.py',           # C3: the planar persistent walk
-           'verify_sticky_fisher.py',    # C4: sticky priors and the endpoint Fisher information
+           'verify_planar_product.py',   # C3: the product curve and turns only
+           'verify_sticky_fisher.py',    # C4: sticky priors (and the endpoint information note S1)
            'verify_second_order.py')     # C5: the local law, the constants and the crossings
 t0 = time.time()
 for name in scripts:

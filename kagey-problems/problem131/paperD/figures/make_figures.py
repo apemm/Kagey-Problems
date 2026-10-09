@@ -170,7 +170,7 @@ def g_root(n):
 
 
 def x_second(n):
-    """The second-order formula of Remark 2.9 without its error term."""
+    """The second-order formula of Proposition 2.10 without its error term."""
     g = g_root(n)
     return g - (2 * g * log(n) + g * g / 2) / (n * (1 + 1 / g))
 
@@ -213,7 +213,7 @@ def landau_mode(dps=30):
 # ---------------------------------------------------------------- heavy-tailed runs
 
 HEAVY_A = ["1.3", "1.5", "phi", "5/3", "1.7", "1.9"]      # panel (a) and Table 2
-HEAVY_B = ["1.5", "1.55", "1.58", "1.59"]                 # panel (b) and Remark 4.7
+HEAVY_B = ["1.5", "1.55", "1.58", "1.59"]                 # panel (b) and Remark 4.6
 ALPHA_TEX = {"phi": r"\varphi", "5/3": "5/3"}
 
 
@@ -420,7 +420,7 @@ TABLE3 = {"1.3": ("+0.469231", "0.422717", "0.498631", "17.7593", "1.3180", "38.
           "1.7": ("-0.111765", "0.880046", "1.265508", "0.298369", "0.7733", "0.262005", "0.8334", "0.215839", "0.8881"),
           "1.9": ("-0.373684", "1.438986", "2.266075", "0.0449706", "0.4923", "0.0256505", "0.5569", "0.0121612", "0.6242")}
 NSTAR = {"1.5": 26, "1.55": 192, "1.58": 2596, "1.59": 14530}
-NSTAR_160 = 372660          # quoted in Remark 4.7, not computed here (grid plus bisection in the notes)
+NSTAR_160 = 372660          # from the research notes (no longer quoted in the paper), not computed here (grid plus bisection in the notes)
 
 
 def agree(paper, got):
@@ -577,7 +577,7 @@ def check(data):
     cmp("R_1e5/C(phi)", "0.938", Rphi / kphi["C"])
     if h["A"]["phi"]["falls_before_max"] or h["A"]["phi"]["argmax_N"] != 100000:
         bad.append("R_n at alpha = phi should increase on the computed range")
-    # Remark 4.7 must say that R_n rises over even n from 12 to 150 (not from the start). R_n falls
+    # The research notes say (the paper no longer prints this) that R_n rises over even n from 12 to 150 (not from the start). R_n falls
     # from R_2 = 0.5618 to R_12 = 0.41448 and then rises, so the one fall in [10, 150] is 10 -> 12.
     t53 = h["A"]["5/3"]
     _, Zs, _ = heavy_centers(5 / 3, 10)
@@ -593,8 +593,8 @@ def check(data):
     cmp("R_12 at alpha = 5/3 (the minimum before the rise, research notes, not printed)", "0.41448", small[5])
     cmp("R_150 at alpha = 5/3", "0.42419", t53["cells"]["150"])
     k53 = h["consts"]["5/3"]
-    cmp("ratio at 1e5, alpha = 5/3 (Remark 4.7)", "0.910", t53["cells"]["100000"] / (k53["C"] * 1e5 ** k53["e"]))
-    cmp("C(5/3) in Remark 4.7", "0.8351", k53["C"])
+    cmp("ratio at 1e5, alpha = 5/3 (Table 2)", "0.910", t53["cells"]["100000"] / (k53["C"] * 1e5 ** k53["e"]))
+    cmp("C(5/3) in Remark 4.6", "0.8351", k53["C"])
     for a, ns in NSTAR.items():
         ch = h["B"][a]["sign_changes"]
         if ch != [ns]:

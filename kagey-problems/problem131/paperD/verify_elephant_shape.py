@@ -1,4 +1,8 @@
-"""Checks for Section 3 and Appendix B of Paper D (the elephant walk near its crossing).
+"""Checks for Section 3 and Appendices B and C of Paper D (the elephant walk near its crossing).
+
+The 2 computations that enter proofs, namely C_N < E_N at eps = 2/(N+2) for even 8 <= N < 1688
+(Proposition 3.8) and the Landau density near its mode (Lemma 3.11), are certified in
+certify_elephant.py. Here they are only recomputed in double precision by 2 methods.
 
 Notation as in the paper. Given X_1 = +1, M_n is the number of steps that differ
 from X_1 and f_n(m) = P_+(M_n = m). Then P(A_n = n-m) = (f_n(m) + f_n(n-m))/2.
@@ -280,7 +284,7 @@ def main():
     check('first-order term of f_n(m) is x/(m(m+1)) for every 1 <= m <= n-1, n <= 15', ok, 'exact')
 
     # ------------------------------------------------ Corollary 3.6: hypothesis x_n >= 2(1 - eps_n)
-    print('\nCorollary 3.6: the hypothesis x_n >= 2(1 - eps_n), computed for n < 1688 and proved for even n >= 1688', flush=True)
+    print('\nProposition 3.8: the hypothesis x_n >= 2(1 - eps_n) of Corollary 3.6 (uncertified recomputation by 2 methods; the certified one is certify_elephant.py)', flush=True)
     # C_n/E_n increases in eps (Proposition 2.3), and x = 2(1 - eps) means eps = 2/(n+2).
     # So x_n >= 2(1 - eps_n) exactly when C_n <= E_n at eps = 2/(n+2): one evaluation per n.
     t0 = time.time()
@@ -295,25 +299,25 @@ def main():
             holdsB.append(n)
         if n >= 8:
             margin = max(margin, center_of(PA, n) / PA[n])
-    check('hypothesis holds for every 8 <= n < 1688 (after Corollary 3.6) and fails for every n <= 7 (research notes, not printed)',
+    check('hypothesis holds for every 8 <= n < 1688 and fails for every n <= 7 (Proposition 3.8 for even n; odd n are research notes, not printed)',
           holdsA == holdsB == list(range(8, 1688)),
           f'A and B agree; first n where it holds: {holdsA[0]}; largest C_n/E_n at eps = 2/(n+2) for n >= 8: {margin:.3f}'
           f'  [{time.time() - t0:.0f}s]')
-    # The proof for even n >= 1688 (text after Corollary 3.6): at eps = 2/n, Theorem 2.6(b) applies and C_n < E_n.
+    # The proof for even n >= 1688 (proof of Proposition 3.8): at eps = 2/n, Theorem 2.6(b) applies and C_n < E_n.
     first = next(n for n in range(64, 4000, 2) if (2 / n) * (1 + log(n)) <= 0.01)
-    check('eps(1 + log n) <= 1/100 at eps = 2/n holds for every even n >= 1688 and fails at n = 1686 (after Corollary 3.6)',
+    check('eps(1 + log n) <= 1/100 at eps = 2/n holds for every even n >= 1688 and fails at n = 1686 (proof of Proposition 3.8)',
           first == 1688, f'first even n: {first}; the left side decreases in n')
     ns = np.arange(1688, 10 ** 6, 2, dtype=float)
     ub = 8 * ns ** (4 / ns) * np.exp(10400 / ns) / (ns * (ns + 2))
-    check('8 n^(4/n) e^(10400/n)/(n(n+2)) decreases in n and is below 1.4e-3 at n = 1688 (after Corollary 3.6)',
+    check('8 n^(4/n) e^(10400/n)/(n(n+2)) decreases in n and is below 1.4e-3 at n = 1688 (proof of Proposition 3.8)',
           bool(np.all(np.diff(ub) < 0)) and ub[0] < 1.4e-3, f'{ub[0]:.4e} at n = 1688 (checked up to 10^6; each factor decreases)')
     En = 0.5 * (1 - 2 / ns) ** (ns - 1)
     lowE = 0.5 * np.exp(-2 - 2 / ns)
-    check('E_n = (1/2)(1 - 2/n)^(n-1) >= (1/2) e^(-2-2/n) > 0.06 for even n >= 1688 (after Corollary 3.6)',
+    check('E_n = (1/2)(1 - 2/n)^(n-1) >= (1/2) e^(-2-2/n) > 0.06 for even n >= 1688 (proof of Proposition 3.8)',
           bool(np.all(En >= lowE)) and lowE.min() > 0.06, f'smallest lower bound {lowE.min():.4f}')
 
     # ------------------------------------------------ crossings for every n <= 600 and the shape there
-    print('\nShape at the crossing for 2 <= n <= 600 (Theorem 3.5, Corollary 3.6, Conjecture 3.10)', flush=True)
+    print('\nShape at the crossing for 2 <= n <= 600 (Theorem 3.5, Corollary 3.6, Conjecture 3.16)', flush=True)
     t0 = time.time()
     XA, XB = {}, {}
     prev = None
@@ -355,13 +359,13 @@ def main():
     check('dip P(A_n = n-1) > E_n at the crossing for every 4 <= n <= 600 (research notes, not printed)', not dipfail, f'failures {dipfail}')
     check('exactly 3 sign changes of the first difference, 10 <= n <= 600 (research notes, not printed)', not shapefail, f'failures {shapefail}')
     check('center bin(s) the unique interior minimum, 10 <= n <= 600 (research notes, not printed)', not minfail, f'failures {minfail}')
-    check('Conjecture 3.10 (open range) holds for every 10 <= n <= 600 (after it)', not openfail, f'failures {openfail}')
+    check('Conjecture 3.16 (open range) holds for every 10 <= n <= 600 (after it)', not openfail, f'failures {openfail}')
     expect = [10, 11] + list(range(17, 23)) + list(range(30, 36)) + list(range(48, 52))
     check('closed-range version fails exactly at n = 10, 11, 17-22, 30-35, 48-51 (endpoints only; the paper says only for some n <= 51)',
           closedfail == expect, f'failures {closedfail}')
 
     # ------------------------------------------------ the doubling grid
-    print('\nThe grid n = 50, ..., 25600 (Remark 3.7, Conjecture 3.10, Figure 2)', flush=True)
+    print('\nThe grid n = 50, ..., 25600 (Remark 3.13, Conjecture 3.16, Figure 2)', flush=True)
     grid = [50, 100, 200, 400, 800, 1600, 3200, 6400, 12800] + ([25600] if args.full else [])
     ms_paper = {1600: 21, 3200: 25, 6400: 29, 12800: 33, 25600: 38}
     a1_paper = {1600: 33, 3200: 39, 6400: 45, 12800: 51, 25600: 57}
@@ -384,8 +388,8 @@ def main():
         if n in ms_paper:
             cpm = int(np.argmax(cp_panjer(x, n, 400)))
             ok &= SA['ms'] == ms_paper[n] == cpm and SA['a1'] == a1_paper[n]
-            line += f', CP_n mode {cpm} (m* equal to the CP_n mode is in Remark 3.7; notes: m* = {ms_paper[n]}, a_1 = {a1_paper[n]})'
-        check(f'n = {n}: open-range convexity (Conjecture 3.10, printed for n = 800, ..., 25600), m* = CP_n mode (Remark 3.7); 3 sign changes, dip, unique central minimum (research notes, not printed)', ok,
+            line += f', CP_n mode {cpm} (m* equal to the CP_n mode is in Remark 3.13; notes: m* = {ms_paper[n]}, a_1 = {a1_paper[n]})'
+        check(f'n = {n}: open-range convexity (Conjecture 3.16, printed for n = 800, ..., 25600), m* = CP_n mode (Remark 3.13); 3 sign changes, dip, unique central minimum (research notes, not printed)', ok,
               line + f', A and B agree: {okB}  [{time.time() - t1:.1f}s]')
         if n in (1600, 3200):
             ratioA = fA[1:n // 2 + 1] / cp_panjer(x, n, n // 2)[1:]
@@ -534,15 +538,15 @@ def main():
             lo_ = mid
     agree('lower factor 1 - e_2(n/2) at the center first positive (n ~ 2.2e3, research notes, not printed)', '2.2e3', {'bisection': hi_})
 
-    check('x L^2 >= log^2 2 > 1/3, not > 1/2, in the explicit proof of Theorem 3.8 (research notes, not printed)',
+    check('x L^2 >= log^2 2 > 1/3, not > 1/2, in the explicit proof of Theorem 3.14 (research notes, not printed)',
           log(2) ** 2 > 1 / 3 and log(2) ** 2 < 1 / 2, f'log^2 2 = {log(2) ** 2:.4f}')
 
-    # ------------------------------------------------ Remark 3.7 and Theorem 3.8 at large n
-    print('\nCompound Poisson proxy, the mode and the tail at large n (Remark 3.7, Theorem 3.8)', flush=True)
+    # ------------------------------------------------ Remark 3.13 and Theorem 3.14 at large n
+    print('\nCompound Poisson proxy, the mode and the tail at large n (Remark 3.13, Theorem 3.14)', flush=True)
     n, x = 10 ** 6, g_root(10 ** 6)
     Hn = float(mp.harmonic(n))
     dB = x * x * log(n) / n + 4 * x * x / n * exp(4 * x * x / n) + 4 * x * x * (Hn * Hn + Hn) / n
-    agree('delta_B at n = 1e6 and x = g_n (about 0.46, Remark 3.7)', '0.46', {'formula': dB})
+    agree('delta_B at n = 1e6 and x = g_n (about 0.46, Remark 3.13)', '0.46', {'formula': dB})
     agree('2x at n = 1e6 (research notes, not printed)', '44.9', {'formula': 2 * x})
     for n, mp_ in ((10 ** 5, 47), (10 ** 6, 64)):
         t1 = time.time()
@@ -568,25 +572,25 @@ def main():
         g1 = chain_B(n, x / n, 1, m)
         vals['B'] = 0.5 * (g0[m] + g1[m]) / (x / m ** 2)
         devs['B'] = float(np.max(np.abs(g0[1:] / cp_fft(x, n, m)[1:] - 1)))
-    agree('P(A_n = n-m)/(x/m^2) at n = 1e6, x = 22.4407, m = 1e4 (after Theorem 3.8)', '0.51889', vals, f'  [{time.time() - t1:.0f}s]')
-    agree('max over m <= 1e4 of |f_n/CP_n - 1| at n = 1e6 (Remark 3.7)', '3.5e-4', devs)
+    agree('P(A_n = n-m)/(x/m^2) at n = 1e6, x = 22.4407, m = 1e4 (after Theorem 3.14)', '0.51889', vals, f'  [{time.time() - t1:.0f}s]')
+    agree('max over m <= 1e4 of |f_n/CP_n - 1| at n = 1e6 (Remark 3.13)', '3.5e-4', devs)
     check('Figure 2 check value 0.51889', abs(RA - 0.51889) < 5e-6, f'{RA:.6f}')
     if not args.full:
         print('  skip  second method (pull recursion, FFT proxy) at n = 1e6; run with --full')
-    # Heuristic H2 near m = 70 at n = 1600 (discussion after Theorem 3.8).
+    # Heuristic H2 near m = 70 at n = 1600 (discussion after Theorem 3.14).
     x = X[1600]
     H2 = 1 + x * (2 * log(70) + 2 * GAMMA - 3) / 70
-    check('heuristic correction 1 + x(2 log m + 2 gamma - 3)/m is still close to 2 at m = 70, n = 1600 (after Theorem 3.8)',
+    check('heuristic correction 1 + x(2 log m + 2 gamma - 3)/m is still close to 2 at m = 70, n = 1600 (after Theorem 3.14)',
           1.9 < H2 < 2.1, f'{H2:.4f}')
 
-    # ------------------------------------------------ Landau constants (Remark 3.7)
-    print('\nLandau constants (Remark 3.7 and the research notes)', flush=True)
+    # ------------------------------------------------ Landau constants (Lemma 3.11, Remark 3.13)
+    print('\nLandau constants (Lemma 3.11, uncertified recomputation by 2 methods, and the research notes)', flush=True)
     mp.mp.dps = 30
     l0A = mp.findroot(lambda l: landau_real(l, 1), -0.22)
     l0B = mp.findroot(lambda l: landau_fourier(l, 1), -0.22)
-    agree('mode lambda_0 of f_L (Remark 3.7 prints -0.2228)', '-0.2227829813', {'A': float(l0A), 'B': float(l0B)})
+    agree('mode lambda_0 of f_L (Lemma 3.11; certified in certify_elephant.py)', '-0.2227829813', {'A': float(l0A), 'B': float(l0B)})
     f2A, f2B = landau_real(l0A, 2), landau_fourier(l0B, 2)
-    agree("f_L''(lambda_0) (computed, not certified, Remark 3.7)", '-0.0789', {'A': float(f2A), 'B': float(f2B)})
+    agree("f_L''(lambda_0) (Lemma 3.11; certified in certify_elephant.py)", '-0.0789', {'A': float(f2A), 'B': float(f2B)})
     f3A, f3B = landau_real(l0A, 3), landau_fourier(l0B, 3)
     agree('kappa_1/2 = f_L\'\'\'/(2 f_L\'\') in H1 (research notes, not printed)', '-0.535021', {'A': float(f3A / f2A / 2), 'B': float(f3B / f2B / 2)})
 
@@ -629,7 +633,7 @@ def main():
                 [mp.mpf(s) * k / 100 for k in range(1, 101) for s in (-1, 1)])
     kap = min(inner, f0 - landau_real(l0A - 1, 0), f0 - landau_real(l0A + 1, 0))
     kapB = min(landau_fourier(l0B, 0) - landau_fourier(l0B + 1, 0), landau_fourier(l0B, 0) - landau_fourier(l0B - 1, 0))
-    agree('best kappa_L (numerical, research notes, not printed)', '0.0262', {'A': float(kap), 'B (value at |l - l_0| = 1)': float(kapB)})
+    agree('best kappa_L (numerical, Remark 3.13 prints 0.026)', '0.0262', {'A': float(kap), 'B (value at |l - l_0| = 1)': float(kapB)})
     EL = lambda y: (mp.mpf('99.7') * mp.log(y) + 517) / y
     xs = mp.findroot(lambda y: EL(y) - kap / 2, 1e5)
     agree('E_L(x) < kappa_L/2 needs x above (about 1.3e5, research notes, not printed)', '1.3e5', {'A': float(xs)})
@@ -642,7 +646,7 @@ def main():
     agree('coefficient 0.631 I_1/(2 pi) of (log x)/x in E_L (research notes, not printed)', '99.64', {'formula': float(mp.mpf('0.631') * I1 / (2 * mp.pi))})
     agree('coefficient (0.631 I_2 + 1.53 I_1)/(2 pi) of 1/x in E_L (research notes, not printed)', '516.7',
           {'formula': float((mp.mpf('0.631') * I2 + mp.mpf('1.53') * I1) / (2 * mp.pi))})
-    check('1/2 + pi/24 <= 0.631 (research notes, not printed)', 0.5 + pi / 24 <= 0.631, f'{0.5 + pi / 24:.6f}')
+    check('1/2 + pi/24 <= 0.631 (Fact 2 in the proof of Theorem 3.10)', 0.5 + pi / 24 <= 0.631, f'{0.5 + pi / 24:.6f}')
 
     def ratio(th):
         s = mp.e ** (1j * th)
@@ -651,11 +655,11 @@ def main():
         return abs(R) / (th ** 2 * (mp.mpf('0.631') * abs(mp.log(th)) + mp.mpf('1.53')))
     grid_t = [mp.mpf(10) ** (-k / 4) for k in range(0, 49)] + [mp.pi * k / 400 for k in range(1, 401)]
     rmax = max(ratio(t) for t in grid_t)
-    check('|R(theta)| <= theta^2 (0.631 |log theta| + 1.53) on a grid of (0, pi] (explicit form in the research notes, not printed)', rmax <= 1,
+    check('|R(theta)| <= theta^2 (0.631 |log theta| + 1.53) on a grid of (0, pi] (Fact 2 in the proof of Theorem 3.10)', rmax <= 1,
           f'largest ratio {float(rmax):.4f}')
     th = np.concatenate([np.logspace(-8, 0, 4000), np.linspace(1, np.pi, 4000)])
     reps = 2 * np.sin(th / 2) ** 2 * np.log(2 * np.sin(th / 2)) + np.sin(th) * (np.pi - th) / 2
-    check('-Re Psi(theta) >= theta/(2 pi) on (0, pi] (research notes behind Remark 3.7)', float(np.min(reps / th)) >= 1 / (2 * pi),
+    check('-Re Psi(theta) >= theta/(2 pi) on (0, pi] (Fact 3 in the proof of Theorem 3.10)', float(np.min(reps / th)) >= 1 / (2 * pi),
           f'min ratio {float(np.min(reps / th)):.5f} against 1/(2 pi) = {1 / (2 * pi):.5f}')
 
     print(f'\nSection 3 checks done in {time.time() - T0:.0f}s: '

@@ -6,8 +6,9 @@ library `PaperC` (root `PaperC.lean`). The library uses Lean 4 v4.33.1 and Mathl
 theorem listed here is proved without `sorry`, `admit` or new axioms, and `#print axioms` on the
 main theorems reports only `propext`, `Classical.choice` and `Quot.sound`.
 
-The numbers are those of the built PDF (`paperC/problem131_switching.pdf`), and the key in
-parentheses is the `\label` in the source. The last column gives the label of the same statement in
+The numbers are those of the build of October 9, 2026 (`paperC/problem131_switching.pdf`), and the
+key in parentheses is the `\label` in the source. The four papers on Problem 131 are called Papers
+A, B, C and D. The last column gives the label of the same statement in
 the research notes `C1.md` to `C5.md`, which the docstrings of the Lean files still use. "In part"
 means that the finite or exact core of the statement is in Lean and the rest is listed under "Not in
 Lean" below. Lean numbers the states from 0, so state `i` of the paper is state `i - 1` in Lean.
@@ -30,7 +31,7 @@ Lean" below. Lean numbers the states from 0, so state `i` of the paper is state 
 | `Constants` | the second-order constants in finite form |
 | `Planar` | the planar walk, its face exponents, the exact identity and the unique crossing |
 | `Sticky` | the thresholds and the direct jump for sticky priors |
-| `Fisher` | the Fisher efficiency identity and its instances |
+| `Fisher` | the Fisher efficiency identity and its instances (now in the note `S1_endpoint_information_note/`, not in the paper) |
 
 ## Section 2, the model and the exact law
 
@@ -38,7 +39,7 @@ Lean" below. Lean numbers the states from 0, so state `i` of the paper is state 
 | --- | --- | --- |
 | Section 2, the chain with transition matrix `I + hQ` and the law `P_N(n)`, which sums to 1 | `stepP`, `chainWt`, `wordWt`, `lawP`, `sum_wordWt` | C1 Section 1 |
 | Lemma 2.3 (`lem:runs`), the run expansion | `lawP_run_expansion`, with `wordWt_eq_runWt`, `chainWt_eq`, `card_runSet`, `runs_noAdjEq`, `sum_runComp` | C1 Prop 1, C5 Lemma 1(a) |
-| Equation (1) (`eq:vertexmax`), the exact part `M_{i} = μ_i (1 - h q_i)^{N-1}` | `lawP_vertex` | C2 Prop C2.8 |
+| Equation (2) (`eq:vertexmax`), the exact part `M_{i} = μ_i (1 - h q_i)^{N-1}` | `lawP_vertex` | C2 Prop C2.8 |
 
 ## Section 3, first-order face selection
 
@@ -77,8 +78,8 @@ Lean" below. Lean numbers the states from 0, so state `i` of the paper is state 
 | Table 1 (`tab:outcomes`), row `K_d` | `completeQ_isLeast`, `completeQ_dirEig`, `completeQ_killed_perp`, `completeQ_row_sum`, `complete_costs`, `complete_vertex_wins`, `complete_full_wins`, `complete_tie` | C2 Theorem C2.4 |
 | Table 1, row symmetric `Q` | `complement_bound`, `complement_isLeast`, `complement_eq_iff`, `eigvec_of_rayleigh_min`, `single_jump_equal_feeding`, `unit_equal_feeding_complete` | C2 Prop C2.5 |
 | Table 1, row `C_d` (the growth like `k³/(2π²)` is by hand) | `cycle_arc_isLeast`, `cycle_arc_dirEig`, `pathM_isLeast`, `pathM_eig`, `cycle_full_dirEig`, `lamArc_strictAnti`, `lamArc_convex`, `tauArc_lt_succ`, `tauArc_lt`, `DArc_two`, `DArc_gt`, `DArc_lt`, `cycle_cascade`, `arcCost_unique_min`, `d_sub_two_thirds`, `lamArc_one` to `lamArc_five`, `tauArc_two` to `tauArc_five`, `tau_full_table` | C2 Lemmas C2.6a, C2.6b, Theorem C2.6 |
-| Table 1, row `P_d`, in part (the end-arc exit rates and the golden ratio) | `path_endArc_isLeast`, `path_endArc_dirEig`, `endArcM_isLeast`, `endArc_eq_lamArc`, `path_first_threshold` | C2 Cor C2.6′ |
-| Table 1, row `Θ_ε`, in part | `theta_triangle_isLeast`, `lamTri_root`, `lamTri_pos`, `lamTri_lt_one`, `lamTri_lt_three_quarters_iff`, `theta_edge_isLeast`, `theta_vertex_isLeast`, `tauA_formula`, `tauStar_formula`, `theta_eps_one`, `theta_comparisons`, `eps1_root`, `theta_four_le`, `theta_four_lt_half`, `theta_four_mono` | C2 Prop C2.7 |
+| Table 1, row `P_d`, and Proposition D.3 (`prop:paths`), in part (the end-arc exit rates in D.3(a) and the golden ratio `τ'_2` of Lemma D.2(a)) | `path_endArc_isLeast`, `path_endArc_dirEig`, `endArcM_isLeast`, `endArc_eq_lamArc`, `path_first_threshold` | C2 Cor C2.6′ |
+| Table 1, row `Θ_ε`, and Proposition D.4 (`prop:triangles`), in part | `theta_triangle_isLeast`, `lamTri_root`, `lamTri_pos`, `lamTri_lt_one`, `lamTri_lt_three_quarters_iff`, `theta_edge_isLeast`, `theta_vertex_isLeast`, `tauA_formula`, `tauStar_formula`, `theta_eps_one`, `theta_comparisons`, `eps1_root`, `theta_four_le`, `theta_four_lt_half`, `theta_four_mono` | C2 Prop C2.7 |
 | Table 1, row paw | `face_dirEig_eq`, `face_dirEig_ge`, `paw_w1` to `paw_w4`, `paw_bounds`, `paw_phase1` to `paw_phase4`, `paw_not_nested` | C2 Prop C2.10 |
 | Table 1, rows house and `K_4` plus a vertex | `house_bounds`, `house_w_vertex`, `house_w23`, `house_w014`, `house_wV`, `house_phase1` to `house_phase4`, `house_disjoint`, `kfv_bounds`, `kfv_w4`, `kfv_wK`, `kfv_wV`, `kfv_phase1` to `kfv_phase3`, `kfv_disjoint` | C2 Prop C2.9(b) |
 
@@ -89,7 +90,7 @@ Lean" below. Lean numbers the states from 0, so state `i` of the paper is state 
 | Section 6, the walk and `c_N = p_0^{N-1}/4` | `planarA`, `planarQ`, `planarQ_eq`, `originMass`, `cornerMass`, `cornerMass_eq` | C3 Section 1.2 |
 | Section 6, the face exponents before Lemma 6.1 and the faces that can reach the origin | `planarI_EW`, `planarI_fiber`, `planarI_uniform`, `origin_faces` | C3 Cor 1.1 |
 | Theorem 6.3 (`thm:planar-first`), the first-order comparison of the exponents, `τ* = min(2/β, 1/s)` and the switch at `s = 2r` | `planar_first_order`, `planar_first_order_turns`, `planar_switch_rev`, `planar_switch_turn` | C3 Theorem 7 |
-| Proposition 6.2 (`prop:decomp`), `o_N/c_N = 2 S_N(u) + R_N` with `R_N ≥ 0`, and an origin path with a turn uses all 4 directions | `planar_origin_identity`, `mixed_nonneg`, `mixed_uses_all_four`, `SPoly_eq_pair_ratio` | C3 Prop 4, C5 Cor 15 |
+| Proposition 6.2 (`prop:decomp`), `o_N/c_N = 2 S_N(u) + E_N` with `E_N ≥ 0`, and an origin path with a turn uses all 4 directions | `planar_origin_identity`, `mixed_nonneg`, `mixed_uses_all_four`, `SPoly_eq_pair_ratio` | C3 Prop 4, C5 Cor 15 |
 | Proposition 6.2, the unique crossing for `s > 0` | `planar_ratio_eq`, `originPoly_zero`, `originPoly_strictMono`, `originPoly_unique_root`, `planar_unique_crossing` | C3 Section 1.2 |
 
 ## Section 7, sticky priors
@@ -104,18 +105,21 @@ Lean" below. Lean numbers the states from 0, so state `i` of the paper is state 
 | Corollary 7.3(a) | `symmetric_direct_uniform` | C4 Prop S3(a) |
 | Corollary 7.3(b) | `d3_pair_condition`, `cyclic_pair_condition` | C4 Prop S3(b) |
 | Proposition 7.4(a) (`prop:directjump`), exactly 2 of the 8 corner kernels have a direct jump | `corner_direct_card` | C4 Prop S3(c) |
-| Appendix D (`app:hdp`), the logit identities in the proof of Proposition 7.4(b) | `logit_two_B`, `logit_two_one_sub_B`, `logit_pair_iff` | C4 Prop S3(d) |
+| Appendix E (`app:hdp`), the logit identities in the proof of Proposition 7.4(b) | `logit_two_B`, `logit_two_one_sub_B`, `logit_pair_iff` | C4 Prop S3(d) |
 | Corollary 7.5 (`cor:sticky-pair`), the exact identity through Proposition 4.9 | `lawP_pair_ratio` | C4 Prop S4 |
 | Proposition 7.6 (`prop:mass`), the bounds at finite `N` | `faceMass_eq`, `iterF_sandwich`, `faceMass_sandwich` | C4 Prop S5 |
 
-## Section 8, the information in the endpoint
+## The information in the endpoint (not in the paper)
 
-| Paper statement | Lean | Note label |
+This was Section 8 of an earlier version. It is now the note
+`S1_endpoint_information_note/s1_note.tex`, and the numbers in this table are those of the note.
+
+| Statement | Lean | Note label |
 | --- | --- | --- |
-| Proposition 8.1 (`prop:eta`), `e_N = Var(E[J \| K])/Var J` | `efficiency_eq`, `hasDerivAt_pathP`, `fisherK_eq`, `fisherPath_eq`, `mean_J`, `paperA_pathP`, `paperA_total`, `paperA_efficiency` | C4 Prop F1 |
-| The case `N = 2` of Proposition 8.1, `e_2 = 1` | `paperA_efficiency_two` | C4 Prop F2 |
+| Not in the paper. Proposition 2.1 of the note S1 (`prop:eta`), `e_N = Var(E[J \| K])/Var J` | `efficiency_eq`, `hasDerivAt_pathP`, `fisherK_eq`, `fisherPath_eq`, `mean_J`, `paperA_pathP`, `paperA_total`, `paperA_efficiency` | C4 Prop F1 |
+| Not in the paper. The case `N = 2` of Proposition 2.1 of the note S1, `e_2 = 1` | `paperA_efficiency_two` | C4 Prop F2 |
 
-## Section 9, open questions
+## Section 8, verification and open questions
 
 | Paper statement | Lean | Note label |
 | --- | --- | --- |
@@ -134,25 +138,29 @@ The asymptotic results are not in Lean, since they need the Laplace method, loca
 or expansions as `N → ∞`. In terms of the paper these are the following.
 
 * Section 2. Lemma 2.2 (`lem:admissible`), Lemma 2.4 (`lem:continuum`) and the asymptotic form in
-  equation (1).
+  equation (2).
 * Section 3. Proposition 3.1(b) and (d), the uniqueness of the minimizer in (a), and (c) on the
   boundary of the face. Lemma 3.2 (`lem:upper`) and Theorem 3.3 (`thm:first`). The strict
   monotonicity of `λ_F` in the face.
 * Section 4. Proposition 4.2(a) in general, Corollary 4.3 (`cor:symface`) for general `k`,
   Theorem 4.4 (`thm:local`), Lemma 4.5 (`lem:discrete`), Theorems 4.6 to 4.8 (`thm:facemax`,
   `thm:crossing`, `thm:window`), the asymptotic parts of Corollaries 4.10 and 4.11, Remark 4.12,
-  the expansion in Proposition 4.13(ii), Proposition 4.13(iii) and (iv), and Remark 4.14.
+  the expansion in Proposition 4.13(ii), Proposition 4.13(iii) and (iv), and Proposition 4.14
+  (`prop:nextterm`).
 * Section 5. Corollary 5.1(c) to (e) apart from the exact identity in (c), the part of
-  Corollary 5.2 that rests on Theorem 4.8, the resultant certificates for `Θ_ε`, the rest of the
-  rows `P_d` and `Θ_ε`, the numerics for `P_4` at finite `N`, and the step in Remark 5.3 that a
+  Corollary 5.2 that rests on Theorem 4.8, the 2 resultants for `Θ_ε`, the rest of the rows `P_d`
+  and `Θ_ε` (Lemmas D.1 and D.2 and Propositions D.3 and D.4 of Appendix D beyond the parts
+  above), the numerics for `P_4` at finite `N`, and the step in Remark 5.3 that a
   proper face of `C_d` that is not an arc is disconnected (by hand in the paper, so
   `cycle_cascade` is stated for the arcs and the whole cycle).
 * Section 6. Lemma 6.1, the bound on `o^(4)_N` in Proposition 6.2 and its uniqueness claim for
-  `s = 0`, Theorems 6.3 and 6.4 beyond the algebra above, Remark 6.5 and Appendix C.
+  `s = 0`, Theorems 6.3 and 6.4 beyond the algebra above, Theorem 6.5 (`thm:fourdir`),
+  Corollary 6.6 (`cor:planar-turn`), Proposition 6.7 (`prop:product`), Corollary 6.8
+  (`cor:productcompare`), Theorem 6.9 (`thm:pureturns`) and Appendix C.
 * Section 7. Corollary 7.1, Proposition 7.4(b) apart from the logit identities, and the asymptotic
   parts of Corollary 7.5, Proposition 7.6 and Remark 7.7.
-* Section 8. Remark 8.2, Theorem 8.3, Corollary 8.4 and Appendix E.
-* Appendices A and B.
+* The note S1 (not in the paper). Its Remark 2.2, Theorem 2.3, Corollary 2.4 and Appendix A.
+* Appendices A and B, and Appendix E apart from the logit identities.
 
 ## Findings while formalizing
 

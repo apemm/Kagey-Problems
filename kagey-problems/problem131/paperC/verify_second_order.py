@@ -567,7 +567,7 @@ def check_engines():
 
 
 def check_constants():
-    print('\nProposition 4.2 and Corollaries 4.9, 4.10, 5.5: the constants', flush=True)
+    print('\nProposition 4.2 and Corollaries 4.10, 4.11, 5.1: the constants', flush=True)
     # Paper A
     Q2 = complete_Q(2)
     mu2 = np.array([0.5, 0.5])
@@ -957,7 +957,7 @@ def check_threecycle(full):
 
 
 def wick_c_euler(A, mu, alpha, rho):
-    """c(alpha*) of Remark 4.14 (the next Laplace term) with z-derivatives (Euler operators), exact in sympy."""
+    """c(alpha*) of Proposition 4.14 (the next Laplace term) with z-derivatives (Euler operators), exact in sympy."""
     k = len(alpha)
     d = k - 1
     zs = sp.symbols(f'z1:{k}')
@@ -1051,7 +1051,7 @@ def gamma_term(adj, q, mu, astar):
 
 
 def check_third_order(full):
-    print('\nRemark 4.14 and Section 5: the next-order coefficients c_F (exact)', flush=True)
+    print('\nProposition 4.14 and Section 5: the next-order coefficients c_F (exact)', flush=True)
     R = sp.Rational
     s2 = sp.sqrt(2)
     q4 = R(1, 4)
@@ -1100,7 +1100,7 @@ def check_third_order(full):
 
 
 def check_K3_window():
-    print('\nRemark 5.2: the edge window on K_3', flush=True)
+    print('\nCorollary 5.2: the edge window on K_3', flush=True)
     t_ve = 0.5 * log(pi / 8)
     Kfull = 3 ** 2.5 / (4 * pi)
     t_ef = 0.5 * log(2 / pi) - log(Kfull)

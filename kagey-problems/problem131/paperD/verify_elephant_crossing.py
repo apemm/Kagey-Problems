@@ -192,7 +192,7 @@ def crossing_B(n):
 
 
 def x_refined(n, k2, k3):
-    """Refined crossing equation of Remark 2.9 with the next coefficient k3."""
+    """Refined crossing equation with k_2 and the next coefficient k_3 (research notes, not printed)."""
     f = lambda x: (log(4 * x / (n * (n + 2))) + (x / n) * k2 + (x / n) ** 2 * k3
                    - log(0.5) - (n - 1) * log1p(-x / n))
     return brentq(f, 0.3, 5 * log(n), xtol=1e-15)
@@ -283,7 +283,7 @@ def upper_B(n, eps):
 
 
 def bridge_A(n, t):
-    """Bridge sums A_t and B_t (research notes behind Remark 2.9, not printed), by a forward DP of the bridge from (t+1, 1) to (n, h)."""
+    """Bridge sums A_t and B_t of Appendix A.1 (Proposition A.5, Lemma A.7), by a forward DP of the bridge from (t+1, 1) to (n, h)."""
     h = n // 2
     P = np.zeros(h + 2)
     P[1] = 1.0
@@ -322,7 +322,7 @@ def bridge_B(n, t):
 
 
 def jensen(n, eps, AB):
-    """J_n, the bridge lower bound of the research notes (Remark 2.9, not printed), summed over t <= 60."""
+    """J_n, the lower bound that Proposition A.5 gives for C_n, summed over t <= 60 (research notes, not printed)."""
     s = 0.0
     for t, (A, B) in AB.items():
         s += exp((t - 1) * log1p(-eps) + log_pi(n, t) + eps * A - eps ** 2 * B)
@@ -362,7 +362,7 @@ def center_mpmath(n, eps, dps=40):
 
 
 def exact_checks():
-    print('\nExactness of the engines (Section 5)', flush=True)
+    print('\nExactness of the engines (Section 6)', flush=True)
     worst = 0.0
     for n in (10, 30, 60):
         for eps in (Fraction(1, 20), Fraction(3, 100)):
@@ -378,7 +378,7 @@ def exact_checks():
         cf, cb = center_window(n, x / n), center_backward(n, x / n)
         rel = abs(cf / cb - 1)
         check(f'forward window DP and folded backward DP at n = {n}', rel < 2e-14,
-              f'relative difference {rel:.1e} (Section 5 quotes agreement to about 1e-14 at n = 12800)')
+              f'relative difference {rel:.1e} (Section 6 quotes agreement to about 1e-14 at n = 12800)')
 
     # c_1 = 4/(n+2): exact sum of pi_t, and the exact first Taylor coefficient.
     ok = True
@@ -458,17 +458,35 @@ def proof_constants():
     check('kappa <= 2.084 eps when eps <= 1/100 (research notes, not printed)', kap <= 2.084, f'2/(1-4/100) = {kap:.5f}')
     check('1 + 2/n <= 1.032 for n >= 64 (research notes, not printed)', 1 + 2 / 64 <= 1.032, f'1 + 2/64 = {1 + 2 / 64:.5f}')
     c1, c2 = 2 * (13 / 56) ** 2, 2 * (13 / 56) ** 2 * 7 / 8
-    check('Hoeffding exponents 2(13/56)^2 and its 7/8 (research notes, not printed)', abs(c1 - 0.10778) < 5e-6 and c2 >= 0.0943,
+    check('Hoeffding exponents 2(13/56)^2 and its 7/8 (proof of Lemma A.7(c))', abs(c1 - 0.10778) < 5e-6 and c2 >= 0.0943,
           f'{c1:.6f} and {c2:.6f} (notes 0.10778 and 0.094308 >= 0.0943)')
     vals = [((84 * log(n) + 1.05e5) / (100 * (1 + log(n))), n) for n in range(64, 10 ** 6, 2)]
     m = max(vals)
-    check('eps^2 (84 log n + 1.05e5) <= 204.2 eps on the range of Theorem 2.6(b) (research notes, not printed)',
+    check('eps^2 (84 log n + 1.05e5) <= 204.2 eps < 205 eps on the range of Proposition 2.9 (its proof)',
           m[1] == 64 and m[0] <= 204.2 + 5e-2, f'maximum {m[0]:.3f} at n = {m[1]}')
     tail = max((2 * log(n) * 2.07 * (n // 8 + 2) * 2.0 ** (-(n // 8) - 1), n) for n in range(64, 100000, 2))
     tot = 2 + 2 * log(3) + 6 + tail[0]
     check('tail mass adds at most 0.35 eps (research notes, not printed)', tail[0] <= 0.35 and tail[0] > 0.34,
           f'largest 2 log n * 2.07 (T+2) 2^(-T-1) = {tail[0]:.4f} at n = {tail[1]}; '
           f'total {tot:.2f} < 11: {tot < 11}')
+    # Proof of Proposition 2.9, with the bound w_t <= 2 t 2^(-t) of Proposition 2.5(c).
+    tail2 = max((2 * log(n) * 2 * (n // 8 + 2) * 2.0 ** (-(n // 8)), n) for n in range(64, 100000, 2))
+    tot2 = 2 + 0.67 + 6 + 2 * log(3)
+    check('2 (1 - w_(<=T)) log n <= 4 (T+2) 2^(-T) log n < 0.67, and 2 + 0.67 + 6 + 2 log 3 < 11 (proof of Proposition 2.9)',
+          tail2[0] < 0.67 and 4 * 10 * 2.0 ** -8 * log(72) < 0.67 and tot2 < 11,
+          f'largest value {tail2[0]:.4f} at n = {tail2[1]}; bound at T = 8: {4 * 10 * 2.0 ** -8 * log(72):.4f}; total {tot2:.3f}')
+    qq = exp(-0.0943)
+    check('8 q(1+q)/(1-q)^3 < 19100 with q = e^(-0.0943), and 84*4 + 683*124 + 19100 = 104128 (Lemma A.7(d), proof of Proposition 2.9)',
+          8 * qq * (1 + qq) / (1 - qq) ** 3 < 19100 and 84 * 4 + 683 * 124 + 19100 == 104128 and 11 + 205 < 5200,
+          f'{8 * qq * (1 + qq) / (1 - qq) ** 3:.1f}')
+    okw = True
+    for n in (2, 4, 10, 64, 500, 4000):
+        hh = n // 2
+        ws = [Fraction(t * comb(n - 1 - t, hh - 1), comb(n, hh + 1)) for t in range(1, hh + 1)]
+        okw &= sum(ws) == 1 and sum(w * (t + 1) ** 3 for t, w in zip(range(1, hh + 1), ws)) <= 124
+    okw &= all(t * (t + 1) ** 3 == 8 * comb(t, 1) + 38 * comb(t, 2) + 54 * comb(t, 3) + 24 * comb(t, 4) for t in range(0, 50))
+    check('sum_t w_t (t+1)^3 <= 124 and t(t+1)^3 = 8 C(t,1) + 38 C(t,2) + 54 C(t,3) + 24 C(t,4) (Lemma A.6)', okw,
+          'exact, n = 2, 4, 10, 64, 500, 4000')
     # Proposition A.4: the one-step ratio D_s(b) of the supersolution has the closed form
     # J Phi^(c')_s(b)/Phi^c_s(b), and log D_s(b) <= kappa/Sigma_s + 2 kappa/(3 Sigma_s^2) on feasible states.
     def lPhi(n, s, b, c):
@@ -504,7 +522,7 @@ def proof_constants():
           f'largest difference of logs {worst_gap:.1e}, n = 64, 500, 2000 and 4 values of eps')
     check('log D_s(b) <= kappa/Sigma_s + 2 kappa/(3 Sigma_s^2) on every feasible state (Proposition A.4)', worst_exc <= 1e-12,
           f'largest excess {worst_exc:.2e}')
-    # Research notes behind Remark 2.9 (not printed): the explicit bounds on the bridge sums A_t and B_t, and the closed form
+    # Lemma A.7: the explicit bounds on the bridge sums A_t and B_t, and the closed form
     # of the second moment E(u - 2 b_u)^2 under the bridge.
     ok_a = ok_b = ok_m = True
     for n in (64, 256, 1000):
@@ -530,9 +548,9 @@ def proof_constants():
                 P[lo:hi + 1] = seg * (1 - pr)
                 P[lo + 1:hi + 2] += seg * pr
                 P[:lo] = 0.0
-    check('A_t >= 2(H_(n-1) - H_t - 1 - 1/t) for t <= (n+2)/4 (research notes, not printed)', ok_a, 'n = 64, 256, 1000')
-    check('B_t <= 84(t+1+log n) + 683(t+1)^3 + 19100 for t <= n/8 (research notes, not printed)', ok_b, 'n = 64, 256, 1000')
-    check('closed form of E(u - 2 b_u)^2 under the bridge (research notes, not printed)', ok_m, 'n = 64, 256, 1000 and t = 1, 3, 7, every u')
+    check('A_t >= 2(H_(n-1) - H_t - 1 - 1/t) for t <= (n+2)/4 (Lemma A.7(b))', ok_a, 'n = 64, 256, 1000')
+    check('B_t <= 84(t+1+log n) + 683(t+1)^3 + 19100 for t <= n/8 (Lemma A.7(d))', ok_b, 'n = 64, 256, 1000')
+    check('closed form of E(u - 2 M_u)^2 under the bridge (Lemma A.7(a))', ok_m, 'n = 64, 256, 1000 and t = 1, 3, 7, every u')
     # Research notes (not printed): the hypothesis eps(1+log n) <= 1/100 of Theorem 2.6(b) holds on x <= 2 Lambda_n from n >= 6e4.
     def hyp(n):
         L = 2 * log(n) - log(8)
@@ -607,7 +625,7 @@ def main():
             agree(f'x_{n} to 10 decimals (research notes, not printed)', notes10[n], vals)
         else:
             agree(f'x_{n} (research notes, not printed)', recorded[n], vals, f'  [{dt:.1f}s]')
-        check(f'x_{n} >= 2(1 - eps_{n}) (hypothesis of Corollary 3.6; the text after it proves this for even n >= 1688)', xa >= 2 * (1 - xa / n), f'{xa:.4f}')
+        check(f'x_{n} >= 2(1 - eps_{n}) (hypothesis of Corollary 3.6; Proposition 3.8 proves it for every even n >= 8)', xa >= 2 * (1 - xa / n), f'{xa:.4f}')
         if n in table:
             g1, g2 = g_root(n), g_lambert(n)
             agree(f'g_{n}', table[n][1], {'root finder': g1, 'Lambert W': g2})
@@ -679,11 +697,11 @@ def main():
             agree(f'D({n}) (research notes, not printed)', dp, {'A': D[n]})
 
     # ------------------------------------------------ second coefficient
-    print('\nSecond coefficient (Remark 2.9)', flush=True)
+    print('\nSecond coefficient (Proposition 2.11, Lemma A.8, Remark 2.12)', flush=True)
     K2 = 2 * GAMMA - 2 - log(2)
     Ainf = lambda t: 2 * (GAMMA - 1 - log(2)) + (t - 2) * sum(1.0 / j for j in range(1, t))
     series = sum(t * 2.0 ** (-t - 1) * (Ainf(t) - (t - 1)) for t in range(1, 200))
-    agree('lim k_2(n) - 2 log n = 2 gamma - 2 - log 2 (Remark 2.9)', '-1.5387158508', {'closed form': K2, 'series over t': series})
+    agree('lim k_2(n) - 2 log n = 2 gamma - 2 - log 2 (Proposition 2.11)', '-1.5387158508', {'closed form': K2, 'series over t': series})
 
     # The closed form of A^oo_t rests on an exact pre-limit identity (research notes, not printed):
     # sum_{m=0}^M e_{m+t+1} equals an explicit expression in harmonic numbers and the
@@ -737,7 +755,7 @@ def main():
         a_t = 2 * ((t - 1) ** 2 - t - 1) + 6
         val = S - 2 * sum(1.0 / j for j in range(1, U0 + 1)) + 2 * GAMMA + a_t * float(polygamma(1, U0 + 1))
         worst = max(worst, abs(val - Ainf(t)))
-    check('A^oo_t closed form against its limit definition (U = 3000), t = 1..4 (research notes, not printed)', worst < 1e-5,
+    check('A^oo_t closed form against its limit definition (U = 3000), t = 1..4 (Lemma A.8(b))', worst < 1e-5,
           f'largest difference {worst:.1e}')
 
     k2paper = {1600: '-1.585878', 12800: '-1.546572', 51200: '-1.541005'}
@@ -752,10 +770,10 @@ def main():
             cb = taylor_symmetric(n, 3)
             vals['B'] = cb[2] / cb[1] - 2 * log(n)
         if n in k2paper:
-            agree(f'k_2({n}) - 2 log n (research notes, not printed)', k2paper[n], vals, f'  [{time.time() - t0:.1f}s]')
+            agree(f'k_2({n}) - 2 log n (Remark 2.12)', k2paper[n], vals, f'  [{time.time() - t0:.1f}s]')
     if not args.full:
         print('  skip  method B for k_2(51200) (run with --full)')
-    # Research notes behind Remark 2.9 (not printed): k_2(n) = sum_t w_t [A_t - (t-1)] through the bridge sums.
+    # Lemma A.8(a): k_2(n) = sum_t w_t [A_t - (t-1)] through the bridge sums.
     n = 400
     h = n // 2
     tot = 0.0
@@ -763,12 +781,12 @@ def main():
         A, _ = bridge_A(n, t)
         tot += exp(log_pi(n, t)) / (4 / (n + 2)) * (A - (t - 1))
     c = taylor_window(n, 2)
-    check('bridge formula for k_2 at n = 400, bridge sum (t <= 120) against the Taylor DP (research notes, not printed)', abs(tot - c[2] / c[1]) < 1e-8,
+    check('bridge formula for k_2 at n = 400, bridge sum (t <= 120) against the Taylor DP (Lemma A.8(a))', abs(tot - c[2] / c[1]) < 1e-8,
           f'{tot:.10f} and {c[2] / c[1]:.10f}')
 
-    # ------------------------------------------------ Remark 2.9, refined crossing
-    print('\nRefined crossing equation (Remark 2.9, numerical)', flush=True)
-    misses = {3200: 5.3e-7, 12800: 1.4e-8, 51200: 3.6e-10}     # Remark 2.9 quotes 3.6e-10. The other values are research notes.
+    # ------------------------------------------------ refined crossing equation with k_2 and k_3 (research notes)
+    print('\nRefined crossing equation with k_2 and k_3 (research notes, numerical, not printed)', flush=True)
+    misses = {3200: 5.3e-7, 12800: 1.4e-8, 51200: 3.6e-10}     # Research notes. The paper does not print these.
     for n in sorted(kap):
         if n in X and n in misses:
             miss = X[n] - x_refined(n, *kap[n])

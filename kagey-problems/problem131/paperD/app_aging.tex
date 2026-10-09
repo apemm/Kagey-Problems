@@ -1,0 +1,295 @@
+\section{Proof of Proposition~\texorpdfstring{\ref{prop:aging-expansion}}{5.5}}\label{app:aging}
+
+We use the setting of Section~\ref{sec:aging} with two states and a fair first
+step. So $0<c<2$, $X_1$ is a fair sign, and the switch indicators
+$\chi_k=\mathbf 1\{X_k\ne X_{k-1}\}$, $k\ge2$, are independent
+Bernoulli$(c/k)$ variables, independent of $X_1$. Put
+\[
+\rho(a,b)=\prod_{k=a+1}^{b}\Bigl(1-\frac ck\Bigr)
+=\frac{\Gamma(b+1-c)\,\Gamma(a+1)}{\Gamma(b+1)\,\Gamma(a+1-c)},\qquad
+\lambda_{t,N}=\frac ct\,\rho(t,N)
+\]
+for integers $1\le a\le b$ and $2\le t\le N$. So $\lambda_{t,N}$ is the
+probability of a switch at time $t$ and none in $(t,N]$, and
+$E_N=\frac12\rho(1,N)$. Let $T^+_s$ be the time of the $s$-th step equal to
+$+1$. Let $B$ be a Beta$(c,c)$ variable, $d_c=4^{1-c}/\mathrm B(c,c)$ its
+density at $\frac12$, and $\Theta(c)=\log\bigl(2\Gamma(2-c)\,d_c\bigr)$. For
+even $N$ we write $h=N/2$ and $C_N=\Prob(A_N=h)$. Changing the sign of every
+step preserves the law of the walk and sends $A_N$ to $N-A_N$. We call this
+flip symmetry.
+
+\paragraph{Idea of the proof.}
+A walk that ends in the center with last step $-1$ takes its $h$-th step
+$+1$ at some time $r$, switches at time $r+1$, and never switches again. So
+$C_N$ is an average of the explicit numbers $\lambda_{r+1,N}$ over the law of
+$T^+_h$ (Lemma~\ref{lem:D-average}). For $c\le1$ these numbers are monotone in
+$r$, which already traps $c_N$ between two explicit roots and gives
+$1-c_N=O(1/\log N)$ (Proposition~\ref{prop:D-bracket}). For the constant we
+need the law of $T^+_h$. We have $T^+_h\le r$ exactly when $A_r\ge h$, and
+$A_r/r$ is close to a Beta$(c,c)$ variable with an error that is a power of
+$r$ (Lemma~\ref{lem:D-coupling}). This is proved by coupling the walk with a
+sign process in continuous time that switches at the points of a Poisson
+process of intensity $c\,dt/t$, whose occupation fraction is exactly
+Beta$(c,c)$ at every time (Proposition~\ref{prop:D-beta}). Summation by parts
+then gives $NC_N=d_c+O(N^{-0.4})$ (Proposition~\ref{prop:D-llt}).
+
+\subsection{A gamma ratio}
+
+Gautschi's inequality~\cite[5.6.4]{dlmf} says that
+$x^{1-s}<\Gamma(x+1)/\Gamma(x+s)<(x+1)^{1-s}$ for $x>0$ and $0<s<1$. We
+claim that for $0<c<2$ and real $y\ge2$,
+\begin{equation}\label{eq:D-gamma}
+\frac{\Gamma(y+1-c)}{\Gamma(y+1)}=y^{-c}(1+\vartheta)\qquad\text{with}\qquad
+-\frac1y\le\vartheta\le\frac2y .
+\end{equation}
+If $c=1$ the left side is $1/y$ and $\vartheta=0$. If $c<1$ we take $x=y$ and
+$s=1-c$. Then the left side lies between $(y+1)^{-c}$ and $y^{-c}$, and
+$(1+1/y)^{-c}\ge1-c/y\ge1-1/y$. If $c>1$ we take $x=y$ and $s=2-c$ and use
+$\Gamma(y+1-c)=\Gamma(y+2-c)/(y+1-c)$. Then the left side lies between
+$(y+1)^{1-c}/(y+1-c)$ and $y^{1-c}/(y+1-c)$. Here
+$y/(y+1-c)=1+(c-1)/(y+1-c)\le1+1/(y-1)\le1+2/y$, and
+$(1+1/y)^{1-c}\,y/(y+1-c)\ge(1+1/y)^{-1}\ge1-1/y$.
+
+\subsection{Averaging at the center and a bracket}
+
+\begin{lemma}[averaging at the center]\label{lem:D-average}
+Let $N\ge2$ be even and $T=T^+_h$. Then
+\begin{equation}\label{eq:D-average}
+C_N=2\sum_{r=h}^{N-1}\Prob(T=r)\,\lambda_{r+1,N}\qquad\text{and}\qquad
+\sum_{r=h}^{N-1}\Prob(T=r)=\frac12 .
+\end{equation}
+If $0<c\le1$, then $c/N\le C_N\le\lambda_{h+1,N}$.
+\end{lemma}
+
+\begin{proof}
+On the event $\{A_N=h,\,X_N=-1\}$ the last step equal to $+1$ is the $h$-th
+one, at a time $T=r\le N-1$. It is followed by a switch at $r+1$ and no switch
+in $(r+1,N]$. Conversely, these conditions give $A_N=h$ and $X_N=-1$. The
+event $\{T=r\}$ depends only on $X_1,\chi_2,\dots,\chi_r$. So
+$\Prob(A_N=h,\,X_N=-1)=\sum_{r=h}^{N-1}\Prob(T=r)\,\lambda_{r+1,N}$, and flip
+symmetry gives the same value for $X_N=+1$. Next, $T\le N-1$ exactly when
+$A_{N-1}\ge h$. This has probability $\frac12$, because $N-1$ is odd and
+$A_{N-1}$ is symmetric about $(N-1)/2$. Finally
+$\lambda_{t+1,N}/\lambda_{t,N}=t/(t+1-c)$, which is at most $1$ for $c\le1$.
+So $\lambda_{N,N}=c/N\le\lambda_{t,N}\le\lambda_{h+1,N}$ for
+$h+1\le t\le N$, and by~\eqref{eq:D-average} $C_N$ is a weighted average of
+these values.
+\end{proof}
+
+For an integer $M\ge2$ put $\eta_M(c)=M\rho(1,M)/(2c)$. Since $\rho(1,M)$
+decreases in $c$ and equals $1/M$ at $c=1$, the function $\eta_M$ decreases
+strictly on $(0,1]$, from $\infty$ at $0$ to $\eta_M(1)=\frac12$. Let
+$c^{(M)}\in(0,1)$ be the root of $\eta_M=1$.
+
+\begin{proposition}[bracket]\label{prop:D-bracket}
+The numbers $c^{(M)}$ increase with $M$, and
+$1-c^{(M)}=\frac{\log2}{\log M+1+\gamma}+O\bigl((\log M)^{-3}\bigr)$. For
+every even $N\ge2$ we have $c^{(h+1)}\le c_N\le c^{(N)}$. So
+$(1-c_N)\log N\to\log2$, and $c_N\ge c^{(3)}=(9-\sqrt{57})/2>0.725$ for
+$N\ge4$.
+\end{proposition}
+
+\begin{proof}
+For $c<1$ we have $\eta_{M+1}/\eta_M=(M+1-c)/M>1$. So
+$\eta_{M+1}(c^{(M)})>1$ and $c^{(M+1)}>c^{(M)}$. By
+Proposition~\ref{prop:aging-fair}(b), $C_N<E_N$ for $c<c_N$ and $C_N>E_N$ for
+$c>c_N$, and $c_N<1$. So it is enough to compare $C_N$ with $E_N$ for
+$0<c<1$. If $c^{(N)}<c<1$, then $\eta_N(c)<1$, that is
+$E_N=\frac12\rho(1,N)<c/N\le C_N$ by Lemma~\ref{lem:D-average}. So
+$c_N\le c^{(N)}$. If $c<c^{(h+1)}$, then $\eta_{h+1}(c)>1$. With
+$\rho(1,N)=\rho(1,h+1)\rho(h+1,N)$ this gives
+$E_N>\frac{c}{h+1}\rho(h+1,N)=\lambda_{h+1,N}\ge C_N$. So
+$c_N\ge c^{(h+1)}$.
+
+The number $c^{(3)}$ solves $3\rho(1,3)=(2-c)(3-c)/2=2c$, that is
+$c^2-9c+6=0$. By~\eqref{eq:D-gamma} with $y=M$, the equation $\eta_M(c)=1$
+reads $(1-c)\log M=\Theta_0(c)+O(1/M)$ with
+$\Theta_0(c)=\log\bigl(2c\,\Gamma(2-c)\bigr)$, uniformly for $0<c\le1$. For
+$M\ge3$ we have $c^{(M)}\in[c^{(3)},1)$, where $\Theta_0$ is bounded. So
+$e=1-c^{(M)}$ is $O(1/\log M)$, and we may expand at $c=1$. We have
+$\Theta_0(1)=\log2$ and $\Theta_0'(1)=1-\psi(1)=1+\gamma$, where
+$\psi=\Gamma'/\Gamma$. Taylor's theorem gives
+$e(\log M+1+\gamma)=\log2+O(e^2)+O(1/M)$, which is the expansion. The limit
+of $(1-c_N)\log N$ follows since $\log(h+1)\sim\log N$.
+\end{proof}
+
+\subsection{The continuum occupation}
+
+\begin{proposition}[continuum occupation]\label{prop:D-beta}
+Let $\Pi$ be a Poisson process on $(0,\infty)$ with intensity $c\,dt/t$, and
+let $Y(1)$ be a fair sign independent of $\Pi$. Put
+$Y(t)=Y(1)(-1)^{\Pi((1,t])}$ for $t\ge1$ and $Y(t)=Y(1)(-1)^{\Pi((t,1])}$ for
+$0<t<1$. Then for every $r>0$ the fraction
+$Z_r=\frac1r\int_0^r\mathbf 1\{Y(t)=+1\}\,dt$ has exactly the Beta$(c,c)$ law.
+\end{proposition}
+
+This agrees with~\cite[Remark~6.2]{evw2020}, which obtains the Beta$(c,c)$
+one-dimensional marginals of the zigzag process
+of~\cite[Definition~6.1]{evw2020} from a scaling limit and mentions a direct
+proof by E.~Crane that is not written there. We give a direct proof.
+
+\begin{proof}
+The points $\log t$, $t\in\Pi$, form a Poisson process $\tilde\Pi$ of rate $c$
+on $\mathbb R$, and $W(u)=Y(e^u)$ satisfies
+$W(v)=W(u)(-1)^{\tilde\Pi((u,v])}$ for $u<v$. For each real $a$, $W(a)$ is
+$W(0)$ times a function of $\tilde\Pi$, so it is a fair sign independent of
+$\tilde\Pi$. As $\tilde\Pi-a$ has the law of $\tilde\Pi$, the pair
+$(W(a),\tilde\Pi-a)$ has the law of $(W(0),\tilde\Pi)$, and so $W(a+\cdot)$
+has the law of $W$. Hence $Z_r=\int_0^1\mathbf 1\{Y(rt)=+1\}\,dt$ has the law
+of $Z_1=\int_0^\infty e^{-s}\mathbf 1\{V_s=+1\}\,ds$, where $V_s=W(-s)$ starts
+at a fair sign and switches at rate $c$. Let $\mu_\pm$ be the law of $Z_1$
+given $V_0=\pm1$, let $\tau$ be the first switch of $V$, and let
+$U=e^{-\tau}$. Then $\Prob(U\le u)=u^c$ for $0\le u\le1$, so $U$ is
+Beta$(c,1)$. After $\tau$ the process starts afresh from $-V_0$,
+independently of $\tau$. Splitting the integral at $\tau$ shows that
+$(\mu_+,\mu_-)$ is a fixed point of the map $\Psi$ that sends a pair
+$(\nu_+,\nu_-)$ of laws on $[0,1]$ to the laws of $1-U+UZ_-$ and $UZ_+$,
+where $Z_\pm\sim\nu_\pm$ are independent of $U$. Coupling $Z_\pm$ optimally
+with $Z'_\pm\sim\nu'_\pm$, independently of $U$, gives
+$\E\lvert UZ_\pm-UZ'_\pm\rvert=\E U\,\E\lvert Z_\pm-Z'_\pm\rvert$. So $\Psi$
+contracts the larger of the two Wasserstein distances by the factor
+$\E U=c/(c+1)$, and it has only one fixed point.
+
+Let $G_a,G_b,G_d$ be independent Gamma variables with shapes $a,b,d$ and unit
+scale. A change of variables shows that $G_a/(G_a+G_b)$ is Beta$(a,b)$ and
+independent of $G_a+G_b$. Hence it is independent of the pair
+$(G_a+G_b,G_d)$ and of $(G_a+G_b)/(G_a+G_b+G_d)$, which is Beta$(a+b,d)$.
+Their product $G_a/(G_a+G_b+G_d)$ is Beta$(a,b+d)$. With $(a,b,d)=(c,1,c)$
+this says that $UZ$ is Beta$(c,c+1)$ whenever $Z$ is Beta$(c+1,c)$ and
+independent of $U$. Applying it to $Z=Z_+$ and to $Z=1-Z_-$, and using
+$1-U+UZ_-=1-U(1-Z_-)$, we see that $\Psi$ maps the pair Beta$(c+1,c)$,
+Beta$(c,c+1)$ to itself. So $Z_1$ is the equal mixture of these two laws. As
+$\mathrm B(c+1,c)=\mathrm B(c,c+1)=\frac12\mathrm B(c,c)$, the mixture has
+density $x^{c-1}(1-x)^{c-1}(x+1-x)/\mathrm B(c,c)$, which is the Beta$(c,c)$
+density.
+\end{proof}
+
+\begin{lemma}[coupling]\label{lem:D-coupling}
+Let $J\subset(0,2)$ be compact, $a_J=\min(\min J,1)$ and
+$\kappa_J=a_J/(1+a_J)$. There is $C_J$ such that for $c\in J$ and every
+integer $r\ge2$,
+\[
+\sup_{y\in\mathbb R}\bigl\lvert\Prob(A_r\ge y)-\Prob(rB\ge y)\bigr\rvert
+\le C_J\,(\log r)\,r^{-\kappa_J}.
+\]
+\end{lemma}
+
+\begin{proof}
+Take $\Pi$ and $Y$ as in Proposition~\ref{prop:D-beta} and an integer
+$1\le K\le r$. The variables
+$\chi'_k=\mathbf 1\{\Pi((k-1,k])\text{ is odd}\}$, $k>K$, are independent of
+each other and of $Y(K)$, and
+$\Prob(\chi'_k=1)=p'_k=\frac12\bigl(1-(1-1/k)^{2c}\bigr)$. By Taylor's theorem
+$\lvert p'_k-c/k\rvert=\frac12c\lvert2c-1\rvert(1-\vartheta)^{2c-2}k^{-2}$ for
+some $0<\vartheta<1/k$. This is at most $3k^{-2}$. Indeed, if $c\ge1$ then
+$\frac12c\lvert2c-1\rvert<3$ and the power of $1-\vartheta$ is at most $1$.
+If $c<1$ then $\frac12c\lvert2c-1\rvert\le\frac12$ and the power is at most
+$(1-\frac12)^{-2}=4$, as $k\ge2$. For $K<k\le r$ we couple
+$\chi_k\sim\text{Bernoulli}(c/k)$ with $\chi'_k$ so that
+$\Prob(\chi_k\ne\chi'_k)=\lvert p'_k-c/k\rvert$, using independent extra
+randomness. We put $X_K=Y(K)$ and $X_k=X_{k-1}(-1)^{\chi_k}$ for $K<k\le r$,
+and we draw $X_1,\dots,X_{K-1}$ from the law of the walk given $X_K$, again
+with independent randomness. In the walk $X_K$ is a fair sign and
+$(\chi_k)_{k>K}$ is independent of $(X_1,\dots,X_K)$. So
+$(X_1,\dots,X_r)$ has the law of the walk.
+
+Let $\mathcal A$ be the event that $\chi_k=\chi'_k$ for $K<k\le r$. On
+$\mathcal A$ we have $X_k=Y(k)$ for $K\le k\le r$, and
+$\Prob(\mathcal A^c)\le\sum_{k>K}3k^{-2}\le3/K$. If also $\Pi((k-1,k])=0$,
+then $Y=Y(k)$ on $(k-1,k]$, so step $k$ adds the same amount to $A_r$ as the
+interval $(k-1,k]$ adds to $rZ_r$. The other steps $k\le r$ number at most
+$K+\Pi((K,r])$, and each changes the difference by at most $1$. Hence
+$\lvert A_r-rZ_r\rvert\le K+\Pi((K,r])$ on $\mathcal A$. The variable
+$\Pi((K,r])$ is Poisson with mean $c\log(r/K)\le2\log r$, so by Markov's
+inequality it exceeds $K$ with probability at most $2\log r/K$. With
+$b_K=(3+2\log r)/K$ we get
+\[
+\Prob(rZ_r\ge y+2K)-b_K\le\Prob(A_r\ge y)\le\Prob(rZ_r\ge y-2K)+b_K ,
+\]
+and $rZ_r$ has the law of $rB$. So the left side of the lemma is at most
+$b_K+\sup_x\Prob(x\le B\le x+2K/r)$.
+
+For $c\le1$ the density of $B$ is at most
+$2^{1-c}\bigl(x^{c-1}+(1-x)^{c-1}\bigr)/\mathrm B(c,c)$, and $x^{c-1}$ has
+integral at most $\delta^c/c$ over an interval of length $\delta$. For
+$c\ge1$ the density is at most $d_c$. The mass of an interval is also at
+most $1$. So there is $C'_J$ such that an interval of length $\delta$ has
+mass at most $C'_J\delta^{a_J}$ for all $\delta>0$ and $c\in J$. Take
+$K=\lceil r^{\kappa_J}\rceil$. Then $b_K\le(3+2\log r)r^{-\kappa_J}$ and
+$2K/r\le4r^{\kappa_J-1}$, and $(r^{\kappa_J-1})^{a_J}=r^{-\kappa_J}$ because
+$(1-\kappa_J)a_J=\kappa_J$.
+\end{proof}
+
+\subsection{A local limit at the center}
+
+\begin{proposition}[local limit at the center]\label{prop:D-llt}
+For each compact $J\subset(0,2)$ there is $C_J$ such that
+$\bigl\lvert NC_N-d_c\bigr\rvert\le C_J\,(\log N)\,N^{-\kappa_J}$ for $c\in J$
+and even $N\ge4$.
+\end{proposition}
+
+\begin{proof}
+Let $T=T^+_h$, $F(r)=\Prob(T\le r)=\Prob(A_r\ge h)$, $\Phi(r)=\Prob(rB\ge h)$
+and $\Lambda_r=N\lambda_{r+1,N}$. Then $F(h-1)=\Phi(h-1)=\Phi(h)=0$. For
+$h\le r\le N-1$ we have $2\le r$ and $N/2\le r<N$, so
+Lemma~\ref{lem:D-coupling} gives
+$\lvert F(r)-\Phi(r)\rvert\le\delta_N:=C_J(\log N)N^{-\kappa_J}$ after
+enlarging $C_J$. By Lemma~\ref{lem:D-average},
+$NC_N=2\sum_{r=h}^{N-1}\bigl(F(r)-F(r-1)\bigr)\Lambda_r$. The ratio
+$\lambda_{t+1,N}/\lambda_{t,N}=t/(t+1-c)$ shows that $\Lambda_r$ is monotone
+in $r$. Also $\Lambda_{N-1}=c$ and $0<\Lambda_h<2c$. For $c\le1$ this holds
+because $\rho\le1$ and $N<2(h+1)$, and for $c>1$ because $\Lambda_r$
+increases. So summation by parts shows that replacing $F$ by $\Phi$ changes
+$NC_N$ by at most
+$2\delta_N\bigl(\Lambda_{N-1}+\lvert\Lambda_{N-1}-\Lambda_h\rvert\bigr)\le4c\,\delta_N$.
+For $h<r\le N-1$ we have $\Phi(r)-\Phi(r-1)=\Prob(h/r\le B<h/(r-1))$, and on
+this event $\lceil h/B\rceil=r$. So the new main term is
+$2\,\E\bigl[\Lambda_{\lceil h/B\rceil};\,B\ge h/(N-1)\bigr]$.
+
+By~\eqref{eq:D-gamma} with $y=N$ and $y=r+1\ge3$,
+$\Lambda_r=c\bigl((r+1)/N\bigr)^{c-1}(1+O(1/N))$ for $h\le r\le N-1$. On the
+event above with $r=\lceil h/B\rceil$, the number $(r+1)/N$ lies in
+$[\frac12,2]$ and within $2/N$ of $1/(2B)$, which also lies in
+$[\frac12,2]$. The function $x^{c-1}$ is $4$-Lipschitz on $[\frac12,2]$. So
+$\Lambda_{\lceil h/B\rceil}=c(2B)^{1-c}+O(1/N)$. Also
+$\Prob\bigl(\frac12\le B<h/(N-1)\bigr)=O_J(1/N)$, since the density of $B$ is
+bounded near $\frac12$ uniformly on $J$. So $NC_N$ is within $4c\,\delta_N$ of
+\[
+2c\,\E\bigl[(2B)^{1-c};\,B\ge\tfrac12\bigr]+O_J(1/N)
+=\frac{2c\,2^{1-c}}{\mathrm B(c,c)}\int_{1/2}^1(1-b)^{c-1}\,db+O_J(1/N)=d_c+O_J(1/N).\qedhere
+\]
+\end{proof}
+
+\subsection{The expansion of the crossing}
+
+\begin{proof}[Proof of Proposition~\ref{prop:aging-expansion}]
+Let $J=[c^{(3)},1]$. Then $\kappa_J=c^{(3)}/(1+c^{(3)})>0.42$, and $d_c$ is
+bounded below on $J$ by a positive constant. By~\eqref{eq:D-gamma} with
+$y=N$,
+$\log E_N=\log\bigl(\tfrac12\rho(1,N)\bigr)=-\log2-\log\Gamma(2-c)-c\log N+O(1/N)$.
+By Proposition~\ref{prop:D-llt},
+$\log C_N=\log d_c-\log N+O(N^{-0.4})$ for large $N$. Both hold uniformly for
+$c\in J$, so
+\begin{equation}\label{eq:D-logratio}
+\log C_N-\log E_N=(c-1)\log N+\Theta(c)+O(N^{-0.4})\qquad(c\in J).
+\end{equation}
+Here $\Theta(1)=\log2$ because $d_1=1$. Next,
+$\Theta'(c)=-\psi(2-c)-\log4-2\psi(c)+2\psi(2c)$, and with $\psi(1)=-\gamma$
+and $\psi(2)=1-\gamma$ this gives $\Theta'(1)=\gamma+2-2\log2$. Put
+$M=\log N+\Theta'(1)$. By Proposition~\ref{prop:D-bracket}, $c_N\in J$ for
+$N\ge4$ and $e=1-c_N$ is $O(1/\log N)$. The left side
+of~\eqref{eq:D-logratio} vanishes at $c=c_N$. As $\Theta$ is smooth on $J$,
+Taylor's theorem gives $eM=\log2+O(e^2)+O(N^{-0.4})=\log2+O(M^{-2})$. So
+$e=\log2/M+O(M^{-3})$.
+\end{proof}
+
+With one more term in Taylor's theorem and $e^2=(\log2)^2/M^2+O(M^{-4})$, the
+same argument adds the term $-\Theta''(1)(\log2)^2/(2M^3)$ to the expansion
+of $c_N$, with error $O(M^{-4})$. Here $\Theta''(1)=\pi^2/2-4$, since
+$\Theta''(c)=\psi'(2-c)-2\psi'(c)+4\psi'(2c)$, $\psi'(1)=\zeta(2)$ and
+$\psi'(2)=\zeta(2)-1$. At $N=200$ the bracket of
+Proposition~\ref{prop:D-bracket} is $[0.88749,0.89878]$,
+Proposition~\ref{prop:aging-expansion} gives $0.89319$, and with the $M^{-3}$
+term we get $0.89236$. The high-precision value is $c_{200}=0.89253$. The
+constants $C_J$ and the constants in the $O$-terms of this appendix are not
+computed.
