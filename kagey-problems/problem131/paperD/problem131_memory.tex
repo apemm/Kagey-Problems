@@ -10,7 +10,7 @@
 \usepackage{xcolor}
 \usepackage[shortlabels]{enumitem}
 \usepackage[colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
-\hypersetup{pdftitle={The middle and the ends IV. Endpoint crossings for random walks with memory},pdfauthor={Arjun Pemmasani}}
+\hypersetup{pdftitle={Endpoint crossings for random walks with memory},pdfauthor={Arjun Pemmasani}}
 
 % ---------- theorem environments ----------
 \newtheorem{theorem}{Theorem}[section]
@@ -31,9 +31,12 @@
 \newcommand{\Var}{\operatorname{Var}}
 \newcommand{\CP}{\mathrm{CP}}
 
-\title{The middle and the ends IV.\\ Endpoint crossings for random walks with memory}
-\author{Arjun Pemmasani}
-\date{October 1, 2026}
+\title{Endpoint crossings for random walks with memory}
+\author{Arjun Pemmasani\\[2pt]
+\small Department of Mathematics, Harvey Mudd College\\
+\small Claremont, CA 91711, USA\\
+\small \texttt{apemmasani@hmc.edu}}
+\date{}
 \begin{document}
 \maketitle
 
@@ -49,16 +52,22 @@ the crossing is unique and that $N\varepsilon$ at the crossing is
 $2\log N-\log\log N-\log16+o(1)$, about twice the Markov value, because a
 walk that ends in the middle needs a reversal among its first few steps.
 At the crossing the law has a hump near each end, and the middle is the
-lowest bin outside a window of width $O(N^{1/2}\log N)$. For alternating runs whose
-lengths have tail $k^{-\alpha}$ with $1<\alpha<2$, started in equilibrium,
-the ends beat the middle for large $N$ exactly when $\alpha$ is below the
-golden ratio. For aging walks, which switch at step $k$ with probability
-$c/k$, the crossing with a fixed first step is exactly $c=1$.
+lowest bin outside a window of width $O(N^{1/2}\log N)$. Next we take
+alternating runs whose lengths have tail $k^{-\alpha}$ with $1<\alpha<2$,
+started in equilibrium. Wang, Li and H\"anggi observed, as a heuristic for
+heat conduction, that the ends and the middle decay at the same rate when
+$\alpha$ is the golden ratio. We prove the lattice form of their observation,
+with its constant. Namely, the ends beat the middle for large $N$ exactly when
+$\alpha$ is below the golden ratio. Finally, an aging walk switches at step
+$k$ with probability $c/k$. With a fixed first step every bin ties with the
+end exactly at $c=1$, for every $N$. We prove the same for an aging walk
+with $d$ states, whose vector of counts is exactly uniform at the tie.
 \end{abstract}
 
+\medskip
 \noindent\textbf{Keywords:} persistent random walk; elephant random walk;
 random recursive tree; P\'olya urn; alternating renewal process; heavy tails;
-golden ratio; Galton board.
+golden ratio; aging random walk; Galton board.
 
 \noindent\textbf{MSC2020:} 60G50; 60K05; 60C05; 60F05; 60J10.
 
@@ -66,30 +75,55 @@ golden ratio; Galton board.
 \input{sec_erw_crossing.tex}
 \input{sec_erw_shape.tex}
 \input{sec_heavy.tex}
+\input{sec_aging.tex}
 \input{sec_verify.tex}
+
+\paragraph{Acknowledgments.} I thank Peter Kagey for posing the problem.
+% AUTHOR: add thanks or coauthorship for Art Benjamin and Aidan Deshong here once settled.
+
+\section*{A note on the use of AI}
+% AI NOTE: to be written by the author.
+All mathematical claims, proofs and computations in this paper are my
+responsibility.
+
+\section*{Statements and declarations}
+\paragraph{Competing interests.} The author has no competing interests to
+declare.
+
+\paragraph{Funding.} No funding was received for this work.
+
+\paragraph{Data availability.} All code, data and Lean files supporting this
+paper are in the folder \nolinkurl{kagey-problems/problem131} of
+\url{https://github.com/apemm/Kagey-Problems}, at the release
+\texttt{paperD-arxiv-v1}. Section~\ref{sec:verify} describes the checks and
+how to rerun them.
 
 \appendix
 \input{app_erw_bounds.tex}
 \input{app_erw_profile.tex}
+\input{app_erw_bulk.tex}
 \input{app_heavy.tex}
+\input{app_aging.tex}
 
 \begin{thebibliography}{99}\small\setlength{\baselineskip}{11pt}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}
 
 \bibitem{kagey131}
 P.~Kagey, \emph{Problem 131}, Open Problem Collection,
-\url{https://peterkagey.com/problems/131/} (accessed September 2026).
+\url{https://peterkagey.com/problems/131/} (accessed October 2026).
 
 \bibitem{paperA}
-A.~Pemmasani, \emph{The middle and the ends I. Uniform Bessel bounds for endpoint crossings in the
+A.~Pemmasani, \emph{Uniform Bessel bounds for endpoint crossings in the
 persistent random walk}, preprint, 2026.
+\href{https://arxiv.org/abs/2610.06935}{arXiv:2610.06935}.
 
 \bibitem{paperB}
-A.~Pemmasani, \emph{The middle and the ends II. Vertex crossings in a symmetric Markov multinomial
+A.~Pemmasani, \emph{Vertex crossings in a symmetric Markov multinomial
 model}, preprint, 2026.
+\href{https://arxiv.org/abs/2610.09258}{arXiv:2610.09258}.
 
 \bibitem{paperC}
-A.~Pemmasani, \emph{The middle and the ends III. Face selection for slowly switching Markov chains and
-the planar persistent walk}, preprint, 2026.
+A.~Pemmasani, \emph{Face selection for slowly switching Markov chains and
+the planar persistent walk}, in preparation.
 
 \bibitem{schutz2004}
 G.~M.~Sch\"utz and S.~Trimper, \emph{Elephants can always remember: exact
@@ -122,6 +156,11 @@ H.~Gu\'erin, L.~Laulin, K.~Raschel and T.~Simon, \emph{On the limit law of
 the superdiffusive elephant random walk}, Electron.\ J.\ Probab.\
 \textbf{30} (2025), 1--25. \href{https://doi.org/10.1214/25-EJP1362}{doi:10.1214/25-EJP1362}.
 
+\bibitem{tv2026}
+H.~Trinas and G.~Valle, \emph{A superdiffusive local limit theorem for the
+elephant random walk and the breakdown of log-concavity}, preprint, 2026,
+\href{https://arxiv.org/abs/2609.14753}{arXiv:2609.14753}.
+
 \bibitem{godrecheluck2001}
 C.~Godr\`eche and J.~M.~Luck, \emph{Statistics of the occupation time of
 renewal processes}, J.\ Stat.\ Phys.\ \textbf{104} (2001), 489--524.
@@ -131,6 +170,29 @@ renewal processes}, J.\ Stat.\ Phys.\ \textbf{104} (2001), 489--524.
 J.~Lamperti, \emph{An occupation time theorem for a class of stochastic
 processes}, Trans.\ Amer.\ Math.\ Soc.\ \textbf{88} (1958), 380--387.
 \href{https://doi.org/10.1090/S0002-9947-1958-0094863-X}{doi:10.1090/S0002-9947-1958-0094863-X}.
+
+\bibitem{bertoin2014ejp}
+J.~Bertoin, \emph{On the non-Gaussian fluctuations of the giant cluster for
+percolation on random recursive trees}, Electron.~J.~Probab. \textbf{19}
+(2014), paper no.~24.
+\href{https://doi.org/10.1214/EJP.v19-2822}{doi:10.1214/EJP.v19-2822}.
+
+\bibitem{kesslerlevine2015}
+D.~A.~Kessler and H.~Levine, \emph{Scaling solution in the large population
+limit of the general asymmetric stochastic Luria--Delbr\"uck evolution
+process}, J.~Stat.~Phys. \textbf{158} (2015), 783--805.
+\href{https://doi.org/10.1007/s10955-014-1143-3}{doi:10.1007/s10955-014-1143-3}.
+
+\bibitem{mohle2005}
+M.~M\"ohle, \emph{Convergence results for compound Poisson distributions
+and applications to the standard Luria--Delbr\"uck distribution},
+J.~Appl.~Probab. \textbf{42} (2005), 620--631.
+\href{https://doi.org/10.1239/jap/1127322016}{doi:10.1239/jap/1127322016}.
+
+\bibitem{dzh2012}
+S.~Denisov, V.~Zaburdaev and P.~H\"anggi, \emph{L\'evy walks with velocity
+fluctuations}, Phys.~Rev.~E \textbf{85} (2012), 031148.
+\href{https://doi.org/10.1103/PhysRevE.85.031148}{doi:10.1103/PhysRevE.85.031148}.
 
 \bibitem{zdk2015}
 V.~Zaburdaev, S.~Denisov and J.~Klafter, \emph{L\'evy walks}, Rev.\ Mod.\
@@ -146,7 +208,7 @@ for anomalous heat transport}, Phys.\ Rev.\ E \textbf{87} (2013),
 L.~Wang, N.~Li and P.~H\"anggi, \emph{Simulation of heat transport in
 low-dimensional oscillator lattices}, in: S.~Lepri (ed.), \emph{Thermal
 Transport in Low Dimensions}, Lecture Notes in Physics \textbf{921},
-Springer, 2016, 239--274.
+Springer, Cham, 2016, pp.~239--274.
 \href{https://doi.org/10.1007/978-3-319-29261-8_6}{doi:10.1007/978-3-319-29261-8\_6}.
 
 \bibitem{ibragimovlinnik1971}
@@ -172,10 +234,26 @@ B.~Efron and C.~Stein, \emph{The jackknife estimate of variance}, Ann.\
 Statist.\ \textbf{9} (1981), 586--596.
 \href{https://doi.org/10.1214/aos/1176345462}{doi:10.1214/aos/1176345462}.
 
+\bibitem{hoeffding1963}
+W.~Hoeffding, \emph{Probability inequalities for sums of bounded random
+variables}, J.\ Amer.\ Statist.\ Assoc.\ \textbf{58} (1963), 13--30.
+\href{https://doi.org/10.1080/01621459.1963.10500830}{doi:10.1080/01621459.1963.10500830}.
+
+\bibitem{higham2002}
+N.~J.~Higham, \emph{Accuracy and Stability of Numerical Algorithms}, 2nd ed.,
+SIAM, Philadelphia, 2002.
+\href{https://doi.org/10.1137/1.9780898718027}{doi:10.1137/1.9780898718027}.
+
+\bibitem{johansson2018}
+F.~Johansson, \emph{Numerical integration in arbitrary-precision ball
+arithmetic}, in: Mathematical Software -- ICMS 2018, Lecture Notes in
+Comput.\ Sci.\ \textbf{10931}, Springer, 2018, 255--263.
+\href{https://doi.org/10.1007/978-3-319-96418-8_30}{doi:10.1007/978-3-319-96418-8\_30}.
+
 \bibitem{dlmf}
 F.~W.~J.~Olver et al.\ (eds.), \emph{NIST Digital Library of Mathematical
 Functions},
-Eqs.~5.5.5, 5.9.15 and~25.12.12, \url{https://dlmf.nist.gov}.
+Eqs.~5.5.5, 5.6.4, 5.9.15 and~25.12.12, \url{https://dlmf.nist.gov}.
 
 \bibitem{ds2007}
 Z.~Dietz and S.~Sethuraman, \emph{Occupation laws for some
@@ -186,6 +264,16 @@ time-nonhomogeneous Markov chains}, Electron.\ J.\ Probab.\ \textbf{12}
 J.~Engl\"ander and S.~Volkov, \emph{Turning a coin over instead of tossing
 it}, J.\ Theoret.\ Probab.\ \textbf{31} (2018), 1097--1118.
 \href{https://doi.org/10.1007/s10959-016-0725-1}{doi:10.1007/s10959-016-0725-1}.
+
+\bibitem{abt2003}
+R.~Arratia, A.~D.~Barbour and S.~Tavar\'e, \emph{Logarithmic Combinatorial
+Structures: A Probabilistic Approach}, EMS Monographs in Mathematics, European
+Mathematical Society, Z\"urich, 2003.
+
+\bibitem{bc2018}
+F.~Bouguet and B.~Cloez, \emph{Fluctuations of the empirical measure of
+freezing Markov chains}, Electron.~J.~Probab. \textbf{23} (2018), 1--31.
+\href{https://doi.org/10.1214/17-EJP130}{doi:10.1214/17-EJP130}.
 
 \bibitem{evw2020}
 J.~Engl\"ander, S.~Volkov and Z.~Wang, \emph{The coin-turning walk and its

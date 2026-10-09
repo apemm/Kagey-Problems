@@ -14,9 +14,9 @@ Let $Q$ be the 4-cycle $C_4$ with $q_{i,i\pm1}=1$ (indices mod $4$), and let
 $\mu$ be uniform.
 \begin{enumerate}[(a)]
 \item The admissible faces are the vertices, the adjacent pairs, the arcs of
-$3$ states and $C_4$, with exit rates $2$, $1$, $2-\sqrt2$ and $0$. The
+three states and $C_4$, with exit rates $2$, $1$, $2-\sqrt2$ and $0$. The
 winners are the vertices for $\tau<1$, the adjacent pairs for $1<\tau<2$ and
-$C_4$ for $\tau>2$. The arcs of $3$ states never win.
+$C_4$ for $\tau>2$. The arcs of three states never win.
 \item $K_{\rm vertex}=\frac14$, $K_{\rm pair}=1/\sqrt{2\pi}$,
 $K_{\rm arc3}=(4+3\sqrt2)/(4\pi)$ and $K_{C_4}=8/\pi^{3/2}$, and
 $\det\Sigma=1/512$ on $C_4$.
@@ -34,16 +34,16 @@ $T=2(L-\frac12\log L+b)+o(1)$.
 \end{enumerate}
 \end{corollary}
 
-In words: the mode moves from a vertex to an adjacent pair at the crossing of
+In words, the mode moves from a vertex to an adjacent pair at the crossing of
 Kagey's board, exactly at every $N$, and from the pairs to the whole cycle at a
 crossing whose equation has the coefficient $1=\frac\Delta2$ of $\log T$, since
-the cycle has 2 more states than a pair.
+the cycle has two more states than a pair.
 
 \begin{proof}
 (a) A proper face that is not an arc is disconnected, so it is not
 admissible. For an adjacent pair $-Q_F$ has rows $(2,-1)$ and $(-1,2)$, with
-least eigenvalue $1$. For an arc of $3$ states $-Q_F=2I-A$, where $A$ is the
-adjacency matrix of the path on $3$ states, and $r=(1/\sqrt2,1,1/\sqrt2)$ is a
+least eigenvalue $1$. For an arc of three states $-Q_F=2I-A$, where $A$ is the
+adjacency matrix of the path on three states, and $r=(1/\sqrt2,1,1/\sqrt2)$ is a
 positive eigenvector with eigenvalue $2-\sqrt2$. Also $Q\ones=0$. So
 $\Phi_\tau$ equals $2\tau$, $\tau+1$, $(2-\sqrt2)\tau+2$ and $3$, and comparing
 the first, second and fourth gives the winners. Since $2-\sqrt2>\frac12$, the
@@ -52,7 +52,7 @@ smaller of the exponents of the pair and of $C_4$. So it never wins.
 
 (b) A vertex has $K=\mu_i=\frac14$. The pair and $C_4$ have symmetric $Q_F$
 with constant row sums, so Corollary~\ref{cor:symface} applies, with
-$\mu(F)=\frac12$ and one spanning tree for the pair, and $\mu(F)=1$ and $4$
+$\mu(F)=\frac12$ and one spanning tree for the pair, and $\mu(F)=1$ and four
 spanning trees for $C_4$. On $C_4$ the law $\alpha^*$ is uniform and every edge
 has conductance $\frac14$, so Proposition~\ref{prop:constant}(b) gives
 $\det\Sigma=2^3\cdot4^{-8}/(4\cdot4^{-3})=1/512$. The 3-arc has unequal row
@@ -65,9 +65,11 @@ $\prod_i\alpha^*_i=\frac1{32}$. So
 $K_{\rm arc3}=\frac{3+2\sqrt2}8\cdot\frac{32}{2\sqrt2}\cdot\frac1{4\pi}
 =\frac{4+3\sqrt2}{4\pi}$.
 
-(c) This is Proposition~\ref{prop:pair} with $a=1$ and $q=2$. As
-$K_{\rm pair}/K_{\rm vertex}=2\sqrt{2/\pi}=e^{-c_0}$, Theorem~\ref{thm:crossing}
-with $\Delta=\delta=1$ gives the equation.
+(c) The identity is Proposition~\ref{prop:pair} with $a=1$ and $q=2$. So the
+two face maxima are equal only at $u=u_N$, and by
+Theorem~\ref{thm:crossing}(i) this crossing lies in $[L/2,2L]$ for large $N$. As
+$K_{\rm pair}/K_{\rm vertex}=2\sqrt{2/\pi}=e^{-c_0}$,
+Theorem~\ref{thm:crossing}(ii) with $\Delta=\delta=1$ gives the equation.
 
 (d) This is Theorem~\ref{thm:crossing} with $F=C_4$, $G$ an adjacent pair,
 $\Delta=2$, $\delta=1$ and $K_F/K_G=8\sqrt{2\pi}/\pi^{3/2}=8\sqrt2/\pi$.
@@ -81,12 +83,24 @@ Theorem~\ref{thm:window} gives (e).
 
 The finite parts of (a) are checked in Lean. Lean also checks that a closed
 form for the constants of all arcs, which we do not use, gives the values of
-$K_{\rm pair}$ and $K_{\rm arc3}$ above. Remark~\ref{rem:nextterm} gives
-$c_{\rm pair}=-\frac18$ without proof, and an exact computer evaluation of the
-next Laplace term gives $c_{\rm arc3}=\frac54\sqrt2-2$ and
-$c_{C_4}=-\frac9{16}$. So if Remark~\ref{rem:nextterm} holds, then at the
-crossings in (d) the quantity $T_N(2L-\log T_N-T_N-\log(8\sqrt2/\pi))$ tends to
-$-\frac9{16}+\frac18=-\frac7{16}$ (computer-assisted, proof omitted).
+$K_{\rm pair}$ and $K_{\rm arc3}$ above.
+
+Proposition~\ref{prop:nextterm} gives the next term $c_F/T$ of the face
+maxima, with the explicit coefficient
+$c_F=c(\alpha^*_F)+\frac12\gamma_F^\top\Sigma_F\gamma_F$, where $c$ is given
+by~\eqref{eq:c-alpha}. For an adjacent pair, Proposition~\ref{prop:nextterm}(iv)
+gives $c_{\rm pair}=-\frac18$. For the 3-arc and for $C_4$ we evaluated the
+coefficient exactly by computer algebra (the script
+\texttt{verify\_second\_order.py}), and the values are
+$c_{\rm arc3}=\frac54\sqrt2-2$ and $c_{C_4}=-\frac9{16}$. So these two
+constants are exact evaluations of the formula of
+Proposition~\ref{prop:nextterm}, done by computer and not by hand. With the
+evaluated constant $c_{C_4}$, Proposition~\ref{prop:nextterm}(iii) gives the
+next term at the crossings in (d), namely
+\[
+ T_N\Bigl(2L-\log T_N-T_N-\log\frac{8\sqrt2}\pi\Bigr)
+ =c_{C_4}-c_{\rm pair}+O\Bigl(\frac1L\Bigr)=-\frac7{16}+O\Bigl(\frac1L\Bigr).
+\]
 
 Theorem~\ref{thm:crossing} also applies to a face that never carries the mode,
 and this is a good test of the implicit equation~\eqref{eq:crossing}. Take the
@@ -97,8 +111,10 @@ puts the crossing at $T_N=42.2633$, where
 $\Delta L-\frac\Delta2\log T_N-\delta T_N=0.959070$. The root of the implicit
 equation is within $0.004$ of $T_N$, while the explicit form in
 Theorem~\ref{thm:crossing} gives $42.2059$. Also
-$T_N(0.959070-0.964591)=-0.2333$, close to the value
-$c_{\rm arc3}-c_{\rm vertex}=-0.2322$ that Remark~\ref{rem:nextterm} predicts.
+$T_N(0.959070-0.964591)=-0.2333$, close to the limit
+$c_{\rm arc3}-c_{\rm vertex}=-0.2322$ that
+Proposition~\ref{prop:nextterm}(iii) gives with the evaluated constant
+$c_{\rm arc3}$ (a vertex has $c_{\rm vertex}=0$).
 
 By Corollary~\ref{cor:symface} the start enters $K_F$ only through $\mu(F)$, and this can
 change which face wins inside a tie window.
@@ -110,7 +126,7 @@ $w=\log\frac{16}{9\sqrt3}=0.026$.
 \item Let $\mu=(\frac12,\frac12,0)$. For every $\eta>0$ and large $N$, if
 $c_0+\eta\le t\le c_0+w-\eta$, then every global mode lies on the face $\{1,2\}$.
 \item Let $\mu$ be uniform. For every compact set of $t$ and large $N$, no global mode lies on a
-face of $2$ states.
+face of two states.
 \end{enumerate}
 \end{corollary}
 
@@ -121,7 +137,7 @@ $\{i,j\}$ and $[3]$ are $\log\mu_i-2t$, $\log((\mu_i+\mu_j)\sqrt{2/\pi})-t$ and 
 $K_{[3]}=3^{5/2}/(4\pi)$. In (a) the line of $\{1,2\}$ lies strictly above the lines of the other
 admissible faces exactly when $c_0<t<\frac12\log\frac2\pi-\log K_{[3]}=c_0+w$. So $E$ has no kink
 in this interval, and the consequence in Theorem~\ref{thm:window} gives (a). In (b) the gap between
-$\max(\log\frac13-2t,\log K_{[3]})$ and an edge line is least where the first 2 lines meet, and there
+$\max(\log\frac13-2t,\log K_{[3]})$ and an edge line is least where the first two lines meet, and there
 it is $\frac12\log(3^{7/2}/32)>0.18$. So Theorem~\ref{thm:window}(i) gives (b).
 \end{proof}
 
@@ -157,18 +173,18 @@ $8.771$ for $k=2,\dots,5$, and they grow like $k^3/(2\pi^2)$. Arcs of $k\ge3$
 states win exactly when $d\ge\lceil3k/2\rceil$. & Lean, asymptotics by hand\\
 $P_d$, $d\ge3$ & End-arcs of $1,\dots,\lfloor2d/3\rfloor$ states, then $P_d$.
 The end-arc of $k$ states has exit rate $2-2\cos\frac\pi{2k+1}$, and the first
-switch is at the golden ratio $(1+\sqrt5)/2$. & Lean in part, proof
-omitted\\
+switch is at the golden ratio $(1+\sqrt5)/2$. &
+Proposition~\ref{prop:paths}\\
 $P_4$ at finite $N$ & The end-arc of $3$ states never wins, and its exit rate is
 only $0.0071$ too large to win. Yet it is the exact mode for
 $T\in(9.381,12.502)$ at $N=40$, and on a window at every $N$ tested up to
-$300$. & numerical\\
+$300$. & Proposition~\ref{prop:paths}, finite $N$ numerical\\
 $\Theta_\varepsilon$ & Triangles $\{1,2,3\}$ and $\{4,5,6\}$ joined by a link
 $3$--$4$ of rate $\varepsilon<\varepsilon_1=(64+\sqrt{46})/60$. The states
 $1,2,5,6$, then $\{1,2\}$ and $\{5,6\}$ from $1$, the triangles from
 $1+\varepsilon/3+O(\varepsilon^2)$, and $[6]$ from
-$9/\varepsilon+2+O(\varepsilon)$. & Lean in part, 3 exact resultants,
-proof omitted\\
+$9/\varepsilon+2+O(\varepsilon)$. & Proposition~\ref{prop:triangles}, with 2
+exact resultants\\
 paw & A triangle $\{1,2,3\}$ with a leaf $4$ at $1$. $\{4\}$, then $\{1,4\}$
 from $1+\sqrt2$, $\{1,2,3\}$ from $\sqrt2+\sqrt3$, and all $4$ states from
 $2+\sqrt3$. & Lean\\
@@ -181,17 +197,27 @@ $(5+\sqrt{17})/4=2.281$. & Lean\\
 \bottomrule
 \end{tabular}
 \caption{First-order winners on some graphs with unit rates and a start of full
-support (the second row allows any symmetric $Q$). The last column says how
-each row is established (Remark~\ref{rem:outcomes}).}
+support (the second row allows any symmetric $Q$). The last column says where
+each row is proved (Remark~\ref{rem:outcomes}).}
 \label{tab:outcomes}
 \end{table}
 
 \begin{remark}[the outcomes table]\label{rem:outcomes}
 Table~\ref{tab:outcomes} lists the outcomes for other graphs. Each row comes
-from Theorem~\ref{thm:hull} applied to the exit rates of the connected faces. On $C_d$ a proper face
-that is not an arc is disconnected, hence not admissible, and the growth of
-its switch values follows from $2-2\cos x=x^2+O(x^4)$. The rows marked ``proof omitted'' use the same
-hull argument, and we omit the details. A well-separated community wins for a
+from Theorem~\ref{thm:hull} applied to the exit rates of the connected faces.
+So a row needs two things, namely the exit rates and the points that lie on
+the lower-left boundary of the hull. The rows marked Lean are proved in Lean
+(Section~\ref{sec:verify}). On $C_d$ two steps are by hand. A proper face that
+is not an arc is disconnected, hence not admissible, and the growth of the
+switch values follows from $2-2\cos x=x^2+O(x^4)$. The rows $P_d$ and
+$\Theta_\varepsilon$ are proved in Appendix~\ref{app:examples}, for every
+$d\ge3$ and for every $\varepsilon<\varepsilon_1$
+(Propositions~\ref{prop:paths} and~\ref{prop:triangles}). The proof for
+$\Theta_\varepsilon$ uses two resultants that we computed by computer algebra,
+and it also shows that the bound $\varepsilon_1$ is sharp. In the row $P_4$ the
+first sentence is the case $d=4$ of Proposition~\ref{prop:paths}, and the rest
+is an exact computation of the law at the values of $N$ listed. A
+well-separated community wins for a
 long range of $\tau$, such as a triangle of $\Theta_\varepsilon$ from
 $\tau\approx1$ to $\tau\approx9/\varepsilon$. The mode need not grow around its
 first vertex. It leaves the leaf of the paw, and on the house and on $K_4$ plus

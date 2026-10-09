@@ -91,7 +91,7 @@ For $1\le d\le N-1$,
 \begin{proof}
 By Lemma~\ref{lem:firstmark},
 $\Prob(D=d)=\sum_j\varepsilon(1-\varepsilon)^{j-2}\beta_j(d)$, and
-$1-(j-2)\varepsilon\le(1-\varepsilon)^{j-2}\le1$. Apply the 2 sums of
+$1-(j-2)\varepsilon\le(1-\varepsilon)^{j-2}\le1$. Apply the two sums of
 Lemma~\ref{lem:urn}, and sum the upper bound over $d'\ge d$.
 \end{proof}
 
@@ -105,6 +105,14 @@ with $e_2(m)=C\bigl(\frac{x\log N}r+\frac{x\log N}m+Ne^{-r/40}\bigr)$.
 \end{enumerate}
 \end{proposition}
 
+\paragraph{Idea of the proof.}
+We use the formula of Lemma~\ref{lem:firstmark}. Given the time $j$ of the
+first flip, the count $M_N$ is $d-Y_d+Z^{(j)}_{N-d}$, where $d$ is the size
+of the first flipped family. As $d$ grows by one this quantity moves by at
+most one, so it hits $m$ at some $d$ close to $m$ unless $Y$ or $Z$ is
+large. The law $\beta_j$ of $d$ is nearly flat near $m$, and this gives
+almost the full weight $\beta_j(m)$. Then we sum over $j$.
+
 \begin{proof}
 (a) \emph{Step 1: one value of $j$.} Fix $2\le j\le J:=\lfloor N/8\rfloor$
 and put
@@ -113,24 +121,33 @@ $Q_j(m)=\E\sum_d\beta_j(d)\mathbf 1\{\Gamma_d=m\}$, and every step of $\Gamma$
 lies in $\{-1,0,1\}$. On the event $\{Z^{(j)}_{N-1}\le m-1,\ Y_{2m}\le m\}$ we
 have $\Gamma_1=1+Z^{(j)}_{N-1}\le m$, and at $d^\circ=m+Y_{2m}\le2m$ we have
 $\Gamma_{d^\circ}\ge d^\circ-Y_{2m}=m$, since $Y$ is nondecreasing and
-$Z\ge0$ (and $d^\circ\le N-j+1$ because $2m+j\le N$). So $\Gamma$ hits $m$ at some $d\le d^\circ$, and as $\beta_j$ is
-nonincreasing the sum is at least $\beta_j(m+Y_{2m})$. By \eqref{eq:B-ratio},
+$Z\ge0$ (and $d^\circ\le N-j+1$ because $2m+j\le N$). So $\Gamma$ hits $m$
+at some $d\le d^\circ$, and as $\beta_j$ is nonincreasing the sum is at
+least $\beta_j(m+Y_{2m})$. By \eqref{eq:B-ratio},
 $\beta_j(m+y)/\beta_j(m)=\prod_{i=1}^y(1-\frac{j-2}{N-m-i})\ge1-\frac{2y(j-2)}N$
-for $y\le m$, since each fraction is at most $\frac{2(j-2)}N\le\frac14$. By
-independence and $ab\ge a+b-1$ for $a,b\in[0,1]$,
+for $y\le m$, since each fraction is at most $\frac{2(j-2)}N\le\frac14$. Let
+$\mathbf 1_{\mathcal E}$ be the indicator of the event. Then the sum is at
+least $\beta_j(m)\bigl(\mathbf 1_{\mathcal E}-\frac{2(j-2)}NY_{2m}\bigr)$ in
+every case, and
+$\mathbf 1_{\mathcal E}\ge1-\mathbf 1\{Y_{2m}>m\}-\mathbf 1\{Z^{(j)}_{N-1}\ge m\}$.
+Taking means gives
 $Q_j(m)\ge\beta_j(m)[1-\Prob(Y_{2m}>m)-\Prob(Z^{(j)}_{N-1}\ge m)]
 -\frac{2(j-2)}N\E Y_{2m}\,\beta_j(m)$.
 
 \emph{Step 2: sum over $j$.} Lemma~\ref{lem:B-tail} gives
 $\Prob(Y_{2m}>m)\le2\varepsilon H_{m+1}$, $\Prob(Z^{(j)}_{N-1}\ge m)\le xH_m/m$
 and $\E Y_{2m}\le2\varepsilon m\log N$. If $2\varepsilon H_{m+1}+xH_m/m>1$,
-then $e_1(m)>1$ and there is nothing to prove. Otherwise we multiply by
-$\Prob(V=j)\le\varepsilon$ and sum over $2\le j\le J$. By the second sum in
+then $e_1(m)>1$ (once $C$ is large) and there is nothing to prove. Otherwise
+the bracket is nonnegative. We multiply the bound of Step 1 by $\Prob(V=j)$
+and sum over $2\le j\le J$, which bounds $f_N(m)$ from below by
+Lemma~\ref{lem:firstmark}. In the terms with $\E Y_{2m}$ we use
+$\Prob(V=j)\le\varepsilon$. By the second sum in
 Lemma~\ref{lem:urn}, the terms with $\E Y_{2m}$ add up to at most
 $\frac{4\varepsilon m\log
 N}N\cdot\frac{2x(N-m-1)}{m(m+1)(m+2)}\le\frac{x}{m(m+1)}\,8\varepsilon\log N$.
 By Lemma~\ref{lem:B-D}, $\sum_{j\le
 J}\Prob(V=j)\beta_j(m)\ge\frac{x}{m(m+1)}(1-\frac{2x}{m+2})-\varepsilon\sum_{j>J}\beta_j(m)$.
+
 \emph{Step 3: the late first flips $j>J$.} By \eqref{eq:B-subtail},
 $\beta_j(m)\le\frac{j-1}{N-m}e^{-(j-1)a}$ with
 $a=\frac{m-1}{N-1}\le\frac14$, and $aJ\ge\frac{m-1}9$ because $\lfloor
@@ -141,7 +158,7 @@ terms gives (a).
 
 (b) The same argument works with $J=w=\lfloor r/8\rfloor\ge2$, the event
 $\{Z^{(j)}_{N-1}\le m-1,\ Y_{m+w}\le w\}$ and $d^\circ=m+Y_{m+w}\le m+w$. Note
-that $m+w+j\le N$. Only 3 estimates change. For $y\le w$ and $j\le J$ we have
+that $m+w+j\le N$. Only three estimates change. For $y\le w$ and $j\le J$ we have
 $N-m-i\ge\frac78r$, so $\beta_j(m+y)\ge\beta_j(m)(1-\frac{8y(j-2)}{7r})$. Since
 $w+1\ge r/8$, Lemma~\ref{lem:B-tail} gives $\Prob(Y_{m+w}>w)\le8xH_N/r$ and $\E
 Y_{m+w}\le x\log N$, and the terms with $\E Y_{m+w}$ add up to at most
@@ -155,6 +172,13 @@ There is an absolute constant $C$ such that for $6\le m\le N/2$ with
 $m\ge16x\log m$ we have $\Prob(M_N\ge m)\le\frac
 xm\bigl(1+C\,\frac{x\log^2m}m\bigr)$.
 \end{proposition}
+
+\paragraph{Idea of the proof.}
+Given the first flip at time $j$, the count $M_N$ is at most $D+Z_j$, the
+size of the first flipped family plus the count from the rest of the tree.
+The event $D\ge m$ gives the main term $x/m$. The other terms come from a
+shift of $D$ by $Z_j$, from a large $Z_j$, and from a late first flip, and
+each is smaller by a factor of order $x\log^2m/m$.
 
 \begin{proof}
 \emph{Step 1: split by the first flip.} Let $J=\lfloor N/4\rfloor$ and
@@ -170,7 +194,7 @@ z(\varrho-1)\varrho^z$. Hence
  \Prob(M_N\ge m)\le\sum_{j=2}^J\Prob(V=j)\Bigl[\bar\beta_j(m)\bigl(1+(\varrho_j-1)\varrho_j^{m/8}\,\E Z_j\bigr)+\Prob\Bigl(Z_j>\frac m8\Bigr)\Bigr]
  +\Prob(V>J)\,\Prob\bigl(M^{[J]}_N\ge m\bigr).
 \]
-This gives 4 terms, which we bound in turn. The main term is
+This gives four terms, which we bound in turn. The main term is
 $\sum_j\Prob(V=j)\bar\beta_j(m)\le\Prob(D\ge m)\le\frac xm$ by
 Lemma~\ref{lem:B-D}.
 
@@ -233,13 +257,24 @@ N\le\bar c$ and $A_1x\log^2(x+1)\le m\le N/8$, then
 \]
 \end{proposition}
 
+\paragraph{Idea of the proof.}
+To the right of its mode $f_N$ is nonincreasing, so $(k+1)f_N(m)$ is at most
+the probability of $\{m-k\le M_N\le m\}$, which is a difference of two tails.
+We bound the first tail from above by
+Proposition~\ref{thm:B-cum-upper} and the second from below by summing
+Proposition~\ref{thm:B-local-lower}. Then we choose $k$ to balance the
+errors.
+
 \begin{proof}
 We take $A_1\ge2A_0$ so large that Lemma~\ref{lem:B-mode} applies and every
 $m'\ge m/2$ satisfies $m'\ge6$ and $m'\ge16x\log m'$ (as $t/\log t$ increases
-for $t\ge e$). \emph{Step 1: a difference of tails.} Let $1\le k\le m/2$. Then
+for $t\ge e$).
+
+\emph{Step 1: a difference of tails.} Let $1\le k\le m/2$. Then
 $m-k\ge m/2\ge m_h$, and
 Lemma~\ref{lem:B-sandwich} with $a=m-k$ and $b=m$ gives
 $(k+1)f_N(m)\le\Prob(M_N\ge m-k)-\Prob(M_N\ge m+1)$.
+
 \emph{Step 2: bound each tail.} Proposition~\ref{thm:B-cum-upper} at $m-k$
 bounds the first term by $\frac
 x{m-k}+\frac{Cx^2\log^2m}{m^2}$. For the second we sum
@@ -249,7 +284,9 @@ $\frac{\log(\ell+1)}\ell$ and $\ell e^{-\ell/9}$ decrease for $\ell\ge9$, and
 $me^{-m/9}\le C/m\le C\Delta(m)$, we get $\Prob(M_N\ge m+1)\ge\frac
 x{m+1}(1-C\Delta(m))$. As $\frac x{m-k}-\frac
 x{m+1}=\frac{x(k+1)}{(m-k)(m+1)}$, this gives
-$f_N(m)\le\frac{x}{(m-k)(m+1)}+\frac{Cx\Delta(m)}{(k+1)m}$. \emph{Step 3: choose $k$.} If
+$f_N(m)\le\frac{x}{(m-k)(m+1)}+\frac{Cx\Delta(m)}{(k+1)m}$.
+
+\emph{Step 3: choose $k$.} If
 $\Delta(m)\le\frac1{16}$, take $k=\lceil m\Delta(m)^{1/2}\rceil\le\frac m2$.
 Then $\frac m{m-k}\le1+\frac{2k}m\le1+2\Delta^{1/2}+\frac2m$ and
 $\frac\Delta{k+1}\le\frac{\Delta^{1/2}}m$, which gives the claim, as
@@ -266,6 +303,8 @@ $\mathcal R_N$ be the range
 $\omega_Nx\ell_x^2\le m\le\delta'_NN$. Since $x\log^2N/N\to0$, for large $N$
 we have $\varepsilon(1+\log N)\le\min(\bar c,\frac1{100})$,
 $\omega_N\ge\max(A_1,16)$, $\delta'_N\le\frac18$ and $A_0x\log(x+2)\le N/4$.
+The standing assumptions $N\ge64$ and $\varepsilon\le\frac14$ hold as well.
+
 \emph{Step 2: the errors are small on $\mathcal R_N$.} The function
 $\frac{x\log^2m}m$ decreases for $m\ge e^2$. At
 $m=\omega_Nx\ell_x^2$ we have $m\ge e^2$ and $\log m\le\log\omega_N+3\ell_x$,

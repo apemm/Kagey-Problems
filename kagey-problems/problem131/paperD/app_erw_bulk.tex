@@ -1,0 +1,347 @@
+\section{Proofs for the bulk}\label{app:bulk}
+
+We prove Theorems~\ref{thm:cp} and~\ref{thm:landau},
+Lemma~\ref{lem:landau-mode} and Corollary~\ref{cor:mode-location}. We keep
+the notation of Section~\ref{sec:shape} and of Appendix~\ref{app:shape}. So
+$\mathcal T$ is the tree of Lemma~\ref{lem:tree}, $\mathcal T_v$ is the family
+of $v$, and $\mu_v$ is the mark of $v$. By Lemma~\ref{lem:urn} and the
+discussion after Lemma~\ref{lem:tree}, $\lvert\mathcal T_v\rvert$ has the law
+$\beta_v$, with mean $N/v$, and $\sum_{v=2}^N\beta_v(d)=N/(d(d+1))$ for
+$1\le d\le N-1$. Let
+\[
+ \Psi_N(\theta)=\sum_{d=1}^{N-1}\frac{e^{i\theta d}-1}{d(d+1)},\qquad
+ \Psi_\infty(\theta)=\sum_{d\ge1}\frac{e^{i\theta d}-1}{d(d+1)} .
+\]
+The law $\CP_N$ has the characteristic function
+$\widehat{\CP}_N(\theta)=e^{x\Psi_N(\theta)}$.
+
+\subsection{Proof of Theorem~\ref{thm:cp}}\label{app:bulk-cp}
+
+Here we assume only $N\ge2$ and $0<\varepsilon\le\frac14$. Let
+$Z_+=\sum_{v=2}^N\mu_v\lvert\mathcal T_v\rvert$ be the total size of the
+flipped families.
+
+\emph{Step 1: $M_N=Z_+$ with high probability.} Two families are nested or
+disjoint. Suppose that no marked vertex has a marked strict descendant. Then
+the marked families are disjoint, each of their vertices has exactly one
+mark on its path to the root, and the other vertices have none. So
+$M_N=Z_+$ by Lemma~\ref{lem:tree}. The number of pairs of a marked vertex and
+a marked strict descendant has mean
+$\varepsilon^2\,\E\sum_v(\lvert\mathcal T_v\rvert-1)$, since marks and tree are
+independent. Hence
+\[
+ \Prob(M_N\ne Z_+)\le\varepsilon^2\sum_{v=2}^N\Bigl(\frac Nv-1\Bigr)
+ \le\varepsilon^2N(H_N-1)\le\frac{x^2\log N}{N}.
+\]
+
+\emph{Step 2: given the tree, a product.} Fix $\theta\in[-\pi,\pi]$. Given
+$\mathcal T$ the marks are independent, so
+$\E[e^{i\theta Z_+}\mid\mathcal T]=\prod_{v=2}^N(1+a_v)$ with
+$a_v=\varepsilon(e^{i\theta\lvert\mathcal T_v\rvert}-1)$. Here
+$\lvert a_v\rvert\le2\varepsilon\le\frac12$ and $\operatorname{Re}a_v\le0$.
+Put $W=\sum_va_v$, so that $\operatorname{Re}W\le0$. For complex $a$ with
+$\lvert a\rvert\le\frac12$ the series of the logarithm gives
+$\lvert\log(1+a)-a\rvert\le\lvert a\rvert^2$. So $\prod_v(1+a_v)=e^{W+\varrho}$
+with $\lvert\varrho\rvert\le\sum_v\lvert a_v\rvert^2\le4\varepsilon^2(N-1)$.
+Since $\lvert e^w-1\rvert\le\lvert w\rvert e^{\lvert w\rvert}$,
+\[
+ \Bigl\lvert\prod_v(1+a_v)-e^W\Bigr\rvert\le e^{\operatorname{Re}W}\,
+ 4\varepsilon^2(N-1)\,e^{4\varepsilon^2(N-1)}\le\frac{4x^2}Ne^{4x^2/N}.
+\]
+
+\emph{Step 3: replace $W$ by its mean.} Write $W=\varepsilon F$ with
+$F=\sum_{v=2}^N(e^{i\theta\lvert\mathcal T_v\rvert}-1)$. Then
+$\E W=\varepsilon\sum_d(e^{i\theta d}-1)\sum_v\beta_v(d)=x\Psi_N(\theta)$,
+which is $\log\widehat{\CP}_N(\theta)$. Put $\delta=W-\E W$. Taylor's formula
+for $s\mapsto e^{\E W+s\delta}$ on $[0,1]$ gives
+\[
+ e^W-e^{\E W}-e^{\E W}\delta=\delta^2\int_0^1(1-s)\,e^{\E W+s\delta}\,ds .
+\]
+The exponent $\E W+s\delta=(1-s)\E W+sW$ has real part at most $0$, so the
+right side has modulus at most $\frac12\lvert\delta\rvert^2$. As $\E\delta=0$,
+we get $\lvert\E e^W-e^{\E W}\rvert\le\frac12\varepsilon^2\Var F$, where
+$\Var F=\E\lvert F-\E F\rvert^2$.
+
+\emph{Step 4: the variance of $F$.} The variable $F$ is a function of the
+independent parents $U_1,\dots,U_{N-1}$. Let $F^{(k)}$ be $F$ with $U_k$
+replaced by an independent copy $U_k'$. The Efron--Stein
+inequality~\cite{efronstein1981} says that
+$\Var F\le\frac12\sum_k\E\lvert F-F^{(k)}\rvert^2$. We use it for a complex
+function of independent variables that are not identically distributed, so we
+recall the proof. Let $\E_k$ be the average over $U_k$ alone, and let
+$\zeta_k=\E[F-\E_kF\mid U_1,\dots,U_k]$. Then
+$\zeta_k=\E[F\mid U_1,\dots,U_k]-\E[F\mid U_1,\dots,U_{k-1}]$, so
+$F-\E F=\sum_k\zeta_k$ and the $\zeta_k$ are orthogonal. Hence
+$\Var F=\sum_k\E\lvert\zeta_k\rvert^2\le\sum_k\E\lvert F-\E_kF\rvert^2$, and
+$\E\lvert F-\E_kF\rvert^2=\frac12\E\lvert F-F^{(k)}\rvert^2$, because given
+the other parents $F$ and $F^{(k)}$ are independent with the same law.
+
+Replacing $U_k$ by $U_k'$ moves the family of $k+1$ from $U_k$ to $U_k'$. So
+$\lvert\mathcal T_v\rvert$ changes only for vertices $v\ge2$ on the path from
+$U_k$ to the root or on the path from $U_k'$ to the root. These paths do not
+depend on the choice at step $k$, since $U_k,U_k'\le k$. Let $\mathrm{dp}(u)$
+be the depth of $u$, namely the number of edges between $u$ and the root.
+There are at most $\mathrm{dp}(U_k)+\mathrm{dp}(U_k')$ such vertices, and each
+term of $F$ moves by at most $2$. Hence
+$\E\lvert F-F^{(k)}\rvert^2\le8\,\E[\mathrm{dp}(U_k)^2+\mathrm{dp}(U_k')^2]
+=16\,\E\,\mathrm{dp}(U_k)^2$.
+
+Since $\mathrm{dp}(u+1)=1+\mathrm{dp}(U_u)$, the generating function
+$g_u(s)=\E s^{\mathrm{dp}(u)}$ satisfies $g_1=1$ and
+$u\,g_{u+1}(s)=s\sum_{j\le u}g_j(s)$. Subtracting the same identity for $u-1$
+gives $u\,g_{u+1}(s)=(u-1+s)\,g_u(s)$ for $u\ge2$, and $g_2(s)=s$. So
+$g_u(s)=\prod_{i=1}^{u-1}\frac{i-1+s}{i}$. Thus $\mathrm{dp}(u)$ is a sum of
+independent Bernoulli$(1/i)$ variables with $1\le i<u$, and
+$\E\,\mathrm{dp}(u)^2\le H_{u-1}^2+H_{u-1}$. The parent $U_k$ is independent
+of the depths of $1,\dots,k$, so $\E\,\mathrm{dp}(U_k)^2\le H_N^2+H_N$. We
+get $\Var F\le\frac12(N-1)\cdot16(H_N^2+H_N)\le8N(H_N^2+H_N)$, and the bound
+of Step 3 is at most $4x^2(H_N^2+H_N)/N$.
+
+\emph{Step 5: Fourier inversion.} For every integer $m$,
+\[
+ \Prob(Z_+=m)-\CP_N(m)=\frac1{2\pi}\int_{-\pi}^{\pi}e^{-im\theta}
+ \bigl(\E e^{i\theta Z_+}-\widehat{\CP}_N(\theta)\bigr)\,d\theta,
+\]
+so the left side is at most
+$\sup_\theta\lvert\E e^{i\theta Z_+}-\widehat{\CP}_N(\theta)\rvert$ in absolute
+value. By Steps 2 to 4 this is at most
+$\frac{4x^2}Ne^{4x^2/N}+\frac{4x^2(H_N^2+H_N)}N$. Finally
+$\lvert f_N(m)-\Prob(Z_+=m)\rvert\le\Prob(M_N\ne Z_+)$, and Step 1 bounds it.
+This proves Theorem~\ref{thm:cp}. \qed
+
+\subsection{Proof of Theorem~\ref{thm:landau}}\label{app:bulk-landau}
+
+We write $B(t)=-it\log\lvert t\rvert-\frac\pi2\lvert t\rvert$ for real
+$t\ne0$, and $B(0)=0$. For $t>0$ this is the value of $u\log u$ at $u=-it$,
+with the principal logarithm, and $B(-t)=\overline{B(t)}$. We need three
+facts about $\Psi_N$ and $\Psi_\infty$.
+
+\emph{Fact 1.} For real $\theta$,
+$\lvert\Psi_N(\theta)-\Psi_\infty(\theta)\rvert\le\sum_{d\ge N}\frac2{d(d+1)}=\frac2N$.
+
+\emph{Fact 2.} For $0<\lvert\theta\rvert\le\pi$ we have
+$\Psi_\infty(\theta)=-i\theta\log(-i\theta)+R(\theta)$ with
+$\lvert R(\theta)\rvert\le\theta^2\bigl(0.631\,\lvert\log\lvert\theta\rvert\rvert+1.53\bigr)$.
+To see this, note first that for $0<\lvert s\rvert\le1$, $s\ne1$,
+\[
+ \sum_{d\ge1}\frac{s^d-1}{d(d+1)}=\chi(s):=\frac{(1-s)\log(1-s)}s,
+\]
+because $\sum_ds^d/d=-\log(1-s)$, $\sum_ds^d/(d+1)=(-\log(1-s)-s)/s$ and
+$\sum_d\frac1{d(d+1)}=1$. So $\Psi_\infty(\theta)=\chi(e^{i\theta})$. Write
+$1-e^{i\theta}=(-i\theta)\,\mathsf u$ with
+$\mathsf u=\operatorname{sinc}(\theta/2)\,e^{i\theta/2}$, where
+$\operatorname{sinc}y=\sin y/y$ is positive for $\lvert y\rvert\le\frac\pi2$.
+The arguments of $-i\theta$ and of $\mathsf u$ add up to a number in
+$(-\frac\pi2,\frac\pi2)$, so
+$\log(1-e^{i\theta})=\log(-i\theta)+\log\mathsf u$ for principal logarithms.
+Hence
+\[
+ R(\theta)=-i\theta\log(-i\theta)\bigl(\mathsf ue^{-i\theta}-1\bigr)
+ -i\theta\,\mathsf ue^{-i\theta}\log\mathsf u .
+\]
+With $y=\theta/2$ we have
+$\lvert\mathsf ue^{-i\theta}-1\rvert=\lvert\operatorname{sinc}y-e^{iy}\rvert
+\le(1-\operatorname{sinc}y)+\lvert1-e^{iy}\rvert\le\frac{y^2}6+\lvert y\rvert
+\le(\frac12+\frac\pi{24})\lvert\theta\rvert$. Next
+$\lvert\log\mathsf u\rvert^2=\log^2\operatorname{sinc}(\theta/2)+\theta^2/4$,
+and $-\log\operatorname{sinc}y=\sum_{k\ge1}\frac{\zeta(2k)}{k\pi^{2k}}y^{2k}$
+has positive coefficients. So
+$\lvert\log\operatorname{sinc}(\theta/2)\rvert/\lvert\theta\rvert$ increases in
+$\lvert\theta\rvert$, and its value at $\lvert\theta\rvert=\pi$ gives
+$\lvert\log\mathsf u\rvert\le\bigl(\frac14+\frac{\log^2(\pi/2)}{\pi^2}\bigr)^{1/2}\lvert\theta\rvert
+\le0.53\,\lvert\theta\rvert$. Finally
+$\lvert\log(-i\theta)\rvert\le\lvert\log\lvert\theta\rvert\rvert+\frac\pi2$
+and $\lvert\mathsf u\rvert\le1$. Since $\frac12+\frac\pi{24}\le0.631$ and
+$0.631\cdot\frac\pi2+0.53\le1.53$, the bound follows.
+
+\emph{Fact 3.} For $\lvert\theta\rvert\le\pi$,
+$-\operatorname{Re}\Psi_\infty(\theta)=\sum_d\frac{1-\cos\theta d}{d(d+1)}
+\ge\frac{\lvert\theta\rvert}{2\pi}$. We may take $\theta\ne0$. Keep only the
+terms with $d\le D:=\lfloor\pi/\lvert\theta\rvert\rfloor$ and use
+$1-\cos v\ge2v^2/\pi^2$ for $\lvert v\rvert\le\pi$. This gives at least
+$\frac{2\theta^2}{\pi^2}\sum_{d\le D}\frac d{d+1}\ge\frac{\theta^2D}{\pi^2}
+\ge\frac{\lvert\theta\rvert}{2\pi}$, since $D\ge\frac\pi{2\lvert\theta\rvert}$.
+
+\emph{The function $e^B$ is a characteristic function of class $L$.} Let
+$S_x$ have the law $\CP_\infty$ with parameter $x$, namely the law of
+$\sum_{d\ge1}d\,\mathcal N_d$. Its characteristic function is
+$e^{x\Psi_\infty(\theta)}$. By Fact 2, for $t\ne0$ and
+$x\ge\max(1,\lvert t\rvert/\pi)$,
+\begin{equation}\label{eq:bulk-AB}
+ x\Psi_\infty(t/x)-it\log x=B(t)+xR(t/x),\qquad
+ \lvert xR(t/x)\rvert\le\frac{t^2}x\bigl(0.631(\lvert\log\lvert t\rvert\rvert+\log x)+1.53\bigr).
+\end{equation}
+So the characteristic function of $(S_x-x\log x)/x$ tends to $e^{B(t)}$ as
+$x\to\infty$, for every real $t$. The limit is continuous at $0$, so by
+L\'evy's continuity theorem it is the characteristic function of a
+probability law. It is integrable, so this law has the bounded continuous
+density $f_L$ of Theorem~\ref{thm:landau}. For $0<c<1$ and real $t$ we have
+$B(ct)=cB(t)-ict\log c$, and hence
+\[
+ e^{B(t)}=e^{B(ct)}\cdot e^{B((1-c)t)}\,e^{it[(1-c)\log(1-c)+c\log c]} .
+\]
+The last two factors form the characteristic function of a scaled and shifted
+copy of the law. So the law is of class $L$ (self-decomposable), and $f_L$ is
+unimodal by~\cite{yamazato1978}.
+
+\emph{Proof of (a).} By Fourier inversion on $\Z$ and the substitution
+$\theta=t/x$,
+\[
+ x\,\CP_N(m)=\frac1{2\pi}\int_{-\pi x}^{\pi x}e^{-i\lambda_mt}e^{A(t)}\,dt,\qquad
+ A(t)=x\Psi_N(t/x)-it\log x .
+\]
+Let $\lvert t\rvert\le\pi x$. By \eqref{eq:bulk-AB} and Fact 1,
+\[
+ \lvert A(t)-B(t)\rvert\le\frac{t^2}x\bigl(0.631(\lvert\log\lvert t\rvert\rvert+\log x)+1.53\bigr)+\frac{2x}N,
+\]
+and by Facts 1 and 3,
+$\max(\operatorname{Re}A(t),\operatorname{Re}B(t))\le-\frac{\lvert t\rvert}{2\pi}+\frac{2x}N$.
+Now $\lvert e^A-e^B\rvert\le\lvert A-B\rvert\,e^{\max(\operatorname{Re}A,\operatorname{Re}B)}$,
+and $\frac{2x}N\le\frac12$. The integrals of $t^2e^{-\lvert t\rvert/2\pi}$,
+of $t^2\lvert\log\lvert t\rvert\rvert e^{-\lvert t\rvert/2\pi}$ and of
+$e^{-\lvert t\rvert/2\pi}$ over the real line are finite. So
+\[
+ \frac1{2\pi}\int_{-\pi x}^{\pi x}\lvert e^{A(t)}-e^{B(t)}\rvert\,dt
+ \le C\Bigl(\frac{1+\log x}x+\frac xN\Bigr).
+\]
+Beyond $\pi x$ we use $\lvert e^{B(t)}\rvert=e^{-\pi\lvert t\rvert/2}$, which
+gives $\frac1{2\pi}\int_{\lvert t\rvert>\pi x}\lvert e^{B(t)}\rvert\,dt
+=\frac2{\pi^2}e^{-\pi^2x/2}\le\frac Cx$. Since
+$f_L(\lambda_m)=\frac1{2\pi}\int_{\mathbb R}e^{-i\lambda_mt}e^{B(t)}\,dt$,
+this proves (a).
+
+\emph{Proof of (b).} By Theorem~\ref{thm:cp},
+$\lvert xf_N(m)-x\,\CP_N(m)\rvert\le x\delta_B$. Add (a).
+
+\emph{Proof of (c).} Let $x\to\infty$ and $x^3\log^2N/N\to0$. Then
+$x\delta_B\to0$ and $x/N\to0$, so the bound of (b) tends to $0$. Let $U$ be
+uniform on $[0,1)$ and independent of $M_N$. Then $(M_N+U-x\log x)/x$ has
+the density $g_N$ with $g_N(\lambda)=xf_N(m)$ for
+$\lambda_m\le\lambda<\lambda_m+\frac1x$. On a compact set of $\lambda$ the
+relevant $m$ are nonnegative once $x$ is large, and
+$\lvert\lambda-\lambda_m\rvert<\frac1x$. As $f_L$ is uniformly continuous,
+$g_N\to f_L$ uniformly on compact sets. By Scheff\'e's lemma $g_N\to f_L$ in
+$L^1$, and since $U/x\to0$ this gives the convergence in law. At the
+crossing $x_N\sim2\log N$ by Theorem~\ref{thm:erw-crossing}, so both
+conditions hold. \qed
+
+\subsection{Proof of Lemma~\ref{lem:landau-mode}}\label{app:bulk-mode}
+
+\emph{Step 1: a real integral.} We claim that for every real $\lambda$ and
+$k\ge0$,
+\begin{equation}\label{eq:landau-real}
+ f_L^{(k)}(\lambda)=\frac1\pi\int_0^\infty(-s)^k\,e^{-s\log s-\lambda s}\sin(\pi s)\,ds .
+\end{equation}
+Since $B(-t)=\overline{B(t)}$, the definition of $f_L$ gives
+$f_L(\lambda)=\frac1\pi\operatorname{Re}\int_0^\infty\Phi(-it)\,dt$ with
+$\Phi(u)=\exp(u\log u+\lambda u)$. The function $\Phi$ is holomorphic off the
+negative real axis. Put $u=\rho e^{i\varphi}$ with
+$-\pi<\varphi\le-\frac\pi2$. Then
+$\operatorname{Re}(u\log u)=\rho(\log\rho\cos\varphi-\varphi\sin\varphi)$,
+where $\cos\varphi\le0$ and $\varphi\sin\varphi\ge0$. For
+$\log\rho\ge\lvert\lambda\rvert+1$ this gives
+$\operatorname{Re}(u\log u+\lambda u)\le-\rho(\lvert\cos\varphi\rvert+\varphi\sin\varphi)\le-\rho$,
+because $\lvert\cos\varphi\rvert+\varphi\sin\varphi\ge1$ on
+$[-\pi,-\frac\pi2]$ (for $\psi=\varphi+\pi\in[0,\frac\pi2]$ it equals
+$\cos\psi+(\pi-\psi)\sin\psi\ge\cos\psi+\sin\psi\ge1$). Also $\Phi$ is bounded
+near $0$. So by Cauchy's theorem we may turn the ray $u=-it$ to the lower
+side of the negative real axis, where $u=-s$ and $\log u=\log s-i\pi$. There
+$u\log u=-s\log s+i\pi s$, and $dt=i\,du=-i\,ds$. Hence
+\[
+ f_L(\lambda)=\frac1\pi\operatorname{Re}\Bigl[-i\int_0^\infty
+ e^{-s\log s-\lambda s}\,e^{i\pi s}\,ds\Bigr]
+ =\frac1\pi\int_0^\infty e^{-s\log s-\lambda s}\sin(\pi s)\,ds .
+\]
+The integrand decays faster than every exponential, so we may differentiate
+under the integral sign. This proves \eqref{eq:landau-real}. Also $f_L''$
+is bounded on the real line, because $t^2e^{B(t)}$ is integrable and we may
+differentiate the Fourier formula for $f_L$ twice.
+
+\emph{Step 2: certified enclosures.} Let $-0.223\le\lambda\le0$ and
+$k\in\{1,2\}$, and split the integral in \eqref{eq:landau-real} at
+$\delta=2^{-20}$ and at $T=30$. On $[0,\delta]$ we have $-s\log s\le1/e$,
+$-\lambda s\le0.223\,s$ and $\lvert\sin\pi s\rvert\le\pi s$, so this part is
+at most $\pi e^{1/e+0.223\delta}\delta^{k+2}/(k+2)$ in absolute value. On
+$[T,\infty)$ we have $s\log s+\lambda s\ge cs$ with $c=\log30-0.223>3$, so
+this part is at most
+$\int_T^\infty s^2e^{-cs}\,ds\le T^2e^{-cT}$. Both are below $10^{-17}$. On
+$[\delta,T]$ the integrand is holomorphic in a neighborhood of the path, and
+we enclose the integral with the rigorous integration algorithm
+of~\cite{johansson2018}, in ball arithmetic with 128 bits. The
+parameter $\lambda$ enters as a ball, so one run encloses the integral for
+every $\lambda$ in an interval. The script \texttt{certify\_elephant.py} does
+this and reports
+\[
+ f_L'(-0.2229)\in[9.232\cdot10^{-6},9.234\cdot10^{-6}],\qquad
+ f_L'(-0.2227)\in[-6.548\cdot10^{-6},-6.546\cdot10^{-6}],
+\]
+and $f_L''(\lambda)\in[-0.0792,-0.0786]$ for every
+$\lambda\in[-0.2229,-0.2227]$. In the same way it finds that $f_L'$ is
+positive at $-0.22278299$ and negative at $-0.22278297$.
+
+\emph{Step 3: the mode.} Write $[a,b]=[-0.2229,-0.2227]$. By Step 2, $f_L'$
+is strictly decreasing on $[a,b]$ with $f_L'(a)>0>f_L'(b)$. So $f_L'$ has
+exactly one zero $\lambda_0$ in $[a,b]$, and $f_L$ is strictly increasing on
+$[a,\lambda_0]$ and strictly decreasing on $[\lambda_0,b]$. Since $f_L$ is
+unimodal, there is a point $\lambda_*$ such that $f_L$ is nondecreasing on
+$(-\infty,\lambda_*]$ and nonincreasing on $[\lambda_*,\infty)$. If
+$\lambda_*>\lambda_0$, then $f_L$ would be nondecreasing just to the right of
+$\lambda_0$, which is false. In the same way $\lambda_*<\lambda_0$ is
+impossible. So $\lambda_*=\lambda_0$. By Step 2 again,
+$\lambda_0\in(-0.22278299,-0.22278297)$. This proves (a) and (b).
+
+\emph{Step 4: the constant $\kappa_L$.} Let
+$\delta_0=\min(\lambda_0-a,b-\lambda_0)>0$. For
+$\lvert\lambda-\lambda_0\rvert\le\delta_0$, Taylor's formula with
+$f_L'(\lambda_0)=0$ and $f_L''\le-0.078$ on $[a,b]$ gives
+$f_L(\lambda_0)-f_L(\lambda)\ge0.039(\lambda-\lambda_0)^2$. For
+$\lvert\lambda-\lambda_0\rvert>\delta_0$ the monotonicity of Step 3 gives
+$f_L(\lambda)\le f_L(\lambda_0\pm\delta_0)\le f_L(\lambda_0)-0.039\,\delta_0^2$.
+Since $\delta_0<1$, (c) holds with $\kappa_L=0.039\,\delta_0^2$. \qed
+
+\subsection{Proof of Corollary~\ref{cor:mode-location}}\label{app:bulk-cor}
+
+We first prove a statement at finite $N$. Assume the standing assumptions of
+Section~\ref{sec:shape}, let $\kappa_L$ be as in
+Lemma~\ref{lem:landau-mode}(c), and let $E_1$ be the bound of
+Theorem~\ref{thm:landau}(b). Put
+\[
+ E'=E_1+\frac{16x^2H_N}{N^2}+\frac{\lVert f_L''\rVert_\infty}{8x^2}.
+\]
+We claim that if $E'<\kappa_L/2$ and $m_h\le N/4$, then every mode $m$ of
+$f_N$ satisfies
+$\lvert m-x\log x-\lambda_0x\rvert\le x\sqrt{2E'/\kappa_L}$, and so does
+$m^*$ for every mode $a^*\ge N/2$ of $P_N$.
+
+Let $m'$ be the integer nearest to $x\log x+\lambda_0x$. This number
+increases in $x\ge1$ and is at least $\lambda_0>-\frac12$, so $m'\ge0$. Also
+$\lvert\lambda_{m'}-\lambda_0\rvert\le\frac1{2x}$, and since
+$f_L'(\lambda_0)=0$,
+$f_L(\lambda_{m'})\ge f_L(\lambda_0)-\lVert f_L''\rVert_\infty/(8x^2)$. Let
+$\tilde m$ be a mode of $f_N$ or $\tilde m=m^*$. We claim that
+$f_N(\tilde m)\ge f_N(m')-16xH_N/N^2$. For a mode of $f_N$ this is clear.
+For $m^*$ we have
+$f_N(m^*)+f_N(N-m^*)=2P_N(N-m^*)\ge2P_N(N-m')\ge f_N(m')$. Here
+$N-m^*\ge\lceil N/2\rceil\ge\lceil N/4\rceil\ge m_h$. So
+$f_N$ is nonincreasing on $\{\lceil N/4\rceil,\dots,N\}$ by
+Lemma~\ref{lem:unimodal}. There are at least $N/4$ integers from
+$\lceil N/4\rceil$ to $\lceil N/2\rceil$, so by Lemma~\ref{lem:B-tail}
+\[
+ f_N(N-m^*)\le f_N(\lceil N/2\rceil)\le\frac{\Prob(M_N\ge\lceil N/4\rceil)}{N/4}
+ \le\frac{16xH_N}{N^2}.
+\]
+Now Theorem~\ref{thm:landau}(b), used at $\tilde m$ and at $m'$, gives
+\[
+ f_L(\lambda_{\tilde m})\ge xf_N(\tilde m)-E_1\ge xf_N(m')-\frac{16x^2H_N}{N^2}-E_1
+ \ge f_L(\lambda_{m'})-2E_1-\frac{16x^2H_N}{N^2}\ge f_L(\lambda_0)-2E'.
+\]
+Since $2E'<\kappa_L$, Lemma~\ref{lem:landau-mode}(c) gives
+$(\lambda_{\tilde m}-\lambda_0)^2\le2E'/\kappa_L$, which is the claim.
+
+Now take $x=x_N$ at the crossing. By Theorem~\ref{thm:erw-crossing},
+$x\sim2\log N$. So $x\delta_B$, $x/N$, $16x^2H_N/N^2$ and
+$\lVert f_L''\rVert_\infty/(8x^2)$ are all $O(\log x/x)$, and
+$E'=O(\log x/x)$. For large $N$ the standing assumptions hold, $E'<\kappa_L/2$,
+and Lemma~\ref{lem:B-mode} gives $m_h\le A_0x\log^2(x+1)\le N/4$. Hence
+$\lvert m^*-x\log x-\lambda_0x\rvert\le x\sqrt{2E'/\kappa_L}=O(\sqrt{x\log x})$,
+and the same holds for $m_h$. \qed

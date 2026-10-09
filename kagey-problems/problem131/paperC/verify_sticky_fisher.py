@@ -1,4 +1,4 @@
-"""Checks for Sections 7 and 8 and Appendices D and E of Paper C.
+"""Checks for Section 7 and Appendix E of Paper C, and for the note S1 (../S1_endpoint_information_note).
 
 Part 1, sticky priors. The chain has transition matrix (1-h)I + h Pi with
 h = tau log N / N, and Pi is a switching kernel (stochastic, zero diagonal).
@@ -10,12 +10,12 @@ The probability of the direct jump under the sticky HDP prior is found by Monte
 Carlo (10^6 draws, as in the paper) and by 2 quadratures in different
 coordinates.
 
-Part 2, the endpoint of Paper A's walk. Method A is the run formula of Paper A
+Part 2, the endpoint of Paper A's walk (now the note S1, whose numbers are used below). Method A is the run formula of Paper A
 (its run count), which gives the joint law of the endpoint and the number of
-switches, and hence e_N(q) through Proposition 8.1. Method B is Paper A's
+switches, and hence e_N(q) through Proposition 2.1 of the note. Method B is Paper A's
 recurrence run with complex q, which gives the derivative in q exactly (the
 complex-step method), and then e_N(q) from the definition of the Fisher
-information. The moments of Lemma E.1 are checked in exact arithmetic, with q
+information. The moments of Lemma A.1 of the note are checked in exact arithmetic, with q
 as a symbol, for N = 1..12, which is the finite computation the proof uses.
 The telegraph limit is an integral with Bessel functions (method A), compared
 with the discrete efficiency at large N (method B).
@@ -460,12 +460,12 @@ def check_hdp():
         agree(f'omega P(direct) at omega = {alpha}', pr, vals, f'; ratio to the limit {v1 / lim:.6f}, 1 - 9/(8 omega) = {1 - 9 / (8 * alpha):.6f}')
     r = [(a * hdp_route1(a) / lim - 1) * a for a in (1000, 3000, 30000)]
     check('the next term looks like 1 - 9/(8 omega) (numerical)', all(abs(x + 9 / 8) < 0.01 for x in r), f'omega (ratio - 1) = {np.round(r, 4)}')
-    check('Appendix D constants: log cosh 1 > 0.43 and sech^2(1)/2 > 0.2', math.log(math.cosh(1)) > 0.43 and 0.5 / math.cosh(1) ** 2 > 0.2,
+    check('Appendix E constants: log cosh 1 > 0.43 and sech^2(1)/2 > 0.2', math.log(math.cosh(1)) > 0.43 and 0.5 / math.cosh(1) ** 2 > 0.2,
           f'{math.log(math.cosh(1)):.5f}, {0.5 / math.cosh(1) ** 2:.5f}')
     y = np.concatenate([np.linspace(-40, 40, 200001), np.geomspace(1e-6, 1e3, 2000)])
     g = 2 * np.log(np.cosh(np.minimum(np.abs(y), 700) / 2))
     ok = np.all(g <= y * y / 4 + 1e-15) and np.all(g >= y * y / 4 - y ** 4 / 96 - 1e-15) and np.all(g >= 0.1 * np.minimum(y * y, np.abs(y)) - 1e-15)
-    check('Appendix D bounds: y^2/4 - y^4/96 <= g(y) <= y^2/4 and g(y) >= 0.1 min(y^2, |y|), g = 2 log cosh(y/2)', bool(ok),
+    check('Appendix E bounds: y^2/4 - y^4/96 <= g(y) <= y^2/4 and g(y) >= 0.1 min(y^2, |y|), g = 2 log cosh(y/2)', bool(ok),
           'on a grid of |y| <= 1000')
 
 
@@ -539,7 +539,7 @@ _EINF = {}
 
 
 def e_inf(x, dps=20):
-    """Telegraph limit of e_N(x/N) (an open question in Section 9), by quadrature of the Bessel density."""
+    """Telegraph limit of e_N(x/N) (an open question in an earlier version of Paper C), by quadrature of the Bessel density."""
     if (x, dps) not in _EINF:
         _EINF[(x, dps)] = _e_inf(x, dps)
     return _EINF[(x, dps)]
@@ -563,13 +563,13 @@ def _e_inf(x, dps):
 
 
 def check_moments():
-    print('\nLemma E.1 (exact moments, q symbolic, N = 1..12) and Lemma E.4(b)', flush=True)
+    print('\nNote S1, Lemma A.1 (exact moments, q symbolic, N = 1..12) and Lemma A.4(b)', flush=True)
     q = sp.symbols('q', positive=True)
     Ns, R = sp.symbols('N R')
     p = 1 - q
     rho = 1 - 2 * q
 
-    def closed(Nv, Rv):              # Rv stands for rho^N; the forms are copied from Lemma E.1
+    def closed(Nv, Rv):              # Rv stands for rho^N; the forms are copied from Lemma A.1 of the note S1
         EX2 = Nv * p / q - rho * (1 - Rv) / (2 * q ** 2)
         Cov = -p / q ** 2 * (Nv * q * (1 + Rv) - p * (1 - Rv))
         EX4 = (3 * Nv ** 2 * p ** 2 / q ** 2 - Nv * p * (1 + 10 * rho + rho ** 2) / (2 * q ** 3)
@@ -592,7 +592,7 @@ def check_moments():
         c2, cc, c4 = closed(Nv, rho ** Nv)
         diffs = [sp.simplify(EX2 - c2), sp.simplify(EX4 - c4), sp.simplify(EJX2 - EJ * EX2 - cc), sp.simplify(EJ - (Nv - 1) * q)]
         bad += any(dd != 0 for dd in diffs)
-    check('E X^2, Cov(J, X^2), E X^4 of Lemma E.1 at N = 1..12 (exact, q symbolic)', bad == 0, f'{bad} mismatches')
+    check('E X^2, Cov(J, X^2), E X^4 of Lemma A.1 at N = 1..12 (exact, q symbolic)', bad == 0, f'{bad} mismatches')
     EX2, Cov, EX4 = closed(Ns, R)
     x = Ns * q
     V = 1 - (1 + 8 * rho + rho ** 2 + 8 * rho * R) / (4 * p * x) + rho * (1 - R) * (2 * (1 + 2 * rho) * (2 + rho) - rho * (1 - R)) / (8 * p ** 2 * x ** 2)
@@ -616,20 +616,20 @@ def check_moments():
             qs = sp.Rational(qv.numerator, qv.denominator)
             c2, cc, c4 = [sp.simplify(t.subs({Ns: Nv, R: (1 - 2 * qs) ** Nv, q: qs})) for t in closed(Ns, R)]
             bad += (sp.Rational(EX2v.numerator, EX2v.denominator) != c2) + (sp.Rational(EX4v.numerator, EX4v.denominator) != c4)
-    check('Lemma E.1 in exact rational arithmetic at N = 13, 15, 17 and 3 values of q', bad == 0, f'{bad} mismatches')
+    check('Lemma A.1 in exact rational arithmetic at N = 13, 15, 17 and 3 values of q', bad == 0, f'{bad} mismatches')
     EW4f = sp.lambdify((Ns, R, q), EX4 / Ns ** 4, 'math')
     EW4 = lambda Nv, qv: EW4f(Nv, (1 - 2 * qv) ** Nv, qv)
     worst = max(EW4(Nv, qv) - (3 * (1 - qv) ** 2 / (Nv * qv) ** 2 + 9 / (2 * (Nv * qv) ** 4))
                 for Nv in (5, 20, 100, 1000) for qv in np.linspace(0.001, 0.5, 60))
-    check('Lemma E.4(b): E W^4 <= 3p^2/x^2 + 9/(2x^4) for q <= 1/2', worst <= 1e-12, f'max of left minus right {worst:.2e}')
+    check('Lemma A.4(b): E W^4 <= 3p^2/x^2 + 9/(2x^4) for q <= 1/2', worst <= 1e-12, f'max of left minus right {worst:.2e}')
     with mp.workdps(30):
         ts = [mp.mpf(10) ** (k / 4) for k in range(-16, 17)]
         ok = all(mp.besseli(1, t) / mp.besseli(0, t) >= (mp.sqrt(1 + t * t) - 1) / t and mp.besseli(1, t) < mp.besseli(0, t) for t in ts)
-    check('Lemma E.3: (sqrt(1+t^2) - 1)/t <= I_1(t)/I_0(t) < 1', ok, 't from 1e-4 to 1e4')
+    check('Lemma A.3: (sqrt(1+t^2) - 1)/t <= I_1(t)/I_0(t) < 1', ok, 't from 1e-4 to 1e4')
 
 
 def check_fisher(full):
-    print('\nPropositions 8.1, 8.2, Theorem 8.3 and Table 3: the endpoint efficiency', flush=True)
+    print('\nNote S1, Proposition 2.1, Remark 2.2, Theorem 2.3 and Table 1: the endpoint efficiency', flush=True)
     # small cases in exact arithmetic
     worst = 0.0
     for N in (3, 5, 8, 12, 14):
@@ -651,7 +651,7 @@ def check_fisher(full):
             EJ = sum(JK)
             e2 = (sum(JK[k] ** 2 / P[k] for k in range(N + 1)) - EJ ** 2) / ((N - 1) * p * qv)
             worst = max(worst, abs(float(e1 - e2)), abs(fisher_A(N, float(qv))[0] - float(e1)), abs(fisher_B(N, float(qv)) - float(e1)))
-    check('Proposition 8.1 (exact, all 2^N words) and both methods agree to 15 digits, N <= 14', worst < 1e-14, f'max difference {worst:.1e}')
+    check('Proposition 2.1 (exact, all 2^N words) and both methods agree to 15 digits, N <= 14', worst < 1e-14, f'max difference {worst:.1e}')
     # 30-digit arithmetic at larger N (the run formula of Paper A in mpmath)
     worst = 0.0
     for N, qv in ((100, 0.035), (400, 0.0119), (400, 0.1)):
@@ -689,10 +689,10 @@ def check_fisher(full):
             chain = [1 - (N - 2) * qv, p ** (N - 2), (N - 1) * qv * p ** (N - 2) / (1 - p ** (N - 1)), e, 1 - (N - 2) * qv * p ** (N - 3) / (2 * p + (N - 2) * qv)]
             bad += any(chain[i] > chain[i + 1] + 1e-12 for i in range(4))
     ex = fisher_A(10, 0.05)[0]
-    check('Remark 8.2: the chain of inequalities', bad == 0, f'{bad} violations in 30 cases; at (N, q) = (10, 0.05) e = {ex:.8f}')
+    check('Remark 2.2: the chain of inequalities', bad == 0, f'{bad} violations in 30 cases; at (N, q) = (10, 0.05) e = {ex:.8f}')
     slopes = [(fisher_A(20, qq)[0] - 1 + 18 * qq / 2) / qq ** 2 for qq in (1e-2, 5e-3, 2.5e-3)]
     check('e_N(q) = 1 - (N-2)q/2 + O(q^2) at fixed N', np.ptp(slopes) < 0.1 * abs(slopes[0]) + 1, f'(e - 1 + (N-2)q/2)/q^2 = {np.round(slopes, 3)} at N = 20')
-    # Theorem 8.3: e >= R^2 and the closed form of R^2
+    # Theorem 2.3 of the note: e >= R^2 and the closed form of R^2
     worst = 0.0
     bad = 0
     for N in (20, 100, 500):
@@ -701,9 +701,9 @@ def check_fisher(full):
             r2n = R2_numeric(N, qv, PK, EJK)
             worst = max(worst, abs(r2n / R2_closed(N, qv) - 1))
             bad += e < r2n - 1e-12
-    check('Theorem 8.3: closed form of R^2_N = numeric R^2 from the exact law, and e_N >= R^2_N', worst < 1e-8 and bad == 0,
+    check('Theorem 2.3: closed form of R^2_N = numeric R^2 from the exact law, and e_N >= R^2_N', worst < 1e-8 and bad == 0,
           f'max relative difference {worst:.1e}, {bad} violations')
-    # Table 3
+    # Table 1 of the note
     table = {50: ('2.8998', '0.24117', '1.3987', '1.8869', '0.20873', '0.20216'),
              100: ('3.5034', '0.18869', '1.3221', '1.7379', '0.16642', '0.16309'),
              200: ('4.1220', '0.15242', '1.2565', '1.6151', '0.13767', '0.13602'),
@@ -726,15 +726,15 @@ def check_fisher(full):
                 {'A': 1 / (2 * xA) + 1 / (4 * xA ** 2), 'B': 1 / (2 * xB) + 1 / (4 * xB ** 2)}]
         names = ['x_N', 'e_N(q_N)', '2 x_N e_N', '2 L e_N', 'R^2_N(q_N)', '1/(2x) + 1/(4x^2)']
         for nm, pr, v in zip(names, row, vals):
-            agree(f'Table 3, N = {N}: {nm}', pr, v)
+            agree(f'Table 1, N = {N}: {nm}', pr, v)
     agree('2 e_N log N at N = 100', '1.74', {'A': 2 * log(100) * eN[100]})
     agree('2 e_N log N at N = 3200', '1.35', {'A': 2 * log(3200) * eN[3200]})
     rem = []
     for N in table:
         L = log(N)
         rem.append((eN[N] - 1 / (2 * L) - (log(L) + 1 + log(8 / pi)) / (4 * L * L)) * L ** 3 / log(L) ** 2)
-    check('Corollary 8.4: the remainder is O((log L)^2/L^3) along Table 3', max(abs(r) for r in rem) < 10, f'remainder L^3/(log L)^2 = {np.round(rem, 3)}')
-    # fixed q (an open question in Section 9)
+    check('Corollary 2.4: the remainder is O((log L)^2/L^3) along Table 1', max(abs(r) for r in rem) < 10, f'remainder L^3/(log L)^2 = {np.round(rem, 3)}')
+    # fixed q (an open question in an earlier version of Paper C)
     for N, pr in ((400, '1.0113'), (800, '1.0055'), (1600, '1.0027')):
         qv = 0.1
         agree(f'fixed q = 0.1, N = {N}: 2(N-1)pq e_N', pr, {'A': 2 * (N - 1) * 0.9 * 0.1 * fisher_A(N, qv)[0], 'B': 2 * (N - 1) * 0.09 * fisher_B(N, qv)})

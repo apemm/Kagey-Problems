@@ -1,14 +1,14 @@
-\section{Application: the information in the endpoint}\label{sec:fisher}
+\section{The information in the endpoint}\label{sec:fisher}
 
-This second application returns to Kagey's board and asks a statistical
-question. If we only see the bin where the ball lands, how much do we learn
+This note asks a statistical question about Kagey's board. If we only see the
+bin where the ball lands, how much do we learn
 about the switching probability? The answer is that the bin keeps about a
 fraction $1/(2T)$ of the Fisher information of the whole path, so about
-$1/(2\log N)$ at Kagey's crossing. We use the shared notation of
-Section~\ref{sec:series}: the first step is left or right with probability
+$1/(2\log N)$ at Kagey's crossing. We use the notation of
+Section~\ref{sec:setting}. The first step is left or right with probability
 $\frac12$ each, and each later step repeats the one before it with probability
-$p=1-q$, where $0<q<1$. This is Example~\ref{ex:models}(i) with $h=q$, so
-$T=Nq$. Put $\rho=1-2q$, $u=q/p$ and $y=Nu=T/p$. Let $J$ be the number of
+$p=1-q$, where $0<q<1$, and $T=Nq$.
+Put $\rho=1-2q$, $u=q/p$ and $y=Nu=T/p$. Let $J$ be the number of
 switches, $K$ the number of right steps, $X=2K-N$ the endpoint and $W=X/N$. A path with $J$ switches has probability
 $\frac12p^{N-1-J}q^J$. So $J\sim\operatorname{Bin}(N-1,q)$, and the path
 carries the Fisher information $(N-1)/(pq)$ about $q$. The endpoint carries
@@ -29,7 +29,7 @@ For $N\ge2$ and $0<q<1$,
 \]
 For $0<k<N$ we have $\E[J\mid K=k]=\frac{d}{dt}\log S_{k,N-k}(e^t)$ at
 $t=\log(q/p)$, where $S_{a,b}$ is the polynomial of
-Section~\ref{sec:papersAB}. For $k\in\{0,N\}$ we have $J=0$.
+Section~\ref{sec:setting}. For $k\in\{0,N\}$ we have $J=0$.
 \end{proposition}
 
 \begin{proof}
@@ -40,7 +40,7 @@ $(N-1)/(pq)=\Var J/(pq)^2$. By the run count of~\cite{paperA}, for $0<k<N$
 the probability $\Prob(K=k,J=j)$ is $\frac12p^{N-1}u^j$ times the number of
 words with $k$ right steps, $N-k$ left steps and $j$ switches. Summing over
 $j$ gives $\Prob(K=k)=\frac12p^{N-1}S_{k,N-k}(u)$, so
-$\E[J\mid K=k]=uS'_{k,N-k}(u)/S_{k,N-k}(u)$. Only the 2 constant paths have
+$\E[J\mid K=k]=uS'_{k,N-k}(u)/S_{k,N-k}(u)$. Only the two constant paths have
 $K\in\{0,N\}$.
 \end{proof}
 
@@ -55,10 +55,10 @@ the functions of $K$ in $L^2$, the Cauchy--Schwarz inequality gives
 \begin{remark}[few switches, proof omitted]\label{rem:fisher-small}
 For fixed $N$ we have $e_N(q)=1-\frac{N-2}2q+O_N(q^2)$ as $q\to0$. If $q\to0$
 and $T=Nq$ stays bounded, then $e_N(q)\to1$ if and only if $T\to0$. The
-reason is that 1 switch and 2 switches both leave the endpoint uniform on the
+reason is that one switch and two switches both leave the endpoint uniform on the
 interior bins. The proof applies \eqref{eq:fisher-proj} to the indicator of
-$K\in\{0,N\}$ and compares the 2 words with 1 switch with the $N-2$ words
-with 2 switches in each interior bin. We omit the details.
+$K\in\{0,N\}$ and compares the two words with one switch with the $N-2$ words
+with two switches in each interior bin. We omit the details.
 \end{remark}
 
 \begin{theorem}[many switches]\label{thm:fisher}
@@ -89,7 +89,8 @@ fraction $1/(2T)$ of the information, and almost all of what it keeps is carried
 by the single statistic $X^2$. The lower bound $e_N\ge R^2_N$ is
 \eqref{eq:fisher-proj} with $g(K)=X^2$,
 for all $N\ge2$ and $0<q<1$. For the upper bound, Proposition~\ref{prop:eta}
-and the uniform Bessel estimate for every bin in~\cite{paperA} make
+and the uniform Bessel estimate for every bin in~\cite{paperA}
+(recalled in~\eqref{eq:fisher-bessel-bound} below) make
 $\E[J\mid K]$ close to $y\sqrt{1-W^2}+\frac12$. As $W$ is of order
 $T^{-1/2}$, this is close to $y(1-W^2/2)+\frac12$, which lies in the span of
 $1$ and $X^2$. Appendix~\ref{app:fisher} proves the closed form and the
@@ -111,7 +112,7 @@ expansion.
 \begin{corollary}[at Kagey's crossing]\label{cor:fisher-crossing}
 Let $p_N$ be the value of $p$ at which the middle bin and the endpoints are
 equally likely, and let $q_N=1-p_N$ and $z_N=Nq_N$
-(Section~\ref{sec:papersAB}). Then
+(Section~\ref{sec:setting}). Then
 \[
  e_N(q_N)=\frac1{2L}+\frac{\log L+1+\log(8/\pi)}{4L^2}
  +O\Bigl(\frac{(\log L)^2}{L^3}\Bigr).
@@ -148,8 +149,8 @@ $N$ & $z_N$ & $e_N(q_N)$ & $2z_Ne_N$ & $2Le_N$ & $R^2_N(q_N)$
 \bottomrule
 \end{tabular}
 \caption{The efficiency of the endpoint at Kagey's crossing $q_N=1-p_N$,
-computed from the exact law, with $z_N=Nq_N$ and $L=\log N$. The last 2
+computed from the exact law, with $z_N=Nq_N$ and $L=\log N$. The last two
 columns are the squared correlation of Theorem~\ref{thm:fisher} and its
-2-term expansion.}
+expansion to two terms.}
 \label{tab:fisher}
 \end{table}

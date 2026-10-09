@@ -1,0 +1,87 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1.05in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,microtype,xcolor,graphicx}
+\usepackage[shortlabels]{enumitem}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\hypersetup{pdftitle={How much does the endpoint say about the switching rate?},pdfauthor={Arjun Pemmasani}}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Prob}{\mathbb P}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\ones}{\mathbf 1}
+\emergencystretch=1.5em
+\title{How much does the endpoint say about the switching rate?\\[4pt]
+\large Working note for direction S1 (moved out of Paper~C, October 2026)}
+\author{}
+\date{October 2026}
+\begin{document}
+\maketitle
+
+\section{Setting}\label{sec:setting}
+
+This note was Section~8 and Appendix~E of an earlier version of Paper~C
+(``Face selection for slowly switching Markov chains and the planar persistent
+walk''). The mathematics is unchanged. It uses only Paper~A~\cite{paperA},
+and this section recalls what it needs from there. Smiga, Radaelli, Binder and
+Landi~\cite{smiga2023} compute the Fisher information of the empirical
+distribution under a Gaussian approximation. Their leading term vanishes for
+the symmetric walk of Paper~A, whose stationary law does not depend on the
+switching rate.
+
+Kagey's board~\cite{kagey131} has $N$ steps. The first step is left or right
+with probability $\frac12$, and each later step repeats the previous one with
+probability $p$. We write $q=1-p$ and $u=q/p$, the odds of a switch. We write
+$L=\log N$, and $T=Nq$ is the expected number of switches (up to the first
+step). $P_N(k)$ is the probability of $k$ right steps, that is, that the ball
+lands in bin $k$. The endpoints have $P_N(0)=P_N(N)=p^{N-1}/2$.
+
+For $a,b\ge1$ let $S_{a,b}(u)=\sum_wu^{s(w)}$, the sum over the words $w$ with
+$a$ right steps and $b$ left steps, where $s(w)$ is the number of switches of
+$w$. Then $S_{a,b}(q/p)$ is the ratio $P_N(a)/P_N(0)$ of the probabilities of
+bin $a$ and bin $0$ after $a+b=N$ steps (the run count of~\cite{paperA}). Let
+$S_N=S_{\lfloor N/2\rfloor,\lceil N/2\rceil}$. It has nonnegative coefficients
+and no constant term, so $S_N(u)=1$ has exactly one positive root $u_N$, and
+$p_N=1/(1+u_N)$ is the crossing of the middle and the endpoints. Put
+$z_N=N(1-p_N)$ and $c_0=\frac12\log(\pi/8)$. Paper~A proves that
+$z_N=L-\frac12\log L+c_0+O(\log L/L)$. We call this the second-order expansion
+of $z_N$.
+
+\input{s1_body.tex}
+
+\appendix
+\input{s1_appendix.tex}
+
+\begin{thebibliography}{9}\small
+
+\bibitem{kagey131}
+P.~Kagey, \emph{Problem 131}, Open Problem Collection,
+\url{https://peterkagey.com/problems/131/} (accessed October 2026).
+
+\bibitem{paperA}
+A.~Pemmasani, \emph{Uniform Bessel bounds for endpoint crossings in the
+persistent random walk}, preprint, 2026.
+\href{https://arxiv.org/abs/2610.06935}{arXiv:2610.06935}.
+
+\bibitem{hallheyde1980}
+P.~Hall and C.~C.~Heyde, \emph{Martingale Limit Theory and Its
+Application}, Academic Press, New York, 1980.
+
+\bibitem{smiga2023}
+J.~A.~Smiga, M.~Radaelli, F.~C.~Binder and G.~T.~Landi, \emph{Stochastic
+metrology and the empirical distribution}, Phys.~Rev.~Research \textbf{5}
+(2023), 033150. \url{https://doi.org/10.1103/PhysRevResearch.5.033150}.
+
+\end{thebibliography}
+
+\end{document}

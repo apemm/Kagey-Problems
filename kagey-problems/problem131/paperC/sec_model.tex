@@ -2,11 +2,12 @@
 
 \subsection{Setting and notation}\label{sec:notation}
 
-\emph{The chain.} Fix $d\ge2$ and a generator $Q$ on $[d]=\{1,\dots,d\}$: the
+\emph{The chain.} Fix $d\ge2$ and a generator $Q$ on $[d]=\{1,\dots,d\}$. Its
 rates are $q_{ij}\ge0$ for $i\ne j$, the exit rates are $q_i=\sum_{j\ne i}q_{ij}$,
 $Q_{ii}=-q_i$, and $q_{\max}=\max_iq_i$. When we write $q$ for the vector
-$(q_i)$ this is clear from the context; the scalar $q=1-p$ of Kagey's board only
-appears in Example~\ref{ex:models}(i) and in Section~\ref{sec:fisher}. The start
+$(q_i)$ this is clear from the context. (The scalar $q=1-p$ of Kagey's board
+appears only where we recall Paper~A, and the scalar $q$ of
+Proposition~\ref{prop:pair} is a common exit rate.) The start
 $\mu$ is a probability law on $[d]$, and $\mu(F)=\sum_{i\in F}\mu_i$. For $N\ge2$
 and $T>0$ put
 \[
@@ -16,8 +17,10 @@ The chain $X_1,\dots,X_N$ has $X_1\sim\mu$ and transition matrix $I+hQ$. So at
 each step it jumps from $i$ to $j$ with probability $hq_{ij}$, and $N$ steps
 look like the continuous-time chain with generator $Q$ run for time $T$. We
 assume $hq_{\max}\le\frac12$ unless we say otherwise. The \emph{composition} is
-$n=(n_1,\dots,n_d)$ with $n_i=\#\{t\le N:X_t=i\}$, we write $P_N(n)$ for its
-probability and $\alpha=n/N$ for the visit fractions.
+the vector of visit counts $n=(n_1,\dots,n_d)$, with
+$n_i=\#\{t\le N:X_t=i\}$, so that $n_1+\dots+n_d=N$. We write $P_N(n)$ for the
+probability that the chain has composition $n$, $\supp n=\{i:n_i>0\}$ for its
+support, and $\alpha=n/N$ for the visit fractions.
 
 \emph{Faces.} A face is a nonempty set $F\subseteq[d]$, of size
 $k=k_F=\lvert F\rvert$. Let $\Delta_F$ be the set of probability vectors on
@@ -40,7 +43,8 @@ eigenvectors~\cite{bermanplemmons1994}.
 \begin{definition}[faces]\label{def:faces}
 Let $F$ be a face. We call $F$ \emph{irreducible} if $G_F$ is strongly connected,
 so every singleton is irreducible. We call $F$ \emph{admissible} if for some
-$N$ some path $x_1\cdots x_N$ of positive probability has support exactly $F$.
+$N$ some path $x_1\cdots x_N$ of positive probability has support exactly $F$
+(for $0<hq_{\max}<1$ this does not depend on $h$).
 We say that $F$ satisfies \textup{(H)} if $F$ is irreducible and $\mu(F)>0$.
 The \emph{exit rate} of $F$ is $\lambda_F=-\varrho(Q_F)$, so
 $\lambda_{\{i\}}=q_i$. If $F$ is irreducible, $r_F$ and $l_F$ are right and left
@@ -50,28 +54,35 @@ $\langle l_F,r_F\rangle=1$, and $\alpha^*_F=l_F\circ r_F$ is the
 \emph{face maximum} is $M_F=\max\{P_N(n):\supp n=F\}$, with $\max\emptyset=0$.
 \end{definition}
 
-Here is why $\lambda_F$ is the rate of leaving $F$. If $F$ is irreducible, then
-$e^{TQ_F}r_F=e^{-T\lambda_F}r_F$, so the chance that the continuous-time chain
-started in $F$ stays in $F$ up to time $T$ is $e^{-T\lambda_F}$ up to a bounded
-factor. If $F$ is reducible, we order the strongly connected components
-$C_1,\dots,C_r$ of $G_F$ so that every edge between components goes forward.
-Then $Q_F$ is block triangular with diagonal blocks $Q_{C_j}$, and
+We call $\lambda_F$ the exit rate for the following reason. If $F$ is
+irreducible, then $e^{TQ_F}r_F=e^{-T\lambda_F}r_F$ and $r_F$ is positive. So
+the chance that the continuous-time chain started at a state of $F$ stays in
+$F$ up to time $T$, which is a row sum of $e^{TQ_F}$, lies between
+$e^{-T\lambda_F}\min r_F/\max r_F$ and $e^{-T\lambda_F}\max r_F/\min r_F$. If
+$F$ is reducible, we order the strongly connected components $C_1,\dots,C_r$ of
+$G_F$ so that every edge between components goes forward. Then $Q_F$ is block
+triangular with diagonal blocks $Q_{C_j}$, and
 $\lambda_F=\min_j\lambda_{C_j}$. In all cases $0\le\lambda_F\le\min_{i\in
 F}q_i$, since the rows of $Q_F$ have sums at most $0$ and a Perron root is at
 least every diagonal entry. For irreducible $F$ the quasi-ergodic law
 $\alpha^*_F$ is the long-run law of the visit fractions of the chain conditioned
-to stay in $F$, and it is where the best composition on $F$ sits.
+to stay in $F$, and the best composition on $F$ sits near $N\alpha^*_F$
+(Theorem~\ref{thm:facemax}).
 
-Later sections add their own symbols where they are needed: the rate $I_F$
-(Section~\ref{sec:firstorder}), the tilted chain and the constant $K_F$
+Later sections add their own symbols where they are needed, namely the rate
+$I_F$ (Section~\ref{sec:firstorder}), the tilted chain and the constant $K_F$
 (Definition~\ref{def:tilt}), and the planar notation of
-Section~\ref{sec:planar}. For Kagey's board we use the following. For
-$a,b\ge1$ let $S_{a,b}(u)=\sum_wu^{s(w)}$, the sum over the words $w$ with $a$
-right steps and $b$ left steps, where $s(w)$ is the number of switches of $w$.
-Then $S_{a,b}(q/p)$ is the ratio $P_N(a)/P_N(0)$ of the probabilities of bin
-$a$ and bin $0$ after $a+b=N$ steps. Let
-$S_N=S_{\lfloor N/2\rfloor,\lceil N/2\rceil}$. It has nonnegative coefficients
-and no constant term, so $S_N(u)=1$ has exactly 1 positive root $u_N$, and
+Section~\ref{sec:planar}.
+
+\emph{Kagey's board.} For $a,b\ge1$ let $S_{a,b}(u)=\sum_wu^{s(w)}$, the sum
+over the words $w$ with $a$ right steps and $b$ left steps, where $s(w)$ is the
+number of switches of $w$. Each such word has probability
+$\frac12p^{N-1}(q/p)^{s(w)}$ on Kagey's board with $N=a+b$ steps. So
+$S_{a,b}(q/p)$ is the probability of bin $a$ divided by the probability
+$\frac12p^{N-1}$ of an endpoint. For $N\ge2$ let
+$S_N=S_{\lfloor N/2\rfloor,\lceil N/2\rceil}$, which belongs to a middle bin.
+It is a nonzero polynomial with nonnegative coefficients
+and no constant term, so $S_N(u)=1$ has exactly one positive root $u_N$, and
 $p_N=1/(1+u_N)$ is the crossing of the middle and the endpoints. Put
 $z_N=N(1-p_N)$ and $c_0=\frac12\log(\pi/8)$. Paper~A proves the crossing
 equation $z_N+\frac12\log z_N=L+c_0+1/(8z_N)+R_N$ with an explicit remainder
@@ -100,14 +111,15 @@ when $q_{ji}>0$, then every admissible face is irreducible.
 The states of the maximal runs of a path of positive probability with support
 $F$ form a walk in $G_F$ that starts in $\supp\mu$ and visits every state of
 $F$, and every such walk arises in this way for large $N$. (a) Along such a
-walk a component $C$ cannot be visited again after a state $y\notin C$, since
-then $y$ and $C$ would be reachable from each other. Hence a path of positive
-probability visits each strongly connected component of its support in one
-block of consecutive times, and it passes from one block to the next by a
-single switch. Conversely, given the numbering and edges $x_j\to y_{j+1}$, take
+walk a component $C$ cannot be visited again after the walk has left it for a
+state $y\notin C$, since then $y$ and $C$ would be reachable from each other.
+Hence a path of positive probability visits each strongly connected component
+of its support in one block of consecutive times, and it passes from one block
+to the next by a single switch. Numbering the components in the order of
+these blocks gives the condition. Conversely, given the numbering and edges $x_j\to y_{j+1}$, take
 $y_1\in C_1$ with $\mu_{y_1}>0$ and any $x_r\in C_r$, and join walks from $y_j$
 to $x_j$ through all of $C_j$ by these edges. (b) is (a) with $r=1$. (c) Here
-an edge between 2 components would give an edge back, so no edge joins 2
+an edge between two components would give an edge back, so no edge joins two
 components, and $r=1$ by (a).
 \end{proof}
 
@@ -146,8 +158,11 @@ M_{\{i\}}=\mu_i(1-hq_i)^{N-1}=\mu_ie^{-q_iT}\bigl(1+O(T^2/N)\bigr).
 \end{equation}
 For $t\in(0,\infty)^F$ let $H(t)=\sum_mW(m)\prod_{i\in F}t_i^{m_i-1}/(m_i-1)!$,
 which is finite since $W(m)\le k^Mq_{\max}^{M-1}$. The next lemma says that
-$H$ is the density of the occupation times of the continuous-time chain.
-Lemma~\ref{lem:discrete} below shows that the discrete law is close to it.
+$e^{-\langle q,t\rangle}H(t)$ is the density of the occupation times of the
+continuous-time chain on the event that it stays in $F$. It is the continuum
+form of Lemma~\ref{lem:runs}, in which the binomial coefficients become the
+powers $t_i^{m_i-1}/(m_i-1)!$. Lemma~\ref{lem:discrete} below shows that the
+discrete law is close to it.
 
 \begin{lemma}[the continuum density]\label{lem:continuum}
 Let $(Y_s)_{s\ge0}$ be the continuous-time chain with generator $Q$ and
@@ -166,21 +181,24 @@ $f_T=\Prob(E_F)=\mu_ie^{-q_iT}$.
 \end{lemma}
 
 \begin{proof}
-Up to a null set, $E_F$ is the disjoint union of the events $E_c$ that $Y$
-visits exactly $c_1,\dots,c_M$ in this order, over the words $c$ in the sums
-$W(m)$. Fix $c$, let $s_1,\dots,s_{M-1}$ be the first $M-1$ holding times and
-$s_M=T-\sum_{j<M}s_j$. The last holding time only has to exceed $s_M$. So on
-$\{s_j>0\text{ for }j\le M\}$ the event $E_c$ has density
-$\mu_{c_1}\prod_{j<M}q_{c_jc_{j+1}}e^{-\langle q,\mathcal O\rangle}$ in
-$(s_1,\dots,s_{M-1})$. For $i\ne c_M$ we replace the last holding time in state
+We split $E_F$ by the sequence of states that $Y$ visits and integrate out the
+holding times. Up to a null set, $E_F$ is the disjoint union of the events
+$E_c$ that $Y$ visits exactly $c_1,\dots,c_M$ in this order during $[0,T]$,
+over the words $c$ in the sums $W(m)$. Fix $c$, let $s_1,\dots,s_{M-1}$ be the
+first $M-1$ holding times and $s_M=T-\sum_{j<M}s_j$. The last holding time only
+has to exceed $s_M$. So on $\{s_j>0\text{ for }j\le M\}$ the event $E_c$ has
+density $\mu_{c_1}\prod_{j<M}q_{c_jc_{j+1}}e^{-\langle q,\mathcal O\rangle}$ in
+$(s_1,\dots,s_{M-1})$, where $\mathcal O_i$ is the sum of the $s_j$ with
+$c_j=i$. For each state $i\ne c_M$ we replace the last holding time in state
 $i$ by $\mathcal O_i$, a triangular change of variables with unit diagonal. For
-fixed $\mathcal O=t$ the other $m_i-1$ holding times in state $i$ range over a
-simplex of volume $t_i^{m_i-1}/(m_i-1)!$. Integrating them out and summing over
-$c$ gives $e^{-\langle q,t\rangle}H(t)$, and any $k-1$ of the coordinates $t_i$
-give the same Lebesgue measure. The rest follows from $t=T\alpha$ and $T/N=h$.
+fixed $\mathcal O=t$ the other $m_i-1$ holding times in each state $i$ (for
+$i=c_M$, those before the last one) range over a simplex of volume
+$t_i^{m_i-1}/(m_i-1)!$. Integrating them out and summing over $c$ gives
+$e^{-\langle q,t\rangle}H(t)$, and any $k-1$ of the coordinates $t_i$ give the
+same Lebesgue measure. The rest follows from $t=T\alpha$ and $T/N=h$.
 \end{proof}
 
-\begin{example}[the 4 models]\label{ex:models}
+\begin{example}[the four models]\label{ex:models}
 (i) For $d=2$, $q_{12}=q_{21}=1$ and uniform $\mu$ the chain is Kagey's board,
 the persistent walk of~\cite{paperA}, with $p=1-h$. So $T=N(1-p)$, the faces
 $\{1\}$ and $\{2\}$ are the endpoints, and Lemma~\ref{lem:runs} is the run count
