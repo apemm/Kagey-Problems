@@ -467,7 +467,7 @@ def check_rate():
 
 
 def check_star():
-    print('\nSection 9: the zero set of the star', flush=True)
+    print('\nSection 8: the zero set of the star', flush=True)
     for leaves, N in ((3, 7), (4, 7)):
         d = leaves + 1
         W = [[Fraction(0)] * d for _ in range(d)]

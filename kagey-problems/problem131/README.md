@@ -5,10 +5,11 @@ direction with probability p. Kagey asks for the distribution of the bins, the l
 his numerator tables, when the middle bin is as likely as the endpoints, the normal limit, and what
 changes on a cylinder or a tetrahedron.
 
-Status. Answered in two papers by A. Pemmasani (preprint, 2026), with two more in draft. Paper A
-solves the binary problem at every N and Paper B treats d directions on the complete graph. The
-drafts in `paperC` (slowly switching chains) and `paperD` (walks with memory) are in preparation. The papers share the notation N,
-L = log N, T, z_N, lambda_F and K_F and cite each other by description. `PUBLICATION.md` has notes
+Status. There are four papers by A. Pemmasani, which call each other Papers A, B, C and D. Paper A
+(arXiv:2610.06935) solves the binary problem at every N, and Paper B (arXiv:2610.09258) treats d
+directions on the complete graph. Paper C (slowly switching chains, in `paperC`) and Paper D (walks
+with memory, in `paperD`) are in preparation. The papers share the notation N, L = log N, T, z_N,
+lambda_F and K_F. Papers C and D cite Papers A and B by statement number. `PUBLICATION.md` has notes
 on where to send them.
 
 Conventions. N is the number of bounces, so Kagey's row n has N = n-1. For p = a/(a+b) his numerator
@@ -17,7 +18,8 @@ and z_N = N(1-p_N) for the value of T at the central crossing p_N.
 
 ## Paper A: Uniform Bessel bounds for endpoint crossings in the persistent random walk
 
-Paper A treats the walk with 2 states, which is the zero-field 1D Ising chain with free boundaries.
+Paper A (arXiv:2610.06935) treats the walk with 2 states, which is the zero-field 1D Ising chain
+with free boundaries.
 It gives the exact law and explicit uniform Bessel bounds for every bin, with relative error at most
 N u^2/2 + u at every N. At the center these bracket the crossing p_N for every N >= 2. With
 zeta_N = W_0(pi N^2/4)/2, the value z_N lies below zeta_N + 1/(8 zeta_N) and within
@@ -37,7 +39,8 @@ appendix `app_every_n.tex`, the check scripts, `paperA/README.md`, and the notes
 
 ## Paper B: Vertex crossings in a symmetric Markov multinomial model
 
-Paper B treats the complete graph on d states, which is the 1D d-state Potts chain. Every face of
+Paper B (arXiv:2610.09258) treats the complete graph on d states, which is the 1D d-state Potts
+chain. Every face of
 the simplex ties with the vertices at first order when T is near log N, and Paper B resolves the
 tie at second order. A balanced bin with k states crosses a vertex at T = z, where
 z + (1/2) log z = L + a_k + 1/(8z) + O(L^-2). The constants a_k come from the mass of a face over a
@@ -56,26 +59,28 @@ sections `multistate_model.tex`, `simplex_thresholds.tex`, `general_start.tex`,
 
 ## Paper C: Face selection for slowly switching Markov chains and the planar persistent walk
 
-Paper C gives the general theory for a chain on d states with transition matrix P = I + (T/N)Q, run
-for N steps with T = tau L. The counts of the N visits play the role of the bin. To first order the
+Paper C (in preparation) gives the general theory for a chain on d states with transition matrix
+P = I + (T/N)Q, run for N steps with T = tau L. The counts of the N visits play the role of the bin. To first order the
 mode sits on a face F that minimizes tau lambda_F + |F| - 1, where lambda_F is the principal
 Dirichlet eigenvalue of -Q on F, the rate at which the chain leaves F. At second order a strongly
 connected face with start mass has a constant K_F, and the crossings of 2 such faces satisfy a
 crossing equation. The constants of Papers A and B are corollaries. The main application is the
-planar persistent walk, which is Kagey's board in 2 dimensions. The paper also treats sticky priors
-for hidden Markov models and the Fisher information carried by the endpoint.
+planar persistent walk, which is Kagey's board in 2 dimensions. Its corner and origin cross exactly
+once, at T/L -> min(2/(2r+s), 1/s), and the paper finds the crossing to second order when reversals
+dominate and when turns dominate. The paper also treats sticky priors for hidden Markov models.
 
 Files. The folder `paperC`, with `problem131_switching.tex` and `problem131_switching.pdf`, its
 section and appendix files, the check scripts and `paperC/README.md`.
 
 ## Paper D: Endpoint crossings for random walks with memory
 
-Paper D asks what memory changes. In the elephant random walk each step copies a uniformly chosen
+Paper D (in preparation) asks what memory changes. In the elephant random walk each step copies a uniformly chosen
 earlier step and flips it with probability eps. The crossing x_N = N eps_N is unique and
 x_N = 2 z_N - log(2 pi) + o(1), about twice the Markov value. The law at the crossing has 2 humps,
 one near each end. For alternating runs with P(xi >= k) = k^(-alpha) and 1 < alpha < 2, the ends win
-for large n exactly when alpha is below the golden ratio. A short remark treats aging walks, where
-the crossing with a fixed first step is exactly c = 1.
+for large N exactly when alpha is below the golden ratio. A section on aging walks shows that the
+crossing with a fixed first step is exactly c = 1 for every N, and that an aging chain on d states
+ties exactly at one value of its parameter.
 
 Files. The folder `paperD`, with `problem131_memory.tex` and `problem131_memory.pdf`, its section
 and appendix files, the check scripts and `paperD/README.md`.
@@ -99,8 +104,11 @@ below are shared.
   rests on computation with the script that checks it.
 - `verify_all.py` runs the checks with `--paper a`, `b`, `c`, `d` or `all` (the default). It calls
   `paperA/verify_all.py` to `paperD/verify_all.py`, each in its own folder.
-- `figures/` holds the program figure shared by all 4 papers (`program_A` to `program_D`), made by
-  `figures/make_program_figure.py`, with the captions in `figures/program_captions.md`.
+- `figures/` holds the 4 variants of the program figure (`program_A` to `program_D`), made by
+  `figures/make_program_figure.py`, with the captions in `figures/program_captions.md`. Papers C
+  and D include `program_C` and `program_D`.
+- `S1_endpoint_information_note/` is a working note on the Fisher information in the endpoint, which was Section 8 and Appendix E of an earlier version of Paper C.
+- `S2_counts_note/` is a working note on which rate matrices the visit counts of a slowly switching chain can tell apart, with its 4 check scripts.
 - `animations/` shows a Galton board with persistence at 4 values of p (`galton.gif`, `galton.mp4`),
   made by `animations/animate.py`.
 - `lean/` holds the Lean 4 proofs, one library per paper (not the large-argument asymptotics).

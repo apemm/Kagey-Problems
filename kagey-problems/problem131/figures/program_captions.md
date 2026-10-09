@@ -2,7 +2,8 @@
 
 The 4 variants are made by `make_program_figure.py` in this folder. Each one is 6.4 in wide and can be
 included at its natural size. The 4 papers sit in the folders `paperA` to `paperD` next to this
-folder and use `../figures/program_A` to `../figures/program_D`. Each caption below is LaTeX for
+folder. Papers C and D include `../figures/program_C` and `../figures/program_D`. The sources of
+Papers A and B do not include a program figure, so their captions below are not in use. Each caption below is LaTeX for
 `\caption{...}`.
 
 ## Paper A, `program_A`
@@ -24,15 +25,24 @@ runs with heavy tails, which changes sign at the golden ratio $\varphi$.
 
 ## Paper C, `program_C`
 
-(a) The crossing value of $T$ against $L=\log N$ for the models of
-Papers~A to~D. The bold curve is the crossing of the corner and the origin for
-the planar walk with $r=s=1$ from this paper. (b) The exponent of Paper~D for
-runs with heavy tails, which changes sign at the golden ratio $\varphi$.
+(a) The crossing on each model's switching scale against $L=\log N$
+for Papers~A to~D. The scale is $T$ for Papers~A to~C, $x=N\varepsilon$ for the
+elephant walk and the expected number of switches for the aging walk of
+Paper~D. The bold curve solves the first crossing equation of
+Corollary~\ref{cor:planar-turn} for the planar walk with $r=s=1$, without its
+$o(1)$ term. The curve A is $z_N$, and the curves B are the face crossings of
+Paper~B.
+(b) The exponent $e(\alpha)=1-\alpha+1/\alpha$ of Paper~D for runs with heavy
+tails, which changes sign at the golden ratio $\varphi$. (A version of this
+figure also appears in Paper~D.)
 
 ## Paper D, `program_D`
 
-The crossing on each model's switching scale against $L=\log N$ (a), and the heavy-tailed exponent
-$e(\alpha)=1-\alpha+1/\alpha$ of this paper for a stationary start (b). The scale is $T$ for Papers A
-to C, $x=N\varepsilon$ for the elephant walk (drawn through the root $g_N$ of
-Theorem~\ref{thm:erw-crossing}), and the expected number $H_N-1$ of switches at $c=1$ for the aging
-walk. The curves of this paper are in bold.
+The crossing on each model's switching scale against $L=\log N$
+(a), and the heavy-tailed exponent $e(\alpha)=1-\alpha+1/\alpha$ of this
+paper for a stationary start (b). The scale is $T$ for Papers~A to~C,
+$x=N\varepsilon$ for the elephant walk (drawn through the root $g_N$ of
+Theorem~\ref{thm:erw-crossing}), and the expected number $H_N-1$ of
+switches at the fixed-start crossing $c=1$ for the aging walk. The curves of
+this paper are in bold, and a version of this figure also appears in
+Paper~C.

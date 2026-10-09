@@ -1,53 +1,89 @@
 \section{First-order face selection}\label{sec:firstorder}
 
-\subsection{A worked example: 4 states on a cycle}\label{sec:worked}
+\subsection{A worked example with four states on a cycle}\label{sec:worked}
 
 Before the general theorem we work out one example by hand. Take $d=4$ states
-on a cycle, with rate $1$ between neighbours (indices modulo $4$), and the
-uniform start. So at each step the chain moves to each of its 2 neighbours with
+on a cycle, with rate $1$ between neighbors (indices modulo $4$), and the
+uniform start. So at each step the chain moves to each of its two neighbors with
 probability $h=T/N$ and stays with probability $1-2h$. This is the direction of
 the planar walk of Section~\ref{sec:planar} when it turns but never reverses
 (Example~\ref{ex:models}(iv) with $r=1$, $s=0$). Up to rotation and reflection
-there are 4 kinds of faces: a vertex, an adjacent pair, an arc of 3 states and
-the whole cycle. (A face such as $\{1,3\}$ cannot be the support of a path,
-since the chain cannot pass from $1$ to $3$ without visiting $2$ or $4$.) Which
-kind carries the most likely composition?
+there are four kinds of faces, namely a vertex, an adjacent pair, an arc of
+three states and the whole cycle. (A face such as $\{1,3\}$ cannot be the
+support of a path, since the chain cannot pass from $1$ to $3$ without visiting
+$2$ or $4$.) Which kind carries the most likely composition?
 
-\emph{A vertex.} The composition $(N,0,0,0)$ has a single path, which never
-switches. So $M_{\{1\}}=\frac14(1-2h)^{N-1}\approx\frac14e^{-2T}$. The exit rate
-is $\lambda_{\{1\}}=2$.
+For each kind we ask two questions. With what probability does the chain stay
+in the face for all $N$ steps? Among how many compositions is this probability
+shared? The best composition of the face gets about the first answer divided by
+the second. In this subsection $T$ is large and $T^2/N$ is small, the sign
+$\approx$ means equality up to a bounded factor, and we do not give proofs.
+The proofs are in Theorems~\ref{thm:first} and~\ref{thm:facemax}, and
+Corollary~\ref{cor:C4} has the constants.
 
-\emph{An adjacent pair}, say $\{1,2\}$. A path with support $\{1,2\}$ is a word
-in the letters $1$ and $2$. Each stay has probability $1-2h$ and each switch
-probability $h$, so a word with $j$ switches has probability
-$\frac14(1-2h)^{N-1}u^j$ with $u=h/(1-2h)$. Summing over the words with $a$
-letters $1$ gives $P_N(a,N-a,0,0)=M_{\{1\}}S_{a,N-a}(u)$, the bin polynomial of
-Kagey's board. It is largest for the balanced compositions, and the uniform
-Bessel bound of Paper~A, recalled in~\eqref{eq:planar-bessel} below, gives
-$S_N(u)\approx\frac2N\sqrt{2Nu/\pi}\,e^{Nu}$ for $Nu$ large. As $Nu\approx T$,
+\emph{A vertex}, say $\{1\}$. The chain stays at state $1$ only if it never
+switches, which has probability $(1-2h)^{N-1}\approx e^{-2T}$. So the exit rate
+is $\lambda_{\{1\}}=2$. The only composition is $(N,0,0,0)$, so nothing is
+shared, and $M_{\{1\}}=\frac14(1-2h)^{N-1}\approx e^{-2T}$.
+
+\emph{An adjacent pair}, say $\{1,2\}$. The chain leaves the pair by the
+switches $1\to4$ and $2\to3$, while the switches between $1$ and $2$ keep it
+inside. So at each step it leaves with probability $h$, whichever of the two
+states it is in, and it stays in the pair with probability
+$(1-h)^{N-1}\approx e^{-T}$. The exit rate is $\lambda_{\{1,2\}}=1$, half that
+of a vertex. Given that the chain stays, it switches between $1$ and $2$ about
+$T$ times, so it makes about $T$ runs of length about $N/T$ each. The number
+$a$ of visits to state $1$ is the total length of half of these runs. So $a$
+is close to $N/2$, with fluctuations of order $\sqrt T\cdot N/T=N/\sqrt T$.
+Hence the mass $e^{-T}$ is shared by about $N/\sqrt T$ compositions
+$(a,N-a,0,0)$, and the best one gets
 \[
- M_{\{1,2\}}\approx\tfrac14e^{-2T}\cdot\tfrac2N\sqrt{2T/\pi}\,e^{T}
- =\frac1{\sqrt{2\pi}}\,N^{-1}\,T^{1/2}e^{-T}.
+ M_{\{1,2\}}\approx\frac{e^{-T}}{N/\sqrt T}=N^{-1}\,T^{1/2}e^{-T}.
 \]
-This has a simple meaning. The chain leaves $\{1,2\}$ at rate $1$ from each of
-its states ($1\to4$ and $2\to3$), so it stays in the pair with probability about
-$e^{-T}$, and $\lambda_{\{1,2\}}=1$. Given that it stays, its fraction of time
-in state $1$ is close to $\frac12$, with fluctuations of order $T^{-1/2}$. So
-the mass $e^{-T}$ is shared by about $N/\sqrt T$ compositions $(a,N-a,0,0)$, and
-the best one gets about $N^{-1}T^{1/2}e^{-T}$.
+For the pair we can check this against an exact formula. A path with support
+$\{1,2\}$ is a word in the letters $1$ and $2$. Each stay has probability
+$1-2h$ and each switch probability $h$, so a word with $j$ switches has
+probability $\frac14(1-2h)^{N-1}u^j$ with $u=h/(1-2h)$. Summing over the words
+with $a$ letters $1$ gives $P_N(a,N-a,0,0)=M_{\{1\}}S_{a,N-a}(u)$, the bin
+polynomial of Kagey's board (Section~\ref{sec:notation}). It is largest for
+the balanced compositions, and the uniform Bessel bound of Paper~A, recalled
+in~\eqref{eq:planar-bessel} below, shows that $S_N(u)$ is
+$\frac2N\sqrt{2T/\pi}\,e^{T}$ times a factor that tends to $1$. So
+$M_{\{1,2\}}$ is $\frac1{\sqrt{2\pi}}N^{-1}T^{1/2}e^{-T}$ times such a factor.
 
-\emph{An arc of 3 states}, say $\{1,2,3\}$. Only the end states $1$ and $3$
-can leave, each at rate $1$. The chain killed on leaving the arc has the matrix
-$I+hQ_F$ with $-Q_F=2I-A$, where $A$ is the adjacency matrix of the path
+\emph{An arc of three states}, say $\{1,2,3\}$. Only the end states $1$ and $3$
+can leave (both to state $4$), each at rate $1$, and the middle state $2$
+cannot. So the chain stays longer if it prefers the middle state, and we need
+an eigenvalue to find the exit rate. The chain killed on leaving the arc has the
+matrix $I+hQ_F$ with $-Q_F=2I-A$, where $A$ is the adjacency matrix of the path
 $1-2-3$. Its largest eigenvalue is $1-(2-\sqrt2)h$, with eigenvector
-$(1,\sqrt2,1)$, so the chain stays in the arc with probability about
-$e^{-(2-\sqrt2)T}$ and $\lambda_{\{1,2,3\}}=2-\sqrt2$. The visit fractions now
-fluctuate in 2 directions, so the mass is shared by about $(N/\sqrt T)^2$
-compositions, and $M_{\{1,2,3\}}\approx N^{-2}Te^{-(2-\sqrt2)T}$.
+$(1,\sqrt2,1)$. So the chain stays in the arc with probability about
+$e^{-(2-\sqrt2)T}$, and $\lambda_{\{1,2,3\}}=2-\sqrt2=0.586$. The visit
+fractions now fluctuate in two directions, so the mass is shared by about
+$(N/\sqrt T)^2$ compositions, and $M_{\{1,2,3\}}\approx
+N^{-2}\,T\,e^{-(2-\sqrt2)T}$.
 
-\emph{The whole cycle.} The chain never has to leave, so $\lambda=0$, and the
-whole mass $1$ is shared by about $(N/\sqrt T)^3$ compositions near
+\emph{The whole cycle.} The chain never has to leave, so $\lambda_{[4]}=0$ and
+the mass is $1$. It is shared by about $(N/\sqrt T)^3$ compositions near
 $(\frac N4,\frac N4,\frac N4,\frac N4)$. So $M_{[4]}\approx N^{-3}T^{3/2}$.
+
+\begin{center}
+\small
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+face $F$ & $\lambda_F$ & it stays with & number of & best composition &
+exponent\\
+ & & probability & compositions & $M_F$ & $\Phi_\tau(F)$\\
+\midrule
+vertex & $2$ & $e^{-2T}$ & $1$ & $e^{-2T}$ & $2\tau$\\
+adjacent pair & $1$ & $e^{-T}$ & $N/\sqrt T$ & $N^{-1}T^{1/2}e^{-T}$ &
+$\tau+1$\\
+arc of three & $2-\sqrt2$ & $e^{-(2-\sqrt2)T}$ & $(N/\sqrt T)^2$ &
+$N^{-2}\,T\,e^{-(2-\sqrt2)T}$ & $(2-\sqrt2)\tau+2$\\
+whole cycle & $0$ & $1$ & $(N/\sqrt T)^3$ & $N^{-3}T^{3/2}$ & $3$\\
+\bottomrule
+\end{tabular}
+\end{center}
 
 \begin{figure}[t]
 \centering
@@ -78,10 +114,10 @@ $(\frac N4,\frac N4,\frac N4,\frac N4)$. So $M_{[4]}\approx N^{-3}T^{3/2}$.
  \end{scope}
 \end{tikzpicture}
 \caption{The 4-cycle. (a) The exponents $\Phi_\tau(F)=\tau\lambda_F+\lvert
-F\rvert-1$ of the 4 kinds of faces against $\tau$, and their lower envelope
-(bold). The mode sits on the face whose line is lowest: a vertex for $\tau<1$,
-an adjacent pair for $1<\tau<2$ and the whole cycle for $\tau>2$. The dashed
-line of the arc of 3 states is never lowest. (b) The same faces as points
+F\rvert-1$ of the four kinds of faces against $\tau$, and their lower envelope
+(bold). The mode sits on the face whose line is lowest, namely a vertex for
+$\tau<1$, an adjacent pair for $1<\tau<2$ and the whole cycle for $\tau>2$. The
+dashed line of the arc of three states is never lowest. (b) The same faces as points
 $(\lambda_F,\lvert F\rvert-1)$, with the lower-left boundary of their convex
 hull. The gray numbers are minus the slopes of its edges, the values of $\tau$
 where the winner changes (Theorem~\ref{thm:hull}). The arc (open) lies above
@@ -89,40 +125,39 @@ the boundary.}
 \label{fig:C4worked}
 \end{figure}
 
-\emph{Comparison.} Now put $T=\tau\log N$. Then $e^{-\lambda T}=N^{-\tau\lambda}$,
-while the powers of $T$ are only powers of $\log N$. So, up to such powers,
-\[
- M_{\{1\}}\approx N^{-2\tau},\qquad M_{\{1,2\}}\approx N^{-(\tau+1)},\qquad
- M_{\{1,2,3\}}\approx N^{-((2-\sqrt2)\tau+2)},\qquad M_{[4]}\approx N^{-3}.
-\]
-The mode sits on the face with the smallest exponent. Figure~\ref{fig:C4worked}(a)
-plots the 4 exponents against $\tau$. The vertices win for $\tau<1$, the
-adjacent pairs for $1<\tau<2$ and the whole cycle for $\tau>2$. The arcs of 3
+\emph{Comparison.} The table above collects the four cases, up to bounded
+factors. Now put $T=\tau\log N$. Then $e^{-\lambda T}=N^{-\tau\lambda}$, while
+the powers of $T$ are only powers of $\log N$. So, up to such powers,
+$M_F\approx N^{-\Phi_\tau(F)}$ with the exponent
+$\Phi_\tau(F)=\tau\lambda_F+\lvert F\rvert-1$ in the last column. The mode sits
+on the face with the smallest exponent. Figure~\ref{fig:C4worked}(a) plots the
+four exponents against $\tau$. The vertices win for $\tau<1$, the adjacent
+pairs for $1<\tau<2$ and the whole cycle for $\tau>2$. The arcs of three
 states never win. They beat the pairs only for $\tau>1+\sqrt2$, and there the
-whole cycle beats them, since that needs only $(2-\sqrt2)\tau>1$. Note also that
-the whole cycle carries almost all the mass for every $\tau>0$. It carries the
-mode only for $\tau>2$, because it spreads its mass over about $N^3$
-compositions.
+whole cycle beats them, since that needs only $(2-\sqrt2)\tau>1$. Note also
+that the whole cycle carries almost all the mass for every $\tau>0$. It
+carries the mode only for $\tau>2$, because it spreads its mass over about
+$N^3$ compositions.
 
-\emph{The general rule.} For any face $F$ the same 2 effects give
-$M_F\approx N^{-(\lvert F\rvert-1)}e^{-T\lambda_F}=N^{-\Phi_\tau(F)}$ up to powers
-of $\log N$, as announced in Section~\ref{sec:intro-faces}. There is a second
-way to see the cost of spreading. A path with support $F$ must enter each of the
-$\lvert F\rvert-1$ states of $F$ where it does not start, and each first entry
-is a switch of probability about $T/N$. Every later switch also costs $T/N$, but
-it multiplies the number of ways to place the runs by a factor of order $N$, so
-it costs no power of $N$. Within $F$ the best composition sits near the
-quasi-ergodic law $\alpha^*_F$: here $(\frac12,\frac12)$ on a pair,
-$(\frac14,\frac12,\frac14)$ on an arc (the normalized squared Perron vector)
-and the uniform law on the cycle. Other visit fractions $\alpha$ cost an extra
-factor $e^{-T(I_F(\alpha)-\lambda_F)}$, with a rate $I_F$ that we now
-introduce.
+\emph{The general rule.} For any face $F$ the same two effects give
+$M_F\approx N^{-(\lvert F\rvert-1)}e^{-T\lambda_F}=N^{-\Phi_\tau(F)}$ up to
+powers of $\log N$, as announced in Section~\ref{sec:intro-faces}. There is a
+second way to see the factor $N^{-(\lvert F\rvert-1)}$. A path with support $F$
+must enter each of the $\lvert F\rvert-1$ states of $F$ where it does not
+start, and each first entry is a switch of probability about $T/N$. Every later
+switch also has probability about $T/N$, but it multiplies the number of ways
+to place the runs by a factor of order $N$, so it loses no power of $N$. Within
+$F$ the best composition sits near the quasi-ergodic law $\alpha^*_F$. Here it
+is $(\frac12,\frac12)$ on a pair, $(\frac14,\frac12,\frac14)$ on an arc (the
+normalized squared Perron vector) and the uniform law on the cycle. Other
+visit fractions $\alpha$ lose an extra factor
+$e^{-T(I_F(\alpha)-\lambda_F)}$, with a rate $I_F$ that we now introduce.
 
-We now make this precise. Proposition~\ref{prop:rate} studies the rate inside a
-face, Theorem~\ref{thm:first} proves the rule for every $Q$ and every start, and
-Theorem~\ref{thm:hull} reads the winners off a convex hull as in
-Figure~\ref{fig:C4worked}(b). Section~\ref{sec:examples} returns to the 4-cycle
-with all constants (Corollary~\ref{cor:C4}).
+The rest of this section proves the rule. Proposition~\ref{prop:rate} studies
+the rate inside a face, Theorem~\ref{thm:first} proves the rule for every $Q$
+and every start, and Theorem~\ref{thm:hull} reads the winners off a convex hull
+as in Figure~\ref{fig:C4worked}(b). Section~\ref{sec:examples} returns to the
+4-cycle with all constants (Corollary~\ref{cor:C4}).
 
 \subsection{The rate inside a face}
 
@@ -131,13 +166,19 @@ For $\alpha\in\Delta_F$ let
  I_F(\alpha)=\sup_{u\in(0,\infty)^F}\sum_{i\in F}\alpha_i\Bigl(-\frac{(Q_Fu)_i}{u_i}\Bigr)
  =\sup_{u\in(0,\infty)^F}\sum_{i\in F}\alpha_i\Bigl(q_i-\sum_{j\in F\setminus\{i\}}q_{ij}\frac{u_j}{u_i}\Bigr),
 \]
-and let $q_i^{\rm out}(F)=\sum_{j\notin F}q_{ij}$. Taking $u=\ones$ gives
+and let $q_i^{\rm out}(F)=\sum_{j\notin F}q_{ij}$, the rate of leaving $F$ from
+$i$. The function $I_F$ is the Donsker--Varadhan rate~\cite{dv1975} of the
+occupation times of the chain killed on leaving $F$
+(Section~\ref{sec:related}). The chance that the chain stays in $F$ with visit
+fractions near $\alpha$ decays like $e^{-TI_F(\alpha)}$
+(Theorem~\ref{thm:first}(i)). Taking $u=\ones$ gives
 $I_F(\alpha)\ge\sum_i\alpha_iq_i^{\rm out}(F)$, and dropping the terms with
-$q_{ij}$ gives $I_F(\alpha)\le\sum_i\alpha_iq_i$. This is the
-Donsker--Varadhan rate~\cite{dv1975} of the occupation times of the chain
-killed on leaving $F$ (Section~\ref{sec:related}): the chance that the chain
-stays in $F$ with visit fractions near $\alpha$ decays like $e^{-TI_F(\alpha)}$.
-We need its properties without reversibility, and the proofs are short.
+$q_{ij}$ gives $I_F(\alpha)\le\sum_i\alpha_iq_i$. So $I_F$ lies between the
+rate of leaving $F$ and the rate of leaving the current state, both averaged
+over $\alpha$. On the pair $\{1,2\}$ of Section~\ref{sec:worked}, part (c)
+below gives $I_F(\alpha)=2-2\sqrt{\alpha_1\alpha_2}$, which is $2$ at a vertex
+and has its least value $1$ at $(\frac12,\frac12)$. We need the properties of
+$I_F$ without reversibility, and the proofs are short.
 
 \begin{proposition}[the rate on a face]\label{prop:rate}
 Let $F$ be irreducible with $k=\lvert F\rvert\ge2$.
@@ -159,6 +200,15 @@ $i,j\in F$, then for every $\alpha\in\Delta_F$
 $\alpha\in\Delta_{F'}$, $I_F(\alpha)=I_{F'}(\alpha)\ge\lambda_{F'}>\lambda_F$.
 \end{enumerate}
 \end{proposition}
+
+\emph{Idea of the proof.} We write $u=e^\psi$. Then the function inside the
+supremum is concave in $\psi$ and affine in $\alpha$, and $\psi$ is a maximizer
+exactly when $\alpha$ is stationary for the chain on $F$ with rates
+$q_{ij}e^{\psi_j-\psi_i}$. The lower bound $I_F\ge\lambda_F$ comes from one
+test vector $u$ (a resolvent applied to $\ones$), and the value at $\alpha^*_F$
+comes from the test vector $u=r_F$. Strict convexity then shows that
+$\alpha^*_F$ is the only minimizer in the open face, and (d) handles the
+boundary.
 
 \begin{proof}
 Write $u=e^\psi$, so that $I_F(\alpha)=\sup_\psi\Psi_\alpha(\psi)$ with
@@ -204,10 +254,11 @@ most $(\sqrt{\alpha_iq_{ij}}-\sqrt{\alpha_jq_{ji}})^2$. The choice $u_i=\sqrt{\a
 $u_i=\varepsilon\to0$ when $\alpha_i=0$, attains the bound in the limit by reversibility.
 \end{proof}
 
-In words, the cheapest way to stay on $F$ is to spend the fractions
-$\alpha^*_F$ of the time in its states, and any other fractions cost more. Part
-(d) says that a composition on the boundary of $F$, which misses some states of
-$F$, is really a composition of a smaller face, and is more expensive. The lower
+In words, the most likely way to stay on $F$ is to spend the fractions
+$\alpha^*_F$ of the time in its states, and the rate at any other fractions is
+strictly larger. Part (d) says that fractions on the boundary of $\Delta_F$,
+which miss some states of $F$, have the rate of the smaller face that they
+use, and this rate is larger than $\lambda_F$. The lower
 bound in (a), the value at $\alpha^*_F$ and the interior form of (c) are checked
 in Lean. For symmetric $Q_F$, $l_F=r_F$ and $\alpha^*_F$ is the entrywise square
 of the Perron vector normalized in $\ell^2$.
@@ -235,9 +286,15 @@ n\rvert\bigr)$.
 
 The proof is in Appendix~\ref{app:torus}. With $\theta=q-\lambda_F\ones$ it
 gives $P_N(n)\le Ch^{k-1}e^{-T\lambda_F+CT^2/N}$ for every $n$ with support
-$F$. This is the rule $M_F\lesssim N^{-(k-1)}e^{-T\lambda_F}$ of
-Section~\ref{sec:worked}, up to a power of $T$. The bound does not depend on
-$N$, so it also applies to the blocks of a path.
+$F$. As $h^{k-1}=T^{k-1}N^{-(k-1)}$, this is the upper half of the rule
+$M_F\approx N^{-(k-1)}e^{-T\lambda_F}$ of Section~\ref{sec:worked}, up to a
+power of $T$. The lemma is stated for a path of any length $\lvert n\rvert$,
+not only $N$, so it also applies to the blocks of a path.
+
+The next theorem uses the local law (Theorem~\ref{thm:local}) and the face
+maxima (Theorem~\ref{thm:facemax}) of Section~\ref{sec:secondorder}, which
+comes later. There is no circularity, since those two theorems are proved
+there without Theorem~\ref{thm:first}.
 
 \begin{theorem}[first-order face selection]\label{thm:first}
 Fix $Q$ and $\mu$.
@@ -269,12 +326,14 @@ full support (Theorem~\ref{thm:hull}(c)).
 \end{enumerate}
 \end{theorem}
 
-In words: (i) a composition with fractions $\alpha$ inside $F$ has probability
-$N^{-(k-1)}e^{-TI_F(\alpha)}$ up to powers of $T$; (ii) the best composition
-on an admissible face has probability $N^{-(k_F-1)}e^{-T\lambda_F}$ up to a power
-of $T$ between $0$ and $k_F-1$; (iii) so with $T=\tau L$ the exponent of $N$
-is $-\Phi_\tau(F)$, and the mode lies on a face that minimizes it, whatever the
-start; (iv) inside the winning face the mode sits near the quasi-ergodic law.
+In words, (i) says that a composition with fractions $\alpha$ inside $F$ has
+probability $N^{-(k-1)}e^{-TI_F(\alpha)}$ up to a power of $T$. Part (ii) says
+that the best composition on an admissible face has probability
+$N^{-(k_F-1)}e^{-T\lambda_F}$ times a power of $T$ with exponent between $0$
+and $k_F-1$, up to a bounded factor. So
+by (iii), with $T=\tau L$ the exponent of $N$ is $-\Phi_\tau(F)$, and the mode
+lies on a face that minimizes it, whatever the start. By (iv), inside the
+winning face the mode sits near the quasi-ergodic law.
 
 \emph{Idea of the proof.} For faces with (H), part (i) and the face maxima come
 from the local law of Section~\ref{sec:secondorder}, which we prove
@@ -288,9 +347,12 @@ Theorem~\ref{thm:facemax}.
 \begin{proof}
 (i) For $k=1$ this is~\eqref{eq:vertexmax}, since $I_{\{i\}}=q_i$. For $k\ge2$,
 Lemma~\ref{lem:discrete} gives $P_N(n)=N^{-(k-1)}f_T(n/N)(1+O(T^2/N))$ with $T^2/N\le N^{-1/3}$.
-By Theorem~\ref{thm:local}, and since $f_T$ is positive and continuous for bounded $T$,
-$\log f_T(\alpha)=\frac{k-1}2\log T+\log C_F(\alpha)-TI_F(\alpha)+O_{\mathcal K}(1)$ on
-$\mathcal K$, and $\log C_F$ is bounded there. This gives (i).
+We claim that
+$\log f_T(\alpha)=\frac{k-1}2\log T+\log C_F(\alpha)-TI_F(\alpha)+O_{\mathcal K}(1)$ for
+$\alpha\in\mathcal K$ and $T\ge1$. For $T\ge T_1$, with $T_1$ large, this is Theorem~\ref{thm:local}.
+For $1\le T\le T_1$ it holds because $f_T(\alpha)$ is positive and continuous on the compact set
+$[1,T_1]\times\mathcal K$ (see the remarks after Theorem~\ref{thm:local}). Finally $C_F$ is positive
+and continuous on $\mathcal K$, so $\log C_F$ is bounded there. This gives (i).
 
 (ii) If $F$ is not admissible, $M_F=0$. If $F$ is admissible and irreducible, it satisfies (H) by
 Lemma~\ref{lem:admissible}(b), and $k^*=k_F$. Then
@@ -326,7 +388,7 @@ $(k_F-1)/2$.
 
 For an admissible face $F$ put $P_F=(\lambda_F,\lvert F\rvert-1)$, and let $S$
 be the set of these points. Then $\Phi_\tau(F)=\tau x+y$ at $(x,y)=P_F$. Picture
-a line of slope $-\tau$ moving up from below the plane: the first points of $S$
+a line of slope $-\tau$ moving up from far below. The first points of $S$ that
 it touches are the winners at $\tau$. For each $\tau>0$ the points of
 $\operatorname{conv}S$ where $\tau x+y$ is least form a vertex or an edge of
 $\operatorname{conv}S$, and we call the union of these over all $\tau>0$ the
@@ -354,9 +416,15 @@ in $\mathcal F_\tau$ is irreducible, for every $\tau>0$.
 \end{enumerate}
 \end{theorem}
 
-In words: as $\tau$ grows the winners walk up the lower-left boundary of the
+In words, as $\tau$ grows the winners walk up the lower-left boundary of the
 hull, from small faces with large exit rates to large faces with small exit
 rates, and they change at the values $\tau_i$, minus the slopes of its edges.
+
+\emph{Idea of the proof.} The least value $g(\tau)$ of $\Phi_\tau$ is a minimum
+of finitely many affine functions of $\tau$, so it is concave and piecewise
+affine. Its pieces are the vertices $v_i$ and its kinks are the values
+$\tau_i$. Part (b) adds two inequalities, and part (c) replaces a reducible
+face by one of its components.
 
 \begin{proof}
 (a) Let $g(\tau)=\min_{(x,y)\in S}(\tau x+y)$. It is a minimum of finitely many affine functions,
@@ -372,7 +440,7 @@ the path $v_0\cdots v_m$.
 (b) Adding $\Phi_\tau(F)\le\Phi_\tau(G)$ and $\Phi_{\tau'}(G)\le\Phi_{\tau'}(F)$ gives
 $(\tau'-\tau)(\lambda_F-\lambda_G)\ge0$, and then $\lvert F\rvert-\lvert
 G\rvert\le\tau(\lambda_G-\lambda_F)\le0$. If $\lambda_F=\lambda_G$, then $\lvert F\rvert=\lvert
-G\rvert$ and $F\in\mathcal F_{\tau'}$. So if the 2 sets are disjoint, $\lambda_F>\lambda_G$ and
+G\rvert$ and $F\in\mathcal F_{\tau'}$. So if the two sets are disjoint, $\lambda_F>\lambda_G$ and
 then $\lvert F\rvert<\lvert G\rvert$.
 
 (c) With symmetric support use Lemma~\ref{lem:admissible}(c). If $\mu$ has full support and $F$ is
@@ -395,9 +463,9 @@ exit rate of each size matters. Figure~\ref{fig:cycles}(a) shows $S$ for the 6-c
 \includegraphics{fig_cycles}
 \caption{(a) The points $(\lambda_F,\lvert F\rvert-1)$ of the arcs of the 6-cycle and of $C_6$,
 with the lower-left boundary of their hull. The numbers beside the edges are the switch values
-$\tau_i$ of Theorem~\ref{thm:hull}. The winners (filled) are the arcs of $1$ to $4$ states and
-$C_6$, and the arc of $5$ states (open) never wins. (b) The support size of the exact mode on
-$C_5$ with the uniform start, against $T$, at $N=40$ and $N=72$. The mode skips the arc of $4$
+$\tau_i$ of Theorem~\ref{thm:hull}. The winners (filled) are the arcs of one to four states and
+$C_6$, and the arc of five states (open) never wins. (b) The support size of the exact mode on
+$C_5$ with the uniform start, against $T$, at $N=40$ and $N=72$. The mode skips the arc of four
 states. The triangles mark the first-order switch points $\tau_i\log N$ with $\tau_i=1$,
 $1+\sqrt2$ and $2+\sqrt2$ (Table~\ref{tab:outcomes}).}
 \label{fig:cycles}

@@ -14,12 +14,12 @@ styles alternate, so the figures still read in greyscale.
   fig_cycles  (a) the points (lambda_F, |F|-1) of the connected faces of the 6-cycle and the
               lower-left boundary of their hull (Theorem 3.4 and Table 1);
               (b) the support of the exact mode on the 5-cycle against T at N = 40 and 72
-  fig_window  (a) the lines l_F(t) of Remark 5.2 on K_3 with start (1/2, 1/2, 0);
+  fig_window  (a) the lines l_F(t) of Corollary 5.2 on K_3 with start (1/2, 1/2, 0);
               (b) the ends of the edge window at N = 10^6, ..., 10^20 against (log L)/L
   fig_sticky  the probability of a direct jump for the sticky HDP weak limit on 3 states
               (Proposition 7.4; Paper C no longer includes fig_window or fig_sticky)
   fig_planar  (a) sT*_N - N(1 - p_N) for (r, s) = (0.1, 1) (Theorem 6.4);
-              (b) the zero-turn share 2 S_N(u*) at the crossing (Theorem 6.3, Remark 6.5)
+              (b) the zero-turn share 2 S_N(u*) at the crossing (Theorem 6.3, Corollary 6.6)
 
 Every plotted number comes from an exact computation. The engines are adapted from the research
 scripts named in the paper's verification section:
@@ -340,7 +340,7 @@ class Face:
 
 
 K3_MU = (0.5, 0.5, 0.0)
-K_FULL = 3 ** 2.5 / (4 * pi)                    # K_[3] of Corollary 4.11 (the K_3 example of Remark 5.2)
+K_FULL = 3 ** 2.5 / (4 * pi)                    # K_[3] of Corollary 4.11 (the K_3 example of Corollary 5.2)
 
 
 def k3_lines(t, mu=K3_MU):
@@ -364,7 +364,7 @@ def window_limits():
 
 
 def compute_window(exponents=range(6, 21, 2)):
-    """Ends of the edge window of Remark 5.2 at N = 10^e, from the exact face maxima."""
+    """Ends of the edge window of Corollary 5.2 at N = 10^e, from the exact face maxima."""
     A2 = np.array([[0.0, 1.0], [1.0, 0.0]])
     A3 = np.ones((3, 3)) - np.eye(3)
     edge = Face(A2, [2, 2], [0.5, 0.5], mmax=300)
@@ -681,7 +681,7 @@ def check(D):
         if not abs(got - want) <= tol:
             bad.append(f"{label}: stated {quoted}{'' if factor == 1 else f' (x{factor})'}, computed {got:.8g}")
 
-    # ---- Figure 2(a) and Table 1: the hull of the 6-cycle from all 63 faces
+    # ---- Figure 3(a) and Table 1: the hull of the 6-cycle from all 63 faces
     faces = all_faces(cycle_rates(6))
     conn = [(lam, len(F) - 1) for F, lam, c in faces if c]
     if len(conn) != 31:
@@ -707,7 +707,7 @@ def check(D):
     for k, q in PAPER["b_k"].items():
         cmp(f"b_{k}", b_k(k), q)
 
-    # ---- Figure 2(b): the exact mode on C_5
+    # ---- Figure 3(b): the exact mode on C_5
     for N, qs in PAPER["C5_transitions"].items():
         C = D["cycles"][N]
         seq = [t for i, t in enumerate(C["types"]) if i == 0 or t != C["types"][i - 1]]
@@ -767,7 +767,7 @@ def check(D):
     cmp("HDP next term, omega (omega P/limit - 1) at 30000", 30000 * (30000 * qd[30000] / HDP_LIMIT - 1),
         PAPER["hdp_next_term"])
 
-    # ---- Figure 3: the planar walk
+    # ---- Figure 5: the planar walk
     rows = D["planar"][(0.1, 1.0)]
     for row, qT, qg, qc in zip(rows, PAPER["planar_sT"], PAPER["planar_gap"], PAPER["planar_curve"]):
         L = log(row["N"])

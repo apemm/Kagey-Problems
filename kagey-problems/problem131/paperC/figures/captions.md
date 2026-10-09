@@ -9,21 +9,22 @@ source with TikZ. Figure 1 is the program figure
 
 (a) The points $(\lambda_F,\lvert F\rvert-1)$ of the arcs of the 6-cycle and of $C_6$,
 with the lower-left boundary of their hull. The numbers beside the edges are the switch values
-$\tau_i$ of Theorem~\ref{thm:hull}. The winners (filled) are the arcs of $1$ to $4$ states and
-$C_6$, and the arc of $5$ states (open) never wins. (b) The support size of the exact mode on
-$C_5$ with the uniform start, against $T$, at $N=40$ and $N=72$. The mode skips the arc of $4$
+$\tau_i$ of Theorem~\ref{thm:hull}. The winners (filled) are the arcs of one to four states and
+$C_6$, and the arc of five states (open) never wins. (b) The support size of the exact mode on
+$C_5$ with the uniform start, against $T$, at $N=40$ and $N=72$. The mode skips the arc of four
 states. The triangles mark the first-order switch points $\tau_i\log N$ with $\tau_i=1$,
 $1+\sqrt2$ and $2+\sqrt2$ (Table~\ref{tab:outcomes}).
 
 ## Figure 5, `fig_planar` (label `fig:planar`, Section 6)
 
-(a) The exact crossing of the planar walk with $(r,s)=(0.1,1)$, written as $sT^*_N-z_N$, for
-$N=40,80,\dots,10240$. Here $z_N=N(1-p_N)$ is the crossing of Paper~A. The dashed curve is
+(a) The exact crossing of the planar walk with $(r,s)=(0.1,1)$, written as
+$sT^*_N-z_N$ with $z_N=N(1-p_N)$, for $N=40,80,\dots,10240$. The dashed curve is
 $-\log2+\log2/(2L)$ from Theorem~\ref{thm:planar-rev}(c), and the dotted line is its limit $-\log2$.
-(b) The zero-turn share $2S_N(u^*_N)$ of the origin mass at the crossing. It tends to $1$ for $s>2r$
-and to $0$ for $s<2r$ (Theorem~\ref{thm:planar-first}), and to $2\sqrt2/(\sqrt2+\sqrt5)=0.7749$ at
-the switch $s=2r$ (Remark~\ref{rem:planar-turns}). For $(r,s)=(1,0)$ there are no reversals and the
-share is $0$ for every $N$. The pair $(0.3,1)$ was computed up to $N=640$.
+(b) The zero-turn share $2S_N(u^*_N)$ of the origin mass at the crossing. It tends to $1$ for
+$s>2r$ and to $0$ for $s<2r$ (Theorem~\ref{thm:planar-first}(c)), and to
+$2\sqrt2/(\sqrt2+\sqrt5)=0.7749$ at the switch $s=2r$ (Corollary~\ref{cor:planar-turn}(b)). For
+$(r,s)=(1,0)$ there are no reversals and the share is $0$ for every $N$. This is the walk with
+turns only of Theorem~\ref{thm:pureturns}. The pair $(0.3,1)$ was computed up to $N=640$.
 
 ## No longer used in Paper C
 

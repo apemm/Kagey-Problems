@@ -11,7 +11,7 @@
 \usepackage{tikz}
 \usepackage[shortlabels]{enumitem}
 \usepackage[colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
-\hypersetup{pdftitle={The middle and the ends III. Face selection for slowly switching Markov chains and the planar persistent walk},pdfauthor={Arjun Pemmasani}}
+\hypersetup{pdftitle={Face selection for slowly switching Markov chains and the planar persistent walk},pdfauthor={Arjun Pemmasani}}
 
 % ---------- theorem environments ----------
 \newtheorem{theorem}{Theorem}[section]
@@ -37,40 +37,52 @@
 
 \graphicspath{{figures/}{../figures/}}
 
-\title{The middle and the ends III.\\ Face selection for slowly switching Markov chains
+\title{Face selection for slowly switching Markov chains
  and the planar persistent walk}
-\author{Arjun Pemmasani}
-\date{September 26, 2026}
+\author{Arjun Pemmasani\\[2pt]
+ \small Department of Mathematics, Harvey Mudd College\\
+ \small Claremont, CA 91711, USA\\
+ \small \texttt{apemmasani@hmc.edu}}
+\date{}
 \begin{document}
 \maketitle
 
 \begin{abstract}
-On Kagey's persistent Galton board each bounce repeats the previous one with
-probability $p$, and Kagey asked when the middle bin becomes as likely as an
-endpoint. We ask the same question for a Markov chain on $d$ states run for
-$N$ steps, which jumps from state $i$ to state $j$ with probability
-$q_{ij}T/N$. The bin is now the vector of visit counts. Write $T=\tau\log N$ and
-let $\lambda_F$ be the rate at which the chain leaves a set of states $F$. To
-first order the most likely count vector is supported by a set $F$ that
-minimizes $\tau\lambda_F+\lvert F\rvert-1$: staying on $F$ costs
-$N^{-\tau\lambda_F}$, and spreading over $F$ costs a factor $N$ per extra state.
-At second order a local limit theorem gives a crossing equation in which
-$\log\log N$ has the coefficient $\frac12$ for strongly connected sets with
-start mass, and a directed 3-cycle shows that this can fail otherwise. Our main
-application is the persistent walk on the square lattice that turns with rate
-$r$ to each side and reverses with rate $s$. The corner and the origin are
-equally likely exactly once, when $T/\log N$ is close to $\min(2/(2r+s),1/s)$,
-and when reversals dominate the crossing is the 1-dimensional one for $N/2$
-steps. We also treat sticky priors for hidden Markov models and the information in
-the endpoint.
+A ball bounces down a Galton board with $N$ rows, and each bounce repeats the
+previous one with probability $p$. Kagey asked when the middle bin becomes as
+likely as an end bin, which only the ball that never switches can reach. We
+ask the same question for a ball with any finite number of directions. Its
+direction is a Markov chain that rarely switches, and its bin records how many
+steps it made in each direction. The most likely bin uses only some set of
+directions, and we find which set. Two effects compete. The ball must never
+switch to a direction outside the set, which is likely when the set is hard to
+leave. But a larger set has more bins to share its probability, and each
+single bin loses a factor $N$ for each extra direction. When the expected number
+of switches is a fixed multiple of $\log N$, both effects are powers of $N$,
+and the winning set minimizes the sum of the two exponents. A local limit
+theorem inside a set then gives the constant in front, and with it the number
+of switches at which two sets are equally likely, up to an error that tends to
+zero, together with the next term. This needs that the ball can pass between
+any two directions of a set without leaving it, and a ball that cycles through
+three directions shows that the answer changes otherwise. Our main application
+is Kagey's board in the plane, a ball on the square lattice that keeps its
+direction, turns left or right, or reverses. Its far corner and the origin are
+equally likely at exactly one switching rate, which we find to first order.
+When the ball reverses more often than it turns, this crossing agrees with the
+one on Kagey's board with $N/2$ rows, up to a negative power of $N$. When it
+turns more often, the crossing comes from a local limit theorem in two
+dimensions. On one curve of rates the planar walk is exactly two independent
+copies of Kagey's board, and with turns only its crossing is Kagey's up to a
+small error. We also apply the rule to sticky priors for hidden Markov models.
 \end{abstract}
 
+\medskip
 \noindent\textbf{Keywords:} persistent random walk; correlated random walk;
 Galton board; occupation times of Markov chains; mode; principal Dirichlet
-eigenvalue; quasi-stationary distribution; local limit theorem; Ising chain;
+eigenvalue; quasi-stationary distribution; local limit theorem;
 hidden Markov model.
 
-\noindent\textbf{MSC2020:} 60J10; 60F05; 82B20; 60F10; 60G50; 62M05.
+\noindent\textbf{MSC2020:} 60J10; 60F05; 60F10; 60G50; 62M05.
 
 \input{sec_intro.tex}
 \input{sec_model.tex}
@@ -79,37 +91,52 @@ hidden Markov model.
 \input{sec_examples.tex}
 \input{sec_planar.tex}
 \input{sec_sticky.tex}
-\input{sec_fisher.tex}
 \input{sec_verify.tex}
 
-\paragraph{Acknowledgment.}
-The Lean code for this paper was generated by AI. AI was also used to
-revise some of the writing and to help cross-verify the code.
+\paragraph{Acknowledgment.} I thank Peter Kagey for posing the problem.
+
+\section*{A note on the use of AI}
+% AI NOTE: to be written by the author.
+All mathematical claims, proofs and computations in this paper are my responsibility.
+
+\section*{Statements and declarations}
+\paragraph{Competing interests.} The author has no competing interests to
+declare.
+
+\paragraph{Funding.} No funding was received for this work.
+
+\paragraph{Data availability.} All code, data and Lean files supporting this
+paper are in the folder \nolinkurl{kagey-problems/problem131} of
+\url{https://github.com/apemm/Kagey-Problems}, at the release
+\texttt{paperC-arxiv-v1}. Section~\ref{sec:verify} describes what each check
+does and how to rerun it.
 
 \appendix
 \input{app_torus.tex}
 \input{app_laplace.tex}
 \input{app_planar.tex}
+\input{app_examples.tex}
 \input{app_hdp.tex}
-\input{app_fisher.tex}
 
 \begin{thebibliography}{99}\small\setlength{\baselineskip}{11pt}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}
 
 \bibitem{kagey131}
 P.~Kagey, \emph{Problem 131}, Open Problem Collection,
-\url{https://peterkagey.com/problems/131/} (accessed September 2026).
+\url{https://peterkagey.com/problems/131/} (accessed October 2026).
 
 \bibitem{paperA}
-A.~Pemmasani, \emph{The middle and the ends I. Uniform Bessel bounds for endpoint crossings in the
+A.~Pemmasani, \emph{Uniform Bessel bounds for endpoint crossings in the
 persistent random walk}, preprint, 2026.
+\href{https://arxiv.org/abs/2610.06935}{arXiv:2610.06935}.
 
 \bibitem{paperB}
-A.~Pemmasani, \emph{The middle and the ends II. Vertex crossings in a symmetric Markov multinomial
+A.~Pemmasani, \emph{Vertex crossings in a symmetric Markov multinomial
 model}, preprint, 2026.
+\href{https://arxiv.org/abs/2610.09258}{arXiv:2610.09258}.
 
 \bibitem{paperD}
-A.~Pemmasani, \emph{The middle and the ends IV. Endpoint crossings for random walks with memory},
-preprint, 2026.
+A.~Pemmasani, \emph{Endpoint crossings for random walks with memory},
+in preparation.
 
 \bibitem{dupuisliu2015}
 P.~Dupuis and Y.~Liu, \emph{On the large deviation rate function for the
@@ -119,8 +146,13 @@ empirical measures of reversible jump Markov processes}, Ann.~Probab.~\textbf{43
 \bibitem{gnw2024}
 A.~Guillin, B.~Nectoux and L.~Wu, \emph{Large deviations of the empirical
 measures of a strong-Feller Markov process inside a subset and quasi-ergodic
-distribution}, preprint (2024), to appear in Ann.~Fac.~Sci.~Toulouse Math.,
-\url{https://arxiv.org/abs/2411.17216}.
+distribution}, preprint, 2024.
+\href{https://arxiv.org/abs/2411.17216}{arXiv:2411.17216}.
+
+\bibitem{chendeng2013}
+J.~Chen and X.~Deng, \emph{Large deviations and related problems for absorbing
+Markov chains}, Stochastic Process.~Appl.~\textbf{123} (2013), 2398--2418.
+\url{https://doi.org/10.1016/j.spa.2013.02.014}.
 
 \bibitem{dv1975}
 M.~D.~Donsker and S.~R.~S.~Varadhan, \emph{On a variational formula for the
@@ -136,6 +168,11 @@ absorbing discrete-time finite Markov chains}, J.~Appl.~Probab.~\textbf{2}
 J.~N.~Darroch and E.~Seneta, \emph{On quasi-stationary distributions in
 absorbing continuous-time finite Markov chains}, J.~Appl.~Probab.~\textbf{4}
 (1967), 192--196. \url{https://doi.org/10.2307/3212311}.
+
+\bibitem{cmsm2013}
+P.~Collet, S.~Mart\'inez and J.~San Mart\'in, \emph{Quasi-Stationary
+Distributions: Markov Chains, Diffusions and Dynamical Systems}, Springer,
+Heidelberg, 2013. \url{https://doi.org/10.1007/978-3-642-33131-2}.
 
 \bibitem{coloniusrasmussen2021}
 F.~Colonius and M.~Rasmussen, \emph{Quasi-ergodic limits for finite
@@ -223,10 +260,36 @@ dimensions: marginal position distributions}, Phys.~Rev.~E \textbf{101}
 L.~Angelani, \emph{Orthogonal run-and-tumble walks}, J.~Stat.~Mech.~(2022),
 123207. \url{https://doi.org/10.1088/1742-5468/aca588}.
 
-\bibitem{smiga2023}
-J.~A.~Smiga, M.~Radaelli, F.~C.~Binder and G.~T.~Landi, \emph{Stochastic
-metrology and the empirical distribution}, Phys.~Rev.~Research \textbf{5}
-(2023), 033150. \url{https://doi.org/10.1103/PhysRevResearch.5.033150}.
+\bibitem{cinqueorsingher2023}
+F.~Cinque and E.~Orsingher, \emph{Stochastic dynamics of generalized planar
+random motions with orthogonal directions}, J.~Theoret.~Probab. \textbf{36}
+(2023), 2229--2261. \url{https://doi.org/10.1007/s10959-022-01229-2}.
+
+\bibitem{orsingher2000}
+E.~Orsingher, \emph{Exact joint distribution in a model of planar random
+motion}, Stochastics Stochastics Rep. \textbf{69} (2000), 1--10.
+\url{https://doi.org/10.1080/17442500008834229}.
+
+\bibitem{kolesnikorsingher2002}
+A.~D.~Kolesnik and E.~Orsingher, \emph{Analysis of a finite-velocity planar
+random motion with reflection}, Theory Probab.~Appl. \textbf{46} (2002),
+132--140. \url{https://doi.org/10.1137/S0040585X97978774}.
+
+\bibitem{sldms2022}
+N.~R.~Smith, P.~Le~Doussal, S.~N.~Majumdar and G.~Schehr, \emph{Exact position
+distribution of a harmonically confined run-and-tumble particle in two
+dimensions}, Phys.~Rev.~E \textbf{106} (2022), 054133.
+\url{https://doi.org/10.1103/PhysRevE.106.054133}.
+
+\bibitem{bhk2007}
+D.~Brydges, R.~van~der~Hofstad and W.~K\"onig, \emph{Joint density for the
+local times of continuous-time Markov chains}, Ann.~Probab. \textbf{35}
+(2007), 1307--1332. \url{https://doi.org/10.1214/009171906000001024}.
+
+\bibitem{hkst2018}
+R.~Huang, D.~Kious, V.~Sidoravicius and P.~Tarr\`es, \emph{Explicit formula for
+the density of local times of Markov jump processes}, Electron.~Commun.~Probab.
+\textbf{23} (2018), no.~90, 1--7. \url{https://doi.org/10.1214/18-ECP194}.
 
 \bibitem{hallheyde1980}
 P.~Hall and C.~C.~Heyde, \emph{Martingale Limit Theory and Its
@@ -242,8 +305,8 @@ B.~Bollob\'as, \emph{Modern Graph Theory}, Springer, New York, 1998.
 \url{https://doi.org/10.1007/978-1-4612-0619-4}.
 
 \bibitem{dlmf}
-NIST, \emph{Digital Library of Mathematical Functions}, Eq.~10.40.1,
-\url{https://dlmf.nist.gov/10.40.E1}.
+NIST, \emph{Digital Library of Mathematical Functions}, Eqs.~10.32.3
+and~10.40.1, \url{https://dlmf.nist.gov/}.
 
 \end{thebibliography}
 
