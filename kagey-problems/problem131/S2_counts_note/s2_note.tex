@@ -58,6 +58,11 @@ Here is what we find. The proofs are in the sections that follow.
  keep the inside, or reverse the inside and keep the outside. This gives two
  chains on four states, with every rate positive and a start that is not
  stationary, that no amount of count data can tell apart.
+\item \emph{The net flow is learned slowly, the entropy production is not}
+ (Theorem~\ref{thm:lecam}). Near a reversible chain no estimator based on $n$
+ copies of the counts finds the size of the net flow to better than $n^{-1/4}$,
+ where the path gives $n^{-1/2}$. In an example the entropy production is still
+ learned at the rate $n^{-1/2}$.
 \item \emph{What is lost} (Theorems~\ref{thm:info} and~\ref{thm:singular}). When
  switches are rare, the counts are as good as the full path for the two-way flow
  on each pair, and blind to first order to the net flow. With a stationary start
@@ -587,7 +592,7 @@ for the tie. This is also why data that cannot see the direction of time can
 give $\sigma$ exactly. The data do not single out the chain, but $\sigma$ takes
 the same value at every chain they allow.
 
-\begin{remark}
+\begin{remark}\label{rem:sigma-smooth}
 (1) Maes, Neto\v{c}n\'y and Wynants~\cite{mnw2008} showed that, close to a
 reversible chain and to leading order, the rate function for the large
 deviations of the occupation times is a quarter of the excess of the entropy
@@ -851,7 +856,8 @@ $\binom d2-(d-1)$.
 Near a reversible chain the law depends on $J$ through quadratic terms such as
 the one in $\tau_{ijk}$. So from $n$ copies of the counts one should expect to
 learn $J^2$ at the usual rate, hence $|J|$ only at rate $n^{-1/4}$ near $J=0$,
-and never its sign. We have not proved this. (Rates of this kind are known for
+and never its sign. Theorem~\ref{thm:lecam} below proves that no estimator of
+$|J|$ does better than $n^{-1/4}$. (Rates of this kind are known for
 models whose information matrix loses rank by one~\cite{rcbr2000}, which is
 the case of three states. There the model is assumed identifiable, and ours is
 not, because of the sign.) For three states and $T=2$ the smallest
@@ -974,6 +980,155 @@ Paper~C's crossings, where $T$ is of order $\log N$.}
 \label{tab:eff}
 \end{table}
 
+\section{How fast the counts learn the net flow}\label{sec:rates}
+
+Suppose we are given $n$ independent copies of the counts of a stationary
+chain. Theorem~\ref{thm:singular} says that near a reversible chain the counts
+carry no first-order information about the net flow. Here we make this a
+statement about estimators. A small net flow of size $\delta$ changes the law
+of the path by an amount of order $\delta$, but it changes the law of the
+counts only by an amount of order $\delta^2$. So the counts need about
+$\delta^{-4}$ copies to notice it, where the path needs $\delta^{-2}$.
+
+Let $(\pi,c)$ be a reversible chain, with rates $g^0_{ij}=c_{ij}/(2\pi_i)$, and
+let $j=(j_{ij})$ be a \emph{circulation}, namely $j_{ji}=-j_{ij}$,
+$\sum_kj_{ik}=0$ for every $i$, and $j_{ij}=0$ whenever $c_{ij}=0$. Put
+$a_{ij}=j_{ij}/c_{ij}$ on the pairs with $c_{ij}>0$, and
+$\bar a=\max\lvert a_{ij}\rvert>0$. For $\lvert\delta\rvert\bar a<1$ let
+$G_\delta$ be the chain with rates
+\[
+ g^\delta_{ij}=\frac{c_{ij}+\delta j_{ij}}{2\pi_i}=g^0_{ij}(1+\delta a_{ij}).
+\]
+It has the same stationary law $\pi$, the same exit rates and the same
+two-way flows as the reversible chain, and its net flow is $J=\delta j$. Let
+$P_\delta$ be the law of $L(t)$ under $G_\delta$ with start $\pi$, and let $N$
+be the number of jumps of the reversible chain up to time $t$.
+
+\begin{theorem}[the counts are slow to see a net flow]\label{thm:lecam}
+Put $K=\frac14\bar a^4\,\E_0\bigl[N^4(9/4)^N\bigr]$, which is finite. For
+$\lvert\delta\rvert\bar a\le\frac12$,
+\[
+ \chi^2(P_\delta,P_0)=\int\Bigl(\frac{dP_\delta}{dP_0}-1\Bigr)^2dP_0
+ \le K\delta^4 .
+\]
+Consequently, let $\delta_n=(Kn)^{-1/4}$ and suppose $\delta_n\bar a\le\frac12$.
+For every estimator $\hat\jmath$ of $\lvert\delta\rvert$ based on $n$
+independent copies of $L(t)$,
+\[
+ \max_{\delta\in\{0,\delta_n\}}\E_\delta\bigl\lvert\hat\jmath-\lvert\delta\rvert\bigr\rvert
+ \ge\frac{\delta_n}6 .
+\]
+The path on $[0,t]$, in contrast, has Fisher information
+$t\sum_{i<j}j_{ij}^2/c_{ij}>0$ about $\delta$ at $\delta=0$.
+\end{theorem}
+
+In words, from $n$ copies of the counts a net flow smaller than about
+$n^{-1/4}$ cannot be told from no net flow at all, whatever the estimator. From
+$n$ copies of the path one can go down to about $n^{-1/2}$.
+
+\paragraph{Idea of the proof.} The likelihood ratio of the path is a product
+with one factor $1+\delta a_{ij}$ for each jump from $i$ to $j$. The counts do
+not see the jumps, so their likelihood ratio is the average of this product
+over the paths with the given counts. Run each path backward. Under the
+reversible chain this does not change the law or the counts, and it turns every
+factor $1+\delta a_{ij}$ into $1-\delta a_{ij}$. So the average only sees the
+even part of the product, and the even part differs from $1$ by order
+$\delta^2$.
+
+\begin{proof}
+\emph{Step 1: the likelihood ratio of the path.} The two chains have the same
+start and the same exit rates, so the holding times contribute nothing, and
+each jump from $i$ to $j$ contributes the ratio of the rates. With $N_{ij}$
+the number of jumps from $i$ to $j$ up to time $t$, the likelihood ratio of
+the path under $G_\delta$ against $G_0$ is
+\[
+ \Lambda_\delta=\prod_{i\ne j}(1+\delta a_{ij})^{N_{ij}} .
+\]
+
+\emph{Step 2: run the film backward.} The likelihood ratio of the counts is
+$\frac{dP_\delta}{dP_0}(L)=\E_0[\Lambda_\delta\mid L]$. The reversible chain
+started from $\pi$ has the same law as its path run backward. Running backward
+keeps $L$ and swaps $N_{ij}$ with $N_{ji}$. Since $a_{ji}=-a_{ij}$, it turns
+$\Lambda_\delta$ into $\Lambda_{-\delta}$. Hence
+$\E_0[\Lambda_\delta\mid L]=\E_0[\Lambda_{-\delta}\mid L]$, and
+\[
+ \frac{dP_\delta}{dP_0}(L)-1
+ =\E_0\Bigl[\tfrac12(\Lambda_\delta+\Lambda_{-\delta})-1\Bigm|L\Bigr].
+\]
+
+\emph{Step 3: the even part is small.} For a given path, $\Lambda_\delta$ is a
+product of $N$ factors of the form $1+\delta a$ with $\lvert a\rvert\le\bar a$.
+So it is a polynomial $\sum_ke_k\delta^k$ with $e_0=1$ and
+$\lvert e_k\rvert\le\binom Nk\bar a^k$. The odd powers cancel in
+$\frac12(\Lambda_\delta+\Lambda_{-\delta})$. With $x=\lvert\delta\rvert\bar a$,
+\[
+ \Bigl\lvert\tfrac12(\Lambda_\delta+\Lambda_{-\delta})-1\Bigr\rvert
+ \le\sum_{k\ge2}\binom Nkx^k=(1+x)^N-1-Nx\le\tfrac12N^2x^2(1+x)^N ,
+\]
+where the last step is Taylor's formula with the second derivative
+$N(N-1)(1+\xi)^{N-2}$.
+
+\emph{Step 4: the chi-square distance.} The square of a conditional mean is at
+most the conditional mean of the square. So by Steps 2 and 3, for
+$x\le\frac12$,
+\[
+ \chi^2(P_\delta,P_0)
+ \le\E_0\Bigl[\bigl(\tfrac12(\Lambda_\delta+\Lambda_{-\delta})-1\bigr)^2\Bigr]
+ \le\tfrac14\bar a^4\delta^4\,\E_0\bigl[N^4(1+x)^{2N}\bigr]\le K\delta^4 .
+\]
+Here $K$ is finite because the chain jumps at rate at most $\max_iq_i$, so $N$
+is at most a Poisson variable with mean $t\max_iq_i$.
+
+\emph{Step 5: two hypotheses.} For $n$ independent copies the chi-square
+distance is $(1+\chi^2(P_\delta,P_0))^n-1\le e^{nK\delta^4}-1$, which is $e-1$
+at $\delta=\delta_n$. The total variation distance between the two laws of the
+sample is at most half the square root of this, so at most
+$\frac12\sqrt{e-1}<0.66$. By Le Cam's two-point
+bound~\cite[Chapter~2]{tsybakov2009}, the larger of the two mean errors is at
+least $\frac12\delta_n(1-0.66)\ge\delta_n/6$.
+
+\emph{The path.} By Step 1 the score of the path at $\delta=0$ is
+$\sum_{i\ne j}a_{ij}N_{ij}$. Its compensator is
+$\int_0^t\sum_ja_{Y_sj}g^0_{Y_sj}\,ds$, and this vanishes because
+$\sum_ja_{ij}g^0_{ij}=\sum_jj_{ij}/(2\pi_i)=0$. So the score is a martingale
+with variance $\sum_{i\ne j}a_{ij}^2\,\E_0N_{ij}=\sum_{i\ne j}a_{ij}^2\,tc_{ij}/2
+=t\sum_{i<j}j_{ij}^2/c_{ij}$.
+\end{proof}
+
+\begin{remark}[the rates are attained in an example]\label{rem:rates}
+Take three states, the $N$-step chain with $N=40$ and $T=2$,
+$\pi=(0.5,0.3,0.2)$ and two-way flows $0.30$, $0.20$, $0.25$, all known, and
+let the only unknown be the flow $j$ around the triangle. The law of the count
+vector is even in $j$ (the proof of Theorem~\ref{thm:lecam} works step by step
+for this chain), and its chi-square distance from the law at $j=0$ is
+$47.1\,\delta^4$ for small $\delta$. We estimate $\lvert j\rvert$ by maximum
+likelihood from $n$ count vectors, and the entropy production by plugging in
+(Figure~\ref{fig:rates}). At $j=0$ the error of $\lvert\hat\jmath\rvert$ falls
+like $n^{-0.248}$, and the error of $\hat\sigma$ like $n^{-0.498}$. At $j=0.1$
+the error of $\lvert\hat\jmath\rvert$ falls like $n^{-0.509}$. So the bound of
+Theorem~\ref{thm:lecam} is attained here, and the entropy production is
+learned at the usual rate even where the net flow is not, as
+Remark~\ref{rem:sigma-smooth} suggests. The numbers fit the standard theory of
+a parameter on the boundary~\cite{sl1987}. In the coordinate $s=j^2$ the model
+is smooth with information $I=47.1$ at $s=0$, the estimate $\hat s$ is close to
+the positive part of a normal variable with variance $1/(nI)$, and
+$\lvert\hat\jmath\rvert=\sqrt{\hat s}$ then has root mean squared error
+$(2\pi)^{-1/4}(nI)^{-1/4}$. At $n=10^6$ this is $0.00763$, and the simulation
+gives $0.00762$. We have not proved that the information in the coordinate
+$J^2$ is nonsingular in general.
+\end{remark}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.6\textwidth]{fig_rates}
+\caption{Root mean squared errors in the example of Remark~\ref{rem:rates},
+from $400$ samples of $n$ count vectors each. At a reversible chain the net flow
+is learned at the rate $n^{-1/4}$ and the entropy production at the rate
+$n^{-1/2}$. Away from reversibility the net flow is learned at the rate
+$n^{-1/2}$. The dotted lines have these slopes.}
+\label{fig:rates}
+\end{figure}
+
 \section{Discrete time, all horizons}\label{sec:discrete}
 
 Papers~A to~D count the steps of a chain in discrete time. The proof of
@@ -1053,6 +1208,9 @@ Each statement above was checked numerically in the scripts next to this note.
  $d=3,4,5$ and both kinds of start. Chains with the same counts have the same
  $\sigma$, and the triangle affinities are recovered from the principal minors
  of orders up to three.
+\item \texttt{sim\_rates.py}. Remark~\ref{rem:rates} and Figure~\ref{fig:rates}.
+ The chi-square distance grows by the factors $15.97$ and $15.89$ when
+ $\delta$ doubles.
 \item \texttt{check\_cut\_transpose.py}. The lumped reversal of
  Example~\ref{ex:four} is the transpose across the module. A transpose across a
  cut that is not a module keeps the principal minors of $G$ but not the counts.
@@ -1149,6 +1307,11 @@ its order, and not the total times. We have not read
 \bibitem{rcbr2000} A.~Rotnitzky, D.~R.~Cox, M.~Bottai and J.~Robins,
  Likelihood-based inference with singular information matrix, \emph{Bernoulli}
  \textbf{6} (2000), 243--284.
+\bibitem{sl1987} S.~G.~Self and K.-Y.~Liang, Asymptotic properties of maximum
+ likelihood estimators and likelihood ratio tests under nonstandard conditions,
+ \emph{J. Amer. Statist. Assoc.} \textbf{82} (1987), 605--610.
+\bibitem{tsybakov2009} A.~B.~Tsybakov, \emph{Introduction to Nonparametric
+ Estimation}, Springer, New York, 2009.
 \bibitem{schnakenberg1976} J.~Schnakenberg, Network theory of microscopic and
  macroscopic behavior of master equation systems, \emph{Rev. Modern Phys.}
  \textbf{48} (1976), 571--585.
