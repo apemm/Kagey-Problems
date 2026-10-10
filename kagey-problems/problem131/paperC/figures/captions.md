@@ -1,7 +1,7 @@
 # Captions for the Paper C figures
 
 Each caption is written in LaTeX and can be pasted into `\caption{...}`. The figures are made by
-`make_figures.py` in this folder. Paper C uses `fig_cycles` and `fig_planar` as Figures 3 and 5. Figures 2 and 4 are drawn in the
+`make_figures.py` in this folder. Paper C uses `fig_cycles` and `fig_planar` as Figures 4 and 6. Figures 3 and 5 are drawn in the
 source with TikZ. Figure 1 is `fig_simplex` (label `fig:simplex`, Section 1.1), made by `make_simplex_figure.py`. Figure 2 is the program figure
 `program_C.pdf` in `../../figures/`, with its caption in `../../figures/program_captions.md`.
 
