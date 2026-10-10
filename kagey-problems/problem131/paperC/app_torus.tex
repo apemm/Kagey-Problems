@@ -578,3 +578,112 @@ have at most $(N+1)^{k^*-1}\prod_{j\ne j^*}(m+1)^{|C_j|-1}$ compositions,
 and $m+1\le3N/T$. Since $\sum_{j\ne j^*}(|C_j|-1)=k_F-k^*-(r-1)$ and $h=T/N$,
 dividing the total probability by the number of compositions gives
 $M_F\ge c\,N^{-(k_F-1)}T^{k_F-k^*}e^{-T\lambda_F}$. \qed
+
+\subsection{A forest formula for the covariance}\label{app:forest}
+
+This lemma is used for Proposition~\ref{prop:forest}. It writes $\det\Sigma$ through
+spanning trees, with no reversibility.
+
+For weights $f_{ij}\ge0$ on the ordered pairs $i\ne j$ of $F$ and a state $i\in F$ let
+\[
+\arb_i(f)=\sum_{\mathcal T}\ \prod_{a\ne i}f_{a\,p_{\mathcal T}(a)},
+\]
+the sum over the spanning trees $\mathcal T$ of the complete graph on $F$, where
+$p_{\mathcal T}(a)$ is the neighbor of $a$ on the path from $a$ to $i$ in $\mathcal T$. So
+$\arb_i(f)$ is the weighted count of the spanning trees oriented toward the root $i$. If $f$ is
+symmetric, then $\arb_i(f)=\tree(f)$ for every $i$.
+
+\begin{lemma}[a forest formula for the covariance]\label{lem:forest}
+Let $G$ be an irreducible generator on $F$ with stationary law $\pi$, where $k=|F|\ge2$, and let
+$D$, $Z$, $\Gamma$ and $\Sigma$ be as at the start of this appendix (before Lemma~\ref{lem:perron}). Put $f_{ij}=\pi_iG_{ij}$ for
+$i\ne j$, the stationary flow from $i$ to $j$.
+\begin{enumerate}[(i)]
+\item The number $\arb_i(f)$ does not depend on $i$. We write $\arb(f)$ for it. Moreover
+$\det(-G)_{(i)}=\pi_i\arb(f)/\prod_j\pi_j$ for every $i$, where $(i)$ means that row and column
+$i$ are deleted, and
+\[
+\det(\ones\pi^\top-G)=\sum_{i\in F}\det(-G)_{(i)}=\frac{\arb(f)}{\prod_j\pi_j}.
+\]
+\item Let $S=-(DG+G^\top D)$. Then $S$ is the Laplacian of the conductances
+$f_{ij}+f_{ji}$, and $\Gamma=Z^\top SZ$.
+\item With $\tree(f+f^\top)$ the weighted count of spanning trees for the conductances
+$f_{ij}+f_{ji}$,
+\[
+\det\Sigma=\frac{\tree(f+f^\top)}{\det(\ones\pi^\top-G)^2}
+=\frac{(\prod_j\pi_j)^2\,\tree(f+f^\top)}{\arb(f)^2}.
+\]
+\end{enumerate}
+\end{lemma}
+
+In words, the determinant of the covariance of the occupation fractions is a count of
+undirected spanning trees for the symmetrized stationary flow, divided by the square of a count
+of directed spanning trees for the flow itself. No reversibility is needed.
+
+\emph{Idea of the proof.} The matrix $\Gamma=DZ+Z^\top D$ factors as $Z^\top SZ$, where $S$ is
+twice the symmetric part of the Laplacian $-DG$ of the stationary flow. Each of the three
+factors has rank $k-1$, so the determinant of the product is $0$ and tells us nothing. The
+adjugate is still multiplicative, and the adjugate of a matrix of rank $k-1$ is a rank one
+matrix that we know up to one scalar from the two kernels. For $S$ the scalar is a count of
+spanning trees by the matrix-tree theorem. For $Z$ the scalar is $1/\det(\ones\pi^\top-G)$, and
+the directed matrix-tree theorem turns this determinant into a count of oriented spanning trees.
+
+\begin{proof}
+We use three facts about the adjugate $\operatorname{adj}M$ of a $k\times k$ matrix $M$. First,
+$\operatorname{adj}(AB)=\operatorname{adj}(B)\operatorname{adj}(A)$ for all square matrices $A$
+and $B$, by the Cauchy--Binet formula. Second,
+$\det(M+uv^\top)=\det M+v^\top\operatorname{adj}(M)\,u$ for all vectors $u$ and $v$. Third,
+suppose that $M$ has rank $k-1$ and that $Mu=0$ and $v^\top M=0$ with $u$ and $v$ nonzero. Then
+$\operatorname{adj}M=m\,uv^\top$ for some number $m$. Indeed
+$M\operatorname{adj}M=\operatorname{adj}(M)M=(\det M)I=0$, so every column of
+$\operatorname{adj}M$ lies in the kernel $\R u$ of $M$, and every row lies in the left kernel
+$\R v^\top$. A matrix with these two properties is a multiple of $uv^\top$.
+
+(i) Let $\mathcal L=-DG$. Its off-diagonal entries are $-f_{ij}$, its row sums vanish because
+$G\ones=0$, and its column sums vanish because $\pi^\top G=0$. The kernel of $G$ is $\R\ones$
+because $G$ is irreducible, so $\mathcal L$ has rank $k-1$. By the third fact with
+$u=v=\ones$, all entries of $\operatorname{adj}\mathcal L$ are equal. By the matrix-tree theorem
+for directed graphs~\cite{tutte1948,chaiken1982}, the diagonal entry
+$\det\mathcal L_{(i)}$ of $\operatorname{adj}\mathcal L$ is $\arb_i(f)$. So $\arb_i(f)$ does
+not depend on $i$. Deleting row and column $i$ from $-G=D^{-1}\mathcal L$ gives
+$\det(-G)_{(i)}=\arb(f)/\prod_{j\ne i}\pi_j=\pi_i\arb(f)/\prod_j\pi_j$, and the sum over $i$ is
+$\arb(f)/\prod_j\pi_j$ because $\sum_i\pi_i=1$. Next, $-G$ has rank $k-1$, right kernel
+$\R\ones$ and left kernel $\R\pi^\top$. So $\operatorname{adj}(-G)=g\,\ones\pi^\top$ for some
+number $g$ by the third fact. The trace of $\ones\pi^\top$ is $1$, so $g$ is the trace of
+$\operatorname{adj}(-G)$, which is $\sum_i\det(-G)_{(i)}$. Since $\det(-G)=0$, the second fact
+gives
+\[
+\det(\ones\pi^\top-G)=\pi^\top\operatorname{adj}(-G)\,\ones=g\,(\pi^\top\ones)(\pi^\top\ones)=g .
+\]
+
+(ii) The matrix $S$ is symmetric. For $i\ne j$ its entry is $-(\pi_iG_{ij}+\pi_jG_{ji})
+=-(f_{ij}+f_{ji})$, and $S\ones=-DG\ones-G^\top\pi=0$. So $S$ is the Laplacian of the
+conductances $f_{ij}+f_{ji}$. By~\eqref{eq:Zprops}, $-GZ=I-\ones\pi^\top$ and $\pi^\top Z=0$.
+Hence
+\[
+Z^\top(-DG)Z=Z^\top D(I-\ones\pi^\top)=Z^\top D-(\pi^\top Z)^\top\pi^\top=Z^\top D,
+\]
+where we used $D\ones=\pi$. The transpose of this identity is $Z^\top(-G^\top D)Z=DZ$. Adding
+the two gives $Z^\top SZ=Z^\top D+DZ=\Gamma$.
+
+(iii) Put $w=\det(\ones\pi^\top-G)$, which is not $0$ because $Z$ exists. By the matrix-tree
+theorem~\cite{bollobas1998} every diagonal entry of $\operatorname{adj}S$ is
+$\tree(f+f^\top)$. This number is positive because the graph of $G$ is strongly connected. So
+$S$ has rank $k-1$, and the third fact with $u=v=\ones$ gives
+$\operatorname{adj}S=\tree(f+f^\top)\,\ones\ones^\top$. Now we turn to $Z$.
+By~\eqref{eq:Zprops}, $Z\ones=0$ and $\pi^\top Z=0$. The matrix
+$Z+\ones\pi^\top=(\ones\pi^\top-G)^{-1}$ is invertible, so $Z$ has rank $k-1$, and
+$\operatorname{adj}Z=z\,\ones\pi^\top$ for some number $z$ by the third fact. Since $\det Z=0$,
+the second fact gives
+\[
+\frac1w=\det(Z+\ones\pi^\top)=\pi^\top\operatorname{adj}(Z)\,\ones=z .
+\]
+Also $\operatorname{adj}(Z^\top)=(\operatorname{adj}Z)^\top=z\,\pi\ones^\top$. By (ii) and the
+first fact,
+\[
+\operatorname{adj}\Gamma=\operatorname{adj}(Z)\operatorname{adj}(S)\operatorname{adj}(Z^\top)
+=z^2\,\tree(f+f^\top)\,\ones(\pi^\top\ones)(\ones^\top\pi)\ones^\top
+=\frac{\tree(f+f^\top)}{w^2}\,\ones\ones^\top .
+\]
+The entry of $\operatorname{adj}\Gamma$ at state $1$ is $\det\Sigma$. This is the first formula
+in (iii), and the second follows from (i).
+\end{proof}

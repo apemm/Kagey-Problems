@@ -75,6 +75,22 @@ Facts from the project record (Claude Opus 5.5 through Claude Code, September an
   and of Huang, Kious, Sidoravicius and Tarres, and credits the telegraph-process factorization
   (Orsingher, Cinque and Orsingher, Smith et al.) for the continuum form of the product curve.
 
+## Added October 9 and 10, 2026 (late)
+
+- Paper C, Proposition `prop:forest` and Lemma `lem:forest` (a tree formula for K_F on every
+  irreducible face). Found and proved by the model, which also wrote `verify_forest.py`. A second
+  model session checked the proof line by line. No literature search was done for it, and the
+  factorization behind it is close to the known Dirichlet-form formula for the variance, so the
+  result may be folklore.
+- Paper D, Section `sec:convex` (Lemmas `lem:D-rec`, `lem:interleave`, `lem:level-one`, Theorems
+  `thm:five-blocks`, `thm:no-holes`, `thm:convex-large`, Corollaries `cor:one-point`,
+  `cor:unique-min`, Proposition `prop:convex-certified`). Found and proved by the model, which also
+  wrote `certify_convex.py`. The proof for large N uses the paper's Theorem `thm:landau`(b) as
+  given. The recurrence for higher differences is identity (4.10) of Trinas and Valle, who use it
+  for bounds and not for sign patterns. Cite them there if you keep the section.
+- Notes S1 and S2: every result and proof in both notes came from the model (S2 was written
+  without reading your own S2 notes, as you asked).
+
 ## Things to check yourself before posting
 
 - Paper D: the urn chapter of Englander and Volkov's book (World Scientific 2024) could not be read.
