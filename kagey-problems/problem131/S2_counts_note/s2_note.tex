@@ -1185,6 +1185,88 @@ In the second case $P^{\top}D^{-1}\one=D^{-1}\one$, so $D^{-1}\one$ is a
 multiple of $\pi$ and $P'=\hat P$.
 \end{proof}
 
+\section{An example with data: the time budgets of sleep}\label{sec:sleep}
+
+We try the theory on data where the full path is known, so that we can throw
+it away and see what the time budgets alone give back.
+
+\paragraph{The data.} The Sleep-EDF telemetry study~\cite{kemp2000,physionet}
+has $44$ nights of sleep, two each from $22$ subjects, scored in epochs of $30$
+seconds. We use three states, namely awake, non-REM sleep (stages $1$ to $4$)
+and REM sleep. We cut off the waking time before the first and after the last
+epoch of sleep, and cut each night into windows of $60$ epochs ($30$ minutes).
+This gives $659$ windows (Figure~\ref{fig:sleep}(a)). For each window the
+\emph{time budget} is the number of epochs in each state, and it is all we
+keep. Time budgets are how sleep and activity data are usually summarized, and
+they are compositional data~\cite{aitchison1986,chastin2015}
+(Figure~\ref{fig:sleep}(b)).
+
+\paragraph{Two fits.} The data are in discrete time, so we use the chain of
+Section~\ref{sec:discrete} with a stationary start, in the coordinates
+$(\pi,c,j)$, where $j$ is the flow around the triangle awake, non-REM, REM. The
+first fit uses the budgets alone, by maximum likelihood with the exact law of
+the count vector. By Theorem~\ref{thm:singular} it can only give $\lvert
+j\rvert$. The second fit uses the full sequences of the same windows, by
+counting transitions. Table~\ref{tab:sleep} and Figure~\ref{fig:sleep}(c),~(d)
+give the results, with intervals from $60$ resamples of the nights.
+
+\begin{table}[ht]\centering\small
+\begin{tabular}{lcc}
+\toprule
+ & full sequences & budgets only\\
+\midrule
+stationary law (awake, non-REM, REM) & $0.060,\ 0.735,\ 0.205$ & $0.061,\ 0.744,\ 0.195$\\
+two-way flow awake, non-REM & $32.8\ (28.8,\,37.2)$ & $18.4\ (15.8,\,21.5)$\\
+two-way flow awake, REM & $3.3\ (2.7,\,3.7)$ & $2.9\ (2.3,\,3.6)$\\
+two-way flow non-REM, REM & $15.8\ (13.3,\,18.9)$ & $8.8\ (7.6,\,9.9)$\\
+net flow around the triangle & $2.3\ (1.9,\,2.6)$ & $\lvert j\rvert=2.9\ (2.1,\,3.6)$\\
+\bottomrule
+\end{tabular}
+\caption{Sleep as a chain on three states, fitted to the full sequences and to
+the time budgets alone. Flows are per $1000$ epochs, with $90\%$ intervals
+from resampling the nights. In the full sequences the net flow runs from awake
+to non-REM to REM and back to awake.}
+\label{tab:sleep}
+\end{table}
+
+\paragraph{What we see.} (1) The budgets give the stationary law, as they must.
+(2) The budgets find the net flow. Sleep goes around the triangle awake,
+non-REM, REM, awake about $2.3$ times in $1000$ epochs more often than the
+other way, and the budgets alone put the size of this flow at $2.9$, with an
+interval that covers the value from the full sequences. No transition is seen
+in the budgets, and the direction of the flow cannot be found from them.
+(3) The budgets give two-way flows that are too small, by almost half on the
+two large pairs. This is not a fault of the method. On data simulated from the
+chain fitted to the full sequences, with the same number of windows, the
+budgets give $31.5\pm1.2$, $3.4\pm0.6$ and $15.9\pm1.7$ for the three two-way
+flows, against the true values $32.7$, $3.3$ and $15.9$. The fault is that
+sleep is not a Markov chain. A chain forces the length of a waking bout to be
+geometric, and the data are far from it (Figure~\ref{fig:sleep}(e)). Half of
+the waking bouts last a single epoch, where the chain predicts $30\%$, and
+$2.1\%$ last ten minutes or more, where the chain predicts $0.1\%$. Heavy
+tails of brief awakenings are well known~\cite{lo2004}. Many short awakenings
+cost little time, so the budgets hardly see them, and a chain fitted to the
+budgets settles for fewer and longer bouts. (4) We do not trust the entropy
+production here. The full sequences give $\sigma=4.7$ per $1000$ epochs, with
+interval $(3.4,6.1)$. In the fit from the budgets the net flow reaches the
+two-way flow of the pair awake, REM in most resamples, which means that this
+pair is crossed in one direction only, and there the formula of
+Theorem~\ref{thm:entropy} blows up. So this example supports the theory where
+the model holds and shows plainly where it does not.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_sleep}
+\caption{Sleep and its time budgets. (a) One night, as a hypnogram. (b) The
+$659$ time budgets on the simplex, on a logarithmic color scale. Most windows
+are spent in non-REM sleep, with some time awake or in REM. (c) The flows of
+the chain fitted to the full sequences, per $1000$ epochs. (d) The two-way
+flows and the net flow from the full sequences and from the budgets alone,
+with $90\%$ intervals. (e) The share of waking bouts that last at least a given
+time, against the geometric law of the fitted chain.}
+\label{fig:sleep}
+\end{figure}
+
 \section{Checks and open questions}
 
 Each statement above was checked numerically in the scripts next to this note.
@@ -1208,6 +1290,9 @@ Each statement above was checked numerically in the scripts next to this note.
  $d=3,4,5$ and both kinds of start. Chains with the same counts have the same
  $\sigma$, and the triangle affinities are recovered from the principal minors
  of orders up to three.
+\item \texttt{sleep\_data.py}, \texttt{sleep\_application.py} and
+ \texttt{sleep\_figure.py}. Section~\ref{sec:sleep}. The hypnogram files are in
+ the folder \texttt{data\_sleep\_edf} with their checksums.
 \item \texttt{sim\_rates.py}. Remark~\ref{rem:rates} and Figure~\ref{fig:rates}.
  The chi-square distance grows by the factors $15.97$ and $15.89$ when
  $\delta$ doubles.
@@ -1267,6 +1352,8 @@ its order, and not the total times. We have not read
 \cite{alahmadieh2026} and~\cite{cggr2025}, which agree.
 
 \begin{thebibliography}{99}\small
+\bibitem{aitchison1986} J.~Aitchison, \emph{The Statistical Analysis of
+ Compositional Data}, Chapman and Hall, London, 1986.
 \bibitem{albert1962} A.~Albert, Estimating the infinitesimal generator of a
  continuous time, finite state Markov process, \emph{Ann. Math. Statist.}
  \textbf{33} (1962), 727--753.
@@ -1278,6 +1365,11 @@ its order, and not the total times. We have not read
  Characterizing and testing principal minor equivalence of matrices,
  \emph{Proc. 57th ACM Symposium on Theory of Computing} (2025), 1067--1078.
  arXiv:2410.01961.
+\bibitem{chastin2015} S.~F.~M.~Chastin, J.~Palarea-Albaladejo, M.~L.~Dontje
+ and D.~A.~Skelton, Combined effects of time spent in physical activity,
+ sedentary behaviors and sleep on obesity and cardio-metabolic health markers:
+ a novel compositional data analysis approach, \emph{PLoS ONE} \textbf{10}
+ (2015), e0139984.
 \bibitem{dlp2016} A.~B.~Duncan, T.~Leli\`evre and G.~A.~Pavliotis, Variance
  reduction using nonreversible Langevin samplers, \emph{J. Stat. Phys.}
  \textbf{163} (2016), 457--491.
@@ -1294,9 +1386,17 @@ its order, and not the total times. We have not read
  \emph{J. Stat. Phys.} \textbf{168} (2017), 259--287.
 \bibitem{kelly1979} F.~P.~Kelly, \emph{Reversibility and Stochastic Networks},
  Wiley, Chichester, 1979.
+\bibitem{kemp2000} B.~Kemp, A.~H.~Zwinderman, B.~Tuk, H.~A.~C.~Kamphuisen and
+ J.~J.~L.~Obery\'e, Analysis of a sleep-dependent neuronal feedback loop: the
+ slow-wave microcontinuity of the EEG, \emph{IEEE Trans. Biomed. Eng.}
+ \textbf{47} (2000), 1185--1194.
 \bibitem{kl2024} S.~Kim and C.~Landim, $\Gamma$-expansion of the measure-current
  large deviations rate functional of non-reversible finite-state Markov chains,
  preprint, arXiv:2412.13515.
+\bibitem{lo2004} C.-C.~Lo, T.~Chou, T.~Penzel, T.~E.~Scammell, R.~E.~Strecker,
+ H.~E.~Stanley and P.~Ch.~Ivanov, Common scale-invariant patterns of
+ sleep--wake transitions across mammalian species, \emph{Proc. Natl. Acad. Sci.
+ USA} \textbf{101} (2004), 17545--17548.
 \bibitem{loewy1986} R.~Loewy, Principal minors and diagonal similarity of
  matrices, \emph{Linear Algebra Appl.} \textbf{78} (1986), 23--64.
 \bibitem{mnw2008} C.~Maes, K.~Neto\v{c}n\'y and B.~Wynants, On and beyond
@@ -1304,6 +1404,11 @@ its order, and not the total times. We have not read
 \bibitem{mr2013} M.~B.~Marcus and J.~Rosen, A sufficient condition for the
  continuity of permanental processes with applications to local times of Markov
  processes, \emph{Ann. Probab.} \textbf{41} (2013), 671--698.
+\bibitem{physionet} A.~L.~Goldberger et al., PhysioBank, PhysioToolkit, and
+ PhysioNet: components of a new research resource for complex physiologic
+ signals, \emph{Circulation} \textbf{101} (2000), e215--e220. The Sleep-EDF
+ Database Expanded, version 1.0.0, is at
+ \url{https://physionet.org/content/sleep-edfx/1.0.0/}.
 \bibitem{rcbr2000} A.~Rotnitzky, D.~R.~Cox, M.~Bottai and J.~Robins,
  Likelihood-based inference with singular information matrix, \emph{Bernoulli}
  \textbf{6} (2000), 243--284.
