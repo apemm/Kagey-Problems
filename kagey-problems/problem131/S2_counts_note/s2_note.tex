@@ -611,7 +611,7 @@ $\sigma$.
 
 (3) Part (a) uses only the functions $r_F$ for faces $F$ of at most two
 states, that is, the paths that stay on at most two states (at all horizons,
-which one horizon gives by Theorem~ef{thm:horizon}). Part (b) uses only the
+which one horizon gives by Theorem~\ref{thm:horizon}). Part (b) uses only the
 faces of at most three states, as long as the start gives
 positive mass to some state of the triangle. (The minors of $G$ inside a set
 $F$ are the coefficients of the denominator of $r_F$ from the proof of
@@ -1003,7 +1003,7 @@ $b_{ij}=j_{ij}/c_{ij}$ on the pairs with $c_{ij}>0$, and
 $\bar b=\max\lvert b_{ij}\rvert>0$. For $\lvert\delta\rvert\bar b<1$ let
 $G_\delta$ be the chain with rates
 \[
- g^\deltb_{ij}=\frac{c_{ij}+\delta j_{ij}}{2\pi_i}=g^0_{ij}(1+\delta b_{ij}).
+ g^\delta_{ij}=\frac{c_{ij}+\delta j_{ij}}{2\pi_i}=g^0_{ij}(1+\delta b_{ij}).
 \]
 It has the same stationary law $\pi$, the same exit rates and the same
 two-way flows as the reversible chain, and its net flow is $J=\delta j$. Let
@@ -1214,10 +1214,13 @@ it away and see what the time budgets alone give back.
 
 \paragraph{The data.} The Sleep-EDF telemetry study~\cite{kemp2000,physionet}
 has $44$ nights of sleep, two each from $22$ subjects, scored in epochs of $30$
-seconds. We use three states, namely awake, non-REM sleep (stages $1$ to $4$)
-and REM sleep. We cut off the waking time before the first and after the last
-epoch of sleep, and cut each night into windows of $60$ epochs ($30$ minutes).
-This gives $659$ windows (Figure~\ref{fig:sleep}(a)). For each window the
+seconds. (The subjects had mild difficulty falling asleep, and one of each
+subject's two nights followed a dose of temazepam and the other a placebo. We
+pool all nights.) We use three states, namely awake, non-REM sleep (stages $1$ to $4$)
+and REM sleep. Epochs scored as movement time count as awake. We cut off the waking time
+before the first and after the last epoch of sleep, cut each night into
+windows of $60$ epochs ($30$ minutes), and drop what is left at the end of the
+night (about $3\%$ of the epochs). This gives $659$ windows (Figure~\ref{fig:sleep}(a)). For each window the
 \emph{time budget} is the number of epochs in each state, and it is all we
 keep. Time budgets are how sleep and activity data are usually summarized, and
 they are compositional data~\cite{aitchison1986,chastin2015}
@@ -1227,54 +1230,90 @@ they are compositional data~\cite{aitchison1986,chastin2015}
 Section~\ref{sec:discrete} with a stationary start, in the coordinates
 $(\pi,c,j)$, where $j$ is the flow around the triangle awake, non-REM, REM. The
 first fit uses the budgets alone, by maximum likelihood with the exact law of
-the count vector. The law of the budgets is even in $j$ (run the film backward), so the fit can only give $\lvert
+the count vector, treating the windows as independent copies. The law of the budgets is even in $j$ (run the film backward), so the fit can only give $\lvert
 j\rvert$. The second fit uses the full sequences of the same windows, by
-counting transitions. Table~\ref{tab:sleep} and Figure~\ref{fig:sleep}(c),~(d)
-give the results, with intervals from $60$ resamples of the nights.
+counting the transitions inside the windows. Table~\ref{tab:sleep} and Figure~\ref{fig:sleep}(c),~(d)
+give the results. The intervals run from the $5$th to the $95$th percentile
+of $60$ resamples of the nights, so they are rough.
 
 \begin{table}[ht]\centering\small
 \begin{tabular}{lcc}
 \toprule
  & full sequences & budgets only\\
 \midrule
-stationary law (awake, non-REM, REM) & $0.060,\ 0.735,\ 0.205$ & $0.061,\ 0.744,\ 0.195$\\
+share of time (awake, non-REM, REM) & $0.060,\ 0.735,\ 0.205$ & $0.061,\ 0.744,\ 0.195$\\
 two-way flow awake, non-REM & $32.8\ (28.8,\,37.2)$ & $18.4\ (15.8,\,21.5)$\\
 two-way flow awake, REM & $3.3\ (2.7,\,3.7)$ & $2.9\ (2.3,\,3.6)$\\
 two-way flow non-REM, REM & $15.8\ (13.3,\,18.9)$ & $8.8\ (7.6,\,9.9)$\\
-net flow around the triangle & $2.3\ (1.9,\,2.6)$ & $\lvert j\rvert=2.9\ (2.1,\,3.6)$\\
+net flow around the triangle & $2.3\ (1.9,\,2.6)$ & $\lvert j\rvert=2.9\ (2.1,\,3.6)$, on the boundary\\
 \bottomrule
 \end{tabular}
 \caption{Sleep as a chain on three states, fitted to the full sequences and to
 the time budgets alone. Flows are per $1000$ epochs, with $90\%$ intervals
 from resampling the nights. In the full sequences the net flow runs from awake
-to non-REM to REM and back to awake.}
+to non-REM to REM and back to awake (the three pairs give $2.2$, $2.4$ and
+$2.2$, and we show their mean). In the fit from the budgets the net flow
+equals the two-way flow of the pair awake, REM, which is the largest value the
+model allows.}
 \label{tab:sleep}
 \end{table}
 
-\paragraph{What we see.} (1) The budgets give the stationary law, as they must.
-(2) The budgets find the net flow. Sleep goes around the triangle awake,
-non-REM, REM, awake about $2.3$ times in $1000$ epochs more often than the
-other way, and the budgets alone put the size of this flow at $2.9$, with an
-interval that covers the value from the full sequences. No transition is seen
-in the budgets, and the direction of the flow cannot be found from them.
+\paragraph{What we see.} (1) The budgets give the share of time in each state,
+as they must.
+
+(2) The budgets say little about the net flow. The full sequences show a clear
+one. Sleep goes around the triangle awake, non-REM, REM, awake about $2.3$ times
+in $1000$ epochs more often than the other way. The fit from the budgets
+gives $\lvert j\rvert=2.9$, which looks close. But this value is not an
+interior maximum of the likelihood. The likelihood keeps rising in
+$\lvert j\rvert$ until the net flow equals the two-way flow of the pair awake,
+REM, and the estimate is this bound. Against the best fit with no net flow the
+likelihood ratio statistic is $5.3$, and this treats the windows as
+independent, which they are not. So the budgets are compatible with a net
+flow of this size and prefer it weakly to none, and that is all. The same
+happens on data simulated from the chain fitted to the full sequences, with
+the same number of windows. In $24$ runs the estimate of $\lvert j\rvert$ was
+close to $0$ in $46\%$, on the bound in $33\%$, and had mean $1.6$ and standard
+deviation $1.7$, where the true value is $2.3$. This is what
+Theorem~\ref{thm:lecam} leads us to expect. A net flow is hard to see in the
+counts, and $659$ windows are too few.
+
 (3) The budgets give two-way flows that are too small, by almost half on the
-two large pairs. This is not a fault of the method. On data simulated from the
-chain fitted to the full sequences, with the same number of windows, the
-budgets give $31.5\pm1.2$, $3.4\pm0.6$ and $15.9\pm1.7$ for the three two-way
-flows, against the true values $32.7$, $3.3$ and $15.9$. The fault is that
-sleep is not a Markov chain. A chain forces the length of a waking bout to be
-geometric, and the data are far from it (Figure~\ref{fig:sleep}(e)). Half of
-the waking bouts last a single epoch, where the chain predicts $30\%$, and
-$2.1\%$ last ten minutes or more, where the chain predicts $0.1\%$. Heavy
-tails of brief awakenings are well known~\cite{lo2004}. Many short awakenings
-cost little time, so the budgets hardly see them, and a chain fitted to the
-budgets settles for fewer and longer bouts. (4) We do not trust the entropy
-production here. The full sequences give $\sigma=4.7$ per $1000$ epochs, with
-interval $(3.4,6.1)$. In the fit from the budgets the net flow reaches the
-two-way flow of the pair awake, REM in most resamples, which means that this
-pair is crossed in one direction only, and there the formula of
-Theorem~\ref{thm:entropy} blows up. So this example supports the theory where
-the model holds and shows plainly where it does not.
+two large pairs. This is not a fault of the method. In the $24$ simulated runs
+the budgets gave $32.7$, $3.4$ and $16.2$ on average for the three two-way
+flows (standard deviations $1.6$, $0.6$ and $1.2$), and the true values are
+$32.7$, $3.3$ and $15.8$. The fault is that sleep is not a chain with fixed
+rates. We see two ways in which it fails. First, a chain forces the length of
+a waking bout to be geometric, and the data are far from it
+(Figure~\ref{fig:sleep}(e)). Half of the waking bouts in these nights last a
+single epoch, where the chain predicts $30\%$, and $2.1\%$ last ten minutes or
+more, where the chain predicts $0.1\%$. Heavy tails of brief awakenings are
+well known~\cite{lo2004}. Many short awakenings cost little time, so the
+budgets hardly see them. Second, sleep changes through the night (deep sleep
+comes early and REM sleep late), so windows from different hours do not have
+one law. This spreads the budgets more than a single chain would, and a chain
+fitted to them answers by switching less often. The second effect must be
+part of the story, because the pair non-REM, REM is also halved and has
+nothing to do with waking. We have not separated the two.
+
+(4) We do not trust the entropy production here. The full sequences give
+$\sigma=4.7$ per $1000$ epochs, with interval $(3.4,6.1)$. In the fit from the
+budgets the pair awake, REM is crossed in one direction only, and there the
+formula of Theorem~\ref{thm:entropy} blows up.
+
+So on real data the example supports less than we hoped. The share of time is
+recovered. The two-way flows are recovered when the data come from a chain,
+and not for sleep. The net flow is barely seen at this sample size, with or
+without a true chain.
+
+\paragraph{Limits.} The windows of one night are not independent, and the first
+window of each night starts with sleep by construction. The two nights of a
+subject are not independent either, and we resample nights, not subjects. The
+nights with and without the drug are pooled. The window of $30$ minutes is a
+choice, and we tried no other. Merging stages $1$ to $4$ hides the structure
+inside non-REM sleep. Proposition~\ref{prop:discrete} needs all horizons, and
+we use one. Since the model does not hold, what the fit from the budgets
+estimates has no fixed relation to the flows of the full sequences.
 
 \begin{figure}[t]
 \centering
@@ -1312,7 +1351,8 @@ Most statements above were checked numerically in the scripts next to this note.
  $d=3,4,5$ and both kinds of start. Chains with the same counts have the same
  $\sigma$, and the triangle affinities are recovered from the principal minors
  of orders up to three.
-\item \texttt{sleep\_data.py}, \texttt{sleep\_application.py} and
+\item \texttt{sleep\_data.py}, \texttt{sleep\_application.py},
+ \texttt{sleep\_checks.py} (the likelihood ratio and the $24$ simulated runs) and
  \texttt{sleep\_figure.py}. Section~\ref{sec:sleep}. The hypnogram files are in
  the folder \texttt{data\_sleep\_edf} with their checksums.
 \item \texttt{sim\_rates.py}. Remark~\ref{rem:rates} and Figure~\ref{fig:rates}.
