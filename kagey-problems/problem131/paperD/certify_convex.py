@@ -8,7 +8,7 @@ For each N:
  (3) find every index a >= N/2 that can be a mode, put m* = N - a, and certify
        second difference > 0 at every a in [2m*+1, N-2m*-1]            (direct check)
      and also the two inequalities of the reduction theorem:
-       second difference < 0 at some a0 <= m*, and > 0 at a1 = 2m*+1.
+       second difference < 0 at some a0 <= 2m*, and > 0 at a1 = 2m*+1 (Theorem 3.22).
 Usage: python -B certify_convex.py Nlo Nhi     (for example 10 400, half a minute)"""
 import sys, time
 from flint import arb, fmpq, ctx
