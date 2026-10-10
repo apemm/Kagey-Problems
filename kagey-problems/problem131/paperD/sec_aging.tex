@@ -81,7 +81,12 @@ at $c=1$.
 \end{proof}
 
 After a shift of one step, part (a) is the exercise
-in~\cite[footnote~1 on p.~6]{evw2020}. The argument for (b) is the one in
+in~\cite[footnote~1 on p.~6]{evw2020}. That footnote also says that the fact
+can be related to P\'olya urns (the authors credit M.~Bal\'azs) and that a
+more general connection of their model with P\'olya urns will appear in a
+later paper. So the uniform law for two states is not new. What we add for
+two states is the joint law with the last step and part (b). The argument for
+(b) is the one in
 Proposition~\ref{prop:mlr}. Both parts of
 Proposition~\ref{prop:aging-two} are also proved in Lean
 (Section~\ref{sec:verify}).
@@ -92,8 +97,11 @@ The same thing happens for a chain on $d$ states that leaves its current
 state for each other state at the same aging rate. For such chains Dietz and
 Sethuraman~\cite[Theorem~1.4]{ds2007} proved that the fractions of time
 converge in law to the Dirichlet law with every parameter $\theta$, which is
-uniform on the simplex exactly at $\theta=1$ (see also~\cite{bc2018}). Part (a)
-of the theorem below is an exact form of this at finite $N$. Fix $d\ge2$ and $\theta$
+uniform on the simplex exactly at $\theta=1$ (see also~\cite{bc2018}). Their
+chain moves to each other state with probability $\theta/n$ at time $n$, and
+ours does so at step $k=n-d+2$, so the two differ by a shift of $d-2$ steps.
+Part (a) of the theorem below is an exact form of their limit at finite $N$.
+Fix $d\ge2$ and $\theta$
 with $0<\theta<d/(d-1)$. The chain $X_1,X_2,\dots$ on $\{1,\dots,d\}$ starts at
 $X_1=1$. At step $k\ge2$ it moves to each of the other $d-1$ states with
 probability $\theta/(k+d-2)$, and it stays with probability
@@ -212,7 +220,14 @@ rational arithmetic for $d=2,3,4$ and $2\le N\le8$
 \end{remark}
 
 The urn is not special to $\theta=1$. It appears for every weight once the
-aging rate is adjusted a little. Fix $d\ge2$ and $\theta>0$, and let
+aging rate is adjusted a little. The chain below either redraws its state or
+repeats it. This is the mechanism of the conservative random walk of
+Engl\"ander and Volkov~\cite{ev2022}, who redraw a direction in $\mathbb Z^d$
+with probability $p_n$ and study recurrence and scaling limits. We do not
+claim the urn law below as new. The footnote quoted above announces a general
+connection with P\'olya urns, and the book~\cite{ev2024} has a chapter on urn
+models that we have not seen. What we use it for is the explicit joint law on
+$d$ states and the tie. Fix $d\ge2$ and $\theta>0$, and let
 $Y_1,Y_2,\dots$ be the following chain on $\{1,\dots,d\}$. At step $t\ge1$,
 with probability
 \[
@@ -287,18 +302,20 @@ $\theta=1$ the product is $(T/2)!^2/T!$.
 \end{proof}
 
 \begin{remark}\label{rem:aging-feller}
-Here is another way to see Proposition~\ref{prop:aging-urn}. The fresh draws
+Here is another way to see the law of the counts in
+Proposition~\ref{prop:aging-urn} (but not the joint law with the last state).
+The fresh draws
 cut $Y_1,\dots,Y_T$ into runs, and each run gets a uniform state. The urn can
 be run in the same way, as a Chinese restaurant process in which each table
 gets a uniform color. There a table is opened with the same probabilities
 $\varphi_t$. The lengths of the runs are the spacings between the successes of
 independent trials with success probabilities $\varphi_t$, and it is a classical
 fact (the Feller coupling, see~\cite{abt2003}) that these spacings have
-the same law as the table sizes. The footnote of Engl\"ander, Volkov and
-Wang~\cite{evw2020} credits M.~Bal\'azs with a relation to P\'olya urns for two
-states. We do not know whether it is this one. We
-checked~\eqref{eq:aging-urn} in exact arithmetic for $d=2,3,4$, four values of
-$\theta$ and $T\le7$ (\texttt{verify\_aging\_urn.py}).
+the same law as the table sizes. We do not know whether this is the relation
+to P\'olya urns that the footnote of~\cite{evw2020} has in mind. We
+checked~\eqref{eq:aging-urn} in exact arithmetic for four values of $\theta$,
+with $T\le7$ for $d=2,3$ and $T\le5$ for $d=4$
+(\texttt{verify\_aging\_urn.py}).
 \end{remark}
 
 \subsection{A fair first step}

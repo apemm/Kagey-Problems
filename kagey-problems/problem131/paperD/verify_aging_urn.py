@@ -80,3 +80,5 @@ for d in (2, 3, 4):
             if urn.get((m, j), 0) != p:
                 ok2 = False
 print("Paper D walk at theta = 1 is the same walk after one step:", ok2)
+if not (ok and ok2):
+    raise SystemExit(1)
