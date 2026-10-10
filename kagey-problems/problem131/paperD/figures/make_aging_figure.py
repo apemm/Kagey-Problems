@@ -23,11 +23,10 @@ FULL = 6.4
 T2, T3 = 40, 36
 THETAS = (0.5, 1.0, 2.0)
 
-try:
-    from cmcrameri import cm as _cmc
-    PALETTE = _cmc.batlow
-except ImportError:
-    PALETTE = plt.get_cmap("viridis")
+import sys as _sys
+_sys.path.insert(0, str(HERE.parent.parent / "figures"))
+import dark_style  # black background and the manim palette, see figures/dark_style.py
+PALETTE = dark_style.HEAT
 
 plt.rcParams.update({
     "font.size": 8, "axes.labelsize": 8, "legend.fontsize": 8,
@@ -60,7 +59,7 @@ def xy(m):
 
 def figure():
     fig, axes = plt.subplots(1, 3, figsize=(FULL, 2.2), gridspec_kw={"width_ratios": [1.25, 1, 1]})
-    cols = [PALETTE(x) for x in (0.78, 0.45, 0.05)]
+    cols = [dark_style.YELLOW, dark_style.BLUE, dark_style.RED]
     a = axes[0]
     k = np.arange(T2 + 1)
     for theta, c, ls in zip(THETAS, cols, ("-", "--", "-.")):
@@ -85,10 +84,13 @@ def figure():
     for ax, theta, letter in zip(axes[1:], (0.5, 2.0), "bc"):
         z = np.array([(log_law(m, theta) + log(nb)) / log(10) for m in bins])
         assert abs(sum(10 ** v for v in z) / nb - 1) < 1e-10
-        pc = PolyCollection([hexagon + xy(m) for m in bins], array=np.clip(z, -1.0, 1.0),
+        pc = PolyCollection([hexagon + xy(m) for m in bins], array=np.clip(z, -0.7, 0.7),
                             cmap=PALETTE, edgecolors="face", linewidths=0.15)
-        pc.set_clim(-1.0, 1.0)
+        pc.set_clim(-0.7, 0.7)
         ax.add_collection(pc)
+        o = 2 * rad
+        ax.plot([-o, 1 + o, 0.5, -o], [-o / sqrt(3), -o / sqrt(3), sqrt(3) / 2 + 2 * o / sqrt(3), -o / sqrt(3)],
+                color="0.45", lw=0.5)
         ax.text(0.5, -0.1, r"(%s) $\theta=%s$" % (letter, "1/2" if theta == 0.5 else "2"),
                 ha="center", va="top")
         ax.set_aspect("equal")
@@ -97,9 +99,10 @@ def figure():
         ax.axis("off")
         print("theta = %g: corner/uniform = %.3g, center/uniform = %.3g"
               % (theta, 10 ** z[bins.index((T3, 0, 0))], 10 ** z[bins.index((T3 // 3,) * 3)]))
-    cb = fig.colorbar(pc, ax=list(axes[1:]), fraction=0.03, pad=0.02, ticks=[-1, 0, 1], extend="both")
+    cb = fig.colorbar(pc, ax=list(axes[1:]), fraction=0.03, pad=0.02, ticks=[-0.5, 0, 0.5], extend="both")
     cb.set_label(r"$\log_{10}$ of probability / uniform")
     cb.outline.set_linewidth(0.4)
+    dark_style.finish(fig)
     for ext, kw in (("pdf", {}), ("png", {"dpi": 600})):
         fig.savefig(HERE / ("aging." + ext), **kw)
     plt.close(fig)
