@@ -49,8 +49,8 @@ Here is what we find. The proofs are in the sections that follow.
  is like this. The size of the net flow on every pair is still known, so the
  counts say how far the chain is from reversible but not which way it turns.
 \item \emph{The counts measure the entropy production}
- (Theorem~\ref{thm:entropy}). They cannot tell a film of the chain from the
- same film run backward. Yet they determine exactly how different the two films
+ (Theorem~\ref{thm:entropy}). With a stationary start they cannot tell a film
+ of the chain from the same film run backward. Yet they determine exactly how different the two films
  are, namely the entropy production rate, and from any start they decide
  whether the chain is reversible (when every rate is positive).
 \item \emph{Lumping gives more ties} (Theorem~\ref{thm:lumping}). If a group of
@@ -66,7 +66,7 @@ Here is what we find. The proofs are in the sections that follow.
 \item \emph{What is lost} (Theorems~\ref{thm:info} and~\ref{thm:singular}). When
  switches are rare, the counts are as good as the full path for the two-way flow
  on each pair, and blind to first order to the net flow. With a stationary start
- the information about the net flow vanishes exactly at reversible chains, at
+ the information about the net flow vanishes at every reversible chain, at
  every horizon.
 \end{enumerate}
 
@@ -351,7 +351,8 @@ everything, which gives $G$ and its reversal. These two differ unless $J=0$.
 
 \begin{remark}
 The proof is also a recipe. Read $\mu_i$ and $q_i$ from the paths that never
-move, and $c_{ij}$ and $a_{ij}$ from the paths that visit two states. Then
+move, and $c_{ij}$ and $a_{ij}$ from the paths that visit two states (in both
+cases through the functions $r_F$, that is, at all horizons). Then
 $f_{ij}=\frac12(c_{ij}\pm|J_{ij}|)$, and the signs are the ones for which
 $\sum_jf_{ij}=\mu_iq_i$ at every state. So paths that visit at most two states
 are enough for almost every chain.
@@ -507,7 +508,8 @@ The \emph{entropy production rate} of the chain at time $0$ is
  \qquad f_{ij}=\mu_ig_{ij}
 \]
 (see~\cite{schnakenberg1976}). A pair with $f_{ij}=f_{ji}=0$ contributes
-nothing. Each term is nonnegative, and $\sigma=0$ exactly when $J=0$. For a stationary start, $t\sigma$ is the relative entropy of the
+nothing. Each term is nonnegative (and may be infinite if only one of the two flows
+vanishes), and $\sigma=0$ exactly when $J=0$. For a stationary start, $t\sigma$ is the relative entropy of the
 law of the path on $[0,t]$ with respect to the law of the same path run
 backward. So $\sigma$ measures how far the film is from its reverse. For three
 states $i,j,k$ with all six rates positive, the \emph{affinity} of the
@@ -607,8 +609,10 @@ Near a reversible chain the counts lose the net flow $J$ itself (we come back
 to this in Theorem~\ref{thm:singular}), but nothing of this kind happens to
 $\sigma$.
 
-(3) Part (a) reads only the paths that visit at most two states. Part (b)
-reads only the paths that visit at most three, as long as the start gives
+(3) Part (a) uses only the functions $r_F$ for faces $F$ of at most two
+states, that is, the paths that stay on at most two states (at all horizons,
+which one horizon gives by Theorem~ef{thm:horizon}). Part (b) uses only the
+faces of at most three states, as long as the start gives
 positive mass to some state of the triangle. (The minors of $G$ inside a set
 $F$ are the coefficients of the denominator of $r_F$ from the proof of
 Theorem~\ref{thm:pairs}, and $r_F$ is zero when no path starts in $F$.)
@@ -702,12 +706,13 @@ side of a cut~\cite{hl1984,alahmadieh2026,cggr2025}, and (a) and (b) are of
 this kind. What Theorem~\ref{thm:lumping} adds is that they pass the second test
 of Proposition~\ref{prop:minors}, the one that involves the start.
 
-The second test matters. Take a rate matrix with a cut $X$ that is not a
+The second test matters. Take a rate matrix with a cut $X$ such that neither $X$ nor its complement is a
 module (the blocks $G_{XX^c}$ and $G_{X^cX}$ have rank one, but the rows of
 $G_{XX^c}$ are not equal). Transposing one side of the cut and rescaling gives a
-rate matrix $G'$ with the same principal minors as $G$, and in our examples
-even the same stationary law. But the minors of $G'-\one\pi^{\top}$ differ from
-those of $G-\one\pi^{\top}$, and the counts differ, by about $10^{-4}$ in the
+rate matrix $G'$ with the same principal minors as $G$, and so with the same
+stationary law (it is proportional to the principal minors of order $d-1$ of
+$-G$). But the minors of $G'-\one\pi^{\top}$ differ from
+those of $G-\one\pi^{\top}$, and the counts differ, by $2\cdot10^{-4}$ to $9\cdot10^{-4}$ in the
 Laplace transform (\texttt{check\_cut\_transpose.py}). For the chains of
 Example~\ref{ex:four} the same script confirms that $G'$ is exactly the
 transpose of $G$ across the module, up to a diagonal similarity.
@@ -983,21 +988,22 @@ Paper~C's crossings, where $T$ is of order $\log N$.}
 \section{How fast the counts learn the net flow}\label{sec:rates}
 
 Suppose we are given $n$ independent copies of the counts of a stationary
-chain. Theorem~\ref{thm:singular} says that near a reversible chain the counts
+chain. Theorem~\ref{thm:singular} says that at a reversible chain the counts
 carry no first-order information about the net flow. Here we make this a
 statement about estimators. A small net flow of size $\delta$ changes the law
 of the path by an amount of order $\delta$, but it changes the law of the
-counts only by an amount of order $\delta^2$. So the counts need about
-$\delta^{-4}$ copies to notice it, where the path needs $\delta^{-2}$.
+counts only by an amount of order $\delta^2$. So the counts need at least of
+the order of $\delta^{-4}$ copies to notice it, where for the path, which is a
+regular model in $\delta$, one expects $\delta^{-2}$.
 
 Let $(\pi,c)$ be a reversible chain, with rates $g^0_{ij}=c_{ij}/(2\pi_i)$, and
 let $j=(j_{ij})$ be a \emph{circulation}, namely $j_{ji}=-j_{ij}$,
 $\sum_kj_{ik}=0$ for every $i$, and $j_{ij}=0$ whenever $c_{ij}=0$. Put
-$a_{ij}=j_{ij}/c_{ij}$ on the pairs with $c_{ij}>0$, and
-$\bar a=\max\lvert a_{ij}\rvert>0$. For $\lvert\delta\rvert\bar a<1$ let
+$b_{ij}=j_{ij}/c_{ij}$ on the pairs with $c_{ij}>0$, and
+$\bar b=\max\lvert b_{ij}\rvert>0$. For $\lvert\delta\rvert\bar b<1$ let
 $G_\delta$ be the chain with rates
 \[
- g^\delta_{ij}=\frac{c_{ij}+\delta j_{ij}}{2\pi_i}=g^0_{ij}(1+\delta a_{ij}).
+ g^\deltb_{ij}=\frac{c_{ij}+\delta j_{ij}}{2\pi_i}=g^0_{ij}(1+\delta b_{ij}).
 \]
 It has the same stationary law $\pi$, the same exit rates and the same
 two-way flows as the reversible chain, and its net flow is $J=\delta j$. Let
@@ -1005,13 +1011,13 @@ $P_\delta$ be the law of $L(t)$ under $G_\delta$ with start $\pi$, and let $N$
 be the number of jumps of the reversible chain up to time $t$.
 
 \begin{theorem}[the counts are slow to see a net flow]\label{thm:lecam}
-Put $K=\frac14\bar a^4\,\E_0\bigl[N^4(9/4)^N\bigr]$, which is finite. For
-$\lvert\delta\rvert\bar a\le\frac12$,
+Put $K=\frac14\bar b^4\,\E_0\bigl[N^4(9/4)^N\bigr]$, which is finite. For
+$\lvert\delta\rvert\bar b\le\frac12$,
 \[
  \chi^2(P_\delta,P_0)=\int\Bigl(\frac{dP_\delta}{dP_0}-1\Bigr)^2dP_0
  \le K\delta^4 .
 \]
-Consequently, let $\delta_n=(Kn)^{-1/4}$ and suppose $\delta_n\bar a\le\frac12$.
+Consequently, let $\delta_n=(Kn)^{-1/4}$ and suppose $\delta_n\bar b\le\frac12$.
 For every estimator $\hat\jmath$ of $\lvert\delta\rvert$ based on $n$
 independent copies of $L(t)$,
 \[
@@ -1027,11 +1033,11 @@ $n^{-1/4}$ cannot be told from no net flow at all, whatever the estimator. From
 $n$ copies of the path one can go down to about $n^{-1/2}$.
 
 \paragraph{Idea of the proof.} The likelihood ratio of the path is a product
-with one factor $1+\delta a_{ij}$ for each jump from $i$ to $j$. The counts do
+with one factor $1+\delta b_{ij}$ for each jump from $i$ to $j$. The counts do
 not see the jumps, so their likelihood ratio is the average of this product
 over the paths with the given counts. Run each path backward. Under the
 reversible chain this does not change the law or the counts, and it turns every
-factor $1+\delta a_{ij}$ into $1-\delta a_{ij}$. So the average only sees the
+factor $1+\delta b_{ij}$ into $1-\delta b_{ij}$. So the average only sees the
 even part of the product, and the even part differs from $1$ by order
 $\delta^2$.
 
@@ -1042,27 +1048,27 @@ each jump from $i$ to $j$ contributes the ratio of the rates. With $N_{ij}$
 the number of jumps from $i$ to $j$ up to time $t$, the likelihood ratio of
 the path under $G_\delta$ against $G_0$ is
 \[
- \Lambda_\delta=\prod_{i\ne j}(1+\delta a_{ij})^{N_{ij}} .
+ R_\delta=\prod_{i\ne j}(1+\delta b_{ij})^{N_{ij}} .
 \]
 
 \emph{Step 2: run the film backward.} The likelihood ratio of the counts is
-$\frac{dP_\delta}{dP_0}(L)=\E_0[\Lambda_\delta\mid L]$. The reversible chain
+$\frac{dP_\delta}{dP_0}(L)=\E_0[R_\delta\mid L]$. The reversible chain
 started from $\pi$ has the same law as its path run backward. Running backward
-keeps $L$ and swaps $N_{ij}$ with $N_{ji}$. Since $a_{ji}=-a_{ij}$, it turns
-$\Lambda_\delta$ into $\Lambda_{-\delta}$. Hence
-$\E_0[\Lambda_\delta\mid L]=\E_0[\Lambda_{-\delta}\mid L]$, and
+keeps $L$ and swaps $N_{ij}$ with $N_{ji}$. Since $b_{ji}=-b_{ij}$, it turns
+$R_\delta$ into $R_{-\delta}$. Hence
+$\E_0[R_\delta\mid L]=\E_0[R_{-\delta}\mid L]$, and
 \[
  \frac{dP_\delta}{dP_0}(L)-1
- =\E_0\Bigl[\tfrac12(\Lambda_\delta+\Lambda_{-\delta})-1\Bigm|L\Bigr].
+ =\E_0\Bigl[\tfrac12(R_\delta+R_{-\delta})-1\Bigm|L\Bigr].
 \]
 
-\emph{Step 3: the even part is small.} For a given path, $\Lambda_\delta$ is a
-product of $N$ factors of the form $1+\delta a$ with $\lvert a\rvert\le\bar a$.
+\emph{Step 3: the even part is small.} For a given path, $R_\delta$ is a
+product of $N$ factors of the form $1+\delta b$ with $\lvert b\rvert\le\bar b$.
 So it is a polynomial $\sum_ke_k\delta^k$ with $e_0=1$ and
-$\lvert e_k\rvert\le\binom Nk\bar a^k$. The odd powers cancel in
-$\frac12(\Lambda_\delta+\Lambda_{-\delta})$. With $x=\lvert\delta\rvert\bar a$,
+$\lvert e_k\rvert\le\binom Nk\bar b^k$. The odd powers cancel in
+$\frac12(R_\delta+R_{-\delta})$. With $x=\lvert\delta\rvert\bar b$,
 \[
- \Bigl\lvert\tfrac12(\Lambda_\delta+\Lambda_{-\delta})-1\Bigr\rvert
+ \Bigl\lvert\tfrac12(R_\delta+R_{-\delta})-1\Bigr\rvert
  \le\sum_{k\ge2}\binom Nkx^k=(1+x)^N-1-Nx\le\tfrac12N^2x^2(1+x)^N ,
 \]
 where the last step is Taylor's formula with the second derivative
@@ -1073,8 +1079,8 @@ most the conditional mean of the square. So by Steps 2 and 3, for
 $x\le\frac12$,
 \[
  \chi^2(P_\delta,P_0)
- \le\E_0\Bigl[\bigl(\tfrac12(\Lambda_\delta+\Lambda_{-\delta})-1\bigr)^2\Bigr]
- \le\tfrac14\bar a^4\delta^4\,\E_0\bigl[N^4(1+x)^{2N}\bigr]\le K\delta^4 .
+ \le\E_0\Bigl[\bigl(\tfrac12(R_\delta+R_{-\delta})-1\bigr)^2\Bigr]
+ \le\tfrac14\bar b^4\delta^4\,\E_0\bigl[N^4(1+x)^{2N}\bigr]\le K\delta^4 .
 \]
 Here $K$ is finite because the chain jumps at rate at most $\max_iq_i$, so $N$
 is at most a Poisson variable with mean $t\max_iq_i$.
@@ -1083,15 +1089,19 @@ is at most a Poisson variable with mean $t\max_iq_i$.
 distance is $(1+\chi^2(P_\delta,P_0))^n-1\le e^{nK\delta^4}-1$, which is $e-1$
 at $\delta=\delta_n$. The total variation distance between the two laws of the
 sample is at most half the square root of this, so at most
-$\frac12\sqrt{e-1}<0.66$. By Le Cam's two-point
-bound~\cite[Chapter~2]{tsybakov2009}, the larger of the two mean errors is at
-least $\frac12\delta_n(1-0.66)\ge\delta_n/6$.
+$\frac12\sqrt{e-1}<0.66$. Now use two hypotheses, as in Le Cam's
+method~\cite[Chapter~2]{tsybakov2009}. For every value of $\hat\jmath$ we have
+$\lvert\hat\jmath\rvert+\lvert\hat\jmath-\delta_n\rvert\ge\delta_n$.
+Integrating this against the smaller of the two laws of the sample, whose
+total mass is one minus the total variation distance, shows that the two mean
+errors add up to at least $\delta_n(1-0.66)$. So the larger one is at least
+$\frac12\delta_n(1-0.66)\ge\delta_n/6$.
 
 \emph{The path.} By Step 1 the score of the path at $\delta=0$ is
-$\sum_{i\ne j}a_{ij}N_{ij}$. Its compensator is
-$\int_0^t\sum_ja_{Y_sj}g^0_{Y_sj}\,ds$, and this vanishes because
-$\sum_ja_{ij}g^0_{ij}=\sum_jj_{ij}/(2\pi_i)=0$. So the score is a martingale
-with variance $\sum_{i\ne j}a_{ij}^2\,\E_0N_{ij}=\sum_{i\ne j}a_{ij}^2\,tc_{ij}/2
+$\sum_{i\ne j}b_{ij}N_{ij}$. Its compensator is
+$\int_0^t\sum_jb_{Y_sj}g^0_{Y_sj}\,ds$, and this vanishes because
+$\sum_jb_{ij}g^0_{ij}=\sum_jj_{ij}/(2\pi_i)=0$. So the score is a martingale
+with variance $\sum_{i\ne j}b_{ij}^2\,\E_0N_{ij}=\sum_{i\ne j}b_{ij}^2\,tc_{ij}/2
 =t\sum_{i<j}j_{ij}^2/c_{ij}$.
 \end{proof}
 
@@ -1105,15 +1115,16 @@ $47.1\,\delta^4$ for small $\delta$. We estimate $\lvert j\rvert$ by maximum
 likelihood from $n$ count vectors, and the entropy production by plugging in
 (Figure~\ref{fig:rates}). At $j=0$ the error of $\lvert\hat\jmath\rvert$ falls
 like $n^{-0.248}$, and the error of $\hat\sigma$ like $n^{-0.498}$. At $j=0.1$
-the error of $\lvert\hat\jmath\rvert$ falls like $n^{-0.509}$. So the bound of
-Theorem~\ref{thm:lecam} is attained here, and the entropy production is
+the error of $\lvert\hat\jmath\rvert$ falls like $n^{-0.509}$ (slopes fitted
+for $n\ge10^3$). So the rate $n^{-1/4}$ of Theorem~\ref{thm:lecam} is attained
+here, and the entropy production is
 learned at the usual rate even where the net flow is not, as
 Remark~\ref{rem:sigma-smooth} suggests. The numbers fit the standard theory of
 a parameter on the boundary~\cite{sl1987}. In the coordinate $s=j^2$ the model
 is smooth with information $I=47.1$ at $s=0$, the estimate $\hat s$ is close to
 the positive part of a normal variable with variance $1/(nI)$, and
 $\lvert\hat\jmath\rvert=\sqrt{\hat s}$ then has root mean squared error
-$(2\pi)^{-1/4}(nI)^{-1/4}$. At $n=10^6$ this is $0.00763$, and the simulation
+$(2\pi)^{-1/4}(nI)^{-1/4}$. At $n=10^6$ this is $0.00762$, and the simulation
 gives $0.00762$. We have not proved that the information in the coordinate
 $J^2$ is nonsingular in general.
 \end{remark}
@@ -1131,7 +1142,7 @@ $n^{-1/2}$. The dotted lines have these slopes.}
 
 \section{Discrete time, all horizons}\label{sec:discrete}
 
-Papers~A to~D count the steps of a chain in discrete time. The proof of
+Papers~A to~C count the steps of a chain in discrete time. The proof of
 Theorem~\ref{thm:horizon} does not carry over (powers of algebraic functions
 can cancel where exponentials cannot). But if we are given the counts at every
 horizon, the rest of the theory does.
@@ -1150,8 +1161,11 @@ and $P'$ is $P$ or its reversal.
 
 In words, with all horizons in hand the discrete chain is read in the same way
 as the continuous one. The counts fix $\mu_i$, $p_{ii}$, $p_{ij}p_{ji}$ and
-$\mu_ip_{ij}+\mu_jp_{ji}$, so the unordered pairs of flows, and with them the
-entropy production of the discrete chain.
+$\mu_ip_{ij}+\mu_jp_{ji}$. If every $\mu_i$ is positive, this gives the
+unordered pairs of flows $\{\mu_ip_{ij},\mu_jp_{ji}\}$, and with them (when
+$p_{ij}>0$ exactly when $p_{ji}>0$) the entropy production
+$\sum_{i<j}(\mu_ip_{ij}-\mu_jp_{ji})\log\frac{\mu_ip_{ij}}{\mu_jp_{ji}}$ of the
+discrete chain.
 
 \begin{proof}
 We collect all horizons in one generating function. A path
@@ -1172,10 +1186,18 @@ are the principal minors of $P-\one\mu^{\top}$.
 It remains to see that the fraction is in lowest terms. Both $\chi$ and $n$
 have degree at most one in each $y_i$, and $\chi(0)=1$ while $n(0)=0$. With
 $x_i=1/y_i$ we have $\chi(y)\prod_ix_i=\det(X-P)$, which is irreducible by the
-proof of Lemma~\ref{lem:irred}. So $\chi$ is irreducible. If $\chi$ divided
-$n$, then $n$ would be a constant multiple of $\chi$, and the constant would be
-$n(0)/\chi(0)=0$. But the coefficient of $y_i$ in $n$ is $\mu_i$. Hence the
-generating function determines $\chi$ and $n$, and the first claim follows.
+proof of Lemma~\ref{lem:irred}. So $\chi$ is irreducible. (If $\chi$ were a
+product of two nonconstant factors, each would have degree at most one in each
+variable and a nonzero constant term, the two would use different variables,
+and replacing $y_i$ by $1/x_i$ in each and clearing denominators would factor
+$\det(X-P)$.) Also $\chi$ has degree exactly one in each $y_i$, since otherwise
+$x_i$ would divide $\det(X-P)$. So if $\chi$ divided $n$, then $n$ would be a
+constant multiple of $\chi$, and the constant would be $n(0)/\chi(0)=0$. But
+the coefficient of $y_i$ in $n$ is $\mu_i$. Hence the fraction is in lowest
+terms. A second pair $(\mu',P')$ with the same laws has $n'\chi=n\chi'$, so
+$\chi$ divides $\chi'$, and then $\chi'=\chi$ because $\chi'$ also has degree
+at most one in each variable and constant term $1$. So the generating function
+determines $\chi$ and $n$, and the first claim follows.
 The coefficient of $y_i$ also gives $\mu'=\mu$.
 
 For the second claim, the theorem of Hartfiel and Loewy gives $P'=DPD^{-1}$ or
@@ -1205,7 +1227,7 @@ they are compositional data~\cite{aitchison1986,chastin2015}
 Section~\ref{sec:discrete} with a stationary start, in the coordinates
 $(\pi,c,j)$, where $j$ is the flow around the triangle awake, non-REM, REM. The
 first fit uses the budgets alone, by maximum likelihood with the exact law of
-the count vector. By Theorem~\ref{thm:singular} it can only give $\lvert
+the count vector. The law of the budgets is even in $j$ (run the film backward), so the fit can only give $\lvert
 j\rvert$. The second fit uses the full sequences of the same windows, by
 counting transitions. Table~\ref{tab:sleep} and Figure~\ref{fig:sleep}(c),~(d)
 give the results, with intervals from $60$ resamples of the nights.
@@ -1269,7 +1291,7 @@ time, against the geometric law of the fitted chain.}
 
 \section{Checks and open questions}
 
-Each statement above was checked numerically in the scripts next to this note.
+Most statements above were checked numerically in the scripts next to this note. (Theorem~\ref{thm:horizon} and the bound of Theorem~\ref{thm:lecam} were not, apart from the growth like $\delta^4$ in one example.)
 \begin{itemize}[itemsep=1pt]
 \item \texttt{check\_identifiability.py}. Reversal agrees to $10^{-15}$ for
  $d=3,4,5$. The map from $G$ to the law has full rank at random points for
