@@ -100,10 +100,24 @@ plt.rcParams.update({
 # one dark color per paper, and light grey for the papers that are not highlighted
 COLOR = {"A": "#1b4f9c", "B": "#b2182b", "C": "#1b7837", "D": "#6a2c8a"}
 GREY, GREY_TEXT = "0.74", "0.55"
+
+# `python make_program_figure.py --dark C D` writes only those variants, on a black
+# background with the manim palette (see dark_style.py). Without arguments the script
+# writes all four variants on white, as in Papers A and B.
+import sys as _sys
+_sys.path.insert(0, str(HERE))
+import dark_style
+DARK_MODE = "--dark" in _sys.argv
+PAPERS = [a for a in _sys.argv[1:] if a in ("A", "B", "C", "D")] or list("ABCD")
+if DARK_MODE:
+    COLOR = {"A": dark_style.BLUE, "B": dark_style.RED, "C": dark_style.GREEN, "D": dark_style.YELLOW}
+    GREY, GREY_TEXT = "0.62", "0.45"
 L_MIN, L_MAX = log(10.0), log(1e8)
 
 
 def save(fig, name):
+    if DARK_MODE:
+        dark_style.finish(fig)
     fig.savefig(HERE / f"{name}.pdf")
     fig.savefig(HERE / f"{name}.png", dpi=600)
     plt.close(fig)
@@ -426,5 +440,5 @@ def fig_program(L, ys, hi):
 if __name__ == "__main__":
     check()
     L, ys = curves()
-    for paper in "ABCD":
+    for paper in PAPERS:
         fig_program(L, ys, paper)
