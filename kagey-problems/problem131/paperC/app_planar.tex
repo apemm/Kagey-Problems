@@ -26,15 +26,21 @@ If $a,b,c,d\ge1$, then $m\ge3$ and $\Omega_N(a,b,c,d)\le\frac12\binom N{m-2}$.
 \end{lemma}
 
 \begin{proof}
-The sum vanishes exactly when the runs going east and west have the same total length $X$, and
-those going north and south have total length $\nu-X$. The four compositions of these totals into runs
-are independent, which gives the formula. Now let $a,b,c,d\ge1$. If $m=3$, there is one run
-in each direction and $\Omega_N=\nu-1<\frac12\binom N1$. Let $m\ge4$. Pick $t_z$ with
-$Z_{t_z}=z$ for each $z$, and fix the other $m-3$ run lengths. If they add up to $N-j$, there are
-$\binom{N-j-1}{m-4}$ ways to choose them. The four free lengths add up to $j$, and $Y_N=0$ fixes
-$\ell_{t_0}-\ell_{t_2}$ and $\ell_{t_1}-\ell_{t_3}$. So $\ell_{t_2}$ determines the other three, and
-$\ell_{t_0}+\ell_{t_2}$ lies in $[2,j-2]$ with a fixed parity. So there are at most $j/2$ solutions,
-and
+We first prove the formula. The sum vanishes exactly when the runs going east and the runs going
+west have the same total length $X$, and those going north and those going south both have total
+length $\nu-X$. Given $X$, the run lengths in the four directions can be chosen separately, in
+$\chi_a(X)$, $\chi_b(X)$, $\chi_c(\nu-X)$ and $\chi_d(\nu-X)$ ways. This gives the formula.
+
+Now let $a,b,c,d\ge1$, so that $m+1=a+b+c+d\ge4$. If $m=3$, there is one run in each direction and
+$\Omega_N=\nu-1<\frac12\binom N1$. Let $m\ge4$. We choose all but four of the run lengths freely and
+show that few choices remain for the last four. For each direction $z$ pick one run $t_z$ with
+$Z_{t_z}=z$, and call these four runs free. Suppose the other $m-3$ run lengths are chosen and add
+up to $N-j$. There are $\binom{N-j-1}{m-4}$ such choices (the compositions of $N-j$ into $m-3$
+positive parts). The four free lengths then add up to $j$, and $Y_N=0$ fixes the two differences
+$\ell_{t_0}-\ell_{t_2}$ and $\ell_{t_1}-\ell_{t_3}$. So the sum $\ell_{t_0}+\ell_{t_2}$ determines
+all four free lengths. This sum lies in $[2,j-2]$, because each free length is at least $1$, and it
+has the parity of the fixed difference $\ell_{t_0}-\ell_{t_2}$. So at most $j/2$ choices of the free
+lengths remain, and
 \[
  \Omega_N(a,b,c,d)\le\sum_{j=0}^{N-1}\frac j2\binom{N-1-j}{m-4}=\frac12\binom N{m-2},
 \]
@@ -61,18 +67,32 @@ we get $\E_z\lvert W_m\rvert^2=\sum_{t,t'}\E_z\mathrm i^{Z_t-Z_{t'}}
 =m+1+2\sum_{k=1}^m(m+1-k)(-\varkappa)^k$. The last sum alternates in sign, starts negative and
 has nonincreasing absolute terms, so it is at most $0$.
 
-(b) Write $m=2m_1+1$ and split $W_m=W'+W''$, where $W'$ sums over $t\le m_1$ and $W''$ over
-$t>m_1$. The law of $\xi$ is symmetric and the uniform law is stationary, so
-$(Z_{m_1},\dots,Z_0)$ is again the walk from a uniform start, and
-$\Prob(W'=w,\,Z_{m_1}=z)=\frac14\Prob_z(W_{m_1}=w)$. With probability $\varkappa$, independently of
-$Z_0,\dots,Z_{m_1}$, the next switch is a reversal. Then given $Z_{m_1}=z$, the second half is the
-walk from $z+2$, and $\Prob_{z+2}(W_{m_1}=-w)=\Prob_z(W_{m_1}=w)$. So
-$\Prob(W_m=0)\ge\frac\varkappa4\sum_z\sum_w\Prob_z(W_{m_1}=w)^2$. Let $R^2=m+1$. By (a) and
-Chebyshev's inequality, $\Prob_z(\lvert W_{m_1}\rvert\le R)\ge\frac12$. At most $9R^2$ Gaussian
-integers have modulus at most $R$, so by Cauchy--Schwarz the inner sum is at least $1/(36R^2)$.
-Summing over $z$ gives (b).
+(b) We cut the skeleton in the middle. If the switch in the middle is a reversal, then the second
+half is a copy of the first half, read backwards and rotated by a half turn. So the two halves
+cancel as soon as two independent copies of the same sum agree, and this has probability of order
+$1/m$ because the sum takes about $m$ values.
 
-(c) Now every switch is a turn, so $\mathrm i^{Z_t}=\mathrm i^{Z_{t-1}}\cdot\mathrm i\epsilon_t$ with
+Write $m=2m_1+1$ and split $W_m=W'+W''$, where $W'$ sums over $t\le m_1$ and $W''$ over $t>m_1$.
+Each half has $m_1+1$ runs. For the first half, the law of $\xi$ is symmetric and the uniform law
+is stationary, so the reversed sequence $(Z_{m_1},\dots,Z_0)$ is again the walk from a uniform
+start. Hence $\Prob(W'=w,\,Z_{m_1}=z)=\frac14\Prob_z(W_{m_1}=w)$. For the second half, the switch
+after run $m_1$ is a reversal with probability $\varkappa$, independently of $Z_0,\dots,Z_{m_1}$.
+In that case, given $Z_{m_1}=z$, the second half is the walk from $z+2$, so $W''$ has the law of
+$W_{m_1}$ under $\Prob_{z+2}$. A half turn maps the walk from $z$ to the walk from $z+2$ and
+changes the sign of the sum, so $\Prob_{z+2}(W_{m_1}=-w)=\Prob_z(W_{m_1}=w)$. Summing over $z$ and
+over the value $w$ of $W'$,
+\[
+ \Prob(W_m=0)\ge\frac\varkappa4\sum_z\sum_w\Prob_z(W_{m_1}=w)^2 .
+\]
+It remains to bound the inner sum from below. Let $R^2=m+1$. By (a),
+$\E_z\lvert W_{m_1}\rvert^2\le m_1+1=R^2/2$, so Chebyshev's inequality gives
+$\Prob_z(\lvert W_{m_1}\rvert\le R)\ge\frac12$. At most $9R^2$ Gaussian integers have modulus at
+most $R$. So by the Cauchy--Schwarz inequality the inner sum is at least
+$(\frac12)^2/(9R^2)=1/(36R^2)$. Summing over the four values of $z$ gives (b).
+
+(c) Here we can compute the probability exactly, because the real and imaginary parts of $W_m$
+turn out to be independent sums of fair signs. Every switch is a turn, so
+$\mathrm i^{Z_t}=\mathrm i^{Z_{t-1}}\cdot\mathrm i\epsilon_t$ with
 independent fair signs $\epsilon_t$. Hence $\mathrm i^{Z_t}=\mathrm i^{Z_0}\mathrm i^t\sigma_t$, where
 $\sigma_0=1$ and $\sigma_t=\epsilon_1\cdots\epsilon_t$ are independent fair signs for $t\ge1$. Write
 $m=4k-1$. Then $\mathrm i^{-Z_0}W_m$ has real part $\sum_{t\text{ even}}(-1)^{t/2}\sigma_t$, which is
@@ -90,20 +110,27 @@ $\Omega_N(a,b,c,d)/\binom{N-1}m\ge\sqrt{m+1}/(2N^2)$.
 \end{lemma}
 
 \begin{proof}
-Put $k=a+c=(m+1)/2$, so $2\le k\le\nu$. Only $1\le X\le\nu-1$ contribute to $\Omega_N$, so by
-Cauchy--Schwarz and Vandermonde's identity
+We bound $\Omega_N$ from below by the Cauchy--Schwarz inequality. The ratio
+$\Omega_N/\binom{N-1}m$ then becomes a hypergeometric probability at its mode, and a mode of a law
+with standard deviation of order $\sqrt k$ has probability of order $1/\sqrt k$.
+
+Put $k=a+c=(m+1)/2$, so $2\le k\le\nu$. Only $1\le X\le\nu-1$ contribute to $\Omega_N$. The sum of
+$\binom{X-1}{a-1}\binom{\nu-X-1}{c-1}$ over these $X$ is $\binom{\nu-1}{k-1}$, since both count the
+compositions of $\nu$ into $k$ positive parts (sorted by the sum $X$ of the first $a$ parts). So the
+Cauchy--Schwarz inequality gives
 \[
  \Omega_N=\sum_{X=1}^{\nu-1}\binom{X-1}{a-1}^2\binom{\nu-X-1}{c-1}^2
  \ge\frac1\nu\binom{\nu-1}{k-1}^2=\frac k{\nu^2}\binom{\nu-1}{k-1}\binom\nu k .
 \]
-Also $\binom{\nu-1}{k-1}\binom\nu k/\binom{2\nu-1}{2k-1}=\Prob(H=k-1)$, where $H$ is the number of
-red balls among $2k-1$ balls drawn without replacement from $\nu-1$ red and $\nu$ blue ones. If
-$k=\nu$, then $H=k-1$. Otherwise the ratio
-$\Prob(H=j+1)/\Prob(H=j)=(\nu-1-j)(2k-1-j)/((j+1)(\nu-2k+2+j))$ decreases in $j$, is
-$\frac{\nu-k}{\nu-k+1}<1$ at $j=k-1$ and exceeds $1$ at $j=k-2$. So $k-1$ is a mode of $H$. Since
-$\Var H\le(2k-1)/4$, Chebyshev's inequality puts mass at least $\frac34$ on the at most
-$3\sqrt{2k}$ integers within $\sqrt{2k-1}$ of $\E H$, so $\Prob(H=k-1)\ge1/(4\sqrt{2k})$. As
-$\binom{N-1}m=\binom{2\nu-1}{2k-1}$, we get $\Omega_N/\binom{N-1}m\ge k/(4\nu^2\sqrt{2k})=\sqrt{m+1}/(2N^2)$.
+Next, $\binom{\nu-1}{k-1}\binom\nu k/\binom{2\nu-1}{2k-1}=\Prob(H=k-1)$, where $H$ is the number of
+red balls among $2k-1$ balls drawn without replacement from $\nu-1$ red and $\nu$ blue ones. We show
+that $k-1$ is a mode of $H$. If $k=\nu$, then $H=k-1$ always. Otherwise the ratio
+$\Prob(H=j+1)/\Prob(H=j)=(\nu-1-j)(2k-1-j)/((j+1)(\nu-2k+2+j))$ decreases in $j$, is $\frac{\nu-k}{\nu-k+1}<1$ at $j=k-1$ and exceeds $1$ at $j=k-2$. So $k-1$ is a
+mode. Now $\Var H\le(2k-1)/4$, so Chebyshev's inequality puts mass at least $\frac34$ on the
+integers within $\sqrt{2k-1}$ of $\E H$. There are at most $3\sqrt{2k}$ of them, and the mode has
+at least the average mass among them, so $\Prob(H=k-1)\ge1/(4\sqrt{2k})$. As
+$\binom{N-1}m=\binom{2\nu-1}{2k-1}$, we get
+$\Omega_N/\binom{N-1}m\ge k/(4\nu^2\sqrt{2k})=\sqrt{m+1}/(2N^2)$.
 \end{proof}
 
 \begin{proof}[Proof of the bound on $o^{(4)}_N$ in Proposition~\ref{prop:decomp}]
@@ -117,63 +144,94 @@ since $1+w=1/p_0$. Dividing by $c_N$ gives the bound on $E_N$.
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{thm:planar-first}]
-We first prove three bounds. Since $I_1\le I_0\le e^z$ for $z\ge0$, we have $\psi(z)\le2ze^z$, and
-\eqref{eq:planar-bessel} gives $2S_N(u)\le8ue^{Nu}$. With Proposition~\ref{prop:decomp} and
-$(1+w)^N\le e^{Nw}$,
+We first prove three bounds on $o_N/c_N$, namely an upper bound, a lower bound from the axes and a
+lower bound from the paths with all four directions. Parts (a) to (c) then follow by inserting
+$h=\tau L/N$.
+
+\emph{The upper bound.} Since $I_1\le I_0\le e^z$ for $z\ge0$, we have $\psi(z)\le2ze^z$, and
+\eqref{eq:planar-bessel} gives $2S_N(u)\le\frac4N\psi(Nu)\le8ue^{Nu}$. With
+Proposition~\ref{prop:decomp} and $(1+w)^N\le e^{Nw}$,
 \begin{equation}\label{eq:app-planar-upper}
  \frac{o_N}{c_N}\le8ue^{Nu}+2w^2e^{Nw}.
 \end{equation}
-Since $o_N\ge o^{(0)}_N$, \eqref{eq:planar-bessel} with $z=Nu$ gives
+The first term bounds the axis part and the second the four-direction part.
+
+\emph{The lower bound from the axes.} Since $o_N\ge o^{(0)}_N$, \eqref{eq:planar-bessel} with
+$z=Nu$ gives
 \begin{equation}\label{eq:app-planar-axes}
  \frac{o_N}{c_N}\ge2S_N(u)\ge\frac4N\Bigl(1-\frac{z(z+2)}{2N}\Bigr)\psi(z).
 \end{equation}
-Third, we show that there are $c'>0$ and $T_0$, depending only on $r$ and $s$, with
+
+\emph{The lower bound from four directions.} We show that there are $c'>0$ and $T_0$, depending
+only on $r$ and $s$, with
 \begin{equation}\label{eq:app-planar-four}
  o^{(4)}_N\ge\frac{c'}{N^2\sqrt T}\qquad\text{whenever }T=Nh\ge T_0\text{ and }\beta h\le\tfrac12 .
 \end{equation}
-Let $\mathcal M$ be the set of odd $m$ if $s>0$, and the set of $m\equiv3\pmod4$ if $s=0$. Let
-$m\in\mathcal M$. The event $\{a=b\ge1,\ c=d\ge1\}$ is $\{W_m=0\}$ minus $\{a=b=0\}$ and
-$\{c=d=0\}$. Each of these needs every switch to be a reversal, so it has probability at most
-$\frac12\varkappa^m$, and it is empty if $s=0$. So Lemma~\ref{lem:skelreturn} gives $m_2$ and $c_2>0$
-with $\Prob(a=b\ge1,\ c=d\ge1\mid m)\ge c_2/(m+1)$ for $m\in\mathcal M$ with $m\ge m_2$ (take
-$c_2=\varkappa/72$ if $s>0$ and $c_2=1$ if $s=0$). On this event Lemma~\ref{lem:balanced} gives
-$\varpi_N\ge\sqrt{m+1}/(2N^2)$. Let $J=[\bar m/2,2\bar m]$. By \eqref{eq:app-planar-o4}, if
-$\bar m\ge2m_2$ then $o^{(4)}_N\ge\sum_{m\in\mathcal M\cap J}\mathrm{bin}(m)\,c_2/(2N^2\sqrt{m+1})
-\ge c_2\Prob(m\in\mathcal M\cap J)/(2N^2\sqrt{2\bar m+1})$. The Chernoff bounds for the
-binomial law are $\Prob(m\le\bar m/2)\le e^{-\bar m/8}$ and $\Prob(m\ge2\bar m)\le e^{-\bar m/3}$,
-so $\Prob(m\notin J)\le2e^{-\bar m/8}$. Put $p=\beta h\le\frac12$. Then
-$\Prob(m\text{ odd})=\frac12(1-(1-2p)^{N-1})\ge\frac12(1-e^{-2\bar m})$. For $s=0$ the roots of unity
-filter gives
+We count only the balanced skeletons, namely those with $a=b\ge1$ and $c=d\ge1$. A skeleton with
+$m$ switches is balanced with probability of order $1/m$ (Lemma~\ref{lem:skelreturn}), and a
+balanced skeleton returns to the origin with probability at least $\sqrt{m+1}/(2N^2)$
+(Lemma~\ref{lem:balanced}). The product is of order $N^{-2}m^{-1/2}$, and $m$ is typically close to
+$\bar m\approx\beta T$.
+
+Lemma~\ref{lem:skelreturn} needs the right parity of $m$. So let $\mathcal M$ be the set of odd
+$m$ if $s>0$, and the set of $m\equiv3\pmod4$ if $s=0$, and let $m\in\mathcal M$. A skeleton is
+balanced exactly when $W_m=0$ and it uses both axes. A skeleton that stays on one axis switches
+only by reversals, so these skeletons have probability at most $\varkappa^m$ given $m$, and there
+are none if $s=0$. Since $\varkappa<1$, Lemma~\ref{lem:skelreturn} gives $m_2$ and $c_2>0$ with
+\[
+ \Prob(a=b\ge1,\ c=d\ge1\mid m)\ge\frac{c_2}{m+1}\qquad\text{for }m\in\mathcal M,\ m\ge m_2
+\]
+(take $c_2=\varkappa/72$ if $s>0$ and $c_2=1$ if $s=0$). On this event Lemma~\ref{lem:balanced}
+gives $\varpi_N\ge\sqrt{m+1}/(2N^2)$. So in \eqref{eq:app-planar-o4} each $m\in\mathcal M$ with
+$m\ge m_2$ contributes at least $\mathrm{bin}(m)\,c_2/(2N^2\sqrt{m+1})$. Let
+$J=[\bar m/2,2\bar m]$ and suppose that $\bar m\ge2m_2$. We keep only the terms with
+$m\in\mathcal M\cap J$, for which $m\ge m_2$ and $m+1\le2\bar m+1$. This gives
+$o^{(4)}_N\ge c_2\Prob(m\in\mathcal M\cap J)/(2N^2\sqrt{2\bar m+1})$.
+It remains to show that $\Prob(m\in\mathcal M\cap J)\ge\frac18$ when $\bar m$ is large. The
+Chernoff bounds for the binomial law are $\Prob(m\le\bar m/2)\le e^{-\bar m/8}$ and
+$\Prob(m\ge2\bar m)\le e^{-\bar m/3}$, so $\Prob(m\notin J)\le2e^{-\bar m/8}$. For the parity put
+$p=\beta h\le\frac12$. If $s>0$, then
+$\Prob(m\text{ odd})=\frac12(1-(1-2p)^{N-1})\ge\frac12(1-e^{-2\bar m})$. If $s=0$, the roots of
+unity filter gives
 \[
  \Prob(m\equiv3\bmod4)=\frac14\sum_{k=0}^3\mathrm i^{-3k}\bigl(1-p+p\,\mathrm i^k\bigr)^{N-1}
  \ge\frac14-\frac34e^{-\bar m/2},
 \]
 since $\lvert1-p+p\,\mathrm i^{\pm1}\rvert^2=1-2p(1-p)\le e^{-p}$ and $\lvert1-2p\rvert\le e^{-2p}$.
-So $\Prob(m\in\mathcal M\cap J)\ge\frac18$ when $\bar m$ is large. As $\bar m\ge\beta T/2$, and
+In both cases $\Prob(m\in\mathcal M)\ge\frac14-\frac34e^{-\bar m/2}$, so
+$\Prob(m\in\mathcal M\cap J)\ge\frac14-\frac34e^{-\bar m/2}-2e^{-\bar m/8}\ge\frac18$ when
+$\bar m$ is large. As $\bar m\ge\beta T/2$, and
 $2\bar m+1\le3\beta T$ when $\beta T\ge1$, this proves \eqref{eq:app-planar-four} with
 $c'=c_2/(16\sqrt{3\beta})$.
 
 (a) Let $h=\tau L/N$ and $T=\tau L$. Then $u,w=O(L/N)$, $Nu=s\tau L+O(L^2/N)$ and
-$Nw=\beta\tau L+O(L^2/N)$. So \eqref{eq:app-planar-upper} gives
-$o_N/c_N=O(LN^{s\tau-1}+L^2N^{\beta\tau-2})$. If $\tau<\tau^*$, then $s\tau<1$ and $\beta\tau<2$,
-and this is at most $N^{-\gamma}$ for large $N$ whenever $0<\gamma<\min(1-s\tau,2-\beta\tau)$. Now
-let $\tau>\tau^*$, so $s\tau>1$ or $\beta\tau>2$. If $s\tau>1$, then $z=Nu\to\infty$ and
-$z^2/N\to0$. As $I_0(z)+I_1(z)\sim2e^z/\sqrt{2\pi z}$~\cite[Eq.~10.40.1]{dlmf}, we have
-$\psi(z)\sim\sqrt{2z/\pi}\,e^z$, and \eqref{eq:app-planar-axes} gives $o_N/c_N\ge N^{s\tau-1}$ for
-large $N$. If $\beta\tau>2$, then \eqref{eq:app-planar-four} and
+$Nw=\beta\tau L+O(L^2/N)$. So $e^{Nu}=O(N^{s\tau})$ and $e^{Nw}=O(N^{\beta\tau})$, and
+\eqref{eq:app-planar-upper} gives $o_N/c_N=O(LN^{s\tau-1}+L^2N^{\beta\tau-2})$.
+If $\tau<\tau^*$, then $s\tau<1$ and $\beta\tau<2$,
+and this is at most $N^{-\gamma}$ for large $N$ whenever $0<\gamma<\min(1-s\tau,2-\beta\tau)$.
+
+Now let $\tau>\tau^*$, so $s\tau>1$ or $\beta\tau>2$. If $s\tau>1$, we use the axes. Then
+$z=Nu\to\infty$ and $z^2/N\to0$. As
+$I_0(z)+I_1(z)\sim2e^z/\sqrt{2\pi z}$~\cite[Eq.~10.40.1]{dlmf}, we have
+$\psi(z)\sim\sqrt{2z/\pi}\,e^z$, and $e^z=N^{s\tau}(1+o(1))$. So \eqref{eq:app-planar-axes} gives
+$o_N/c_N\ge N^{s\tau-1}$ for large $N$. If $\beta\tau>2$, we use the four directions. Then
+\eqref{eq:app-planar-four} and
 $c_N^{-1}=4p_0^{-(N-1)}\ge4e^{\beta T-\beta h}$ give
 $o_N/c_N\ge4c'e^{-\beta h}N^{\beta\tau-2}(\tau L)^{-1/2}$, which is at least $N^{(\beta\tau-2)/2}$
 for large $N$.
 
 (b) Let $\tau<\tau^*<\tau'$. By (a), for large $N$ the ratio $o_N/c_N$ is below $1$ at
 $h=\tau L/N$ and above $1$ at $h=\tau'L/N<1/\beta$. It increases in $h$ by
-Proposition~\ref{prop:decomp}, so $\tau L<T^*_N<\tau'L$.
+Proposition~\ref{prop:decomp}, so $\tau L<T^*_N<\tau'L$. As $\tau$ and $\tau'$ are arbitrary, this
+is (b).
 
-(c) Put $\tau_N=T^*_N/L$, so $\tau_N\to\tau^*$ by (b), and $w^*=\beta h^*_N/(1-\beta h^*_N)$. As in
-(a), $u^*_N,w^*=O(L/N)$, $Nu^*_N=s\tau_NL+o(1)$ and $Nw^*=\beta\tau_NL+o(1)$. At the crossing
-Proposition~\ref{prop:decomp} gives $2S_N(u^*_N)+E_N=1$. If $s>2r$, then $\tau^*=1/s$ and
-$\beta\tau^*<2$. So $E_N\le2w^{*2}e^{Nw^*}=N^{\beta/s-2+o(1)}\to0$, and $2S_N(u^*_N)\to1$. The two
-axes carry the same mass by symmetry. If $s<2r$, then $\tau^*=2/\beta$ and $s\tau^*<1$. So
+(c) We evaluate the two parts of the identity $2S_N(u^*_N)+E_N=1$, which holds at the crossing by
+Proposition~\ref{prop:decomp}, with the bounds of \eqref{eq:app-planar-upper}. Put
+$\tau_N=T^*_N/L$, so $\tau_N\to\tau^*$ by (b), and $w^*=\beta h^*_N/(1-\beta h^*_N)$. As in
+(a), $u^*_N,w^*=O(L/N)$, $Nu^*_N=s\tau_NL+o(1)$ and $Nw^*=\beta\tau_NL+o(1)$. If $s>2r$, then
+$\tau^*=1/s$ and $\beta\tau^*<2$. So $E_N\le2w^{*2}e^{Nw^*}=N^{\beta/s-2+o(1)}\to0$, and
+$2S_N(u^*_N)\to1$. The two axes carry the same mass by symmetry. If $s<2r$, then
+$\tau^*=2/\beta$ and $s\tau^*<1$. So
 $2S_N(u^*_N)\le8u^*_Ne^{Nu^*_N}=N^{2s/\beta-1+o(1)}$, which is at most $N^{-\gamma}$ for large $N$
 whenever $0<\gamma<1-2s/\beta$.
 \end{proof}
@@ -200,7 +258,9 @@ Let $J_N=[\bar m/2,2\bar m]$, $\mathcal G_m=\{a,b,c,d\ge m/8\}$ and $m_0=20$. No
 $\bar m=\beta T(1-1/N)\to\infty$ and $\bar m\le\beta N^{1/8}$. Below, $C$ is a constant that depends
 only on $r$ and $s$ and may change from line to line.
 
-\emph{Step 1 (few or many switches).} If $a,b,c,d\ge1$ and $m\le N/5$, then
+\emph{Step 1 (few or many switches).} We show that the terms of \eqref{eq:app-planar-o4} with
+$m\notin J_N$ contribute $o(1)$ to $N^2o^{(4)}_N$. For this we need a bound on $\varpi_N$ that holds
+for every skeleton. If $a,b,c,d\ge1$ and $m\le N/5$, then
 Lemma~\ref{lem:returncount} and
 $\binom N{m-2}/\binom{N-1}m=Nm(m-1)/((N-m+2)(N-m+1)(N-m))$ give $\varpi_N\le m^2/N^2$. If $m>N/5$,
 then $\varpi_N\le1<25m^2/N^2$. So $N^2\varpi_N\le25m^2$ whenever the path uses all four directions.
@@ -212,7 +272,10 @@ Cauchy--Schwarz inequality, the terms of \eqref{eq:app-planar-o4} with $m\notin 
 most $25\,\E[m^2\mathbf 1\{m\notin J_N\}]\le25\sqrt{30}\,\bar m^2e^{-\bar m/16}=o(1)$ to
 $N^2o^{(4)}_N$.
 
-\emph{Step 2 (unbalanced skeletons).} For $k=1,2,3$ let $V_k=\sum_{t=0}^m\mathrm i^{kZ_t}$. The
+\emph{Step 2 (unbalanced skeletons).} We show that the skeletons outside $\mathcal G_m$ contribute
+$O(1)$ to $N^2o^{(4)}_N$. The reason is that each of $a,b,c,d$ is close to $\frac{m+1}4$, with a
+deviation of order $\sqrt m$. To see this we write the four counts through three sums that are
+nearly martingales. For $k=1,2,3$ let $V_k=\sum_{t=0}^m\mathrm i^{kZ_t}$. The
 number of $t$ with $Z_t=z$ is $\frac{m+1}4+\frac14\sum_{k=1}^3\mathrm i^{-kz}V_k$. Let
 $\vartheta_k=\E\,\mathrm i^{k\xi}$, so $\vartheta_1=\vartheta_3=-\varkappa$ and
 $\vartheta_2=2\varkappa-1$. Then
@@ -224,16 +287,19 @@ increments of modulus at most $2$, and
 \]
 Here $1-\vartheta_k\ge\min(1,4r/\beta)>0$. Burkholder's inequality \cite[Theorem~2.10]{hallheyde1980},
 applied to the real and imaginary parts, bounds $\E\lvert M^{(k)}_m\rvert^4$ by a constant times
-the second moment of the sum of the $m$ squared increments. So
-$\E\lvert M^{(k)}_m\rvert^4\le Cm^2$. So
-$\E\lvert V_k\rvert^4\le Cm^2$ and $\E(a-\frac{m+1}4)^4\le Cm^2$, and the same holds for $b,c,d$.
+the second moment of the sum of the $m$ squared increments. This sum is at most $4m$, so
+$\E\lvert M^{(k)}_m\rvert^4\le Cm^2$. By the last display the same bound holds for $V_k$, namely
+$\E\lvert V_k\rvert^4\le Cm^2$. Hence $\E(a-\frac{m+1}4)^4\le Cm^2$, and the same holds for $b,c,d$.
 Since $\frac{m+1}4-\frac m8\ge\frac m8$, Markov's inequality gives
 $\Prob(\mathcal G_m^c\mid m)\le C/m^2$. Every skeleton in $\mathcal G_m$ uses all four directions. By
 Step 1, the skeletons with all four directions that are not in $\mathcal G_m$, with $m\in J_N$,
 contribute at most $\sum_m\mathrm{bin}(m)\,25m^2\,C/m^2\le25C$ to $N^2o^{(4)}_N$.
 
 \emph{Step 3 (run lengths given the skeleton).} We show that $N^2\varpi_N=g(a,b,c,d)(1+o(1))$
-uniformly over the skeletons in $\mathcal G_m$ with $m\in J_N$. For large $N$ such $m$ satisfy
+uniformly over the skeletons in $\mathcal G_m$ with $m\in J_N$. The reason is that each
+factor $\chi_a(X)=\binom{X-1}{a-1}$ of $\Omega_N$ is close to $X^{a-1}/(a-1)!$ when $X$ is much
+larger than $a^2$. So $\Omega_N$ is close to a sum of $X^{A-2}(\nu-X)^{B-2}$ over $X$, and this sum
+is close to a Beta integral. For large $N$ the $m\in J_N$ satisfy
 $m_0\le m\le2\beta N^{1/8}\le N^{1/6}$. On $\mathcal G_m$ we have $A,B\ge m/4$, so
 $A-1,B-1\ge m/8$. Put $f(X)=X^{A-2}(\nu-X)^{B-2}$. For
 $X\ge1$ we have $\chi_a(X)=\frac{X^{a-1}}{(a-1)!}\prod_{1\le j<a}(1-j/X)_+$, where
@@ -248,7 +314,9 @@ integrals of $f$ over the two unit intervals next to $X$. So $\lvert\sum_{j\le X
 $0\le j\le k\le\nu$. Moreover $f/\int_0^\nu f$ is the density of $\nu$ times a Beta variable with
 parameters $A-1$ and $B-1$, and $\int_0^\nu f=\nu^{m-2}\mathrm B(A-1,B-1)$.
 
-We need three estimates. First, this Beta law is the law of the $(A-1)$-th smallest of $m-2$
+We need three estimates. The first says that the ends of the integral are small, the second that
+$\omega$ is close to $1$ away from the ends, and the third that $\max f$ is small compared with the
+integral. First, this Beta law is the law of the $(A-1)$-th smallest of $m-2$
 independent uniform points in $[0,1]$. A union bound over sets of $A-1$ points gives, for $0<t<1$,
 \[
  \Prob(\mathrm{Beta}\le t)\le\binom{m-2}{A-1}t^{A-1}\le\Bigl(\frac{e(m-2)t}{A-1}\Bigr)^{A-1}
@@ -279,7 +347,9 @@ $\nu^{m-2}/N^{m-2}=2^{-(m-2)}$ and $\mathrm B(A-1,B-1)=(A-2)!\,(B-2)!/(m-2)!$ th
 $N^2\varpi_N=g(a,b,c,d)(1+o(1))$.
 
 \emph{Step 4 (average over the skeleton).} We show that
-$\E[g\,\mathbf 1_{\mathcal G_m}\mid m]/m\to c_*=\frac{2(r+s)}{\pi\beta}$ as $m\to\infty$. First we
+$\E[g\,\mathbf 1_{\mathcal G_m}\mid m]/m\to c_*=\frac{2(r+s)}{\pi\beta}$ as $m\to\infty$. This has
+three parts. We write $g/m$ as a Gaussian function $\Psi$ of the skeleton, we prove a central limit
+theorem for $W_m$, and we take the limit of the expectation of $\Psi$. For the first part we
 need a local limit for the fair binomial law. Let $0\le k\le n$ and $y=(2k-n)/n$. If
 $\lvert2k-n\rvert\le n^{3/5}$, Stirling's formula gives
 \begin{align*}
@@ -324,20 +394,25 @@ $\mathrm i^{Z_j}=\mathrm i^{Z_{j-1}}(\zeta_j-\varkappa)$,
 \]
 and $M_m$ is a martingale with increments of modulus at most $2$. We take the skeletons for all $m$
 to be the first steps of one infinite walk, so the $\sigma$-fields are nested. Fix $\varphi\in\R$. For a
-constant $\omega$ with $\lvert\omega\rvert=1$ we have
-$\E(\operatorname{Re}\omega\zeta_j)^2=\frac12(\E\lvert\zeta_j\rvert^2+\operatorname{Re}\omega^2\E\zeta_j^2)$.
+constant $\upsilon$ with $\lvert\upsilon\rvert=1$ we have
+$\E(\operatorname{Re}\upsilon\zeta_j)^2=\frac12(\E\lvert\zeta_j\rvert^2+\operatorname{Re}\upsilon^2\E\zeta_j^2)$.
+We apply this with $\upsilon=e^{-\mathrm i\varphi}\mathrm i^{Z_{j-1}}$, for which
+$\upsilon^2=e^{-2\mathrm i\varphi}(-1)^{Z_{j-1}}$.
 So the $j$-th increment of $\operatorname{Re}(e^{-\mathrm i\varphi}M_m)$ has conditional variance
 $\frac12[(1-\varkappa^2)-(1-\varkappa)^2\cos(2\varphi)(-1)^{Z_{j-1}}]$. The average of these
 variances tends to $\frac12(1-\varkappa^2)$ in probability, because
 $\sum_{t=0}^m(-1)^{Z_t}=V_2$ and $\E\lvert V_2/m\rvert^4\le C/m^2$ by Step 2. The increments are
 bounded, so the martingale central limit theorem \cite[Cor.~3.1]{hallheyde1980} and the
-Cram\'er--Wold device give $M_m/\sqrt m\Rightarrow N(0,\frac12(1-\varkappa^2)I_2)$. Hence
+Cram\'er--Wold device give $M_m/\sqrt m\Rightarrow N(0,\frac12(1-\varkappa^2)I_2)$. The other two terms in the identity for
+$(1+\varkappa)W_m$ are bounded, so they do not matter after division by $\sqrt m$. Hence
 \[
  \frac{W_m}{\sqrt m}\Rightarrow X\sim N(0,\sigma_*^2I_2),\qquad
  \sigma_*^2=\frac{1-\varkappa}{2(1+\varkappa)}=\frac r{2(r+s)}.
 \]
 Also $A=\frac{m+1}2+\frac12V_2$, so $A/m\to\frac12$ in probability, and
-$(W_m/\sqrt m,A/m)\Rightarrow(X,\frac12)$. By Step 2,
+$(W_m/\sqrt m,A/m)\Rightarrow(X,\frac12)$.
+
+Now we take the limit. By Step 2,
 $\E[\tilde\Psi\,\mathbf 1_{\mathcal G_m^c}\mid m]\le C/m^2$. So, since $\tilde\Psi$ is bounded and
 continuous,
 \[
@@ -391,6 +466,7 @@ In words, a balanced word switches at a given step with probability of order $x$
 without any condition does, and it has at most about $2z$ switches on average.
 
 \begin{proof}
+We cut a balanced word at the step $t$ where it switches and bound the total weight of each piece.
 Reversing a word maps the balanced words that switch at $t$ to those that switch at $N-t$, and it
 keeps the weight. So we may take $t\ge N/2$. A balanced word that switches at $t$ is a word $w_1$
 of length $t$ followed by a word $w_2$ of length $N-t$ whose first letter differs from the last

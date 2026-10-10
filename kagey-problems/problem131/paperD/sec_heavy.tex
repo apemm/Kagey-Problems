@@ -34,11 +34,17 @@ is the Hurwitz zeta function.
 
 \begin{proof}
 All $N$ steps are $+1$ exactly when the first direction is $+$ and $D\ge N$.
-Hence $E_N=\frac12\Prob(D\ge N)$, and $\Prob(\xi\ge N)=N^{-\alpha}$. For the
-stationary start $\Prob(D\ge N)=\zeta(\alpha,N)/\zeta(\alpha)$. Since
+Hence $E_N=\frac12\Prob(D\ge N)$. For the fresh start
+$\Prob(D\ge N)=\bar F(N)=N^{-\alpha}$. For the stationary start
+$\Prob(D\ge N)=\sum_{d\ge N}d^{-\alpha}/\mu=\zeta(\alpha,N)/\zeta(\alpha)$.
+To estimate $\zeta(\alpha,N)$ we compare the sum with an integral. Since
 $t^{-\alpha}$ is decreasing,
-$\int_N^\infty t^{-\alpha}dt\le\zeta(\alpha,N)\le N^{-\alpha}+\int_N^\infty
-t^{-\alpha}dt$, and the integral equals $N^{1-\alpha}/(\alpha-1)$.
+\[
+ \int_N^\infty t^{-\alpha}\,dt\le\zeta(\alpha,N)\le N^{-\alpha}+\int_N^\infty
+ t^{-\alpha}\,dt .
+\]
+The integral equals $N^{1-\alpha}/(\alpha-1)$, and $N^{-\alpha}$ is
+$(\alpha-1)/N$ times the integral. This gives the second form.
 \end{proof}
 
 So the edge only sees the first run, while the center depends on all the runs.
@@ -70,21 +76,35 @@ this is $C_N=\sum_mu_m(h)[q_m(h)+q_{m+1}(h)]$.
 \end{proposition}
 
 \begin{proof}
-Let the $+$ runs have lengths $D,\xi^+_2,\xi^+_3,\dots$ and the $-$ runs
+We split according to the run that contains step $N$. Let the $+$ runs have
+lengths $D,\xi^+_2,\xi^+_3,\dots$ and the $-$ runs
 $\xi^-_1,\xi^-_2,\dots$, and let $s^\pm_j$ be the sum of the first $j$ lengths
 of each sign, with $s^\pm_0=0$. So $s^+_j$ has law $u^D_j$ and $s^-_j$ has law
-$u_j$, and the two sequences are independent. The $j$-th $+$ run covers the
-steps in $(s^+_{j-1}+s^-_{j-1},\,s^+_j+s^-_{j-1}]$, and the $j$-th $-$ run
-covers $(s^+_j+s^-_{j-1},\,s^+_j+s^-_j]$. We split according to the run that
-contains step $N=a+b$. If it is the first run, then $A_N=N$, and this happens
-exactly when $D\ge N$. If it is the $j$-th $+$ run with $j\ge2$, then
-$A_N=N-s^-_{j-1}$, so $A_N=a$ means $s^-_{j-1}=b$ and $s^+_{j-1}<a\le s^+_j$.
-This has probability $u_{j-1}(b)q^D_j(a)$. If it is the $j$-th $-$ run, then
-$A_N=s^+_j$, so $A_N=a$ means $s^+_j=a$ and $s^-_{j-1}<b\le s^-_j$. This has
-probability $u^D_j(a)q_j(b)$. The cases are disjoint. Summing them, with
-$m=j-1$ in the second and $m=j$ in the third, gives the formula. For even $N$
-changing the sign of every step gives
-$C_N=\frac12[\Prob_+(A_N=h)+\Prob_+(A_N=N-h)]=\Prob_+(A_N=h)$.
+$u_j$, and the two sequences are independent. The runs alternate and the
+first one is a $+$ run. So the $j$-th $+$ run comes after $j-1$ runs of each
+sign and covers the steps in $(s^+_{j-1}+s^-_{j-1},\,s^+_j+s^-_{j-1}]$, and
+the $j$-th $-$ run covers $(s^+_j+s^-_{j-1},\,s^+_j+s^-_j]$. Let $N=a+b$.
+There are three cases.
+
+Suppose step $N$ is in the first run. Then $A_N=N$, and this happens exactly
+when $D\ge N$.
+
+Suppose step $N$ is in the $j$-th $+$ run with $j\ge2$. Then exactly $j-1$ of
+the $-$ runs lie before step $N$, and they are complete, so
+$A_N=N-s^-_{j-1}$. So $A_N=a$ means $s^-_{j-1}=b$, and then step $N=a+b$ is
+in this run exactly when $s^+_{j-1}<a\le s^+_j$. By independence this has
+probability $u_{j-1}(b)\,q^D_j(a)$.
+
+Suppose step $N$ is in the $j$-th $-$ run. Then the first $j$ of the $+$ runs
+are complete and no other has begun, so $A_N=s^+_j$. So $A_N=a$ means
+$s^+_j=a$, and then step $N$ is in this run exactly when
+$s^-_{j-1}<b\le s^-_j$. This has probability $u^D_j(a)\,q_j(b)$.
+
+The cases are disjoint. Summing them, with $m=j-1$ in the second and $m=j$ in
+the third, gives the formula. Now let $N$ be even. The first direction is
+fair, and changing the sign of every step sends $A_N$ to $N-A_N$. Hence
+$C_N=\frac12[\Prob_+(A_N=h)+\Prob_+(A_N=N-h)]=\Prob_+(A_N=h)$. With a fresh
+start $u^D_m=u_m$ and $q^D_m=q_m$, which gives the last formula.
 \end{proof}
 
 This identity is the coefficient form of the double transform of Godr\`eche
@@ -115,33 +135,73 @@ $I_\alpha:=\int_{\mathbb R}g(z)^2\,dz=\Gamma(1+1/\alpha)/(\pi\sigma_\alpha^{1/\a
 \end{lemma}
 
 \begin{proof}
+All four parts come from the expansion of the transform of $\xi$ near $0$. We
+find it first.
+
 (i) Summation by parts gives $1-\E w^\xi=(1-w)\sum_{k\ge1}\bar F(k)w^{k-1}$
-for $\lvert w\rvert\le1$. With $w=e^{-v}$ and
-$\mathrm{Li}_\alpha(w)=\sum_{k\ge1}k^{-\alpha}w^k$ this is
-$1-\E e^{-v\xi}=(e^v-1)\mathrm{Li}_\alpha(e^{-v})$. For $\operatorname{Re}v\ge0$
-and $0<\lvert v\rvert<2\pi$, \cite[25.12.12]{dlmf} gives
+for $\lvert w\rvert\le1$. Put $w=e^{-v}$ with $\operatorname{Re}v\ge0$, and
+write $\mathrm{Li}_\alpha(w)=\sum_{k\ge1}k^{-\alpha}w^k$. Since
+$\bar F(k)=k^{-\alpha}$, the identity reads
+$1-\E e^{-v\xi}=(e^v-1)\mathrm{Li}_\alpha(e^{-v})$. For
+$0<\lvert v\rvert<2\pi$, \cite[25.12.12]{dlmf} gives
 $\mathrm{Li}_\alpha(e^{-v})=\Gamma(1-\alpha)v^{\alpha-1}+\zeta(\alpha)+O(\lvert
-v\rvert)$. So $1-\E e^{-v\xi}=\mu v+\Gamma(1-\alpha)v^\alpha+O(\lvert
-v\rvert^2)$, and $v=-i\theta$ gives (i). (ii) By (i),
-$e^{-i\mu t}\E e^{it\xi}=1+K_\alpha(-i\theta)^\alpha/m+O(\theta^2m^{-2/\alpha})$
-for $t=\theta/a_m$. As $2/\alpha>1$, the characteristic function of
-$(\tau_m-m\mu)/a_m$ tends to $\exp(K_\alpha(-i\theta)^\alpha)$, whose modulus
-$\exp(-\frac12\sigma_\alpha\lvert\theta\rvert^\alpha)$ is integrable. L\'evy's
-continuity theorem, Fourier inversion and the Riemann--Lebesgue lemma give $G$
-and $g$ (the domain of attraction also follows
-from~\cite[Theorem~XVII.5.2]{feller1971}). For real $s>0$, the expansion of
-$1-\E e^{-v\xi}$ above with $v=s/a_m$ gives
-$\E e^{-s(\tau_m-m\mu)/a_m}\to e^{K_\alpha s^\alpha}$ in the same way, and
-with $2s$ in place of $s$ this gives uniform integrability, so
-$\E e^{-sG}=e^{K_\alpha s^\alpha}$. (iii) Every $\Prob(\xi=k)$ is positive,
-so $\xi$ has maximal span $1$, and
-Gnedenko's local limit theorem~\cite[Chapter~4]{ibragimovlinnik1971} gives
-the limit. Then $a_mu_m(k)\le\lVert g\rVert_\infty+1$ for large $m$ and
-$a_mu_m(k)\le a_m$ for the others, so $\bar u<\infty$. (iv) The function
-$\lvert\E e^{i\theta G}\rvert^2=e^{-\sigma_\alpha\lvert\theta\rvert^\alpha}$
-is the characteristic function of $G-G'$, and Plancherel's theorem gives
-$I_\alpha=\frac1{2\pi}\int e^{-\sigma_\alpha\lvert\theta\rvert^\alpha}d\theta$,
-which is $\Gamma(1+1/\alpha)/(\pi\sigma_\alpha^{1/\alpha})$.
+v\rvert)$. We multiply by $e^v-1=v+O(\lvert v\rvert^2)$ and use
+$\zeta(\alpha)=\mu$ and $\Gamma(1-\alpha)=-K_\alpha$. Since $\alpha+1>2$,
+\[
+ 1-\E e^{-v\xi}=\mu v-K_\alpha v^\alpha+O(\lvert v\rvert^2)
+ \qquad(v\to0,\ \operatorname{Re}v\ge0).
+\]
+With $v=-i\theta$ this is (i).
+
+(ii) Put $Z_m=(\tau_m-m\mu)/a_m$. Fix $\theta$ and let $t=\theta/a_m$. By (i)
+and $e^{-i\mu t}=1-i\mu t+O(t^2)$, and since $a_m^\alpha=m$,
+\[
+ e^{-i\mu t}\,\E e^{it\xi}=1+K_\alpha(-it)^\alpha+O(t^2)
+ =1+\frac{K_\alpha(-i\theta)^\alpha}m+O\bigl(\theta^2m^{-2/\alpha}\bigr).
+\]
+The left side is the characteristic function of $(\xi-\mu)/a_m$ at $\theta$,
+and $\E e^{i\theta Z_m}$ is its $m$-th power. As $2/\alpha>1$, the error is
+$o(1/m)$, so $\E e^{i\theta Z_m}\to\exp(K_\alpha(-i\theta)^\alpha)$. The
+real part of $(-i\theta)^\alpha$ is
+$\lvert\theta\rvert^\alpha\cos\frac{\pi\alpha}2$, which is negative because
+$1<\alpha<2$. So the limit has modulus
+$\exp(-\frac12\sigma_\alpha\lvert\theta\rvert^\alpha)$. It is continuous at
+$0$, so by L\'evy's continuity theorem it is the characteristic function of a
+variable $G$, and $Z_m$ converges in law to $G$. It is integrable, so by
+Fourier inversion $G$ has a bounded, uniformly continuous density $g$, and
+$g$ vanishes at infinity by the Riemann--Lebesgue lemma (the domain of
+attraction also follows from~\cite[Theorem~XVII.5.2]{feller1971}). A stable
+law with this characteristic function is the one called totally skewed to
+the right.
+
+For the Laplace transform let $s>0$ be real and take $v=s/a_m$ in the
+expansion above. In the same way
+$\E e^{-sZ_m}\to e^{K_\alpha s^\alpha}$. This also holds with $2s$ in place of
+$s$, so the second moments of $e^{-sZ_m}$ are bounded in $m$, and these
+variables are uniformly integrable. Hence $\E e^{-sZ_m}\to\E e^{-sG}$, and so
+$\E e^{-sG}=e^{K_\alpha s^\alpha}$.
+
+(iii) Every $\Prob(\xi=k)$ is positive, so $\xi$ has maximal span $1$. So
+Gnedenko's local limit theorem~\cite[Chapter~4]{ibragimovlinnik1971} applies
+to the convergence in (ii) and gives the uniform limit. For $\bar u$, the
+limit gives an $m_0$ with $a_mu_m(k)\le\lVert g\rVert_\infty+1$ for all
+$m\ge m_0$ and all $k$. For $m<m_0$ we use $u_m(k)\le1$, so
+$a_mu_m(k)\le a_{m_0}$. Hence $\bar u<\infty$.
+
+(iv) The characteristic function of $-G'$ is the complex conjugate of that
+of $G$. So $G-G'$ has the characteristic function
+$\lvert\E e^{i\theta G}\rvert^2=e^{-\sigma_\alpha\lvert\theta\rvert^\alpha}$,
+which is that of a symmetric $\alpha$-stable law. Plancherel's theorem gives
+\[
+ I_\alpha=\int_{\mathbb R}g(z)^2\,dz
+ =\frac1{2\pi}\int_{\mathbb R}e^{-\sigma_\alpha\lvert\theta\rvert^\alpha}\,d\theta
+ =\frac1\pi\int_0^\infty e^{-\sigma_\alpha\theta^\alpha}\,d\theta
+ =\frac{\Gamma(1+1/\alpha)}{\pi\sigma_\alpha^{1/\alpha}} ,
+\]
+where the last step is the substitution $x=\sigma_\alpha\theta^\alpha$. (Note
+that $I_\alpha$ is the density of $G-G'$ at $0$. This is how it enters
+Theorem~\ref{thm:center}, where two independent renewal processes have to
+meet.)
 \end{proof}
 
 \begin{theorem}[the center for $1<\alpha<2$]\label{thm:center}
@@ -158,16 +218,28 @@ In words, the center decays like $N^{-1/\alpha}$, and the first run does not
 matter.
 
 \paragraph{Idea of the proof.}
-Both kinds of runs must fill about $h$ steps, which takes about $h/\mu$ runs
-of each kind. Each renewal process is then within about $N^{1/\alpha}$ of its
-mean, so the two meet at a given level with probability of order
-$N^{-1/\alpha}$. In the proof (Appendix~\ref{app:heavy}) we split the sum in
-Proposition~\ref{prop:tworenewal} by the number $m$ of runs. With
-$b_h=(h/\mu)^{1/\alpha}$, the terms with $\lvert m\mu-h\rvert\le Mb_h$ form a
-Riemann sum for $2b_h^{-1}\int_{-M}^Mg^2$ by Lemma~\ref{lem:stable}(iii). The
-terms with $m\le h/(4\mu)$ add up to $O(h^{-\alpha})=o(b_h^{-1})$, since a
-large sum of few runs is most likely made by one long run. The others add up
-to $O(b_h^{-1})\Prob(\lvert G\rvert\ge M-1)+o(b_h^{-1})$, and we let
+By Proposition~\ref{prop:tworenewal} the walk ends in the center when, for
+some $m$, one renewal process ends its $m$-th run exactly at level $h$ and
+the other is inside a run that covers level $h$. Level $h$ takes about
+$h/\mu$ runs. Put $b_h=(h/\mu)^{1/\alpha}$, which is the scale on which
+$\tau_m$ spreads around its mean for such $m$. So the $m$-th run ends at $h$
+with probability about $g(z)/b_h$, where $z=(h-m\mu)/b_h$ says how far $m$ is
+from the typical number of runs. A level is covered by a run $\mu$ times as
+often as a run ends there, so the $m$-th run covers $h$ with probability
+about $\mu g(z)/b_h$. The values of $m$ that matter have
+$\lvert m\mu-h\rvert$ of order $b_h$, and there are $b_h/\mu$ of them for
+each unit of $z$. Proposition~\ref{prop:tworenewal} has two terms of this
+kind for each $m$, so $C_N$ is about
+$2\cdot\frac1{b_h}\cdot\frac\mu{b_h}\cdot\frac{b_h}\mu\int g^2=2I_\alpha/b_h$.
+
+In the proof (Appendix~\ref{app:heavy}) we split the sum in
+Proposition~\ref{prop:tworenewal} by the number $m$ of runs. The terms with
+$\lvert m\mu-h\rvert\le Mb_h$ form a Riemann sum for
+$2b_h^{-1}\int_{-M}^Mg^2$ by Lemma~\ref{lem:stable}(iii). The terms with
+$m\le h/(4\mu)$ add up to $O(h^{-\alpha})=o(b_h^{-1})$, since a sum of few
+runs that is far above its mean is most likely made by one long run. The
+others add up to at most
+$O(b_h^{-1})\Prob(\lvert G\rvert\ge M-1)+o(b_h^{-1})$, and we let
 $M\to\infty$.
 
 \begin{table}[t]

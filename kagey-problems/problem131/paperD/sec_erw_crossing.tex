@@ -55,26 +55,33 @@ $\varepsilon_N<\frac12$. Also $C_N\ge2E_N$ for $\varepsilon\ge\frac12$.
 \end{proposition}
 
 \begin{proof}
-The probability of a path of $M$ is a product of $N-1$ factors, namely
+We compare each path of $M$ with the path that never flips, one step at a
+time. The probability of a path of $M$ is a product of $N-1$ factors, namely
 $r_s(b_s)$ for an up step at time $s$ and $1-r_s(b_s)$ otherwise, where $b_s$
-is the state at time $s$. We divide it by the probability
-$f_N(0)=(1-\varepsilon)^{N-1}$ of the path that never flips. With
-$y=b_s/s\in[0,1)$ the factors become
+is the state at time $s$. The path that never flips has probability
+$f_N(0)=(1-\varepsilon)^{N-1}$, which is one factor $1-\varepsilon$ for each
+step. So we divide each factor by $1-\varepsilon$. With $y=b_s/s\in[0,1)$ the
+two kinds of factors become
 $\frac{\varepsilon+(1-2\varepsilon)y}{1-\varepsilon}$ and
 $1-y\frac{1-2\varepsilon}{1-\varepsilon}$, whose derivatives in
 $\varepsilon$ are $\frac{1-y}{(1-\varepsilon)^2}>0$ and
 $\frac y{(1-\varepsilon)^2}\ge0$. Both factors are positive, since
 $r_s(b_s)=\varepsilon(1-y)+(1-\varepsilon)y$ lies strictly between 0 and 1.
-So the ratio for each path is nondecreasing in $\varepsilon$, and strictly
-increasing if the path has an up step. Summing over the paths with $k\ge1$
-up steps proves the claim for $f_N(k)/f_N(0)$, and the claim for $P_N(k)/E_N$
-follows by Lemma~\ref{lem:erw-reduction}. As $\varepsilon\to0$, $C_N\to0$
-and $E_N\to\frac12$. For
-$\varepsilon\ge\frac12$ every $r_s(b)$ and every $1-r_s(b)$ lies in
-$[1-\varepsilon,\varepsilon]$, so each path of $M$ that ends at $h$ has
-probability at least $(1-\varepsilon)^{N-1}=2E_N$. Hence $C_N\ge2E_N$. The
-ratio $C_N/E_N$ is continuous and strictly increasing, so it equals 1 at
-exactly one $\varepsilon$, and this $\varepsilon$ lies in $(0,\frac12)$.
+So the ratio for each path is nondecreasing in $\varepsilon$, and it is
+strictly increasing if the path has an up step. Summing over the paths with
+$k\ge1$ up steps proves the claim for $f_N(k)/f_N(0)$. By
+Lemma~\ref{lem:erw-reduction},
+$P_N(k)/E_N=[f_N(k)+f_N(N-k)]/f_N(0)$, and both $k$ and $N-k$ are at least 1.
+So the claim for $P_N(k)/E_N$ follows.
+
+It remains to locate the crossing. The ratio $C_N/E_N$ is continuous and
+strictly increasing in $\varepsilon$. As $\varepsilon\to0$ it tends to 0,
+since $C_N\to0$ (at $\varepsilon=0$ the chain never leaves 0) and
+$E_N\to\frac12$. For $\varepsilon\ge\frac12$ every $r_s(b)$ and every
+$1-r_s(b)$ lies in $[1-\varepsilon,\varepsilon]$, so each path of $M$ that
+ends at $h$ has probability at least $(1-\varepsilon)^{N-1}=2E_N$. Hence
+$C_N\ge2E_N$ there. So the ratio equals 1 at exactly one $\varepsilon$, and
+this $\varepsilon$ lies in $(0,\frac12)$.
 \end{proof}
 
 \subsection{First order, one early flip}
@@ -97,21 +104,31 @@ $\sum_dd\,\beta_v(d)=N/v$. For $1\le d\le N-1$,
 \end{lemma}
 
 \begin{proof}
-If the urn holds $s$ balls of the first color at time $k$, the next draw
-is of that color with probability $s/k$. So a given order of $i$ draws of
-the first color among the $N-v$ draws has probability
-$\frac{i!\,(v-1)v\cdots(N-i-2)}{v(v+1)\cdots(N-1)}=\frac{(v-1)\,i!\,(N-i-2)!}{(N-1)!}$.
-Multiplying by $\binom{N-v}{i}$ and putting $d=i+1$ gives
-$\beta_v(d)=a_d(v-1)\binom{N-v}{d-1}$ with $a_d=\frac{(d-1)!(N-d-1)!}{(N-1)!}$,
-which equals $\binom{N-d-1}{v-2}/\binom{N-1}{v-1}$. Hence
-$\beta_v(d)/\beta_v(d-1)=1-\frac{v-2}{N-d}$ for $2\le d\le N-v+1$, and
+We compute the probability of one order of the draws and count the orders.
+At time $k$ the urn holds $k$ balls. So if $s$ of them are of the first
+color, the next draw is of that color with probability $s/k$. Take one order
+of the $N-v$ draws in which $i$ draws are of the first color. The draws of
+the first color contribute the numerators $1,2,\dots,i$, the other draws
+contribute $v-1,v,\dots,N-i-2$, and the denominators are $v,v+1,\dots,N-1$.
+So this order has probability
+$\frac{i!\,(v-1)v\cdots(N-i-2)}{v(v+1)\cdots(N-1)}=\frac{(v-1)\,i!\,(N-i-2)!}{(N-1)!}$,
+whatever the order is. There are $\binom{N-v}{i}$ orders. With $d=i+1$ this
+gives $\beta_v(d)=a_d(v-1)\binom{N-v}{d-1}$ with
+$a_d=\frac{(d-1)!(N-d-1)!}{(N-1)!}$, and writing out the factorials shows
+that this is $\binom{N-d-1}{v-2}/\binom{N-1}{v-1}$. From the last form,
+$\beta_v(d)/\beta_v(d-1)=1-\frac{v-2}{N-d}\le1$ for $2\le d\le N-v+1$, so
 $\beta_v$ is nonincreasing. The fraction of balls of the first color is a
-martingale that starts at $1/v$, which gives the mean. For the two sums put
-$i=N-v$, so that $v-1=\binom{N-1-i}1$ and $(v-1)(v-2)=2\binom{N-1-i}2$. By
-the Chu--Vandermonde identity,
-$\sum_i\binom{i}{d-1}\binom{N-1-i}{1}=\binom{N}{d+1}$ and
-$\sum_i\binom{i}{d-1}\binom{N-1-i}{2}=\binom{N}{d+2}$. Multiplying by $a_d$
-and $2a_d$ gives the two sums.
+martingale that starts at $1/v$. So the mean number of such balls at time
+$N$ is $N/v$.
+
+For the two sums we use the first form of $\beta_v(d)$ and put $i=N-v$, so
+that $v-1=\binom{N-1-i}1$ and $(v-1)(v-2)=2\binom{N-1-i}2$. The
+Chu--Vandermonde identity says that
+$\sum_i\binom ia\binom{N-1-i}b=\binom N{a+b+1}$ (sort the subsets of
+$\{1,\dots,N\}$ of size $a+b+1$ by their element number $a+1$, which we call
+$i+1$). With $a=d-1$ and $b=1,2$ it shows that the two sums are
+$a_d\binom N{d+1}$ and $2a_d\binom N{d+2}$, and these are the values in the
+statement.
 \end{proof}
 
 We need some more notation. Let $V_s(b)=\Prob_+(M_N=h\mid M_s=b)$ be the
@@ -135,12 +152,15 @@ $C_N'(0)=c_1=\frac4{N+2}$ exactly.
 \end{proposition}
 
 \begin{proof}
-(a) Under $\Prob_+$ the first flip happens at step $t+1$ exactly when
-$M_s=0$ for $s\le t$ and $M_{t+1}=1$. Since $r_s(0)=\varepsilon$, this has
-probability $(1-\varepsilon)^{t-1}\varepsilon$, and by the Markov property
-the chain then ends at $h$ with probability $V_{t+1}(1)$. At time $t+1$
-there are $t$ steps equal to $X_1$, and this number never decreases. So
-$V_{t+1}(1)=0$ for $t>h$. Paths with no flip end at $0\ne h$.
+(a) We condition on the time of the first flip. Under $\Prob_+$ the first
+flip happens at step $t+1$ exactly when $M_s=0$ for $s\le t$ and $M_{t+1}=1$.
+Since $r_s(0)=\varepsilon$, this has probability
+$(1-\varepsilon)^{t-1}\varepsilon$, and by the Markov property the chain then
+ends at $h$ with probability $V_{t+1}(1)$. A path with no flip ends at
+$0\ne h$. So $C_N$ is the sum of $\varepsilon(1-\varepsilon)^{t-1}V_{t+1}(1)$
+over $1\le t\le N-1$. Only $t\le h$ contribute. Indeed at time $t+1$ there
+are $t$ steps equal to $X_1$, this number never decreases, and at the center
+it is $h$. So $V_{t+1}(1)=0$ for $t>h$.
 
 (b) Every transition probability is affine in $\varepsilon$, so $C_N$ and
 $V_{t+1}(1)$ are polynomials in $\varepsilon$. By (a), $C_N(0)=0$ and
@@ -151,10 +171,14 @@ $V_{t+1}(1)=\beta_{t+1}(h)=\pi_t$. Since $\beta_v(h)=0$ for $v>h+1$,
 Lemma~\ref{lem:urn} with $d=h$ gives
 $c_1=\sum_{v=2}^N\beta_v(h)=\frac N{h(h+1)}=\frac4{N+2}$.
 
-(c) In the same way the second sum of Lemma~\ref{lem:urn} gives
-$\sum_t(t-1)\pi_t=\frac{2N(h-1)}{h(h+1)(h+2)}$, so
-$\sum_tw_t(t-1)=\frac{2(h-1)}{h+2}$. Next $\frac{h-i}{N-i}\le\frac12$, so
-$w_t=\frac{N+2}4\pi_t\le\frac{N+2}{2(N-t)}\,t2^{-t}\le2t2^{-t}$ for $t\le h$.
+(c) In the same way the second sum of Lemma~\ref{lem:urn}, with $d=h$ and
+$v=t+1$, gives $\sum_t(t-1)\pi_t=\frac{2N(h-1)}{h(h+1)(h+2)}$. Dividing by
+$c_1=\frac N{h(h+1)}$ gives $\sum_tw_t(t-1)=\frac{2(h-1)}{h+2}=2-\frac6{h+2}$,
+and adding $\sum_tw_t=1$ gives the first claim. For the second claim, each
+factor $\frac{h-i}{N-i}$ in $\pi_t$ is at most $\frac12$, so
+$\pi_t\le\frac t{N-t}2^{1-t}$. Hence
+$w_t=\frac{N+2}4\pi_t\le\frac{N+2}{2(N-t)}\,t2^{-t}$. For $t\le h$ we have
+$N-t\ge h$ and $\frac{N+2}{2h}=1+\frac2N\le2$, so $w_t\le2t2^{-t}$.
 \end{proof}
 
 In words, to first order the walk flips once, at some step $t+1$, and then
@@ -246,25 +270,43 @@ $O(L^2/N)$ of the zero $g_N$ of $G-\Lambda_N$.
 $F(x)=\log C_N(x/N)-\log E_N(x/N)$ for $0<x<N$, where $C_N(\varepsilon)$ and
 $E_N(\varepsilon)$ are the center and the end at flip probability
 $\varepsilon$. By Proposition~\ref{prop:mlr}, $F$ is strictly increasing and
-$x_N$ is its only zero. Let $1\le x\le2\Lambda_N$. Then $x/N\le4L/N$, so for
-large $N$ Theorem~\ref{thm:erw-bounds} applies with $\varepsilon=x/N$. As
-$\log\frac{4\varepsilon}{N+2}=\log x+\log4-2L-\log(1+2/N)$ and $x\ge1$, it
-gives $\log C_N=\log x+\log4-2L+O(xL/N)$. Also $\log(1-y)=-y+O(y^2)$ for
-$0\le y\le\frac12$, so $\log E_N=-\log2-(N-1)x/N+O(x^2/N)=-\log2-x+O(x^2/N)$.
-Since $\log4+\log2=\log8$ and $x\le2\Lambda_N\le4L$, we get
-$|F(x)-G(x)+\Lambda_N|\le\rho_N$ on $[1,2\Lambda_N]$, with $\rho_N=O(L^2/N)$.
+$x_N$ is its only zero. We show that
+\begin{equation}\tag{$\ast$}\label{eq:F-G}
+ \lvert F(x)-G(x)+\Lambda_N\rvert\le\rho_N\quad(1\le x\le2\Lambda_N),
+ \qquad\text{with }\rho_N=O(L^2/N).
+\end{equation}
+Let $1\le x\le2\Lambda_N$ and $\varepsilon=x/N$. Then
+$\varepsilon\le4L/N$, so for large $N$ both parts of
+Theorem~\ref{thm:erw-bounds} apply, and together they say that
+$\log C_N=\log\frac{4\varepsilon}{N+2}+O(\varepsilon L)$. Here
+$\log\frac{4\varepsilon}{N+2}=\log x+\log4-2L-\log(1+2/N)$, and
+$\log(1+2/N)\le2/N\le2xL/N$ because $x\ge1$. For the end we use
+$\log(1-y)=-y+O(y^2)$ for $0\le y\le\frac12$ in
+$\log E_N=-\log2+(N-1)\log(1-\frac xN)$. So
+\[
+ \log C_N=\log x+\log4-2L+O\Bigl(\frac{xL}N\Bigr),\qquad
+ \log E_N=-\log2-x+O\Bigl(\frac{x^2}N\Bigr).
+\]
+We subtract. Since $\log4+\log2=\log8$, the main terms give
+$x+\log x-2L+\log8=G(x)-\Lambda_N$, and both errors are $O(L^2/N)$ because
+$x\le2\Lambda_N\le4L$. This is \eqref{eq:F-G}.
 
-\emph{Step 2: trap the zero.} Now $G'\ge1$ and $G(g_N)=\Lambda_N$. So
-$F(x)<0$ for $1\le x<g_N-\rho_N$ and $F(x)>0$ for $g_N+\rho_N<x\le2\Lambda_N$.
-As $\Lambda_N-\log\Lambda_N\le g_N\le\Lambda_N$ (because
-$G(\Lambda_N-\log\Lambda_N)\le\Lambda_N\le G(\Lambda_N)$), both ranges are
-nonempty for large $N$. Since $F$ is increasing, its zero $x_N$ lies between
-them, so $|x_N-g_N|\le\rho_N$. Then
-$F(x_N)=0$ gives $|G(x_N)-\Lambda_N|\le\rho_N$.
+\emph{Step 2: trap the zero.} We have $G'=1+1/x\ge1$ and $G(g_N)=\Lambda_N$.
+So $G(x)-\Lambda_N<-\rho_N$ for $x<g_N-\rho_N$, and
+$G(x)-\Lambda_N>\rho_N$ for $x>g_N+\rho_N$. By \eqref{eq:F-G}, $F(x)<0$ for
+$1\le x<g_N-\rho_N$ and $F(x)>0$ for $g_N+\rho_N<x\le2\Lambda_N$. Both ranges
+are nonempty for large $N$, because
+$\Lambda_N-\log\Lambda_N\le g_N\le\Lambda_N$ (note that
+$G(\Lambda_N-\log\Lambda_N)\le\Lambda_N\le G(\Lambda_N)$). Since $F$ is
+increasing, its zero $x_N$ lies between the two ranges, so
+$|x_N-g_N|\le\rho_N$. Then $x_N$ lies in $[1,2\Lambda_N]$, and $F(x_N)=0$ in
+\eqref{eq:F-G} gives $|G(x_N)-\Lambda_N|\le\rho_N$.
 
-(b) Since $g_N=\Lambda_N-\log g_N$ and
-$\Lambda_N-\log\Lambda_N\le g_N\le\Lambda_N$, we have
-$\log g_N=\log\Lambda_N+O(\log\Lambda_N/\Lambda_N)$, and
+(b) We solve $g_N=\Lambda_N-\log g_N$ by one substitution. Since
+$\Lambda_N-\log\Lambda_N\le g_N\le\Lambda_N$, the ratio $g_N/\Lambda_N$ is
+$1+O(\log\Lambda_N/\Lambda_N)$, so
+$\log g_N=\log\Lambda_N+O(\log\Lambda_N/\Lambda_N)$. Also
+$\Lambda_N=2\log N-\log8$ gives
 $\log\Lambda_N=\log2+\log\log N+O(1/\log N)$. So
 $g_N=2\log N-\log8-\log2-\log\log N+O(\log\log N/\log N)$, which is (b) for
 $g_N$, and (a) gives it for $x_N$.
@@ -301,25 +343,39 @@ $G(x)=\Lambda_N$ of the elephant, find that $2z_N-\log(2\pi)$ misses it by
 $c_*/L$, and divide by $G'\approx1$.
 
 \begin{proof}
-Write $\ell=\log(2\pi)$. By Section~\ref{sec:series}, the error term in
-\eqref{eq:markov-crossing} is $O(L^{-2})$ and $L/2\le z_N\le L$. So
-\eqref{eq:markov-crossing} gives $z_N+\frac12\log z_N=L+O(1)$ with
-$\log z_N=\log L+O(1)$, hence $z_N=L-\frac12\log L+O(1)$. Since $z_N\ge L/2$,
-this gives $\frac1{8z_N}-\frac1{8L}=\frac{L-z_N}{8Lz_N}=O(\log L/L^2)$. Put
-$Y=2z_N$. Twice \eqref{eq:markov-crossing} plus $\log2$, together with
-$2c_0+\log2=\log\frac\pi4$, gives
-$Y+\log Y=2L+\log\frac\pi4+\frac1{4L}+O(\log L/L^2)$. Also
-$Y=2L-\log L+O(1)$, so $1/Y=1/(2L)+O(\log L/L^2)$ and
-$\log(1-\ell/Y)=-\ell/(2L)+O(\log L/L^2)$. Using $\log\frac\pi4-\ell=-\log8$,
-we get
+Write $\ell=\log(2\pi)$ and $Y=2z_N$. We compute $G(Y-\ell)$ in three steps
+and then compare it with $G(x_N)$.
+
+\emph{Step 1: the size of $z_N$.} By Section~\ref{sec:series}, the error term
+in \eqref{eq:markov-crossing} is $O(L^{-2})$ and $L/2\le z_N\le L$. So
+$\log z_N=\log L+O(1)$ and $\frac1{8z_N}=O(1)$, and
+\eqref{eq:markov-crossing} gives $z_N=L-\frac12\log L+O(1)$. Hence
+$Y=2L-\log L+O(1)$, and
+\[
+ \frac1{8z_N}=\frac1{8L}+\frac{L-z_N}{8Lz_N}=\frac1{8L}+O\Bigl(\frac{\log L}{L^2}\Bigr),
+ \qquad\frac1Y=\frac1{2L}+O\Bigl(\frac{\log L}{L^2}\Bigr).
+\]
+
+\emph{Step 2: the equation for $Y$.} We double \eqref{eq:markov-crossing} and
+add $\log2$. The left side becomes $2z_N+\log z_N+\log2=Y+\log Y$. On the
+right, $2c_0+\log2=\log\frac\pi4$, and $\frac1{4z_N}=\frac1{4L}+O(\log L/L^2)$
+by Step~1. So $Y+\log Y=2L+\log\frac\pi4+\frac1{4L}+O(\log L/L^2)$.
+
+\emph{Step 3: the value $G(Y-\ell)$.} We have
+$\log(Y-\ell)=\log Y+\log(1-\ell/Y)$, and
+$\log(1-\ell/Y)=-\ell/(2L)+O(\log L/L^2)$ by Step~1. With Step~2 and
+$\log\frac\pi4-\ell=-\log8$ this gives
 \[
  G(Y-\ell)=Y+\log Y-\ell+\log\Bigl(1-\frac\ell Y\Bigr)
  =\Lambda_N+\frac1{4L}-\frac\ell{2L}+O\Bigl(\frac{\log L}{L^2}\Bigr)
  =\Lambda_N-\frac{c_*}L+O\Bigl(\frac{\log L}{L^2}\Bigr).
 \]
-By Theorem~\ref{thm:erw-crossing}(a), $G(x_N)=\Lambda_N+O(L^2/N)$. Both
-$x_N$ and $Y-\ell=2z_N-\log(2\pi)$ are $2L+O(\log L)$, so $G'=1+1/x=1+O(1/L)$
-between them, and the mean value theorem gives
+
+\emph{Step 4: compare with $x_N$.} By Theorem~\ref{thm:erw-crossing}(a),
+$G(x_N)=\Lambda_N+O(L^2/N)$. So
+$G(x_N)-G(Y-\ell)=c_*/L+O(\log L/L^2)$. Both $x_N$ and
+$Y-\ell=2z_N-\log(2\pi)$ are $2L+O(\log L)$, so $G'(x)=1+1/x=1+O(1/L)$
+between them. By the mean value theorem we may divide by $G'$, and we get
 $x_N-(Y-\ell)=c_*/L+O(\log L/L^2)$.
 \end{proof}
 
@@ -373,27 +429,40 @@ So $x_N<g_N$ for large $N$.
 In words, the root $g_N$ overshoots the crossing by about $6\log^2N/N$.
 
 \begin{proof}
-Let $F$ be as in the proof of Theorem~\ref{thm:erw-crossing}, and let
-$1\le x\le2\Lambda_N$ and $\varepsilon=x/N$. For large $N$
-Proposition~\ref{prop:second-order} applies and gives
-$\log C_N=\log x+\log4-2L+\frac{2xL}N+O(\frac{x}N)$. For
-$0\le y\le\frac12$ we have $\log(1-y)=-y-\frac{y^2}2+O(y^3)$, so
-$\log E_N=-\log2+(N-1)\log(1-\frac xN)=-\log2-x-\frac{x^2}{2N}+O(\frac xN)$,
-because $x^2/N^2$ and $x^3/N^2$ are $O(x/N)$ for $x\le4L$. Hence
+We repeat the proof of Theorem~\ref{thm:erw-crossing}(a) with one more term
+on each side. The center gains the term $2\varepsilon\log N$ and the end
+gains the term $-x^2/(2N)$, and both push $F$ up.
+
+\emph{Step 1: both sides.} Let $F$ be as in the proof of
+Theorem~\ref{thm:erw-crossing}, and let $1\le x\le2\Lambda_N$ and
+$\varepsilon=x/N$. For large $N$ Proposition~\ref{prop:second-order} applies,
+and its error $5200\,\varepsilon$ is $O(x/N)$, as is the term
+$\log(1+2/N)$ in $\log\frac{4\varepsilon}{N+2}$. For the end we use
+$\log(1-y)=-y-\frac{y^2}2+O(y^3)$ for $0\le y\le\frac12$ with $y=x/N$. So
+\[
+ \log C_N=\log x+\log4-2L+\frac{2xL}N+O\Bigl(\frac xN\Bigr),\qquad
+ \log E_N=-\log2-x-\frac{x^2}{2N}+O\Bigl(\frac xN\Bigr).
+\]
+In the second formula we multiplied the expansion by $N-1$, and the terms
+left over are $O(x/N)$ because $x^2/N$ is bounded for $x\le4L$. Subtracting
+gives
 \[
  F(x)=G(x)-\Lambda_N+\frac{2xL+x^2/2}{N}+O\Bigl(\frac xN\Bigr)
  \qquad(1\le x\le2\Lambda_N).
 \]
-By Theorem~\ref{thm:erw-crossing}, $x_N$ lies in this range for large $N$.
-So $F(x_N)=0$ gives $G(x_N)=\Lambda_N-\eta_N$ with
-$\eta_N=(2x_NL+x_N^2/2)/N+O(L/N)$. By the mean value theorem,
+
+\emph{Step 2: solve for $x_N$.} By Theorem~\ref{thm:erw-crossing}, $x_N$ lies
+in this range for large $N$. So $F(x_N)=0$ gives $G(x_N)=\Lambda_N-\eta_N$
+with $\eta_N=(2x_NL+x_N^2/2)/N+O(L/N)$. Since $G(g_N)=\Lambda_N$, the mean
+value theorem gives
 $x_N-g_N=-\eta_N/G'(\xi)$ for some $\xi$ between $x_N$ and $g_N$. Here
 $G'(\xi)=1+1/\xi=(1+1/g_N)(1+O(1/N))$, since $\lvert\xi-g_N\rvert=O(L^2/N)$
 and $g_N\ge L$ for large $N$. As $\eta_N=O(L^2/N)$, we get
 $x_N-g_N=-\eta_N/(1+1/g_N)+O(L^2/N^2)$. Replacing $x_N$ by $g_N$ in the main
-term of $\eta_N$ changes it by $O(L^3/N^2)$. This gives the formula. Its
-main term is of order $L^2/N$ and is larger than the error for large $N$, so
-$x_N<g_N$.
+term of $\eta_N$ changes it by $O(L^3/N^2)$, again because
+$\lvert x_N-g_N\rvert=O(L^2/N)$. All these errors are $O(L/N)$, which gives
+the formula. Its main term is of order $L^2/N$ and is larger than the error
+for large $N$, so $x_N<g_N$.
 \end{proof}
 
 Proposition~\ref{prop:second-order} does not identify the term of order

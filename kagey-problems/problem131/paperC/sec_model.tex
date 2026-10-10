@@ -108,19 +108,36 @@ when $q_{ji}>0$, then every admissible face is irreducible.
 \end{lemma}
 
 \begin{proof}
-The states of the maximal runs of a path of positive probability with support
-$F$ form a walk in $G_F$ that starts in $\supp\mu$ and visits every state of
-$F$, and every such walk arises in this way for large $N$. (a) Along such a
-walk a component $C$ cannot be visited again after the walk has left it for a
-state $y\notin C$, since then $y$ and $C$ would be reachable from each other.
-Hence a path of positive probability visits each strongly connected component
-of its support in one block of consecutive times, and it passes from one block
-to the next by a single switch. Numbering the components in the order of
-these blocks gives the condition. Conversely, given the numbering and edges $x_j\to y_{j+1}$, take
-$y_1\in C_1$ with $\mu_{y_1}>0$ and any $x_r\in C_r$, and join walks from $y_j$
-to $x_j$ through all of $C_j$ by these edges. (b) is (a) with $r=1$. (c) Here
-an edge between two components would give an edge back, so no edge joins two
-components, and $r=1$ by (a).
+We translate paths into walks in $G_F$. Take a path of positive probability
+with support $F$ and list the states of its maximal runs. This list is a walk
+in $G_F$ that starts at a state of $\supp\mu$ and visits every state of $F$.
+Conversely, every such walk is the list of runs of a path of positive
+probability with support $F$, as soon as $N$ is at least the length of the
+walk. (The path follows the walk and then stays in its last state, and a stay
+has positive probability.) So $F$ is admissible exactly when $G_F$ has a walk
+that starts in $\supp\mu$ and visits every state of $F$.
+
+(a) Suppose that there is such a walk. Once it has left a component $C$ for a
+state $y\notin C$, it cannot come back to $C$. (If it did, $y$ could be reached
+from $C$ and $C$ from $y$, so $y$ would belong to $C$.) Hence the walk visits
+each component in one block of consecutive times, and it passes from one block
+to the next along a single edge. We number the components in the order of these
+blocks. The walk starts in $C_1$, so $\mu(C_1)>0$, and the edge from block $j$
+to block $j+1$ is an edge $x\to y$ with $x\in C_j$ and $y\in C_{j+1}$. This is
+the condition in (a).
+
+Conversely, suppose that the components are numbered as in (a), with edges
+$x_j\to y_{j+1}$ from $C_j$ to $C_{j+1}$ for $j<r$. Take $y_1\in C_1$ with
+$\mu_{y_1}>0$ and any $x_r\in C_r$. Since $C_j$ is strongly connected, there is
+a walk inside $C_j$ from $y_j$ to $x_j$ that visits every state of $C_j$. We
+join these $r$ walks by the edges $x_j\to y_{j+1}$. The result is a walk that
+starts in $\supp\mu$ and visits every state of $F$.
+
+(b) This is (a) with $r=1$.
+
+(c) If $Q$ has symmetric support, an edge from one component to another would
+come with an edge back, and the two components would be the same. So no edge
+joins two components, and the condition in (a) forces $r=1$.
 \end{proof}
 
 So $M_F>0$ for large $N$ if $F$ is admissible, and $M_F=0$ otherwise.
@@ -143,12 +160,18 @@ P_N(n)=\sum_{m\in\Z_{\ge1}^F}W(m)\,h^{M-1}\prod_{i\in F}\binom{n_i-1}{m_i-1}
 \end{lemma}
 
 \begin{proof}
-The states $c_1\cdots c_M$ of the maximal runs of a path form a word as in
-$W(m)$. The path has $M-1$ switches, of probabilities $hq_{c_jc_{j+1}}$, and
-$n_i-m_i$ stays in state $i$, of probability $1-hq_i$ each. For a fixed $c$ the
-lengths of the runs of state $i$ form one of the $\binom{n_i-1}{m_i-1}$
-compositions of $n_i$ into $m_i$ positive parts. Summing over $c$ gives the
-claim.
+We group the paths with composition $n$ by the word of their runs. The states
+$c_1\cdots c_M$ of the maximal runs of a path form a word as in $W(m)$, where
+$m_i$ is the number of runs in state $i$. The path starts at $c_1$, which has
+probability $\mu_{c_1}$. It has $M-1$ switches, of probabilities
+$hq_{c_jc_{j+1}}$, and $n_i-m_i$ stays in state $i$, of probability $1-hq_i$
+each. So every path with the word $c$ and composition $n$ has the same
+probability, namely
+$\mu_{c_1}\prod_{j<M}q_{c_jc_{j+1}}\,h^{M-1}\prod_i(1-hq_i)^{n_i-m_i}$. The
+number of these paths is $\prod_i\binom{n_i-1}{m_i-1}$, because the lengths of
+the $m_i$ runs in state $i$ can be any of the $\binom{n_i-1}{m_i-1}$ ways to
+write $n_i$ as an ordered sum of $m_i$ positive parts. Summing over the words
+$c$ with given $m$ gives $W(m)$, and summing over $m$ gives the claim.
 \end{proof}
 
 Lemma~\ref{lem:runs} is checked in Lean (Section~\ref{sec:verify}). For
@@ -181,21 +204,48 @@ $f_T=\Prob(E_F)=\mu_ie^{-q_iT}$.
 \end{lemma}
 
 \begin{proof}
-We split $E_F$ by the sequence of states that $Y$ visits and integrate out the
-holding times. Up to a null set, $E_F$ is the disjoint union of the events
-$E_c$ that $Y$ visits exactly $c_1,\dots,c_M$ in this order during $[0,T]$,
-over the words $c$ in the sums $W(m)$. Fix $c$, let $s_1,\dots,s_{M-1}$ be the
-first $M-1$ holding times and $s_M=T-\sum_{j<M}s_j$. The last holding time only
-has to exceed $s_M$. So on $\{s_j>0\text{ for }j\le M\}$ the event $E_c$ has
-density $\mu_{c_1}\prod_{j<M}q_{c_jc_{j+1}}e^{-\langle q,\mathcal O\rangle}$ in
-$(s_1,\dots,s_{M-1})$, where $\mathcal O_i$ is the sum of the $s_j$ with
-$c_j=i$. For each state $i\ne c_M$ we replace the last holding time in state
-$i$ by $\mathcal O_i$, a triangular change of variables with unit diagonal. For
-fixed $\mathcal O=t$ the other $m_i-1$ holding times in each state $i$ (for
-$i=c_M$, those before the last one) range over a simplex of volume
-$t_i^{m_i-1}/(m_i-1)!$. Integrating them out and summing over $c$ gives
-$e^{-\langle q,t\rangle}H(t)$, and any $k-1$ of the coordinates $t_i$ give the
-same Lebesgue measure. The rest follows from $t=T\alpha$ and $T/N=h$.
+We split $E_F$ by the sequence of states that $Y$ visits, and for each
+sequence we integrate out the holding times. Up to a null set, $E_F$ is the
+disjoint union of the events $E_c$ that $Y$ visits exactly $c_1,\dots,c_M$ in
+this order during $[0,T]$, over the words $c$ in the sums $W(m)$.
+
+\emph{The density of the holding times.} Fix $c$, and let $s_j$ be the time
+that $Y$ spends in its $j$-th run during $[0,T]$, so that $s_1+\dots+s_M=T$.
+For $j<M$ the $j$-th run is complete. Its holding time has the density
+$q_{c_j}e^{-q_{c_j}s_j}$, and it ends with a jump to $c_{j+1}$, which has
+probability $q_{c_jc_{j+1}}/q_{c_j}$. The last run only has to last longer
+than $s_M=T-\sum_{j<M}s_j$, which has probability $e^{-q_{c_M}s_M}$. We
+multiply these factors. On the set where $s_j>0$ for every $j\le M$, the event
+$E_c$ has the density
+\[
+\mu_{c_1}\prod_{j<M}q_{c_jc_{j+1}}\;e^{-\langle q,\mathcal O\rangle}
+\]
+in $(s_1,\dots,s_{M-1})$, where $\mathcal O_i$ is the sum of the $s_j$ with
+$c_j=i$.
+
+\emph{From holding times to occupation times.} This density depends on the
+holding times only through $\mathcal O$, so we change variables. For each state
+$i\ne c_M$ we replace the last holding time in state $i$ by $\mathcal O_i$.
+This change of variables is triangular with unit diagonal, so it preserves
+Lebesgue measure. The new variables are the $k-1$ occupation times
+$\mathcal O_i$ with $i\ne c_M$, and for each state $i$ the other $m_i-1$
+holding times in state $i$ (for $i=c_M$, those before the last run). Now fix
+$\mathcal O=t$. The $m_i-1$ free holding times in state $i$ are positive and
+their sum is less than $t_i$, so they range over a simplex of volume
+$t_i^{m_i-1}/(m_i-1)!$. (For two states and the word $c=121$ the only free
+variable is the first holding time, which ranges over $(0,t_1)$, and the factor
+is $t_1$.) Integrating the free holding times out, we find that
+$\Prob(E_c,\ \mathcal O\in\cdot\,)$ has the density
+$\mu_{c_1}\prod_{j<M}q_{c_jc_{j+1}}\,e^{-\langle q,t\rangle}
+\prod_{i\in F}t_i^{m_i-1}/(m_i-1)!$ in the coordinates $t_i$ with $i\ne c_M$.
+
+\emph{Summing over the words.} On $\{\sum_it_i=T\}$ any $k-1$ of the
+coordinates $t_i$ give the same Lebesgue measure, so we may use
+$(t_2,\dots,t_k)$ for every $c$. Summing over the words $c$ with given $m$
+gives $W(m)$, and summing over $m$ gives $e^{-\langle q,t\rangle}H(t)$. The
+substitution $t=T\alpha$ has Jacobian $T^{k-1}$, which gives $f_T$, and
+$T/N=h$ gives the identity for $t=hn$. For $F=\{i\}$ the event $E_F$ says that
+$Y$ starts at $i$ and does not jump before time $T$.
 \end{proof}
 
 \begin{example}[the four models]\label{ex:models}

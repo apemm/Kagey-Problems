@@ -92,15 +92,21 @@ the $\binom{N-1}m$ compositions.
 \end{lemma}
 
 \begin{proof}
-Put $q(\pm1)=r$ and $q(2)=s$. The sequence with data $(m,Z,\ell)$ has probability
+We write down the probability of one sequence and factor it. The map is a bijection because the
+runs of a sequence determine $(m,Z,\ell)$ and are determined by it. Put $q(\pm1)=r$ and $q(2)=s$.
+A sequence with data $(m,Z,\ell)$ starts in the direction $Z_0$ with probability $\frac14$, keeps
+its direction at $N-1-m$ steps, and makes the switch from $Z_{t-1}$ to $Z_t$ with probability
+$h\,q(Z_t-Z_{t-1})$. So it has probability
 \[
  \frac14p_0^{N-1-m}\prod_{t=1}^mh\,q(Z_t-Z_{t-1})
  =\binom{N-1}m(\beta h)^mp_0^{N-1-m}\cdot\frac14\prod_{t=1}^m\frac{q(Z_t-Z_{t-1})}\beta
  \cdot\binom{N-1}m^{-1}.
 \]
-For fixed $m$ the middle factor is the probability of $Z$ under the walk in (c), so it sums to $1$
-over the skeletons, and the last factor sums to $1$ over the compositions. So the three factors are the
-laws in (a), (c) and (d), and the product form gives (b).
+The run lengths do not appear on the left, which is why they are uniform. On the right, the first
+factor depends only on $m$. For fixed $m$ the middle factor is the probability of $Z$ under the walk
+in (c), so it sums to $1$ over the skeletons, and the last factor sums to $1$ over the
+$\binom{N-1}m$ compositions. So the three factors are the laws in (a), (c) and (d), and the product
+form gives (b).
 \end{proof}
 
 The next proposition separates the skeletons that stay on one axis from those
@@ -127,6 +133,7 @@ $o_N/c_N$ grows with the switching rate, so the corner and the origin cross
 exactly once, at every even $N\ge4$.
 
 \begin{proof}
+We sort the origin paths by whether they turn, and then we write $o_N/c_N$ as a sum over paths.
 An origin path with no turn stays on the axis of its first step. An origin path that turns uses both
 axes, and since $n_0=n_2$ and $n_1=n_3$ at the origin, it uses all four directions. So every origin
 path is of exactly one of the two kinds. The origin paths on the axis $\{0,2\}$ are the paths with
@@ -233,28 +240,63 @@ $\psi(z)\approx N/4$. So doubling $S_N$ has the same effect as halving $N$.
 (a) Since $s>0$, $S_N(u)\ge2u>0$. Divide Proposition~\ref{prop:decomp} by $2S_N(u)$. Then
 $\varepsilon_N(h)=E_N/(2S_N(u))$ and $E_N\le2w^2(1+w)^N$.
 
-(b) Write $u^*=u^*_N$, $z^*=Nu^*$ and $E^*=E_N(h^*_N)$. At the crossing
-Proposition~\ref{prop:decomp} gives $2S_N(u^*)+E^*=1$. So $S_N(u^*)\le\frac12<S_N(u_N)$, and
-$u^*<u_N$. Put $w_N=\beta u_N/s$, which is the value of $w$ when $u=u_N$. Since
-$w\mapsto2w^2(1+w)^N$ is increasing, $E^*\le\eta_N:=2w_N^2(1+w_N)^N$. By the second-order expansion
-of $z_N$ in~\cite[Corollary~3.7(b)]{paperA}, $Nu_N=z_N/p_N=L-\frac12\log L+O(1)$. So
-$(1+w_N)^N\le e^{Nw_N}=O(N^{\beta/s}L^{-\beta/(2s)})$ and
-$w_N^2=O(L^2/N^2)$. As $\beta/s-2=-(s-2r)/s$ and $2-\beta/(2s)=\frac32-\frac rs$, this gives
-$\eta_N=O(L^{3/2-r/s}N^{-(s-2r)/s})$, which tends to $0$. Then
-$\varepsilon_N(h^*_N)=E^*/(1-E^*)\le\eta_N/(1-\eta_N)$.
+(b) The proof has two steps. We first show that the four-direction part $E_N$ is negligible at the
+crossing, so that the crossing nearly solves $2S_N(u)=1$. Then we compare this equation with the
+equation $S_{N/2}(u)=1$ of Kagey's crossing for $N/2$ steps. Both equations become statements about
+$\psi$, and $\psi$ grows so fast that nearly equal values force nearly equal arguments. Write
+$u^*=u^*_N$ and $z^*=Nu^*$, and let $E^*$ be the value of $E_N$ at $h=h^*_N$.
 
-Next let $z'=\frac N2u_{N/2}$, so that $S_{N/2}(2z'/N)=1$. By \eqref{eq:planar-bessel} with
-$N/2$ steps, $\frac N4\le\psi(z')\le\frac N4(1-\delta'_N)^{-1}$ with $\delta'_N=z'(z'+2)/N$. By
-\eqref{eq:planar-bessel} with $N$ steps and $\frac12(1-\eta_N)\le S_N(u^*)\le\frac12$, we get
-$\frac N4(1-\eta_N)\le\psi(z^*)\le\frac N4(1-\delta_N)^{-1}$ with $\delta_N=z^*(z^*+2)/(2N)$. Both $z'$
-and $z^*<Nu_N$ are $O(L)$, so $\delta_N,\delta'_N=O(L^2/N)$. As $(\log\psi)'\ge1$,
-$\lvert z^*-z'\rvert\le\lvert\log\psi(z^*)-\log\psi(z')\rvert=O(\eta_N+L^2/N)$. Finally
-$z_{N/2}=z'/(1+u_{N/2})=z'+O(L^2/N)$. So $z^*-z_{N/2}=O(\eta_N+L^2/N)$, which is $O(N^{-\gamma})$.
+\emph{Step 1: $E^*$ is small.} At the crossing $o_N/c_N=1$, so Proposition~\ref{prop:decomp} gives
+\[
+ 2S_N(u^*)+E^*=1.
+\]
+Hence $S_N(u^*)\le\frac12<1=S_N(u_N)$, and $u^*<u_N$ because $S_N$ is increasing. Now
+$w=\beta u/s$ for every $h$, so the value of $w$ at the crossing is below $w_N=\beta u_N/s$. The
+bound $E_N\le2w^2(1+w)^N$ of Proposition~\ref{prop:decomp} increases with $w$, so
+\[
+ E^*\le\eta_N:=2w_N^2(1+w_N)^N\le2w_N^2e^{Nw_N}.
+\]
+We estimate $\eta_N$. The second-order expansion of $z_N$
+in~\cite[Corollary~3.7(b)]{paperA} gives $Nu_N=z_N/p_N=L-\frac12\log L+O(1)$. So
+$Nw_N=\frac\beta s(L-\frac12\log L)+O(1)$, and
+\[
+ e^{Nw_N}=O\bigl(N^{\beta/s}L^{-\beta/(2s)}\bigr),\qquad w_N^2=O\Bigl(\frac{L^2}{N^2}\Bigr).
+\]
+In the product the exponent of $N$ is $\beta/s-2=-(s-2r)/s$, and the exponent of $L$ is
+$2-\beta/(2s)=\frac32-\frac rs$. Hence
+\[
+ \eta_N=O\bigl(L^{3/2-r/s}N^{-(s-2r)/s}\bigr),
+\]
+which tends to $0$ because $s>2r$. Since $2S_N(u^*)=1-E^*$, part (a) gives
+$\varepsilon_N(h^*_N)=E^*/(1-E^*)\le\eta_N/(1-\eta_N)$. This is the first claim.
 
-(c) Since $h^*_N=u^*/(s+\beta u^*)$, we have $sT^*_N=z^*/(1+\beta u^*/s)=z^*+O(L^2/N)$, as
+\emph{Step 2: comparison with $N/2$ steps.} Let $z'=\frac N2u_{N/2}$, so that
+$S_{N/2}(z'/(N/2))=1$. We apply \eqref{eq:planar-bessel} twice. With $N/2$ steps at $z'$ it reads
+$(1-\delta'_N)\psi(z')\le\frac N4\le\psi(z')$, where $\delta'_N=z'(z'+2)/N$. With $N$ steps at $z^*$
+it reads $(1-\delta_N)\psi(z^*)\le\frac N2S_N(u^*)\le\psi(z^*)$, where
+$\delta_N=z^*(z^*+2)/(2N)$, and Step 1 gives $\frac14(1-\eta_N)\le\frac12S_N(u^*)\le\frac14$.
+Together,
+\[
+ \frac N4\le\psi(z')\le\frac N4\cdot\frac1{1-\delta'_N},\qquad
+ \frac N4(1-\eta_N)\le\psi(z^*)\le\frac N4\cdot\frac1{1-\delta_N}.
+\]
+So $\psi$ is close to $N/4$ at both points. Both $z'$ and $z^*<Nu_N$ are $O(L)$, so $\delta_N$ and
+$\delta'_N$ are $O(L^2/N)$, and taking logarithms gives
+$\lvert\log\psi(z^*)-\log\psi(z')\rvert=O(\eta_N+L^2/N)$. Since $(\log\psi)'\ge1$, two points are
+never farther apart than their values of $\log\psi$. So
+\[
+ \lvert z^*-z'\rvert\le\lvert\log\psi(z^*)-\log\psi(z')\rvert=O\Bigl(\eta_N+\frac{L^2}N\Bigr).
+\]
+Finally $z_{N/2}=\frac N2(1-p_{N/2})=z'/(1+u_{N/2})$ and $u_{N/2}=O(L/N)$, so
+$z_{N/2}=z'+O(L^2/N)$. Hence $z^*-z_{N/2}=O(\eta_N+L^2/N)$. By the bound on $\eta_N$ in Step 1
+this is $O(N^{-\gamma})$, because $\gamma<\min(1,(s-2r)/s)$.
+
+(c) We pass from $Nu^*_N$ to $sT^*_N$ and then insert the expansion of $z_N$. Since
+$u=sh/(1-\beta h)$, we have $h^*_N=u^*/(s+\beta u^*)$. So $sT^*_N=z^*/(1+\beta u^*/s)=z^*+O(L^2/N)$, as
 $u^*<u_N=O(L/N)$. With (b) this gives $sT^*_N=z_{N/2}+O(N^{-\gamma})$. The third-order expansion of
 $z_N$, for $N/2$ steps and for $N$ steps, gives
-$z_{N/2}=\mathcal A(L-\log2)+O((\log L)^2/L^2)$ and $z_N=\mathcal A(L)+O((\log L)^2/L^2)$. The last
+$z_{N/2}=\mathcal A(L-\log2)+O((\log L)^2/L^2)$ and $z_N=\mathcal A(L)+O((\log L)^2/L^2)$, since
+$\log(N/2)=L-\log2$. This is the first display. For the second we subtract. The last
 term of $\mathcal A$ has derivative $O(\log L/L^2)$ near $L$, so
 \[
  \mathcal A(L-\log2)-\mathcal A(L)=-\log2-\tfrac12\log\Bigl(1-\frac{\log2}L\Bigr)
@@ -338,11 +380,18 @@ dimensions it is of order $T/N^2$. At the switch $s=2r$ neither kind of path win
 shares of the origin mass tend to explicit constants.
 
 \begin{proof}
-Let $0\le s\le2r$. Then $\tau^*=2/\beta$, so $T^*_N/L\to2/\beta$ by
-Theorem~\ref{thm:planar-first}(b), and Theorem~\ref{thm:fourdir} applies with $T_N=T^*_N$. At the
-crossing Proposition~\ref{prop:decomp} gives $o^{(4)}_N=c_N(1-2S_N(u^*_N))$, and both sides are
-positive. Also $\log c_N=-\log4+(N-1)\log(1-\beta h^*_N)=-\log4-\beta T^*_N+O(L^2/N)$. Taking
-logarithms and using Theorem~\ref{thm:fourdir},
+Let $0\le s\le2r$. At the crossing Proposition~\ref{prop:decomp} gives
+$o^{(4)}_N=c_N(1-2S_N(u^*_N))$. We take logarithms in this identity and insert
+Theorem~\ref{thm:fourdir} on the left.
+
+Since $\tau^*=2/\beta$, Theorem~\ref{thm:planar-first}(b) gives $T^*_N/L\to2/\beta$. So
+$T^*_N\to\infty$ and $T^*_N\le N^{1/8}$ for large $N$, and Theorem~\ref{thm:fourdir} applies with
+$T_N=T^*_N$. It gives
+\[
+ \log o^{(4)}_N=-2L+\log T^*_N+\log\frac{2(r+s)}\pi+o(1).
+\]
+On the right, $\log c_N=-\log4+(N-1)\log(1-\beta h^*_N)=-\log4-\beta T^*_N+O(L^2/N)$. Both sides of
+the identity are positive, so we may equate their logarithms. This gives
 \begin{equation}\label{eq:planar-star}
  \beta T^*_N+\log T^*_N=2L+\log\frac\pi{8(r+s)}+\log\bigl(1-2S_N(u^*_N)\bigr)+o(1).
 \end{equation}
@@ -352,16 +401,27 @@ in~\eqref{eq:planar-star} is $o(1)$. For the second form note that
 $\log T^*_N=\log(2L/\beta)+o(1)$, and that $2z_N=2L-\log L+\log\frac\pi8+o(1)$ by the crossing
 equation of~\cite{paperA} recalled in Section~\ref{sec:notation}.
 
-(b) Now $\beta=2s$ and $2(r+s)=3s$. Put $z^*=Nu^*_N$, so that $z^*=sT^*_N+O(L^2/N)$ and
-$z^*\to\infty$. As in the proof of Theorem~\ref{thm:planar-first}, \eqref{eq:planar-bessel} and
-$\psi(z)\sim\sqrt{2z/\pi}\,e^z$ give
-$2S_N(u^*_N)=\frac4N\sqrt{2z^*/\pi}\,e^{z^*}(1+o(1))$. Let $\varrho_N=Ne^{-sT^*_N}/\sqrt{T^*_N}$,
-$a=8\sqrt{s/(2\pi)}$ and $b=12s/\pi$. Then $2S_N(u^*_N)=(a/\varrho_N)(1+o(1))$, and
-Theorem~\ref{thm:fourdir} with $c_N^{-1}=4e^{2sT^*_N}(1+o(1))$ gives
-$o^{(4)}_N/c_N=(b/\varrho_N^2)(1+o(1))$. These two positive terms add up to $1$. So $\varrho_N$ is
-bounded and bounded away from $0$, and each of its limit points $\tilde\varrho$ solves
-$\tilde\varrho^2-a\tilde\varrho-b=0$. As $a^2=32s/\pi$ and $a^2+4b=80s/\pi$, the only positive root
-is $\tilde\varrho=2\sqrt{s/\pi}\,(\sqrt2+\sqrt5)$. Hence
+(b) Now $\beta=2s$ and $2(r+s)=3s$. Here the axis part and the four-direction part of the origin
+mass have the same order at the crossing. We write both in terms of the one quantity
+$\varrho_N=Ne^{-sT^*_N}/\sqrt{T^*_N}$ and solve for it.
+
+Put $z^*=Nu^*_N$, so that $z^*=sT^*_N+O(L^2/N)$ and $z^*\to\infty$. As in the proof of
+Theorem~\ref{thm:planar-first}, \eqref{eq:planar-bessel} and $\psi(z)\sim\sqrt{2z/\pi}\,e^z$ give
+the axis part,
+\[
+ 2S_N(u^*_N)=\frac4N\sqrt{\frac{2z^*}\pi}\,e^{z^*}(1+o(1))=\frac a{\varrho_N}(1+o(1)),
+ \qquad a=8\sqrt{\frac s{2\pi}}.
+\]
+Theorem~\ref{thm:fourdir} with $c_N^{-1}=4e^{2sT^*_N}(1+o(1))$ gives the four-direction part,
+\[
+ \frac{o^{(4)}_N}{c_N}=\frac{3s}\pi\cdot\frac{T^*_N}{N^2}\cdot4e^{2sT^*_N}(1+o(1))
+ =\frac b{\varrho_N^2}(1+o(1)),\qquad b=\frac{12s}\pi.
+\]
+The two parts are positive and add up to $1$. So $\varrho_N$ is bounded and bounded away from $0$
+(otherwise the sum would tend to $\infty$ or to $0$ along a subsequence), and each of its limit
+points $\tilde\varrho$ solves $\tilde\varrho^2-a\tilde\varrho-b=0$. As $a^2=32s/\pi$ and
+$a^2+4b=80s/\pi$, the only positive root is $\tilde\varrho=2\sqrt{s/\pi}\,(\sqrt2+\sqrt5)$. So
+$\varrho_N$ converges to it. Hence
 $2S_N(u^*_N)\to a/\tilde\varrho=2\sqrt2/(\sqrt2+\sqrt5)$, so
 $1-2S_N(u^*_N)\to(\sqrt5-\sqrt2)/(\sqrt5+\sqrt2)$, and~\eqref{eq:planar-star} gives the display.
 \end{proof}

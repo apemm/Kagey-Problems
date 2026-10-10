@@ -121,19 +121,44 @@ the unique minimizer of $\Phi_\tau$.
 \end{proposition}
 
 \begin{proof}
-(a) A vertex has $\Phi_\tau=\tau$. For $|F|\ge2$,
-$\Phi_\tau(F)-\tau=\rho_F((|F|-1)/\rho_F-\tau)$ with $\rho_F>0$, and for
-$F\ne[d]$, $\Phi_\tau(F)-(d-1)=(1-\rho_F)(\tau-(d-|F|)/(1-\rho_F))$ with
-$1-\rho_F>0$, while $\Phi_\tau([d])=d-1$. (b) For $2\le|F|\le d-1$,
-$\rho_F<1$ gives $(|F|-1)/\rho_F>1$, and $[d]$ gives $d-1\ge2$, so
-$\tau_->1$. Also $[d]$ gives $\tau_-\le d-1$, and a vertex gives
-$\tau_+\ge d-1$. (c) By (b), $\tau_-=d-1$ exactly when
-$(|F|-1)/\rho_F\ge d-1$ for all $|F|\ge2$, and $\tau_+=d-1$ exactly when
-$(d-|F|)/(1-\rho_F)\le d-1$ for all $F\ne[d]$. Both say
-$(d-1)\rho_F\le|F|-1$, which holds for the vertices and $[d]$. If
-\eqref{eq:directjump} fails, we get $\tau_-<d-1<\tau_+$, and (a) excludes the
-vertices and $[d]$ on $(\tau_-,\tau_+)$. The consequence follows from Corollary~\ref{cor:map} and
-$P_N(Ne_i)=\mu_i(1-h)^{N-1}$. Parts (a) to (c) are checked in Lean.
+We compare every face with a vertex and with $[d]$. The function
+$\Phi_\tau(F)=\tau(1-\rho_F)+|F|-1$ is linear in $\tau$, so each comparison
+changes sign at one value of $\tau$, and $\tau_-$ and $\tau_+$ are the extreme
+ones.
+
+(a) A vertex has $\Phi_\tau=\tau$. For $|F|\ge2$ we have $\rho_F>0$ and
+\[
+ \Phi_\tau(F)-\tau=|F|-1-\tau\rho_F=\rho_F\Bigl(\frac{|F|-1}{\rho_F}-\tau\Bigr).
+\]
+So $F$ is worse than a vertex exactly when $\tau<(|F|-1)/\rho_F$. This holds
+for every $F$ with $|F|\ge2$ exactly when $\tau<\tau_-$, and if $\tau>\tau_-$
+some $F$ is better than every vertex. In the same way $\Phi_\tau([d])=d-1$,
+and for $F\ne[d]$ we have $1-\rho_F>0$ and
+\[
+ \Phi_\tau(F)-(d-1)=\tau(1-\rho_F)-(d-|F|)
+ =(1-\rho_F)\Bigl(\tau-\frac{d-|F|}{1-\rho_F}\Bigr).
+\]
+So $F$ is worse than $[d]$ exactly when $\tau>(d-|F|)/(1-\rho_F)$, which gives
+the two claims on $[d]$.
+
+(b) In the minimum that defines $\tau_-$, a face with $2\le|F|\le d-1$ has
+$\rho_F<1$ and so $(|F|-1)/\rho_F>1$, and $[d]$ gives the value $d-1\ge2$. So
+$\tau_->1$ and $\tau_-\le d-1$. In the maximum that defines $\tau_+$, a vertex
+gives the value $d-1$, so $\tau_+\ge d-1$.
+
+(c) By (b), $\tau_-=d-1$ exactly when $(|F|-1)/\rho_F\ge d-1$ for all
+$|F|\ge2$, and $\tau_+=d-1$ exactly when $(d-|F|)/(1-\rho_F)\le d-1$ for all
+$F\ne[d]$. After clearing the denominators both conditions say
+$(d-1)\rho_F\le|F|-1$. This inequality always holds for the vertices and for
+$[d]$, so each condition is \eqref{eq:directjump}. If
+\eqref{eq:directjump} fails, then neither holds, so $\tau_-<d-1<\tau_+$ by
+(b), and (a) excludes the vertices and $[d]$ on $(\tau_-,\tau_+)$.
+
+For the consequence, Corollary~\ref{cor:map} says that the support of a prior
+mode minimizes $\Phi_\tau$, and (a) and (c) say which faces can do so. If
+$\tau<\tau_-$ the prior modes are vertex compositions, and
+$P_N(Ne_i)=\mu_i(1-h)^{N-1}$ is largest for the largest $\mu_i$. Parts (a) to
+(c) are checked in Lean.
 \end{proof}
 
 We say that $\Pi$ has a \emph{direct jump} when \eqref{eq:directjump} holds.
@@ -155,13 +180,23 @@ jump.
 \end{corollary}
 
 \begin{proof}
-A pair has $\rho_{\{i,j\}}=\sqrt{\pi_{ij}\pi_{ji}}$. (a) Here
-$\rho_{\{i,j\}}=\pi_{ij}$, and since the rows sum to $1$ the average of
-$\pi_{ij}$ over the pairs is $1/(d-1)$. So \eqref{eq:directjump} fails unless
-all $\pi_{ij}$ are equal, and the uniform kernel satisfies it with equality.
-(b) For $d=3$, \eqref{eq:directjump} is automatic for the vertices and $[3]$,
-and for a pair it reads $\pi_{ij}\pi_{ji}\le\frac14$. The cyclic kernel has
-$a(1-a)\le\frac14$. Both parts are checked in Lean.
+We test \eqref{eq:directjump} on the pairs. The matrix $\Pi_{\{i,j\}}$ has
+zero diagonal and off-diagonal entries $\pi_{ij}$ and $\pi_{ji}$, so
+$\rho_{\{i,j\}}=\sqrt{\pi_{ij}\pi_{ji}}$.
+
+(a) Here $\rho_{\{i,j\}}=\pi_{ij}$, so for a pair \eqref{eq:directjump} reads
+$\pi_{ij}\le1/(d-1)$. The $d$ rows sum to $1$ and have $d(d-1)$ off-diagonal
+entries, so the average of the $\pi_{ij}$ is $1/(d-1)$. If none of them
+exceeds the average, they are all equal to it. So a direct jump forces the
+uniform kernel. Conversely the uniform kernel has $\rho_F=(|F|-1)/(d-1)$ for
+every face, as we saw above, so it satisfies \eqref{eq:directjump} with
+equality.
+
+(b) For $d=3$ the faces are the vertices, the three pairs and $[3]$. For the
+vertices and $[3]$, \eqref{eq:directjump} reads $0\le0$ and $1\le1$. For a
+pair it reads $\sqrt{\pi_{ij}\pi_{ji}}\le\frac12$. The cyclic kernel has
+$\pi_{ij}\pi_{ji}=a(1-a)\le\frac14$ for every pair. Both parts are checked in
+Lean.
 \end{proof}
 
 So for a symmetric kernel that is not uniform there is a range of $\tau$ in
@@ -184,12 +219,16 @@ Let $B_1,B_2,B_3$ be independent with law $\mathrm{Beta}(\omega/3,\omega/3)$,
 and put $\pi_{12}=B_1$, $\pi_{21}=B_2$ and $\pi_{31}=B_3$, so that the other
 off-diagonal entries are $1-B_j$. By Corollary~\ref{cor:uniform-kernel}(b),
 $D$ is the event that $B_1B_2$, $(1-B_1)B_3$ and $(1-B_2)(1-B_3)$ are all at
-most $\frac14$. (a) As $\omega\to0$ each $B_j$ tends in law to a fair coin on $\{0,1\}$, and
-the three products then take only the values $0$ and $1$. So $\partial D$ has
-limit probability $0$, and $\Prob_\omega(D)$ tends to the limit probability of
-$D$. Only $(1,0,1)$ and $(0,1,0)$ make all three products $0$
-(checked in Lean), so the limit is $\frac14$. Part (b) is proved in
-Appendix~\ref{app:hdp}.
+most $\frac14$.
+
+(a) As $\omega\to0$ each $B_j$ tends in law to a fair coin on $\{0,1\}$. So
+the law of $(B_1,B_2,B_3)$ tends to the uniform law on the eight points of
+$\{0,1\}^3$. At these points the three products take only the values $0$ and
+$1$, so none of the points lies on the boundary of $D$ (where some product
+equals $\frac14$). Hence $\Prob_\omega(D)$ tends to the limit probability of
+$D$, which is the fraction of the eight points at which all three products are
+$0$. Only $(1,0,1)$ and $(0,1,0)$ have this property (checked in Lean), so the
+limit is $\frac28=\frac14$. Part (b) is proved in Appendix~\ref{app:hdp}.
 \end{proof}
 
 In words, a direct jump has probability close to $\frac14$ when the
@@ -223,12 +262,20 @@ value of $\tau$ at which the pair overtakes the state is known at every $N$ and
 not only in the limit.
 
 \begin{proof}
-Every exit rate is $1$, so this is Proposition~\ref{prop:pair} with $a=\pi_0$
-and $q=1$, where $u=\pi_0h/(1-h)>u_N$ exactly when $h>u_N/(\pi_0+u_N)$. For
-the prior modes, $P_N(Ne_l)=\mu_l(1-h)^{N-1}\le P_N(Ne_i)$ for every $l$, and the range
-of $\tau$ is not empty as $u_N/(\pi_0+u_N)<1$. Finally $Nu_N=z_N/p_N$ and
-$u_N=O(L/N)$, so $\tau^{\rm pair}(N)=\frac{z_N}{\pi_0L}(1+O(L/N))$, and the
-second-order expansion of $z_N$ in~\cite[Corollary~3.7(b)]{paperA} gives the claim.
+We apply Proposition~\ref{prop:pair}. Every exit rate is $1$, so its
+hypotheses hold with $a=\pi_0$ and $q=1$, and its odds are $u=\pi_0h/(1-h)$. It
+says that the balanced compositions are the most likely ones on $\{i,j\}$ and
+that they beat $Ne_i$ exactly when $u>u_N$. Solving for $h$, this is
+$h>u_N/(\pi_0+u_N)$, and with $h=\tau L/N$ it is $\tau>\tau^{\rm pair}(N)$.
+
+For the prior modes, $P_N(Ne_l)=\mu_l(1-h)^{N-1}\le P_N(Ne_i)$ for every $l$.
+So when the pair beats $Ne_i$ it beats every single state. The condition
+$\tau<N/L$ is $h<1$, and the range of $\tau$ is not empty as
+$u_N/(\pi_0+u_N)<1$.
+
+Finally $Nu_N=z_N/p_N$ and $u_N=O(L/N)$, so
+$\tau^{\rm pair}(N)=\frac{z_N}{\pi_0L}(1+O(L/N))$, and the second-order
+expansion of $z_N$ in~\cite[Corollary~3.7(b)]{paperA} gives the claim.
 \end{proof}
 
 So far we looked at the single most likely count vector. The last result
@@ -252,12 +299,18 @@ $\mu(F)N^{-\tau\lambda_F}$ up to a bounded factor, and the probability that it
 uses every state tends to $1$.
 
 \begin{proof}
-Let $U_F=(1-h)I+h\Pi_F\ge0$. Then
-$\Prob(\supp n\subseteq F)=\mu_F^{\top}U_F^{N-1}\ones$ and
-$U_Fr_F=\Lambda_Fr_F$. As $r_F/\max r_F\le\ones\le r_F/\min r_F$ entrywise,
-this gives the bounds, and $(N-1)\log(1-h\lambda_F)=-\tau\lambda_FL+O(L^2/N)$. A
-vertex composition is a single path, and every $F\ne[d]$ has $\lambda_F>0$,
-which gives the last two claims. The finite bounds are checked in Lean.
+We write the probability with the transition matrix restricted to $F$ and
+compare the vector $\ones$ with the Perron vector. Let
+$U_F=(1-h)I+h\Pi_F\ge0$. The chain stays in $F$ for all $N$ steps with
+probability $\Prob(\supp n\subseteq F)=\mu_F^{\top}U_F^{N-1}\ones$, and
+$U_Fr_F=\Lambda_Fr_F$. As $r_F/\max r_F\le\ones\le r_F/\min r_F$ entrywise and
+$U_F^{N-1}$ has nonnegative entries, we may replace $\ones$ by these two
+multiples of $r_F$. This gives the bounds. For fixed $\tau$,
+$(N-1)\log(1-h\lambda_F)=-\tau\lambda_FL+O(L^2/N)$. A vertex composition is a
+single path that never switches, which gives $\Prob(\text{one state})$. Every
+$F\ne[d]$ has $\lambda_F>0$, so each of the finitely many proper faces has
+probability tending to $0$, and $\Prob(\supp n=[d])\to1$. The finite bounds are
+checked in Lean.
 \end{proof}
 
 \begin{remark}[prior mode versus mass]\label{rem:mapmass}
