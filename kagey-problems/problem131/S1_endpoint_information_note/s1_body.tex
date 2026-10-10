@@ -65,44 +65,71 @@ appear. The reason is that one switch and two switches both leave the endpoint
 uniform on the interior bins, so an interior bin cannot tell them apart.
 
 \begin{proof}
-By Proposition~\ref{prop:eta}, $1-e_N=\E\Var(J\mid K)/\Var J$, and
-$\Var J=(N-1)pq$. Fix an interior bin $0<k<N$. Exactly two words with $k$
-right steps have one switch, and exactly $N-2$ have two switches ($k-1$ that
-start to the right and $N-k-1$ that start to the left). So
+We measure the loss $1-e_N$ by how uncertain $J$ still is once we know the
+bin. By Proposition~\ref{prop:eta} and the decomposition of the variance,
+\[
+ 1-e_N=\frac{\E\Var(J\mid K)}{\Var J},\qquad\Var J=(N-1)pq .
+\]
+On the two end bins $J=0$, so only the interior bins count. Fix an interior
+bin $0<k<N$. Exactly two words with $k$ right steps have one switch, and
+exactly $N-2$ have two switches ($k-1$ that start to the right and $N-k-1$
+that start to the left). Each word with $j$ switches has probability
+$\frac12p^{N-1-j}q^j$. So
 \[
  \Prob(J=1,K=k)=p^{N-2}q,\qquad\Prob(J=2,K=k)=\frac{N-2}2\,p^{N-3}q^2 .
 \]
 
-(a) Here $N$ is fixed. Given $K=k$ the number of switches is $1$, or $2$ with
-probability $\frac{N-2}2q+O_N(q^2)$, or larger with probability $O_N(q^2)$. So
-$\Var(J\mid K=k)=\frac{N-2}2q+O_N(q^2)$, and
-$\Prob(0<K<N)=(N-1)q+O_N(q^2)$. For $K\in\{0,N\}$ the conditional variance is
-$0$. Hence $\E\Var(J\mid K)=\frac{(N-1)(N-2)}2q^2+O_N(q^3)$, and dividing by
-$(N-1)pq$ gives the claim.
+(a) Here $N$ is fixed and $q\to0$. By these two formulas, given $K=k$
+the number of switches is $2$ with probability $\frac{N-2}2q+O_N(q^2)$ and
+larger than $2$ with probability $O_N(q^2)$. Otherwise it is $1$. So $J$ given
+$K=k$ is close to a coin with a small chance of the value $2$, and
+$\Var(J\mid K=k)=\frac{N-2}2q+O_N(q^2)$. The interior bins have total
+probability $1-p^{N-1}=(N-1)q+O_N(q^2)$. Hence
+$\E\Var(J\mid K)=\frac{(N-1)(N-2)}2q^2+O_N(q^3)$, and dividing by $(N-1)pq$
+gives the claim.
 
-(b) For the upper bound we replace $\E[J\mid K]$ by the indicator of an
-interior bin, which can only raise the mean squared error. This gives
+(b) We prove an upper and a lower bound for $1-e_N$ that hold for all
+$N\ge2$ and $0<q<1$.
+
+\emph{Upper bound.} The conditional mean $\E[J\mid K]$ is the function of $K$
+closest to $J$ in mean square. So replacing it by another function of $K$,
+namely the indicator of an interior bin, can only raise the error. Note that
+$J\ge1$ exactly on the interior bins, so $J$ minus this indicator is $0$ when
+$J=0$ and $J-1$ otherwise. Since $(J-1)^2\le J(J-1)$ for $J\ge1$,
 \[
  \E\Var(J\mid K)\le\E\bigl(J-\mathbf 1\{0<K<N\}\bigr)^2
- =\E\bigl[(J-1)^2;J\ge2\bigr]\le\E[J(J-1)]=(N-1)(N-2)q^2 ,
+ \le\E[J(J-1)]=(N-1)(N-2)q^2 .
 \]
-because $J\ge1$ exactly on the interior bins. So
-$1-e_N\le(N-2)q/p\le T/p$, which tends to $0$ if $T\to0$.
+(The last step is the second factorial moment of
+$J\sim\operatorname{Bin}(N-1,q)$.) Dividing by $(N-1)pq$ gives
+$1-e_N\le(N-2)q/p\le T/p$. This tends to $0$ if $T\to0$.
 
-For the lower bound, a variable that takes two values $1$ apart with
-probabilities $a$ and $b$ has variance at least $ab$. So
-$\Var(J\mid K=k)\ge\Prob(J=1\mid K=k)\Prob(J=2\mid K=k)$, and by the
-Cauchy--Schwarz inequality
+\emph{Lower bound.} We use only the values $1$ and $2$ of $J$. If a variable
+equals $1$ with probability $a$ and $2$ with probability $b$ (and anything
+else otherwise), then its variance is at least $ab$. (The variance is half the
+mean of $(J_1-J_2)^2$ for two independent copies, and with probability $2ab$
+one copy is $1$ and the other is $2$.) So
 \[
- \E\Var(J\mid K)\ge\sum_{0<k<N}\frac{\Prob(J=1,K=k)\Prob(J=2,K=k)}{\Prob(K=k)}
- \ge\Bigl(\sum_{0<k<N}\sqrt{\Prob(J=1,K=k)\Prob(J=2,K=k)}\Bigr)^2
- =\frac{(N-1)^2(N-2)}2\,p^{2N-5}q^3 .
+ \E\Var(J\mid K)\ge\sum_{0<k<N}\frac{\Prob(J=1,K=k)\Prob(J=2,K=k)}{\Prob(K=k)} .
 \]
-Dividing by $(N-1)pq$ gives $1-e_N\ge\frac{(N-1)(N-2)}2p^{2N-6}q^2$. If $T$
-stays in an interval $[t_0,t_1]$ with $t_0>0$, the right side tends to a limit
-between $\frac12t_0^2e^{-2t_1}$ and $\frac12t_1^2$, and it is positive. So
-$e_N$ does not tend to $1$ along any sequence on which $T$ stays away from
-$0$.
+By the Cauchy--Schwarz inequality and $\sum_{0<k<N}\Prob(K=k)\le1$, the right
+side is at least
+\[
+ \Bigl(\sum_{0<k<N}\sqrt{\Prob(J=1,K=k)\Prob(J=2,K=k)}\Bigr)^2
+ =\frac{(N-1)^2(N-2)}2\,p^{2N-5}q^3 ,
+\]
+where we used the two formulas above and that there are $N-1$ interior bins.
+Dividing by $(N-1)pq$ gives
+\[
+ 1-e_N\ge\frac{(N-1)(N-2)}2\,p^{2N-6}q^2 .
+\]
+
+\emph{Conclusion.} Let $q\to0$ with $T$ bounded. If $T\to0$, the upper bound
+gives $e_N\to1$. If $T$ does not tend to $0$, then $T\ge t_0>0$ along a
+subsequence, and $T\le t_1$ for some $t_1$. Along it $N\to\infty$, so
+$(N-1)(N-2)q^2=T^2(1+o(1))$ and $p^{2N-6}=e^{-2T}(1+o(1))$. So the lower bound
+is $\frac12T^2e^{-2T}+o(1)\ge\frac12t_0^2e^{-2t_1}+o(1)$, and $e_N$ does not
+tend to $1$.
 \end{proof}
 
 \begin{theorem}[many switches]\label{thm:fisher}
@@ -226,28 +253,47 @@ $1\le T\le N^{1/4}$,
 \end{corollary}
 
 In words, among all estimators that see only the bins, matching the mean
-square of the endpoint loses a fraction of order $1/T^2+T^4/N$ of the
-information. At Kagey's crossing the efficiency $R^2_N/e_N$ is $0.87$ at
+square of the endpoint loses at most a fraction of order $1/T^2+T^4/N$ of
+the information. At Kagey's crossing the efficiency $R^2_N/e_N$ is $0.87$ at
 $N=50$ and $0.97$ at $N=3200$ (Table~\ref{tab:fisher}).
 
 \begin{proof}
-The law of a path is a polynomial in $q$ with score $(J-(N-1)q)/(pq)$, so
+This is the usual argument for a method of moments estimator. The one thing
+special to our model is that the slope $m'(q)$ is a covariance with $J$, and
+this is what brings in $R^2_N$.
+
+\emph{The slope.} The probability of a path is a polynomial in $q$, and its
+score is $(J-(N-1)q)/(pq)$. So
 $m'(q)=\E[X^2(J-(N-1)q)]/(pq)=\Cov(J,X^2)/(pq)$. This is not zero because
-$R^2_N(q)>0$. So $m$ is strictly monotone near $q$. By the law of large
-numbers the mean of the $X_i^2$ tends to $m(q)$, so with probability tending
-to $1$ it lies in the image of a small interval around $q$, and the solution
-in that interval converges to $q$. The central limit theorem and the delta
-method give the limit law with variance
+$R^2_N(q)>0$.
+
+\emph{The estimator.} Since $m'(q)\ne0$, there is an interval $U$ around $q$
+on which $m$ is strictly monotone, with a continuous inverse on $m(U)$. By the
+law of large numbers the mean of the $X_i^2$ tends to $m(q)$ in probability.
+So with probability tending to $1$ it lies in $m(U)$, and then we let
+$\hat q_n$ be the solution in $U$. It converges to $q$ because the inverse is
+continuous.
+
+\emph{The limit law.} By the central limit theorem, $\sqrt n$ times the
+difference of the mean of the $X_i^2$ and $m(q)$ tends to $N(0,\Var X^2)$. The
+delta method divides the variance by $m'(q)^2$. So the limit variance is
 \[
  \frac{\Var X^2}{m'(q)^2}=\frac{(pq)^2\Var X^2}{\Cov(J,X^2)^2}
- =\frac{(pq)^2}{R^2_N(q)\Var J}=\frac{pq}{(N-1)R^2_N(q)} .
+ =\frac{(pq)^2}{R^2_N(q)\Var J}=\frac{pq}{(N-1)R^2_N(q)} ,
 \]
-Since $I_K(q)=e_N(q)(N-1)/(pq)$, the ratio of $1/I_K(q)$ to this variance is
-$R^2_N/e_N$, and it is at most $1$ by~\eqref{eq:fisher-proj}. For the lower
-bound let $C_1$ be the constant in the expansion of
-Theorem~\ref{thm:fisher}, and put $C'=4\max(C,C_1)$ and
-$\epsilon=T^{-2}+T^4/N$. If $C'\epsilon\ge1$ the claim is trivial, since
-$R^2_N/e_N\ge0$. Otherwise $C_1\epsilon<\frac14$, so the expansion gives
-$e_N\ge\frac1{2T}-\frac{C_1\epsilon}T\ge\frac1{4T}$. Then
-$1-R^2_N/e_N=(e_N-R^2_N)/e_N\le4T\cdot C\epsilon/T=4C\epsilon\le C'\epsilon$.
+where we used the definition of $R^2_N$ and $\Var J=(N-1)pq$.
+
+\emph{The efficiency.} Since $I_K(q)=e_N(q)(N-1)/(pq)$, the ratio of
+$1/I_K(q)$ to this variance is $R^2_N/e_N$. It is at most $1$
+by~\eqref{eq:fisher-proj} with $g(K)=X^2$.
+
+\emph{The lower bound.} Put $\epsilon=T^{-2}+T^4/N$. Theorem~\ref{thm:fisher}
+gives $e_N-R^2_N\le C\epsilon/T$. Let $C_1$ be the constant in its expansion,
+so that $e_N\ge\frac1{2T}-C_1\epsilon/T$, and put $C'=4\max(C,C_1)$. If
+$C'\epsilon\ge1$ the claim is trivial, since $R^2_N/e_N\ge0$. Otherwise
+$C_1\epsilon<\frac14$, so $e_N\ge\frac1{4T}$. Then
+\[
+ 1-\frac{R^2_N}{e_N}=\frac{e_N-R^2_N}{e_N}\le\frac{C\epsilon}T\cdot4T
+ =4C\epsilon\le C'\epsilon .
+\]
 \end{proof}

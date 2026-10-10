@@ -52,7 +52,7 @@ Here is what we find. The proofs are in the sections that follow.
  (Theorem~\ref{thm:entropy}). They cannot tell a film of the chain from the
  same film run backward. Yet they determine exactly how different the two films
  are, namely the entropy production rate, and from any start they decide
- whether the chain is reversible.
+ whether the chain is reversible (when every rate is positive).
 \item \emph{Lumping gives more ties} (Theorem~\ref{thm:lumping}). If a group of
  states looks like a single state from outside, we can reverse the outside and
  keep the inside, or reverse the inside and keep the outside. This gives two
@@ -159,12 +159,26 @@ If $G$ is irreducible, then $\chi(z,\lambda)=\det(z+\Lambda-G)$ is an irreducibl
 polynomial.
 \end{lemma}
 \begin{proof}
-Put $x_i=z+\lambda_i+q_i$ and let $A\ge0$ be $G$ without its diagonal. Then
-$\chi=\det(X-A)=\sum_{U\subseteq[d]}m(U)\prod_{i\notin U}x_i$ with
-$m(U)=\det(-A_{UU})$. This has degree one in each $x_i$. So if $\chi=pq$ with
-both factors nonconstant, the variables split into two nonempty sets $S$ and
-$S^c$, with $p$ using only $S$ and $q$ only $S^c$, and comparing coefficients
-gives $m(U\cup V)=m(U)\,m(V)$ for $U\subseteq S$ and $V\subseteq S^c$.
+We argue by contradiction. A factorization of $\chi$ would force a product rule
+on its coefficients, and a cycle of the chain breaks that rule.
+
+Put $x_i=z+\lambda_i+q_i$, let $X=\operatorname{diag}(x_1,\ldots,x_d)$, and let
+$A\ge0$ be $G$ without its diagonal. Then
+\[
+\chi=\det(X-A)=\sum_{U\subseteq[d]}m(U)\prod_{i\notin U}x_i,
+\qquad m(U)=\det(-A_{UU}),\quad m(\emptyset)=1 .
+\]
+So $\chi$ is a polynomial in $x_1,\ldots,x_d$ alone, and it is enough to show
+that it does not factor as such a polynomial. (Use $x_1,\ldots,x_d$ and $z$ as
+coordinates. Then $\chi$ has degree zero in $z$, so every factor of $\chi$ does
+too.) It has degree exactly one in
+each $x_i$. Suppose $\chi=\chi_1\chi_2$ with both factors nonconstant. Then each
+$x_i$ appears in exactly one factor, so the variables split into two nonempty
+sets $S$ and $S^c$, with $\chi_1$ using only $S$ and $\chi_2$ only $S^c$. Scale
+the factors so that each has top coefficient $1$. Comparing coefficients gives
+\[
+m(U\cup V)=m(U)\,m(V)\qquad\text{for }U\subseteq S\text{ and }V\subseteq S^c .
+\]
 
 Since $G$ is irreducible, some cycle of positive rates meets both $S$ and $S^c$.
 Take one with the fewest states, let $W$ be its set of states, and put
@@ -173,11 +187,15 @@ permutations that keep $U$ and $V$ apart sum to $m(U)m(V)$. Any other permutatio
 with nonzero weight contains a cycle that meets both sides, which by our choice
 uses all of $W$. A single cycle on $W$ has sign $(-1)^{|W|-1}$ and weight
 $(-1)^{|W|}$ times a product of rates, so it contributes minus that product.
-These contributions cannot cancel, and ours is not zero. So
-$m(W)\ne m(U)m(V)$, a contradiction.
+These contributions all have the same sign, so they cannot cancel, and ours is
+not zero. So $m(W)\ne m(U)m(V)$, a contradiction.
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{thm:horizon}]
+We write $\Phi_1$ as a sum of $d$ exponentials on a ball where the eigenvalues
+of $G-\Lambda$ are far apart, do the same for $\Phi_1'$, and match the two sums
+term by term.
+
 Both $\Phi_1$ and $\Phi_1'$ are entire and agree on $\mathbb R^d$, so they agree
 on $\C^d$. Let $m=2\max_i\max(q_i,q_i')$ and let $B$ be the ball of radius $3m$
 around the real point $(0,12m,24m,\ldots)$. On $B$ we have
@@ -194,31 +212,44 @@ where $\rho_i$ is the residue of $n/\chi=\mu^{\top}(z+\Lambda-G)^{-1}\one$ at
 $z_i$. Since the residues of a resolvent sum to the identity, $\sum_i\rho_i=1$.
 The same holds for $(\mu',G')$ with $z_i'$, $\rho_i'$ and $\chi'$.
 
-\emph{No mode is missing.} If $\rho_i=0$ on $B$, then $n$ and $\chi$ share the
-root $z_i$, so they have a common factor. But $\chi$ is irreducible
-(Lemma~\ref{lem:irred}), and $n$ has degree $d-1$ in $z$ with leading
-coefficient $\sum_i\mu_i=1$.
+We now compare the two expansions of $\Phi_1$ in three steps.
 
-\emph{The modes match.} Since $|z_i+\lambda_i|\le m$ and
-$|z_j'+\lambda_j|\le m$ on $B$, while $\lambda_i-\lambda_j$ moves by more than
-$4m$ across $B$, none of the differences $z_i-z_j$, $z_i'-z_j'$ and $z_i-z_j'$
-with $i\ne j$ is constant. Apply Lemma~\ref{lem:exp} to
-$\sum_i\rho_ie^{z_i}-\sum_i\rho_i'e^{z_i'}=0$, after merging any two exponents
-that differ by a constant. The term $\rho_ie^{z_i}$ cannot stand alone, so
-$z_i'=z_i-\kappa_i$ for a constant $\kappa_i$, and
-$\rho_i'=e^{\kappa_i}\rho_i$.
+\emph{No mode is missing.} We claim that no $\rho_i$ vanishes identically on
+$B$. If one did, then $n(z_i(\lambda),\lambda)=0$ on $B$, so $n$ and $\chi$
+would share the root $z_i$ and hence a common factor. Since $\chi$ is
+irreducible (Lemma~\ref{lem:irred}), it would divide $n$. But $n$ has degree
+$d-1$ in $z$, less than $\chi$, and it is not zero, because its leading
+coefficient in $z$ is $\sum_i\mu_i=1$.
+
+\emph{The modes match.} On $B$ we have $|z_i+\lambda_i|\le m$ and
+$|z_j'+\lambda_j|\le m$, so each of the differences $z_i-z_j$, $z_i'-z_j'$ and
+$z_i-z_j'$ stays within $2m$ of $\lambda_j-\lambda_i$. For $i\ne j$ the number
+$\lambda_j-\lambda_i$ moves by more than $4m$ across $B$. So none of these
+differences with $i\ne j$ is constant, and the only exponents that can differ
+by a constant are $z_i$ and $z_i'$ with the same $i$. Now
+$\sum_i\rho_ie^{z_i}-\sum_i\rho_i'e^{z_i'}=0$ on $B$. Merge $z_i$ and $z_i'$
+into one term whenever they differ by a constant, and apply
+Lemma~\ref{lem:exp}. Every coefficient is then zero. If $z_i$ were not merged,
+its coefficient would be $\rho_i$, which is not zero. So $z_i'=z_i-\kappa_i$
+for a constant $\kappa_i$, the merged coefficient is
+$\rho_i-e^{-\kappa_i}\rho_i'$, and hence $\rho_i'=e^{\kappa_i}\rho_i$.
 
 \emph{The constants vanish.} The polynomials $\chi'(z,\lambda)$ and
-$\chi(z+\kappa_1,\lambda)$ share the root $z_1-\kappa_1$, have the same degree and
-leading term, and the second is irreducible. So they are equal. Comparing roots
-in the disjoint discs gives $\kappa_i=\kappa_1$ for every $i$. Then
-$1=\sum_i\rho_i'=e^{\kappa_1}\sum_i\rho_i=e^{\kappa_1}$, and $\kappa_1$ is real
-because the eigenvalues at the center of $B$ are real. Hence every $\kappa_i=0$.
+$\chi(z+\kappa_1,\lambda)$ share the root $z_1-\kappa_1$ on $B$. The second is
+irreducible, so it divides the first. Both have degree $d$ in $z$ with leading
+coefficient $1$, so they are equal. Their roots are the $z_i-\kappa_i$ and the
+$z_i-\kappa_1$. So $z_i-\kappa_i=z_j-\kappa_1$ for some $j$, and $j=i$ because
+$z_i-z_j$ is not constant for $j\ne i$. Thus $\kappa_i=\kappa_1$ for every $i$.
+Then $1=\sum_i\rho_i'=e^{\kappa_1}\sum_i\rho_i=e^{\kappa_1}$. Also $\kappa_1$ is
+real. (At the center of $B$ the matrices are real, and each disc contains one
+eigenvalue and is symmetric about the real axis, so $z_1$ and $z_1'$ are real
+there.) Hence $\kappa_1=0$, and every $\kappa_i=0$.
 
 So $\chi'=\chi$ and $\rho_i'=\rho_i$, which gives
 $\mu'^{\top}(z+\Lambda-G')^{-1}\one=\sum_i\rho_i/(z-z_i)=\mu^{\top}(z+\Lambda-G)^{-1}\one$
-on $B$, and so everywhere. The left and right sides are the Laplace transforms
-in $t$ of $\Phi_t'$ and $\Phi_t$.
+on $B$, and so everywhere, since both sides are rational. The left and right
+sides are the Laplace transforms in $t$ of $\Phi_t'$ and $\Phi_t$. Hence
+$\Phi_t'=\Phi_t$ for every $t$, and $z=0$ gives $r'=r$.
 \end{proof}
 
 \section{What the counts know about a pair}
@@ -278,26 +309,39 @@ Let $G$ be irreducible and $\mu_i>0$ for every $i$.
  is not reversible. In that case exactly two pairs have this law, namely
  $(\mu,G)$ and its reversal.
 \item For every $\mu$ and almost every $G$, it determines $(\mu,G)$.
-\item If $\mu$ is the stationary law, then for almost every $G$ exactly two pairs
- have this law, namely $(\mu,G)$ and its reversal.
+\item If $d\ge3$ and $\mu$ is the stationary law, then for almost every $G$
+ exactly two pairs have this law, namely $(\mu,G)$ and its reversal.
 \end{enumerate}
 \end{corollary}
 \begin{proof}
-Swapping a pair with $J_{ij}=0$ changes nothing, so we may take $J_{ij}\ne0$ on
-$S$. In (a) a single pair cannot satisfy~\eqref{eq:kirchhoff}. In (b), a state
-that lies in exactly one pair of $S$ violates~\eqref{eq:kirchhoff}, so $S$ is
-all three pairs and $J_{12}=J_{23}=J_{31}$. Then $\sum_jJ_{ij}=0$ at every state,
-so $\mu$ is stationary, $G^S$ is the reversal, and
-Proposition~\ref{prop:reversal} shows that it does have the same law. In (c), fix
-$\mu$ and use the flows as coordinates. For each nonempty $S$,
-condition~\eqref{eq:kirchhoff} at a state that meets $S$ is a linear equation
-that is not trivial, so it fails off a hyperplane. In (d), use the coordinates
-$(\pi,c,J)$, where $J$ runs over the flows that obey Kirchhoff's law on the whole
-graph. Let $S$ be neither empty nor everything. Some state $i$ has a pair
-$\{i,j\}$ in $S$ and a pair $\{i,k\}$ outside it, and the unit flow around the
-triangle $i\to j\to k\to i$ violates~\eqref{eq:kirchhoff} at $i$. So
-again~\eqref{eq:kirchhoff} fails off a proper subspace. What is left is $S$ empty
-or everything, which gives $G$ and its reversal.
+By Corollary~\ref{cor:candidates} we only have to find the sets $S$ that
+satisfy~\eqref{eq:kirchhoff}. Swapping a pair with $J_{ij}=0$ changes nothing,
+so we may take $J_{ij}\ne0$ on $S$.
+
+(a) A single pair with $J_{12}\ne0$ cannot satisfy~\eqref{eq:kirchhoff}. So $S$
+is empty and $G'=G$.
+
+(b) A state that lies in exactly one pair of $S$
+violates~\eqref{eq:kirchhoff}. With three states this leaves only $S$ empty or
+$S$ all three pairs. In the second case~\eqref{eq:kirchhoff} gives
+$J_{12}=J_{23}=J_{31}\ne0$. Then $\sum_jJ_{ij}=0$ at every state, so $\mu$ is
+stationary and the chain is not reversible. Also $G^S$ is the reversal, and
+Proposition~\ref{prop:reversal} shows that it does have the same law.
+
+(c) Fix $\mu$ and use the flows $f_{ij}$ as coordinates for $G$. For each
+nonempty $S$, condition~\eqref{eq:kirchhoff} at a state that meets $S$ is a
+linear equation in the flows that is not trivial. So it fails off a hyperplane,
+and off these finitely many hyperplanes only $S$ empty is left.
+
+(d) Use the coordinates $(\pi,c,J)$, where $J$ runs over the flows that obey
+Kirchhoff's law on the whole graph. Let $S$ be neither empty nor everything.
+Some state $i$ has a pair $\{i,j\}$ in $S$ and a pair $\{i,k\}$ outside it. The
+unit flow around the triangle $i\to j\to k\to i$ is an allowed $J$, and it
+violates~\eqref{eq:kirchhoff} at $i$, because only its edge $\{i,j\}$ counts
+there. So~\eqref{eq:kirchhoff} at $i$ is again a linear equation that is not
+trivial, and it fails off a proper subspace. What is left is $S$ empty or
+everything, which gives $G$ and its reversal. These two differ unless $J=0$.
+(For $d=2$ every chain is reversible, so there the two coincide.)
 \end{proof}
 
 \begin{remark}
@@ -329,21 +373,42 @@ $G$ and every principal minor of $G-\one\mu^{\top}$. Conversely, these minors
 determine the law of $L(t)$ for every $t$.
 \end{proposition}
 \begin{proof}
+The law determines the rational function $r$. We show that its denominator
+and its numerator can be read off separately, and that their coefficients are
+the two sets of minors.
+
 By Theorem~\ref{thm:horizon} the law determines $r=n_0/\chi_0$, where
-$\chi_0(\lambda)=\det(\Lambda-G)$ and
-$n_0(\lambda)=\mu^{\top}\operatorname{adj}(\Lambda-G)\one$. The polynomial
-$\chi_0$ is irreducible (the proof of Lemma~\ref{lem:irred} with $z=0$), the
-degree of $n_0$ is smaller, and the coefficient of $\lambda_1\cdots\lambda_d$ in
-$\chi_0$ is $1$. So the fraction is in lowest terms, and $r$ determines $\chi_0$
-and $n_0$. For a matrix $A$ we have
-$\det(\Lambda-A)=\sum_{U}\det(-A_{UU})\prod_{i\notin U}\lambda_i$, so the
-coefficients of $\chi_0$ are the principal minors of $-G$. The same holds for
-$\chi_0+n_0$ and $-(G-\one\mu^{\top})$, because
-$\det(\Lambda-G+\one\mu^{\top})=\chi_0+n_0$ (the determinant of a rank one
-change). For the converse, the minors give $r$, and $r(\lambda+z\one)$ is the
-Laplace transform of $t\mapsto\Phi_t(\lambda)$ since the coordinates of $L(t)$
-sum to $t$.
+\[
+\chi_0(\lambda)=\det(\Lambda-G),\qquad
+n_0(\lambda)=\mu^{\top}\operatorname{adj}(\Lambda-G)\one .
+\]
+The polynomial $\chi_0$ is irreducible (the proof of Lemma~\ref{lem:irred} with
+$z=0$). The polynomial $n_0$ is not zero and has smaller degree, so $\chi_0$
+does not divide it. Hence the fraction is in lowest terms, and $r$ determines
+$\chi_0$ and $n_0$ up to a common constant factor. The factor is fixed because
+the coefficient of $\lambda_1\cdots\lambda_d$ in $\chi_0$ is $1$. (A second
+pair $(\mu',G')$ with the same law has $r'=r$, with a denominator of the same
+degree and the same top coefficient. So $\chi_0'=\chi_0$ and $n_0'=n_0$, and we
+do not need $G'$ to be irreducible.)
+
+Now we read the coefficients. For a matrix $A$ we have
+$\det(\Lambda-A)=\sum_{U}\det(-A_{UU})\prod_{i\notin U}\lambda_i$. With $A=G$
+this is $\chi_0$, so the coefficients of $\chi_0$ are the principal minors of
+$-G$, which are those of $G$ up to the sign $(-1)^{|U|}$. Next, the rule for
+the determinant of a rank one change gives
+$\det(\Lambda-G+\one\mu^{\top})=\chi_0+n_0$. So the coefficients of
+$\chi_0+n_0$ are the principal minors of $-(G-\one\mu^{\top})$.
+
+For the converse, the two sets of minors give $\chi_0$ and $\chi_0+n_0$, and so
+$r$. Since the coordinates of $L(t)$ sum to $t$, we have
+$\Phi_t(\lambda+z\one)=e^{-zt}\Phi_t(\lambda)$. So $z\mapsto r(\lambda+z\one)$
+is the Laplace transform of $t\mapsto\Phi_t(\lambda)$, and it determines
+$\Phi_t(\lambda)$ for every $t$.
 \end{proof}
+
+For example, the sets $U$ with one element give $q_i$ from the first set of
+minors and $q_i+\mu_i$ from the second. So the second set is where the start
+law enters.
 
 Two things always keep the principal minors of a matrix $A$, namely passing to
 $DAD^{-1}$ for a diagonal matrix $D$ and passing to the transpose. For a rate
@@ -374,29 +439,52 @@ as far as the weight $w$ is concerned. A stationary start has $w=1$, and then
 \eqref{eq:startend} is clear.
 
 \begin{proof}
-By Proposition~\ref{prop:minors}, $G'$ has the same principal minors as $G$. By
-the theorem of Hartfiel and Loewy, $G'=DGD^{-1}$ or $G'=DG^{\top}D^{-1}$. We use
-that the rows of $G'$ sum to zero. In the first case $GD^{-1}\one=0$. Since $G$
-is irreducible, its kernel is spanned by $\one$, so $D$ is a multiple of the
-identity and $G'=G$. In the second case $G^{\top}D^{-1}\one=0$, so $D^{-1}\one$
-is a multiple of $\pi$ and $G'=\Pi^{-1}G^{\top}\Pi=\hat G$. Next, the
-coefficient of $\prod_{k\ne i}\lambda_k$ in $n_0$ is $\mu_i$, so $\mu'=\mu$.
+The first part is linear algebra. The theorem of Hartfiel and Loewy leaves two
+families of matrices, and only one member of each family is a rate matrix. The
+second part runs the film backward.
 
-For the last claim, start the chain with rates $\hat G$ from $\mu$. Its law is
-the stationary law of that chain weighted by $w(Y_0)$. Run the film backward, as
-in Proposition~\ref{prop:reversal}. This turns it into the stationary chain with
-rates $G$ weighted by $w(Y_1)$, with the same $L(1)$. On the other hand
-$(\mu,G)$ is the stationary chain with rates $G$ weighted by $w(Y_0)$. So the
-two laws of $L(1)$ agree exactly when $w(Y_0)-w(Y_1)$ has conditional mean zero
-given $L(1)$.
+\emph{The candidates.} By Proposition~\ref{prop:minors}, $G'$ has the same
+principal minors as $G$. By the theorem of Hartfiel and Loewy, $G'=DGD^{-1}$ or
+$G'=DG^{\top}D^{-1}$ for an invertible diagonal matrix $D$. We use that the rows
+of $G'$ sum to zero, that is, $G'\one=0$. In the first case this says
+$GD^{-1}\one=0$. Since $G$ is irreducible, the only vectors it sends to zero are
+the multiples of $\one$. So $D$ is a multiple of the identity and $G'=G$. In
+the second case $G^{\top}D^{-1}\one=0$. The only vectors that $G^{\top}$ sends
+to zero are the multiples of $\pi$, so $D^{-1}$ is a multiple of $\Pi$ and
+$G'=\Pi^{-1}G^{\top}\Pi=\hat G$.
+
+\emph{The start.} By the proof of Proposition~\ref{prop:minors} the law
+determines the polynomial $n_0$, and the coefficient of
+$\prod_{k\ne i}\lambda_k$ in $n_0$ is $\mu_i$. So $\mu'=\mu$.
+
+\emph{When the reversal passes.} For a bounded function $F$ we compare
+$\E F(L(1))$ under $(\mu,G)$ and under $(\mu,\hat G)$. Write $\E_\pi$ for the
+stationary chain with rates $G$. The chain $(\mu,G)$ is this chain with its
+start reweighted, so
+\[
+\E_{(\mu,G)}F(L(1))=\E_\pi\bigl[w(Y_0)F(L(1))\bigr].
+\]
+In the same way the chain $(\mu,\hat G)$ is the stationary chain with rates
+$\hat G$ weighted by $w$ at its first state (both chains have the stationary
+law $\pi$). Run the film backward, as in Proposition~\ref{prop:reversal}. The
+stationary chain with rates $\hat G$ becomes the stationary chain with rates
+$G$, its first state becomes the last state $Y_1$, and $L(1)$ does not change.
+So
+\[
+\E_{(\mu,\hat G)}F(L(1))=\E_\pi\bigl[w(Y_1)F(L(1))\bigr].
+\]
+The two right sides agree for every $F$ exactly when $w(Y_0)-w(Y_1)$ has
+conditional mean zero given $L(1)$, which is~\eqref{eq:startend}.
 \end{proof}
 
 A cut asks for $2\times2$ minors to vanish, so almost every rate matrix has
 none. Thus Theorem~\ref{thm:rigid} names the exceptional chains in parts (c) and
-(d) of Corollary~\ref{cor:generic}. They all have a cut, or (in part (c)) they
-satisfy~\eqref{eq:startend} with a start that is not stationary. The second can
-happen, as we will see after Theorem~\ref{thm:lumping}. For a chain with every
-rate drawn at random it does not happen (\texttt{check\_rigidity.py}).
+(d) of Corollary~\ref{cor:generic}. In part (c) an exceptional chain has a cut
+or satisfies~\eqref{eq:startend}. In part (d) it has a cut or is reversible
+(then the two candidates are the same chain). In part (c) the second case can
+happen with a start that is not stationary, as we will see after
+Theorem~\ref{thm:lumping}. For a chain with every rate drawn at random it does
+not happen (\texttt{check\_rigidity.py}).
 
 The same two operations, and the same theorem of Loewy, appear for the kernels
 of permanental processes, which describe local times of Markov processes at
@@ -413,8 +501,8 @@ The \emph{entropy production rate} of the chain at time $0$ is
  \sigma(\mu,G)=\sum_{i<j}(f_{ij}-f_{ji})\log\frac{f_{ij}}{f_{ji}},
  \qquad f_{ij}=\mu_ig_{ij}
 \]
-(see~\cite{schnakenberg1976}). Each term is nonnegative, and $\sigma=0$ exactly
-when $J=0$. For a stationary start, $t\sigma$ is the relative entropy of the
+(see~\cite{schnakenberg1976}). A pair with $f_{ij}=f_{ji}=0$ contributes
+nothing. Each term is nonnegative, and $\sigma=0$ exactly when $J=0$. For a stationary start, $t\sigma$ is the relative entropy of the
 law of the path on $[0,t]$ with respect to the law of the same path run
 backward. So $\sigma$ measures how far the film is from its reverse. For three
 states $i,j,k$ with all six rates positive, the \emph{affinity} of the
@@ -449,30 +537,46 @@ its own share, and each triangle shows the size of the force that drives the
 chain around it.
 
 \begin{proof}
+Both parts use the same remark. The counts know a sum and a product, and the
+quantity we want does not change when the two numbers are swapped.
+
 (a) Each term of $\sigma$ does not change when $f_{ij}$ and $f_{ji}$ are
 swapped. So $\sigma$ is a function of the unordered pairs
-$\{f_{ij},f_{ji}\}$, which the law determines by Theorem~\ref{thm:pairs}. The
-two flows are $\frac12(c_{ij}\pm\lvert J_{ij}\rvert)$, which gives the formula.
+$\{f_{ij},f_{ji}\}$, which the law determines by Theorem~\ref{thm:pairs}. For
+the formula, let $a_{ij}>0$. The two flows are
+$\frac12(c_{ij}\pm\lvert J_{ij}\rvert)$, both positive, so their difference is
+$\pm\lvert J_{ij}\rvert$ and the logarithm of their ratio has the same sign.
+The value of $\lvert J_{ij}\rvert$ is the one in~\eqref{eq:roots}. A pair with
+$a_{ij}=0$ has both flows zero by our assumption on $G$, and contributes
+nothing.
 
-(b) By Proposition~\ref{prop:minors} the law determines the principal minors of
-$G$. Those of order one are the $q_i$, and those of order two give
-$a_{ij}=q_iq_j-\det(-G_{\{i,j\}\{i,j\}})$. Put $w=g_{ij}g_{jk}g_{ki}$ and
-$\bar w=g_{ik}g_{kj}g_{ji}$ for the two ways around a triangle. Expanding the
-determinant,
+(b) Here the two numbers are the weights of the two ways around a triangle,
+namely $\omega=g_{ij}g_{jk}g_{ki}$ and $\bar\omega=g_{ik}g_{kj}g_{ji}$, so that
+$A_{ijk}=\log(\omega/\bar\omega)$. By Proposition~\ref{prop:minors} the law
+determines the principal minors of $G$, for every start law. Those of order one
+are the $q_i$, and those of order two give
+$a_{ij}=q_iq_j-\det(-G_{\{i,j\}\{i,j\}})$. For order three we expand the
+determinant over the six permutations. The identity gives $q_iq_jq_k$, each
+transposition gives one term $-q\,a$, and the two cyclic permutations give
+$-\omega$ and $-\bar\omega$. So
 \[
- \det(-G_{UU})=q_iq_jq_k-q_ia_{jk}-q_ja_{ik}-q_ka_{ij}-(w+\bar w),
+ \det(-G_{UU})=q_iq_jq_k-q_ia_{jk}-q_ja_{ik}-q_ka_{ij}-(\omega+\bar\omega),
  \qquad U=\{i,j,k\}.
 \]
-So the law determines $w+\bar w$. It also determines
-$w\bar w=a_{ij}a_{jk}a_{ki}$. A sum and a product give the unordered pair
-$\{w,\bar w\}$, and with it $\lvert A_{ijk}\rvert=\lvert\log(w/\bar w)\rvert$.
+Hence the law determines the sum $\omega+\bar\omega$. It also determines the
+product $\omega\bar\omega=a_{ij}a_{jk}a_{ki}$. A sum and a product give the
+unordered pair $\{\omega,\bar\omega\}$, and with it
+$\lvert A_{ijk}\rvert=\lvert\log(\omega/\bar\omega)\rvert$.
 
-Now let every rate be positive. If the chain is reversible then
-$\pi_ig_{ij}=\pi_jg_{ji}$ on every pair, and multiplying three of these gives
-$w=\bar w$ for every triangle. Conversely, suppose $w=\bar w$ for every
-triangle. Put $\rho_1=1$ and $\rho_i=g_{1i}/g_{i1}$. The triangle $\{1,i,j\}$
-gives $g_{1i}g_{ij}g_{j1}=g_{1j}g_{ji}g_{i1}$, that is,
-$\rho_ig_{ij}=\rho_jg_{ji}$. So $\rho$ is a reversible measure. (This is
+Now let every rate be positive. We show that the chain is reversible exactly
+when $\omega=\bar\omega$ for every triangle, which the law decides by what we
+just proved. If the chain is reversible then $\pi_ig_{ij}=\pi_jg_{ji}$ on every
+pair, and multiplying three of these gives $\omega=\bar\omega$. Conversely,
+suppose $\omega=\bar\omega$ for every triangle. Put $\theta_1=1$ and
+$\theta_i=g_{1i}/g_{i1}$, so that $\theta_1g_{1i}=\theta_ig_{i1}$. For
+$i,j\ne1$ the triangle $\{1,i,j\}$ gives
+$g_{1i}g_{ij}g_{j1}=g_{1j}g_{ji}g_{i1}$, that is,
+$\theta_ig_{ij}=\theta_jg_{ji}$. So $\theta$ is a reversible measure. (This is
 Kolmogorov's criterion, see~\cite{kelly1979}.)
 \end{proof}
 
@@ -490,8 +594,11 @@ Near a reversible chain the counts lose the net flow $J$ itself (we come back
 to this in Theorem~\ref{thm:singular}), but nothing of this kind happens to
 $\sigma$.
 
-(3) Part (b) reads only the paths that visit at most three states, and
-part (a) only those that visit at most two.
+(3) Part (a) reads only the paths that visit at most two states. Part (b)
+reads only the paths that visit at most three, as long as the start gives
+positive mass to some state of the triangle. (The minors of $G$ inside a set
+$F$ are the coefficients of the denominator of $r_F$ from the proof of
+Theorem~\ref{thm:pairs}, and $r_F$ is zero when no path starts in $F$.)
 \end{remark}
 
 \section{Lumping gives more ties}\label{sec:lumping}
@@ -518,37 +625,59 @@ on each side is a cut.
 Let $M$ be a module.
 \begin{enumerate}[(a),itemsep=1pt]
 \item (Reverse the outside, keep the inside.) Suppose $\bar\mu$ is stationary
- for the lumped chain. Reverse the lumped chain with respect to $\bar\mu$, and
+ for the lumped chain and positive at every state. Reverse the lumped chain with respect to $\bar\mu$, and
  let $G'$ be the chain with the reversed rates on $O$, the reversed rates
  $\hat r_x\nu_b$ into $M$ and $\hat\gamma_x$ out of $M$, and the old rates
  $g_{bb'}$ inside $M$. Then $(\mu,G')$ and $(\mu,G)$ give the same law of $L(t)$
  for every $t$.
 \item (Reverse the inside, keep the outside.) Suppose $\nu$ is stationary for
- the inside chain. Let $G''$ be $G$ with the inside chain replaced by its
- reversal with respect to $\nu$. Then $(\mu,G'')$ and $(\mu,G)$ give the same
- law of $L(t)$ for every $t$.
+ the inside chain and positive at every state of $M$. Let $G''$ be $G$ with the
+ inside chain replaced by its reversal with respect to $\nu$, namely
+ $g''_{bb'}=\nu_{b'}g_{b'b}/\nu_b$ for $b,b'\in M$. Then $(\mu,G'')$ and
+ $(\mu,G)$ give the same law of $L(t)$ for every $t$.
 \end{enumerate}
 \end{theorem}
+
+The idea is that a chain with a module is two films, one inside the other. The
+outer film is the lumped chain. Each of its visits to $\ast$ holds an inner
+film, a piece of the inside chain. The counts add up times and forget the order
+of things, so we may run the outer film backward and leave the inner films
+alone, or run each inner film backward and leave the outer one alone.
+
 \begin{proof}
-Build $Y$ in two steps. First run the lumped chain $Z$. Then, for each visit of
-$Z$ to $\ast$, fill the visit with a fresh copy of the inside chain (rates
-$g_{bb'}$ on $M$, started from $\nu$), run for the length of the visit. This is
-the chain $(\mu,G)$. By (i) the time and place of an exit do not depend on what
-happens inside $M$, and by (ii) and (iii) every visit starts from $\nu$.
+We build $Y$ in two steps. First run the lumped chain $Z$ from $\bar\mu$ up to
+time $t$. Then, for each visit of $Z$ to $\ast$, fill the visit with a fresh
+copy of the inside chain (rates $g_{bb'}$ on $M$, started from $\nu$), run for
+the length of the visit. The fillings are independent of each other and of $Z$.
 
-So the counts are a function of two things, the times $Z$ spends in the states
-of $O$, and the list of lengths of its visits to $\ast$, together with
-independent fillings whose law depends only on those lengths and not on their
-order.
+We claim that this builds the chain $(\mu,G)$. By (i) a path of $Y$ inside $M$
+leaves to $x$ at the rate $\gamma_x$ wherever it is. So the time and place of
+the exit do not depend on what happens inside $M$, and until the exit the path
+moves by the inside rates. By (ii) every entrance into $M$ lands by $\nu$, and
+by (iii) so does a start inside $M$. Hence every visit starts from $\nu$.
 
-(a) Run the film of $Z$ backward. Since $\bar\mu$ is stationary, this is
-the reversed lumped chain. It has the same times in $O$ and the same list of
-visit lengths. Filling its visits in the same way builds the chain $(\mu,G')$.
+The time that $Y$ spends in a state of $O$ is the time that $Z$ spends there.
+The time that $Y$ spends in a state $b$ of $M$ is the sum over the visits of
+the time the filling spends in $b$. So the law of $L(t)$ depends on two things
+only. The first is the joint law of the times $Z$ spends in the states of $O$
+and the list of lengths of its visits to $\ast$, where the order of the list
+does not matter. The second is the law of the times a filling of a given
+length spends in the states of $M$.
+
+(a) Run the film of $Z$ backward. Since $\bar\mu$ is stationary, this is the
+reversed lumped chain started from $\bar\mu$. It has the same times in $O$ and
+the same visit lengths, in the opposite order. So the first of the two things
+is the same for $Z$ and for its reversal, and we fill the visits as before.
+The result is built from the reversed lumped chain and the old inside chain in
+the same two steps, so it is the chain $(\mu,G')$.
 
 (b) Keep $Z$ and run the film of each filling backward. A filling is the
-inside chain started from its stationary law $\nu$ and run for a fixed time, so
-its film run backward is the reversed inside chain started from $\nu$, with the
-same times in the states of $M$. This builds the chain $(\mu,G'')$.
+inside chain started from its stationary law $\nu$ and run for a fixed time. So
+its film run backward is the reversed inside chain started from $\nu$, and it
+spends the same time in each state of $M$. So the second of the two things is
+the same for the inside chain and for its reversal. The result is built from
+$Z$ and the reversed inside chain in the same two steps, so it is the chain
+$(\mu,G'')$.
 \end{proof}
 
 A single state is always a module, and then (a) is
@@ -561,15 +690,25 @@ this kind. What Theorem~\ref{thm:lumping} adds is that they pass the second test
 of Proposition~\ref{prop:minors}, the one that involves the start.
 
 \begin{example}[the reversal can win without a stationary start]\label{ex:inside}
-Let $M$ have three states and $O$ a single state $z$, with every rate positive,
-and let $\nu$ be stationary for the inside chain. Here $M$ is not a cut,
+Let $M$ be a module with three states and let $O$ be a single state $z$, with
+every rate positive, and let $\nu$ be stationary for the inside chain. Here $M$
+is not a cut,
 since $|O|=1$, and for a typical choice of the rates $G$ has no cut at all.
-Balance at $z$ gives $\pi_zg_{zb}=\pi_b\gamma_z$, so $\pi$ is
-proportional to $\nu$ on $M$, and one checks that $G''=\hat G$. By (b), the
-start $\mu=a\nu+(1-a)\delta_z$ gives the same counts under $G$ and under
-$\hat G$ for every $a$, and it is stationary for only one value of $a$. So
-\eqref{eq:startend} can hold with $w$ not constant. Here $w$ takes one value on
-$M$ and another at $z$.
+We claim that $G''=\hat G$. First, the stationary law $\pi$ of $G$ is
+proportional to $\nu$ on $M$. To see this, let $\pi$ be $\nu$ on $M$ times a
+constant, with $\pi_z$ chosen so that $\pi_zr_z=\pi(M)\gamma_z$ (the flow out
+of $z$ equals the flow into $z$). At a state $b$ of $M$ the flow through the
+inside balances because $\nu$ is stationary there, and the flow from $z$,
+namely $\pi_zr_z\nu_b$, equals the flow to $z$, namely $\pi_b\gamma_z$. So this
+$\pi$ is stationary. Second, we just saw that
+$\pi_zg_{zb}=\pi_bg_{bz}$ for every $b$. So reversal with respect to $\pi$
+keeps the rates between $z$ and $M$, and inside $M$ it is reversal with respect
+to $\nu$. This is $G''$.
+
+The start $\mu=a\nu+(1-a)\delta_z$ makes $M$ a module for every $0<a<1$. So by
+(b) it gives the same counts under $G$ and under $\hat G$, and it is stationary
+for only one value of $a$. Thus \eqref{eq:startend} can hold with $w$ not
+constant. Here $w$ takes one value on $M$ and another at $z$.
 \end{example}
 
 \begin{example}[four states]\label{ex:four}
@@ -723,32 +862,57 @@ for the matrix of the derivatives $\partial\pi_k/\partial Q_{ij}$.
 \end{enumerate}
 \end{theorem}
 \begin{proof}
-(a) Differentiating $\pi^{\top}Q=0$ and using $-QZ=I-\one\pi^{\top}$ gives
-$d\pi^{\top}=\pi^{\top}(dQ)Z$. Raising $Q_{ij}$ (and lowering $Q_{ii}$) gives
-$\partial\pi/\partial Q_{ij}=\pi_i(Z_{j\cdot}-Z_{i\cdot})$. So for a vector
-$\eta$ and $u=Z\eta$,
+(a) We compute both sides as quadratic forms in a vector $\eta$ and find the
+same sum over pairs. We use the three facts $Z\one=0$, $\pi^{\top}Z=0$ and
+$-QZ=I-\one\pi^{\top}$, which follow from
+$(\one\pi^{\top}-Q)(Z+\one\pi^{\top})=I$. Differentiating $\pi^{\top}Q=0$ gives
+$d\pi^{\top}Q=-\pi^{\top}dQ$. Multiply by $Z$ on the right and use
+$d\pi^{\top}\one=0$. This gives $d\pi^{\top}=\pi^{\top}(dQ)Z$. Raising $Q_{ij}$ (and lowering $Q_{ii}$)
+gives $\partial\pi/\partial Q_{ij}=\pi_i(Z_{j\cdot}-Z_{i\cdot})$. So for a
+vector $\eta$ and $u=Z\eta$, the entry of $\pi'^{\top}\eta$ at $(i,j)$ is
+$\pi_i(u_j-u_i)$, and
 \[
  \eta^{\top}\pi'D^{-1}\pi'^{\top}\eta=\sum_{i\ne j}\frac{Q_{ij}}{\pi_i}\,
  \pi_i^2(u_j-u_i)^2=\sum_{i\ne j}\pi_iQ_{ij}(u_j-u_i)^2 .
 \]
-On the other hand $\eta^{\top}\Gamma\eta=2\sum_i\pi_i\eta_iu_i$, and
-$-Qu=\eta-(\pi\cdot\eta)\one$ with $\pi\cdot u=0$. Hence
-$\eta^{\top}\Gamma\eta=-2\sum_i\pi_iu_i(Qu)_i$, and expanding the squares above
-with $Q\one=0$ and $\pi^{\top}Q=0$ gives the same number.
+On the other side $\eta^{\top}\Gamma\eta=2\sum_i\pi_i\eta_iu_i$. Here
+$-Qu=\eta-(\pi\cdot\eta)\one$ and $\pi\cdot u=0$, so
+$\eta^{\top}\Gamma\eta=-2\sum_i\pi_iu_i(Qu)_i$. Now expand the squares in the
+display. The terms with $u_i^2$ and with $u_j^2$ each give $\sum_i\pi_iq_iu_i^2$
+(the second by $\pi^{\top}Q=0$), and the cross terms give
+$-2\sum_i\pi_iu_i\bigl((Qu)_i+q_iu_i\bigr)$. The sum is the same number.
 
-(b) The first claim is as in Theorem~\ref{thm:info}, since the chain spends the
-fraction $\pi_i+O(1/T)$ of its time in state $i$. For the second, let $m$ and
-$V$ be the mean and the covariance of $L(1)$ under the generator $TQ$, and let
-$s$ be the score of $L(1)$. Then $\E[(L-m)s^{\top}]=m'$ (differentiate
-$\E L=m$), so the covariance matrix of the pair $(L,s)$ has the blocks $V$, $m'$
-and $I_L$, and it is positive semidefinite. Its Schur complement gives
-$I_L\succeq m'^{\top}V^{+}m'$. Now $e^{tQ}-\one\pi^{\top}$ decays exponentially,
-locally uniformly in $Q$ and together with its derivatives in $Q$. So
-$m=\pi+O(1/T)$, $m'=\pi'+O(1/T)$ and $V=\Gamma/T+O(T^{-2})$, which gives the
-bound. Finally the nonzero eigenvalues of $D^{-1}\pi'^{\top}\Gamma^{+}\pi'$ are
-those of $\Gamma^{+}\pi'D^{-1}\pi'^{\top}=\Gamma^{+}\Gamma$ by (a), namely $1$
-with multiplicity $d-1$. Every efficiency is at most $1$, and the eigenvalues of
-$I_{\mathrm{path}}^{-1}I_L$ can only go up when $I_L$ does.
+We note for part (b) that $\Gamma$ is positive definite on the vectors with sum
+zero. Indeed the display vanishes only if $u$ is constant. Then $u=0$ because
+$\pi\cdot u=0$, and so $\eta=(\pi\cdot\eta)\one$.
+
+(b) The first claim is as in Theorem~\ref{thm:info}. The path information is
+diagonal with entries $T\,\E L_i(1)/Q_{ij}$, and $\E L_i(1)=\pi_i+O(1/T)$. (A
+stationary start adds the information in the first state, which is $O(1)$.)
+
+For the second claim we bound $I_L$ from below by what the mean of $L$ alone
+tells us. Let $m$ and $V$ be the mean and the covariance of $L=L(1)$ under the
+generator $TQ$, and let $s$ be the score of $L$. Differentiating $\E L=m$ gives
+$\E[(L-m)s^{\top}]=m'$. So the covariance matrix of the pair $(L,s)$ has the
+blocks $V$, $m'$ and $I_L$, and it is positive semidefinite. Its Schur
+complement gives $I_L\succeq m'^{\top}V^{+}m'$, where $V^{+}$ is the
+pseudoinverse of $V$. (The coordinates of $L$ sum to $1$, so $V\one=0$ and
+$V^{+}$ lives on the vectors with sum zero.) Now $e^{tQ}-\one\pi^{\top}$ decays
+exponentially, locally uniformly in $Q$ and together with its derivatives in
+$Q$. So
+\[
+m=\pi+O(1/T),\qquad m'=\pi'+O(1/T),\qquad V=\Gamma/T+O(T^{-2}).
+\]
+Since $\Gamma$ is invertible on the vectors with sum zero, so is $V$ for large
+$T$, with $V^{+}=T\,\Gamma^{+}+O(1)$. This gives the bound.
+
+Finally we count the efficiencies that tend to $1$. The nonzero eigenvalues of
+$D^{-1}\pi'^{\top}\Gamma^{+}\pi'$ are those of
+$\Gamma^{+}\pi'D^{-1}\pi'^{\top}$, which is $\Gamma^{+}\Gamma$ by (a). So they
+are $1$ with multiplicity $d-1$. The eigenvalues of $I_{\mathrm{path}}^{-1}I_L$
+can only go up when $I_L$ does, so by the two estimates of (b) the largest
+$d-1$ of them are at least $1-O(1/T)$. Every efficiency is at most $1$, because
+$L$ is a function of the path.
 \end{proof}
 
 So over a long horizon the counts estimate the stationary law as well as the
