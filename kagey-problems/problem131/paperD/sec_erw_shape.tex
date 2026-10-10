@@ -172,18 +172,24 @@ times as likely as the end.
 By Lemma~\ref{lem:erw-reduction}, $\rho_1=\bigl(f_N(1)+f_N(N-1)\bigr)/f_N(0)$
 with $f_N(0)=(1-\varepsilon)^{N-1}$. We bound the two terms in turn.
 
-\emph{The term $f_N(1)$.} On the event $M_N=1$ the chain moves up once, from
-time $j-1$ to time $j$ for some $2\le j\le N$, and then stays at $1$. Since
-$r_t(0)=\varepsilon$ and $1-r_k(1)=(1-\varepsilon)(1-c/k)$ with
-$c=(1-2\varepsilon)/(1-\varepsilon)\in[0,1]$,
+\emph{The term $f_N(1)$.} On the event $M_N=1$ the chain moves up exactly
+once, say from time $j-1$ to time $j$ with $2\le j\le N$. Before that it
+stays at $0$ for $j-2$ steps, each with probability
+$1-r_t(0)=1-\varepsilon$. The move up has probability $\varepsilon$. After it
+the chain stays at $1$ at the times $k=j,\dots,N-1$, each with probability
+$1-r_k(1)=(1-\varepsilon)(1-c/k)$, where
+$c=(1-2\varepsilon)/(1-\varepsilon)\in[0,1]$. Multiplying and summing over
+$j$ gives
 \[
  f_N(1)=\varepsilon(1-\varepsilon)^{N-2}\sum_{j=2}^NP_j,\qquad
  P_j=\prod_{k=j}^{N-1}\Bigl(1-\frac ck\Bigr).
 \]
-Since $c\le1$, $P_j\ge\prod_{k=j}^{N-1}(1-1/k)=(j-1)/(N-1)$, and these lower
-bounds sum to $N/2$. So $f_N(1)/f_N(0)\ge x/(2(1-\varepsilon))$. Next,
-$1-c/k\le e^{-c/k}$ and $\sum_{k=j}^{N-1}1/k\ge\log(N/j)$ give $P_j\le(j/N)^c$.
-As $(t/N)^c$ is nondecreasing in $t$,
+For the lower bound we use $c\le1$. Then
+$P_j\ge\prod_{k=j}^{N-1}(1-1/k)=(j-1)/(N-1)$, and these lower bounds sum to
+$N/2$ over $2\le j\le N$. So $f_N(1)/f_N(0)\ge x/(2(1-\varepsilon))$. For
+the upper bound, $1-c/k\le e^{-c/k}$ and $\sum_{k=j}^{N-1}1/k\ge\log(N/j)$
+give $P_j\le(j/N)^c$. As $(t/N)^c$ is nondecreasing in $t$, we can compare
+the sum with an integral, namely
 \[
  \sum_{j=2}^NP_j\le\int_2^{N+1}\Bigl(\frac tN\Bigr)^c dt
  \le\frac{N(1+1/N)^{c+1}}{c+1}\le\frac{N(1+1/N)^2(1-\varepsilon)}{2-3\varepsilon},
@@ -460,7 +466,10 @@ and so has the largest mode $m_h$ of $f_N$.
 \end{corollary}
 
 In words, each hump of the law at the crossing sits at distance about
-$x\log x-0.2228\,x$ from its end.
+$x\log x-0.2228\,x$ from its end. The proof is in
+Appendix~\ref{app:bulk}. It compares $f_N$ at a mode with $f_N$ at the
+integer nearest to $x\log x+\lambda_0x$, and uses
+Theorem~\ref{thm:landau}(b) and Lemma~\ref{lem:landau-mode}(c).
 
 \begin{remark}[how good the bulk approximation is]\label{rem:bulk}
 The bounds of this subsection are far from sharp at the sizes we can
@@ -530,15 +539,21 @@ N/N$. The two meet at $t$ of order $(Nx\log N)^{1/2}$.
 
 \begin{proof}
 Write $x=x_N$ and $\varepsilon=\varepsilon_N$, so that $C_N=E_N$. By
-symmetry we take $a=N-m$ with $1\le m\le h$, and put $t=h-m$. Since $2\le
-x\le N^{1/4}$, every error term below is bounded by a function of $N$ alone,
-and we take $N$ large. Put
+symmetry we take $a=N-m$ with $1\le m\le h$, and put $t=h-m$. We compare
+$P_N(N-m)$ with $C_N$ in three ranges of $m$. In the first two a crude lower
+bound is enough. In the third, near the center, we need the comparison with
+$x\Pi(m)$ and a matching upper bound for $C_N$. Since $2\le x\le N^{1/4}$,
+every error term below is bounded by a function of $N$ alone that tends to
+$0$, and we take $N$ large.
+
+We start with the upper bound for $C_N$. Put
 $\Pi(m)=\frac12\bigl[\frac1{m(m+1)}+\frac1{(N-m)(N-m+1)}\bigr]$, so that
 $x\Pi(h)=\frac{4\varepsilon}{N+2}$. As $\varepsilon(1+\log N)\to0$,
 Theorem~\ref{thm:erw-bounds}(b) gives $C_N\le x\Pi(h)(1+\eta)$ with
 $\eta=N^{2\varepsilon}e^{5200\varepsilon}-1$. Put
-$y=\varepsilon(2\log N+5200)$. Then $y\le\frac12$ for large $N$, and
-$e^y-1\le2y$ for $0\le y\le\frac12$, so $\eta\le2y\le10^4\varepsilon\log N$.
+$y=\varepsilon(2\log N+5200)$, so that $\eta=e^y-1$. Then $y\le\frac12$ for
+large $N$, and $e^y-1\le2y$ for $0\le y\le\frac12$, so
+$\eta\le2y\le10^4\varepsilon\log N$.
 
 \emph{Step 1: $m\le m_h$.} Then $f_N(m)\ge f_N(1)$ by
 Lemma~\ref{lem:unimodal}. The proof of Theorem~\ref{thm:dip} gives
@@ -554,16 +569,20 @@ $\frac{4x}{N(N+2)}(1+\eta)\ge C_N$.
 
 \emph{Step 3: $N/8<m\le h$.} Then $m$ and $N-m$ are at least $N/8$, and
 Proposition~\ref{thm:B-local-lower} at $m$ and at $N-m$ gives
-$P_N(N-m)\ge x\Pi(m)(1-\bar e)$ with $\bar e=O(x\log N/N)$. Put
-$\bar N=N+1$ and $s=2t/\bar N$, so that $m+\frac12=\frac{\bar N}2(1-s)$ and
-$N-m+\frac12=\frac{\bar N}2(1+s)$. Since $\frac1{k(k+1)}\ge(k+\frac12)^{-2}$
-and $\Pi(h)=\frac1{h(h+1)}=(\frac{\bar N}2)^{-2}(1-\bar N^{-2})^{-1}$, we get
+$P_N(N-m)\ge x\Pi(m)(1-\bar e)$ with $\bar e=O(x\log N/N)$. It remains to
+compare $\Pi(m)$ with $\Pi(h)$. We measure the distance from the center by
+$s=2t/\bar N$ with $\bar N=N+1$, so that $m+\frac12=\frac{\bar N}2(1-s)$ and
+$N-m+\frac12=\frac{\bar N}2(1+s)$. Since $\frac1{n(n+1)}\ge(n+\frac12)^{-2}$
+for every $n\ge1$, and
+$\Pi(h)=\frac1{h(h+1)}=(\frac{\bar N}2)^{-2}(1-\bar N^{-2})^{-1}$, we get
 \[
  \frac{\Pi(m)}{\Pi(h)}\ge\tfrac12\bigl[(1-s)^{-2}+(1+s)^{-2}\bigr](1-\bar N^{-2})
- \ge(1+3s^2)(1-\bar N^{-2}),
+ \ge(1+3s^2)(1-\bar N^{-2}).
 \]
-because $\frac12[(1-s)^{-2}+(1+s)^{-2}]=\sum_{k\ge0}(2k+1)s^{2k}$. With
-$b=\bar e+\bar N^{-2}\le\frac12$ this gives $P_N(N-m)\ge
+The last step holds because
+$\frac12[(1-s)^{-2}+(1+s)^{-2}]=\sum_{i\ge0}(2i+1)s^{2i}$, and we keep the
+first two terms of this series. Put $b=\bar e+\bar N^{-2}$, so that
+$b\le\frac12$ and $(1-\bar e)(1-\bar N^{-2})\ge1-b$. Then $P_N(N-m)\ge
 x\Pi(h)(1+3s^2)(1-b)\ge x\Pi(h)(1+\frac32s^2-b)$.
 
 \emph{Step 4: the window.} The bound of Step 3 exceeds
@@ -593,21 +612,39 @@ $\min(a^*,N-a^*)=O(x_N\log^2x_N)$.
 \end{corollary}
 
 \begin{proof}
-Write $x=x_N$ and $\varepsilon=\varepsilon_N$. By
-Theorem~\ref{thm:erw-crossing}, $x\sim2\log N$, so for large $N$ the
-hypotheses of Theorem~\ref{thm:erw-bounds}(b) and Lemma~\ref{lem:B-mode}
-hold. The law is symmetric about $h$, so $m^*=\min(a^*,N-a^*)$ maximizes
-$f_N(m)+f_N(N-m)$ over $0\le m\le h$. Lemma~\ref{lem:B-mode} gives $m_h\le h$
-for large $N$. So Lemma~\ref{lem:unimodal} and
-Theorem~\ref{thm:erw-bounds}(b) give $f_N(N-m)\le f_N(h)=C_N=O(x/N^2)$ for
-$m\le h$, and hence $f_N(m^*)\ge f_N(m_h)-C_N$. Let $\ell$ be as in the proof
-of Lemma~\ref{lem:B-mode}. Then $f_N(m_h)\ge f_N(\ell)\ge\frac
-x{2\ell(\ell+1)}$, so $f_N(m^*)\ge\frac x{4\ell(\ell+1)}$ for large $N$. If
-$m^*>m'=\max(m_h,\ell)$, then Lemmas~\ref{lem:B-sandwich}
-and~\ref{lem:B-tail} give $(m^*-m'+1)f_N(m^*)\le\Prob(M_N\ge\ell)\le
-xH_\ell/\ell$. Hence $m^*\le\max(m_h,\ell)+4(\ell+1)H_\ell$ in every case.
-Finally Lemma~\ref{lem:B-mode} gives $m_h=O(x\log^2x)$, and $\ell=O(x\log x)$
-and $H_\ell=O(\log x)$.
+We show that $f_N(m^*)$ is not much below the maximum of $f_N$, and then
+that $f_N$ cannot be that large far to the right of its mode. Write $x=x_N$
+and $\varepsilon=\varepsilon_N$. By Theorem~\ref{thm:erw-crossing},
+$x\sim2\log N$, so for large $N$ the hypotheses of
+Theorem~\ref{thm:erw-bounds}(b) and Lemma~\ref{lem:B-mode} hold. Let
+$\ell=\lceil Ax\log(x+2)\rceil$ be as in the proof of
+Lemma~\ref{lem:B-mode}, where it is shown that
+$f_N(\ell)\ge\frac x{2\ell(\ell+1)}$.
+
+\emph{Step 1: $f_N(m^*)$ is large.} The law is symmetric about $h$, so
+$m^*=\min(a^*,N-a^*)$ maximizes $g(m)=f_N(m)+f_N(N-m)$ over $0\le m\le h$.
+Lemma~\ref{lem:B-mode} gives $m_h\le h$ for large $N$. So for $m\le h$ we
+have $N-m\ge h\ge m_h$, and Lemma~\ref{lem:unimodal} and
+Theorem~\ref{thm:erw-bounds}(b) give $f_N(N-m)\le f_N(h)=C_N=O(x/N^2)$.
+Hence
+\[
+ f_N(m^*)\ge g(m^*)-C_N\ge g(m_h)-C_N\ge f_N(m_h)-C_N\ge f_N(\ell)-C_N
+ \ge\frac x{4\ell(\ell+1)}
+\]
+for large $N$, because $\ell=O(\log^2N)$ and so $C_N$ is far below
+$x/\ell^2$.
+
+\emph{Step 2: $m^*$ is not far beyond $\ell$.} Put $m'=\max(m_h,\ell)$ and
+suppose that $m^*>m'$. To the right of $m_h$ the function $f_N$ is
+nonincreasing, so Lemma~\ref{lem:B-sandwich} (with $a=m'$ and $b=m^*$) and
+Lemma~\ref{lem:B-tail} give
+\[
+ (m^*-m'+1)\,f_N(m^*)\le\Prob(M_N\ge\ell)\le\frac{xH_\ell}\ell .
+\]
+With Step 1 this gives $m^*-m'+1\le4(\ell+1)H_\ell$. Hence
+$m^*\le\max(m_h,\ell)+4(\ell+1)H_\ell$ in every case. Finally
+Lemma~\ref{lem:B-mode} gives $m_h=O(x\log^2x)$, and $\ell=O(x\log x)$ and
+$H_\ell=O(\log x)$.
 \end{proof}
 
 The conjecture holds for every $10\le N\le600$ and for

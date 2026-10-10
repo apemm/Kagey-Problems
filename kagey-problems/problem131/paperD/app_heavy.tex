@@ -3,8 +3,10 @@
 We use the notation of Section~\ref{sec:heavy}, with $\tau_0=0$. For a first run $D$ let
 $\tau^D_m=D+\tau'_{m-1}$, where $(\tau'_m)$ is an independent copy of $(\tau_m)$, and
 $\tau^D_0=0$. Then $u^D_m(k)=\Prob(\tau^D_m=k)$ and
-$q^D_m(k)=\Prob(\tau^D_{m-1}<k\le\tau^D_m)$. Conditioning on the last run gives, for
-$m,k\ge1$,
+$q^D_m(k)=\Prob(\tau^D_{m-1}<k\le\tau^D_m)$. We find each of these by conditioning on
+where the run before ends. For example, the $m$-th run covers level $k$ exactly when the
+first $m-1$ runs end at some level $k-j$ with $j\ge1$ and the $m$-th run has length at
+least $j$. In this way, for $m,k\ge1$,
 \begin{equation}\label{eq:C-conv}
 \begin{gathered}
 q_m(k)=\sum_{j\ge1}\bar F(j)\,u_{m-1}(k-j),\qquad
@@ -12,8 +14,12 @@ q^D_{m+1}(k)=\sum_{j\ge1}\bar F(j)\,u^D_m(k-j),\\
 u^D_m(k)=\sum_{d\ge1}\Prob(D=d)\,u_{m-1}(k-d).
 \end{gathered}
 \end{equation}
-Since $\tau_m$ and $\tau^D_m$ increase strictly, $\sum_mq_m(k)=\sum_mq^D_m(k)=1$,
-$\sum_mu^D_m(k)\le1$ and $\sum_{m\le m'}q_m(k)=\Prob(\tau_{m'}\ge k)$.
+Here $u_0(k)=\mathbf 1\{k=0\}$. The sums $\tau_m$ and $\tau^D_m$ increase strictly in $m$.
+So exactly one run covers a given level $k\ge1$, and at most one run ends there. Hence
+$\sum_mq_m(k)=\sum_mq^D_m(k)=1$ and $\sum_mu_m(k)\le1$, $\sum_mu^D_m(k)\le1$. Also, the
+first $m'$ runs reach level $k$ exactly when one of them covers it, so
+$\sum_{m\le m'}q_m(k)=\Prob(\tau_{m'}\ge k)$, and in the same way
+$\sum_{m\le m'}q^D_m(k)=\Prob(\tau^D_{m'}\ge k)$.
 
 Sections~\ref{app:heavy-setting} to~\ref{app:heavy-alpha2} treat $\alpha>1$ and prove
 Theorems~\ref{thm:center} and~\ref{thm:alpha2} together.
@@ -55,44 +61,61 @@ $u_m(k)\le C_B\,m\,k^{-\alpha-1}$ for all $m\ge1$ and $k\ge2m\mu$.
 \end{lemma}
 
 \begin{proof}
-Here $C$ depends only on $\alpha$ and may change from line to line. Since $\mu\ge1$ we have
-$m\le k/2$. Let $r>2$ be a constant chosen below, and put $y=k/r$. We split according to
-whether some run is at least $y$.
+We split the event $\{\tau_m=k\}$ according to whether some run is long, namely at least
+$y=k/r$, where $r>2$ is a constant that depends only on $\alpha$ and is chosen below. The
+first part is small because one run takes a given value $\ell\ge y$ with probability at
+most $\alpha y^{-\alpha-1}$. If no run is long, then $\tau_m$ is a sum of variables below $y$ whose mean is at most $k/2$,
+and a Chernoff bound shows that such a sum rarely reaches $k$. Here $C$ depends only on
+$\alpha$ and may change from line to line. Since $\mu\ge1$ we have $m\le k/2$.
 
-\emph{One big jump.} By the mean value theorem $\Prob(\xi=\ell)\le\alpha\ell^{-\alpha-1}$.
-So for each $i$ the probability
-$\Prob(\tau_m=k,\,\xi_i\ge y)=\sum_{\ell\ge y}\Prob(\xi=\ell)\,\Prob(\tau_m-\xi_i=k-\ell)$
-is at most $\alpha r^{\alpha+1}k^{-\alpha-1}$, and the $m$ indices give at most
-$\alpha r^{\alpha+1}mk^{-\alpha-1}$.
+\emph{One big jump.} By the mean value theorem
+$\Prob(\xi=\ell)=\ell^{-\alpha}-(\ell+1)^{-\alpha}\le\alpha\ell^{-\alpha-1}$. Fix an
+index $i$. Then
+\[
+\Prob(\tau_m=k,\,\xi_i\ge y)=\sum_{\ell\ge y}\Prob(\xi=\ell)\,\Prob(\tau_m-\xi_i=k-\ell)
+\le\alpha y^{-\alpha-1}=\alpha r^{\alpha+1}k^{-\alpha-1},
+\]
+because the first factor is at most $\alpha y^{-\alpha-1}$ and the second factors add up
+to at most $1$. The $m$ indices together give at most $\alpha r^{\alpha+1}mk^{-\alpha-1}$.
 
 \emph{No big jump.} We may take $y\ge1$, since otherwise $\max_i\xi_i<y$ is impossible.
-Let $x_0>0$ and $s\ge0$. Markov's inequality for $e^{s\tau_m/y}$ and
-$e^x\le1+x+\frac{x^2}2e^x$ for $x\ge0$ give
+Let $x_0>0$ and $s\ge0$. For $0\le x\le s$ we have
+$e^x\le1+x+\frac{x^2}2e^s$. We use this with $x=s\xi/y$ on the event $\{\xi<y\}$ and then
+$1+x\le e^x$. This gives
+$\E[e^{s\xi/y};\xi<y]\le\exp\bigl(\frac sy\E[\xi;\xi<y]+\frac{s^2e^s}{2y^2}\E[\xi^2;\xi<y]\bigr)$.
+By independence and Markov's inequality for $e^{s\tau_m/y}$,
 \begin{equation}\label{eq:C-chernoff}
 \Prob\bigl(\tau_m\ge x_0,\ \max_{i\le m}\xi_i<y\bigr)
 \le\exp\Bigl(-\frac{sx_0}y+m\Bigl(\frac sy\,\E[\xi;\xi<y]
 +\frac{s^2e^s}{2y^2}\,\E[\xi^2;\xi<y]\Bigr)\Bigr).
 \end{equation}
-We take $x_0=k$ and use $\E[\xi;\xi<y]\le\mu$ and $k-m\mu\ge k/2$. Then the exponent is at
-most $-sr/2+\frac12r^2s^2e^s\,m\,k^{-2}\,\E[\xi^2;\xi<y]$. There are three cases.
+We take $x_0=k$. Since $\E[\xi;\xi<y]\le\mu$ and $k-m\mu\ge k/2$, the first two terms of
+the exponent add up to at most $-\frac sy\cdot\frac k2=-sr/2$. So the exponent is at most
+$-sr/2+\frac12r^2s^2e^s\,m\,k^{-2}\,\E[\xi^2;\xi<y]$. It remains to choose $s$ and $r$ so that the bound is at most $Cmk^{-\alpha-1}$. The
+choice depends on how fast the truncated second moment grows, so there are three cases.
 
 Let $1<\alpha<2$. Then $\E[\xi^2;\xi<y]\le\alpha\sum_{\ell<y}\ell^{1-\alpha}\le
 Cy^{2-\alpha}$, so the exponent is at most $-sr/2+Cr^\alpha s^2e^sm/k^\alpha$. Take
 $s=\frac12\log(k^\alpha/m)$, which is positive since $m\le k/2<k^\alpha$. Then
-$e^sm/k^\alpha=e^{-s}$ and $s^2e^{-s}\le1$, so the bound is $C(m/k^\alpha)^{r/4}$. With
-$r=4+4/(\alpha-1)$ and $m\le k$ this is at most
+$e^sm/k^\alpha=e^{-s}$ and $s^2e^{-s}\le1$, so the second term is at most $Cr^\alpha$.
+The first term is $-\frac r4\log(k^\alpha/m)$. So the probability is at most
+$C(m/k^\alpha)^{r/4}$. We take $r=4+4/(\alpha-1)$, so that $r/4=1+1/(\alpha-1)$. Since
+$m\le k$, the bound is at most
 $C(m/k^\alpha)(k^{1-\alpha})^{1/(\alpha-1)}=Cmk^{-\alpha-1}$.
 
 Let $\alpha>2$. Then $\E[\xi^2;\xi<y]\le\E\xi^2<\infty$, so the exponent is at most
 $-sr/2+Cr^2s^2e^sm/k^2$. Take $s=\frac12\log(k^2/m)$, which is positive since $m<k^2$.
-As before the bound is $C(m/k^2)^{r/4}$. With $r=4\alpha$ and $m\le k$ this is
-$C\,m\,m^{\alpha-1}k^{-2\alpha}\le Cmk^{-\alpha-1}$.
+As before the probability is at most $C(m/k^2)^{r/4}$. With $r=4\alpha$ and $m\le k$
+this is $C\,m\,m^{\alpha-1}k^{-2\alpha}\le Cmk^{-\alpha-1}$.
 
 Let $\alpha=2$. Then $\E[\xi^2;\xi<y]\le2\sum_{\ell<y}\ell^{-1}\le2\log(ek)$, so the
 exponent is at most $-sr/2+r^2s^2e^sm\log(ek)/k^2$. Take
 $s=\frac12\log\frac{k^2}{m\log(ek)}$, which is positive since
-$m\log(ek)\le\frac12k\log(ek)<k^2$. The bound is $C(m\log(ek)/k^2)^{r/4}$. With $r=20$
-and $m\le k$ this is at most $Cmk^{-6}\log^5(ek)\le Cmk^{-3}$.
+$m\log(ek)\le\frac12k\log(ek)<k^2$. As before the probability is at most
+$C(m\log(ek)/k^2)^{r/4}$. With $r=20$ and $m\le k$ this is at most
+$Cmk^{-6}\log^5(ek)\le Cmk^{-3}$.
+
+In each case the two bounds together give the lemma.
 \end{proof}
 
 \begin{lemma}\label{lem:C-firstpassage}
@@ -108,27 +131,45 @@ $\sup_ku^D_m(k)\le \bar u/a_{m-1}$.
 \end{lemma}
 
 \begin{proof}
-By \eqref{eq:C-conv}, $q_m$ and $u^D_m$ are mixtures of shifts of $u_{m-1}$ with total
-weights $\mu$ and $1$. This gives the bounds for $m\ge2$.
+By \eqref{eq:C-conv}, $q_m$ and $u^D_m$ are sums of shifts of $u_{m-1}$ with total
+weights $\sum_j\bar F(j)=\mu$ and $1$. Since $u_{m-1}(k)\le\bar u/a_{m-1}$, this gives the
+two bounds for $m\ge2$.
 
-Fix $J\ge1$ and $Z>0$, put $\sigma_J=\sum_{j>J}\bar F(j)$ and write $z=z_{m,k}$. In the
-sum for $q_m(k)$ the terms with $j>J$ add up to at most $\bar u\sigma_J/a_{m-1}$. For
-$j\le J$ we have $\lvert a_{m-1}u_{m-1}(k-j)-g(z_{m-1,k-j})\rvert\le\delta_{m-1}$ and
+For the limits we use that a shift by a bounded amount $j$ moves the point $z_{m,k}$ only
+by $O(1/a_m)$, and that $g$ is uniformly continuous. So the local limit for $u_{m-1}$
+passes to these sums. We give the details for $q_m$. Fix $J\ge1$ and $Z>0$, put
+$\sigma_J=\sum_{j>J}\bar F(j)$ and write $z=z_{m,k}$. We compare term by term the two sums
+\[
+a_{m-1}q_m(k)=\sum_{j\ge1}\bar F(j)\,a_{m-1}u_{m-1}(k-j)\qquad\text{and}\qquad
+\mu g(z)=\sum_{j\ge1}\bar F(j)\,g(z).
+\]
+The terms with $j>J$ add up to at most $\bar u\sigma_J$ in the first sum and
+$\lVert g\rVert_\infty\sigma_J$ in the second.
+
+Let $j\le J$. By (F2),
+$\lvert a_{m-1}u_{m-1}(k-j)-g(z_{m-1,k-j})\rvert\le\delta_{m-1}$. Next we compare
+$g(z_{m-1,k-j})$ with $g(z)$. The definition of $z_{m,k}$ gives
 $z_{m-1,k-j}=z\,a_m/a_{m-1}+(\mu-j)/a_{m-1}$. If $\lvert z\rvert\le Z$, then
-$\lvert z_{m-1,k-j}-z\rvert\le\eta_m=Z\lvert a_m/a_{m-1}-1\rvert+(J+\mu)/a_{m-1}$. If
-$\lvert z\rvert>Z$, then for large $m$ both $g(z)$ and $g(z_{m-1,k-j})$ lie in
-$[0,\bar g(Z/2)]$. Since $\mu-\sum_{j\le J}\bar F(j)=\sigma_J$, we get, uniformly in $k$
-for large $m$,
+$\lvert z_{m-1,k-j}-z\rvert\le\eta_m$ with
+$\eta_m=Z\lvert a_m/a_{m-1}-1\rvert+(J+\mu)/a_{m-1}$, so the two values of $g$ differ by
+at most $\omega(\eta_m)$. If $\lvert z\rvert>Z$, then
+$\lvert z_{m-1,k-j}\rvert\ge Z/2$ once $m$ is large (how large depends only on $J$ and
+$Z$), so both values lie in $[0,\bar g(Z/2)]$. In both cases they differ by at most
+$\omega(\eta_m)+\bar g(Z/2)$. Hence, uniformly in $k$ for large $m$,
 \[
 \bigl\lvert a_{m-1}q_m(k)-\mu g(z)\bigr\rvert
 \le\mu\bigl(\delta_{m-1}+\omega(\eta_m)+\bar g(Z/2)\bigr)
 +(\bar u+\lVert g\rVert_\infty)\sigma_J .
 \]
-We let $m\to\infty$, then $J,Z\to\infty$, and use $a_m/a_{m-1}\to1$. This gives the
-first limit. The second follows in the same way from the sum for $u^D_m$, with the
-weights $\Prob(D=d)$ and with $\Prob(D>J)$ in place of $\sigma_J$. The third follows
-from the sum for $q^D_{m+1}$, with $a_mu^D_m$ in place of $a_{m-1}u_{m-1}$, the second
-limit in place of $\delta_{m-1}\to0$, and the shift $z_{m,k-j}-z_{m,k}=-j/a_m$.
+Here $\eta_m\to0$ as $m\to\infty$. So we let $m\to\infty$ and then $J,Z\to\infty$, and
+the right side tends to $0$. Since $a_m/a_{m-1}\to1$ and $a_{m-1}q_m(k)\le\mu\bar u$, we
+may replace $a_{m-1}$ by $a_m$ on the left. This gives the first limit.
+
+The second limit follows in the same way from the sum for $u^D_m$, with the weights
+$\Prob(D=d)$ and with $\Prob(D>J)$ in place of $\sigma_J$, which tends to $0$ as
+$J\to\infty$ because $D$ is a.s.\ finite. The third follows from the sum for $q^D_{m+1}$, with
+$a_mu^D_m$ in place of $a_{m-1}u_{m-1}$, the second limit in place of $\delta_{m-1}\to0$,
+and the shift $z_{m,k-j}-z_{m,k}=-j/a_m$.
 \end{proof}
 
 \subsection{The center for \texorpdfstring{$\alpha>1$}{alpha > 1}}
@@ -151,50 +192,66 @@ the main region) one factor of each term is $O(1/b_h)$, and the other factors ad
 tail probability of $G$, which is small when $M$ is large.
 
 \begin{proof}
-By (F1), $b_h=o(h)$ and $h^{-\alpha}=o(1/b_h)$, since $\kappa<1<\alpha$. Also
-$a(h/(8\mu))\ge b_h/9$ and $a(h/(2\mu))\ge b_h/3$ for large $h$, since
-$8^{-\kappa}>\frac19$ and $2^{-\kappa}>\frac13$. And $a_m/b_h\to1$ uniformly in $m$ with
-$\lvert m\mu-h\rvert\le2Mb_h$, for each fixed $M$. By Proposition~\ref{prop:tworenewal},
+By Proposition~\ref{prop:tworenewal},
 $C_N=\sum_{m\ge1}\bigl[u_m(h)q^D_{m+1}(h)+u^D_m(h)q_m(h)\bigr]$. Fix $M>1$, put
 $m_\pm=(h\pm Mb_h)/\mu$, and let $\Sigma_1,\dots,\Sigma_4$ be the parts of this sum over
 the regions $\mathcal R_1=\{m\le h/(4\mu)\}$, $\mathcal R_2=\{h/(4\mu)<m<m_-\}$,
-$\mathcal R_3=\{m_-\le m\le m_+\}$ and $\mathcal R_4=\{m>m_+\}$.
+$\mathcal R_3=\{m_-\le m\le m_+\}$ and $\mathcal R_4=\{m>m_+\}$. We show that
+$b_h\Sigma_3$ tends to $2\int_{-M}^Mg^2$ and that the other three parts are small.
 
-\emph{Region $\mathcal R_1$.} Here $h\ge4m\mu$, so
-$u_m(h)\le C_Bmh^{-\alpha-1}\le C_Bh^{-\alpha}/(4\mu)$ by (F3). Also
-$q_1(h)=h^{-\alpha}$. For $m\ge2$ we split the sum for $q_m(h)$ at $j=h/2$. The terms
-with $j\ge h/2$ add up to at most $(h/2)^{-\alpha}$. For $j<h/2$ we have
-$h-j>h/2\ge2\mu(m-1)$, so the other terms add up to at most
-$\mu C_B(m-1)(h/2)^{-\alpha-1}\le2^{\alpha-1}C_Bh^{-\alpha}$. Since
-$\sum_mq^D_{m+1}(h)\le1$ and $\sum_mu^D_m(h)\le1$, we get $\Sigma_1=O(h^{-\alpha})$,
-which is $o(1/b_h)$.
+We need three consequences of (F1). First, $b_h=o(h)$ and $h^{-\alpha}=o(1/b_h)$, since
+$\kappa<1<\alpha$. Second, $a(h/(8\mu))\ge b_h/9$ and $a(h/(2\mu))\ge b_h/3$ for large
+$h$, since $8^{-\kappa}>\frac19$ and $2^{-\kappa}>\frac13$. Third, $a_m/b_h\to1$
+uniformly in $m$ with $\lvert m\mu-h\rvert\le2Mb_h$.
 
-\emph{Region $\mathcal R_2$.} For large $h$ we have $m-1\ge h/(8\mu)$ here, so
+\emph{Region $\mathcal R_1$ (far too few runs).} Here $h\ge4m\mu$, so level $h$ is far above
+the mean of $\tau_m$. We show that $u_m(h)$ and $q_m(h)$ are both $O(h^{-\alpha})$ for
+$m\in\mathcal R_1$. By (F3), $u_m(h)\le C_Bmh^{-\alpha-1}\le C_Bh^{-\alpha}/(4\mu)$. Also
+$q_1(h)=h^{-\alpha}$. For $m\ge2$ we split the sum for $q_m(h)$ in~\eqref{eq:C-conv} at
+$j=h/2$. The terms with $j\ge h/2$ have $\bar F(j)\le(h/2)^{-\alpha}$, and the factors
+$u_{m-1}(h-j)$ add up to at most $1$. So these terms add up to at most
+$(h/2)^{-\alpha}$. For $j<h/2$ we have $h-j>h/2\ge2\mu(m-1)$, so (F3) applies to
+$u_{m-1}(h-j)$, and the weights $\bar F(j)$ add up to at most $\mu$. So the other terms
+add up to at most $\mu C_B(m-1)(h/2)^{-\alpha-1}\le2^{\alpha-1}C_Bh^{-\alpha}$. In
+$\Sigma_1$ each of these factors is multiplied by $q^D_{m+1}(h)$ or by $u^D_m(h)$, and
+$\sum_mq^D_{m+1}(h)\le1$ and $\sum_mu^D_m(h)\le1$. Hence $\Sigma_1=O(h^{-\alpha})$, which
+is $o(1/b_h)$.
+
+\emph{Region $\mathcal R_2$ (too few runs).} In each term one
+factor is at most $9\bar u/b_h$, and the other factors add up to the probability that few
+runs reach level $h$. For large $h$ we have $m-1\ge h/(8\mu)$ here, so
 $a_m\ge a_{m-1}\ge b_h/9$ and $u_m(h),u^D_m(h)\le9\bar u/b_h$ by (F2) and
-Lemma~\ref{lem:C-firstpassage}. Let $m'=\lfloor m_-\rfloor$. Then
-$\sum_{m\in\mathcal R_2}q_m(h)\le\Prob(\tau_{m'}\ge h)$ and
-$\sum_{m\in\mathcal R_2}q^D_{m+1}(h)\le\Prob(D+\tau'_{m'}\ge h)$, which is at most
-$\Prob(D\ge b_h)+\Prob(\tau_{m'}\ge h-b_h)$. Since $m'\mu\le h-Mb_h$ and
+Lemma~\ref{lem:C-firstpassage}. Let $m'=\lfloor m_-\rfloor$. Every $m\in\mathcal R_2$ is
+at most $m'$, so $\sum_{m\in\mathcal R_2}q_m(h)\le\Prob(\tau_{m'}\ge h)$ and
+$\sum_{m\in\mathcal R_2}q^D_{m+1}(h)\le\Prob(D+\tau'_{m'}\ge h)$. The last probability
+is at most $\Prob(D\ge b_h)+\Prob(\tau_{m'}\ge h-b_h)$. Since $m'\mu\le h-Mb_h$ and
 $a_{m'}\le b_h$, the event $\{\tau_{m'}\ge h-b_h\}$ implies
-$(\tau_{m'}-m'\mu)/a_{m'}\ge M-1$. As $D$ is a.s.\ finite and
-$(\tau_{m'}-m'\mu)/a_{m'}$ converges in law to $G$, which has a continuous law, we get
-$\limsup_hb_h\Sigma_2\le18\bar u\,\Prob(G\ge M-1)$.
+$(\tau_{m'}-m'\mu)/a_{m'}\ge M-1$. Now $\Prob(D\ge b_h)\to0$ because $D$ is a.s.\
+finite, and $(\tau_{m'}-m'\mu)/a_{m'}$ converges in law to $G$, which has a continuous
+law. So $\limsup_hb_h\Sigma_2\le18\bar u\,\Prob(G\ge M-1)$.
 
-\emph{Region $\mathcal R_4$.} For large $h$ we have $m-1\ge h/(2\mu)$ here, so
-$u_m(h),u^D_m(h)\le3\bar u/b_h$. Let $k=\lfloor m_+\rfloor$. Then
-$\sum_{m\in\mathcal R_4}q_m(h)=\Prob(\tau_k<h)$ and, since $D\ge1$,
-$\sum_{m\in\mathcal R_4}q^D_{m+1}(h)=\Prob(D+\tau'_k<h)\le\Prob(\tau_k<h)$. Now
-$(h-k\mu)/a_k\le(\mu-Mb_h)/a_k\to-M$, so
+\emph{Region $\mathcal R_4$ (too many runs).} This is like $\mathcal R_2$. For large $h$
+we have $m-1\ge h/(2\mu)$ here, so $u_m(h),u^D_m(h)\le3\bar u/b_h$. Let
+$m''=\lfloor m_+\rfloor$. The runs after the first $m''$ cover level $h$ exactly when
+the first $m''$ do not reach it. So $\sum_{m\in\mathcal R_4}q_m(h)=\Prob(\tau_{m''}<h)$
+and, since $D\ge1$,
+$\sum_{m\in\mathcal R_4}q^D_{m+1}(h)=\Prob(D+\tau'_{m''}<h)\le\Prob(\tau_{m''}<h)$. Now
+$m''\mu>h+Mb_h-\mu$, so $(h-m''\mu)/a_{m''}\le(\mu-Mb_h)/a_{m''}\to-M$. Hence
 $\limsup_hb_h\Sigma_4\le6\bar u\,\Prob(G\le-M)$.
 
-\emph{Region $\mathcal R_3$.} Here $m\to\infty$ and $a_m=b_h(1+o(1))$ uniformly. By
-Lemma~\ref{lem:C-firstpassage} and $\delta_m\to0$, uniformly in $m\in\mathcal R_3$,
+\emph{Region $\mathcal R_3$ (the main part).} Here $m\to\infty$ and
+$a_m=b_h(1+o(1))$ uniformly. By (F2) and Lemma~\ref{lem:C-firstpassage}, the factors
+$u_m(h)$ and $u^D_m(h)$ are $(g(z_{m,h})+o(1))/a_m$, and the factors $q_m(h)$ and
+$q^D_{m+1}(h)$ are $\mu(g(z_{m,h})+o(1))/a_m$. So, uniformly in $m\in\mathcal R_3$,
 \[
 u_m(h)q^D_{m+1}(h)+u^D_m(h)q_m(h)=\frac{2\mu}{a_m^2}\bigl(g(z_{m,h})^2+o(1)\bigr).
 \]
-Put $y_m=(h-m\mu)/b_h$. Then $\lvert z_{m,h}-y_m\rvert\le M\lvert b_h/a_m-1\rvert\to0$,
-so $g(z_{m,h})^2=g(y_m)^2+o(1)$. The $y_m$ with $m\in\mathcal R_3$ are the points of an
-arithmetic progression with step $\mu/b_h$ that lie in $[-M,M]$. Hence
+Put $y_m=(h-m\mu)/b_h$. Then $z_{m,h}=y_mb_h/a_m$ and $\lvert y_m\rvert\le M$, so
+$\lvert z_{m,h}-y_m\rvert\le M\lvert b_h/a_m-1\rvert\to0$ and
+$g(z_{m,h})^2=g(y_m)^2+o(1)$. The $y_m$ with $m\in\mathcal R_3$ are the points of an
+arithmetic progression with step $\mu/b_h$ that lie in $[-M,M]$. There are at most
+$2Mb_h/\mu+1$ of them, so the $o(1)$ terms below add up to $o(1)$, and the rest is a
+Riemann sum. Hence
 \[
 b_h\Sigma_3=2\bigl(1+o(1)\bigr)\frac\mu{b_h}
 \sum_{m\in\mathcal R_3}\bigl(g(y_m)^2+o(1)\bigr)\to2\int_{-M}^Mg^2 .
@@ -216,46 +273,53 @@ second form follows from Lemma~\ref{lem:stable}(iv) and $h=N/2$.
 
 \subsection{Proof of Theorem~\texorpdfstring{\ref{thm:alpha2}}{4.7}}\label{app:heavy-alpha2}
 
-Let $\alpha\ge2$ and let $g$ be the standard normal density. It is bounded and uniformly
-continuous, it vanishes at $\pm\infty$, and $\int g^2=1/(2\sqrt\pi)$. Every
-$\Prob(\xi=k)$ is positive, so $\xi$ has maximal span $1$. Fact (F3) is
-Lemma~\ref{lem:C-bigjump}. So by Proposition~\ref{prop:C-center} it is enough to find
-$(a_m)$ with (F1) such that $(\tau_m-m\mu)/a_m$ converges in law to the standard normal
-law. Then Gnedenko's local limit
-theorem~\cite[Theorem~4.2.1]{ibragimovlinnik1971} gives $\delta_m\to0$, and
-$\bar u<\infty$ follows as in the proof of Lemma~\ref{lem:stable}(iii). This is (F2), and
-we get $C_N\sim1/(\sqrt\pi\,b_h)$.
+We apply Proposition~\ref{prop:C-center} with the standard normal density in place of the
+stable density. So let $\alpha\ge2$ and let $g$ be the standard normal density. We have
+to find a norming sequence $(a_m)$ with (F1), (F2) and (F3). Fact (F3) is
+Lemma~\ref{lem:C-bigjump}, which holds for every $\alpha>1$. For (F2) it is enough that
+$(\tau_m-m\mu)/a_m$ converges in law to the standard normal law. Indeed, $g$ is bounded
+and uniformly continuous and vanishes at $\pm\infty$. Every $\Prob(\xi=k)$ is positive,
+so $\xi$ has maximal span $1$, and Gnedenko's local limit
+theorem~\cite[Theorem~4.2.1]{ibragimovlinnik1971} turns the convergence in law into
+$\delta_m\to0$. Then $\bar u<\infty$ follows as in the proof of
+Lemma~\ref{lem:stable}(iii). So in each of the two cases we choose $(a_m)$, check (F1)
+and the normal limit, and read off $b_h=a(h/\mu)$. Since $\int g^2=1/(2\sqrt\pi)$,
+Proposition~\ref{prop:C-center} then gives $C_N\sim1/(\sqrt\pi\,b_h)$.
 
-(a) Let $\alpha>2$. Summation by parts gives
-$\E\xi^2=\sum_{k\ge1}(2k-1)\bar F(k)=2\zeta(\alpha-1)-\zeta(\alpha)$, so $v$ is as stated
-and finite. It is positive because $\xi$ is not constant. We take $a_m=\sqrt{vm}$, which
-has (F1) with $\kappa=\frac12$ and $\beta=0$, and the central limit theorem gives the
-normal limit. So $b_h=\sqrt{vh/\mu}$ and
+(a) Let $\alpha>2$. Then $\xi$ has a finite variance, and we use the central limit
+theorem. Summation by parts gives
+$\E\xi^2=\sum_{k\ge1}(2k-1)\bar F(k)=2\zeta(\alpha-1)-\zeta(\alpha)$, so $v=\E\xi^2-\mu^2$
+is as stated and finite. It is positive because $\xi$ is not constant. We take
+$a_m=\sqrt{vm}$. This has (F1) with $\kappa=\frac12$ and $\beta=0$, and the central limit
+theorem gives the normal limit. So $b_h=\sqrt{vh/\mu}$, and with $h=N/2$ we get
 $C_N\sim(\pi vh/\mu)^{-1/2}=\sqrt{2\mu/(\pi vN)}$. For the stationary start
-Proposition~\ref{prop:edge} gives $E_N=N^{1-\alpha}(1+O(1/N))/(2(\alpha-1)\mu)$, and
-dividing gives $R_N\sim C_2(\alpha)N^{3/2-\alpha}$.
+Proposition~\ref{prop:edge} gives $E_N=N^{1-\alpha}(1+O(1/N))/(2(\alpha-1)\mu)$.
+Dividing $E_N$ by $C_N$ gives $R_N\sim C_2(\alpha)N^{3/2-\alpha}$.
 
-(b) Let $\alpha=2$, so that $\mu=\zeta(2)$ and $\E\xi^2=\infty$. The truncated second
-moment is
+(b) Let $\alpha=2$, so that $\mu=\zeta(2)$ and $\E\xi^2=\infty$. The central limit
+theorem with the norming $\sqrt m$ fails, but the variance is infinite only by a
+logarithm, and the limit is still normal with a slightly larger norming. To see this we
+compute the truncated second moment
 \[
 U(x)=\E[\xi^2;\xi\le x]=\sum_{k\le x}k^2\bigl(k^{-2}-(k+1)^{-2}\bigr)
-=\sum_{k\le x}\frac{2k+1}{(k+1)^2}=2\log x+O(1),
+=\sum_{k\le x}\frac{2k+1}{(k+1)^2}=2\log x+O(1).
 \]
-which varies slowly. So $\xi$ is in the domain of attraction of the normal law, and
-$(\tau_m-m\mu)/a_m$ converges in law to the standard normal law for every sequence
+This function varies slowly. So $\xi$ is in the domain of attraction of the normal law,
+and $(\tau_m-m\mu)/a_m$ converges in law to the standard normal law for every sequence
 $(a_m)$ with
-$mU(a_m)/a_m^2\to1$~\cite[Theorem~XVII.5.3 and eq.~(XVII.5.23)]{feller1971}. For
-$a(x)=\sqrt{x\log x}$ we have
-$mU(a(m))/a(m)^2=(\log m+\log\log m+O(1))/\log m\to1$. We take $a_m=a(m)$ for $m\ge3$
-and $a_1=a_2=1$. This has (F1) with $\kappa=\beta=\frac12$. So
-$b_h^2=(h/\mu)\log(h/\mu)\sim N\log N/(2\mu)$ and
+$mU(a_m)/a_m^2\to1$~\cite[Theorem~XVII.5.3 and eq.~(XVII.5.23)]{feller1971}. We try
+$a(x)=\sqrt{x\log x}$. Then $U(a(m))=\log m+\log\log m+O(1)$ and $a(m)^2/m=\log m$, so
+$mU(a(m))/a(m)^2\to1$. We take $a_m=a(m)$ for $m\ge3$ and $a_1=a_2=1$. This has (F1)
+with $\kappa=\beta=\frac12$. So $b_h^2=(h/\mu)\log(h/\mu)\sim N\log N/(2\mu)$ and
 $C_N\sim\sqrt{2\mu/(\pi N\log N)}$. For the stationary start
-$E_N=N^{-1}(1+O(1/N))/(2\mu)$ by Proposition~\ref{prop:edge}, so
+$E_N=N^{-1}(1+O(1/N))/(2\mu)$ by Proposition~\ref{prop:edge}. Dividing gives
 $R_N\sim\sqrt{\pi\log N/(8\mu^3N)}$.
 
-In both cases the fresh start has the edge $E_N=\frac12N^{-\alpha}$ and the same center
-asymptotics. So $R_N$ is of order $N^{1/2-\alpha}$ for $\alpha>2$ and of order
-$N^{-3/2}(\log N)^{1/2}$ for $\alpha=2$, and it tends to $0$.
+Finally we take the fresh start. In both cases it has the edge $E_N=\frac12N^{-\alpha}$
+by Proposition~\ref{prop:edge}, and the center asymptotics are the same because
+Proposition~\ref{prop:C-center} holds for every a.s.\ finite first run. So $R_N$ is of
+order $N^{1/2-\alpha}$ for $\alpha>2$ and of order $N^{-3/2}(\log N)^{1/2}$ for
+$\alpha=2$, and it tends to $0$.
 \qed
 
 \subsection{Proof of Theorem~\texorpdfstring{\ref{thm:lamperti}}{4.8}}\label{app:heavy-lamperti}
@@ -299,12 +363,19 @@ $a_mu_m(k)\le\lVert g\rVert_\infty+1$ for large $m$ and $a_mu_m(k)\le a_m$ for t
 others.
 
 (iii) We argue as in Lemma~\ref{lem:C-bigjump}, with $r=4+4/\alpha$, $y=k/r$ and
-$t=k^\alpha/m\ge1$. For $m=1$ the claim is $\Prob(\xi=k)\le\alpha k^{-\alpha-1}$. Let
-$m\ge2$. The bound $\alpha r^{\alpha+1}mk^{-\alpha-1}$ for the event that some run is at
-least $y$ holds as before. For the other event we may take $y\ge1$. Split the indices
-into $I_1=\{1,\dots,\lfloor m/2\rfloor\}$ and $I_2=\{\lfloor m/2\rfloor+1,\dots,m\}$, and
+$t=k^\alpha/m$, which is at least $1$ because $k\ge a_m$. One thing is new. For $k$ of
+order $a_m$ the claim is $u_m(k)\le C/a_m$, which is a local bound, and a bound for the
+tail of $\tau_m$ cannot give it. So we cut the $m$ runs into two halves. One half must be
+large, which we bound as before. The other half must then take one exact value, and this
+gives the factor $1/a_m$.
+
+For $m=1$ the claim is $\Prob(\xi=k)\le\alpha k^{-\alpha-1}$. Let $m\ge2$. The bound
+$\alpha r^{\alpha+1}mk^{-\alpha-1}$ for the event that some run is at least $y$ holds as
+before. For the other event we may take $y\ge1$. Split the indices into
+$I_1=\{1,\dots,\lfloor m/2\rfloor\}$ and $I_2=\{\lfloor m/2\rfloor+1,\dots,m\}$, and
 write $\tau_I=\sum_{i\in I}\xi_i$. On $\{\tau_m=k\}$ one of $\tau_{I_1},\tau_{I_2}$ is at
-least $k/2$, so by independence
+least $k/2$, and given that half the other half has to equal $k$ minus it. So by
+independence
 \[
 \Prob\bigl(\tau_m=k,\ \max_i\xi_i<y\bigr)\le\sum_{i=1,2}
 \Prob\bigl(\tau_{I_i}\ge k/2,\ \max_{j\in I_i}\xi_j<y\bigr)\,\sup_\ell\Prob(\tau_{I_{3-i}}=\ell).
@@ -313,14 +384,16 @@ Each half has at least $\lfloor m/2\rfloor\ge m/3$ indices, so by (ii) the supre
 most $\bar u/a_{\lfloor m/2\rfloor}\le3^{1/\alpha}\bar u/a_m$. For the first factor we
 use~\eqref{eq:C-chernoff} for the sum over $I_i$, with $x_0=k/2$ and at most $m$ terms.
 Now $\E[\xi;\xi<y]\le\sum_{\ell<y}\bar F(\ell)\le Cy^{1-\alpha}$ and
-$\E[\xi^2;\xi<y]\le Cy^{2-\alpha}$, and $my^{-\alpha}=r^\alpha/t$. So the exponent is at
-most $-sr/2+C(s+s^2e^s)/t$, and $s=\frac12\log t$ makes the second term bounded. Hence
-the first factor is at most $Ct^{-r/4}=Ct^{-1-1/\alpha}$, and
-$t^{-1-1/\alpha}/a_m=mk^{-\alpha-1}$.
+$\E[\xi^2;\xi<y]\le Cy^{2-\alpha}$, and $my^{-\alpha}=r^\alpha/t$. So the exponent
+in~\eqref{eq:C-chernoff} is at most $-sr/2+C(s+s^2e^s)/t$. We take $s=\frac12\log t$.
+Then $e^s=\sqrt t$, so the second term is bounded, and the first is $-\frac r4\log t$.
+Hence the first factor is at most $Ct^{-r/4}=Ct^{-1-1/\alpha}$. Since $a_m=m^{1/\alpha}$,
+we have $t^{-1-1/\alpha}/a_m=mk^{-\alpha-1}$, which is the claim.
 
 (iv) Fix $y>1$ and let $k_m=\lceil ya_m\rceil$. By (iii) and $ma_m^{-\alpha}=1$,
 $a_mu_m(k_m)\le C_Bma_m(ya_m)^{-\alpha-1}=C_By^{-1-\alpha}$. By (ii) and the continuity
-of $g$, the left side tends to $g(y)$. The integral converges because $g$ is bounded.
+of $g$, the left side tends to $g(y)$ as $m\to\infty$. The integral converges because
+$g$ is bounded and $tg(t)^2\le C_B^2t^{-1-2\alpha}$ for $t>1$.
 \end{proof}
 
 \paragraph{Idea of the proof of Theorem~\ref{thm:lamperti}.}
@@ -328,16 +401,20 @@ With a fresh start, Proposition~\ref{prop:tworenewal} reads
 $C_N=\sum_{m\ge1}u_m(h)\bigl[q_m(h)+q_{m+1}(h)\bigr]$. Put $t_m=h/a_m$. Step 1 finds
 $q_m(h)$ on the scale where $t_m$ is of order $1$, namely $mq_m(h)\approx t_mg(t_m)/\alpha$.
 Step 2 sums over $m$. The terms with $t_m$ very large or very small are negligible, and
-the others form a Riemann sum in the variable $\log m$. Step 3 identifies the limit
-$4\int_0^\infty tg(t)^2\,dt$ as the density at $\frac12$ of $G_1/(G_1+G_2)$ and computes
-it.
+the others form a Riemann sum in the variable $\log m$. This gives
+$NC_N\to4\int_0^\infty tg(t)^2\,dt$. Step 3 identifies this limit as the density at
+$\frac12$ of $Y=G_1/(G_1+G_2)$, where $G_1,G_2$ are independent copies of $G$. Step 4
+finds the law of $Y$ from the moments of $G_1/G_2$, and with it the value of the limit.
 
 \begin{proof}[Proof of Theorem~\ref{thm:lamperti}]
 Fix $M>1$.
 
 \emph{Step 1.} Let $g_1(t)=\int_0^tw^{-\alpha}g(t-w)\,dw$. We claim that
-$mq_m(h)=g_1(t_m)+o(1)$ as $h\to\infty$, uniformly in $m$ with $t_m\in[1/(2M),2M]$. Such
-$m$ tend to infinity. Since
+$mq_m(h)=g_1(t_m)+o(1)$ as $h\to\infty$, uniformly in $m$ with $t_m\in[1/(2M),2M]$, and
+that $g_1(t)=tg(t)/\alpha$. The reason for the first claim is that the sum for $q_m$
+in~\eqref{eq:C-conv} is the convolution of the tail $j^{-\alpha}$ with $u_{m-1}$, and on
+the scale $a_m$ it becomes the convolution $g_1$. The $m$ in this range tend to
+infinity with $h$. Since
 $\lvert k/a_{m-1}-k/a_m\rvert\le2M(a_m/a_{m-1}-1)\to0$ for $0\le k\le h$,
 Lemma~\ref{lem:C-stable1}(ii) for $u_{m-1}$ and the uniform continuity of $g$ give
 $a_mu_{m-1}(k)=g(k/a_m)+o(1)$ uniformly in $0\le k\le h$. As
@@ -353,21 +430,24 @@ With $x=t_m\le2M$ this shows that the $o(1)$ terms add up to $o(1)$. With $x=\et
 shows that the terms with $j\le\eta a_m$ are $O(\eta^{1-\alpha})$, and so is
 $\int_0^\eta w^{-\alpha}g(t_m-w)\,dw$. The other terms form a Riemann sum with mesh
 $1/a_m$ of the function $w^{-\alpha}g(t-w)$, which is uniformly continuous on
-$\{\eta\le w\le t\le2M\}$. Letting $\eta\to0$ proves the claim.
+$\{\eta\le w\le t\le2M\}$. Letting $\eta\to0$ proves the first claim.
 
-Next, the Laplace transform of $g_1$ is the product of those of $w^{-\alpha}$ and $g$,
-namely $\Gamma(1-\alpha)s^{\alpha-1}e^{-\Gamma(1-\alpha)s^\alpha}$. This is
-$\frac1\alpha$ times $-\frac d{ds}e^{-\Gamma(1-\alpha)s^\alpha}$, which is the transform
-of $tg(t)$. Both $g_1$ and $tg(t)$ are continuous on $(0,\infty)$, so
-$g_1(t)=tg(t)/\alpha$.
+For the second claim we compare Laplace transforms. The transform of the convolution
+$g_1$ is the product of those of $w^{-\alpha}$ and $g$, namely
+$\Gamma(1-\alpha)s^{\alpha-1}e^{-\Gamma(1-\alpha)s^\alpha}$. This is $\frac1\alpha$ times
+$-\frac d{ds}e^{-\Gamma(1-\alpha)s^\alpha}$, and minus the derivative of the transform of
+$g$ is the transform of $tg(t)$. Both $g_1$ and $tg(t)$ are continuous on $(0,\infty)$,
+so $g_1(t)=tg(t)/\alpha$.
 
-\emph{Step 2.} If $t_m>M$, then $h>Ma_m$ and Lemma~\ref{lem:C-stable1}(iii) gives
+\emph{Step 2.} We sum $u_m(h)[q_m(h)+q_{m+1}(h)]$ over $m$ in three ranges. If $t_m>M$,
+then $h>Ma_m$, so $m<(h/M)^\alpha$, and Lemma~\ref{lem:C-stable1}(iii) gives
 $u_m(h)\le C_Bmh^{-\alpha-1}\le C_BM^{-\alpha}/h$. Since
 $\sum_m(q_m(h)+q_{m+1}(h))\le2$, these $m$ contribute at most $2C_BM^{-\alpha}/h$ to
 $C_N$. If $t_m<1/M$, then $u_m(h)\le\bar u/a_m<\bar u/(Mh)$, and these $m$ contribute at
 most $2\bar u/(Mh)$. For the remaining $m$ we have $t_{m+1}=t_m(1+o(1))\in[1/(2M),2M]$
-and $(m+1)/m\to1$, and $g_1$ is uniformly continuous on $[1/(2M),2M]$. So Step 1,
-$1/a_m=t_m/h$ and $\delta_m\to0$ give, uniformly,
+and $(m+1)/m\to1$, and $g_1$ is uniformly continuous on $[1/(2M),2M]$. So Step 1 applies
+to $q_m(h)$ and to $q_{m+1}(h)$, and both are $(t_mg(t_m)/\alpha+o(1))/m$. With
+$1/a_m=t_m/h$ and $\delta_m\to0$ we get, uniformly,
 \[
 u_m(h)\bigl[q_m(h)+q_{m+1}(h)\bigr]
 =\frac{t_m}h\bigl(g(t_m)+o(1)\bigr)\,\frac2m\Bigl(\frac{t_mg(t_m)}\alpha+o(1)\Bigr)
@@ -386,24 +466,28 @@ $M\to\infty$, and we get $NC_N=2hC_N\to4\int_0^\infty tg(t)^2\,dt$.
 
 \emph{Step 3.} Let $G_1,G_2$ be independent copies of $G$ and $Y=G_1/(G_1+G_2)$. The map
 $(G_1,G_2)\mapsto(Y,G_1+G_2)$ has inverse $(y,r)\mapsto(yr,(1-y)r)$ with Jacobian $r$. So
-$Y$ has the density $f(y)=\int_0^\infty r\,g(yr)\,g((1-y)r)\,dr$ on $(0,1)$, and
-$f(\frac12)=\int_0^\infty r\,g(r/2)^2\,dr=4\int_0^\infty tg(t)^2\,dt$. Hence
-$NC_N\to f(\frac12)$. The function $f$ is continuous on $[\frac14,\frac34]$. Indeed, for
-such $y$ both $yr$ and $(1-y)r$ are at least $r/4$, so by
-Lemma~\ref{lem:C-stable1}(iv) the integrand is at most
+$Y$ has the density $f(y)=\int_0^\infty r\,g(yr)\,g((1-y)r)\,dr$ on $(0,1)$. With $r=2t$
+we get $f(\frac12)=\int_0^\infty r\,g(r/2)^2\,dr=4\int_0^\infty tg(t)^2\,dt$. Hence
+$NC_N\to f(\frac12)$ by Step 2. The function $f$ is continuous on
+$[\frac14,\frac34]$. Indeed, for such $y$ both $yr$ and $(1-y)r$ are at least $r/4$, so
+by Lemma~\ref{lem:C-stable1}(iv) the integrand is at most
 $r\min(\lVert g\rVert_\infty^2,Cr^{-2-2\alpha})$. This is integrable, and dominated
 convergence applies.
 
-We now identify the law of $Y$. It does not change if $G$ is multiplied by a constant,
-so we may take $\E e^{-sG}=e^{-s^\alpha}$. For $x>0$ and $0<p<1$,
+\emph{Step 4.} It remains to show that $f(\frac12)=\ell_\alpha(\frac12)$. We show that
+$Y$ has the density $\ell_\alpha$. To do this we compute the moments $\E W^p$ of
+$W=G_1/G_2$ for small $\lvert p\rvert$, and we check that a certain explicit density
+$\rho_\alpha$ has the same moments. The law of $Y$ does not change if $G$ is multiplied
+by a constant, so we may take $\E e^{-sG}=e^{-s^\alpha}$. For $x>0$ and $0<p<1$,
 \[
 x^p=\frac p{\Gamma(1-p)}\int_0^\infty s^{-p-1}(1-e^{-sx})\,ds,\qquad
 x^{-p}=\frac1{\Gamma(p)}\int_0^\infty s^{p-1}e^{-sx}\,ds .
 \]
-Taking expectations and substituting $w=s^\alpha$ gives
+We put $x=G$, take expectations and substitute $w=s^\alpha$. The first formula gives
+$\E G^p$ for $0<p<\alpha$ and the second gives $\E G^{-p}$ for $0<p<1$. Together,
 $\E G^p=\Gamma(1-p/\alpha)/\Gamma(1-p)$ for $\lvert p\rvert<\alpha$ (see
-also~\cite[Theorem~2.6.3]{zolotarev1986}). Let $W=G_1/G_2$, so that $Y=W/(1+W)$. By
-independence and $\Gamma(1-z)\Gamma(1+z)=\pi z/\sin(\pi z)$,
+also~\cite[Theorem~2.6.3]{zolotarev1986}). Now $Y=W/(1+W)$ and $\E W^p=\E G^p\,\E G^{-p}$
+by independence. With $\Gamma(1-z)\Gamma(1+z)=\pi z/\sin(\pi z)$ this is
 \[
 \E W^p=\frac{\Gamma(1-\frac p\alpha)\Gamma(1+\frac p\alpha)}{\Gamma(1-p)\Gamma(1+p)}
 =\frac{\sin\pi p}{\alpha\sin(\pi p/\alpha)},\qquad0<\lvert p\rvert<\alpha .
@@ -422,12 +506,20 @@ $\frac1{x^2+2x\cos\theta+1}=\frac1{2i\sin\theta}\bigl(\frac1{x+e^{-i\theta}}-\fr
 and
 $\int_0^\infty x^\beta(x+e^{\pm i\theta})^{-1}dx=-\pi e^{\pm i\beta\theta}/\sin(\pi\beta)$.
 The substitution $x\mapsto1/x$ shows that the left side is even in $\beta$, and so is the
-right side. With $x=w^\alpha$, $\beta=p/\alpha$ and $\theta=\pi\alpha$ it gives
-$\int_0^\infty w^p\rho_\alpha(w)\,dw=\E W^p$ for $\lvert p\rvert<\alpha$. At $p=0$ this
-shows that $\rho_\alpha$ is a probability density. So $\log W$ and the logarithm of a
-variable with density $\rho_\alpha$ have the same moment generating function near $0$,
-and $W$ has density $\rho_\alpha$. Then $Y$ has density
-$\rho_\alpha(\frac y{1-y})(1-y)^{-2}=\ell_\alpha(y)$. Both $f$ and $\ell_\alpha$ are
+right side. So the formula holds for $0<\beta<1$ too. We use it with $x=w^\alpha$,
+$\beta=p/\alpha$ and $\theta=\pi\alpha$. Then $w^{\alpha-1}dw=dx/\alpha$, and we get
+\[
+\int_0^\infty w^p\rho_\alpha(w)\,dw
+=\frac{\sin\pi\alpha}{\pi\alpha}\cdot\frac{\pi\sin\pi p}{\sin\pi\alpha\,\sin(\pi p/\alpha)}
+=\E W^p\qquad(0<\lvert p\rvert<\alpha).
+\]
+At $p=0$ the value $\theta/\sin\theta$ of the classical integral gives
+$\int_0^\infty\rho_\alpha=1$, so $\rho_\alpha$ is a probability density. So $\log W$ and the
+logarithm of a variable with density $\rho_\alpha$ have the same moment generating
+function near $0$. A moment generating function that is finite near $0$ determines the
+law, so $W$ has density $\rho_\alpha$. Then $Y=W/(1+W)$ has density
+$\rho_\alpha(\frac y{1-y})(1-y)^{-2}$, and multiplying the numerator and the denominator
+by $(1-y)^{2\alpha}$ shows that this is $\ell_\alpha(y)$. Both $f$ and $\ell_\alpha$ are
 densities of $Y$ that are continuous near $\frac12$, so
 \[
 f(\tfrac12)=\ell_\alpha(\tfrac12)=\frac{2\sin\pi\alpha}{\pi(1+\cos\pi\alpha)}
