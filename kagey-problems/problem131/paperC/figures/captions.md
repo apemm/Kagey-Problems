@@ -2,10 +2,10 @@
 
 Each caption is written in LaTeX and can be pasted into `\caption{...}`. The figures are made by
 `make_figures.py` in this folder. Paper C uses `fig_cycles` and `fig_planar` as Figures 3 and 5. Figures 2 and 4 are drawn in the
-source with TikZ. Figure 1 is the program figure
+source with TikZ. Figure 1 is `fig_simplex` (label `fig:simplex`, Section 1.1), made by `make_simplex_figure.py`. Figure 2 is the program figure
 `program_C.pdf` in `../../figures/`, with its caption in `../../figures/program_captions.md`.
 
-## Figure 3, `fig_cycles` (label `fig:cycles`, Section 3)
+## Figure 4, `fig_cycles` (label `fig:cycles`, Section 3)
 
 (a) The points $(\lambda_F,\lvert F\rvert-1)$ of the arcs of the 6-cycle and of $C_6$,
 with the lower-left boundary of their hull. The numbers beside the edges are the switch values
@@ -15,7 +15,7 @@ $C_5$ with the uniform start, against $T$, at $N=40$ and $N=72$. The mode skips 
 states. The triangles mark the first-order switch points $\tau_i\log N$ with $\tau_i=1$,
 $1+\sqrt2$ and $2+\sqrt2$ (Table~\ref{tab:outcomes}).
 
-## Figure 5, `fig_planar` (label `fig:planar`, Section 6)
+## Figure 6, `fig_planar` (label `fig:planar`, Section 6)
 
 (a) The exact crossing of the planar walk with $(r,s)=(0.1,1)$, written as
 $sT^*_N-z_N$ with $z_N=N(1-p_N)$, for $N=40,80,\dots,10240$. The dashed curve is

@@ -40,7 +40,7 @@ connected and it has start mass.
 
 - A worked example opens Section 3. On the 4-cycle (the planar walk without reversals) the cost of
   staying on a face, N^(-tau lambda_F), and the cost of spreading over it, N^(-(|F| - 1)), are
-  computed by hand, and they explain the rule below (Figure 2).
+  computed by hand, and they explain the rule below (Figure 3).
 - First order, for every start (Theorem 3.3). The mode lies on a face F that minimizes
   tau lambda_F + |F| - 1. The winners are read off the lower-left boundary of the convex hull of
   the points (lambda_F, |F| - 1) (Theorem 3.4), so a sticky walk prefers a well-separated community.
@@ -124,7 +124,7 @@ jump with d >= 4 states.
   appendices `app_torus.tex`, `app_laplace.tex`, `app_planar.tex`, `app_examples.tex` and
   `app_hdp.tex` (Appendices A to E).
 - `figures/` holds Figures 3 and 5 (`fig_cycles`, `fig_planar`), made by `figures/make_figures.py`,
-  with the captions in `figures/captions.md`. Figure 1 is the program figure
+  with the captions in `figures/captions.md`. Figure 1 is the simplex figure from `figures/make_simplex_figure.py`. Figure 2 is the program figure
   `../figures/program_C.pdf`, made by `../figures/make_program_figure.py`. Figures 2 and 4 (the
   worked example on the 4-cycle and the 3 kinds of planar paths) are drawn in the source with TikZ. The files `fig_window` and
   `fig_sticky` are no longer included in the paper.
