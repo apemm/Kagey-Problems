@@ -110,16 +110,20 @@ for N in (8, 16, 32, 64, 96):
     uN = root(lambda x: S_N(N, x), 0.0, 1.0)
     vstar = root(lambda x: planar_ratio_turns(N, x), 0.0, 1.0)
     L = math.log(N)
-    worst = 0.0
+    worst, tested = 0.0, 0
     for x in (0.5 * uN, uN, 1.5 * uN):
         z = N * x
         S = S_N(N, x)
         Delta = S * S - planar_ratio_turns(N, x)
-        bound = (2 * x + 8 * x * S) * (2 * z + 2) * S
-        worst = max(worst, Delta / bound)
         assert Delta >= -1e-12
-    print("   N=%3d  N*u_N=%.5f  N*v*=%.5f  N(v*-u_N)*N/L^2=%.4f  max Delta/bound=%.4f" % (
-        N, N * uN, N * vstar, N * (vstar - uN) * N / L ** 2, worst))
+        if z * (z + 2) <= N:          # the hypothesis of Theorem 6.9(b)
+            bound = (2 * x + 8 * x * S) * (2 * z + 2) * S
+            assert Delta <= bound * (1 + 1e-9)
+            worst = max(worst, Delta / bound)
+            tested += 1
+    print("   N=%3d  N*u_N=%.5f  N*v*=%.5f  N(v*-u_N)*N/L^2=%.4f  max Delta/bound=%.4f"
+          "  (bound tested at %d of 3 points, the others have z(z+2) > N)" % (
+        N, N * uN, N * vstar, N * (vstar - uN) * N / L ** 2, worst, tested))
 
 print("3. F(y/2) <= 2 F(y) for F(y) = exp(-y)(I0+I1)(y)")
 from scipy.special import ive
