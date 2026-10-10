@@ -83,9 +83,20 @@ def save(fig, name):
     print(f"wrote {name}.pdf and {name}.png")
 
 
-def shades(n, cmap="viridis", lo=0.0, hi=0.85):
+# The palette is batlow, from F. Crameri's Scientific colour maps (perceptually
+# uniform, readable in grayscale and with color-vision deficiencies). Without
+# the package cmcrameri the figures fall back to viridis.
+try:
+    from cmcrameri import cm as _cmc
+    PALETTE = _cmc.batlow
+except ImportError:
+    PALETTE = plt.get_cmap("viridis")
+
+
+def shades(n, cmap=None, lo=0.0, hi=0.82):
     """n colours from light to dark."""
-    return [plt.get_cmap(cmap)(x) for x in np.linspace(hi, lo, n)]
+    cm = PALETTE if cmap is None else plt.get_cmap(cmap)
+    return [cm(x) for x in np.linspace(hi, lo, n)]
 
 
 def panel(ax, letter, x=0.03, y=0.95):

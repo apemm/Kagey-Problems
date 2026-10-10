@@ -59,9 +59,20 @@ def save(fig, name):
     print(f"wrote {name}.pdf and {name}.png")
 
 
-def shades(n, cmap="viridis", lo=0.0, hi=0.85):
+# The palette is batlow, from F. Crameri's Scientific colour maps (perceptually
+# uniform, readable in grayscale and with color-vision deficiencies). Without
+# the package cmcrameri the figures fall back to viridis.
+try:
+    from cmcrameri import cm as _cmc
+    PALETTE = _cmc.batlow
+except ImportError:
+    PALETTE = plt.get_cmap("viridis")
+
+
+def shades(n, cmap=None, lo=0.0, hi=0.82):
     """n colours from light to dark."""
-    return [plt.get_cmap(cmap)(x) for x in np.linspace(hi, lo, n)]
+    cm = PALETTE if cmap is None else plt.get_cmap(cmap)
+    return [cm(x) for x in np.linspace(hi, lo, n)]
 
 
 # ---------------------------------------------------------------- checks
@@ -170,7 +181,7 @@ def fig_simplex(n=24):
     ang = np.deg2rad(np.arange(6) * 60 + 30)
     hexv = np.c_[np.cos(ang), np.sin(ang)] * hexr
     vmin, vmax = -1, 1
-    cmap = plt.get_cmap("viridis")
+    cmap = PALETTE
     fig, axs = plt.subplots(1, 3, figsize=(FULL, 2.0))
     for ax, p, lab, letter in zip(axs, ps, labels, "abc"):
         P = simplex_law(n, p)
@@ -191,7 +202,8 @@ def fig_simplex(n=24):
         tri = Triangulation(*np.array(pts).T)
         ax.tricontour(tri, vals, levels=[0.0], colors="white", linewidths=1.0)
         ax.tricontour(tri, vals, levels=[0.0], colors="k", linewidths=0.4, linestyles="--")
-        ax.plot(*xy(*c[:2]), "+", color="w", ms=5, mew=0.8)
+        ax.plot(*xy(*c[:2]), "+", color="w", ms=6, mew=2.0)
+        ax.plot(*xy(*c[:2]), "+", color="k", ms=5, mew=0.8)
         ax.set_xlim(-0.06, 1.06)
         ax.set_ylim(-0.08, s3 + 0.06)
         ax.set_aspect("equal")
