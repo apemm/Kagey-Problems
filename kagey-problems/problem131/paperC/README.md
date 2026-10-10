@@ -123,9 +123,9 @@ jump with d >= 4 states.
 - `problem131_switching.tex` is the paper. It includes `sec_*.tex` (Sections 1 to 8) and the
   appendices `app_torus.tex`, `app_laplace.tex`, `app_planar.tex`, `app_examples.tex` and
   `app_hdp.tex` (Appendices A to E).
-- `figures/` holds Figures 3 and 5 (`fig_cycles`, `fig_planar`), made by `figures/make_figures.py`,
+- `figures/` holds Figures 4 and 6 (`fig_cycles`, `fig_planar`), made by `figures/make_figures.py`,
   with the captions in `figures/captions.md`. Figure 1 is the simplex figure from `figures/make_simplex_figure.py`. Figure 2 is the program figure
-  `../figures/program_C.pdf`, made by `../figures/make_program_figure.py`. Figures 2 and 4 (the
+  `../figures/program_C.pdf`, made by `../figures/make_program_figure.py`. Figures 3 and 5 (the
   worked example on the 4-cycle and the 3 kinds of planar paths) are drawn in the source with TikZ. The files `fig_window` and
   `fig_sticky` are no longer included in the paper.
 - `verify_first_order.py` checks the exact law, the rate on a face and first-order selection
@@ -134,10 +134,13 @@ jump with d >= 4 states.
   3-cycle (Section 4, Appendices A and B, and the 4-cycle numbers of Section 5).
 - `verify_examples.py` checks the 4-cycle and the rows of Table 1 (Section 5 and Appendix D),
   with the 2 exact resultants of Proposition D.4.
-- `verify_planar.py` checks the planar walk (Section 6 and Appendix C).
+- `verify_planar.py` checks the planar walk (Section 6 and Appendix C). It also tests the identity
+  of Theorem 6.9(a) in exact rational arithmetic for even N up to 30.
 - `verify_planar_product.py` checks the product formula of Proposition 6.7 in exact rational
-  arithmetic for N = 4, 6, 8. In floating point it checks an inequality of Appendix C, the bound
-  of Lemma C.4 and Theorem 6.9(a) and (b) for N up to 96. It takes a few minutes.
+  arithmetic for N = 4, 6, 8. In floating point, and only on grids, it checks the inequality
+  F(y/2) <= 2 F(y) of Appendix C, the inequality x S_N'(x) <= (2z+2) S_N(x) of Lemma C.4 at
+  N = 16, 64 and 256, and Delta_N >= 0 and the bound of Theorem 6.9(b) for N up to 96. Every
+  check asserts. It takes a few minutes.
 - `verify_sticky_fisher.py` checks the sticky priors (Section 7 and Appendix E). It also checks the
   Fisher information of the endpoint, which now belongs to the note
   `../S1_endpoint_information_note/s1_note.tex`, including the exact moments that the proof of the
