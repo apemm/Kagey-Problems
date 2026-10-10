@@ -425,7 +425,7 @@ def check_cycles():
         check(f'tau_full(C_{d}) = {label}', abs(wA[-1][0] - closed) < 1e-9 and abs(ceil(d / 3) / lam(K) - closed) < 1e-12,
               f'hull {wA[-1][0]:.9f}, formula {ceil(d / 3) / lam(K):.9f}')
     wA, _ = winners_hull(exit_rates(W_cycle(6)), 6)
-    agree('Figure 3(a): C_6 switch at 4.906', '4.906', {'hull': wA[3][0]})
+    agree('Figure 4(a): C_6 switch at 4.906', '4.906', {'hull': wA[3][0]})
     ks = np.array([100, 200, 400, 800])
     tk = 1 / (np.array([lam(k - 1) for k in ks]) - np.array([lam(k) for k in ks]))
     resid = (tk - ks ** 3 / (2 * pi ** 2) - 3 * ks ** 2 / (4 * pi ** 2)) / ks
@@ -550,7 +550,7 @@ def check_dp_exact():
 
 
 def check_C5(full):
-    print('\nFigure 3(b): the exact mode on C_5', flush=True)
+    print('\nFigure 4(b): the exact mode on C_5', flush=True)
     W = W_cycle(5)
     Q = gen(W)
     mu = np.ones(5) / 5

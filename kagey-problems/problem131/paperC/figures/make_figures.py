@@ -692,7 +692,7 @@ def check(D):
         if not abs(got - want) <= tol:
             bad.append(f"{label}: stated {quoted}{'' if factor == 1 else f' (x{factor})'}, computed {got:.8g}")
 
-    # ---- Figure 3(a) and Table 1: the hull of the 6-cycle from all 63 faces
+    # ---- Figure 4(a) and Table 1: the hull of the 6-cycle from all 63 faces
     faces = all_faces(cycle_rates(6))
     conn = [(lam, len(F) - 1) for F, lam, c in faces if c]
     if len(conn) != 31:
@@ -718,7 +718,7 @@ def check(D):
     for k, q in PAPER["b_k"].items():
         cmp(f"b_{k}", b_k(k), q)
 
-    # ---- Figure 3(b): the exact mode on C_5
+    # ---- Figure 4(b): the exact mode on C_5
     for N, qs in PAPER["C5_transitions"].items():
         C = D["cycles"][N]
         seq = [t for i, t in enumerate(C["types"]) if i == 0 or t != C["types"][i - 1]]
@@ -778,7 +778,7 @@ def check(D):
     cmp("HDP next term, omega (omega P/limit - 1) at 30000", 30000 * (30000 * qd[30000] / HDP_LIMIT - 1),
         PAPER["hdp_next_term"])
 
-    # ---- Figure 5: the planar walk
+    # ---- Figure 6: the planar walk
     rows = D["planar"][(0.1, 1.0)]
     for row, qT, qg, qc in zip(rows, PAPER["planar_sT"], PAPER["planar_gap"], PAPER["planar_curve"]):
         L = log(row["N"])
