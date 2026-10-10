@@ -580,6 +580,13 @@ $\theta_ig_{ij}=\theta_jg_{ji}$. So $\theta$ is a reversible measure. (This is
 Kolmogorov's criterion, see~\cite{kelly1979}.)
 \end{proof}
 
+Part (a) does not ask for a chain without a cut. By
+Corollary~\ref{cor:candidates} two chains with the same counts have the same
+unordered pairs of flows, so they have the same $\sigma$, whatever the reason
+for the tie. This is also why data that cannot see the direction of time can
+give $\sigma$ exactly. The data do not single out the chain, but $\sigma$ takes
+the same value at every chain they allow.
+
 \begin{remark}
 (1) Maes, Neto\v{c}n\'y and Wynants~\cite{mnw2008} showed that, close to a
 reversible chain and to leading order, the rate function for the large
@@ -689,6 +696,16 @@ is reached from it by diagonal similarity, the transpose, and transposing one
 side of a cut~\cite{hl1984,alahmadieh2026,cggr2025}, and (a) and (b) are of
 this kind. What Theorem~\ref{thm:lumping} adds is that they pass the second test
 of Proposition~\ref{prop:minors}, the one that involves the start.
+
+The second test matters. Take a rate matrix with a cut $X$ that is not a
+module (the blocks $G_{XX^c}$ and $G_{X^cX}$ have rank one, but the rows of
+$G_{XX^c}$ are not equal). Transposing one side of the cut and rescaling gives a
+rate matrix $G'$ with the same principal minors as $G$, and in our examples
+even the same stationary law. But the minors of $G'-\one\pi^{\top}$ differ from
+those of $G-\one\pi^{\top}$, and the counts differ, by about $10^{-4}$ in the
+Laplace transform (\texttt{check\_cut\_transpose.py}). For the chains of
+Example~\ref{ex:four} the same script confirms that $G'$ is exactly the
+transpose of $G$ across the module, up to a diagonal similarity.
 
 \begin{example}[the reversal can win without a stationary start]\label{ex:inside}
 Let $M$ be a module with three states and let $O$ be a single state $z$, with
@@ -957,6 +974,62 @@ Paper~C's crossings, where $T$ is of order $\log N$.}
 \label{tab:eff}
 \end{table}
 
+\section{Discrete time, all horizons}\label{sec:discrete}
+
+Papers~A to~D count the steps of a chain in discrete time. The proof of
+Theorem~\ref{thm:horizon} does not carry over (powers of algebraic functions
+can cancel where exponentials cannot). But if we are given the counts at every
+horizon, the rest of the theory does.
+
+Let $P$ be an irreducible transition matrix on $[d]$, let $\mu$ be a start
+law, and let $K_N$ be the vector of visit counts of the first $N$ steps. A cut
+of $P$ is defined as for $G$, and the reversal is
+$\hat p_{ij}=\pi_jp_{ji}/\pi_i$.
+
+\begin{proposition}[discrete time]\label{prop:discrete}
+The laws of $K_N$ for all $N\ge1$ determine every principal minor of $P$ and
+every principal minor of $P-\one\mu^{\top}$, and they are determined by these
+minors. If $P$ has no cut and $(\mu',P')$ gives the same laws, then $\mu'=\mu$,
+and $P'$ is $P$ or its reversal.
+\end{proposition}
+
+In words, with all horizons in hand the discrete chain is read in the same way
+as the continuous one. The counts fix $\mu_i$, $p_{ii}$, $p_{ij}p_{ji}$ and
+$\mu_ip_{ij}+\mu_jp_{ji}$, so the unordered pairs of flows, and with them the
+entropy production of the discrete chain.
+
+\begin{proof}
+We collect all horizons in one generating function. A path
+$x_1,\ldots,x_N$ contributes $\mu_{x_1}p_{x_1x_2}\cdots p_{x_{N-1}x_N}$ times
+$z_{x_1}\cdots z_{x_N}$ to $\E z^{K_N}$, so
+$\E z^{K_N}=\mu^{\top}D_z(PD_z)^{N-1}\one$ with $D_z=\operatorname{diag}(z)$.
+Multiply by $s^N$, sum over $N$ and put $y_i=sz_i$. For small $y$,
+\[
+ \sum_{N\ge1}s^N\,\E z^{K_N}=\mu^{\top}D_y(I-PD_y)^{-1}\one=\frac{n(y)}{\chi(y)},
+ \qquad\chi(y)=\det(I-PD_y),
+\]
+and $n(y)=\det(I-PD_y+\one\mu^{\top}D_y)-\chi(y)$ by the formula for the
+determinant of a rank one change. For a matrix $A$ we have
+$\det(I-AD_y)=\sum_U(-1)^{|U|}\det(A_{UU})\prod_{i\in U}y_i$. So the
+coefficients of $\chi$ are the principal minors of $P$, and those of $\chi+n$
+are the principal minors of $P-\one\mu^{\top}$.
+
+It remains to see that the fraction is in lowest terms. Both $\chi$ and $n$
+have degree at most one in each $y_i$, and $\chi(0)=1$ while $n(0)=0$. With
+$x_i=1/y_i$ we have $\chi(y)\prod_ix_i=\det(X-P)$, which is irreducible by the
+proof of Lemma~\ref{lem:irred}. So $\chi$ is irreducible. If $\chi$ divided
+$n$, then $n$ would be a constant multiple of $\chi$, and the constant would be
+$n(0)/\chi(0)=0$. But the coefficient of $y_i$ in $n$ is $\mu_i$. Hence the
+generating function determines $\chi$ and $n$, and the first claim follows.
+The coefficient of $y_i$ also gives $\mu'=\mu$.
+
+For the second claim, the theorem of Hartfiel and Loewy gives $P'=DPD^{-1}$ or
+$P'=DP^{\top}D^{-1}$. The rows of $P'$ sum to one. In the first case
+$PD^{-1}\one=D^{-1}\one$, so $D^{-1}\one$ is a multiple of $\one$ and $P'=P$.
+In the second case $P^{\top}D^{-1}\one=D^{-1}\one$, so $D^{-1}\one$ is a
+multiple of $\pi$ and $P'=\hat P$.
+\end{proof}
+
 \section{Checks and open questions}
 
 Each statement above was checked numerically in the scripts next to this note.
@@ -980,6 +1053,11 @@ Each statement above was checked numerically in the scripts next to this note.
  $d=3,4,5$ and both kinds of start. Chains with the same counts have the same
  $\sigma$, and the triangle affinities are recovered from the principal minors
  of orders up to three.
+\item \texttt{check\_cut\_transpose.py}. The lumped reversal of
+ Example~\ref{ex:four} is the transpose across the module. A transpose across a
+ cut that is not a module keeps the principal minors of $G$ but not the counts.
+ The generating function of Proposition~\ref{prop:discrete} and its two
+ expansions in principal minors, for $d=3,4$.
 \item \texttt{check\_rigidity.py}. Part (b) of Theorem~\ref{thm:lumping} and
  Example~\ref{ex:inside} (the laws agree to $10^{-15}$ for $d=4,5,7$). In each
  tie both sets of minors of Proposition~\ref{prop:minors} agree. For a random
@@ -1000,7 +1078,8 @@ What we do not know.
  Example~\ref{ex:inside} are the cases we know.
 \item Does Theorem~\ref{thm:horizon} have a form for the $N$-step chain? The
  proof uses that exponentials of algebraic functions do not cancel, and powers
- of algebraic functions can.
+ of algebraic functions can. Proposition~\ref{prop:discrete} needs every
+ horizon.
 \item The large $T$ row of Table~\ref{tab:eff}. By Theorem~\ref{thm:long},
  $d-1$ efficiencies tend to $1$. We expect the rest to tend to $0$, most of
  them like $1/T$ and, for three states, the smallest like $T^{-2}$.
@@ -1011,7 +1090,10 @@ What we do not know.
 \end{enumerate}
 
 \paragraph{What is in the literature.} A search (not a full review) found the
-following. The algebra of Section~\ref{sec:rigid} and of the polynomial $\chi_0$ in Section~\ref{sec:lumping}
+following. The closest work in probability is by Kim and
+Landim~\cite{kl2024}, who ask when the large deviation rate function of the
+occupation times (the limit of our data as the horizon grows) determines the
+chain. Our data are the law at one finite horizon, with any start. The algebra of Section~\ref{sec:rigid} and of the polynomial $\chi_0$ in Section~\ref{sec:lumping}
 is the theory of matrices with equal principal
 minors~\cite{hl1984,loewy1986,alahmadieh2026,cggr2025}. We did not find
 Theorem~\ref{thm:horizon}, the role of the start law (the unordered pairs of
@@ -1054,6 +1136,9 @@ its order, and not the total times. We have not read
  \emph{J. Stat. Phys.} \textbf{168} (2017), 259--287.
 \bibitem{kelly1979} F.~P.~Kelly, \emph{Reversibility and Stochastic Networks},
  Wiley, Chichester, 1979.
+\bibitem{kl2024} S.~Kim and C.~Landim, $\Gamma$-expansion of the measure-current
+ large deviations rate functional of non-reversible finite-state Markov chains,
+ preprint, arXiv:2412.13515.
 \bibitem{loewy1986} R.~Loewy, Principal minors and diagonal similarity of
  matrices, \emph{Linear Algebra Appl.} \textbf{78} (1986), 23--64.
 \bibitem{mnw2008} C.~Maes, K.~Neto\v{c}n\'y and B.~Wynants, On and beyond
