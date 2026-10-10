@@ -598,7 +598,8 @@ Section~\ref{sec:convex}, and Corollary~\ref{cor:unique-min} closes the window
 for large even $N$.
 
 \begin{conjecture}[convexity between the humps]\label{conj:convex}
-For every $N\ge10$ and $x=x_N$, the second difference
+For every $N\ge10$, $x=x_N$ and every mode $a^*\ge N/2$ of $P_N$ with
+$m^*=N-a^*$, the second difference
 $P_N(a-1)-2P_N(a)+P_N(a+1)$ is positive for $2m^*+1\le a\le N-2m^*-1$.
 \end{conjecture}
 
@@ -653,8 +654,9 @@ Lemma~\ref{lem:B-mode} gives $m_h=O(x\log^2x)$, and $\ell=O(x\log x)$ and
 $H_\ell=O(\log x)$.
 \end{proof}
 
-The conjecture holds for every $10\le N\le600$ and for
-$N=800,1600,\dots,25600$. It leaves out the two endpoints $a=2m^*$ and
+The conjecture is certified for every $10\le N\le2000$
+(Proposition~\ref{prop:convex-certified}), and in double precision it holds for
+$N=3200,6400,12800,25600$. It leaves out the two endpoints $a=2m^*$ and
 $a=N-2m^*$, because there the second difference is not positive for some
 $N\le51$. Heuristically, a concave
 stretch of $f_N$ far from its mode is added to the tail $x/(2r^2)$ of the
@@ -662,8 +664,8 @@ other branch, with $r=N-a$, and the second difference $3x/r^4$ of this tail
 beats the concave curvature, which is of order $x^2/(N^2r^3)$. We leave open
 the tail between $x\log x$ and $x\log^2x$, effective constants in
 Theorems~\ref{thm:profile} and~\ref{thm:shape}, and the conjecture for the
-values of $N$ between $2000$ and the constant $N_0$ of
-Theorem~\ref{thm:convex-large}.
+even $N$ between $2000$ and the constant $N_0$ of
+Theorem~\ref{thm:convex-large} and for every odd $N>2000$.
 
 \subsection{Convexity between the humps}\label{sec:convex}
 
@@ -688,9 +690,10 @@ with $f_t(m)$ in place of $P_t(a)$.
 \begin{proof}
 Given $A_t=a$, the copied step is $+1$ with probability $a/t$, so step $t+1$
 is $+1$ with probability $(1-\varepsilon)\frac at+\varepsilon(1-\frac
-at)=r_t(a)$. This gives \eqref{eq:P-rec} for $0\le a\le t+1$. For other $a$
-both sides vanish, because the only terms that could remain are
-$r_t(-1)P_t(-1)$ and $(1-r_t(t+1))P_t(t+1)$, and $P_t(-1)=P_t(t+1)=0$. The
+at)=r_t(a)$. This gives \eqref{eq:P-rec} for $0\le a\le t+1$, where at $a=0$ and at
+$a=t+1$ the formula has one extra term, namely $r_t(-1)P_t(-1)$ or
+$(1-r_t(t+1))P_t(t+1)$, and this term is $0$ because $P_t(-1)=P_t(t+1)=0$. For
+other $a$ every term vanishes. The
 symmetry of $P_t$ is Lemma~\ref{lem:erw-reduction}, and it gives the symmetry
 of $D_t$. The chain $M$ of Lemma~\ref{lem:erw-reduction} has the same
 transition probabilities, so \eqref{eq:P-rec} holds for $f_t$ as well.
@@ -798,7 +801,7 @@ So the second difference of $P_N$ changes sign at most four times on
 $\{1,\dots,N-1\}$. The same holds for the second difference of $f_N$.
 \end{theorem}
 
-In words, for every $N$ and every $\varepsilon$ the law has at most two
+In words, for every $N\ge3$ and every $0<\varepsilon<\frac12$ the law has at most two
 concave stretches, one for each hump, and what lies between them is convex.
 
 \begin{proof}
@@ -1038,18 +1041,20 @@ then places the crossing between them. It then runs \eqref{eq:P-rec} with
 $\varepsilon$ equal to this interval. Each step only multiplies and adds
 enclosures of numbers in $[0,1]$, so the radii stay small. From the resulting enclosure of $P_N$ it lists every index that
 can be a mode, and for each of them it checks that the enclosure of $D_N(a)$
-is positive for every $2m^*+1\le a\le N-2m^*-1$. It also checks the two
-inequalities $D_N(a_0)<0<D_N(2m^*+1)$ of Corollary~\ref{cor:one-point}, which
-by themselves imply the claim.
+is positive for every $2m^*+1\le a\le N-2m^*-1$. It also checks that
+$D_N(a_0)<0$ for some $a_0\le2m^*$ and that $D_N(2m^*+1)>0$. By
+Theorem~\ref{thm:no-holes} these two inequalities by themselves imply the claim.
 \end{proof}
 
 \begin{remark}[what is still open]\label{rem:convex-open}
 The constant $N_0$ of Theorem~\ref{thm:convex-large} is not explicit, because
 the constant in Theorem~\ref{thm:landau} is not. Even with an explicit
-constant, Step~3 needs $f_L(\lambda_0+\frac12\log x)<\frac12f_L(\lambda_0)$ up
+constant, Step~3 needs $f_L(\frac32\lambda_0+\frac12\log x)<\frac12f_L(\lambda_0)$ up
 to the error $\eta_N$, and at the sizes we can compute the ratio
-$P_N(v)/P_N(m^*)$ is still about $0.8$. So the range between $N_{\rm c}$ and
-$N_0$ is open. By Corollary~\ref{cor:one-point} it would be closed by an
+$P_N(v)/P_N(m^*)$ is still about $0.8$. So the even $N$ between $N_{\rm c}$ and
+$N_0$ are open, and so is every odd $N>N_{\rm c}$, since
+Theorem~\ref{thm:convex-large} is for even $N$. By Corollary~\ref{cor:one-point}
+the even range would be closed by an
 effective proof of the single inequality $D_N(a_1)>0$ at one point
-$m^*<a_1\le2m^*+1$. Numerically the convex stretch starts near $1.5\,m^*$.
+$m^*<a_1\le2m^*+1$. For odd $N$ one also needs $P_N(0)<P_N(1)$ at the crossing. Numerically the convex stretch starts near $1.5\,m^*$.
 \end{remark}

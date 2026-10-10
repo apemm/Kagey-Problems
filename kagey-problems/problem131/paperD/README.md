@@ -121,7 +121,7 @@ The aging walk (switch at step k >= 2 with probability c/k), in its own section,
 ## What rests on computation
 
 No statement is left with its details omitted. Section 6 of the paper (`sec_verify.tex`) gives the
-full account. The proofs use computation in 3 places only.
+full account. The proofs use computation in 4 places only.
 
 - Some constants are values of explicit sums and integrals, such as the 60-term sum in the proof of
   Theorem 2.6(b), evaluated in 30-digit arithmetic (`verify_elephant_crossing.py`).
@@ -139,9 +139,11 @@ alpha = 1 of Table 3 is a heuristic.
 
 - An upper bound log C_N <= log(eps c_1) + eps k_2(N) + O(eps^2 (log N)^k), and an explicit N beyond
   which the root g_N exceeds x_N (Remark 2.12).
-- The window around the center. Closing it needs second differences of the law, as in
-  Conjecture 3.16 (strict convexity between the humps, which would make the center the unique
-  interior minimum). The conjecture is checked for 10 <= N <= 600 and N = 800, 1600, ..., 25600.
+- Conjecture 3.16 (strict convexity between the humps) for even N between 2000 and the constant
+  N_0 of Theorem 3.24, and for odd N > 2000. Section 3.6 proves it for all even N >= N_0, and
+  `certify_convex.py` certifies it for 10 <= N <= 2000 (about an hour, output in
+  `data/certify_convex_output.txt`). For large even N the center is the unique interior minimum
+  (Corollary 3.25).
 - The tail for m between x log x and x log^2 x, effective constants in Theorems 3.14 and 3.15, and
   an effective error term in Corollary 3.12 (Remark 3.13).
 - For heavy tails, a rate in Theorem 4.4, monotonicity of E_N/C_N and uniqueness of the crossover
