@@ -18,8 +18,6 @@ computations in this paper are my responsibility."
    wrote them? Be specific by theorem number. If the honest answer for a result is "the model proved
    it and I have read the proof but not rederived it", say that.
 3. Did you check the proofs with a second model, as you did with GPT-6 Astra for A and B?
-4. Paper D only: what did Art Benjamin and Aidan Deshong contribute, and is it an acknowledgment or
-   coauthorship? (This has to be settled with them before posting.)
 
 ## What the model did: Paper C
 
