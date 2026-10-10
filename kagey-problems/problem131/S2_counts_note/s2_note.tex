@@ -48,6 +48,11 @@ Here is what we find. The proofs are in the sections that follow.
  more that talk to each other through rank one blocks), and almost every chain
  is like this. The size of the net flow on every pair is still known, so the
  counts say how far the chain is from reversible but not which way it turns.
+\item \emph{The counts measure the entropy production}
+ (Theorem~\ref{thm:entropy}). They cannot tell a film of the chain from the
+ same film run backward. Yet they determine exactly how different the two films
+ are, namely the entropy production rate, and from any start they decide
+ whether the chain is reversible.
 \item \emph{Lumping gives more ties} (Theorem~\ref{thm:lumping}). If a group of
  states looks like a single state from outside, we can reverse the outside and
  keep the inside, or reverse the inside and keep the outside. This gives two
@@ -398,6 +403,97 @@ of permanental processes, which describe local times of Markov processes at
 certain random times~\cite{mr2013}. What is different here is the fixed
 horizon and the start law, which bring in the second matrix $G-\one\mu^{\top}$.
 
+\section{The counts measure the entropy production}\label{sec:entropy}
+
+A stationary start hides the arrow of time. One might guess that the counts
+then say nothing about how irreversible the chain is. The opposite is true.
+
+The \emph{entropy production rate} of the chain at time $0$ is
+\[
+ \sigma(\mu,G)=\sum_{i<j}(f_{ij}-f_{ji})\log\frac{f_{ij}}{f_{ji}},
+ \qquad f_{ij}=\mu_ig_{ij}
+\]
+(see~\cite{schnakenberg1976}). Each term is nonnegative, and $\sigma=0$ exactly
+when $J=0$. For a stationary start, $t\sigma$ is the relative entropy of the
+law of the path on $[0,t]$ with respect to the law of the same path run
+backward. So $\sigma$ measures how far the film is from its reverse. For three
+states $i,j,k$ with all six rates positive, the \emph{affinity} of the
+triangle is
+\[
+ A_{ijk}=\log\frac{g_{ij}g_{jk}g_{ki}}{g_{ik}g_{kj}g_{ji}} ,
+\]
+the logarithm of the odds of going around the triangle one way and not the
+other.
+
+\begin{theorem}[irreversibility]\label{thm:entropy}
+Let $G$ be irreducible, and suppose that $g_{ij}>0$ exactly when $g_{ji}>0$.
+\begin{enumerate}[(a),itemsep=1pt]
+\item If $\mu_i>0$ for every $i$, the law of $L(1)$ determines
+ $\sigma(\mu,G)$. With the pair data of Theorem~\ref{thm:pairs},
+ \[
+ \sigma(\mu,G)=\sum_{i<j}\lvert J_{ij}\rvert
+ \log\frac{c_{ij}+\lvert J_{ij}\rvert}{c_{ij}-\lvert J_{ij}\rvert},
+ \qquad\lvert J_{ij}\rvert=\sqrt{c_{ij}^2-4\mu_i\mu_ja_{ij}} ,
+ \]
+ where the sum is over the pairs with $a_{ij}>0$.
+\item For every start law, the law of $L(1)$ determines
+ $\lvert A_{ijk}\rvert$ for every triangle with all six rates positive. So if
+ every rate is positive, the law of $L(1)$ decides whether the chain is
+ reversible.
+\end{enumerate}
+\end{theorem}
+
+In words, the counts cannot tell which way the film runs, but they know
+exactly how different the two directions are. Each pair of states contributes
+its own share, and each triangle shows the size of the force that drives the
+chain around it.
+
+\begin{proof}
+(a) Each term of $\sigma$ does not change when $f_{ij}$ and $f_{ji}$ are
+swapped. So $\sigma$ is a function of the unordered pairs
+$\{f_{ij},f_{ji}\}$, which the law determines by Theorem~\ref{thm:pairs}. The
+two flows are $\frac12(c_{ij}\pm\lvert J_{ij}\rvert)$, which gives the formula.
+
+(b) By Proposition~\ref{prop:minors} the law determines the principal minors of
+$G$. Those of order one are the $q_i$, and those of order two give
+$a_{ij}=q_iq_j-\det(-G_{\{i,j\}\{i,j\}})$. Put $w=g_{ij}g_{jk}g_{ki}$ and
+$\bar w=g_{ik}g_{kj}g_{ji}$ for the two ways around a triangle. Expanding the
+determinant,
+\[
+ \det(-G_{UU})=q_iq_jq_k-q_ia_{jk}-q_ja_{ik}-q_ka_{ij}-(w+\bar w),
+ \qquad U=\{i,j,k\}.
+\]
+So the law determines $w+\bar w$. It also determines
+$w\bar w=a_{ij}a_{jk}a_{ki}$. A sum and a product give the unordered pair
+$\{w,\bar w\}$, and with it $\lvert A_{ijk}\rvert=\lvert\log(w/\bar w)\rvert$.
+
+Now let every rate be positive. If the chain is reversible then
+$\pi_ig_{ij}=\pi_jg_{ji}$ on every pair, and multiplying three of these gives
+$w=\bar w$ for every triangle. Conversely, suppose $w=\bar w$ for every
+triangle. Put $\rho_1=1$ and $\rho_i=g_{1i}/g_{i1}$. The triangle $\{1,i,j\}$
+gives $g_{1i}g_{ij}g_{j1}=g_{1j}g_{ji}g_{i1}$, that is,
+$\rho_ig_{ij}=\rho_jg_{ji}$. So $\rho$ is a reversible measure. (This is
+Kolmogorov's criterion, see~\cite{kelly1979}.)
+\end{proof}
+
+\begin{remark}
+(1) Maes, Neto\v{c}n\'y and Wynants~\cite{mnw2008} showed that, close to a
+reversible chain and to leading order, the entropy production is the rate
+function for the large deviations of the occupation times. Part (a) is exact,
+at a single finite horizon, and needs no closeness.
+
+(2) Write $s=J_{ij}^2/c_{ij}^2$. The term of the pair in (a) is
+$c_{ij}\,\varphi(s)$ with $\varphi(s)=\sqrt s\log\frac{1+\sqrt s}{1-\sqrt s}
+=2s+\frac23s^2+\cdots$, an analytic function of $s$ for $\lvert s\rvert<1$. So
+$\sigma$ is a smooth function of $c$ and $J^2$, the quantities the counts see.
+Near a reversible chain the counts lose the net flow $J$ itself (we come back
+to this in Theorem~\ref{thm:singular}), but nothing of this kind happens to
+$\sigma$.
+
+(3) Part (b) reads only the paths that visit at most three states, and
+part (a) only those that visit at most two.
+\end{remark}
+
 \section{Lumping gives more ties}\label{sec:lumping}
 
 A chain with a cut can have other rivals, and a start that is not stationary
@@ -485,8 +581,22 @@ $\mu$ is not stationary for $G$, because $\nu$ is not stationary for the inside.
 The lumped chain is not reversible, so $G'\ne G$ (their entries differ by up to
 $0.59$). The two laws of $L(t)$ agree to $10^{-15}$ at $t=0.3$, $1$ and $4$.
 In the language of Corollary~\ref{cor:candidates}, $S$ is the five pairs that
-are not inside $M$.
+are not inside $M$. By Theorem~\ref{thm:entropy} the two chains also have the
+same entropy production rate, $\sigma=0.7325$ (Figure~\ref{fig:twins}).
 \end{example}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_twins}
+\caption{The two chains of Example~\ref{ex:four}. (a), (b) The rates, with
+thicker arrows for larger rates. The gray arrows inside the module are the
+same in both chains, and every other rate differs. (c) The fraction of time in
+state $1$ up to time $t=4$, from $4\cdot10^5$ simulated paths of each chain.
+The two histograms agree, as they must. (d) The number of jumps from $1$ to
+$2$ minus the number from $2$ to $1$ on the same paths. This sees the order of
+the visits, and it tells the chains apart at once.}
+\label{fig:twins}
+\end{figure}
 
 When both parts apply, and neither the inside chain nor the lumped chain is
 reversible, we get four chains with the same counts, namely $G$, the chain with
@@ -648,6 +758,17 @@ and~\cite{gw1994} for efficiency). Part (a) is the identity behind it. The
 other $(d-1)^2$ efficiencies appear to decay like $1/T$ (Table~\ref{tab:eff}),
 but we have not proved that they tend to $0$.
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_information}
+\caption{The six efficiencies of the counts against the horizon $T$, for the
+chain of Table~\ref{tab:eff}. For few switches they split as in
+Theorem~\ref{thm:info}. Three are lost with a known start, and only the flow
+around the triangle with a stationary start. For many switches two tend to $1$
+(Theorem~\ref{thm:long}) and the others fall off like $1/T$.}
+\label{fig:information}
+\end{figure}
+
 \begin{table}[ht]\centering\small
 \begin{tabular}{rll}
 \toprule
@@ -685,6 +806,11 @@ Each statement above was checked numerically in the scripts next to this note.
  Theorem~\ref{thm:info} (the first to within $0.017$ at $T=0.025$, the second
  within $3\%$ at $T=0.02$ and still converging), Theorem~\ref{thm:singular} and
  Table~\ref{tab:eff}.
+\item \texttt{check\_entropy.py}. Theorem~\ref{thm:entropy}. The entropy
+ production is recovered from the function $r$ alone, to four digits, for
+ $d=3,4,5$ and both kinds of start. Chains with the same counts have the same
+ $\sigma$, and the triangle affinities are recovered from the principal minors
+ of orders up to three.
 \item \texttt{check\_rigidity.py}. Part (b) of Theorem~\ref{thm:lumping} and
  Example~\ref{ex:inside} (the laws agree to $10^{-15}$ for $d=4,5,7$). In each
  tie both sets of minors of Proposition~\ref{prop:minors} agree. For a random
@@ -722,7 +848,7 @@ Theorem~\ref{thm:horizon}, the role of the start law (the unordered pairs of
 flows in Theorem~\ref{thm:pairs}, the second matrix in
 Proposition~\ref{prop:minors}, condition~\eqref{eq:startend}, and
 Theorem~\ref{thm:lumping} as a statement about the law of $L(t)$), or
-Theorems~\ref{thm:info} and~\ref{thm:singular}. Work on aggregate data from
+Theorems~\ref{thm:entropy}, \ref{thm:info} and~\ref{thm:singular}. Work on aggregate data from
 Markov chains and on the embedding problem observes something else, namely how
 many of a population sit in each state at given times. Work on aggregated
 Markov processes (see~\cite{fr1986}) observes a lumped path over time, with
@@ -757,6 +883,8 @@ its order, and not the total times. We have not read
 \bibitem{kjz2017} M.~Kaiser, R.~L.~Jack and J.~Zimmer, Acceleration of
  convergence to equilibrium in Markov chains by breaking detailed balance,
  \emph{J. Stat. Phys.} \textbf{168} (2017), 259--287.
+\bibitem{kelly1979} F.~P.~Kelly, \emph{Reversibility and Stochastic Networks},
+ Wiley, Chichester, 1979.
 \bibitem{loewy1986} R.~Loewy, Principal minors and diagonal similarity of
  matrices, \emph{Linear Algebra Appl.} \textbf{78} (1986), 23--64.
 \bibitem{mnw2008} C.~Maes, K.~Neto\v{c}n\'y and B.~Wynants, On and beyond
@@ -767,6 +895,9 @@ its order, and not the total times. We have not read
 \bibitem{rcbr2000} A.~Rotnitzky, D.~R.~Cox, M.~Bottai and J.~Robins,
  Likelihood-based inference with singular information matrix, \emph{Bernoulli}
  \textbf{6} (2000), 243--284.
+\bibitem{schnakenberg1976} J.~Schnakenberg, Network theory of microscopic and
+ macroscopic behavior of master equation systems, \emph{Rev. Modern Phys.}
+ \textbf{48} (1976), 571--585.
 \end{thebibliography}
 
 \end{document}
