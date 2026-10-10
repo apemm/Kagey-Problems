@@ -593,7 +593,9 @@ w}^2>2A_2/3$.
 \end{proof}
 
 We did not compute $C_{\rm w}$ or $N_0$. Inside the window the proof gives
-nothing, and closing it needs second differences of the law.
+nothing, and closing it needs second differences of the law. We study them in
+Section~\ref{sec:convex}, and Corollary~\ref{cor:unique-min} closes the window
+for large even $N$.
 
 \begin{conjecture}[convexity between the humps]\label{conj:convex}
 For every $N\ge10$ and $x=x_N$, the second difference
@@ -604,7 +606,11 @@ With the symmetry of the law, the conjecture makes $P_N$ strictly convex on
 $[2m^*,N-2m^*]$, so $h$ is its unique minimizer there (the two central bins for
 odd $N$). The next corollary shows that $m^*=o(N)$ at the crossing, so
 together with Theorem~\ref{thm:shape} the conjecture would make the center
-the unique interior minimum for large even $N$.
+the unique interior minimum for large even $N$. Section~\ref{sec:convex}
+proves the conjecture for all large even $N$
+(Theorem~\ref{thm:convex-large}) and, with a certified computation, for
+$10\le N\le2000$ (Proposition~\ref{prop:convex-certified}). For every $N$ it
+reduces the conjecture to one inequality (Corollary~\ref{cor:one-point}).
 
 \begin{corollary}[the modes]\label{cor:modes}
 For large even $N$ the modes $a^*$ of $P_N$ at the crossing satisfy
@@ -654,5 +660,396 @@ $N\le51$. Heuristically, a concave
 stretch of $f_N$ far from its mode is added to the tail $x/(2r^2)$ of the
 other branch, with $r=N-a$, and the second difference $3x/r^4$ of this tail
 beats the concave curvature, which is of order $x^2/(N^2r^3)$. We leave open
-the window around the center, the tail between $x\log x$ and $x\log^2x$, and
-effective constants in Theorems~\ref{thm:profile} and~\ref{thm:shape}.
+the tail between $x\log x$ and $x\log^2x$, effective constants in
+Theorems~\ref{thm:profile} and~\ref{thm:shape}, and the conjecture for the
+values of $N$ between $2000$ and the constant $N_0$ of
+Theorem~\ref{thm:convex-large}.
+
+\subsection{Convexity between the humps}\label{sec:convex}
+
+Throughout this subsection $0<\varepsilon<\frac12$ and $c=1-2\varepsilon$, so
+that $r_t(b)=\varepsilon+cb/t$. For $t\ge1$ and every integer $a$ we write
+$P_t(a)=\Prob(A_t=a)$, which is $0$ unless $0\le a\le t$, and
+\[
+ D_t(a)=P_t(a+1)-2P_t(a)+P_t(a-1).
+\]
+We also put $s_t=D_t(1)=P_t(0)-2P_t(1)+P_t(2)$ for $t\ge2$.
+
+\begin{lemma}[recurrence for the second difference]\label{lem:D-rec}
+For every $t\ge1$ and every integer $a$,
+\begin{align}
+ P_{t+1}(a)&=\bigl(1-r_t(a)\bigr)P_t(a)+r_t(a-1)\,P_t(a-1),\label{eq:P-rec}\\
+ D_{t+1}(a)&=\bigl(1-r_t(a+1)\bigr)D_t(a)+r_t(a-2)\,D_t(a-1).\label{eq:D-rec}
+\end{align}
+Also $P_t(a)=P_t(t-a)$ and $D_t(a)=D_t(t-a)$. The same two recurrences hold
+with $f_t(m)$ in place of $P_t(a)$.
+\end{lemma}
+
+\begin{proof}
+Given $A_t=a$, the copied step is $+1$ with probability $a/t$, so step $t+1$
+is $+1$ with probability $(1-\varepsilon)\frac at+\varepsilon(1-\frac
+at)=r_t(a)$. This gives \eqref{eq:P-rec} for $0\le a\le t+1$. For other $a$
+both sides vanish, because the only terms that could remain are
+$r_t(-1)P_t(-1)$ and $(1-r_t(t+1))P_t(t+1)$, and $P_t(-1)=P_t(t+1)=0$. The
+symmetry of $P_t$ is Lemma~\ref{lem:erw-reduction}, and it gives the symmetry
+of $D_t$. The chain $M$ of Lemma~\ref{lem:erw-reduction} has the same
+transition probabilities, so \eqref{eq:P-rec} holds for $f_t$ as well.
+
+For \eqref{eq:D-rec} put $\varsigma=c/t$, so that $r_t(b+1)=r_t(b)+\varsigma$.
+We insert \eqref{eq:P-rec} at $a+1$, $a$ and $a-1$ into the definition of
+$D_{t+1}(a)$ and collect the coefficients of $P_t(a+1)$, $P_t(a)$, $P_t(a-1)$
+and $P_t(a-2)$. They are
+\[
+ 1-r_t(a+1),\qquad 3r_t(a)-2,\qquad 1-3r_t(a-1),\qquad r_t(a-2).
+\]
+The right side of \eqref{eq:D-rec} has the coefficients $1-r_t(a+1)$,
+$-2+2r_t(a+1)+r_t(a-2)$, $1-r_t(a+1)-2r_t(a-2)$ and $r_t(a-2)$. The second
+ones agree because $2r_t(a+1)+r_t(a-2)=3r_t(a)$, and the third ones agree
+because $r_t(a+1)+2r_t(a-2)=3r_t(a-1)$.
+\end{proof}
+
+The recurrence~\eqref{eq:D-rec}, and its analogue for differences of any
+order, is used by Trinas and Valle~\cite[(4.10)]{tv2026} to bound the law and
+its differences at a fixed memory parameter. We use it for signs.
+The coefficients in \eqref{eq:D-rec} are positive when $2\le a\le t-1$. So the
+second difference moves like a mass that is partly killed, and its sign can
+change only through what enters at the two edges. The next lemma is the
+elementary form of the variation diminishing property that we need.
+
+For a finite list $z$ of real numbers let $\operatorname{sp}(z)$ be its sign
+pattern. We delete the zeros of $z$, replace each entry by its sign, and merge
+equal neighbors. So $\operatorname{sp}(z)$ is a list of alternating signs. For
+two such lists we write $p\preceq q$ if $p$ is a subsequence of $q$. We put
+$\Pi_5=(+,-,+,-,+)$ and $\Pi_3=(+,-,+)$.
+
+\begin{lemma}[one step]\label{lem:interleave}
+Let $\zeta=(\zeta_1,\dots,\zeta_n)$ be real, and let
+$\eta_i=A_i\zeta_i+B_i\zeta_{i+1}$ for $1\le i\le n-1$ with $A_i\ge0$ and
+$B_i\ge0$. Let $w=(\zeta_1,\eta_1,\zeta_2,\eta_2,\dots,\eta_{n-1},\zeta_n)$.
+Then $\operatorname{sp}(w)=\operatorname{sp}(\zeta)$ and
+$\operatorname{sp}(\eta)\preceq\operatorname{sp}(\zeta)$.
+\end{lemma}
+
+\begin{proof}
+We insert the numbers $\eta_i$ into $\zeta$ one at a time. If $\eta_i=0$, the
+sign pattern does not change. If $\eta_i>0$, then $\zeta_i>0$ or
+$\zeta_{i+1}>0$, so $\eta_i$ is placed next to an entry of its own sign, and
+the pattern does not change. The case $\eta_i<0$ is the same. This proves the
+first claim. Deleting entries from a list replaces its sign pattern by a
+subsequence, and $\eta$ is obtained from $w$ by deleting the entries
+$\zeta_i$. This proves the second claim.
+\end{proof}
+
+\begin{lemma}[the sequence next to the end]\label{lem:level-one}
+For every $T\ge2$ we have $\operatorname{sp}(s_2,s_3,\dots,s_T)\preceq\Pi_3$.
+Moreover $s_3$ and $s_4$ do not both vanish.
+\end{lemma}
+
+\begin{proof}
+Put $\rho_t=P_t(1)/P_t(0)$. By \eqref{eq:P-rec}, $P_{t+1}(0)=(1-\varepsilon)P_t(0)$
+and $P_{t+1}(1)=(1-\varepsilon-\frac ct)P_t(1)+\varepsilon P_t(0)$. So
+\[
+ \rho_{t+1}-\rho_t=\frac1{1-\varepsilon}\Bigl(\varepsilon-\frac{c\rho_t}t\Bigr),
+ \qquad\rho_2=\frac{2\varepsilon}{1-\varepsilon}.
+\]
+We claim that $\rho_t<\varepsilon t/c$ for $t\ge2$. For $t=2$ this holds
+because $c<1-\varepsilon$. If it holds for $t$, then
+$0<\rho_{t+1}-\rho_t\le\frac\varepsilon{1-\varepsilon}<\frac\varepsilon c$,
+and it holds for $t+1$. So $\rho_t$ is strictly increasing for $t\ge2$, and
+$\rho_t<1$ whenever $t\le c/\varepsilon$.
+
+Now \eqref{eq:D-rec} with $a=1$, and $D_t(0)=P_t(1)-2P_t(0)$, give for $t\ge2$
+\[
+ s_{t+1}=\bigl(1-r_t(2)\bigr)s_t+\sigma_t,\qquad
+ \sigma_t=\Bigl(\varepsilon-\frac ct\Bigr)(\rho_t-2)\,P_t(0).
+\]
+Here $1-r_t(2)\ge1-\varepsilon-c=\varepsilon>0$. If $t<c/\varepsilon$, both
+factors of $\sigma_t$ are negative and $\sigma_t>0$. If $t>c/\varepsilon$, the
+first factor is positive, and the second is first negative and then positive,
+because $\rho_t$ increases. So
+$\operatorname{sp}(\sigma_2,\sigma_3,\dots)\preceq\Pi_3$. Let
+$\Phi_t=\prod_{u=2}^{t-1}(1-r_u(2))>0$. Then
+\[
+ \frac{s_t}{\Phi_t}=s_2+\sum_{u=2}^{t-1}\frac{\sigma_u}{\Phi_{u+1}},\qquad
+ s_2=1-3\varepsilon .
+\]
+If $\varepsilon<\frac13$, the terms $s_2,\sigma_2,\sigma_3,\dots$ are first
+nonnegative, then nonpositive, then nonnegative. Their partial sums are
+nonnegative and nondecreasing in the first stretch, nonincreasing in the
+second, and nondecreasing in the third. So the sign pattern of the partial
+sums is a subsequence of $\Pi_3$. If $\varepsilon\ge\frac13$, then
+$c/\varepsilon\le1$, so the terms are first nonpositive and then nonnegative,
+and the sign pattern of the partial sums is a subsequence of $(-,+)$. This
+proves the first claim.
+
+For the second claim we compute $P_3(0)=\frac12(1-\varepsilon)^2$ and
+$P_3(1)=P_3(2)=\frac12-P_3(0)$, so $s_3=P_3(0)-P_3(1)=(1-\varepsilon)^2-\frac12$.
+Suppose that $s_3=0$. Then $\varepsilon=1-2^{-1/2}$, $P_3(0)=P_3(1)=\frac14$
+and $s_4=\sigma_3=(\varepsilon-\frac c3)(P_3(1)-2P_3(0))=-\frac{5\varepsilon-1}{12}$.
+This is not $0$, because $\varepsilon\ne\frac15$.
+\end{proof}
+
+\begin{theorem}[at most five blocks]\label{thm:five-blocks}
+Let $N\ge3$ and $0<\varepsilon<\frac12$. Then
+\[
+ \operatorname{sp}\bigl(D_N(1),D_N(2),\dots,D_N(N-1)\bigr)\preceq(+,-,+,-,+).
+\]
+So the second difference of $P_N$ changes sign at most four times on
+$\{1,\dots,N-1\}$. The same holds for the second difference of $f_N$.
+\end{theorem}
+
+In words, for every $N$ and every $\varepsilon$ the law has at most two
+concave stretches, one for each hump, and what lies between them is convex.
+
+\begin{proof}
+For $3\le t\le N$ let $Z_t$ be the list
+\[
+ Z_t=\bigl(s_N,s_{N-1},\dots,s_{t+1},\ s_t,D_t(2),D_t(3),\dots,D_t(t-2),s_t,\
+ s_{t+1},\dots,s_{N-1},s_N\bigr).
+\]
+It has $2N-t-1$ entries. Its middle part is
+$(D_t(1),D_t(2),\dots,D_t(t-1))$, because $D_t(t-1)=D_t(1)=s_t$ by symmetry.
+The list $Z_3$ is $(s_N,\dots,s_4,s_3,s_3,s_4,\dots,s_N)$, and $Z_N$ is the
+list in the statement.
+
+We check that $Z_{t+1}$ is obtained from $Z_t$ as in
+Lemma~\ref{lem:interleave}, for $3\le t\le N-1$. The first $N-t$ entries of
+$Z_{t+1}$ are $s_N,\dots,s_{t+1}$, and they are copies of the first $N-t$
+entries of $Z_t$. So $A_i=1$ and $B_i=0$ there. The next $t-2$ entries are
+$D_{t+1}(b)$ for $2\le b\le t-1$. By \eqref{eq:D-rec},
+\[
+ D_{t+1}(b)=r_t(b-2)\,D_t(b-1)+\bigl(1-r_t(b+1)\bigr)D_t(b),
+\]
+and $D_t(b-1)$ and $D_t(b)$ are neighbors in the middle part of $Z_t$, at the
+right places. The coefficients satisfy $r_t(b-2)\ge\varepsilon$ and
+$1-r_t(b+1)\ge1-\varepsilon-c=\varepsilon$, since $2\le b\le t-1$. The last
+$N-t$ entries of $Z_{t+1}$ are $s_{t+1},\dots,s_N$, and each is a copy of the
+entry of $Z_t$ one place to its right. So $A_i=0$ and $B_i=1$ there.
+
+By Lemma~\ref{lem:interleave},
+$\operatorname{sp}(Z_N)\preceq\operatorname{sp}(Z_{N-1})\preceq\dots\preceq\operatorname{sp}(Z_3)$.
+By Lemma~\ref{lem:level-one} the sign pattern $p$ of $(s_3,\dots,s_N)$ is a
+subsequence of $\Pi_3$, so it is one of the lists $()$, $(+)$, $(-)$, $(+,-)$,
+$(-,+)$ and $(+,-,+)$. The sign pattern of $Z_3$ is $p$ reversed, followed by
+$p$, with equal neighbors merged. In the six cases this is $()$, $(+)$, $(-)$,
+$(-,+,-)$, $(+,-,+)$ and $(+,-,+,-,+)$, and each is a subsequence of $\Pi_5$.
+
+For $f_N$ we argue in the same way with $D^f_t(m)=f_t(m+1)-2f_t(m)+f_t(m-1)$
+and the lists
+\[
+ Z^f_t=\bigl(s^f_N,\dots,s^f_{t+1},\ s^f_t,D^f_t(2),\dots,D^f_t(t-1),\ d_t,d_{t+1},\dots,d_{N-1}\bigr),
+ \qquad2\le t\le N,
+\]
+where $s^f_t=D^f_t(1)$ and $d_u=(1-r_u(u+1))D^f_u(u)=(\varepsilon-\frac
+cu)f_u(u-1)$. The entry $D^f_{t+1}(t)$ of $Z^f_{t+1}$ equals
+$r_t(t-2)D^f_t(t-1)+d_t$ by \eqref{eq:D-rec}, and the other entries are as
+before. The proof of Lemma~\ref{lem:level-one} applies to $s^f_t$ without
+change, with $\rho_t=f_t(1)/f_t(0)$, $\rho_2=\frac\varepsilon{1-\varepsilon}$
+and $s^f_2=1-3\varepsilon$. The numbers $d_u$ are negative for
+$u<c/\varepsilon$ and positive for $u>c/\varepsilon$. So
+$\operatorname{sp}(Z^f_2)$ is a subsequence of $(+,-,+)$ followed by $(-,+)$,
+and $Z^f_N=(D^f_N(1),\dots,D^f_N(N-1))$.
+\end{proof}
+
+\begin{theorem}[no holes]\label{thm:no-holes}
+Let $N\ge5$ and $0<\varepsilon<\frac12$. Let $1\le a_0<a_1\le N/2$ be integers
+with $D_N(a_0)<0<D_N(a_1)$. Then $D_N(a)>0$ for every $a_1\le a\le N-a_1$.
+\end{theorem}
+
+In words, once the law has turned convex to the right of its left hump, it
+stays strictly convex up to the mirror image of that point.
+
+\begin{proof}
+By symmetry $D_N(N-a_1)>0>D_N(N-a_0)$. Suppose that $D_N(a)\le0$ for some $a$
+with $a_1<a<N-a_1$.
+
+\emph{The case $D_N(a)<0$.} Then the entries of $Z_N$ at $a_0<a_1<a<N-a_1<N-a_0$
+have the signs $-,+,-,+,-$. So $(-,+,-,+,-)\preceq\operatorname{sp}(Z_N)\preceq\Pi_5$
+by Theorem~\ref{thm:five-blocks}. This is impossible, because a subsequence of
+$\Pi_5$ with five terms is $\Pi_5$ itself.
+
+\emph{The case $D_N(a)=0$.} We use the lists $Z_t$ of the proof of
+Theorem~\ref{thm:five-blocks} and number the entries of $Z_t$ from $1$ to
+$2N-t-1$. So $D_t(b)$ stands at place $N-t+b$ for $1\le b\le t-1$. For
+$3\le t\le N-1$ let $W_t$ be the list $w$ of Lemma~\ref{lem:interleave} for
+$\zeta=Z_t$ and $\eta=Z_{t+1}$. Then
+$\operatorname{sp}(W_t)=\operatorname{sp}(Z_t)\preceq\Pi_5$. The entry of
+$Z_{t+1}$ at place $k$ is a combination of the entries of $Z_t$ at the places
+$k$ and $k+1$, with nonnegative coefficients. We call these two entries its
+parents. For $2\le b\le t-1$ the parents of $D_{t+1}(b)$ are $D_t(b-1)$ and
+$D_t(b)$, and both coefficients are positive.
+
+For $4\le t\le N$ let $B_t$ be the set of integers $b$ with
+$\max(2,a-N+t)\le b\le\min(a,t-2)$. It is not empty, because $2\le a\le N-2$.
+We prove by downward induction on $t$ that there are places $p_1<p_2<p_4<p_5$
+in $Z_t$ such that the entries there have the signs $-,+,+,-$, that
+$D_t(b)=0$ for every $b\in B_t$, and that all the places $N-t+b$ with
+$b\in B_t$ lie strictly between $p_2$ and $p_4$. For $t=N$ we have
+$B_N=\{a\}$, and we take the places $a_0$, $a_1$, $N-a_1$ and $N-a_0$.
+
+Let the claim hold for $t+1$, where $4\le t\le N-1$, with the places
+$p_1'<p_2'<p_4'<p_5'$. Let $b\in B_{t+1}$. Then $D_{t+1}(b)=0$ is a
+combination of its two parents with positive coefficients. So the parents
+both vanish, or they have strictly opposite signs. In the second case one
+parent is negative. In $W_t$ it stands next to $D_{t+1}(b)$, hence between the
+positive entries of $Z_{t+1}$ at the places $p_2'$ and $p_4'$, and these stand
+between the negative entries at $p_1'$ and $p_5'$. So
+$(-,+,-,+,-)\preceq\operatorname{sp}(W_t)\preceq\Pi_5$, which is impossible.
+Hence $D_t(b-1)=D_t(b)=0$ for every $b\in B_{t+1}$. Every element of $B_t$ is
+of the form $b$ or $b-1$ with $b\in B_{t+1}$, so $D_t$ vanishes on $B_t$.
+
+The entry of $Z_{t+1}$ at $p_1'$ is negative, so one of its parents is
+negative. Let $p_1\in\{p_1',p_1'+1\}$ be its place in $Z_t$, and choose $p_2$,
+$p_4$ and $p_5$ in the same way. Then $p_1\le p_1'+1\le p_2'\le p_2$, and
+$p_1\ne p_2$ because the signs differ. In the same way $p_4<p_5$. Let $q^-$ and
+$q^+$ be the smallest and the largest place $N-t-1+b$ with $b\in B_{t+1}$. The
+places $N-t+b$ with $b\in B_t$ lie between $q^-$ and $q^++1$. Since
+$p_2\le p_2'+1\le q^-$ and $p_4\ge p_4'\ge q^++1$, and the entries at $p_2$
+and $p_4$ are not zero, these places lie strictly between $p_2$ and $p_4$.
+This proves the claim for $t$.
+
+The same argument for the step from $Z_5$ to $Z_4$ shows that both parents of
+$D_5(b)$ vanish for $b\in B_5\subseteq\{2,3\}$. The parents of $D_5(2)$ are
+$s_4$ and $D_4(2)$, and those of $D_5(3)$ are $D_4(2)$ and $s_4$. So $s_4=0$.
+The step from $Z_4$ to $Z_3$ shows that both parents of $D_4(2)$ vanish, and
+both are equal to $s_3$. So $s_3=s_4=0$, which contradicts
+Lemma~\ref{lem:level-one}.
+\end{proof}
+
+\begin{corollary}[one inequality is enough]\label{cor:one-point}
+Let $N\ge8$ be even and $x=x_N$, or let $N\ge5$ and $0<\varepsilon<\frac12$
+be such that $P_N(0)<P_N(1)$. Let $a^*\ge N/2$ be a mode of $P_N$ and
+$m^*=N-a^*$. If $D_N(a_1)>0$ for some integer $a_1$ with $m^*<a_1\le2m^*+1$
+and $a_1\le N/2$, then $D_N(a)>0$ for every $2m^*+1\le a\le N-2m^*-1$. In
+particular the statement of Conjecture~\ref{conj:convex} holds for this $N$,
+this $\varepsilon$ and this $m^*$ as soon as $D_N(2m^*+1)>0$. Note that
+$2m^*+1\le N/2$ whenever the range $2m^*+1\le a\le N-2m^*-1$ is not empty.
+\end{corollary}
+
+\begin{proof}
+At the crossing with $N\ge8$ even, $P_N(0)=E_N<P_N(N-1)=P_N(1)$ by
+Proposition~\ref{prop:dip-hyp}. Let $a_0$ be the smallest maximizer of $P_N$.
+Then $1\le a_0\le m^*$, because $P_N(0)<P_N(1)$ and $P_N(m^*)=P_N(a^*)$ is the
+maximum. Also $P_N(a_0-1)<P_N(a_0)\ge P_N(a_0+1)$, so $D_N(a_0)<0$. Now
+Theorem~\ref{thm:no-holes} applies to $a_0<a_1$.
+\end{proof}
+
+\begin{theorem}[convexity between the humps for large $N$]\label{thm:convex-large}
+There is $N_0$ such that Conjecture~\ref{conj:convex} holds for every even
+$N\ge N_0$. That is, for even $N\ge N_0$, $x=x_N$ and every mode $a^*\ge N/2$
+of $P_N$ with $m^*=N-a^*$,
+\[
+ P_N(a-1)-2P_N(a)+P_N(a+1)>0\qquad\text{for }2m^*+1\le a\le N-2m^*-1 .
+\]
+\end{theorem}
+
+\paragraph{Idea of the proof.}
+By Corollary~\ref{cor:one-point} it is enough to find one point of strict
+convexity between $m^*$ and $2m^*+1$. If there were none, $P_N$ would be
+concave on $[m^*,2m^*+2]$, and then its value halfway would be at least half of
+its maximum. The Landau limit shows that the value halfway is much smaller.
+
+\begin{proof}
+Let $N$ be even and large, and let $x=x_N$ and $\varepsilon=\varepsilon_N$. By
+Theorem~\ref{thm:erw-crossing}, $x\to\infty$ and $x=O(\log N)$. So the standing
+assumptions of Section~\ref{sec:shape} hold, and $(1+\log x)/x$, $x/N$ and
+$x\delta_B=O(x^3\log^2N/N)$ tend to $0$. So by Theorem~\ref{thm:landau}(b)
+there are numbers $\eta_N\to0$ with
+\begin{equation}\label{eq:llt-used}
+ \bigl\lvert xf_N(m)-f_L(\lambda_m)\bigr\rvert\le\eta_N\qquad\text{for every integer }m\ge0 .
+\end{equation}
+The density $f_L$ is continuous, because it is the Fourier transform of an
+integrable function. It is unimodal with mode $\lambda_0$
+(Lemma~\ref{lem:landau-mode}), so it is nonincreasing on
+$[\lambda_0,\infty)$, and it is integrable. So
+$f_L(\lambda)\to0$ as $\lambda\to\infty$. We write $o(1)$ for a quantity that
+is bounded in absolute value by a function of $N$ alone that tends to $0$.
+
+\emph{Step 1, the mirror term.} Let $0\le m\le N/2$. Then
+$\lambda_{N-m}\ge\frac N{2x}-\log x\to\infty$. So \eqref{eq:llt-used} gives
+$xf_N(N-m)\le f_L(\lambda_{N-m})+\eta_N=o(1)$. Since
+$P_N(m)=P_N(N-m)=\frac12[f_N(m)+f_N(N-m)]$, we get
+\[
+ 2xP_N(m)=f_L(\lambda_m)+o(1)\qquad\text{uniformly for }0\le m\le N/2 .
+\]
+
+\emph{Step 2, the mode.} Let $m_0$ be the integer part of
+$x\log x+\lambda_0x$. Then $0\le m_0\le N/2$ and
+$\lvert\lambda_{m_0}-\lambda_0\rvert\le1/x$, so Step~1 and the continuity of
+$f_L$ give $2xP_N(m_0)=f_L(\lambda_0)+o(1)$. Now $P_N(m^*)\ge P_N(m_0)$ and
+$m^*\le N/2$, so Step~1 at $m^*$ gives
+$f_L(\lambda_{m^*})\ge f_L(\lambda_0)-o(1)$. By
+Lemma~\ref{lem:landau-mode}(c) this forces
+$\lvert\lambda_{m^*}-\lambda_0\rvert\le1$ for large $N$. Hence
+\[
+ x\log x+(\lambda_0-1)x\le m^*\le x\log x+(\lambda_0+1)x,\qquad
+ 2xP_N(m^*)\ge f_L(\lambda_0)-o(1).
+\]
+In particular $m^*\to\infty$ and $2m^*+2\le N/2$ for large $N$.
+
+\emph{Step 3, halfway.} Let $v=m^*+\lfloor m^*/2\rfloor$. Then
+$v\ge\frac32m^*-1$, so by Step~2
+\[
+ \lambda_v\ge\tfrac12\log x+\tfrac32(\lambda_0-1)-\tfrac1x\to\infty .
+\]
+Also $v\le N/2$. So Step~1 gives $2xP_N(v)=f_L(\lambda_v)+o(1)=o(1)$. Since
+$f_L(\lambda_0)>0$, Step~2 shows that $P_N(v)<\frac12P_N(m^*)$ for large $N$.
+
+\emph{Step 4, a point of convexity.} Suppose that $D_N(a)\le0$ for every
+$m^*<a\le2m^*+1$. Then $P_N$ is concave on the integers of $[m^*,2m^*+2]$.
+With $u=m^*$ and $w=2m^*+2$ this gives
+\[
+ P_N(v)\ge\frac{w-v}{w-u}P_N(u)+\frac{v-u}{w-u}P_N(w)\ge\frac{w-v}{w-u}P_N(m^*)
+ \ge\tfrac12P_N(m^*),
+\]
+because $w-v\ge\frac12(m^*+2)=\frac12(w-u)$. This contradicts Step~3. So
+$D_N(a_1)>0$ for some $m^*<a_1\le2m^*+1$, and $a_1\le N/2$ by Step~2.
+Corollary~\ref{cor:one-point} gives the claim.
+\end{proof}
+
+\begin{corollary}[the center is the unique interior minimum]\label{cor:unique-min}
+For every large even $N$, at the crossing, $P_N(a)>C_N$ for every
+$1\le a\le N-1$ with $a\ne h$.
+\end{corollary}
+
+\begin{proof}
+Let $N$ be large and even, and let $m^*$ be as in
+Theorem~\ref{thm:convex-large}. By that theorem and the symmetry of $P_N$, the
+first differences $P_N(a+1)-P_N(a)$ are strictly increasing for
+$2m^*\le a\le N-2m^*-1$, and $P_N(h+1)-P_N(h)=\frac12D_N(h)>0$. So $P_N$ is
+strictly increasing on $[h,N-2m^*]$ and strictly decreasing on $[2m^*,h]$. By
+Step~2 of the last proof, $m^*=O(\log N\log\log N)$. So for large $N$ every
+$a$ with $1\le a\le N-1$ and $\lvert a-h\rvert<C_{\rm w}(Nx_N\log N)^{1/2}$
+lies in $[2m^*,N-2m^*]$, and the other $a$ are covered by
+Theorem~\ref{thm:shape}.
+\end{proof}
+
+\begin{proposition}[small $N$, computer-assisted]\label{prop:convex-certified}
+Conjecture~\ref{conj:convex} holds for every $10\le N\le N_{\rm c}=2000$, even
+or odd.
+\end{proposition}
+
+\begin{proof}
+The script \texttt{certify\_convex.py} uses ball arithmetic with 160 bits
+(the library Arb). For each $N$ it encloses $\varepsilon_N$ in an interval of
+relative width at most $2\cdot10^{-8}$. It does so by evaluating the center
+and the end at the two ends of the interval, and Proposition~\ref{prop:mlr}
+then places the crossing between them. It then runs \eqref{eq:P-rec} with
+$\varepsilon$ equal to this interval. Each step only multiplies and adds
+enclosures of numbers in $[0,1]$, so the radii stay small. From the resulting enclosure of $P_N$ it lists every index that
+can be a mode, and for each of them it checks that the enclosure of $D_N(a)$
+is positive for every $2m^*+1\le a\le N-2m^*-1$. It also checks the two
+inequalities $D_N(a_0)<0<D_N(2m^*+1)$ of Corollary~\ref{cor:one-point}, which
+by themselves imply the claim.
+\end{proof}
+
+\begin{remark}[what is still open]\label{rem:convex-open}
+The constant $N_0$ of Theorem~\ref{thm:convex-large} is not explicit, because
+the constant in Theorem~\ref{thm:landau} is not. Even with an explicit
+constant, Step~3 needs $f_L(\lambda_0+\frac12\log x)<\frac12f_L(\lambda_0)$ up
+to the error $\eta_N$, and at the sizes we can compute the ratio
+$P_N(v)/P_N(m^*)$ is still about $0.8$. So the range between $N_{\rm c}$ and
+$N_0$ is open. By Corollary~\ref{cor:one-point} it would be closed by an
+effective proof of the single inequality $D_N(a_1)>0$ at one point
+$m^*<a_1\le2m^*+1$. Numerically the convex stretch starts near $1.5\,m^*$.
+\end{remark}

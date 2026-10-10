@@ -147,6 +147,9 @@ So $\det\Sigma_\alpha=2^{k-1}(\prod_i\alpha_i)^2/\tree(c(\alpha))$, and putting 
 Definition~\ref{def:tilt} gives the formula for $C_F(\alpha)$.
 \end{proof}
 
+Part (b) needs a reversible face. Proposition~\ref{prop:forest} at the end of this section gives a
+formula of the same kind for every irreducible face.
+
 \begin{corollary}[symmetric faces]\label{cor:symface}
 Let $F$ satisfy \textup{(H)} with $k\ge2$, and let $Q_F$ be symmetric with constant row sums.
 Then $\lambda_F=q_i-\sum_{j\in F\setminus\{i\}}q_{ij}$ for every $i\in F$, $\alpha^*_F$ is uniform
@@ -767,3 +770,113 @@ and for the full faces of $K_3$ and $K_4$ the script \texttt{verify\_second\_ord
 evaluates~\eqref{eq:c-alpha} exactly. For other faces $c_F$ has to be computed
 from~\eqref{eq:c-alpha}, $\gamma_F$ and $\Sigma_F$, as we do for the $4$-cycle in
 Section~\ref{sec:examples}.
+
+\subsection{A tree formula for every face}\label{sec:forest}
+
+Proposition~\ref{prop:constant}(b) needs a reversible face. The next proposition gives a formula of the same kind for every
+irreducible face. It uses two counts of spanning trees in place of one. Its proof rests on
+Lemma~\ref{lem:forest} in Appendix~\ref{app:torus}.
+
+\begin{proposition}[the constant on a general face]\label{prop:forest}
+Let $F$ be irreducible with $k\ge2$. For $\alpha\in\Delta_F^\circ$ put
+\[
+f_{ij}(\alpha)=l_{\alpha,i}\,q_{ij}\,r_{\alpha,j}\qquad(i\ne j\text{ in }F),
+\]
+which does not change when $r_\alpha$ is scaled.
+\begin{enumerate}[(a)]
+\item The weights $f(\alpha)$ are the stationary flow of the tilted chain, that is,
+$f_{ij}(\alpha)=\alpha_i(\widehat Q_\alpha)_{ij}$, and
+$\sum_{j\ne i}f_{ij}(\alpha)=\sum_{j\ne i}f_{ji}(\alpha)=\alpha_i\theta_i(\alpha)$ for every $i$.
+The number $\arb_i(f(\alpha))$ does not depend on the root $i$, and
+\[
+\det\Sigma_\alpha=\frac{(\prod_i\alpha_i)^2\,\tree\bigl(f(\alpha)+f(\alpha)^\top\bigr)}
+{\arb(f(\alpha))^2}
+\]
+and
+\[
+C_F(\alpha)=\frac{(\mu\cdot r_\alpha)(l_\alpha\cdot\ones)}{(2\pi)^{(k-1)/2}}\,
+\frac{\arb(f(\alpha))}{\prod_i\alpha_i\,\sqrt{\tree(f(\alpha)+f(\alpha)^\top)}} .
+\]
+\item Also $\arb(f(\alpha))/\prod_i\alpha_i
+=\sum_{i\in F}\det\bigl(\operatorname{diag}\theta(\alpha)-A_F\bigr)_{(i)}$. At
+$\alpha=\alpha^*_F$ this is $\prod_\rho(\rho-\lambda_F)$, the product over the eigenvalues
+$\rho\ne\lambda_F$ of $-Q_F$ with multiplicity. So with $l_F\cdot r_F=1$ and
+$f_{ij}=l_{F,i}\,q_{ij}\,r_{F,j}$,
+\[
+K_F=\frac{(\mu\cdot r_F)(l_F\cdot\ones)}{(2\pi)^{(k-1)/2}}\,
+\frac{\arb(f)}{\prod_i\alpha^*_{F,i}\,\sqrt{\tree(f+f^\top)}}
+=\frac{(\mu\cdot r_F)(l_F\cdot\ones)}{(2\pi)^{(k-1)/2}}\,
+\frac{\prod_\rho(\rho-\lambda_F)}{\sqrt{\tree(f+f^\top)}} .
+\]
+\item In the reversible case of Proposition~\ref{prop:constant}(b), $f(\alpha)$ is symmetric
+and equals $c(\alpha)$, and \textup{(a)} reduces to Proposition~\ref{prop:constant}(b).
+\item Let $F=\{1,\dots,k\}$ be a directed cycle, that is, $q_{i,i+1}=a_i>0$ with indices modulo
+$k$, and $q_{ij}=0$ for all other $i\ne j$ in $F$. Then for every $\alpha\in\Delta_F^\circ$
+\[
+\det\Sigma_\alpha=\frac{k\,(\prod_i\alpha_i)^2}{\bigl(\prod_i\alpha_ia_i\bigr)^{(k-1)/k}} .
+\]
+If moreover $q_i=a_i$ for all $i$, then $\alpha^*_{F,i}=\phi/a_i$ with
+$\phi=(\sum_i1/a_i)^{-1}$, and
+\[
+\det\Sigma_{\alpha^*_F}=\frac{k\,\phi^{k+1}}{\prod_ia_i^2},\qquad
+K_F=\frac{\mu(F)\,\prod_ia_i}{(2\pi)^{(k-1)/2}\,\sqrt k\,\phi^{(k+1)/2}} .
+\]
+\end{enumerate}
+\end{proposition}
+
+In words, the Gaussian factor in $C_F$ is a count of oriented spanning trees for the stationary
+flow of the tilted chain, divided by the square root of a count of spanning trees for the
+symmetrized flow. For the directed $3$-cycle of Proposition~\ref{prop:threecycle} part (d) gives
+$\phi=b/(1+2b)$ and $K_F=(1+2b)^2/(2\sqrt3\,\pi b)$ again.
+
+\emph{Idea of the proof.} Lemma~\ref{lem:forest} applies to the tilted generator
+$\widehat Q_\alpha$, whose stationary law is $\alpha$. The count of oriented trees is a sum of
+principal minors, and these do not change under the diagonal conjugation that defines
+$\widehat Q_\alpha$. At $\alpha^*_F$ the sum of these minors is a coefficient of the
+characteristic polynomial of $Q_F$.
+
+\begin{proof}
+(a) By Definition~\ref{def:tilt}, $(\widehat Q_\alpha)_{ij}=q_{ij}r_{\alpha,j}/r_{\alpha,i}$ for
+$i\ne j$, and $\alpha_i=l_{\alpha,i}r_{\alpha,i}$. So
+$\alpha_i(\widehat Q_\alpha)_{ij}=f_{ij}(\alpha)$. The diagonal entry of $\widehat Q_\alpha$ is
+$-\theta_i(\alpha)$. So $\widehat Q_\alpha\ones=0$ gives
+$\sum_{j\ne i}f_{ij}(\alpha)=\alpha_i\theta_i(\alpha)$, and $\alpha^\top\widehat Q_\alpha=0$
+gives $\sum_{j\ne i}f_{ji}(\alpha)=\alpha_i\theta_i(\alpha)$. Now apply Lemma~\ref{lem:forest}
+to $G=\widehat Q_\alpha$ and $\pi=\alpha$, for which $\Sigma=\Sigma_\alpha$. Part (iii) is the
+formula for $\det\Sigma_\alpha$, and Definition~\ref{def:tilt} then gives $C_F(\alpha)$.
+
+(b) We have $-\widehat Q_\alpha=R^{-1}(\operatorname{diag}\theta(\alpha)-A_F)R$ with $R$
+diagonal, and a conjugation by a diagonal matrix does not change principal minors. So
+Lemma~\ref{lem:forest}(i) gives the first claim. At $\alpha^*_F$ we have
+$\theta(\alpha^*_F)=q-\lambda_F\ones$, so
+$\operatorname{diag}\theta(\alpha^*_F)-A_F=-Q_F-\lambda_FI$. For a $k\times k$ matrix $M$ the sum
+of the principal minors of order $k-1$ is the elementary symmetric polynomial of degree $k-1$ in
+the eigenvalues of $M$. The eigenvalues of $-Q_F-\lambda_FI$ are the numbers $\rho-\lambda_F$,
+where $\rho$ runs over the eigenvalues of $-Q_F$. Exactly one of them is $0$, because the Perron
+root is a simple eigenvalue. So the symmetric polynomial is the product of the other $k-1$
+numbers. Finally $r_{\alpha^*_F}$ and $l_{\alpha^*_F}$ are multiples of $r_F$ and $l_F$ with
+$l_{\alpha^*_F}\cdot r_{\alpha^*_F}=1$, and (a) gives the two forms of $K_F$.
+
+(c) By Proposition~\ref{prop:constant}(b),
+$\alpha_i(\widehat Q_\alpha)_{ij}=c_{ij}(\alpha)$, so $f(\alpha)=c(\alpha)$ is symmetric. Then
+$\arb(f(\alpha))=\tree(c(\alpha))$, because every spanning tree has exactly one orientation
+toward a given root. Also $\tree(2c)=2^{k-1}\tree(c)$, because a spanning tree has $k-1$ edges.
+So (a) gives $\det\Sigma_\alpha=2^{k-1}(\prod_i\alpha_i)^2/\tree(c(\alpha))$.
+
+(d) Only the pairs $(i,i+1)$ carry flow, so by (a) the flow $f_{i,i+1}(\alpha)$ out of $i$
+equals the flow $f_{i-1,i}(\alpha)$ into $i$. Hence all $f_{i,i+1}(\alpha)$ are equal to one
+number $\varphi$. Their product is
+$\prod_il_{\alpha,i}\,a_i\,r_{\alpha,i+1}=\prod_i\alpha_ia_i$, so
+$\varphi=(\prod_i\alpha_ia_i)^{1/k}$. The only spanning tree oriented toward a root $i$ with
+nonzero weight is the cycle without the edge that leaves $i$. So
+$\arb(f(\alpha))=\varphi^{k-1}$.
+The symmetrized flow has conductance $\varphi$ on each of the $k$ edges of the undirected cycle.
+For $k\ge3$ the spanning trees are the cycle without one edge, so
+$\tree(f(\alpha)+f(\alpha)^\top)=k\varphi^{k-1}$. For $k=2$ the two edges of the cycle are the
+same pair, the conductance is $2\varphi$, and the count is again $k\varphi^{k-1}$. Now (a) gives
+$\det\Sigma_\alpha=k(\prod_i\alpha_i)^2/\varphi^{k-1}$. If $q_i=a_i$, then $Q_F$ is a generator,
+so $\lambda_F=0$, $r_F=\ones$ and $l_F=\alpha^*_F$ is the stationary law. Its flow $l_{F,i}a_i$
+is constant, which gives $\alpha^*_{F,i}=\phi/a_i$ and $\varphi=\phi$. Then
+$\prod_i\alpha^*_{F,i}=\phi^k/\prod_ia_i$, and $(\mu\cdot r_F)(l_F\cdot\ones)=\mu(F)$. Putting
+this into the formulas above gives $\det\Sigma_{\alpha^*_F}$ and $K_F$.
+\end{proof}
