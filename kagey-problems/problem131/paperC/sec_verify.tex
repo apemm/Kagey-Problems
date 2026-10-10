@@ -28,19 +28,33 @@ dynamic program and an exact formula). They illustrate the theorems, and no
 statement is deduced from them. Finally, the value $0.115$ in
 Section~\ref{sec:sticky} is a Monte Carlo estimate.
 
-For the planar walk, \texttt{verify\_planar.py} computes $o_N$ in four ways and
-finds the crossings. The script \texttt{verify\_planar\_product.py} checks the
-product formula of Proposition~\ref{prop:product} in exact rational arithmetic
-for $N=4,6,8$. In floating point, and only on grids, it also checks the
-inequality $F(y/2)\le2F(y)$ of Appendix~\ref{app:planar}, the inequality
-$xS_N'(x)\le(2z+2)S_N(x)$ used for Lemma~\ref{lem:oneswitch}, that
-$\Delta_N\ge0$ in Theorem~\ref{thm:pureturns}(a), and the bound of
-Theorem~\ref{thm:pureturns}(b) at the grid points where its hypothesis
-$z(z+2)\le N$ holds, for $N$ up to $96$. It does not test the identity in
-Theorem~\ref{thm:pureturns}(a), which is how the script computes $\Delta_N$.
-The script \texttt{verify\_planar.py} also keeps some bounds at finite $N$ from
-our research notes that are not statements of this paper. These checks guard against slips. The proofs do
-not use them.
+For the planar walk, \texttt{verify\_planar.py} computes $o_N$ by the three
+levels of Lemma~\ref{lem:threelevel}, by Fourier inversion, by a dynamic
+program and by a sum over all $4^N$ words. It compares the first three for
+even $N\le10$ and all four for $N\le8$. It finds the crossings by the first
+method and checks them by the second for $N\le2560$. It also tests the
+identity of Theorem~\ref{thm:pureturns}(a) in exact rational arithmetic, for
+even $N\le30$ and four values of $x$. The form it tests is that $o_N/c_N$ is
+the sum of $x^{j+j'}$ over the pairs of balanced words with no common switch.
+Finally it keeps some bounds at finite $N$ from our research notes that are
+not statements of this paper.
+
+The script \texttt{verify\_planar\_product.py} checks the product formula of
+Proposition~\ref{prop:product} in exact rational arithmetic for $N=4,6,8$,
+with one value of $\rho$ each. Its other checks are in floating point and
+only on grids. The first is the inequality $F(y/2)\le2F(y)$ of
+Appendix~\ref{app:planar}, at $4000$ values of $y$ between $10^{-3}$ and
+$10^4$. The second is the inequality $xS_N'(x)\le(2z+2)S_N(x)$ of
+Lemma~\ref{lem:oneswitch}, at $N=16$, $64$ and $256$ and $30$ values of $z$
+with $z(z+2)\le N$, where the derivative is a central difference. The third
+takes $N=8,16,32,64,96$ and $x=\frac12u_N,u_N,\frac32u_N$. It checks that
+$\Delta_N(x)\ge0$, and it checks the bound of Theorem~\ref{thm:pureturns}(b)
+at those points where the hypothesis $z(z+2)\le N$ holds. This script
+computes $\Delta_N$ as $S_N^2-o_N/c_N$, so it does not test the identity of
+Theorem~\ref{thm:pureturns}(a) a second time. A check that fails ends either
+script with an error. The script also prints $N(v^*_N-u_N)$ against $L^2/N$
+and does not test it, because Theorem~\ref{thm:pureturns}(c) gives no
+constant. These checks guard against slips. The proofs do not use them.
 
 Many finite and algebraic steps, and the rows of
 Table~\ref{tab:outcomes} marked Lean, are proved in Lean~4 in the folder
@@ -51,16 +65,11 @@ and the unique crossing for $s>0$ in Proposition~\ref{prop:decomp}. The
 asymptotic results, the product curve and the theorem on turns only are not in
 Lean.
 
-\paragraph{Data and code availability.} Everything is in the folder
-\nolinkurl{kagey-problems/problem131} of
-\url{https://github.com/apemm/Kagey-Problems}, at the release
-\nolinkurl{paperC-arxiv-v1}. To rerun the checks, run
-\texttt{python -B verify\_all.py -{}-paper c} in that folder. The file
-\nolinkurl{SUPPLEMENT.md} lists each check, the two methods behind it and the
-predictions that we wrote down before most of the computations. The scripts
-are in the subfolder \nolinkurl{paperC} and need numpy, scipy, sympy and
-mpmath. The largest cases, such as the planar crossings for $N\ge1280$, run
-only with the option \texttt{-{}-full}.
+The file \nolinkurl{SUPPLEMENT.md} in the folder
+\nolinkurl{kagey-problems/problem131} lists each check, the two methods
+behind it and the predictions that we wrote down before most of the
+computations. The data availability statement after this section says where
+the files are and how to rerun the checks.
 
 \paragraph{Open questions.} We list them in the order of the paper.
 
