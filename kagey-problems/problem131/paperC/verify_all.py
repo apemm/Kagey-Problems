@@ -26,7 +26,8 @@ scripts = ('verify_first_order.py',      # C1: exact law, the rate on a face, fi
            'verify_planar.py',           # C3: the planar persistent walk
            'verify_planar_product.py',   # C3: the product curve and turns only
            'verify_sticky_fisher.py',    # C4: sticky priors (and the endpoint information note S1)
-           'verify_second_order.py')     # C5: the local law, the constants and the crossings
+           'verify_second_order.py',     # C5: the local law, the constants and the crossings
+           'verify_forest.py')           # Proposition 4.15 and Lemma A.3: the tree formula (about five minutes)
 t0 = time.time()
 for name in scripts:
     print(f'\nRunning {name}' + (' --full' if args.full else ''), flush=True)
