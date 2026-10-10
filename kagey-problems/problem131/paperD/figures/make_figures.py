@@ -82,26 +82,21 @@ plt.rcParams.update({
 
 
 def save(fig, name):
+    dark_style.finish(fig)
     fig.savefig(HERE / f"{name}.pdf")
     fig.savefig(HERE / f"{name}.png", dpi=600)
     plt.close(fig)
     print(f"wrote {name}.pdf and {name}.png")
 
 
-# The palette is batlow, from F. Crameri's Scientific colour maps (perceptually
-# uniform, readable in grayscale and with color-vision deficiencies). Without
-# the package cmcrameri the figures fall back to viridis.
-try:
-    from cmcrameri import cm as _cmc
-    PALETTE = _cmc.batlow
-except ImportError:
-    PALETTE = plt.get_cmap("viridis")
+import sys as _sys
+_sys.path.insert(0, str(HERE.parent.parent / "figures"))
+import dark_style  # black background and the manim palette, see figures/dark_style.py
 
 
-def shades(n, cmap=None, lo=0.0, hi=0.82):
-    """n colours from light to dark."""
-    cm = PALETTE if cmap is None else plt.get_cmap(cmap)
-    return [cm(x) for x in np.linspace(hi, lo, n)]
+def shades(n, cmap=None, lo=0.0, hi=1.0):
+    """n colours for a family of curves, from figures/dark_style.py."""
+    return dark_style.shades(n)
 
 
 def panel(ax, letter, x=0.03, y=0.95):
