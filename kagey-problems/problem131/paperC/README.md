@@ -145,7 +145,9 @@ jump with d >= 4 states.
   Fisher information of the endpoint, which now belongs to the note
   `../S1_endpoint_information_note/s1_note.tex`, including the exact moments that the proof of the
   moment lemma there uses.
-- `verify_all.py` runs the 6 scripts.
+- `verify_forest.py` checks the tree formula (Lemma A.3 in exact rational arithmetic for 119
+  generators, Proposition 4.15 in floating point). It takes about five minutes.
+- `verify_all.py` runs the 7 scripts.
 - `data/ledger.md` and `data/ledger_C1.md` to `data/ledger_C5.md` hold the predictions, written down
   before most of the computations, and what happened to them.
 - `data/verify_output.txt` is the output of `verify_all.py` from September 26, 2026. It predates
