@@ -7,7 +7,7 @@ here, and the paper includes the shared file directly with
 there is no copy in this folder. It is in the introduction with label `fig:program` and the caption
 "The crossing on each model's switching scale against $L=\log N$ (a), and the heavy-tailed exponent $e(\alpha)=1-\alpha+1/\alpha$ of this paper for a stationary start (b). The scale is $T$ for Papers~A to~C, $x=N\varepsilon$ for the elephant walk (drawn through the root $g_N$ of Theorem~\ref{thm:erw-crossing}), and the expected number $H_N-1$ of switches at the fixed-start crossing $c=1$ for the aging walk. The curves of this paper are in bold, and a version of this figure also appears in Paper~C."
 
-Figures 2 and 3 are made by `make_figures.py` in this folder. Each is 6.4 in wide. Figure 2 is
+Figures 2 and 3 are made by `make_figures.py` in this folder, and Figure 4 (`aging.pdf`, label `fig:aging`, in Section 5 after Proposition 5.4) by `make_aging_figure.py`. Each is 6.4 in wide. Figure 2 is
 included with `\includegraphics[width=\textwidth]{figures/shape}` and Figure 3 at its natural size with
 `\includegraphics{figures/heavy}`. The script also makes `crossing.pdf`, a figure of the elephant
 crossing that the paper no longer prints (Table 1 has its numbers).
