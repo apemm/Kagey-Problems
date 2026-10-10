@@ -52,14 +52,58 @@ the functions of $K$ in $L^2$, the Cauchy--Schwarz inequality gives
  \qquad\text{whenever }\Var g(K)>0.
 \end{equation}
 
-\begin{remark}[few switches, proof omitted]\label{rem:fisher-small}
-For fixed $N$ we have $e_N(q)=1-\frac{N-2}2q+O_N(q^2)$ as $q\to0$. If $q\to0$
-and $T=Nq$ stays bounded, then $e_N(q)\to1$ if and only if $T\to0$. The
-reason is that one switch and two switches both leave the endpoint uniform on the
-interior bins. The proof applies \eqref{eq:fisher-proj} to the indicator of
-$K\in\{0,N\}$ and compares the two words with one switch with the $N-2$ words
-with two switches in each interior bin. We omit the details.
-\end{remark}
+\begin{proposition}[few switches]\label{rem:fisher-small}
+\begin{enumerate}[(a)]
+\item For fixed $N\ge3$, $e_N(q)=1-\frac{N-2}2q+O_N(q^2)$ as $q\to0$.
+\item Let $q\to0$ with $T=Nq$ bounded. Then $e_N(q)\to1$ if and only if
+$T\to0$.
+\end{enumerate}
+\end{proposition}
+
+In words, the endpoint loses information as soon as paths with two switches
+appear. The reason is that one switch and two switches both leave the endpoint
+uniform on the interior bins, so an interior bin cannot tell them apart.
+
+\begin{proof}
+By Proposition~\ref{prop:eta}, $1-e_N=\E\Var(J\mid K)/\Var J$, and
+$\Var J=(N-1)pq$. Fix an interior bin $0<k<N$. Exactly two words with $k$
+right steps have one switch, and exactly $N-2$ have two switches ($k-1$ that
+start to the right and $N-k-1$ that start to the left). So
+\[
+ \Prob(J=1,K=k)=p^{N-2}q,\qquad\Prob(J=2,K=k)=\frac{N-2}2\,p^{N-3}q^2 .
+\]
+
+(a) Here $N$ is fixed. Given $K=k$ the number of switches is $1$, or $2$ with
+probability $\frac{N-2}2q+O_N(q^2)$, or larger with probability $O_N(q^2)$. So
+$\Var(J\mid K=k)=\frac{N-2}2q+O_N(q^2)$, and
+$\Prob(0<K<N)=(N-1)q+O_N(q^2)$. For $K\in\{0,N\}$ the conditional variance is
+$0$. Hence $\E\Var(J\mid K)=\frac{(N-1)(N-2)}2q^2+O_N(q^3)$, and dividing by
+$(N-1)pq$ gives the claim.
+
+(b) For the upper bound we replace $\E[J\mid K]$ by the indicator of an
+interior bin, which can only raise the mean squared error. This gives
+\[
+ \E\Var(J\mid K)\le\E\bigl(J-\mathbf 1\{0<K<N\}\bigr)^2
+ =\E\bigl[(J-1)^2;J\ge2\bigr]\le\E[J(J-1)]=(N-1)(N-2)q^2 ,
+\]
+because $J\ge1$ exactly on the interior bins. So
+$1-e_N\le(N-2)q/p\le T/p$, which tends to $0$ if $T\to0$.
+
+For the lower bound, a variable that takes two values $1$ apart with
+probabilities $a$ and $b$ has variance at least $ab$. So
+$\Var(J\mid K=k)\ge\Prob(J=1\mid K=k)\Prob(J=2\mid K=k)$, and by the
+Cauchy--Schwarz inequality
+\[
+ \E\Var(J\mid K)\ge\sum_{0<k<N}\frac{\Prob(J=1,K=k)\Prob(J=2,K=k)}{\Prob(K=k)}
+ \ge\Bigl(\sum_{0<k<N}\sqrt{\Prob(J=1,K=k)\Prob(J=2,K=k)}\Bigr)^2
+ =\frac{(N-1)^2(N-2)}2\,p^{2N-5}q^3 .
+\]
+Dividing by $(N-1)pq$ gives $1-e_N\ge\frac{(N-1)(N-2)}2p^{2N-6}q^2$. If $T$
+stays in an interval $[t_0,t_1]$ with $t_0>0$, the right side tends to a limit
+between $\frac12t_0^2e^{-2t_1}$ and $\frac12t_1^2$, and it is positive. So
+$e_N$ does not tend to $1$ along any sequence on which $T$ stays away from
+$0$.
+\end{proof}
 
 \begin{theorem}[many switches]\label{thm:fisher}
 Let $R^2_N(q)=\Cov(J,X^2)^2/(\Var J\,\Var X^2)$ be the squared correlation
@@ -153,4 +197,57 @@ computed from the exact law, with $z_N=Nq_N$ and $L=\log N$. The last two
 columns are the squared correlation of Theorem~\ref{thm:fisher} and its
 expansion to two terms.}
 \label{tab:fisher}
-\end{table}
+\end{table}\subsection*{Many balls}
+
+Now drop $n$ independent balls and record only the histogram of their bins.
+How well can $q$ be estimated? By the Cram\'er--Rao bound no unbiased
+estimator has variance below $1/(nI_K(q))$, and the maximum likelihood
+estimator attains this as $n\to\infty$. The next corollary says that a much
+simpler estimator does almost as well. Put $m(q)=\E_qX^2$, a polynomial in
+$q$.
+
+\begin{corollary}[the moment estimator]\label{cor:fisher-moment}
+Let $X_1,\dots,X_n$ be the endpoints of $n$ independent balls with switching
+probability $q$, and suppose that $R^2_N(q)>0$. Then $m'(q)\ne0$, and with
+probability tending to $1$ the equation
+$m(\hat q)=\frac1n\sum_{i=1}^nX_i^2$ has a solution $\hat q_n$ that converges
+to $q$ in probability. For this solution
+\[
+ \sqrt n\,(\hat q_n-q)\Rightarrow N\Bigl(0,\frac{pq}{(N-1)R^2_N(q)}\Bigr)
+ \qquad(n\to\infty).
+\]
+So its asymptotic efficiency, relative to the bound $1/(nI_K(q))$, is
+$R^2_N(q)/e_N(q)$. There is an absolute constant $C'$ such that, with $N_0$
+as in Theorem~\ref{thm:fisher}, for $N\ge N_0$, $0<q\le\frac12$ and
+$1\le T\le N^{1/4}$,
+\[
+ 1-C'\Bigl(\frac1{T^2}+\frac{T^4}N\Bigr)\le\frac{R^2_N(q)}{e_N(q)}\le1 .
+\]
+\end{corollary}
+
+In words, among all estimators that see only the bins, matching the mean
+square of the endpoint loses a fraction of order $1/T^2+T^4/N$ of the
+information. At Kagey's crossing the efficiency $R^2_N/e_N$ is $0.87$ at
+$N=50$ and $0.97$ at $N=3200$ (Table~\ref{tab:fisher}).
+
+\begin{proof}
+The law of a path is a polynomial in $q$ with score $(J-(N-1)q)/(pq)$, so
+$m'(q)=\E[X^2(J-(N-1)q)]/(pq)=\Cov(J,X^2)/(pq)$. This is not zero because
+$R^2_N(q)>0$. So $m$ is strictly monotone near $q$. By the law of large
+numbers the mean of the $X_i^2$ tends to $m(q)$, so with probability tending
+to $1$ it lies in the image of a small interval around $q$, and the solution
+in that interval converges to $q$. The central limit theorem and the delta
+method give the limit law with variance
+\[
+ \frac{\Var X^2}{m'(q)^2}=\frac{(pq)^2\Var X^2}{\Cov(J,X^2)^2}
+ =\frac{(pq)^2}{R^2_N(q)\Var J}=\frac{pq}{(N-1)R^2_N(q)} .
+\]
+Since $I_K(q)=e_N(q)(N-1)/(pq)$, the ratio of $1/I_K(q)$ to this variance is
+$R^2_N/e_N$, and it is at most $1$ by~\eqref{eq:fisher-proj}. For the lower
+bound let $C_1$ be the constant in the expansion of
+Theorem~\ref{thm:fisher}, and put $C'=4\max(C,C_1)$ and
+$\epsilon=T^{-2}+T^4/N$. If $C'\epsilon\ge1$ the claim is trivial, since
+$R^2_N/e_N\ge0$. Otherwise $C_1\epsilon<\frac14$, so the expansion gives
+$e_N\ge\frac1{2T}-\frac{C_1\epsilon}T\ge\frac1{4T}$. Then
+$1-R^2_N/e_N=(e_N-R^2_N)/e_N\le4T\cdot C\epsilon/T=4C\epsilon\le C'\epsilon$.
+\end{proof}
