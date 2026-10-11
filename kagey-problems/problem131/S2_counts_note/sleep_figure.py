@@ -26,6 +26,7 @@ from matplotlib.patches import FancyArrowPatch
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "figures"))
 import dark_style as ds
+ds.light()  # white background
 import sleep_data as sd
 
 FULL = 6.4
