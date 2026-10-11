@@ -11,12 +11,16 @@ estimate |j| by maximum likelihood on j >= 0.
 2. Root mean squared errors over repeated samples of n count vectors:
    at j = 0 the error of |j| falls like n^(-1/4) and the error of the entropy
    production like n^(-1/2); at j = 0.1 the error of |j| falls like n^(-1/2).
+3. The score for s = j^2 at j = 0 (Theorem `thm:regular`), its information I,
+   and two tests of reversibility at level 5 percent, the score test of
+   Theorem `thm:test` and the likelihood ratio test. Their power is a function
+   of j n^(1/4) alone, namely Phi(sqrt(I) j^2 sqrt(n) - 1.645) in the limit.
 Writes fig_rates.pdf and prints the fitted slopes.
 
-Run:  python -B sim_rates.py     (about a minute)
+Run:  python -B sim_rates.py     (a few minutes)
 """
 import sys
-from math import log
+from math import erf, log, sqrt
 from pathlib import Path
 
 import matplotlib
@@ -38,6 +42,10 @@ T, N = 2.0, 40
 JMAX, GRID = 0.15, 601
 NS = [10 ** 2, 10 ** 3, 10 ** 4, 10 ** 5, 10 ** 6]
 REPS = 400
+TEST_NS = [10 ** 3, 10 ** 4, 10 ** 5]
+TEST_X = [0.0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7]     # j n^(1/4)
+TEST_REPS = 2000
+Z05 = 1.6448536269514722
 
 plt.rcParams.update({
     "font.size": 8, "axes.labelsize": 8, "legend.fontsize": 8,
@@ -120,7 +128,45 @@ def main():
     print("   j = 0, sig :", np.round(res["zero"][:, 1], 6), " slope %.3f (expect -1/2)" % slope(res["zero"][:, 1]))
     print("   j = .1, |j|:", np.round(res["away"][:, 0], 5), " slope %.3f (expect -1/2)" % slope(res["away"][:, 0]))
 
-    fig, ax = plt.subplots(figsize=(3.6, 2.6))
+    print("3. the score for s = j^2, and two tests of reversibility")
+    p0 = table[0]
+
+    def quotient(d):
+        return (law(d) - p0) / (d * d * p0)
+
+    score = (4 * quotient(0.005) - quotient(0.01)) / 3          # Richardson, error O(d^4)
+    info = float((p0 * score ** 2).sum())
+    assert abs((p0 * score).sum()) < 1e-9
+    print("   information I = %.2f (chi-square distance / delta^4 above: %.2f)"
+          % (info, ((law(0.02) - p0) ** 2 / p0).sum() / 0.02 ** 4))
+    print("   E_j[score] / (I j^2) at j = 0.02, 0.05: %.3f, %.3f"
+          % tuple((law(d) * score).sum() / (info * d * d) for d in (0.02, 0.05)))
+
+    def Phi(x):
+        return 0.5 * (1 + erf(x / sqrt(2)))
+
+    power = {}
+    for n in TEST_NS:
+        rows = []
+        for x in TEST_X:
+            d = x / n ** 0.25
+            p = law(d)
+            hit_s = hit_l = zero = 0
+            for _ in range(TEST_REPS):
+                counts = rng.multinomial(n, p)
+                hit_s += (score @ counts) / sqrt(n * info) > Z05
+                ll = logt @ counts
+                lr = 2 * (ll.max() - ll[0])
+                hit_l += lr > Z05 ** 2
+                zero += lr < 1e-9
+            rows.append((hit_s / TEST_REPS, hit_l / TEST_REPS, zero / TEST_REPS))
+        power[n] = np.array(rows)
+        print("   n = %d: score test %s" % (n, np.round(power[n][:, 0], 3)))
+        print("   %s  likelihood ratio %s, share of LR = 0 at j = 0: %.3f"
+              % (" " * len("n = %d:" % n), np.round(power[n][:, 1], 3), power[n][0, 2]))
+    print("   limit:      %s" % np.round([1 - Phi(Z05 - sqrt(info) * x * x) for x in TEST_X], 3))
+
+    fig, (ax, bx) = plt.subplots(1, 2, figsize=(6.4, 2.6))
     ns = np.array(NS, dtype=float)
     ax.plot(ns, res["zero"][:, 0], "o-", color=ds.YELLOW, ms=3.5, label=r"$|\hat\jmath|$ at $j=0$")
     ax.plot(ns, res["away"][:, 0], "s-", color=ds.BLUE, ms=3.2, label=r"$|\hat\jmath|$ at $j=0.1$")
@@ -134,6 +180,19 @@ def main():
     ax.set_xlabel(r"number $n$ of count vectors")
     ax.set_ylabel("root mean squared error")
     ax.legend(frameon=False, loc="lower left")
+    ax.text(0.95, 0.95, "(a)", transform=ax.transAxes, ha="right", va="top")
+    xs = np.linspace(0, TEST_X[-1], 200)
+    bx.plot(xs, [1 - Phi(Z05 - sqrt(info) * x * x) for x in xs], "-", color="0.35", lw=1.0, label="limit")
+    for n, col, mk in zip(TEST_NS, (ds.YELLOW, ds.GREEN, ds.BLUE), ("o", "s", "^")):
+        bx.plot(TEST_X, power[n][:, 0], mk, color=col, ms=3.8, label=r"score test, $n=10^{%d}$" % round(np.log10(n)))
+        bx.plot(TEST_X, power[n][:, 1], mk, color=col, ms=3.8, mfc="none", mew=0.8)
+    bx.plot([], [], "o", color="0.35", ms=3.8, mfc="none", mew=0.8, label="likelihood ratio test")
+    bx.axhline(0.05, color="0.6", lw=0.6, ls=":")
+    bx.set_xlabel(r"$j\,n^{1/4}$")
+    bx.set_ylabel("chance to reject reversibility")
+    bx.set_ylim(0, 1.03)
+    bx.legend(frameon=False, loc="upper left", handletextpad=0.3)
+    bx.text(0.95, 0.08, "(b)", transform=bx.transAxes, ha="right", va="bottom")
     ds.finish(fig)
     fig.savefig(HERE / "fig_rates.pdf")
     fig.savefig(HERE / "fig_rates.png", dpi=400)

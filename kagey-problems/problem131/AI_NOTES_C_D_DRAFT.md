@@ -91,6 +91,17 @@ Facts from the project record (Claude Opus 5.5 through Claude Code, September an
 - Notes S1 and S2: every result and proof in both notes came from the model (S2 was written
   without reading your own S2 notes, as you asked).
 
+## Added October 11, 2026
+
+- Note S2, Theorems `thm:regular` and `thm:test`, Corollary `cor:local` and Remark `rem:test` (the
+  counts are a regular model in the square of the net flow, with positive information; a one-sided
+  score test of reversibility; the rates n^(-1/4) and n^(-1/2) on the scale of the lower bound).
+  Found and proved by the model, which also extended `sim_rates.py`. A second model session read
+  the proofs as a referee. The limit laws quoted for maximum likelihood and for the likelihood
+  ratio are cited from Chernoff (1954) and Self and Liang (1987) and are not proved in the note.
+- Papers C and D and note S2: all figures moved to a white background. Figure 1 of Paper C and the
+  aging figure of Paper D were redrawn (the faces of the simplex drawn apart).
+
 ## Figures (both papers, and the notes S1 and S2)
 
 - Every figure was generated with Claude (Claude Opus 5.5 through Claude Code). The model wrote the

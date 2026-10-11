@@ -61,8 +61,13 @@ Here is what we find. The proofs are in the sections that follow.
 \item \emph{The net flow is learned slowly, the entropy production is not}
  (Theorem~\ref{thm:lecam}). Near a reversible chain no estimator based on $n$
  copies of the counts finds the size of the net flow to better than $n^{-1/4}$,
- where the path gives $n^{-1/2}$. In an example the entropy production is still
- learned at the rate $n^{-1/2}$.
+ where the path gives $n^{-1/2}$. The counts see the net flow only through
+ its square, and at a reversible chain they have positive information about
+ the square (Theorem~\ref{thm:regular}). This gives a one-sided test of
+ reversibility that sees a net flow of size $n^{-1/4}$ when the rest of the
+ chain is known (Theorem~\ref{thm:test}). Near a reversible chain the
+ entropy production is learned to within $n^{-1/2}$, also where it is itself
+ much larger than that (Corollary~\ref{cor:local}).
 \item \emph{What is lost} (Theorems~\ref{thm:info} and~\ref{thm:singular}). When
  switches are rare, the counts are as good as the full path for the two-way flow
  on each pair, and blind to first order to the net flow. With a stationary start
@@ -996,7 +1001,7 @@ counts only by an amount of order $\delta^2$. So the counts need at least of
 the order of $\delta^{-4}$ copies to notice it, where for the path, which is a
 regular model in $\delta$, one expects $\delta^{-2}$.
 
-Let $(\pi,c)$ be a reversible chain, with rates $g^0_{ij}=c_{ij}/(2\pi_i)$, and
+Let $(\pi,c)$ be a reversible chain with every $\pi_i>0$, with rates $g^0_{ij}=c_{ij}/(2\pi_i)$, and
 let $j=(j_{ij})$ be a \emph{circulation}, namely $j_{ji}=-j_{ij}$,
 $\sum_kj_{ik}=0$ for every $i$, and $j_{ij}=0$ whenever $c_{ij}=0$. Put
 $b_{ij}=j_{ij}/c_{ij}$ on the pairs with $c_{ij}>0$, and
@@ -1105,6 +1110,251 @@ with variance $\sum_{i\ne j}b_{ij}^2\,\E_0N_{ij}=\sum_{i\ne j}b_{ij}^2\,tc_{ij}/
 =t\sum_{i<j}j_{ij}^2/c_{ij}$.
 \end{proof}
 
+\subsection{At a reversible chain the square of the net flow is an ordinary parameter}
+
+Theorem~\ref{thm:lecam} is a bound from one side. We now show that its power
+$\delta^4$ is sharp. The counts see $\delta$ only through $\delta^2$, and at
+the reversible chain their likelihood has a first-order expansion in
+$\delta^2$ with positive information. This gives a test of reversibility
+within the family $G_\delta$ (so $\pi$, $c$ and the direction $j$ are known)
+and the rates of estimation near $\delta=0$.
+
+Two functions of the path are needed. Let
+\[
+ W=\sum_{i<j}b_{ij}(N_{ij}-N_{ji}),\qquad
+ V=\sum_{i<j}b_{ij}^2(N_{ij}+N_{ji}),\qquad
+ S=\tfrac12\,\E_0\bigl[W^2-V\bigm|L\bigr].
+\]
+Here $W$ is the score of the path at $\delta=0$ (the end of the proof of
+Theorem~\ref{thm:lecam}). It counts the jumps along the circulation minus the
+jumps against it, with weights. And $V$ is the variance that $W$ collects
+along the way, in the sense that $W^2-V$ has mean zero under the reversible
+chain. So $S$ asks whether the path went around more than chance alone would
+make it, given the counts.
+
+\begin{theorem}[the expansion in $\delta^2$]\label{thm:regular}
+Let $t>0$ and $\lvert\delta\rvert\bar b\le\frac12$.
+\begin{enumerate}[(a),itemsep=1pt]
+\item $\displaystyle\frac{dP_\delta}{dP_0}=1+\delta^2S+\rho_\delta$ with
+ $\E_0[\rho_\delta^2]\le K_2^2\,\delta^8$, where
+ $K_2=\frac1{24}\bar b^4\bigl(\E_0[N^8(9/4)^N]\bigr)^{1/2}$, which is finite
+ for the same reason as $K$.
+\item The number $I=\E_0[S^2]$ is finite and positive.
+\item $\chi^2(P_\delta,P_0)=I\delta^4+O(\delta^6)$.
+\end{enumerate}
+\end{theorem}
+
+In words, $S$ is the score of the counts for the parameter $\delta^2$ at
+$\delta^2=0$, and $I$ is their information about $\delta^2$ at the reversible
+chain. Part (c) says
+that the power $\delta^4$ in Theorem~\ref{thm:lecam} cannot be improved.
+
+\paragraph{Idea of the proof.} The path sees $\delta$ to first order through
+$W$. Running the film backward flips the sign of $W$ and keeps the counts, so
+the counts lose this term and keep the next one, which is
+$\frac12\delta^2(W^2-V)$. The information is positive because of the paths that
+stay on two states. On a pair $\{i,k\}$ the counts see the weight
+$g_{ik}g_{ki}$ of a round trip (Theorem~\ref{thm:pairs}). The two flows of the
+pair have a fixed sum, so their product is largest when they are equal, and a
+net flow of either sign makes round trips rarer by a factor
+$1-\delta^2b_{ik}^2$.
+
+\begin{proof}
+(a) By Step~3 of the proof of Theorem~\ref{thm:lecam}, for a given path
+$R_\delta=\sum_ke_k\delta^k$, where $e_k$ is the sum of the products of $k$ of
+the $N$ factors $b$ of the jumps, and $\lvert e_k\rvert\le\binom Nk\bar b^k$.
+The sum of the factors is $W$ and the sum of their squares is $V$, so $e_1=W$
+and $e_2=\frac12(W^2-V)$. The series is dominated by $(3/2)^N$, which is
+integrable, so we may take the conditional mean term by term. Running the
+film backward keeps the law of the reversible chain and the counts, and it
+turns each factor $b$ into $-b$, hence $e_k$ into $(-1)^ke_k$. So
+$\E_0[e_k\mid L]=0$ for odd $k$, and
+\[
+ \frac{dP_\delta}{dP_0}=\E_0[R_\delta\mid L]=1+\delta^2S+\rho_\delta,\qquad
+ \rho_\delta=\E_0\Bigl[\sum_{k\ge4\text{ even}}e_k\delta^k\Bigm|L\Bigr].
+\]
+With $x=\lvert\delta\rvert\bar b\le\frac12$, Taylor's formula with the fourth
+derivative gives
+$\sum_{k\ge4}\binom Nkx^k\le\frac1{24}N^4x^4(1+x)^N$. The square of a
+conditional mean is at most the conditional mean of the square, so
+$\E_0[\rho_\delta^2]\le\frac1{24^2}\bar b^8\delta^8\,\E_0[N^8(9/4)^N]$.
+
+(b) Since $\lvert e_2\rvert\le\frac12\bar b^2N^2$, every moment of $S$ is
+finite. Suppose that $I=0$, so that $S=0$ almost surely. Choose a pair
+$F=\{i,k\}$ with $j_{ik}\ne0$. (One exists because $\bar b>0$, and then
+$c_{ik}>0$.) Let $\mathcal A$ be the event that the path stays in $F$ up to
+time $t$. Up to a null set this event is a function of the counts (it says that
+$L_l(t)=0$ for $l\notin F$). So for every real $\lambda$ (of either sign, since
+$L$ is bounded),
+\begin{equation}\label{eq:edge-zero}
+ 0=\E_0\bigl[S\,e^{-\lambda\cdot L}\one_{\mathcal A}\bigr]
+ =\E_0\bigl[e_2\,e^{-\lambda\cdot L}\one_{\mathcal A}\bigr].
+\end{equation}
+Put $\Psi(\delta)=\E_\delta[e^{-\lambda\cdot L}\one_{\mathcal A}]
+=\E_0[R_\delta e^{-\lambda\cdot L}\one_{\mathcal A}]$. Since
+$\sum_k\lvert e_k\rvert\lvert\delta\rvert^k\le(3/2)^N$ is integrable, we have
+$\Psi(\delta)=\sum_k\delta^k\,\E_0[e_k\,e^{-\lambda\cdot L}\one_{\mathcal A}]$, so
+the right side of~\eqref{eq:edge-zero} is the coefficient of $\delta^2$ in
+$\Psi$. By the Feynman--Kac formula for the chain killed when it leaves $F$,
+\[
+ \Psi(\delta)=(\pi_i,\pi_k)\,
+ \exp\Bigl(t\begin{pmatrix}-y_i&g^\delta_{ik}\\ g^\delta_{ki}&-y_k\end{pmatrix}\Bigr)
+ \begin{pmatrix}1\\1\end{pmatrix},\qquad y_i=\lambda_i+q_i .
+\]
+(The exit rates $q_i$ are the same for every $\delta$.) Take $\lambda$ with
+$y_i=y_k=y$. The matrix is then $-y$ plus a matrix whose square is $a$ times
+the identity, where
+$a=g^\delta_{ik}g^\delta_{ki}=a^0(1-\delta^2b_{ik}^2)$ and
+$a^0=c_{ik}^2/(4\pi_i\pi_k)>0$ is the weight of a round trip in the reversible
+chain. Since $\pi_ig^\delta_{ik}+\pi_kg^\delta_{ki}=c_{ik}$ does not depend on
+$\delta$,
+\[
+ \Psi(\delta)=e^{-ty}\Bigl[(\pi_i+\pi_k)\cosh(t\sqrt a)
+ +c_{ik}\,\frac{\sinh(t\sqrt a)}{\sqrt a}\Bigr].
+\]
+Both $\cosh(t\sqrt a)$ and $\sinh(t\sqrt a)/\sqrt a$ are power series in $a$
+with positive coefficients, so the derivative of the bracket in $a$ is
+positive at $a=a^0$ (here $t>0$). And $\Psi$ depends on $\delta$ only through
+$a=a^0-a^0b_{ik}^2\delta^2$. Hence the coefficient of $\delta^2$ in $\Psi$ is
+$-a^0b_{ik}^2$ times a positive number. It is not zero, which
+contradicts~\eqref{eq:edge-zero}.
+
+(c) By (a), $\chi^2(P_\delta,P_0)=\E_0[(\delta^2S+\rho_\delta)^2]$, which
+differs from $I\delta^4$ by at most
+$2\sqrt I\,K_2\lvert\delta\rvert^6+K_2^2\delta^8$.
+\end{proof}
+
+Now let $L^{(1)},\ldots,L^{(n)}$ be independent copies of the counts, and put
+\[
+ T_n=\frac1{\sqrt{nI}}\sum_{k=1}^nS\bigl(L^{(k)}\bigr).
+\]
+Let $Z$ be a standard normal variable and let $z_\alpha$ be the number with
+$\Prob(Z>z_\alpha)=\alpha$.
+
+\begin{theorem}[a test of reversibility]\label{thm:test}
+Let $\pi$, $c$ and the direction $j$ be known, so that $\delta$ is the only
+unknown.
+\begin{enumerate}[(a),itemsep=1pt]
+\item If $\delta=0$, then $T_n\to Z$ in law.
+\item If $\delta=\delta_n$ with $\sqrt n\,\delta_n^2\to h\ge0$, then
+ $T_n\to Z+h\sqrt I$ in law. So the test that rejects reversibility when
+ $T_n>z_\alpha$ has level tending to $\alpha$ and power tending to
+ $\Prob(Z>z_\alpha-h\sqrt I)$.
+\item If $\sqrt n\,\delta_n^2\to0$, then every test with level at most
+ $\alpha$ has power at most $\alpha+o(1)$ against $\delta_n$.
+\end{enumerate}
+\end{theorem}
+
+In words, the test is one-sided, because a net flow of either sign pushes
+$T_n$ up. It sees a net flow of size $n^{-1/4}$, and by (c) no test sees a
+smaller one, even when everything but $\delta$ is known.
+
+\begin{proof}
+(a) Under $P_0$ the variable $S$ has mean $\E_0[\E_0[e_2\mid L]]=\frac12\E_0[W^2-V]=0$
+(the variance of $W$ is $\E_0V$, as at the end of the proof of
+Theorem~\ref{thm:lecam}) and variance $I$. So this is the central limit
+theorem.
+
+(b) Since $\delta_n\to0$ we have $\lvert\delta_n\rvert\bar b\le\frac12$ for
+large $n$. Write $\ell_\delta=dP_\delta/dP_0$. By
+Theorem~\ref{thm:regular}(a) and the Cauchy--Schwarz inequality,
+\[
+ \E_\delta S=\E_0[S\ell_\delta]=\delta^2I+\E_0[S\rho_\delta],\qquad
+ \lvert\E_0[S\rho_\delta]\rvert\le\sqrt I\,K_2\,\delta^4 ,
+\]
+\[
+ \bigl\lvert\E_\delta S^2-I\bigr\rvert=\bigl\lvert\E_0[S^2(\ell_\delta-1)]\bigr\rvert
+ \le\bigl(\E_0S^4\bigr)^{1/2}\bigl(\sqrt I\,\delta^2+K_2\delta^4\bigr),
+\]
+and $\E_\delta\lvert S\rvert^3\le(\E_0S^6)^{1/2}(1+\sqrt I\delta^2+K_2\delta^4)$.
+So along $\delta_n\to0$ the mean of $S$ is $\delta_n^2I+O(\delta_n^4)$, its
+variance $\E_\delta S^2-(\E_\delta S)^2$ tends to $I$, and its third absolute
+moment stays bounded (and with it the third absolute moment about the mean,
+which is at most eight times as large). By
+Lyapunov's central limit theorem the sum $\sum_kS(L^{(k)})$, centered and
+divided by $\sqrt{nI}$, tends to $Z$ in law. The centering is
+$\sqrt n\,(\delta_n^2I+O(\delta_n^4))/\sqrt I\to h\sqrt I$.
+
+(c) The bound in Step~5 of the proof of Theorem~\ref{thm:lecam} holds for
+every $\delta$ with $\lvert\delta\rvert\bar b\le\frac12$. So for large $n$ the
+total variation distance between the laws of the sample under $\delta_n$ and
+under $0$ is at most $\frac12(e^{nK\delta_n^4}-1)^{1/2}$, which tends to $0$. The power of a
+test exceeds its level by at most this distance.
+\end{proof}
+
+\begin{corollary}[the two rates]\label{cor:local}
+Let $\hat s=\max\bigl(0,\frac1{nI}\sum_kS(L^{(k)})\bigr)$, and estimate the
+size of the net flow by $\sqrt{\hat s}$ and the entropy production by
+$\hat\sigma=2\hat s\sum_{i<j}j_{ij}^2/c_{ij}$. There is a constant $C$ such
+that, for every $n$ and every $\delta$ with $\lvert\delta\rvert\bar b\le\frac12$,
+\[
+ \E_\delta\bigl\lvert\hat s-\delta^2\bigr\rvert\le C\bigl(n^{-1/2}+\delta^4\bigr),
+ \qquad
+ \E_\delta\bigl\lvert\hat\sigma-\sigma(\pi,G_\delta)\bigr\rvert
+ \le C\bigl(n^{-1/2}+\delta^4\bigr),
+\]
+\[
+ \E_\delta\bigl\lvert\sqrt{\hat s}-\lvert\delta\rvert\bigr\rvert
+ \le\min\Bigl(\sqrt C\,\bigl(n^{-1/4}+\delta^2\bigr),\;
+ \frac{C}{\lvert\delta\rvert}\bigl(n^{-1/2}+\delta^4\bigr)\Bigr).
+\]
+\end{corollary}
+
+In words, as long as $\lvert\delta\rvert$ is at most of order $n^{-1/8}$, the
+entropy production is learned to within $n^{-1/2}$. In this range the entropy
+production itself can be as large as $n^{-1/4}$, so this says something. The
+size of the net flow is learned to within $n^{-1/4}$ at $\delta=0$, which is
+the rate of Theorem~\ref{thm:lecam}, and to within $n^{-1/2}/\lvert\delta\rvert$
+for larger $\delta$ in this range. (Outside this range $\hat s$ is biased, and
+one would use maximum likelihood.)
+
+\begin{proof}
+Let $m$ be the mean of the $S(L^{(k)})$. By the bounds in the proof of
+Theorem~\ref{thm:test}(b), which hold for
+$\lvert\delta\rvert\bar b\le\frac12$, the mean of $m/I$ differs from
+$\delta^2$ by at most $K_2\delta^4/\sqrt I$, and its variance is at most a
+constant over $n$. So $\E_\delta\lvert m/I-\delta^2\rvert\le C(n^{-1/2}+\delta^4)$.
+Taking the positive part moves $m/I$ toward $\delta^2\ge0$, so the same bound
+holds for $\hat s$. For the entropy production,
+Remark~\ref{rem:sigma-smooth}(2) gives
+$\sigma(\pi,G_\delta)=\sum c_{ij}\,\varphi(\delta^2b_{ij}^2)
+=2\delta^2\sum j_{ij}^2/c_{ij}+O(\delta^4)$, where the sums are over the pairs
+with $c_{ij}>0$ and the error is uniform because
+$\delta^2b_{ij}^2\le\frac14$. For the size of the net flow use
+$\lvert\sqrt u-\sqrt v\rvert\le\sqrt{\lvert u-v\rvert}$ and Jensen's
+inequality for the first bound, and
+$\lvert\sqrt u-\sqrt v\rvert\le\lvert u-v\rvert/\sqrt v$ for the second.
+\end{proof}
+
+\begin{remark}\label{rem:test}
+(1) To leading order $\sigma=2\delta^2\sum_{i<j}j_{ij}^2/c_{ij}$, and
+$\sum_{i<j}j_{ij}^2/c_{ij}$ is the information of the path about $\delta$ per
+unit time (Theorem~\ref{thm:lecam}). So near a reversible chain the entropy
+production is twice the square of the net flow, measured in the units in
+which the path sees it.
+
+(2) The estimator $\hat s$ is built for a neighborhood of $\delta=0$. Away
+from it one would use maximum likelihood. For a regular model with the true
+parameter on the boundary, the standard theory~\cite{chernoff1954,sl1987}
+says that at $\delta=0$, $\sqrt n$ times the maximum likelihood estimate of
+$\delta^2$ tends to the positive part of a normal variable with variance
+$1/I$, and that twice the logarithm of the likelihood ratio tends to a
+variable that is $0$ with probability $\frac12$ and otherwise is the square of
+a standard normal variable. Theorem~\ref{thm:regular} supplies the expansion
+and the positive information that this theory starts from. We have not
+checked its remaining conditions (for one, we have not shown that the model
+is regular at $\delta\ne0$). The simulations of Remark~\ref{rem:rates}, which
+are for an $N$-step chain, agree with it.
+
+(3) We took $\pi$, $c$ and the direction $j$ as known. For three states there
+is only one direction. With $\pi$ and $c$ unknown one expects the same
+rates, since those are learned at the rate $n^{-1/2}$, but we have not proved
+this. For four or more states with every $c_{ij}>0$ the circulations form a
+space of dimension $\binom{d-1}2$. The law of the counts is even in the
+circulation, so to leading order it can depend on it only through a quadratic
+form. We have not worked this case out.
+\end{remark}
+
 \begin{remark}[the rates are attained in an example]\label{rem:rates}
 Take three states, the $N$-step chain with $N=40$ and $T=2$,
 $\pi=(0.5,0.3,0.2)$ and two-way flows $0.30$, $0.20$, $0.25$, all known, and
@@ -1125,18 +1375,34 @@ is smooth with information $I=47.1$ at $s=0$, the estimate $\hat s$ is close to
 the positive part of a normal variable with variance $1/(nI)$, and
 $\lvert\hat\jmath\rvert=\sqrt{\hat s}$ then has root mean squared error
 $(2\pi)^{-1/4}(nI)^{-1/4}$. At $n=10^6$ this is $0.00762$, and the simulation
-gives $0.00762$. We have not proved that the information in the coordinate
-$J^2$ is nonsingular in general.
+gives $0.00762$. The score $S$ of Theorem~\ref{thm:regular}, computed for this
+chain, has $\E_0S^2=47.1$, the same number. (This is part (c) of that
+theorem, whose proof, like that of part (a), works step by step for the
+$N$-step chain.)
+We also ran the test of Theorem~\ref{thm:test} and the likelihood ratio test
+at level $5\%$ (Figure~\ref{fig:rates}(b)). At $j=0$ they reject in $4.9\%$ to
+$5.8\%$ of $2000$ samples, and the likelihood ratio is exactly $1$ in $51\%$
+of them. For $j\,n^{1/4}=0.5$ the limit of the power is $0.528$, and the
+score test rejects in $52.4\%$, $53.1\%$ and $51.8\%$ of the samples for
+$n=10^3$, $10^4$ and $10^5$. (Theorems~\ref{thm:regular}
+and~\ref{thm:test} are stated for continuous time. We have not written out
+the proof of $I>0$ for the $N$-step chain, and here $I>0$ is a computed
+fact.)
 \end{remark}
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.6\textwidth]{fig_rates}
-\caption{Root mean squared errors in the example of Remark~\ref{rem:rates},
+\includegraphics[width=\textwidth]{fig_rates}
+\caption{The example of Remark~\ref{rem:rates}. (a) Root mean squared errors
 from $400$ samples of $n$ count vectors each. At a reversible chain the net flow
 is learned at the rate $n^{-1/4}$ and the entropy production at the rate
 $n^{-1/2}$. Away from reversibility the net flow is learned at the rate
-$n^{-1/2}$. The dotted lines have these slopes.}
+$n^{-1/2}$. The dotted lines have these slopes. (b) The chance that a test of
+level $5\%$ rejects reversibility, against $j\,n^{1/4}$, from $2000$ samples
+for each point. Filled marks are the score test of Theorem~\ref{thm:test} and
+open marks the likelihood ratio test. The curve is the limit
+$\Prob(Z>z_{0.05}-\sqrt I\,j^2\sqrt n)$ with $I=47.1$. The three sample sizes
+fall on one curve, so the test sees a net flow of size $n^{-1/4}$.}
 \label{fig:rates}
 \end{figure}
 
@@ -1357,7 +1623,11 @@ Most statements above were checked numerically in the scripts next to this note.
  the folder \texttt{data\_sleep\_edf} with their checksums.
 \item \texttt{sim\_rates.py}. Remark~\ref{rem:rates} and Figure~\ref{fig:rates}.
  The chi-square distance grows by the factors $15.97$ and $15.89$ when
- $\delta$ doubles.
+ $\delta$ doubles. The score of Theorem~\ref{thm:regular} has $\E_0S^2=47.09$,
+ and the chi-square distance divided by $\delta^4$ is $47.07$ at
+ $\delta=0.02$. The mean of the score at $j=0.02$ and $0.05$ is $1.000$ and
+ $0.998$ times $Ij^2$. The two tests of reversibility are run on $2000$
+ samples for each of three sample sizes and seven sizes of the net flow.
 \item \texttt{check\_cut\_transpose.py}. The lumped reversal of
  Example~\ref{ex:four} is the transpose across the module. A transpose across a
  cut that is not a module keeps the principal minors of $G$ but not the counts.
@@ -1432,6 +1702,8 @@ its order, and not the total times. We have not read
  sedentary behaviors and sleep on obesity and cardio-metabolic health markers:
  a novel compositional data analysis approach, \emph{PLoS ONE} \textbf{10}
  (2015), e0139984.
+\bibitem{chernoff1954} H.~Chernoff, On the distribution of the likelihood
+ ratio, \emph{Ann. Math. Statist.} \textbf{25} (1954), 573--578.
 \bibitem{dlp2016} A.~B.~Duncan, T.~Leli\`evre and G.~A.~Pavliotis, Variance
  reduction using nonreversible Langevin samplers, \emph{J. Stat. Phys.}
  \textbf{163} (2016), 457--491.
