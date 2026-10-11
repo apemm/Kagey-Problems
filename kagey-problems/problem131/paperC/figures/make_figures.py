@@ -86,7 +86,8 @@ def save(fig, name):
 
 import sys as _sys
 _sys.path.insert(0, str(HERE.parent.parent / "figures"))
-import dark_style  # black background and the manim palette, see figures/dark_style.py
+import dark_style  # the manim palette, see figures/dark_style.py
+dark_style.light()  # white background
 
 
 def shades(n, cmap=None, lo=0.0, hi=1.0):
