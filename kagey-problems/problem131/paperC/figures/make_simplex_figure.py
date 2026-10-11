@@ -21,13 +21,15 @@ import numpy as np
 
 HERE = Path(__file__).resolve().parent
 FULL = 6.4
-N = 48
+N = 90
+FLOOR = -4.0
 Q = np.array([[-1.0, 1.0, 0.0], [1.0, -2.0, 1.0], [0.0, 1.0, -1.0]])
 PANELS = (2.0, 5.5, 10.0)
 
 import sys as _sys
 _sys.path.insert(0, str(HERE.parent.parent / "figures"))
-import dark_style  # black background and the manim palette, see figures/dark_style.py
+import dark_style  # the manim palette, see figures/dark_style.py
+dark_style.light()  # white background
 PALETTE = dark_style.HEAT
 
 plt.rcParams.update({
@@ -85,51 +87,98 @@ def scan():
 
 
 def figure():
+    """The interior of the simplex, its three edges and its three corners are
+    drawn apart, on one color scale. So one sees on which face the mass sits."""
     from matplotlib.collections import PolyCollection
-    fig, axes = plt.subplots(1, 3, figsize=(FULL, 2.2))
-    idx = [(i, j) for i in range(N + 1) for j in range(N + 1 - i)]
-    X = np.array([xy(i, j, N - i - j)[0] for i, j in idx])
-    Y = np.array([xy(i, j, N - i - j)[1] for i, j in idx])
-    rad = 1.0 / (N * sqrt(3))            # hexagons that tile the triangle
-    ang = np.pi / 6 + np.arange(6) * np.pi / 3
-    hexagon = rad * np.c_[np.cos(ang), np.sin(ang)]
-    floor = -3.0
+    from matplotlib.patches import Circle
+    from matplotlib.tri import Triangulation
+    fig, axes = plt.subplots(1, 3, figsize=(FULL, 2.25))
+    corner = {0: np.array([0.0, 0.0]), 1: np.array([0.5, sqrt(3) / 2]), 2: np.array([1.0, 0.0])}
+    center = sum(corner.values()) / 3
+    inner = [(i, j) for i in range(1, N) for j in range(1, N - i)]
+    X = np.array([xy(i, j, N - i - j)[0] for i, j in inner])
+    Y = np.array([xy(i, j, N - i - j)[1] for i, j in inner])
+    tri = Triangulation(X, Y)
+    gap, width, radius = 0.035, 0.05, 0.05
+    floor = FLOOR
+    norm = plt.Normalize(floor, 0.0)
     for ax, T, letter in zip(axes, PANELS, "abc"):
         law = count_law(T)
         assert abs(law.sum() - 1) < 1e-10
-        vals = np.array([law[i, j] for i, j in idx])
-        with np.errstate(divide="ignore"):
-            z = np.log10(vals / vals.max())
-        keep = np.isfinite(z)            # bins of probability zero stay white
-        polys = [hexagon + (x, y) for x, y, k in zip(X, Y, keep) if k]
-        pc = PolyCollection(polys, array=np.maximum(z[keep], floor), cmap=PALETTE,
-                            edgecolors="face", linewidths=0.15)
-        pc.set_clim(floor, 0.0)
-        ax.add_collection(pc)
-        o = 2 * rad
-        ax.plot([-o, 1 + o, 0.5, -o], [-o / sqrt(3), -o / sqrt(3), sqrt(3) / 2 + 2 * o / sqrt(3), -o / sqrt(3)],
-                color="0.45", lw=0.5)
+        top = law.max()
+
+        def level(i, j):
+            return max(np.log10(law[i, j] / top), floor)
+
+        # the interior, smoothly shaded, with a contour at each power of ten
+        z = np.array([level(i, j) for i, j in inner])
+        pc = ax.tripcolor(tri, z, shading="gouraud", cmap=PALETTE, norm=norm, rasterized=True)
+        ax.tricontour(tri, z, levels=np.arange(floor + 1, 0), colors="white", linewidths=0.35, alpha=0.55)
+        # the three edges, as bands outside the triangle
+        mass = {"in": sum(law[i, j] for i, j in inner)}
+        for missing in range(3):
+            p, q = [k for k in range(3) if k != missing]
+            along = corner[q] - corner[p]
+            out = (corner[p] + corner[q]) / 2 - center
+            out = out / np.linalg.norm(out)
+            polys, vals, tot = [], [], 0.0
+            for k in range(1, N):
+                n = [0, 0, 0]
+                n[p], n[q] = N - k, k
+                lo = corner[p] + along * (k - 0.5) / N + out * gap
+                hi = corner[p] + along * (k + 0.5) / N + out * gap
+                polys.append([lo, hi, hi + out * width, lo + out * width])
+                vals.append(level(n[0], n[1]))
+                tot += law[n[0], n[1]]
+            mass["".join(str(k + 1) for k in (p, q))] = tot
+            if tot == 0:                  # no edge between the two states, so no mass here
+                a0, a1 = corner[p] + along * 0.5 / N + out * gap, corner[p] + along * (N - 0.5) / N + out * gap
+                ax.add_collection(PolyCollection([[a0, a1, a1 + out * width, a0 + out * width]],
+                                                 facecolors="none", edgecolors="0.6", linewidths=0.5,
+                                                 linestyles="--"))
+                continue
+            ax.add_collection(PolyCollection(polys, array=np.array(vals), cmap=PALETTE, norm=norm,
+                                             edgecolors="face", linewidths=0.1))
+        # the three corners, as disks
+        for k in range(3):
+            n = [0, 0, 0]
+            n[k] = N
+            out = corner[k] - center
+            out = out / np.linalg.norm(out)
+            c = corner[k] + out * (2 * gap + radius + 0.02)
+            ax.add_patch(Circle(c, radius, facecolor=PALETTE(norm(level(n[0], n[1]))), edgecolor="0.3",
+                                linewidth=0.4))
+            mass[str(k + 1)] = law[n[0], n[1]]
+            ax.annotate("$%d$" % (k + 1), c + out * (radius + 0.075), ha="center", va="center")
+        assert abs(sum(mass.values()) - 1) < 1e-10
+        # the mode (the law is symmetric under 1 <-> 3, so mark the mirror image too)
         m = mode_of(law)
-        # the law is symmetric under 1 <-> 3, so on the boundary mark the mirror image too
-        marks = {m} if min(m) > 0 else {m, (m[2], m[1], m[0])}
-        for mm in marks:
-            ax.plot(*xy(*mm), marker="o", ms=6.5, mfc="none", mec="white", mew=2.0, clip_on=False)
-            ax.plot(*xy(*mm), marker="o", ms=6.5, mfc="none", mec="black", mew=0.8, clip_on=False)
-        ax.text(-0.05, -0.04, "$1$", ha="right", va="top")
-        ax.text(1.05, -0.04, "$3$", ha="left", va="top")
-        ax.text(0.5, sqrt(3) / 2 + 0.05, "$2$", ha="center", va="bottom")
-        ax.text(0.5, -0.1, "(%s) $T=%g$" % (letter, T), ha="center", va="top")
+        for mm in ({m} if min(m) > 0 else {m, (m[2], m[1], m[0])}):
+            zero = [k for k in range(3) if mm[k] == 0]
+            pos = np.array(xy(*mm))
+            if len(zero) == 1:
+                out = (sum(corner[k] for k in range(3) if k != zero[0])) / 2 - center
+                pos = pos + out / np.linalg.norm(out) * (gap + width / 2)
+            elif len(zero) == 2:
+                k = [k for k in range(3) if mm[k] > 0][0]
+                out = corner[k] - center
+                pos = corner[k] + out / np.linalg.norm(out) * (2 * gap + radius + 0.02)
+            ax.plot(*pos, marker="o", ms=4.6 if len(zero) < 2 else 9.6, mfc="none", mec="white", mew=1.7)
+            ax.plot(*pos, marker="o", ms=4.6 if len(zero) < 2 else 9.6, mfc="none", mec="black", mew=0.7)
+        ax.text(0.5, -0.27, "(%s) $T=%g$" % (letter, T), ha="center", va="top")
         ax.set_aspect("equal")
-        ax.set_xlim(-0.1, 1.1)
-        ax.set_ylim(-0.22, 1.0)
+        ax.set_xlim(-0.23, 1.23)
+        ax.set_ylim(-0.36, 1.2)
         ax.axis("off")
         print("T = %g: mode %s on face {%s}, P(mode) = %.3e" % (T, m, face(m), law[m[0], m[1]]))
-    cb = fig.colorbar(pc, ax=list(axes), fraction=0.018, pad=0.02, ticks=[-3, -2, -1, 0],
+        print("   mass: corners %.3f, edges 12 %.3f, 23 %.3f, 13 %.3f, interior %.3f"
+              % (mass["1"] + mass["2"] + mass["3"], mass["12"], mass["23"], mass["13"], mass["in"]))
+    cb = fig.colorbar(pc, ax=list(axes), fraction=0.018, pad=0.02, ticks=np.arange(floor, 1),
                       extend="min")
     cb.set_label(r"$\log_{10}(P_N(n)/\max P_N)$")
     cb.outline.set_linewidth(0.4)
     dark_style.finish(fig)
-    for ext, kw in (("pdf", {}), ("png", {"dpi": 600})):
+    for ext, kw in (("pdf", {"dpi": 600}), ("png", {"dpi": 600})):
         fig.savefig(HERE / ("fig_simplex." + ext), **kw)
     plt.close(fig)
     print("wrote fig_simplex.pdf and fig_simplex.png")

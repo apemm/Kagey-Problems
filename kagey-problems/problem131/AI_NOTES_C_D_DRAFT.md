@@ -91,6 +91,19 @@ Facts from the project record (Claude Opus 5.5 through Claude Code, September an
 - Notes S1 and S2: every result and proof in both notes came from the model (S2 was written
   without reading your own S2 notes, as you asked).
 
+## Figures (both papers, and the notes S1 and S2)
+
+- Every figure was generated with Claude (Claude Opus 5.5 through Claude Code). The model wrote the
+  matplotlib scripts (`paperC/figures/make_figures.py`, `paperC/figures/make_simplex_figure.py`,
+  `paperD/figures/make_figures.py`, `paperD/figures/make_aging_figure.py`,
+  `figures/make_program_figure.py`, `figures/dark_style.py`, and the figure scripts of S2), chose the
+  layouts and colors, and looked at each output. Each script computes what it plots exactly and
+  checks the plotted values against the numbers quoted in the paper. No figure is an image made by
+  a generative image model.
+- Say this in the note. A sentence of this kind would do: "The figures were generated with Claude,
+  which wrote the plotting scripts in the repository. The data in them come from the exact
+  computations described in the section on verification."
+
 ## Things to check yourself before posting
 
 - Paper D: the urn chapter of Englander and Volkov's book (World Scientific 2024) could not be read.
@@ -111,5 +124,5 @@ Paper A's note has this shape, and Cambridge and Springer both accept it:
 2. What I used the model for (name and version, dates, how it was accessed).
 3. Which results came from the model, and how I checked them.
 4. The second check with another model, if any.
-5. Lean, scripts, literature search.
+5. Lean, scripts, figures (generated with Claude), literature search.
 6. "All mathematical claims, proofs and computations in this paper are my responsibility."

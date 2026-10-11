@@ -103,3 +103,20 @@ def finish(fig):
             except Exception:
                 pass
     return fig
+
+
+def light():
+    """The same palette on a white background (Papers C and D).
+
+    The gradient is the same one, from purple through blue and green to
+    yellow. The colors are the darker shades of the manim palette, so that
+    thin curves stay readable on white.
+    """
+    global DARK, BLUE, TEAL, GREEN, YELLOW, GOLD, RED, MAROON, PURPLE, LINES, HEAT, DISTINCT
+    DARK = False
+    BLUE, TEAL, GREEN = "#1C8FB0", "#2E9C82", "#5F9A45"
+    YELLOW, GOLD, RED = "#E0A800", "#C77F2A", "#E0483B"
+    MAROON, PURPLE = "#A8475C", "#7A4F92"
+    LINES = LinearSegmentedColormap.from_list("manim_lines_light", [PURPLE, BLUE, TEAL, GREEN, YELLOW])
+    HEAT = LinearSegmentedColormap.from_list("manim_heat_light", ["#0B2A33", BLUE_E, "#58C4DD", "#FFFF00"])
+    DISTINCT = [YELLOW, BLUE, RED, GREEN, PURPLE, GOLD, TEAL, MAROON]
