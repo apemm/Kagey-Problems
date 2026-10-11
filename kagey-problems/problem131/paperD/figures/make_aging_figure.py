@@ -4,7 +4,8 @@ The law is the one of Proposition `prop:aging-urn`,
     P(M_T = m) = T!/(d theta)^(T) * prod_i theta^(m_i)/m_i!,
 where x^(m) is the rising factorial. Panel (a) is two states, and panels (b)
 and (c) are three states on the simplex, colored by the probability of a bin
-relative to the uniform law (which is the law at theta = 1).
+relative to the uniform law (which is the law at theta = 1). The interior of
+the simplex, its edges and its corners are drawn apart.
 
 Run:  python make_aging_figure.py     (a second)
 """
@@ -17,6 +18,8 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.collections import PolyCollection
+from matplotlib.patches import Circle
+from matplotlib.tri import Triangulation
 
 HERE = Path(__file__).resolve().parent
 FULL = 6.4
@@ -77,34 +80,63 @@ def figure():
     a.legend(frameon=False, loc="lower center", handlelength=2.4)
     a.text(0.03, 0.95, "(a)", transform=a.transAxes, va="top")
 
-    rad = 1.0 / (T3 * sqrt(3))
-    ang = np.pi / 6 + np.arange(6) * np.pi / 3
-    hexagon = rad * np.c_[np.cos(ang), np.sin(ang)]
-    bins = [(i, j, T3 - i - j) for i in range(T3 + 1) for j in range(T3 + 1 - i)]
-    nb = len(bins)
+    # Three states. The interior of the simplex, its edges and its corners are drawn apart.
+    corner = {0: np.array([0.0, 0.0]), 1: np.array([0.5, sqrt(3) / 2]), 2: np.array([1.0, 0.0])}
+    center = sum(corner.values()) / 3
+    inner = [(i, j, T3 - i - j) for i in range(1, T3) for j in range(1, T3 - i)]
+    tri = Triangulation([xy(m)[0] for m in inner], [xy(m)[1] for m in inner])
+    nb = (T3 + 1) * (T3 + 2) // 2
+    gap, width, radius, clip = 0.035, 0.05, 0.05, 0.7
+    norm = plt.Normalize(-clip, clip)
     for ax, theta, letter in zip(axes[1:], (0.5, 2.0), "bc"):
-        z = np.array([(log_law(m, theta) + log(nb)) / log(10) for m in bins])
-        assert abs(sum(10 ** v for v in z) / nb - 1) < 1e-10
-        pc = PolyCollection([hexagon + xy(m) for m in bins], array=np.clip(z, -0.7, 0.7),
-                            cmap=PALETTE, edgecolors="face", linewidths=0.15)
-        pc.set_clim(-0.7, 0.7)
-        ax.add_collection(pc)
-        o = 2 * rad
-        ax.plot([-o, 1 + o, 0.5, -o], [-o / sqrt(3), -o / sqrt(3), sqrt(3) / 2 + 2 * o / sqrt(3), -o / sqrt(3)],
-                color="0.45", lw=0.5)
-        ax.text(0.5, -0.1, r"(%s) $\theta=%s$" % (letter, "1/2" if theta == 0.5 else "2"),
+
+        def level(m):
+            return (log_law(m, theta) + log(nb)) / log(10)
+
+        total = sum(10 ** level(m) for m in inner)
+        z = np.clip([level(m) for m in inner], -clip, clip)
+        pc = ax.tripcolor(tri, z, shading="gouraud", cmap=PALETTE, norm=norm, rasterized=True)
+        ax.tricontour(tri, z, levels=[-0.6, -0.4, -0.2, 0.0, 0.2, 0.4, 0.6], colors="white", linestyles="solid",
+                      linewidths=0.35, alpha=0.55)
+        for missing in range(3):
+            p, q = [k for k in range(3) if k != missing]
+            along = corner[q] - corner[p]
+            out = (corner[p] + corner[q]) / 2 - center
+            out = out / np.linalg.norm(out)
+            polys, vals = [], []
+            for k in range(1, T3):
+                m = [0, 0, 0]
+                m[p], m[q] = T3 - k, k
+                lo = corner[p] + along * (k - 0.5) / T3 + out * gap
+                hi = corner[p] + along * (k + 0.5) / T3 + out * gap
+                polys.append([lo, hi, hi + out * width, lo + out * width])
+                vals.append(level(tuple(m)))
+                total += 10 ** vals[-1]
+            ax.add_collection(PolyCollection(polys, array=np.clip(vals, -clip, clip), cmap=PALETTE, norm=norm,
+                                             edgecolors="face", linewidths=0.1))
+        for k in range(3):
+            m = [0, 0, 0]
+            m[k] = T3
+            out = corner[k] - center
+            out = out / np.linalg.norm(out)
+            v = level(tuple(m))
+            total += 10 ** v
+            ax.add_patch(Circle(corner[k] + out * (2 * gap + radius + 0.02), radius,
+                                facecolor=PALETTE(norm(np.clip(v, -clip, clip))), edgecolor="0.3", linewidth=0.4))
+        assert abs(total / nb - 1) < 1e-10
+        ax.text(0.5, -0.27, r"(%s) $\theta=%s$" % (letter, "1/2" if theta == 0.5 else "2"),
                 ha="center", va="top")
         ax.set_aspect("equal")
-        ax.set_xlim(-0.08, 1.08)
-        ax.set_ylim(-0.22, 0.95)
+        ax.set_xlim(-0.2, 1.2)
+        ax.set_ylim(-0.36, 1.1)
         ax.axis("off")
         print("theta = %g: corner/uniform = %.3g, center/uniform = %.3g"
-              % (theta, 10 ** z[bins.index((T3, 0, 0))], 10 ** z[bins.index((T3 // 3,) * 3)]))
+              % (theta, 10 ** level((T3, 0, 0)), 10 ** level((T3 // 3,) * 3)))
     cb = fig.colorbar(pc, ax=list(axes[1:]), fraction=0.03, pad=0.02, ticks=[-0.5, 0, 0.5], extend="both")
     cb.set_label(r"$\log_{10}$ of probability / uniform")
     cb.outline.set_linewidth(0.4)
     dark_style.finish(fig)
-    for ext, kw in (("pdf", {}), ("png", {"dpi": 600})):
+    for ext, kw in (("pdf", {"dpi": 600}), ("png", {"dpi": 600})):
         fig.savefig(HERE / ("aging." + ext), **kw)
     plt.close(fig)
     print("wrote aging.pdf and aging.png")

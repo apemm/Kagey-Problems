@@ -29,6 +29,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "figures"))
 sys.path.insert(0, str(HERE))
 import dark_style as ds
+ds.light()  # white background
 import check_information as ci
 
 PI = np.array([0.5, 0.3, 0.2])
