@@ -139,8 +139,8 @@ alpha = 1 of Table 3 is a heuristic.
 
 - An upper bound log C_N <= log(eps c_1) + eps k_2(N) + O(eps^2 (log N)^k), and an explicit N beyond
   which the root g_N exceeds x_N (Remark 2.12).
-- Conjecture 3.16 (strict convexity between the humps) for even N between 2000 and the constant
-  N_0 of Theorem 3.24, and for odd N > 2000. Section 3.6 proves it for all even N >= N_0, and
+- Conjecture 3.16 (strict convexity between the humps) for N between 2000 and the constants of
+  Theorem 3.24 (even N) and Proposition 3.27 (odd N). Section 3.6 proves it for all large N, and
   `certify_convex.py` certifies it for 10 <= N <= 2000 (about an hour, output in
   `data/certify_convex_output.txt`). For large even N the center is the unique interior minimum
   (Corollary 3.25).
@@ -179,7 +179,9 @@ grows.
 - `verify_aging_urn.py` checks Proposition 5.4 in exact arithmetic for d = 2, 3, 4.
 - `certify_elephant.py` certifies the computations behind Lemma 3.7, Proposition 3.8 and
   Lemma 3.11. It needs python-flint.
-- `verify_all.py` runs the six scripts.
+- `verify_elephant_odd.py` checks Proposition 3.27 (odd N, with the identity of part (a) in exact
+  arithmetic) and the numbers of Remark 3.28. It takes a few seconds.
+- `verify_all.py` runs the seven scripts.
 - `data/ledger.md` is the index of the prediction ledgers `data/ledger_D1.md` to
   `data/ledger_D4.md`.
 - `data/figdata_*.json` holds cached data for the figures.
