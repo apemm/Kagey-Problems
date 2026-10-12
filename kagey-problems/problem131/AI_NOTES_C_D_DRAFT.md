@@ -112,6 +112,13 @@ Facts from the project record (Claude Opus 5.5 through Claude Code, September an
   Gabrielli rate function was taken from the introduction of Kim and Landim (arXiv:2412.13515), and
   Schwenk's inequality from the introduction of arXiv:2408.04357. Neither original paper was read.
 
+- Paper D, Proposition `prop:odd` (the two central bins of an odd N are the center of N+1 up to the
+  factor 1 - c/N, the crossing for odd N, the dip for odd N >= 1689, and the convexity for large odd
+  N) and the rewritten Remark `rem:convex-open`. Found and proved by the model, which wrote
+  `verify_elephant_odd.py`. The Landau numbers in the remark (2.432, 1.104, 253, 4.8) are computed
+  in floating point and are not certified. The N between 2000 and the constants of the two
+  theorems remain open, and the model found no way to close them.
+
 ## Figures (both papers, and the notes S1 and S2)
 
 - Every figure was generated with Claude (Claude Opus 5.5 through Claude Code). The model wrote the
