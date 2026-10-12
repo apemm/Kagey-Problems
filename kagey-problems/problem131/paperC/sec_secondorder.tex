@@ -8,8 +8,9 @@ Section~\ref{sec:locallaw} proves a local limit theorem inside a face and
 deduces $M_F$ up to a factor $1+O(1/T+T^2/N)$. Section~\ref{sec:crossings}
 compares two faces, Section~\ref{sec:papersAB} recovers Papers~A and~B, and
 Section~\ref{sec:reducible} shows what can change without (H).
-Section~\ref{sec:nextterm} adds the next term, of relative order $1/T$, and
-Section~\ref{sec:forest} gives a tree formula for $K_F$ on every irreducible face. In
+Section~\ref{sec:nextterm} adds the next term, of relative order $1/T$,
+Section~\ref{sec:forest} gives a tree formula for $K_F$ on every irreducible face, and
+Section~\ref{sec:flows} writes the rate $I_F$ through flows. In
 this section gradients and Hessians in $\alpha$ are taken in the coordinates
 $\alpha'=(\alpha_2,\dots,\alpha_k)$, $|\cdot|$ is the Euclidean norm, and
 $q=(q_i)_{i\in F}$.
@@ -885,3 +886,168 @@ is constant, which gives $\alpha^*_{F,i}=\phi/a_i$ and $\varphi=\phi$. Then
 $\prod_i\alpha^*_{F,i}=\phi^k/\prod_ia_i$, and $(\mu\cdot r_F)(l_F\cdot\ones)=\mu(F)$. Putting
 this into the formulas above gives $\det\Sigma_{\alpha^*_F}$ and $K_F$.
 \end{proof}
+
+\subsection{The rate through flows}\label{sec:flows}
+
+Proposition~\ref{prop:rate}(c) gives the rate $I_F$ in closed form on a reversible face. The flow
+$f(\alpha)$ of Proposition~\ref{prop:forest} gives the rate on every irreducible face, and it
+shows what a face gains when it is not reversible. A \emph{balanced flow} on $F$ is a family
+$J=(J_{ij})$ of numbers $J_{ij}\ge0$, one for each ordered pair $i\ne j$ in $F$, with $J_{ij}=0$
+when $q_{ij}=0$ and with $\sum_jJ_{ij}=\sum_jJ_{ji}$ at every state $i$. So $f(\alpha)$ is a
+balanced flow (Proposition~\ref{prop:forest}(a)). The numbers $\alpha_iq_{ij}$ are the flow of
+the original chain when its law is $\alpha$, and they need not be balanced. For
+$x\ge0$ and $y>0$ let
+\[
+\mathsf h(x\,|\,y)=x\log\frac xy-x+y,\qquad\mathsf h(0\,|\,y)=y .
+\]
+This is the cost per unit time of seeing jumps at rate $x$ where the chain makes them at rate
+$y$. It is strictly convex in $x$, and it vanishes only at $x=y$. Finally let
+$R_F(\alpha)$ be the right side of the formula in Proposition~\ref{prop:rate}(c), which is
+defined on every face.
+
+\begin{proposition}[the rate through flows]\label{prop:flows}
+Let $F$ be irreducible with $k\ge2$, let $\alpha\in\Delta_F^\circ$, and let $f=f(\alpha)$.
+\begin{enumerate}[(a)]
+\item $f$ is positive on the edges of $G_F$, and around every directed cycle of $G_F$ it has the
+same product as the numbers $\alpha_iq_{ij}$. It is the only balanced flow on $F$ with these
+two properties. In particular $f_{ij}f_{ji}=\alpha_i\alpha_jq_{ij}q_{ji}$ for all $i\ne j$.
+\item We have
+\[
+I_F(\alpha)=\sum_{i\in F}\alpha_iq_i-\sum_{i\ne j}f_{ij}
+=\sum_{i\in F}\alpha_iq_i^{\rm out}(F)+\min_J\sum_{i\ne j,\ q_{ij}>0}\mathsf h\bigl(J_{ij}\,|\,\alpha_iq_{ij}\bigr),
+\]
+where the minimum is over the balanced flows on $F$, and it is attained only at $J=f$.
+\item $R_F(\alpha)-I_F(\alpha)=\sum_{\{i,j\}}\bigl(\sqrt{f_{ij}}-\sqrt{f_{ji}}\bigr)^2\ge0$, the sum
+over the unordered pairs in $F$. There is equality if and only if $F$ is reversible, that is,
+$\nu_iq_{ij}=\nu_jq_{ji}$ for all $i,j\in F$ and some $\nu\in(0,\infty)^F$.
+\item Let $F=\{1,\dots,k\}$ with $k\ge3$ be a cycle with both directions, that is,
+$q_{i,i+1}=p_i>0$ and $q_{i+1,i}=m_i>0$ with indices modulo $k$, and $q_{ij}=0$ for all other
+$i\ne j$ in $F$. Put $g_i=\sqrt{\alpha_i\alpha_{i+1}p_im_i}$. Then
+\[
+I_F(\alpha)=\sum_{i\in F}\alpha_iq_i-\sum_{i=1}^k\sqrt{c^2+4g_i^2},
+\]
+where $c$ is the only real number with
+\[
+\prod_{i=1}^k\frac{c+\sqrt{c^2+4g_i^2}}2=\prod_{i=1}^k\alpha_ip_i .
+\]
+It is the net flow $f_{i,i+1}-f_{i+1,i}$ across every edge, and it has the sign of
+$\prod_ip_i-\prod_im_i$.
+\end{enumerate}
+\end{proposition}
+
+In words, to hold the fractions $\alpha$ the chain keeps the product of its flow around every
+cycle and changes the flow until it is balanced. The rate is the total flow that is lost, and
+it is also the least cost of a balanced flow. A reversible face balances every pair on its own.
+A face that is not reversible does better than the formula for reversible faces, because it lets a
+net flow circulate. On a cycle the size $c$ of this net flow solves one equation.
+
+\emph{Idea of the proof.} The tilted chain has rates $q_{ij}r_{\alpha,j}/r_{\alpha,i}$, and the
+factors $r_{\alpha,j}/r_{\alpha,i}$ cancel around a cycle. A flow with the same cycle products as
+$\alpha_iq_{ij}$ must have this form for some vector in place of $r_\alpha$, and balance says
+that this vector is optimal in the definition of $I_F(\alpha)$. The minimum in (b) is a tangent
+line bound for $\mathsf h$, summed over the edges. Part (c) is the AM--GM inequality once more, and
+(d) solves a quadratic equation on each edge.
+
+\begin{proof}
+Let $\psi=\log r_\alpha$, so that $f_{ij}=\alpha_iq_{ij}e^{\psi_j-\psi_i}$, by the definition of
+$f$ and $\alpha_i=l_{\alpha,i}r_{\alpha,i}$.
+
+(a) An edge of $G_F$ has $q_{ij}>0$, so $f_{ij}>0$ there. Around a directed cycle the
+differences $\psi_j-\psi_i$ sum to $0$, so $f$ and the numbers $\alpha_iq_{ij}$ have the same
+product. A pair $i,j$ with $q_{ij}q_{ji}>0$ is a cycle of length two, and if $q_{ij}q_{ji}=0$
+both sides of the last claim vanish. Now let $J$ be a balanced flow with the two properties, and
+put $\ell_{ij}=\log(J_{ij}/(\alpha_iq_{ij}))$ on the edges of $G_F$. A closed walk in $G_F$ is
+made of directed cycles, so the sum of $\ell$ along every closed walk is $0$. Take two walks from
+state $1$ to a state $i$, and follow each of them by the same walk from $i$ back to $1$, which
+exists because $F$ is irreducible. Both closed walks have sum $0$, so the two walks from $1$ to
+$i$ have the same sum. Call it $\chi_i$, with $\chi_1=0$. A walk to $i$ followed by an edge
+from $i$ to $j$ is a walk to $j$, so $\chi_j=\chi_i+\ell_{ij}$, which says that
+$J_{ij}=\alpha_iq_{ij}e^{\chi_j-\chi_i}$. In the notation of the proof of
+Proposition~\ref{prop:rate}, $J_{ij}=\alpha_iG^\chi_{ij}$, and the balance of $J$ says that
+$\alpha$ is the stationary law of $G^\chi$. By the criterion there, $\chi$ attains
+$I_F(\alpha)$, and by Proposition~\ref{prop:rate}(b) it differs from $\psi$ by a constant.
+Hence $J=f$.
+
+(b) By Proposition~\ref{prop:forest}(a), $\sum_{j\ne i}f_{ij}=\alpha_i\theta_i(\alpha)$, and
+$I_F(\alpha)=\langle q-\theta(\alpha),\alpha\rangle$. This is the first formula. For the second
+we use that, for $x\ge0$, $y>0$ and real $t$,
+\[
+\mathsf h(x\,|\,y)\ge xt-y(e^t-1),\qquad\text{with equality exactly when }x=ye^t .
+\]
+Indeed the difference of the two sides is $\mathsf h(x\,|\,ye^t)$. Let $J$ be a balanced flow.
+We use the bound on each edge with $t=\psi_j-\psi_i$ and add. This gives
+\[
+\sum_{q_{ij}>0}\mathsf h\bigl(J_{ij}\,|\,\alpha_iq_{ij}\bigr)
+\ge\sum_{i\ne j}J_{ij}(\psi_j-\psi_i)+\sum_{i\ne j}\alpha_iq_{ij}-\sum_{i\ne j}f_{ij}.
+\]
+The first sum on the right is $\sum_i\psi_i\bigl(\sum_jJ_{ji}-\sum_jJ_{ij}\bigr)=0$. The second
+is $\sum_i\alpha_i(q_i-q_i^{\rm out}(F))$. So the right side is
+$I_F(\alpha)-\sum_i\alpha_iq_i^{\rm out}(F)$ by the first formula. There is equality exactly when
+$J_{ij}=\alpha_iq_{ij}e^{\psi_j-\psi_i}=f_{ij}$ on every edge.
+
+(c) Since $(\sqrt x-\sqrt y)^2=x+y-2\sqrt{xy}$ and
+$q_i=\sum_{j\in F\setminus\{i\}}q_{ij}+q_i^{\rm out}(F)$, we have
+$R_F(\alpha)=\sum_i\alpha_iq_i-2\sum_{\{i,j\}}\sqrt{\alpha_iq_{ij}\alpha_jq_{ji}}$, and the square
+root is $\sqrt{f_{ij}f_{ji}}$ by (a). With the first formula of (b),
+\[
+R_F(\alpha)-I_F(\alpha)=\sum_{\{i,j\}}\bigl(f_{ij}+f_{ji}-2\sqrt{f_{ij}f_{ji}}\bigr)
+=\sum_{\{i,j\}}\bigl(\sqrt{f_{ij}}-\sqrt{f_{ji}}\bigr)^2 .
+\]
+This vanishes exactly when $f$ is symmetric. If $F$ is reversible, then $f=c(\alpha)$ is
+symmetric by Proposition~\ref{prop:constant}(b). Conversely, $f_{ij}=f_{ji}$ reads
+$\alpha_iq_{ij}r_{\alpha,j}/r_{\alpha,i}=\alpha_jq_{ji}r_{\alpha,i}/r_{\alpha,j}$, which is
+$\nu_iq_{ij}=\nu_jq_{ji}$ for $\nu_i=\alpha_i/r_{\alpha,i}^2$.
+
+(d) Only the pairs $\{i,i+1\}$ carry flow. The balance at state $i$ says that
+$f_{i,i+1}-f_{i+1,i}=f_{i-1,i}-f_{i,i-1}$, so the net flow across an edge is one number $c$ for
+all edges. By (a), $f_{i,i+1}f_{i+1,i}=g_i^2$. So $f_{i,i+1}$ is the positive root of
+$x^2-cx-g_i^2=0$, namely $\frac12(c+\sqrt{c^2+4g_i^2})$, and
+$f_{i+1,i}=\frac12(-c+\sqrt{c^2+4g_i^2})$. Their sum is $\sqrt{c^2+4g_i^2}$, and (b) gives the
+formula for $I_F(\alpha)$. As $k\ge3$, the states $1,2,\dots,k$ form a directed cycle, and (a)
+gives $\prod_if_{i,i+1}=\prod_i\alpha_ip_i$, which is the equation for $c$. Its left side is
+continuous and strictly increasing in $c$, with the limits $0$ and $\infty$, so $c$ is the only
+solution. At $c=0$ the left side is $\prod_ig_i=\prod_i\alpha_i\sqrt{p_im_i}$, which is less than
+the right side exactly when $\prod_im_i<\prod_ip_i$. This gives the sign of $c$.
+\end{proof}
+
+\begin{remark}[three special cases, and the sources]\label{rem:flows}
+(1) If the pairs $\{i,j\}$ with $q_{ij}>0$ form a tree, then removing a pair cuts $F$ in two
+parts, and a balanced flow has no net flow between them. So $f$ is symmetric, such a face is
+reversible, and Proposition~\ref{prop:rate}(c) is the whole answer. (2) On a directed cycle with
+rates $q_{i,i+1}=a_i$, the flow $f$ takes one value $\varphi$ on all edges, and the cycle product in
+(a) gives $\varphi^k=\prod_i\alpha_ia_i$. So
+$I_F(\alpha)=\sum_i\alpha_iq_i-k(\prod_i\alpha_ia_i)^{1/k}$, as in the proofs of
+Propositions~\ref{prop:threecycle} and~\ref{prop:forest}(d). Part (d) joins this formula to the
+reversible one. (3) By the proof of Proposition~\ref{prop:rate}(c), $I_F\le R_F$ on all of
+$\Delta_F$, and $R_F(\alpha)=-x^\top S_Fx$ for $x=\sqrt\alpha$ (entrywise), where $S_F$ has the
+diagonal of $Q_F$ and the off-diagonal entries $\sqrt{q_{ij}q_{ji}}$. The least value of $R_F$ on $\Delta_F$ is minus the largest eigenvalue of $S_F$, because $S_F$
+has an eigenvector with nonnegative entries for this eigenvalue. The least value of $I_F$ is
+$\lambda_F$. So the largest real eigenvalue of $Q_F$ is at least that of $S_F$, which is the
+inequality of Schwenk~\cite{schwenk1986} for $Q_F$ plus a multiple of the identity. Part (c)
+adds that the inequality is strict unless $F$ is reversible. Indeed, let $R_F$ be least at
+$\alpha'$. If $\alpha'=\alpha^*_F$ then $R_F(\alpha')>I_F(\alpha')$ by (c), and otherwise
+$R_F(\alpha')\ge I_F(\alpha')>\lambda_F$.
+
+The cost $\sum\mathsf h$ is the rate function of Bertini, Faggionato and
+Gabrielli~\cite{bfg2015} for the empirical measure together with the empirical flow of a chain
+that is not killed. They show that its least value over the flows is the Donsker--Varadhan
+rate (see also~\cite[(1.3) to (1.7)]{kl2024}). The second formula in (b) is this statement for the chain killed on leaving $F$,
+with a direct proof, and (a) names the minimizer.
+\end{remark}
+
+\begin{example}[a cycle with a drift]\label{ex:drift}
+Let $F$ be the whole state space $\{1,\dots,k\}$ with $k\ge3$, and let $q_{i,i+1}=p$ and
+$q_{i+1,i}=m$ with $p>m>0$, and no other rates. Then $q_i=p+m$, the chain is not reversible, and
+Proposition~\ref{prop:flows}(d) gives
+\[
+I_F(\alpha)=p+m-\sum_{i=1}^k\sqrt{c^2+4pm\,\alpha_i\alpha_{i+1}},\qquad
+\prod_{i=1}^k\frac{c+\sqrt{c^2+4pm\,\alpha_i\alpha_{i+1}}}2=p^k\prod_{i=1}^k\alpha_i .
+\]
+At the uniform law, $c=(p-m)/k$ solves the equation, and $I_F=0$, as it must be at the stationary
+law. The formula for reversible faces gives $R_F=(\sqrt p-\sqrt m)^2>0$ there. For $k=3$, $p=2$,
+$m=1$ and $\alpha=(0.5,0.3,0.2)$ we get $c=0.3059$ and $I_F(\alpha)=0.1600$, while
+$R_F(\alpha)=0.3173$. If $k$ is even and $\alpha$ alternates between two values $a$ and $b$, then
+all $g_i$ are equal, $c=(p-m)\sqrt{ab}$, and $I_F(\alpha)=(p+m)(1-k\sqrt{ab})$. As $m\to0$ the
+equation becomes $c^k=p^k\prod_i\alpha_i$, and we recover the directed cycle of
+Remark~\ref{rem:flows}.
+\end{example}
