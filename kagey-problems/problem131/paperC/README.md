@@ -147,7 +147,9 @@ jump with d >= 4 states.
   moment lemma there uses.
 - `verify_forest.py` checks the tree formula (Lemma A.3 in exact rational arithmetic for 119
   generators, Proposition 4.15 in floating point). It takes about five minutes.
-- `verify_all.py` runs the 7 scripts.
+- `verify_rate_flows.py` checks the rate written through flows (Proposition 4.16 and Example 4.18)
+  in floating point. It takes a few seconds.
+- `verify_all.py` runs the 8 scripts.
 - `data/ledger.md` and `data/ledger_C1.md` to `data/ledger_C5.md` hold the predictions, written down
   before most of the computations, and what happened to them.
 - `data/verify_output.txt` is the output of `verify_all.py` from September 26, 2026. It predates

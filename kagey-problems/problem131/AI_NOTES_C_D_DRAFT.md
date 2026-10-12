@@ -102,6 +102,16 @@ Facts from the project record (Claude Opus 5.5 through Claude Code, September an
 - Papers C and D and note S2: all figures moved to a white background. Figure 1 of Paper C and the
   aging figure of Paper D were redrawn (the faces of the simplex drawn apart).
 
+## Added October 12, 2026
+
+- Paper C, Section 4.8 (Proposition `prop:flows`, Remark `rem:flows`, Example `ex:drift`): the rate
+  I_F written through the flow of the tilted chain, the gap to the reversible formula, and the one
+  equation for the net flow on a cycle. Found and proved by the model, following the suggestion in the
+  research-direction file to contract the measure-flow rate function of Bertini, Faggionato and
+  Gabrielli. The model wrote `verify_rate_flows.py`. The statement of the Bertini, Faggionato and
+  Gabrielli rate function was taken from the introduction of Kim and Landim (arXiv:2412.13515), and
+  Schwenk's inequality from the introduction of arXiv:2408.04357. Neither original paper was read.
+
 ## Figures (both papers, and the notes S1 and S2)
 
 - Every figure was generated with Claude (Claude Opus 5.5 through Claude Code). The model wrote the
