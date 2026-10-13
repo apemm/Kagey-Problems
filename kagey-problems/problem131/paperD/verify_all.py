@@ -19,7 +19,7 @@ mode.add_argument('--full', action='store_true', help='also run the heavy cells'
 args = parser.parse_args()
 scripts = ('verify_elephant_crossing.py',   # Section 2, Table 1, Appendix A
            'verify_elephant_shape.py',      # Section 3, Appendices B and C
-           'verify_elephant_odd.py',        # Proposition 3.27 (odd N) and the numbers of Remark 3.28
+           'verify_elephant_odd.py',        # Proposition 3.27 (odd N) and the numbers of Remark 3.29
            'certify_elephant.py')           # Lemma 3.7, Proposition 3.8, Lemma 3.11 (needs python-flint)
 extra = ['--full'] if args.full else []
 start = time.time()

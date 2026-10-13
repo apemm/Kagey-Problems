@@ -87,7 +87,8 @@ eps). Put x = N eps.
   (Theorem 3.24), where the center is then the unique interior minimum (Corollary 3.25), for
   10 <= N <= 2000 by a certified computation (Proposition 3.26), and for all large odd N
   (Proposition 3.27). For odd N the two central bins equal the center of N+1 divided by
-  1 - (1 - 2 eps)/N.
+  1 - (1 - 2 eps)/N. For every even N from 10 to 2000 the center is the unique interior minimum
+  (Proposition 3.28, from the certified convexity and the bound on the sign changes).
 
 Heavy-tailed runs and aging walks (the old Sections 4 and 5 and Appendices D and E) are now Paper F,
 in `../paperF`.
@@ -119,7 +120,7 @@ kind.
   N_1' of Theorem 3.24 (even N) and Proposition 3.27 (odd N). Section 3.6 proves it for all large N,
   and `certify_convex.py` certifies it for 10 <= N <= 2000. The constants are not explicit, and the
   proof as it stands cannot work below N of about 3 * 10^56, so no computation closes the gap
-  (Remark 3.28). For even N >= 8 and odd N >= 1689 the conjecture follows from one inequality
+  (Remark 3.29). For even N >= 8 and odd N >= 1689 the conjecture follows from one inequality
   (Corollary 3.23 and Proposition 3.27(c)).
 - The tail for m between x log x and x log^2 x, effective constants in Theorems 3.14 and 3.15, and
   an effective error term in Corollary 3.12 (Remark 3.13).
@@ -150,11 +151,15 @@ grows.
 - `verify_elephant_shape.py` checks Section 3 and Appendices B and C.
 - `certify_elephant.py` certifies the computations behind Lemma 3.7, Proposition 3.8 and
   Lemma 3.11. It needs python-flint.
+- `certify_center.py` certifies that every possible mode has 2m*+1 <= N/2 for even N from 10 to
+  2000, which with Proposition 3.26 makes the center the unique interior minimum there
+  (Proposition 3.28). It takes about half an hour, so `verify_all.py` does not run it. Its output is
+  in `data/certify_center_output.txt`.
 - `certify_convex.py` certifies Conjecture 3.16 for a range of N in ball arithmetic
   (Proposition 3.26). The whole range 10 to 2000 takes about an hour, so `verify_all.py` does not
   run it. Its output is in `data/certify_convex_output.txt`.
 - `verify_elephant_odd.py` checks Proposition 3.27 (odd N, with the identity of part (a) in exact
-  arithmetic) and the numbers of Remark 3.28. It takes a few seconds.
+  arithmetic) and the numbers of Remark 3.29. It takes about 10 seconds.
 - `verify_all.py` runs the four scripts.
 - `data/ledger.md` is the index of the prediction ledgers. `data/ledger_D1.md` and `ledger_D2.md` are
   here, and `ledger_D3.md` and `ledger_D4.md` (heavy tails and aging) are in `../paperF/data`.
