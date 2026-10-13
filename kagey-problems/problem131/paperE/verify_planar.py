@@ -34,6 +34,10 @@ from scipy.optimize import brentq
 from scipy.special import gammaln
 from scipy.stats import binom
 
+from pathlib import Path
+
+# Paper A's polynomial S_N and its root u_N come from a script of Paper C
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'paperC'))
 from verify_sticky_fisher import logS, uN_dp, uN_runs
 
 FAILS = []

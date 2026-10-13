@@ -1,13 +1,22 @@
-# Verification supplement for the 4 papers on Problem 131
+# Verification supplement for the papers on Problem 131
 
-This supplement serves the 4 papers on Kagey's Problem 131 by A. Pemmasani. Papers A (arXiv:2610.06935) and B (arXiv:2610.09258) are posted, and Papers C and D are in preparation.
+This supplement serves the 6 papers on Kagey's Problem 131 by A. Pemmasani. Papers A (arXiv:2610.06935) and B (arXiv:2610.09258) are posted, and Papers C to F are in preparation.
 
 | Paper | Title | Source |
 | --- | --- | --- |
 | A | Uniform Bessel bounds for endpoint crossings in the persistent random walk | `paperA/problem131.tex` |
 | B | Vertex crossings in a symmetric Markov multinomial model | `paperB/problem131_multistate.tex` |
-| C | Face selection for slowly switching Markov chains and the planar persistent walk | `paperC/problem131_switching.tex` |
-| D | Endpoint crossings for random walks with memory | `paperD/problem131_memory.tex` |
+| C | Face selection for slowly switching Markov chains | `paperC/problem131_switching.tex` |
+| D | Endpoint crossings for the elephant random walk | `paperD/problem131_memory.tex` |
+| E | Kagey's board in the plane: endpoint crossings for the planar persistent walk | `paperE/problem131_planar.tex` |
+| F | Endpoint crossings for random walks with heavy-tailed runs and for aging walks | `paperF/problem131_heavy_aging.tex` |
+
+Papers E and F were split off Papers C and D on October 13, 2026. The sections on Papers C and D
+below were written before the split and use the statement numbers of that time. In them, the rows
+for `verify_planar.py` and `verify_planar_product.py` now belong to Paper E (folder `paperE`, old
+numbers 6.x and C.x, new numbers 3.x and A.x), and the rows for `verify_heavy_runs.py`,
+`verify_aging.py` and `verify_aging_urn.py` now belong to Paper F (folder `paperF`, old numbers 4.x,
+5.x, D.x and E.x, new numbers 2.x, 3.x, A.x and B.x). Run them with `--paper e` and `--paper f`.
 
 The proofs are in the papers. The scripts check the finite statements exactly and the asymptotic
 ones numerically, and where possible each number is computed in 2 independent ways. For each paper
@@ -21,7 +30,7 @@ runner calls the paper's own runner, `paperA/verify_all.py` to `paperD/verify_al
 and B use only the standard library of Python 3. Those for Papers C and D need numpy, scipy and
 mpmath. Paper C also needs sympy, and Paper D also needs python-flint. Before most computations we wrote a prediction and a
 condition that would refute it in a ledger, and we recorded the outcome below it. `ledger.md`
-indexes the ledgers of all 4 papers.
+indexes the ledgers of the papers.
 
 ## Paper A: the two-state walk
 

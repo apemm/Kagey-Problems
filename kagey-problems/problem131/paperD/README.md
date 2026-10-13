@@ -1,34 +1,30 @@
-# Problem 131, Paper D: endpoint crossings for random walks with memory
+# Problem 131, Paper D: endpoint crossings for the elephant random walk
 
 Kagey asks when the middle bin of a Galton board is as likely as its ends if the ball tends to keep
-its direction. This is the last of four papers on Problem 131, which call each other Papers A, B, C
-and D. They share the notation N (the number of steps), L = log N, T (the switching scale of a Markov
-walk with transition matrix I + (T/N)Q), z_N (the crossing value of T for two states), lambda_F and
-K_F.
+its direction. Paper D asks the same question for the elephant random walk, in which each step
+copies a uniformly chosen earlier step and flips it with probability eps. The crossing is at
+x_N = N eps_N = 2 z_N - log(2 pi) + o(1), about twice the Markov value, and the law at the crossing
+has a hump near each end.
 
-- Paper A, "Uniform Bessel bounds for endpoint crossings in the persistent random walk"
-  (arXiv:2610.06935), treats the two-state walk, the zero-field Ising chain with free boundaries. It gives explicit uniform Bessel
-  bounds for every bin and brackets the crossing p_N for every N >= 2, which gives the crossing
-  equation z_N + (1/2) log z_N = L + c_0 + 1/(8 z_N) + R_N with an explicit remainder R_N. It also
-  proves a uniform local law for every q <= 1/2, from the diffusive to the ballistic regime.
-- Paper B, "Vertex crossings in a symmetric Markov multinomial model" (arXiv:2610.09258), treats the
-  complete graph,
-  the d-state Potts chain. Every face ties with the vertices at first order, and Paper B resolves
-  the tie at second order. The constants a_k are a face's mass over a Gaussian volume, square roots
-  of weighted spanning-tree sums, and the mode changes exactly once, from the vertices to the full
-  centers. A start law or a weak field shifts the constants.
-- Paper C, "Face selection for slowly switching Markov chains and the planar persistent walk" (in
-  preparation), gives the general theory for P = I + (T/N)Q. To first order the mode sits on a face
-  F that minimizes tau lambda_F + |F| - 1, where lambda_F is the principal Dirichlet eigenvalue. For
-  strongly connected faces it finds the second order, with constants K_F and a crossing equation,
-  and it applies the theory to the planar persistent walk.
-- Paper D (this folder), "Endpoint crossings for random walks with memory" (in preparation), asks
-  what memory changes. The elephant walk crosses at x_N = 2 z_N - log(2 pi) + o(1), about twice the
-  Markov value, with a hump near each end. Heavy-tailed runs have the golden-ratio threshold, which
-  is the lattice form of a heuristic of Wang, Li and Hänggi. Aging walks, with two states and with d
-  states, tie exactly at one value of the parameter for every N.
+The series has six papers by A. Pemmasani, which call each other Papers A to F.
 
-Conventions. Paper D uses the notation that the four papers share. The walk has N steps (Kagey's
+- Paper A (`../paperA`), "Uniform Bessel bounds for endpoint crossings in the persistent random
+  walk", arXiv:2610.06935. Kagey's board, at every N.
+- Paper B (`../paperB`), "Vertex crossings in a symmetric Markov multinomial model",
+  arXiv:2610.09258. The complete graph on d directions.
+- Paper C (`../paperC`), "Face selection for slowly switching Markov chains" (in preparation). The
+  general theory for the transition matrix I + (T/N)Q.
+- Paper D (`../paperD`), "Endpoint crossings for the elephant random walk" (in preparation).
+- Paper E (`../paperE`), "Kagey's board in the plane: endpoint crossings for the planar persistent
+  walk" (in preparation). Until October 13, 2026 this was Section 6 and Appendix C of Paper C.
+- Paper F (`../paperF`), "Endpoint crossings for random walks with heavy-tailed runs and for aging
+  walks" (in preparation). Until October 13, 2026 this was Sections 4 and 5 and Appendices D and E
+  of Paper D.
+
+The titles of Papers C to F are working titles. Paper A cites Papers C and D under their titles
+from before the split, so its references need an update at revision.
+
+Conventions. Paper D uses the notation that the papers share. The walk has N steps (Kagey's
 row N+1), L = log N, and P_N(k) is the probability of bin k. For the elephant walk x = N eps plays the
 role of T and its crossing x_N plays the role of z_N. A_N is the number of right steps,
 C_N = P_N(N/2) is the probability of the center bin and E_N = P_N(N) that of the right end. The
@@ -37,8 +33,8 @@ and Lean files, write n for N.)
 
 ## What is proved
 
-The statement numbers below are those of the build of October 9, 2026. Check them against the
-current PDF if the paper has changed since then.
+The statement numbers below are those of the build of October 13, 2026, after the split. Sections 2
+and 3 kept their numbers. Check them against the current PDF if the paper has changed since then.
 
 The elephant walk (each step copies a uniformly chosen earlier step and flips it with probability
 eps). Put x = N eps.
@@ -93,42 +89,12 @@ eps). Put x = N eps.
   (Proposition 3.27). For odd N the two central bins equal the center of N+1 divided by
   1 - (1 - 2 eps)/N.
 
-Heavy-tailed runs (alternating runs, with run lengths xi such that P(xi >= k) = k^(-alpha)).
-
-- The end is E_N = P(D >= N)/2, where D is the first run, with an explicit expansion for the
-  stationary start (Proposition 4.1). The law of A_N is a sum over products of the masses of two
-  independent renewal processes (Proposition 4.2).
-- For 1 < alpha < 2 and every a.s. finite first run, C_N is asymptotic to an explicit constant
-  times N^(-1/alpha) (Theorem 4.4).
-- With a stationary start, E_N/C_N ~ C(alpha) N^(1 - alpha + 1/alpha), so for large N the ends win
-  exactly when alpha < phi. At alpha = phi the ratio tends to C(phi) = 0.7761317206, so the center
-  still wins by the factor 1.2884. With a fresh start, E_N/C_N ~ C_fr(alpha) N^(-alpha + 1/alpha),
-  so the center wins for every 1 < alpha < 2 (Corollary 4.5).
-- For alpha > 2, C_N ~ sqrt(2 mu/(pi v N)) for every a.s. finite first run, and for alpha = 2,
-  C_N ~ sqrt(2 mu/(pi N log N)). So the center wins for alpha >= 2 with either start (Theorem 4.7).
-- For 0 < alpha < 1 and a fresh start, N C_N tends to the Lamperti density at 1/2, which is
-  (2/pi) tan(pi alpha/2), so the ends win (Theorem 4.8). With a fresh start the threshold is
-  alpha = 1, where the paper has only a heuristic (Remark 4.9 and Table 3).
-
-The aging walk (switch at step k >= 2 with probability c/k), in its own section, `sec_aging.tex`.
-
-- With the first step fixed, A_N is uniform on {1, ..., N} at c = 1. The ratio of each interior
-  bin to the end increases strictly in c, so the crossing is exactly c = 1 for every N and every
-  interior bin (Proposition 5.1).
-- With d states (start in state 1, and at step k >= 2 move to each of the other d-1 states with
-  probability theta/(k+d-2)), the count vector at theta = 1 is exactly uniform over all
-  compositions with n_1 >= 1, and every bin ties with the corner exactly at theta = 1 for every N
-  (Theorem 5.2).
-- A chain that at each step draws a fresh uniform state or repeats its last state has counts with
-  exactly the law of Pólya's urn with d colors, for every weight theta (Proposition 5.4).
-- With a fair first step each interior bin is twice as likely as an end at c = 1, and its crossing
-  is unique and below 1 (Proposition 5.6). For the center,
-  c_N = 1 - log 2/(log N + gamma + 2 - 2 log 2) + O((log N)^(-3)) (Proposition 5.7, proved in
-  Appendix E).
+Heavy-tailed runs and aging walks (the old Sections 4 and 5 and Appendices D and E) are now Paper F,
+in `../paperF`.
 
 ## What rests on computation
 
-No statement is left with its details omitted. Section 6 of the paper (`sec_verify.tex`) gives the
+No statement is left with its details omitted. Section 4 of the paper (`sec_verify.tex`) gives the
 full account. The proofs use computation in 4 places only (the three below, and Proposition 3.26,
 which rests on the ball-arithmetic computation of `certify_convex.py` for 10 <= N <= 2000).
 
@@ -142,9 +108,8 @@ which rests on the ball-arithmetic computation of `certify_convex.py` for 10 <= 
 
 The tables, the figures and the numbers quoted outside the proofs rest on computation alone, and so
 does the evidence for Conjecture 3.16 beyond what Section 3.6 proves (double precision at
-N = 3200, 6400, 12800 and 25600). The numbers in Remarks 2.12, 3.13, 3.28, 4.6 and 4.9 are of this
-kind, and the row
-alpha = 1 of Table 3 is a heuristic.
+N = 3200, 6400, 12800 and 25600). The numbers in Remarks 2.12, 3.13 and 3.28 are of this
+kind.
 
 ## Open
 
@@ -158,27 +123,24 @@ alpha = 1 of Table 3 is a heuristic.
   (Corollary 3.23 and Proposition 3.27(c)).
 - The tail for m between x log x and x log^2 x, effective constants in Theorems 3.14 and 3.15, and
   an effective error term in Corollary 3.12 (Remark 3.13).
-- For heavy tails, a rate in Theorem 4.4, monotonicity of E_N/C_N and uniqueness of the crossover
-  size (Remark 4.6), the case alpha = 1 (Remark 4.9), and the full profile of the law.
 
 ## Prior work
 
 The elephant walk is due to Schütz and Trimper (2004). The cluster picture is Kürsten's coupling with
 random recursive trees, and Guérin, Laulin, Raschel and Simon (2025) prove unimodality with a fixed
-first step. For heavy tails, both scalings are in Godrèche and Luck (2001), and Wang, Li and Hänggi
-(2016) already noted the golden ratio as a heuristic for Lévy walks. The Beta limit of the aging walk
-is due to Dietz and Sethuraman (2007) and to Engländer and Volkov (2018). We did not find in the
+first step. We did not find in the
 literature an asymptotic formula for the center probability of the elephant walk when eps -> 0 as N
 grows.
 
 ## Files
 
 - `problem131_memory.tex` and the section files `sec_*.tex` and `app_*.tex` make up Paper D, the
-  main text and Appendices A to E in one PDF, `problem131_memory.pdf`. The sections are
-  `sec_intro`, `sec_erw_crossing`, `sec_erw_shape`, `sec_heavy`, `sec_aging` and `sec_verify`, and the
-  appendices are `app_erw_bounds`, `app_erw_profile`, `app_erw_bulk`, `app_heavy` and `app_aging`.
-- `figures/` holds Figures 2 and 3 of the paper (`shape.pdf`, `heavy.pdf`), made by
-  `figures/make_figures.py`, with their captions in `figures/captions.md`. Figure 1 is the shared
+  main text and Appendices A to C in one PDF, `problem131_memory.pdf`. The sections are
+  `sec_intro`, `sec_erw_crossing`, `sec_erw_shape` and `sec_verify`, and the
+  appendices are `app_erw_bounds`, `app_erw_profile` and `app_erw_bulk`.
+- `figures/` holds Figure 2 of the paper (`shape.pdf`), made by
+  `figures/make_figures.py`, with the captions in `figures/captions.md`. The same script makes the
+  figure `heavy.pdf` of Paper F and writes it to `../paperF/figures`. Figure 1 is the shared
   program figure `../figures/program_D.pdf`, made by `../figures/make_program_figure.py`. The paper
   includes it directly, so there is no copy here. `figures/make_figures.py` also makes
   `crossing.pdf`, which the paper no longer prints.
@@ -186,9 +148,6 @@ grows.
   numbers printed in the paper.
 - `verify_elephant_crossing.py` checks Section 2, Table 1 and Appendix A.
 - `verify_elephant_shape.py` checks Section 3 and Appendices B and C.
-- `verify_heavy_runs.py` checks Section 4, Tables 2 and 3, and Appendix D.
-- `verify_aging.py` checks Section 5 and Appendix E.
-- `verify_aging_urn.py` checks Proposition 5.4 in exact arithmetic for d = 2, 3, 4.
 - `certify_elephant.py` certifies the computations behind Lemma 3.7, Proposition 3.8 and
   Lemma 3.11. It needs python-flint.
 - `certify_convex.py` certifies Conjecture 3.16 for a range of N in ball arithmetic
@@ -196,9 +155,9 @@ grows.
   run it. Its output is in `data/certify_convex_output.txt`.
 - `verify_elephant_odd.py` checks Proposition 3.27 (odd N, with the identity of part (a) in exact
   arithmetic) and the numbers of Remark 3.28. It takes a few seconds.
-- `verify_all.py` runs the seven scripts.
-- `data/ledger.md` is the index of the prediction ledgers `data/ledger_D1.md` to
-  `data/ledger_D4.md`.
+- `verify_all.py` runs the four scripts.
+- `data/ledger.md` is the index of the prediction ledgers. `data/ledger_D1.md` and `ledger_D2.md` are
+  here, and `ledger_D3.md` and `ledger_D4.md` (heavy tails and aging) are in `../paperF/data`.
 - `data/figdata_*.json` holds cached data for the figures.
 - `data/verify_output.txt` and `data/verify_output_full.txt` hold the output of the quick run and
   the full run of the checks from September 26, 2026. They predate `verify_aging_urn.py`,
@@ -213,7 +172,7 @@ Where two independent methods were used when the numbers were first found, the s
 scripts also keep some checks of numbers from the research notes that the paper no longer prints.
 Their labels say "research notes, not printed".
 
-The one verification supplement for all four papers is `../SUPPLEMENT.md`, and
+The one verification supplement for the papers is `../SUPPLEMENT.md`, and
 `python -B verify_all.py --paper d` in the Problem 131 folder runs the checks of this paper by
 calling `verify_all.py` here. Run `python -B verify_all.py` here (or `python -B verify_all.py
 --quick`, the same thing) for the quick run, which takes about 5 minutes, or add `--full` for the

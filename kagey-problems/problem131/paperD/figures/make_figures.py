@@ -81,10 +81,19 @@ plt.rcParams.update({
 })
 
 
+# Heavy-tailed runs are now Paper F. That figure and its cached data live in ../../paperF.
+PAPER_F = HERE.parent.parent / "paperF"
+
+
+def data_path(name):
+    return (PAPER_F / "data" if name == "heavy" else DATA) / f"figdata_{name}.json"
+
+
 def save(fig, name):
     dark_style.finish(fig)
-    fig.savefig(HERE / f"{name}.pdf")
-    fig.savefig(HERE / f"{name}.png", dpi=600)
+    out = PAPER_F / "figures" if name == "heavy" else HERE
+    fig.savefig(out / f"{name}.pdf")
+    fig.savefig(out / f"{name}.png", dpi=600)
     plt.close(fig)
     print(f"wrote {name}.pdf and {name}.png")
 
@@ -387,7 +396,7 @@ def load_data(rebuild=False):
     DATA.mkdir(exist_ok=True)
     data, todo = {}, []
     for name in BUILDERS:
-        path = DATA / f"figdata_{name}.json"
+        path = data_path(name)
         if path.exists() and not rebuild:
             data[name] = json.loads(path.read_text())
         else:
@@ -398,7 +407,7 @@ def load_data(rebuild=False):
                 t = time.time()
                 print(f"computing figdata_{name}.json ...", flush=True)
                 data[name] = BUILDERS[name](pool)
-                (DATA / f"figdata_{name}.json").write_text(json.dumps(data[name]))
+                data_path(name).write_text(json.dumps(data[name]))
                 print(f"   done in {time.time() - t:.0f} s", flush=True)
     return data
 

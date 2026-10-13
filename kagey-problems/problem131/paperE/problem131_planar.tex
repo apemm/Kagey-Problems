@@ -1,0 +1,195 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1.05in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[shortlabels]{enumitem}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\hypersetup{pdftitle={Kagey's board in the plane: endpoint crossings for the planar persistent walk},pdfauthor={Arjun Pemmasani}}
+
+% ---------- theorem environments ----------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% ---------- notation macros ----------
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\ones}{\mathbf{1}}
+\newcommand{\tree}{\operatorname{tree}}
+\newcommand{\arb}{\operatorname{arb}}
+
+\graphicspath{{figures/}{../figures/}}
+
+\title{Kagey's board in the plane:\\ endpoint crossings for the planar persistent walk}
+\author{Arjun Pemmasani\\[2pt]
+ \small Department of Mathematics, Harvey Mudd College\\
+ \small Claremont, CA 91711, USA\\
+ \small \texttt{apemmasani@hmc.edu}}
+\date{}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+A ball bounces down a Galton board with $N$ rows, and each bounce repeats the
+previous one with probability $p$. Kagey asked when the middle bin becomes as
+likely as an end bin, which only the ball that never switches can reach. We
+ask the same question for Kagey's board in the plane, a ball on the square lattice that keeps
+its direction, turns left or right, or reverses. For an even number of steps its far corner and
+the origin are
+equally likely at exactly one switching rate, which we find to first order.
+When the ball reverses more often than it turns, this crossing agrees with the
+one on Kagey's board with $N/2$ rows, up to a negative power of $N$. When it
+turns more often, the crossing comes from a local limit theorem in two
+dimensions. On one curve of rates the planar walk is exactly two independent
+copies of Kagey's board, and with turns only its crossing is Kagey's up to a
+small error.
+\end{abstract}
+
+\medskip
+\noindent\textbf{Keywords:} persistent random walk; correlated random walk;
+Galton board; planar random motion; telegraph process; local limit theorem.
+
+\noindent\textbf{MSC2020:} 60G50; 60F05; 60J10; 60K35.
+
+\input{sec_intro.tex}
+\input{sec_setting.tex}
+\input{sec_planar.tex}
+\input{sec_verify.tex}
+
+\paragraph{Acknowledgment.} I thank Peter Kagey for posing the problem.
+
+\section*{A note on the use of AI}
+% AI NOTE: to be written by the author.
+All mathematical claims, proofs and computations in this paper are my responsibility.
+
+\appendix
+\input{app_planar.tex}
+
+\section*{Statements and declarations}
+\paragraph{Competing interests.} The author has no competing interests to
+declare.
+
+\paragraph{Funding.} No funding was received for this work.
+
+\paragraph{Data availability.} All code, data and Lean files supporting this
+paper are in the folder \nolinkurl{kagey-problems/problem131} of
+\url{https://github.com/apemm/Kagey-Problems}, at the release
+\nolinkurl{paperE-arxiv-v1}. The scripts are in the subfolder
+\nolinkurl{paperE} and need numpy and scipy. To rerun the
+checks, run \texttt{python -B verify\_all.py -{}-paper e} in the folder
+\nolinkurl{problem131}. The largest cases, such as the planar crossings for
+$N\ge1280$, run only with the option \texttt{-{}-full}.
+Section~\ref{sec:verify} describes what each check does.
+
+\begin{thebibliography}{99}\small\setlength{\baselineskip}{11pt}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}
+
+\bibitem{kagey131}
+P.~Kagey, \emph{Problem 131}, Open Problem Collection,
+\url{https://peterkagey.com/problems/131/} (accessed October 2026).
+
+\bibitem{paperA}
+A.~Pemmasani, \emph{Uniform Bessel bounds for endpoint crossings in the
+persistent random walk}, preprint, 2026.
+\href{https://arxiv.org/abs/2610.06935}{arXiv:2610.06935}.
+
+\bibitem{paperB}
+A.~Pemmasani, \emph{Vertex crossings in a symmetric Markov multinomial
+model}, preprint, 2026.
+\href{https://arxiv.org/abs/2610.09258}{arXiv:2610.09258}.
+
+\bibitem{paperC}
+A.~Pemmasani, \emph{Face selection for slowly switching Markov chains},
+in preparation.
+
+\bibitem{paperD}
+A.~Pemmasani, \emph{Endpoint crossings for the elephant random walk},
+in preparation.
+
+\bibitem{paperF}
+A.~Pemmasani, \emph{Endpoint crossings for random walks with heavy-tailed runs and
+for aging walks}, in preparation.
+
+\bibitem{gillis1955}
+J.~Gillis, \emph{Correlated random walk}, Proc.~Cambridge Philos.~Soc.~\textbf{51}
+(1955), 639--651. \url{https://doi.org/10.1017/S0305004100030711}.
+
+\bibitem{chenrenshaw1992}
+A.~Chen and E.~Renshaw, \emph{The Gillis--Domb--Fisher correlated random
+walk}, J.~Appl.~Probab.~\textbf{29} (1992), 792--813.
+\url{https://doi.org/10.2307/3214713}.
+
+\bibitem{chenrenshaw1994}
+A.~Chen and E.~Renshaw, \emph{The general correlated random walk},
+J.~Appl.~Probab.~\textbf{31} (1994), 869--884.
+\url{https://doi.org/10.2307/3215313}.
+
+\bibitem{marris2024}
+D.~Marris and L.~Giuggioli, \emph{Persistent and anti-persistent motion in
+bounded and unbounded space: resolution of the first-passage problem},
+New J.~Phys.~\textbf{26} (2024), 073020.
+\url{https://doi.org/10.1088/1367-2630/ad5d85}.
+
+\bibitem{santra2020}
+I.~Santra, U.~Basu and S.~Sabhapandit, \emph{Run-and-tumble particles in two
+dimensions: marginal position distributions}, Phys.~Rev.~E \textbf{101}
+(2020), 062120. \url{https://doi.org/10.1103/PhysRevE.101.062120}.
+
+\bibitem{angelani2022}
+L.~Angelani, \emph{Orthogonal run-and-tumble walks}, J.~Stat.~Mech.~(2022),
+123207. \url{https://doi.org/10.1088/1742-5468/aca588}.
+
+\bibitem{cinqueorsingher2023}
+F.~Cinque and E.~Orsingher, \emph{Stochastic dynamics of generalized planar
+random motions with orthogonal directions}, J.~Theoret.~Probab. \textbf{36}
+(2023), 2229--2261. \url{https://doi.org/10.1007/s10959-022-01229-2}.
+
+\bibitem{orsingher2000}
+E.~Orsingher, \emph{Exact joint distribution in a model of planar random
+motion}, Stochastics Stochastics Rep. \textbf{69} (2000), 1--10.
+\url{https://doi.org/10.1080/17442500008834229}.
+
+\bibitem{kolesnikorsingher2002}
+A.~D.~Kolesnik and E.~Orsingher, \emph{Analysis of a finite-velocity planar
+random motion with reflection}, Theory Probab.~Appl. \textbf{46} (2002),
+132--140. \url{https://doi.org/10.1137/S0040585X97978774}.
+
+\bibitem{sldms2022}
+N.~R.~Smith, P.~Le~Doussal, S.~N.~Majumdar and G.~Schehr, \emph{Exact position
+distribution of a harmonically confined run-and-tumble particle in two
+dimensions}, Phys.~Rev.~E \textbf{106} (2022), 054133.
+\url{https://doi.org/10.1103/PhysRevE.106.054133}.
+
+\bibitem{lenci2007}
+M.~Lenci, \emph{Recurrence for persistent random walks in two dimensions},
+Stoch.~Dyn. \textbf{7} (2007), 53--74.
+\href{https://arxiv.org/abs/math/0507411}{arXiv:math/0507411}.
+
+\bibitem{hallheyde1980}
+P.~Hall and C.~C.~Heyde, \emph{Martingale Limit Theory and Its
+Application}, Academic Press, New York, 1980.
+
+\bibitem{dlmf}
+NIST, \emph{Digital Library of Mathematical Functions}, Eqs.~10.32.3
+and~10.40.1, \url{https://dlmf.nist.gov/}.
+
+\end{thebibliography}
+
+\end{document}

@@ -1,10 +1,11 @@
-"""Run the checks for Papers A to D of Problem 131 with the current interpreter.
+"""Run the checks for Papers A to F of Problem 131 with the current interpreter.
 
-Each paper has its own runner, paperA/verify_all.py to paperD/verify_all.py, and runs its scripts
+Each paper has its own runner, paperA/verify_all.py to paperF/verify_all.py, and runs its scripts
 in its own folder. This script calls those runners in turn with --quick, or with --full when --full
 is given. The quick runs take about 2 minutes each for Papers A and B and a few minutes each for
 Papers C and D. With --full, Paper A takes about 21 minutes more, Paper B about 3 minutes more,
-Paper C up to about half an hour and Paper D about 45 minutes.
+Papers C and E up to about half an hour together, and Papers D and F about 45 minutes together.
+(Papers E and F were split off Papers C and D in October 2026.)
 
 If a paper folder is missing, this script says so in one line and goes on. A runner that stops
 with a nonzero exit code stops this script too. With --dry-run the commands are printed and
@@ -23,7 +24,7 @@ import sys
 base = Path(__file__).resolve().parent
 parser = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-parser.add_argument('--paper', choices=('a', 'b', 'c', 'd', 'all'), default='all')
+parser.add_argument('--paper', choices=('a', 'b', 'c', 'd', 'e', 'f', 'all'), default='all')
 parser.add_argument('--full', action='store_true',
                     help='also run the long scripts of Papers A and B (about 21 and 3 minutes '
                          'more) and the heavy cells of Papers C and D')
@@ -32,7 +33,7 @@ parser.add_argument('--dry-run', action='store_true',
 args = parser.parse_args()
 
 mode = '--full' if args.full else '--quick'
-papers = 'abcd' if args.paper == 'all' else args.paper
+papers = 'abcdef' if args.paper == 'all' else args.paper
 runs = []          # (paper, folder)
 for paper in papers:
     folder = base / f'paper{paper.upper()}'

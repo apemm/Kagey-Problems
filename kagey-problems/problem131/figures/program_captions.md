@@ -46,3 +46,5 @@ Theorem~\ref{thm:erw-crossing}), and the expected number $H_N-1$ of
 switches at the fixed-start crossing $c=1$ for the aging walk. The curves of
 this paper are in bold, and a version of this figure also appears in
 Paper~C.
+
+Note of October 13, 2026. The series now has six papers. The variants `program_C` to `program_F` carry the new labels (E planar, D elephant, F aging and heavy-tailed runs), and `program_C` highlights the curves A, B and E. The variants `program_A` and `program_B` are the posted ones and are not regenerated.

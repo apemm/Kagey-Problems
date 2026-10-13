@@ -128,6 +128,16 @@ Facts from the project record (Claude Opus 5.5 through Claude Code, September an
   Section 5 of arXiv:2412.13515 as summarized by a web fetch, and the locator Lemma 2.8 of
   Chatterjee et al. from the review list. Neither was read in full.
 
+## The split of October 13, 2026
+
+- At the author's instruction the model split Paper C into Paper C (face selection) and Paper E (the
+  planar walk), and Paper D into Paper D (the elephant walk) and Paper F (heavy-tailed runs and aging
+  walks). No mathematics changed. The new introductions, abstracts and verification sections of
+  Papers E and F were assembled by the model from sentences of the old Papers C and D, with short
+  linking sentences that the model wrote. The titles of all four papers are working titles chosen
+  by the model. Each of the four papers needs its own note on the use of AI, and this draft now
+  serves all four.
+
 ## Figures (both papers, and the notes S1 and S2)
 
 - Every figure was generated with Claude (Claude Opus 5.5 through Claude Code). The model wrote the

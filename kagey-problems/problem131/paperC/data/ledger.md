@@ -32,3 +32,5 @@ calls a theorem. The path P_4 in the erratum of C2 shows that at finite N the or
 can differ from first order, and the paper says so as a numerical remark.
 
 The output of the check scripts (`verify_all.py`) is in `verify_output.txt`.
+
+Note of October 13, 2026. The ledger of the planar walk, `ledger_C3.md`, moved to `../../paperE/data` with Paper E.

@@ -44,3 +44,5 @@ uniform base weights has a direct jump, against the concentration $\omega$. The 
 Monte Carlo estimates with $10^6$ draws, and their error bars of one standard error are smaller than
 the circles. The filled squares are quadrature values for $\omega\ge100$. The dotted line is the
 limit $\frac14$ as $\omega\to0$, and the dashed line is the asymptote $3\sqrt3/(8\pi\omega)$.
+
+Note of October 13, 2026. `fig_planar` is now Figure 3 of Paper E and lives in `../../paperE/figures`.

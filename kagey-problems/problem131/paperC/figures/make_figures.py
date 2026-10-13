@@ -1,4 +1,5 @@
-"""Figures for Paper C of Problem 131 (face selection and the planar persistent walk).
+"""Figures for Papers C and E of Problem 131 (face selection, and the planar persistent walk).
+The planar figure fig_planar and its data are written to ../../paperE.
 
 Run from anywhere:
     python -B make_figures.py                 check the quoted values, then draw every figure
@@ -76,10 +77,15 @@ plt.rcParams.update({
 })
 
 
+# The planar walk is now Paper E. Its figure and its cached data live in ../../paperE.
+PAPER_E = HERE.parent.parent / "paperE"
+
+
 def save(fig, name):
     dark_style.finish(fig)
-    fig.savefig(HERE / f"{name}.pdf")
-    fig.savefig(HERE / f"{name}.png", dpi=600)
+    out = PAPER_E / "figures" if name == "fig_planar" else HERE
+    fig.savefig(out / f"{name}.pdf")
+    fig.savefig(out / f"{name}.png", dpi=600)
     plt.close(fig)
     print(f"wrote {name}.pdf and {name}.png")
 
@@ -101,11 +107,12 @@ def panel(ax, letter, x=0.03, y=0.95):
 
 def cache(name, compute, recompute=False):
     """Load ../data/figdata_<name>.json, or compute it and write it."""
-    path = DATA / f"figdata_{name}.json"
+    folder = PAPER_E / "data" if name.startswith("planar") else DATA
+    path = folder / f"figdata_{name}.json"
     if path.exists() and not recompute:
         return json.loads(path.read_text(encoding="utf-8"))
     data = compute()
-    DATA.mkdir(exist_ok=True)
+    folder.mkdir(exist_ok=True)
     path.write_text(json.dumps(data, indent=1), encoding="utf-8")
     print(f"wrote {path.name}")
     return data

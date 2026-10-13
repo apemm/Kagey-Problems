@@ -5,12 +5,14 @@ direction with probability p. Kagey asks for the distribution of the bins, the l
 his numerator tables, when the middle bin is as likely as the endpoints, the normal limit, and what
 changes on a cylinder or a tetrahedron.
 
-Status. There are four papers by A. Pemmasani, which call each other Papers A, B, C and D. Paper A
+Status. There are six papers by A. Pemmasani, which call each other Papers A to F. Paper A
 (arXiv:2610.06935) solves the binary problem at every N, and Paper B (arXiv:2610.09258) treats d
-directions on the complete graph. Paper C (slowly switching chains, in `paperC`) and Paper D (walks
-with memory, in `paperD`) are in preparation. The papers share the notation N, L = log N, T, z_N,
-lambda_F and K_F. Papers C and D cite Papers A and B by statement number. `PUBLICATION.md` has notes
-on where to send them.
+directions on the complete graph. Papers C to F are in preparation. Paper C (slowly switching
+chains, in `paperC`) and Paper E (the planar walk, in `paperE`) were one paper until October 13,
+2026, and so were Paper D (the elephant walk, in `paperD`) and Paper F (heavy-tailed runs and aging
+walks, in `paperF`). The titles of Papers C to F are working titles, and Paper A cites C and D under
+their old titles. The papers share the notation N, L = log N, T, z_N, lambda_F and K_F.
+`PUBLICATION.md` has notes on where to send them.
 
 Conventions. N is the number of bounces, so Kagey's row n has N = n-1. For p = a/(a+b) his numerator
 is 2(a+b)^(N-1) P_N(k). Write u = (1-p)/p for the switching odds, T = N(1-p) for the switching scale
@@ -57,33 +59,50 @@ sections `multistate_model.tex`, `simplex_thresholds.tex`, `general_start.tex`,
 `app_start_field.tex`, `app_boundary.tex` and `vertex_completion.tex`, the check scripts and
 `paperB/README.md`.
 
-## Paper C: Face selection for slowly switching Markov chains and the planar persistent walk
+## Paper C: Face selection for slowly switching Markov chains
 
 Paper C (in preparation) gives the general theory for a chain on d states with transition matrix
 P = I + (T/N)Q, run for N steps with T = tau L. The counts of the N visits play the role of the bin. To first order the
 mode sits on a face F that minimizes tau lambda_F + |F| - 1, where lambda_F is the principal
 Dirichlet eigenvalue of -Q on F, the rate at which the chain leaves F. At second order a strongly
 connected face with start mass has a constant K_F, and the crossings of 2 such faces satisfy a
-crossing equation. The constants of Papers A and B are corollaries. The main application is the
-planar persistent walk, which is Kagey's board in 2 dimensions. Its corner and origin cross exactly
-once, at T/L -> min(2/(2r+s), 1/s), and the paper finds the crossing to second order when reversals
-dominate and when turns dominate. The paper also treats sticky priors for hidden Markov models.
+crossing equation. The constants of Papers A and B are corollaries. The paper also treats sticky
+priors for hidden Markov models.
 
 Files. The folder `paperC`, with `problem131_switching.tex` and `problem131_switching.pdf`, its
 section and appendix files, the check scripts and `paperC/README.md`.
 
-## Paper D: Endpoint crossings for random walks with memory
+## Paper D: Endpoint crossings for the elephant random walk
 
 Paper D (in preparation) asks what memory changes. In the elephant random walk each step copies a uniformly chosen
 earlier step and flips it with probability eps. The crossing x_N = N eps_N is unique and
 x_N = 2 z_N - log(2 pi) + o(1), about twice the Markov value. The law at the crossing has 2 humps,
-one near each end. For alternating runs with P(xi >= k) = k^(-alpha) and 1 < alpha < 2, the ends win
-for large N exactly when alpha is below the golden ratio. A section on aging walks shows that the
-crossing with a fixed first step is exactly c = 1 for every N, and that an aging chain on d states
-ties exactly at one value of its parameter.
+one near each end, and for large N it is strictly convex between them.
 
 Files. The folder `paperD`, with `problem131_memory.tex` and `problem131_memory.pdf`, its section
 and appendix files, the check scripts and `paperD/README.md`.
+
+## Paper E: Kagey's board in the plane
+
+Paper E (in preparation) treats the planar persistent walk, which is Kagey's board in 2 dimensions.
+Its corner and origin cross exactly
+once, at T/L -> min(2/(2r+s), 1/s), and the paper finds the crossing to second order when reversals
+dominate and when turns dominate. On one curve of rates the walk is exactly 2 independent copies of
+Paper A's walk.
+
+Files. The folder `paperE`, with `problem131_planar.tex` and `problem131_planar.pdf`, its section and
+appendix files, the check scripts and `paperE/README.md`.
+
+## Paper F: Heavy-tailed runs and aging walks
+
+Paper F (in preparation) treats two more kinds of memory. For alternating runs with
+P(xi >= k) = k^(-alpha) and 1 < alpha < 2, the ends win
+for large N exactly when alpha is below the golden ratio. For aging walks the
+crossing with a fixed first step is exactly c = 1 for every N, and an aging chain on d states
+ties exactly at one value of its parameter.
+
+Files. The folder `paperF`, with `problem131_heavy_aging.tex` and `problem131_heavy_aging.pdf`, its
+section and appendix files, the check scripts and `paperF/README.md`.
 
 ## Earlier work
 
@@ -95,18 +114,19 @@ section on related work.
 
 ## Shared files
 
-Each paper has its own folder, `paperA` to `paperD`, with its source and PDF, its figures, its check
+Each paper has its own folder, `paperA` to `paperF`, with its source and PDF, its figures, its check
 scripts and runner, their recorded output and ledgers in `data/`, and a `README.md`. Papers B, C and
 D also keep the proofs cut while shortening them in `removed_proofs/`, for reference. The files
 below are shared.
 
-- `SUPPLEMENT.md` is the one verification supplement for the 4 papers. It lists each result that
+- `SUPPLEMENT.md` is the one verification supplement for the papers. It lists each result that
   rests on computation with the script that checks it.
-- `verify_all.py` runs the checks with `--paper a`, `b`, `c`, `d` or `all` (the default). It calls
-  `paperA/verify_all.py` to `paperD/verify_all.py`, each in its own folder.
-- `figures/` holds the 4 variants of the program figure (`program_A` to `program_D`), made by
+- `verify_all.py` runs the checks with `--paper a`, `b`, `c`, `d`, `e`, `f` or `all` (the default).
+  It calls `paperA/verify_all.py` to `paperF/verify_all.py`, each in its own folder.
+- `figures/` holds the variants of the program figure (`program_A` to `program_F`), made by
   `figures/make_program_figure.py`, with the captions in `figures/program_captions.md`. Papers C
-  and D include `program_C` and `program_D`.
+  to F include `program_C` to `program_F`. The variants A and B are the ones posted with those
+  papers and carry the labels of the series as it stood then.
 - `S1_endpoint_information_note/` is a working note on the Fisher information in the endpoint, which was Section 8 and Appendix E of an earlier version of Paper C.
 - `S2_counts_note/` is a working note on which rate matrices the visit counts of a slowly switching chain can tell apart, with its 4 check scripts.
 - `animations/` shows a Galton board with persistence at 4 values of p (`galton.gif`, `galton.mp4`),
@@ -114,12 +134,12 @@ below are shared.
 - `lean/` holds the Lean 4 proofs, one library per paper (not the large-argument asymptotics).
   `lean/README.md` says what each library covers.
 - `ledger.md` holds the predictions written down before the first computations for Papers A and B,
-  what happened to them, and an index of the ledgers of all 4 papers.
+  what happened to them, and an index of the ledgers of the papers.
 - `early_runs/` holds the recorded output of the joint checks of Papers A and B from 21 and 22
   September 2026, before the papers were split.
 - `literature_review.md` says what each earlier source proves.
 
-Run `python -B verify_all.py --paper a` (or `b`, `c`, `d`, `all`). Add `--full` for the long runs
+Run `python -B verify_all.py --paper a` (or `b` to `f`, or `all`). Add `--full` for the long runs
 and `--dry-run` to list the commands. Build each paper in its folder with pdflatex, 3 times, for
 example `pdflatex problem131.tex` in `paperA` and `pdflatex problem131_multistate.tex` in
 `paperB`.
