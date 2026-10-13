@@ -435,9 +435,10 @@ def fig_program(L, ys, hi):
     bx.set_title("F  heavy-tailed runs", fontsize=8, pad=4, color=col if on else GREY_TEXT,
                  fontweight="bold" if on else "normal")
     # The sign of e(alpha) decides the winner: e > 0 (alpha < phi) means the ends win.
-    bx.text(0.975, 0.965, "$\\alpha>\\varphi$: middle\nbeats the ends", transform=bx.transAxes,
+    # Each label sits on its own side of the zero line: above it e > 0 and the ends win.
+    bx.text(0.975, 0.965, "$e>0$: ends\nbeat the middle", transform=bx.transAxes,
             ha="right", va="top", color="0.2", linespacing=1.3)
-    bx.text(0.05, 0.04, "$\\alpha<\\varphi$: ends\nbeat the middle", transform=bx.transAxes,
+    bx.text(0.05, 0.04, "$e<0$: middle\nbeats the ends", transform=bx.transAxes,
             ha="left", va="bottom", color="0.2", linespacing=1.3)
     panel(bx, "b", x=0.05, y=0.965)
     box = fig.get_tightbbox(fig.canvas.get_renderer())
