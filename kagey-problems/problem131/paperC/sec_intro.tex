@@ -19,7 +19,7 @@ ball can move in more than two directions. Our main example is Kagey's board in
 two dimensions. A ball moves on the square lattice $\Z^2$, one step east,
 north, west or south at a time. It starts in a uniform direction, and at each
 step it keeps its direction, turns left or right, or reverses. Turns and
-reversals are rare. A turn to each side has probability $rT/N$ and a reversal
+reversals are rare. Fix $T>0$. A turn to each side has probability $rT/N$ and a reversal
 has probability $sT/N$, where $r,s\ge0$ are fixed rates with $2r+s>0$. After
 $N$ steps, is the ball more likely to be at the corner $(N,0)$, which only the
 path that never switches can reach, or back at the origin? We show that for
@@ -52,20 +52,22 @@ the matrix of the rates $q_{ij}$. How likely the best composition with
 support $F$ is depends on two effects.
 \begin{itemize}
 \item \emph{The cost of staying.} The chain must stay inside $F$ for all $N$
-steps. This has probability about $e^{-T\lambda_F}=N^{-\tau\lambda_F}$. A
+steps. If the start gives $F$ positive mass, this has probability about
+$e^{-T\lambda_F}=N^{-\tau\lambda_F}$. A
 larger face is harder to leave, so the chain stays on it more easily.
 \item \emph{The cost of spreading.} The mass of $F$ is shared among the
 compositions with support $F$, and there are about $N^{\lvert F\rvert-1}$ of
 them, one factor $N$ for each free coordinate. Up to powers of $\log N$, the
 best single composition gets a share $N^{-(\lvert F\rvert-1)}$.
 \end{itemize}
-So the most likely composition with support $F$ has probability
+Call a face admissible if some path of positive probability has exactly this support. For an
+admissible face $F$ the most likely composition with support $F$ has probability
 $N^{-\Phi_\tau(F)+o(1)}$, where
 \[
  \Phi_\tau(F)=\tau\lambda_F+\lvert F\rvert-1,
 \]
-and every mode sits on a face that minimizes $\Phi_\tau$
-(Theorem~\ref{thm:first}). In words, a sticky walk prefers a well-separated
+and for large $N$ every mode sits on an admissible face that minimizes $\Phi_\tau$ among the
+admissible faces (Theorem~\ref{thm:first}). In words, a sticky walk prefers a well-separated
 community, a set of states that is hard to leave for its size. As $\tau$ grows
 staying counts for more, and the mode moves to larger faces. On Kagey's board
 an endpoint has $\Phi_\tau=\tau$ and the interior has $\Phi_\tau=1$, so the
@@ -129,9 +131,10 @@ $M_F=M_G$ satisfies
  \delta T+\frac\Delta2\log T=\Delta\log N-\log\frac{K_F}{K_G}
  +O\Bigl(\frac1{\log N}\Bigr)
 \]
-(Theorem~\ref{thm:crossing}). So the coefficient $\frac12$ of $\log\log N$ that
-Papers~A and~B found holds for every such pair, whatever the graph, the rates,
-the sizes or the start, and without reversibility. When several faces tie at
+(Theorem~\ref{thm:crossing}). Solving this gives
+$T=\frac\Delta\delta[\log N-\frac12\log\log N+O(1)]$. So the coefficient $\frac12$ of
+$\log\log N$ inside the bracket, which Papers~A and~B found, holds for every such pair, whatever
+the graph, the rates, the sizes or the start, and without reversibility. When several faces tie at
 first order, Theorem~\ref{thm:window} describes the window of $T$ in which
 they compete. For reversible faces $K_F$ involves the square root of a
 weighted count of spanning trees (Proposition~\ref{prop:constant}), and the
@@ -165,8 +168,8 @@ Their mass is given by a local limit theorem in two dimensions
 \[
  (2r+s)\,T^*_N+\log T^*_N=2\log N+\log\frac\pi{8(r+s)}+o(1)
 \]
-(Corollary~\ref{cor:planar-turn}). Here $\log T^*_N$ has the coefficient $1$
-and not $\frac12$, because the origin is a point of a local limit in two
+(Corollary~\ref{cor:planar-turn}). Here $\log T^*_N$ has the coefficient $1$,
+as for a pair of faces with $\Delta=2$, because the origin is a point of a local limit in two
 dimensions. There is also one curve of switching probabilities on which everything is exact. If
 the walk turns to each side with probability $\rho(1-\rho)$ and reverses with
 probability $\rho^2$, its two diagonal coordinates are independent copies of
@@ -241,7 +244,9 @@ figure also appears in Paper~D.)}
 
 \subsection{Related work}\label{sec:related}
 
-The rate $I_F$ of Section~\ref{sec:firstorder} is the Donsker--Varadhan
+This subsection places the results among earlier work on occupation measures, on exact laws of
+transition counts and on correlated random walks. Section~\ref{sec:firstorder} introduces a rate
+$I_F$ for the visit fractions inside a face. It is the Donsker--Varadhan
 rate of the occupation measure of the chain killed on leaving $F$. Dupuis
 and Liu give this rate explicitly for reversible jump
 processes~\cite[Eq.~(3.2)]{dupuisliu2015}, and on a finite chain their
