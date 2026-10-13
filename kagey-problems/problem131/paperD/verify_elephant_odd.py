@@ -9,7 +9,7 @@
  4. In double precision, the two central bins are below the end at eps = 2/N for odd
     1689 <= N <= 1699, and x_N > 2 for a sample of odd N.
  5. The Landau density (numerical, not certified): its right half-maximum point 2.432 and its
-    right inflection point 1.104, with the thresholds 253 and 4.8 for x quoted in the remark.
+    right inflection point 1.104, with the thresholds 252.8 and 4.8 for x quoted in the remark.
 Run: python -B verify_elephant_odd.py     (about a minute)
 """
 import math
@@ -134,8 +134,9 @@ def main():
     check('right half-maximum point 2.432', abs(lh - 2.432) < 5e-4, mp.nstr(lh, 6))
     check('right inflection point 1.104', abs(l1 - 1.104) < 5e-4, mp.nstr(l1, 6))
     xs = mp.e ** (2 * lh - 3 * l0)
-    check('Step 3 needs x above 253, which is N near 10^55', 252 < xs < 254 and 54 < xs / 2 / mp.log(10) < 56,
-          'x = %s, log10 N = %s' % (mp.nstr(xs, 5), mp.nstr(xs / 2 / mp.log(10), 4)))
+    logN = (xs + mp.log(xs) + mp.log(8)) / 2          # from x + log x = 2 log N - log 8
+    check('Step 3 needs x above 252.8, which is N above about 3e56', 252.7 < xs < 252.9 and 3e56 < mp.e ** logN < 4e56,
+          'x = %s, N = %s' % (mp.nstr(xs, 5), mp.nstr(mp.e ** logN, 3)))
     check('the inflection is below twice the mode once x >= 4.8', 4.7 < mp.e ** (l1 - 2 * l0) < 4.8,
           mp.nstr(mp.e ** (l1 - 2 * l0), 5))
 

@@ -84,6 +84,14 @@ eps). Put x = N eps.
   center at the crossing (Theorem 3.15). This window has width O(sqrt(N) log N).
 - For large even N the modes a* of the law at the crossing satisfy
   min(a*, N - a*) = O(x_N log^2 x_N) (Corollary 3.17). This is weaker than Corollary 3.12.
+- For every N >= 3 and every 0 < eps < 1/2 the second difference of the law changes sign at most
+  four times (Theorem 3.21), and once the law has turned convex to the right of its left hump it
+  stays strictly convex up to the mirror point (Theorem 3.22). So strict convexity between the
+  humps follows from one inequality (Corollary 3.23). It holds for all large even N
+  (Theorem 3.24), where the center is then the unique interior minimum (Corollary 3.25), for
+  10 <= N <= 2000 by a certified computation (Proposition 3.26), and for all large odd N
+  (Proposition 3.27). For odd N the two central bins equal the center of N+1 divided by
+  1 - (1 - 2 eps)/N.
 
 Heavy-tailed runs (alternating runs, with run lengths xi such that P(xi >= k) = k^(-alpha)).
 
@@ -121,7 +129,8 @@ The aging walk (switch at step k >= 2 with probability c/k), in its own section,
 ## What rests on computation
 
 No statement is left with its details omitted. Section 6 of the paper (`sec_verify.tex`) gives the
-full account. The proofs use computation in 4 places only.
+full account. The proofs use computation in 4 places only (the three below, and Proposition 3.26,
+which rests on the ball-arithmetic computation of `certify_convex.py` for 10 <= N <= 2000).
 
 - Some constants are values of explicit sums and integrals, such as the 60-term sum in the proof of
   Theorem 2.6(b), evaluated in 30-digit arithmetic (`verify_elephant_crossing.py`).
@@ -131,19 +140,22 @@ full account. The proofs use computation in 4 places only.
   eps = 2/(N+2), with the rounding error bounded in Lemma 3.7 (`certify_elephant.py`, which also
   repeats it in exact integer arithmetic for 20 values of N).
 
-Conjecture 3.16, the tables, the figures and the numbers quoted outside the proofs rest on
-computation alone. The numbers in Remarks 2.12, 3.13, 4.6 and 4.9 are of this kind, and the row
+The tables, the figures and the numbers quoted outside the proofs rest on computation alone, and so
+does the evidence for Conjecture 3.16 beyond what Section 3.6 proves (double precision at
+N = 3200, 6400, 12800 and 25600). The numbers in Remarks 2.12, 3.13, 3.28, 4.6 and 4.9 are of this
+kind, and the row
 alpha = 1 of Table 3 is a heuristic.
 
 ## Open
 
 - An upper bound log C_N <= log(eps c_1) + eps k_2(N) + O(eps^2 (log N)^k), and an explicit N beyond
   which the root g_N exceeds x_N (Remark 2.12).
-- Conjecture 3.16 (strict convexity between the humps) for N between 2000 and the constants of
-  Theorem 3.24 (even N) and Proposition 3.27 (odd N). Section 3.6 proves it for all large N, and
-  `certify_convex.py` certifies it for 10 <= N <= 2000 (about an hour, output in
-  `data/certify_convex_output.txt`). For large even N the center is the unique interior minimum
-  (Corollary 3.25).
+- Conjecture 3.16 (strict convexity between the humps) for N between 2000 and the constants N_1 and
+  N_1' of Theorem 3.24 (even N) and Proposition 3.27 (odd N). Section 3.6 proves it for all large N,
+  and `certify_convex.py` certifies it for 10 <= N <= 2000. The constants are not explicit, and the
+  proof as it stands cannot work below N of about 3 * 10^56, so no computation closes the gap
+  (Remark 3.28). For even N >= 8 and odd N >= 1689 the conjecture follows from one inequality
+  (Corollary 3.23 and Proposition 3.27(c)).
 - The tail for m between x log x and x log^2 x, effective constants in Theorems 3.14 and 3.15, and
   an effective error term in Corollary 3.12 (Remark 3.13).
 - For heavy tails, a rate in Theorem 4.4, monotonicity of E_N/C_N and uniqueness of the crossover
@@ -179,6 +191,9 @@ grows.
 - `verify_aging_urn.py` checks Proposition 5.4 in exact arithmetic for d = 2, 3, 4.
 - `certify_elephant.py` certifies the computations behind Lemma 3.7, Proposition 3.8 and
   Lemma 3.11. It needs python-flint.
+- `certify_convex.py` certifies Conjecture 3.16 for a range of N in ball arithmetic
+  (Proposition 3.26). The whole range 10 to 2000 takes about an hour, so `verify_all.py` does not
+  run it. Its output is in `data/certify_convex_output.txt`.
 - `verify_elephant_odd.py` checks Proposition 3.27 (odd N, with the identity of part (a) in exact
   arithmetic) and the numbers of Remark 3.28. It takes a few seconds.
 - `verify_all.py` runs the seven scripts.
@@ -186,8 +201,8 @@ grows.
   `data/ledger_D4.md`.
 - `data/figdata_*.json` holds cached data for the figures.
 - `data/verify_output.txt` and `data/verify_output_full.txt` hold the output of the quick run and
-  the full run of the checks from September 26, 2026. They predate the 2 newest scripts and use the
-  statement numbers of that date.
+  the full run of the checks from September 26, 2026. They predate `verify_aging_urn.py`,
+  `verify_elephant_odd.py` and `certify_convex.py`, and they use the statement numbers of that date.
 - `removed_proofs/` keeps Paper D as first written in September 2026, before it was shortened. The
   October revision put several of those proofs back.
 - `../lean/PaperD/` holds the Lean 4 proofs of the exact statements (not the asymptotics). `MAP.md`
