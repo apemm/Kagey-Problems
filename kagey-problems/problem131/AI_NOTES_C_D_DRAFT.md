@@ -138,6 +138,11 @@ Facts from the project record (Claude Opus 5.5 through Claude Code, September an
   by the model. Each of the four papers needs its own note on the use of AI, and this draft now
   serves all four.
 
+- Paper D, Proposition `prop:center-small` (October 13): the center is the unique interior minimum
+  for every even N from 10 to 2000. The author observed that the certified range should give this.
+  The model wrote the proof (a criterion from the bound on sign changes, without seeing the
+  author's sketch) and the script `certify_center.py`, and ran it.
+
 ## Figures (both papers, and the notes S1 and S2)
 
 - Every figure was generated with Claude (Claude Opus 5.5 through Claude Code). The model wrote the

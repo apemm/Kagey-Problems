@@ -1,4 +1,4 @@
-"""Checks for Proposition 3.27 (odd N) and the numbers of Remark 3.28.
+"""Checks for Proposition 3.27 (odd N) and the numbers of Remark 3.29.
 
  1. The identity  P_N((N+1)/2) = C_{N+1} / (1 - (1-2 eps)/N)  for odd N, in exact rational
     arithmetic for small N and in double precision for larger N.
@@ -10,7 +10,7 @@
     1689 <= N <= 1699, and x_N > 2 for a sample of odd N.
  5. The Landau density (numerical, not certified): its right half-maximum point 2.432 and its
     right inflection point 1.104, with the thresholds 252.8 and 4.8 for x quoted in the remark.
-Run: python -B verify_elephant_odd.py     (about a minute)
+Run: python -B verify_elephant_odd.py     (about 10 seconds)
 """
 import math
 import sys

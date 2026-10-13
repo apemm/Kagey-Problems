@@ -1127,6 +1127,67 @@ uses Theorem~\ref{thm:landau}, Lemma~\ref{lem:landau-mode} and
 $P_N(m)=\frac12[f_N(m)+f_N(N-m)]$, and these hold for every $N$.
 \end{proof}
 
+\begin{proposition}[the center for $10\le N\le2000$]\label{prop:center-small}
+\begin{enumerate}[(a)]
+\item Let $N\ge8$ be even and $x=x_N$. Let $a^*\ge N/2$ be a mode of $P_N$ and $m^*=N-a^*$.
+Suppose that $2m^*+1\le N/2$ and that $D_N(a)>0$ for every $2m^*+1\le a\le N-2m^*-1$. Then
+$P_N(a)>C_N$ for every $1\le a\le N-1$ with $a\ne h$.
+\item For every even $10\le N\le2000$, at the crossing, $P_N(a)>C_N$ for every $1\le a\le N-1$
+with $a\ne h$.
+\end{enumerate}
+\end{proposition}
+
+In words, if the law is strictly convex between the humps and the stretch between the humps
+contains the center, then the center is the unique lowest interior bin. So
+Corollary~\ref{cor:unique-min} holds for every even $N$ from $10$ to $2000$, and not only for
+large $N$.
+
+\paragraph{Idea of the proof.}
+Between the humps the law is strictly convex and symmetric, so the center is its only minimum
+there. Outside, a bin as low as the center would be a second valley. A valley needs a point of
+convexity with points of concavity on both sides, and with the mirror image this gives more
+changes of sign of the second difference than Theorem~\ref{thm:five-blocks} allows.
+
+\begin{proof}
+(a) Write $b=2m^*$, so that $b+1\le h$, and put $\delta(a)=P_N(a+1)-P_N(a)$.
+
+\emph{Between the humps.} Since $D_N(a)=\delta(a)-\delta(a-1)>0$ for $b+1\le a\le N-b-1$, the
+differences $\delta(a)$ are strictly increasing for $b\le a\le N-b-1$. By symmetry
+$\delta(h-1)=-\delta(h)$, and $\delta(h-1)<\delta(h)$ because $b\le h-1$. So
+$\delta(h-1)<0<\delta(h)$. Hence $P_N$ is strictly decreasing on $\{b,\dots,h\}$ and strictly
+increasing on $\{h,\dots,N-b\}$, and $P_N(a)>C_N$ for every $b\le a\le N-b$ with $a\ne h$. In
+particular $P_N(b)>C_N$.
+
+\emph{Near the ends.} By symmetry it is enough to treat $1\le a\le b-1$. Suppose that
+$P_N(a)\le C_N$ for some such $a$, and let $c$ be the smallest index in $\{1,\dots,b\}$ at which
+$P_N$ takes its least value on this set. By Proposition~\ref{prop:dip-hyp},
+$P_N(1)>P_N(0)=E_N=C_N$, and $P_N(b)>C_N$. So $2\le c\le b-1$, and
+$P_N(c-1)>P_N(c)\le P_N(c+1)$, which gives $D_N(c)>0$.
+Next let $a'$ be the smallest index at which $P_N$ takes its largest value on $\{0,\dots,c\}$.
+This value is at least $P_N(1)$, which exceeds both $P_N(0)$ and $P_N(c)$. So $1\le a'\le c-1$
+and $P_N(a'-1)<P_N(a')\ge P_N(a'+1)$, which gives $D_N(a')<0$. In the same way let $a''$ be the
+largest index at which $P_N$ takes its largest value on $\{c,\dots,h\}$. This value is at least
+$P_N(b)$, which exceeds both $P_N(c)$ and $P_N(h)=C_N$. So $c+1\le a''\le h-1$ and
+$P_N(a''-1)\le P_N(a'')>P_N(a''+1)$, which gives $D_N(a'')<0$. Finally $D_N(h)>0$ by hypothesis.
+
+So $D_N$ has the signs $-,+,-,+$ at $a'<c<a''<h$. By the symmetry $D_N(a)=D_N(N-a)$ it has the
+signs $-,+,-$ at $N-a''<N-c<N-a'$. Hence the sign pattern of $(D_N(1),\dots,D_N(N-1))$ has a
+subsequence of seven alternating signs. This contradicts Theorem~\ref{thm:five-blocks}, which
+allows at most five.
+
+(b) Let $10\le N\le2000$ be even. By Proposition~\ref{prop:convex-certified}, $D_N(a)>0$ for
+$2m^*+1\le a\le N-2m^*-1$ and every mode. The script \texttt{certify\_center.py} encloses
+$\varepsilon_N$ and the law $P_N$ in the same way as \texttt{certify\_convex.py}, lists every
+index $a^*\ge N/2$ that can be a mode, and checks that $2(N-a^*)+1\le N/2$ for each of them. This
+holds for every even $N$ in the range. So (a) applies.
+\end{proof}
+
+Part (a) also gives Corollary~\ref{cor:unique-min} from Theorem~\ref{thm:convex-large} without
+Theorem~\ref{thm:shape}, since $m^*=o(N)$ at the crossing. As a second check, for each even $N$
+in the range the script also tests directly that the enclosure of $P_N(a)-P_N(h)$ is positive for
+every $a\ne h$, and this succeeds for @DIRECT@ of the $996$ values of $N$. The smallest value of
+$N/2-(2m^*+1)$ is @SLACK@, at $N=@SLACKN@$.
+
 \begin{remark}[what is still open]\label{rem:convex-open}
 The constant $N_1$ of Theorem~\ref{thm:convex-large} is not explicit, because
 the constant in Theorem~\ref{thm:landau} and the constant $\kappa_L$ of
