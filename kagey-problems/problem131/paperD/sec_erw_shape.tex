@@ -177,24 +177,24 @@ once, say from time $j-1$ to time $j$ with $2\le j\le N$. Before that it
 stays at $0$ for $j-2$ steps, each with probability
 $1-r_t(0)=1-\varepsilon$. The move up has probability $\varepsilon$. After it
 the chain stays at $1$ at the times $k=j,\dots,N-1$, each with probability
-$1-r_k(1)=(1-\varepsilon)(1-c/k)$, where
-$c=(1-2\varepsilon)/(1-\varepsilon)\in[0,1]$. Multiplying and summing over
+$1-r_k(1)=(1-\varepsilon)(1-c'/k)$, where
+$c'=(1-2\varepsilon)/(1-\varepsilon)\in[0,1]$. Multiplying and summing over
 $j$ gives
 \[
  f_N(1)=\varepsilon(1-\varepsilon)^{N-2}\sum_{j=2}^NP_j,\qquad
- P_j=\prod_{k=j}^{N-1}\Bigl(1-\frac ck\Bigr).
+ P_j=\prod_{k=j}^{N-1}\Bigl(1-\frac{c'}k\Bigr).
 \]
-For the lower bound we use $c\le1$. Then
+For the lower bound we use $c'\le1$. Then
 $P_j\ge\prod_{k=j}^{N-1}(1-1/k)=(j-1)/(N-1)$, and these lower bounds sum to
 $N/2$ over $2\le j\le N$. So $f_N(1)/f_N(0)\ge x/(2(1-\varepsilon))$. For
-the upper bound, $1-c/k\le e^{-c/k}$ and $\sum_{k=j}^{N-1}1/k\ge\log(N/j)$
-give $P_j\le(j/N)^c$. As $(t/N)^c$ is nondecreasing in $t$, we can compare
+the upper bound, $1-c'/k\le e^{-c'/k}$ and $\sum_{k=j}^{N-1}1/k\ge\log(N/j)$
+give $P_j\le(j/N)^{c'}$. As $(t/N)^{c'}$ is nondecreasing in $t$, we can compare
 the sum with an integral, namely
 \[
- \sum_{j=2}^NP_j\le\int_2^{N+1}\Bigl(\frac tN\Bigr)^c dt
- \le\frac{N(1+1/N)^{c+1}}{c+1}\le\frac{N(1+1/N)^2(1-\varepsilon)}{2-3\varepsilon},
+ \sum_{j=2}^NP_j\le\int_2^{N+1}\Bigl(\frac tN\Bigr)^{c'} dt
+ \le\frac{N(1+1/N)^{c'+1}}{c'+1}\le\frac{N(1+1/N)^2(1-\varepsilon)}{2-3\varepsilon},
 \]
-using $c\le1$ and $1/(c+1)=(1-\varepsilon)/(2-3\varepsilon)$. So
+using $c'\le1$ and $1/(c'+1)=(1-\varepsilon)/(2-3\varepsilon)$. So
 $f_N(1)/f_N(0)\le x(1+1/N)^2/(2-3\varepsilon)$.
 
 \emph{The term $f_N(N-1)$.} The event $M_N=N-1$ needs an up move at every
@@ -305,7 +305,7 @@ $E_N=C_N<P_N(N-1)$, and $P_N$ is not unimodal. For $N=2$, $4$ and $6$ the
 hypothesis of Corollary~\ref{cor:dip} fails.
 \end{proposition}
 
-In words, from $N=8$ on the end is below its neighbor at the crossing, so
+In words, for every even $N$ from $8$ on the end is below its neighbor at the crossing, so
 the law has a hump on each side of the center.
 
 \begin{proof}
@@ -450,8 +450,9 @@ every real $\lambda$.
 The proof is in Appendix~\ref{app:bulk}. It is computer-assisted. We turn the
 Fourier integral into the real integral
 $f_L(\lambda)=\frac1\pi\int_0^\infty e^{-s\log s-\lambda s}\sin(\pi s)\,ds$.
-Then we enclose $f_L'$ at two points and $f_L''$ on the interval between them
-in ball arithmetic, with the rigorous integration algorithm
+Then we enclose $f_L'$ at four points (namely $-0.2229$, $-0.2227$, $-0.22278299$ and
+$-0.22278297$) and $f_L''$ on the interval $[-0.2229,-0.2227]$
+in ball arithmetic (python-flint 0.9.0, which wraps Arb, at 128 bits, in under a second), with the rigorous integration algorithm
 of~\cite{johansson2018} on $[2^{-20},30]$ and explicit bounds for the rest
 (\texttt{certify\_elephant.py}). Part (c) follows from (b) and the
 unimodality of $f_L$.
@@ -486,6 +487,9 @@ in double precision and are not used in any proof.
 
 \subsection{The tail}
 
+This subsection shows that the law falls like $x/(2m^2)$ beyond the humps. We use it for the
+shape at the center.
+
 \begin{theorem}[the tail]\label{thm:profile}
 Let $N$ be even, and let $x=N\varepsilon\ge1$ depend on $N$ with
 $x\log^2N/N\to0$. Let $\omega_N\to\infty$ with $\omega_Nx\log^2(x+1)=o(N)$,
@@ -497,9 +501,9 @@ and let $\delta'_N\to0$. Then
 uniformly for $\omega_Nx\log^2(x+1)\le m\le\delta'_NN$.
 \end{theorem}
 
-In words, the chance of landing at distance $m$ from an end is the chance
-that a flipped family has $m$ steps, halved because the first step must point
-to that end.
+In words, for $m$ well beyond $x\log^2x$ and well below $N$, the chance of landing at
+distance $m$ from an end is about half the expected number of flipped families with $m$
+steps, namely $x/(2m^2)$. The half is there because the first step must point to that end.
 
 \paragraph{Idea of the proof.}
 The proof is in Appendix~\ref{app:shape}. For the lower bound we use the
@@ -510,7 +514,7 @@ $\Prob(M_N\ge m)\le\frac xm(1+O(x\log^2m/m))$, and the unimodality of $f_N$
 turns this into a local bound. The mirror term $f_N(N-m)$ is at most
 $C_N=O(x/N^2)$, which gives the constant $\frac12$.
 
-At $N=10^6$, $x=22.4407$ and $m=10^4$ the exact ratio $P_N(N-m)/(x/m^2)$ is
+At $N=10^6$, $x=22.4407$ and $m=10^4$ the computed ratio $P_N(N-m)/(x/m^2)$ is
 $0.51889$. At moderate $m$, $\CP_N$ suggests
 $f_N(m)\,m(m+1)/x\approx1+x(2\log m+2\gamma-3)/m$, and this factor is still
 about $2$ near $m=70$ when $N=1600$ (Figure~\ref{fig:shape}(c)).
@@ -670,7 +674,8 @@ Proposition~\ref{prop:odd}.
 
 \subsection{Convexity between the humps}\label{sec:convex}
 
-Throughout this subsection $0<\varepsilon<\frac12$ and $c=1-2\varepsilon$, so
+This subsection proves Conjecture~\ref{conj:convex} for all large $N$ and reduces it to one
+inequality for the other $N$. Throughout this subsection $0<\varepsilon<\frac12$ and $c=1-2\varepsilon$, so
 that $r_t(b)=\varepsilon+cb/t$. For $t\ge1$ and every integer $a$ we write
 $P_t(a)=\Prob(A_t=a)$, which is $0$ unless $0\le a\le t$, and
 \[
@@ -852,7 +857,9 @@ change, with $\rho_t=f_t(1)/f_t(0)$, $\rho_2=\frac\varepsilon{1-\varepsilon}$
 and $s^f_2=1-3\varepsilon$. The numbers $d_u$ are negative for
 $u<c/\varepsilon$ and positive for $u>c/\varepsilon$. So
 $\operatorname{sp}(Z^f_2)$ is a subsequence of $(+,-,+)$ followed by $(-,+)$,
-and $Z^f_N=(D^f_N(1),\dots,D^f_N(N-1))$.
+and $Z^f_N=(D^f_N(1),\dots,D^f_N(N-1))$. As before
+$\operatorname{sp}(Z^f_N)\preceq\operatorname{sp}(Z^f_2)$, and a subsequence of $(+,-,+)$
+followed by $(-,+)$ is a subsequence of $\Pi_5$ once equal neighbors are merged.
 \end{proof}
 
 \begin{theorem}[no holes]\label{thm:no-holes}
