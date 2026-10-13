@@ -19,7 +19,7 @@
 \newcommand{\one}{\mathbf 1}
 \emergencystretch=1.5em
 \title{What the visit counts remember\\[4pt]
-\large Working note for direction S2 (independent derivation, not yet compared with the S2 notes)}
+\large Which Markov chains can be told apart by their occupation times, and how well}
 \author{}
 \date{October 2026}
 \begin{document}
@@ -59,15 +59,16 @@ Here is what we find. The proofs are in the sections that follow.
  chains on four states, with every rate positive and a start that is not
  stationary, that no amount of count data can tell apart.
 \item \emph{The net flow is learned slowly, the entropy production is not}
- (Theorem~\ref{thm:lecam}). Near a reversible chain no estimator based on $n$
- copies of the counts finds the size of the net flow to better than $n^{-1/4}$,
- where the path gives $n^{-1/2}$. The counts see the net flow only through
+ (Theorem~\ref{thm:lecam}). Near a reversible chain with a stationary start, no
+ estimator based on $n$ copies of the counts finds the size of the net flow to
+ better than $n^{-1/4}$, where the path gives $n^{-1/2}$. The counts see the net flow only through
  its square, and at a reversible chain they have positive information about
  the square (Theorem~\ref{thm:regular}). This gives a one-sided test of
  reversibility that sees a net flow of size $n^{-1/4}$ when the rest of the
  chain is known (Theorem~\ref{thm:test}). Near a reversible chain the
  entropy production is learned to within $n^{-1/2}$, also where it is itself
- much larger than that (Corollary~\ref{cor:local}).
+ much larger than that (Corollary~\ref{cor:local}). Here too the stationary
+ law, the two-way flows and the direction of the net flow are taken as known.
 \item \emph{What is lost} (Theorems~\ref{thm:info} and~\ref{thm:singular}). When
  switches are rare, the counts are as good as the full path for the two-way flow
  on each pair, and blind to first order to the net flow. With a stationary start
@@ -262,7 +263,7 @@ sides are the Laplace transforms in $t$ of $\Phi_t'$ and $\Phi_t$. Hence
 $\Phi_t'=\Phi_t$ for every $t$, and $z=0$ gives $r'=r$.
 \end{proof}
 
-\section{What the counts know about a pair}
+\section{What the counts know about a pair}\label{sec:pairs}
 
 \begin{theorem}\label{thm:pairs}
 Let $G$ be irreducible and $\mu_i>0$ for every $i$. The law of $L(1)$ determines
@@ -431,7 +432,8 @@ on two or three states has no cut.) Loewy~\cite{loewy1986} proved that if $A$
 is irreducible, has at least four rows and has no cut, then every matrix with
 the same principal minors as $A$ is $DAD^{-1}$ or $DA^{\top}D^{-1}$ for some
 diagonal $D$. For two and three rows the same holds for every irreducible $A$,
-by Hartfiel and Loewy~\cite{hl1984} (see also~\cite[Theorem~4.1]{alahmadieh2026}).
+by Hartfiel and Loewy~\cite{hl1984} (see~\cite[Lemma~2.8]{cggr2025}). We refer
+to these two statements together as the theorem quoted above.
 
 \begin{theorem}[at most two candidates]\label{thm:rigid}
 Let $G$ be irreducible with no cut, and let $\pi$ be its stationary law. Suppose
@@ -450,12 +452,12 @@ as far as the weight $w$ is concerned. A stationary start has $w=1$, and then
 \eqref{eq:startend} is clear.
 
 \begin{proof}
-The first part is linear algebra. The theorem of Hartfiel and Loewy leaves two
+The first part is linear algebra. The theorem quoted above leaves two
 families of matrices, and only one member of each family is a rate matrix. The
 second part runs the film backward.
 
 \emph{The candidates.} By Proposition~\ref{prop:minors}, $G'$ has the same
-principal minors as $G$. By the theorem of Hartfiel and Loewy, $G'=DGD^{-1}$ or
+principal minors as $G$. By the theorem quoted above, $G'=DGD^{-1}$ or
 $G'=DG^{\top}D^{-1}$ for an invertible diagonal matrix $D$. We use that the rows
 of $G'$ sum to zero, that is, $G'\one=0$. In the first case this says
 $GD^{-1}\one=0$. Since $G$ is irreducible, the only vectors it sends to zero are
@@ -716,9 +718,11 @@ module (the blocks $G_{XX^c}$ and $G_{X^cX}$ have rank one, but the rows of
 $G_{XX^c}$ are not equal). Transposing one side of the cut and rescaling gives a
 rate matrix $G'$ with the same principal minors as $G$, and so with the same
 stationary law (it is proportional to the principal minors of order $d-1$ of
-$-G$). But the minors of $G'-\one\pi^{\top}$ differ from
-those of $G-\one\pi^{\top}$, and the counts differ, by $2\cdot10^{-4}$ to $9\cdot10^{-4}$ in the
-Laplace transform (\texttt{check\_cut\_transpose.py}). For the chains of
+$-G$). In the three random examples of this kind that we tried, the minors of
+$G'-\one\pi^{\top}$ differ from those of $G-\one\pi^{\top}$, and the counts differ, by
+$2\cdot10^{-4}$ to $9\cdot10^{-4}$ in the Laplace transform
+(\texttt{check\_cut\_transpose.py}). This is an observation. We have not proved that the counts
+differ for almost every such chain, and for special rates they need not. For the chains of
 Example~\ref{ex:four} the same script confirms that $G'$ is exactly the
 transpose of $G$ across the module, up to a diagonal similarity.
 
@@ -955,8 +959,8 @@ full path does. That the occupation fractions are an efficient estimate of
 $\pi$ is classical (see~\cite{albert1962} for the path likelihood
 and~\cite{gw1994} for efficiency). Part (a) is the identity behind it. The
 other $(d-1)^2$ efficiencies appear to tend to $0$ (Table~\ref{tab:eff} and
-Figure~\ref{fig:information}), but we have not proved this. For three states,
-three of them fall off like $1/T$ and the smallest like $T^{-2}$.
+Figure~\ref{fig:information}), but we have not proved this. For the chain of
+Table~\ref{tab:eff}, three of them fall off like $1/T$ and the smallest like $T^{-2}$.
 
 \begin{figure}[t]
 \centering
@@ -967,7 +971,8 @@ Theorem~\ref{thm:info}. Three are lost with a known start, and only the flow
 around the triangle with a stationary start. For many switches two tend to $1$
 (Theorem~\ref{thm:long}), three fall off like $1/T$ and the smallest like
 $T^{-2}$ (between $T=10$ and $T=20$ their slopes are $-1.04$, $-0.99$, $-1.00$
-and $-2.2$).}
+and $-2.2$ with a known start, and $-1.06$, $-0.99$, $-1.01$ and $-2.1$ with a
+stationary start).}
 \label{fig:information}
 \end{figure}
 
@@ -1224,6 +1229,35 @@ differs from $I\delta^4$ by at most
 $2\sqrt I\,K_2\lvert\delta\rvert^6+K_2^2\delta^8$.
 \end{proof}
 
+\begin{remark}[the $N$-step chain]\label{rem:nstep}
+Theorem~\ref{thm:regular} also holds for the chain in discrete time with
+transition matrix $I+hG_\delta$ and at least three steps, as long as $hq_i<1$ for
+every $i$, with the vector $K$ of visit counts in place of $L$. Indeed a stay
+at $i$ has probability $1-hq_i$ for every $\delta$, and a jump from $i$ to $j$
+has probability $hg^0_{ij}(1+\delta b_{ij})$. So $R_\delta$ is the same product
+over the jumps, the number of jumps is bounded, and parts (a) and (c) follow as
+before. For (b) we argue with signs. Take a pair $F=\{i,k\}$ with $j_{ik}\ne0$,
+let $\mathcal A$ be the event that the path stays in $F$, and let $z_i,z_k>0$.
+A path in $F$ with $2m$ jumps has probability $\pi_x a^m$ times its stay
+factors, where $x$ is its first state and $a=g^\delta_{ik}g^\delta_{ki}h^2$. A
+path with $2m+1$ jumps that starts at $i$ has probability
+$\pi_ig^\delta_{ik}h\,a^m$ times its stay factors. Run backward, it is a path
+that starts at $k$, with the same counts and the same stay factors, and with
+$\pi_kg^\delta_{ki}$ in place of $\pi_ig^\delta_{ik}$. The two add up to
+$c_{ik}h\,a^m$ times the stay factors. Hence
+\[
+ \E_\delta\bigl[z^K\one_{\mathcal A}\bigr]=\sum_{m\ge0}a^m\,A_m(z),
+\]
+where the $A_m$ do not depend on $\delta$ and are sums of positive terms, and
+$A_1(z)>0$ because three steps allow the path $i,k,i$. The left side depends on
+$\delta$ only through $a=a^0(1-\delta^2b_{ik}^2)$, so its coefficient of
+$\delta^2$ is $-a^0b_{ik}^2\sum_{m\ge1}m(a^0)^{m-1}A_m(z)<0$. As in the proof
+of (b) this coefficient is $\E_0[S\,z^K\one_{\mathcal A}]$, so $S$ is not
+almost surely $0$ and $I>0$. The same argument, with the integral over the jump
+times in place of the sum over paths, gives another proof of (b) in continuous
+time.
+\end{remark}
+
 Now let $L^{(1)},\ldots,L^{(n)}$ be independent copies of the counts, and put
 \[
  T_n=\frac1{\sqrt{nI}}\sum_{k=1}^nS\bigl(L^{(k)}\bigr).
@@ -1306,7 +1340,10 @@ production itself can be as large as $n^{-1/4}$, so this says something. The
 size of the net flow is learned to within $n^{-1/4}$ at $\delta=0$, which is
 the rate of Theorem~\ref{thm:lecam}, and to within $n^{-1/2}/\lvert\delta\rvert$
 for larger $\delta$ in this range. (Outside this range $\hat s$ is biased, and
-one would use maximum likelihood.)
+one would use maximum likelihood.) At $\delta=0$, $\sqrt n\,\hat s$ tends in law
+to the positive part of a normal variable with variance $1/I$, by
+Theorem~\ref{thm:test}(a), and so does $\sqrt n\,\hat\sigma$ up to a constant
+factor. So intervals based on a normal limit fail at a reversible chain.
 
 \begin{proof}
 Let $m$ be the mean of the $S(L^{(k)})$. By the bounds in the proof of
@@ -1348,8 +1385,10 @@ are for an $N$-step chain, agree with it.
 
 (3) We took $\pi$, $c$ and the direction $j$ as known. For three states there
 is only one direction. With $\pi$ and $c$ unknown one expects the same
-rates, since those are learned at the rate $n^{-1/2}$, but we have not proved
-this. For four or more states with every $c_{ij}>0$ the circulations form a
+rates, since those are learned at the rate $n^{-1/2}$. For this the score $S$
+must not lie in the span of the scores of the counts for $\pi$ and $c$ (if it
+did, a change of $\pi$ and $c$ could imitate a small net flow). We have proved
+neither this nor the rates. For four or more states with every $c_{ij}>0$ the circulations form a
 space of dimension $\binom{d-1}2$. The law of the counts is even in the
 circulation, so to leading order it can depend on it only through a quadratic
 form. We have not worked this case out.
@@ -1361,7 +1400,7 @@ $\pi=(0.5,0.3,0.2)$ and two-way flows $0.30$, $0.20$, $0.25$, all known, and
 let the only unknown be the flow $j$ around the triangle. The law of the count
 vector is even in $j$ (the proof of Theorem~\ref{thm:lecam} works step by step
 for this chain), and its chi-square distance from the law at $j=0$ is
-$47.1\,\delta^4$ for small $\delta$. We estimate $\lvert j\rvert$ by maximum
+$47.1\,j^4$ for small $j$. We estimate $\lvert j\rvert$ by maximum
 likelihood from $n$ count vectors, and the entropy production by plugging in
 (Figure~\ref{fig:rates}). At $j=0$ the error of $\lvert\hat\jmath\rvert$ falls
 like $n^{-0.248}$, and the error of $\hat\sigma$ like $n^{-0.498}$. At $j=0.1$
@@ -1371,23 +1410,27 @@ here, and the entropy production is
 learned at the usual rate even where the net flow is not, as
 Remark~\ref{rem:sigma-smooth} suggests. The numbers fit the standard theory of
 a parameter on the boundary~\cite{sl1987}. In the coordinate $s=j^2$ the model
-is smooth with information $I=47.1$ at $s=0$, the estimate $\hat s$ is close to
+is smooth with information $I=47.1$ at $s=0$, the maximum likelihood estimate
+$\hat\jmath^{\,2}$ of $s$ is close to
 the positive part of a normal variable with variance $1/(nI)$, and
-$\lvert\hat\jmath\rvert=\sqrt{\hat s}$ then has root mean squared error
+$\lvert\hat\jmath\rvert$ then has root mean squared error
 $(2\pi)^{-1/4}(nI)^{-1/4}$. At $n=10^6$ this is $0.00762$, and the simulation
-gives $0.00762$. The score $S$ of Theorem~\ref{thm:regular}, computed for this
-chain, has $\E_0S^2=47.1$, the same number. (This is part (c) of that
-theorem, whose proof, like that of part (a), works step by step for the
-$N$-step chain.)
+gives $0.00762$. (A root mean squared error from $400$ samples has a relative
+error of about $4\%$, so the agreement to three digits is partly luck.) The
+score $S$ of Theorem~\ref{thm:regular}, computed for this
+chain, has $\E_0S^2=47.1$, the same number, as part (c) of that theorem says
+(Remark~\ref{rem:nstep}).
 We also ran the test of Theorem~\ref{thm:test} and the likelihood ratio test
-at level $5\%$ (Figure~\ref{fig:rates}(b)). At $j=0$ they reject in $4.9\%$ to
+at level $5\%$ (Figure~\ref{fig:rates}(b)). The likelihood ratio test rejects
+when twice the logarithm of the likelihood ratio exceeds $z_{0.05}^2=2.71$, the
+critical value of the limit law in Remark~\ref{rem:test}(2). At $j=0$ they reject in $4.9\%$ to
 $5.8\%$ of $2000$ samples, and the likelihood ratio is exactly $1$ in $51\%$
 of them. For $j\,n^{1/4}=0.5$ the limit of the power is $0.528$, and the
 score test rejects in $52.4\%$, $53.1\%$ and $51.8\%$ of the samples for
-$n=10^3$, $10^4$ and $10^5$. (Theorems~\ref{thm:regular}
-and~\ref{thm:test} are stated for continuous time. We have not written out
-the proof of $I>0$ for the $N$-step chain, and here $I>0$ is a computed
-fact.)
+$n=10^3$, $10^4$ and $10^5$. (A share from $2000$ samples has a standard
+error of at most $1.1$ percentage points. Theorem~\ref{thm:test} is stated for
+continuous time, and its proof uses only Theorem~\ref{thm:regular}, which
+holds for this chain by Remark~\ref{rem:nstep}.)
 \end{remark}
 
 \begin{figure}[t]
@@ -1406,12 +1449,13 @@ fall on one curve, so the test sees a net flow of size $n^{-1/4}$.}
 \label{fig:rates}
 \end{figure}
 
-\section{Discrete time, all horizons}\label{sec:discrete}
+\section{Discrete time, the first $2d$ horizons}\label{sec:discrete}
 
 Papers~A to~C count the steps of a chain in discrete time. The proof of
 Theorem~\ref{thm:horizon} does not carry over (powers of algebraic functions
-can cancel where exponentials cannot). But if we are given the counts at every
-horizon, the rest of the theory does.
+can cancel where exponentials cannot). But if we are given the counts at the
+horizons $1$ to $2d$, the algebra of Sections~\ref{sec:pairs} to~\ref{sec:entropy}
+does. (We have not carried over the lumping, the information or the rates.)
 
 Let $P$ be an irreducible transition matrix on $[d]$, let $\mu$ be a start
 law, and let $K_N$ be the vector of visit counts of the first $N$ steps. A cut
@@ -1419,14 +1463,14 @@ of $P$ is defined as for $G$, and the reversal is
 $\hat p_{ij}=\pi_jp_{ji}/\pi_i$.
 
 \begin{proposition}[discrete time]\label{prop:discrete}
-The laws of $K_N$ for all $N\ge1$ determine every principal minor of $P$ and
-every principal minor of $P-\one\mu^{\top}$, and they are determined by these
-minors. If $P$ has no cut and $(\mu',P')$ gives the same laws, then $\mu'=\mu$,
-and $P'$ is $P$ or its reversal.
+The laws of $K_N$ for $1\le N\le2d$ determine every principal minor of $P$ and
+every principal minor of $P-\one\mu^{\top}$, and these minors determine the law
+of $K_N$ for every $N\ge1$. If $P$ has no cut and $(\mu',P')$ gives the same
+laws for $1\le N\le2d$, then $\mu'=\mu$, and $P'$ is $P$ or its reversal.
 \end{proposition}
 
-In words, with all horizons in hand the discrete chain is read in the same way
-as the continuous one. The counts fix $\mu_i$, $p_{ii}$, $p_{ij}p_{ji}$ and
+In words, with the first $2d$ horizons in hand the discrete chain is read in
+the same way as the continuous one, and later horizons add nothing. The counts fix $\mu_i$, $p_{ii}$, $p_{ij}p_{ji}$ and
 $\mu_ip_{ij}+\mu_jp_{ji}$. If every $\mu_i$ is positive, this gives the
 unordered pairs of flows $\{\mu_ip_{ij},\mu_jp_{ji}\}$, and with them (when
 $p_{ij}>0$ exactly when $p_{ji}>0$) the entropy production
@@ -1460,13 +1504,19 @@ $\det(X-P)$.) Also $\chi$ has degree exactly one in each $y_i$, since otherwise
 $x_i$ would divide $\det(X-P)$. So if $\chi$ divided $n$, then $n$ would be a
 constant multiple of $\chi$, and the constant would be $n(0)/\chi(0)=0$. But
 the coefficient of $y_i$ in $n$ is $\mu_i$. Hence the fraction is in lowest
-terms. A second pair $(\mu',P')$ with the same laws has $n'\chi=n\chi'$, so
+terms. Now let a second pair $(\mu',P')$ give the same laws for
+$1\le N\le2d$. The term with $s^N$ is homogeneous of degree $N$ in $y$, so the
+power series of $n/\chi-n'/\chi'$ has no term of degree at most $2d$. Since
+$\chi\chi'$ has constant term $1$, the same holds for the polynomial
+$n\chi'-n'\chi$. But $n$, $n'$, $\chi$ and $\chi'$ have degree at most $d$, so
+this polynomial has degree at most $2d$, and it is $0$. So $n'\chi=n\chi'$, hence
 $\chi$ divides $\chi'$, and then $\chi'=\chi$ because $\chi'$ also has degree
-at most one in each variable and constant term $1$. So the generating function
-determines $\chi$ and $n$, and the first claim follows.
+at most one in each variable and constant term $1$. So the first $2d$ laws
+determine $\chi$ and $n$, and $\chi$ and $n$ determine every law. This is the
+first claim.
 The coefficient of $y_i$ also gives $\mu'=\mu$.
 
-For the second claim, the theorem of Hartfiel and Loewy gives $P'=DPD^{-1}$ or
+For the second claim, the theorem quoted before Theorem~\ref{thm:rigid} gives $P'=DPD^{-1}$ or
 $P'=DP^{\top}D^{-1}$. The rows of $P'$ sum to one. In the first case
 $PD^{-1}\one=D^{-1}\one$, so $D^{-1}\one$ is a multiple of $\one$ and $P'=P$.
 In the second case $P^{\top}D^{-1}\one=D^{-1}\one$, so $D^{-1}\one$ is a
@@ -1497,8 +1547,10 @@ Section~\ref{sec:discrete} with a stationary start, in the coordinates
 $(\pi,c,j)$, where $j$ is the flow around the triangle awake, non-REM, REM. The
 first fit uses the budgets alone, by maximum likelihood with the exact law of
 the count vector, treating the windows as independent copies. The law of the budgets is even in $j$ (run the film backward), so the fit can only give $\lvert
-j\rvert$. The second fit uses the full sequences of the same windows, by
-counting the transitions inside the windows. Table~\ref{tab:sleep} and Figure~\ref{fig:sleep}(c),~(d)
+j\rvert$. This fit is a stationary chain. The second fit uses the full sequences of the same windows, by
+counting the transitions inside the windows. It is not constrained to be
+stationary. Its flows are the transition counts per epoch, so its net flows on
+the three pairs need not be equal. Table~\ref{tab:sleep} and Figure~\ref{fig:sleep}(c),~(d)
 give the results. The intervals run from the $5$th to the $95$th percentile
 of $60$ resamples of the nights, so they are rough.
 
@@ -1540,9 +1592,10 @@ flow of this size and prefer it weakly to none, and that is all. The same
 happens on data simulated from the chain fitted to the full sequences, with
 the same number of windows. In $24$ runs the estimate of $\lvert j\rvert$ was
 close to $0$ in $46\%$, on the bound in $33\%$, and had mean $1.6$ and standard
-deviation $1.7$, where the true value is $2.3$. This is what
-Theorem~\ref{thm:lecam} leads us to expect. A net flow is hard to see in the
-counts, and $659$ windows are too few.
+deviation $1.7$, where the true value is $2.3$. This is in line with
+Theorem~\ref{thm:lecam}, although that theorem is for continuous time, for a
+chain close to reversible, and with the rest of the chain known. A net flow is
+hard to see in the counts, and $659$ windows are too few.
 
 (3) The budgets give two-way flows that are too small, by almost half on the
 two large pairs. This is not a fault of the method. In the $24$ simulated runs
@@ -1558,9 +1611,10 @@ well known~\cite{lo2004}. Many short awakenings cost little time, so the
 budgets hardly see them. Second, sleep changes through the night (deep sleep
 comes early and REM sleep late), so windows from different hours do not have
 one law. This spreads the budgets more than a single chain would, and a chain
-fitted to them answers by switching less often. The second effect must be
-part of the story, because the pair non-REM, REM is also halved and has
-nothing to do with waking. We have not separated the two.
+fitted to them answers by switching less often. The first effect is not
+confined to waking. Non-REM bouts are not geometric either ($19\%$ of them last
+a single epoch, where the chain predicts $3\%$), so it also reaches the pair
+non-REM, REM, which is halved as well. We have not separated the two effects.
 
 (4) We do not trust the entropy production here. The full sequences give
 $\sigma=4.7$ per $1000$ epochs, with interval $(3.4,6.1)$. In the fit from the
@@ -1577,8 +1631,8 @@ window of each night starts with sleep by construction. The two nights of a
 subject are not independent either, and we resample nights, not subjects. The
 nights with and without the drug are pooled. The window of $30$ minutes is a
 choice, and we tried no other. Merging stages $1$ to $4$ hides the structure
-inside non-REM sleep. Proposition~\ref{prop:discrete} needs all horizons, and
-we use one. Since the model does not hold, what the fit from the budgets
+inside non-REM sleep. Proposition~\ref{prop:discrete} uses the horizons $1$ to
+$2d$, and we use one. Since the model does not hold, what the fit from the budgets
 estimates has no fixed relation to the flows of the full sequences.
 
 \begin{figure}[t]
@@ -1629,8 +1683,9 @@ Most statements above were checked numerically in the scripts next to this note.
  $0.998$ times $Ij^2$. The two tests of reversibility are run on $2000$
  samples for each of three sample sizes and seven sizes of the net flow.
 \item \texttt{check\_cut\_transpose.py}. The lumped reversal of
- Example~\ref{ex:four} is the transpose across the module. A transpose across a
- cut that is not a module keeps the principal minors of $G$ but not the counts.
+ Example~\ref{ex:four} is the transpose across the module. In three random
+ examples, a transpose across a cut that is not a module keeps the principal
+ minors of $G$ but not the counts.
  The generating function of Proposition~\ref{prop:discrete} and its two
  expansions in principal minors, for $d=3,4$.
 \item \texttt{check\_rigidity.py}. Part (b) of Theorem~\ref{thm:lumping} and
@@ -1653,11 +1708,13 @@ What we do not know.
  Example~\ref{ex:inside} are the cases we know.
 \item Does Theorem~\ref{thm:horizon} have a form for the $N$-step chain? The
  proof uses that exponentials of algebraic functions do not cancel, and powers
- of algebraic functions can. Proposition~\ref{prop:discrete} needs every
- horizon.
+ of algebraic functions can. Proposition~\ref{prop:discrete} uses the
+ horizons $1$ to $2d$. Is one horizon $N\ge3$ enough? (The rank check in
+ \texttt{check\_lumping\_decoder.py} suggests that it is for three states.)
 \item The large $T$ row of Table~\ref{tab:eff}. By Theorem~\ref{thm:long},
- $d-1$ efficiencies tend to $1$. We expect the rest to tend to $0$, most of
- them like $1/T$ and, for three states, the smallest like $T^{-2}$.
+ $d-1$ efficiencies tend to $1$. We expect the rest to tend to $0$. For the
+ chain of Table~\ref{tab:eff} three of them fall off like $1/T$ and the smallest
+ like $T^{-2}$, and we do not know the general pattern.
 \item A start at one state. The rank check says almost every chain is
  recovered, and the pair formulas change because some $\mu_i$ vanish.
  (Proposition~\ref{prop:minors} and Theorem~\ref{thm:rigid} do not need
@@ -1668,7 +1725,15 @@ What we do not know.
 following. The closest work in probability is by Kim and
 Landim~\cite{kl2024}, who ask when the large deviation rate function of the
 occupation times (the limit of our data as the horizon grows) determines the
-chain. Our data are the law at one finite horizon, with any start. The algebra of Section~\ref{sec:rigid} and of the polynomial $\chi_0$ in Section~\ref{sec:lumping}
+chain. They show that it determines the exit rates, the products
+$g_{ij}g_{ji}$ and the stationary law, and with them the generator of a
+reversible chain, and they give a cycle on three states that it cannot tell
+from its reversal (their Section~5). Our data are the law at one finite
+horizon, with any start. This law holds more. It sees the start, so away from
+a stationary start it determines almost every chain
+(Corollary~\ref{cor:generic}), it gives the unordered pairs of flows and the
+entropy production (Theorems~\ref{thm:pairs} and~\ref{thm:entropy}), and for
+it we can say exactly which chains tie when there is no cut. The algebra of Section~\ref{sec:rigid} and of the polynomial $\chi_0$ in Section~\ref{sec:lumping}
 is the theory of matrices with equal principal
 minors~\cite{hl1984,loewy1986,alahmadieh2026,cggr2025}. We did not find
 Theorem~\ref{thm:horizon}, the role of the start law (the unordered pairs of

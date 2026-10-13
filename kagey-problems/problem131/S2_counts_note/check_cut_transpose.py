@@ -12,7 +12,7 @@ chains.
 3. But G' has the same counts as G only if the second set of minors (those of
    G - 1 mu^T) also agrees. For a cut that is not a module this fails, with a
    stationary start and with other starts.
-4. Discrete time: the laws of the count vector at all horizons determine the
+4. Discrete time: the laws of the count vector at the horizons 1 to 2d determine the
    principal minors of P and of P - 1 mu^T (checked through the generating
    function), and a chain and its reversal agree.
 """

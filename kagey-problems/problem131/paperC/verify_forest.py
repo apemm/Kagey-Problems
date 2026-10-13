@@ -4,7 +4,8 @@ Tests of the forest formula
    det Sigma_alpha = (prod alpha)^2 tree(f + f^T) / arb(f)^2,   f_ij = l_i q_ij r_j,
 and of the resulting formula for C_F(alpha) and K_F.
 Trees and arborescences are ENUMERATED (no determinants), so the test does not
-depend on the matrix-tree theorem.  Run: python -B verify_forest.py   (a few minutes)
+depend on the matrix-tree theorem.  Every part asserts, the floating-point parts with a
+tolerance.  Run: python -B verify_forest.py   (a few minutes)
 """
 import itertools, math, sys, random
 from fractions import Fraction
@@ -116,13 +117,16 @@ def sym_check(G):
 G3 = sp.Matrix([[-(q12 + q13), q12, q13], [q21, -(q21 + q23), q23], [q31, q32, -(q31 + q32)]])
 d, _ = sym_check(G3)
 print("B1. general 3-state generator, symbolic difference:", d, flush=True)
+assert d == 0
 a, b, c = sp.symbols('a b c', positive=True)
 Gc = sp.Matrix([[-a, a, 0], [0, -b, b], [c, 0, -c]])
 d, val = sym_check(Gc)
 print("B2. directed 3-cycle with rates a,b,c: difference", d, "; det Sigma =", val)
+assert d == 0
 val_paper = val.subs({a: b, b: 1, c: 1}, simultaneous=True)
 print("    at rates (b,1,1): det Sigma =", sp.factor(val_paper), "; equals 3b^2/(1+2b)^4:",
       sp.simplify(val_paper - 3 * b ** 2 / (1 + 2 * b) ** 4) == 0, flush=True)
+assert sp.simplify(val_paper - 3 * b ** 2 / (1 + 2 * b) ** 4) == 0
 
 
 # ---------- C. full pipeline in floats against consts_A of the paper (K_F and C_F(alpha))
@@ -183,6 +187,7 @@ for k in (3, 4, 5):
         cnt += 1
 print(f"C. K_F and C_F(alpha) against consts_A on {cnt} random non-reversible cases "
       f"(k=3,4,5, complete and sparse): max rel. error {worst:.2e}", flush=True)
+assert worst < 1e-6, worst
 
 worst = 0
 for k in (3, 4):
@@ -200,6 +205,7 @@ for k in (3, 4):
         b_det = 2 ** (k - 1) * np.prod(al) ** 2 / tree(cij.tolist())
         worst = max(worst, abs(detS / b_det - 1))
 print(f"D. reversible faces: new formula against Prop. constant(b), max rel. error {worst:.2e}", flush=True)
+assert worst < 1e-9, worst
 
 for bb in (2.5, 3.0, 7.0):
     A = np.array([[0, bb, 0], [0, 0, 1], [1, 0, 0.]])
@@ -208,6 +214,7 @@ for bb in (2.5, 3.0, 7.0):
     detS, C, _, _ = formula(A, q, mu)
     Kp = (1 + 2 * bb) ** 2 / (2 * math.sqrt(3) * math.pi * bb)
     print(f"E. 3-cycle b={bb}: K formula {C:.15f}  Prop. threecycle {Kp:.15f}  rel.diff {abs(C / Kp - 1):.1e}")
+    assert abs(C / Kp - 1) < 1e-12
 
 # ---------- F. 50-digit check with det Sigma obtained independently as det Hess(Lambda_0)(0),
 # by numerical differentiation of the Perron root of Q_F + diag(0, beta)
@@ -259,3 +266,5 @@ for k, seed in ((3, 1), (3, 2), (4, 3), (4, 4)):
     e1, e2 = mp_case(k, seed)
     print(f"F. k={k} seed={seed}: |det Hess(Lambda_0)/formula - 1| = {mp.nstr(e1, 3)},  "
           f"|gap product/(arb/prod alpha) - 1| = {mp.nstr(e2, 3)}", flush=True)
+    assert e1 < mp.mpf(10) ** -15 and e2 < mp.mpf(10) ** -30, (e1, e2)
+print("verify_forest.py: all parts passed.")
