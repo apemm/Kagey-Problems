@@ -119,6 +119,15 @@ Facts from the project record (Claude Opus 5.5 through Claude Code, September an
   in floating point and are not certified. The N between 2000 and the constants of the two
   theorems remain open, and the model found no way to close them.
 
+- Third-pass fixes of October 12 (from the review list, applied by the model). In note S2 two
+  pieces of mathematics are new and came from the model: Remark `rem:nstep` (a sign argument that
+  gives positive information for the N-step chain, so it is no longer only a computed fact) and
+  the restated Proposition `prop:discrete` (the horizons 1 to 2d suffice, by a degree count that the
+  review list suggested). The model recomputed the non-REM bout shares (19% against 3%) and the
+  slopes for the stationary start before writing them. What Kim and Landim prove was taken from
+  Section 5 of arXiv:2412.13515 as summarized by a web fetch, and the locator Lemma 2.8 of
+  Chatterjee et al. from the review list. Neither was read in full.
+
 ## Figures (both papers, and the notes S1 and S2)
 
 - Every figure was generated with Claude (Claude Opus 5.5 through Claude Code). The model wrote the
