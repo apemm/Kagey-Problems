@@ -3,7 +3,7 @@
 The default (--quick) reproduces the numbers of the paper that take a few
 minutes in all. Add --full for the heavy cells as well: the directed 3-cycle at
 N = 10^8, the whole 4-cycle in the continuum, C_5 at N = 72, the path P_4 at
-N = 150 and 300, the census of graphs on 6 states, the planar crossings from
+N = 150 and 300, the census of graphs on 6 states,
 N = 1280 to 10240, the sticky switches at N = 480, the telegraph comparison at
 N = 16000, and the cells at N = 160 of the first-order section.
 Needs numpy, scipy, sympy and mpmath.
@@ -23,8 +23,6 @@ args = parser.parse_args()
 # one script per topic, matching the ledgers ledger_C1.md to ledger_C5.md
 scripts = ('verify_first_order.py',      # C1: exact law, the rate on a face, first-order selection
            'verify_examples.py',         # C2: complete graphs, cycles, paths, 2 triangles, the paw and the house
-           'verify_planar.py',           # C3: the planar persistent walk
-           'verify_planar_product.py',   # C3: the product curve and turns only
            'verify_sticky_fisher.py',    # C4: sticky priors (and the endpoint information note S1)
            'verify_second_order.py',     # C5: the local law, the constants and the crossings
            'verify_forest.py',           # Proposition 4.15 and Lemma A.3: the tree formula (about five minutes)

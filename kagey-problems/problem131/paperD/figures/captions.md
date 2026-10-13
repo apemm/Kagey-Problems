@@ -19,3 +19,5 @@ The elephant walk at its crossing. (a) The law $P_N$ at $N=3200$ and its crossin
 ## Figure 3, `heavy.pdf`, label `fig:heavy`, in Section 4 before Corollary 4.5
 
 Alternating runs with a stationary start. (a) $R_N/(C(\alpha)N^{e(\alpha)})$ for even $N$ from 100 to $10^5$, with the entries of Table~\ref{tab:heavy} as dots. (b) $R_N$ for $\alpha=1.5,1.55,1.58,1.59$ below $\varphi$. Each curve crosses 1 once on $10\le N\le3\cdot10^4$, at $N^*(\alpha)$ (circles).
+
+Note of October 13, 2026. The figures `heavy` and `aging` are now Figures 2 and 3 of Paper F and live in `../../paperF/figures`.

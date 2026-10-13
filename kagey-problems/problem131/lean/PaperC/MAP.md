@@ -171,3 +171,5 @@ or expansions as `N → ∞`. In terms of the paper these are the following.
   The paw is proved the same way in `Paw`. So these rows of Table 1 are proved in Lean.
 * Proposition 4.13 assumes `b > 2`. The monotonicity of `M_{1,2}/M_{1}` in `h`, and hence the
   uniqueness of the first crossing in 4.13(ii), holds for every `b > 1` (`dicyc_ratio_strictMono`).
+
+Note of October 13, 2026. The planar walk (Section 6 below) is now Paper E, where its statements are numbered 3.x. The other numbers of Paper C from Section 7 on dropped by one section (the sticky priors are now Section 6).

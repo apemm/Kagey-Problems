@@ -20,3 +20,5 @@ D3-P2 (a slope tolerance), the point value in D3-V1(b) (a slip in reading a roun
 statement that the paper calls a theorem.
 
 The output of the check scripts is in `verify_output.txt` (quick run) and `verify_output_full.txt`.
+
+Note of October 13, 2026. The ledgers `ledger_D3.md` and `ledger_D4.md` (heavy tails and aging) moved to `../../paperF/data` with Paper F.
