@@ -1,0 +1,227 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1.05in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[shortlabels]{enumitem}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\hypersetup{pdftitle={Endpoint crossings for random walks with heavy-tailed runs and for aging walks},pdfauthor={Arjun Pemmasani}}
+
+% ---------- theorem environments ----------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% ---------- notation macros ----------
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\CP}{\mathrm{CP}}
+
+\title{Endpoint crossings for random walks with heavy-tailed runs\\ and for aging walks}
+\author{Arjun Pemmasani\\[2pt]
+\small Department of Mathematics, Harvey Mudd College\\
+\small Claremont, CA 91711, USA\\
+\small \texttt{apemmasani@hmc.edu}}
+\date{}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Drop a ball through a Galton board on which every bounce after the first
+repeats the previous direction with probability $p$. Kagey asked when the
+middle bin is as likely as each end bin. For this Markov walk with $N$ steps
+the crossing comes when the expected number of direction changes is about
+$\log N$. We ask what changes when the ball remembers more than its last
+step. First we take
+alternating runs whose lengths have tail $k^{-\alpha}$ with $1<\alpha<2$,
+started in equilibrium. Wang, Li and H\"anggi observed, as a heuristic for
+heat conduction, that the ends and the middle decay at the same rate when
+$\alpha$ is the golden ratio. We prove the lattice form of their observation,
+with its constant. Namely, the ends beat the middle for large $N$ exactly when
+$\alpha$ is below the golden ratio. Second, an aging walk switches at step
+$k$ with probability $c/k$. With a fixed first step each of the bins
+$1,\dots,N-1$ ties with the end exactly at $c=1$, for every $N$. We prove the
+same for an aging walk
+with $d$ states, whose vector of counts is exactly uniform at the tie.
+\end{abstract}
+
+\medskip
+\noindent\textbf{Keywords:} persistent random walk; alternating renewal process; heavy tails;
+L\'evy walk; golden ratio; aging random walk; P\'olya urn; Galton board.
+
+\noindent\textbf{MSC2020:} 60G50; 60K05; 60F05; 60J10; 60C05.
+
+\input{sec_intro.tex}
+\input{sec_heavy.tex}
+\input{sec_aging.tex}
+\input{sec_verify.tex}
+
+\paragraph{Acknowledgments.} I thank Peter Kagey for posing the problem and
+Aidan Deshong for insightful conversations.
+
+\section*{A note on the use of AI}
+% AI NOTE: to be written by the author.
+All mathematical claims, proofs and computations in this paper are my
+responsibility.
+
+\appendix
+\input{app_heavy.tex}
+\input{app_aging.tex}
+
+\section*{Statements and declarations}
+\paragraph{Competing interests.} The author has no competing interests to
+declare.
+
+\paragraph{Funding.} No funding was received for this work.
+
+\paragraph{Data availability.} All code, data and Lean files supporting this
+paper are in the folder \nolinkurl{kagey-problems/problem131} of
+\url{https://github.com/apemm/Kagey-Problems}, at the release
+\nolinkurl{paperF-arxiv-v1}. To rerun the checks, run
+\texttt{python -B verify\_all.py -{}-paper f} in that folder, which takes
+a few minutes. The scripts are in the subfolder \nolinkurl{paperF} and need
+\texttt{numpy}, \texttt{scipy} and \texttt{mpmath}.
+The file \nolinkurl{SUPPLEMENT.md} says what each script checks and where to
+find the predictions that we wrote down before each computation.
+Section~\ref{sec:verify} describes the checks.
+
+\begin{thebibliography}{99}\small\setlength{\baselineskip}{11pt}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}
+
+\bibitem{kagey131}
+P.~Kagey, \emph{Problem 131}, Open Problem Collection,
+\url{https://peterkagey.com/problems/131/} (accessed October 2026).
+
+\bibitem{paperA}
+A.~Pemmasani, \emph{Uniform Bessel bounds for endpoint crossings in the
+persistent random walk}, preprint, 2026.
+\href{https://arxiv.org/abs/2610.06935}{arXiv:2610.06935}.
+
+\bibitem{paperB}
+A.~Pemmasani, \emph{Vertex crossings in a symmetric Markov multinomial
+model}, preprint, 2026.
+\href{https://arxiv.org/abs/2610.09258}{arXiv:2610.09258}.
+
+\bibitem{paperC}
+A.~Pemmasani, \emph{Face selection for slowly switching Markov chains},
+in preparation.
+
+\bibitem{paperD}
+A.~Pemmasani, \emph{Endpoint crossings for the elephant random walk},
+in preparation.
+
+\bibitem{paperE}
+A.~Pemmasani, \emph{Kagey's board in the plane: endpoint crossings for the planar
+persistent walk}, in preparation.
+
+\bibitem{glrs2025}
+H.~Gu\'erin, L.~Laulin, K.~Raschel and T.~Simon, \emph{On the limit law of
+the superdiffusive elephant random walk}, Electron.\ J.\ Probab.\
+\textbf{30} (2025), 1--25. \href{https://doi.org/10.1214/25-EJP1362}{doi:10.1214/25-EJP1362}.
+
+\bibitem{tv2026}
+H.~Trinas and G.~Valle, \emph{A superdiffusive local limit theorem for the
+elephant random walk and the breakdown of log-concavity}, preprint, 2026,
+\href{https://arxiv.org/abs/2609.14753}{arXiv:2609.14753}.
+
+\bibitem{godrecheluck2001}
+C.~Godr\`eche and J.~M.~Luck, \emph{Statistics of the occupation time of
+renewal processes}, J.\ Stat.\ Phys.\ \textbf{104} (2001), 489--524.
+\href{https://doi.org/10.1023/A:1010364003250}{doi:10.1023/A:1010364003250}.
+
+\bibitem{lamperti1958}
+J.~Lamperti, \emph{An occupation time theorem for a class of stochastic
+processes}, Trans.\ Amer.\ Math.\ Soc.\ \textbf{88} (1958), 380--387.
+\href{https://doi.org/10.1090/S0002-9947-1958-0094863-X}{doi:10.1090/S0002-9947-1958-0094863-X}.
+
+\bibitem{dzh2012}
+S.~Denisov, V.~Zaburdaev and P.~H\"anggi, \emph{L\'evy walks with velocity
+fluctuations}, Phys.~Rev.~E \textbf{85} (2012), 031148.
+\href{https://doi.org/10.1103/PhysRevE.85.031148}{doi:10.1103/PhysRevE.85.031148}.
+
+\bibitem{zdk2015}
+V.~Zaburdaev, S.~Denisov and J.~Klafter, \emph{L\'evy walks}, Rev.\ Mod.\
+Phys.\ \textbf{87} (2015), 483--530.
+\href{https://doi.org/10.1103/RevModPhys.87.483}{doi:10.1103/RevModPhys.87.483}.
+
+\bibitem{dsd2013}
+A.~Dhar, K.~Saito and B.~Derrida, \emph{Exact solution of a L\'evy walk model
+for anomalous heat transport}, Phys.\ Rev.\ E \textbf{87} (2013),
+010103(R). \href{https://doi.org/10.1103/PhysRevE.87.010103}{doi:10.1103/PhysRevE.87.010103}.
+
+\bibitem{wlh2016}
+L.~Wang, N.~Li and P.~H\"anggi, \emph{Simulation of heat transport in
+low-dimensional oscillator lattices}, in: S.~Lepri (ed.), \emph{Thermal
+Transport in Low Dimensions}, Lecture Notes in Physics \textbf{921},
+Springer, Cham, 2016, pp.~239--274.
+\href{https://doi.org/10.1007/978-3-319-29261-8_6}{doi:10.1007/978-3-319-29261-8\_6}.
+
+\bibitem{ibragimovlinnik1971}
+I.~A.~Ibragimov and Yu.~V.~Linnik, \emph{Independent and Stationary
+Sequences of Random Variables}, Wolters-Noordhoff, Groningen, 1971.
+
+\bibitem{feller1971}
+W.~Feller, \emph{An Introduction to Probability Theory and Its
+Applications}, Vol.~II, 2nd ed., Wiley, New York, 1971.
+
+\bibitem{zolotarev1986}
+V.~M.~Zolotarev, \emph{One-Dimensional Stable Distributions}, Transl.\
+Math.\ Monogr.\ \textbf{65}, Amer.\ Math.\ Soc., Providence, RI, 1986.
+\href{https://doi.org/10.1090/mmono/065}{doi:10.1090/mmono/065}.
+
+\bibitem{dlmf}
+F.~W.~J.~Olver et al.\ (eds.), \emph{NIST Digital Library of Mathematical
+Functions},
+Eqs.~5.5.5, 5.6.4, 5.9.15 and~25.12.12, \url{https://dlmf.nist.gov}.
+
+\bibitem{ds2007}
+Z.~Dietz and S.~Sethuraman, \emph{Occupation laws for some
+time-nonhomogeneous Markov chains}, Electron.\ J.\ Probab.\ \textbf{12}
+(2007), 661--683. \href{https://doi.org/10.1214/EJP.v12-413}{doi:10.1214/EJP.v12-413}.
+
+\bibitem{ev2018}
+J.~Engl\"ander and S.~Volkov, \emph{Turning a coin over instead of tossing
+it}, J.\ Theoret.\ Probab.\ \textbf{31} (2018), 1097--1118.
+\href{https://doi.org/10.1007/s10959-016-0725-1}{doi:10.1007/s10959-016-0725-1}.
+
+\bibitem{abt2003}
+R.~Arratia, A.~D.~Barbour and S.~Tavar\'e, \emph{Logarithmic Combinatorial
+Structures: A Probabilistic Approach}, EMS Monographs in Mathematics, European
+Mathematical Society, Z\"urich, 2003.
+
+\bibitem{bc2018}
+F.~Bouguet and B.~Cloez, \emph{Fluctuations of the empirical measure of
+freezing Markov chains}, Electron.~J.~Probab. \textbf{23} (2018), 1--31.
+\href{https://doi.org/10.1214/17-EJP130}{doi:10.1214/17-EJP130}.
+
+\bibitem{ev2022}
+J.~Engl\"ander and S.~Volkov, \emph{Conservative random walk},
+Electron.~J.~Probab. \textbf{27} (2022), paper no.~138, 1--29.
+\href{https://doi.org/10.1214/22-EJP863}{doi:10.1214/22-EJP863}.
+
+\bibitem{ev2024}
+J.~Engl\"ander and S.~Volkov, \emph{Coin-Turning, Random Walks and
+Inhomogeneous Markov Chains}, World Scientific, Singapore, 2024.
+\href{https://doi.org/10.1142/13837}{doi:10.1142/13837}.
+
+\bibitem{evw2020}
+J.~Engl\"ander, S.~Volkov and Z.~Wang, \emph{The coin-turning walk and its
+scaling limit}, Electron.\ J.\ Probab.\ \textbf{25} (2020), paper no.~3,
+1--38. \href{https://doi.org/10.1214/19-EJP406}{doi:10.1214/19-EJP406}.
+
+\end{thebibliography}
+
+\end{document}

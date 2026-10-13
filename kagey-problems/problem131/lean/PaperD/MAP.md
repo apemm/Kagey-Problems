@@ -163,3 +163,5 @@ No statement that was formalized turned out to be false. We record 4 points.
 * D4 Proposition 10's conclusion for `n ≥ 6` depends on Theorem 7's lower bracket, which in turn
   depends on Proposition 2(b). Both are formalized, so Proposition 10 is proved for every even
   `n ≥ 4` without numerics.
+
+Note of October 13, 2026. Heavy-tailed runs and aging walks (Sections 4 and 5 below) are now Paper F, where their statements are numbered 2.x and 3.x.

@@ -9,7 +9,7 @@ program_X the curves of Paper X are drawn in color and bold, and the curves of
 the other papers are light grey, so each variant still reads in greyscale.
 The figure is 6.4 in wide and has no text smaller than 8 pt at its natural size.
 
-The four papers (all A. Pemmasani, preprint, 2026) are
+The first four papers of the series as it stood when Papers A and B were posted (all A. Pemmasani, 2026) are
   A  Uniform Bessel bounds for endpoint crossings in the persistent random walk
   B  Vertex crossings in a symmetric Markov multinomial model
   C  Face selection for slowly switching Markov chains and the planar persistent walk
@@ -98,7 +98,7 @@ plt.rcParams.update({
 })
 
 # one dark color per paper, and light grey for the papers that are not highlighted
-COLOR = {"A": "#1b4f9c", "B": "#b2182b", "C": "#1b7837", "D": "#6a2c8a"}
+COLOR = {"A": "#1b4f9c", "B": "#b2182b", "E": "#1b7837", "D": "#6a2c8a", "F": "#b35806"}
 GREY, GREY_TEXT = "0.74", "0.55"
 
 # `python make_program_figure.py --dark C D` writes only those variants, on a black
@@ -108,9 +108,16 @@ import sys as _sys
 _sys.path.insert(0, str(HERE))
 import dark_style
 DARK_MODE = "--dark" in _sys.argv
-PAPERS = [a for a in _sys.argv[1:] if a in ("A", "B", "C", "D")] or list("ABCD")
+# Since October 2026 the series has six papers. Paper C (face selection) has no curve of its own,
+# so its variant highlights the crossings that its theory covers, namely A, B and E. Paper E is
+# the planar walk, Paper D the elephant walk, and Paper F the heavy-tailed runs and the aging walk.
+# The variants program_A and program_B are the ones posted with Papers A and B. They carry the
+# labels of the series as it stood then (C planar, D aging), and this script no longer writes them.
+HIGHLIGHT = {"C": {"A", "B", "E"}, "D": {"D"}, "E": {"E"}, "F": {"F"}}
+PAPERS = [a for a in _sys.argv[1:] if a in HIGHLIGHT] or list("CDEF")
 if DARK_MODE:
-    COLOR = {"A": dark_style.BLUE, "B": dark_style.RED, "C": dark_style.GREEN, "D": dark_style.YELLOW}
+    COLOR = {"A": dark_style.BLUE, "B": dark_style.RED, "E": dark_style.GREEN, "D": dark_style.YELLOW,
+             "F": dark_style.GOLD}
     GREY, GREY_TEXT = "0.62", "0.45"
 L_MIN, L_MAX = log(10.0), log(1e8)
 
@@ -205,8 +212,8 @@ def load_exact():
             return None
         return json.loads(file.read_text(encoding="utf-8"))
 
-    rev = read("paperC/data/figdata_planar_0p1_1.json")
-    turn = read("paperC/data/figdata_planar_1_1.json")
+    rev = read("paperE/data/figdata_planar_0p1_1.json")
+    turn = read("paperE/data/figdata_planar_1_1.json")
     ele = read("paperD/data/figdata_crossing.json")
     simplex = read("paperB/data/simplex-verification.json")
     simplex = None if simplex is None else simplex["threshold_checks"]
@@ -293,7 +300,7 @@ def check():
     r, s = 1.0, 1.0
     beta = 2 * r + s
     need(s < 2 * r and abs(min(2 / beta, 1 / s) - 2 / 3) < 1e-15, "r = s = 1 should give tau* = 2/3 with turns dominating")
-    if have("C", what="curve C against the exact crossings of Paper C"):
+    if have("C", what="the planar curve against the exact crossings of Paper E"):
         d = gaps(planar, ex["C"])
         need(decreasing(d) and 0 < d[0] < 0.25 and d[-1] < 0.05, f"curve C against Paper C, {d}")
     other = (2 * bessel_type(Ls, C0) + log(beta / (2 * (r + s)))) / beta   # beta T = 2 z_N + log(beta/(2(r + s)))
@@ -349,20 +356,20 @@ def curves():
         ("B", 2): bessel_type(L, a_k(2)),
         ("B", 3): bessel_type(L, a_k(3)),
         ("B", 4): bessel_type(L, a_k(4)),
-        ("C", "C"): planar(L),
+        ("E", "E"): planar(L),
         ("D", "elephant"): elephant(L),
-        ("D", "aging"): aging(L),
+        ("F", "aging"): aging(L),
     }
 
 
 STYLE = {("A", "A"): "-", ("B", 2): "-", ("B", 3): (0, (4, 1.6)), ("B", 4): (0, (1, 1.2)),
-         ("C", "C"): "-", ("D", "elephant"): "-", ("D", "aging"): (0, (5, 1.5, 1, 1.5))}
+         ("E", "E"): "-", ("D", "elephant"): "-", ("F", "aging"): (0, (5, 1.5, 1, 1.5))}
 # (paper, curve, label, height of the label at the right edge, None meaning the end of the curve)
 LABELS = [("D", "elephant", "D  elephant", None),
-          ("D", "aging", "D  aging", 19.8),
+          ("F", "aging", "F  aging", 19.8),
           ("A", "A", r"A  $z_N$", 17.2),
           ("B", 3, r"B  $k=2,3,4$", 14.6),
-          ("C", "C", "C  planar", None)]
+          ("E", "E", "E  planar", None)]
 YMAX = 34.0
 
 
@@ -372,13 +379,14 @@ def fig_program(L, ys, hi):
     bx = fig.add_axes([0.782, 0.135, 0.213, 0.745])
 
     # panel (a), with the grey curves first and the highlighted paper on top
-    for key, y in sorted(ys.items(), key=lambda kv: kv[0][0] == hi):
-        on = key[0] == hi
+    hot = HIGHLIGHT[hi]
+    for key, y in sorted(ys.items(), key=lambda kv: kv[0][0] in hot):
+        on = key[0] in hot
         bold = 1.25 if key[0] == "B" else 1.7      # the 3 curves of B lie within 0.4 of each other
         ax.plot(L, y, ls=STYLE[key], color=COLOR[key[0]] if on else GREY,
                 lw=bold if on else 0.9, zorder=3 if on else 2)
     for paper, which, text, y_lab in LABELS:
-        on = paper == hi
+        on = paper in hot
         y_end = float(ys[(paper, which)][-1])
         ax.annotate(text, xy=(L_MAX, y_end), xytext=(L_MAX + 0.5, y_end if y_lab is None else y_lab),
                     va="center", ha="left", annotation_clip=False,
@@ -407,9 +415,9 @@ def fig_program(L, ys, hi):
     ax.text(0.975, 0.022, "below each curve\nthe ends beat the middle", transform=ax.transAxes,
             va="bottom", ha="right", color="0.2", linespacing=1.3)
 
-    # panel (b), the heavy-tailed exponent of Paper D
-    on = hi == "D"
-    col = COLOR["D"] if on else GREY
+    # panel (b), the heavy-tailed exponent of Paper F
+    on = "F" in hot
+    col = COLOR["F"] if on else GREY
     al = np.linspace(1.0, 2.0, 400)
     bx.axhline(0.0, color="0.55", lw=0.5, ls=":")
     bx.plot([PHI, PHI], [-0.6, 0.0], color="0.55", lw=0.5, ls=":")
@@ -424,7 +432,7 @@ def fig_program(L, ys, hi):
     bx.set_xticks([1.25, 1.5, 1.75], minor=True)
     bx.set_xlabel(r"run exponent $\alpha$")
     bx.set_ylabel(r"$e(\alpha)=1-\alpha+1/\alpha$", labelpad=1)
-    bx.set_title("D  heavy-tailed runs", fontsize=8, pad=4, color=col if on else GREY_TEXT,
+    bx.set_title("F  heavy-tailed runs", fontsize=8, pad=4, color=col if on else GREY_TEXT,
                  fontweight="bold" if on else "normal")
     # The sign of e(alpha) decides the winner: e > 0 (alpha < phi) means the ends win.
     bx.text(0.975, 0.965, "$\\alpha>\\varphi$: middle\nbeats the ends", transform=bx.transAxes,

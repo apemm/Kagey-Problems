@@ -1,0 +1,474 @@
+\section{Heavy-tailed runs}\label{sec:heavy}
+
+In this section the walk remembers the time since its last switch. The steps
+form maximal runs whose directions alternate. The first run has length $D$,
+and the later runs have i.i.d.\ lengths $\xi_1,\xi_2,\dots$ distributed as
+$\xi$, where
+\[
+ \bar F(k)=\Prob(\xi\ge k)=k^{-\alpha}\quad(k\ge1)
+\]
+for some $\alpha>0$. So $\Prob(\xi=k)=k^{-\alpha}-(k+1)^{-\alpha}>0$ for every
+$k\ge1$. The first direction is fair, and $D$, $(\xi_i)$ and the first
+direction are independent. With a fresh start $D$ has the law of $\xi$. For
+$\alpha>1$ the stationary start is $\Prob(D=d)=\bar F(d)/\mu$, where
+$\mu=\E\xi=\zeta(\alpha)$. This law is stationary in the following sense. The
+number of steps left in the current run, counting the current one, is a Markov
+chain that moves from $k\ge2$ to $k-1$ and from $1$ to a fresh copy of $\xi$.
+Since $\bar F(k)=\bar F(k+1)+\Prob(\xi=k)\bar F(1)$, the law $\bar F(k)/\mu$
+is invariant for this chain. So the stationary start sees the runs at a
+typical time. We define $A_N$, $P_N$, $C_N$ and $E_N$ as in
+Section~\ref{sec:notation}, put $R_N=E_N/C_N$, and write $\Prob_+$ for the law
+given that the first run is $+$. In this section the constants implied by
+$O(\cdot)$ may depend on $\alpha$.
+
+\begin{proposition}[the edge]\label{prop:edge}
+For every law of $D$, $E_N=\frac12\Prob(D\ge N)$. With a fresh start
+$E_N=\frac12N^{-\alpha}$. With the stationary start
+\[
+ E_N=\frac{\zeta(\alpha,N)}{2\zeta(\alpha)}
+ =\frac{N^{1-\alpha}}{2(\alpha-1)\zeta(\alpha)}\Bigl(1+\frac{\theta_N(\alpha-1)}N\Bigr)
+\]
+for some $\theta_N\in[0,1]$, where $\zeta(\alpha,N)=\sum_{k\ge N}k^{-\alpha}$
+is the Hurwitz zeta function.
+\end{proposition}
+
+\begin{proof}
+All $N$ steps are $+1$ exactly when the first direction is $+$ and $D\ge N$.
+Hence $E_N=\frac12\Prob(D\ge N)$. For the fresh start
+$\Prob(D\ge N)=\bar F(N)=N^{-\alpha}$. For the stationary start
+$\Prob(D\ge N)=\sum_{d\ge N}d^{-\alpha}/\mu=\zeta(\alpha,N)/\zeta(\alpha)$.
+To estimate $\zeta(\alpha,N)$ we compare the sum with an integral. Since
+$t^{-\alpha}$ is decreasing,
+\[
+ \int_N^\infty t^{-\alpha}\,dt\le\zeta(\alpha,N)\le N^{-\alpha}+\int_N^\infty
+ t^{-\alpha}\,dt .
+\]
+The integral equals $N^{1-\alpha}/(\alpha-1)$, and $N^{-\alpha}$ is
+$(\alpha-1)/N$ times the integral. This gives the second form.
+\end{proof}
+
+So the edge only sees the first run, while the center depends on all the runs.
+For the center we need the renewal quantities
+\begin{gather*}
+ \tau_m=\xi_1+\dots+\xi_m,\quad\tau_0=0,\qquad u_m(k)=\Prob(\tau_m=k),\\
+ q_m(k)=\Prob(\tau_{m-1}<k\le\tau_m)=\sum_{j\ge1}\bar F(j)u_{m-1}(k-j)
+\end{gather*}
+for $m,k\ge1$. So $u_m(k)$ is the chance that the $m$-th run ends at level $k$,
+and $q_m(k)$ the chance that the $m$-th run covers level $k$. For the delayed
+versions let $D$ be independent of $(\xi_i)$, and put
+$u^D_m(k)=\Prob(D+\tau_{m-1}=k)$, $q^D_1(k)=\Prob(D\ge k)$ and
+$q^D_m(k)=\Prob(D+\tau_{m-2}<k\le D+\tau_{m-1})$ for $m\ge2$. For the
+stationary start
+$u^D_m(k)=\sum_d\frac{\bar F(d)}{\mu}u_{m-1}(k-d)=q_m(k)/\mu$.
+
+The $+$ runs and the $-$ runs form two independent renewal processes. The walk
+is in bin $a$ at time $N$ exactly when one of them sits at its level and the
+other is inside a run that covers its level.
+
+\begin{proposition}[two renewal processes]\label{prop:tworenewal}
+Let $D$ have any law on $\{1,2,\dots\}$. For $a+b=N$ with $a,b\ge1$,
+\[
+ \Prob_+(A_N=a)=\sum_{m\ge1}\Bigl[u_m(b)\,q^D_{m+1}(a)+u^D_m(a)\,q_m(b)\Bigr],
+\]
+and $\Prob_+(A_N=N)=\Prob(D\ge N)$. So for even $N$ and $h=N/2$,
+$C_N=\sum_{m\ge1}[u_m(h)q^D_{m+1}(h)+u^D_m(h)q_m(h)]$. For the fresh start
+this is $C_N=\sum_mu_m(h)[q_m(h)+q_{m+1}(h)]$.
+\end{proposition}
+
+\begin{proof}
+We split according to the run that contains step $N$. Let the $+$ runs have
+lengths $D,\xi^+_2,\xi^+_3,\dots$ and the $-$ runs
+$\xi^-_1,\xi^-_2,\dots$, and let $s^\pm_j$ be the sum of the first $j$ lengths
+of each sign, with $s^\pm_0=0$. So $s^+_j$ has law $u^D_j$ and $s^-_j$ has law
+$u_j$, and the two sequences are independent. The runs alternate and the
+first one is a $+$ run. So the $j$-th $+$ run comes after $j-1$ runs of each
+sign and covers the steps in $(s^+_{j-1}+s^-_{j-1},\,s^+_j+s^-_{j-1}]$, and
+the $j$-th $-$ run covers $(s^+_j+s^-_{j-1},\,s^+_j+s^-_j]$. Let $N=a+b$.
+There are three cases.
+
+Suppose step $N$ is in the first run. Then $A_N=N$, and this happens exactly
+when $D\ge N$.
+
+Suppose step $N$ is in the $j$-th $+$ run with $j\ge2$. Then exactly $j-1$ of
+the $-$ runs lie before step $N$, and they are complete, so
+$A_N=N-s^-_{j-1}$. So $A_N=a$ means $s^-_{j-1}=b$, and then step $N=a+b$ is
+in this run exactly when $s^+_{j-1}<a\le s^+_j$. By independence this has
+probability $u_{j-1}(b)\,q^D_j(a)$.
+
+Suppose step $N$ is in the $j$-th $-$ run. Then the first $j$ of the $+$ runs
+are complete and no other has begun, so $A_N=s^+_j$. So $A_N=a$ means
+$s^+_j=a$, and then step $N$ is in this run exactly when
+$s^-_{j-1}<b\le s^-_j$. This has probability $u^D_j(a)\,q_j(b)$.
+
+The cases are disjoint. Summing them, with $m=j-1$ in the second and $m=j$ in
+the third, gives the formula. Now let $N$ be even. The first direction is
+fair, and changing the sign of every step sends $A_N$ to $N-A_N$. Hence
+$C_N=\frac12[\Prob_+(A_N=h)+\Prob_+(A_N=N-h)]=\Prob_+(A_N=h)$. With a fresh
+start $u^D_m=u_m$ and $q^D_m=q_m$, which gives the last formula.
+\end{proof}
+
+This identity is the coefficient form of the double transform of Godr\`eche
+and Luck~\cite[Section~7]{godrecheluck2001} for the occupation time of an
+alternating renewal process. To evaluate it we need the stable limit of
+$\tau_m$ and its local form.
+
+\begin{lemma}[stable and local limits]\label{lem:stable}
+Let $1<\alpha<2$ and $a_m=m^{1/\alpha}$. Put
+$K_\alpha=\Gamma(2-\alpha)/(\alpha-1)=-\Gamma(1-\alpha)>0$ and
+$\sigma_\alpha=2K_\alpha\lvert\cos\frac{\pi\alpha}2\rvert$.
+\begin{enumerate}[(i)]
+\item $\E e^{i\theta\xi}=1+i\mu\theta+K_\alpha(-i\theta)^\alpha+O(\theta^2)$
+as $\theta\to0$, with the principal branch.
+\item $(\tau_m-m\mu)/a_m$ converges in law to a variable $G$ with
+$\E e^{-sG}=e^{K_\alpha s^\alpha}$ for $s\ge0$ and
+$\E e^{i\theta G}=\exp(K_\alpha(-i\theta)^\alpha)$. The law of $G$ is totally
+skewed to the right and has a bounded, uniformly continuous density $g$ with
+$g(z)\to0$ as $\lvert z\rvert\to\infty$.
+\item (Gnedenko) The constant $\bar u:=\sup_{m\ge1}\sup_ka_mu_m(k)$ is
+finite, and $a_mu_m(k)-g((k-m\mu)/a_m)\to0$ uniformly in $k$ as
+$m\to\infty$.
+\item If $G'$ is an independent copy of $G$, then $G-G'$ is symmetric
+$\alpha$-stable with $\E e^{i\theta(G-G')}=e^{-\sigma_\alpha\lvert
+\theta\rvert^\alpha}$, and
+$I_\alpha:=\int_{\mathbb R}g(z)^2\,dz=\Gamma(1+1/\alpha)/(\pi\sigma_\alpha^{1/\alpha})$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+All four parts come from the expansion of the transform of $\xi$ near $0$. We
+find it first.
+
+(i) Summation by parts gives $1-\E w^\xi=(1-w)\sum_{k\ge1}\bar F(k)w^{k-1}$
+for $\lvert w\rvert\le1$. Put $w=e^{-v}$ with $\operatorname{Re}v\ge0$, and
+write $\mathrm{Li}_\alpha(w)=\sum_{k\ge1}k^{-\alpha}w^k$. Since
+$\bar F(k)=k^{-\alpha}$, the identity reads
+$1-\E e^{-v\xi}=(e^v-1)\mathrm{Li}_\alpha(e^{-v})$. For
+$0<\lvert v\rvert<2\pi$, \cite[25.12.12]{dlmf} gives
+$\mathrm{Li}_\alpha(e^{-v})=\Gamma(1-\alpha)v^{\alpha-1}+\zeta(\alpha)+O(\lvert
+v\rvert)$. We multiply by $e^v-1=v+O(\lvert v\rvert^2)$ and use
+$\zeta(\alpha)=\mu$ and $\Gamma(1-\alpha)=-K_\alpha$. Since $\alpha+1>2$,
+\[
+ 1-\E e^{-v\xi}=\mu v-K_\alpha v^\alpha+O(\lvert v\rvert^2)
+ \qquad(v\to0,\ \operatorname{Re}v\ge0).
+\]
+With $v=-i\theta$ this is (i).
+
+(ii) Put $Z_m=(\tau_m-m\mu)/a_m$. Fix $\theta$ and let $t=\theta/a_m$. By (i)
+and $e^{-i\mu t}=1-i\mu t+O(t^2)$, and since $a_m^\alpha=m$,
+\[
+ e^{-i\mu t}\,\E e^{it\xi}=1+K_\alpha(-it)^\alpha+O(t^2)
+ =1+\frac{K_\alpha(-i\theta)^\alpha}m+O\bigl(\theta^2m^{-2/\alpha}\bigr).
+\]
+The left side is the characteristic function of $(\xi-\mu)/a_m$ at $\theta$,
+and $\E e^{i\theta Z_m}$ is its $m$-th power. As $2/\alpha>1$, the error is
+$o(1/m)$, so $\E e^{i\theta Z_m}\to\exp(K_\alpha(-i\theta)^\alpha)$. The
+real part of $(-i\theta)^\alpha$ is
+$\lvert\theta\rvert^\alpha\cos\frac{\pi\alpha}2$, which is negative because
+$1<\alpha<2$. So the limit has modulus
+$\exp(-\frac12\sigma_\alpha\lvert\theta\rvert^\alpha)$. It is continuous at
+$0$, so by L\'evy's continuity theorem it is the characteristic function of a
+variable $G$, and $Z_m$ converges in law to $G$. It is integrable, so by
+Fourier inversion $G$ has a bounded, uniformly continuous density $g$, and
+$g$ vanishes at infinity by the Riemann--Lebesgue lemma (the domain of
+attraction also follows from~\cite[Theorem~XVII.5.2]{feller1971}). A stable
+law with this characteristic function is the one called totally skewed to
+the right.
+
+For the Laplace transform let $s>0$ be real and take $v=s/a_m$ in the
+expansion above. In the same way
+$\E e^{-sZ_m}\to e^{K_\alpha s^\alpha}$. This also holds with $2s$ in place of
+$s$, so the second moments of $e^{-sZ_m}$ are bounded in $m$, and these
+variables are uniformly integrable. Hence $\E e^{-sZ_m}\to\E e^{-sG}$, and so
+$\E e^{-sG}=e^{K_\alpha s^\alpha}$.
+
+(iii) Every $\Prob(\xi=k)$ is positive, so $\xi$ has maximal span $1$. So
+Gnedenko's local limit theorem~\cite[Chapter~4]{ibragimovlinnik1971} applies
+to the convergence in (ii) and gives the uniform limit. For $\bar u$, the
+limit gives an $m_0$ with $a_mu_m(k)\le\lVert g\rVert_\infty+1$ for all
+$m\ge m_0$ and all $k$. For $m<m_0$ we use $u_m(k)\le1$, so
+$a_mu_m(k)\le a_{m_0}$. Hence $\bar u<\infty$.
+
+(iv) The characteristic function of $-G'$ is the complex conjugate of that
+of $G$. So $G-G'$ has the characteristic function
+$\lvert\E e^{i\theta G}\rvert^2=e^{-\sigma_\alpha\lvert\theta\rvert^\alpha}$,
+which is that of a symmetric $\alpha$-stable law. Plancherel's theorem gives
+\[
+ I_\alpha=\int_{\mathbb R}g(z)^2\,dz
+ =\frac1{2\pi}\int_{\mathbb R}e^{-\sigma_\alpha\lvert\theta\rvert^\alpha}\,d\theta
+ =\frac1\pi\int_0^\infty e^{-\sigma_\alpha\theta^\alpha}\,d\theta
+ =\frac{\Gamma(1+1/\alpha)}{\pi\sigma_\alpha^{1/\alpha}} ,
+\]
+where the last step is the substitution $x=\sigma_\alpha\theta^\alpha$. (Note
+that $I_\alpha$ is the density of $G-G'$ at $0$. This is how it enters
+Theorem~\ref{thm:center}, where two independent renewal processes have to
+meet.)
+\end{proof}
+
+\begin{theorem}[the center for $1<\alpha<2$]\label{thm:center}
+Let $1<\alpha<2$ and let $D$ be any a.s.\ finite first run, in particular
+either start. As $N\to\infty$ over even $N$,
+\[
+ C_N\sim2I_\alpha\Bigl(\frac{\mu}{h}\Bigr)^{1/\alpha}
+ =\frac{2\Gamma(1+1/\alpha)}{\pi}\Bigl(\frac{\mu}{K_\alpha\lvert\cos(\pi
+ \alpha/2)\rvert\,N}\Bigr)^{1/\alpha}.
+\]
+\end{theorem}
+
+In words, the center decays like $N^{-1/\alpha}$, and the first run does not
+matter.
+
+\paragraph{Idea of the proof.}
+By Proposition~\ref{prop:tworenewal} the walk ends in the center when, for
+some $m$, one renewal process ends its $m$-th run exactly at level $h$ and
+the other is inside a run that covers level $h$. Level $h$ takes about
+$h/\mu$ runs. Put $b_h=(h/\mu)^{1/\alpha}$, which is the scale on which
+$\tau_m$ spreads around its mean for such $m$. So the $m$-th run ends at $h$
+with probability about $g(z)/b_h$, where $z=(h-m\mu)/b_h$ says how far $m$ is
+from the typical number of runs. A level is covered by a run $\mu$ times as
+often as a run ends there, so the $m$-th run covers $h$ with probability
+about $\mu g(z)/b_h$. The values of $m$ that matter have
+$\lvert m\mu-h\rvert$ of order $b_h$, and there are $b_h/\mu$ of them for
+each unit of $z$. Proposition~\ref{prop:tworenewal} has two terms of this
+kind for each $m$, so $C_N$ is about
+$2\cdot\frac1{b_h}\cdot\frac\mu{b_h}\cdot\frac{b_h}\mu\int g^2=2I_\alpha/b_h$.
+
+In the proof (Appendix~\ref{app:heavy}) we split the sum in
+Proposition~\ref{prop:tworenewal} by the number $m$ of runs. The terms with
+$\lvert m\mu-h\rvert\le Mb_h$ form a Riemann sum for
+$2b_h^{-1}\int_{-M}^Mg^2$ by Lemma~\ref{lem:stable}(iii). The terms with
+$m\le h/(4\mu)$ add up to $O(h^{-\alpha})=o(b_h^{-1})$, since a sum of few
+runs that is far above its mean is most likely made by one long run. The
+others add up to at most
+$O(b_h^{-1})\Prob(\lvert G\rvert\ge M-1)+o(b_h^{-1})$, and we let
+$M\to\infty$.
+
+\begin{table}[t]
+\centering\footnotesize
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{@{}lrlllll@{}}
+\toprule
+$\alpha$ & $e(\alpha)$ & $C(\alpha)$ & $C_{\rm fr}(\alpha)$ & $R_{1600}$ & $R_{10^4}$ & $R_{10^5}$\\
+\midrule
+$1.3$ & $+0.469231$ & $0.422717$ & $0.498631$ & $17.7593$ $[1.3180]$ & $38.7537$ $[1.2171]$ & $106.149$ $[1.1317]$\\
+$1.5$ & $+0.166667$ & $0.647971$ & $0.846371$ & $2.14409$ $[0.9675]$ & $2.9528$ $[0.9818]$ & $4.37642$ $[0.9914]$\\
+$\varphi$ & $0$ & $0.776132$ & $1.073675$ & $0.661763$ $[0.8526]$ & $0.697331$ $[0.8985]$ & $0.727689$ $[0.9376]$\\
+$5/3$ & $-1/15$ & $0.835101$ & $1.182237$ & $0.411815$ $[0.8064]$ & $0.389307$ $[0.8614]$ & $0.352822$ $[0.9102]$\\
+$1.7$ & $-0.111765$ & $0.880046$ & $1.265508$ & $0.298369$ $[0.7733]$ & $0.262005$ $[0.8334]$ & $0.215839$ $[0.8881]$\\
+$1.9$ & $-0.373684$ & $1.438986$ & $2.266075$ & $0.0449706$ $[0.4923]$ & $0.0256505$ $[0.5569]$ & $0.0121612$ $[0.6242]$\\
+\bottomrule
+\end{tabular}
+\caption{Constants of Corollary~\ref{cor:golden} and computed values of
+$R_N=E_N/C_N$ for the stationary start, with $R_N/(C(\alpha)N^{e(\alpha)})$ in
+brackets.}
+\label{tab:heavy}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics{figures/heavy}
+\caption{Alternating runs with a stationary start. (a)
+$R_N/(C(\alpha)N^{e(\alpha)})$ for even $N$ from 100 to $10^5$, with the
+entries of Table~\ref{tab:heavy} as dots. (b) $R_N$ for
+$\alpha=1.5,1.55,1.58,1.59$ below $\varphi$. Each curve crosses 1 once on
+$10\le N\le3\cdot10^4$, at $N^*(\alpha)$ (circles).}
+\label{fig:heavy}
+\end{figure}
+
+\begin{corollary}[the golden-ratio exponent]\label{cor:golden}
+Let $1<\alpha<2$ and $e(\alpha)=1-\alpha+1/\alpha$. If
+$\Prob(D\ge N)\sim c_DN^{-\beta_D}$ with $c_D,\beta_D>0$, then
+$R_N\sim c_DN^{1/\alpha-\beta_D}/(4I_\alpha(2\mu)^{1/\alpha})$. In particular
+$R_N\sim C(\alpha)N^{e(\alpha)}$ for the stationary start and
+$R_N\sim C_{\rm fr}(\alpha)N^{e(\alpha)-1}$ for the fresh start, where
+\[
+ C(\alpha)=\frac{\pi\bigl(K_\alpha\lvert\cos\frac{\pi\alpha}2\rvert
+ \bigr)^{1/\alpha}}{4(\alpha-1)\Gamma(1+\frac1\alpha)\,
+ \zeta(\alpha)^{1+1/\alpha}},\qquad
+ C_{\rm fr}(\alpha)=(\alpha-1)\zeta(\alpha)\,C(\alpha).
+\]
+Since $e(\alpha)>0$ exactly when $\alpha<\varphi$, with a stationary start the
+ends win for all large $N$ if $\alpha<\varphi$, and the center wins if
+$\alpha>\varphi$. At $\alpha=\varphi$,
+\[
+ R_N\to C(\varphi)=\frac{\pi\varphi\bigl(\varphi\,\Gamma(\varphi^{-2})\lvert
+ \cos\frac{\pi\varphi}2\rvert\bigr)^{1/\varphi}}{4\,\Gamma(\varphi)\,
+ \zeta(\varphi)^{\varphi}}=0.7761317206\ldots,
+\]
+so the center still wins by the factor $1/C(\varphi)=1.2884$. With a fresh
+start $e(\alpha)-1<0$, and the center wins for every $1<\alpha<2$.
+\end{corollary}
+
+\begin{proof}
+By Proposition~\ref{prop:edge} and Theorem~\ref{thm:center}, with $h=N/2$, we
+have $R_N=\Prob(D\ge N)/(2C_N)$, and this is asymptotic to
+$c_DN^{-\beta_D}/(4I_\alpha(2\mu/N)^{1/\alpha})$, which is the general formula.
+By Lemma~\ref{lem:stable}(iv),
+$4I_\alpha(2\mu)^{1/\alpha}=4\Gamma(1+\frac1\alpha)\mu^{1/\alpha}/(\pi(K_\alpha\lvert\cos\frac{\pi\alpha}2\rvert)^{1/\alpha})$.
+The fresh start has $c_D=1$ and $\beta_D=\alpha$, which gives
+$C_{\rm fr}(\alpha)$. By Proposition~\ref{prop:edge} the stationary start has
+$c_D=1/((\alpha-1)\mu)$ and $\beta_D=\alpha-1$, which gives $C(\alpha)$. Next,
+$e(\alpha)=-(\alpha^2-\alpha-1)/\alpha$, and $\varphi$ is the positive root of
+$\alpha^2-\alpha-1$. At $\alpha=\varphi$ we have $\alpha-1=1/\varphi$,
+$1+1/\alpha=\varphi$ and $2-\alpha=\varphi^{-2}$. So
+$K_\varphi=\varphi\,\Gamma(\varphi^{-2})$, and substituting these into
+$C(\alpha)$ gives the closed form.
+\end{proof}
+
+Corollary~\ref{cor:golden} is the lattice form, with its constant, of the
+heuristic of~\cite[Section~2.1]{wlh2016}. The approach to $C(\varphi)$ is
+slow. At $\alpha=\varphi$ we have $R_{10^5}/C(\varphi)=0.938$, and $R_N$
+increases on the computed grid (Table~\ref{tab:heavy} and
+Figure~\ref{fig:heavy}).
+
+The golden ratio also appears for the elephant walk of
+Paper~D with first step $+1$ and reversal probability $\varepsilon$. There the law of $A_N$ is
+log-concave for every $N$ exactly when
+$1-2\varepsilon\le1/\varphi$~\cite[Proposition~2.2]{glrs2025}. We know of no
+connection. Log-concavity should be kept apart from unimodality, which is
+weaker. With first step $+1$, the limit law of the superdiffusive elephant
+walk (the case $\varepsilon<\frac14$) is unimodal for every such
+$\varepsilon$~\cite[Theorem~1.1]{glrs2025}. For log-concavity, the authors
+of~\cite{glrs2025} conjectured in their Remark~2.3 that for every
+$\varepsilon<\frac14$ the law of $A_N$ is log-concave for all large $N$.
+Trinas and Valle disproved this~\cite[Theorem~4.4]{tv2026}. They show that
+for $1-2\varepsilon>0.80399$ the law of $A_N$ is not log-concave for
+arbitrarily large $N$, and they prove a uniform local limit theorem for the
+superdiffusive walk~\cite[Theorem~3.1]{tv2026}.
+
+\begin{remark}[crossover sizes and heat conduction]\label{rem:crossover}
+For $\alpha<\varphi$ and a stationary start the crossover is late when
+$\alpha$ is close to $\varphi$. In our computation, for $\alpha=1.5,1.55,1.58,1.59$ and every even
+$N$ in $[10,3\cdot10^4]$, $R_N-1$ changes sign once, at
+$N^*(\alpha)=26,192,2596,14530$. Heuristically, $C(\alpha)N^{e(\alpha)}=1$
+gives $\log N^*(\alpha)=0.1834/(\varphi-\alpha)+O(1)$ as
+$\alpha\uparrow\varphi$. At the value $\alpha=5/3$ of L\'evy-walk models of
+heat conduction~\cite{dsd2013,zdk2015}, $R_N\sim C(5/3)N^{-1/15}$ with
+$C(5/3)=0.8351$.
+\end{remark}
+
+We turn to the other exponents. Table~\ref{tab:outcomes} collects them. For
+$\alpha\ge2$ the sums $\tau_m$ have a Gaussian limit, and the center wins
+with either start.
+
+\begin{table}[t]
+\centering\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lllll@{}}
+\toprule
+$\alpha$ & start & center $C_N$ & ratio $R_N$ & status\\
+\midrule
+$\alpha>2$ & stationary & $\sim\sqrt{2\mu/(\pi vN)}$ & $\sim C_2(\alpha)N^{3/2-\alpha}\to0$ & Theorem~\ref{thm:alpha2}(a)\\
+$\alpha=2$ & stationary & $\sim\sqrt{2\mu/(\pi N\log N)}$ & $\sim\sqrt{\pi\log N/(8\zeta(2)^3N)}\to0$ & Theorem~\ref{thm:alpha2}(b)\\
+$1<\alpha<2$ & stationary & $\sim2I_\alpha(\mu/h)^{1/\alpha}$ & $\sim C(\alpha)N^{e(\alpha)}$ & Corollary~\ref{cor:golden}\\
+$1<\alpha<2$ & fresh & $\sim2I_\alpha(\mu/h)^{1/\alpha}$ & $\sim C_{\rm fr}(\alpha)N^{e(\alpha)-1}\to0$ & Corollary~\ref{cor:golden}\\
+$\alpha=1$ & fresh & $\approx2/(\pi^2\tilde m_h)$ & $\approx\pi^2\tilde m_h/(8h)\sim\pi^2/(8\log N)$ & heuristic, not proved (Remark~\ref{rem:other})\\
+$0<\alpha<1$ & fresh & $\sim\frac2\pi\tan\frac{\pi\alpha}2\cdot\frac1N$ & $\sim\frac{\pi}{4\tan(\pi\alpha/2)}\,N^{1-\alpha}\to\infty$ & Theorem~\ref{thm:lamperti}\\
+\bottomrule
+\end{tabular}
+\caption{The center and the ratio $R_N=E_N/C_N$ for each exponent. The center
+wins when $R_N\to0$ and the ends win when $R_N\to\infty$. For $\alpha\ge2$ the
+center formula holds for every a.s.\ finite first run, and a fresh start also
+gives $R_N\to0$.}
+\label{tab:outcomes}
+\end{table}
+
+\begin{theorem}[$\alpha\ge2$]\label{thm:alpha2}
+Let $D$ be any a.s.\ finite first run, and let $N\to\infty$ over even $N$.
+\begin{enumerate}[(a)]
+\item Let $\alpha>2$ and
+$v=\Var\xi=2\zeta(\alpha-1)-\zeta(\alpha)-\zeta(\alpha)^2$. Then
+$C_N\sim\sqrt{2\mu/(\pi vN)}$. With the stationary start
+$R_N\sim C_2(\alpha)N^{3/2-\alpha}$, where
+$C_2(\alpha)=\sqrt{\pi v/(2\mu)}\big/(2(\alpha-1)\mu)$.
+\item Let $\alpha=2$, so that $\mu=\zeta(2)$ and $\E\xi^2=\infty$. Then
+$(\tau_m-m\mu)/\sqrt{m\log m}$ converges in law to the standard normal law,
+and $C_N\sim\sqrt{2\mu/(\pi N\log N)}$. With the stationary start
+$R_N\sim\sqrt{\pi\log N/(8\zeta(2)^3N)}$.
+\end{enumerate}
+In both cases $R_N\to0$ with the fresh start too.
+\end{theorem}
+
+In words, for $\alpha\ge2$ the center is of the Gaussian order $N^{-1/2}$,
+with an extra factor $(\log N)^{-1/2}$ at $\alpha=2$, where the variance is
+infinite. With either start the end is at most of order $N^{1-\alpha}$, so
+the center wins. The
+exponent of $R_N$ is continuous at $\alpha=2$, since
+$e(2)=-\frac12=\frac32-2$.
+
+\paragraph{Idea of the proof.}
+The proof of Theorem~\ref{thm:center} uses the exponent $\alpha$ in three
+places only. These are the limit law of $\tau_m$ with its local form, the
+bound $u_m(k)\le C_Bmk^{-\alpha-1}$ for a sum far above its mean, and the
+fact that the norming sequence varies regularly with index less than $1$. All
+three hold for $\alpha\ge2$ with the normal law in place of the stable law.
+For $\alpha>2$ the norming is $a_m=\sqrt{vm}$. For $\alpha=2$ the truncated
+second moment $\E[\xi^2;\xi\le x]$ grows like $2\log x$, which gives the
+norming $a_m=\sqrt{m\log m}$. Since $\int g^2=1/(2\sqrt\pi)$ for the standard
+normal density $g$, the center is $1/(\sqrt\pi\,b_h)$ to leading order, where
+$b_h$ is the norming at $m=h/\mu$. We give the proof in
+Appendix~\ref{app:heavy}, where the proof of Theorem~\ref{thm:center} is
+written so that it covers both theorems.
+
+The convergence is slow at $\alpha=2$. There $R_N$ divided by the leading
+term in (b) is $0.885$ at $N=1600$ and $0.943$ at $N=10^5$. At $\alpha=3$
+the ratio of $R_N$ to the leading term in (a) is $0.981$ at $N=16000$.
+
+For $0<\alpha<1$ the runs have infinite mean, and only the fresh start makes
+sense. Then $A_N/N$ has a limit law that is not concentrated at a point,
+namely Lamperti's occupation-time
+law~\cite{lamperti1958,godrecheluck2001}, with density
+\[
+ \ell_\alpha(y)=\frac{\sin\pi\alpha}{\pi}\,
+ \frac{y^{\alpha-1}(1-y)^{\alpha-1}}{y^{2\alpha}+2y^\alpha(1-y)^\alpha
+ \cos\pi\alpha+(1-y)^{2\alpha}}\qquad(0<y<1).
+\]
+So the center should be of order $1/N$. The next theorem is the local form
+of this at the center.
+
+\begin{theorem}[$0<\alpha<1$]\label{thm:lamperti}
+Let $0<\alpha<1$, with a fresh start. As $N\to\infty$ over even $N$,
+\[
+ NC_N\to\ell_\alpha(\tfrac12)=\frac2\pi\tan\frac{\pi\alpha}2 .
+\]
+Hence $R_N\sim\frac{\pi}{4\tan(\pi\alpha/2)}N^{1-\alpha}\to\infty$.
+\end{theorem}
+
+In words, for $\alpha<1$ the center is an ordinary bin of size about $1/N$,
+while the end has the much larger probability $\frac12N^{-\alpha}$ that the
+first run never stops. So the ends win for every $\alpha<1$.
+
+\paragraph{Idea of the proof.}
+Now $\tau_m$ is of order $a_m=m^{1/\alpha}$ with no centering, and $\tau_m/a_m$
+converges to a positive stable variable $G$ with density $g$. The number $m$
+of runs of each sign is no longer concentrated. It ranges over all $m$ with
+$m^{1/\alpha}$ of order $h$, and on this range the terms of
+Proposition~\ref{prop:tworenewal} are $\frac2{\alpha hm}t^2g(t)^2$ with
+$t=h/a_m$. Summing over $m$ is integrating in $\log m$, which gives
+$NC_N\to4\int_0^\infty tg(t)^2\,dt$. This integral is the density at
+$\frac12$ of $G_1/(G_1+G_2)$ for two independent copies of $G$, and a Mellin
+transform identifies the law of $G_1/G_2$ and hence this density. The proof
+is in Appendix~\ref{app:heavy}. It does not use Lamperti's theorem.
+
+Here too the convergence is slow near $\alpha=1$. At $N=16000$ the ratio of
+$NC_N$ to its limit is $1.042$, $1.001$, $0.928$ and $0.554$ for
+$\alpha=0.3$, $0.5$, $0.7$ and $0.9$. We do not prove the local limit at
+bins other than the center.
+
+\begin{remark}[the exponent $\alpha=1$ and the fresh start]\label{rem:other}
+With a fresh start the threshold is $\alpha=1$. The ends win for $\alpha<1$
+by Theorem~\ref{thm:lamperti}, and the center wins for $\alpha>1$ by
+Corollary~\ref{cor:golden} and Theorem~\ref{thm:alpha2}. At $\alpha=1$ we
+only have a heuristic. Suppose we repeat the proof of
+Theorem~\ref{thm:center} with a skewed Cauchy limit, the centering
+$m(H_{m+1}-1)$, and the density $1/\pi^2$ at $0$ of the difference of two
+copies of the limit. This suggests the row of Table~\ref{tab:outcomes},
+namely $R_N\approx\pi^2\tilde m_h/(8h)\sim\pi^2/(8\log N)$, where
+$\tilde m_h$ solves $m(H_{m+1}-1)=h$. We have not controlled the error
+terms, so the claim that the center wins by a logarithm at $\alpha=1$ is not
+proved. The computed $R_N$ divided by $\pi^2\tilde m_h/(8h)$ is $0.796$,
+$0.850$ and $0.886$ at $N=1600$, $10^4$ and $10^5$.
+\end{remark}
+
+We do not know a rate in Theorem~\ref{thm:center}, whether $R_N$ is monotone
+with a single sign change of $R_N-1$, how to make the case $\alpha=1$
+rigorous, or the full shape of $P_N$ for heavy-tailed runs.
