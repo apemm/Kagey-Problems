@@ -289,7 +289,7 @@ def fig_crossing():
     a.set_xlabel(r"$N$")
     a.set_ylabel(r"$z_N/\log N$")
     a.legend(frameon=False, loc="lower right", handlelength=2.2)
-    panel(a, "a")
+    a.text(0.97, 0.87, "(a)", transform=a.transAxes, ha="right", va="top")   # clear of the line at 1
 
     b.axhline(0.0, color="0.6", lw=0.6, ls=":")
     b.plot(ns[m], (exact - two)[m], "-.", color=cols[0], label=r"minus $\nu_N$")
@@ -301,7 +301,7 @@ def fig_crossing():
     b.set_xlabel(r"$N$")
     b.set_ylabel(r"error in $z_N$")
     b.legend(frameon=False, loc="upper right", handlelength=2.2)
-    panel(b, "b", y=0.12)
+    b.text(0.97, 0.04, "(b)", transform=b.transAxes, ha="right", va="bottom")   # clear of the curves
     fig.subplots_adjust(left=0.075, right=0.985, wspace=0.26)
     save(fig, "crossing")
 
