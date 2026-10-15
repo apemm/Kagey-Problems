@@ -3,9 +3,9 @@
 The default (--quick) reproduces the numbers of the paper that take a few
 minutes in all. Add --full for the heavy cells as well: the directed 3-cycle at
 N = 10^8, the whole 4-cycle in the continuum, C_5 at N = 72, the path P_4 at
-N = 150 and 300, the census of graphs on 6 states,
-N = 1280 to 10240, the sticky switches at N = 480, the telegraph comparison at
-N = 16000, and the cells at N = 160 of the first-order section.
+N = 150 and 300, the census of graphs on 6 states, the sticky switches at
+N = 480, the telegraph comparison at N = 16000, and the cells at N = 160 of the
+first-order section. The planar cells are now in ../paperE.
 Needs numpy, scipy, sympy and mpmath.
 """
 from pathlib import Path

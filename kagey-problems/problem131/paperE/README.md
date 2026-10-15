@@ -65,4 +65,6 @@ order L^2/N with turns only, and the walk on Z^d for d >= 3.
 
 From the Problem 131 folder, `python -B verify_all.py --paper e` runs the checks of this paper. In
 this folder, `python -B verify_all.py` does the same (a few minutes), and `--full` adds the crossings
-for N from 1280 to 10240. The scripts need numpy and scipy. Build the paper with pdflatex, 3 times.
+for N from 1280 to 10240. The scripts need numpy, scipy, sympy and mpmath. The last 2 are needed
+because `verify_planar.py` imports `../paperC/verify_sticky_fisher.py`. Build the paper with
+pdflatex, 3 times.

@@ -318,7 +318,7 @@ def global_mode(facemaxes, N, T, method='A'):
 # ======================================================================== checks
 
 def check_complete_and_census(full):
-    print('\nTable 1, rows K_d and symmetric Q: complete graphs, single jumps, and a census of small graphs', flush=True)
+    print('\nTable 2, rows K_d and symmetric Q: complete graphs, single jumps, and a census of small graphs', flush=True)
     worst = 0.0
     for d in range(2, 7):
         l = exit_rates(W_complete(d))
@@ -373,7 +373,7 @@ def check_complete_and_census(full):
 
 
 def check_cycles():
-    print('\nTable 1, row C_d: arcs and the cycle cascade', flush=True)
+    print('\nTable 2, row C_d: arcs and the cycle cascade', flush=True)
     lam = lambda k: 4 * sin(pi / (2 * (k + 1))) ** 2        # = 2 - 2cos(pi/(k+1)), without cancellation
     # arcs, and non-arc faces (Remark 5.3)
     worst = 0.0
@@ -394,7 +394,7 @@ def check_cycles():
     mono = all(pi ** 2 / 12 * (2 * a - 1) / (a - 1) ** 2 + pi ** 4 / (960 * a * a) > pi ** 2 / 12 * (2 * a + 1) / a ** 2 + pi ** 4 / (960 * (a + 1) ** 2)
                for a in range(4, 500))
     check('left side decreases and right side increases in m', mono, 'm = 4..500')
-    # Table 1, row C_d: winners on C_d from the hull (A) and from a direct scan (B)
+    # Table 2, row C_d: winners on C_d from the hull (A) and from a direct scan (B)
     taus = np.linspace(0.01, 80, 40000)
     least = {}
     all_ok = True
@@ -412,12 +412,12 @@ def check_cycles():
         for _, s in wA:
             if s < d:
                 least.setdefault(s, d)
-    check('Table 1, row C_d: winners and switch values on C_d, d = 3..12 (hull and direct scan)', all_ok, 'arcs of 1..floor(2d/3) states, then C_d')
+    check('Table 2, row C_d: winners and switch values on C_d, d = 3..12 (hull and direct scan)', all_ok, 'arcs of 1..floor(2d/3) states, then C_d')
     agree('tau_4 = 2/(1 - 2 sqrt2 + sqrt5)', '4.906280', {'closed': 2 / (1 - 2 * sqrt(2) + sqrt(5)), 'eigen': 1 / (lam(3) - lam(4))})
     agree('tau_5 = 1/(sqrt3 - (1+sqrt5)/2)', '8.770636', {'closed': 1 / (sqrt(3) - (1 + sqrt(5)) / 2), 'eigen': 1 / (lam(4) - lam(5))})
     agree('tau_3 = 1 + sqrt2', '2.414214', {'closed': 1 + sqrt(2), 'eigen': 1 / (lam(2) - lam(3))})
     want = {2: 4, 3: 5, 4: 6, 5: 8, 6: 9, 7: 11, 8: 12}
-    check('least d with arc k winning (Table 1): 4, 5, 6, 8, 9, 11, 12', all(least.get(k) == v for k, v in want.items()) and
+    check('least d with arc k winning (Table 2): 4, 5, 6, 8, 9, 11, 12', all(least.get(k) == v for k, v in want.items()) and
           all(ceil(3 * k / 2) == v for k, v in want.items() if k >= 3), f'from the hulls: {dict((k, least.get(k)) for k in want)}')
     for d, closed, label in [(4, 2.0, '2'), (5, 2 + sqrt(2), '2 + sqrt2'), (6, 3 + sqrt(5), '3 + sqrt5'), (8, 6 + 3 * sqrt(3), '6 + 3 sqrt3')]:
         K = floor(2 * d / 3)
@@ -425,7 +425,7 @@ def check_cycles():
         check(f'tau_full(C_{d}) = {label}', abs(wA[-1][0] - closed) < 1e-9 and abs(ceil(d / 3) / lam(K) - closed) < 1e-12,
               f'hull {wA[-1][0]:.9f}, formula {ceil(d / 3) / lam(K):.9f}')
     wA, _ = winners_hull(exit_rates(W_cycle(6)), 6)
-    agree('Figure 4(a): C_6 switch at 4.906', '4.906', {'hull': wA[3][0]})
+    agree('Figure 3(a): C_6 switch at 4.906', '4.906', {'hull': wA[3][0]})
     ks = np.array([100, 200, 400, 800])
     tk = 1 / (np.array([lam(k - 1) for k in ks]) - np.array([lam(k) for k in ks]))
     resid = (tk - ks ** 3 / (2 * pi ** 2) - 3 * ks ** 2 / (4 * pi ** 2)) / ks
@@ -455,7 +455,7 @@ def check_cycles():
 
 
 def check_paths(full):
-    print('\nTable 1, rows P_d and P_4: paths', flush=True)
+    print('\nTable 2, rows P_d and P_4: paths', flush=True)
     lp = lambda k: 4 * sin(pi / (2 * (2 * k + 1))) ** 2     # = 2 - 2cos(pi/(2k+1))
     worst = 0.0
     for d in range(3, 10):
@@ -550,7 +550,7 @@ def check_dp_exact():
 
 
 def check_C5(full):
-    print('\nFigure 4(b): the exact mode on C_5', flush=True)
+    print('\nFigure 3(b): the exact mode on C_5', flush=True)
     W = W_cycle(5)
     Q = gen(W)
     mu = np.ones(5) / 5
@@ -587,7 +587,7 @@ def check_C5(full):
 
 
 def check_triangles():
-    print('\nTable 1, row Theta_eps: two triangles joined by a weak link', flush=True)
+    print('\nTable 2, row Theta_eps: two triangles joined by a weak link', flush=True)
     e = sp.symbols('epsilon', positive=True)
     x = sp.symbols('x')
     pA = x ** 2 - (3 + e) * x + e
@@ -661,7 +661,7 @@ def check_triangles():
 
 
 def check_paw_house():
-    print('\nTable 1, rows paw, house and K_4 plus a vertex', flush=True)
+    print('\nTable 2, rows paw, house and K_4 plus a vertex', flush=True)
     lA = exit_rates(W_paw())
     lB = exit_rates(W_paw(), 'B')
     closed = {(0,): 1, (2,): 2, (3,): 2, (1,): 3, (0, 1): 2 - sqrt(2), (2, 3): 1, (1, 2): (5 - sqrt(5)) / 2, (1, 3): (5 - sqrt(5)) / 2,

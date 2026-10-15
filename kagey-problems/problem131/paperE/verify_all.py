@@ -1,8 +1,9 @@
 """Run the checks for Paper E (the planar persistent walk) with the current interpreter.
 
 The default (--quick) takes a few minutes. Add --full for the planar crossings from
-N = 1280 to 10240. Needs numpy and scipy. verify_planar.py imports Paper A's polynomial S_N
-from ../paperC/verify_sticky_fisher.py, so the folder paperC must be present.
+N = 1280 to 10240. Needs numpy, scipy, sympy and mpmath. verify_planar.py imports Paper A's
+polynomial S_N from ../paperC/verify_sticky_fisher.py, which needs all 4 packages, so the
+folder paperC must be present.
 """
 from pathlib import Path
 import argparse

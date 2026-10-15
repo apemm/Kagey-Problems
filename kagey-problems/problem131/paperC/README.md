@@ -61,7 +61,7 @@ is strongly connected and it has start mass.
   on a window of width log(16/(9 sqrt 3)) = 0.026 in T, proved here from the tie-window theorem.
   With the uniform start no edge carries the mode. `../paperB` compares the window with exact
   computations at finite N.
-- The table of outcomes (Table 1 and Remark 5.3). The rows for the path P_d and for 2 triangles
+- The table of outcomes (Table 2 and Remark 5.3). The rows for the path P_d and for 2 triangles
   joined by a link of rate eps < eps_1 = (64 + sqrt 46)/60 are proved in Appendix C
   (Propositions C.3 and C.4). The rows marked Lean are proved in Lean.
 - The tree formula for the constant on every irreducible face (Proposition 4.15, with Lemma A.3),
@@ -83,7 +83,9 @@ The planar persistent walk (the old Section 6 and Appendix C) is now in `../pape
 The statement numbers in this file are those of the build of October 15, 2026. That revision of the
 framing replaced the subsection on the series of papers (Section 1.2) by a subsection on the
 second-order results and removed the program figure, so the old Figures 3 and 4 are now Figures 2
-and 3. No other section number, and no theorem, equation or table number, changed.
+and 3. Table 1 is the worked example on the 4-cycle in Section 3, Table 2 is the table of outcomes
+and Table 3 is the sticky table of Section 6. The stored outputs in `data/` call
+the table of outcomes Table 1.
 
 ## How the statements are proved
 
@@ -92,7 +94,7 @@ full account.
 
 - Every theorem, proposition, lemma and corollary is proved in the text or in Appendices A to D.
   There are 2 kinds of outside input. The paper quotes results of `../paperA` and `../paperB` where it says so,
-  and the rows of Table 1 marked Lean are proved in Lean and not in the text.
+  and the rows of Table 2 marked Lean are proved in Lean and not in the text.
 - No proof rests on a floating-point computation. Exact computer algebra enters in 2 places. They
   are the 2 resultants behind Proposition C.4 (`verify_examples.py`) and the 2 values of c_F after
   Corollary 5.1 (`verify_second_order.py`).
@@ -123,7 +125,7 @@ jump with d >= 4 states.
   (Sections 2 and 3).
 - `verify_second_order.py` checks the local law, the constants, the crossings and the directed
   3-cycle (Section 4, Appendices A and B, and the 4-cycle numbers of Section 5).
-- `verify_examples.py` checks the 4-cycle and the rows of Table 1 (Section 5 and Appendix C),
+- `verify_examples.py` checks the 4-cycle and the rows of Table 2 (Section 5 and Appendix C),
   with the 2 exact resultants of Proposition C.4.
 - `verify_sticky_fisher.py` checks the sticky priors (Section 6 and Appendix D). It also holds
   the polynomial S_N of the two-state walk, which `../paperE/verify_planar.py` imports. It also checks the
@@ -138,9 +140,11 @@ jump with d >= 4 states.
 - `data/ledger.md` and `data/ledger_C1.md`, `ledger_C2.md`, `ledger_C4.md` and `ledger_C5.md` hold the
   predictions, written down before most of the computations, and what happened to them. The ledger
   of the planar walk, `ledger_C3.md`, is now in `../paperE/data`.
-- `data/verify_output.txt` is the output of `verify_all.py` from September 26, 2026. It predates
-  the split and uses the statement numbers of that date, so it still contains the planar checks. `data/figdata_*.json`
-  holds the plotted data.
+- `data/verify_output.txt` is the output of `verify_all.py` from September 26, 2026, and
+  `data/verify_output_2026-10-09.txt` is the output from October 9, 2026. Both predate the split
+  and use the statement numbers of their dates, so they still contain the planar checks and do not
+  contain `verify_forest.py` or `verify_rate_flows.py`. `data/figdata_*.json` holds the plotted
+  data.
 - `removed_proofs/` keeps the paper as first written in September 2026, before it was shortened.
   The October revision put several of those proofs back.
 - `../lean/PaperC/` holds Lean 4 proofs of many of the finite and algebraic steps, and
