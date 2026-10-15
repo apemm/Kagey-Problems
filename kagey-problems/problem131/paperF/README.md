@@ -95,7 +95,7 @@ to Dietz and Sethuraman (2007) and to Engländer and Volkov (2018).
 - `verify_aging.py` checks Section 3 and Appendix B.
 - `verify_aging_urn.py` checks Proposition 3.4 in exact arithmetic for d = 2, 3, 4.
 - `verify_all.py` runs the three scripts.
-- `data/figdata_heavy.json` holds cached data for Figure 2, and `data/ledger_D3.md` and
+- `data/figdata_heavy.json` holds cached data for Figure 1, and `data/ledger_D3.md` and
   `data/ledger_D4.md` are the prediction ledgers (they keep their names from Paper D).
 - `../lean/PaperD/` holds the Lean 4 proofs of the exact statements of Papers D and F, with the
   statement numbers from before the split.

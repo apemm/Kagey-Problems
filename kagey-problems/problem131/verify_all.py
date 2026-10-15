@@ -11,8 +11,9 @@ If a paper folder is missing, this script says so in one line and goes on. A run
 with a nonzero exit code stops this script too. With --dry-run the commands are printed and
 nothing is run.
 
-The scripts of Papers A and B use only the standard library. Those of Papers C and D need numpy,
-scipy and mpmath, and Paper C also needs sympy. Some scripts of Papers A and B report their checks
+The scripts of Papers A and B use only the standard library. Those of Papers C to F need numpy,
+scipy and mpmath. Papers C and E also need sympy (Paper E imports a script of Paper C), and
+Paper D also needs python-flint. Some scripts of Papers A and B report their checks
 in their output rather than through the exit code, and the docstrings of paperA/verify_all.py and
 paperB/verify_all.py say which ones.
 """
@@ -27,7 +28,7 @@ parser = argparse.ArgumentParser(description=__doc__,
 parser.add_argument('--paper', choices=('a', 'b', 'c', 'd', 'e', 'f', 'all'), default='all')
 parser.add_argument('--full', action='store_true',
                     help='also run the long scripts of Papers A and B (about 21 and 3 minutes '
-                         'more) and the heavy cells of Papers C and D')
+                         'more) and the heavy cells of Papers C to F')
 parser.add_argument('--dry-run', action='store_true',
                     help='print the commands in order and run nothing')
 args = parser.parse_args()

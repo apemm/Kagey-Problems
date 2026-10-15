@@ -1,4 +1,4 @@
-"""Checks for Section 6 and Appendix C of Paper C (the planar persistent walk).
+"""Checks for Section 3 and Appendix A of Paper E (the planar persistent walk).
 
 The walk has directions E, N, W, S. At each step it keeps its direction with
 probability p_0 = 1 - beta h, turns left or right with probability r h each and
@@ -370,7 +370,7 @@ def check_bounds():
 
 
 def check_crossings(full):
-    print('\nTheorems 3.3 and 3.4, Figure 2 and the table of crossings', flush=True)
+    print('\nTheorems 3.3 and 3.4, Figure 2 and the crossings printed in Section 3', flush=True)
     pairs = [(0.1, 1.0), (0.3, 1.0), (0.5, 1.0), (1.0, 1.0), (1.0, 0.0)]
     # T* and the zero-turn share 2 S_N(u*) as recorded in ledger_C3.md (the data of Figure 2)
     Nall = (40, 80, 160, 320, 640, 1280, 2560, 5120, 10240)
@@ -427,16 +427,16 @@ def check_crossings(full):
                     agree(f'(r,s) = ({r},{s}), N = {N}: zero-turn share 2 S_N(u*)', v, {'Paper A polynomial': S2, 'three levels': a0 / c})
             if (r, s) == (1.0, 0.0):
                 check(f'(r,s) = (1,0), N = {N}: zero-turn share is 0', a0 == 0.0, '')
-        # Table A, (r, s) = (0.1, 1)
+        # Figure 2(a), (r, s) = (0.1, 1). Section 3 prints s T* - N(1 - p_N) and the closed form at N = 640 and 10240
         T = Tstar[(0.1, 1.0, N)]
         nq = paperA_nq(N, both=N <= (10240 if full else 640))
         L = log(N)
         pT, pd, pf = tableA[N]
-        agree(f'Table A, N = {N}: s T*', pT, {'three levels': T})
-        agree(f'Table A, N = {N}: s T* - N(1 - p_N)', pd, {k: T - v for k, v in nq.items()})
-        agree(f'Table A, N = {N}: -log 2 + log 2/(2L)', pf, {'closed': -log(2) + log(2) / (2 * L)})
+        agree(f'Figure 2(a), N = {N}: s T*', pT, {'three levels': T})
+        agree(f'Figure 2(a), N = {N}: s T* - N(1 - p_N)', pd, {k: T - v for k, v in nq.items()})
+        agree(f'Figure 2(a), N = {N}: -log 2 + log 2/(2L)', pf, {'closed': -log(2) + log(2) / (2 * L)})
         if N in Gdiff:
-            agree(f'Table A, N = {N}: s T* - A(L - log 2)', Gdiff[N], {'three levels': T - A_exp(L - log(2))})
+            agree(f'N = {N}: s T* - A(L - log 2) (research notes, not printed)', Gdiff[N], {'three levels': T - A_exp(L - log(2))})
     lim = 2 * sqrt(2) / (sqrt(2) + sqrt(5))
     agree('limit of the zero-turn share at s = 2r', '0.774852', {'closed': lim})
     check('the share at s = 2r stays below its limit (N = 640)', 2 * exp(logS(320, 320, Tstar[(0.5, 1.0, 640)] / 640 / (1 - 2 * Tstar[(0.5, 1.0, 640)] / 640))) < lim, '')

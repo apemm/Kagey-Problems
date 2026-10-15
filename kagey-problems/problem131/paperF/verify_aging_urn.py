@@ -4,7 +4,7 @@ Walk on d states. At step t = 1, 2, ..., T: with probability d*th/(d*th + t - 1)
 draw a fresh uniform state, otherwise repeat the previous state. Claim:
 P(counts = m, last state = j) = DM(m; th,...,th) * m_j / T, where DM is the
 Dirichlet-multinomial law (Polya urn with mass th on each colour).
-At th = 1 this is the aging walk of Paper D after its first step.
+At th = 1 this is the aging walk of Paper F after its first step.
 """
 from fractions import Fraction as Fr
 from itertools import product
@@ -60,7 +60,7 @@ for d in (2, 3, 4):
                     print("MISMATCH", d, th, T, m, j)
 print("fresh-or-repeat walk equals the Polya urn law (counts and last state):", ok)
 
-# Paper D's walk at theta = 1: X_1 = 1, at step k >= 2 stay w.p. (k-1)/(k+d-2).
+# Paper F's walk at theta = 1: X_1 = 1, at step k >= 2 stay w.p. (k-1)/(k+d-2).
 ok2 = True
 for d in (2, 3, 4):
     for N in range(2, 8):
@@ -79,6 +79,6 @@ for d in (2, 3, 4):
             m = (n[0] - 1,) + n[1:]
             if urn.get((m, j), 0) != p:
                 ok2 = False
-print("Paper D walk at theta = 1 is the same walk after one step:", ok2)
+print("Paper F walk at theta = 1 is the same walk after one step:", ok2)
 if not (ok and ok2):
     raise SystemExit(1)

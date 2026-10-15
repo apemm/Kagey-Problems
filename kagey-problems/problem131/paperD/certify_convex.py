@@ -1,5 +1,6 @@
-"""Ball-arithmetic certificate (python-flint / Arb) of Conjecture 3.16 for a range of N
-(Proposition 3.26). The whole range 10..2000 takes about an hour, and the output of that
+"""Ball-arithmetic certificate (python-flint / Arb) of convexity between the humps (the property of
+Conjecture 3.16) for a range of N
+(Proposition 3.25). The whole range 10..2000 takes about an hour, and the output of that
 run is in data/certify_convex_output.txt.
 For each N:
  (1) enclose the crossing eps_N in [e-, e+] by the sign of P_N(center) - P_N(N) at the two ends
@@ -8,7 +9,7 @@ For each N:
  (3) find every index a >= N/2 that can be a mode, put m* = N - a, and certify
        second difference > 0 at every a in [2m*+1, N-2m*-1]            (direct check)
      and also the two inequalities of the reduction theorem:
-       second difference < 0 at some a0 <= 2m*, and > 0 at a1 = 2m*+1 (Theorem 3.22).
+       second difference < 0 at some a0 <= 2m*, and > 0 at a1 = 2m*+1 (Theorem 3.21).
 Usage: python -B certify_convex.py Nlo Nhi     (for example 10 400, half a minute)"""
 import sys, time
 from flint import arb, fmpq, ctx

@@ -523,7 +523,7 @@ def S_ab(a, b, u):
 # ======================================================================== checks
 
 def check_engines():
-    print('\nLemma 2.3 and Lemma A.1: the run expansion against brute force and the torus', flush=True)
+    print('\nLemma 2.3 and Lemma A.2: the run expansion against brute force and the torus', flush=True)
     worst = {'run-DP': 0.0, 'torus-DP': 0.0, 'DP-words': 0.0}
     cells = [(cycle_Q(4), 6, 0.05), (cycle_Q(4), 10, 0.2), (random_gen(7), 6, 0.03), (random_gen(7), 10, 0.03)]
     mu = np.ones(4) / 4
@@ -670,7 +670,7 @@ def check_constants():
         cA = consts_A(*face(Q, range(dd), mu))
         worst = max(worst, abs(cA['K'] / (dd ** ((dd + 2) / 2) * (4 * pi) ** (-(dd - 1) / 2)) - 1))
     check('K_{C_d} = d^((d+2)/2) (4 pi)^(-(d-1)/2), d = 3..8', worst < 1e-11, f'max relative error {worst:.1e}')
-    # Table 1, row C_d: lambda_k and tau_k, and the arc offsets b_k of the notes (not printed in the paper)
+    # Table 2, row C_d: lambda_k and tau_k, and the arc offsets b_k of the notes (not printed in the paper)
     lam = lambda k: 2 - 2 * cos(pi / (k + 1))
     tab = {2: ('1', '1', '-0.4673558'), 3: ('0.585786', '2.414214', '-0.9379218'), 4: ('0.381966', '4.906280', '-1.3514657'),
            5: ('0.267949', '8.770636', '-1.7011216'), 6: ('0.198062', '14.308827', '-2.0012059'),
@@ -680,8 +680,8 @@ def check_constants():
         b_closed = 0.5 * log(dk) - log(Karc[k][1] / Karc[k - 1][1])
         b_num = 0.5 * log(dk) - log(Karc[k][0] / Karc[k - 1][0])
         lam_num = -perron(face(cycle_Q(10), range(k), np.ones(10))[0] - 2 * np.eye(k))[0]
-        agree(f'Table 1, row C_d, k = {k}: lambda_k', pl, {'closed': lam(k), 'eigen': lam_num})
-        agree(f'Table 1, row C_d, k = {k}: tau_k', pt, {'closed': 1 / dk, 'eigen': 1 / (lam(k - 1) - lam_num) if k > 1 else 1})
+        agree(f'Table 2, row C_d, k = {k}: lambda_k', pl, {'closed': lam(k), 'eigen': lam_num})
+        agree(f'Table 2, row C_d, k = {k}: tau_k', pt, {'closed': 1 / dk, 'eigen': 1 / (lam(k - 1) - lam_num) if k > 1 else 1})
         agree(f'arcs of C_d, k = {k}: b_k (notes)', pb, {'closed': b_closed, 'numeric K': b_num})
     # Proposition 4.2(a): det Sigma det Hess I = 1, at random points of non-reversible faces
     worst = 0.0

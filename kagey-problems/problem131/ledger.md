@@ -118,10 +118,17 @@ then the outcome, with nothing deleted).
   claim in the notes about the leading behavior of the correction for 2 or more rare counts is
   refuted by X1 and was removed.
 
-## Ledgers of Papers C and D
+## Ledgers of Papers C to F
 
 - [paperC/data/ledger.md](paperC/data/ledger.md) indexes the ledgers of Paper C.
 - [paperD/data/ledger.md](paperD/data/ledger.md) indexes the ledgers of Paper D.
+- [paperE/data/ledger_C3.md](paperE/data/ledger_C3.md) is the ledger of Paper E, the planar walk.
+  It was written for Paper C before the split of October 13, 2026.
+- [paperF/data/ledger_D3.md](paperF/data/ledger_D3.md) (heavy-tailed runs) and
+  [paperF/data/ledger_D4.md](paperF/data/ledger_D4.md) (the aging walk) are the ledgers of Paper F.
+  They were written for Paper D before the split.
+
+Each ledger uses the statement numbers of its date.
 
 ## Rerun after the move to 4 papers (2026-09-26)
 

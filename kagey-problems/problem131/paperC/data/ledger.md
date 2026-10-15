@@ -3,7 +3,8 @@
 Predictions were written down before the computation that tests them. Each prediction has a kill
 condition, and the outcome is recorded below it without changes, also when it refutes the
 prediction. The entries are kept in one file per topic, and each file starts by listing the few
-computations that were run before it existed.
+computations that were run before it existed. Each ledger uses the statement numbers of its date.
+The section numbers below are those of the current papers.
 
 - [ledger_C1.md](ledger_C1.md) covers the exact law in transition-count form, the order of the
   winning faces on a star and a path, the star with a rare centre, and the non-reversible cell NR3
@@ -11,11 +12,11 @@ computations that were run before it existed.
 - [ledger_C2.md](ledger_C2.md) covers complete graphs, the cycle cascade, 2 triangles, the paw and
   the house, and the census of small graphs (Section 5). Entries 0 to 11, and an erratum that
   records the checks of the path P_4 and of C_6 at N = 40.
-- [ledger_C3.md](ledger_C3.md) covers the planar walk, corner against origin (Section 7 and
-  Appendix D). Entries C3-P1 to C3-P8.
-- [ledger_C4.md](ledger_C4.md) covers sticky priors and the Fisher information of the endpoint
-  (Sections 6 and 8, Appendices C and E). Entries C4-F1 to C4-F7, C4-S1 to C4-S5, C4-G1 and
-  C4-R1 to C4-R3.
+- [ledger_C3.md](../../paperE/data/ledger_C3.md) covers the planar walk, corner against origin
+  (now Section 3 and Appendix A of Paper E). Entries C3-P1 to C3-P8.
+- [ledger_C4.md](ledger_C4.md) covers sticky priors (Section 6 and Appendix D) and the Fisher
+  information of the endpoint (now the note `../../S1_endpoint_information_note`). Entries C4-F1
+  to C4-F7, C4-S1 to C4-S5, C4-G1 and C4-R1 to C4-R3.
 - [ledger_C5.md](ledger_C5.md) covers the local law, the constants K_F, the crossings, the window
   on K_3 and the directed 3-cycle (Section 4 and Appendices A and B). Entries P0 to P10, P3', P6',
   P8(b'), R1 and R2.
@@ -31,6 +32,8 @@ new cells was registered before it was run. None of them concerns a statement th
 calls a theorem. The path P_4 in the erratum of C2 shows that at finite N the order of the phases
 can differ from first order, and the paper says so as a numerical remark.
 
-The output of the check scripts (`verify_all.py`) is in `verify_output.txt`.
+The output of the check scripts (`verify_all.py`) is in `verify_output.txt` (September 26, 2026)
+and `verify_output_2026-10-09.txt` (October 9, 2026). Both predate the split and use the statement
+numbers of their dates.
 
 Note of October 13, 2026. The ledger of the planar walk, `ledger_C3.md`, moved to `../../paperE/data` with Paper E.

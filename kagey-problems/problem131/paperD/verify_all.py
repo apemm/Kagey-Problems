@@ -1,8 +1,15 @@
-"""Run the checks for Paper D, one script per section, with the current interpreter.
+"""Run the 4 check scripts of Paper D with the current interpreter.
+
+verify_elephant_crossing.py checks Section 2, Table 1 and Appendix A, and
+verify_elephant_shape.py checks Section 3 and Appendices B and C.
+verify_elephant_odd.py checks Proposition 3.26 and the numbers of Remark 3.28,
+and certify_elephant.py certifies the computations behind Lemma 3.7,
+Proposition 3.8 and Lemma 3.11. certify_center.py and certify_convex.py take
+much longer, so this runner does not run them.
 
 The default is the quick run, which takes a few minutes. Add --full for the
-heavy cells (second methods on the largest sizes, the slow bridge sums, and the
-grid search for n*(1.60)). The full run takes about 45 minutes.
+heavy cells of the first 2 scripts (the second method at the largest n, the
+case n = 25600 and the slow bridge sums at n = 12800).
 Needs numpy, scipy, mpmath and python-flint.
 """
 from pathlib import Path
@@ -19,7 +26,7 @@ mode.add_argument('--full', action='store_true', help='also run the heavy cells'
 args = parser.parse_args()
 scripts = ('verify_elephant_crossing.py',   # Section 2, Table 1, Appendix A
            'verify_elephant_shape.py',      # Section 3, Appendices B and C
-           'verify_elephant_odd.py',        # Proposition 3.27 (odd N) and the numbers of Remark 3.29
+           'verify_elephant_odd.py',        # Proposition 3.26 (odd N) and the numbers of Remark 3.28
            'certify_elephant.py')           # Lemma 3.7, Proposition 3.8, Lemma 3.11 (needs python-flint)
 extra = ['--full'] if args.full else []
 start = time.time()
