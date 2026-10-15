@@ -12,7 +12,6 @@ the vertex probability `p^(N-1)/d`, and the ratio `P_N(k)/V_N = ∑_w u^(changes
 A word of length `N ≥ 1` is written `Fin (n+1) → Fin d` with `N = n+1`, so the
 `n` steps are indexed by `Fin n`.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperB

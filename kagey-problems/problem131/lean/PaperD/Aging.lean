@@ -23,7 +23,6 @@ Proved here:
 * a word in an interior bin has a switch (`exists_switch_of_interior`), and every bin is
   nonempty (`prefixWord`).
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperD

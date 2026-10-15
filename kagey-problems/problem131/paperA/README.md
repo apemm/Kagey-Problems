@@ -18,8 +18,9 @@ Table 3 compares with the approximations of Stepanyan et al. (J. Stat. Mech. 202
 - `problem131.tex` is the paper and `problem131.pdf` the built version. It includes the sections
   `sec_exact.tex`, `sec_crossing.tex`, `allbin_thresholds.tex` and `periodic_window.tex`, and the
   appendix `app_every_n.tex`. It builds from this folder alone.
-- `figures/` holds the four figures (`row10`, `crossing`, `allbin` and `window`), made by
-  `figures/make_figures.py`.
+- `figures/` holds the five figures. Four of them (`row10`, `crossing`, `allbin` and `window`) are
+  made by `figures/make_figures.py`, and the coupling figure `coupling` by
+  `figures/make_coupling_figure.py`. Both scripts use the shared style `../figures/series_style.py`.
 - `llt_note/` holds the uniform local law (the former Section 6 and Appendix B), the start of a
   separate paper. `tables_note/` holds the numerator tables and bijections (the former Appendix C
   and its figure), kept for a later note.

@@ -16,7 +16,6 @@ For positive rare counts `a_1, …, a_ℓ` (here `a i = m i + 1`) with total
 * `H_root`: there is a unique `y_a > 0` with `H(y_a) = 1`, and
   `1/(A+1) ≤ y_a ≤ 1`.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperB

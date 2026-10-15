@@ -18,7 +18,6 @@ here the same two bounds are proved by induction: `1 - c/m ≤ (m/(m+1))^c` (fro
 `exp` inequalities) and the Bernoulli step `j^(c+1) + (c+1) j^c ≤ (j+1)^(c+1)`, which
 telescopes. Finally `P₊(b_n = n-1) ≤ ε(1-ε)^(n-2)`.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperD

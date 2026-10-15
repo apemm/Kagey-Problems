@@ -21,7 +21,6 @@ This file proves it completely:
   cheaper than every other nonempty face (`paw_phase1` to `paw_phase4`), and the
   non-nestedness (`paw_not_nested`).
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperC

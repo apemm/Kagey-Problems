@@ -18,7 +18,6 @@ import PaperB.Constants
   determinant `k`, hence covolume `√k` (Remark `rem:frontier-superlevel`, whose proof
   the paper omits and whose covolume it says is checked in Lean).
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperB

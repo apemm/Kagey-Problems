@@ -31,7 +31,6 @@ The `ρ_F` are kept abstract here (with the facts `ρ_{i} = 0`, `0 < ρ_F < 1` f
 proper faces of size `≥ 2`, `ρ_{[d]} = 1` that note C4 derives from (A+) and
 Perron–Frobenius), except for pair faces, whose Perron root is computed.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperC

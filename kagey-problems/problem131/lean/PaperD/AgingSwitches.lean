@@ -8,7 +8,6 @@ switches in `n = t + 1` steps is `∑_{k=2}^{n} p_k` (`expected_switches`). For 
 (`p k = c/k`) this is `E N_n = c (H_n - 1)` (`expected_switches_aging`), the exact identity that
 note D4, Corollary 12 combines with Theorem 8.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperD

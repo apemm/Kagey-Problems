@@ -22,7 +22,6 @@ We work with the integrals directly (Jensen's inequality is replaced by the
 supporting tangent line of the convex polynomial `H`), so the random variable
 `T` of the paper does not appear explicitly.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperB

@@ -22,7 +22,6 @@ certificates (positive test vectors with rational entries) for the other faces.
 
 In each phase the stated face is strictly cheaper than every other nonempty face.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperC

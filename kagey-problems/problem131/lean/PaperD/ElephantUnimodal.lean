@@ -14,7 +14,6 @@ The proof is the note's: with `Δ_n(c) = h_n(c+1) - h_n(c)`,
 `Δ_{n+1}(0) = (1 - r_n(1)) Δ_n(0) + (ε - (1-2ε)/n) h_n(0)` (`delta_succ_zero`); the extra term is
 negative exactly when `ε(n+2) < 1`, and then `Δ(0) < 0` all along (`delta_zero_neg`).
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperD

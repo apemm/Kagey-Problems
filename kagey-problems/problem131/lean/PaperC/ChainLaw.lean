@@ -31,7 +31,6 @@ Proved here:
   so `out_i - in_i = [i = s_1] - [i = s_R]` (`switchProd_eq_prod_pow`,
   `sum_switchCount_out`, `sum_switchCount_in`, `switch_balance`).
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperC

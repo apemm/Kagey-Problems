@@ -15,7 +15,6 @@ Proved here, for the power-series `I_0`, `I_1` of `Bessel.lean`:
 * the root comparison used in Corollary `cor:allbin-root-bound` and Theorem `thm:bessel`:
   if `A ≤ G_η(x) ≤ A/(1-δ)` then `0 ≤ x - x_B ≤ -(1/2) log(1-δ)`.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131

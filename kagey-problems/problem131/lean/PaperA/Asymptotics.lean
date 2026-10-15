@@ -13,7 +13,6 @@ Stirling-type bound `r! ≤ e √r (r/e)^r` (Mathlib's `stirlingSeq` is decreasi
 * the quantitative form of `u_N - u_B = O((log N)²/N²)` in Theorem `thm:bessel` (iii):
   eventually `0 ≤ u_N - u_B ≤ 8 (log N)²/N²`.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131

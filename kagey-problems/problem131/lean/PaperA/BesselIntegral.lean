@@ -19,7 +19,6 @@ proof is in Appendix `app:every-n`):
   `E(z) ≤ 1` (`besselE_ge`, `besselE_le`, `besselE_le_one`); in particular
   `E(z) ≤ 1 - 1/(8z)` for `z ≥ 5/4` (`besselE_le_of_ge`).
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131

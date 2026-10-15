@@ -14,7 +14,6 @@ import PaperB.VertexH
   the crossing polynomial `S`. Its conclusion is `S(u₊) > 1 > S(u₋)` with
   `u_± = (1 ± δ) √(y_a/b)`.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperB

@@ -29,7 +29,6 @@ direction: `z(u_hi) ≤ q + 1/(8Q)` and `Q + 1/(8q) - q(q+1)/N - 1/(16Q²) ≤ z
 `z(u) = N u/(1+u)`. The coefficients of `S_N` are evaluated with the multiplicative recursion
 for binomial coefficients (`chooseMul`), proved equal to `Nat.choose`.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131

@@ -26,7 +26,6 @@ arbitrary finite family of faces with real exit rates `lam F` and sizes `sz F`
   iff its exit rate is the minimum `μ_{|F|}` of its size and its size wins
   (`face_winner_iff`).
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperC

@@ -18,7 +18,7 @@ Conventions. N is the number of bounces, so Kagey's row n has N = n-1. For p = a
 is 2(a+b)^(N-1) P_N(k). Write u = (1-p)/p for the switching odds, T = N(1-p) for the switching scale
 and z_N = N(1-p_N) for the value of T at the central crossing p_N.
 
-## Paper A: Uniform Bessel bounds for endpoint crossings in the persistent random walk
+## Paper A: Uniform Bessel bounds for magnetization crossings in finite Ising chains
 
 Paper A (arXiv:2610.06935) treats the walk with 2 states, which is the zero-field 1D Ising chain
 with free boundaries.
@@ -82,7 +82,7 @@ one near each end, and for large N it is strictly convex between them.
 Files. The folder `paperD`, with `problem131_memory.tex` and `problem131_memory.pdf`, its section
 and appendix files, the check scripts and `paperD/README.md`.
 
-## Paper E: Kagey's board in the plane
+## Paper E: Endpoint crossings for the planar persistent walk
 
 Paper E (in preparation) treats the planar persistent walk, which is Kagey's board in 2 dimensions.
 Its corner and origin cross exactly

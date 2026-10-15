@@ -11,7 +11,6 @@ import PaperB.Balance
 * `edge_modes`: at `d = 3`, `N = 4`, `p = 10/17`, the three edge centers are
   exactly the global modes.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperB

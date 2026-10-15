@@ -19,7 +19,6 @@ Proved here:
   minimum degree forces the graph to be complete (`unit_equal_feeding_complete`); the
   converse is Theorem C2.4 (`complete_vertex_wins`, `complete_full_wins`).
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperC

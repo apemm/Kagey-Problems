@@ -19,7 +19,6 @@ For `a = m + 1 ≥ 1` and `y > 0` write `B_a(y) = y Z(y)` with
 * `kap_eq`: `κ_a(y) = y B_a'(y)/B_a(y)` with the polynomial derivative.
 * `Zf_hasDerivAt`, `E1f_hasDerivAt`: `Z' = E₁/y`, `E₁' = E₂/y`.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperB

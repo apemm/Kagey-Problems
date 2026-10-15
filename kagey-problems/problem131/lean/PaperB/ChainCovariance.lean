@@ -15,7 +15,6 @@ each other state with `r = (1-p)/(d-1)`, `σ = p - r`), with `N = n+1` visits:
   `(δ_{ab}/d - 1/d^2) (N(1+σ)/(1-σ) - 2σ(1-σ^N)/(1-σ)^2)`. The proof of Proposition
   `prop:field-tilt` (3) uses the case `a = b`, the variance of `K_a`.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperB
