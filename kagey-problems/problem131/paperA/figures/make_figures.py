@@ -275,14 +275,15 @@ def fig_crossing():
         i = n - 2
         assert abs(exact[i] - two[i] - lead) < 1e-6 and abs(exact[i] - three[i] - ref) < 1e-6
 
-    cols = [PRIOR2, PRIOR, INK]
+    # one color per approximation, the same in both panels; only the Bessel root is dashed
+    cols = [ss.GOLD, ss.PURPLE, INK]
     fig, (a, b) = plt.subplots(1, 2, figsize=(FULL, 2.3))
     m = ns >= 3
-    a.axhline(1.0, color="0.6", lw=0.6, ls=":")
-    a.plot(ns[m], two[m] / L[m], "-.", color=cols[0], label=r"$\nu_N$")
-    a.plot(ns[m], three[m] / L[m], ":", color=cols[1], lw=1.2, label=r"$\nu_N$ + $1/L$ term")
-    a.plot(ns, bessel / L, "--", color=cols[2], label="Bessel root $u_B$")
-    a.plot(ns, exact / L, "-", color=EXACT, lw=1.3, label="exact $z_N$")
+    a.axhline(1.0, color=ss.SERIES["grid"], lw=0.6)
+    a.plot(ns[m], two[m] / L[m], "-", color=cols[0], lw=1.1, label=r"$\nu_N$")
+    a.plot(ns[m], three[m] / L[m], "-", color=cols[1], lw=1.1, label=r"$\nu_N$ + $1/L$ term")
+    a.plot(ns, bessel / L, "--", color=cols[2], lw=1.1, label="Bessel root $u_B$")
+    a.plot(ns, exact / L, "-", color=EXACT, lw=1.6, label="exact $z_N$")
     a.set_xscale("log")
     a.set_xlim(2, 1e4)
     a.set_ylim(0.45, 1.05)
@@ -291,10 +292,10 @@ def fig_crossing():
     a.legend(frameon=False, loc="lower right", handlelength=2.2)
     a.text(0.97, 0.87, "(a)", transform=a.transAxes, ha="right", va="top")   # clear of the line at 1
 
-    b.axhline(0.0, color="0.6", lw=0.6, ls=":")
-    b.plot(ns[m], (exact - two)[m], "-.", color=cols[0], label=r"minus $\nu_N$")
-    b.plot(ns[m], (exact - three)[m], ":", color=cols[1], lw=1.2, label=r"minus $\nu_N$ + $1/L$ term")
-    b.plot(ns, exact - bessel, "--", color=cols[2], label="minus Bessel root")
+    b.axhline(0.0, color=ss.SERIES["grid"], lw=0.6)
+    b.plot(ns[m], (exact - two)[m], "-", color=cols[0], lw=1.1, label=r"minus $\nu_N$")
+    b.plot(ns[m], (exact - three)[m], "-", color=cols[1], lw=1.1, label=r"minus $\nu_N$ + $1/L$ term")
+    b.plot(ns, exact - bessel, "--", color=cols[2], lw=1.1, label="minus Bessel root")
     b.set_xscale("log")
     b.set_xlim(2, 1e4)
     b.set_ylim(-0.1, 0.32)
