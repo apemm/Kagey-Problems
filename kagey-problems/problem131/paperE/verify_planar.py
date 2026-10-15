@@ -6,7 +6,7 @@ reverses with probability s h, where beta = 2r + s. The first direction is
 uniform. c_N is the probability of the corner N e_E and o_N that of the origin.
 
 We compute o_N in 4 ways.
-Method A (Lemma 6.1). The number m of switches is binomial, the skeleton is a
+Method A (Lemma 3.1). The number m of switches is binomial, the skeleton is a
 random walk on Z_4, and the run lengths are uniform over the compositions. The
 expected number of compositions that return to the origin is tabulated once per
 N and (r, s), so a root in h is cheap. The tables are written as matrix
@@ -246,7 +246,7 @@ def origin_dp(N, r, s, h):
 
 
 def brute_exact(N, r, s, h):
-    """All 4^N words in exact arithmetic: o_N, its axis and 4-direction parts, and Lemma 6.1 word by word."""
+    """All 4^N words in exact arithmetic: o_N, its axis and 4-direction parts, and Lemma 3.1 word by word."""
     beta = 2 * r + s
     p0 = 1 - beta * h
     q = {0: p0, 1: r * h, 3: r * h, 2: s * h}
@@ -299,7 +299,7 @@ def paperA_nq(N, both=True):
 # ======================================================================== checks
 
 def check_small():
-    print('\nLemma 6.1 and Proposition 6.2: the engines for N <= 10', flush=True)
+    print('\nLemma 3.1 and Proposition 3.2: the engines for N <= 10', flush=True)
     worst = 0.0
     ok_lemma = True
     ok_parts = True
@@ -323,8 +323,8 @@ def check_small():
                 worst = max(worst, max(abs(v) for v in vals))
             else:
                 worst = max(worst, max(abs(v / ref - 1) for v in vals))
-    check('Lemma 6.1: every word has probability Bin(m) x skeleton / C(N-1, m) (exact, N <= 6)', ok_lemma, '')
-    check('Proposition 6.2: the axis part is 2 S_N(u) c_N (exact, N <= 6)', ok_parts, '')
+    check('Lemma 3.1: every word has probability Bin(m) x skeleton / C(N-1, m) (exact, N <= 6)', ok_lemma, '')
+    check('Proposition 3.2: the axis part is 2 S_N(u) c_N (exact, N <= 6)', ok_parts, '')
     check('three levels = Fourier = dynamic program = all 4^N words (paper: 2e-13)', worst < 2e-13, f'max relative difference {worst:.1e}, N <= 10')
 
 
@@ -340,7 +340,7 @@ def S_exact(N, u):
 
 
 def check_bounds():
-    print('\nProposition 6.2 and Theorem 6.4(a): the bounds on the 4-direction part', flush=True)
+    print('\nProposition 3.2 and Theorem 3.4: the bounds on the 4-direction part', flush=True)
     bad = 0
     worst_id = 0.0
     mono = True
@@ -370,9 +370,9 @@ def check_bounds():
 
 
 def check_crossings(full):
-    print('\nTheorem 6.4, Figure 6 and the table of crossings', flush=True)
+    print('\nTheorems 3.3 and 3.4, Figure 2 and the table of crossings', flush=True)
     pairs = [(0.1, 1.0), (0.3, 1.0), (0.5, 1.0), (1.0, 1.0), (1.0, 0.0)]
-    # T* and the zero-turn share 2 S_N(u*) as recorded in ledger_C3.md (the data of Figure 6)
+    # T* and the zero-turn share 2 S_N(u*) as recorded in ledger_C3.md (the data of Figure 2)
     Nall = (40, 80, 160, 320, 640, 1280, 2560, 5120, 10240)
     recorded = {(1.0, 0.0, 40): '2.6427593', (1.0, 0.0, 80): '3.2524385', (1.0, 0.0, 160): '3.8810744', (1.0, 0.0, 320): '4.5189207',
                 (1.0, 0.0, 640): '5.1612511', (1.0, 0.0, 1280): '5.80620711', (1.0, 0.0, 2560): '6.45327647',
@@ -440,7 +440,7 @@ def check_crossings(full):
     lim = 2 * sqrt(2) / (sqrt(2) + sqrt(5))
     agree('limit of the zero-turn share at s = 2r', '0.774852', {'closed': lim})
     check('the share at s = 2r stays below its limit (N = 640)', 2 * exp(logS(320, 320, Tstar[(0.5, 1.0, 640)] / 640 / (1 - 2 * Tstar[(0.5, 1.0, 640)] / 640))) < lim, '')
-    # Turns only at the (1,0) crossings (finite-N bounds from the research notes; see Theorem 6.9)
+    # Turns only at the (1,0) crossings (finite-N bounds from the research notes; see Theorem 3.9)
     for N in ((640, 10240) if full else (640,)):
         T = Tstar[(1.0, 0.0, N)]
         h = T / N
@@ -460,7 +460,7 @@ def check_crossings(full):
 
 
 def check_pure_turns():
-    print('\nTurns only, in exact arithmetic (finite-N bounds from the research notes; see Theorem 6.9)', flush=True)
+    print('\nTurns only, in exact arithmetic (finite-N bounds from the research notes; see Theorem 3.9)', flush=True)
     viol = 0
     mism = 0
     for N in range(2, 31, 2):

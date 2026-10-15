@@ -3,13 +3,13 @@
 Check 1 is the product identity in exact rational arithmetic, for N = 4, 6, 8 with one rho each.
 The other checks are in floating point and only on grids.
 Check 2 (turns only, N = 8, 16, 32, 64, 96, at x = u_N/2, u_N, 3u_N/2): Delta_N >= 0 and the bound
-of Theorem 6.9(b) where z(z+2) <= N. Here Delta_N is computed as S_N^2 - o_N/c_N, so this check
-does not test the identity of Theorem 6.9(a). verify_planar.py tests that identity exactly.
+of Theorem 3.9(b) where z(z+2) <= N. Here Delta_N is computed as S_N^2 - o_N/c_N, so this check
+does not test the identity of Theorem 3.9(a). verify_planar.py tests that identity exactly.
 Check 3: F(y/2) <= 2 F(y) of Appendix C, at 4000 points y from 1e-3 to 1e4.
-Check 4: x S_N'(x) <= (2z+2) S_N(x) of Lemma C.4, for N = 16, 64, 256 at 30 values of z with
+Check 4: x S_N'(x) <= (2z+2) S_N(x) of Lemma A.4, for N = 16, 64, 256 at 30 values of z with
 z(z+2) <= N, with the derivative taken as a central difference.
 Every check asserts, so a failure stops the script with an error. The size of N v*_N - N u_N
-against L^2/N (Theorem 6.9(c)) is only printed, because the theorem gives no constant.
+against L^2/N (Theorem 3.9(c)) is only printed, because the theorem gives no constant.
 Accepts and ignores --full.
 """
 import itertools
@@ -114,7 +114,7 @@ def root(f, lo, hi, it=200):
     return 0.5 * (lo + hi)
 
 
-print("2. turns only: S_N(v)^2 - o/c >= 0, the bound of Theorem 6.9(b), and the crossing")
+print("2. turns only: S_N(v)^2 - o/c >= 0, the bound of Theorem 3.9(b), and the crossing")
 for N in (8, 16, 32, 64, 96):
     uN = root(lambda x: S_N(N, x), 0.0, 1.0)
     vstar = root(lambda x: planar_ratio_turns(N, x), 0.0, 1.0)
@@ -125,7 +125,7 @@ for N in (8, 16, 32, 64, 96):
         S = S_N(N, x)
         Delta = S * S - planar_ratio_turns(N, x)
         assert Delta >= -1e-12
-        if z * (z + 2) <= N:          # the hypothesis of Theorem 6.9(b)
+        if z * (z + 2) <= N:          # the hypothesis of Theorem 3.9(b)
             bound = (2 * x + 8 * x * S) * (2 * z + 2) * S
             assert Delta <= bound * (1 + 1e-9)
             worst = max(worst, Delta / bound)
@@ -142,7 +142,7 @@ supF = np.max(F(ys / 2) / F(ys))
 print("   sup F(y/2)/F(y) on the grid: %.6f" % supF)
 assert supF <= 2 * (1 + 1e-9)
 
-print("4. x S_N'(x) <= (2z+2) S_N(x) when z(z+2)/(2N) <= 1/2 (Lemma C.4)")
+print("4. x S_N'(x) <= (2z+2) S_N(x) when z(z+2)/(2N) <= 1/2 (Lemma A.4)")
 for N in (16, 64, 256):
     worst = 0.0
     for z in np.linspace(0.2, min(math.sqrt(N) - 1.0, 12), 30):   # z <= sqrt(N) - 1 gives z(z+2) <= N
