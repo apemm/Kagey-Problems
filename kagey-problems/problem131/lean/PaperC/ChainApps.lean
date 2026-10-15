@@ -29,7 +29,6 @@ and C5.
   two maxima cross at most once (`dicycle_face`, `dicycle_face_max`,
   `dicycle_ratio_strictMono`).
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperC

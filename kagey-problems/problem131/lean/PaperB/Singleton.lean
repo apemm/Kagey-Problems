@@ -22,7 +22,6 @@ For `M = 0` the identity fails (`S_(1) = 1` but the right side is
 We also derive `S_(b,1)(u) = 2u + (b-1)u^2` and
 `S_(b,1,1)(u) = 6u^2 + 6(b-1)u^3 + (b-1)(b-2)u^4`.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperB

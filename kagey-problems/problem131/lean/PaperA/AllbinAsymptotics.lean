@@ -13,7 +13,6 @@ import PaperA.Periodic
   adjacent periodic threshold is `J = (log N)/4` (Section `sec:periodicwindow`, where the
   coupling is `J`; it is `K` in the Lean statement).
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131

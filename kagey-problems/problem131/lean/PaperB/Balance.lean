@@ -14,7 +14,6 @@ import PaperB.LogConcave
 * `law_max_balanced`: every maximizer among bins with a given support and
   total is balanced.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperB

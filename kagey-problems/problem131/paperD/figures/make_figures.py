@@ -753,6 +753,9 @@ def fig_shape(s):
 
 # ---------------------------------------------------------------- Figure 3 heavy tails
 
+ACCENT = "#D55E00"   # the accent of the series (figures/series_style.py)
+
+
 def fig_heavy(h):
     fig, (a, b) = plt.subplots(1, 2, figsize=(FULL, 2.3))
     cols = shades(len(HEAVY_A))
@@ -761,7 +764,10 @@ def fig_heavy(h):
         N = np.array(d["N"], dtype=float)
         ratio = np.array(d["R"]) / (k["C"] * N ** k["e"])
         tex = ALPHA_TEX.get(al, al)
-        a.plot(N, ratio, "-" if i % 2 == 0 else "--", color=cols[i], lw=1.1, label=rf"$\alpha={tex}$")
+        if tex == r"\varphi":          # the threshold case of the series, in the accent colour
+            cols[i] = ACCENT
+        a.plot(N, ratio, "-" if i % 2 == 0 else "--", color=cols[i], lw=1.6 if tex == r"\varphi" else 1.1,
+               label=rf"$\alpha={tex}$")
         cells = np.array([1600, 10000, 100000], dtype=float)
         a.plot(cells, [d["cells"][str(int(v))] / (k["C"] * v ** k["e"]) for v in cells], "o",
                ms=2.6, color=cols[i], mec="k", mew=0.4, zorder=3, clip_on=False)
@@ -781,7 +787,7 @@ def fig_heavy(h):
         ns = NSTAR[al]
         b.plot(N, d["R"], "-" if i % 2 == 0 else "--", color=cols[i], lw=1.1,
                label=rf"$\alpha={al}$, $N^*={ns}$")
-        b.plot([ns], [1.0], "o", ms=3.4, mfc="white", mec="k", mew=0.8, zorder=3)
+        b.plot([ns], [1.0], "o", ms=3.4, mfc="white", mec=ACCENT, mew=0.9, zorder=3)
     b.axhline(1.0, color="k", lw=0.6, ls="--")
     b.set_xscale("log")
     b.set_yscale("log")

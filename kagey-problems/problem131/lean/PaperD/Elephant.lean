@@ -22,7 +22,6 @@ Proved here (note D1, statement S1; note D2, Lemma 2.1):
   `P(A_n = n) = (1/2)(1-ε)^(n-1)` (`ewBin_top`), the probability that all steps are `+1`;
 * basic facts on the count chain: support, positivity, `P₊(b_n = 0) = (1-ε)^(n-1)`.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperD

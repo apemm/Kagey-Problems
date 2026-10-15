@@ -15,7 +15,6 @@ import Mathlib
   concavity of `c(x) - x^2/4`, whose second derivative is `-(x-1)^2/(2x^2)`
   (equivalently `c''(x) = (x-½)/x^2 ≤ ½`).
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperB

@@ -16,7 +16,6 @@ Kagey's numerator weight. Proved here:
 * Proposition `prop:var`: `E K_N = N/2` and both closed forms of `Var K_N`, and
   `Var K_N = N^2/4` at `p = 1`.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131

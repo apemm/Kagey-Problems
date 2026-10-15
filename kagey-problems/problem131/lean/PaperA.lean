@@ -23,5 +23,4 @@ import PaperA.EveryNLarge
 
 Imports every module of the Lean proofs for the binary paper.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/

@@ -1,8 +1,8 @@
 \section{The elephant walk and its crossing}\label{sec:erw}
 
-We reduce the elephant walk to a counting chain, prove that the crossing is
-unique, compute the center to first and second order in $\varepsilon$, and
-locate the crossing. The last subsection gives one more term of the center
+We reduce the elephant walk to a counting chain and prove that the crossing is
+unique. We then compute the center to first order in $\varepsilon$, bound it
+from both sides, and locate the crossing. The last subsection gives one more term of the center
 and of the crossing.
 
 \begin{definition}[elephant walk]\label{def:erw}
@@ -44,8 +44,8 @@ $k\mapsto N-k$. Finally $M_N\le N-1$, so $f_N(N)=0$, and
 $f_N(0)=\prod_{t=1}^{N-1}(1-r_t(0))=(1-\varepsilon)^{N-1}$.
 \end{proof}
 
-So the end is Kagey's end $p^{N-1}/2$ with $p=1-\varepsilon$. More flips
-always help the middle against the end.
+So the end is that of the persistent walk with switch probability
+$\varepsilon$. More flips always raise the center relative to the end.
 
 \begin{proposition}\label{prop:mlr}
 Let $N\ge2$ and $1\le k\le N-1$. Then $f_N(k)/f_N(0)$ and $P_N(k)/E_N$ are
@@ -182,12 +182,12 @@ $N-t\ge h$ and $\frac{N+2}{2h}=1+\frac2N\le2$, so $w_t\le2t2^{-t}$.
 \end{proof}
 
 In words, to first order the walk flips once, at some step $t+1$, and then
-runs as P\'olya's urn from $t$ balls of one color and one of the other. The
-minority fraction is then close to a Beta$(1,t)$ variable, whose density at
-$\frac12$ is $t2^{1-t}$, and $\sum_tt2^{1-t}=4$ explains the constant
+runs as P\'olya's urn from $t$ balls of one color and one of the other. As
+$N\to\infty$ the final fraction of the color that started with one ball tends
+in law to a Beta$(1,t)$ variable, whose density at $\frac12$ is $t2^{1-t}$, and $\sum_tt2^{1-t}=4$ explains the constant
 $4/(N+2)$. Since $w_t\le2t2^{-t}$, only an early flip counts.
 
-\subsection{Second order}
+\subsection{Two-sided bounds on the center}
 
 This subsection bounds the center from both sides. The bounds give the crossing in the next
 subsection.
@@ -213,8 +213,9 @@ is P\'olya's urn with $\beta s$ extra balls of each color, where
 $\beta=\varepsilon/(1-2\varepsilon)$ (Lemma~\ref{lem:A-polya}). They pull the
 minority fraction toward $\frac12$. For (a) we drop them. For (b) we compare
 $M$ with an urn with $\kappa(s+10)$ extra balls, where
-$\kappa=2\varepsilon/(1-4\varepsilon)$. The step at time $s$ then loses a
-factor of about $e^{\kappa/s}$, and the product of these factors is about
+$\kappa=2\varepsilon/(1-4\varepsilon)$. One step of $M$ at time $s$
+multiplies the hitting probability of this urn by a factor of at most about
+$e^{\kappa/s}$, and the product of these factors is about
 $e^{\kappa H_N}\approx N^{2\varepsilon}$.
 
 \subsection{The crossing}
@@ -243,11 +244,11 @@ $N$ & $x_N$ & $g_N$ & $x_N-x_{\mathrm{2nd}}$ & $x_N/\log N$ & $D(N)\log N$\\
 51200 & 16.778468 & 16.786946 & $+0.0008$ & 1.547 & $+0.707$\\
 \bottomrule
 \end{tabular}
-\caption{Elephant crossings computed in double precision from the recursion of
-Lemma~\ref{lem:erw-reduction}, the root $g_N$ of $G(g)=\Lambda_N$, and
-the difference $D(N)$ of Theorem~\ref{thm:erw-markov} times $\log N$. Here
-$x_{\mathrm{2nd}}$ is the formula of Proposition~\ref{prop:refined} without
-its error term.}
+\caption{Elephant crossings $x_N$, computed in double precision from the
+recursion of Lemma~\ref{lem:erw-reduction}, and the root $g_N$ of
+$G(g)=\Lambda_N$. Here $x_{\mathrm{2nd}}$ is the formula of
+Proposition~\ref{prop:refined} without its error term, and $D(N)$ is the
+difference of Theorem~\ref{thm:erw-markov}.}
 \label{tab:erw-crossing}
 \end{table}
 
@@ -321,14 +322,14 @@ $N=50\cdot2^k$, computed from the recursion for $f_N$ in
 Lemma~\ref{lem:erw-reduction}. The limit $2$ of $x_N/\log N$ is approached
 slowly, because of the term $-\log\log N$.
 
-Now we compare with Kagey's board. Doubling \eqref{eq:markov-crossing}
-without its last two terms gives $2z_N+\log(2z_N)=\Lambda_N+\log(2\pi)$, so
+Now we compare with the persistent walk. Doubling \eqref{eq:markov-crossing}
+without its last two terms and adding $\log2$ gives $2z_N+\log(2z_N)=\Lambda_N+\log(2\pi)$, so
 $2z_N-\log(2\pi)$ nearly solves $G(x)=\Lambda_N$. What is left is of order
 $1/L$.
 
 \begin{theorem}\label{thm:erw-markov}
-Let $z_N$ be the crossing value of $T$ for Kagey's board with $N$ steps, as
-in Section~\ref{sec:series}. As $N\to\infty$ over even $N$,
+Let $z_N$ be the crossing value of $T$ for the persistent walk with $N$ steps, as
+in Section~\ref{sec:notation}. As $N\to\infty$ over even $N$,
 \[
  D(N):=x_N-\bigl(2z_N-\log(2\pi)\bigr)=\frac{c_*}{\log N}
  +O\Bigl(\frac{\log\log N}{(\log N)^2}\Bigr),\qquad
@@ -336,7 +337,7 @@ in Section~\ref{sec:series}. As $N\to\infty$ over even $N$,
 \]
 \end{theorem}
 
-In words, the elephant needs twice as many flips as Kagey's board needs
+In words, the elephant needs twice as many flips as the persistent walk needs
 switches, less $\log(2\pi)=1.837\ldots$, and the difference from this tends
 to 0 like $c_*/\log N$.
 
@@ -350,7 +351,7 @@ $c_*/L$, and divide by $G'\approx1$.
 Write $\ell=\log(2\pi)$ and $Y=2z_N$. We compute $G(Y-\ell)$ in three steps
 and then compare it with $G(x_N)$.
 
-\emph{Step 1: the size of $z_N$.} By Section~\ref{sec:series}, the error term
+\emph{Step 1: the size of $z_N$.} By Section~\ref{sec:notation}, the error term
 in \eqref{eq:markov-crossing} is $O(L^{-2})$ and $L/2\le z_N\le L$. So
 $\log z_N=\log L+O(1)$ and $\frac1{8z_N}=O(1)$, and
 \eqref{eq:markov-crossing} gives $z_N=L-\frac12\log L+O(1)$. Hence
@@ -383,7 +384,7 @@ between them. By the mean value theorem we may divide by $G'$, and we get
 $x_N-(Y-\ell)=c_*/L+O(\log L/L^2)$.
 \end{proof}
 
-We computed $z_N$ from the exact law of Kagey's board~\cite{paperA}. The
+We computed $z_N$ from the exact law of the persistent walk~\cite{paperA}. The
 difference $D(N)$ changes sign between $N=400$ and $N=1600$, and
 $D(N)\log N$ is $0.707$ at $N=51200$ against the limit $c_*=0.669$
 (Table~\ref{tab:erw-crossing}). So the asymptotic regime is reached slowly.
@@ -431,7 +432,7 @@ So $x_N<g_N$ for large $N$.
 \end{proposition}
 
 In words, the root $g_N$ overshoots the crossing by an amount of order $\log^2N/N$. The
-amount is $6\log^2N/N$ in the limit, but only about $60$ percent of that at $N=51200$
+amount is $6\log^2N/N$ in the limit, but only about 60 percent of that at $N=51200$
 (Table~\ref{tab:erw-crossing}).
 
 \begin{proof}
@@ -504,7 +505,9 @@ From the Taylor coefficients of $C_N$, computed in double precision
 $k_2(N)-2\log N=-1.585878$, $-1.546572$ and $-1.541005$ at $N=1600$, $12800$
 and $51200$. The formula of Proposition~\ref{prop:refined} without its error
 term is within $0.07$ of $x_N$ already at $N=400$
-(Table~\ref{tab:erw-crossing}). We do not know an upper bound
-$\log C_N\le\log(c_1\varepsilon)+\varepsilon k_2(N)+O(\varepsilon^2(\log N)^k)$,
-or an explicit $N$ beyond which $g_N>x_N$.
+(Table~\ref{tab:erw-crossing}). We do not know whether, for some fixed $k$,
+the bound
+$\log C_N\le\log(c_1\varepsilon)+\varepsilon k_2(N)+O(\varepsilon^2(\log N)^k)$
+holds uniformly in $N$ in the range of Proposition~\ref{prop:second-order}.
+We also do not know an explicit $N$ beyond which $g_N>x_N$.
 \end{remark}

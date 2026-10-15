@@ -46,6 +46,5 @@ python verify_general.py
 
 ## Before submission
 
-- Fill in the bracketed placeholder in "A note on the use of AI" (how the proofs were checked).
 - Sources read only second-hand (Rosen 1954, Hecke 1936 via its JFM review, Leutbecher 1974 beyond the
   introduction) are cited only for attribution. See `data/literature.md`.

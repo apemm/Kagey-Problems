@@ -5,14 +5,14 @@ direction at step $k\ge2$ with probability $c/k$, independently of the past,
 where $0<c<2$. So the walk switches less and less often, and the expected
 number of switches in $N$ steps is $c(H_N-1)$, which is about $c\log N$. With
 a fair first step, $A_N/N$ converges in law to
-$\mathrm{Beta}(c,c)$~\cite[Example~1.1 and Theorem~1.4]{ds2007} (their chain
-is this walk for $c\le1$), \cite[Theorem~1]{ev2018}, and the limit is uniform
-exactly when $c=1$~\cite[Remark~2]{ev2018}. At finite $N$ the first step
+$\mathrm{Beta}(c,c)$~\cite[Example~1.1 and Theorem~1.4]{ds2007},
+\cite[Theorem~1]{ev2018}. (The chain of~\cite{ds2007} is this walk when
+$c\le1$.) The limit is uniform exactly when $c=1$~\cite[Remark~2]{ev2018}. At finite $N$ the first step
 matters. We first fix it, then pass to $d$ states, and then return to the
 fair first step.
 
 We write $\Prob_+$ for the law given $X_1=+1$, as in
-Section~\ref{sec:heavy}, and $X_N$ for the last step. A path is a sequence
+Section~\ref{sec:notation}, and $X_N$ for the last step. A path is a sequence
 $x\in\{\pm1\}^N$, and it switches at time $t\ge2$ if $x_t\ne x_{t-1}$. Step
 $k\ge2$ contributes the factor $c/k$ to the probability of a path if the path
 switches there, and $1-c/k$ otherwise. So relative to no switch, a switch at
@@ -30,9 +30,9 @@ $c$, and tends to $0$ as $c\downarrow0$.
 
 \subsection{A fixed first step}
 
-We first fix the first step. Then every interior bin ties with the end exactly at $c=1$.
+With the first step fixed, every interior bin ties with the end exactly at $c=1$.
 
-\begin{proposition}[two states, fixed first step]\label{prop:aging-two}\label{rem:aging}
+\begin{proposition}[two states, fixed first step]\label{prop:aging-two}
 Let $N\ge2$ and let the first step be $+1$.
 \begin{enumerate}[(a)]
 \item At $c=1$, for $1\le s\le N$,
@@ -91,8 +91,8 @@ can be related to P\'olya urns (the authors credit M.~Bal\'azs) and that a
 more general connection of their model with P\'olya urns will appear in a
 later paper. So the uniform law for two states is not new. What we add for
 two states is the joint law with the last step and part (b). The argument for
-(b) is the one that gives the unique crossing of the elephant walk
-in~\cite[Proposition~2.3]{paperD}. Both parts of
+(b) is the path-weight argument that gives the unique crossing of the
+elephant walk in~\cite{paperD}. Both parts of
 Proposition~\ref{prop:aging-two} are also proved in Lean
 (Section~\ref{sec:verify}).
 
@@ -110,9 +110,10 @@ $\theta/(k+d-2)$ at every step $k\ge2$. If $\theta\le1$ then
 $\lceil(d-1)\theta\rceil\le d-1$, so our step $k$ has the transition
 probabilities of their time $k+d-2$ for every $k\ge2$, and the two chains
 differ by a shift of $d-2$ steps. If $\theta>1$ the ceiling is $d$. Then
-their chain stays at time $d$, where ours takes its second step, and the
-later steps agree. One step does not change the limit.
-Part (a) of the theorem below is an exact form of their limit at finite $N$.
+their chain stays put at time $d$, which corresponds to our step $2$, and the
+later steps agree. A change at a single step does not change the limit law.
+At $\theta=1$, part~(a) of the theorem below is an exact finite-$N$ form of
+their limit.
 Fix $d\ge2$ and $\theta$
 with $0<\theta<d/(d-1)$. The chain $X_1,X_2,\dots$ on $\{1,\dots,d\}$ starts at
 $X_1=1$. At step $k\ge2$ it moves to each of the other $d-1$ states with
@@ -224,7 +225,7 @@ step $k$ with probability $(d-1)/(k+d-2)$, independently over $k$. This is
 the probability that customer $k$ opens a new table in the Chinese restaurant
 process with parameter $d-1$. So the expected number of moves in $N$ steps at
 the tie is $\sum_{k=2}^N\frac{d-1}{k+d-2}=(d-1)\log N+O(1)$, which is the
-first-order scale of the vertex crossing in Paper~B~\cite{paperB}.
+first-order scale of the vertex crossing in~\cite{paperB}.
 
 We checked~\eqref{eq:aging-d} and the strict ordering in (b) in exact
 rational arithmetic for $d=2,3,4$ and $2\le N\le8$
@@ -238,15 +239,15 @@ Engl\"ander and Volkov~\cite{ev2022}, who redraw a direction in $\mathbb Z^d$
 with probability $p_n$ and study recurrence and scaling limits. We do not
 claim the urn law below as new. The footnote quoted above announces a general
 connection with P\'olya urns, and two chapters of the book~\cite{ev2024} concern
-urn models. We have not seen them. What we use it for is the explicit joint law on
-$d$ states and the tie. Fix $d\ge2$ and $\theta>0$, and let
+urn models. What we add is the explicit joint law of the counts and the last
+state for $d$ states, and the tie that follows from it. Fix $d\ge2$ and $\theta>0$, and let
 $Y_1,Y_2,\dots$ be the following chain on $\{1,\dots,d\}$. At step $t\ge1$,
 with probability
 \[
- \varphi_t=\frac{d\theta}{d\theta+t-1}
+ f_t=\frac{d\theta}{d\theta+t-1}
 \]
 the state $Y_t$ is drawn afresh, uniformly from the $d$ states, and otherwise
-$Y_t=Y_{t-1}$ (so $Y_1$ is uniform, since $\varphi_1=1$). In other words, at
+$Y_t=Y_{t-1}$ (so $Y_1$ is uniform, since $f_1=1$). In other words, at
 step $t\ge2$ the chain moves to each other state with probability
 $\theta/(d\theta+t-1)$. Let $M_T$ be the vector of visit counts of
 $Y_1,\dots,Y_T$. At $\theta=1$ this is the chain of
@@ -257,10 +258,10 @@ $M_T=L_{T+1}-e_1$. We write $x^{(m)}=x(x+1)\cdots(x+m-1)$.
 For every $T\ge1$, every composition $m$ of $T$ into $d$ nonnegative parts and
 every state $j$,
 \begin{equation}\label{eq:aging-urn}
- \Prob(M_T=m,\,Y_T=j)=\frac{m_j}{T}\,D_T(m),\qquad
- D_T(m)=\frac{T!}{(d\theta)^{(T)}}\prod_{i=1}^d\frac{\theta^{(m_i)}}{m_i!} .
+ \Prob(M_T=m,\,Y_T=j)=\frac{m_j}{T}\,Q_T(m),\qquad
+ Q_T(m)=\frac{T!}{(d\theta)^{(T)}}\prod_{i=1}^d\frac{\theta^{(m_i)}}{m_i!} .
 \end{equation}
-So $M_T$ has the law $D_T$ of the counts in P\'olya's urn with $d$ colors and
+So $M_T$ has the law $Q_T$ of the counts in P\'olya's urn with $d$ colors and
 initial weight $\theta$ on each color. For $d=2$ and even $T$,
 \begin{equation}\label{eq:aging-urn-ratio}
  \frac{\Prob(M_T=(T/2,T/2))}{\Prob(M_T=(T,0))}
@@ -297,20 +298,20 @@ We use induction on $T$. For $T=1$ both sides of~\eqref{eq:aging-urn} are
 $\frac1d$ when $m=e_j$ and $0$ otherwise. Let $T\ge2$ and suppose
 \eqref{eq:aging-urn} holds for $T-1$. If $m_j=0$ both sides vanish. Otherwise
 put $m'=m-e_j$. Summing~\eqref{eq:aging-urn} over the last state gives
-$\Prob(M_{T-1}=m')=D_{T-1}(m')$. A fresh draw gives $j$ with probability
+$\Prob(M_{T-1}=m')=Q_{T-1}(m')$. A fresh draw gives $j$ with probability
 $\frac1d$ whatever the last state was, and a repeat gives $j$ only when the
 last state was $j$ (this is why the induction carries the last state along
 with the counts). So
 \[
  \Prob(M_T=m,\,Y_T=j)
- =\frac{\varphi_T}{d}\,D_{T-1}(m')+(1-\varphi_T)\,\frac{m_j-1}{T-1}\,D_{T-1}(m')
- =\frac{\theta+m_j-1}{d\theta+T-1}\,D_{T-1}(m') .
+ =\frac{f_T}{d}\,Q_{T-1}(m')+(1-f_T)\,\frac{m_j-1}{T-1}\,Q_{T-1}(m')
+ =\frac{\theta+m_j-1}{d\theta+T-1}\,Q_{T-1}(m') .
 \]
 On the other hand
-$D_T(m)=D_{T-1}(m')\cdot\frac{T}{m_j}\cdot\frac{\theta+m_j-1}{d\theta+T-1}$ by
-the definition of $D_T$. This gives~\eqref{eq:aging-urn}. Summing over $j$
-gives $\Prob(M_T=m)=D_T(m)$, and the ratio~\eqref{eq:aging-urn-ratio} is
-$D_T(T/2,T/2)/D_T(T,0)$ with
+$Q_T(m)=Q_{T-1}(m')\cdot\frac{T}{m_j}\cdot\frac{\theta+m_j-1}{d\theta+T-1}$ by
+the definition of $Q_T$. This gives~\eqref{eq:aging-urn}. Summing over $j$
+gives $\Prob(M_T=m)=Q_T(m)$, and the ratio~\eqref{eq:aging-urn-ratio} is
+$Q_T(T/2,T/2)/Q_T(T,0)$ with
 $\theta^{(T)}=\theta^{(T/2)}(\theta+T/2)^{(T/2)}$. Each factor
 $(\theta+i)/(\theta+T/2+i)$ increases strictly in $\theta$, and at
 $\theta=1$ the product is $(T/2)!^2/T!$.
@@ -323,8 +324,8 @@ The fresh draws
 cut $Y_1,\dots,Y_T$ into runs, and each run gets a uniform state. The urn can
 be run in the same way, as a Chinese restaurant process in which each table
 gets a uniform color. There a table is opened with the same probabilities
-$\varphi_t$. The lengths of the runs are the spacings between the successes of
-independent trials with success probabilities $\varphi_t$, and it is a classical
+$f_t$. The lengths of the runs are the spacings between the successes of
+independent trials with success probabilities $f_t$, and it is a classical
 fact (the Feller coupling, see~\cite{abt2003}) that the multiset of these spacings has
 the same law as the multiset of the table sizes (the two ordered lists do not). We do not know whether this is the relation
 to P\'olya urns that the footnote of~\cite{evw2020} has in mind. We
@@ -398,6 +399,7 @@ an averaging identity for $C_N$ and a coupling of the walk with a sign
 process driven by a Poisson process of intensity $c\,dt/t$, whose occupation
 fraction is exactly $\mathrm{Beta}(c,c)$.
 
-The convergence is slow. The computed crossing at $N=200$ is $c_{200}=0.8925$,
-against $0.8932$ from the expansion without its error term. The constant in
+The error term is only $O((\log N)^{-3})$, but the expansion is already
+accurate at moderate $N$. The computed crossing at $N=200$ is
+$c_{200}=0.8925$, against $0.8932$ from the expansion without its error term. The constant in
 the error term is not computed.

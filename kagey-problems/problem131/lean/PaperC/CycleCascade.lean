@@ -28,7 +28,6 @@ the facts about these numbers that drive the cascade of note C2, Section 3:
 Not formalized: the reduction of non-arc faces of `C_d` to their longest component
 arc (the rest of Lemma C2.6a), and the asymptotics of Theorem C2.6(d).
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperC

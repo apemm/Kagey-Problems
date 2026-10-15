@@ -33,7 +33,6 @@ Proved here:
 Not formalized: the bound `E_N ≤ 2w²((1+w)^N - 1)` (Lemma 3), and all asymptotic
 statements (Theorems 7 to 9, Corollary 10, Proposition 12).
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperC

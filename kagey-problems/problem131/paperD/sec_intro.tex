@@ -1,52 +1,51 @@
 \section{Introduction}\label{sec:intro}
 
-Suppose you drop a ball through a Galton board with $N$ rows of pegs. At the
-first peg the ball goes left or right with probability $\frac12$ each. At every
-later peg it repeats its previous direction with probability $p$ and switches
-with probability $q=1-p$. This is the board of Problem 131 in Kagey's Open
-Problem Collection~\cite{kagey131}, and one of his questions is when the middle
-bin is exactly as likely as each of the two end bins. If $p$ is close to 1 the
-ball rarely switches, so the ends win. If $p=\frac12$ the ball does a simple
-random walk, so the middle wins. Paper~A~\cite{paperA} finds the crossing in
-between. The middle catches up with the ends when the expected number of
-switches $T=Nq$ is about $\log N$.
+The elephant random walk of Sch\"utz and Trimper~\cite{schutz2004} remembers
+its whole past. Its first step is $+1$ or $-1$ with probability $\frac12$
+each. Each later step picks one of the earlier steps uniformly at random and
+repeats it, except that with probability $\varepsilon$ it reverses it. For a
+walk with $N$ steps we write $x=N\varepsilon$. The expected number of
+reversals is $(N-1)\varepsilon=x-\varepsilon$, so $x$ is this number up to an
+error below one. We let $A_N$ be the number of steps equal to $+1$.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.8\textwidth]{../figures/program_D}
-\caption{The crossing on each model's switching scale against $L=\log N$
-(a), and the heavy-tailed exponent $e(\alpha)=1-\alpha+1/\alpha$ of Paper~F
-for a stationary start (b). The scale is $T$ for Papers~A, B and~E,
-$x=N\varepsilon$ for the elephant walk (drawn through the root $g_N$ of
-Theorem~\ref{thm:erw-crossing}), and the expected number of
-switches at the crossing for the aging walk of Paper~F. The curve of
-this paper is in bold, and versions of this figure also appear in
-Papers~C, E and~F.}
-\label{fig:program}
-\end{figure}
+We ask when the walk is as likely to end in the middle as at each end. Let $N$
+be even. The walk ends at the origin, which we call the middle, when
+$A_N=N/2$. It ends at $N$ or at $-N$, which we call the ends, when $A_N=N$ or
+$A_N=0$. If $\varepsilon$ is close to 0 the walk rarely reverses, so the ends
+win. If $\varepsilon=\frac12$ the steps are independent and fair, so the
+middle wins. The crossing is the value of $\varepsilon$ in between at which the
+middle and each end are equally likely.
 
-Kagey's ball remembers one step, since its next direction depends only on its
-last one. In this paper we ask what happens to the middle-versus-ends question
-if the ball remembers its whole past.
-In the elephant random walk of Sch\"utz and Trimper~\cite{schutz2004},
-at each peg the ball picks one of its earlier
-directions uniformly at random and repeats it, except that with probability
-$\varepsilon$ it reverses it. We write $x=N\varepsilon$, which is the expected
-number of reversals up to $\varepsilon$.
-The middle
-needs about twice as many reversals as Kagey's board needs switches. Namely,
-the crossing value of $x$ is about $2\log N$, not $\log N$. (Paper~F~\cite{paperF} treats two
-other kinds of memory, runs with heavy tails and aging walks, and there the answer is different
-again.)
+In the persistent random walk each step repeats the previous one with
+probability $p$ and switches with probability $q=1-p$. So with $q=\varepsilon$
+it is the walk that copies its last step instead of a uniformly chosen one.
+Its steps are the spins of the Ising chain in zero field with free ends, and
+its position is the magnetization. For this Markov walk our question is part
+of Problem~131 of Kagey's Open Problem Collection~\cite{kagey131}, which is
+posed for a Galton board. As on that board, we call the values of $A_N$ bins.
+Let $T=Nq$, which exceeds the expected number $(N-1)q$ of switches by $q$. The middle catches
+up with the ends when $T$ is about $\log N$, and~\cite{paperA} locates this
+crossing within explicit bounds for every $N\ge2$.
+
+In this paper we find the crossing of the elephant walk. The middle needs
+about twice as many reversals as the persistent walk needs switches. Namely,
+the crossing value of $x$ is about $2\log N$, not $\log N$. The limit theorems
+of~\cite{glrs2025,tv2026} for the elephant walk fix the memory parameter, here
+$1-\varepsilon$, as $N$ grows, while we let $\varepsilon\to0$. K\"ursten's
+coupling~\cite{kursten2016} splits the steps into the clusters of bond
+percolation on a random recursive tree, and our regime $x\asymp\log N$ lies in
+the strongly supercritical regime of this
+percolation~\cite{baur2016,bertoin2014}. The results there describe cluster
+sizes, not the probability of the middle (Section~\ref{sec:prior}).
 
 \paragraph{Why the elephant needs twice as many reversals.}
 The following argument is heuristic, and Sections~\ref{sec:erw} and~\ref{sec:shape} make it precise.
-The ends are easy. The ball lands in the right end bin exactly when its first
+The ends are easy. The walk ends in the right end bin exactly when its first
 step goes right and it never changes direction. This has probability
 $\frac12(1-\varepsilon)^{N-1}\approx\frac12e^{-x}$ for the elephant walk, and
-the same with $q$ in place of $\varepsilon$ for Kagey's board. So only the
-middle differs. On Kagey's board the $T$ switches are spread over the whole
-walk, and each moves the final position by about a run length $N/T$. So the
+the same with $q$ in place of $\varepsilon$ for the persistent walk. So only the
+middle differs. In the persistent walk the $T$ switches are spread over the whole
+walk, and each switch moves the final position by about one run length $N/T$. So the
 number of right steps spreads over about $N/\sqrt T$ bins, the middle bin has
 probability of order $\sqrt T/N$, and the ends lose when $e^{-T}$ falls to
 about $1/N$, that is, when $T\approx\log N$.
@@ -55,14 +54,14 @@ The elephant walk spreads a reversal in a different way. A reversal at step
 $t+1$ is copied by later steps, those copies are copied, and so on. The steps
 that descend from it form a family, whose share of the walk behaves like the
 share of one ball in P\'olya's urn started with one ball against $t$. So a late
-reversal has a small family and hardly moves the ball.
-To land exactly in the middle, the walk needs a family that fills half the
-walk, so it needs a reversal among its first few steps. This has probability
+reversal has a small family and hardly moves the walk.
+To end exactly in the middle, the walk usually needs a family that fills
+about half the walk, so in most such walks a reversal happens among the first few steps. This has probability
 of order $\varepsilon$, and hitting the exact middle brings another factor of
 order $1/N$. So the middle bin has probability of order $\varepsilon/N=x/N^2$ (in
 fact about $4x/N^2$), and the ends lose only when $e^{-x}$ falls to about
-$1/N^2$, that is, when $x\approx2\log N$. More precisely, at Kagey's crossing
-$\frac12e^{-T}\approx\sqrt{2T/\pi}/N$, and squaring this relation turns it
+$1/N^2$, that is, when $x\approx2\log N$. More precisely, at the crossing of
+the persistent walk $\frac12e^{-T}\approx\sqrt{2T/\pi}/N$, and squaring this relation turns it
 into the elephant relation $\frac12e^{-x}\approx4x/N^2$ with
 $x\approx2T-\log(2\pi)$.
 
@@ -72,56 +71,11 @@ probability about $x/(2m^2)$ over a wide range of $m$. So the law has a hump
 near each end, and the middle is where the two tails meet. Indeed, twice
 $x/(2m^2)$ at $m=N/2$ is the $4x/N^2$ above.
 
-\subsection{The other papers of the series}\label{sec:series}
-
-This is one of six papers on Problem 131, which we call Papers~A to~F.
-Paper~A~\cite{paperA} solves Kagey's board. Paper~B~\cite{paperB}
-treats $d$ directions, where the ball turns to each other direction with the
-same probability. Paper~C~\cite{paperC} gives the general theory for slowly
-switching chains, and Paper~E~\cite{paperE} treats Kagey's board in the plane. These four
-papers study Markov walks, whose next step
-depends only on the current one, and their answer is that the middle (or a
-face) ties with the vertices when $T$ is of order $\log N$. This paper,
-Paper~D, and Paper~F keep Kagey's question and change the walk. This paper can be read on its
-own. From the earlier papers we use only the crossing equation of Paper~A,
-namely~\eqref{eq:markov-crossing} below, and we use it only to compare the
-elephant crossing with the Markov crossing in Section~\ref{sec:erw}. The
-papers share the following notation.
-\begin{itemize}[nosep]
-\item Kagey's board has $N$ steps (Kagey's row $n$ has $N=n-1$). The first
-step is left or right with probability $\frac12$, and each later step repeats
-the previous one with probability $p$. We put $q=1-p$ and $u=q/p$ (the odds of
-a switch).
-\item $P_N(k)$ is the probability of $k$ right steps, that is, the probability
-that the ball lands in bin $k$. The endpoints have $P_N(0)=P_N(N)=p^{N-1}/2$.
-\item $L=\log N$, and $T=Nq$ is the expected number of switches (up to the
-first step).
-\item The crossing is the value of $p$ (or of $T$) at which a bin is exactly
-as likely as an endpoint. For the middle bin it is $p_N$, and
-$z_N=N(1-p_N)$.
-\item Papers~B and~C have $d$ states. A face $F$ is a nonempty set of states,
-and the vertices are the faces of size $1$. For a chain with transition matrix
-$I+(T/N)Q$, $\lambda_F$ is the principal Dirichlet eigenvalue of $-Q$ on $F$,
-and $K_F$ is a second-order constant.
-\end{itemize}
-For the elephant walk $x=N\varepsilon$ corresponds to $T$, and its crossing
-$x_N$ corresponds to $z_N$. We compare the two crossings through the crossing
-equation of Paper~A~\cite[Proposition~3.8]{paperA}, which says that for every
-$N\ge2$
-\begin{equation}\label{eq:markov-crossing}
- z_N+\tfrac12\log z_N=L+c_0+\frac1{8z_N}+O(L^{-2}),\qquad
- c_0=\tfrac12\log\tfrac\pi8,
-\end{equation}
-where the error term is at most $\frac1{4L^2}+\frac{L^2+L}N$ in absolute
-value, and that $L/2\le z_N\le L$.
-Figure~\ref{fig:program} shows the crossings of the series.
-
 \subsection{Setting and notation}\label{sec:notation}
 
 The walk takes $N$ steps $X_1,\dots,X_N\in\{+1,-1\}$, where
 $+1$ means right. Let $A_N=\#\{i\le N:X_i=+1\}$ be the number of right steps,
-and keep writing $P_N(k)=\Prob(A_N=k)$ for the probability that the ball lands
-in bin $k$, now for the elephant walk. Unless we say otherwise the first
+and write $P_N(k)=\Prob(A_N=k)$ for the probability of bin $k$. Unless we say otherwise the first
 step is fair, $\Prob(X_1=+1)=\frac12$, and the rules treat the two directions
 alike, so $P_N(k)=P_N(N-k)$. We write $\Prob_+$ and $\E_+$ for probability and
 expectation given $X_1=+1$. For even $N$ we put $h=N/2$ and call
@@ -136,8 +90,23 @@ unless we name what they depend on.
 The elephant walk (Definition~\ref{def:erw}) has the reversal probability
 $\varepsilon\in(0,1)$ and $x=N\varepsilon$. Its crossing is $\varepsilon_N$,
 and $x_N=N\varepsilon_N$. The symbols that only one section uses are defined at the start
-of that section. The letters $p$, $q$ and $u$ have their meaning for Kagey's
-board only in this introduction, and later sections reuse them locally.
+of that section.
+
+For the persistent walk, $p$, $q=1-p$ and $T=Nq$ are as above. Its end is
+$E_N=p^{N-1}/2$, its crossing is $p_N$, and $z_N=N(1-p_N)$. So $x=N\varepsilon$
+corresponds to $T$, and the crossing $x_N$ corresponds to $z_N$. We compare the
+two crossings through the crossing equation of~\cite[Proposition~3.8]{paperA},
+which says that for every $N\ge2$
+\begin{equation}\label{eq:markov-crossing}
+ z_N+\tfrac12\log z_N=L+c_0+\frac1{8z_N}+O(L^{-2}),\qquad
+ c_0=\tfrac12\log\tfrac\pi8,
+\end{equation}
+where the error term is at most $\frac1{4L^2}+\frac{L^2+L}N$ in absolute
+value, and that $L/2\le z_N\le L$. This is the only result of~\cite{paperA}
+that we use, and we use it only to compare the two crossings in
+Section~\ref{sec:erw}. The letters $p$ and $q$ have their meaning
+for the persistent walk only in this introduction, and later sections reuse
+them locally.
 
 \subsection{Results}\label{sec:results}
 
@@ -150,8 +119,21 @@ $\varepsilon(1+\log N)\le\frac1{100}$, with explicit constants
 (Theorem~\ref{thm:erw-bounds}). Let $g_N$ be the root of
 $g+\log g=2L-\log8$. Then $x_N=g_N+O(L^2/N)$, and so
 $x_N=2L-\log L-\log16+O(\log L/L)$ (Theorem~\ref{thm:erw-crossing}). Compared
-with Kagey's board, $x_N=2z_N-\log(2\pi)+c_*/L+O(\log L/L^2)$ with
-$c_*=\frac12\log(2\pi)-\frac14$ (Theorem~\ref{thm:erw-markov}).
+with the persistent walk, $x_N=2z_N-\log(2\pi)+c_*/L+O(\log L/L^2)$ with
+$c_*=\frac12\log(2\pi)-\frac14$ (Theorem~\ref{thm:erw-markov}). We collect
+the main statements.
+
+\begin{mainthm}
+For every even $N\ge2$ the elephant walk has a unique crossing
+$\varepsilon_N\in(0,\frac12)$. As $N\to\infty$ over even $N$, the value
+$x_N=N\varepsilon_N$ satisfies
+\[
+ x_N=2\log N-\log\log N-\log16+O\Bigl(\frac{\log\log N}{\log N}\Bigr),\qquad
+ x_N=2z_N-\log(2\pi)+\frac{c_*}{\log N}+O\Bigl(\frac{\log\log N}{\log^2N}\Bigr),
+\]
+where $z_N$ is the crossing value of $T$ for the persistent walk and
+$c_*=\frac12\log(2\pi)-\frac14$.
+\end{mainthm}
 
 We also go one order further. In the same range of $\varepsilon$ the center
 is $\frac{4\varepsilon}{N+2}N^{2\varepsilon}(1+O(\varepsilon))$, with
@@ -175,29 +157,36 @@ to the Landau law, with a bound for each bin (Theorem~\ref{thm:landau}). So at
 the crossing every mode lies at distance
 $x_N\log x_N+\lambda_0x_N+O(\sqrt{x_N\log x_N})$ from the nearer end, where
 $\lambda_0\approx-0.2228$ is the mode of the Landau density
-(Corollary~\ref{cor:mode-location}, and Corollary~\ref{cor:modes} gives the
-weaker bound $O(x_N\log^2x_N)$). Farther from the ends, bin $N-m$ has
+(Corollary~\ref{cor:mode-location}). Corollary~\ref{cor:modes} gives the
+weaker bound $O(x_N\log^2x_N)$ for this distance. Farther from the ends, bin $N-m$ has
 probability $\frac x{2m^2}(1+o(1))$ for $x\log^2(x+1)\ll m\ll N$, when
 $x\ge1$ and $x\log^2N/N\to0$ (Theorem~\ref{thm:profile}). Finally, for large
 even $N$ the center at the crossing is below every interior bin outside a
 window of width of order $N^{1/2}\log N$ around it
 (Theorem~\ref{thm:shape}). Inside the window we use second differences. For every
-$N\ge3$ and every $0<\varepsilon<\frac12$ the second difference of the law changes sign at
-most four times (Theorem~\ref{thm:five-blocks}), so the law has at most two
-concave stretches, one for each hump. For large even $N$ the law at the
+$N\ge3$ and every $0<\varepsilon<\frac12$ the signs of the second difference
+of the law follow the pattern convex, concave, convex, concave, convex, where
+some blocks may be empty (Theorem~\ref{thm:five-blocks}). So the law has at
+most two concave stretches. For large even $N$ the law at the
 crossing is strictly convex between the humps (from $2m^*$ to $N-2m^*$, with
 $m^*$ the distance of a mode from the nearer end), and the center is its unique
 interior minimum (Theorem~\ref{thm:convex-large} and
-Corollary~\ref{cor:unique-min}). The convexity also holds for large odd $N$, because the two
+Corollary~\ref{cor:unique-min}). For odd $N$ we define the crossing as the
+value of $\varepsilon$ at which the two central bins are as likely as each end.
+The convexity also holds at this crossing for large odd $N$, because the two
 central bins of an odd $N$ are the center of $N+1$ up to an explicit factor
 (Proposition~\ref{prop:odd}). A certified computation gives the convexity
 for $10\le N\le2000$ (Proposition~\ref{prop:convex-certified}), and with it the unique interior
-minimum for every even $N$ in this range (Proposition~\ref{prop:center-small}). The
-$N$ in between are open (Conjecture~\ref{conj:convex}).
+minimum for every even $N$ in this range (Proposition~\ref{prop:center-small}). For
+the $N$ above $2000$ that these results do not cover, the convexity is open
+(Conjecture~\ref{conj:convex}).
 
 \subsection{Prior work}\label{sec:prior}
 
-The steps of the elephant walk split into clusters, since a step either
+The asymptotic behavior of the elephant walk for a fixed memory parameter is
+well understood~\cite{coletti2017,bercu2018,kubotatakei2019}, and
+Bertoin~\cite{bertoin2022zeros} counts its returns to the origin. For
+$\varepsilon\le\frac12$ the steps of the elephant walk split into clusters, since a step either
 copies an earlier step exactly, with probability $1-2\varepsilon$, or starts
 a new cluster with a fair sign. This is K\"ursten's coupling with bond
 percolation on random recursive trees~\cite{kursten2016}, and Baur and
@@ -206,10 +195,16 @@ regime $N\varepsilon\asymp\log N$ lies in the strongly supercritical regime
 of Baur~\cite{baur2016}, who extends the results of
 Bertoin~\cite{bertoin2014} for retention probability $1-t/\log n$. Baur's
 Corollary~1 gives the sizes of the largest clusters other than the root's (a
-Poisson limit with intensity $a^{-2}\,da$), which is the picture of about
-$x/m^2$ families of size $m$ behind Theorem~\ref{thm:profile}. These results
+Poisson limit with intensity $a^{-2}\,da$). In our regime this is the picture
+of about $2x/m^2$ clusters of size $m$, since a new cluster starts with
+probability $2\varepsilon$. Half of them have the sign opposite to the root,
+which gives the $x/m^2$ families of size $m$ behind Theorem~\ref{thm:profile}. These results
 describe cluster sizes, not the center probability, which is a large deviation
-of the root cluster. The law that appears in the bulk
+of the root cluster. Miyazaki and Takei~\cite{miyazakitakei2020} prove limit
+theorems in the diffusive, critical and superdiffusive regimes for a minimal
+walk of elephant type whose steps are $0$ or $+1$. Their results also give
+limit theorems for the size of the root cluster in percolation on uniform
+random recursive trees. The law that appears in the bulk
 (Theorems~\ref{thm:cp} and~\ref{thm:landau}) is also known. Without its
 truncation, our compound Poisson law is the Lea--Coulson form of the
 Luria--Delbr\"uck distribution, and Kessler and
@@ -225,7 +220,8 @@ prove that the law with a fixed first step is unimodal, and their other
 results fix the memory parameter as $N$ grows. So do the local limit theorem
 of Trinas and Valle~\cite[Theorem~3.1]{tv2026} for the superdiffusive walk
 and their bounds on where log-concavity fails. We did not find an asymptotic
-formula for the center probability when $\varepsilon\to0$ as $N$ grows.
+formula for the center probability when $\varepsilon\to0$ as $N$ grows,
+either in the elephant-walk literature or in the percolation literature.
 
 \subsection{Organization}\label{sec:organization}
 

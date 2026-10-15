@@ -23,7 +23,6 @@ Proved here (walk of `n = t + 1` steps):
   (`shift_one_crossing`); for `-1 < b < 1` every crossing is `< 1` and for `b > 1` every
   crossing is `> 1` (`shift_crossing_lt_one`, `shift_crossing_gt_one`).
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperD

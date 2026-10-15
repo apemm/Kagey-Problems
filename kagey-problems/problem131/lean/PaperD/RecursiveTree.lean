@@ -19,7 +19,6 @@ Proved here, for every tree size `n` and every `1 ≤ d ≤ n - 1`:
 * the identity of Lemma 2.3(5) is the same function as the exact first-order coefficient of the
   elephant walk: `∑_v β_v(d) = d/dε P₊(b_n = d)|_{ε=0}` (`subtreeCount_eq_coef1`).
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperD

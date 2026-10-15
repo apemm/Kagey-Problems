@@ -1,11 +1,11 @@
 # Captions for the Paper C figures
 
 Each caption is written in LaTeX and can be pasted into `\caption{...}`. The figures are made by
-`make_figures.py` in this folder. Paper C uses `fig_cycles` and `fig_planar` as Figures 4 and 6. Figures 3 and 5 are drawn in the
-source with TikZ. Figure 1 is `fig_simplex` (label `fig:simplex`, Section 1.1), made by `make_simplex_figure.py` (N = 90, the interior, the edges and the corners of the simplex drawn apart). Figure 2 is the program figure
-`program_C.pdf` in `../../figures/`, with its caption in `../../figures/program_captions.md`.
+`make_figures.py` in this folder. The paper uses `fig_cycles` as Figure 3. Figure 2 is drawn in the
+source with TikZ. Figure 1 is `fig_simplex` (label `fig:simplex`, Section 1.1), made by `make_simplex_figure.py` (N = 90, the interior, the edges and the corners of the simplex drawn apart). The program figure
+`program_C.pdf` in `../../figures/` is no longer included (October 15, 2026).
 
-## Figure 4, `fig_cycles` (label `fig:cycles`, Section 3)
+## Figure 3, `fig_cycles` (label `fig:cycles`, Section 3)
 
 (a) The points $(\lambda_F,\lvert F\rvert-1)$ of the arcs of the 6-cycle and of $C_6$,
 with the lower-left boundary of their hull. The numbers beside the edges are the switch values

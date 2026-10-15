@@ -13,7 +13,6 @@ The proof is the paper's: the coefficient of `(aw)^j/(j!(j+1)!)` in
 most `j(j+1)/(2a)` by Lemma `lem:clipped-product`, and
 `∑_j j(j+1) x^j/(j!(j+1)!) = x Φ(x)`.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperB

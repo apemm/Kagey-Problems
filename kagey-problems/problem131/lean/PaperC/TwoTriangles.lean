@@ -26,7 +26,6 @@ Proved here (note C2, Proposition C2.7):
 Not formalized: the resultant certificates (i) to (iii) of C2.7(c), hence the full
 three-regime table, and the strict monotonicity and the limit of `μ_4` in C2.7(d).
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperC

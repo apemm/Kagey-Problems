@@ -14,7 +14,6 @@ Proved here:
   `R^P_{N,k}(u)` of the normalized periodic measure (`perBin_ratio`);
 * the adjacent periodic ratio `R^P_{N,1} = N u²`.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131

@@ -1,40 +1,31 @@
-# Problem 131, Paper D: endpoint crossings for the elephant random walk
+# Endpoint crossings for the elephant random walk
 
-Kagey asks when the middle bin of a Galton board is as likely as its ends if the ball tends to keep
-its direction. Paper D asks the same question for the elephant random walk, in which each step
-copies a uniformly chosen earlier step and flips it with probability eps. The crossing is at
-x_N = N eps_N = 2 z_N - log(2 pi) + o(1), about twice the Markov value, and the law at the crossing
-has a hump near each end.
+In the elephant random walk each step copies a uniformly chosen earlier step and reverses (flips) it
+with probability eps. For an even number N of steps the paper studies the crossing, the value of eps
+at which the walk is as likely to end at the origin (the middle bin, N/2 right steps) as at N (the
+end bin, N right steps). The crossing is unique, and x_N = N eps_N = 2 log N - log log N - log 16 +
+o(1), about twice the value for the persistent random walk, because a walk that ends in the middle
+needs a reversal among its first few steps. At the crossing the law has a hump near each end, and
+for large even N the middle is the lowest interior bin.
 
-The series has six papers by A. Pemmasani, which call each other Papers A to F.
+For the persistent (Markov) walk, which copies its last step instead, the question is part of
+Problem 131 of Kagey's Open Problem Collection (https://peterkagey.com/problems/131/), posed for a
+Galton board, which is why the values of the number of right steps are called bins. The paper uses
+one result on the persistent walk, the crossing equation of A. Pemmasani, "Uniform Bessel bounds
+for magnetization crossings in finite Ising chains", arXiv:2610.06935 (Proposition 3.8 there, with
+its source in `../paperA`), and only to compare the two crossings (Theorem 2.8).
 
-- Paper A (`../paperA`), "Uniform Bessel bounds for endpoint crossings in the persistent random
-  walk", arXiv:2610.06935. Kagey's board, at every N.
-- Paper B (`../paperB`), "Vertex crossings in a symmetric Markov multinomial model",
-  arXiv:2610.09258. The complete graph on d directions.
-- Paper C (`../paperC`), "Face selection for slowly switching Markov chains" (in preparation). The
-  general theory for the transition matrix I + (T/N)Q.
-- Paper D (`../paperD`), "Endpoint crossings for the elephant random walk" (in preparation).
-- Paper E (`../paperE`), "Kagey's board in the plane: endpoint crossings for the planar persistent
-  walk" (in preparation). Until October 13, 2026 this was Section 6 and Appendix C of Paper C.
-- Paper F (`../paperF`), "Endpoint crossings for random walks with heavy-tailed runs and for aging
-  walks" (in preparation). Until October 13, 2026 this was Sections 4 and 5 and Appendices D and E
-  of Paper D.
-
-The titles of Papers C to F are working titles. Paper A cites Papers C and D under their titles
-from before the split, so its references need an update at revision.
-
-Conventions. Paper D uses the notation that the papers share. The walk has N steps (Kagey's
-row N+1), L = log N, and P_N(k) is the probability of bin k. For the elephant walk x = N eps plays the
-role of T and its crossing x_N plays the role of z_N. A_N is the number of right steps,
-C_N = P_N(N/2) is the probability of the center bin and E_N = P_N(N) that of the right end. The
-first step is fair unless we say otherwise. (Earlier versions of the paper, and the check scripts
-and Lean files, write n for N.)
+Conventions. The walk has N steps, L = log N, A_N is the number of right steps, and P_N(k) is the
+probability of bin k. C_N = P_N(N/2) is the probability of the center bin and E_N = P_N(N) that of
+the right end. For the persistent walk T = Nq is the expected number of switches and z_N is its
+value at the crossing. For the elephant walk x = N eps plays the role of T and its crossing x_N plays
+the role of z_N. The first step is fair unless we say otherwise. (Earlier versions of the paper, and
+the check scripts and Lean files, write n for N.)
 
 ## What is proved
 
-The statement numbers below are those of the build of October 13, 2026, after the split. Sections 2
-and 3 kept their numbers. Check them against the current PDF if the paper has changed since then.
+The statement numbers below are those of the build of October 15, 2026. Check them against the
+current PDF if the paper has changed since then.
 
 The elephant walk (each step copies a uniformly chosen earlier step and flips it with probability
 eps). Put x = N eps.
@@ -47,7 +38,8 @@ eps). Put x = N eps.
   log C_N = log(4 eps/(N+2)) + O(eps log N) there.
 - x_N = N eps_N satisfies x_N + log x_N = 2 log N - log 8 + O((log N)^2/N), so
   x_N = 2 log N - log log N - log 16 + O(log log N/log N) (Theorem 2.7).
-- With the crossing equation of Paper A for the Markov crossing z_N,
+- With the crossing equation of the persistent walk (arXiv:2610.06935, Proposition 3.8) for its
+  crossing z_N,
   x_N = 2 z_N - log(2 pi) + c_*/log N + O(log log N/(log N)^2), where
   c_* = (1/2) log(2 pi) - 1/4 (Theorem 2.8).
 - The center to second order. In the range of Theorem 2.6(b),
@@ -90,8 +82,8 @@ eps). Put x = N eps.
   1 - (1 - 2 eps)/N. For every even N from 10 to 2000 the center is the unique interior minimum
   (Proposition 3.28, from the certified convexity and the bound on the sign changes).
 
-Heavy-tailed runs and aging walks (the old Sections 4 and 5 and Appendices D and E) are now Paper F,
-in `../paperF`.
+Heavy-tailed runs and aging walks, which earlier versions treated in Sections 4 and 5 and
+Appendices D and E, are now a separate paper in `../paperF`.
 
 ## What rests on computation
 
@@ -135,16 +127,16 @@ grows.
 
 ## Files
 
-- `problem131_memory.tex` and the section files `sec_*.tex` and `app_*.tex` make up Paper D, the
+- `problem131_memory.tex` and the section files `sec_*.tex` and `app_*.tex` make up the paper, the
   main text and Appendices A to C in one PDF, `problem131_memory.pdf`. The sections are
   `sec_intro`, `sec_erw_crossing`, `sec_erw_shape` and `sec_verify`, and the
   appendices are `app_erw_bounds`, `app_erw_profile` and `app_erw_bulk`.
-- `figures/` holds Figure 2 of the paper (`shape.pdf`), made by
-  `figures/make_figures.py`, with the captions in `figures/captions.md`. The same script makes the
-  figure `heavy.pdf` of Paper F and writes it to `../paperF/figures`. Figure 1 is the shared
-  program figure `../figures/program_D.pdf`, made by `../figures/make_program_figure.py`. The paper
-  includes it directly, so there is no copy here. `figures/make_figures.py` also makes
-  `crossing.pdf`, which the paper no longer prints.
+- `figures/` holds the two figures of the paper, with the captions in `figures/captions.md`.
+  Figure 1 (`family.pdf`) is made by `figures/make_family_figure.py` and Figure 2 (`shape.pdf`) by
+  `figures/make_figures.py`, both in the shared style `../figures/series_style.py`. The second script makes the
+  figure `heavy.pdf` for the heavy-tailed and aging walks and writes it to `../paperF/figures`.
+  `figures/make_figures.py` also makes `crossing.pdf`, which the paper no longer prints. Versions
+  before October 15, 2026 also printed the shared figure `../figures/program_D.pdf` as Figure 1.
 - The research scripts named in the ledgers are not included. The check scripts below recompute the
   numbers printed in the paper.
 - `verify_elephant_crossing.py` checks Section 2, Table 1 and Appendix A.
@@ -167,7 +159,7 @@ grows.
 - `data/verify_output.txt` and `data/verify_output_full.txt` hold the output of the quick run and
   the full run of the checks from September 26, 2026. They predate `verify_aging_urn.py`,
   `verify_elephant_odd.py` and `certify_convex.py`, and they use the statement numbers of that date.
-- `removed_proofs/` keeps Paper D as first written in September 2026, before it was shortened. The
+- `removed_proofs/` keeps the paper as first written in September 2026, before it was shortened. The
   October revision put several of those proofs back.
 - `../lean/PaperD/` holds the Lean 4 proofs of the exact statements (not the asymptotics). `MAP.md`
   there gives the Lean name of each statement, with its number in the paper.
@@ -177,7 +169,7 @@ Where two independent methods were used when the numbers were first found, the s
 scripts also keep some checks of numbers from the research notes that the paper no longer prints.
 Their labels say "research notes, not printed".
 
-The one verification supplement for the papers is `../SUPPLEMENT.md`, and
+The one verification supplement for the Problem 131 folder is `../SUPPLEMENT.md`, and
 `python -B verify_all.py --paper d` in the Problem 131 folder runs the checks of this paper by
 calling `verify_all.py` here. Run `python -B verify_all.py` here (or `python -B verify_all.py
 --quick`, the same thing) for the quick run, which takes about 5 minutes, or add `--full` for the
