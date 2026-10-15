@@ -45,18 +45,13 @@ import numpy as np
 
 HERE = Path(__file__).resolve().parent
 np.seterr(over="ignore", invalid="ignore")   # bisection overshoots are mapped to +inf below
-COL, FULL = 3.37, 6.4
+import sys as _sys
+_sys.path.insert(0, str(HERE.parent.parent / "figures"))
+import series_style as ss  # the shared style of the series (figures/series_style.py)
 
-plt.rcParams.update({
-    "font.size": 8, "axes.labelsize": 8, "legend.fontsize": 8,
-    "xtick.labelsize": 8, "ytick.labelsize": 8,
-    "font.family": "serif", "mathtext.fontset": "cm",
-    "axes.linewidth": 0.6, "lines.linewidth": 1.0,
-    "xtick.direction": "in", "ytick.direction": "in",
-    "xtick.top": True, "ytick.right": True,
-    "savefig.bbox": "tight", "savefig.pad_inches": 0.02,
-    "pdf.fonttype": 42,
-})
+ss.use()
+COL, FULL = ss.COL, ss.FULL
+EXACT, PRIOR, PRIOR2, ACCENT, INK = (ss.SERIES[k] for k in ("exact", "prior", "prior2", "accent", "ink"))
 
 
 def save(fig, name):
@@ -67,9 +62,9 @@ def save(fig, name):
     print(f"wrote {name}.pdf and {name}.png")
 
 
-def shades(n, cmap="viridis", lo=0.0, hi=0.85):
-    """n colours from light to dark."""
-    return [plt.get_cmap(cmap)(x) for x in np.linspace(hi, lo, n)]
+def shades(n, cmap=None, lo=0.0, hi=1.0):
+    """n colours along the gradient of the series (figures/series_style.py)."""
+    return ss.shades(n, lo, hi)
 
 
 def panel(ax, letter, x=0.03, y=0.95):
@@ -243,16 +238,16 @@ def fig_row10():
     fig, axs = plt.subplots(1, 4, figsize=(FULL, 1.75), sharey=True)
     for ax, p, c, letter in zip(axs, ps, cols, "abcd"):
         P = pmf_exact(9, p)
-        ax.bar(k, [float(v) for v in P], width=0.78, color=c, edgecolor="0.15", linewidth=0.4)
+        ax.bar(k, [float(v) for v in P], width=0.78, color=c, edgecolor=INK, linewidth=0.4)
         ax.set_title(rf"$p={p.numerator}/{p.denominator}$", fontsize=8, pad=3)
         ax.set_xticks([0, 3, 6, 9])
         ax.set_xlim(-0.7, 9.7)
         ax.set_xlabel(r"bin $k$")
         ax.tick_params(top=False)
         if p == Fraction(5, 6):
-            ax.axhline(float(P[0]), color="k", lw=0.6, ls="--")
-            ax.annotate("ends", (0, float(P[0])), xytext=(1.2, 0.2),
-                        arrowprops=dict(arrowstyle="-", lw=0.5, color="0.2"))
+            ax.axhline(float(P[0]), color=ACCENT, lw=0.8, ls="--")
+            ax.annotate("ends", (0, float(P[0])), xytext=(1.2, 0.2), color=ACCENT,
+                        arrowprops=dict(arrowstyle="-", lw=0.5, color=ACCENT))
     axs[0].set_ylabel(r"$P_9(k)$")
     axs[0].set_ylim(0, 0.36)
     fig.subplots_adjust(left=0.075, right=0.995, wspace=0.08)
@@ -280,14 +275,14 @@ def fig_crossing():
         i = n - 2
         assert abs(exact[i] - two[i] - lead) < 1e-6 and abs(exact[i] - three[i] - ref) < 1e-6
 
-    cols = shades(3)
+    cols = [PRIOR2, PRIOR, INK]
     fig, (a, b) = plt.subplots(1, 2, figsize=(FULL, 2.3))
     m = ns >= 3
     a.axhline(1.0, color="0.6", lw=0.6, ls=":")
     a.plot(ns[m], two[m] / L[m], "-.", color=cols[0], label=r"$\nu_N$")
     a.plot(ns[m], three[m] / L[m], ":", color=cols[1], lw=1.2, label=r"$\nu_N$ + $1/L$ term")
     a.plot(ns, bessel / L, "--", color=cols[2], label="Bessel root $u_B$")
-    a.plot(ns, exact / L, "-", color="k", lw=1.1, label="exact $z_N$")
+    a.plot(ns, exact / L, "-", color=EXACT, lw=1.3, label="exact $z_N$")
     a.set_xscale("log")
     a.set_xlim(2, 1e4)
     a.set_ylim(0.45, 1.05)

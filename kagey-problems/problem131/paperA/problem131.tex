@@ -48,21 +48,23 @@
 \maketitle
 
 \begin{abstract}
-In a zero-field Ising chain of $N$ spins, the all-up configuration and zero
+In a finite zero-field Ising chain, the all-up configuration and zero
 magnetization become equally likely at a single coupling. This crossing has
 recently been described as a thermal transition of the finite chain, an
 analogue of a first-order transition temperature, and approximated by an
-analytic estimate and a numerical fit. We find its asymptotics, with explicit constants, for free and
-for periodic ends. The coupling at the crossing is half of
-$\log N-\log\log N$ plus a correction that tends to zero, so the correlation
-length there is about $N/(2\log N)$, and periodic ends lower the coupling by a
-term of order $1/\log N$. The earlier approximations lack the $\log\log N$
-term, which explains why fits at moderate $N$ find a slope below one half. The
-proofs treat the magnetization as the position of a persistent random walk
-and compare its central probability with a modified Bessel function, with a
-relative error bound that is explicit for every $N$. For free ends this traps
-the crossing in an explicit interval at every $N\ge2$, proved analytically for
-$N\ge175$ and by exact integer arithmetic below, with the integer checks
+analytic estimate and a numerical fit. We find its asymptotics, with explicit
+constants, for free and for periodic ends. The coupling at the crossing grows
+like half the logarithm of the length of the chain, minus half the logarithm
+of that logarithm. So the correlation length at the crossing is a vanishing
+fraction of the chain, and periodic ends lower the coupling by an amount that
+decays like the inverse logarithm of the length. The earlier approximations
+lack the doubly logarithmic term, which explains why fits on chains of
+moderate length find a slope below one half. The proofs treat the
+magnetization as the position of a persistent random walk and compare its
+central probability with a modified Bessel function, with a relative error
+bound that is explicit for every length. For free ends this traps the crossing
+in an explicit interval for every length, proved analytically for long chains
+and by exact integer arithmetic for short ones, with the integer checks
 repeated in Lean. We also find the crossing of every other value of the
 magnetization with full magnetization.
 \end{abstract}
@@ -78,7 +80,9 @@ Bessel functions; computer-assisted proof.
 \subsection{The crossing}
 
 Take $N$ spins $\sigma_i=\pm1$ in a row, with free ends and the zero-field
-Ising weight $\exp(J\sum_{i<N}\sigma_i\sigma_{i+1})$, where $J>0$. The all-up
+Ising weight $\exp(J\sum_{i<N}\sigma_i\sigma_{i+1})$, where $J>0$. Here $J$ is
+dimensionless, and it is the product $\beta J$ of the inverse temperature and
+the exchange coupling in the notation of~\cite{stepanyan2024}. The all-up
 configuration is the only one with magnetization $\sigma_1+\dots+\sigma_N=N$.
 Zero magnetization (magnetization $\pm1$ for odd $N$) comes from very many
 configurations, each with a few domain walls. For small $J$ the walls cost
@@ -96,19 +100,17 @@ walk~\cite{goldstein1951,gillis1955,renshaw1981}. The first step is fair, and
 each later step repeats the previous one with probability $p$, where
 $e^{-2J}=(1-p)/p$. The magnetization is the position after $N$ steps, so the
 walk that never turns, which reaches an end, competes with the many walks
-that end in the middle. In this form the question is Problem~131 of Kagey's
-Open Problem Collection~\cite{kagey131}, posed for a Galton board whose ball
-keeps its direction with probability $p$.
+that end in the middle.
 
 With two steps the walk ends in the middle exactly when it turns once, so the
 three bins have probabilities $\frac p2$, $1-p$ and $\frac p2$, and they are
 level at $p=\frac23$. With three steps the bins have probabilities
 $\frac{p^2}2$, $\frac{1-p^2}2$, $\frac{1-p^2}2$ and $\frac{p^2}2$, and they are
-level at $p=1/\sqrt2$. In general exactly one word reaches a given end bin,
+level at $p=1/\sqrt2$. In general exactly one word reaches a given endpoint,
 namely the word that never turns, and very many words reach the middle by
 turning a few times (each turn brings a factor of about $1-p$).
 
-The middle bin and the end bins are level when the walk turns about $\log N$
+The middle bin and the endpoints are level when the walk turns about $\log N$
 times on average. More precisely, the crossing value $p_N$ of $p$ satisfies
 $N(1-p_N)=\log N-\frac12\log\log N-0.467\ldots+o(1)$, and for every $N\ge2$
 we trap $N(1-p_N)$ between two explicit functions of $N$ whose distance tends
@@ -130,9 +132,10 @@ uniformly in $T$. Our main tool is a comparison of the middle bin with a
 modified Bessel function, with a relative error that is explicit for every $N$
 (Theorem~\ref{thm:bessel}).
 
-Problem~131 also asks four other questions, about the law of the bins, its
-tables, a normal limit and a cylinder. They have short or classical answers,
-which we collect in Remark~\ref{rem:kagey}. A walk with $d$ directions, which
+The crossing for free ends is also Problem~131 of Kagey's Open Problem
+Collection~\cite{kagey131}, posed for a Galton board whose ball keeps its
+direction with probability $p$, and Remark~\ref{rem:kagey} answers the other
+questions of that problem. A walk with $d$ directions, which
 is the $d$-state Potts chain, is treated in~\cite{paperB}, and general slowly
 switching chains in~\cite{paperC}.
 
@@ -192,8 +195,9 @@ z_N=N(1-p_N)=\frac{Nu_N}{1+u_N}
 \end{equation}
 is the value of $T$ there.
 
-\paragraph{Special functions and asymptotic notation.} $I_0$ and $I_1$ are the
-modified Bessel functions of the first kind. We use them through their power
+\paragraph{Special functions and asymptotic notation.} The functions $I_0$ and
+$I_1$ are the modified Bessel functions of the first kind, of orders zero and
+one. We use them through their power
 series and their behavior at infinity~\cite[Eqs.~10.25.2, 10.40.1]{dlmf},
 \[
 I_0(2x)=\sum_{r\ge0}\frac{x^{2r}}{(r!)^2},\quad
@@ -215,13 +219,14 @@ Theorem~\ref{thm:periodic-crossing} and Corollary~\ref{cor:couplings} give
 J_N^X=\tfrac12(\log N-\log\log N)+\frac{\frac14\log\log N-\frac12c_X}{\log N}
 +O\Bigl(\frac{(\log\log N)^2}{(\log N)^2}\Bigr)
 \]
-for $X=\mathrm F$, with $c_{\mathrm F}=c_0$, and for $X=\mathrm P$. Since
+for free ends ($X=\mathrm F$, with $c_{\mathrm F}=c_0$) and for periodic ends
+($X=\mathrm P$). Since
 $c_{\mathrm P}=c_0+\log2$, periodic ends lower the coupling at the crossing by
 $(\log2)/(2\log N)$ to leading order. At either crossing the correlation
 length is about $N/(2\log N)$, a vanishing fraction of the chain. The
 approximation $\beta J\approx(2\log N-1)/5$ of~\cite[Eq.~(16)]{stepanyan2024}
 grows too slowly. At $N=10^5$ the exact periodic coupling is $4.576$, the
-display without its error term gives $4.578$, and the approximation gives
+periodic case of the display, without its error term, gives $4.578$, and the approximation gives
 $4.405$ (Table~\ref{tab:couplings}).
 
 \paragraph{A Bessel bound at every $N$.} Put $h=N/2$ and
@@ -262,8 +267,8 @@ only $0.84$ at $N=10^4$ (Figure~\ref{fig:crossing}).
 
 \paragraph{Every bin.} Let bin $a$ be at distance $a$ from the nearer edge,
 with $b=N-a\ge a$. Next to the edge the crossing is at
-$p_N^{\mathrm{adj}}=(1+\sqrt{N-1})/(2+\sqrt{N-1})$, and at the central
-crossing these two bins are the least likely of all
+$p_N^{\mathrm{adj}}=(1+\sqrt{N-1})/(2+\sqrt{N-1})$. For $N\ge4$ the two bins
+next to the edges are the least likely of all at the central crossing
 (Proposition~\ref{prop:adjacent}). As $a\to\infty$,
 Theorem~\ref{thm:allbin-expansion} expands $2\sqrt{ab}\,u_{a,b}$ to the same
 order as $z_N$, uniformly in $b\ge a$. For fixed $a$ the crossing comes
@@ -306,9 +311,9 @@ of~\cite{kagey131}.
 For the Ising chain, Antal, Droz and R\'acz~\cite{antal2004} give the
 magnetization law at a fixed scale $T$ under several boundary conditions, and
 Dantchev and Rudnick~\cite{dantchev2022} give exact free and periodic
-coefficients. Their scaling law already predicts the central crossing.
-Evaluated at $T$ of order $\log N$, where it is not proved, its endpoint atom
-and its density at zero magnetization balance at a value $z$ of $T$ with
+coefficients. The fixed-$T$ scaling law of Antal, Droz and R\'acz already
+predicts the central crossing. If one evaluates it at $T$ of order $\log N$
+(a regime in which it is not proved), its endpoint atom and its density at zero magnetization balance at a value $z$ of $T$ with
 $z+\frac12\log z=L+c_0+1/(8z)+O(z^{-2})$, which is the crossing equation of
 Proposition~\ref{prop:crossing-eq} without its remainder. What we add is a
 proof in this regime, with explicit bounds, and the crossing at every $N$.

@@ -17,7 +17,6 @@ Switching probability `c/(k-1+2c)` at step `k ≥ 2` (`dlsP c`), fair start, `c 
   on `(0, ∞)` and equals `1` at `c = 1`, so the crossing is exactly `c = 1` for every `N` and
   every bin (`dls_crossing`).
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperD

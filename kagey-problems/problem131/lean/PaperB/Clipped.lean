@@ -6,7 +6,6 @@ import Mathlib
 For nonnegative reals `t_1, …, t_m`,
 `0 ≤ 1 - ∏ (1 - t_j)_+ ≤ ∑ t_j`, including the empty product.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperB

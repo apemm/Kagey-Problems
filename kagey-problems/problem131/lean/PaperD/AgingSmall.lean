@@ -14,7 +14,6 @@ For the note's aging walk (switching probability `c/k`, fair start):
   whenever `√3 - 1 < c ≤ 1` (`neighbour_ratio_gt_one`); at the crossing `c₄` the end atom is
   strictly below its neighbour (`four_steps_end_below_neighbour`).
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperD

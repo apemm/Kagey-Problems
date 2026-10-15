@@ -29,7 +29,6 @@ of the sticky chain):
   occupancy vector for `h` is `Var(E[J | n])/Var(J)` (`sticky_pathP`,
   `sticky_efficiency`).
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperC

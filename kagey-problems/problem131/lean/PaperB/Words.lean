@@ -14,7 +14,6 @@ arguments of Theorem `thm:simplex-crossing` are easier to state:
   coordinate is incremented" in the proof of Theorem `thm:simplex-crossing`.
   The paper describes this injection briefly; here it is proved in full.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperB

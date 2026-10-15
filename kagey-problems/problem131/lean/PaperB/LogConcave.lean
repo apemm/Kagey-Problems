@@ -15,7 +15,6 @@ The sequence is not log-concave from `n = 0`: `B_0 = 1`, `B_1 = y`,
 `B_2 = y + y^2/2`, and `B_1^2 < B_0 B_2`. The paper's restriction to `n ≥ 1`
 and `a ≥ 1` is needed.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperB

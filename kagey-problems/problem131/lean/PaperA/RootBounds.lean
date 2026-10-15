@@ -11,7 +11,6 @@ import PaperA.BesselDeriv
   `x_B` the root of `F(x_B) = h`, and `δ_N = x_N(x_N+1)/h`, we have `0 ≤ x_N - x_B`, and
   `x_N - x_B ≤ -(1/2) log(1 - δ_N)` when `δ_N < 1`; dividing by `h` gives `0 ≤ u_N - u_B`.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131

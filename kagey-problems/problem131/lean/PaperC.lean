@@ -20,5 +20,4 @@ import PaperC.Fisher
 Imports every module of the Lean proofs for Paper C. The map from the statements of
 the research notes C1.md to C5.md to the Lean theorem names is in `PaperC/MAP.md`.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/

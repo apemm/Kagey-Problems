@@ -28,9 +28,10 @@ it $T$, is close to $L-\frac12\log L+c_0$ with $c_0=\frac12\log(\pi/8)$.
 \item For every $N\ge2$ there is exactly one $p=p_N\in[0,1]$ with
 $P_N(m_N)=P_N(0)$, and $p_N\ge\tfrac23$. The middle is more likely than the
 endpoints for $p<p_N$ and less likely for $p>p_N$.
-\item $p_2=\tfrac23$, $p_3=1/\sqrt2$, $p_4$ is the real root of
-$3p^3-4p^2+4p-2$, and $p_N<p_{N+1}$ for all $N\ge2$.
-\item $p_N\to1$ as $N\to\infty$, and more precisely $1-p_N\sim(\log N)/N$.
+\item The first values are $p_2=\tfrac23$, $p_3=1/\sqrt2$ and the real root
+$p_4$ of $3p^3-4p^2+4p-2$, and $p_N<p_{N+1}$ for all $N\ge2$.
+\item As $N\to\infty$ we have $p_N\to1$, and more precisely
+$1-p_N\sim(\log N)/N$.
 \end{enumerate}
 \end{theorem}
 
@@ -59,9 +60,9 @@ theorem.
 \end{proof}
 
 In the tables of~\cite{kagey131} (Remark~\ref{rem:tables}), the middle and
-the endpoints of row $N+1$ are level at $p=p_N$. The least value is $p_2=\tfrac23$ for the odd rows and
-$p_3=1/\sqrt2$ for the even rows after the second (which is $1,1$ for every
-$p$). There is no greatest value, since $p_N\uparrow1$. The tenth row has $p_9=0.82829\ldots$, just below
+the endpoints of row $N+1$ are level at $p=p_N$. Among the odd rows from the third on the least value is $p_2=\tfrac23$, and
+among the even rows from the fourth on it is $p_3=1/\sqrt2$. (The first row
+has one bin, and the second is $1,1$ for every $p$.) There is no greatest value, since $p_N\uparrow1$. The tenth row has $p_9=0.82829\ldots$, just below
 $\tfrac56$, so its middle and endpoints are nearly level in the third histogram
 of~\cite{kagey131} (Figure~\ref{fig:row10} and Table~\ref{tab:pn}).
 
@@ -138,8 +139,7 @@ $x_N-x_B\le-\frac12\log(1-\delta_N)$ whenever $\delta_N<1$.
 \end{enumerate}
 \end{theorem}
 
-Part~(i) holds at every $N\ge2$, and Section~\ref{sec:every-n-sub} uses it to
-locate $p_N$ at every $N$.
+Section~\ref{sec:every-n-sub} uses part~(i) to locate $p_N$ at every $N$.
 
 \begin{proof}
 (i) \emph{Step 1. The clipped factors.} Let $a=\lfloor N/2\rfloor$ and
@@ -222,7 +222,7 @@ $\cE(z)=\sqrt{\pi z/2}\,e^{-z}\bigl(I_0(z)+I_1(z)\bigr)$, which tends to $1$ as
 $z\to\infty$. Put $w_N=Nu_N$ and $\Lambda_N=2\Phi(w_N)/N$. At the crossing,
 \eqref{eq:uniformbessel} and \eqref{eq:bracket-log} below give
 $\psi(w_N)+\log \cE(w_N)=L+c_0+\log\Lambda_N$ with
-$0\le\log\Lambda_N\le-\log(1-w_N(w_N+2)/(2N))$. With $\cE=\Lambda_N=1$ this
+$0\le\log\Lambda_N\le-\log(1-w_N(w_N+2)/(2N))$ whenever $w_N(w_N+2)<2N$. With $\cE=\Lambda_N=1$ this
 would say $w_N=\zeta_N$. Since $\log \cE(w)=-1/(8w)+O(w^{-2})$ and
 $z_N=w_N+O(w_N^2/N)$, it suggests
 $z_N=\zeta_N+1/(8\zeta_N)+O(\zeta_N^{-2}+\zeta_N^2/N)$. The theorem makes this
@@ -293,9 +293,9 @@ again with explicit constants for every $\zeta\ge4$ in
 Appendix~\ref{app:every-n}. The term $-\zeta/N$ is why $\varepsilon_N$
 contains $\zeta(\zeta+1)/N$.
 
-\emph{Step 4. $2\le N\le174$, by certificates.} Let $d=10^9$ and let $c<c'$ be
-integers with $c'=c+1$ ($c'=c+2$ at $N=2$, where $u_2=\frac12$ is a grid
-point). The sign of $S_N(c/d)-1$ is the sign of $n_N(m_N)-d^{N-1}$, where
+\emph{Step 4. Short chains, by certificates.} Here $2\le N\le174$. Let
+$d=10^9$, let $c=\lfloor du_N\rfloor$ and let $c'=c+1$. At $N=2$, where
+$du_2=5\cdot10^8$ is an integer, we take $c=du_2-1$ and $c'=c+2$. The sign of $S_N(c/d)-1$ is the sign of $n_N(m_N)-d^{N-1}$, where
 $n_N(m_N)=d^{N-1}S_N(c/d)$ is the integer of Remark~\ref{rem:tables} at
 $(\alpha,\beta)=(d,c)$ (Appendix~\ref{app:certificates}). We computed these
 integers at $c$ and $c'$ by two exact methods, the run-count sum of
@@ -307,14 +307,15 @@ $z(c'/d)<\zeta_N+\frac1{8\zeta_N}$ in 60-digit decimal arithmetic, with
 $\zeta_N$ in a bracket of width $10^{-45}$. We certified this bracket by the
 sign of $\psi(\zeta)-L-c_0$, which is the sign of $8\zeta e^{2\zeta}-\pi N^2$,
 at both of its ends, using a correctly rounded logarithm. The smallest margins
-are $0.033193$ (upper) and $0.085591$ (lower), both at $N=174$. Rounding cannot change these comparisons. Put
+are $0.033193$ (upper) and $0.085591$ (lower), both at $N=174$. The following estimate shows that rounding cannot change
+these comparisons. Put
 $g_1(\zeta)=\zeta+\frac1{8\zeta}$ and
 $g_2(\zeta)=g_1(\zeta)-\frac{\zeta(\zeta+1)}N-\frac1{16\zeta^2}$. For
 $\frac12\le\zeta\le L+1$ and $N\ge2$ we have $|g_1'|,|g_2'|\le5$, and
 $\frac12<\zeta_2\le\zeta_N\le L$. So $g_1$ and $g_2$ vary by at most
 $5\cdot10^{-45}$ on the bracket, and the decimal evaluation adds at most
-$10^{-50}$. Both are much smaller than the margin $0.03$, so the comparisons
-hold. Lean checks them again with rational bounds on $\zeta_N$ and $\pi$. We
+$10^{-50}$. Both errors are far below the smallest margin, which exceeds
+$0.03$, so the comparisons hold. Lean checks them again with rational bounds on $\zeta_N$ and $\pi$. We
 also ran the certificates up to $N=1000$ as a sanity check (both methods up to
 $400$, then only the run-count sum), and they all pass.
 \end{proof}
@@ -374,9 +375,9 @@ $\zeta_N-\nu_N\le(\log L-2c_0)/(4\nu_N)$. For $z_N$, add
 Theorem~\ref{thm:every-n} and $0<\frac1{8\zeta_N}\le\frac1{8\nu_N}$. The last
 claim follows since $\varepsilon_N=O(L^2/N+L^{-2})$.
 
-(c) Put $\eta=\zeta_N-\nu_N=\frac12\log(L/\zeta_N)$. By (b),
+(c) Put $\mu=\zeta_N-\nu_N=\frac12\log(L/\zeta_N)$. By (b),
 $L-\zeta_N=\frac12\log L-c_0+O(\log L/L)$, so
-$\eta=\frac{L-\zeta_N}{2L}+O\bigl(\frac{(\log L)^2}{L^2}\bigr)
+$\mu=\frac{L-\zeta_N}{2L}+O\bigl(\frac{(\log L)^2}{L^2}\bigr)
 =\frac{\frac14\log L-\frac12c_0}L+O\bigl(\frac{(\log L)^2}{L^2}\bigr)$.
 Also $\frac1{8\zeta_N}=\frac1{8L}+O(\frac{\log L}{L^2})$ and
 $\varepsilon_N=O(L^2/N+L^{-2})$, and Theorem~\ref{thm:every-n} gives (c).
@@ -403,7 +404,7 @@ For every $N\ge2$,
 z_N+\tfrac12\log z_N=L+c_0+\frac1{8z_N}+R_N,\qquad
 -\frac{z_N^2+z_N}N\le R_N\le\frac1{16z_N^2}.
 \end{equation}
-Moreover $L/2\le z_N\le L$, so $|R_N|\le\frac1{4L^2}+\frac{L^2+L}N$ for every
+We also have $L/2\le z_N\le L$, so $|R_N|\le\frac1{4L^2}+\frac{L^2+L}N$ for every
 $N\ge2$.
 \end{proposition}
 

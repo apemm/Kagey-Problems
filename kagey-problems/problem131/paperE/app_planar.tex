@@ -56,7 +56,7 @@ $Y_N=0$ given $m$ and $Z$, so
 
 \begin{lemma}[skeleton returns]\label{lem:skelreturn}
 Let $W_m=\sum_{t=0}^m\mathrm i^{Z_t}=(a-b)+\mathrm i(c-d)$.
-\textup{(a)} $\E_z\lvert W_m\rvert^2\le m+1$ for every start $z$.
+\textup{(a)} For every start $z$, $\E_z\lvert W_m\rvert^2\le m+1$.
 \textup{(b)} If $s>0$ and $m$ is odd, then $\Prob(W_m=0)\ge\varkappa/(36(m+1))$.
 \textup{(c)} If $s=0$ and $m\equiv3\pmod4$, then $\Prob(W_m=0)\ge1/(m+1)$.
 \end{lemma}
@@ -75,14 +75,14 @@ $1/m$ because the sum takes about $m$ values.
 Write $m=2m_1+1$ and split $W_m=W'+W''$, where $W'$ sums over $t\le m_1$ and $W''$ over $t>m_1$.
 Each half has $m_1+1$ runs. For the first half, the law of $\xi$ is symmetric and the uniform law
 is stationary, so the reversed sequence $(Z_{m_1},\dots,Z_0)$ is again the walk from a uniform
-start. Hence $\Prob(W'=w,\,Z_{m_1}=z)=\frac14\Prob_z(W_{m_1}=w)$. For the second half, the switch
+start. Hence $\Prob(W'=y,\,Z_{m_1}=z)=\frac14\Prob_z(W_{m_1}=y)$. For the second half, the switch
 after run $m_1$ is a reversal with probability $\varkappa$, independently of $Z_0,\dots,Z_{m_1}$.
 In that case, given $Z_{m_1}=z$, the second half is the walk from $z+2$, so $W''$ has the law of
 $W_{m_1}$ under $\Prob_{z+2}$. A half turn maps the walk from $z$ to the walk from $z+2$ and
-changes the sign of the sum, so $\Prob_{z+2}(W_{m_1}=-w)=\Prob_z(W_{m_1}=w)$. Summing over $z$ and
-over the value $w$ of $W'$,
+changes the sign of the sum, so $\Prob_{z+2}(W_{m_1}=-y)=\Prob_z(W_{m_1}=y)$. Summing over $z$ and
+over the value $y$ of $W'$,
 \[
- \Prob(W_m=0)\ge\frac\varkappa4\sum_z\sum_w\Prob_z(W_{m_1}=w)^2 .
+ \Prob(W_m=0)\ge\frac\varkappa4\sum_z\sum_y\Prob_z(W_{m_1}=y)^2 .
 \]
 It remains to bound the inner sum from below. Let $R^2=m+1$. By (a),
 $\E_z\lvert W_{m_1}\rvert^2\le m_1+1=R^2/2$, so Chebyshev's inequality gives
@@ -189,15 +189,16 @@ $m\in\mathcal M\cap J$, for which $m\ge m_2$ and $m+1\le2\bar m+1$. This gives
 $o^{(4)}_N\ge c_2\Prob(m\in\mathcal M\cap J)/(2N^2\sqrt{2\bar m+1})$.
 It remains to show that $\Prob(m\in\mathcal M\cap J)\ge\frac18$ when $\bar m$ is large. The
 Chernoff bounds for the binomial law are $\Prob(m\le\bar m/2)\le e^{-\bar m/8}$ and
-$\Prob(m\ge2\bar m)\le e^{-\bar m/3}$, so $\Prob(m\notin J)\le2e^{-\bar m/8}$. For the parity put
-$p=\beta h\le\frac12$. If $s>0$, then
-$\Prob(m\text{ odd})=\frac12(1-(1-2p)^{N-1})\ge\frac12(1-e^{-2\bar m})$. If $s=0$, the roots of
+$\Prob(m\ge2\bar m)\le e^{-\bar m/3}$, so $\Prob(m\notin J)\le2e^{-\bar m/8}$. For the parity recall that
+$\beta h\le\frac12$. If $s>0$, then
+$\Prob(m\text{ odd})=\frac12(1-(1-2\beta h)^{N-1})\ge\frac12(1-e^{-2\bar m})$. If $s=0$, the roots of
 unity filter gives
 \[
- \Prob(m\equiv3\bmod4)=\frac14\sum_{k=0}^3\mathrm i^{-3k}\bigl(1-p+p\,\mathrm i^k\bigr)^{N-1}
+ \Prob(m\equiv3\bmod4)=\frac14\sum_{k=0}^3\mathrm i^{-3k}\bigl(1-\beta h+\beta h\,\mathrm i^k\bigr)^{N-1}
  \ge\frac14-\frac34e^{-\bar m/2},
 \]
-since $\lvert1-p+p\,\mathrm i^{\pm1}\rvert^2=1-2p(1-p)\le e^{-p}$ and $\lvert1-2p\rvert\le e^{-2p}$.
+since $\lvert1-\beta h+\beta h\,\mathrm i^{\pm1}\rvert^2=1-2\beta h(1-\beta h)\le e^{-\beta h}$ and
+$\lvert1-2\beta h\rvert\le e^{-2\beta h}$.
 In both cases $\Prob(m\in\mathcal M)\ge\frac14-\frac34e^{-\bar m/2}$, so
 $\Prob(m\in\mathcal M\cap J)\ge\frac14-\frac34e^{-\bar m/2}-2e^{-\bar m/8}\ge\frac18$ when
 $\bar m$ is large. As $\bar m\ge\beta T/2$, and
@@ -266,7 +267,7 @@ $\binom N{m-2}/\binom{N-1}m=Nm(m-1)/((N-m+2)(N-m+1)(N-m))$ give $\varpi_N\le m^2
 then $\varpi_N\le1<25m^2/N^2$. So $N^2\varpi_N\le25m^2$ whenever the path uses all four directions.
 As in the proof of Theorem~\ref{thm:planar-first}, the Chernoff bounds give
 $\Prob(m\notin J_N)\le2e^{-\bar m/8}$. Also
-$\E m^4=\sum_{j=1}^4S(4,j)(N-1)_j(\beta h)^j\le15\bar m^4$, where $S(4,j)=1,7,6,1$ are Stirling
+$\E m^4=\sum_{j=1}^4\genfrac\{\}{0pt}{}4j(N-1)_j(\beta h)^j\le15\bar m^4$, where $\genfrac\{\}{0pt}{}4j=1,7,6,1$ are Stirling
 numbers of the second kind, $(N-1)_j$ is a falling factorial, and $\bar m\ge1$. By the
 Cauchy--Schwarz inequality, the terms of \eqref{eq:app-planar-o4} with $m\notin J_N$ contribute at
 most $25\,\E[m^2\mathbf 1\{m\notin J_N\}]\le25\sqrt{30}\,\bar m^2e^{-\bar m/16}=o(1)$ to
@@ -311,7 +312,7 @@ where $\omega(X)\in[0,1]$ is the product of the four products. The function $f$ 
 $\nu$ and is unimodal, and its mode $X^*=\nu(A-2)/(m-3)$ lies in $[\nu/6,5\nu/6]$ since
 $A,B\ge m/4$ and $m\ge18$. On each monotone piece of $f$ every value $f(X)$ lies between the
 integrals of $f$ over the two unit intervals next to $X$. So $\lvert\sum_{j\le X\le k}f(X)-\int_j^kf\rvert\le2\max f$ for all integers
-$0\le j\le k\le\nu$. Moreover $f/\int_0^\nu f$ is the density of $\nu$ times a Beta variable with
+$0\le j\le k\le\nu$. Also, $f/\int_0^\nu f$ is the density of $\nu$ times a Beta variable with
 parameters $A-1$ and $B-1$, and $\int_0^\nu f=\nu^{m-2}\mathrm B(A-1,B-1)$.
 
 We need three estimates. The first says that the ends of the integral are small, the second that
@@ -403,14 +404,14 @@ $\frac12[(1-\varkappa^2)-(1-\varkappa)^2\cos(2\varphi)(-1)^{Z_{j-1}}]$. The aver
 variances tends to $\frac12(1-\varkappa^2)$ in probability, because
 $\sum_{t=0}^m(-1)^{Z_t}=V_2$ and $\E\lvert V_2/m\rvert^4\le C/m^2$ by Step 2. The increments are
 bounded, so the martingale central limit theorem \cite[Cor.~3.1]{hallheyde1980} and the
-Cram\'er--Wold device give $M_m/\sqrt m\Rightarrow N(0,\frac12(1-\varkappa^2)I_2)$. The other two terms in the identity for
+Cram\'er--Wold device give $M_m/\sqrt m\Rightarrow\mathcal N(0,\frac12(1-\varkappa^2)I_2)$. The other two terms in the identity for
 $(1+\varkappa)W_m$ are bounded, so they do not matter after division by $\sqrt m$. Hence
 \[
- \frac{W_m}{\sqrt m}\Rightarrow X\sim N(0,\sigma_*^2I_2),\qquad
+ \frac{W_m}{\sqrt m}\Rightarrow G\sim\mathcal N(0,\sigma_*^2I_2),\qquad
  \sigma_*^2=\frac{1-\varkappa}{2(1+\varkappa)}=\frac r{2(r+s)}.
 \]
 Also $A=\frac{m+1}2+\frac12V_2$, so $A/m\to\frac12$ in probability, and
-$(W_m/\sqrt m,A/m)\Rightarrow(X,\frac12)$.
+$(W_m/\sqrt m,A/m)\Rightarrow(G,\frac12)$.
 
 Now we take the limit. By Step 2,
 $\E[\tilde\Psi\,\mathbf 1_{\mathcal G_m^c}\mid m]\le C/m^2$. So, since $\tilde\Psi$ is bounded and
@@ -418,7 +419,7 @@ continuous,
 \[
  \frac{\E[g\,\mathbf 1_{\mathcal G_m}\mid m]}m
  =\E\,\tilde\Psi\Bigl(\frac{W_m}{\sqrt m},\frac Am\Bigr)+O(m^{-1/2})
- \to\E\,\Psi\bigl(X,\tfrac12\bigr)=\frac2\pi\,\E e^{-\lvert X\rvert^2}
+ \to\E\,\Psi\bigl(G,\tfrac12\bigr)=\frac2\pi\,\E e^{-\lvert G\rvert^2}
  =\frac2{\pi(1+2\sigma_*^2)}=c_*.
 \]
 
@@ -512,23 +513,23 @@ part (b) is already smaller than the gain in $S_N^2$.
 
 Put $z_0=Nu_N$. Since $S_N(u)\ge2u$, we have $u_N\le\frac12$ and $p_N\ge\frac23$. With
 $z_0=z_N/p_N$ and $z_N\le L$~\cite[Proposition~3.8]{paperA} this gives $z_0\le\frac32L$. By
-\eqref{eq:planar-bessel} and $S_N(u_N)=1$, $\psi(z_0)\ge N/2$. Let $\kappa=40(z_0+2)^2/N$, which
-tends to $0$, and let $x_1>u_N$ be the root of $S_N(x_1)=1+\kappa$, with $z_1=Nx_1$ and
+\eqref{eq:planar-bessel} and $S_N(u_N)=1$, $\psi(z_0)\ge N/2$. Let $\mu=40(z_0+2)^2/N$, which
+tends to $0$, and let $x_1>u_N$ be the root of $S_N(x_1)=1+\mu$, with $z_1=Nx_1$ and
 $\eta_1=z_1(z_1+2)/(2N)$.
 
 We first show that $z_1\le z_0+1$ for large $N$. Since $(\log\psi)'\ge1$, we have
 $\psi(z_0+1)\ge e\,\psi(z_0)\ge eN/2$. So by~\eqref{eq:planar-bessel}, at $x=(z_0+1)/N$ we get
-$S_N(x)\ge(1-O(L^2/N))\,e$, which exceeds $1+\kappa$ for large $N$. As $S_N$ is increasing,
-$z_1\le z_0+1$. In particular $z_1(z_1+2)\le N$ and $\kappa\le1$ for large $N$, so part (b) gives
+$S_N(x)\ge(1-O(L^2/N))\,e$, which exceeds $1+\mu$ for large $N$. As $S_N$ is increasing,
+$z_1\le z_0+1$. In particular $z_1(z_1+2)\le N$ and $\mu\le1$ for large $N$, so part (b) gives
 \[
  \Delta_N(x_1)\le\bigl(2x_1+16x_1\bigr)(2z_1+2)\cdot2=\frac{72\,z_1(z_1+1)}N
- \le\frac{72(z_0+1)(z_0+2)}N\le2\kappa .
+ \le\frac{72(z_0+1)(z_0+2)}N\le2\mu .
 \]
-By part (a), $o_N/c_N=(1+\kappa)^2-\Delta_N(x_1)\ge1$ at $v=x_1$. The ratio $o_N/c_N$ increases
-with $v$, so $v^*_N\le x_1$. Now $\psi(z_1)\le\frac N2(1+\kappa)/(1-\eta_1)$
+By part (a), $o_N/c_N=(1+\mu)^2-\Delta_N(x_1)\ge1$ at $v=x_1$. The ratio $o_N/c_N$ increases
+with $v$, so $v^*_N\le x_1$. Now $\psi(z_1)\le\frac N2(1+\mu)/(1-\eta_1)$
 by~\eqref{eq:planar-bessel}, and $(\log\psi)'\ge1$. Hence
 \[
- 0\le Nv^*_N-z_0\le z_1-z_0\le\log\psi(z_1)-\log\psi(z_0)\le\log\frac{1+\kappa}{1-\eta_1}
+ 0\le Nv^*_N-z_0\le z_1-z_0\le\log\psi(z_1)-\log\psi(z_0)\le\log\frac{1+\mu}{1-\eta_1}
  =O\Bigl(\frac{L^2}N\Bigr),
 \]
 where the first inequality is part (a). This is the first claim. For the second,

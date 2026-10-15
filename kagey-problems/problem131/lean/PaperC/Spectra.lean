@@ -25,7 +25,6 @@ proved to be the least Rayleigh quotient, not only an eigenvalue.
   when every state feeds `x` at the same rate (note C2, Proposition C2.5(a) and its
   equality case).
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperC

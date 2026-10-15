@@ -12,7 +12,6 @@ prescribed number of `+1` steps.
 The definitions of `Word`, `numR`, `numL`, `flip` and `sum_word_snoc` are copied from the
 Paper A library (`PaperA/Model.lean`) so that Paper D builds on its own.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperD

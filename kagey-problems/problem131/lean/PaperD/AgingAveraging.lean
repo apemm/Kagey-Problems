@@ -24,7 +24,6 @@ Walk of `n = t + 1` steps; `G_r(s) = P(S_{r+1} = s, X_{r+1} = +)` is `agEnd p r 
   `√3 - 1 < c_n < 1` (`crossing_bounds`) and at `c = c_n` the end atom is strictly below its
   neighbour, `P(S_n = n-1) > P(S_n = n)` (`end_below_neighbour_at_crossing`).
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperD

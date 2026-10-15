@@ -27,7 +27,6 @@ limit theorems) are out of scope here; this file proves the exact and finite par
 * §1, stationarity check: `π(k) = T(k)/μ` satisfies `π(k) = π(k+1) + π(1) p_k`
   (`residual_stationary`).
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperD

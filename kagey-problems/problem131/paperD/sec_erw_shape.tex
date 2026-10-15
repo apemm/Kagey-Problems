@@ -2,21 +2,36 @@
 
 We now look at the whole law $P_N$ near the crossing
 (Figure~\ref{fig:shape}). The picture is that of the introduction. Each flip
-turns a whole family of steps, most families are small, and the law falls
-like $x/(2m^2)$ from each end. Lemmas \ref{lem:tree} to~\ref{lem:unimodal},
-the results of Section~\ref{sec:shape-end} and Theorem~\ref{thm:cp} hold as
-stated. Elsewhere in this section and in Appendices~\ref{app:shape}
+turns a whole family of steps, and most families are small. So the law has
+a hump near each end, and beyond the humps it falls like $x/(2m^2)$, where
+$m$ is the distance from the nearer end. Lemmas~\ref{lem:tree}
+to~\ref{lem:unimodal}, the results of Section~\ref{sec:shape-end},
+Theorem~\ref{thm:cp} and the results of Section~\ref{sec:convex} hold under
+their own hypotheses. Elsewhere in this section and in Appendices~\ref{app:shape}
 and~\ref{app:bulk} we assume, unless we say otherwise, that
 \[
  N\ge64,\qquad0<\varepsilon\le\tfrac14,\qquad x=N\varepsilon\ge1 .
 \]
-Recall that $P_N(N-m)=\frac12[f_N(m)+f_N(N-m)]$. Some numerical statements
-also use odd $N$, and there $x_N$ is the value of $x$ at which the two central
-bins are as likely as the ends (it is unique by Proposition~\ref{prop:mlr}).
+Recall that $P_N(N-m)=\frac12[f_N(m)+f_N(N-m)]$. Some statements also use
+odd $N$. There $x_N$ is the value of $x$ at which the two central bins are as
+likely as the ends (it exists and is unique by Proposition~\ref{prop:odd}).
 For a mode $a^*\ge N/2$ of $P_N$ we put $m^*=N-a^*$, and $m_h$ is the largest
 mode of $f_N$.
 
 \subsection{Families and the first flip}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/family}
+\caption{One elephant walk with $N=40$ steps and $\varepsilon=0.07$. (a) The position against
+the step. The steps that disagree with the first step are drawn in blue. (b) The memory tree of
+the same walk. Step $k+1$ copies the step at the left end of its arc, and the arcs drawn heavier
+are flips. A step disagrees with the first step exactly when the path from it to step $1$
+crosses an odd number of flips (Lemma~\ref{lem:tree}). The first flip, at step $4$, turns its
+family of ten steps. The flip at step $22$, inside that family, turns its own family of three
+steps back, and the flip at step $39$ turns only that step.}
+\label{fig:family}
+\end{figure}
 
 For $k_0\ge1$ let $(M^{[k_0]}_k)_{k\ge k_0}$ be the Markov chain with
 $M^{[k_0]}_{k_0}=0$ and the transition probabilities $r_k(b)$ of $M$. It is
@@ -49,7 +64,8 @@ then $k+1$ is odd with conditional probability $(1-\varepsilon)\frac
 bk+\varepsilon(1-\frac bk)=r_k(b)$, whatever else is known about $[k]$.
 \end{proof}
 
-So a single flip at $v$ turns every step of its family. K\"ursten's
+So a single flip at $v$ turns every step of its family
+(Figure~\ref{fig:family}). K\"ursten's
 coupling~\cite{kursten2016} uses bond percolation with retention probability
 $1-2\varepsilon$ instead, which gives the same law of the walk. For $k\ge v$, if $\mathcal T_v$ contains $s$ of the
 vertices in $[k]$, then $k+1$ joins $\mathcal T_v$ with probability $s/k$.
@@ -113,11 +129,11 @@ $M_N=0$ if there is no mark.
 In words, the first flip turns its whole family except the steps of that
 family that flip back, and the rest of the tree is a walk whose first $j-1$
 steps agree with $X_1$. Only the law of each pair $(Y_d,Z^{(j)}_{N-d})$
-enters the lemma. So from now on $(Y_d)_{d\ge1}$ is one path of $M^{[1]}$ and
-$(Z^{(j)}_t)_{t\ge j-1}$ one path of $M^{[j-1]}$, independent of each other
-and of $(V,D)$.
+enters the lemma. So from now on $(Y_d)_{d\ge1}$ is a copy of the chain
+$M^{[1]}$, and $(Z^{(j)}_t)_{t\ge j-1}$ is a copy of $M^{[j-1]}$, independent
+of $Y$ and of $(V,D)$.
 
-\begin{lemma}[unimodality given the first step]\label{lem:unimodal}
+\begin{lemma}[unimodality given the first step~{\cite[proof of Theorem~1.1]{glrs2025}}]\label{lem:unimodal}
 The function $f_N$ is unimodal.
 \end{lemma}
 
@@ -140,8 +156,8 @@ in favor of the neighbor.
 \begin{figure}[t]
 \centering
 \includegraphics[width=\textwidth]{figures/shape}
-\caption{The elephant walk at its crossing. (a) The law $P_N$ at $N=3200$ and
-its crossing $x=11.5468$, divided by the end $E_N$. The center equals the end,
+\caption{The elephant walk at its crossing. (a) The law $P_N$ for $N=3200$
+at its crossing $x=11.5468$, divided by the end $E_N$. The center equals the end,
 and the law rises from each end to a mode and falls to the center. The inset
 shows the last 60 bins, with dots at bins $N$, $N-1$ and $N-2$. The end is
 below its neighbor, and the modes are 25 steps from each end (dashed). (b) The
@@ -247,7 +263,8 @@ Let $N\ge2$ be even with $N(N+2)<2^{53}$, let $\varepsilon=2/(N+2)$, and put
 $u=2^{-53}$. Compute numbers $\hat f_t(b)$ for $1\le t\le N$ and
 $0\le b\le\min(t-1,h)$ in IEEE~754 double precision with rounding to
 nearest, as follows. Put $\hat f_1(0)=1$. In \eqref{eq:forward} each weight
-is one division of the two integers in \eqref{eq:weights}, each term on the
+is one division of its numerator in \eqref{eq:weights} by its denominator
+$(N+2)t$, each term on the
 right is one multiplication of a computed value $\hat f_t$ by a computed
 weight, and if both terms are present they are added by one addition.
 Finally let $\hat R$ be twice the computed quotient of $\hat f_N(h)$ by
@@ -353,7 +370,7 @@ size $d$. If no flipped step has a flipped descendant, which is likely when
 $x^2\log N/N$ is small, then $M_N$ is the total size of the flipped families,
 and this is close to the compound Poisson sum.
 
-The law $\CP_N$ is a known one. Without the truncation at $d=N-1$ its
+The law $\CP_N$ is known. Without the truncation at $d=N-1$ its
 generating function is $(1-s)^{x(1-s)/s}$, which is the Lea--Coulson form of
 the Luria--Delbr\"uck distribution with parameter
 $x$~\cite[Eq.~(14)]{kesslerlevine2015}. Its limit after centering at $x\log x$
@@ -441,20 +458,21 @@ To locate the modes we need to know that $f_L$ is curved at its maximum.
 $-0.22278299<\lambda_0<-0.22278297$.
 \item $f_L'(\lambda_0)=0$, and $-0.0792\le f_L''(\lambda)\le-0.0786$ for
 $-0.2229\le\lambda\le-0.2227$.
-\item There is a constant $\kappa_L>0$ with
-$f_L(\lambda_0)-f_L(\lambda)\ge\kappa_L\min\{1,(\lambda-\lambda_0)^2\}$ for
-every real $\lambda$.
+\item For every real $\lambda$,
+$f_L(\lambda_0)-f_L(\lambda)\ge\kappa_L\min\{1,(\lambda-\lambda_0)^2\}$ with
+$\kappa_L=2.6\cdot10^{-10}$.
 \end{enumerate}
 \end{lemma}
 
 The proof is in Appendix~\ref{app:bulk}. It is computer-assisted. We turn the
 Fourier integral into the real integral
 $f_L(\lambda)=\frac1\pi\int_0^\infty e^{-s\log s-\lambda s}\sin(\pi s)\,ds$.
-Then we enclose $f_L'$ at four points (namely $-0.2229$, $-0.2227$, $-0.22278299$ and
-$-0.22278297$) and $f_L''$ on the interval $[-0.2229,-0.2227]$
-in ball arithmetic (python-flint 0.9.0, which wraps Arb, at 128 bits, in under a second), with the rigorous integration algorithm
-of~\cite{johansson2018} on $[2^{-20},30]$ and explicit bounds for the rest
-(\texttt{certify\_elephant.py}). Part (c) follows from (b) and the
+Then we enclose $f_L'$ at four points (namely $-0.2229$, $-0.2227$,
+$-0.22278299$ and $-0.22278297$) and $f_L''$ on the interval
+$[-0.2229,-0.2227]$. We use ball arithmetic at 128 bits (python-flint 0.9.0,
+which wraps Arb) and the rigorous integration algorithm
+of~\cite{johansson2018} on $[2^{-20},30]$, with explicit bounds for the rest
+(\texttt{certify\_elephant.py}). The run takes under a second. Part (c) follows from (b) and the
 unimodality of $f_L$.
 
 \begin{corollary}[where the modes are]\label{cor:mode-location}
@@ -514,10 +532,10 @@ $\Prob(M_N\ge m)\le\frac xm(1+O(x\log^2m/m))$, and the unimodality of $f_N$
 turns this into a local bound. The mirror term $f_N(N-m)$ is at most
 $C_N=O(x/N^2)$, which gives the constant $\frac12$.
 
-At $N=10^6$, $x=22.4407$ and $m=10^4$ the computed ratio $P_N(N-m)/(x/m^2)$ is
-$0.51889$. At moderate $m$, $\CP_N$ suggests
+At $N=10^6$, $x=22.4407$ and $m=10^4$ the computed ratio
+$P_N(N-m)/(x/(2m^2))$ is $1.03778$. At moderate $m$ the law $\CP_N$ suggests
 $f_N(m)\,m(m+1)/x\approx1+x(2\log m+2\gamma-3)/m$, and this factor is still
-about $2$ near $m=70$ when $N=1600$ (Figure~\ref{fig:shape}(c)).
+about $2$ near $m=70$ when $N=3200$ (Figure~\ref{fig:shape}(c)).
 
 \subsection{The center}
 
@@ -659,14 +677,12 @@ Lemma~\ref{lem:B-mode} gives $m_h=O(x\log^2x)$, and $\ell=O(x\log x)$ and
 $H_\ell=O(\log x)$.
 \end{proof}
 
-The conjecture is certified for every $10\le N\le2000$
-(Proposition~\ref{prop:convex-certified}), and in double precision it holds for
-$N=3200,6400,12800,25600$. It leaves out the two endpoints $a=2m^*$ and
+In double precision the conjecture also holds for $N=3200$, $6400$, $12800$
+and $25600$. It leaves out the two endpoints $a=2m^*$ and
 $a=N-2m^*$, because there the second difference is not positive for some
-$N\le51$. Heuristically, a concave
-stretch of $f_N$ far from its mode is added to the tail $x/(2r^2)$ of the
-other branch, with $r=N-a$, and the second difference $3x/r^4$ of this tail
-beats the concave curvature, which is of order $x^2/(N^2r^3)$. We leave open
+$N\le51$. Heuristically, between the humps $P_N(a)$ is close to
+$\frac x2\bigl[\frac1{a(a+1)}+\frac1{(N-a)(N-a+1)}\bigr]$, which is strictly
+convex in $a$. We leave open
 the tail between $x\log x$ and $x\log^2x$, effective constants in
 Theorems~\ref{thm:profile} and~\ref{thm:shape}, and the conjecture for the
 $N$ between $2000$ and the constants $N_1$ and $N_1'$ of Theorem~\ref{thm:convex-large} and
@@ -674,8 +690,8 @@ Proposition~\ref{prop:odd}.
 
 \subsection{Convexity between the humps}\label{sec:convex}
 
-This subsection proves Conjecture~\ref{conj:convex} for all large $N$ and reduces it to one
-inequality for the other $N$. Throughout this subsection $0<\varepsilon<\frac12$ and $c=1-2\varepsilon$, so
+This subsection proves Conjecture~\ref{conj:convex} for all large $N$, and for every even
+$N\ge8$ and every odd $N\ge1689$ it reduces the conjecture to one inequality. Throughout this subsection $0<\varepsilon<\frac12$ and $c=1-2\varepsilon$, so
 that $r_t(b)=\varepsilon+cb/t$. For $t\ge1$ and every integer $a$ we write
 $P_t(a)=\Prob(A_t=a)$, which is $0$ unless $0\le a\le t$, and
 \[
@@ -751,7 +767,7 @@ $\zeta_i$. This proves the second claim.
 
 \begin{lemma}[the sequence next to the end]\label{lem:level-one}
 For every $T\ge2$ we have $\operatorname{sp}(s_2,s_3,\dots,s_T)\preceq\Pi_3$.
-Moreover $s_3$ and $s_4$ do not both vanish.
+Also, $s_3$ and $s_4$ do not both vanish.
 \end{lemma}
 
 \begin{proof}
@@ -808,7 +824,7 @@ $\{1,\dots,N-1\}$. The same holds for the second difference of $f_N$.
 \end{theorem}
 
 In words, for every $N\ge3$ and every $0<\varepsilon<\frac12$ the law has at most two
-concave stretches, one for each hump, and what lies between them is convex.
+concave stretches. When it has two, the stretch between them is convex.
 
 \begin{proof}
 For $3\le t\le N$ let $Z_t$ be the list
@@ -919,12 +935,12 @@ $p_2\le p_2'+1\le q^-$ and $p_4\ge p_4'\ge q^++1$, and the entries at $p_2$
 and $p_4$ are not zero, these places lie strictly between $p_2$ and $p_4$.
 This proves the claim for $t$.
 
-The same argument for the step from $Z_5$ to $Z_4$ shows that both parents of
-$D_5(b)$ vanish for $b\in B_5\subseteq\{2,3\}$. The parents of $D_5(2)$ are
-$s_4$ and $D_4(2)$, and those of $D_5(3)$ are $D_4(2)$ and $s_4$. So $s_4=0$.
-The step from $Z_4$ to $Z_3$ shows that both parents of $D_4(2)$ vanish, and
-both are equal to $s_3$. So $s_3=s_4=0$, which contradicts
-Lemma~\ref{lem:level-one}.
+The induction step with $t=4$ shows that both parents of $D_5(b)$ vanish for every
+$b\in B_5\subseteq\{2,3\}$. The parents of $D_5(2)$ are $s_4$ and $D_4(2)$,
+and those of $D_5(3)$ are $D_4(2)$ and $s_4$. So $s_4=D_4(2)=0$. By
+\eqref{eq:D-rec} with $t=3$ and $a=2$, and since $D_3(1)=D_3(2)=s_3$, we have
+$D_4(2)=r_3(0)s_3+\bigl(1-r_3(3)\bigr)s_3=2\varepsilon s_3$. So $s_3=0$ as
+well, which contradicts Lemma~\ref{lem:level-one}.
 \end{proof}
 
 \begin{corollary}[one inequality is enough]\label{cor:one-point}
@@ -933,8 +949,7 @@ be such that $P_N(0)<P_N(1)$. Let $a^*\ge N/2$ be a mode of $P_N$ and
 $m^*=N-a^*$. If $D_N(a_1)>0$ for some integer $a_1$ with $m^*<a_1\le2m^*+1$
 and $a_1\le N/2$, then $D_N(a)>0$ for every $2m^*+1\le a\le N-2m^*-1$. In
 particular the statement of Conjecture~\ref{conj:convex} holds for this $N$,
-this $\varepsilon$ and this $m^*$ as soon as $D_N(2m^*+1)>0$. Note that
-$2m^*+1\le N/2$ whenever the range $2m^*+1\le a\le N-2m^*-1$ is not empty.
+this $\varepsilon$ and this $m^*$ as soon as $D_N(2m^*+1)>0$.
 \end{corollary}
 
 \begin{proof}
@@ -944,6 +959,9 @@ Then $1\le a_0\le m^*$, because $P_N(0)<P_N(1)$ and $P_N(m^*)=P_N(a^*)$ is the
 maximum. Also $P_N(a_0-1)<P_N(a_0)\ge P_N(a_0+1)$, so $D_N(a_0)<0$. Now
 Theorem~\ref{thm:no-holes} applies to $a_0<a_1$.
 \end{proof}
+
+The condition $a_1\le N/2$ costs nothing at $a_1=2m^*+1$, because
+$2m^*+1\le N/2$ whenever the range $2m^*+1\le a\le N-2m^*-1$ is not empty.
 
 \begin{theorem}[convexity between the humps for large $N$]\label{thm:convex-large}
 There is $N_1$ such that Conjecture~\ref{conj:convex} holds for every even
@@ -976,7 +994,7 @@ $[\lambda_0,\infty)$, and it is integrable. So
 $f_L(\lambda)\to0$ as $\lambda\to\infty$. We write $o(1)$ for a quantity that
 is bounded in absolute value by a function of $N$ alone that tends to $0$.
 
-\emph{Step 1, the mirror term.} Let $0\le m\le N/2$. Then
+\emph{Step 1: the mirror term.} Let $0\le m\le N/2$. Then
 $\lambda_{N-m}\ge\frac N{2x}-\log x\to\infty$. So \eqref{eq:llt-used} gives
 $xf_N(N-m)\le f_L(\lambda_{N-m})+\eta_N=o(1)$. Since
 $P_N(m)=P_N(N-m)=\frac12[f_N(m)+f_N(N-m)]$, we get
@@ -984,7 +1002,7 @@ $P_N(m)=P_N(N-m)=\frac12[f_N(m)+f_N(N-m)]$, we get
  2xP_N(m)=f_L(\lambda_m)+o(1)\qquad\text{uniformly for }0\le m\le N/2 .
 \]
 
-\emph{Step 2, the mode.} Let $m_0$ be the integer part of
+\emph{Step 2: the mode.} Let $m_0$ be the integer part of
 $x\log x+\lambda_0x$. Then $0\le m_0\le N/2$ and
 $\lvert\lambda_{m_0}-\lambda_0\rvert\le1/x$, so Step~1 and the continuity of
 $f_L$ give $2xP_N(m_0)=f_L(\lambda_0)+o(1)$. Now $P_N(m^*)\ge P_N(m_0)$ and
@@ -998,7 +1016,7 @@ $\lvert\lambda_{m^*}-\lambda_0\rvert\le1$ for large $N$. Hence
 \]
 In particular $m^*\to\infty$ and $2m^*+2\le N/2$ for large $N$.
 
-\emph{Step 3, halfway.} Let $v=m^*+\lfloor m^*/2\rfloor$. Then
+\emph{Step 3: halfway.} Let $v=m^*+\lfloor m^*/2\rfloor$. Then
 $v\ge\frac32m^*-1$, so by Step~2
 \[
  \lambda_v\ge\tfrac12\log x+\tfrac32(\lambda_0-1)-\tfrac1x\to\infty .
@@ -1006,7 +1024,7 @@ $v\ge\frac32m^*-1$, so by Step~2
 Also $v\le N/2$. So Step~1 gives $2xP_N(v)=f_L(\lambda_v)+o(1)=o(1)$. Since
 $f_L(\lambda_0)>0$, Step~2 shows that $P_N(v)<\frac12P_N(m^*)$ for large $N$.
 
-\emph{Step 4, a point of convexity.} Suppose that $D_N(a)\le0$ for every
+\emph{Step 4: a point of convexity.} Suppose that $D_N(a)\le0$ for every
 $m^*<a\le2m^*+1$. Then $P_N$ is concave on the integers of $[m^*,2m^*+2]$.
 With $u=m^*$ and $w=2m^*+2$ this gives
 \[
@@ -1051,7 +1069,8 @@ enclosures of numbers in $[0,1]$, so the radii stay small. From the resulting en
 can be a mode, and for each of them it checks that the enclosure of $D_N(a)$
 is positive for every $2m^*+1\le a\le N-2m^*-1$. It also checks that
 $D_N(a_0)<0$ for some $a_0\le2m^*$ and that $D_N(2m^*+1)>0$. By
-Theorem~\ref{thm:no-holes} these two inequalities by themselves imply the claim.
+Theorem~\ref{thm:no-holes} these two inequalities already imply the claim, so the test of
+every $a$ is a second check.
 \end{proof}
 
 \begin{proposition}[odd $N$]\label{prop:odd}
@@ -1159,19 +1178,19 @@ increasing on $\{h,\dots,N-b\}$, and $P_N(a)>C_N$ for every $b\le a\le N-b$ with
 particular $P_N(b)>C_N$.
 
 \emph{Near the ends.} By symmetry it is enough to treat $1\le a\le b-1$. Suppose that
-$P_N(a)\le C_N$ for some such $a$, and let $c$ be the smallest index in $\{1,\dots,b\}$ at which
+$P_N(a)\le C_N$ for some such $a$, and let $k$ be the smallest index in $\{1,\dots,b\}$ at which
 $P_N$ takes its least value on this set. By Proposition~\ref{prop:dip-hyp},
-$P_N(1)>P_N(0)=E_N=C_N$, and $P_N(b)>C_N$. So $2\le c\le b-1$, and
-$P_N(c-1)>P_N(c)\le P_N(c+1)$, which gives $D_N(c)>0$.
-Next let $a'$ be the smallest index at which $P_N$ takes its largest value on $\{0,\dots,c\}$.
-This value is at least $P_N(1)$, which exceeds both $P_N(0)$ and $P_N(c)$. So $1\le a'\le c-1$
+$P_N(1)>P_N(0)=E_N=C_N$, and $P_N(b)>C_N$. So $2\le k\le b-1$, and
+$P_N(k-1)>P_N(k)\le P_N(k+1)$, which gives $D_N(k)>0$.
+Next let $a'$ be the smallest index at which $P_N$ takes its largest value on $\{0,\dots,k\}$.
+This value is at least $P_N(1)$, which exceeds both $P_N(0)$ and $P_N(k)$. So $1\le a'\le k-1$
 and $P_N(a'-1)<P_N(a')\ge P_N(a'+1)$, which gives $D_N(a')<0$. In the same way let $a''$ be the
-largest index at which $P_N$ takes its largest value on $\{c,\dots,h\}$. This value is at least
-$P_N(b)$, which exceeds both $P_N(c)$ and $P_N(h)=C_N$. So $c+1\le a''\le h-1$ and
+largest index at which $P_N$ takes its largest value on $\{k,\dots,h\}$. This value is at least
+$P_N(b)$, which exceeds both $P_N(k)$ and $P_N(h)=C_N$. So $k+1\le a''\le h-1$ and
 $P_N(a''-1)\le P_N(a'')>P_N(a''+1)$, which gives $D_N(a'')<0$. Finally $D_N(h)>0$ by hypothesis.
 
-So $D_N$ has the signs $-,+,-,+$ at $a'<c<a''<h$. By the symmetry $D_N(a)=D_N(N-a)$ it has the
-signs $-,+,-$ at $N-a''<N-c<N-a'$. Hence the sign pattern of $(D_N(1),\dots,D_N(N-1))$ has a
+So $D_N$ has the signs $-,+,-,+$ at $a'<k<a''<h$. By the symmetry $D_N(a)=D_N(N-a)$ it has the
+signs $-,+,-$ at $N-a''<N-k<N-a'$. Hence the sign pattern of $(D_N(1),\dots,D_N(N-1))$ has a
 subsequence of seven alternating signs. This contradicts Theorem~\ref{thm:five-blocks}, which
 allows at most five.
 
@@ -1190,9 +1209,9 @@ $N/2-(2m^*+1)$ is $1$, at $N=12$.
 
 \begin{remark}[what is still open]\label{rem:convex-open}
 The constant $N_1$ of Theorem~\ref{thm:convex-large} is not explicit, because
-the constant in Theorem~\ref{thm:landau} and the constant $\kappa_L$ of
-Lemma~\ref{lem:landau-mode}(c) are not. Even with explicit
-constants, Step~3 needs $f_L(\frac32\lambda_0+\frac12\log x)<\frac12f_L(\lambda_0)$ up
+the constant $C$ in Theorem~\ref{thm:landau} is not. (Lemma~\ref{lem:landau-mode}(c)
+gives the explicit value $\kappa_L=2.6\cdot10^{-10}$, but it is far too small
+to help.) Even with explicit constants, Step~3 needs $f_L(\frac32\lambda_0+\frac12\log x)<\frac12f_L(\lambda_0)$ up
 to the error $\eta_N$, and at the sizes we can compute the ratio
 $P_N(v)/P_N(m^*)$ is still about $0.8$. Numerically $f_L$ falls to half of its maximum at
 $\lambda=2.432$. So even without the error $\eta_N$, Step~3 needs

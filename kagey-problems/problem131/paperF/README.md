@@ -1,33 +1,29 @@
 # Problem 131, Paper F: heavy-tailed runs and aging walks
 
-Kagey asks when the middle bin of a Galton board is as likely as its ends if the ball tends to keep
-its direction. Paper F asks the same question for two walks that remember more than their last step.
-With alternating runs whose lengths have tail k^(-alpha), started in equilibrium, the ends win for
-large N exactly when alpha is below the golden ratio. An aging walk, which switches at step k with
-probability c/k, ties exactly at c = 1 for every N, and so does its version with d states. The title
-is "Endpoint crossings for random walks with heavy-tailed runs and for aging walks".
+The paper is "Endpoint crossings for random walks with heavy-tailed runs and for aging walks". It
+studies walks on Z that move in runs of alternating direction and asks when the ballistic ends of the
+law after N steps beat the center. With runs whose lengths have tail k^(-alpha), 1 < alpha < 2,
+started in equilibrium, the ends win for large N exactly when alpha is below the golden ratio. This
+is the lattice form, with its constant, of a heuristic of Wang, Li and Hänggi for heat conduction.
+An aging walk, which switches at step k with probability c/k, ties exactly at c = 1 for every N, and
+so does its version with d states. For runs with geometric lengths the question is Problem 131 of
+Kagey's Open Problem Collection.
 
-The series has six papers by A. Pemmasani, which call each other Papers A to F.
+Until October 13, 2026 this paper was Sections 4 and 5 and Appendices D and E of the elephant-walk
+paper in `../paperD`. It cites three other papers by A. Pemmasani, only where its mathematics uses
+them, and `../README.md` describes all the papers on Problem 131. Inside the paper they are cited by
+number only, not as Papers A, B and D.
 
-- Paper A (`../paperA`), "Uniform Bessel bounds for endpoint crossings in the persistent random
-  walk", arXiv:2610.06935. Kagey's board, at every N.
-- Paper B (`../paperB`), "Vertex crossings in a symmetric Markov multinomial model",
-  arXiv:2610.09258. The complete graph on d directions.
-- Paper C (`../paperC`), "Face selection for slowly switching Markov chains" (in preparation). The
-  general theory for the transition matrix I + (T/N)Q.
-- Paper D (`../paperD`), "Endpoint crossings for the elephant random walk" (in preparation).
-- Paper E (`../paperE`), "Kagey's board in the plane: endpoint crossings for the planar persistent
-  walk" (in preparation). Until October 13, 2026 this was Section 6 and Appendix C of Paper C.
-- Paper F (`../paperF`), "Endpoint crossings for random walks with heavy-tailed runs and for aging
-  walks" (in preparation). Until October 13, 2026 this was Sections 4 and 5 and Appendices D and E
-  of Paper D.
+- `../paperA`, "Uniform Bessel bounds for magnetization crossings in finite Ising chains",
+  arXiv:2610.06935. The crossing for geometric runs (Section 1).
+- `../paperB`, "Vertex crossings in a symmetric Markov multinomial model", arXiv:2610.09258. The
+  first-order scale of its vertex crossing (Remark 3.3).
+- `../paperD`, "Endpoint crossings for the elephant random walk" (in preparation). Its
+  Proposition 2.3 uses the same argument as Proposition 3.1(b).
 
-The titles of Papers C to F are working titles. Paper A cites Papers C and D under their titles
-from before the split, so its references need an update at revision.
-
-Conventions. The walk has N steps, L = log N, and P_N(k) is the probability of bin k. A_N is the
-number of right steps, C_N = P_N(N/2) is the probability of the center bin and E_N = P_N(N) that of
-the right end. The first step is fair unless we say otherwise.
+Conventions. The walk has N steps, and P_N(k) is the probability of bin k. A_N is the number of
+right steps, C_N = P_N(N/2) is the probability of the center bin and E_N = P_N(N) that of the right
+end. The first step is fair unless we say otherwise.
 
 ## What is proved
 
@@ -50,7 +46,7 @@ Heavy-tailed runs (alternating runs, with run lengths xi such that P(xi >= k) = 
   C_N ~ sqrt(2 mu/(pi N log N)). So the center wins for alpha >= 2 with either start (Theorem 2.7).
 - For 0 < alpha < 1 and a fresh start, N C_N tends to the Lamperti density at 1/2, which is
   (2/pi) tan(pi alpha/2), so the ends win (Theorem 2.8). With a fresh start the threshold is
-  alpha = 1, where the paper has only a heuristic (Remark 2.9 and Table 3).
+  alpha = 1, where the paper has only a heuristic (Remark 2.9 and Table 2).
 
 The aging walk (switch at step k >= 2 with probability c/k), in its own section, `sec_aging.tex`.
 
@@ -92,9 +88,9 @@ to Dietz and Sethuraman (2007) and to Engländer and Volkov (2018).
 - `problem131_heavy_aging.tex` is the paper. It includes `sec_intro.tex`, `sec_heavy.tex`,
   `sec_aging.tex` and `sec_verify.tex` (Sections 1 to 4) and the appendices `app_heavy.tex` and
   `app_aging.tex` (Appendices A and B).
-- `figures/` holds Figure 2 (`heavy.pdf`), made by `../paperD/figures/make_figures.py`, and Figure 3
-  (`aging.pdf`), made by `figures/make_aging_figure.py`. Figure 1 is the program figure
-  `../figures/program_F.pdf`, made by `../figures/make_program_figure.py`.
+- `figures/` holds Figure 1 (`heavy.pdf`), made by `../paperD/figures/make_figures.py`, and Figure 2
+  (`aging.pdf`), made by `figures/make_aging_figure.py`. The paper no longer includes the program
+  figure `../figures/program_F.pdf`.
 - `verify_heavy_runs.py` checks Section 2, Tables 1 and 2, and Appendix A.
 - `verify_aging.py` checks Section 3 and Appendix B.
 - `verify_aging_urn.py` checks Proposition 3.4 in exact arithmetic for d = 2, 3, 4.
@@ -108,5 +104,5 @@ to Dietz and Sethuraman (2007) and to Engländer and Volkov (2018).
 
 From the Problem 131 folder, `python -B verify_all.py --paper f` runs the checks of this paper. In
 this folder, `python -B verify_all.py` does the same, and `--full` adds the heavy cells. The scripts
-need numpy, scipy and mpmath. Build the paper with pdflatex, 3 times. The build reads the program
-figure from `../figures/program_F.pdf`.
+need numpy, scipy and mpmath. Build the paper with pdflatex, 3 times. The build reads only files in
+this folder.

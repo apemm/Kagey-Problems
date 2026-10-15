@@ -16,7 +16,6 @@ For a positive integer `a`, `H_a(y) = ∑_{r=0}^{a-1} C(a-1,r) y^(r+1)/(r+1)!`
 The asymptotic expansion of Theorem `thm:edge-laguerre` itself is not formalized here; the
 coefficient algebra behind it is in `EdgeExpansion.lean`.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131

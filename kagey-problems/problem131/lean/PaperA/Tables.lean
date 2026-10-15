@@ -19,7 +19,6 @@ follows the paper's state machine: the walk counts at the corner `(3a,3b)` and a
 emitting states `(3a+2,3b)`, `(3a,3b+2)` satisfy the same linear system as the numerator and
 its last-letter refinements.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131

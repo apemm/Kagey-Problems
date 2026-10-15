@@ -14,7 +14,6 @@ the transfer matrix of eq. `eq:dp`, with trace `2p cos θ` and determinant `2p-1
 `λ_+^N → exp(-p s²/(8q))`, `c_+ → 1`, `c_- → 0`, and `λ_-` stays bounded; Lévy's continuity
 theorem (Mathlib) finishes the proof.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131

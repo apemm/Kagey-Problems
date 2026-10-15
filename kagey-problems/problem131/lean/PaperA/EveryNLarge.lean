@@ -27,7 +27,6 @@ The logarithms are bounded by `1 - 1/x ≤ log x ≤ x - 1` and by
 `log(1 - x) ≥ -(x + x²/2 + x³/(1 - x))` for `0 ≤ x < 1`. The constants differ slightly from
 those of Appendix `app:every-n` but every margin stays positive.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131

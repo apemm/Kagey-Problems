@@ -36,7 +36,6 @@ not formalized; this file checks the finite algebra they rest on.
 * Corollary 13, the 4-cycle arc constants `K_pair = 1/√(2π)`,
   `K_{arc 3} = (4 + 3√2)/(4π)` from the general arc formula (`Karc_pair`, `Karc_three`).
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperC

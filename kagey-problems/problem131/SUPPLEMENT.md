@@ -8,7 +8,7 @@ This supplement serves the 6 papers on Kagey's Problem 131 by A. Pemmasani. Pape
 | B | Vertex crossings in a symmetric Markov multinomial model | `paperB/problem131_multistate.tex` |
 | C | Face selection for slowly switching Markov chains | `paperC/problem131_switching.tex` |
 | D | Endpoint crossings for the elephant random walk | `paperD/problem131_memory.tex` |
-| E | Kagey's board in the plane: endpoint crossings for the planar persistent walk | `paperE/problem131_planar.tex` |
+| E | Endpoint crossings for the planar persistent walk | `paperE/problem131_planar.tex` |
 | F | Endpoint crossings for random walks with heavy-tailed runs and for aging walks | `paperF/problem131_heavy_aging.tex` |
 
 Papers E and F were split off Papers C and D on October 13, 2026. The sections on Papers C and D

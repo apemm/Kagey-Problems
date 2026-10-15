@@ -20,7 +20,6 @@ conditioning on the last letter gives
 state `a` (theorem `endLaw_succ`), and the closed form satisfies the same
 recurrence because `B'_{n+1} = B'_n + B_n` (Pascal's rule).
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperB

@@ -23,5 +23,4 @@ import PaperB.ChainCovariance
 
 Imports every module of the Lean proofs for the multistate paper.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/

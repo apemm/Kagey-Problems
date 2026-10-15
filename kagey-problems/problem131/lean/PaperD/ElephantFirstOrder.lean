@@ -20,7 +20,6 @@ Consequences:
   `h(m) = P(M_n = m)` is exactly `x/(m(m+1))` with `x = nε`, for every `1 ≤ m ≤ n-1`
   (`profile_hasDerivAt`).
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperD

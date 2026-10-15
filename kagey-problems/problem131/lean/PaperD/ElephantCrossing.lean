@@ -24,7 +24,6 @@ The proofs follow the note's argument, written along the forward recursion of th
 after dividing by `(1-ε)^(n-1)` each step multiplies by a stay factor that is nondecreasing
 in `ε` and an up factor that is strictly increasing in `ε`.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperD

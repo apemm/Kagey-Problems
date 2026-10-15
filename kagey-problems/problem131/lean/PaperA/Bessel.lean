@@ -13,7 +13,6 @@ identities used in Paper A (proofs of Theorems `thm:bessel`, `thm:allbin-bessel`
 * `∑ r(r+1) x^(2r+1)/(r!(r+1)!) = x² I_1(2x)`,
 * `∑ (r+1) x^(2r+1)/(r!(r+1)!) = x I_0(2x)`.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131

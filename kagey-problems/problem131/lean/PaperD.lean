@@ -23,5 +23,4 @@ Imports every module of the Lean proofs for Paper D: the elephant random walk ne
 golden-ratio exponent (D3), and the aging walk (D4). See `PaperD/MAP.md` for the map from the
 research notes' statements to theorem names.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/

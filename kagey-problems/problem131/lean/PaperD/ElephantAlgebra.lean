@@ -17,7 +17,6 @@ as identities of real numbers):
 * S11 (constants): `2c₀ + log 2 = log(π/4)` with `c₀ = (1/2) log(π/8)`, and
   `log(π/4) - log(2π) = -log 8` (`s11_log_constants`).
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperD

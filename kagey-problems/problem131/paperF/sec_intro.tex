@@ -1,111 +1,88 @@
 \section{Introduction}\label{sec:intro}
 
-Suppose you drop a ball through a Galton board with $N$ rows of pegs. At the
-first peg the ball goes left or right with probability $\frac12$ each. At every
-later peg it repeats its previous direction with probability $p$ and switches
-with probability $q=1-p$. This is the board of Problem 131 in Kagey's Open
-Problem Collection~\cite{kagey131}, and one of his questions is when the middle
-bin is exactly as likely as each of the two end bins. If $p$ is close to 1 the
-ball rarely switches, so the ends win. If $p=\frac12$ the ball does a simple
-random walk, so the middle wins. Paper~A~\cite{paperA} finds the crossing in
-between. The middle catches up with the ends when the expected number of
-switches $T=Nq$ is about $\log N$.
+We study walks on $\Z$ that move in runs of alternating direction with random
+lengths. Let $A_N$ be the number of right steps among the first $N$. If the run
+lengths are independent, $A_N$ is the occupation time of an alternating
+renewal process~\cite{godrecheluck2001,lamperti1958}. If they are also
+heavy-tailed, the walk is a lattice analogue of a L\'evy walk. L\'evy walks
+are a standard model of superdiffusion~\cite{zdk2015}, and they model
+anomalous heat transport in one-dimensional lattices~\cite{dsd2013,wlh2016}.
+The profile of a L\'evy walk has a central peak and two ballistic side
+peaks~\cite{zdh2011,dzh2012,zdk2015,fsbz2015}. On the lattice we compare the end bins $A_N=N$
+and $A_N=0$, which the walk reaches only if one run covers all $N$ steps, with
+the center $A_N=N/2$, which it reaches in many ways. We ask when the ballistic
+ends beat the center. For runs with geometric lengths this question is
+Problem~131 of Kagey's Open Problem Collection~\cite{kagey131}, posed for a
+Galton board. The walk is then the persistent random walk, which remembers
+only its last step, and the center catches up with the ends when the expected
+number of switches is about $\log N$~\cite{paperA}.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.8\textwidth]{../figures/program_F}
-\caption{The crossing on each model's switching scale against $L=\log N$
-(a), and the heavy-tailed exponent $e(\alpha)=1-\alpha+1/\alpha$ of this
-paper for a stationary start (b). The scale is $T$ for Papers~A, B and~E,
-$x=N\varepsilon$ for the elephant walk of Paper~D, and the expected number $H_N-1$ of
-switches at the fixed-start crossing $c=1$ for the aging walk. The curves of
-this paper are in bold, and versions of this figure also appear in
-Papers~C, D and~E.}
-\label{fig:program}
-\end{figure}
-
-Kagey's ball remembers one step, since its next direction depends only on its
-last one. In this paper we ask what happens to the middle-versus-ends question
-if the ball remembers more. We study two kinds of memory.
+In this paper we ask what happens if the walk remembers more. We study two
+kinds of memory.
 \begin{itemize}[nosep]
-\item In a walk with heavy-tailed runs the ball remembers how long it has
-gone in its current direction. Its path is a sequence of runs of alternating
-direction, and the run lengths $\xi$ are independent with
-$\Prob(\xi\ge k)=k^{-\alpha}$ for $k\ge1$.
-\item In an aging walk the ball remembers how old it is. It switches at peg
-$k\ge2$ with probability $c/k$. We also give the ball $d$ directions. Then at
-peg $k\ge2$ it turns to each of the other $d-1$ directions with probability
+\item A walk with heavy-tailed runs remembers how long it has gone in its
+current direction. Its path is a sequence of runs of alternating direction,
+and the run lengths $\xi$ are independent with $\Prob(\xi\ge k)=k^{-\alpha}$
+for $k\ge1$.
+\item An aging walk remembers how old it is. It switches at step $k\ge2$ with
+probability $c/k$. We also give the walk $d$ directions. Then at step $k\ge2$
+it turns to each of the other $d-1$ directions with probability
 $\theta/(k+d-2)$, which is $c/k$ with $c=\theta$ when $d=2$.
 \end{itemize}
-A third kind, the elephant random walk, in which the ball remembers its whole past, is the
-subject of Paper~D~\cite{paperD}.
 The answer depends on the kind of memory. For heavy-tailed runs
 started in equilibrium the ends win for large $N$ if $\alpha$ is below the
-golden ratio $\varphi=(1+\sqrt5)/2$, and the middle wins if $\alpha$ is above
-$\varphi$. For the aging walk with a fixed first step every bin from $1$ to $N-1$ ties with
+golden ratio $\varphi=(1+\sqrt5)/2$, and the center wins if $\alpha$ is above
+$\varphi$. With this start the end decays like $N^{1-\alpha}$
+(Proposition~\ref{prop:edge}) and the center like $N^{-1/\alpha}$
+(Theorem~\ref{thm:center}), and the two exponents are equal exactly when
+$\alpha^2=\alpha+1$. Corollary~\ref{cor:golden} is the lattice form, with its
+constant, of a heuristic of Wang, Li and H\"anggi~\cite{wlh2016} for heat
+conduction.
+
+For the aging walk with a fixed first step, every bin from $1$ to $N-1$ ties with
 the end exactly at $c=1$, for every $N\ge2$. With $d$ directions the same happens at
 $\theta=1$, where the vector of counts is exactly uniform
-(Section~\ref{sec:aging}).
+(Section~\ref{sec:aging}). At $c=1$ the walk makes $H_N-1$ switches on
+average, which is about $\log N$, as at the crossing for geometric runs.
+Earlier work on the aging walk gives the limit law of
+$A_N/N$~\cite{ds2007,ev2018} and the scaling limit of the
+walk~\cite{evw2020}, and the uniform law for two directions is an exercise
+in~\cite{evw2020} (Section~\ref{sec:prior}). In both models the start
+matters. For heavy-tailed runs it decides whether the threshold is $\varphi$
+or $1$, and for the aging walk it decides whether the crossing is exactly
+$c=1$.
 
-\paragraph{Why the golden ratio.}
-Here is the heuristic. Theorem~\ref{thm:center} and Corollary~\ref{cor:golden} are the proof.
+\subsection{Why the golden ratio}\label{sec:heuristic}
+
+Here is the heuristic. Theorem~\ref{thm:center} and Corollary~\ref{cor:golden} make it rigorous.
 For heavy-tailed runs take $1<\alpha<2$, so a run has a finite mean $\mu$ but
 an infinite variance. Start the walk in equilibrium, at a typical time of a
 long sequence of runs. Then the first run is already in progress, and long runs
 are more likely to be in progress. The chance that this run covers all $N$
-steps is of order $N^{1-\alpha}$, and this is the end. For the middle, the runs
+steps is of order $N^{1-\alpha}$, and this is the end. For the center, the runs
 to the right and the runs to the left form two independent renewal processes,
-each making about $N/(2\mu)$ runs, and the ball ends in the middle when they
+each making about $N/(2\mu)$ runs, and the walk ends in the center when they
 meet at level $N/2$. Each process fluctuates on the scale $N^{1/\alpha}$ of a
-stable law, so they meet exactly with probability of order $N^{-1/\alpha}$. Hence the ratio of end to middle is
+stable law, so they meet at the same level with probability of order
+$N^{-1/\alpha}$. Hence the ratio of end to center is
 of order $N^{1-\alpha}/N^{-1/\alpha}=N^{1-\alpha+1/\alpha}$. The exponent
 vanishes when $\alpha^2-\alpha-1=0$, that is, at $\alpha=\varphi$. Below
-$\varphi$ the ends win, and above $\varphi$ the middle wins. If the first run
+$\varphi$ the ends win, and above $\varphi$ the center wins. If the first run
 is a fresh run instead, the end is of order $N^{-\alpha}$, a factor $N$
-smaller, and the middle wins for every $1<\alpha<2$.
-
-\subsection{The other papers of the series}\label{sec:series}
-
-This is one of six papers on Problem 131, which we call Papers~A to~F.
-Paper~A~\cite{paperA} solves Kagey's board. Paper~B~\cite{paperB}
-treats $d$ directions, where the ball turns to each other direction with the
-same probability. Paper~C~\cite{paperC} gives the general theory for slowly
-switching chains, and Paper~E~\cite{paperE} treats Kagey's board in the plane. These four
-papers study Markov walks, whose next step
-depends only on the current one, and their answer is that the middle (or a
-face) ties with the vertices when $T$ is of order $\log N$. Paper~D~\cite{paperD} and this
-paper, Paper~F, keep Kagey's question and change the walk. This paper can be read on its
-own, and it uses no result of the other papers. The
-papers share the following notation.
-\begin{itemize}[nosep]
-\item Kagey's board has $N$ steps (Kagey's row $n$ has $N=n-1$). The first
-step is left or right with probability $\frac12$, and each later step repeats
-the previous one with probability $p$. We put $q=1-p$ and $u=q/p$ (the odds of
-a switch).
-\item The probability that the ball lands in bin $k$, that is, of $k$ right steps, is
-$P_N(k)$. The endpoints have $P_N(0)=P_N(N)=p^{N-1}/2$.
-\item We write $L=\log N$, and $T=Nq$ is the expected number of switches (up to the
-first step).
-\item The crossing is the value of $p$ (or of $T$) at which a bin is exactly
-as likely as an endpoint.
-\end{itemize}
-As in Paper~B the start law matters. For
-heavy-tailed runs it decides whether the threshold is $\varphi$ or $1$, and
-for the aging walk it decides whether the crossing is exactly $c=1$.
-Figure~\ref{fig:program} shows the crossings of the series.
+smaller, and the center wins for every $1<\alpha<2$.
 
 \subsection{Setting and notation}\label{sec:notation}
 
 Every walk in this paper takes $N$ steps $X_1,\dots,X_N\in\{+1,-1\}$, where
 $+1$ means right. Let $A_N=\#\{i\le N:X_i=+1\}$ be the number of right steps,
-and keep writing $P_N(k)=\Prob(A_N=k)$ for the probability that the ball lands
-in bin $k$, now for whichever walk we study. Unless we say otherwise the first
+and write $P_N(k)=\Prob(A_N=k)$ for the probability of bin $k$, that is, of
+$k$ right steps, for whichever walk we study. Unless we say otherwise the first
 step is fair, $\Prob(X_1=+1)=\frac12$, and the rules treat the two directions
 alike, so $P_N(k)=P_N(N-k)$. We write $\Prob_+$ and $\E_+$ for probability and
 expectation given $X_1=+1$. For even $N$ we put $h=N/2$ and call
 $C_N=P_N(h)$ the center and $E_N=P_N(N)=P_N(0)$ the end. Whenever $C_N$
-appears, $N$ is even. The crossing is the value of the parameter at which
-$C_N=E_N$. All logarithms are natural, $L=\log N$,
+appears, $N$ is even. A crossing is a value of the parameter at which a bin
+ties with an end, and for the center this means $C_N=E_N$. All logarithms are natural,
 $H_k=\sum_{j\le k}1/j$ is the $k$-th harmonic number, and $\gamma$ is Euler's
 constant. Limits, $O(\cdot)$ and $o(\cdot)$ refer to $N\to\infty$, over even
 $N$ when $C_N$ appears. The constants implied by $O(\cdot)$ are absolute
@@ -115,13 +92,12 @@ Heavy-tailed runs (Section~\ref{sec:heavy}) have
 the exponent $\alpha$, the mean run length $\mu=\E\xi=\zeta(\alpha)$ for
 $\alpha>1$, and the length $D$ of the first run. A fresh start has $D$
 distributed as $\xi$, and the stationary start has
-$\Prob(D=d)=\Prob(\xi\ge d)/\mu$. We put $R_N=E_N/C_N$, so the ends win
+$\Prob(D=\ell)=\Prob(\xi\ge \ell)/\mu$. We put $R_N=E_N/C_N$, so the ends win
 exactly when $R_N>1$. The aging walk (Section~\ref{sec:aging}) has the
 constant $c\in(0,2)$, and its version with $d$ states has the constant
 $\theta$ and the count vector $(n_1,\dots,n_d)$, where $n_i$ is the number of
-steps in state $i$. The symbols that only one section uses are defined at the start
-of that section. The letters $p$, $q$ and $u$ have their meaning for Kagey's
-board only in this introduction, and later sections reuse them locally.
+steps in state $i$. Symbols that only one section uses are defined in that
+section.
 
 \subsection{Results}\label{sec:results}
 
@@ -163,9 +139,10 @@ $c_N=1-\log2/(\log N+\gamma+2-2\log2)+O((\log N)^{-3})$
 
 For heavy-tailed runs, Godr\`eche and Luck~\cite{godrecheluck2001} give the
 transform of the occupation time of an alternating renewal process and the
-scalings of the center and of both edges, and~\cite{zdk2015,dsd2013} describe
-the profile of a L\'evy walk. Wang, Li and H\"anggi~\cite{wlh2016} already observe,
-as a heuristic for heat conduction, that equal decay of the central peak and
+scalings of the center and of both ends, and Zaburdaev, Denisov and
+Klafter~\cite{zdk2015} and Dhar, Saito and Derrida~\cite{dsd2013} describe the
+profile of a L\'evy walk. Wang, Li and H\"anggi~\cite{wlh2016} observed, as a
+heuristic for heat conduction, that equal decay of the central peak and
 the side peaks gives the golden ratio. The two decay rates of the end,
 $N^{1-\alpha}$ and $N^{-\alpha}$, are the scalings of the ballistic peaks of a
 L\'evy walk with and without an equilibrated start~\cite[Table~I]{dzh2012}. We
@@ -178,8 +155,8 @@ Engl\"ander, Volkov and Wang~\cite{evw2020} found the scaling limit of the
 walk. For $d$ states the limit is a Dirichlet
 law~\cite[Theorem~1.4]{ds2007}. The exact uniform law for two states is an
 exercise in~\cite[footnote~1 on p.~6]{evw2020}, which also announces a general
-connection with P\'olya urns, and the chain that redraws or repeats is a
-conservative random walk in the sense of~\cite{ev2022}. What is new in
+connection with P\'olya urns, and the chain that redraws or repeats its state
+(Proposition~\ref{prop:aging-urn}) is a conservative random walk in the sense of~\cite{ev2022}. What is new in
 Section~\ref{sec:aging} is the explicit joint law of the counts and the last
 state for $d$ states and the ties that follow from it.
 

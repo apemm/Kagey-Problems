@@ -20,7 +20,6 @@ Proof: the word polynomial `∑_w X^(lch w)` equals the closed-form polynomial
 `law_div_closed`); the low coefficients of `∏ B_{n_i} = X^s ∏ Q_i` are
 `1` and `∑ (n_i - 1)/2 = (N-s)/2`.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperB

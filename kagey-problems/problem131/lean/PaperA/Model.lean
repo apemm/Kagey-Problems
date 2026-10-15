@@ -13,7 +13,6 @@ Proved here: the total mass is one, the endpoint probabilities `P_N(0) = P_N(N) 
 the reflection symmetry `P_N(k) = P_N(N-k)`, the two-state recursion `eq:dp`, the exact
 count of words by letters, changes, first and last letter, and Theorem `thm:pmf`.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131

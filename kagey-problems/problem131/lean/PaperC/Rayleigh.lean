@@ -24,7 +24,6 @@ Proved here:
 * reindexing along an equivalence does not change the Rayleigh set;
 * monotonicity `λ_G ≤ λ_F` for faces `F ⊆ G` (the non-strict half of C2.1(b)).
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperC

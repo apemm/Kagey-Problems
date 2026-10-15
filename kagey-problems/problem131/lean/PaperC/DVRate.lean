@@ -29,7 +29,6 @@ Not formalized: uniqueness of the minimiser (strict convexity, Proposition 8(b) 
 Lemma DV(c),(d)), the quadratic growth bound, the reducible case 8(e), and boundary
 `β` in 8(c).
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperC

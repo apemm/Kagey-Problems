@@ -14,7 +14,6 @@ import PaperB.Words
 * `SL_faceBal_self`, `face_crossing_kk`: `S = k! u^(k-1)` at `N = k`, and
   `p_{k,k} = 1/(1 + (d-1)(k!)^(-1/(k-1)))`.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperB

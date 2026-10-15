@@ -18,7 +18,6 @@ The key steps are the exact normalized series (eq. `eq:allbin-normalized-series`
 coefficient deficits (eqs. `eq:allbin-odd-deficit`, `eq:allbin-even-deficit`), and the
 weighted Bessel sums, all including the zero tail beyond the polynomial support.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131

@@ -16,7 +16,6 @@ The identification of `Cov(1{X_i=a}, 1{X_{i+m}=b})` with the matrix-power
 kernel for the word law of `PaperB.Model` is not formalized here but in
 `ChainCovariance.lean`.
 
-This Lean verification code was generated with Claude Opus 5.5.
 -/
 
 namespace Kagey131.PaperB
