@@ -1,4 +1,6 @@
-# Problem 131, Paper A: uniform Bessel bounds for endpoint crossings in the persistent random walk
+# Problem 131, Paper A: uniform Bessel bounds for magnetization crossings in finite Ising chains
+
+The arXiv v1 title was "Uniform Bessel bounds for endpoint crossings in the persistent random walk".
 
 Paper A treats the walk with 2 states, which is the zero-field 1D Ising chain with free boundaries.
 It gives the exact law and explicit uniform Bessel bounds for every bin, with relative error at most
@@ -7,6 +9,8 @@ analytic for N >= 175 and uses exact integer certificates below that, and all of
 Lean. This gives the crossing equation z_N + (1/2) log z_N = L + c_0 + 1/(8 z_N) + R_N with
 c_0 = (1/2) log(pi/8) and |R_N| <= 1/(4L^2) + (L^2 + L)/N. The paper also expands the crossing of
 every other bin, with a Laguerre law for fixed bins, and compares free and periodic boundaries.
+In Ising terms the coupling at both central crossings is (1/2)(log N - log log N) + o(1), which
+Table 3 compares with the approximations of Stepanyan et al. (J. Stat. Mech. 2024).
 `../README.md` describes the other papers on Problem 131.
 
 ## Files
@@ -20,7 +24,8 @@ every other bin, with a Laguerre law for fixed bins, and compares free and perio
   separate paper. `tables_note/` holds the numerator tables and bijections (the former Appendix C
   and its figure), kept for a later note.
 - `verify.py`, `check_bessel.py`, `verify_adjacent.py`, `verify_allbin.py`,
-  `verify_periodic_window.py`, `verify_every_n.py`, `verify_every_n_guards.py`,
+  `verify_periodic_window.py`, `verify_ising_coupling.py`, `verify_every_n.py`,
+  `verify_every_n_guards.py`,
   `verify_every_n_sign.py`, `verify_uniform_llt.py` and `verify_uniform_llt_cor5.py` are the checks.
   They use only the standard library, and `../SUPPLEMENT.md` says what each one checks. The last
   two belong to the local law note.

@@ -4,7 +4,7 @@ This supplement serves the 6 papers on Kagey's Problem 131 by A. Pemmasani. Pape
 
 | Paper | Title | Source |
 | --- | --- | --- |
-| A | Uniform Bessel bounds for endpoint crossings in the persistent random walk | `paperA/problem131.tex` |
+| A | Uniform Bessel bounds for magnetization crossings in finite Ising chains (arXiv v1: Uniform Bessel bounds for endpoint crossings in the persistent random walk) | `paperA/problem131.tex` |
 | B | Vertex crossings in a symmetric Markov multinomial model | `paperB/problem131_multistate.tex` |
 | C | Face selection for slowly switching Markov chains | `paperC/problem131_switching.tex` |
 | D | Endpoint crossings for the elephant random walk | `paperD/problem131_memory.tex` |
@@ -59,6 +59,7 @@ proofs but does not replace them.
 | `verify_adjacent.py` | Adjacent-bin ratio and global extrema in 474 exact distributions up to N = 80, exact adjacent thresholds, and the cubic gap between the central and adjacent polynomials by word enumeration up to N = 12. |
 | `verify_allbin.py` | 5,476 exact coefficient comparisons, 264 all-bin Bessel inequalities, 28 Laguerre-Bessel inequalities, and the crossing and edge expansions at 80 digits. |
 | `verify_periodic_window.py` | 66 cyclic run polynomials against enumeration, 120 relative-error inequalities, and root and critical-window samples up to N = 10^12. |
+| `verify_ising_coupling.py` | Table 3 and Corollary 5.4. The couplings at the free and periodic central crossings for 10 <= N <= 10^6 from the exact run polynomials, against the main terms of the expansions and the two approximations of Stepanyan et al., the values of N/xi at both crossings, and the secant slopes of the periodic coupling. Asserts the 2 couplings already quoted in Section 5 to 6 decimals and the orderings stated in the text (a few seconds). |
 | `verify_every_n.py` | The crossing at every N (about 8 minutes, only with `--full`). The bounds on I_0 + I_1 at 2,000 points, with the Bessel values by power series and by quadrature, the certificates for 2 <= N <= 174 and as a cross-check up to N = 1000, the margins of the analytic proof, and a table of z_N by 2 bisections. Writes `paperA/data/every_n_certificates.csv` and `paperA/data/every_n_output.txt`. |
 | `verify_every_n_sign.py` | The sign of z_N - zeta_N for 1001 <= N <= 2773 (about 13 minutes, only with `--full`). |
 | `verify_every_n_guards.py` | The rounding guards of the 2 scripts above, the signs of z_N - zeta_N and of R_N for N <= 1000, and the checks at N = 2773 and 2774 (about 25 seconds). |

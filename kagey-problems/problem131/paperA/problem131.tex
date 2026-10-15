@@ -11,7 +11,7 @@
 \usepackage[shortlabels]{enumitem}
 \setlist{topsep=3pt,itemsep=1pt,parsep=0pt}
 \usepackage[colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
-\hypersetup{pdftitle={Uniform Bessel bounds for endpoint crossings in the persistent random walk},pdfauthor={Arjun Pemmasani}}
+\hypersetup{pdftitle={Uniform Bessel bounds for magnetization crossings in finite Ising chains},pdfauthor={Arjun Pemmasani}}
 
 % ---------- theorem environments ----------
 \newtheorem{theorem}{Theorem}[section]
@@ -38,7 +38,7 @@
 % the Bessel factor E(z) of Lemma 3.6
 \newcommand{\cE}{\mathcal E}
 
-\title{Uniform Bessel bounds for endpoint crossings\\ in the persistent random walk}
+\title{Uniform Bessel bounds for magnetization crossings\\ in finite Ising chains}
 \author{Arjun Pemmasani\\[2pt]
 \small Department of Mathematics, Harvey Mudd College\\
 \small Claremont, CA 91711, USA\\
@@ -48,75 +48,97 @@
 \maketitle
 
 \begin{abstract}
-A ball bounces down a Galton board, where its first bounce's direction is fair
-while every later bounce repeats the previous bounce's direction with
-probability $p$, all the way down to some bin. We ask for which $p$ the middle
-bin is exactly as likely as the end bins, a question originally posed by Kagey.
-We find that for $N$ bounces, the tie occurs when the ball changes direction
-(turns) approximately $\log N$ times on average. We compare the central bin
-with a Bessel function, with an error bound that is explicit for all $N$. This
-yields an explicit interval for the tie at every $N\ge2$, rather than just for
-large $N$. This is done analytically for $N\ge175$, and for smaller $N$ exactly
-by integer arithmetic, cross-verified in Lean. We also find the tie of every other bin with the end bins and
-the shift caused by periodic boundaries.
+In a zero-field Ising chain of $N$ spins, the all-up configuration and zero
+magnetization become equally likely at a single coupling. This crossing has
+recently been described as a thermal transition of the finite chain, an
+analogue of a first-order transition temperature, and approximated by an
+analytic estimate and a numerical fit. We find its asymptotics, with explicit constants, for free and
+for periodic ends. The coupling at the crossing is half of
+$\log N-\log\log N$ plus a correction that tends to zero, so the correlation
+length there is about $N/(2\log N)$, and periodic ends lower the coupling by a
+term of order $1/\log N$. The earlier approximations lack the $\log\log N$
+term, which explains why fits at moderate $N$ find a slope below one half. The
+proofs treat the magnetization as the position of a persistent random walk
+and compare its central probability with a modified Bessel function, with a
+relative error bound that is explicit for every $N$. For free ends this traps
+the crossing in an explicit interval at every $N\ge2$, proved analytically for
+$N\ge175$ and by exact integer arithmetic below, with the integer checks
+repeated in Lean. We also find the crossing of every other value of the
+magnetization with full magnetization.
 \end{abstract}
 
-\noindent\textbf{Keywords:} persistent random walk; correlated random walk;
-Galton board; Markov binomial distribution; Ising chain; modified Bessel
-functions; computer-assisted proof.
+\noindent\textbf{Keywords:} Ising chain; finite-size effects; magnetization
+distribution; persistent random walk; Markov binomial distribution; modified
+Bessel functions; computer-assisted proof.
 
-\noindent\textbf{MSC2020:} 60J10; 60F05; 82B20; 60G50; 33C10.
+\noindent\textbf{MSC2020:} 82B20; 60J10; 60F05; 60G50; 33C10.
 
 \section{Introduction}\label{sec:intro}
 
-\subsection{Kagey's question}
+\subsection{The crossing}
 
-Problem 131 of Kagey's Open Problem Collection~\cite{kagey131} is about a
-Galton board where the ball has momentum. The first bounce is fair. After that,
-each bounce goes the same way as the previous one with probability $p$. For
-$p=\frac12$ this is the usual board. The bin is binomial and the end bins are
-the least likely. For $p$ close to $1$ the ball rarely turns, so the end bins
-are the most likely.
+Take $N$ spins $\sigma_i=\pm1$ in a row, with free ends and the zero-field
+Ising weight $\exp(J\sum_{i<N}\sigma_i\sigma_{i+1})$, where $J>0$. The all-up
+configuration is the only one with magnetization $\sigma_1+\dots+\sigma_N=N$.
+Zero magnetization (magnetization $\pm1$ for odd $N$) comes from very many
+configurations, each with a few domain walls. For small $J$ the walls cost
+little and zero magnetization is the more likely of the two, and for large $J$
+the all-up configuration is. They are equally likely at a single coupling,
+the \emph{central crossing}. Stepanyan et~al.\@~\cite{stepanyan2024} study
+this crossing in the periodic chain as a thermal transition of a finite
+system, the analogue of the temperature of a first-order transition, and
+approximate it by $\beta J\approx(2\log N-1)/5$. We find its asymptotics with
+explicit constants for free and for periodic ends, and for free ends we bound
+it at every $N$.
 
-Kagey asks five questions. What is the law of the bins? What do the tables of
-numerators for $p=\frac23$ and $p=\frac13$ count? At which $p$ is the middle bin
-as likely as the end bins? Is there a normal limit? What changes on a cylinder?
-Most of this paper is about the third question.
+Read from left to right, the spins are the steps of a persistent random
+walk~\cite{goldstein1951,gillis1955,renshaw1981}. The first step is fair, and
+each later step repeats the previous one with probability $p$, where
+$e^{-2J}=(1-p)/p$. The magnetization is the position after $N$ steps, so the
+walk that never turns, which reaches an end, competes with the many walks
+that end in the middle. In this form the question is Problem~131 of Kagey's
+Open Problem Collection~\cite{kagey131}, posed for a Galton board whose ball
+keeps its direction with probability $p$.
 
-With two steps there are three bins. The ball
-lands in the middle exactly when it turns once, so the bins have probabilities
-$\frac p2$, $1-p$ and $\frac p2$, and they are level at $p=\frac23$. This is
-why the third row of Kagey's table for $p=\frac23$ reads $2,2,2$. With three
-steps the bins have probabilities $\frac{p^2}2$, $\frac{1-p^2}2$,
-$\frac{1-p^2}2$ and $\frac{p^2}2$, and they are level at $p=1/\sqrt2$. In
-general there is exactly one way to reach a given end bin, namely never
-turning, and there are very many ways to reach the middle by turning a few
-times (each turn brings a factor of about $1-p$).
+With two steps the walk ends in the middle exactly when it turns once, so the
+three bins have probabilities $\frac p2$, $1-p$ and $\frac p2$, and they are
+level at $p=\frac23$. With three steps the bins have probabilities
+$\frac{p^2}2$, $\frac{1-p^2}2$, $\frac{1-p^2}2$ and $\frac{p^2}2$, and they are
+level at $p=1/\sqrt2$. In general exactly one word reaches a given end bin,
+namely the word that never turns, and very many words reach the middle by
+turning a few times (each turn brings a factor of about $1-p$).
 
-The middle bin and the end bins are level when the ball turns about $\log N$
-times on average, where $N$ is the number of steps. More precisely, the
-crossing value $p_N$ of $p$ satisfies
+The middle bin and the end bins are level when the walk turns about $\log N$
+times on average. More precisely, the crossing value $p_N$ of $p$ satisfies
 $N(1-p_N)=\log N-\frac12\log\log N-0.467\ldots+o(1)$, and for every $N\ge2$
 we trap $N(1-p_N)$ between two explicit functions of $N$ whose distance tends
-to $0$ (Theorem~\ref{thm:every-n}). For $p<p_N$ the
-middle is more likely, and for $p>p_N$ the ends are.
+to $0$ (Theorem~\ref{thm:every-n}). For $p<p_N$ the middle is more likely, and
+for $p>p_N$ the ends are. In terms of the coupling, the crossing is at
+$J=\frac12(\log N-\log\log N)+O(\log\log N/\log N)$ for free and for periodic
+ends, and the correlation length there is about $N/(2\log N)$
+(Corollary~\ref{cor:couplings}). The approximations of~\cite{stepanyan2024}
+have no $\log\log N$ term, and this term explains the slope of their numerical
+fit (Table~\ref{tab:couplings}).
 
-The other questions have short answers. The law of the bins is a sum over the
-number of turns (Theorem~\ref{thm:pmf}), with a rational generating function
-(Proposition~\ref{prop:gf}), and this is classical~\cite{renshaw1981}. The
-numerators of Kagey's tables are weighted counts of words
-(Remark~\ref{rem:tables}). For each fixed $p\in(0,1)$ the bin has a normal
-limit (Theorem~\ref{thm:clt}). Rather than treating the cylinder, we close
-the sequence of steps into a loop, which gives the periodic Ising chain. This
-moves the central crossing by about $(\log2)/N$ in the odds $(1-p)/p$
-(Section~\ref{sec:periodicwindow}). Kagey
-also asks about boards with more directions, like a tetrahedron. We treat a
-ball with $d$ directions in the companion paper~\cite{paperB}. More general
-chains and walks with memory will appear in~\cite{paperC,paperD}.
+The crossing lies between two regimes in which the law is well understood.
+When $T=N(1-p)$ stays bounded, the walk is close to the telegraph process and
+the magnetization has a scaling
+limit~\cite{renshaw1981,konno2009,herrmann2010,antal2004}. When $p$ is fixed,
+the bin has a normal limit (Theorem~\ref{thm:clt}). At the crossing $T$ grows
+like $\log N$, so neither limit decides it, and we need bounds that hold
+uniformly in $T$. Our main tool is a comparison of the middle bin with a
+modified Bessel function, with a relative error that is explicit for every $N$
+(Theorem~\ref{thm:bessel}).
+
+Problem~131 also asks four other questions, about the law of the bins, its
+tables, a normal limit and a cylinder. They have short or classical answers,
+which we collect in Remark~\ref{rem:kagey}. A walk with $d$ directions, which
+is the $d$-state Potts chain, is treated in~\cite{paperB}, and general slowly
+switching chains in~\cite{paperC}.
 
 \subsection{Setting and notation}\label{sec:setting}
 
-\paragraph{The walk.} The ball makes $N\ge1$ steps. We record a run as a word
+\paragraph{The walk.} The walk makes $N\ge1$ steps. We record a run as a word
 $w=w_1\cdots w_N$ in the letters $\sR$ (right) and $\sL$ (left). The letter $w_1$
 is $\sR$ or $\sL$ with probability $\frac12$, and given $w_1,\dots,w_i$,
 \[
@@ -129,7 +151,7 @@ number of switches and $\rep(w)=N-1-\chg(w)$. Then
 \end{equation}
 For $p>0$ we put $u=q/p$, the odds of a switch.
 
-\paragraph{Bins.} The ball lands in bin $k$ if $w$ has $k$ letters $\sR$, for
+\paragraph{Bins.} The walk ends in bin $k$ if $w$ has $k$ letters $\sR$, for
 $0\le k\le N$. We write $P_N(k)$ for the probability of bin $k$, and $P_0(0)=1$.
 Bins $0$ and $N$ are the \emph{endpoints}. Only the constant word
 $\sL\cdots\sL$ reaches bin $0$, and only $\sR\cdots\sR$ reaches bin $N$, so
@@ -137,10 +159,7 @@ $\sL\cdots\sL$ reaches bin $0$, and only $\sR\cdots\sR$ reaches bin $N$, so
 P_N(0)=P_N(N)=\tfrac12p^{N-1}\qquad(N\ge1).
 \]
 A middle bin is $m_N=\lfloor N/2\rfloor$. For odd $N$ the two middle bins
-have equal probability by symmetry. Row $n$ of the tables of the problem has
-$n$ bins, so it is our $N=n-1$. For $p=\alpha/(\alpha+\beta)$ with integers
-$\alpha,\beta\ge0$, not both $0$, the numerator of bin $k$ in those tables is
-$n_N(k)=2(\alpha+\beta)^{N-1}P_N(k)$ (Remark~\ref{rem:tables}).
+have equal probability by symmetry.
 
 \paragraph{Spins.} Put $\sigma_i=+1$ if $w_i=\sR$ and $\sigma_i=-1$ if
 $w_i=\sL$, and $X_N=\sigma_1+\dots+\sigma_N$. The bin is $K_N=(N+X_N)/2$. Since
@@ -187,6 +206,24 @@ is uniform in, and $O_a(\cdot)$ means that the constant may depend on $a$.
 
 \subsection{Main results}
 
+\paragraph{The coupling at the crossing.} In Ising terms the free central
+crossing is the coupling $J_N^{\mathrm F}=-\frac12\log u_N$, and
+$J_N^{\mathrm P}$ is the coupling at the periodic one. Put
+$c_0=\frac12\log(\pi/8)=-0.467\ldots$ and $c_{\mathrm P}=\frac12\log(\pi/2)$.
+Theorem~\ref{thm:periodic-crossing} and Corollary~\ref{cor:couplings} give
+\[
+J_N^X=\tfrac12(\log N-\log\log N)+\frac{\frac14\log\log N-\frac12c_X}{\log N}
++O\Bigl(\frac{(\log\log N)^2}{(\log N)^2}\Bigr)
+\]
+for $X=\mathrm F$, with $c_{\mathrm F}=c_0$, and for $X=\mathrm P$. Since
+$c_{\mathrm P}=c_0+\log2$, periodic ends lower the coupling at the crossing by
+$(\log2)/(2\log N)$ to leading order. At either crossing the correlation
+length is about $N/(2\log N)$, a vanishing fraction of the chain. The
+approximation $\beta J\approx(2\log N-1)/5$ of~\cite[Eq.~(16)]{stepanyan2024}
+grows too slowly. At $N=10^5$ the exact periodic coupling is $4.576$, the
+display without its error term gives $4.578$, and the approximation gives
+$4.405$ (Table~\ref{tab:couplings}).
+
 \paragraph{A Bessel bound at every $N$.} Put $h=N/2$ and
 $F(x)=2x(I_0(2x)+I_1(2x))$. Theorem~\ref{thm:bessel} says that for every
 $N\ge2$ and every $x>0$,
@@ -209,8 +246,8 @@ says that
 Note that $\varepsilon_N\to0$. For $N\ge175$ the proof is analytic. For
 $2\le N\le174$ we decide the sign of $S_N-1$ at two rationals, one on each side
 of the root, in exact integer arithmetic, and the Lean kernel repeats this
-check. The theorem has two simpler consequences. With
-$c_0=\frac12\log(\pi/8)=-0.467\ldots$, the crossing satisfies
+check. The theorem has two simpler consequences. With $c_0$ as above, the
+crossing satisfies
 \[
 z_N+\tfrac12\log z_N=L+c_0+\frac1{8z_N}+R_N,\qquad
 |R_N|\le\frac1{4L^2}+\frac{L^2+L}N\quad(N\ge2)
@@ -263,17 +300,26 @@ Bessel density. Dekking and Kong~\cite{dekkingkong2011} study the Markov
 binomial law, give its variance and find when it has one, two or three modes.
 Their criterion already gives the crossing of the bins next to the edges
 (Section~\ref{sec:allbin-order}). The OEIS
-entries~\cite{oeisA035002,oeisA348595} already record both tables of the
-problem.
+entries~\cite{oeisA035002,oeisA348595} already record both tables
+of~\cite{kagey131}.
 
 For the Ising chain, Antal, Droz and R\'acz~\cite{antal2004} give the
 magnetization law at a fixed scale $T$ under several boundary conditions, and
 Dantchev and Rudnick~\cite{dantchev2022} give exact free and periodic
-coefficients. Stepanyan et~al.\@~\cite[Section~III.B]{stepanyan2024} study the
-periodic endpoint--adjacent and endpoint--center crossings directly, so the
-crossing question itself is not new. What is new here are bounds at finite
-$N$ when $T$ is of order $\log N$, both in the middle and near the edges. The Markov binomial
-estimates of
+coefficients. Their scaling law already predicts the central crossing.
+Evaluated at $T$ of order $\log N$, where it is not proved, its endpoint atom
+and its density at zero magnetization balance at a value $z$ of $T$ with
+$z+\frac12\log z=L+c_0+1/(8z)+O(z^{-2})$, which is the crossing equation of
+Proposition~\ref{prop:crossing-eq} without its remainder. What we add is a
+proof in this regime, with explicit bounds, and the crossing at every $N$.
+Stepanyan et~al.\@~\cite[Section~III.B]{stepanyan2024} study two crossings of
+the periodic chain as thermal transitions. In the first, the all-up
+configuration and magnetization $N-2$ (one flipped spin) are equally likely
+exactly at $J=\frac14\log N$, which they give to leading order. In the second,
+the all-up configuration and zero magnetization are equally likely, and they
+estimate the coupling. We give the second with its constants under both boundary
+conditions, and for free ends we bound it at every $N$ and find the crossing
+of every bin. The Markov binomial estimates of
 \v{C}ekanavi\v{c}ius and Mikalauskas~\cite{cekanavicius2001,cekanavicius2001ld}
 assume ranges of the transition probabilities that exclude $p\to1$.
 
@@ -289,45 +335,55 @@ proofs use two computations, namely the integer certificates for $N\le174$ in
 Theorem~\ref{thm:every-n} (Step~4) and Proposition~\ref{prop:crossing-eq}, and
 the evaluation at $N=2774$ in Corollary~\ref{cor:every-n}(d). Each one is
 described where it is used. The scripts are standard-library
-Python. They check the exact law, the orderings, the Bessel bounds and the
-asymptotic formulas, and where possible each reported number is computed in
-two independent ways.
+Python. They check the exact law, the orderings, the Bessel bounds, the
+asymptotic formulas and the couplings of Table~\ref{tab:couplings}, and where
+possible each reported number is computed in two independent ways.
 
 Many of the results are formalized in Lean~4, in the folder
 \nolinkurl{kagey-problems/problem131/lean/PaperA}. This includes
 Theorem~\ref{thm:every-n} for all $N\ge2$. For $N\le174$ the Lean kernel checks
 the same certificates as Step~4 of its proof, with rational bounds on $\zeta_N$
 that Lean proves itself. Only the standard axioms are used. Not formalized are
-Proposition~\ref{prop:crossing-eq}, the remarks, and the terms after the
-leading one in the asymptotic results. The file \nolinkurl{MAP.md} in that
+Proposition~\ref{prop:crossing-eq}, Corollary~\ref{cor:couplings}, the
+remarks, and the terms after the leading one in the asymptotic results. The file \nolinkurl{MAP.md} in that
 folder gives the Lean theorem for each result, or says that there is none.
 
 \paragraph{Data and code availability.} Everything is in the folder
 \nolinkurl{kagey-problems/problem131} of
 \url{https://github.com/apemm/Kagey-Problems}, at the release
-\nolinkurl{paperA-arxiv-v1}. To rerun the checks, run
+\nolinkurl{paperA-arxiv-v2}. To rerun the checks, run
 \texttt{python -B verify\_all.py -{}-paper a} in that folder. The file
 \nolinkurl{SUPPLEMENT.md} says what each script does. Theorem~\ref{thm:every-n}'s
-certificates are listed in \nolinkurl{paperA/data/every_n_certificates.csv}.
+certificates are listed in \nolinkurl{paperA/data/every_n_certificates.csv},
+and \nolinkurl{paperA/verify_ising_coupling.py} prints
+Table~\ref{tab:couplings}.
 Any number in Sections~\ref{sec:middle} and~\ref{sec:periodicwindow} that no
 script prints is listed in \nolinkurl{paperA/data/quoted_values.txt}.
 
-\paragraph{Acknowledgment.} I thank Peter Kagey for posing the problem.
+\paragraph{Acknowledgments.} I thank Peter Kagey for posing the problem. The
+use of Claude Opus 5.5 (Anthropic) and GPT-6 Astra (OpenAI) in this work is
+described in the note on the use of AI below.
 
 \section*{A note on the use of AI}
-Except for Theorem~\ref{thm:every-n} (below), I wrote the proofs and
-derivations of this paper by hand, without AI assistance, before any revision. I then used Claude Opus 5.5 (Anthropic,
+Except for Theorem~\ref{thm:every-n} and Corollary~\ref{cor:couplings}
+(below), I wrote the proofs and derivations of this paper by hand, without AI
+assistance, before any revision. I then used Claude Opus 5.5 (Anthropic,
 through Claude Code) in September and October 2026 to check everything I had
 written for typos and for statements that were technically wrong. It found a fair
 number of gaps, which I fixed, along with occasional wrong references and
 unclear wording. I decided every revision and went over each one by hand. The model also
-drafted rewordings of many passages, which I reviewed and edited. One result came from the model. Near the
+drafted rewordings of many passages, which I reviewed and edited. Two results came from the model. Near the
 end of the work it conjectured Theorem~\ref{thm:every-n}, the bracket for the
 crossing at every $N$, together with a proof that uses the Bessel bounds of
 Lemma~\ref{lem:bessel-bounds}. It was different enough from my original
 conjecture that most of the credit for it belongs to the model, and I rechecked
-and rederived its proof by hand. I also checked the proofs with GPT-6 Astra
-(OpenAI), which found nothing beyond the earlier check.
+and rederived its proof by hand.
+In a later revision, which recast the introduction in terms of the Ising
+chain, the model proposed Corollary~\ref{cor:couplings} and the comparison in
+Table~\ref{tab:couplings}, and wrote their proofs and the script that computes
+the table. I checked both by hand. I also checked the proofs, except those of
+Corollary~\ref{cor:couplings}, with GPT-6 Astra (OpenAI), which found nothing
+beyond the earlier check.
 
 The Lean~4 formalization in
 \nolinkurl{kagey-problems/problem131/lean/PaperA} was generated by the
@@ -351,17 +407,12 @@ P.~Kagey, \emph{Problem 131}, Open Problem Collection,
 
 \bibitem{paperB}
 A.~Pemmasani, \emph{Vertex crossings in a symmetric Markov multinomial
-model}, preprint, 2026.
+model}, preprint, 2026, \url{https://arxiv.org/abs/2610.09258}.
 
 \bibitem{paperC}
-A.~Pemmasani, \emph{Face selection for slowly switching Markov chains and the
-planar persistent walk}, in preparation, draft at
-\url{https://github.com/apemm/Kagey-Problems/tree/main/kagey-problems/problem131/paperC}.
-
-\bibitem{paperD}
-A.~Pemmasani, \emph{Endpoint crossings for random walks with memory}, in
+A.~Pemmasani, \emph{Face selection for slowly switching Markov chains}, in
 preparation, draft at
-\url{https://github.com/apemm/Kagey-Problems/tree/main/kagey-problems/problem131/paperD}.
+\url{https://github.com/apemm/Kagey-Problems/tree/main/kagey-problems/problem131/paperC}.
 
 \bibitem{antal2004}
 T.~Antal, M.~Droz and Z.~R\'acz, \emph{Probability distribution of magnetization in the
