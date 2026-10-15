@@ -1,8 +1,7 @@
 \section{Periodic boundaries and the crossing window}\label{sec:periodicwindow}
 
-We keep the line of bins but close the sequence of steps into a loop, so that
-the last step also interacts with the first. This is different from wrapping
-the board into a cylinder. With this closing bond the spins form the periodic
+We now close the sequence of steps into a loop, so that the last step also
+interacts with the first. With this closing bond the spins form the periodic
 Ising chain, with weight proportional to
 $\exp(J\sum_{i=1}^N\sigma_i\sigma_{i+1})$, $\sigma_{N+1}=\sigma_1$ and again
 $u=e^{-2J}$. Antal, Droz and R\'acz~\cite{antal2004} give its magnetization law
@@ -125,15 +124,8 @@ $\log z=\log L-(\frac12\log L-c_{\mathrm P})/L+O((\log L)^2/L^2)$ gives
 \eqref{eq:isingtemperature}.
 \end{proof}
 
-Stepanyan et~al.\@~\cite[Eq.~(16)]{stepanyan2024} approximate the periodic
-crossing by $\beta J\approx(2\log N-1)/5$, and their Fig.~1(b) fits the line
-$\beta J\approx0.3864\log N-0.21055$. At $N=10^5$ the exact periodic crossing
-is $J=4.576$ (their $\beta J$). Their Eq.~(16) gives $4.405$, their line gives
-$4.238$, and \eqref{eq:isingtemperature} without its error term gives $4.578$.
-The line is accurate for $10\le N\le100$ (at $N=100$ it gives $1.569$ and the
-exact value is $1.574$), but it has no $\log\log N$ term.
-
-We also describe the whole row near the crossing. The factor $e^{-2y^2}$ in
+We return to the coupling~\eqref{eq:isingtemperature} at the end of this
+section. We also describe the whole row near the crossing. The factor $e^{-2y^2}$ in
 the next theorem has a simple heuristic. Moving $yN/\sqrt{\log N}$ away from
 the middle multiplies the Bessel argument
 by $2\sqrt{k(N-k)}/N\approx1-2y^2/\log N$. The argument is about $\log N$, so
@@ -204,3 +196,107 @@ and the bins above the dotted line are above the endpoint height. The
 convergence is slow, and at $t=2$ and $y=0$ the relative error is still $0.08$.}
 \label{fig:window}
 \end{figure}
+
+We end with the coupling at the two central crossings, since this is how
+Stepanyan et~al.\@~\cite{stepanyan2024} state the crossing. Write
+$J_N^{\mathrm F}=-\frac12\log u_N$ for the coupling at the free central
+crossing. For $J>0$ let $\xi(J)=-1/\log\tanh J$ be the correlation length of
+the infinite chain, so that $\langle\sigma_0\sigma_r\rangle=e^{-r/\xi(J)}$
+there.
+
+\begin{corollary}[couplings and correlation lengths at the crossings]\label{cor:couplings}
+As $N\to\infty$,
+\begin{enumerate}[(a)]
+\item $J_N^{\mathrm F}=\frac12(\log N-\log\log N)
++\dfrac{\frac14\log\log N-\frac12c_0}{\log N}
++O\Bigl(\dfrac{(\log\log N)^2}{(\log N)^2}\Bigr)$;
+\item $J_N^{\mathrm F}-J_N^{\mathrm P}=\dfrac{\log2}{2\log N}
++O\Bigl(\dfrac{\log\log N}{(\log N)^2}\Bigr)$;
+\item $N/\xi(J_N^{\mathrm F})=2\log N-\log\log N+\log(\pi/8)
++O(\log\log N/\log N)$, and
+$N/\xi(J_N^{\mathrm P})=2\log N-\log\log N+\log(\pi/2)
++O(\log\log N/\log N)$.
+\end{enumerate}
+\end{corollary}
+
+All three parts are facts about $Nu$ at the crossings, read on other scales.
+The coupling is $-\frac12\log u$, so it sees $Nu$ only through $\log(Nu)$. The
+shift of $\log2$ in $Nu$ between the two boundary conditions therefore becomes
+a shift of order $1/\log N$ in the coupling. The correlation length is
+$1/(2u)$ to leading order, so $N/\xi$ is about $2Nu$.
+
+\begin{proof}
+(a) By \eqref{eq:zN}, $u_N=z_N/(N-z_N)$, so
+$J_N^{\mathrm F}=\frac12(L-\log z_N)+O(L/N)$. Taking logarithms in
+\eqref{eq:thirdorder} gives
+$\log z_N=\log L-(\frac12\log L-c_0)/L+O((\log L)^2/L^2)$, and (a) follows in
+the same way as \eqref{eq:isingtemperature} in Step~3 of the proof of
+Theorem~\ref{thm:periodic-crossing}.
+
+(b) The difference is $J_N^{\mathrm F}-J_N^{\mathrm P}
+=\frac12\log(u_N^{\mathrm P}/u_N^{\mathrm F})=\frac12\log(1+\delta)$, where
+$\delta=N(u_N^{\mathrm P}-u_N^{\mathrm F})/(Nu_N^{\mathrm F})$. By
+\eqref{eq:boundaryshift} the numerator is $\log2+O(1/L)$. By \eqref{eq:zN} and
+Corollary~\ref{cor:every-n}(b) the denominator is $z_N+O(L^2/N)=L+O(\log L)$.
+So $\delta=(\log2)/L+O(\log L/L^2)$, and
+$\frac12\log(1+\delta)=\delta/2+O(\delta^2)$.
+
+(c) With $u=e^{-2J}$ we have $\tanh J=(1-u)/(1+u)$, so
+$N/\xi(J)=N\log\frac{1+u}{1-u}=2Nu+O(Nu^3)$ for $0<u\le\frac12$. At either
+crossing $Nu^3=O(L^3/N^2)$. It remains to insert
+$Nu_N=z_N+O(L^2/N)=L-\frac12\log L+c_0+O(\log L/L)$, from
+Corollary~\ref{cor:every-n}(b), and the expansion \eqref{eq:periodicasym} of
+$Nu_N^{\mathrm P}$, and to recall that $2c_0=\log(\pi/8)$ and
+$2c_{\mathrm P}=\log(\pi/2)$.
+\end{proof}
+
+So at either crossing the correlation length is about $N/(2\log N)$. The chain
+is ordered over long stretches, but each stretch is a vanishing fraction of the
+chain, and $N/\xi$ grows like $2\log N$. Antal, Droz and
+R\'acz~\cite{antal2004} give the magnetization law when $T$ is fixed, and
+there $N/\xi$ stays bounded (it is about $2T$). The crossing lies outside that
+regime, which is why we need bounds that are uniform in $T$. Part~(b) is the
+shift by $\log2$ in $Nu$ of \eqref{eq:boundaryshift}, seen on the logarithmic
+scale of the coupling. So the boundary condition moves the coupling at the
+crossing by an amount that decays only like $1/\log N$.
+
+Stepanyan et~al.\@~\cite[Section~III.B]{stepanyan2024} call the periodic
+central crossing the second thermal transition of the finite chain. They
+estimate it analytically by $\beta J\approx(2\log N-1)/5$~\cite[Eq.~(16)]{stepanyan2024},
+and their Fig.~1(b) shows the fitted line $\beta J\approx0.3864\log N-0.21055$.
+Table~\ref{tab:couplings} compares both with the exact crossing and with
+\eqref{eq:isingtemperature} without its error term. The line is accurate for
+$10\le N\le100$, but neither approximation has a $\log\log N$ term. The main
+terms of \eqref{eq:isingtemperature} have slope $\frac12-1/(2\log N)$ in
+$\log N$, up to $O(\log\log N/(\log N)^2)$, so the exact curve bends slowly
+toward slope $\frac12$. Its secant slope is $0.385$ on $10\le N\le10^2$, close
+to the fitted $0.3864$, then $0.417$ on $10^2\le N\le10^3$, and $0.450$ on
+$10^4\le N\le10^5$. From $N=10^3$ on, the main terms of
+\eqref{eq:isingtemperature} are closer to the exact value than either
+approximation, and at $N=10^5$ they are off by $0.002$, against $0.171$ and
+$0.338$.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{rcccccc}
+\toprule
+$N$ & $J_N^{\mathrm P}$ & \eqref{eq:isingtemperature} & Eq.~(16) &
+Fig.~1(b) & $J_N^{\mathrm F}$ & $J_N^{\mathrm F}-J_N^{\mathrm P}$\\
+\midrule
+$10$ & $0.687$ & $0.776$ & $0.721$ & $0.679$ & $0.823$ & $0.136$\\
+$10^2$ & $1.574$ & $1.597$ & $1.642$ & $1.569$ & $1.658$ & $0.084$\\
+$10^3$ & $2.534$ & $2.541$ & $2.563$ & $2.459$ & $2.591$ & $0.057$\\
+$10^4$ & $3.540$ & $3.543$ & $3.484$ & $3.348$ & $3.582$ & $0.042$\\
+$10^5$ & $4.576$ & $4.578$ & $4.405$ & $4.238$ & $4.610$ & $0.033$\\
+$10^6$ & $5.633$ & $5.634$ & $5.326$ & $5.128$ & $5.661$ & $0.028$\\
+\bottomrule
+\end{tabular}
+\caption{The couplings $J_N^{\mathrm P}$ and $J_N^{\mathrm F}$ at the
+periodic and free central crossings, from the exact run polynomials, against
+the main terms of \eqref{eq:isingtemperature} and the two approximations of
+Stepanyan et~al.~\cite{stepanyan2024} (their Eq.~(16) and the line of their
+Fig.~1(b)). By Corollary~\ref{cor:couplings}(b) the last column is
+$(\log2)/(2\log N)$ to leading order, which is $0.030$ at $N=10^5$.}
+\label{tab:couplings}
+\end{table}
