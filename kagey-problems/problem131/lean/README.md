@@ -5,6 +5,11 @@ with a root file (`PaperA.lean`) and a folder of modules (`PaperA/`). We use Lea
 Mathlib v4.33.1. Each module starts with a docstring that lists what it proves. For Papers C and
 D the files `PaperC/MAP.md` and `PaperD/MAP.md` match each statement to its Lean theorems.
 
+On October 13, 2026 Paper E (`paperE/problem131_planar.tex`, the planar walk) was split off
+Paper C, and Paper F (`paperF/problem131_heavy_aging.tex`, heavy-tailed runs and aging walks) off
+Paper D. `PaperC` also holds the Lean proofs for Paper E, and `PaperD` those for Paper F. Their
+`MAP.md` files give the statement numbers from before the split.
+
 ## Paper A (`paperA/problem131.tex`)
 
 `PaperA/` is about the binary walk. It proves the following.

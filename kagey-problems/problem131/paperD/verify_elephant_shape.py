@@ -317,7 +317,7 @@ def main():
           bool(np.all(En >= lowE)) and lowE.min() > 0.06, f'smallest lower bound {lowE.min():.4f}')
 
     # ------------------------------------------------ crossings for every n <= 600 and the shape there
-    print('\nShape at the crossing for 2 <= n <= 600 (Theorem 3.5, Corollary 3.6, Conjecture 3.16)', flush=True)
+    print('\nShape at the crossing for 2 <= n <= 600 (Theorem 3.5, Corollary 3.6, the property of Conjecture 3.16)', flush=True)
     t0 = time.time()
     XA, XB = {}, {}
     prev = None
@@ -359,7 +359,7 @@ def main():
     check('dip P(A_n = n-1) > E_n at the crossing for every 4 <= n <= 600 (research notes, not printed)', not dipfail, f'failures {dipfail}')
     check('exactly 3 sign changes of the first difference, 10 <= n <= 600 (research notes, not printed)', not shapefail, f'failures {shapefail}')
     check('center bin(s) the unique interior minimum, 10 <= n <= 600 (research notes, not printed)', not minfail, f'failures {minfail}')
-    check('Conjecture 3.16 (open range) holds for every 10 <= n <= 600 (after it)', not openfail, f'failures {openfail}')
+    check('convexity between the humps (Conjecture 3.16, Proposition 3.25) holds for every 10 <= n <= 600', not openfail, f'failures {openfail}')
     expect = [10, 11] + list(range(17, 23)) + list(range(30, 36)) + list(range(48, 52))
     check('closed-range version fails exactly at n = 10, 11, 17-22, 30-35, 48-51 (endpoints only; the paper says only for some n <= 51)',
           closedfail == expect, f'failures {closedfail}')
@@ -389,7 +389,7 @@ def main():
             cpm = int(np.argmax(cp_panjer(x, n, 400)))
             ok &= SA['ms'] == ms_paper[n] == cpm and SA['a1'] == a1_paper[n]
             line += f', CP_n mode {cpm} (m* equal to the CP_n mode is in Remark 3.13; notes: m* = {ms_paper[n]}, a_1 = {a1_paper[n]})'
-        check(f'n = {n}: open-range convexity (Conjecture 3.16, printed for n = 800, ..., 25600), m* = CP_n mode (Remark 3.13); 3 sign changes, dip, unique central minimum (research notes, not printed)', ok,
+        check(f'n = {n}: convexity between the humps (Conjecture 3.16, printed for n = 3200, ..., 25600), m* = CP_n mode (Remark 3.13); 3 sign changes, dip, unique central minimum (research notes, not printed)', ok,
               line + f', A and B agree: {okB}  [{time.time() - t1:.1f}s]')
         if n in (1600, 3200):
             ratioA = fA[1:n // 2 + 1] / cp_panjer(x, n, n // 2)[1:]

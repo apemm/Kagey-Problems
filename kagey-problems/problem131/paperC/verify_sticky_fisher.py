@@ -1,11 +1,11 @@
-"""Checks for Section 7 and Appendix E of Paper C, and for the note S1 (../S1_endpoint_information_note).
+"""Checks for Section 6 and Appendix D of Paper C, and for the note S1 (../S1_endpoint_information_note).
 
 Part 1, sticky priors. The chain has transition matrix (1-h)I + h Pi with
 h = tau log N / N, and Pi is a switching kernel (stochastic, zero diagonal).
 Method A is a dynamic program for the exact law of the composition. Method B
 uses other exact formulas: Paper A's polynomial S_{a,b} for a symmetric pair
-(Corollary 7.5), the run expansion of Lemma 2.3 for the maximum on a face,
-and powers of the killed matrices for the face masses (Proposition 7.6).
+(Corollary 6.5), the run expansion of Lemma 2.3 for the maximum on a face,
+and powers of the killed matrices for the face masses (Proposition 6.6).
 The probability of the direct jump under the sticky HDP prior is found by Monte
 Carlo (10^6 draws, as in the paper) and by 2 quadratures in different
 coordinates.
@@ -167,7 +167,7 @@ K1 = np.array([[0, .9, .1], [.9, 0, .1], [.5, .5, 0]])
 
 
 def check_kernels():
-    print('\nProposition 7.2 and Corollary 7.3: thresholds and the direct jump', flush=True)
+    print('\nProposition 6.2 and Corollary 6.3: thresholds and the direct jump', flush=True)
     cm, cp, rho = thresholds(K1)
     agree('Pi: rho_{1,2}', '0.9', {'numpy': rho[(0, 1)], 'closed': 0.9})
     agree('Pi: rho_{1,3} = sqrt(0.05)', '0.2236', {'numpy': rho[(0, 2)], 'closed': sqrt(0.05)})
@@ -211,7 +211,7 @@ def check_kernels():
 
 
 def check_sticky_switches(full):
-    print('\nCorollary 7.5 and the switches of the MAP for Pi', flush=True)
+    print('\nCorollary 6.5 and the switches of the MAP for Pi', flush=True)
     # the dynamic program against a list of all 3^N paths, for a random kernel and start
     rng = np.random.default_rng(1)
     K = rng.random((3, 3))
@@ -290,7 +290,7 @@ def check_sticky_switches(full):
 
 
 def check_sticky_masses():
-    print('\nTable 2 and Proposition 7.6: MAP against mass at N = 240', flush=True)
+    print('\nTable 3 and Proposition 6.6: MAP against mass at N = 240', flush=True)
     N = 240
     mu = np.ones(3) / 3
     rows = {0.5: ('one', '0.0643', '0.465', '0.092', '0.379'), 0.8: ('one', '0.0122', '0.423', '0.034', '0.531'),
@@ -327,7 +327,7 @@ def check_sticky_masses():
         agree(f'tau = {c}: P(supp = {{1,2}})', p12, {'DP': mA['12'], 'powers': mB['12']})
         agree(f'tau = {c}: P(other pairs)', poth, {'DP': mA['oth'], 'powers': mB['oth']})
         agree(f'tau = {c}: P(supp = [3])', pall, {'DP': mA['all'], 'powers': mB['all']})
-    # Proposition 7.6: the sandwich for every face with at least 2 states
+    # Proposition 6.6: the sandwich for every face with at least 2 states
     bad = 0
     for c in (0.5, 0.8, 3.0, 8.0):
         h = c * log(N) / N
@@ -340,7 +340,7 @@ def check_sticky_masses():
             m = mu[list(F)].sum() * Lam ** (N - 1)
             val = float(mu[list(F)] @ np.linalg.matrix_power(P[np.ix_(F, F)], N - 1) @ np.ones(len(F)))
             bad += not (r.min() / r.max() * m * (1 - 1e-12) <= val <= r.max() / r.min() * m * (1 + 1e-12))
-    check('Proposition 7.6: min r/max r <= P(supp in F)/(mu(F) Lambda_F^(N-1)) <= max r/min r', bad == 0, f'{bad} violations, 16 cases')
+    check('Proposition 6.6: min r/max r <= P(supp in F)/(mu(F) Lambda_F^(N-1)) <= max r/min r', bad == 0, f'{bad} violations, 16 cases')
 
 
 def hdp_route1(alpha):
@@ -426,13 +426,13 @@ def hdp_quantile(alpha):
 
 
 def check_hdp():
-    print('\nProposition 7.4: the direct jump under the sticky HDP prior', flush=True)
+    print('\nProposition 6.4: the direct jump under the sticky HDP prior', flush=True)
     import warnings
     from scipy.integrate import IntegrationWarning
     warnings.simplefilter('ignore', IntegrationWarning)
     rng = np.random.default_rng(20260925)
     M = 10 ** 6
-    # the recorded Monte Carlo values (same seed), to 5 decimals; fig_sticky plots them, and the text after Proposition 7.4 quotes omega = 1
+    # the recorded Monte Carlo values (same seed), to 5 decimals; fig_sticky (no longer in the paper) plots them, and the text after Proposition 6.4 quotes omega = 1
     printed = {0.01: '0.24735', 0.1: '0.22516', 1: '0.11530', 3: '0.05339', 10: '0.01883', 30: '0.00663', 100: '0.00201', 1000: '0.00021'}
     mc = {}
     quadv = {}
@@ -460,12 +460,12 @@ def check_hdp():
         agree(f'omega P(direct) at omega = {alpha}', pr, vals, f'; ratio to the limit {v1 / lim:.6f}, 1 - 9/(8 omega) = {1 - 9 / (8 * alpha):.6f}')
     r = [(a * hdp_route1(a) / lim - 1) * a for a in (1000, 3000, 30000)]
     check('the next term looks like 1 - 9/(8 omega) (numerical)', all(abs(x + 9 / 8) < 0.01 for x in r), f'omega (ratio - 1) = {np.round(r, 4)}')
-    check('Appendix E constants: log cosh 1 > 0.43 and sech^2(1)/2 > 0.2', math.log(math.cosh(1)) > 0.43 and 0.5 / math.cosh(1) ** 2 > 0.2,
+    check('Appendix D constants: log cosh 1 > 0.43 and sech^2(1)/2 > 0.2', math.log(math.cosh(1)) > 0.43 and 0.5 / math.cosh(1) ** 2 > 0.2,
           f'{math.log(math.cosh(1)):.5f}, {0.5 / math.cosh(1) ** 2:.5f}')
     y = np.concatenate([np.linspace(-40, 40, 200001), np.geomspace(1e-6, 1e3, 2000)])
     g = 2 * np.log(np.cosh(np.minimum(np.abs(y), 700) / 2))
     ok = np.all(g <= y * y / 4 + 1e-15) and np.all(g >= y * y / 4 - y ** 4 / 96 - 1e-15) and np.all(g >= 0.1 * np.minimum(y * y, np.abs(y)) - 1e-15)
-    check('Appendix E bounds: y^2/4 - y^4/96 <= g(y) <= y^2/4 and g(y) >= 0.1 min(y^2, |y|), g = 2 log cosh(y/2)', bool(ok),
+    check('Appendix D bounds: y^2/4 - y^4/96 <= g(y) <= y^2/4 and g(y) >= 0.1 min(y^2, |y|), g = 2 log cosh(y/2)', bool(ok),
           'on a grid of |y| <= 1000')
 
 

@@ -5,7 +5,8 @@ The tables cite the statement labels of the 4 research notes D1 to D4, and the c
 the number in the paper, in the build of October 9, 2026 (for example D1 S9 is Proposition 2.3, D2
 Theorem 1 is Theorem 3.5, D3 Prop 1 is Proposition 4.1, and D4 Prop 9 is Proposition 5.1). "Not in
 the paper" marks results of the notes that the paper does not state. The Lean
-library is `PaperD` (root `PaperD.lean`, 16 modules in `PaperD/`, namespace `Kagey131.PaperD`),
+library is `PaperD` (root `PaperD.lean` and 16 modules in `PaperD/`, so 17 modules in all,
+namespace `Kagey131.PaperD`),
 built against Lean 4 v4.33.1 and Mathlib v4.33.1.
 
 Every theorem below is proved without `sorry`, `admit` or new axioms. `#print axioms` on each of
@@ -106,7 +107,7 @@ following.
 
 * D1 S8 (uniform asymptotic), S10 (the crossing `x_n`, Theorem 2.7 and Proposition 2.10), S11 (the
   comparison with the crossing of Paper A, Theorem 2.8, where only the constants are checked),
-  S13 (limit `K₂`, Proposition 2.11, which needs series over `t` and `u`), S14, S16 (heuristic),
+  S13 (limit `K₂`, which needs series over `t` and `u`, and which the paper no longer states), S14, S16 (heuristic),
   S3(c) (limit weights `t 2^{-t-1}`, Lemma A.6).
 * D2 Theorem 2 (compound Poisson bulk, Theorem 3.9), Theorem 3 and Corollaries 6.2, 6.3
   (explicit but very long error terms, and the profile statements are asymptotic), Theorem 4

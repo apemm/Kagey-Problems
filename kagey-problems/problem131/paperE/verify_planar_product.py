@@ -1,11 +1,11 @@
-"""Paper C, Section 6: the product curve (Proposition prop:product) and turns only (Theorem thm:pureturns).
+"""Paper E, Section 3: the product curve (Proposition 3.7) and turns only (Theorem 3.9).
 
 Check 1 is the product identity in exact rational arithmetic, for N = 4, 6, 8 with one rho each.
 The other checks are in floating point and only on grids.
 Check 2 (turns only, N = 8, 16, 32, 64, 96, at x = u_N/2, u_N, 3u_N/2): Delta_N >= 0 and the bound
 of Theorem 3.9(b) where z(z+2) <= N. Here Delta_N is computed as S_N^2 - o_N/c_N, so this check
 does not test the identity of Theorem 3.9(a). verify_planar.py tests that identity exactly.
-Check 3: F(y/2) <= 2 F(y) of Appendix C, at 4000 points y from 1e-3 to 1e4.
+Check 3: F(y/2) <= 2 F(y) of Appendix A, at 4000 points y from 1e-3 to 1e4.
 Check 4: x S_N'(x) <= (2z+2) S_N(x) of Lemma A.4, for N = 16, 64, 256 at 30 values of z with
 z(z+2) <= N, with the derivative taken as a central difference.
 Every check asserts, so a failure stops the script with an error. The size of N v*_N - N u_N

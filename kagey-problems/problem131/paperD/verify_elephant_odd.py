@@ -1,4 +1,4 @@
-"""Checks for Proposition 3.27 (odd N) and the numbers of Remark 3.29.
+"""Checks for Proposition 3.26 (odd N) and the numbers of Remark 3.28.
 
  1. The identity  P_N((N+1)/2) = C_{N+1} / (1 - (1-2 eps)/N)  for odd N, in exact rational
     arithmetic for small N and in double precision for larger N.

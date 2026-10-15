@@ -362,7 +362,7 @@ def center_mpmath(n, eps, dps=40):
 
 
 def exact_checks():
-    print('\nExactness of the engines (Section 6)', flush=True)
+    print('\nExactness of the engines (Section 4)', flush=True)
     worst = 0.0
     for n in (10, 30, 60):
         for eps in (Fraction(1, 20), Fraction(3, 100)):
@@ -378,7 +378,7 @@ def exact_checks():
         cf, cb = center_window(n, x / n), center_backward(n, x / n)
         rel = abs(cf / cb - 1)
         check(f'forward window DP and folded backward DP at n = {n}', rel < 2e-14,
-              f'relative difference {rel:.1e} (Section 6 quotes agreement to about 1e-14 at n = 12800)')
+              f'relative difference {rel:.1e} (Section 4 quotes agreement to about 1e-14 at n = 12800)')
 
     # c_1 = 4/(n+2): exact sum of pi_t, and the exact first Taylor coefficient.
     ok = True
@@ -697,11 +697,11 @@ def main():
             agree(f'D({n}) (research notes, not printed)', dp, {'A': D[n]})
 
     # ------------------------------------------------ second coefficient
-    print('\nSecond coefficient (Proposition 2.11, Lemma A.8, Remark 2.12)', flush=True)
+    print('\nSecond coefficient (Remark 2.11, with the limit from the research notes)', flush=True)
     K2 = 2 * GAMMA - 2 - log(2)
     Ainf = lambda t: 2 * (GAMMA - 1 - log(2)) + (t - 2) * sum(1.0 / j for j in range(1, t))
     series = sum(t * 2.0 ** (-t - 1) * (Ainf(t) - (t - 1)) for t in range(1, 200))
-    agree('lim k_2(n) - 2 log n = 2 gamma - 2 - log 2 (Proposition 2.11)', '-1.5387158508', {'closed form': K2, 'series over t': series})
+    agree('lim k_2(n) - 2 log n = 2 gamma - 2 - log 2 (value in Remark 2.11, limit from the research notes)', '-1.5387158508', {'closed form': K2, 'series over t': series})
 
     # The closed form of A^oo_t rests on an exact pre-limit identity (research notes, not printed):
     # sum_{m=0}^M e_{m+t+1} equals an explicit expression in harmonic numbers and the
@@ -755,7 +755,7 @@ def main():
         a_t = 2 * ((t - 1) ** 2 - t - 1) + 6
         val = S - 2 * sum(1.0 / j for j in range(1, U0 + 1)) + 2 * GAMMA + a_t * float(polygamma(1, U0 + 1))
         worst = max(worst, abs(val - Ainf(t)))
-    check('A^oo_t closed form against its limit definition (U = 3000), t = 1..4 (Lemma A.8(b))', worst < 1e-5,
+    check('A^oo_t closed form against its limit definition (U = 3000), t = 1..4 (research notes, not printed)', worst < 1e-5,
           f'largest difference {worst:.1e}')
 
     k2paper = {1600: '-1.585878', 12800: '-1.546572', 51200: '-1.541005'}
@@ -770,10 +770,10 @@ def main():
             cb = taylor_symmetric(n, 3)
             vals['B'] = cb[2] / cb[1] - 2 * log(n)
         if n in k2paper:
-            agree(f'k_2({n}) - 2 log n (Remark 2.12)', k2paper[n], vals, f'  [{time.time() - t0:.1f}s]')
+            agree(f'k_2({n}) - 2 log n (Remark 2.11)', k2paper[n], vals, f'  [{time.time() - t0:.1f}s]')
     if not args.full:
         print('  skip  method B for k_2(51200) (run with --full)')
-    # Lemma A.8(a): k_2(n) = sum_t w_t [A_t - (t-1)] through the bridge sums.
+    # Research notes: k_2(n) = sum_t w_t [A_t - (t-1)] through the bridge sums.
     n = 400
     h = n // 2
     tot = 0.0
@@ -781,7 +781,7 @@ def main():
         A, _ = bridge_A(n, t)
         tot += exp(log_pi(n, t)) / (4 / (n + 2)) * (A - (t - 1))
     c = taylor_window(n, 2)
-    check('bridge formula for k_2 at n = 400, bridge sum (t <= 120) against the Taylor DP (Lemma A.8(a))', abs(tot - c[2] / c[1]) < 1e-8,
+    check('bridge formula for k_2 at n = 400, bridge sum (t <= 120) against the Taylor DP (research notes, not printed)', abs(tot - c[2] / c[1]) < 1e-8,
           f'{tot:.10f} and {c[2] / c[1]:.10f}')
 
     # ------------------------------------------------ refined crossing equation with k_2 and k_3 (research notes)

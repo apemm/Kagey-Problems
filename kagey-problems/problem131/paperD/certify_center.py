@@ -1,11 +1,11 @@
 """Ball-arithmetic certificate (python-flint / Arb) that the center is the unique interior minimum
-of the elephant law at the crossing, for even N in a range (Proposition 3.28).
+of the elephant law at the crossing, for even N in a range (Proposition 3.27).
 
 For each even N the script encloses the crossing eps_N and the whole law P_N exactly as
 certify_convex.py does (it imports that script). Then it certifies one of two things.
  (A) For every index a* >= N/2 that can be a mode, with m* = N - a*, the range
-     2m*+1 <= a <= N-2m*-1 contains the center N/2. By Proposition 3.26 the second difference is
-     positive on this range, and the criterion of Proposition 3.28(a) then gives the claim.
+     2m*+1 <= a <= N-2m*-1 contains the center N/2. By Proposition 3.25 the second difference is
+     positive on this range, and the criterion of Proposition 3.27(a) then gives the claim.
  (B) Otherwise, directly: the enclosure of P_N(a) - P_N(N/2) is positive for every
      1 <= a <= N-1 with a != N/2.
 It prints how many N fall under (A) and under (B), the N under (B), and for (A) the smallest value

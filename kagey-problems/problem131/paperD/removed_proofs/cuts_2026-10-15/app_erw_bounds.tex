@@ -1,0 +1,834 @@
+\section{Proofs for Section~\ref{sec:erw}}\label{app:erw}
+
+We first prove Theorem~\ref{thm:erw-bounds}. Then
+Section~\ref{app:erw-bridge} proves Proposition~\ref{prop:second-order}, and
+Section~\ref{app:erw-K2} proves Proposition~\ref{prop:K2}. Throughout, $N\ge2$
+is even and we condition on $X_1=+1$. By
+Proposition~\ref{prop:first-mutation}(a) we need to bound $V_{t+1}(1)$, and we
+compare $V$ with explicit hitting probabilities of P\'olya urns. Let
+$\mathcal L_sF(b)=(1-r_s(b))F(b)+r_s(b)F(b+1)$, so that $V_s=\mathcal L_sV_{s+1}$ and $V_N(b)=\mathbf 1\{b=h\}$. Both $M_t$
+and $t-M_t\ge1$ are nondecreasing. So from $b\ge1$ the chain stays at states
+$\ge1$, and for $b\ge1$ we have $V_s(b)=0$ unless $b$ is feasible, that is,
+$b\in\mathcal S_s=\{b\in\Z:1\le b\le h,\ 1\le s-b\le h\}$. Note that
+$\mathcal S_N=\{h\}$.
+
+For $c\ge0$ the P\'olya$(c)$ chain moves at time $s$ from $b$ to $b+1$ with
+probability $r^c_s(b)=\frac{b+c}{s+2c}$. It is P\'olya's urn with weights
+$b+c$ and $s-b+c$ for the two colors, that is, with $c$ extra balls of each
+color. For $b+c>0$ and $s-b+c>0$ let
+$\Phi^c_s(b)=\binom{N-s}{h-b}\mathrm B(h+c,h+c)/\mathrm B(b+c,s-b+c)$, where
+$\mathrm B$ is the beta function and the binomial coefficient is 0 unless
+$0\le h-b\le N-s$. Theorem~\ref{thm:erw-bounds}(a) will follow from
+Lemma~\ref{lem:A-polya}(d), and (b) from Proposition~\ref{prop:A-super}.
+
+\begin{lemma}\label{lem:A-polya}
+Let $c\ge0$, $1\le s\le N$, $b+c>0$ and $s-b+c>0$.
+\begin{enumerate}[(a)]
+\item The number $\Phi^c_s(b)$ is the probability that the P\'olya$(c)$
+chain at $b$ at time $s$ is at $h$ at time $N$. So $\Phi^c_N(b)=\mathbf 1\{b=h\}$, and
+$\Phi^c_s(b)=r^c_s(b)\Phi^c_{s+1}(b+1)+(1-r^c_s(b))\Phi^c_{s+1}(b)$ for
+$s<N$.
+\item If $s<N$ and $\Phi^c_s(b)>0$, then
+$r^c_s(b)\Phi^c_{s+1}(b+1)/\Phi^c_s(b)=\bar r_s(b):=\frac{h-b}{N-s}$.
+\item If $0<\varepsilon<\frac12$ and $\beta=\frac{\varepsilon}{1-2\varepsilon}$,
+then $r_s(b)=r^{\beta s}_s(b)$ for $0\le b\le s$.
+\item If $0<\varepsilon<\frac12$ and $0\le c\le\beta s$, then
+$V_s(b)\ge\Phi^c_s(b)$ for $1\le b\le s-1$. In particular
+$V_{t+1}(1)\ge\Phi^0_{t+1}(1)=\pi_t$ for $1\le t\le h$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) Let $x=b+c$, $y=s-b+c$ and $(x)_k=x(x+1)\cdots(x+k-1)$. As in the proof
+of Lemma~\ref{lem:urn}, each order of the $N-s$ draws with $h-b$ draws of
+the first color has probability
+$(x)_{h-b}(y)_{N-s-h+b}/(x+y)_{N-s}=\mathrm B(h+c,h+c)/\mathrm B(x,y)$, and
+there are $\binom{N-s}{h-b}$ such orders. The recursion is the Markov
+property.
+
+(b) Use $\binom{N-s-1}{h-b-1}/\binom{N-s}{h-b}=\frac{h-b}{N-s}$ and
+$\mathrm B(x,y)/\mathrm B(x+1,y)=\frac{x+y}x=1/r^c_s(b)$.
+
+(c) Since $1+2\beta=1/(1-2\varepsilon)$, we have
+$\frac{b+\beta s}{s+2\beta s}=(1-2\varepsilon)(\frac bs+\beta)=r_s(b)$.
+
+(d) We check the hypotheses of Lemma~\ref{lem:A-compare}(b) below for
+$F_u=\Phi^c_u$ on $\{1,\dots,u-1\}$, where $s\le u\le N$. The reason is that
+$M$ has $\beta u\ge c$ extra balls at time $u$, so it is pulled toward
+$\frac u2$ at least as strongly as the P\'olya$(c)$ chain, and from a state
+closer to $\frac u2$ it is easier to end at $h$.
+
+By (a), $F_N(b)=\mathbf 1\{b=h\}$, and $F_u$ vanishes off $\mathcal S_u$
+because the binomial coefficient does. Let $s\le u<N$ and
+$b\in\mathcal S_u$. Subtracting the recursion in (a) from the definition of
+$\mathcal L_u$ gives
+\[
+ \mathcal L_uF_{u+1}(b)-F_u(b)
+ =\bigl(r_u(b)-r^c_u(b)\bigr)\bigl(F_{u+1}(b+1)-F_{u+1}(b)\bigr).
+\]
+We show that the two factors on the right never have opposite signs. For the
+first factor, $r^c_u(b)=\frac12-(\frac u2-b)/(u+2c)$, and by (c) the same
+formula with $\beta u$ in place of $c$ gives $r_u(b)$. So the first factor
+is $\frac u2-b$ times $\frac1{u+2c}-\frac1{u+2\beta u}$. The second of these
+is nonnegative because $c\le\beta s\le\beta u$. Hence the first factor has
+the sign of $\frac u2-b$ or vanishes. For the second factor there are
+three cases. If $b=h$ then $b\ge\frac u2$ and $F_{u+1}(b+1)=0$, so the factor
+is $\le0$. If $u-b=h$ then $b\le\frac u2$ and $F_{u+1}(b)=0$, so the factor
+is $\ge0$. Otherwise both values are positive, and the formula for $\Phi$
+gives
+$F_{u+1}(b+1)/F_{u+1}(b)=\frac{(h-b)(u-b+c)}{(h-u+b)(b+c)}$. With
+$b=\frac u2-d$ the numerator minus the denominator is $2d(h+c)$, so the
+ratio is $\ge1$ if $b\le\frac u2$ and $\le1$ if $b\ge\frac u2$. In all three
+cases the second factor has the sign of $\frac u2-b$ or vanishes. Hence $\mathcal L_uF_{u+1}\ge F_u$ on $\mathcal S_u$, and
+Lemma~\ref{lem:A-compare}(b) with $s_0=s$ gives $V_s\ge F_s$. Finally
+$\Phi^0_{t+1}(1)=\beta_{t+1}(h)=\pi_t$ by (a) and Lemma~\ref{lem:urn}.
+\end{proof}
+
+\begin{lemma}\label{lem:A-compare}
+Let $1\le s_0\le N$, and for $s_0\le s\le N$ let $F_s\ge0$ be a function on
+$\{1,\dots,s-1\}$.
+\begin{enumerate}[(a)]
+\item If $F_N(h)\ge1$ and $\mathcal L_sF_{s+1}\le K_sF_s$ on $\mathcal S_s$
+for $s_0\le s<N$, with constants $K_s\ge0$, then
+$V_s\le\bigl(\prod_{u=s}^{N-1}K_u\bigr)F_s$ on $\mathcal S_s$.
+\item If $F_N(b)\le\mathbf 1\{b=h\}$, each $F_s$ vanishes off $\mathcal S_s$,
+and $\mathcal L_sF_{s+1}\ge F_s$ on $\mathcal S_s$ for $s_0\le s<N$, then
+$V_s\ge F_s$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+We use backward induction on $s$, from $V_N(b)=\mathbf 1\{b=h\}$ and
+$V_s=\mathcal L_sV_{s+1}$. Note that $\mathcal L_s$ is an average of two
+values, so it keeps inequalities between functions. In (a), suppose that
+$V_{s+1}\le\prod_{u>s}K_u\,F_{s+1}$ on $\mathcal S_{s+1}$. This also holds
+off $\mathcal S_{s+1}$, because there $V_{s+1}=0$ and $F_{s+1}\ge0$. So on
+$\mathcal S_s$ we get
+$V_s=\mathcal L_sV_{s+1}\le\prod_{u>s}K_u\,\mathcal L_sF_{s+1}
+\le\prod_{u\ge s}K_u\,F_s$. In (b), suppose that $V_{s+1}\ge F_{s+1}$ on
+$\{1,\dots,s\}$. Then
+$V_s=\mathcal L_sV_{s+1}\ge\mathcal L_sF_{s+1}\ge F_s$ on $\mathcal S_s$, and
+$F_s=0\le V_s$ off $\mathcal S_s$.
+\end{proof}
+
+\paragraph{Idea of the proof of the upper bound.}
+We compare $M$ with an urn whose number of extra balls, $\kappa(s+10)$ of
+each color at time $s$, grows a little faster than the $\beta s$ of $M$.
+Its hitting probability $\Phi^{\kappa_s}_s$ is explicit. One step of $M$
+applied to it gives it back times a factor $\Delta_s$, and
+Proposition~\ref{prop:A-super} shows that $\log\Delta_s\le\kappa/s$ up to a
+smaller term. Two effects enter $\Delta_s$. Raising the extra balls from
+$\kappa_s$ to $\kappa_{s+1}$ changes $\Phi$, and we bound this through the
+derivative of $\Phi^\tau_s$ in $\tau$ (Lemma~\ref{lem:A-cderiv}). Also $M$
+pulls toward the middle less than the comparison urn, which helps. The
+product of the factors is about $e^{\kappa H_N}$. Let $\psi$ be the digamma
+function.
+
+\begin{lemma}\label{lem:A-cderiv}
+Let $2\le s\le N$, $b\in\mathcal S_s$ and $\tau\ge0$. Put $X=b+\tau$,
+$Y=s-b+\tau$, $\Sigma=X+Y$ and $z=(s-2b)^2/\Sigma^2$. Then
+\[
+ \partial_\tau\log\Phi^\tau_s(b)
+ <-\log(1-z)+\frac{1+z}{(1-z)\Sigma}+\frac{2(1+z)}{3\Sigma^2(1-z)^2}.
+\]
+\end{lemma}
+
+\begin{proof}
+We differentiate the beta functions and bound the digamma function by the
+first terms of its expansion. Only the two beta functions in $\Phi^\tau_s(b)$
+depend on $\tau$, and
+$\log\mathrm B(x,y)=\log\Gamma(x)+\log\Gamma(y)-\log\Gamma(x+y)$. So the
+derivative is $2\psi(\Sigma)-\psi(X)-\psi(Y)$ minus the difference
+$2\psi(N+2\tau)-2\psi(h+\tau)$. The duplication formula
+\cite[5.5.5]{dlmf} gives $2\psi(2y)=\psi(y)+\psi(y+\frac12)+2\log2$, and
+$\psi$ is increasing. With $y=h+\tau$ this shows that the difference we
+subtract is more than $2\log2$. For $x>0$, \cite[5.9.15]{dlmf} writes
+$\log x-\frac1{2x}-\psi(x)$ as
+$2\int_0^\infty\frac{t\,dt}{(t^2+x^2)(e^{2\pi t}-1)}$, which lies in
+$(0,\frac1{12x^2})$ since
+$\int_0^\infty\frac{t\,dt}{e^{2\pi t}-1}=\frac1{24}$. So
+$\psi(\Sigma)<\log\Sigma-\frac1{2\Sigma}$, and
+$\psi(x)>\log x-\frac1{2x}-\frac1{12x^2}$ for $x=X$ and $x=Y$. Hence the
+derivative is less than
+$\log\frac{\Sigma^2}{4XY}+(\frac1{2X}+\frac1{2Y}-\frac1\Sigma)
++\frac1{12}(\frac1{X^2}+\frac1{Y^2})$. Now $X-Y=2b-s$, so $4XY=\Sigma^2-(X-Y)^2=\Sigma^2(1-z)$ and
+$X^2+Y^2=\Sigma^2(1+z)/2$. So the three terms are $-\log(1-z)$,
+$\frac{X^2+Y^2}{2XY\Sigma}=\frac{1+z}{(1-z)\Sigma}$ and
+$\frac{X^2+Y^2}{12X^2Y^2}=\frac{2(1+z)}{3\Sigma^2(1-z)^2}$.
+\end{proof}
+
+\begin{proposition}\label{prop:A-super}
+Let $0<\varepsilon<\frac14$, $\kappa=\frac{2\varepsilon}{1-4\varepsilon}$,
+$\kappa_s=\kappa(s+10)$ and $\Sigma_s=s+2\kappa_s$. For $1\le s\le N-1$ and
+$b\in\mathcal S_s$ let
+$\Delta_s(b)=\mathcal L_s\Phi^{\kappa_{s+1}}_{s+1}(b)\big/\Phi^{\kappa_s}_s(b)$.
+\begin{enumerate}[(a)]
+\item Let $c=\kappa_s$, $c'=\kappa_{s+1}$, $d=\frac s2-b$, $u=\frac{d}{s+2c'}$,
+$v=\frac d{N-s}$ and $\rho=\frac{s+2c'}{s(1+2\beta)}$. Then $|u|<\frac12$
+and
+\[
+ \Delta_s(b)=\mathcal J\,\frac{\Phi^{c'}_s(b)}{\Phi^{c}_s(b)},\qquad
+ \mathcal J=1-(\rho-1)\frac{u(u+v)}{\frac14-u^2}.
+\]
+\item The factor satisfies
+$\log \Delta_s(b)\le\frac{\kappa}{\Sigma_s}+\frac{2\kappa}{3\Sigma_s^2}$.
+\item For $1\le t\le h$,
+$V_{t+1}(1)\le\pi_t\exp\bigl(\kappa\bigl[H_{N-1}-H_t+\frac2{3t}\bigr]
++\kappa_{t+1}\bigl[\log\frac{(t+1)^2}{4t}+\frac23\bigr]\bigr)$.
+\item The center satisfies
+$C_N\le U_N:=\varepsilon c_1e^{\kappa H_{N-1}}\sum_{t=1}^hw_t
+(1-\varepsilon)^{t-1}e^{\kappa\mathcal G(t)}$, where
+$\mathcal G(t)=(t+11)\bigl(\log\frac{(t+1)^2}{4t}+\frac23\bigr)-H_t+\frac2{3t}$.
+\end{enumerate}
+\end{proposition}
+
+The slope $\kappa$ solves $2(\kappa-\beta)/(1+2\beta)=\kappa$, so that in (b)
+the gain in $\mathcal J$ cancels the main loss from raising the extra balls
+from $c$ to $c'$.
+
+\begin{proof}
+(a) Write $r'=r^{c'}_s(b)$, $\bar r=\bar r_s(b)$ and $r=r_s(b)$. By
+Lemma~\ref{lem:A-polya}(b) with $c'$, and the recursion in
+Lemma~\ref{lem:A-polya}(a), we have
+$r'\Phi^{c'}_{s+1}(b+1)=\bar r\,\Phi^{c'}_s(b)$ and
+$(1-r')\Phi^{c'}_{s+1}(b)=(1-\bar r)\Phi^{c'}_s(b)$. So the numerator of
+$\Delta_s(b)$ divided by $\Phi^{c'}_s(b)$ is
+$\frac{(1-r)(1-\bar r)}{1-r'}+\frac{r\bar r}{r'}$. Here $r'=\frac12-u$,
+$\bar r=\frac12+v$ and $r=\frac12-\rho u$, since
+$\frac12-r=(1-2\varepsilon)\frac ds=\rho u$. Over the denominator
+$r'(1-r')=\frac14-u^2$ the numerator is $f(u,v)+f(-u,-v)$ with
+$f(u,v)=(\frac12+\rho u)(\frac12-v)(\frac12-u)$, and this equals
+$\frac14-\rho u^2-(\rho-1)uv$. Also $|d|\le\frac s2-1$, so $|u|<\frac12$.
+
+(b) \emph{Step 1: the factor $\mathcal J$.} Write $c=\kappa_s$,
+$c'=c+\kappa$ and $\Sigma=\Sigma_s$. Since
+$c'-\beta s=(\kappa-\beta)s+11\kappa$, the choice of $\kappa$ gives
+$\rho-1=\kappa+\nu_s$ with $\nu_s=\frac{22\kappa}{s(1+2\beta)}$. As $u$ and
+$v$ have the sign of $d$, $u(u+v)\ge u^2$. So
+$\mathcal J\le1-(\kappa+\nu_s)W'$ with $z'=4u^2$ and $W'=\frac{z'}{1-z'}$.
+Also $\mathcal J>0$ by (a), since $0<r<1$ and $\bar r$, $1-\bar r$ are not
+both 0. So $\log\mathcal J\le-(\kappa+\nu_s)W'$.
+
+\emph{Step 2: the ratio $\Phi^{c'}_s/\Phi^c_s$.} The logarithm
+$\log(\Phi^{c'}_s(b)/\Phi^c_s(b))$ is the integral over $\tau\in[c,c']$ of
+the derivative in Lemma~\ref{lem:A-cderiv}. Its bound increases in $z$ and
+decreases in $\Sigma$, while $z$ decreases and $\Sigma$ increases in $\tau$.
+So we may take the bound at $\tau=c$, where $X+Y=\Sigma$, and multiply it by
+the length $\kappa$ of the interval. Put
+$W=\frac z{1-z}$. Then $\frac1{1-z}=1+W$, $\frac{1+z}{1-z}=1+2W$ and
+$-\log(1-z)\le W$, so
+\begin{equation}\label{eq:A-logD}
+ \log \Delta_s(b)\le\kappa\Bigl[W+\frac{1+2W}\Sigma+\frac{2(1+2W)(1+W)}{3\Sigma^2}\Bigr]
+ -(\kappa+\nu_s)W'.
+\end{equation}
+\emph{Step 3: what is left to show.} The terms of \eqref{eq:A-logD} without
+$W$ and $W'$ are $\frac\kappa\Sigma+\frac{2\kappa}{3\Sigma^2}$, which is the
+bound we want. Since $(1+2W)(1+W)=1+3W+2W^2$, the other terms are
+\[
+ \kappa(W-W')+\frac{2\kappa W}\Sigma+\frac{2\kappa W}{\Sigma^2}
+ +\frac{4\kappa W^2}{3\Sigma^2}-\nu_sW',
+\]
+and we must show that they add up to at most 0. If $W=0$ then $d=0$, so
+$W'=0$ and there is nothing to do. So let $W>0$. The first four terms are
+positive, and we show that each is a small multiple of $\frac\kappa sW$. The
+last term is negative (it comes from the shift 10 in $\kappa_s$), and it is
+a larger multiple of $\frac\kappa sW$. We need three facts, with $X=b+c$ and
+$Y=s-b+c$ as in Step~2.
+
+
+(i) We have $1+W\le\frac\Sigma{2(1+c)}$. Indeed $X,Y\ge1+c$, since $b\ge1$ and
+$s-b\ge1$, and the larger of $X$ and $Y$ is at least $\frac\Sigma2$. So
+$XY\ge(1+c)\Sigma/2$, and $1+W=\frac1{1-z}=\frac{\Sigma^2}{4XY}$.
+
+(ii) We have $W-W'\le\frac{2\kappa}{1+c}W$, and so $W'\ge\frac9{11}W$. Indeed $z$
+and $z'$ have the same numerator $(s-2b)^2$, and their denominators are
+$\Sigma^2$ and $(s+2c')^2=(\Sigma+2\kappa)^2$. So $z'=\lambda z$ with
+$\lambda=(\frac\Sigma{\Sigma+2\kappa})^2\ge1-\frac{4\kappa}\Sigma$. Then
+\[
+ W-W'=\frac{(1-\lambda)z}{(1-z)(1-\lambda z)}\le(1-\lambda)W(1+W)
+ \le\frac{4\kappa}\Sigma\,W\,\frac\Sigma{2(1+c)}=\frac{2\kappa}{1+c}W,
+\]
+where we used $1-\lambda z\ge1-z$ and then (i). Since
+$c=\kappa(s+10)\ge11\kappa$, we have $\frac{2\kappa}{1+c}\le\frac2{11}$.
+
+(iii) We have $\Sigma\ge s$, $1+c>\kappa s$ and $\Sigma^2\ge3s$. The first two are
+clear. For the third, $W>0$ means $s\ne2b$, and with $b\ge1$ and $s-b\ge1$
+this forces $s\ge3$.
+
+\emph{Step 4: the terms with $W$.} We bound the four positive terms one by
+one.
+\begin{align*}
+ \kappa(W-W')&\le\frac{2\kappa^2}{1+c}W\le\frac{2\kappa}sW
+ &&\text{by (ii) and $1+c>\kappa s$,}\\
+ \frac{2\kappa W}\Sigma&\le\frac{2\kappa}sW
+ &&\text{by $\Sigma\ge s$,}\\
+ \frac{2\kappa W}{\Sigma^2}&\le\frac{2\kappa}{3s}W
+ &&\text{by $\Sigma^2\ge3s$,}\\
+ \frac{4\kappa W^2}{3\Sigma^2}&\le\frac{4\kappa W(1+W)}{3\Sigma^2}
+ \le\frac{2\kappa W}{3\Sigma(1+c)}\le\frac{2\kappa}{3s}W
+ &&\text{by (i) and $\Sigma\ge s$.}
+\end{align*}
+The four bounds add up to $\frac{16\kappa}{3s}W$. For the negative term, (ii)
+gives $-\nu_sW'\le-\frac9{11}\nu_sW=-\frac{18\kappa}{s(1+2\beta)}W$. So
+\[
+ \log \Delta_s(b)\le\frac\kappa\Sigma+\frac{2\kappa}{3\Sigma^2}
+ +W\Bigl[\frac{16\kappa}{3s}-\frac{18\kappa}{s(1+2\beta)}\Bigr],
+\]
+and the bracket is negative because $1+2\beta<2$ for $\varepsilon<\frac14$,
+so $18/(1+2\beta)>9>16/3$.
+
+(c) We first compare $V_{t+1}(1)$ with $\Phi^{\kappa_{t+1}}_{t+1}(1)$, and
+then this with $\pi_t=\Phi^0_{t+1}(1)$. For the first step apply
+Lemma~\ref{lem:A-compare}(a) with $s_0=t+1$,
+$F_s=\Phi^{\kappa_s}_s$ and $K_s=\exp(\frac\kappa s+\frac{2\kappa}{3s^2})$.
+This is allowed, since $F_N(h)=1$, $F_s>0$ on $\mathcal S_s$, and
+$\mathcal L_sF_{s+1}=\Delta_sF_s\le K_sF_s$ on $\mathcal S_s$ by (b) and
+$\Sigma_s\ge s$. The product of the $K_s$ over $t<s<N$ is the exponential of
+$\kappa(H_{N-1}-H_t)+\frac{2\kappa}3\sum_{s>t}s^{-2}$, and
+$\sum_{s>t}s^{-2}\le\frac1t$. Since $1\in\mathcal S_{t+1}$, we get
+$V_{t+1}(1)\le e^{\kappa[H_{N-1}-H_t+2/(3t)]}\,\Phi^{\kappa_{t+1}}_{t+1}(1)$.
+
+For the second step, $\log(\Phi^{\kappa_{t+1}}_{t+1}(1)/\pi_t)$ is the
+integral over $\tau\in[0,\kappa_{t+1}]$ of the derivative in
+Lemma~\ref{lem:A-cderiv} with $s=t+1$ and $b=1$. As in Step~2 of (b), the
+bound of that lemma is largest at $\tau=0$. There $X=1$, $Y=t$ and
+$\frac1{1-z}=\frac{(t+1)^2}{4t}$, and the bound is
+$\log\frac{(t+1)^2}{4t}+\frac{t^2+1}{2t(t+1)}+\frac{t^2+1}{12t^2}
+\le\log\frac{(t+1)^2}{4t}+\frac23$, because the two fractions are at most
+$\frac12$ and $\frac16$ for $t\ge1$. Multiplying by the length
+$\kappa_{t+1}$ of the interval gives (c).
+
+(d) Insert (c) into Proposition~\ref{prop:first-mutation}(a), and use
+$\kappa_{t+1}=\kappa(t+11)$ and $\pi_t=c_1w_t$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:erw-bounds}]
+(a) By Proposition~\ref{prop:first-mutation}(a) and
+Lemma~\ref{lem:A-polya}(d),
+$C_N\ge\varepsilon c_1\sum_tw_t(1-\varepsilon)^{t-1}$. Now
+$(1-\varepsilon)^{t-1}\ge1-(t-1)\varepsilon$ and
+$\sum_tw_t(t-1)=2-\frac6{h+2}$ by Proposition~\ref{prop:first-mutation}(c).
+So $C_N\ge\varepsilon c_1(1-2\varepsilon)$, and $c_1=\frac4{N+2}$.
+
+(b) \emph{Step 1: the constants.} Let $N\ge64$ and
+$\varepsilon(1+\log N)\le\frac1{100}$. Then
+$\varepsilon<0.002$ and $\kappa\le2\varepsilon(1+8\varepsilon)\le2.1\varepsilon$.
+Since $\log\frac{(t+1)^2}{4t}\ge0$ and $\frac23(t+11)>1+\log t\ge H_t$, we
+have $\mathcal G(t)>0$. Since $\frac{(t+1)^2}{4t}\le\frac{t+1}2$,
+$\frac23<\log2$ and $H_t\ge\frac2{3t}$, also
+$\mathcal G(t)\le(t+11)\log(t+1)\le12t\log(t+1)$. So
+$\kappa\mathcal G(t)\le25.2\,\varepsilon t\log(t+1)$, and this is at most
+$\frac t2\log2$ for $t\le h$, since then
+$25.2\,\varepsilon\log(t+1)\le25.2\,\varepsilon\log N\le0.252<\frac12\log2$.
+
+\emph{Step 2: the sum over $t$.} Since $e^y-1\le ye^y$ for $y\ge0$, Step~1
+gives $e^{\kappa\mathcal G(t)}-1\le\kappa\mathcal G(t)2^{t/2}$. By
+Proposition~\ref{prop:A-super}(d), $(1-\varepsilon)^{t-1}\le1$,
+$\sum_tw_t=1$ and $w_t\le2t2^{-t}$ (Proposition~\ref{prop:first-mutation}(c)),
+\[
+ C_N\le\varepsilon c_1e^{\kappa H_{N-1}}\Bigl(1+50.4\,\varepsilon
+ \sum_{t\ge1}t^2\log(t+1)2^{-t/2}\Bigr),
+\]
+and we bound the series as follows. The ratio of its consecutive terms is
+$(1+\frac1t)^2\frac{\log(t+2)}{\log(t+1)}2^{-1/2}$, which decreases in $t$ and
+is below $\frac34$ at $t=60$. So the terms with $t>60$ add up to less than
+four times the term at $t=61$, and this is below $10^{-4}$. The first 60 terms add up
+to $102.5864$ to four decimals (computed in 30-digit arithmetic by
+\texttt{verify\_elephant\_crossing.py}), so the series is below $102.59$.
+
+\emph{Step 3: the factor $e^{\kappa H_{N-1}}$.} Finally
+$H_{N-1}\le1+\log N$, so
+$\kappa H_{N-1}\le2\varepsilon\log N+2\varepsilon+16\varepsilon^2(1+\log N)
+\le2\varepsilon\log N+3\varepsilon$. With $1+y\le e^y$ this proves (b),
+since $3+50.4\cdot102.59<5200$.
+\end{proof}
+
+\subsection{The bridge and the lower bound}\label{app:erw-bridge}
+
+Fix $1\le t\le h$, and start the P\'olya$(c)$ chain at state 1 at time $t+1$.
+By Lemma~\ref{lem:A-polya}(b), given that it is at $h$ at time $N$ it moves
+up at time $u$ from $b$ with probability $\bar r_u(b)=\frac{h-b}{N-u}$,
+whatever $c$ is. So its $h-1$ up steps are placed uniformly at random among
+the $N-t-1$ steps after time $t+1$. We call this law of the path
+$(M_u)_{t+1\le u\le N}$ the bridge, and we write $\Prob^{\mathrm{br}}_t$ and
+$\E^{\mathrm{br}}_t$ for it. For $1\le b\le u-1$ let
+\[
+ \varpi^+_u(b)=1+\varepsilon\frac{u-2b}{b},\qquad
+ \varpi^-_u(b)=1-\varepsilon\frac{u-2b}{u-b},
+\]
+\[
+ \theta_u(b)=\frac{N(u-2b)^2}{2(N-u)\,b(u-b)},\qquad
+ Q_u(b)=(u-2b)^2\Bigl[\frac{\bar r_u(b)}{b^2}+\frac{1-\bar r_u(b)}{(u-b)^2}\Bigr],
+\]
+and let $\varpi_u=\varpi^+_u(M_u)$ if $M_{u+1}=M_u+1$ and
+$\varpi_u=\varpi^-_u(M_u)$ otherwise. Put
+\[
+ A_t=\sum_{u=t+1}^{N-1}\E^{\mathrm{br}}_t\,\theta_u(M_u),\qquad
+ B_t=\sum_{u=t+1}^{N-1}\E^{\mathrm{br}}_t\,Q_u(M_u).
+\]
+Both are nonnegative, and neither depends on $\varepsilon$.
+
+\begin{proposition}[bridge formula]\label{prop:A-bridge}
+Let $0\le\varepsilon\le1$ and $1\le t\le h$. Then
+\[
+ V_{t+1}(1)=\pi_t\,\E^{\mathrm{br}}_t\Bigl[\prod_{u=t+1}^{N-1}\varpi_u\Bigr].
+\]
+If $0<\varepsilon\le\frac12$, then
+$\log V_{t+1}(1)\ge\log\pi_t+\varepsilon A_t-\varepsilon^2B_t$.
+\end{proposition}
+
+\begin{proof}
+We divide $V$ by the hitting probability of P\'olya's urn. The quotient
+satisfies a recursion whose weights are the step probabilities of the
+bridge, and each step leaves one factor $\varpi_u$.
+For $u\ge t+1$ and $b\in\mathcal S_u$ we have $\Phi^0_u(b)>0$, and we put
+$R_u(b)=V_u(b)/\Phi^0_u(b)$. By Lemma~\ref{lem:A-polya}(a) and (b) with
+$c=0$, $\frac bu\Phi^0_{u+1}(b+1)=\bar r_u(b)\Phi^0_u(b)$ and
+$(1-\frac bu)\Phi^0_{u+1}(b)=(1-\bar r_u(b))\Phi^0_u(b)$. Dividing
+$V_u=\mathcal L_uV_{u+1}$ by $\Phi^0_u(b)$ gives
+\[
+ R_u(b)=(1-\bar r_u(b))\,\frac{1-r_u(b)}{1-b/u}\,R_{u+1}(b)
+ +\bar r_u(b)\,\frac{r_u(b)}{b/u}\,R_{u+1}(b+1),
+\]
+where a term with an infeasible state is absent, and its bridge probability
+is 0 (if $b=h$ then $\bar r_u(b)=0$, and if $u-b=h$ then $\bar r_u(b)=1$).
+Also $\frac{r_u(b)}{b/u}=\varpi^+_u(b)$ and
+$\frac{1-r_u(b)}{1-b/u}=\varpi^-_u(b)$. So
+$R_u(b)=\E^{\mathrm{br}}_t[\varpi_uR_{u+1}(M_{u+1})\mid M_u=b]$, and
+$R_N(h)=1$. Iterating from $u=t+1$ and using $\Phi^0_{t+1}(1)=\pi_t$ gives
+the formula.
+
+Now let $0<\varepsilon\le\frac12$. We take the logarithm of the formula and
+bound it from below in three steps. First, every factor is at least
+$\frac12$. Indeed if $b\le u/2$ then $\varpi^+_u(b)\ge1$ and
+$\varpi^-_u(b)-1\in[-\varepsilon,0]$, and if $b\ge u/2$ the same holds with
+$+$ and $-$ exchanged. Second, by Jensen's inequality for the logarithm,
+\[
+ \log\E^{\mathrm{br}}_t\Bigl[\prod_u\varpi_u\Bigr]
+ \ge\sum_u\E^{\mathrm{br}}_t\log\varpi_u
+ \ge\sum_u\E^{\mathrm{br}}_t\bigl[(\varpi_u-1)-(\varpi_u-1)^2\bigr].
+\]
+The second inequality is $\log(1+y)\ge y-y^2$ for $y\ge-\frac12$, which holds
+since the difference vanishes at 0 and its derivative $y(1+2y)/(1+y)$ has
+the sign of $y$. Third, we compute the two means given $M_u=b$. Write
+$\bar r=\bar r_u(b)$. The bridge moves up with probability $\bar r$, and
+then $\varpi_u-1=\varepsilon\frac{u-2b}b$. Otherwise
+$\varpi_u-1=-\varepsilon\frac{u-2b}{u-b}$. Since
+$u\bar r-b=\frac{N(u-2b)}{2(N-u)}$, this gives
+\[
+ \E^{\mathrm{br}}_t[\varpi_u-1\mid M_u=b]=\varepsilon(u-2b)\frac{u\bar r-b}{b(u-b)}
+ =\varepsilon\,\theta_u(b),\qquad
+ \E^{\mathrm{br}}_t[(\varpi_u-1)^2\mid M_u=b]=\varepsilon^2Q_u(b).
+\]
+So the sum above is $\varepsilon A_t-\varepsilon^2B_t$, which is the bound.
+\end{proof}
+
+\begin{lemma}[the weights $w_t$]\label{lem:A-w}
+For each fixed $t$, $w_t\to t2^{-t-1}$ as $N\to\infty$. For every even
+$N\ge2$, $\sum_tw_t(t+1)^3\le124$.
+\end{lemma}
+
+\begin{proof}
+Each fraction in $\pi_t=\frac t{N-t}\prod_{i=1}^{t-1}\frac{h-i}{N-i}$ tends
+to $\frac12$, so $N\pi_t\to t2^{1-t}$, and $Nc_1\to4$. This is the first
+claim. For the second claim we write $w_t$ and $(t+1)^3$ through binomial
+coefficients in $t$. By the proof of Lemma~\ref{lem:urn} (with $v=t+1$ and
+$d=h$), $\pi_t$ is a constant times $\binom t1\binom{N-1-t}{h-1}$, and the
+Chu--Vandermonde identity gives
+$\sum_t\binom tj\binom{N-1-t}{h-1}=\binom N{h+j}$. With $j=1$ this gives
+the constant, namely $w_t=\binom t1\binom{N-1-t}{h-1}/\binom N{h+1}$. Now
+$t(t+1)^3=8\binom t1+38\binom t2+54\binom t3+24\binom t4$, because both sides
+are polynomials of degree four that agree at $t=0,1,2,3,4$. So
+$\sum_tw_t(t+1)^3$ is the sum of $8$, $38$, $54$ and $24$ times
+$\binom N{h+j}/\binom N{h+1}$ for $j=1,2,3,4$. Since
+$\binom N{h+j}\le\binom N{h+1}$ for $j\ge1$, it is at most
+$8+38+54+24=124$.
+\end{proof}
+
+Under $\Prob^{\mathrm{br}}_t$ let $K=M_u-1$ and $K'=m-K$ be the numbers of
+up steps and of other steps among the $m=u-t-1$ steps between times $t+1$
+and $u$. So $K$ is hypergeometric, with $m$ draws from $N-t-1$ steps of
+which $h-1$ are up steps. Let $\Omega_u=\{u/8\le M_u\le7u/8\}$.
+
+\begin{lemma}\label{lem:A-AB}
+Let $N\ge16$, $1\le t\le h$ and $t+1\le u\le N-1$.
+\begin{enumerate}[(a)]
+\item The second moment is
+\[
+ \E^{\mathrm{br}}_t(u-2M_u)^2=\frac{(t-1)^2(N-u)^2}{(N-t-1)^2}
+ +\frac{4(u-t-1)(h-1)(h-t)(N-u)}{(N-t-1)^2(N-t-2)}\le(t-1)^2+u .
+\]
+\item If $t\le\frac{N+2}4$, then
+$A_t\ge2(H_{N-1}-H_t-1-\frac1t)\ge2(\log N-\log t-3)$.
+\item If $t\le\frac N8$ and $u\ge8(t+1)$, then
+$\Prob^{\mathrm{br}}_t(\Omega_u^c)\le2e^{-0.0943u}$.
+\item If $t\le\frac N8$, then $B_t\le84(t+1+\log N)+683(t+1)^3+19100$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) Here $u-2M_u=u-2-2K$ and $u-2=m+t-1$. Since $N-2=2(h-1)$, the mean
+$\E K=\frac{m(h-1)}{N-t-1}$ gives
+\[
+ \E(u-2M_u)=\frac{(m+t-1)(N-t-1)-m(N-2)}{N-t-1}
+ =\frac{(t-1)(N-t-1-m)}{N-t-1}=\frac{(t-1)(N-u)}{N-t-1}.
+\]
+The variance of a hypergeometric variable with $m$ draws from $N-t-1$ steps,
+of which $h-1$ are up steps and $h-t$ are not, is
+$\Var K=\frac{m(h-1)(h-t)(N-t-1-m)}{(N-t-1)^2(N-t-2)}$, and $N-t-1-m=N-u$. So
+the second term is $4\Var K$, and the identity is
+$\E(u-2M_u)^2=(\E(u-2M_u))^2+4\Var K$. For the bound, the first term is at
+most $(t-1)^2$ because $N-u\le N-t-1$. In the second term
+$4(h-1)(h-t)=(N-2)(N-2t)=(N-t-1)^2-(t-1)^2\le(N-t-1)^2$, so it is at most
+$\frac{m(N-u)}{N-t-2}$. This is $0$ for $u=t+1$, and for $u\ge t+2$ it is at
+most $u$, because $m\le u$ and $N-u\le N-t-2$.
+
+(b) We bound $\theta_u$ from below by a multiple of $(u-2b)^2$ and use only
+the variance term of (a). Since $b(u-b)\le u^2/4$,
+$\theta_u(b)\ge\frac{2N(u-2b)^2}{(N-u)u^2}$. By (a),
+$\E^{\mathrm{br}}_t(u-2M_u)^2\ge4\Var K$, and in $4\Var K$ the factor $N-u$
+cancels. With $4(h-1)(h-t)=(N-2)(N-2t)$ this gives
+$A_t\ge\Pi_t\sum_{u=t+1}^{N-1}\frac{u-t-1}{u^2}$ with
+$\Pi_t=\frac{2N(N-2)(N-2t)}{(N-t-1)^2(N-t-2)}$. We show that $\Pi_t\ge2$. Here
+$\Pi_1=\frac{2N}{N-3}>2$, and for real $t\in[1,\frac{N+2}4]$,
+$\frac{d}{dt}\log\Pi_t=-\frac2{N-2t}+\frac2{N-t-1}+\frac1{N-t-2}
+\ge\frac3{N-t-1}-\frac2{N-2t}\ge0$,
+since the last inequality is equivalent to $4t\le N+2$. Next, the sum is
+$H_{N-1}-H_t-(t+1)\sum_{u=t+1}^{N-1}u^{-2}$, which is at least
+$H_{N-1}-H_t-\frac{t+1}t$. The sum is also nonnegative. So multiplying by
+$\Pi_t\ge2$ gives the first inequality, whether this lower bound is positive
+or not. For the second inequality use
+$H_{N-1}-H_t\ge\log\frac N{t+1}\ge\log N-\log t-\frac1t$.
+
+(c) Here $m\ge\frac78u$, so $\frac u8\le\frac m7$. Since $t\ge1$,
+$\E K\ge\frac m2$, and since $t\le\frac N8$,
+$\E K'=\frac{m(h-t)}{N-t-1}\ge\frac{3m}8$. Hoeffding's inequality also holds
+for sampling without replacement \cite[Section~6]{hoeffding1963}, so
+$\Prob(K-\E K\le-\sigma m)\le e^{-2\sigma^2m}$ for $\sigma>0$, and the same
+holds for $K'$. Now $\{M_u<\frac u8\}\subset\{K-\E K<-\frac{5m}{14}\}$, and
+since $u-M_u=t+K'$, also
+$\{u-M_u<\frac u8\}\subset\{K'-\E K'<-\frac{13m}{56}\}$. So
+$\Prob(\Omega_u^c)\le e^{-2(5/14)^2m}+e^{-2(13/56)^2m}\le2e^{-0.10778m}
+\le2e^{-0.0943u}$.
+
+(d) We split each term $\E^{\mathrm{br}}_tQ_u(M_u)$ of $B_t$ into the part on
+$\Omega_u$ and the part off $\Omega_u$, and the three terms of the bound
+come from the parts on $\Omega_u$, the parts off $\Omega_u$ with $u<8(t+1)$,
+and the parts off $\Omega_u$ with $u\ge8(t+1)$. In all of them we use that
+$\bar r(u-b)^2+(1-\bar r)b^2\le u^2$, so that
+$Q_u(b)\le\frac{(u-2b)^2u^2}{b^2(u-b)^2}$. On $\Omega_u$ we have
+$b(u-b)\ge\frac{7u^2}{64}$, so
+$Q_u\le\frac{4096}{49}\frac{(u-2b)^2}{u^2}\le83.6\frac{(u-2b)^2}{u^2}$. By (a)
+these parts add up to at most
+$83.6\sum_{u>t}(\frac{(t-1)^2}{u^2}+\frac1u)\le83.6(t+H_{N-1})
+\le84(t+1+\log N)$.
+Off $\Omega_u$ we only have $b(u-b)\ge u-1\ge\frac u2$, which gives
+$Q_u\le4(u-2b)^2\le4u^2$. For $u<8(t+1)$ we bound the probability of
+$\Omega_u^c$ by 1, and these parts add up to at most
+$\sum_{u<8(t+1)}4u^2\le\frac43(8(t+1))^3\le683(t+1)^3$. For $u\ge8(t+1)$,
+(c) bounds the part by $8u^2e^{-0.0943u}$, and with $q=e^{-0.0943}$ we have
+$8\sum_{u\ge1}u^2q^u=8q(1+q)/(1-q)^3<19100$.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:second-order}]
+The upper bound is Theorem~\ref{thm:erw-bounds}(b). For the lower bound let
+$t_0=\lfloor N/8\rfloor\ge8$. By Proposition~\ref{prop:first-mutation}(a),
+$C_N=\varepsilon c_1\sum_tw_t(1-\varepsilon)^{t-1}V_{t+1}(1)/\pi_t$. This is
+$\varepsilon c_1$ times a mean over the probability vector $(w_t)$. By
+Jensen's inequality the logarithm of the mean is at least the mean of the
+logarithms. For $t\le t_0$ we bound $\log(V_{t+1}(1)/\pi_t)$ from below by
+Proposition~\ref{prop:A-bridge}. For $t>t_0$ we use only that it is $\ge0$,
+which is Lemma~\ref{lem:A-polya}(d). This gives
+\[
+ \log C_N\ge\log(\varepsilon c_1)+\sum_tw_t(t-1)\log(1-\varepsilon)
+ +\sum_{t\le t_0}w_t\bigl(\varepsilon A_t-\varepsilon^2B_t\bigr).
+\]
+\emph{The first sum.} By $\log(1-\varepsilon)\ge-\varepsilon-\varepsilon^2$
+and Proposition~\ref{prop:first-mutation}(c), it is at least
+$-(\varepsilon+\varepsilon^2)\sum_tw_t(t-1)\ge-2\varepsilon-2\varepsilon^2$.
+
+\emph{The terms with $A_t$.} Since $t_0\le\frac{N+2}4$,
+Lemma~\ref{lem:A-AB}(b) gives $A_t\ge2(\log N-\log t-3)$ for $t\le t_0$. Let
+$w_\le=\sum_{t\le t_0}w_t$. By Jensen's inequality
+$\sum_tw_t\log t\le\log\sum_tw_tt\le\log3$, so
+\[
+ \sum_{t\le t_0}w_t\,\varepsilon A_t\ge2\varepsilon(\log N-3)w_\le-2\varepsilon\log3
+ \ge2\varepsilon\log N-2\varepsilon(1-w_\le)\log N-6\varepsilon-2\varepsilon\log3 .
+\]
+By Proposition~\ref{prop:first-mutation}(c),
+$1-w_\le\le2\sum_{t>t_0}t2^{-t}=2(t_0+2)2^{-t_0}$, and $N<8(t_0+1)$. As
+$(t_0+2)2^{-t_0}\log(8t_0+8)$ decreases for $t_0\ge8$, we get
+$2\varepsilon(1-w_\le)\log N\le4\cdot10\cdot2^{-8}\log72\,
+\varepsilon<0.67\,\varepsilon$.
+
+\emph{The terms with $B_t$.} Here $t\le t_0\le\frac N8$, so Lemma~\ref{lem:A-AB}(d) applies. With
+$\sum_tw_t(t+1)\le4$ (Proposition~\ref{prop:first-mutation}(c)) and
+Lemma~\ref{lem:A-w} it gives
+$\sum_{t\le t_0}w_tB_t\le84(3+1+\log N)+683\cdot124+19100
+=84\log N+104128$.
+
+Collecting terms, and using $c_1=\frac4{N+2}$,
+\[
+ \log C_N-\log\frac{4\varepsilon}{N+2}-2\varepsilon\log N
+ \ge-(2+0.67+6+2\log3)\,\varepsilon-\varepsilon^2(84\log N+104130),
+\]
+which gives the lower bound since $2+0.67+6+2\log3<11$. For the last claim,
+the hypothesis on $\varepsilon$ gives
+$\varepsilon^2(84\log N+1.05\cdot10^5)\le\varepsilon\,
+\frac{84\log N+1.05\cdot10^5}{100(1+\log N)}$. The fraction decreases in
+$N$, and its value at $N=64$ is below $205$. Since $11+205<5200$, the
+two-sided bound follows.
+\end{proof}
+
+\subsection{The coefficient of \texorpdfstring{$\varepsilon^2$}{epsilon squared}}\label{app:erw-K2}
+
+We prove Proposition~\ref{prop:K2} in three parts. Lemma~\ref{lem:A-K2}(a)
+writes $k_2(N)$ through the sums $A_t$. Lemma~\ref{lem:A-K2}(b) finds the
+limit of $A_t-2\log N$ for fixed $t$, and (c) bounds it uniformly in $t$.
+Then we sum over $t$.
+
+\begin{lemma}\label{lem:A-K2}
+\begin{enumerate}[(a)]
+\item For every even $N\ge2$, $k_2(N)=\sum_{t=1}^hw_t\bigl[A_t-(t-1)\bigr]$.
+\item For each fixed $t\ge1$, as $N\to\infty$ over even $N$,
+$A_t-2\log N\to A^\infty_t:=2(\gamma-1-\log2)+(t-2)H_{t-1}$.
+\item For even $N\ge64$ and $1\le t\le h$,
+$-2\log(4t)-6\le A_t-2\log N\le2+2(t+11)\log(t+1)$.
+\end{enumerate}
+\end{lemma}
+
+\paragraph{Idea of the proof of (b).}
+Fix $t$ and let $N$ be large. At a fixed time $u$ the bridge looks like a
+walk with fair steps that starts at state 1 at time $t+1$. For such a walk
+$(u-2M_u)^2$ is about $u$ and $M_u(u-M_u)$ is about $u^2/4$, so $\theta_u$ is
+about $2/u$, and the sum over $u<N$ is about $2\log N$. To find the constant
+we split $\theta_u$ into a part that is quadratic in $u-2M_u$, whose mean
+over the bridge we know exactly (Lemma~\ref{lem:A-AB}(a)), and a remainder
+whose means are summable over $u$, uniformly in $N$. So $A_t-2\log N$ has
+the same limit as the corresponding quantity for the fair walk. For the fair
+walk the mean of $\theta_u$ is an explicit integral over $[0,1]$, and we can
+sum these integrals over $u$.
+
+\begin{proof}
+We prove (c) before (b), because (c) is short.
+
+(a) By Proposition~\ref{prop:first-mutation}(a) and (b),
+$c_2=\sum_t[-(t-1)\pi_t+\partial_\varepsilon V_{t+1}(1)|_{\varepsilon=0}]$.
+In Proposition~\ref{prop:A-bridge} the bridge does not depend on
+$\varepsilon$, and each $\varpi_u$ is affine in $\varepsilon$ and equals 1 at
+$\varepsilon=0$. So by the conditional mean computed in its proof,
+$\partial_\varepsilon V_{t+1}(1)|_{\varepsilon=0}
+=\pi_t\sum_u\E^{\mathrm{br}}_t[(\varpi_u-1)/\varepsilon]=\pi_tA_t$. Divide by
+$c_1$.
+
+(c) Both sides of Proposition~\ref{prop:A-super}(c) are differentiable in
+$\varepsilon$ on $[0,\frac14)$ and equal $\pi_t$ at $\varepsilon=0$, and
+$\kappa=2\varepsilon/(1-4\varepsilon)$ has derivative 2 at 0. Comparing the
+derivatives at 0 and using the proof of (a) gives
+$A_t\le2H_{N-1}+2\mathcal G(t)$. By Step~1 in the proof of
+Theorem~\ref{thm:erw-bounds}(b), $\mathcal G(t)\le(t+11)\log(t+1)$, and
+$H_{N-1}\le1+\log N$. This is the upper bound. For $t\le\frac{N+2}4$ the
+lower bound follows from Lemma~\ref{lem:A-AB}(b). For $t>\frac{N+2}4$ we use
+$A_t\ge0$ and $N<4t$.
+
+(b) Fix $t$ and let $N\ge16(t+1)$. Recall that $m=u-t-1$ and $K=M_u-1$.
+Steps 1 to 5 show that the limit exists and is a limit for the fair walk.
+Steps 6 to 9 compute it.
+
+\emph{Step 1: split $\theta_u$.} For $1\le b\le u-1$ we have
+$u^2=4b(u-b)+(u-2b)^2$, so
+$\frac1{2b(u-b)}=\frac2{u^2}+\frac{(u-2b)^2}{2b(u-b)u^2}$. Multiplying by
+$\frac{N(u-2b)^2}{N-u}$ gives
+\[
+ \theta_u(b)=\frac N{N-u}\Bigl[\frac{2(u-2b)^2}{u^2}+\vartheta_u(b)\Bigr],
+ \qquad \vartheta_u(b)=\frac{(u-2b)^4}{2b(u-b)u^2}\ge0 .
+\]
+The first term in the bracket is what we get when we replace $b(u-b)$ by its
+largest value $u^2/4$, and $\vartheta_u$ is the correction. So
+$A_t=A'_t+A''_t$, where
+\[
+ A'_t=\sum_{u=t+1}^{N-1}\frac{2N\,\E^{\mathrm{br}}_t(u-2M_u)^2}{(N-u)u^2},
+ \qquad
+ A''_t=\sum_{u=t+1}^{N-1}\frac N{N-u}\,\E^{\mathrm{br}}_t\vartheta_u(M_u).
+\]
+
+\emph{Step 2: the quadratic part $A'_t$.} Write
+$\varsigma_t=\sum_{u>t}u^{-2}$. We show that
+$A'_t=2\log N+2\gamma-2H_t+2((t-1)^2-t-1)\varsigma_t+o(1)$. We insert the
+formula of Lemma~\ref{lem:A-AB}(a). In its second term the factor $N-u$
+cancels, and we get
+\[
+ A'_t=\sum_{u=t+1}^{N-1}\frac{2N(t-1)^2(N-u)}{(N-t-1)^2u^2}
+ +\Pi_t\sum_{u=t+1}^{N-1}\frac{u-t-1}{u^2},
+\]
+with $\Pi_t$ as in the proof of Lemma~\ref{lem:A-AB}(b). In the first sum the
+factor $\frac{2N(N-u)}{(N-t-1)^2}$ is at most 8 (because $N-t-1\ge\frac N2$)
+and tends to 2 for fixed $u$. So this sum tends to $2(t-1)^2\varsigma_t$ by
+dominated convergence. The second sum is
+$H_{N-1}-H_t-(t+1)\sum_{u=t+1}^{N-1}u^{-2}=\log N+\gamma-H_t-(t+1)\varsigma_t
++o(1)$, and $\Pi_t=2+O(1/N)$. Adding the two gives the claim.
+
+\emph{Step 3: the terms of $A''_t$ converge.} Fix $u$. The variable $K$
+counts the up steps among $m$ steps drawn without replacement from $N-t-1$
+steps, of which $h-1$ (about half) are up steps. So as $N\to\infty$ its law
+tends to the binomial law with $m$ trials and success probability $\frac12$.
+Let $\nu_u$ have this binomial law and put $\bar M_u=1+\nu_u$. This is the
+walk with fair steps from state 1 at time $t+1$. Since $\frac N{N-u}\to1$,
+the $u$-th term of $A''_t$ tends to $\E\vartheta_u(\bar M_u)$.
+
+\emph{Step 4: the terms of $A''_t$ are dominated.} To exchange the limit and
+the sum we need a bound for the $u$-th term of $A''_t$ that is summable over
+$u$ and does not depend on $N$. We use four facts.
+
+First, $\E^{\mathrm{br}}_t(u-2M_u)^4\le64\min(u,N-u)^2+8t^4$. To see this,
+note that $u-2M_u-\E(u-2M_u)=-2(K-\E K)$, where $K$ is hypergeometric with
+$m\le u$ draws. The last $N-u$ steps of the bridge also form a uniform
+sample, so $h-M_u$ is hypergeometric with $N-u$ draws, and
+$u-2M_u-\E(u-2M_u)=2(h-M_u-\E(h-M_u))$. By Hoeffding's comparison with
+sampling with replacement \cite[Theorem~4]{hoeffding1963}, applied to the
+convex function $x\mapsto(x-x_0)^4$, the fourth central moment of a
+hypergeometric variable with $n$ draws is at most that of the binomial
+variable with $n$ trials and the same mean. The latter is
+$np(1-p)(1+3(n-2)p(1-p))\le n^2/2$, where $p$ is the success probability. We
+may take $n=m$ or $n=N-u$, so the fourth central moment of $u-2M_u$ is at
+most $8\min(u,N-u)^2$. Now use $\lvert\E(u-2M_u)\rvert\le t$ (by the proof of
+Lemma~\ref{lem:A-AB}(a)) and $(x_1+x_2)^4\le8(x_1^4+x_2^4)$.
+
+Second, $\frac N{N-u}\le2u$ and $\frac N{N-u}\min(u,N-u)^2\le2u^2$. The first
+holds because $u(N-u)\ge N-1\ge\frac N2$. The second is clear for
+$u\le\frac N2$, and for $u>\frac N2$ it follows from $N(N-u)\le2u^2$.
+Third, on $\Omega_u$ we have $2M_u(u-M_u)u^2\ge\frac7{32}u^4$, so
+$\vartheta_u(M_u)\le\frac{32}{7u^4}(u-2M_u)^4$. By the first two facts the
+part of the $u$-th term on $\Omega_u$ is at most
+$\frac{32}{7u^4}(128u^2+16t^4u)$.
+Fourth, off $\Omega_u$ we only have $M_u(u-M_u)\ge\frac u2$, which gives
+$\vartheta_u\le u$. So the part of the $u$-th term off $\Omega_u$ is at most
+$2u^2\,\Prob^{\mathrm{br}}_t(\Omega_u^c)$. This is at most
+$4u^2e^{-0.0943u}$ for $u\ge8(t+1)$ by Lemma~\ref{lem:A-AB}(c), and at most
+$2u^2$ for the finitely many smaller $u$.
+The sum of the two bounds is summable over $u$ and does not depend on $N$.
+
+\emph{Step 5: the limit as a sum for the fair walk.} By Steps 2 to 4 and
+dominated convergence,
+\[
+ A_t-2\log N\to\tilde A_t:=2\gamma-2H_t+2\bigl((t-1)^2-t-1\bigr)\varsigma_t
+ +\sum_{u>t}\E\vartheta_u(\bar M_u).
+\]
+We now undo the split of Step~1 for the fair walk. Let
+$\bar\theta_u=\E\frac{(u-2\bar M_u)^2}{2\bar M_u(u-\bar M_u)}
+=\E\bigl[\frac{2(u-2\bar M_u)^2}{u^2}+\vartheta_u(\bar M_u)\bigr]$, where the
+second form is the identity of Step~1. This is the mean of $\theta_u$ for
+the fair walk, without the factor $\frac N{N-u}$. The variable
+$u-2\bar M_u=(m+t-1)-2\nu_u$ has mean $t-1$ and variance $m$, so
+$\E(u-2\bar M_u)^2=(t-1)^2+(u-t-1)$. So the computation of Step~2 gives
+$\sum_{u=t+1}^{u_1}\E\frac{2(u-2\bar M_u)^2}{u^2}
+=2\log u_1+2\gamma-2H_t+2((t-1)^2-t-1)\varsigma_t+o(1)$ as $u_1\to\infty$.
+We subtract $2\log u_1$ and add the convergent sum of the
+$\E\vartheta_u(\bar M_u)$. Hence
+\begin{equation}\label{eq:A-tilde}
+ \tilde A_t=\lim_{u_1\to\infty}\Bigl(\sum_{u=t+1}^{u_1}\bar\theta_u-2\log u_1\Bigr).
+\end{equation}
+
+\emph{Step 6: $\bar\theta_u$ as an integral.} It remains to compute the limit
+in \eqref{eq:A-tilde}. Write $\nu=\nu_u$, and for $0\le q\le1$ let
+$y=\frac{1+q}2$, so that $\E q^\nu=y^m$. Since $(u-2b)^2=u^2-4b(u-b)$ and
+$\frac1{b(u-b)}=\frac1u(\frac1b+\frac1{u-b})$, we have
+$\frac{(u-2b)^2}{2b(u-b)}=\frac u2(\frac1b+\frac1{u-b})-2$. We take $b=\bar M_u=1+\nu$. Then $u-b=t+(m-\nu)$, and $m-\nu$ has the law of
+$\nu$. So $\bar\theta_u=\frac u2\E[\frac1{1+\nu}+\frac1{t+\nu}]-2$. For an
+integer $a\ge1$ we have $\frac1{a+\nu}=\int_0^1q^{a-1+\nu}\,dq$, so
+$\E\frac1{a+\nu}=\int_0^1q^{a-1}y^m\,dq$. Hence
+\[
+ \bar\theta_u=u\int_0^1\frac{1+q^{t-1}}2\,y^m\,dq-2 .
+\]
+
+\emph{Step 7: split off the part with $q^{t-1}$.} Let
+$\sigma(q)=\sum_{j=0}^{t-2}q^j$, with $\sigma=0$ for $t=1$. Since
+$1-y=\frac{1-q}2$, we have $(1-y)\sigma(q)=\frac{1-q^{t-1}}2$, that is,
+$\frac{1+q^{t-1}}2=1-(1-y)\sigma(q)$. Also
+$\int_0^1y^m\,dq=\frac{2(1-2^{-m-1})}{m+1}$ and $u=m+1+t$. So
+\[
+ \bar\theta_u
+ =\Bigl[\frac{2t}{m+1}-\Bigl(1+\frac t{m+1}\Bigr)2^{-m}\Bigr]-\mathcal T_m,
+ \qquad\mathcal T_m=u\int_0^1(1-y)\sigma(q)y^m\,dq .
+\]
+To compute $\mathcal T_m$ we split $u=(m+1)+t$. For the part with $m+1$ we
+integrate by parts, using $\frac d{dq}y^{m+1}=\frac{m+1}2y^m$. For $j\ge0$
+this gives
+\[
+ (m+1)\int_0^1q^j\,\frac{1-q}2\,y^m\,dq=-\delta_{j0}2^{-m-1}
+ +\int_0^1y^{m+1}\bigl((j+1)q^j-jq^{j-1}\bigr)\,dq,
+\]
+where the first term on the right is the boundary term at $q=0$. We sum over
+$0\le j\le t-2$. The integrands telescope to $(t-1)q^{t-2}y^{m+1}$. For the
+part with $t$ we use $(1-y)\sigma(q)=\frac{1-q^{t-1}}2$ again. With
+$I(j,k)=\int_0^1q^jy^k\,dq$ this gives
+\[
+ \mathcal T_m=-[t\ge2]\,2^{-m-1}+(t-1)I(t-2,m+1)
+ +\frac t2\int_0^1(1-q^{t-1})y^m\,dq ,
+\]
+where $[t\ge2]$ is 1 if $t\ge2$ and 0 if $t=1$, and the term with $I$ is
+absent for $t=1$.
+
+\emph{Step 8: sum over $u$.} We sum the formulas of Step~7 over
+$0\le m\le m_0$, so that $u_1=m_0+t+1$. The terms $\frac{2t}{m+1}$ add up to
+$2tH_{m_0+1}$, and the terms $2^{-m-1}$ add up to $1-2^{-m_0-1}$. Under the
+integrals we use $\sum_{m\le m_0}y^m=\frac{2(1-y^{m_0+1})}{1-q}$ and
+$\frac{1-q^{t-1}}{1-q}=\sigma(q)$. So
+\begin{multline*}
+ \sum_{u=t+1}^{u_1}\bar\theta_u=2tH_{m_0+1}
+ -\sum_{m=0}^{m_0}\Bigl(1+\frac t{m+1}\Bigr)2^{-m}+[t\ge2](1-2^{-m_0-1})\\
+ -(t-1)\sum_{k=0}^{m_0}I(t-2,k+1)-t\int_0^1\sigma(q)\bigl(1-y^{m_0+1}\bigr)dq .
+\end{multline*}
+\emph{Step 9: let $m_0\to\infty$.} We go through the terms of Step~8. The
+first sum tends to $\sum_{m\ge0}(1+\frac t{m+1})2^{-m}=2+2t\log2$, since
+$\sum_{m\ge0}\frac{2^{-m}}{m+1}=2\log2$. The last integral tends to
+$\int_0^1\sigma\,dq=H_{t-1}$. The sum of the $I(t-2,k+1)$ grows like
+$2\log m_0$, and we need it up to $o(1)$. For $t\ge2$ we sum the geometric
+series as before and write $q^{t-2}=1-(1-q^{t-2})$. So the sum is twice
+the difference of $\int_0^1y\frac{1-y^{m_0+1}}{1-q}dq$ and
+$\int_0^1(1-q^{t-2})y\frac{1-y^{m_0+1}}{1-q}dq$.
+In the first integral we substitute $q=2y-1$. It becomes
+$\int_{1/2}^1(y+\dots+y^{m_0+1})\,dy=\sum_{j=2}^{m_0+2}\frac{1-2^{-j}}j
+=H_{m_0+2}-\frac12-\log2+o(1)$. In the second integral
+$\frac{1-q^{t-2}}{1-q}=\sum_{j=0}^{t-3}q^j$ is bounded, so by dominated
+convergence it tends to
+$\int_0^1\sum_{j=0}^{t-3}q^j\frac{1+q}2dq=\frac12(H_{t-2}+H_{t-1}-1)$. So
+$\sum_{k\le m_0}I(t-2,k+1)=2H_{m_0+2}-2\log2-H_{t-2}-H_{t-1}+o(1)$.
+We collect the terms. Since
+$2tH_{m_0+1}-2(t-1)H_{m_0+2}=2H_{m_0+1}+o(1)$, we get
+\[
+ \sum_{u=t+1}^{u_1}\bar\theta_u=2H_{m_0+1}-2-2\log2+[t\ge2]+(t-1)H_{t-2}-H_{t-1}+o(1).
+\]
+Here $[t\ge2]+(t-1)H_{t-2}-H_{t-1}=(t-2)H_{t-1}$ for all $t\ge1$, where
+the term $(t-1)H_{t-2}$ is read as $0$ when $t=1$ (for $t\ge2$ use
+$H_{t-2}=H_{t-1}-\frac1{t-1}$), and
+$H_{m_0+1}=\log u_1+\gamma+o(1)$. So by \eqref{eq:A-tilde},
+$\tilde A_t=2(\gamma-1-\log2)+(t-2)H_{t-1}=A^\infty_t$.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:K2}]
+We pass to the limit under the sum over $t$ and then sum the series. Since
+$\sum_tw_t=1$, Lemma~\ref{lem:A-K2}(a) gives
+$k_2(N)-2\log N=\sum_{t\le h}w_t[A_t-2\log N-(t-1)]$. For fixed $t$ the
+$t$-th term tends to $t2^{-t-1}[A^\infty_t-(t-1)]$ by
+Lemma~\ref{lem:A-K2}(b) and Lemma~\ref{lem:A-w}. By Lemma~\ref{lem:A-K2}(c)
+and $w_t\le2t2^{-t}$, for $N\ge64$ the $t$-th term is at most
+$C_0(1+t\log(t+1))\,t2^{-t}$ in absolute value, with a constant $C_0$ that
+does not depend on $N$ or $t$. This bound is summable over $t$. So by
+dominated convergence,
+\[
+ k_2(N)-2\log N\to\sum_{t\ge1}t2^{-t-1}\bigl[A^\infty_t-(t-1)\bigr].
+\]
+To sum the series, note that $\sum_tt2^{-t-1}=1$ and
+$\sum_tt(t-1)2^{-t-1}=2$. Let
+$\mathcal H(q)=\sum_{k\ge0}H_kq^k=\frac{\ell}{1-q}$ with $\ell=-\log(1-q)$,
+and let $D=\frac d{dq}$. With $k=t-1$,
+\[
+ \sum_{t\ge1}t(t-2)2^{-t-1}H_{t-1}=\frac14\sum_{k\ge0}(k^2-1)H_k2^{-k}
+ =\frac14\bigl[(qD)^2\mathcal H-\mathcal H\bigr]_{q=1/2}.
+\]
+Here $(qD)^2\mathcal H=q\bigl[\frac{1+\ell}{(1-q)^2}+\frac{q}{(1-q)^3}
++\frac{2q(1+\ell)}{(1-q)^3}\bigr]$ equals $8+6\log2$ at $q=\frac12$, and
+$\mathcal H(\frac12)=2\log2$. So the sum is $2+\log2$, and the limit is
+$2(\gamma-1-\log2)+(2+\log2)-2=2\gamma-2-\log2$.
+\end{proof}

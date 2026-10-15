@@ -1,0 +1,1234 @@
+\section{The elephant walk near its crossing}\label{sec:shape}
+
+We now look at the whole law $P_N$ near the crossing
+(Figure~\ref{fig:shape}). The picture is that of the introduction. Each flip
+turns a whole family of steps, and most families are small. So the law has
+a hump near each end, and beyond the humps it falls like $x/(2m^2)$, where
+$m$ is the distance from the nearer end. Lemmas~\ref{lem:tree}
+to~\ref{lem:unimodal}, the results of Section~\ref{sec:shape-end},
+Theorem~\ref{thm:cp} and the results of Section~\ref{sec:convex} hold under
+their own hypotheses. Elsewhere in this section and in Appendices~\ref{app:shape}
+and~\ref{app:bulk} we assume, unless we say otherwise, that
+\[
+ N\ge64,\qquad0<\varepsilon\le\tfrac14,\qquad x=N\varepsilon\ge1 .
+\]
+Recall that $P_N(N-m)=\frac12[f_N(m)+f_N(N-m)]$. Some statements also use
+odd $N$. There $x_N$ is the value of $x$ at which the two central bins are as
+likely as the ends (it exists and is unique by Proposition~\ref{prop:odd}).
+For a mode $a^*\ge N/2$ of $P_N$ we put $m^*=N-a^*$, and $m_h$ is the largest
+mode of $f_N$.
+
+\subsection{Families and the first flip}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/family}
+\caption{One elephant walk with $N=40$ steps and $\varepsilon=0.07$. (a) The position against
+the step. The steps that disagree with the first step are drawn in blue. (b) The memory tree of
+the same walk. Step $k+1$ copies the step at the left end of its arc, and the arcs drawn heavier
+are flips. A step disagrees with the first step exactly when the path from it to step $1$
+crosses an odd number of flips (Lemma~\ref{lem:tree}). The first flip, at step $4$, turns its
+family of ten steps. The flip at step $22$, inside that family, turns its own family of three
+steps back, and the flip at step $39$ turns only that step.}
+\label{fig:family}
+\end{figure}
+
+For $k_0\ge1$ let $(M^{[k_0]}_k)_{k\ge k_0}$ be the Markov chain with
+$M^{[k_0]}_{k_0}=0$ and the transition probabilities $r_k(b)$ of $M$. It is
+the count of disagreeing steps for a walk whose first $k_0$ steps are forced
+to agree. So $M^{[1]}$ has the law of $M$. We write $Y_d=M^{[1]}_d$, and
+$Z^{(j)}_t=M^{[j-1]}_t$ for $j\ge2$ and $t\ge j-1$. In a random recursive tree
+on $[N]=\{1,\dots,N\}$, vertex $k+1$ is joined to a uniform vertex of $[k]$,
+independently for $k=1,\dots,N-1$. We write $\mathcal T_v$ for the subtree of
+$v$, that is, $v$ and its descendants, and we call it the family of $v$.
+
+\begin{lemma}[tree and marks]\label{lem:tree}
+Let $\mathcal T$ be the tree on $[N]$ in which the parent of $k+1$ is $U_k$.
+For $2\le v\le N$ let $\mu_v=1$ if step $v$ flips the step it copies, and
+$\mu_v=0$ otherwise. Then $\mathcal T$ is a random recursive tree, the marks
+$\mu_v$ are i.i.d.\ Bernoulli$(\varepsilon)$ and independent of $\mathcal T$,
+and $X_v=X_1(-1)^{\sigma(v)}$, where $\sigma(v)$ is the number of marks on the
+path from $v$ to the root, the root excluded. So $M_N=\#\{v:\sigma(v)\text{
+odd}\}$. If the marks on $2,\dots,k_0$ are set to $0$, then the number of odd
+vertices in $[k]$, $k\ge k_0$, is a copy of the chain $M^{[k_0]}$.
+\end{lemma}
+
+\begin{proof}
+The parent $U_k$ of $k+1$ is uniform on $[k]$ and independent of the earlier
+choices, and the marks are the flip indicators. The path from $k+1$ to the
+root is $k+1$ followed by the path from $U_k$, so
+$\sigma(k+1)=\mu_{k+1}+\sigma(U_k)$ and, by induction on $k$,
+$X_{k+1}=X_{U_k}(-1)^{\mu_{k+1}}=X_1(-1)^{\sigma(k+1)}$. Now set
+$\mu_2=\dots=\mu_{k_0}=0$. If $b$ of the vertices in $[k]$ are odd, $k\ge k_0$,
+then $k+1$ is odd with conditional probability $(1-\varepsilon)\frac
+bk+\varepsilon(1-\frac bk)=r_k(b)$, whatever else is known about $[k]$.
+\end{proof}
+
+So a single flip at $v$ turns every step of its family
+(Figure~\ref{fig:family}). K\"ursten's
+coupling~\cite{kursten2016} uses bond percolation with retention probability
+$1-2\varepsilon$ instead, which gives the same law of the walk. For $k\ge v$, if $\mathcal T_v$ contains $s$ of the
+vertices in $[k]$, then $k+1$ joins $\mathcal T_v$ with probability $s/k$.
+This is the urn of Lemma~\ref{lem:urn}, so $\lvert\mathcal T_v\rvert$ has the
+law $\beta_v$ and mean $N/v$, and on average there are $N/(d(d+1))$ families
+of size $d$. If $v$ is the only marked vertex, the odd vertices are those of
+$\mathcal T_v$. Two or more marks have probability $O(\varepsilon^2)$ at fixed
+$N$, and no mark gives $M_N=0$. So at fixed $N$ the part of $f_N(m)$ of first
+order in $\varepsilon$ is exactly $\varepsilon\sum_v\beta_v(m)=x/(m(m+1))$, for
+$1\le m\le N-1$ (at $m=h$ this is $c_1\varepsilon$ of
+Proposition~\ref{prop:first-mutation}). This is also proved in Lean
+(Section~\ref{sec:verify}).
+
+To go beyond first order we cut the tree at the first flip.
+
+\begin{lemma}[splitting]\label{lem:split}
+Let $\mathcal T$ be a random recursive tree on $[N]$, let $2\le v\le N$ and
+let $S\subseteq[N]$ with $\min S=v$. Given that $\mathcal T_v$ has vertex set
+$S$, the restrictions of $\mathcal T$ to $S$ and to $[N]\setminus S$,
+relabeled in increasing order, are independent random recursive trees. They
+are independent of the parent of $v$, which is uniform on $[v-1]$.
+\end{lemma}
+
+\begin{proof}
+The tree $\mathcal T$ is uniform over the $(N-1)!$ increasing trees on $[N]$.
+Its family $\mathcal T_v$ has vertex set $S$ exactly when every $u\in
+S\setminus\{v\}$ has its parent in $S$ and every $u\notin S$ with $u\ge2$ has
+its parent outside $S$. So, given this event, each element of $S$ other than
+$v$ picks its parent freely among the smaller elements of $S$, $v$ picks any
+element of $[v-1]$, and each element of $[N]\setminus S$ other than $1$ picks
+freely among the smaller elements of $[N]\setminus S$. This is the claim.
+\end{proof}
+
+\begin{lemma}[the first flip]\label{lem:firstmark}
+Let $V=\min\{v\ge2:\mu_v=1\}$, with $V=\infty$ if there is no mark, and let
+$D=\lvert\mathcal T_V\rvert$. Then
+$\Prob(V=j,\,D=d)=\varepsilon(1-\varepsilon)^{j-2}\beta_j(d)$, and for $m\ge1$
+\[
+ f_N(m)=\sum_{j=2}^N\varepsilon(1-\varepsilon)^{j-2}\sum_{d=1}^{N-j+1}
+ \beta_j(d)\,\Prob\bigl(d-Y_d+Z^{(j)}_{N-d}=m\bigr),
+\]
+where $Y_d$ and $Z^{(j)}_{N-d}$ are independent.
+\end{lemma}
+
+\begin{proof}
+Marks and tree are independent, which gives the law of $(V,D)$. Condition on
+$V=j$ and on the vertex set $S$ of $\mathcal T_j$, with $\lvert S\rvert=d$.
+The marks on $j+1,\dots,N$ are still i.i.d., and by Lemma~\ref{lem:split} the
+trees on $S$ and on $[N]\setminus S$ are independent random recursive trees.
+The vertices $1,\dots,j-1$ carry no mark, so $j$ is odd, and $u\in S$ is odd
+exactly when the path from $u$ up to $j$, with $j$ excluded, has an even
+number of marks. So by Lemma~\ref{lem:tree} for the tree on $S$ rooted at
+$j$, the number of odd vertices in $S$ has the law of $d-Y_d$. Paths from
+outside $S$ stay outside $S$, and the tree on $[N]\setminus S$ has the
+unmarked vertices $1,\dots,j-1$ first. So by Lemma~\ref{lem:tree} its odd
+count has the law of $Z^{(j)}_{N-d}$. The two counts are independent, and their
+law depends on $S$ only through $d$. Sum over $j$ and $d$, and note that
+$M_N=0$ if there is no mark.
+\end{proof}
+
+In words, the first flip turns its whole family except the steps of that
+family that flip back, and the rest of the tree is a walk whose first $j-1$
+steps agree with $X_1$. Only the law of each pair $(Y_d,Z^{(j)}_{N-d})$
+enters the lemma. So from now on $(Y_d)_{d\ge1}$ is a copy of the chain
+$M^{[1]}$, and $(Z^{(j)}_t)_{t\ge j-1}$ is a copy of $M^{[j-1]}$, independent
+of $Y$ and of $(V,D)$.
+
+\begin{lemma}[unimodality given the first step~{\cite[proof of Theorem~1.1]{glrs2025}}]\label{lem:unimodal}
+The function $f_N$ is unimodal.
+\end{lemma}
+
+This is shown in the proof of Theorem~1.1 of Gu\'erin, Laulin, Raschel and
+Simon~\cite{glrs2025}, for every $N$ and every memory parameter
+$1-\varepsilon$, and it is also proved in Lean (Section~\ref{sec:verify}). So
+$f_N$ is nondecreasing on $\{0,\dots,m_h\}$ and nonincreasing on
+$\{m_h,\dots,N\}$. With a fair first step, $P_N$ mixes $f_N$ and its mirror
+image. When the mode of $f_N$ is far from the center, the mixture can have
+two humps, one near each end.
+
+\subsection{The end and its neighbor}\label{sec:shape-end}
+
+We first say why the end should fall below its neighbor once $x>2$. Given
+$X_1=+1$, the end needs no flip at all. Its neighbor, bin $N-1$, needs one flip
+that is never copied. A flip at step $j$ is never copied with probability
+about $j/N$. Summing $\varepsilon j/N$ over $j$ gives a factor of about $x/2$
+in favor of the neighbor.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/shape}
+\caption{The elephant walk at its crossing. (a) The law $P_N$ for $N=3200$
+at its crossing $x=11.5468$, divided by the end $E_N$. The center equals the end,
+and the law rises from each end to a mode and falls to the center. The inset
+shows the last 60 bins, with dots at bins $N$, $N-1$ and $N-2$. The end is
+below its neighbor, and the modes are 25 steps from each end (dashed). (b) The
+law of $M_N$, scaled as $xf_N(m)$, against $\lambda_m=(m-x\log x)/x$, with the
+Landau density $f_L$. The dotted line is its mode $\lambda_0$. (c) The tail
+$P_N(N-m)$ divided by $x/(2m^2)$. The dashed line is the limit 1 of
+Theorem~\ref{thm:profile}, and the dotted curves are the heuristic correction
+$1+x(2\log m+2\gamma-3)/m$ for $2x\log x\le m\le N/x$. The rise of the
+$N=3200$ curve near $m=N/2$ is the mirror term $f_N(N-m)$. At $N=10^6$ we use
+$x=g_N=22.4407$.}
+\label{fig:shape}
+\end{figure}
+
+\begin{theorem}[endpoint dip]\label{thm:dip}
+Let $N\ge3$ and $0<\varepsilon\le\frac12$, and put $\rho_1=P_N(N-1)/E_N$.
+Then
+\[
+ \frac{x}{2(1-\varepsilon)}<\rho_1\le\frac{x(1+1/N)^2}{2-3\varepsilon}+\frac{\varepsilon}{1-\varepsilon}.
+\]
+Hence the end is strictly below its neighbor if $x\ge2(1-\varepsilon)$, and
+strictly above it if the right side is below $1$.
+\end{theorem}
+
+In words, when $\varepsilon$ is small the neighbor of the end is about $x/2$
+times as likely as the end.
+
+\begin{proof}
+By Lemma~\ref{lem:erw-reduction}, $\rho_1=\bigl(f_N(1)+f_N(N-1)\bigr)/f_N(0)$
+with $f_N(0)=(1-\varepsilon)^{N-1}$. We bound the two terms in turn.
+
+\emph{The term $f_N(1)$.} On the event $M_N=1$ the chain moves up exactly
+once, say from time $j-1$ to time $j$ with $2\le j\le N$. Before that it
+stays at $0$ for $j-2$ steps, each with probability
+$1-r_t(0)=1-\varepsilon$. The move up has probability $\varepsilon$. After it
+the chain stays at $1$ at the times $k=j,\dots,N-1$, each with probability
+$1-r_k(1)=(1-\varepsilon)(1-c'/k)$, where
+$c'=(1-2\varepsilon)/(1-\varepsilon)\in[0,1]$. Multiplying and summing over
+$j$ gives
+\[
+ f_N(1)=\varepsilon(1-\varepsilon)^{N-2}\sum_{j=2}^NP_j,\qquad
+ P_j=\prod_{k=j}^{N-1}\Bigl(1-\frac{c'}k\Bigr).
+\]
+For the lower bound we use $c'\le1$. Then
+$P_j\ge\prod_{k=j}^{N-1}(1-1/k)=(j-1)/(N-1)$, and these lower bounds sum to
+$N/2$ over $2\le j\le N$. So $f_N(1)/f_N(0)\ge x/(2(1-\varepsilon))$. For
+the upper bound, $1-c'/k\le e^{-c'/k}$ and $\sum_{k=j}^{N-1}1/k\ge\log(N/j)$
+give $P_j\le(j/N)^{c'}$. As $(t/N)^{c'}$ is nondecreasing in $t$, we can compare
+the sum with an integral, namely
+\[
+ \sum_{j=2}^NP_j\le\int_2^{N+1}\Bigl(\frac tN\Bigr)^{c'} dt
+ \le\frac{N(1+1/N)^{c'+1}}{c'+1}\le\frac{N(1+1/N)^2(1-\varepsilon)}{2-3\varepsilon},
+\]
+using $c'\le1$ and $1/(c'+1)=(1-\varepsilon)/(2-3\varepsilon)$. So
+$f_N(1)/f_N(0)\le x(1+1/N)^2/(2-3\varepsilon)$.
+
+\emph{The term $f_N(N-1)$.} The event $M_N=N-1$ needs an up move at every
+time. The first has probability $r_1(0)=\varepsilon$, and the one at time
+$k\ge2$ has probability
+$r_k(k-1)=1-\varepsilon-(1-2\varepsilon)/k\in[\frac12,1-\varepsilon]$. So
+$0<f_N(N-1)\le\varepsilon(1-\varepsilon)^{N-2}$. This makes the lower bound
+strict and gives the term $\varepsilon/(1-\varepsilon)$ in the upper bound.
+\end{proof}
+
+\begin{corollary}[the dip at the crossing]\label{cor:dip}
+Let $N\ge4$ be even and suppose that $x_N\ge2(1-\varepsilon_N)$. Then at the
+crossing $E_N=C_N<P_N(N-1)$, and $P_N$ is not unimodal.
+\end{corollary}
+
+\begin{proof}
+By Proposition~\ref{prop:mlr}, $\varepsilon_N<\frac12$, so
+Theorem~\ref{thm:dip} gives $P_N(N-1)>E_N=C_N$. Suppose that $P_N$ is
+nondecreasing on $\{0,\dots,a_0\}$ and nonincreasing on $\{a_0,\dots,N\}$.
+It is symmetric about $h$, so we may replace $a_0$ by $N-a_0$ and assume
+$a_0\le h$. Then $P_N(a)\le C_N$ for every $a\ge h$, including $a=N-1$, which
+is a contradiction.
+\end{proof}
+
+The hypothesis $x_N\ge2(1-\varepsilon_N)$ says that
+$\varepsilon_N\ge2/(N+2)$. By Proposition~\ref{prop:mlr} it holds exactly
+when $C_N\le E_N$ at $\varepsilon=2/(N+2)$. We now show that this is so for
+every even $N\ge8$. For $N\ge1688$ we use Theorem~\ref{thm:erw-bounds}(b).
+For smaller $N$ that theorem does not apply, and we compute $C_N/E_N$ in
+floating-point arithmetic and bound the rounding error. At
+$\varepsilon=2/(N+2)$ the transition probabilities of $M$ are ratios of
+integers, namely
+\begin{equation}\label{eq:weights}
+ 1-r_t(b)=\frac{N(t-b)+2b}{(N+2)t},\qquad r_t(b)=\frac{2(t-b)+Nb}{(N+2)t}.
+\end{equation}
+By Lemma~\ref{lem:erw-reduction}, $C_N/E_N=2f_N(h)/f_N(0)$. Write
+$f_t(b)=\Prob_+(M_t=b)$ for the law of $M_t$ at this $\varepsilon$, for
+$1\le t\le N$. The law of $M_{t+1}$ follows from the law of $M_t$ by
+\begin{equation}\label{eq:forward}
+ f_{t+1}(b)=f_t(b)\bigl(1-r_t(b)\bigr)+f_t(b-1)\,r_t(b-1),\qquad f_1(0)=1.
+\end{equation}
+Here $f_t(b)>0$ exactly for $0\le b\le t-1$. So the first term is absent for
+$b=t$ and the second for $b=0$. The values $f_{t+1}(b)$ with $b\le h$ only
+need the values $f_t(b)$ with $b\le h$. Every number in \eqref{eq:forward}
+is positive, and nothing is subtracted. This is what makes the rounding
+error easy to bound.
+
+\begin{lemma}[rounding error]\label{lem:rounding}
+Let $N\ge2$ be even with $N(N+2)<2^{53}$, let $\varepsilon=2/(N+2)$, and put
+$u=2^{-53}$. Compute numbers $\hat f_t(b)$ for $1\le t\le N$ and
+$0\le b\le\min(t-1,h)$ in IEEE~754 double precision with rounding to
+nearest, as follows. Put $\hat f_1(0)=1$. In \eqref{eq:forward} each weight
+is one division of its numerator in \eqref{eq:weights} by its denominator
+$(N+2)t$, each term on the
+right is one multiplication of a computed value $\hat f_t$ by a computed
+weight, and if both terms are present they are added by one addition.
+Finally let $\hat R$ be twice the computed quotient of $\hat f_N(h)$ by
+$\hat f_N(0)$. Suppose that no computed weight, product or sum in the
+recursion is below $2^{-1000}$. Then
+\[
+ (1-u)^{6N-5}\le\frac{C_N/E_N}{\hat R}\le(1-u)^{-(6N-5)} .
+\]
+For $N<1688$ the right side is at most $1+3\cdot10^{-12}$.
+\end{lemma}
+
+In words, for $N<1688$ the computed ratio is correct to about 11 digits,
+because each of the $N-1$ steps of the recursion rounds each term three
+times and all terms are positive.
+
+\begin{proof}
+We use the standard model of floating-point
+arithmetic~\cite[Section~2.2]{higham2002}. If $a$ and $b$ are floating-point
+numbers and $\circ$ is addition, multiplication or division, then the
+computed value of $a\circ b$ is $(a\circ b)(1+\delta)$ with
+$\lvert\delta\rvert\le u$, as long as the result does not overflow or
+underflow. Underflow means that the exact result is nonzero and below the
+smallest normal number $2^{-1022}$, and then the rounded result is at most
+$2^{-1022}$. So a computed result that is at least $2^{-1000}$ did not
+underflow, and by hypothesis this covers every operation in the recursion.
+The integers in \eqref{eq:weights} are positive and at most $N(N+2)<2^{53}$,
+so they are floating-point numbers, and each computed weight is the true
+weight times some $1+\delta$.
+
+We claim that $\hat f_t(b)=f_t(b)(1+\vartheta)$ with
+$(1-u)^{3(t-1)}\le1+\vartheta\le(1+u)^{3(t-1)}$. We use induction on $t$,
+and the case $t=1$ is clear. In the step from $t$ to $t+1$, each term on the
+right of \eqref{eq:forward} is computed as $\hat f_t(b')$ times the true
+weight times $(1+\delta_1)(1+\delta_2)$, and the sum of two terms gets one more
+factor $1+\delta_3$. All numbers are positive. So $\hat f_{t+1}(b)$ lies
+between $(1-u)^3$ and $(1+u)^3$ times the right side of \eqref{eq:forward}
+with $\hat f_t$ in place of $f_t$, and the claim follows. Nothing overflows
+on the way, because the true weights and the $f_t(b)$ are at most $1$ and
+$(1+u)^{3N}<2$.
+
+In the last division both numbers lie between $2^{-1000}$ and $2$. So the
+quotient lies between $2^{-1001}$ and $2^{1001}$, it neither underflows nor
+overflows, and the division adds one more factor $1+\delta$. Doubling is
+exact. Hence $(C_N/E_N)/\hat R$ lies between
+$(1-u)^{3(N-1)}(1+u)^{-3(N-1)-1}$ and $(1+u)^{3(N-1)}(1-u)^{-3(N-1)-1}$.
+Since $1+u\le(1-u)^{-1}$, this gives both bounds with the exponent
+$6(N-1)+1=6N-5$. For $N\le1686$ put $k=6N-5\le10111$. Then
+$(1-u)^{-k}\le(1-ku)^{-1}\le1+2ku\le1+3\cdot10^{-12}$.
+\end{proof}
+
+\begin{proposition}[the hypothesis holds from $N=8$ on]\label{prop:dip-hyp}
+For every even $N\ge8$ we have $C_N<E_N$ at $\varepsilon=2/(N+2)$, and hence
+$x_N>2(1-\varepsilon_N)$. So for every even $N\ge8$, at the crossing
+$E_N=C_N<P_N(N-1)$, and $P_N$ is not unimodal. For $N=2$, $4$ and $6$ the
+hypothesis of Corollary~\ref{cor:dip} fails.
+\end{proposition}
+
+In words, for every even $N$ from $8$ on the end is below its neighbor at the crossing, so
+the law has a hump on each side of the center.
+
+\begin{proof}
+\emph{The range $N\ge1688$.} Take $\varepsilon=2/N$. Then
+$\varepsilon(1+\log N)\le\frac1{100}$, so Theorem~\ref{thm:erw-bounds}(b)
+gives $C_N\le\frac8{N(N+2)}N^{4/N}e^{10400/N}$. The right side decreases in
+$N$ and is below $1.4\cdot10^{-3}$ at $N=1688$. Since $\log(1-y)\ge-y-y^2$
+for $0\le y\le\frac12$, we also have
+$E_N=\frac12(1-\frac2N)^{N-1}\ge\frac12e^{-2-2/N}>0.06$. So $C_N<E_N$ at
+$\varepsilon=2/N$, and Proposition~\ref{prop:mlr} gives $\varepsilon_N>2/N$.
+Hence $C_N<E_N$ at $\varepsilon=2/(N+2)$ as well.
+
+\emph{The range $8\le N<1688$.} The script \texttt{certify\_elephant.py}
+runs the computation of Lemma~\ref{lem:rounding} for each of the 840 even
+$N$ in this range, with exactly the operations listed there (elementwise
+operations on arrays of doubles, with no fused operation, and for a sample
+of $N$ the same bits come out of plain scalar arithmetic). The smallest
+weight, product or sum that occurs is above $10^{-9}$, so the lemma applies.
+The largest
+computed ratio is $\hat R=0.947307\ldots$, at $N=8$, and the next largest is
+$0.729947\ldots$, at $N=10$. By Lemma~\ref{lem:rounding},
+$C_N/E_N\le0.9474$ for every even $8\le N<1688$.
+
+\emph{The three smallest $N$.} At $\varepsilon=2/(N+2)$ the ratio $C_N/E_N$ is
+exactly $2$, $\frac53$ and $\frac{508}{405}$ for $N=2$, $4$ and $6$, so
+$\varepsilon_N<2/(N+2)$ there. The last claim of the proposition about
+$N\ge8$ is Corollary~\ref{cor:dip}.
+\end{proof}
+
+As an independent check, the same script runs \eqref{eq:forward} in exact
+integer arithmetic for 20 values of $N$ between 8 and 1686. In each case
+$C_N<E_N$ exactly, and the double-precision ratio differs from the exact one
+by a relative error below $10^{-13}$. At $N=8$ the exact ratio is
+$\frac{67903}{71680}$. By Lemma~\ref{lem:unimodal}, $P_N$ is always a mixture
+of two unimodal laws (namely $f_N$ and its mirror image), as is the limit
+law in~\cite[eq.~(1)]{glrs2025}.
+
+\subsection{The bulk}
+
+The steps that disagree with $X_1$ lie in the flipped families. Let
+$\CP_N$ be the law of
+$\sum_{d=1}^{N-1}d\,\mathcal N_d$, where the $\mathcal N_d$ are independent Poisson variables with
+means $x/(d(d+1))$. On average $x/(d(d+1))$ flipped vertices have a family of
+size $d$. If no flipped step has a flipped descendant, which is likely when
+$x^2\log N/N$ is small, then $M_N$ is the total size of the flipped families,
+and this is close to the compound Poisson sum.
+
+The law $\CP_N$ is known. Without the truncation at $d=N-1$ its
+generating function is $(1-s)^{x(1-s)/s}$, which is the Lea--Coulson form of
+the Luria--Delbr\"uck distribution with parameter
+$x$~\cite[Eq.~(14)]{kesslerlevine2015}. Its limit after centering at $x\log x$
+and dividing by $x$ is known as well (see~\cite[Eq.~(19)]{kesslerlevine2015}
+and~\cite{mohle2005}), and the same stable law appears for the root cluster of
+a random recursive tree~\cite{bertoin2014ejp}. So the limit law in the two
+theorems below is not new. What they add is the comparison with the elephant
+walk in sup norm, with an explicit error in Theorem~\ref{thm:cp} and an
+absolute constant in Theorem~\ref{thm:landau}. Numerical values of $f_L$ and
+of its mode are standard (see K\"olbig and Schorr~\cite{ks1984}). What
+Lemma~\ref{lem:landau-mode} adds is a certified enclosure.
+
+\begin{theorem}[compound Poisson bulk]\label{thm:cp}
+For $N\ge2$ and $0<\varepsilon\le\frac14$,
+\[
+ \sup_{m\ge0}\bigl\lvert f_N(m)-\CP_N(m)\bigr\rvert\le\delta_B
+ :=\frac{x^2\log N}{N}+\frac{4x^2}{N}e^{4x^2/N}+\frac{4x^2(H_N^2+H_N)}{N}.
+\]
+\end{theorem}
+
+In words, bin by bin the law of the number of disagreeing steps is within
+$\delta_B$ of the compound Poisson law, and $\delta_B=O(x^2\log^2N/N)$ when
+$x^2\le N$.
+
+\paragraph{Idea of the proof.}
+The proof is in Appendix~\ref{app:bulk}. Let $Z_+$ be the total size of the
+flipped families. Then $M_N=Z_+$ unless some flipped step has a flipped
+descendant, and this has probability at most $x^2\log N/N$. Given the tree,
+$Z_+$ is a sum of independent terms, so its characteristic function is a
+product, and the product is close to $e^{\varepsilon F}$ with
+$F=\sum_v(e^{i\theta\lvert\mathcal T_v\rvert}-1)$. The mean of
+$\varepsilon F$ is exactly the logarithm of the characteristic function of
+$\CP_N$. So it remains to show that $F$ is close to its mean. For this we
+use the Efron--Stein inequality~\cite{efronstein1981}. Changing the parent
+of one vertex changes the family sizes only along two paths to the root, and
+these paths have length of order $\log N$.
+
+The families of size up to about $x$ add up to nearly $x\log x$, and the few
+families of size of order $x$ give fluctuations of order $x$. So we center
+$M_N$ at $x\log x$ and divide by $x$. Put $\lambda_m=(m-x\log x)/x$, and let
+\[
+ f_L(\lambda)=\frac1{2\pi}\int_{-\infty}^{\infty}e^{-i\lambda t}e^{B(t)}\,dt,
+ \qquad B(t)=-it\log\lvert t\rvert-\frac\pi2\lvert t\rvert .
+\]
+This is the Landau density, a stable density with index one. We show in
+Appendix~\ref{app:bulk} that $e^B$ is the characteristic function of a
+probability law of class $L$, so that $f_L$ is a unimodal probability
+density by~\cite{yamazato1978}.
+
+\begin{theorem}[Landau limit]\label{thm:landau}
+There is an absolute constant $C$ such that the following hold under the
+standing assumptions of this section.
+\begin{enumerate}[(a)]
+\item For every integer $m\ge0$, $\bigl\lvert x\,\CP_N(m)-f_L(\lambda_m)\bigr\rvert
+\le C\bigl(\frac{1+\log x}x+\frac xN\bigr)$.
+\item For every integer $m\ge0$, $\bigl\lvert xf_N(m)-f_L(\lambda_m)\bigr\rvert
+\le C\bigl(\frac{1+\log x}x+\frac xN\bigr)+x\delta_B$.
+\item If $x\to\infty$ and $x^3\log^2N/N\to0$, then $(M_N-x\log x)/x$
+converges in law to the law with density $f_L$. Both conditions hold at the
+crossing.
+\end{enumerate}
+\end{theorem}
+
+In words, near the crossing the number of disagreeing steps is about
+$x\log x$, with fluctuations of order $x$ that follow the Landau law, bin by
+bin.
+
+\paragraph{Idea of the proof.}
+The proof is in Appendix~\ref{app:bulk}. If we allow every jump size
+$d\ge1$, the characteristic function of the compound Poisson law is
+$e^{x\chi(e^{i\theta})}$ with $\chi(s)=(1-s)\log(1-s)/s$, and the jumps
+$d\ge N$ change it little. For small $\theta$ we have
+$\chi(e^{i\theta})=-i\theta\log(-i\theta)+O(\theta^2\lvert\log\lvert\theta\rvert\rvert)$.
+With $\theta=t/x$ the exponent becomes $B(t)+it\log x$ plus an error of
+order $t^2\log x/x$. The term $it\log x$ is the centering at $x\log x$. Both
+characteristic functions decay like $e^{-c\lvert t\rvert}$, so Fourier
+inversion turns this into a bound for each bin. Part (b) then follows from
+Theorem~\ref{thm:cp}.
+
+To locate the modes we need to know that $f_L$ is curved at its maximum.
+
+\begin{lemma}[the mode of the Landau density]\label{lem:landau-mode}
+\begin{enumerate}[(a)]
+\item The density $f_L$ has exactly one mode $\lambda_0$, and
+$-0.22278299<\lambda_0<-0.22278297$.
+\item The derivative vanishes at the mode, $f_L'(\lambda_0)=0$, and
+$-0.0792\le f_L''(\lambda)\le-0.0786$ for
+$-0.2229\le\lambda\le-0.2227$.
+\item For every real $\lambda$,
+$f_L(\lambda_0)-f_L(\lambda)\ge\kappa_L\min\{1,(\lambda-\lambda_0)^2\}$ with
+$\kappa_L=2.6\cdot10^{-10}$.
+\end{enumerate}
+\end{lemma}
+
+The proof is in Appendix~\ref{app:bulk}. It is computer-assisted. We turn the
+Fourier integral into the real integral
+$f_L(\lambda)=\frac1\pi\int_0^\infty e^{-s\log s-\lambda s}\sin(\pi s)\,ds$.
+Then we enclose $f_L'$ at four points (namely $-0.2229$, $-0.2227$,
+$-0.22278299$ and $-0.22278297$) and $f_L''$ on the interval
+$[-0.2229,-0.2227]$. We use ball arithmetic at 128 bits (python-flint 0.9.0,
+which wraps Arb) and the rigorous integration algorithm
+of~\cite{johansson2018} on $[2^{-20},30]$, with explicit bounds for the rest
+(\texttt{certify\_elephant.py}). The run takes under a second. Part (c) follows from (b) and the
+unimodality of $f_L$.
+
+\begin{corollary}[where the modes are]\label{cor:mode-location}
+Let $N\to\infty$ over even $N$. At the crossing, with $x=x_N$, every mode
+$a^*\ge N/2$ of $P_N$ has
+\[
+ m^*=x\log x+\lambda_0x+O\bigl(\sqrt{x\log x}\bigr),
+\]
+and so has the largest mode $m_h$ of $f_N$.
+\end{corollary}
+
+In words, each hump of the law at the crossing sits at distance about
+$x\log x-0.2228\,x$ from its end. The proof is in
+Appendix~\ref{app:bulk}. It compares $f_N$ at a mode with $f_N$ at the
+integer nearest to $x\log x+\lambda_0x$, and uses
+Theorem~\ref{thm:landau}(b) and Lemma~\ref{lem:landau-mode}(c).
+
+\begin{remark}[how good the bulk approximation is]\label{rem:bulk}
+The bounds of this subsection are far from sharp at the sizes we can
+compute. At $N=10^6$ and $x=22.4407$ the bound $\delta_B$ is still about
+$0.46$, but there the computed law has
+$\lvert f_N(m)/\CP_N(m)-1\rvert\le3.6\cdot10^{-4}$ for $1\le m\le10^4$. At
+every tested crossing $m^*$ equals the mode of $\CP_N$. The error term in
+Corollary~\ref{cor:mode-location} is not effective. Its proof needs the
+bound of Theorem~\ref{thm:landau}(b) to be below $\kappa_L/2$, where
+$\kappa_L$ is the constant of Lemma~\ref{lem:landau-mode}(c), and
+numerically the best $\kappa_L$ is about $0.026$. These numbers are computed
+in double precision and are not used in any proof.
+\end{remark}
+
+\subsection{The tail}
+
+This subsection shows that the law falls like $x/(2m^2)$ beyond the humps. We use it for the
+shape at the center.
+
+\begin{theorem}[the tail]\label{thm:profile}
+Let $N$ be even, and let $x=N\varepsilon\ge1$ depend on $N$ with
+$x\log^2N/N\to0$. Let $\omega_N\to\infty$ with $\omega_Nx\log^2(x+1)=o(N)$,
+and let $\delta'_N\to0$. Then
+\[
+ f_N(m)=\frac{x}{m(m+1)}\bigl(1+o(1)\bigr)\qquad\text{and}\qquad
+ P_N(N-m)=\frac{x}{2m^2}\bigl(1+o(1)\bigr),
+\]
+uniformly for $\omega_Nx\log^2(x+1)\le m\le\delta'_NN$.
+\end{theorem}
+
+In words, for $m$ well beyond $x\log^2x$ and well below $N$, the chance of landing at
+distance $m$ from an end is about half the expected number of flipped families with $m$
+steps, namely $x/(2m^2)$. The half is there because the first step must point to that end.
+
+\paragraph{Idea of the proof.}
+The proof is in Appendix~\ref{app:shape}. For the lower bound we use the
+first flipped family, which has size $m$ with probability about
+$x/(m(m+1))$ (Lemma~\ref{lem:B-D}), while the other flips change the count
+only by a relative amount of order $x\log m/m$. For the upper bound we show
+$\Prob(M_N\ge m)\le\frac xm(1+O(x\log^2m/m))$, and the unimodality of $f_N$
+turns this into a local bound. The mirror term $f_N(N-m)$ is at most
+$C_N=O(x/N^2)$, which gives the constant $\frac12$.
+
+At $N=10^6$, $x=22.4407$ and $m=10^4$ the computed ratio
+$P_N(N-m)/(x/(2m^2))$ is $1.03778$. At moderate $m$ the law $\CP_N$ suggests
+$f_N(m)\,m(m+1)/x\approx1+x(2\log m+2\gamma-3)/m$, and this factor is still
+about $2$ near $m=70$ when $N=3200$ (Figure~\ref{fig:shape}(c)).
+
+\subsection{The center}
+
+\begin{theorem}[shape at the crossing]\label{thm:shape}
+There are absolute constants $C_{\rm w}$ and $N_0$ with the following
+property. Let $N\ge N_0$ be even with $x_N\in[2,N^{1/4}]$. Then at the
+crossing $P_N(a)>C_N$ for every $1\le a\le N-1$ with
+$\lvert a-h\rvert\ge C_{\rm w}(Nx_N\log N)^{1/2}$.
+\end{theorem}
+
+By Theorem~\ref{thm:erw-crossing}, $x_N\in[2,N^{1/4}]$ for large $N$, so at
+the crossing the window has width of order $N^{1/2}\log N$. In words, the
+middle bin is lower than every interior bin except possibly those within about
+$N^{1/2}\log N$ of it.
+
+\paragraph{Idea of the proof.}
+Up to the mode of $f_N$ the law is above $f_N(1)/2$, which beats $C_N=E_N$ by
+Theorem~\ref{thm:dip}. Farther in, it is close to $x/(2m^2)$, far above the
+center $4x/N^2$. Near the middle, the main term $x\Pi(m)$ below exceeds its
+value at $h$ by a factor of about $1+12t^2/N^2$ at distance $t$ from $h$,
+while we know $C_N$ and the law only up to relative errors of order $x\log
+N/N$. The two meet at $t$ of order $(Nx\log N)^{1/2}$.
+
+\begin{proof}
+Write $x=x_N$ and $\varepsilon=\varepsilon_N$, so that $C_N=E_N$. By
+symmetry we take $a=N-m$ with $1\le m\le h$, and put $t=h-m$. We compare
+$P_N(N-m)$ with $C_N$ in three ranges of $m$. In the first two a crude lower
+bound is enough. In the third, near the center, we need the comparison with
+$x\Pi(m)$ and a matching upper bound for $C_N$. Since $2\le x\le N^{1/4}$,
+every error term below is bounded by a function of $N$ alone that tends to
+$0$, and we take $N$ large.
+
+We start with the upper bound for $C_N$. Put
+$\Pi(m)=\frac12\bigl[\frac1{m(m+1)}+\frac1{(N-m)(N-m+1)}\bigr]$, so that
+$x\Pi(h)=\frac{4\varepsilon}{N+2}$. As $\varepsilon(1+\log N)\to0$,
+Theorem~\ref{thm:erw-bounds}(b) gives $C_N\le x\Pi(h)(1+\eta)$ with
+$\eta=N^{2\varepsilon}e^{5200\varepsilon}-1$. Put
+$y=\varepsilon(2\log N+5200)$, so that $\eta=e^y-1$. Then $y\le\frac12$ for
+large $N$, and $e^y-1\le2y$ for $0\le y\le\frac12$, so
+$\eta\le2y\le10^4\varepsilon\log N$.
+
+\emph{Step 1: $m\le m_h$.} Then $f_N(m)\ge f_N(1)$ by
+Lemma~\ref{lem:unimodal}. The proof of Theorem~\ref{thm:dip} gives
+$f_N(1)\ge\frac x{2(1-\varepsilon)}f_N(0)$, and $f_N(0)=2E_N=2C_N$. So
+$P_N(N-m)\ge\frac12f_N(m)\ge\frac x{2(1-\varepsilon)}C_N>C_N$, since $x\ge2$.
+
+\emph{Step 2: $m_h<m\le N/8$.} Then $f_N(m)\ge f_N(k)$ with
+$k=\lfloor N/8\rfloor$, by Lemma~\ref{lem:unimodal}.
+Proposition~\ref{thm:B-local-lower}(a) at $k$ gives
+$f_N(k)\ge\frac{x}{k(k+1)}(1-O(\frac{x\log N}N))$. So
+$P_N(N-m)\ge\frac{32x}{N(N+8)}(1-o(1))$, which exceeds
+$\frac{4x}{N(N+2)}(1+\eta)\ge C_N$.
+
+\emph{Step 3: $N/8<m\le h$.} Then $m$ and $N-m$ are at least $N/8$, and
+Proposition~\ref{thm:B-local-lower} at $m$ and at $N-m$ gives
+$P_N(N-m)\ge x\Pi(m)(1-\bar e)$ with $\bar e=O(x\log N/N)$. It remains to
+compare $\Pi(m)$ with $\Pi(h)$. We measure the distance from the center by
+$s=2t/\bar N$ with $\bar N=N+1$, so that $m+\frac12=\frac{\bar N}2(1-s)$ and
+$N-m+\frac12=\frac{\bar N}2(1+s)$. Since $\frac1{n(n+1)}\ge(n+\frac12)^{-2}$
+for every $n\ge1$, and
+$\Pi(h)=\frac1{h(h+1)}=(\frac{\bar N}2)^{-2}(1-\bar N^{-2})^{-1}$, we get
+\[
+ \frac{\Pi(m)}{\Pi(h)}\ge\tfrac12\bigl[(1-s)^{-2}+(1+s)^{-2}\bigr](1-\bar N^{-2})
+ \ge(1+3s^2)(1-\bar N^{-2}).
+\]
+The last step holds because
+$\frac12[(1-s)^{-2}+(1+s)^{-2}]=\sum_{i\ge0}(2i+1)s^{2i}$, and we keep the
+first two terms of this series. Put $b=\bar e+\bar N^{-2}$, so that
+$b\le\frac12$ and $(1-\bar e)(1-\bar N^{-2})\ge1-b$. Then $P_N(N-m)\ge
+x\Pi(h)(1+3s^2)(1-b)\ge x\Pi(h)(1+\frac32s^2-b)$.
+
+\emph{Step 4: the window.} The bound of Step 3 exceeds
+$x\Pi(h)(1+\eta)\ge C_N$ as soon as $\frac32s^2>\eta+b$. Now $\eta+b\le
+A_2x\log N/N$ for an absolute constant $A_2$, since $x\ge2$, and $s\ge t/N$.
+So the condition holds when $t\ge C_{\rm w}(Nx\log N)^{1/2}$ with $C_{\rm
+w}^2>2A_2/3$.
+\end{proof}
+
+We did not compute $C_{\rm w}$ or $N_0$. Inside the window the proof gives
+nothing, and closing it needs second differences of the law. We study them in
+Section~\ref{sec:convex}, and Corollary~\ref{cor:unique-min} closes the window
+for large even $N$.
+
+\begin{conjecture}[convexity between the humps]\label{conj:convex}
+For every $N\ge10$, $x=x_N$ and every mode $a^*\ge N/2$ of $P_N$ with
+$m^*=N-a^*$, the second difference
+$P_N(a-1)-2P_N(a)+P_N(a+1)$ is positive for $2m^*+1\le a\le N-2m^*-1$.
+\end{conjecture}
+
+With the symmetry of the law, the conjecture makes $P_N$ strictly convex on
+$[2m^*,N-2m^*]$, so $h$ is its unique minimizer there (the two central bins for
+odd $N$). The next corollary shows that $m^*=o(N)$ at the crossing, so
+together with Theorem~\ref{thm:shape} the conjecture would make the center
+the unique interior minimum for large even $N$. Section~\ref{sec:convex}
+proves the conjecture for all large $N$, even
+(Theorem~\ref{thm:convex-large}) or odd (Proposition~\ref{prop:odd}), and, with a certified computation, for
+$10\le N\le2000$ (Proposition~\ref{prop:convex-certified}). For every even $N\ge8$ and every
+odd $N\ge1689$ it reduces the conjecture to one inequality (Corollary~\ref{cor:one-point} and
+Proposition~\ref{prop:odd}(c)).
+
+\begin{corollary}[the modes]\label{cor:modes}
+For large even $N$ the modes $a^*$ of $P_N$ at the crossing satisfy
+$\min(a^*,N-a^*)=O(x_N\log^2x_N)$.
+\end{corollary}
+
+\begin{proof}
+We show that $f_N(m^*)$ is not much below the maximum of $f_N$, and then
+that $f_N$ cannot be that large far to the right of its mode. Write $x=x_N$
+and $\varepsilon=\varepsilon_N$. By Theorem~\ref{thm:erw-crossing},
+$x\sim2\log N$, so for large $N$ the hypotheses of
+Theorem~\ref{thm:erw-bounds}(b) and Lemma~\ref{lem:B-mode} hold. Let
+$\ell=\lceil Ax\log(x+2)\rceil$ be as in the proof of
+Lemma~\ref{lem:B-mode}, where it is shown that
+$f_N(\ell)\ge\frac x{2\ell(\ell+1)}$.
+
+\emph{Step 1: $f_N(m^*)$ is large.} The law is symmetric about $h$, so
+$m^*=\min(a^*,N-a^*)$ maximizes $g(m)=f_N(m)+f_N(N-m)$ over $0\le m\le h$.
+Lemma~\ref{lem:B-mode} gives $m_h\le h$ for large $N$. So for $m\le h$ we
+have $N-m\ge h\ge m_h$, and Lemma~\ref{lem:unimodal} and
+Theorem~\ref{thm:erw-bounds}(b) give $f_N(N-m)\le f_N(h)=C_N=O(x/N^2)$.
+Hence
+\[
+ f_N(m^*)\ge g(m^*)-C_N\ge g(m_h)-C_N\ge f_N(m_h)-C_N\ge f_N(\ell)-C_N
+ \ge\frac x{4\ell(\ell+1)}
+\]
+for large $N$, because $\ell=O(\log^2N)$ and so $C_N$ is far below
+$x/\ell^2$.
+
+\emph{Step 2: $m^*$ is not far beyond $\ell$.} Put $m'=\max(m_h,\ell)$ and
+suppose that $m^*>m'$. To the right of $m_h$ the function $f_N$ is
+nonincreasing, so Lemma~\ref{lem:B-sandwich} (with $a=m'$ and $b=m^*$) and
+Lemma~\ref{lem:B-tail} give
+\[
+ (m^*-m'+1)\,f_N(m^*)\le\Prob(M_N\ge\ell)\le\frac{xH_\ell}\ell .
+\]
+With Step 1 this gives $m^*-m'+1\le4(\ell+1)H_\ell$. Hence
+$m^*\le\max(m_h,\ell)+4(\ell+1)H_\ell$ in every case. Finally
+Lemma~\ref{lem:B-mode} gives $m_h=O(x\log^2x)$, and $\ell=O(x\log x)$ and
+$H_\ell=O(\log x)$.
+\end{proof}
+
+In double precision the conjecture also holds for $N=3200$, $6400$, $12800$
+and $25600$. It leaves out the two endpoints $a=2m^*$ and
+$a=N-2m^*$, because there the second difference is not positive for some
+$N\le51$. Heuristically, between the humps $P_N(a)$ is close to
+$\frac x2\bigl[\frac1{a(a+1)}+\frac1{(N-a)(N-a+1)}\bigr]$, which is strictly
+convex in $a$. We leave open
+the tail between $x\log x$ and $x\log^2x$, effective constants in
+Theorems~\ref{thm:profile} and~\ref{thm:shape}, and the conjecture for the
+$N$ between $2000$ and the constants $N_1$ and $N_1'$ of Theorem~\ref{thm:convex-large} and
+Proposition~\ref{prop:odd}.
+
+\subsection{Convexity between the humps}\label{sec:convex}
+
+This subsection proves Conjecture~\ref{conj:convex} for all large $N$, and for every even
+$N\ge8$ and every odd $N\ge1689$ it reduces the conjecture to one inequality. Throughout this subsection $0<\varepsilon<\frac12$ and $c=1-2\varepsilon$, so
+that $r_t(b)=\varepsilon+cb/t$. For $t\ge1$ and every integer $a$ we write
+$P_t(a)=\Prob(A_t=a)$, which is $0$ unless $0\le a\le t$, and
+\[
+ D_t(a)=P_t(a+1)-2P_t(a)+P_t(a-1).
+\]
+We also put $s_t=D_t(1)=P_t(0)-2P_t(1)+P_t(2)$ for $t\ge2$.
+
+\begin{lemma}[recurrence for the second difference]\label{lem:D-rec}
+For every $t\ge1$ and every integer $a$,
+\begin{align}
+ P_{t+1}(a)&=\bigl(1-r_t(a)\bigr)P_t(a)+r_t(a-1)\,P_t(a-1),\label{eq:P-rec}\\
+ D_{t+1}(a)&=\bigl(1-r_t(a+1)\bigr)D_t(a)+r_t(a-2)\,D_t(a-1).\label{eq:D-rec}
+\end{align}
+Also $P_t(a)=P_t(t-a)$ and $D_t(a)=D_t(t-a)$. The same two recurrences hold
+with $f_t(m)$ in place of $P_t(a)$.
+\end{lemma}
+
+\begin{proof}
+Given $A_t=a$, the copied step is $+1$ with probability $a/t$, so step $t+1$
+is $+1$ with probability $(1-\varepsilon)\frac at+\varepsilon(1-\frac
+at)=r_t(a)$. This gives \eqref{eq:P-rec} for $0\le a\le t+1$, where at $a=0$ and at
+$a=t+1$ the formula has one extra term, namely $r_t(-1)P_t(-1)$ or
+$(1-r_t(t+1))P_t(t+1)$, and this term is $0$ because $P_t(-1)=P_t(t+1)=0$. For
+other $a$ every term vanishes. The
+symmetry of $P_t$ is Lemma~\ref{lem:erw-reduction}, and it gives the symmetry
+of $D_t$. The chain $M$ of Lemma~\ref{lem:erw-reduction} has the same
+transition probabilities, so \eqref{eq:P-rec} holds for $f_t$ as well.
+
+For \eqref{eq:D-rec} put $\varsigma=c/t$, so that $r_t(b+1)=r_t(b)+\varsigma$.
+We insert \eqref{eq:P-rec} at $a+1$, $a$ and $a-1$ into the definition of
+$D_{t+1}(a)$ and collect the coefficients of $P_t(a+1)$, $P_t(a)$, $P_t(a-1)$
+and $P_t(a-2)$. They are
+\[
+ 1-r_t(a+1),\qquad 3r_t(a)-2,\qquad 1-3r_t(a-1),\qquad r_t(a-2).
+\]
+The right side of \eqref{eq:D-rec} has the coefficients $1-r_t(a+1)$,
+$-2+2r_t(a+1)+r_t(a-2)$, $1-r_t(a+1)-2r_t(a-2)$ and $r_t(a-2)$. The second
+ones agree because $2r_t(a+1)+r_t(a-2)=3r_t(a)$, and the third ones agree
+because $r_t(a+1)+2r_t(a-2)=3r_t(a-1)$.
+\end{proof}
+
+Trinas and Valle~\cite[(4.10)]{tv2026} write the analogue
+of~\eqref{eq:D-rec} for differences of higher order, and they use it at a
+fixed memory parameter in a certified study of log-concavity. We use
+\eqref{eq:D-rec} for signs.
+The coefficients in \eqref{eq:D-rec} are positive when $2\le a\le t-1$. So the
+second difference moves like a mass that is partly killed, and its sign can
+change only through what enters at the two edges. The next lemma is the
+elementary form of the variation diminishing property that we need.
+
+For a finite list $z$ of real numbers let $\operatorname{sp}(z)$ be its sign
+pattern. We delete the zeros of $z$, replace each entry by its sign, and merge
+equal neighbors. So $\operatorname{sp}(z)$ is a list of alternating signs. For
+two such lists we write $p\preceq q$ if $p$ is a subsequence of $q$. We put
+$\Pi_5=(+,-,+,-,+)$ and $\Pi_3=(+,-,+)$.
+
+\begin{lemma}[one step]\label{lem:interleave}
+Let $\zeta=(\zeta_1,\dots,\zeta_n)$ be real, and let
+$\eta_i=A_i\zeta_i+B_i\zeta_{i+1}$ for $1\le i\le n-1$ with $A_i\ge0$ and
+$B_i\ge0$. Let $w=(\zeta_1,\eta_1,\zeta_2,\eta_2,\dots,\eta_{n-1},\zeta_n)$.
+Then $\operatorname{sp}(w)=\operatorname{sp}(\zeta)$ and
+$\operatorname{sp}(\eta)\preceq\operatorname{sp}(\zeta)$.
+\end{lemma}
+
+\begin{proof}
+We insert the numbers $\eta_i$ into $\zeta$ one at a time. If $\eta_i=0$, the
+sign pattern does not change. If $\eta_i>0$, then $\zeta_i>0$ or
+$\zeta_{i+1}>0$, so $\eta_i$ is placed next to an entry of its own sign, and
+the pattern does not change. The case $\eta_i<0$ is the same. This proves the
+first claim. Deleting entries from a list replaces its sign pattern by a
+subsequence, and $\eta$ is obtained from $w$ by deleting the entries
+$\zeta_i$. This proves the second claim.
+\end{proof}
+
+\begin{lemma}[the sequence next to the end]\label{lem:level-one}
+For every $T\ge2$ we have $\operatorname{sp}(s_2,s_3,\dots,s_T)\preceq\Pi_3$.
+Also, $s_3$ and $s_4$ do not both vanish.
+\end{lemma}
+
+\begin{proof}
+Put $\xi_t=P_t(1)/P_t(0)$. By \eqref{eq:P-rec}, $P_{t+1}(0)=(1-\varepsilon)P_t(0)$
+and $P_{t+1}(1)=(1-\varepsilon-\frac ct)P_t(1)+\varepsilon P_t(0)$. So
+\[
+ \xi_{t+1}-\xi_t=\frac1{1-\varepsilon}\Bigl(\varepsilon-\frac{c\xi_t}t\Bigr),
+ \qquad\xi_2=\frac{2\varepsilon}{1-\varepsilon}.
+\]
+We claim that $\xi_t<\varepsilon t/c$ for $t\ge2$. For $t=2$ this holds
+because $c<1-\varepsilon$. If it holds for $t$, then
+$0<\xi_{t+1}-\xi_t\le\frac\varepsilon{1-\varepsilon}<\frac\varepsilon c$,
+and it holds for $t+1$. So $\xi_t$ is strictly increasing for $t\ge2$, and
+$\xi_t<1$ whenever $t\le c/\varepsilon$.
+
+Now \eqref{eq:D-rec} with $a=1$, and $D_t(0)=P_t(1)-2P_t(0)$, give for $t\ge2$
+\[
+ s_{t+1}=\bigl(1-r_t(2)\bigr)s_t+\sigma_t,\qquad
+ \sigma_t=\Bigl(\varepsilon-\frac ct\Bigr)(\xi_t-2)\,P_t(0).
+\]
+Here $1-r_t(2)\ge1-\varepsilon-c=\varepsilon>0$. If $t<c/\varepsilon$, both
+factors of $\sigma_t$ are negative and $\sigma_t>0$. If $t>c/\varepsilon$, the
+first factor is positive, and the second is first negative and then positive,
+because $\xi_t$ increases. So
+$\operatorname{sp}(\sigma_2,\sigma_3,\dots)\preceq\Pi_3$. Let
+$\Phi_t=\prod_{u=2}^{t-1}(1-r_u(2))>0$. Then
+\[
+ \frac{s_t}{\Phi_t}=s_2+\sum_{u=2}^{t-1}\frac{\sigma_u}{\Phi_{u+1}},\qquad
+ s_2=1-3\varepsilon .
+\]
+If $\varepsilon<\frac13$, the terms $s_2,\sigma_2,\sigma_3,\dots$ are first
+nonnegative, then nonpositive, then nonnegative. Their partial sums are
+nonnegative and nondecreasing in the first stretch, nonincreasing in the
+second, and nondecreasing in the third. So the sign pattern of the partial
+sums is a subsequence of $\Pi_3$. If $\varepsilon\ge\frac13$, then
+$c/\varepsilon\le1$, so the terms are first nonpositive and then nonnegative,
+and the sign pattern of the partial sums is a subsequence of $(-,+)$. This
+proves the first claim.
+
+For the second claim we compute $P_3(0)=\frac12(1-\varepsilon)^2$ and
+$P_3(1)=P_3(2)=\frac12-P_3(0)$, so $s_3=P_3(0)-P_3(1)=(1-\varepsilon)^2-\frac12$.
+Suppose that $s_3=0$. Then $\varepsilon=1-2^{-1/2}$, $P_3(0)=P_3(1)=\frac14$
+and $s_4=\sigma_3=(\varepsilon-\frac c3)(P_3(1)-2P_3(0))=-\frac{5\varepsilon-1}{12}$.
+This is not $0$, because $\varepsilon\ne\frac15$.
+\end{proof}
+
+\begin{theorem}[at most five blocks]\label{thm:five-blocks}
+Let $N\ge3$ and $0<\varepsilon<\frac12$. Then
+\[
+ \operatorname{sp}\bigl(D_N(1),D_N(2),\dots,D_N(N-1)\bigr)\preceq(+,-,+,-,+).
+\]
+So the second difference of $P_N$ changes sign at most four times on
+$\{1,\dots,N-1\}$. The same holds for the second difference of $f_N$.
+\end{theorem}
+
+In words, for every $N\ge3$ and every $0<\varepsilon<\frac12$ the law has at most two
+concave stretches. When it has two, the stretch between them is convex.
+
+\begin{proof}
+For $3\le t\le N$ let $Z_t$ be the list
+\[
+ Z_t=\bigl(s_N,s_{N-1},\dots,s_{t+1},\ s_t,D_t(2),D_t(3),\dots,D_t(t-2),s_t,\
+ s_{t+1},\dots,s_{N-1},s_N\bigr).
+\]
+It has $2N-t-1$ entries. Its middle part is
+$(D_t(1),D_t(2),\dots,D_t(t-1))$, because $D_t(t-1)=D_t(1)=s_t$ by symmetry.
+The list $Z_3$ is $(s_N,\dots,s_4,s_3,s_3,s_4,\dots,s_N)$, and $Z_N$ is the
+list in the statement.
+
+We check that $Z_{t+1}$ is obtained from $Z_t$ as in
+Lemma~\ref{lem:interleave}, for $3\le t\le N-1$. The first $N-t$ entries of
+$Z_{t+1}$ are $s_N,\dots,s_{t+1}$, and they are copies of the first $N-t$
+entries of $Z_t$. So $A_i=1$ and $B_i=0$ there. The next $t-2$ entries are
+$D_{t+1}(b)$ for $2\le b\le t-1$. By \eqref{eq:D-rec},
+\[
+ D_{t+1}(b)=r_t(b-2)\,D_t(b-1)+\bigl(1-r_t(b+1)\bigr)D_t(b),
+\]
+and $D_t(b-1)$ and $D_t(b)$ are neighbors in the middle part of $Z_t$, at the
+right places. The coefficients satisfy $r_t(b-2)\ge\varepsilon$ and
+$1-r_t(b+1)\ge1-\varepsilon-c=\varepsilon$, since $2\le b\le t-1$. The last
+$N-t$ entries of $Z_{t+1}$ are $s_{t+1},\dots,s_N$, and each is a copy of the
+entry of $Z_t$ one place to its right. So $A_i=0$ and $B_i=1$ there.
+
+By Lemma~\ref{lem:interleave},
+$\operatorname{sp}(Z_N)\preceq\operatorname{sp}(Z_{N-1})\preceq\dots\preceq\operatorname{sp}(Z_3)$.
+By Lemma~\ref{lem:level-one} the sign pattern $p$ of $(s_3,\dots,s_N)$ is a
+subsequence of $\Pi_3$, so it is one of the lists $()$, $(+)$, $(-)$, $(+,-)$,
+$(-,+)$ and $(+,-,+)$. The sign pattern of $Z_3$ is $p$ reversed, followed by
+$p$, with equal neighbors merged. In the six cases this is $()$, $(+)$, $(-)$,
+$(-,+,-)$, $(+,-,+)$ and $(+,-,+,-,+)$, and each is a subsequence of $\Pi_5$.
+
+For $f_N$ we argue in the same way with $D^f_t(m)=f_t(m+1)-2f_t(m)+f_t(m-1)$
+and the lists
+\[
+ Z^f_t=\bigl(s^f_N,\dots,s^f_{t+1},\ s^f_t,D^f_t(2),\dots,D^f_t(t-1),\ d_t,d_{t+1},\dots,d_{N-1}\bigr),
+ \qquad2\le t\le N,
+\]
+where $s^f_t=D^f_t(1)$ and $d_u=(1-r_u(u+1))D^f_u(u)=(\varepsilon-\frac
+cu)f_u(u-1)$. The entry $D^f_{t+1}(t)$ of $Z^f_{t+1}$ equals
+$r_t(t-2)D^f_t(t-1)+d_t$ by \eqref{eq:D-rec}, and the other entries are as
+before. The proof of Lemma~\ref{lem:level-one} applies to $s^f_t$ without
+change, with $\xi_t=f_t(1)/f_t(0)$, $\xi_2=\frac\varepsilon{1-\varepsilon}$
+and $s^f_2=1-3\varepsilon$. The numbers $d_u$ are negative for
+$u<c/\varepsilon$ and positive for $u>c/\varepsilon$. So
+$\operatorname{sp}(Z^f_2)$ is a subsequence of $(+,-,+)$ followed by $(-,+)$,
+and $Z^f_N=(D^f_N(1),\dots,D^f_N(N-1))$. As before
+$\operatorname{sp}(Z^f_N)\preceq\operatorname{sp}(Z^f_2)$, and a subsequence of $(+,-,+)$
+followed by $(-,+)$ is a subsequence of $\Pi_5$ once equal neighbors are merged.
+\end{proof}
+
+\begin{theorem}[no holes]\label{thm:no-holes}
+Let $N\ge5$ and $0<\varepsilon<\frac12$. Let $1\le a_0<a_1\le N/2$ be integers
+with $D_N(a_0)<0<D_N(a_1)$. Then $D_N(a)>0$ for every $a_1\le a\le N-a_1$.
+\end{theorem}
+
+In words, once the law has turned convex to the right of its left hump, it
+stays strictly convex up to the mirror image of that point.
+
+\begin{proof}
+By symmetry $D_N(N-a_1)>0>D_N(N-a_0)$. Suppose that $D_N(a)\le0$ for some $a$
+with $a_1<a<N-a_1$.
+
+\emph{The case $D_N(a)<0$.} Then the entries of $Z_N$ at $a_0<a_1<a<N-a_1<N-a_0$
+have the signs $-,+,-,+,-$. So $(-,+,-,+,-)\preceq\operatorname{sp}(Z_N)\preceq\Pi_5$
+by Theorem~\ref{thm:five-blocks}. This is impossible, because a subsequence of
+$\Pi_5$ with five terms is $\Pi_5$ itself.
+
+\emph{The case $D_N(a)=0$.} We use the lists $Z_t$ of the proof of
+Theorem~\ref{thm:five-blocks} and number the entries of $Z_t$ from $1$ to
+$2N-t-1$. So $D_t(b)$ stands at place $N-t+b$ for $1\le b\le t-1$. For
+$3\le t\le N-1$ let $W_t$ be the list $w$ of Lemma~\ref{lem:interleave} for
+$\zeta=Z_t$ and $\eta=Z_{t+1}$. Then
+$\operatorname{sp}(W_t)=\operatorname{sp}(Z_t)\preceq\Pi_5$. The entry of
+$Z_{t+1}$ at place $k$ is a combination of the entries of $Z_t$ at the places
+$k$ and $k+1$, with nonnegative coefficients. We call these two entries its
+parents. For $2\le b\le t-1$ the parents of $D_{t+1}(b)$ are $D_t(b-1)$ and
+$D_t(b)$, and both coefficients are positive.
+
+For $4\le t\le N$ let $B_t$ be the set of integers $b$ with
+$\max(2,a-N+t)\le b\le\min(a,t-2)$. It is not empty, because $2\le a\le N-2$.
+We prove by downward induction on $t$ that there are places $p_1<p_2<p_4<p_5$
+in $Z_t$ such that the entries there have the signs $-,+,+,-$, that
+$D_t(b)=0$ for every $b\in B_t$, and that all the places $N-t+b$ with
+$b\in B_t$ lie strictly between $p_2$ and $p_4$. For $t=N$ we have
+$B_N=\{a\}$, and we take the places $a_0$, $a_1$, $N-a_1$ and $N-a_0$.
+
+Let the claim hold for $t+1$, where $4\le t\le N-1$, with the places
+$p_1'<p_2'<p_4'<p_5'$. Let $b\in B_{t+1}$. Then $D_{t+1}(b)=0$ is a
+combination of its two parents with positive coefficients. So the parents
+both vanish, or they have strictly opposite signs. In the second case one
+parent is negative. In $W_t$ it stands next to $D_{t+1}(b)$, hence between the
+positive entries of $Z_{t+1}$ at the places $p_2'$ and $p_4'$, and these stand
+between the negative entries at $p_1'$ and $p_5'$. So
+$(-,+,-,+,-)\preceq\operatorname{sp}(W_t)\preceq\Pi_5$, which is impossible.
+Hence $D_t(b-1)=D_t(b)=0$ for every $b\in B_{t+1}$. Every element of $B_t$ is
+of the form $b$ or $b-1$ with $b\in B_{t+1}$, so $D_t$ vanishes on $B_t$.
+
+The entry of $Z_{t+1}$ at $p_1'$ is negative, so one of its parents is
+negative. Let $p_1\in\{p_1',p_1'+1\}$ be its place in $Z_t$, and choose $p_2$,
+$p_4$ and $p_5$ in the same way. Then $p_1\le p_1'+1\le p_2'\le p_2$, and
+$p_1\ne p_2$ because the signs differ. In the same way $p_4<p_5$. Let $q^-$ and
+$q^+$ be the smallest and the largest place $N-t-1+b$ with $b\in B_{t+1}$. The
+places $N-t+b$ with $b\in B_t$ lie between $q^-$ and $q^++1$. Since
+$p_2\le p_2'+1\le q^-$ and $p_4\ge p_4'\ge q^++1$, and the entries at $p_2$
+and $p_4$ are not zero, these places lie strictly between $p_2$ and $p_4$.
+This proves the claim for $t$.
+
+The induction step with $t=4$ shows that both parents of $D_5(b)$ vanish for every
+$b\in B_5\subseteq\{2,3\}$. The parents of $D_5(2)$ are $s_4$ and $D_4(2)$,
+and those of $D_5(3)$ are $D_4(2)$ and $s_4$. So $s_4=D_4(2)=0$. By
+\eqref{eq:D-rec} with $t=3$ and $a=2$, and since $D_3(1)=D_3(2)=s_3$, we have
+$D_4(2)=r_3(0)s_3+\bigl(1-r_3(3)\bigr)s_3=2\varepsilon s_3$. So $s_3=0$ as
+well, which contradicts Lemma~\ref{lem:level-one}.
+\end{proof}
+
+\begin{corollary}[one inequality is enough]\label{cor:one-point}
+Let $N\ge8$ be even and $x=x_N$, or let $N\ge5$ and $0<\varepsilon<\frac12$
+be such that $P_N(0)<P_N(1)$. Let $a^*\ge N/2$ be a mode of $P_N$ and
+$m^*=N-a^*$. If $D_N(a_1)>0$ for some integer $a_1$ with $m^*<a_1\le2m^*+1$
+and $a_1\le N/2$, then $D_N(a)>0$ for every $2m^*+1\le a\le N-2m^*-1$. In
+particular the statement of Conjecture~\ref{conj:convex} holds for this $N$,
+this $\varepsilon$ and this $m^*$ as soon as $D_N(2m^*+1)>0$.
+\end{corollary}
+
+\begin{proof}
+At the crossing with $N\ge8$ even, $P_N(0)=E_N<P_N(N-1)=P_N(1)$ by
+Proposition~\ref{prop:dip-hyp}. Let $a_0$ be the smallest maximizer of $P_N$.
+Then $1\le a_0\le m^*$, because $P_N(0)<P_N(1)$ and $P_N(m^*)=P_N(a^*)$ is the
+maximum. Also $P_N(a_0-1)<P_N(a_0)\ge P_N(a_0+1)$, so $D_N(a_0)<0$. Now
+Theorem~\ref{thm:no-holes} applies to $a_0<a_1$.
+\end{proof}
+
+The condition $a_1\le N/2$ costs nothing at $a_1=2m^*+1$, because
+$2m^*+1\le N/2$ whenever the range $2m^*+1\le a\le N-2m^*-1$ is not empty.
+
+\begin{theorem}[convexity between the humps for large $N$]\label{thm:convex-large}
+There is $N_1$ such that Conjecture~\ref{conj:convex} holds for every even
+$N\ge N_1$. That is, for even $N\ge N_1$, $x=x_N$ and every mode $a^*\ge N/2$
+of $P_N$ with $m^*=N-a^*$,
+\[
+ P_N(a-1)-2P_N(a)+P_N(a+1)>0\qquad\text{for }2m^*+1\le a\le N-2m^*-1 .
+\]
+\end{theorem}
+
+\paragraph{Idea of the proof.}
+By Corollary~\ref{cor:one-point} it is enough to find one point of strict
+convexity between $m^*$ and $2m^*+1$. If there were none, $P_N$ would be
+concave on $[m^*,2m^*+2]$, and then its value halfway would be at least half of
+its maximum. The Landau limit shows that the value halfway is much smaller.
+
+\begin{proof}
+Let $N$ be even and large, and let $x=x_N$ and $\varepsilon=\varepsilon_N$. By
+Theorem~\ref{thm:erw-crossing}, $x\to\infty$ and $x=O(\log N)$. So the standing
+assumptions of Section~\ref{sec:shape} hold, and $(1+\log x)/x$, $x/N$ and
+$x\delta_B=O(x^3\log^2N/N)$ tend to $0$. So by Theorem~\ref{thm:landau}(b)
+there are numbers $\eta_N\to0$ with
+\begin{equation}\label{eq:llt-used}
+ \bigl\lvert xf_N(m)-f_L(\lambda_m)\bigr\rvert\le\eta_N\qquad\text{for every integer }m\ge0 .
+\end{equation}
+The density $f_L$ is continuous, because it is the Fourier transform of an
+integrable function. It is unimodal with mode $\lambda_0$
+(Lemma~\ref{lem:landau-mode}), so it is nonincreasing on
+$[\lambda_0,\infty)$, and it is integrable. So
+$f_L(\lambda)\to0$ as $\lambda\to\infty$. We write $o(1)$ for a quantity that
+is bounded in absolute value by a function of $N$ alone that tends to $0$.
+
+\emph{Step 1: the mirror term.} Let $0\le m\le N/2$. Then
+$\lambda_{N-m}\ge\frac N{2x}-\log x\to\infty$. So \eqref{eq:llt-used} gives
+$xf_N(N-m)\le f_L(\lambda_{N-m})+\eta_N=o(1)$. Since
+$P_N(m)=P_N(N-m)=\frac12[f_N(m)+f_N(N-m)]$, we get
+\[
+ 2xP_N(m)=f_L(\lambda_m)+o(1)\qquad\text{uniformly for }0\le m\le N/2 .
+\]
+
+\emph{Step 2: the mode.} Let $m_0$ be the integer part of
+$x\log x+\lambda_0x$. Then $0\le m_0\le N/2$ and
+$\lvert\lambda_{m_0}-\lambda_0\rvert\le1/x$, so Step~1 and the continuity of
+$f_L$ give $2xP_N(m_0)=f_L(\lambda_0)+o(1)$. Now $P_N(m^*)\ge P_N(m_0)$ and
+$m^*\le N/2$, so Step~1 at $m^*$ gives
+$f_L(\lambda_{m^*})\ge f_L(\lambda_0)-o(1)$. By
+Lemma~\ref{lem:landau-mode}(c) this forces
+$\lvert\lambda_{m^*}-\lambda_0\rvert\le1$ for large $N$. Hence
+\[
+ x\log x+(\lambda_0-1)x\le m^*\le x\log x+(\lambda_0+1)x,\qquad
+ 2xP_N(m^*)\ge f_L(\lambda_0)-o(1).
+\]
+In particular $m^*\to\infty$ and $2m^*+2\le N/2$ for large $N$.
+
+\emph{Step 3: halfway.} Let $v=m^*+\lfloor m^*/2\rfloor$. Then
+$v\ge\frac32m^*-1$, so by Step~2
+\[
+ \lambda_v\ge\tfrac12\log x+\tfrac32(\lambda_0-1)-\tfrac1x\to\infty .
+\]
+Also $v\le N/2$. So Step~1 gives $2xP_N(v)=f_L(\lambda_v)+o(1)=o(1)$. Since
+$f_L(\lambda_0)>0$, Step~2 shows that $P_N(v)<\frac12P_N(m^*)$ for large $N$.
+
+\emph{Step 4: a point of convexity.} Suppose that $D_N(a)\le0$ for every
+$m^*<a\le2m^*+1$. Then $P_N$ is concave on the integers of $[m^*,2m^*+2]$.
+With $u=m^*$ and $w=2m^*+2$ this gives
+\[
+ P_N(v)\ge\frac{w-v}{w-u}P_N(u)+\frac{v-u}{w-u}P_N(w)\ge\frac{w-v}{w-u}P_N(m^*)
+ \ge\tfrac12P_N(m^*),
+\]
+because $w-v\ge\frac12(m^*+2)=\frac12(w-u)$. This contradicts Step~3. So
+$D_N(a_1)>0$ for some $m^*<a_1\le2m^*+1$, and $a_1\le N/2$ by Step~2.
+Corollary~\ref{cor:one-point} gives the claim.
+\end{proof}
+
+\begin{corollary}[the center is the unique interior minimum]\label{cor:unique-min}
+For every large even $N$, at the crossing, $P_N(a)>C_N$ for every
+$1\le a\le N-1$ with $a\ne h$.
+\end{corollary}
+
+\begin{proof}
+Let $N$ be large and even, and let $m^*$ be as in
+Theorem~\ref{thm:convex-large}. By that theorem and the symmetry of $P_N$, the
+first differences $P_N(a+1)-P_N(a)$ are strictly increasing for
+$2m^*\le a\le N-2m^*-1$, and $P_N(h+1)-P_N(h)=\frac12D_N(h)>0$. So $P_N$ is
+strictly increasing on $[h,N-2m^*]$ and strictly decreasing on $[2m^*,h]$. By
+Step~2 of the last proof, $m^*=O(\log N\log\log N)$. So for large $N$ every
+$a$ with $1\le a\le N-1$ and $\lvert a-h\rvert<C_{\rm w}(Nx_N\log N)^{1/2}$
+lies in $[2m^*,N-2m^*]$, and the other $a$ are covered by
+Theorem~\ref{thm:shape}.
+\end{proof}
+
+\begin{proposition}[small $N$, computer-assisted]\label{prop:convex-certified}
+Conjecture~\ref{conj:convex} holds for every $10\le N\le N_{\rm c}=2000$, even
+or odd.
+\end{proposition}
+
+\begin{proof}
+The script \texttt{certify\_convex.py} uses ball arithmetic with 160 bits
+(the library Arb). For each $N$ it encloses $\varepsilon_N$ in an interval of
+relative width at most $2\cdot10^{-8}$. It does so by evaluating the center
+and the end at the two ends of the interval, and Proposition~\ref{prop:mlr}
+then places the crossing between them. It then runs \eqref{eq:P-rec} with
+$\varepsilon$ equal to this interval. Each step only multiplies and adds
+enclosures of numbers in $[0,1]$, so the radii stay small. From the resulting enclosure of $P_N$ it lists every index that
+can be a mode, and for each of them it checks that the enclosure of $D_N(a)$
+is positive for every $2m^*+1\le a\le N-2m^*-1$. It also checks that
+$D_N(a_0)<0$ for some $a_0\le2m^*$ and that $D_N(2m^*+1)>0$. By
+Theorem~\ref{thm:no-holes} these two inequalities already imply the claim, so the test of
+every $a$ is a second check.
+\end{proof}
+
+\begin{proposition}[odd $N$]\label{prop:odd}
+Let $N\ge3$ be odd, and write $\widetilde C_N=P_N(\frac{N-1}2)=P_N(\frac{N+1}2)$ for the two
+central bins. The ratio $\widetilde C_N/E_N$ is strictly increasing in $\varepsilon$, and it
+equals $1$ at exactly one $\varepsilon_N\in(0,\frac12)$. Put $x_N=N\varepsilon_N$.
+\begin{enumerate}[(a)]
+\item For every $0<\varepsilon<\frac12$,
+\[
+ \widetilde C_N=\Bigl(1-\frac cN\Bigr)^{-1}C_{N+1},
+\]
+where $C_{N+1}$ is the center of the walk with $N+1$ steps and the same $\varepsilon$.
+\item As $N\to\infty$ over odd $N$, $x_N+\log x_N=\Lambda_N+O(L^2/N)$. So both parts of
+Theorem~\ref{thm:erw-crossing} hold for odd $N$ as well.
+\item For every odd $N\ge1689$ we have $x_N>2$, and at the crossing $P_N(0)<P_N(1)$. So
+Corollary~\ref{cor:one-point} applies to these $N$ with $x=x_N$.
+\item There is $N_1'$ such that Conjecture~\ref{conj:convex} holds for every odd $N\ge N_1'$.
+\end{enumerate}
+\end{proposition}
+
+In words, the center of a walk with an even number of steps is reached from the two central bins
+one step earlier, and from each of them with the same probability. So the two central bins of
+an odd $N$ are the center of $N+1$ up to the factor $1-c/N$, and what we know about the crossing
+for even $N$ carries over.
+
+\begin{proof}
+\emph{The crossing.} By Proposition~\ref{prop:mlr}, $P_N(k)/E_N$ is strictly increasing in
+$\varepsilon$ for $k=\frac{N+1}2$. It tends to $0$ as $\varepsilon\to0$. At
+$\varepsilon=\frac12$ the steps are independent and fair, so
+$\widetilde C_N=\binom Nk2^{-N}>2^{-N}=E_N$. So the ratio equals $1$ at exactly one
+$\varepsilon_N$, and $\varepsilon_N<\frac12$.
+
+(a) Put $k=\frac{N+1}2$. Since $\varepsilon+\frac c2=\frac12$, we have
+$r_N(k)=\frac12+\frac c{2N}$ and $r_N(k-1)=\frac12-\frac c{2N}$. So \eqref{eq:P-rec} with $t=N$
+and $a=k$ gives
+\[
+ C_{N+1}=P_{N+1}(k)=\Bigl(\frac12-\frac c{2N}\Bigr)\bigl(P_N(k)+P_N(k-1)\bigr)
+ =\Bigl(1-\frac cN\Bigr)\widetilde C_N .
+\]
+
+(b) We follow the proof of Theorem~\ref{thm:erw-crossing}(a), with
+$\widetilde F(x)=\log\widetilde C_N-\log E_N$ at $\varepsilon=x/N$ in place of $F$. Let
+$1\le x\le2\Lambda_N$. For large $N$, Theorem~\ref{thm:erw-bounds} applies to the even number
+$N+1$ at this $\varepsilon$ and gives
+$\log C_{N+1}=\log\frac{4\varepsilon}{N+3}+O(\varepsilon L)$. By (a),
+$\log\widetilde C_N=\log C_{N+1}+O(1/N)$. Here $\log\frac{4\varepsilon}{N+3}=\log x+\log4-2L+O(1/N)$,
+and $1/N\le xL/N$. So
+\[
+ \log\widetilde C_N=\log x+\log4-2L+O\Bigl(\frac{xL}N\Bigr),
+\]
+which is the estimate for $\log C_N$ in Step~1 of that proof. The formula
+$E_N=\frac12(1-\varepsilon)^{N-1}$ holds for every $N$ (Lemma~\ref{lem:erw-reduction}). So
+\eqref{eq:F-G} holds for $\widetilde F$, and Step~2 of that proof gives
+$\lvert x_N-g_N\rvert=O(L^2/N)$ and the claim. Part (b) of Theorem~\ref{thm:erw-crossing} follows
+from part (a) as before.
+
+(c) We argue as in the proof of Proposition~\ref{prop:dip-hyp}. Let $N\ge1689$ be odd and take
+$\varepsilon=2/N$. Then $\varepsilon(1+\log(N+1))\le\frac1{100}$, so
+Theorem~\ref{thm:erw-bounds}(b) for $N+1$ and part (a) give
+\[
+ \widetilde C_N\le\frac N{N-1}\,C_{N+1}\le\frac N{N-1}\cdot\frac8{N(N+3)}(N+1)^{4/N}e^{10400/N}.
+\]
+The right side decreases in $N$ and is below $1.4\cdot10^{-3}$ at $N=1689$. Also
+$E_N=\frac12(1-\frac2N)^{N-1}>0.06$, as in that proof. So $\widetilde C_N<E_N$ at
+$\varepsilon=2/N$, and hence $\varepsilon_N>2/N$ and $x_N>2\ge2(1-\varepsilon_N)$.
+Theorem~\ref{thm:dip} then gives $P_N(N-1)>E_N$ at the crossing, which is $P_N(0)<P_N(1)$ by
+symmetry. This is the hypothesis of the second case of Corollary~\ref{cor:one-point}.
+
+(d) The proof of Theorem~\ref{thm:convex-large} uses that $N$ is even in two places only. The
+first is $x\to\infty$ and $x=O(\log N)$, which holds for odd $N$ by (b). The second is
+Corollary~\ref{cor:one-point} at the end of Step~4, which applies by (c). The rest of that proof
+uses Theorem~\ref{thm:landau}, Lemma~\ref{lem:landau-mode} and
+$P_N(m)=\frac12[f_N(m)+f_N(N-m)]$, and these hold for every $N$.
+\end{proof}
+
+\begin{proposition}[the center for $10\le N\le2000$]\label{prop:center-small}
+\begin{enumerate}[(a)]
+\item Let $N\ge8$ be even and $x=x_N$. Let $a^*\ge N/2$ be a mode of $P_N$ and $m^*=N-a^*$.
+Suppose that $2m^*+1\le N/2$ and that $D_N(a)>0$ for every $2m^*+1\le a\le N-2m^*-1$. Then
+$P_N(a)>C_N$ for every $1\le a\le N-1$ with $a\ne h$.
+\item For every even $10\le N\le2000$, at the crossing, $P_N(a)>C_N$ for every $1\le a\le N-1$
+with $a\ne h$.
+\end{enumerate}
+\end{proposition}
+
+In words, if the law is strictly convex between the humps and the stretch between the humps
+contains the center, then the center is the unique lowest interior bin. So
+Corollary~\ref{cor:unique-min} holds for every even $N$ from $10$ to $2000$, and not only for
+large $N$.
+
+\paragraph{Idea of the proof.}
+Between the humps the law is strictly convex and symmetric, so the center is its only minimum
+there. Outside, a bin as low as the center would be a second valley. A valley needs a point of
+convexity with points of concavity on both sides, and with the mirror image this gives more
+changes of sign of the second difference than Theorem~\ref{thm:five-blocks} allows.
+
+\begin{proof}
+(a) Write $b=2m^*$, so that $b+1\le h$, and put $\delta(a)=P_N(a+1)-P_N(a)$.
+
+\emph{Between the humps.} Since $D_N(a)=\delta(a)-\delta(a-1)>0$ for $b+1\le a\le N-b-1$, the
+differences $\delta(a)$ are strictly increasing for $b\le a\le N-b-1$. By symmetry
+$\delta(h-1)=-\delta(h)$, and $\delta(h-1)<\delta(h)$ because $b\le h-1$. So
+$\delta(h-1)<0<\delta(h)$. Hence $P_N$ is strictly decreasing on $\{b,\dots,h\}$ and strictly
+increasing on $\{h,\dots,N-b\}$, and $P_N(a)>C_N$ for every $b\le a\le N-b$ with $a\ne h$. In
+particular $P_N(b)>C_N$.
+
+\emph{Near the ends.} By symmetry it is enough to treat $1\le a\le b-1$. Suppose that
+$P_N(a)\le C_N$ for some such $a$, and let $k$ be the smallest index in $\{1,\dots,b\}$ at which
+$P_N$ takes its least value on this set. By Proposition~\ref{prop:dip-hyp},
+$P_N(1)>P_N(0)=E_N=C_N$, and $P_N(b)>C_N$. So $2\le k\le b-1$, and
+$P_N(k-1)>P_N(k)\le P_N(k+1)$, which gives $D_N(k)>0$.
+Next let $a'$ be the smallest index at which $P_N$ takes its largest value on $\{0,\dots,k\}$.
+This value is at least $P_N(1)$, which exceeds both $P_N(0)$ and $P_N(k)$. So $1\le a'\le k-1$
+and $P_N(a'-1)<P_N(a')\ge P_N(a'+1)$, which gives $D_N(a')<0$. In the same way let $a''$ be the
+largest index at which $P_N$ takes its largest value on $\{k,\dots,h\}$. This value is at least
+$P_N(b)$, which exceeds both $P_N(k)$ and $P_N(h)=C_N$. So $k+1\le a''\le h-1$ and
+$P_N(a''-1)\le P_N(a'')>P_N(a''+1)$, which gives $D_N(a'')<0$. Finally $D_N(h)>0$ by hypothesis.
+
+So $D_N$ has the signs $-,+,-,+$ at $a'<k<a''<h$. By the symmetry $D_N(a)=D_N(N-a)$ it has the
+signs $-,+,-$ at $N-a''<N-k<N-a'$. Hence the sign pattern of $(D_N(1),\dots,D_N(N-1))$ has a
+subsequence of seven alternating signs. This contradicts Theorem~\ref{thm:five-blocks}, which
+allows at most five.
+
+(b) Let $10\le N\le2000$ be even. By Proposition~\ref{prop:convex-certified}, $D_N(a)>0$ for
+$2m^*+1\le a\le N-2m^*-1$ and every mode. The script \texttt{certify\_center.py} encloses
+$\varepsilon_N$ and the law $P_N$ in the same way as \texttt{certify\_convex.py}, lists every
+index $a^*\ge N/2$ that can be a mode, and checks that $2(N-a^*)+1\le N/2$ for each of them. This
+holds for every even $N$ in the range. So (a) applies.
+\end{proof}
+
+Part (a) also gives Corollary~\ref{cor:unique-min} from Theorem~\ref{thm:convex-large} without
+Theorem~\ref{thm:shape}, since $m^*=o(N)$ at the crossing. As a second check, for each even $N$
+in the range the script also tests directly that the enclosure of $P_N(a)-P_N(h)$ is positive for
+every $a\ne h$, and this succeeds for all $996$ values of $N$. The smallest value of
+$N/2-(2m^*+1)$ is $1$, at $N=12$.
+
+\begin{remark}[what is still open]\label{rem:convex-open}
+The constant $N_1$ of Theorem~\ref{thm:convex-large} is not explicit, because
+the constant $C$ in Theorem~\ref{thm:landau} is not. (Lemma~\ref{lem:landau-mode}(c)
+gives the explicit value $\kappa_L=2.6\cdot10^{-10}$, but it is far too small
+to help.) Even with explicit constants, Step~3 needs $f_L(\frac32\lambda_0+\frac12\log x)<\frac12f_L(\lambda_0)$ up
+to the error $\eta_N$, and at the sizes we can compute the ratio
+$P_N(v)/P_N(m^*)$ is still about $0.8$. Numerically $f_L$ falls to half of its maximum at
+$\lambda=2.432$. So even without the error $\eta_N$, Step~3 needs
+$\frac32\lambda_0+\frac12\log x>2.432$, that is, $x>252.8$. Since
+$x_N+\log x_N$ is close to $2\log N-\log8$ (Theorem~\ref{thm:erw-crossing}), this means that $N$
+is above about $3.5\cdot10^{56}$. So the $N$ between $N_{\rm c}$ and
+the constants $N_1$ and $N_1'$ of Theorem~\ref{thm:convex-large} and
+Proposition~\ref{prop:odd} are open, and no computation can reach these constants as the proof
+stands. By Corollary~\ref{cor:one-point} and Proposition~\ref{prop:odd}(c) the whole range would
+be closed by an effective proof of the single inequality $D_N(a_1)>0$ at one point
+$m^*<a_1\le2m^*+1$. Numerically the convex stretch starts near $1.5\,m^*$. This agrees with
+the Landau limit, because the inflection point of $f_L$ to the right of its mode is at
+$\lambda=1.104$ numerically, and $x\log x+1.104\,x$ is below twice the mode
+$x\log x+\lambda_0x$ as soon as $x\ge4.8$. A proof along these lines would need the second
+differences of $P_N$ near $2m^*$ with an error below their size, which is of order $1/x^3$.
+The main error in Theorem~\ref{thm:landau} is $C(1+\log x)/x$ for each value of $xf_N$, with a
+constant $C$ that is not explicit, and this is far too large for the $N$ in question.
+\end{remark}
