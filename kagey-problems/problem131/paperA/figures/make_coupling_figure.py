@@ -49,12 +49,14 @@ def main():
     fig, (ax, bx) = plt.subplots(1, 2, figsize=(ss.FULL, 2.45), gridspec_kw={"width_ratios": [1.25, 1]})
     c = ss.SERIES
     ax.plot(L, main_terms(L, CP), color=c["exact"], lw=1.1, label="main terms, periodic")
-    ax.plot(L, main_terms(L, C0), color=c["exact"], lw=1.1, ls=(0, (4, 1.6)), label="main terms, free")
-    ax.plot(Ln, jp, "o", ms=3.0, color=c["exact"], mfc="white", mew=0.9, label=r"exact $J_N^{\rm P}$")
-    ax.plot(Ln, jf, "s", ms=2.6, color=c["exact"], mew=0, label=r"exact $J_N^{\rm F}$")
+    ax.plot(L, main_terms(L, C0), color=ss.PURPLE, lw=1.1, ls=(0, (4, 1.6)), label="main terms, free")
+    # alternate the two sets of exact values so that the markers do not pile up
+    ax.plot(Ln[::2], jp[::2], "o", ms=3.2, color=c["exact"], mfc="white", mew=0.9, label=r"exact $J_N^{\rm P}$")
+    ax.plot(Ln[1::2], jf[1::2], "s", ms=2.8, color=ss.PURPLE, mew=0, label=r"exact $J_N^{\rm F}$")
     ax.plot(L, (2 * L - 1) / 5, color=c["prior"], lw=1.0, ls=(0, (1, 1.3)), label="Stepanyan Eq. (16)")
     ax.plot(L, 0.3864 * L - 0.21055, color=c["prior2"], lw=1.0, ls=(0, (5, 1.5, 1, 1.5)), label="Stepanyan fit")
     ax.set_xlabel(r"$\log N$")
+    ax.set_xticks(range(2, 15, 2))
     ax.set_ylabel(r"coupling $J$ at the crossing")
     ss.top_n_axis(ax, range(1, 7))
     ax.set_ylim(0.4, 8.6)   # headroom for the legend
@@ -64,6 +66,7 @@ def main():
 
     bx.axhline(0, color="0.6", lw=0.5)
     bx.plot(Ln, main_terms(Ln, CP) - jp, "-", color=c["exact"], lw=1.1)
+    bx.plot(Ln[::2], (main_terms(Ln, CP) - jp)[::2], "o", ms=2.6, color=c["exact"], mfc="white", mew=0.8)
     bx.plot(Ln, (2 * Ln - 1) / 5 - jp, color=c["prior"], lw=1.0, ls=(0, (1, 1.3)))
     bx.plot(Ln, 0.3864 * Ln - 0.21055 - jp, color=c["prior2"], lw=1.0, ls=(0, (5, 1.5, 1, 1.5)))
     # direct labels, each placed beside its own curve
@@ -76,6 +79,7 @@ def main():
     bx.annotate("fit", xy=(Ln[j], 0.3864 * Ln[j] - 0.21055 - jp[j]), xytext=(-4, -3),
                 textcoords="offset points", ha="right", va="top", color=c["prior"])
     bx.set_xlabel(r"$\log N$")
+    bx.set_xticks(range(2, 15, 2))
     bx.set_ylabel(r"approximation $-$ exact $J_N^{\rm P}$")
     ss.top_n_axis(bx, range(1, 7))
     ss.panel(bx, "b", x=0.04, y=0.06, ha="left", va="bottom")
