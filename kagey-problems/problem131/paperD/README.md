@@ -5,8 +5,8 @@ with probability eps. For an even number N of steps the paper studies the crossi
 at which the walk is as likely to end at the origin (the middle bin, N/2 right steps) as at N (the
 end bin, N right steps). The crossing is unique, and x_N = N eps_N = 2 log N - log log N - log 16 +
 o(1), about twice the value for the persistent random walk, because a walk that ends in the middle
-needs a reversal among its first few steps. At the crossing the law has a hump near each end, and
-for large even N the middle is the lowest interior bin.
+usually has a reversal among its first few steps. At the crossing the law has a hump near each end,
+and for large even N, and for every even N from 10 to 2000, the middle is the lowest interior bin.
 
 For the persistent (Markov) walk, which copies its last step instead, the question is part of
 Problem 131 of Kagey's Open Problem Collection (https://peterkagey.com/problems/131/), posed for a

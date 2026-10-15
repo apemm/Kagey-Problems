@@ -32,8 +32,9 @@ ledger and the recorded outputs still use the old numbers.
   exactly rho = 1 - p_N. Off this curve the crossing is bracketed (Corollary 3.8).
 - With turns only (s = 0), r T = z_N + O(L^2/N) at the crossing (Theorem 3.9).
 
-The proofs use arXiv:2610.06935 (the run count, the uniform Bessel bound and the expansion of z_N).
-They do not use the paper in `../paperC`, which supplies the first-order heuristic.
+The proofs use arXiv:2610.06935 (the coefficientwise growth of the bin polynomials, the uniform
+Bessel bound and the expansion of z_N). They cite the paper in `../paperC` for the first-order
+face selection and the crossing equation.
 
 ## Open
 
