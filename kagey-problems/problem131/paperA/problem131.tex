@@ -56,22 +56,20 @@ analytic estimate and a numerical fit. We find its asymptotics, with explicit
 constants, for free and for periodic ends. The coupling at the crossing grows
 like half the logarithm of the length of the chain, minus half the logarithm
 of that logarithm. So the correlation length at the crossing is a vanishing
-fraction of the chain, and periodic ends lower the coupling by an amount that
-decays like the inverse logarithm of the length. The earlier approximations
-lack the doubly logarithmic term, which explains why fits on chains of
-moderate length find a slope below one half. The proofs treat the
+fraction of the chain. Periodic ends lower the coupling at the crossing by an
+amount that decays like the inverse logarithm of the length. The earlier
+approximations lack the doubly logarithmic term, which explains why a fit on
+chains of moderate length finds a slope below one half. The proofs treat the
 magnetization as the position of a persistent random walk and compare its
 central probability with a modified Bessel function, with a relative error
 bound that is explicit for every length. For free ends this traps the crossing
-in an explicit interval for every length, proved analytically for long chains
-and by exact integer arithmetic for short ones, with the integer checks
-repeated in Lean. We also find the crossing of every other value of the
-magnetization with full magnetization.
+in an explicit interval at every length. The proof is analytic for long chains
+and uses exact integer arithmetic for short ones. We also locate, for each
+smaller magnetization, the coupling at which it becomes as likely as full
+magnetization.
 \end{abstract}
 
-\noindent\textbf{Keywords:} Ising chain; finite-size effects; magnetization
-distribution; persistent random walk; Markov binomial distribution; modified
-Bessel functions; computer-assisted proof.
+\noindent\textbf{Keywords:} exact results; persistence; stochastic processes.
 
 \noindent\textbf{MSC2020:} 82B20; 60J10; 60F05; 60G50; 33C10.
 
@@ -123,19 +121,18 @@ have no $\log\log N$ term, and this term explains the slope of their numerical
 fit (Table~\ref{tab:couplings}).
 
 The crossing lies between two regimes in which the law is well understood.
-When $T=N(1-p)$ stays bounded, the walk is close to the telegraph process and
+When $\tau=N(1-p)$ stays bounded, the walk is close to the telegraph process and
 the magnetization has a scaling
 limit~\cite{renshaw1981,konno2009,herrmann2010,antal2004}. When $p$ is fixed,
-the bin has a normal limit (Theorem~\ref{thm:clt}). At the crossing $T$ grows
+the bin has a normal limit (Theorem~\ref{thm:clt}). At the crossing $\tau$ grows
 like $\log N$, so neither limit decides it, and we need bounds that hold
-uniformly in $T$. Our main tool is a comparison of the middle bin with a
+uniformly in $\tau$. Our main tool is a comparison of the middle bin with a
 modified Bessel function, with a relative error that is explicit for every $N$
 (Theorem~\ref{thm:bessel}).
 
 The crossing for free ends is also Problem~131 of Kagey's Open Problem
 Collection~\cite{kagey131}, posed for a Galton board whose ball keeps its
-direction with probability $p$, and Remark~\ref{rem:kagey} answers the other
-questions of that problem. A walk with $d$ directions, which
+direction with probability $p$. A walk with $d$ directions, which
 is the $d$-state Potts chain, is treated in~\cite{paperB}, and general slowly
 switching chains in~\cite{paperC}.
 
@@ -171,10 +168,11 @@ $\Prob(w)\propto\exp(J\sum_{i<N}\sigma_i\sigma_{i+1})$ with $e^{-2J}=u$. So the
 spins form the Ising chain in zero field with free boundaries, and $J>0$
 exactly when $p>\frac12$.
 
-\paragraph{Scales.} Let $L=\log N$ and $T=Nq$. Each of the $N-1$ steps after
+\paragraph{Scales.} Let $L=\log N$ and $\tau=Nq$. Each of the $N-1$ steps after
 the first switches with probability $q$, so the expected number of switches is
-$(N-1)q=T-q$. We call $T$ the \emph{switching scale}. The central crossing has
-$T$ of order $L$. Near the edges the crossings have larger $T$, up to order
+$(N-1)q=\tau-q$. We call $\tau$ the \emph{switching scale}. In the Ising chain a switch is a domain wall, and
+$q=1/(1+e^{2J})$, so $\tau$ is the expected number of domain walls plus $q$. The central crossing has
+$\tau$ of order $L$. Near the edges the crossings have larger $\tau$, up to order
 $\sqrt N$ for the bins next to an edge (Section~\ref{sec:allbin}).
 
 \paragraph{Ratios and crossings.} For a bin $k$ with $1\le k\le N-1$ we write
@@ -193,7 +191,7 @@ $p_{a,b}$ for it and $u_{a,b}=(1-p_{a,b})/p_{a,b}$ for its odds. The
 \begin{equation}\label{eq:zN}
 z_N=N(1-p_N)=\frac{Nu_N}{1+u_N}
 \end{equation}
-is the value of $T$ there.
+is the value of $\tau$ there.
 
 \paragraph{Special functions and asymptotic notation.} The functions $I_0$ and
 $I_1$ are the modified Bessel functions of the first kind, of orders zero and
@@ -304,16 +302,14 @@ Herrmann and Vallois~\cite{herrmann2010} give the telegraph limit with its
 Bessel density. Dekking and Kong~\cite{dekkingkong2011} study the Markov
 binomial law, give its variance and find when it has one, two or three modes.
 Their criterion already gives the crossing of the bins next to the edges
-(Section~\ref{sec:allbin-order}). The OEIS
-entries~\cite{oeisA035002,oeisA348595} already record both tables
-of~\cite{kagey131}.
+(Section~\ref{sec:allbin-order}).
 
 For the Ising chain, Antal, Droz and R\'acz~\cite{antal2004} give the
-magnetization law at a fixed scale $T$ under several boundary conditions, and
+magnetization law at a fixed scale $\tau$ under several boundary conditions, and
 Dantchev and Rudnick~\cite{dantchev2022} give exact free and periodic
-coefficients. The fixed-$T$ scaling law of Antal, Droz and R\'acz already
-predicts the central crossing. If one evaluates it at $T$ of order $\log N$
-(a regime in which it is not proved), its endpoint atom and its density at zero magnetization balance at a value $z$ of $T$ with
+coefficients. The fixed-$\tau$ scaling law of Antal, Droz and R\'acz already
+predicts the central crossing. If one evaluates it at $\tau$ of order $\log N$
+(a regime in which it is not proved), its endpoint atom and its density at zero magnetization balance at a value $z$ of $\tau$ with
 $z+\frac12\log z=L+c_0+1/(8z)+O(z^{-2})$, which is the crossing equation of
 Proposition~\ref{prop:crossing-eq} without its remainder. What we add is a
 proof in this regime, with explicit bounds, and the crossing at every $N$.
@@ -365,30 +361,26 @@ Table~\ref{tab:couplings}.
 Any number in Sections~\ref{sec:middle} and~\ref{sec:periodicwindow} that no
 script prints is listed in \nolinkurl{paperA/data/quoted_values.txt}.
 
-\paragraph{Acknowledgments.} I thank Peter Kagey for posing the problem. The
-use of Claude Opus 5.5 (Anthropic) and GPT-6 Astra (OpenAI) in this work is
-described in the note on the use of AI below.
-
-\section*{A note on the use of AI}
-Except for Theorem~\ref{thm:every-n} and Corollary~\ref{cor:couplings}
-(below), I wrote the proofs and derivations of this paper by hand, without AI
-assistance, before any revision. I then used Claude Opus 5.5 (Anthropic,
-through Claude Code) in September and October 2026 to check everything I had
-written for typos and for statements that were technically wrong. It found a fair
-number of gaps, which I fixed, along with occasional wrong references and
-unclear wording. I decided every revision and went over each one by hand. The model also
-drafted rewordings of many passages, which I reviewed and edited. Two results came from the model. Near the
-end of the work it conjectured Theorem~\ref{thm:every-n}, the bracket for the
-crossing at every $N$, together with a proof that uses the Bessel bounds of
-Lemma~\ref{lem:bessel-bounds}. It was different enough from my original
-conjecture that most of the credit for it belongs to the model, and I rechecked
-and rederived its proof by hand.
+\paragraph{Acknowledgments.} I thank Peter Kagey for posing the problem. I
+used two AI tools in this work, Claude Opus 5.5 (Anthropic, through Claude
+Code, in September and October 2026) and GPT-6 Astra (OpenAI). Except for the
+proofs of Theorem~\ref{thm:every-n} and Corollary~\ref{cor:couplings}, I wrote
+the proofs and derivations of this paper by hand, without AI assistance, before
+any revision. I then used Claude Opus 5.5 to check everything I had written for
+typos and for statements that were technically wrong. It found a fair number of
+gaps, which I fixed, along with occasional wrong references and unclear
+wording. I decided every revision and went over each one by hand. The model
+also drafted rewordings of many passages, which I reviewed and edited. I came
+up with Theorem~\ref{thm:every-n}, the bracket for the crossing at every $N$.
+The model offered a more refined and elegant way of stating it, which is the
+form given here, together with a proof that uses the Bessel bounds of
+Lemma~\ref{lem:bessel-bounds}. I rechecked and rederived that proof by hand.
 In a later revision, which recast the introduction in terms of the Ising
 chain, the model proposed Corollary~\ref{cor:couplings} and the comparison in
 Table~\ref{tab:couplings}, and wrote their proofs and the script that computes
 the table. I checked both by hand. I also checked the proofs, except those of
-Corollary~\ref{cor:couplings}, with GPT-6 Astra (OpenAI), which found nothing
-beyond the earlier check.
+Corollary~\ref{cor:couplings}, with GPT-6 Astra, which found nothing beyond the
+earlier check.
 
 The Lean~4 formalization in
 \nolinkurl{kagey-problems/problem131/lean/PaperA} was generated by the
@@ -472,14 +464,6 @@ Stochastics and Dynamics \textbf{10} (2010), 161--196.
 N.~Konno, \emph{Limit theorems and absorption problems for one-dimensional correlated random
 walks}, Stochastic Models \textbf{25} (2009), 28--49.
 \url{https://arxiv.org/abs/quant-ph/0310191}.
-
-\bibitem{oeisA035002}
-E.~Friedman, Sequence A035002, in: OEIS Foundation Inc., \emph{The On-Line Encyclopedia of Integer
-Sequences}, \url{https://oeis.org/A035002}.
-
-\bibitem{oeisA348595}
-R.~J.~Mathar, Sequence A348595, in: OEIS Foundation Inc., \emph{The On-Line Encyclopedia of Integer
-Sequences} (2022), \url{https://oeis.org/A348595}.
 
 \bibitem{renshaw1981}
 E.~Renshaw and R.~Henderson, \emph{The correlated random walk}, J.\ Appl.\ Probab.\ \textbf{18}
