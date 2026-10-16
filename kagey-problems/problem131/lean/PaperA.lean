@@ -17,6 +17,8 @@ import PaperA.AllbinAsymptotics
 import PaperA.EveryN
 import PaperA.BesselIntegral
 import PaperA.EveryNLarge
+import PaperA.EveryNCorollary
+import PaperA.EveryNSign
 
 /-!
 # Paper A (`paperA/problem131.tex`), root module

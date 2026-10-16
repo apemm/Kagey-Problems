@@ -17,9 +17,12 @@ Table 3 compares with the approximations of Stepanyan et al. (J. Stat. Mech. 202
 Lean coverage is partial. The fixed-edge and Laguerre-root asymptotics (including their leading
 limits), the entire periodic central-crossing theorem, the spatial window, and the crossing
 equation are not formalized. The edge coefficient lemmas are rational algebra conditional on
-coefficient equations. In the every-N corollary, only the `p_N` interval of part (a) follows by
-rewriting the Lean theorem; the positivity chain and coupling interval are not formalized.
-`../lean/PaperA/MAP.md` lists the remaining omissions, including the coupling corollary.
+coefficient equations. In the every-N corollary, parts (a), (d) and the finite inequalities
+of (b) are formalized. This includes the positivity chain, the probability and coupling
+intervals, the logarithmic bracket for ζ_N, and the strict crossing above ζ_N for every
+N ≥ 2774. The asymptotic conclusion of (b) and part (c) remain outside Lean.
+`../lean/PaperA/MAP.md` lists the remaining omissions, including the separate asymptotic
+coupling and correlation-length corollary.
 
 ## Files
 
