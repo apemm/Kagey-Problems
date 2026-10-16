@@ -35,7 +35,7 @@ args = parser.parse_args()
 # Each entry is a script name followed by its arguments.
 runs = [('test_certified_decimal.py',), ('verify.py',), ('check_bessel.py',), ('verify_adjacent.py',),
         ('verify_allbin.py',), ('verify_periodic_window.py',),
-        ('verify_ising_coupling.py',), ('verify_ising_coupling_tm.py',), ('verify_walls.py',),
+        ('verify_ising_coupling.py',), ('verify_ising_coupling_tm.py',), ('verify_walls.py',), ('verify_field.py',),
         ('verify_certified_bounds.py',),
         ('verify_every_n_guards.py',),
         ('verify_uniform_llt.py',), ('verify_uniform_llt.py', '--run2'),
