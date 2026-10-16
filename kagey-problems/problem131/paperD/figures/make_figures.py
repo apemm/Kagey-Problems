@@ -565,7 +565,7 @@ def check(data):
     cmp("notes H2, exact f_n(m) m(m+1)/x at m = 10^4", "1.03777", b["f_last"] * m * (m + 1) / X_BIG)
     cmp("notes H2, formula at m = 10^4", "1.0372", 1 + X_BIG * (2 * log(m) + 2 * EULER - 3) / m)
     cmp("heuristic factor near m = 70 at n = 1600 (close to 2)", "2", 1 + 10.2405649147 * (2 * log(70) + 2 * EULER - 3) / 70)
-    cmp("Landau mode lambda_0", "-0.2227829813", s["landau"]["mode"])
+    cmp("Landau mode lambda_L", "-0.2227829813", s["landau"]["mode"])
 
     # Figure 3 and Table 2
     h = data["heavy"]
