@@ -63,16 +63,18 @@ is strongly connected and it has start mass.
   computations at finite N.
 - The table of outcomes (Table 2 and Remark 5.3). The rows for the path P_d and for 2 triangles
   joined by a link of rate eps < eps_1 = (64 + sqrt 46)/60 are proved in Appendix C
-  (Propositions C.3 and C.4). The rows marked Lean are proved in Lean.
+  (Propositions C.3 and C.4). The symmetric-Q row is proved in Remark 5.3, and the rows marked Lean
+  are proved in Lean (theorem names in Remark 5.3 and lean/PaperC/MAP.md).
 - The tree formula for the constant on every irreducible face (Proposition 4.15, with Lemma A.3),
   and the rate inside a face written through balanced flows, with the gap to the reversible
   formula and one equation on a cycle (Proposition 4.16, Remark 4.17 and Example 4.18).
-- Sticky priors for hidden Markov models. The support and location of the prior mode
+- Sticky hidden Markov models, given the kernel and a common exit probability h. The support and
+  location of the conditional mode
   (Corollary 6.1 and Proposition 6.2), the fact that among symmetric kernels only the uniform kernel
   jumps from 1 state straight to all of them (Corollary 6.3), the probability of such a jump under
   the sticky HDP prior with 3 states, about 3 sqrt3/(8 pi omega) for large omega (Proposition 6.4),
-  an exact link to the two-state walk (Corollary 6.5) and the gap between the prior mode and where the
-  prior puts its mass (Proposition 6.6).
+  an exact link to the two-state walk (Corollary 6.5) and the gap between the conditional mode and where
+  the law puts its mass (Proposition 6.6). The mixture over h under the prior is not treated.
 
 The material on the Fisher information in the endpoint (the old Section 8 and Appendix E) is no
 longer in this paper. It is now the separate note `../S1_endpoint_information_note/s1_note.tex`,
