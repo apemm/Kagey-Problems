@@ -81,6 +81,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `TableValuesCore` | correct rounding (`RoundsTo`), Taylor certificates for `exp` and `log`, rational bounds on `ζ_N`, and bounds on `u_N` and `u_N^P` from truncated sums with a geometric tail |
 | `TableValuesEveryN` | the values of the table `tab:every-n`, by kernel-checked certificates |
 | `TableValuesCouplings` | the values of the table `tab:couplings`, by kernel-checked certificates |
+| `TableValuesText` | decimals displayed in the text, by kernel-checked certificates |
 
 ## Section 1, setting and notation
 
@@ -217,6 +218,26 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `app:every-n` | A.2 | Step 3, the lower bound | `lower_key`, `U_sq_expand`, `every_N_lower_large` | `EveryNLarge` |
 | `app:every-n` | A.3 | `d^(N-1) S_N(c/d)` is an integer, so the sign of `S_N(c/d) - 1` is a comparison of integers | `Snum`, `Snum_eq`, `Wfast_eq`, `chooseMul_eq` | `EveryN` |
 | `eq:RN-formula` | A.4, (41) | the exact formula `R_N = log Λ_N - (log E(w) + 1/(8w)) - 1/(8N) - wz/N - (1/2) log(1 + w/N)`, in the equivalent form `log Λ_N - log E(w) - (w - z) - (1/2) log(w/z) - 1/(8z)` | inside `crossing_eq_large` | `CrossingEquation` |
+
+## Numbers displayed in the text
+
+A decimal written with `...` is a truncation and is stated as two bounds. The others are stated
+with `RoundsTo` (correct rounding). All are in the module `TableValuesText`.
+
+| Where | Number | Statement | Lean |
+| --- | --- | --- | --- |
+| introduction and Section 3 | `c_0 = -0.467...`, `-0.46735...` | `-0.46736 < (1/2) log(π/8) < -0.46735` | `tv_c0` |
+| introduction | `0.84` | `z_N/L` at `N = 10⁴` rounds to `0.84` | `tv_zN_div_L_10000` |
+| introduction | `4.576`, `4.578`, `4.405` | the row `N = 10⁵` of `tab:couplings` | `tab_couplings_5` |
+| Figure 1 | `p_9 = 0.82829...` | `0.82829 ≤ p_9 < 0.82830` | `tv_p9` |
+| after `thm:every-n` | `0.440`, `0.163`, `0.0387`, `0.00778` | `ε_N` at `N = 10, 10², 10³, 10⁴` | `tv_eps_10`, `tv_eps_100`, `tv_eps_1000`, `tv_eps_10000` |
+| proof of `thm:every-n` | `174.25...` | `174.25 ≤ √(32/π) e⁴ < 174.26` | `tv_sqrt_exp4` |
+| proof of `cor:every-n` (b) | `ν_2 > 0.40` | `log 2 - (1/2) log log 2 + c_0 > 0.40` | `tv_nu2` |
+| after `rem:sign` | `0.0230`, `0.00126` | `L/(2N)` at `N = 100` and `N = 3200` | `tv_L_div_2N` |
+| Section 5 | `0.385`, `0.417`, `0.450` | the secant slopes of `J_N^P` against `log N` on `[10, 10²]`, `[10², 10³]`, `[10⁴, 10⁵]` | `tv_secant_1_2`, `tv_secant_2_3`, `tv_secant_4_5` |
+| Section 5 | `0.002`, `0.171`, `0.338` | `|main terms - J_N^P|`, `|(2L - 1)/5 - J_N^P|`, `|0.3864 L - 0.21055 - J_N^P|` at `N = 10⁵` | `tv_off_by_5` |
+| caption of `tab:couplings` | `0.030` | `(log 2)/(2 log N)` at `N = 10⁵` | `tv_shift_100000` |
+| `rem:ordered` | `1.046`, `1.330` | `J_ord - J_N^F` at `N = 10³` and `N = 10⁵`, with `J_ord = -(1/2) log(2^{1/(N-1)} - 1)` | `tv_Jord_3`, `tv_Jord_5` |
 
 ## Not in this paper, kept in the repository for the tables note
 

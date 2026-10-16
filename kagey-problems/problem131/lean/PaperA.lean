@@ -36,6 +36,7 @@ import PaperA.FixedMagnetization
 import PaperA.TableValuesCore
 import PaperA.TableValuesEveryN
 import PaperA.TableValuesCouplings
+import PaperA.TableValuesText
 
 /-!
 # Paper A (`paperA/problem131.tex`), root module
