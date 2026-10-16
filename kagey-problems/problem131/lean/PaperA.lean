@@ -30,6 +30,7 @@ import PaperA.IsingDictionary
 import PaperA.AllbinExpansion
 import PaperA.EdgeLaguerre
 import PaperA.CriticalWindow
+import PaperA.EveryNSignTable
 
 /-!
 # Paper A (`paperA/problem131.tex`), root module

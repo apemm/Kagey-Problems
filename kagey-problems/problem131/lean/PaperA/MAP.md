@@ -2,7 +2,7 @@
 
 This file maps covered statements of Paper A (`paperA/problem131.tex` and the files it inputs)
 to Lean declarations and records partial coverage and omissions. The library `PaperA` has root
-`PaperA.lean`, which imports all 32 modules in `PaperA/` (33 modules including the root), in
+`PaperA.lean`, which imports all 33 modules in `PaperA/` (34 modules including the root), in
 namespace `Kagey131`. It uses Lean 4 v4.33.1 and Mathlib v4.33.1. Every theorem listed here is
 proved without `sorry`, `admit` or new axioms, and `#print axioms` on each of them reports only
 `propext`, `Classical.choice` and `Quot.sound` (see `build-log.txt`).
@@ -63,6 +63,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `EveryNLarge` | the crossing for `N ≥ 175` and for every `N ≥ 2` |
 | `EveryNCorollary` | full positivity, probability and coupling bounds of Corollary (a), and the finite inequalities of (b) |
 | `EveryNSign` | the rational threshold certificate and the crossing above ζ_N for every N ≥ 2774 |
+| `EveryNSignTable` | Remark `rem:sign` for `2 ≤ N ≤ 2773` by kernel-checked certificates, and the whole sign pattern |
 | `EveryNAsymptotics` | the asymptotic conclusions of Corollary (b) and (c), with explicit constants, and the conversion between `z_N` and `N u_N` |
 | `CrossingEquation` | Proposition `prop:crossing-eq` for every `N ≥ 2`, analytic for `N ≥ 175` and by rational certificates below |
 | `LogInversion` | Lemma `lem:inversion`, the inversion of `z + (1/2) log z`, with an explicit constant |
@@ -132,6 +133,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `cor:every-n` (b) | 3.7 | the asymptotic conclusion `z_N = ν_N + O(log L/L)`, as `|z_N - ν_N| ≤ 27 log L/L` for every N ≥ 21 and as an `IsBigO` statement | `every_N_corollary_b_bound`, `every_N_corollary_b_isBigO` | `EveryNAsymptotics` |
 | `cor:every-n` (c), `eq:thirdorder` | 3.7, (11) | `z_N = ν_N + (log L/4 - c₀/2 + 1/8)/L + O((log L)²/L²)`, as the bound `52 (log L)²/L²` for every N ≥ 21 and as an `IsBigO` statement | `every_N_corollary_c_bound`, `every_N_corollary_c_isBigO`, with `every_N_c_core`, `every_N_eps_le` | `EveryNAsymptotics` |
 | `eq:zN`, conversion | (2) | `0 ≤ N u_N - z_N ≤ 2(L + 1/4)²/N` for every N ≥ 2 | `N_uN_sub_zN` | `EveryNAsymptotics` |
+| `rem:sign` | 3.9 | for every `N ≥ 2`, `z_N > ζ_N` for `N ≤ 15`, `z_N < ζ_N` for `16 ≤ N ≤ 218` and `z_N > ζ_N` for `N ≥ 219`, where `z_N = N(1 - p_N)` | `rem_sign`, `sign_table`, with `signCheck1` to `signCheck14`, `sign_of_check`, `sign_of_cert`, `SnumFast_eq`, `lt_zetaN_of_cert10`, `zetaN_lt_of_cert10`, `lt_zN_of_cert`, `zN_lt_of_cert`, and `every_N_crossing_above_zeta` for `N ≥ 2774` | `EveryNSignTable`, `EveryNSign` |
 | `cor:every-n` (d) | 3.7 | z_N > ζ_N for every N ≥ 2774, with a kernel-checked rational threshold certificate | `every_N_crossing_above_zeta`, `zetaN_2774_lower`, `zetaN_2774_upper` | `EveryNSign` |
 | `eq:zetaN`, auxiliary bounds | (8) | ζ_N is monotone in N, and 1/2 < ζ_N ≤ log N for N ≥ 2 | `zetaN_mono`, `half_lt_zetaN`, `zetaN_le_log` | `EveryNCorollary` |
 | `prop:crossing-eq`, `eq:crossing-eq` | 3.8, (12) | with `R_N = z + (1/2) log z - L - c₀ - 1/(8z)`, for every `N ≥ 2`: `-(z²+z)/N ≤ R_N ≤ 1/(16z²)`, `L/2 ≤ z ≤ L` and `|R_N| ≤ 1/(4L²) + (L²+L)/N` | `crossing_equation`, `crossRem`, `crossRem_eq` | `CrossingEquation` |
@@ -415,6 +417,13 @@ Partial coverage.
     `|t| ≤ T`, `|y| ≤ Y`, which contain every compact set. For free ends `M^F_N(t)` counts the
     bins with `P_N(k) > P_N(0)` at `p = 1/(1+u)`, and for periodic ends `M^P_N(t)` uses `perBin`.
     No rate of convergence is stated.
+42. `rem:sign`. For `2 ≤ N ≤ 2773` Lean checks one rational `r_N = n/10⁷` per `N` that lies
+    strictly between `z_N` and `ζ_N`. The side of `ζ_N` is an integer inequality from ten-term
+    Taylor bounds for `exp(n/(32·10⁷))`, raised to the power `64`, and `π` to twenty decimals. The
+    side of `z_N` is the sign of `S_N(n/(10⁷N - n)) - 1` in integers, evaluated by `SnumFast`,
+    which `SnumFast_eq` identifies with `Snum`. The kernel checks all 2772 certificates with
+    `decide +kernel`, which takes about ten minutes. The numbers `n` were found in floating point,
+    and they are data only. The paper replays its own outward-interval brackets instead.
 
 ## Not in Lean
 
@@ -422,8 +431,7 @@ The following parts of the paper are not formalized. The finite results and cond
 listed above do not supply these omitted limit statements or their error bounds.
 
 * Section 1. The infinite chain behind `ξ(J)` (see difference 39).
-* Section 3. The complete sign pattern of Remark 3.9 (`rem:sign`). The N ≥ 2774 portion of that pattern follows
-  from the formalized part (d). The values in the table `tab:every-n` are not formalized.
+* Section 3. The values in the table `tab:every-n`.
 * Section 4. Corollary 4.4 (`cor:fixed-M`) as stated (Lean has Theorem 4.3, of which it is a
   restatement), Remarks 4.5 (`rem:sign-correction`) and 4.7 (`rem:jacobi`), and the
   consequences of Theorem 4.9 displayed after it (`eq:allbin-growing-edge` and the case
