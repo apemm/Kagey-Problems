@@ -57,9 +57,9 @@ eps). Put x = N eps.
   x/(d(d+1)), bin by bin (Theorem 3.9). The bulk (M_N - x log x)/x tends to the Landau law when
   x -> oo and x^3 (log N)^2/N -> 0, in particular at the crossing, with a bound for each bin
   (Theorem 3.10).
-- The Landau density f_L has exactly one mode lambda_0, with -0.22278299 < lambda_0 < -0.22278297,
+- The Landau density f_L has exactly one mode lambda_L, with -0.22278299 < lambda_L < -0.22278297,
   and -0.0792 <= f_L'' <= -0.0786 near it (Lemma 3.11, by ball arithmetic). So at the crossing every
-  mode is at distance x log x + lambda_0 x + O(sqrt(x log x)) from the nearer end
+  mode is at distance x log x + lambda_L x + O(sqrt(x log x)) from the nearer end
   (Corollary 3.12).
 - For even N with x >= 1 and x (log N)^2/N -> 0, bin N-m has probability (x/(2m^2))(1 + o(1)),
   uniformly for omega_N x log^2(x+1) <= m <= delta_N N, for any omega_N -> oo with
@@ -125,9 +125,10 @@ grows.
 ## Files
 
 - `problem131_memory.tex` and the section files `sec_*.tex` and `app_*.tex` make up the paper, the
-  main text and Appendices A to C in one PDF, `problem131_memory.pdf`. The sections are
+  main text and Appendices A to D in one PDF, `problem131_memory.pdf`. The sections are
   `sec_intro`, `sec_erw_crossing`, `sec_erw_shape` and `sec_verify`, and the
-  appendices are `app_erw_bounds`, `app_erw_profile` and `app_erw_bulk`.
+  appendices are `app_erw_bounds`, `app_erw_profile`, `app_erw_bulk` and `app_erw_signs`
+  (the proofs for the sign pattern of the second difference and the rounding lemma).
 - `figures/` holds the two figures of the paper, with the captions in `figures/captions.md`.
   Figure 1 (`family.pdf`) is made by `figures/make_family_figure.py` and Figure 2 (`shape.pdf`) by
   `figures/make_figures.py`, both in the shared style `../figures/series_style.py`. The second script makes the

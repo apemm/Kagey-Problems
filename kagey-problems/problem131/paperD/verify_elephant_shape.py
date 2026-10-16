@@ -588,9 +588,9 @@ def main():
     mp.mp.dps = 30
     l0A = mp.findroot(lambda l: landau_real(l, 1), -0.22)
     l0B = mp.findroot(lambda l: landau_fourier(l, 1), -0.22)
-    agree('mode lambda_0 of f_L (Lemma 3.11; certified in certify_elephant.py)', '-0.2227829813', {'A': float(l0A), 'B': float(l0B)})
+    agree('mode lambda_L of f_L (Lemma 3.11; certified in certify_elephant.py)', '-0.2227829813', {'A': float(l0A), 'B': float(l0B)})
     f2A, f2B = landau_real(l0A, 2), landau_fourier(l0B, 2)
-    agree("f_L''(lambda_0) (Lemma 3.11; certified in certify_elephant.py)", '-0.0789', {'A': float(f2A), 'B': float(f2B)})
+    agree("f_L''(lambda_L) (Lemma 3.11; certified in certify_elephant.py)", '-0.0789', {'A': float(f2A), 'B': float(f2B)})
     f3A, f3B = landau_real(l0A, 3), landau_fourier(l0B, 3)
     agree('kappa_1/2 = f_L\'\'\'/(2 f_L\'\') in H1 (research notes, not printed)', '-0.535021', {'A': float(f3A / f2A / 2), 'B': float(f3B / f2B / 2)})
 
