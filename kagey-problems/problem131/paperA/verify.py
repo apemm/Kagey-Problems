@@ -396,9 +396,12 @@ def S_coeffs(N):
 
 PREC = 64
 def u_root(N, jmax=500):
-    """largest a with S_N(a/2^PREC) < 1, by bisection in exact integer arithmetic.
-    For N > jmax the polynomial is truncated at degree jmax; the dropped terms are positive and
-    smaller than 1e-100 on the search range (checked below)."""
+    """Return the largest grid value u=a/2**PREC with the truncated sum < 1.
+    Bisection uses exact integer signs for the terms of S_N through degree jmax.
+    If jmax < N-1, this approximates the full-polynomial root and does not certify
+    its grid bracket. The check below samples omitted degrees 501 through 559
+    near the approximate root, not the full tail.
+    """
     c = S_coeffs(N)[:jmax + 1]
     J = len(c) - 1
     one = 1 << (PREC * J)
@@ -468,7 +471,7 @@ report("18. middle - extreme changes sign exactly once on the grid p = i/200, 2<
 seq = [u_root(N) for N in range(2, 122)]
 report("19. p_N strictly increasing for 2<=N<=121", all(seq[i] > seq[i + 1] for i in range(len(seq) - 1)))
 
-# large N: truncation is harmless, float DP as second method, Bessel heuristic
+# Large N uses a truncated-polynomial approximation and float DP for comparison.
 def bessel_x(m):
     """root of 2x(I0(2x)+I1(2x)) = m, power series and bisection"""
     def G(x):
@@ -510,6 +513,7 @@ for N, window in [(800, (0.9950, 0.9970)), (1600, (0.9970, 0.9985)), (3200, (0.9
     u = u_root(N)
     c = S_coeffs(N)
     uf = float(u) * 1.01
+    # Numerical check of the first 59 omitted degrees, not a bound on the full tail.
     tail = sum(float(F(c[j])) * uf**j if c[j] < 10**300 else float(F(c[j]) * F(uf)**j) for j in range(501, 560))
     if not tail < 1e-100:
         ok = False

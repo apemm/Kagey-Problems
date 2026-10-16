@@ -38,17 +38,19 @@ scripts below are in `paperA/`. Add `--full` to include `verify_every_n.py` and
 
 | Result that rests on computation | Script | The 2 methods |
 | --- | --- | --- |
-| The crossing at every N (theorem), for 2 <= N <= 174 | `verify_every_n.py`, rechecked by `verify_every_n_guards.py` | The certificate integers come from the run-count sum and from the recursion with integer weights. zeta_N comes from a Decimal Newton iteration and from a float Lambert W iteration. The Lean kernel also checks these certificates (`lean/PaperA/EveryN.lean`). |
-| The crossing equation (proposition), for N <= 174 | the same 2 scripts | The same certificates. The guards also get the sign of R_N from the certificate integers for N <= 1000 and check z_2 = 2/3 < log 2. |
-| Part (d) of the corollary on the crossing at every N | `verify_every_n_guards.py` | One evaluation with a proved bracket. f(zeta_2774) - 1 = 2.1e-4 and f(zeta_2773) - 1 < 0 in 60-digit decimal arithmetic, with zeta_N known to within 10^-45. The function increases in zeta, so the signs hold on the whole bracket. |
-| The remark on the sign of z_N - zeta_N (computer-assisted throughout) | `verify_every_n.py` and `verify_every_n_sign.py` | Up to N = 1000 the certificate integers, and for 1001 <= N <= 2773 exact integers S_N(v) < 1 at a rational v just above zeta_N/(N - zeta_N). The run-count sum and the recursion agree at N = 401, 1000, 1008, 2000 and 2773, and 2 float methods agree up to N = 3000. |
+| The crossing at every N (theorem), for 2 <= N <= 174 | `verify_certified_bounds.py`, also called by `verify_every_n_guards.py` | The certificate integers come from the run-count sum and the independent recursion with integer weights. Opposite interval signs certify zeta_N. The Lean kernel also checks the short-chain certificates (`lean/PaperA/EveryN.lean`). |
+| The crossing equation (proposition), for N <= 174 | `verify_certified_bounds.py` | Outward intervals at the same rational endpoints certify the remainder and logarithm bounds. |
+| Part (d) of the corollary on the crossing at every N | `verify_certified_bounds.py` | Outward intervals give f(zeta_2774) - 1 > 0.0002124 and f(zeta_2773) - 1 < -0.000005210. The analytic monotonicity proof then covers larger N. |
+| The remark on the sign of z_N - zeta_N (computer-assisted throughout) | `verify_certified_bounds.py`, with the original integer checks in `verify_every_n.py` and `verify_every_n_sign.py` | The replay encloses all polynomial comparisons through N = 2773 and all rational-grid separations. The original independent recursion agrees with run counts at N = 401, 1000, 1008, 2000 and 2773, and two float methods agree up to N = 3000. |
 
-The integer tests are exact, and every comparison with zeta_N is made in 60-digit decimal
-arithmetic with zeta_N bracketed to within 10^-45. The margins are above 0.03 for the crossing and
-the crossing equation. For the sign remark the smallest distance from zeta_N to a certified interval
-is 1.66e-5 (at N = 218), and for 1001 <= N <= 2773 the test point exceeds zeta_N/(N - zeta_N) by at
-least 1.2e-11. Every other high-precision check is not interval arithmetic, so it supports the
-proofs but does not replace them.
+The integer tests are exact. Every comparison with zeta_N uses eighty-digit outward intervals,
+including a proved pi enclosure and explicit widening of correctly rounded logarithms.
+Newton iteration only proposes the bracket of half-width 10^-45. The short-chain margins exceed
+0.03 for both the crossing and the crossing equation. For the sign remark the smallest distance
+from zeta_N to a certified interval exceeds 1.65e-5 (at N = 218), and for 1001 <= N <= 2773 the
+test point exceeds zeta_N/(N - zeta_N) by at least 1.2e-11. The replay bounds any omitted
+positive polynomial tail by a geometric series. `paperA/README.md` explains the construction.
+Other high-precision tables and sampled asymptotic checks remain numerical diagnostics.
 
 | Script | What it checks |
 | --- | --- |
@@ -61,14 +63,16 @@ proofs but does not replace them.
 | `verify_ising_coupling_tm.py` | Table 3, second method. Finds both central crossings again from the 2 x 2 transfer matrix of the Ising chain, with the coefficient of the middle bin extracted as a discrete Fourier sum over the N + 1 roots of unity, and asserts that every coupling of Table 3 agrees with the run polynomials within 1e-7 (the largest difference is about 2e-13). Needs NumPy (about 2 minutes). |
 | `verify_every_n.py` | The crossing at every N (about 8 minutes, only with `--full`). The bounds on I_0 + I_1 at 2,000 points, with the Bessel values by power series and by quadrature, the certificates for 2 <= N <= 174 and as a cross-check up to N = 1000, the margins of the analytic proof, and a table of z_N by 2 bisections. Writes `paperA/data/every_n_certificates.csv` and `paperA/data/every_n_output.txt`. |
 | `verify_every_n_sign.py` | The sign of z_N - zeta_N for 1001 <= N <= 2773 (about 13 minutes, only with `--full`). |
-| `verify_every_n_guards.py` | The rounding guards of the 2 scripts above, the signs of z_N - zeta_N and of R_N for N <= 1000, and the checks at N = 2773 and 2774 (about 25 seconds). |
+| `verify_certified_bounds.py` | Replays all finite certificates with outward intervals, including both integer methods for N <= 174. Writes bounds, margins and input hashes to `data/certified_bounds_output.txt` and `data/certified_bounds_manifest.json` (about ten seconds). |
+| `test_certified_decimal.py` | Independent exact-rational tests of interval operations, logarithms, pi, root-grid separation and positive-tail bounds. |
+| `verify_every_n_guards.py` | Runs the certified replay, then retains the older rounded diagnostic output and independent integer-DP spot checks. |
 | `verify_uniform_llt.py` | The uniform local law in 3 runs. With no argument, the exact identity for P_N(k) in 3,900 cases and the errors of the tilted Bessel form over all bins. With `--run2`, the lemmas and the error bound at 217 sampled points. With `--run3`, the central crossing from the tilted form against p_N. |
 | `verify_uniform_llt_cor5.py` | Where the proved central bound of the local law stops being vacuous (the smallest even N is 1454, found 2 ways), and the closed form for bins 1 and N - 1 in 390 exact cases (about 30 seconds). |
 
 `verify.py` checks the exact law against enumeration for N <= 16 at 20 rational values of p. The
 polynomials have degree less than N, so for those N this proves the polynomial identities. The last
-4 scripts in the table report their checks in their output rather than through the exit code, so
-the output has to be read. It is also saved in `paperA/data/`. The predictions are in `ledger.md`,
+two local-law scripts report their checks in their output rather than through the exit code, so
+that output has to be read. It is also saved in `paperA/data/`. The predictions are in `ledger.md`,
 `paperA/data/ledger_every_n.md` and `paperA/data/ledger_llt.md`.
 
 ## Paper B: the complete graph
@@ -245,10 +249,24 @@ The Lean 4 proofs are in `lean/`, one library for each of Papers A to D (`lean/P
 `lean/PaperD`), with Lean 4.33.1 and Mathlib. The library `lean/PaperC` also covers Paper E, and
 `lean/PaperD` also covers Paper F, with the statement numbers from before the split. The command
 `python -B lean/verify_lean.py` builds them with Lake and checks that every theorem and lemma uses
-only the axioms `propext`, `Classical.choice` and `Quot.sound`. The last run, on October 15, 2026,
+only the axioms `propext`, `Classical.choice` and `Quot.sound`. The recorded run on October 15, 2026,
 checked 481 declarations for Paper A, 307 for Paper B, 346 for Paper C (with Paper E) and 281 for
 Paper D (with Paper F). The build output, source hashes and axioms are in `lean/build-log.txt` and
-`lean/verification-manifest.json`. The file `lean/README.md` says what each library covers and what
-is not in Lean, and `lean/PaperC/MAP.md` and `lean/PaperD/MAP.md` match the statements to their
-Lean theorems. The MAP files use the numbers of the build of October 9, 2026, and each ends with a
-note that says where the statements of Paper E or Paper F went.
+`lean/verification-manifest.json`. The Paper A entries were refreshed from a fresh rebuild
+outside OneDrive, with cached dependencies and initially empty Paper A build artifacts.
+It checked all 20 modules (including the root) and 481 declarations, with 22 linter warnings
+and no unexpected axioms. Every source hash matches the current Lean files.
+
+The file `lean/README.md` summarizes coverage. The files `lean/PaperA/MAP.md` through
+`lean/PaperD/MAP.md` map covered statements to Lean declarations and list partial coverage and
+omissions. The C/D maps use the numbers from October 9, 2026, and explain where the statements
+of Papers E and F moved.
+
+For Paper A, the every-N bracket and finite Bessel inequalities are formalized. The fixed-edge
+and Laguerre-root asymptotics, including their leading limits, the entire periodic central-crossing
+theorem, and the spatial crossing window are not. The edge coefficient lemmas prove rational
+algebra conditional on coefficient equations. Only the `p_N` interval of Corollary 3.7(a) is
+covered by rewriting the every-N theorem; its positivity chain and coupling interval are not.
+`lean/PaperA/MAP.md` lists the other omissions, including the crossing equation and coupling
+corollary. The imported `Tables` module proves recurrence identities for material moved to the
+tables note; the path interpretations and bijections are not formalized.

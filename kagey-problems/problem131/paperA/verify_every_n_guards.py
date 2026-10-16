@@ -1,6 +1,8 @@
 """Guards and spot checks for the crossing at every N (Paper A, Theorem thm:every-n), added
 after a second check of the proofs.
-Standard library only.  Runtime under a minute (predicted < 2 min).
+Standard library only. First replays verify_certified_bounds.py with outward
+intervals and nonzero failure status. The older G1--G7 output below is retained
+as rounded diagnostic output and independent integer-DP spot checks.
 
   G1  rounding guard of verify_every_n_sign.py: v - u_zeta > 1e-40 for N = 1001..2773.
   G2  rounding guard of section [6] of verify_every_n.py at N = 15, 16, 218, 219.
@@ -33,6 +35,8 @@ def out(*a):
 def main():
     t0 = time.time()
     out("verify_every_n_guards.py  run " + time.strftime("%Y-%m-%d %H:%M"))
+    from verify_certified_bounds import verify
+    out(verify().rstrip())
 
     # G1
     DEN = 10 ** 7
@@ -121,6 +125,8 @@ def main():
         t1 = time.time()
         dp = v.S_int_dp(N, a, DEN)
         tdp = time.time() - t1
+        if not (rc == dp and rc < target):
+            raise ArithmeticError(f"Independent integer-DP check failed at N={N}")
         out(f"[G6] N = {N}: run-count == DP: {rc == dp}; S_N(v) < 1: {rc < target};"
             f" 1 - S_N(v) = {float(1 - D(rc) / D(target)):.4e}; time run-count {trc:.2f}s, DP {tdp:.2f}s")
 
