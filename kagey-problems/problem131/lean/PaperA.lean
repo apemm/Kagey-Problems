@@ -47,6 +47,7 @@ import PaperA.Jacobi
 import PaperA.FreeEnergy
 import PaperA.LevelTheta
 import PaperA.WindowBound
+import PaperA.FieldWeights
 
 /-!
 # Paper A (`paperA/problem131.tex`), root module
