@@ -2,7 +2,7 @@
 
 This file maps covered statements of Paper A (`paperA/problem131.tex` and the files it inputs)
 to Lean declarations and records partial coverage and omissions. The library `PaperA` has root
-`PaperA.lean`, which imports all 21 modules in `PaperA/` (22 modules including the root), in
+`PaperA.lean`, which imports all 22 modules in `PaperA/` (23 modules including the root), in
 namespace `Kagey131`. It uses Lean 4 v4.33.1 and Mathlib v4.33.1. Every theorem listed here is
 proved without `sorry`, `admit` or new axioms, and `#print axioms` on each of them reports only
 `propext`, `Classical.choice` and `Quot.sound` (see `build-log.txt`).
@@ -63,6 +63,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `EveryNLarge` | the crossing for `N ≥ 175` and for every `N ≥ 2` |
 | `EveryNCorollary` | full positivity, probability and coupling bounds of Corollary (a), and the finite inequalities of (b) |
 | `EveryNSign` | the rational threshold certificate and the crossing above ζ_N for every N ≥ 2774 |
+| `EveryNAsymptotics` | the asymptotic conclusions of Corollary (b) and (c), with explicit constants, and the conversion between `z_N` and `N u_N` |
 | `Tables` | identities between numerator tables and recursively defined rook and Mathar sequences; retained for the tables note |
 
 ## Section 1, setting and notation
@@ -111,7 +112,10 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `lem:bracket` (b) | 3.5 | `Φ(w)(1 - w(w+2)/(2N)) > N/2` gives `z_N < Nw/(N+w)` | `crossing_upper_of_Fcent` | `EveryN` |
 | `lem:bessel-bounds` | 3.6 | the two cubic bounds on `E(z)` for `z > 0`, `E(z) ≤ 1`, and `E(z) ≤ 1 - 1/(8z)` for `z ≥ 5/4` | `besselE_ge`, `besselE_le`, `besselE_le_one`, `besselE_le_of_ge` | `BesselIntegral` |
 | `cor:every-n` (a) | 3.7 | the full positivity chain `0 < Y'_N < Y_N < N`, probability interval and coupling interval for every N ≥ 2 | `every_N_corollary_a`, `every_N_bracket_endpoints` | `EveryNCorollary` |
-| `cor:every-n` (b), `eq:secondorder` | 3.7, (10) | both finite bounds on ζ_N and both finite bounds on z_N - ν_N; the asymptotic conclusion is not included | `every_N_zeta_bracket`, `every_N_corollary_b_finite`, `nuN_pos` | `EveryNCorollary` |
+| `cor:every-n` (b), `eq:secondorder` | 3.7, (10) | both finite bounds on ζ_N and both finite bounds on z_N - ν_N | `every_N_zeta_bracket`, `every_N_corollary_b_finite`, `nuN_pos` | `EveryNCorollary` |
+| `cor:every-n` (b) | 3.7 | the asymptotic conclusion `z_N = ν_N + O(log L/L)`, as `|z_N - ν_N| ≤ 27 log L/L` for every N ≥ 21 and as an `IsBigO` statement | `every_N_corollary_b_bound`, `every_N_corollary_b_isBigO` | `EveryNAsymptotics` |
+| `cor:every-n` (c), `eq:thirdorder` | 3.7, (11) | `z_N = ν_N + (log L/4 - c₀/2 + 1/8)/L + O((log L)²/L²)`, as the bound `52 (log L)²/L²` for every N ≥ 21 and as an `IsBigO` statement | `every_N_corollary_c_bound`, `every_N_corollary_c_isBigO`, with `every_N_c_core`, `every_N_eps_le` | `EveryNAsymptotics` |
+| `eq:zN`, conversion | (2) | `0 ≤ N u_N - z_N ≤ 2(L + 1/4)²/N` for every N ≥ 2 | `N_uN_sub_zN` | `EveryNAsymptotics` |
 | `cor:every-n` (d) | 3.7 | z_N > ζ_N for every N ≥ 2774, with a kernel-checked rational threshold certificate | `every_N_crossing_above_zeta`, `zetaN_2774_lower`, `zetaN_2774_upper` | `EveryNSign` |
 | `eq:zetaN`, auxiliary bounds | (8) | ζ_N is monotone in N, and 1/2 < ζ_N ≤ log N for N ≥ 2 | `zetaN_mono`, `half_lt_zetaN`, `zetaN_le_log` | `EveryNCorollary` |
 
@@ -296,7 +300,11 @@ Partial coverage.
     Monotonicity and `ζ_N ≤ L` are proved in `EveryNCorollary`.
 28. `cor:every-n`. Part (a) and the finite inequalities of (b) are standalone theorems
     about the actual `pN`, `uN` and `zetaN`. The coupling is `-Real.log (uN N) / 2`.
-    The asymptotic conclusion of (b) and all of (c) remain outside Lean.
+    The asymptotic conclusions of (b) and (c) are proved with explicit constants for every
+    N ≥ 21 (`|z_N - ν_N| ≤ 27 log L/L` and `52 (log L)²/L²`) and restated as `IsBigO` along
+    `N → ∞`, which is stronger than the `O(·)` of the paper. The proof follows the paper's proof of
+    (c), using `-log(1-x) ≤ x + 2x²` for `0 ≤ x ≤ 1/2` and `L⁴ ≤ 24 N` for the term
+    `ζ_N(ζ_N+1)/N`.
     For (d), `EveryNSign` proves `6.5230 < ζ_2774 < 6.5231` by rational Taylor
     certificates. It extends the inequality using
     `z³(z+1) ≤ a³(a+1) exp(z-a)` for `4 ≤ a ≤ z` and the defining equation for ζ_N,
@@ -330,8 +338,7 @@ The following parts of the paper are not formalized. The finite results and cond
 listed above do not supply these omitted limit statements or their error bounds.
 
 * Section 1. The Ising dictionary at the end of Section 1.2.
-* Section 3. The asymptotic conclusion of Corollary 3.7(b) and part (c) of
-  Corollary 3.7 (`cor:every-n`), Proposition 3.8 (`prop:crossing-eq`), and the complete
+* Section 3. Proposition 3.8 (`prop:crossing-eq`), and the complete
   sign pattern of Remark 3.9 (`rem:sign`). The N ≥ 2774 portion of that pattern follows
   from the formalized part (d). The values in the tables `tab:pn` and `tab:every-n`
   are not formalized.
