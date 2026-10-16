@@ -1,5 +1,6 @@
 import PaperA.TableValuesWalls
 import PaperA.BoundaryLayer
+import PaperA.SignCorrection
 
 /-!
 # Further numbers quoted in the text
@@ -248,16 +249,17 @@ theorem tv_fSign : 2 / 10 ^ 4 < fSign 2774 (zetaN 2774) - 1 ∧ fSign 2773 (zeta
 
 /-! ### Remark `rem:sign-correction`: `₂F₁(-200,-200;1;1/1600)` against `I_0(10)` -/
 
-/-- The terminating series `₂F₁(-a,-b;1;z) = ∑_{n ≤ min(a,b)} C(a,n) C(b,n) zⁿ`. -/
-noncomputable def hyp2F1neg (a b : ℕ) (z : ℝ) : ℝ :=
+/-- The terminating series `₂F₁(-a,-b;1;z) = ∑_{n ≤ min(a,b)} C(a,n) C(b,n) zⁿ`, summed to
+`min(a,b)`; for `a = b` it is `hyp2F1neg` of `SignCorrection` (`hyp2F1negMin_self`). -/
+noncomputable def hyp2F1negMin (a b : ℕ) (z : ℝ) : ℝ :=
   ∑ n ∈ range (min a b + 1), (a.choose n : ℝ) * (b.choose n : ℝ) * z ^ n
 
 /-- The same over `ℚ`, with `chooseD`. -/
 def hyp2F1negQ (a b : ℕ) (z : ℚ) : ℚ :=
   ∑ n ∈ range (min a b + 1), (chooseD a n : ℚ) * (chooseD b n : ℚ) * z ^ n
 
-theorem hyp2F1negQ_cast (a b : ℕ) (z : ℚ) : ((hyp2F1negQ a b z : ℚ) : ℝ) = hyp2F1neg a b (z : ℝ) := by
-  unfold hyp2F1negQ hyp2F1neg; push_cast; simp only [chooseD_eq]
+theorem hyp2F1negQ_cast (a b : ℕ) (z : ℚ) : ((hyp2F1negQ a b z : ℚ) : ℝ) = hyp2F1negMin a b (z : ℝ) := by
+  unfold hyp2F1negQ hyp2F1negMin; push_cast; simp only [chooseD_eq]
 
 /-- `∑_{r<R} b0(x, r)` over `ℚ`. -/
 def b0PartQ (x : ℚ) (R : ℕ) : ℚ := ∑ r ∈ range R, x ^ (2 * r) / ((r.factorial : ℚ) ^ 2)
@@ -290,12 +292,12 @@ theorem besselI0_two_mul_bounds (x : ℝ) (R : ℕ) (hρ : x ^ 2 < ((R : ℝ) + 
 /-- Remark `rem:sign-correction`: at `a = b = 200` and `z = 25/(ab) = 1/1600`, the exact
 `₂F₁(-a,-b;1;z)` is `9.5` percent below `I_0(10)`, that is,
 `100 (1 - ₂F₁(-a,-b;1;z)/I_0(10))` rounds to `9.5`. -/
-theorem tv_hyp_percent :
-    RoundsTo (100 * (1 - hyp2F1neg 200 200 (1 / 1600) / besselI0 10)) 95 1 := by
+theorem tv_hyp_percent_min :
+    RoundsTo (100 * (1 - hyp2F1negMin 200 200 (1 / 1600) / besselI0 10)) 95 1 := by
   obtain ⟨i1, i2⟩ := besselI0_two_mul_bounds (5 : ℝ) 40 (by norm_num)
   have e10 : (10 : ℝ) = 2 * 5 := by norm_num
   rw [e10]
-  have hF : hyp2F1neg 200 200 (1 / 1600) = ((hyp2F1negQ 200 200 (1 / 1600) : ℚ) : ℝ) := by
+  have hF : hyp2F1negMin 200 200 (1 / 1600) = ((hyp2F1negQ 200 200 (1 / 1600) : ℚ) : ℝ) := by
     rw [hyp2F1negQ_cast]; push_cast; rfl
   have hP : ∑ r ∈ range 40, b0 (5 : ℝ) r = ((b0PartQ 5 40 : ℚ) : ℝ) := by
     rw [b0PartQ_cast]; push_cast; rfl
@@ -333,5 +335,17 @@ theorem tv_hyp_percent :
     push_cast at this ⊢
     linarith
   exact roundsTo_of_bounds hlo hhi c1 c2
+
+/-- For `a = b` the two terminating sums agree. -/
+theorem hyp2F1negMin_self (a : ℕ) (z : ℝ) : hyp2F1negMin a a z = hyp2F1neg a a z := by
+  unfold hyp2F1negMin hyp2F1neg
+  rw [min_self]
+
+/-- Remark `rem:sign-correction`: the `9.5` percent, stated with `hyp2F1neg` of
+`SignCorrection`. -/
+theorem tv_hyp_percent :
+    RoundsTo (100 * (1 - hyp2F1neg 200 200 (1 / 1600) / besselI0 10)) 95 1 := by
+  rw [← hyp2F1negMin_self]
+  exact tv_hyp_percent_min
 
 end Kagey131
