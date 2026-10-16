@@ -1,7 +1,7 @@
-"""Figure 5 of Paper A: the couplings at the central crossings and the boundary shift.
+"""Figure 6 of Paper A: the couplings at the central crossings and the boundary shift.
 
 (a) The exact couplings J_N^P (periodic) and J_N^F (free) divided by log N, against log N, from
-    the exact run polynomials, with the main terms of (eq:isingtemperature) and of Corollary 5.4(a)
+    the exact run polynomials, with the main terms of (eq:isingtemperature) and of Corollary 5.5(a)
     and the two approximations of Stepanyan et al. (their Eq. (16) and the fitted line of their
     Fig. 1(b)).
 (b) The boundary shift N(u_N^P - u_N^F) against 1/log N for 10 <= N <= 10^9, with the first two
@@ -54,7 +54,7 @@ def main():
         jf = np.array([float(coupling(u)) for u in uf])
         shift = np.array([float(n * (p - f)) for n, p, f in zip(ns, up, uf)])
     Ln = np.log(np.array(ns, dtype=float))
-    a6 = Ln <= np.log(1e6) + 1e-9           # panel (a) stops at 10^6, as Table 3 does
+    a6 = Ln <= np.log(1e6) + 1e-9           # panel (a) stops at 10^6, as Table 2 does
     L = np.linspace(np.log(10), np.log(1e6), 400)
 
     # Eq. (16)/log N = 2/5 - 1/(5 log N) increases toward 2/5, and the fitted line divided by
