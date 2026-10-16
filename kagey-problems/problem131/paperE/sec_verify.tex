@@ -1,63 +1,22 @@
-\section{Verification and open questions}\label{sec:verify}
+\section{Verification}\label{sec:verify}
 
-The theorems, propositions, lemmas and corollaries of this paper are proved in
-the text or in the appendix. We quote results of~\cite{paperA} where we say so (for example the
-uniform Bessel bound~\eqref{eq:planar-bessel}). No proof rests on a floating-point computation.
-The computed numbers in the paper, namely the planar crossings
-and zero-turn shares in Section~\ref{sec:planar} and Figure~\ref{fig:planar}, are computations
-of the law at a finite $N$. Each crossing is found by one method and, for $N\le2560$, checked by
-a second, independent one. For larger $N$ it rests on one method. At each computed crossing the
-zero-turn share is evaluated in two independent ways. These numbers illustrate the theorems, and no statement is deduced
-from them.
+Every statement of this paper is proved in the text or in the appendix, and we
+quote results of~\cite{paperA} where we say so. No proof rests on a
+floating-point computation. The computed numbers, namely the planar crossings
+and zero-turn shares in Section~\ref{sec:planar} and Figure~\ref{fig:planar},
+are computations of the law at a finite $N$ and only illustrate the theorems.
+Each crossing is found by one method and, for $N\le2560$, checked by a second,
+independent one (for larger $N$ it rests on one method), and each zero-turn
+share is evaluated in two ways.
 
-The script \texttt{verify\_planar.py} computes $o_N$ by the three
-levels of Lemma~\ref{lem:threelevel}, by Fourier inversion, by a dynamic
-program and by a sum over all $4^N$ words. It compares the first three for
-even $N\le10$ and all four for $N\le8$. It finds the crossings by the first
-method and checks them by the second for $N\le2560$. It also tests the
-identity of Theorem~\ref{thm:pureturns}(a) in exact rational arithmetic, for
-even $N\le30$ and four values of $x$. The form it tests is that $o_N/c_N$ is
-the sum of $x^{j+j'}$ over the pairs of balanced words with no common switch.
-It also checks some bounds at finite $N$ that are not statements of this
-paper.
-
-The script \texttt{verify\_planar\_product.py} checks the product formula of
-Proposition~\ref{prop:product} in exact rational arithmetic for $N=4,6,8$,
-with one value of $\rho$ each. Its other checks are in floating point and
-only on grids. The first is the inequality $F(y/2)\le2F(y)$ of
-Appendix~\ref{app:planar}, at $4000$ values of $y$ between $10^{-3}$ and
-$10^4$. The second is the inequality $xS_N'(x)\le(2z+2)S_N(x)$ of
-Lemma~\ref{lem:oneswitch}, at $N=16$, $64$ and $256$ and $30$ values of $z$
-with $z(z+2)\le N$, where the derivative is a central difference. The third
-takes $N=8,16,32,64,96$ and $x=\frac12u_N,u_N,\frac32u_N$. It checks that
-$\Delta_N(x)\ge0$, and it checks the bound of Theorem~\ref{thm:pureturns}(b)
-at those points where the hypothesis $z(z+2)\le N$ holds. This script
-computes $\Delta_N$ as $S_N^2-o_N/c_N$, so it does not test the identity of
-Theorem~\ref{thm:pureturns}(a) a second time. A check that fails ends either
-script with an error. The script also prints $N(v^*_N-u_N)$ against $L^2/N$
-and does not test it, because Theorem~\ref{thm:pureturns}(c) gives no
-constant. These checks guard against slips. The proofs do not use them.
-
-The identity and the unique crossing for $s>0$ in Proposition~\ref{prop:decomp} are also
-checked in Lean~4. The asymptotic results, the product curve and the theorem on turns only are
-not. The data availability statement says where the scripts and the Lean files are.
-
-\paragraph{Open questions.}
-The first-order heuristic at the start of
-Section~\ref{sec:planar} applies the face selection of~\cite{paperC} to a linear function of the
-composition. We prove its conclusion for the planar walk, but not such a rule
-in general. The errors in Theorem~\ref{thm:fourdir} and
-Corollary~\ref{cor:planar-turn} are only $o(1)$, and
-Theorem~\ref{thm:fourdir} needs $T\le N^{1/8}$. The next term of the crossing
-equation when turns dominate is open, and so is the crossover when $s-2r$ tends
-to $0$ as $N$ grows. A heuristic suggests that the next term comes from
-replacing $T$ by $T+\frac1{4r}-\frac1{2(r+s)}$ in Theorem~\ref{thm:fourdir}.
-For $s=0$ this agrees with the term $1/(8z_N)$ of the crossing equation in
-Section~\ref{sec:notation}, through
-Theorem~\ref{thm:pureturns}(c). Off the product curve of
-Proposition~\ref{prop:product} we have no closed form for $o_N$ or for the
-crossing, and Corollary~\ref{cor:productcompare} only brackets the crossing.
-With turns only, the computations give $N(v^*_N-u_N)=0.37\,L^2/N$ at
-$N=96$ and $0.38\,L^2/N$ at $N=10240$. So the order $L^2/N$ in
-Theorem~\ref{thm:pureturns}(c) seems to be right, but we do not prove a lower
-bound of this order. The walk on $\Z^d$ with $d\ge3$ is open as well.
+The script \texttt{verify\_planar.py} computes $\omega_N$ by the three levels of
+Lemma~\ref{lem:threelevel}, by Fourier inversion, by a dynamic program and by a
+sum over all $4^N$ words, and compares them for small even $N$. It also tests
+the identity of Theorem~\ref{thm:pureturns}(a) in exact rational arithmetic for
+even $N\le30$. The script \texttt{verify\_planar\_product.py} checks
+Proposition~\ref{prop:product} in exact rational arithmetic for $N=4,6,8$ and
+the inequalities of Appendix~\ref{app:planar} and Theorem~\ref{thm:pureturns}(b)
+on grids. The file \nolinkurl{SUPPLEMENT.md} lists every check. The identity
+and the unique crossing for $s>0$ in Proposition~\ref{prop:decomp} are also
+checked in Lean~4. The asymptotic results, the product curve and the theorem on
+turns only are not.
