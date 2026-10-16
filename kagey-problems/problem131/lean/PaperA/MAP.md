@@ -78,6 +78,8 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `Supplements` | smaller statements: Lemma `lem:clipped` over the reals and in product form, `ζ_N < 4` for `N ≤ 174`, `p_{a,b} = 2/3` only at `a = b = 1`, strict probability ordering, and `Snum` as the numerator |
 | `FixedMagnetization` | Corollary `cor:fixed-M`, the fixed-magnetization weight |
 | `Tables` | identities between numerator tables and recursively defined rook and Mathar sequences; retained for the tables note |
+| `TableValuesCore` | correct rounding (`RoundsTo`), Taylor certificates for `exp` and `log`, rational bounds on `ζ_N`, and bounds on `u_N` and `u_N^P` from truncated sums with a geometric tail |
+| `TableValuesEveryN` | the values of the table `tab:every-n`, by kernel-checked certificates |
 
 ## Section 1, setting and notation
 
@@ -141,6 +143,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `prop:crossing-eq`, `eq:crossing-eq` | 3.8, (12) | with `R_N = z + (1/2) log z - L - c₀ - 1/(8z)`, for every `N ≥ 2`: `-(z²+z)/N ≤ R_N ≤ 1/(16z²)`, `L/2 ≤ z ≤ L` and `|R_N| ≤ 1/(4L²) + (L²+L)/N` | `crossing_equation`, `crossRem`, `crossRem_eq` | `CrossingEquation` |
 | `prop:crossing-eq`, `N ≥ 175` | 3.8 | the analytic case | `crossing_eq_large`, with `large_core`, `large_sizes`, `bessel_tail_poly`, `step0_fourth` | `CrossingEquation` |
 | `prop:crossing-eq`, `N ≤ 174` | 3.8 | the case `2 ≤ N ≤ 174`, by certificates | `crossing_eq_small`, with `crossEqTable`, `crossEqTable_ok`, `crossEqTable_sub`, `crossEqTable_covers`, `crossing_eq_of_cert`, `small_core`, `everyNCert_brackets` | `CrossingEquation` |
+| `tab:every-n` | Table 1 | every printed value is the correct rounding of the quantity it names: `z_N` to 12 decimals, `ζ_N` to 10, `z_N - ζ_N - 1/(8ζ_N)` to 7, `-ε_N` to 5 and `R_N` to 6, for `N = 2, 10, 100, 174, 175, 1000, 10⁴` | `tab_every_n_2`, `tab_every_n_10`, `tab_every_n_100`, `tab_every_n_174`, `tab_every_n_175`, `tab_every_n_1000`, `tab_every_n_10000`, with `tv_zN_N`, `tv_zetaN_N`, `RoundsTo`, `lt_uN_of_tail`, `uN_lt_of_partial`, `lt_zetaN_of_tv`, `zetaN_lt_of_tv`, `crossRem_bounds` | `TableValuesEveryN`, `TableValuesCore` |
 
 ## Section 4, the crossing of every bin
 
@@ -435,7 +438,6 @@ The following parts of the paper are not formalized. The finite results and cond
 listed above do not supply these omitted limit statements or their error bounds.
 
 * Section 1. The infinite chain behind `ξ(J)` (see difference 39).
-* Section 3. The values in the table `tab:every-n`.
 * Section 4. Remarks 4.5 (`rem:sign-correction`) and 4.7 (`rem:jacobi`), and the
   consequences of Theorem 4.9 displayed after it (`eq:allbin-growing-edge` and the case
   `a/N → α`).
