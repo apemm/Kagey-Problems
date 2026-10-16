@@ -4,8 +4,8 @@ The exact law and recurrence are classical, and so are the generating
 function~\cite[Eq.~(3.1)]{gillis1955} and the fixed-$p$ normal
 limit~\cite[Theorem~6]{konno2009}. The count of Theorem~\ref{thm:pmf} is
 Ising's count of domains~\cite{ising1925}, and it appears
-as~\cite[Eq.~(44)]{antal2004} and~\cite[Eqs.~(A15) to (A18)]{dantchev2022}.
-The law is also~\cite[Proposition~4.1 and Eq.~(4.1)]{dekkingkong2011}, and
+in~\cite[Eq.~(44)]{antal2004} and~\cite[Eqs.~(A15) to (A18)]{dantchev2022}.
+The law also appears in~\cite[Proposition~4.1 and Eq.~(4.1)]{dekkingkong2011}, and
 Garc\'ia-Pelayo~\cite{garciapelayo2009} writes it in terms of ${}_2F_1$.
 We prove Theorem~\ref{thm:pmf} because the later sections use its count of
 words by switches. By \eqref{eq:wordprob}, a word with $j$ switches has
@@ -55,7 +55,7 @@ $P_1^{\sR}(0)=P_1^{\sL}(1)=0$, and for $N\ge2$
 P_N^{\sR}(k)=p\,P_{N-1}^{\sR}(k-1)+q\,P_{N-1}^{\sL}(k-1),\qquad
 P_N^{\sL}(k)=p\,P_{N-1}^{\sL}(k)+q\,P_{N-1}^{\sR}(k).
 \end{equation}
-Consequently
+Consequently, in formal variables $x$ and $t$,
 \begin{equation}\label{eq:gf}
 \sum_{N\ge0}\sum_{k=0}^{N}P_N(k)\,x^kt^N=\frac{1-(p-\tfrac12)(1+x)\,t}{1-p(1+x)\,t+(2p-1)\,x\,t^2},
 \end{equation}
@@ -87,16 +87,17 @@ it is an integer.
 
 \subsection{Variance and the normal limit}\label{sec:clt}
 
-Note that $K_N$ counts the visits of the chain $w_1,\dots,w_N$ to the letter
+The bin $K_N$ counts the visits of the chain $w_1,\dots,w_N$ to the letter
 $\sR$. This chain leaves each letter with probability $q$ and starts from its
 stationary law $(\frac12,\frac12)$. So $K_N$ has the Markov binomial law
 $\mathrm{Bin}(N,q,q,(\frac12,\frac12))$ of Dekking and
-Kong~\cite{dekkingkong2011}, whose second eigenvalue is $1-2q=2p-1$.
+Kong~\cite{dekkingkong2011}. The transition matrix of the chain has second
+eigenvalue $1-2q=2p-1$.
 
 \begin{proposition}[mean and variance]\label{prop:var}
-Let $0<p<1$ and $\rho=2p-1$. Then $\E K_N=N/2$ and
+Let $0<p<1$ and $\lambda=2p-1$. Then $\E K_N=N/2$ and
 \[
-\Var K_N=\frac14\Bigl(N\,\frac{1+\rho}{1-\rho}-\frac{2\rho\,(1-\rho^N)}{(1-\rho)^2}\Bigr)
+\Var K_N=\frac14\Bigl(N\,\frac{1+\lambda}{1-\lambda}-\frac{2\lambda\,(1-\lambda^N)}{(1-\lambda)^2}\Bigr)
 =\frac{Np}{4(1-p)}-\frac{(2p-1)\bigl(1-(2p-1)^N\bigr)}{8(1-p)^2}.
 \]
 \end{proposition}
@@ -106,7 +107,7 @@ This is \cite[Eq.~(2.3) and Proposition~2.1]{dekkingkong2011} with both of
 their switching probabilities equal to $q$
 and the stationary start, for which both excentricities vanish and both
 stationary weights are $\frac12$. The second form follows from
-$(1+\rho)/(1-\rho)=p/q$ and $1-\rho=2q$.
+$(1+\lambda)/(1-\lambda)=p/q$ and $1-\lambda=2q$.
 \end{proof}
 
 \begin{theorem}[normal limit]\label{thm:clt}
@@ -116,18 +117,20 @@ $N\to\infty$, to the normal law with mean $0$ and variance $p/(4(1-p))$.
 
 \begin{proof}
 By \eqref{eq:dp}, the vector $v_N(\theta)$ with entries
-$\E[e^{i\theta X_N};\sigma_N=\pm1]$ satisfies $v_{N+1}=Mv_N$, where $M$ has rows
-$(pe^{i\theta},qe^{i\theta})$ and $(qe^{-i\theta},pe^{-i\theta})$. Its
-eigenvalues at $\theta=0$ are $1$ and $2p-1$, so for small $|\theta|$ they
+$\E[e^{i\theta X_N};\sigma_N=\pm1]$ satisfies $v_{N+1}=T_\theta v_N$, where $T_\theta$ has rows
+$(pe^{i\theta},qe^{i\theta})$ and $(qe^{-i\theta},pe^{-i\theta})$. The
+eigenvalues of $T_\theta$ at $\theta=0$ are $1$ and $2p-1$, so for small $|\theta|$ they
 stay simple, with
 $\lambda_+(\theta)=p\cos\theta+\sqrt{q^2-p^2\sin^2\theta}=1-\frac p{2q}\theta^2+O(\theta^4)$
 and $\lambda_-$ near $2p-1$. Since $v_1(0)$ is an eigenvector for the
-eigenvalue $1$, the component along $\lambda_+$ tends to $1$, and at
+eigenvalue $1$, the component of $v_1(\theta)$ along the eigenvector of
+$\lambda_+(\theta)$ tends to $1$ as $\theta\to0$, the term with $\lambda_-^N$ tends
+to $0$ since $|\lambda_-|<1$, and at
 $\theta=s/\sqrt N$ we get $\E e^{i\theta X_N}\to\exp(-\frac p{2q}s^2)$. L\'evy's
 continuity theorem~\cite[Theorem~26.3]{billingsley1995} gives the normal
 limit of $X_N/\sqrt N$ with variance $p/q$, and $K_N-N/2=X_N/2$.
 \end{proof}
 
-For $p>\frac12$ persistence widens the bell by the factor $\sqrt{p/q}$
-compared with the simple random walk, and for $p<\frac12$ it narrows it by the
-same factor.
+Compared with the simple random walk, persistence multiplies the width of the
+bell by $\sqrt{p/q}$, so it widens the bell for $p>\frac12$ and narrows it for
+$p<\frac12$.

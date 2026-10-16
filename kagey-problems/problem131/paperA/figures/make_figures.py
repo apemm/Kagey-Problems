@@ -671,7 +671,7 @@ def fig_window():
     save_data("fig_window", data)
 
 
-# ---------------------------------------------------------------- 6 boundary layer
+# ---------------------------------------------------------------- Figure 4, boundary layer
 
 def layer_width(N, v):
     """L_N = #{1 <= k <= N/2 : P_N(k) < P_N(0)} at odds v, by bisection (ratios increase inward)."""
