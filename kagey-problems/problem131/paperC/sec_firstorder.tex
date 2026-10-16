@@ -345,8 +345,8 @@ $\alpha^*_F$ of the time in its states, and the rate at any other fractions is
 strictly larger. Part (d) says that fractions on the boundary of $\Delta_F$,
 which miss some states of $F$, have the rate of the smaller face that they
 use, and this rate is larger than $\lambda_F$. The lower
-bound in (a), the value at $\alpha^*_F$ and the interior form of (c) are checked
-in Lean. For symmetric $Q_F$, $l_F=r_F$ and $\alpha^*_F$ is the entrywise square
+bound in (a) and the value at $\alpha^*_F$ are checked in Lean, and so is the
+interior form of (c) when $Q_F$ is symmetric. For symmetric $Q_F$, $l_F=r_F$ and $\alpha^*_F$ is the entrywise square
 of the Perron vector normalized in $\ell^2$. On a face that is not reversible the formula in (c)
 is only an upper bound, and Proposition~\ref{prop:flows} gives the rate and the gap.
 
@@ -429,10 +429,10 @@ $-\Phi_\tau(F)$, and part (iii) says that for large $N$ the mode lies on an admi
 By (iv), if every such face is irreducible, the mode sits near the quasi-ergodic law of its
 face.
 
-\emph{Idea of the proof.} For faces with (H), part (i) and the face maxima come
-from the local law of Section~\ref{sec:secondorder}, which we prove
-independently of this theorem. A reducible face is visited in blocks, one for
-each strongly connected component. For the upper bound in (ii) we apply
+\emph{Idea of the proof.} Part (i) comes from the local law of
+Section~\ref{sec:secondorder}, which we prove independently of this theorem.
+Parts (ii) and (iii) are elementary. A face is visited in blocks, one for
+each strongly connected component (a single block if the face is irreducible). For the upper bound in (ii) we apply
 Lemma~\ref{lem:upper} to each block, and for the lower bound we write down
 explicit paths that spend almost all their time in a component of least exit
 rate. Part (iii) compares the faces, and (iv) follows from
@@ -450,11 +450,10 @@ $[1,T_1]\times\mathcal K$ (see the remarks after Theorem~\ref{thm:local}). Final
 and continuous on $\mathcal K$, so $\log C_F$ is bounded there. So $\log f_T(n/N)=-TI_F(n/N)
 +O_{\mathcal K}(1+\log T)$, and adding $\log N^{-(k-1)}=-(k-1)L$ gives (i).
 
-(ii) If $F$ is not admissible, $M_F=0$. If $F$ is admissible and irreducible, it satisfies (H) by
-Lemma~\ref{lem:admissible}(b), and $k^*=k_F$. Then
-Theorem~\ref{thm:facemax} gives both bounds, since $0\le\frac{k_F-1}2\log T\le(k_F-1)\log T$. For
-a reducible face, a path visits each component in one block of consecutive times (proof of
-Lemma~\ref{lem:admissible}). For the upper bound, Lemma~\ref{lem:upper} (or a direct count if
+(ii) If $F$ is not admissible, $M_F=0$. Let $F$ be admissible. A path visits each component
+in one block of consecutive times (proof of Lemma~\ref{lem:admissible}), and an irreducible
+face is one component, with $k^*=k_F$. (For irreducible $F$, Theorem~\ref{thm:facemax} later
+gives the sharper factor $T^{(k_F-1)/2}K_F$, but we do not need it here.) For the upper bound, Lemma~\ref{lem:upper} (or a direct count if
 $\lvert C\rvert=1$) bounds a block of length $N_C$ in the component $C$ by
 $O(h^{\lvert C\rvert-1}e^{-h\lambda_CN_C})$, and each of the $r-1$
 switches between blocks gives a factor $h$. As $\lambda_C\ge\lambda_F$, this gives
@@ -577,7 +576,12 @@ $\mu(C)>0$, so it is admissible by Lemma~\ref{lem:admissible}(b). It has the sam
 $F$ and fewer states, so $\Phi_\tau(C)\le\Phi_\tau(F)-1$. Hence $F\notin\mathcal F_\tau$.
 \end{proof}
 
-The statement of Theorem~\ref{thm:hull} for a finite set of points is checked in Lean. A face with small $\lambda_F$ for
+Lean checks part (b), the fact that a face with a proper subface of the same exit
+rate never wins, and part (a) when the least exit rate of each size decreases
+strictly with the size. In that case the vertices of the hull are sizes, and
+Lean checks which size wins between consecutive kinks and that consecutive
+vertices tie at $\tau_i$. The general path structure in (a) and the ties along
+a closed edge are proved only here. A face with small $\lambda_F$ for
 its size is a set of states that the chain rarely leaves, a well-separated community. As $\tau$
 grows the exit rate counts for more, and the mode moves to larger communities. It need not
 grow around its first vertex, and it can move to a disjoint community (Table~\ref{tab:outcomes}).
