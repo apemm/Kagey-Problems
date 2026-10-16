@@ -53,24 +53,25 @@
 \maketitle
 
 \begin{abstract}
-In a finite zero-field Ising chain, the all-up configuration and zero
-magnetization (magnetization one for an odd number of spins) become equally
-likely at a single coupling. This crossing has recently been described as a
-thermal transition of the finite chain, an analogue of a first-order
-transition temperature, and estimated by an approximate formula and a
-numerical fit. We prove its asymptotics, with explicit constants, for free
-and for periodic ends. The coupling at the crossing grows like half the
-logarithm of the length of the chain, minus half the logarithm of that
-logarithm, and periodic ends lower it by an amount that decays like the
-inverse logarithm of the length. The earlier approximations lack the doubly
-logarithmic term, which explains why a fit on chains of moderate length finds
-a slope below one half. At the crossing the central magnetization carries
-about as many domain walls as the logarithm of the length, so the crossing
-sharpens only like the inverse logarithm of the length, not like the inverse
-length as at a first-order transition. The proofs compare the central
-probability with a modified Bessel function, with a relative error bound
-that is explicit for every length, and for free ends they trap the crossing
-in an explicit interval at every length.
+In a finite zero-field Ising chain, the weight of the configurations with a
+given magnetization is a classical sum over domain walls, and for long chains
+it is close to a modified Bessel function. We bound the relative error of
+this Bessel form explicitly, for every length, every coupling and every
+magnetization, also when the number of domain walls grows with the length,
+and the bound fixes the sign of the first correction. We apply it to the
+coupling at which the all-up configuration and zero magnetization
+(magnetization one for an odd number of spins) become equally likely, which
+has recently been described as a thermal transition of the finite chain and
+estimated by an approximate formula and a numerical fit. We prove its
+asymptotics, with explicit constants, for free and for periodic ends. The
+coupling grows like half the logarithm of the length minus half the logarithm
+of that logarithm, the term that the earlier approximations lack and that
+explains why a fit on chains of moderate length finds a slope below one half.
+At the crossing the central magnetization carries about as many domain walls
+as the logarithm of the length, so the crossing sharpens only like the inverse
+logarithm of the length, not like the inverse length as at a first-order
+transition. For free ends we also trap the crossing in an explicit interval at
+every length.
 \end{abstract}
 
 \noindent\textbf{Keywords:} exact results; finite-size scaling; rigorous results in statistical mechanics.
@@ -80,6 +81,18 @@ in an explicit interval at every length.
 \section{Introduction}\label{sec:intro}
 
 \subsection{The crossing}
+
+The weight $Z_N(M)$ of the configurations of a finite Ising chain with
+magnetization $M$, which is the partition function of the
+fixed-magnetization ensemble, is a classical finite sum over domain
+walls~\cite{ising1925,antal2004,dantchev2022}. When the mean number of domain
+walls stays bounded as the chain grows, it is close to a modified Bessel
+function~\cite{antal2004,dantchev2023,dantchev2024}. We bound the relative
+error of this Bessel form explicitly at every length, every coupling and every
+magnetization (Theorem~\ref{thm:allbin-bessel} and
+Corollary~\ref{cor:fixed-M}). The error has one sign, and it stays small when
+the mean number of domain walls grows like the logarithm of the length. Our
+main application is a crossing that lives in exactly this regime.
 
 Take $N\ge2$ spins $\sigma_i=\pm1$ with free ends and zero-field Ising
 weight $\exp(J\sum_{i<N}\sigma_i\sigma_{i+1})$, where $J>0$. Here $J$ is
@@ -112,7 +125,8 @@ With two steps the walk ends in the middle exactly when it turns once, so the
 three bins have probabilities $\frac p2$, $1-p$ and $\frac p2$, and they are
 level at $p=\frac23$. With three steps the bins have probabilities
 $\frac{p^2}2$, $\frac{1-p^2}2$, $\frac{1-p^2}2$ and $\frac{p^2}2$, and they are
-level at $p=1/\sqrt2$. In general exactly one word reaches a given endpoint,
+level at $p=1/\sqrt2$. In terms of the coupling these two crossings are at
+$J=\frac12\log2$ and $J=\frac12\log(1+\sqrt2)$. In general exactly one word reaches a given endpoint,
 namely the word that never turns, and very many words reach the middle by
 turning a few times (each turn brings a factor of about $1-p$).
 
@@ -128,7 +142,8 @@ ends, and the correlation length there is about $N/(2\log N)$
 have no $\log\log N$ term, and this term explains why the slope of their
 numerical fit is below $\frac12$ (Table~\ref{tab:couplings}). At the
 crossing the central bin carries about $\log N$ domain walls, so its energy
-exceeds that of the all-up configuration only by about $2\log N$, and the
+exceeds that of the all-up configuration only by $2\log N-\log\log N+O(1)$,
+and the
 crossing sharpens like $1/\log N$ in the coupling, not like $1/N$ as at a
 first-order transition (Proposition~\ref{prop:walls}).
 
@@ -173,8 +188,9 @@ have equal probability by symmetry.
 
 \paragraph{Spins.} Put $\sigma_i=+1$ if $w_i=\sR$ and $\sigma_i=-1$ if
 $w_i=\sL$, and $X_N=\sigma_1+\dots+\sigma_N$. The bin is $K_N=(N+X_N)/2$. Since
-$\chg(w)=\sum_{i<N}(1-\sigma_i\sigma_{i+1})/2$, \eqref{eq:wordprob} gives
-$\Prob(w)\propto\exp(J\sum_{i<N}\sigma_i\sigma_{i+1})$ with $e^{-2J}=u$. So the
+$\chg(w)=\sum_{i<N}(1-\sigma_i\sigma_{i+1})/2$, equation~\eqref{eq:wordprob}
+shows that $\Prob(w)$ is proportional to
+$\exp(J\sum_{i<N}\sigma_i\sigma_{i+1})$ with $e^{-2J}=u$. So the
 spins form the Ising chain in zero field with free boundaries, and $J>0$
 exactly when $p>\frac12$.
 
@@ -184,6 +200,10 @@ $(N-1)q=\tau-q$. We call $\tau$ the \emph{switching scale}. In the Ising chain a
 $q=1/(1+e^{2J})$, so $\tau$ is the expected number of domain walls plus $q$. The central crossing has
 $\tau$ of order $L$. Near the edges the crossings have larger $\tau$, up to order
 $\sqrt N$ for the bins next to an edge (Section~\ref{sec:allbin}).
+We use several equivalent parameters, namely the persistence $p$, the odds
+$u=q/p=e^{-2J}$ of a switch, the coupling $J$, the switching scale $\tau=Nq$,
+and in the Bessel estimates $w=Nu$ and $x=w/2$. Near the central crossing
+$u$ is of order $L/N$, and then $\tau$, $Nu$ and $2x$ differ by $O(L^2/N)$.
 
 \paragraph{Ratios and crossings.} For a bin $k$ with $1\le k\le N-1$ we write
 $a=k$ and $b=N-k$ for its numbers of letters $\sR$ and $\sL$. For $p>0$ the
@@ -221,7 +241,10 @@ are written in the variables of the walk, and they translate as follows.
 Bin $k$ is magnetization $X_N=2k-N$, so the endpoints are full magnetization
 $\pm N$. A middle bin has magnetization zero for even $N$ and either $-1$
 or $1$ for odd $N$. A switch is a domain wall, and its odds $u=e^{-2J}$ are the
-Boltzmann factor of one wall. The crossing of bin $k$ is the coupling
+Boltzmann factor of one wall. If $Z_N(M)$ is the sum of the weights
+$\exp(J\sum_{i<N}\sigma_i\sigma_{i+1})$ of the configurations with
+magnetization $M$, then $Z_N(N)=e^{(N-1)J}$ and
+$S_{a,b}(u)=Z_N(a-b)/Z_N(N)$. The crossing of bin $k$ is the coupling
 $J_{a,b}=-\frac12\log u_{a,b}$ at which magnetization $a-b$ and
 magnetization $N$ are equally likely, and at the center it is
 $J_N^{\mathrm F}=-\frac12\log u_N$. The correlation length of the infinite
@@ -315,7 +338,8 @@ endpoint tends to $e^{t-2y^2}$ (Theorem~\ref{thm:critical-window}).
 \paragraph{Domain walls and the energy gap.} At the free crossing the central
 bin carries $z_N+\frac12+O(1/z_N)$ domain walls on average
 (Proposition~\ref{prop:walls}), so its mean energy exceeds that of the
-all-up configuration by about $2\log N$ in units of the exchange constant. At
+all-up configuration by $2\log N-\log\log N+O(1)$ in units of the exchange
+constant. At
 a first-order transition the two coexisting phases differ in energy by an
 amount proportional to $N$. Accordingly the ratio of the central bin to an
 endpoint changes by a factor $e$ over a range of couplings of width about
@@ -404,6 +428,55 @@ the exact root (Theorem~\ref{thm:critical-window}).
 \input{periodic_window.tex}
 \FloatBarrier
 
+\section{Discussion}\label{sec:discussion}
+
+The crossing that Stepanyan et~al.\@~\cite{stepanyan2024} read as a thermal
+transition of the finite chain compares one microstate, the all-up
+configuration, with one magnetization of a broad band. At the crossing the
+band has width of order $N/\sqrt{\log N}$ in the magnetization, its free
+energy relative to full order is the parabola of
+Remark~\ref{rem:free-energy}, and it carries about $\log N$ domain walls
+(Proposition~\ref{prop:walls}). So the energy gap between the two compared
+states grows like $\log N$, not like $N$, and the crossing sharpens only like
+$1/\log N$ in the coupling. In this sense it is a finite-size crossover between
+order and disorder rather than a sharpening transition, in line with the
+absence of transition signals in the microcanonical entropy of finite
+chains~\cite{sitarachu2020}. Its location is set
+by the balance of one wall-free state against the entropy of about $\log N$
+walls, which is where the $\log\log N$ term comes from. The boundary shift by
+$\log2$ comes from the parity of the number of walls on a ring.
+
+Three couplings organize the row. At the adjacent crossing
+(Proposition~\ref{prop:adjacent}) the odds are about $N^{-1/2}$, so
+$\xi\approx\sqrt N/2$, and for periodic ends this is the first transition
+$J=\frac14\log N$ of~\cite{stepanyan2024}. At the central crossing
+$\xi\approx N/(2\log N)$ (Corollary~\ref{cor:couplings}). The chain is fully
+ordered with probability $\frac12$ when $N/\xi\approx2\log2$
+(Remark~\ref{rem:ordered}), which is the usual finite-size crossover, where
+the correlation length is comparable with the chain. The central crossing
+lies $\frac12\log\log N+O(1)$ below it in the coupling, because it compares one
+microstate with one bin. At a first-order transition the finite-size rounding
+has width of order the inverse of the energy gap between the coexisting
+phases, which grows like the volume~\cite{privman1983,borgs1990,lee1991}.
+Here the gap is $2\mathcal W_N(u_N)=2\log N-\log\log N+O(1)$, and the
+width $1/(2\mathcal W_N(u_N))$ shrinks only like $1/\log N$.
+
+The bounds behind these statements hold at every $N$ and every coupling.
+Theorem~\ref{thm:allbin-bessel} bounds the ratio of the partition function at
+magnetization $a-b$ to the one at full magnetization, so it gives the
+fixed-magnetization partition function of the free chain, as used
+in~\cite{dantchev2022,dantchev2024}, with an explicit relative error, also
+when the mean number of domain walls grows with $N$. The approach extends to
+the $d$-state Potts chain~\cite{paperB}. Three questions are open. The
+bracket of Theorem~\ref{thm:every-n} is proved only for free ends and for the
+level $1$ of Remark~\ref{rem:convention}, and the same method should give it
+for periodic ends and for other levels. In a magnetic field the two letters
+of the walk get different weights, and the run polynomial becomes a
+polynomial in two variables. Stepanyan et~al.\@~\cite{stepanyan2024} find
+that their two transitions merge above a field of about
+$2J\log2/\log(N/2)$, and the biased walk is the natural route to a proof. We
+do not treat the field here.
+
 \section{Verification}\label{sec:verify}
 
 Aside from Remark~\ref{rem:sign}, which is computer-assisted throughout, the
@@ -445,37 +518,11 @@ formalized are the remarks and the numbers in the tables. The file
 \nolinkurl{MAP.md} in that folder gives the Lean theorem for each result, or
 says that there is none.
 
-\section{Discussion}\label{sec:discussion}
-
-The crossing that Stepanyan et~al.\@~\cite{stepanyan2024} read as a thermal
-transition of the finite chain compares one microstate, the all-up
-configuration, with one magnetization of a broad band. At the crossing the
-band has width of order $N/\sqrt{\log N}$ in the magnetization, its free
-energy relative to full order is the parabola of
-Remark~\ref{rem:free-energy}, and it carries about $\log N$ domain walls
-(Proposition~\ref{prop:walls}). So the energy gap between the two compared
-states grows like $\log N$, not like $N$, and the crossing sharpens only like
-$1/\log N$ in the coupling. In this sense it is a finite-size crossover between
-order and disorder rather than a sharpening transition, in line with the
-absence of transition signals in the microcanonical entropy of finite
-chains~\cite{sitarachu2020}. Its location is set
-by the balance of one wall-free state against the entropy of about $\log N$
-walls, which is where the $\log\log N$ term comes from. The boundary shift by
-$\log2$ comes from the parity of the number of walls on a ring.
-
-The bounds behind these statements hold at every $N$ and every coupling.
-Theorem~\ref{thm:allbin-bessel} bounds the ratio of the partition function at
-magnetization $a-b$ to the one at full magnetization, so it gives the
-fixed-magnetization partition function of the free chain, as used
-in~\cite{dantchev2022,dantchev2024}, with an explicit relative error, also
-when the mean number of domain walls grows with $N$. The approach extends to
-the $d$-state Potts chain~\cite{paperB}. A magnetic field would change the weights of the two
-letters, and we do not treat it here.
-
 \paragraph{Acknowledgments.} I thank Peter Kagey, whose Open Problem
 Collection~\cite{kagey131} asks for this crossing for a Galton board whose
-ball keeps its direction with probability $p$. I
-used AI tools in this work, including Claude Opus 5.5 (Anthropic, through Claude
+ball keeps its direction with probability $p$.
+
+\paragraph{Use of AI tools.} I used AI tools in this work, including Claude Opus 5.5 (Anthropic, through Claude
 Code, in September and October 2026) and GPT-6 Astra (OpenAI). Except for the
 proofs of Theorem~\ref{thm:every-n}, Corollary~\ref{cor:couplings},
 Proposition~\ref{prop:walls} and Remarks~\ref{rem:free-energy},
@@ -543,6 +590,34 @@ The author declares no conflict of interest.
 
 \begin{thebibliography}{99}\small\setlength{\baselineskip}{11pt}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}
 
+\bibitem{ising1925}
+E.~Ising, \emph{Beitrag zur Theorie des Ferromagnetismus}, Z.~Phys.\
+\textbf{31} (1925), 253--258.
+\url{https://doi.org/10.1007/BF02980577}.
+
+\bibitem{antal2004}
+T.~Antal, M.~Droz and Z.~R\'acz, \emph{Probability distribution of magnetization in the
+one-dimensional Ising model: effects of boundary conditions},
+J.~Phys.~A: Math.~Gen.~\textbf{37} (2004), 1465--1478.
+\url{https://doi.org/10.1088/0305-4470/37/5/001}.
+
+\bibitem{dantchev2022}
+D.~Dantchev and J.~Rudnick, \emph{Exact expressions for the partition function of the
+one-dimensional Ising model in the fixed-$M$ ensemble},
+Phys.~Rev.~E \textbf{106} (2022), L042103.
+\url{https://doi.org/10.1103/PhysRevE.106.L042103}.
+
+\bibitem{dantchev2023}
+D.~M.~Dantchev, N.~S.~Tonchev and J.~Rudnick, \emph{Casimir versus Helmholtz
+forces: exact results}, Ann.~Phys.\ \textbf{459} (2023), 169533.
+\url{https://doi.org/10.1016/j.aop.2023.169533}.
+
+\bibitem{dantchev2024}
+D.~M.~Dantchev, N.~S.~Tonchev and J.~Rudnick, \emph{Casimir and Helmholtz
+forces in one-dimensional Ising model with Dirichlet (free) boundary
+conditions}, Ann.~Phys.\ \textbf{464} (2024), 169647.
+\url{https://doi.org/10.1016/j.aop.2024.169647}.
+
 \bibitem{stepanyan2024}
 V.~Stepanyan, A.~F.~Tzortzakakis, D.~Petrosyan and A.~E.~Allahverdyan,
 \emph{Thermal transitions in a one-dimensional, finite-size Ising model},
@@ -581,12 +656,6 @@ preparation, draft at
 F.~W.~J. Olver et al.\ (eds.), \emph{NIST Digital Library of Mathematical
 Functions}, Release~1.2.8 (2026-09-15), \url{https://dlmf.nist.gov}.
 
-\bibitem{antal2004}
-T.~Antal, M.~Droz and Z.~R\'acz, \emph{Probability distribution of magnetization in the
-one-dimensional Ising model: effects of boundary conditions},
-J.~Phys.~A: Math.~Gen.~\textbf{37} (2004), 1465--1478.
-\url{https://doi.org/10.1088/0305-4470/37/5/001}.
-
 \bibitem{renshaw1981}
 E.~Renshaw and R.~Henderson, \emph{The correlated random walk}, J.\ Appl.\ Probab.\ \textbf{18}
 (1981), 403--414.
@@ -602,23 +671,6 @@ F.~M.~Dekking and D.~Kong, \emph{Multimodality of the Markov binomial distributi
 J.~Appl.~Probab.\ \textbf{48} (2011), 938--953.
 \url{https://doi.org/10.1239/jap/1324046011}.
 
-\bibitem{dantchev2022}
-D.~Dantchev and J.~Rudnick, \emph{Exact expressions for the partition function of the
-one-dimensional Ising model in the fixed-$M$ ensemble},
-Phys.~Rev.~E \textbf{106} (2022), L042103.
-\url{https://doi.org/10.1103/PhysRevE.106.L042103}.
-
-\bibitem{dantchev2023}
-D.~M.~Dantchev, N.~S.~Tonchev and J.~Rudnick, \emph{Casimir versus Helmholtz
-forces: exact results}, Ann.~Phys.\ \textbf{459} (2023), 169533.
-\url{https://doi.org/10.1016/j.aop.2023.169533}.
-
-\bibitem{dantchev2024}
-D.~M.~Dantchev, N.~S.~Tonchev and J.~Rudnick, \emph{Casimir and Helmholtz
-forces in one-dimensional Ising model with Dirichlet (free) boundary
-conditions}, Ann.~Phys.\ \textbf{464} (2024), 169647.
-\url{https://doi.org/10.1016/j.aop.2024.169647}.
-
 \bibitem{cekanavicius2001}
 V.~\v{C}ekanavi\v{c}ius and M.~Mikalauskas,
 \emph{Local theorems for the Markov binomial distribution},
@@ -633,6 +685,15 @@ Lithuanian Math.~J.~\textbf{41} (2001), 307--318.
 
 \bibitem{billingsley1995}
 P.~Billingsley, \emph{Probability and Measure}, 3rd ed., Wiley, New York, 1995.
+
+\bibitem{zheng2026}
+Z.~F.~Zheng, R.~K.~Lin and J.~M.~Zhang, \emph{Landau free energy and the
+absence of spontaneous magnetization of the one-dimensional Ising model},
+preprint, 2026, \url{https://arxiv.org/abs/2605.06691}.
+
+\bibitem{szego1975}
+G.~Szeg\H{o}, \emph{Orthogonal Polynomials}, 4th ed., Amer.\ Math.\ Soc.,
+Providence, RI, 1975.
 
 \bibitem{elliott1971}
 D.~Elliott, \emph{Uniform asymptotic expansions of the Jacobi polynomials and an associated
@@ -661,6 +722,22 @@ K.~Sitarachu, R.~K.~P.~Zia and M.~Bachmann, \emph{Exact microcanonical
 statistical analysis of transition behavior in Ising chains and strips},
 J.~Stat.~Mech.\ (2020), 073204.
 \url{https://doi.org/10.1088/1742-5468/ab97bc}.
+
+\bibitem{privman1983}
+V.~Privman and M.~E.~Fisher, \emph{Finite-size effects at first-order
+transitions}, J.~Stat.~Phys.\ \textbf{33} (1983), 385--417.
+\url{https://doi.org/10.1007/BF01009803}.
+
+\bibitem{borgs1990}
+C.~Borgs and R.~Koteck\'y, \emph{A rigorous theory of finite-size scaling at
+first-order phase transitions}, J.~Stat.~Phys.\ \textbf{61} (1990), 79--119.
+\url{https://doi.org/10.1007/BF01013955}.
+
+\bibitem{lee1991}
+J.~Lee and J.~M.~Kosterlitz, \emph{Finite-size scaling and Monte Carlo
+simulations of first-order phase transitions}, Phys.~Rev.~B \textbf{43}
+(1991), 3265--3277.
+\url{https://doi.org/10.1103/PhysRevB.43.3265}.
 
 \bibitem{kagey131}
 P.~Kagey, \emph{Problem 131}, Open Problem Collection,
