@@ -2,7 +2,7 @@
 
 This file maps covered statements of Paper A (`paperA/problem131.tex` and the files it inputs)
 to Lean declarations and records partial coverage and omissions. The library `PaperA` has root
-`PaperA.lean`, which imports all 19 modules in `PaperA/` (20 modules including the root), in
+`PaperA.lean`, which imports all 21 modules in `PaperA/` (22 modules including the root), in
 namespace `Kagey131`. It uses Lean 4 v4.33.1 and Mathlib v4.33.1. Every theorem listed here is
 proved without `sorry`, `admit` or new axioms, and `#print axioms` on each of them reports only
 `propext`, `Classical.choice` and `Quot.sound` (see `build-log.txt`).
@@ -61,6 +61,8 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `BesselIntegral` | the integral form of `I_0 + I_1` and the bounds on `E` |
 | `EveryN` | the root bracket, `ζ_N`, and the crossing for `2 ≤ N ≤ 174` by certificates |
 | `EveryNLarge` | the crossing for `N ≥ 175` and for every `N ≥ 2` |
+| `EveryNCorollary` | full positivity, probability and coupling bounds of Corollary (a), and the finite inequalities of (b) |
+| `EveryNSign` | the rational threshold certificate and the crossing above ζ_N for every N ≥ 2774 |
 | `Tables` | identities between numerator tables and recursively defined rook and Mathar sequences; retained for the tables note |
 
 ## Section 1, setting and notation
@@ -108,7 +110,10 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `lem:bracket` (a) | 3.5 | `Φ(w) ≤ N/2` gives `Nw/(N+w) ≤ z_N`, strictly if `Φ(w) < N/2` | `crossing_lower_of_Fcent`, `crossing_lower_of_Fcent_strict` | `EveryN` |
 | `lem:bracket` (b) | 3.5 | `Φ(w)(1 - w(w+2)/(2N)) > N/2` gives `z_N < Nw/(N+w)` | `crossing_upper_of_Fcent` | `EveryN` |
 | `lem:bessel-bounds` | 3.6 | the two cubic bounds on `E(z)` for `z > 0`, `E(z) ≤ 1`, and `E(z) ≤ 1 - 1/(8z)` for `z ≥ 5/4` | `besselE_ge`, `besselE_le`, `besselE_le_one`, `besselE_le_of_ge` | `BesselIntegral` |
-| `cor:every-n` (a) | 3.7 | in part, only the interval for `p_N`; neither the positivity chain `0 < Y'_N < Y_N < N` nor the coupling interval is in Lean | `every_N_crossing`, by algebraic rewriting | `EveryNLarge` |
+| `cor:every-n` (a) | 3.7 | the full positivity chain `0 < Y'_N < Y_N < N`, probability interval and coupling interval for every N ≥ 2 | `every_N_corollary_a`, `every_N_bracket_endpoints` | `EveryNCorollary` |
+| `cor:every-n` (b), `eq:secondorder` | 3.7, (10) | both finite bounds on ζ_N and both finite bounds on z_N - ν_N; the asymptotic conclusion is not included | `every_N_zeta_bracket`, `every_N_corollary_b_finite`, `nuN_pos` | `EveryNCorollary` |
+| `cor:every-n` (d) | 3.7 | z_N > ζ_N for every N ≥ 2774, with a kernel-checked rational threshold certificate | `every_N_crossing_above_zeta`, `zetaN_2774_lower`, `zetaN_2774_upper` | `EveryNSign` |
+| `eq:zetaN`, auxiliary bounds | (8) | ζ_N is monotone in N, and 1/2 < ζ_N ≤ log N for N ≥ 2 | `zetaN_mono`, `half_lt_zetaN`, `zetaN_le_log` | `EveryNCorollary` |
 
 ## Section 4, the crossing of every bin
 
@@ -275,7 +280,8 @@ Different proofs of the same statement.
     values of `N`. Lean evaluates `d^(N-1) S_N(c/d)` by the run-count sum only, and the recursion
     `eq:dp` is the second method of the Python script. Lean brackets `ζ_N` on the grid `10⁻⁴`,
     with Taylor bounds for `exp` and `3.141592 < π < 3.141593`. The script brackets `ζ_N` with
-    half-width `10⁻⁴⁵` in 60-digit arithmetic. The margins `0.033193` and `0.085591` are those of the script.
+    half-width `10⁻⁴⁵` using eighty-digit outward intervals. Its certified margins exceed
+    `0.03319` and `0.08559`.
 
 Partial coverage.
 
@@ -286,11 +292,15 @@ Partial coverage.
     `Π(1 - k/m)_+` appears only as the recursion `normCoeff_succ`.
 26. `thm:every-n`, Step 1. Lean has `ζ_N > 4` for `N ≥ 175`. It does not state that `ζ_N < 4` for
     `N ≤ 174`.
-27. `eq:zetaN`. The Lambert form `ζ_N = (1/2) W_0(πN²/4)`, the monotonicity of `ζ_N` in `N` and
-    `ζ_N ≤ L` are not in Lean.
-28. `cor:every-n` (a). Only the interval for `p_N` is an algebraic reformulation of
-    `every_N_crossing`, using `p_N = 1 - z_N/N`; there is no separate theorem for it.
-    The positivity chain `0 < Y'_N < Y_N < N` and the coupling interval are not formalized.
+27. `eq:zetaN`. The Lambert form `ζ_N = (1/2) W_0(πN²/4)` is not in Lean.
+    Monotonicity and `ζ_N ≤ L` are proved in `EveryNCorollary`.
+28. `cor:every-n`. Part (a) and the finite inequalities of (b) are standalone theorems
+    about the actual `pN`, `uN` and `zetaN`. The coupling is `-Real.log (uN N) / 2`.
+    The asymptotic conclusion of (b) and all of (c) remain outside Lean.
+    For (d), `EveryNSign` proves `6.5230 < ζ_2774 < 6.5231` by rational Taylor
+    certificates. It extends the inequality using
+    `z³(z+1) ≤ a³(a+1) exp(z-a)` for `4 ≤ a ≤ z` and the defining equation for ζ_N,
+    rather than differentiating the function f in the paper.
 29. `sec:allbin-order`. That `p_{a,b} = 2/3` only for `a = b = 1` is not in Lean.
 30. `prop:adjacent`. `global_min` and `extrema_at_pN` have weak inequalities, so they show that the
     named bins attain the minimum or maximum. The strict inequality `P_N(k) < P_N(k+1)` between
@@ -320,10 +330,11 @@ The following parts of the paper are not formalized. The finite results and cond
 listed above do not supply these omitted limit statements or their error bounds.
 
 * Section 1. The Ising dictionary at the end of Section 1.2.
-* Section 3. The positivity chain and coupling interval in Corollary 3.7(a), parts (b)–(d) of
-  Corollary 3.7 (`cor:every-n`), Proposition 3.8 (`prop:crossing-eq`) and Remark 3.9 (`rem:sign`).
-  Only the `p_N` interval of part (a) is covered by rewriting `every_N_crossing`. The values in
-  the tables `tab:pn` and `tab:every-n` are not formalized.
+* Section 3. The asymptotic conclusion of Corollary 3.7(b) and part (c) of
+  Corollary 3.7 (`cor:every-n`), Proposition 3.8 (`prop:crossing-eq`), and the complete
+  sign pattern of Remark 3.9 (`rem:sign`). The N ≥ 2774 portion of that pattern follows
+  from the formalized part (d). The values in the tables `tab:pn` and `tab:every-n`
+  are not formalized.
 * Section 4. Remark 4.5 (`rem:jacobi`), Lemma 4.6 (`lem:inversion`), Theorem 4.7
   (`thm:allbin-expansion`) beyond its leading term as `a → ∞`, uniformly in `b ≥ a`; the entire
   fixed-edge expansion of Theorem 4.8 (`thm:edge-laguerre`), including its leading limit; the
@@ -333,8 +344,8 @@ listed above do not supply these omitted limit statements or their error bounds.
 * Section 5. Theorem 5.2 (`thm:periodic-crossing`), even its leading term, Theorem 5.3
   (`thm:critical-window`) for both free and periodic boundaries, Corollary 5.4 (`cor:couplings`),
   and the values in the table `tab:couplings`.
-* Appendix A. The proof of Proposition 3.8, and the 60-digit comparisons of Step 4 (Lean has its
-  own rational bounds in their place).
+* Appendix A. The proof of Proposition 3.8 and the outward-interval Python calculations
+  (Lean has its own rational bounds for the results listed above).
 * The uniform local law (the local law note, not in Lean).
 
 ## Findings while checking

@@ -40,7 +40,7 @@ scripts below are in `paperA/`. Add `--full` to include `verify_every_n.py` and
 | --- | --- | --- |
 | The crossing at every N (theorem), for 2 <= N <= 174 | `verify_certified_bounds.py`, also called by `verify_every_n_guards.py` | The certificate integers come from the run-count sum and the independent recursion with integer weights. Opposite interval signs certify zeta_N. The Lean kernel also checks the short-chain certificates (`lean/PaperA/EveryN.lean`). |
 | The crossing equation (proposition), for N <= 174 | `verify_certified_bounds.py` | Outward intervals at the same rational endpoints certify the remainder and logarithm bounds. |
-| Part (d) of the corollary on the crossing at every N | `verify_certified_bounds.py` | Outward intervals give f(zeta_2774) - 1 > 0.0002124 and f(zeta_2773) - 1 < -0.000005210. The analytic monotonicity proof then covers larger N. |
+| Part (d) of the corollary on the crossing at every N | `lean/PaperA/EveryNSign.lean` and `verify_certified_bounds.py` | Lean checks rational Taylor bounds at N = 2774 and proves the inequality for every larger N. Independently, outward Python intervals give f(zeta_2774) - 1 > 0.0002124 and f(zeta_2773) - 1 < -0.000005210. |
 | The remark on the sign of z_N - zeta_N (computer-assisted throughout) | `verify_certified_bounds.py`, with the original integer checks in `verify_every_n.py` and `verify_every_n_sign.py` | The replay encloses all polynomial comparisons through N = 2773 and all rational-grid separations. The original independent recursion agrees with run counts at N = 401, 1000, 1008, 2000 and 2773, and two float methods agree up to N = 3000. |
 
 The integer tests are exact. Every comparison with zeta_N uses eighty-digit outward intervals,
@@ -250,12 +250,14 @@ The Lean 4 proofs are in `lean/`, one library for each of Papers A to D (`lean/P
 `lean/PaperD` also covers Paper F, with the statement numbers from before the split. The command
 `python -B lean/verify_lean.py` builds them with Lake and checks that every theorem and lemma uses
 only the axioms `propext`, `Classical.choice` and `Quot.sound`. The recorded run on October 15, 2026,
-checked 481 declarations for Paper A, 307 for Paper B, 346 for Paper C (with Paper E) and 281 for
+checked 497 declarations for Paper A, 307 for Paper B, 346 for Paper C (with Paper E) and 281 for
 Paper D (with Paper F). The build output, source hashes and axioms are in `lean/build-log.txt` and
 `lean/verification-manifest.json`. The Paper A entries were refreshed from a fresh rebuild
 outside OneDrive, with cached dependencies and initially empty Paper A build artifacts.
-It checked all 20 modules (including the root) and 481 declarations, with 22 linter warnings
-and no unexpected axioms. Every source hash matches the current Lean files.
+The baseline rebuild checked 481 declarations. The two added modules were then built and
+the integrated library audited again. It now has 22 modules (including the root) and 497
+declarations, with the same 22 linter warnings and no unexpected axioms. Every source hash
+matches the current Lean files.
 
 The file `lean/README.md` summarizes coverage. The files `lean/PaperA/MAP.md` through
 `lean/PaperD/MAP.md` map covered statements to Lean declarations and list partial coverage and
@@ -265,8 +267,9 @@ of Papers E and F moved.
 For Paper A, the every-N bracket and finite Bessel inequalities are formalized. The fixed-edge
 and Laguerre-root asymptotics, including their leading limits, the entire periodic central-crossing
 theorem, and the spatial crossing window are not. The edge coefficient lemmas prove rational
-algebra conditional on coefficient equations. Only the `p_N` interval of Corollary 3.7(a) is
-covered by rewriting the every-N theorem; its positivity chain and coupling interval are not.
-`lean/PaperA/MAP.md` lists the other omissions, including the crossing equation and coupling
+algebra conditional on coefficient equations. Corollary 3.7(a), including the full positivity
+chain and coupling interval, the finite inequalities of (b), and all of (d) are formalized.
+The asymptotic conclusion of (b) and part (c) remain outside Lean. `lean/PaperA/MAP.md` lists
+the other omissions, including the crossing equation and the separate asymptotic coupling
 corollary. The imported `Tables` module proves recurrence identities for material moved to the
 tables note; the path interpretations and bijections are not formalized.
