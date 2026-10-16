@@ -163,7 +163,9 @@ and by Theorem~\ref{thm:window}(i) the face maximum of an edge is smaller than t
 or of $[3]$, for $t$ in a compact set and large $N$.
 \end{proof}
 
-The left end $c_0$ is the crossing of the two-state walk~\cite{paperA}. Indeed Proposition~\ref{prop:pair} with $a=1$ and
+Part (a) recovers~\cite[Example~4.9]{paperB}, which identifies the global modes
+exactly, with the same window width $w$. Here it is an instance of
+Theorem~\ref{thm:window}. The left end $c_0$ is the crossing of the two-state walk~\cite{paperA}. Indeed Proposition~\ref{prop:pair} with $a=1$ and
 $q=2$ shows that for every $N$ the face maxima of $\{1,2\}$ and of a vertex cross exactly at
 $u=u_N$. The comparison of the lines in (a) and the value of $w$ are checked in Lean. With the
 uniform start the mode jumps from the vertices straight to $[3]$, as~\cite{paperB} shows for every
@@ -186,7 +188,7 @@ second order. & Lean\\
 symmetric $Q$ & $\lambda_{[d]\setminus\{x\}}\le q_x/(d-1)$, with equality
 exactly when $q_{yx}=q_x/(d-1)$ for all $y\ne x$. With unit rates on a
 connected graph, the winners go from vertices straight to $[d]$ exactly when
-the graph is complete. & Lean\\
+the graph is complete. & proved here\\
 $C_d$, $d\ge4$ & Arcs of $k=1,\dots,k_d$ states with $k_d=\lfloor2d/3\rfloor$,
 then $C_d$. The arc of $k\ge2$ states wins from $1/(\lambda_{k-1}-\lambda_k)$
 with $\lambda_k=2-2\cos\frac\pi{k+1}$, and $C_d$ from
@@ -229,7 +231,26 @@ each row is proved (Remark~\ref{rem:outcomes}).}
 Table~\ref{tab:outcomes} lists the outcomes for other graphs. Each row comes
 from Theorem~\ref{thm:hull} applied to the exit rates of the connected faces.
 So a row needs two things, namely the exit rates and the points that lie on
-the lower-left boundary of the hull. The rows marked Lean are proved in Lean
+the lower-left boundary of the hull. The second row has a short proof. By
+Rayleigh--Ritz with the unit vector $f$ that equals $(d-1)^{-1/2}$ off $x$ and
+$0$ at $x$, we get $\lambda_{[d]\setminus\{x\}}\le\sum_{y\ne x}q_{xy}/(d-1)=q_x/(d-1)$,
+with equality exactly when $f$ is an eigenvector of $-Q$ restricted to
+$[d]\setminus\{x\}$. Its entry at $y$ is $q_{yx}(d-1)^{-1/2}$, so this happens
+exactly when $q_{yx}$ does not depend on $y$, that is, $q_{yx}=q_x/(d-1)$. With
+unit rates on a connected graph, take $x$ of least degree $\delta$. The vertices
+with exit rate $\delta$ and the face $[d]$ tie at $\tau_0=(d-1)/\delta$, and
+there a component $C$ of $[d]\setminus\{x\}$ of least exit rate has
+$\lambda_C=\lambda_{[d]\setminus\{x\}}$ (the restricted matrix is block diagonal)
+and $\Phi_{\tau_0}(C)\le\tau_0\lambda_{[d]\setminus\{x\}}+d-2\le d-1$. Equality
+needs every $q_{yx}$ to equal $\delta/(d-1)$, which for unit rates means that the
+graph is complete. So on an incomplete graph the connected face $C$ beats both at
+$\tau_0$, and on $K_d$ the first row applies. The other rows marked Lean are proved in Lean~4 (v4.33.1 with Mathlib
+v4.33.1), namely $K_d$ by \texttt{complete\_vertex\_wins},
+\texttt{complete\_full\_wins} and \texttt{complete\_tie}, $C_d$ by
+\texttt{cycle\_cascade} and \texttt{arcCost\_unique\_min}, the paw by
+\texttt{paw\_phase1} to \texttt{paw\_phase4}, the house by \texttt{house\_phase1} to
+\texttt{house\_phase4}, and $K_4$ plus a vertex by \texttt{kfv\_phase1} to
+\texttt{kfv\_phase3}, with the lemmas listed in \nolinkurl{MAP.md}
 (Section~\ref{sec:verify}). On $C_d$ two steps are by hand. A proper face that
 is not an arc is disconnected, hence not admissible, and the growth of the
 switch values follows from $2-2\cos x=x^2+O(x^4)$. The rows $P_d$ and
