@@ -2,7 +2,7 @@
 
 This file maps covered statements of Paper A (`paperA/problem131.tex` and the files it inputs)
 to Lean declarations and records partial coverage and omissions. The library `PaperA` has root
-`PaperA.lean`, which imports all 43 modules in `PaperA/` (44 modules including the root), in
+`PaperA.lean`, which imports all 48 modules in `PaperA/` (49 modules including the root), in
 namespace `Kagey131`. It uses Lean 4 v4.33.1 and Mathlib v4.33.1. Every theorem listed here is
 proved without `sorry`, `admit` or new axioms, and `#print axioms` on each of them reports only
 `propext`, `Classical.choice` and `Quot.sound` (see `build-log.txt`).
@@ -81,6 +81,11 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `DomainWalls` | Proposition `prop:walls`, the domain walls at the crossing |
 | `FullOrder` | Remark `rem:ordered`, full order against one bin |
 | `FieldCrossing` | Theorem `thm:field`, the edge crossings in a fixed field, for free and periodic ends |
+| `AllbinConsequences` | the consequences of Theorem `thm:allbin-expansion` displayed after it, for sequences of bins |
+| `SignCorrection` | Remark `rem:sign-correction`: the sign and size of the first correction to the Bessel form, and the numbers at `a = b = 200` |
+| `Jacobi` | Remark `rem:jacobi`: the Jacobi forms of the run sums, the Laguerre limit at the edge with rates, and the Mehler–Heine limit for natural parameters |
+| `FreeEnergy` | Remark `rem:free-energy`: the constrained free energies, the periodic Ising weight of a magnetization, and their limit in the crossing window |
+| `LevelTheta` | Remark `rem:convention`: the central crossings at a level `Θ`, for free and periodic ends, the shift of the coupling, and the conventions with two bins or two endpoints |
 | `Tables` | identities between numerator tables and recursively defined rook and Mathar sequences; retained for the tables note |
 | `TableValuesCore` | correct rounding (`RoundsTo`), Taylor certificates for `exp` and `log`, rational bounds on `ζ_N`, and bounds on `u_N` and `u_N^P` from truncated sums with a geometric tail |
 | `TableValuesEveryN` | the values of the table `tab:every-n`, by kernel-checked certificates |
@@ -172,11 +177,21 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `eq:allbin-bessel-root` | (18) | `G_η`, and its root `x_B` exists and is unique | `Geta`, `Groot_spec`, `Groot_unique`, `Geta_strictMonoOn` | `BesselDeriv` |
 | `eq:allbin-logderivative` | (19) | `G_η' - 2G_η = 2x(1-η)(I_0 - I_1) + η I_0 ≥ 0` | `hasDerivAt_Geta`, `Geta_logderiv`, `Geta_deriv_ge`, `besselI1_lt_I0`, `Geta_growth` | `BesselDeriv` |
 | `cor:fixed-M` | 4.4 | for `a, b ≥ 1`, `N = a + b`, `μ = a - b`, `ρ = √(1 - μ²/N²)` and `v = N e^{-2J} ρ`, `Z_N(μ) = 2 e^{(N-3)J} (I_0(v) + I_1(v)/ρ)(1 - θ)` with `0 ≤ θ ≤ (N/2) e^{-4J} + e^{-2J}`, for every real `J` | `fixed_M_weight`, `rho_eq` | `FixedMagnetization` |
+| `rem:sign-correction` | 4.5 | the exact weight lies below its Bessel form: `S_{a,b} ≤ Ŝ_{a,b}`, and `₂F₁(-a,-b;1;w²/(ab)) ≤ I_0(2w)` for `a, b ≥ 1` | `allbin_bessel`, `hyp2F1neg_le_besselI0`, `hyp2F1neg` | `UniformBessel`, `SignCorrection` |
+| `rem:sign-correction` | 4.5 | the clipped products fall short of `1` by about `σ_r = r(r+1)/(2A)`: `σ_r - σ_r²/2 ≤ 1 - U_r V_r ≤ σ_r` for every `r` | `pair_deficit_bounds`, with `pair_product_upper`, `bonferroni_step`, `normCoeff_self_succ` | `SignCorrection` |
+| `rem:sign-correction` | 4.5 | the corrected expansion with falling factorials: `0 ≤ ₂F₁(-a,-b;1;z) - (I_0(2w) - (w² I_0(2w) - w I_1(2w))/(2A)) ≤ M/(8A²)` for `abz = w²`, with `M = Σ_n (n(n-1))² w^{2n}/(n!)²`; the first correction is `-w² I_2(2w)/(2A)` | `hyp2F1neg_expansion`, with `hypCoeff`, `hypCoeff_bounds`, `hyp_term_eq`, `choose_succ_norm`, `hasSum_n_b0`, `hasSum_nn_b0`, `summable_nn_sq_b0` | `SignCorrection` |
+| `rem:sign-correction` | 4.5 | at `a = b = 200`, `c = 1`, `abz = 25`: the exact value is between `9.45` and `9.55` percent below `I_0(10)`, the formula with the sign of Eq. (D.6) is between `10.05` and `10.15` percent above it, and the corrected formula is within `0.8` percent of the exact value | `sign_correction_numbers`, with `besselI0_ten_bounds`, `besselI1_ten_bounds`, `tsum_le_of_ratio_half`, `hyp200_eq`, `i0_bounds_q`, `i1_bounds_q`, `hyp200_bounds_q` | `SignCorrection` |
+| `rem:jacobi` | 4.7 | for `1 ≤ a ≤ b` and `t ≠ 1`, `Σ_r C(a-1,r) C(b-1,r) t^r = ₂F₁(1-a,1-b;1;t) = (1-t)^{a-1} P_{a-1}^{(0,b-a)}((1+t)/(1-t))` | `jacobi_first`, `jacobiP`, `jacobiP_moebius` | `Jacobi` |
+| `rem:jacobi` | 4.7 | for `a + 1 ≤ b` and `u² ≠ 1`, `Σ_r C(a-1,r) C(b-1,r+1) u^{2r+2} = ((b-1)u²/a)(1-u²)^{a-1} P_{a-1}^{(1,b-a-1)}((1+u²)/(1-u²))` | `jacobi_second` | `Jacobi` |
+| `rem:jacobi` | 4.7 | the Mehler–Heine limit at `iw`: for natural `α, β`, every `W` and `ε > 0`, eventually `|n^{-α} P_n^{(α,β)}(1 + w²/(2n²)) - (w/2)^{-α} I_α(w)| ≤ ε` for all `|w| ≤ W` | `mehler_heine`, `jacobiScaled`, `besselScaled`, `besselScaled_zero`, `besselScaled_one`, with `mhTerm_uniform`, `mhTerm_bound`, `mhLimit_bound`, `tendsto_choose_div_pow`, `tendsto_mhCoeff` | `Jacobi` |
+| `rem:jacobi` | 4.7 | for fixed `a` and `u² = y/b`: the run form splits into the odd runs and two even parts; for `0 ≤ y ≤ Y`, `0 ≤ H_a(y) - Σ_r C(a-1,r) C(b-1,r+1)(y/b)^{r+1} ≤ K_a(Y)/b`, the odd-run part with its factor `2u` is at most `K'_a(Y)/√b`, the other even part at most `K''_a(Y)/b`, and `|S_{a,b}(√(y/b)) - H_a(y)| ≤ K/√b` | `edge_run_decomposition`, `edge_even_main`, `edge_odd_part`, `edge_even_other`, `edge_jacobi_limit`, with `choose_le_pow_div` | `Jacobi` |
 | `cor:allbin-root-bound`, `eq:allbin-root-bound` | 4.6, (20) | `x_{a,b} ≥ x̂_{a,b}`, and `x_{a,b} - x̂_{a,b} ≤ -(1/2) log(1 - δ_{a,b})` when `δ_{a,b} < 1` | `allbin_root_bound`, with `Tab_eq_Geta`, `eta_le_one`, `root_comparison` | `RootBounds`, `BesselDeriv` |
 | `lem:inversion` | 4.8 | for every `K > 0` there is `C_K` with `|z - ℓ + (1/2) log ℓ - C - ((1/4) log ℓ - C/2 + B)/ℓ| ≤ C_K((log ℓ)²/ℓ² + |ω|)` whenever `z ≥ 1`, `ℓ ≥ 2`, `|C|, |B| ≤ K`, `|ω| ≤ 1` and `z + (1/2) log z = ℓ + C + B/z + ω` | `log_inversion`, with `abs_log_one_add_sub_le`, `log_le_quarter` | `LogInversion` |
 | `thm:allbin-expansion`, `eq:allbin-expansion` | 4.9, (21) | with `ℓ = log A`, `η = 2√(ab)/(a+b)`, `C(η) = (1/2) log(8π) - log(1+η)` and `B(η) = (3-η)/(8(1+η))`, there are `K` and `a₀` with `|2√(ab) u_{a,b} - (ℓ - (1/2) log ℓ + C(η) + ((1/4) log ℓ - C(η)/2 + B(η))/ℓ)| ≤ K((log ℓ)²/ℓ² + (log a)²/a)` for all `a ≥ a₀` and all `b ≥ a`, and the same for `1 - p_{a,b}` | `allbin_expansion`, `allbin_expansion_prob`, `rootMain`, `Ceta`, `Beta`, with `allbin_root_close` | `AllbinExpansion` |
 | `thm:allbin-expansion` | 4.9 | Step 2 of the proof: if `G_η(z/2) = A` and `z ≥ 100`, then `z + (1/2) log z = log A + C(η) + B(η)/z + ω` with `|ω| ≤ 24/z²`, and there are `K` and `A₀` with `|2x̂ - (main terms in ℓ = log A)| ≤ K (log ℓ)²/ℓ²` for all `A ≥ A₀`, uniformly in `0 ≤ η ≤ 1` | `bessel_root_eq`, `bessel_root_expansion`, with `bessel_factor`, `Ceta_bounds`, `Beta_bounds` | `AllbinExpansion` |
 | `thm:allbin-expansion`, `eq:allbin-leading` | 4.9, (23) | in part, only the leading term `2√(ab) u_{a,b} ~ log a`, uniformly in `b ≥ a`, also for `1 - p_{a,b}` | `allbin_leading`, `allbin_leading_prob` | `AllbinAsymptotics` |
+| `eq:allbin-growing-edge` | (24) | for sequences with `a → ∞`, `a ≤ b` and `a/b → 0`: `2√(ab)(1 - p_{a,b}) - (log a - (1/2) log log a + (1/2) log(8π)) → 0` | `allbin_growing_edge`, with `allbin_limit_core`, `rootMain_limit`, `allbin_expansion_prob_symm` | `AllbinConsequences` |
+| `thm:allbin-expansion`, the case `a/N → α` | 4.9 | for sequences with `N → ∞` and `a/N → α`, `0 < α < 1`: `2√(a(N-a))(1 - p_{a,N-a}) - (log N - (1/2) log log N + log(α(1-α)) + C(2√(α(1-α)))) → 0` | `allbin_fixed_fraction`, with `allbin_limit_core` | `AllbinConsequences` |
 | `eq:edge-polynomial` | (25) | `H_a(y) = (y/a) L^(1)_{a-1}(-y)` | `Hedge`, `genLaguerre`, `Hedge_eq_laguerre` | `UniformBessel`, `Edge` |
 | `sec:allbin-edge` | 4.4 | `y_a` exists and is unique, `y_1 = 1`, `y_2 = √3 - 1`, and `y_{a+1} < y_a` | `yEdge_spec`, `yEdge_unique`, `yEdge_one`, `yEdge_two`, `yEdge_succ_lt`, `Hedge_strictMonoOn`, `Hedge_lt_succ` | `Edge` |
 | `eq:edge-exact-series` | (28) | the exact series of `S_{a,b}` in `y = b u²` | `edge_exact_series` | `Edge` |
@@ -210,6 +225,12 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `rem:ordered` | 5.8 | `P_N(0) + P_N(N) = p^(N-1)`, which is `1/2` at `u_ord = 2^{1/(N-1)} - 1`; `|J_ord - (1/2) log((N-1)/log 2)| ≤ 1/N` for `N ≥ 2`; `J_N^F = (1/2) log(N/z_N - 1)` | `full_order_prob`, `full_order_half`, `uOrd`, `jOrd`, `jOrd_asymp`, `jF_eq` | `FullOrder` |
 | `rem:ordered` | 5.8 | for all large `N`, `|J_ord - J_N^F - (1/2) log(z_N/log 2)| ≤ 7 log N/N` and `|J_ord - J_N^F - ((1/2) log log N - (1/2) log log 2)| ≤ 7 log N/N + (log log N + 3)/log N` | `ordered_minus_free`, `ordered_minus_free_loglog` | `FullOrder` |
 | `thm:critical-window`, `eq:criticalcount` | 5.3, (39) | for free and periodic ends and every real `t`, `(√(log N)/N) M^X_N(t) → √(2 max(t,0))`, where `M^X_N(t)` is the number of interior bins whose probability is strictly above the endpoint probability at the odds `u_N^X + t/N` | `free_window_count`, `periodic_window_count`, `freeAbove`, `periodicAbove`, with `count_limit`, `countAbove_eq_zero`, `countAbove_le`, `card_near_mid`, `free_mono`, `periodic_mono`, `Sab_comm` | `CriticalWindow` |
+| `rem:free-energy` | 5.4 | with `F^X_N(μ) = -log Z^X_N(μ)` and `u = e^{-2J}`: `-log S_{a,b}(u) = F_N(a-b) - F_N(N)` for `a, b ≥ 1`, and `-log S^P_{N,k}(u) = F^P_N(2k-N) - F^P_N(N)` for `1 ≤ k ≤ N-1`, for every real `J` | `free_energy_ratio`, `periodic_energy_ratio`, `perIsingZ`, `perIsingZ_full`, `perRatio_eq_perIsingZ_ratio`, with `isingZ` | `FreeEnergy`, `IsingDictionary` |
+| `rem:free-energy` | 5.4 | for free and periodic ends, every `T, Y ≥ 0` and `ε > 0` there is `N₀` with, for `N ≥ N₀`, `|t| ≤ T`, `|y| ≤ Y` and every integer `k` within `1/2` of `N/2 + yN/√(log N)`: `u = u_N^X + t/N > 0` and `|F^X_N(2k-N) - F^X_N(N) - (2y² - t)| ≤ ε` at `J = -(1/2) log u` | `free_energy_window`, `periodic_energy_window`, with `energy_of_profile`, `abs_log_sub_log_le`, `eventually_odds_pos` | `FreeEnergy` |
+| `rem:convention` | 5.6 | for fixed `Θ > 0`, with `u` the root of `S_N(u) = Θ` and `p = 1/(1+u)`: there is `C` with, for all large `N`, `|N u - (L - (1/2) log L + c + ((1/4) log L - c/2 + 1/8)/L)| ≤ C (log L)²/L²` and the same for `N(1-p)`, where `c = c_0 + log Θ` | `free_level_expansion`, `uNL`, `pNL`, `uabL`, `uabL_spec`, `uabL_unique`, `uNL_one`, `levelMain`, with `allbin_level_expansion`, `level_core`, `free_sandwich`, `rootMain_conv`, `level_assembly`, `center_facts`, `log_center_ratio` | `LevelTheta` |
+| `rem:convention` | 5.6 | the same for periodic ends, with the root of `S^P_{N,m_N}(u) = Θ`, `3/8` in place of `1/8` and `c = c_P + log Θ` | `periodic_level_expansion`, `uNPL`, `pNPL`, `uNPL_spec`, `uNPL_one`, with `periodic_sandwich`, `perRatio_exists_level` | `LevelTheta` |
+| `rem:convention` | 5.6 | the coupling moves by `-(log Θ)/(2 log N)` to leading order: there is `C` with `|J^Θ - J + (log Θ)/(2 log N)| ≤ C (log L)²/L²` for all large `N`, for free and periodic ends | `free_level_coupling`, `periodic_level_coupling`, with `coupling_level_shift`, `log_shift_of_expansions` | `LevelTheta` |
+| `rem:convention` | 5.6 | the central bin equals both endpoints together exactly when `S_N = 2`; `c_0 + log 2 = c_P`; the two central bins against the two endpoints give the ratio `S_N` (`Θ = 1`) | `both_endpoints_iff`, `c0_add_log_two`, `odd_two_bins_ratio` | `LevelTheta` |
 | `cor:couplings` | 5.5 | for all large `N`, `J_N^F`, `J_N^P`, `ξ(J_N^F)` and `ξ(J_N^P)` are positive | `couplings_eventually_pos` | `IsingDictionary` |
 | `cor:couplings` | 5.5 | (a) for all large `N`, `|J_N^F - ((1/2)(L - log L) + ((1/4) log L - c_0/2)/L)| ≤ 28 (log L)²/L²`, where `J_N^F = -(1/2) log u_N` | `free_coupling` | `PeriodicExpansion` |
 | `cor:couplings` | 5.5 | (b) for all large `N`, `|J_N^F - J_N^P - (log 2)/(2L)| ≤ 2 (log L)/L²` | `coupling_shift`, with `shift_final` | `PeriodicExpansion` |
@@ -338,6 +359,9 @@ Different normalizations.
     `ℓ = log A` (`allbin_expansion`), and `a/2 ≤ A ≤ a`, so the two leading terms agree. The
     consequences displayed after the theorem, `eq:allbin-growing-edge` and the case
     `a/N → α`, are not stated in Lean.
+    They are now stated, for sequences of bins, as `allbin_growing_edge` and `allbin_fixed_fraction`
+    in `AllbinConsequences`. The second one allows `0 < α < 1` (the paper has `0 < α ≤ 1/2`) and
+    does not need `a ≤ N - a`, by the symmetry `p_{a,b} = p_{b,a}`.
 
 Different proofs of the same statement.
 
@@ -499,15 +523,41 @@ Partial coverage.
     in floating point and are data only. The paper computes the tables in 50-digit and
     floating-point arithmetic instead.
 
+49. `rem:sign-correction`. Lean writes `w² I_2(2w)` as `w² I_0(2w) - w I_1(2w)`, since only `I_0`
+    and `I_1` are defined. The formula `I_0(2w) + w² I_2(2w)/(2A)` with the sign of Eq. (D.6) is the
+    one the remark describes; Lean does not quote the other paper. `hyp2F1neg a b z` is the
+    terminating sum `Σ_n C(a,n) C(b,n) z^n`, which is `₂F₁(-a,-b;1;z)`. The bounds on `I_0(10)`,
+    `I_1(10)` and on the exact sum are rational and checked with `decide +kernel`; the series of
+    `I_0` and `I_1` are cut after thirty terms with a geometric tail bound.
+
+50. `rem:jacobi`. Mathlib has no Jacobi polynomials, so `jacobiP n α β` is the explicit sum
+    `Σ_s C(n+α, n-s) C(n+β, s) ((x-1)/2)^s ((x+1)/2)^{n-s}` (Szegő, Eq. (4.3.2)) for natural `α, β`.
+    The identities hold for every `t ≠ 1` (the paper has `0 ≤ t < 1`). The Laguerre limit is proved
+    with explicit rates, from the run form and the bounds on `U_r(b)`, not from the
+    Jacobi–Laguerre limit. The Mehler–Heine limit is proved directly, term by term with a
+    dominating series, and holds for `|w| ≤ W`, not only `0 ≤ w ≤ W`.
+
+51. `rem:convention`. Lean does not follow the sketch of the remark (Step 2 of the proof of
+    Theorem 5.2 with `log Θ` added). For both boundaries it compares the root with the Bessel root
+    `G_η(x̂) = ΘA` of Section 4 (`level_core`), with `η = 2√(ab)/N` for free ends and `η = 0`,
+    `A = ab/N` for periodic ends, and then rewrites the expansion in `ℓ = log(ΘA)` in terms of
+    `L = log N` (`rootMain_conv`). The free version holds for every bin as `allbin_level_expansion`.
+    The constants `C` exist but are not computed. The identity of `odd_two_bins_ratio` holds for
+    every `N ≥ 2`. The sentence that the bracket of Theorem 3.4 is proved only for `Θ = 1` makes no
+    claim.
+
 ## Not in Lean
 
 The following parts of the paper are not formalized. The finite results and conditional algebra
 listed above do not supply these omitted limit statements or their error bounds.
 
-* Section 4. Remarks 4.5 (`rem:sign-correction`) and 4.7 (`rem:jacobi`), and the
-  consequences of Theorem 4.9 displayed after it (`eq:allbin-growing-edge` and the case
-  `a/N → α`).
-* Section 5. Remarks 5.4 and 5.6.
+* Section 4. In Remark 4.7 (`rem:jacobi`), the Mehler–Heine limit for real `α, β > -1` (a cited
+  theorem; Lean has natural `α, β`) and the sentences that describe the expansions of Elliott,
+  Temme, and Gil, Segura and Temme. In Remark 4.5 the statement about the misprint in Eq. (D.4)
+  of Dantchev, Tonchev and Rudnick is about another paper, not a mathematical claim.
+* Section 5. In Remark 5.4, the bound of order `√(log N)/N` on the probability of a bin of the
+  window (it follows from Theorem 5.3, since about `N/√(log N)` bins of the window are each
+  comparable with an endpoint and the probabilities sum to one, but Lean does not state it).
 * Appendix A. The outward-interval Python calculations (Lean has its own rational bounds for
   the results listed above).
 * The uniform local law (the local law note, not in Lean).
