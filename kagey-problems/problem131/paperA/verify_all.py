@@ -7,8 +7,8 @@ verify_every_n_guards.py, which reads the certificate file. Without --full the g
 certificate file that is already in data/. The scripts use only the standard library, except
 verify_ising_coupling_tm.py, which needs NumPy.
 
-verify_every_n_sign.py, verify_every_n_guards.py, verify_uniform_llt.py and
-verify_uniform_llt_cor5.py report their checks in their output rather than through the exit code,
+verify_uniform_llt.py and verify_uniform_llt_cor5.py report their checks
+in their output rather than through the exit code,
 so that output must be read (it is also saved in data/). The other scripts stop with a nonzero exit
 code when a check fails, and then this runner stops too.
 
@@ -33,7 +33,7 @@ parser.add_argument('--dry-run', action='store_true',
 args = parser.parse_args()
 
 # Each entry is a script name followed by its arguments.
-runs = [('verify.py',), ('check_bessel.py',), ('verify_adjacent.py',),
+runs = [('test_certified_decimal.py',), ('verify.py',), ('check_bessel.py',), ('verify_adjacent.py',),
         ('verify_allbin.py',), ('verify_periodic_window.py',),
         ('verify_ising_coupling.py',), ('verify_ising_coupling_tm.py',),
         ('verify_every_n_guards.py',),

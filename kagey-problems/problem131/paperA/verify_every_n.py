@@ -11,7 +11,8 @@ Checks, each with two independent methods where a number is reported:
      S_N(u_lo) < 1 < S_N(u_hi), each decided by exact integers computed twice
      (run-count binomial formula; integer transfer-matrix DP over words), then
        zeta + 1/(8 zeta) - zeta(zeta+1)/N - 1/(16 zeta^2) <= z(u_lo),  z(u_hi) < zeta + 1/(8 zeta)
-     and the R_N bounds, with z(u) = N u/(1+u), in 60-digit Decimal.
+     and the R_N bounds, with z(u) = N u/(1+u), in outward 80-digit intervals.
+     Scalar Decimal values below are for display and numerical diagnostics.
   4. The explicit margin functions of the analytic proof (zeta >= 4) on a fine grid, and the
      exact sufficient conditions (exact Bessel function) for every N up to NSUFF.
   5. A table of z_N: run-count Decimal bisection vs float DP bisection (plus a DP sign check at
@@ -27,6 +28,7 @@ import time
 from decimal import Decimal as D, getcontext
 from fractions import Fraction
 from math import comb
+from certified_decimal import certificate_margins, threshold_gap, zeta_bounds, zeta_grid
 
 getcontext().prec = 60
 PI_STR = "3.14159265358979323846264338327950288419716939937510582097494459"
@@ -49,19 +51,8 @@ def out(*a):
 
 # ---------------------------------------------------------------- zeta_N
 def zeta_dec(N):
-    K = D(N).ln() + C0
-    z = D(max(0.5, math.log(N) - 0.5 * math.log(max(math.log(N), 0.5))))
-    for _ in range(200):
-        f = z + z.ln() / 2 - K
-        z_new = z - f / (1 + 1 / (2 * z))
-        if abs(z_new - z) < D(10) ** -55:
-            z = z_new
-            break
-        z = z_new
-    # rigorous bracket (Decimal ln is correctly rounded)
-    h = D(10) ** -45
-    assert (z - h) + (z - h).ln() / 2 < K < (z + h) + (z + h).ln() / 2
-    return z
+    """Approximate center of a rigorously enclosed root, for display/diagnostics."""
+    return zeta_bounds(N).midpoint()
 
 
 def zeta_lambert(N):
@@ -328,6 +319,11 @@ def main():
                 continue
             break
         assert vlo < target < vhi, N
+        # These intervals, not the rounded scalar diagnostics below, certify
+        # all non-polynomial comparisons. They include the error in pi and ln.
+        for name, margin in certificate_margins(N, a, a1, den).items():
+            if margin.lo <= 0:
+                raise ArithmeticError(f"{name} failed at N={N}: {margin}")
         both = N <= NCERT_BOTH
         if both:
             t1 = time.time()
@@ -518,14 +514,8 @@ def main():
     out(f"  sign(z_2 - zeta_2) = {signs[2]:+d}; sign changes at N = {changes} (first N with the new sign)")
     # exact certification of the sign at the change points
     for N in sorted(set(sum([[c - 1, c] for c in changes], []))):
-        zt = zeta_dec(N)
-        # rational just below / above zeta/(N-zeta)
-        uz = zt / (N - zt)
         den2 = 10 ** 30
-        aa = int((uz * den2).to_integral_value(rounding="ROUND_FLOOR"))
-        # guard: both grid points clear u_zeta by more than the 1e-45 error in zeta_N
-        # (added after the recorded run; checked in verify_every_n_guards.py [G2])
-        assert uz - D(aa) / den2 > D(10) ** -40 and D(aa + 1) / den2 - uz > D(10) ** -40, N
+        aa, _ = zeta_grid(N, den2)
         W = runcount_coeffs(N)
         tg = den2 ** (N - 1)
         v1 = S_int_runcount2(W, aa, den2)
@@ -544,15 +534,9 @@ def main():
 
     # N_2: from the theorem, z_N >= zeta + 1/(8 zeta) - zeta(zeta+1)/N - 1/(16 zeta^2) > zeta once
     # N (1/(8 zeta) - 1/(16 zeta^2)) > zeta(zeta+1)
-    N2 = None
-    for N in range(2, 20001):
-        zt = zeta_dec(N)
-        if D(N) * (1 / (8 * zt) - 1 / (16 * zt * zt)) > zt * (zt + 1):
-            if N2 is None:
-                N2 = N
-        else:
-            N2 = None
-    out(f"  theorem gives z_N > zeta_N for every N >= N_2 = {N2} (checked to 20000; beyond, the gap grows)")
+    if not (threshold_gap(2773).hi < 0 < threshold_gap(2774).lo):
+        raise ArithmeticError("The 2773/2774 threshold is not certified")
+    out("  certified threshold N_2 = 2774; extension to all larger N uses the paper's monotonicity proof")
     out(f"\ntotal time {time.time()-t0:.1f}s")
     with open("data/every_n_output.txt", "w") as f:
         f.write("\n".join(OUT) + "\n")
