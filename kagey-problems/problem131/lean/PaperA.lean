@@ -41,6 +41,7 @@ import PaperA.TableValuesCore
 import PaperA.TableValuesEveryN
 import PaperA.TableValuesCouplings
 import PaperA.TableValuesText
+import PaperA.TableValuesBessel
 
 /-!
 # Paper A (`paperA/problem131.tex`), root module
