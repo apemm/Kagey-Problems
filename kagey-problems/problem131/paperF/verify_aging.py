@@ -16,7 +16,7 @@ Run with python -B verify_aging.py, or add --full for the second method on every
 even n <= 1000 and for n = 6400 by both methods. Checks of numbers from the research notes
 that the paper does not print are kept, labeled 'research notes, not printed'.
 
-The d-state chain of Theorem 3.2 starts in state 1 and at step k >= 2 moves to each of the
+The d-state chain of Theorem 3.4 starts in state 1 and at step k >= 2 moves to each of the
 other d-1 states with probability theta/(k+d-2). Its joint law of (visit counts, last state)
 is computed in exact rationals by a forward recursion and by enumerating all paths.
 """
@@ -260,8 +260,8 @@ def main():
     check('P(A_n = s)/P(A_n = n) strictly increasing in c for 1 <= s <= n-1 (fixed and fair start), '
           'and equal to 1 at c = 1 for the fixed start', ok, 'exact, n <= 12, c = 0.1, ..., 1.9')
 
-    # ------------------------------------------------ d states (Theorem 3.2)
-    print('\nThe d-state chain (Theorem 3.2), exact rationals', flush=True)
+    # ------------------------------------------------ d states (Theorem 3.4)
+    print('\nThe d-state chain (Theorem 3.4), exact rationals', flush=True)
     ok, nbins = True, 0
     for d in (2, 3, 4):
         for N in range(2, 9):

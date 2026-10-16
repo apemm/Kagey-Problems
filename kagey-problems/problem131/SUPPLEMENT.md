@@ -223,8 +223,8 @@ from September 26, 2026 (`paperD/data/verify_output.txt` and `verify_output_full
 all 3 scripts are in `paperD/data/verify_output_2026-10-09.txt`. These outputs use the old numbers
 (4.x, 5.x, D.x and E.x). The ledgers are `paperF/data/ledger_D3.md` and `ledger_D4.md`, which keep
 their names and their numbers from Paper D. The check labels of the scripts use the current
-numbers. In the outputs, Corollary 2.5, Remarks 2.6 and 2.9, Theorems 2.7, 2.8
-and 3.2, Section 3 and Tables 1 and 2 appear there as Corollary 4.5, Remarks 4.6 and 4.9, Theorems
+numbers. In the outputs, Corollary 2.5, Remarks 2.7 and 2.10, Theorems 2.8, 2.9
+and 3.4, Section 3 and Tables 1 and 2 appear there as Corollary 4.5, Remarks 4.6 and 4.9, Theorems
 4.7, 4.8 and 5.2, Section 5 and Tables 2 and 3. Labels that say "research notes, not printed" check
 numbers that the paper does not print.
 
@@ -234,15 +234,15 @@ and exact checks of 2 proved statements.
 | Result that rests on computation | Script | The 2 methods |
 | --- | --- | --- |
 | Corollary 2.5, C(phi) = 0.7761317206 and the factor 1.2884 | `verify_heavy_runs.py` | The general formula for C(alpha) and the closed form at the golden ratio. |
-| The values of R_N in Table 1, and the numbers in Remarks 2.6 and 2.9 and after Theorems 2.7 and 2.8 (crossover sizes, alpha = 1, ratios to the leading terms) | `verify_heavy_runs.py` | The two-renewal formula of Proposition 2.2 and a spectral method, and for small N a first-run recursion and a sum over all run compositions. Some of the largest cells use one method only. |
+| The values of R_N in Table 1, and the numbers in Remarks 2.7 and 2.10 and after Theorems 2.8 and 2.9 (crossover sizes, alpha = 1, ratios to the leading terms) | `verify_heavy_runs.py` | The two-renewal formula of Proposition 2.2 and a spectral method, and for small N a first-run recursion and a sum over all run compositions. Some of the largest cells use one method only. |
 | The crossing c_200 = 0.8925 after Proposition 3.7, and the values of c_N in Appendix B | `verify_aging.py` | A forward recursion, transfer matrices at roots of unity, and the path-weight form, with an exact rational sign check at c_200 plus and minus 10^-6. |
-| The exact checks of Theorem 3.2 and Proposition 3.4 for d = 2, 3, 4 | `verify_aging.py` and `verify_aging_urn.py` | For Theorem 3.2 a forward recursion in exact rationals and a sum over all paths. For Proposition 3.4 the law of the walk by a forward recursion in exact rationals against the Dirichlet-multinomial formula. |
+| The exact checks of Theorem 3.4 and Proposition 3.1 for d = 2, 3, 4 | `verify_aging.py` and `verify_aging_urn.py` | For Theorem 3.4 a forward recursion in exact rationals and a sum over all paths. For Proposition 3.1 the law of the walk by a forward recursion in exact rationals against the Dirichlet-multinomial formula. |
 
 | Script | What it checks |
 | --- | --- |
-| `verify_heavy_runs.py` | Heavy-tailed runs (Section 2, Tables 1 and 2, and Appendix A). The two-renewal formula against a first-run recursion and a sum over all run compositions for every bin with N <= 14, the end of Proposition 2.1, the constants C(alpha) and C_fr(alpha) by formula and by quadrature, the values of Table 1, the crossover sizes behind Remark 2.6, the Lamperti value (2/pi) tan(pi alpha/2) of Table 2, and the approach to the limits of Theorems 2.7 and 2.8. |
-| `verify_aging.py` | The aging walk (Section 3 and Appendix B). The law at c = 1 with a fixed first step and the recursion against all 2^N paths for N <= 12, the ratios of Proposition 3.1 increasing in c, the d-state law of Theorem 3.2 against all paths, the bounds and the expansion of Appendix B, and c_N by 3 methods. |
-| `verify_aging_urn.py` | Proposition 3.4 in exact rational arithmetic, with only the standard library. For d = 2, 3, 4, 4 values of theta and up to 7 steps (5 for d = 4), the law of the counts and the last state against the Dirichlet-multinomial formula. Also that the d-state chain of Theorem 3.2 at theta = 1 is the same walk after its first step. |
+| `verify_heavy_runs.py` | Heavy-tailed runs (Section 2, Tables 1 and 2, and Appendix A). The two-renewal formula against a first-run recursion and a sum over all run compositions for every bin with N <= 14, the end of Proposition 2.1, the constants C(alpha) and C_fr(alpha) by formula and by quadrature, the values of Table 1, the crossover sizes behind Remark 2.7, the Lamperti value (2/pi) tan(pi alpha/2) of Table 2, and the approach to the limits of Theorems 2.8 and 2.9. |
+| `verify_aging.py` | The aging walk (Section 3 and Appendix B). The law at c = 1 with a fixed first step and the recursion against all 2^N paths for N <= 12, the ratios of Proposition 3.3 increasing in c, the d-state law of Theorem 3.4 against all paths, the bounds and the expansion of Appendix B, and c_N by 3 methods. |
+| `verify_aging_urn.py` | Proposition 3.1 in exact rational arithmetic, with only the standard library. For d = 2, 3, 4, 4 values of theta and up to 7 steps (5 for d = 4), the law of the counts and the last state against the Dirichlet-multinomial formula. Also that the d-state chain of Theorem 3.4 at theta = 1 is the same walk after its first step. |
 
 ## Lean
 
