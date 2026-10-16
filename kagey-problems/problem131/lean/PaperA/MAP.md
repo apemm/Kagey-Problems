@@ -74,6 +74,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `EdgeLaguerre` | Theorem `thm:edge-laguerre`, the fixed-edge expansion |
 | `CriticalWindow` | Theorem `thm:critical-window`, the profile and the count for both boundary conditions |
 | `IsingDictionary` | the Ising dictionary for free ends, and the positivity of the couplings and correlation lengths at the crossings |
+| `InfiniteChain` | the two-point function of the free chain in zero field, its infinite-volume limit and `ξ(J)` as its correlation length |
 | `BoundaryLayer` | Corollary `cor:boundary-layer`, the moving boundary layer, for arbitrary sequences `v_N` |
 | `Supplements` | smaller statements: Lemma `lem:clipped` over the reals and in product form, `ζ_N < 4` for `N ≤ 174`, `p_{a,b} = 2/3` only at `a = b = 1`, strict probability ordering, and `Snum` as the numerator |
 | `FixedMagnetization` | Corollary `cor:fixed-M`, the fixed-magnetization weight |
@@ -92,6 +93,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `sec:setting` | 1.2 | Ising dictionary: the energy `∑_{i<N} σ_i σ_{i+1}` of a word is `(N-1) - 2 chg(w)`, so `u^chg(w) = e^{-(N-1)J} exp(J ∑ σ_i σ_{i+1})` with `u = e^{-2J}`, and bin `k` is magnetization `2k - N` | `freeEnergy`, `freeEnergy_eq_rep_sub_chg`, `free_energy`, `free_weight_ising`, `magn`, `magn_eq` | `IsingDictionary` |
 | `sec:setting` | 1.2 | Ising dictionary: `Z_N(N) = e^{(N-1)J}` and `S_{a,b}(u) = Z_N(a-b)/Z_N(N)` for `a, b ≥ 1`, and `J > 0` exactly when `p > 1/2` | `isingZ`, `isingZ_full`, `Sab_eq_isingZ_ratio`, `word_sum_eq_Sab`, `coupling_pos_iff` | `IsingDictionary` |
 | `sec:setting` | 1.2 | Ising dictionary: with `ξ(J) = -1/log tanh J`, `tanh J = (1-u)/(1+u)`, `N/ξ = N log((1+u)/(1-u))` with `|log((1+u)/(1-u)) - 2u| ≤ u³` for `0 ≤ u ≤ 1/2`, `N(1 - tanh J)/2 = τ`, and `|τ - N/(2ξ)| ≤ 2u N/(2ξ)` for `0 < u ≤ 1/2` | `corrLen`, `tanh_neg_half_log`, `N_div_corrLen`, `log_ratio_sub_two`, `adr_scale_eq`, `switching_scale_corrLen` | `PeriodicExpansion`, `IsingDictionary` |
+| `sec:setting` | 1.2 | the infinite chain behind `ξ(J)`: in every finite free chain in zero field `⟨σ_i σ_{i+r}⟩ = tanh(J)^r` for every real `J`; the infinite-volume two-point function, the limit over growing chains, is `tanh(J)^(abs(x-y))`; for `J > 0`, `⟨σ_0 σ_r⟩ = e^{-r/ξ(J)}` with `ξ(J) = -1/log tanh J`, and `ξ(J)` is the inverse of the decay rate | `chainCorr`, `chainCorr_eq`, `chainCorr_eq_dist`, `intervalCorr_eq`, `tendsto_intervalCorr`, `infCorr`, `infCorr_eq`, `tendsto_infCorr`, `infCorr_eq_exp`, `infCorr_zero_eq_exp`, `decay_rate_eq`, `tendsto_decay_rate`, `corrLen_eq_decay`, `infCorr_at_odds`, with `chainZ_succ`, `chainCorr_succ_succ`, `chainCorr_zero_succ` | `InfiniteChain` |
 | `sec:setting` | 1.2 | the argument shift: for `z ≥ 48` and `|h| ≤ z/2`, `|e^{-h} √((z+h)/z) I(z+h)/I(z) - 1| ≤ 48/z` for `I = I_0, I_1` | `besselI0_shift`, `besselI1_shift`, `shift_of_first` | `BesselAsymptotics` |
 
 ## Section 2, the exact law
@@ -404,6 +406,13 @@ Partial coverage.
     infinite chain and its correlations `⟨σ_0 σ_r⟩ = e^{-r/ξ(J)}` are not formalized, so Lean
     does not show that this formula is a correlation length. In `switching_scale_corrLen` the
     `O(u)` of the paper is the explicit bound `2u`.
+44. `sec:setting`, the infinite chain (module `InfiniteChain`, which supersedes the first two
+    sentences of difference 39). The sites of a chain of `N` spins are `0, …, N-1`, and the
+    weights are `exp(J ∑_{i<N} σ_i σ_{i+1})` (`freeEnergy`). `⟨σ_i σ_{i+r}⟩ = tanh(J)^r` holds
+    for every real `J`. The infinite-volume function `infCorr` is defined as the limit over the
+    boxes `[-M, M]`, and `tendsto_infCorr` gives the same limit along any family of intervals
+    that eventually contains both sites. `corrLen_eq_decay` states
+    `ξ(J) = 1/lim_r (-(1/r) log ⟨σ_0 σ_r⟩)` for `J > 0`.
 40. `thm:allbin-expansion`, `thm:edge-laguerre`, `thm:edge-matching`. Each `O` term is a bound
     `K` times the paper's bracket that holds from some `a₀` (or `b₀`) on. Lean shows that `K` and
     the threshold exist but does not compute them. For Theorem 4.9 they are the same for every
@@ -434,7 +443,6 @@ Partial coverage.
 The following parts of the paper are not formalized. The finite results and conditional algebra
 listed above do not supply these omitted limit statements or their error bounds.
 
-* Section 1. The infinite chain behind `ξ(J)` (see difference 39).
 * Section 3. The values in the table `tab:every-n`.
 * Section 4. Remarks 4.5 (`rem:sign-correction`) and 4.7 (`rem:jacobi`), and the
   consequences of Theorem 4.9 displayed after it (`eq:allbin-growing-edge` and the case

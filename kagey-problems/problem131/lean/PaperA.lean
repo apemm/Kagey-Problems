@@ -33,6 +33,7 @@ import PaperA.CriticalWindow
 import PaperA.EveryNSignTable
 import PaperA.Supplements
 import PaperA.FixedMagnetization
+import PaperA.InfiniteChain
 
 /-!
 # Paper A (`paperA/problem131.tex`), root module
