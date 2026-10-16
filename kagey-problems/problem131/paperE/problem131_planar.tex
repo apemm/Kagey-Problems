@@ -32,7 +32,6 @@
 \newcommand{\Var}{\operatorname{Var}}
 \newcommand{\Cov}{\operatorname{Cov}}
 \newcommand{\supp}{\operatorname{supp}}
-\newcommand{\ones}{\mathbf{1}}
 \newcommand{\tree}{\operatorname{tree}}
 \newcommand{\arb}{\operatorname{arb}}
 
@@ -60,22 +59,27 @@ expected number of switches is asymptotically a constant multiple of $\log N$,
 and we find the constant. When the walk reverses more often than it turns, the crossing agrees
 with that of the persistent walk on the line with $N/2$ steps, up to a negative
 power of $N$. When it turns more often, the crossing is set by a local limit
-theorem in two dimensions, and the logarithmic correction in the crossing
-equation is twice as large as on the line. On one curve of switching
-probabilities the planar walk is exactly two independent copies of the walk on
-the line, so the two crossings agree at every $N$. With turns only they agree
+theorem in two dimensions, and the expected number of switches at the
+crossing is about twice the logarithm of $N$ instead of the logarithm itself.
+In every regime the relative correction to the leading term is the same as on
+the line. The sequence of directions is a one-dimensional Ashkin--Teller
+chain, in which the corner is full order and the origin is zero
+magnetization. On one curve of switching probabilities this chain is two
+decoupled Ising chains, the planar walk is exactly two independent copies of
+the walk on the line, and the two crossings agree at every $N$. With turns only they agree
 up to a relative error of at most order $(\log N)/N$.
 \end{abstract}
 
 \medskip
 \noindent\textbf{Keywords:} persistent random walk, run-and-tumble particle,
-active matter, planar random motion, local limit theorem
+Ashkin--Teller chain, planar random motion, local limit theorem
 
 \noindent\textbf{MSC2020:} 60G50, 60F05, 60J10, 82C41
 
 \input{sec_intro.tex}
 \input{sec_setting.tex}
 \input{sec_planar.tex}
+\input{sec_discussion.tex}
 \input{sec_verify.tex}
 
 \section*{Acknowledgments}
@@ -88,11 +92,13 @@ The code, data and Lean files that support this paper are openly available
 at \url{https://github.com/apemm/Kagey-Problems}, in the folder
 \nolinkurl{kagey-problems/problem131} at the release
 \nolinkurl{paperE-arxiv-v1}. The scripts are in the subfolder
-\nolinkurl{paperE} and need numpy and scipy. To rerun the
+\nolinkurl{paperE}. They need numpy, scipy, mpmath and sympy, and they import
+the line walk from the subfolder \nolinkurl{paperC}, so both subfolders are
+needed. To rerun the
 checks, run \texttt{python -B verify\_all.py -{}-paper e} in the folder
 \nolinkurl{problem131}. The largest cases, such as the planar crossings for
 $N\ge1280$, run only with the option \texttt{-{}-full}.
-Section~\ref{sec:verify} describes what each check does. The Lean~4 proofs are
+Section~\ref{sec:verify} summarizes the checks. The Lean~4 proofs are
 in the subfolder \nolinkurl{lean/PaperC}, whose file \nolinkurl{MAP.md} matches
 each statement to its Lean theorems. The file \nolinkurl{SUPPLEMENT.md} lists
 each check, the two methods behind it and the predictions that we wrote down
@@ -117,6 +123,11 @@ A.~Pemmasani, \emph{Uniform Bessel bounds for magnetization crossings in
 finite Ising chains}, preprint, arXiv:2610.06935v2, 2026,
 \url{https://arxiv.org/abs/2610.06935}.
 
+\bibitem{paperB}
+A.~Pemmasani, \emph{Vertex crossings in a symmetric Markov multinomial
+model}, preprint, arXiv:2610.09258, 2026,
+\url{https://arxiv.org/abs/2610.09258}.
+
 \bibitem{paperC}
 A.~Pemmasani, \emph{Face selection for slowly switching Markov chains},
 in preparation, draft in the folder \nolinkurl{kagey-problems/problem131/paperC}
@@ -126,6 +137,16 @@ of \url{https://github.com/apemm/Kagey-Problems}.
 S.~Goldstein, \emph{On diffusion by discontinuous movements, and on the
 telegraph equation}, Quart.~J.~Mech.~Appl.~Math.~\textbf{4} (1951), 129--156.
 \url{https://doi.org/10.1093/qjmam/4.2.129}.
+
+\bibitem{hrf1984}
+R.~Henderson, E.~Renshaw and D.~Ford, \emph{A correlated random walk model
+for two-dimensional diffusion}, J.~Appl.~Probab.~\textbf{21} (1984),
+233--246. \url{https://doi.org/10.2307/3213636}.
+
+\bibitem{ashkinteller1943}
+J.~Ashkin and E.~Teller, \emph{Statistics of two-dimensional lattices with
+four components}, Phys.~Rev.~\textbf{64} (1943), 178--184.
+\url{https://doi.org/10.1103/PhysRev.64.178}.
 
 \bibitem{kac1974}
 M.~Kac, \emph{A stochastic model related to the telegrapher's equation},
