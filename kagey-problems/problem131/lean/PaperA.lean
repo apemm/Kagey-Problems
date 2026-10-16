@@ -22,6 +22,8 @@ import PaperA.EveryNSign
 import PaperA.EveryNAsymptotics
 import PaperA.CrossingEquation
 import PaperA.BoundaryLayer
+import PaperA.LogInversion
+import PaperA.BesselAsymptotics
 
 /-!
 # Paper A (`paperA/problem131.tex`), root module
