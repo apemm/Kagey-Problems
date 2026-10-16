@@ -1,107 +1,198 @@
-"""A magnetic field (Theorem 5.9 and the values quoted after it).
+"""Targeted interval checks for the fixed-field result (Theorem 5.9).
 
-For the fields B = 0.1, 0.2, 0.3, 0.5 the script computes the limits y_a(B), the roots of
-H_a(y) = e^(2Ba) with H_a of (eq:edge-polynomial), their minimum y_*(B) over a >= 2 and the
-minimizing a. It checks part (c) of the theorem on a grid of fields on both sides of (1/2) log 2,
-and the bound H_a(1/t) t^a <= (t + 1/2)^(a-1) used in its proof. For N = 10^4 it finds the exact
-crossings u^(a)_N of the free and periodic chains from the run polynomials (verify_allbin.ratio,
-verify_periodic_window.periodic_ratio) and reports N (min_{a>=2} u^(a)_N)^2. It asserts every
-value quoted in Section 5 to the digits shown there.
+Run with python -B verify_field.py. Only the standard library is required.
+For each of the four quoted fields, enclose the candidate minimum by outward
+interval signs, compare every other bin below a certified cutoff, and exclude
+ALL remaining bins using the theorem's tail bound. No field grid is swept.
+The finite minima are global, including bins beyond N/2.
 
-Only the standard library is required. Run with python -B in this folder (a few seconds).
+All positive polynomials are evaluated in full, without truncation. Exact
+enumeration and rational threshold checks give independent checks. Arithmetic
+comes from certified_decimal.py. These examples do not replace the proof for
+all fields. The endpoint brackets also certify the quoted rounding.
 """
-from decimal import Decimal as D, getcontext
-import math
+from decimal import Decimal as D, localcontext
+from fractions import Fraction as F
+from itertools import product
+from math import comb, factorial
 
-from verify_allbin import ratio
-from verify_periodic_window import periodic_ratio
+from certified_decimal import Interval as I, PRECISION
 
-getcontext().prec = 40
-AMAX = 60
-
-QUOTED = {  # B: (minimizing a, y_*, exact periodic at 10^4, exact free at 10^4)
-    0.1: (11, '0.757', '0.758', '0.741'),
-    0.2: (4, '1.287', '1.288', '1.266'),
-    0.3: (2, '1.764', '1.764', '1.738'),
-    0.5: (2, '2.972', '2.973', '2.939'),
+# B: (minimizing a, limiting y_*, periodic N u^2, free N u^2 at N=10^4)
+QUOTED = {
+    '0.1': (11, '0.757', '0.758', '0.741'),
+    '0.2': (4, '1.287', '1.288', '1.266'),
+    '0.3': (2, '1.764', '1.764', '1.738'),
+    '0.5': (2, '2.972', '2.973', '2.939'),
 }
 
 
-def H(a, y):
-    return sum(math.comb(a - 1, r) * y ** (r + 1) / math.factorial(r + 1) for r in range(a))
+def sqrt_interval(value):
+    """Widen nearest-rounded square roots, then certify endpoints by squaring."""
+    value = I.coerce(value)
+    if value.lo < 0:
+        raise ValueError('Square root needs a nonnegative interval')
+    with localcontext() as ctx:
+        ctx.prec = PRECISION
+        lo = D(0) if value.lo == 0 else ctx.next_minus(value.lo.sqrt())
+        hi = D(0) if value.hi == 0 else ctx.next_plus(value.hi.sqrt())
+    assert (I(lo) ** 2).hi <= value.lo
+    assert (I(hi) ** 2).lo >= value.hi
+    return I(lo, hi)
 
 
-def logH(a, y):
-    """log H_a(y) without overflow."""
-    ts = [math.log(math.comb(a - 1, r)) + (r + 1) * math.log(y) - math.lgamma(r + 2) for r in range(a)]
-    m = max(ts)
-    return m + math.log(math.fsum(math.exp(t - m) for t in ts))
-
-
-def bisect(f, lo, hi, n=200):
-    for _ in range(n):
-        m = (lo + hi) / 2
-        if f(m) < 0:
-            lo = m
+def zero_field(a, y, N=None, boundary=None):
+    """Enclose H_a(y), or the finite run polynomial at u=sqrt(y/N)."""
+    y = I.coerce(y)
+    if N is None:
+        if a < 1:
+            raise ValueError('H_a needs a positive index')
+        term, total = y, I(0)
+        for r in range(a):
+            total += term
+            if r + 1 < a:
+                term *= y * I.rational(a - 1 - r, (r + 1) * (r + 2))
+        return total
+    if not 1 <= a < N or boundary not in ('free', 'periodic'):
+        raise ValueError('Need an interior bin and a boundary condition')
+    b, u2 = N - a, y / N
+    u = sqrt_interval(u2) if boundary == 'free' else None
+    term, total = I(1), I(0)
+    for r in range(min(a, b)):
+        if boundary == 'free':
+            total += term * (2 * u + I.rational(N - 2 - 2 * r, r + 1) * u2)
         else:
-            hi = m
-    return (lo + hi) / 2
+            total += term * I.rational(N, r + 1) * u2
+        if r + 1 < min(a, b):
+            term *= u2 * I.rational((a - 1 - r) * (b - 1 - r), (r + 1) ** 2)
+    return total
 
 
-def tail_start(B, Y):
-    """Smallest A with 4 sqrt(Y) exp(2 sqrt(Y a) - 2 B a) < 1 for every a >= A (proof of (b))."""
-    a = 1
-    while True:
-        g = lambda t: math.log(4 * math.sqrt(Y)) + 2 * math.sqrt(Y * t) - 2 * B * t
-        # g is concave in t, so once it is negative and decreasing it stays negative
-        if g(a) < 0 and g(a + 1) < g(a):
-            return a
-        a += 1
+def root_bracket(value):
+    """Certify a root to width 1e-12 by endpoint signs and monotonicity."""
+    with localcontext() as ctx:
+        ctx.prec = PRECISION
+        lo, hi = D(0), D(4)
+        while value(hi).lo <= 1:
+            hi *= 2
+        while hi - lo > D('1e-12'):
+            mid = (lo + hi) / 2
+            sign = value(mid)
+            if sign.hi < 1:
+                lo = mid
+            elif sign.lo > 1:
+                hi = mid
+            else:
+                raise ArithmeticError('Interval sign is undecided')
+    assert value(lo).hi < 1 < value(hi).lo
+    return I(lo, hi)
 
 
-def limits(B):
-    a_max = AMAX
-    while True:
-        ys = {a: bisect(lambda y: logH(a, y) - 2 * B * a, 1e-12, 1e4) for a in range(1, a_max)}
-        a_star = min(range(2, a_max), key=lambda a: ys[a])
-        A = tail_start(B, ys[a_star] + 1)
-        if A <= a_max:
-            return ys, a_star  # every a >= A has y_a > y_* + 1, so the minimum is global
-        a_max = A + 1
+def tail_cutoff(B, Y):
+    """Certify the tail for all N, both boundaries and the limiting polynomial.
+
+    The theorem gives R <= 4 sqrt(Y) exp(2 sqrt(Y a) - 2 B a).
+    Use 4 sqrt(Y) <= 2(Y+1) and 2 sqrt(Y a) <= B a + Y/B.
+    This logarithmic upper bound decreases linearly with a.
+    """
+    B, Y = I(B), I(Y)
+    intercept = (2 * (Y + 1)).ln() + Y / B
+    A = max(3, int((intercept / B).hi) + 1)
+    assert (intercept - B * A).hi < 0
+    return A
 
 
-def exact_min(B, N, law, amax=30):
-    best = None
-    for a in range(2, amax):
-        b, s = N - a, math.sqrt(a * (N - a))
-        def g(t):
-            return float(law(a, b, D(math.sqrt(t / N) * s))) * math.exp(-2 * B * a) - 1
-        t = bisect(g, 0.0, 400.0, 120)
-        best = t if best is None else min(best, t)
-    return best
+def certify_minimum(B, a_star, quoted, N=None, boundary=None):
+    """Certify the minimizing index and quoted rounding, including the tail."""
+    factors = {}
+
+    def value(a, y):
+        if a not in factors:
+            factors[a] = (-2 * I(B) * a).exp()
+        return zero_field(a, y, N, boundary) * factors[a]
+
+    bracket = root_bracket(lambda y: value(a_star, y))
+    with localcontext() as ctx:
+        ctx.prec = PRECISION
+        center = D(quoted)
+        assert center - D('0.0005') < bracket.lo < bracket.hi < center + D('0.0005')
+    A = tail_cutoff(B, bracket.hi)
+    stop = A if N is None else min(A, N)
+    assert 2 <= a_star < stop
+    for a in range(2, stop):
+        if a != a_star:
+            assert value(a, bracket.hi).hi < 1, (B, N, boundary, a)
+    label = 'limit' if N is None else f'N={N} {boundary}'
+    print(f'B={B} {label}: y in [{bracket.lo}, {bracket.hi}], '
+          f'global minimizer a={a_star}, tail a>={A}', flush=True)
+    return bracket
+
+
+def check_enumeration():
+    """Compare finite evaluators with exact word weights, independently."""
+    count, u = 0, F(1, 4)
+    for N in range(2, 10):
+        totals = {law: [F(0) for _ in range(N + 1)] for law in ('free', 'periodic')}
+        for word in product((0, 1), repeat=N):
+            a = sum(word)
+            walls = sum(word[j] != word[j + 1] for j in range(N - 1))
+            totals['free'][a] += u ** walls
+            totals['periodic'][a] += u ** (walls + (word[-1] != word[0]))
+        for boundary in totals:
+            for a in range(1, N):
+                actual = zero_field(a, I.rational(N, 16), N, boundary)
+                assert F(actual.lo) <= totals[boundary][a] <= F(actual.hi)
+                count += 1
+    for a in range(1, 21):
+        y = F(3, 4)
+        exact = sum(F(comb(a - 1, r), factorial(r + 1)) * y ** (r + 1)
+                    for r in range(a))
+        actual = zero_field(a, I.rational(3, 4))
+        assert F(actual.lo) <= exact <= F(actual.hi)
+    print(f'Independent enumeration: {count} finite-bin checks passed; '
+          '20 limiting polynomials checked exactly.', flush=True)
+
+
+def check_threshold():
+    """Exact examples of the factorial bound, equality and both sides."""
+    for t in (F(1, 10), F(3, 10), F(1, 2), F(3, 4)):
+        for a in range(2, 65):
+            value = sum(F(comb(a - 1, r), factorial(r + 1)) * t ** (a - 1 - r)
+                        for r in range(a))
+            assert value <= (t + F(1, 2)) ** (a - 1)
+            if t < F(1, 2):
+                assert value < 1
+            elif t == F(1, 2):
+                assert value <= 1 and (value == 1) == (a == 2)
+            elif a == 2:
+                assert value > 1
+    # Direct check of the periodic triple tie. At the one-spin crossing,
+    # t=e^(-2B), y=1/t and R_2=t+(N-3)/(2N). Its critical t -> 1/2.
+    for N in (4, 5, 10, 100, 10000):
+        t = F(N + 3, 2 * N)
+        assert t + F(N - 3, 2 * N) == 1
+        for a in (1, 2):
+            actual = (zero_field(a, I.rational(t.denominator, t.numerator),
+                                 N, 'periodic')
+                      * I.rational(t.numerator, t.denominator) ** a)
+            assert actual.lo <= 1 <= actual.hi
+    print('Exact rational threshold checks passed below, at and above B_c, '
+          'including the periodic finite-N triple tie.', flush=True)
 
 
 def main():
-    for B, (a_q, y_q, per_q, free_q) in QUOTED.items():
-        ys, a_star = limits(B)
-        per = exact_min(B, 10**4, periodic_ratio)
-        free = exact_min(B, 10**4, ratio)
-        print(f'B={B}: y_1={ys[1]:.4f}, y_*={ys[a_star]:.4f} at a={a_star}; N=10^4 periodic {per:.4f}, free {free:.4f}')
-        assert a_star == a_q and f'{ys[a_star]:.3f}' == y_q, B
-        assert f'{per:.3f}' == per_q and f'{free:.3f}' == free_q, B
-    half_log2 = 0.5 * math.log(2)
-    for B in [0.05 * k for k in range(1, 21)]:
-        ys, a_star = limits(B)
-        if B > half_log2 + 1e-9:
-            assert ys[a_star] > math.exp(2 * B), B
-        elif B < half_log2 - 1e-9:
-            assert ys[a_star] < math.exp(2 * B), B
-    for t in [0.1, 0.3, 0.5]:
-        for a in range(2, 30):
-            assert H(a, 1 / t) * t ** a <= (t + 0.5) ** (a - 1) * (1 + 1e-12), (t, a)
-    ys, _ = limits(half_log2)
-    assert abs(ys[2] - 2) < 1e-9 and abs(ys[1] - 2) < 1e-9
-    print('All checks passed.')
+    check_enumeration()
+    check_threshold()
+    for B, (a_star, limit_q, periodic_q, free_q) in QUOTED.items():
+        limiting = certify_minimum(B, a_star, limit_q)
+        one_spin = (2 * I(B)).exp()
+        if B in ('0.1', '0.2', '0.3'):
+            assert limiting.hi < one_spin.lo
+        else:
+            assert limiting.lo > one_spin.hi
+        certify_minimum(B, a_star, periodic_q, 10000, 'periodic')
+        certify_minimum(B, a_star, free_q, 10000, 'free')
+    print('All targeted field checks passed. No field-grid sweep was run.')
 
 
 if __name__ == '__main__':
