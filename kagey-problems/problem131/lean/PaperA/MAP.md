@@ -2,7 +2,7 @@
 
 This file maps covered statements of Paper A (`paperA/problem131.tex` and the files it inputs)
 to Lean declarations and records partial coverage and omissions. The library `PaperA` has root
-`PaperA.lean`, which imports all 29 modules in `PaperA/` (30 modules including the root), in
+`PaperA.lean`, which imports all 31 modules in `PaperA/` (32 modules including the root), in
 namespace `Kagey131`. It uses Lean 4 v4.33.1 and Mathlib v4.33.1. Every theorem listed here is
 proved without `sorry`, `admit` or new axioms, and `#print axioms` on each of them reports only
 `propext`, `Classical.choice` and `Quot.sound` (see `build-log.txt`).
@@ -69,6 +69,8 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `BesselAsymptotics` | the large-argument forms of `I_0`, `I_1` and `I_1 + η I_0` with explicit remainders, and the argument shift |
 | `PeriodicCrossing` | the periodic central root `u_N^P`, its first order and the periodic crossing equation |
 | `PeriodicExpansion` | Theorem `thm:periodic-crossing` and Corollary `cor:couplings` |
+| `AllbinExpansion` | Theorem `thm:allbin-expansion` and the expansion of Theorem `thm:edge-matching`, through the Bessel root |
+| `EdgeLaguerre` | Theorem `thm:edge-laguerre`, the fixed-edge expansion |
 | `IsingDictionary` | the Ising dictionary for free ends, and the positivity of the couplings and correlation lengths at the crossings |
 | `BoundaryLayer` | Corollary `cor:boundary-layer`, the moving boundary layer, for arbitrary sequences `v_N` |
 | `Tables` | identities between numerator tables and recursively defined rook and Mathar sequences; retained for the tables note |
@@ -156,12 +158,18 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `eq:allbin-logderivative` | (19) | `G_η' - 2G_η = 2x(1-η)(I_0 - I_1) + η I_0 ≥ 0` | `hasDerivAt_Geta`, `Geta_logderiv`, `Geta_deriv_ge`, `besselI1_lt_I0`, `Geta_growth` | `BesselDeriv` |
 | `cor:allbin-root-bound`, `eq:allbin-root-bound` | 4.6, (20) | `x_{a,b} ≥ x̂_{a,b}`, and `x_{a,b} - x̂_{a,b} ≤ -(1/2) log(1 - δ_{a,b})` when `δ_{a,b} < 1` | `allbin_root_bound`, with `Tab_eq_Geta`, `eta_le_one`, `root_comparison` | `RootBounds`, `BesselDeriv` |
 | `lem:inversion` | 4.8 | for every `K > 0` there is `C_K` with `|z - ℓ + (1/2) log ℓ - C - ((1/4) log ℓ - C/2 + B)/ℓ| ≤ C_K((log ℓ)²/ℓ² + |ω|)` whenever `z ≥ 1`, `ℓ ≥ 2`, `|C|, |B| ≤ K`, `|ω| ≤ 1` and `z + (1/2) log z = ℓ + C + B/z + ω` | `log_inversion`, with `abs_log_one_add_sub_le`, `log_le_quarter` | `LogInversion` |
+| `thm:allbin-expansion`, `eq:allbin-expansion` | 4.9, (21) | with `ℓ = log A`, `η = 2√(ab)/(a+b)`, `C(η) = (1/2) log(8π) - log(1+η)` and `B(η) = (3-η)/(8(1+η))`, there are `K` and `a₀` with `|2√(ab) u_{a,b} - (ℓ - (1/2) log ℓ + C(η) + ((1/4) log ℓ - C(η)/2 + B(η))/ℓ)| ≤ K((log ℓ)²/ℓ² + (log a)²/a)` for all `a ≥ a₀` and all `b ≥ a`, and the same for `1 - p_{a,b}` | `allbin_expansion`, `allbin_expansion_prob`, `rootMain`, `Ceta`, `Beta`, with `allbin_root_close` | `AllbinExpansion` |
+| `thm:allbin-expansion` | 4.9 | Step 2 of the proof: if `G_η(z/2) = A` and `z ≥ 100`, then `z + (1/2) log z = log A + C(η) + B(η)/z + ω` with `|ω| ≤ 24/z²`, and there are `K` and `A₀` with `|2x̂ - (main terms in ℓ = log A)| ≤ K (log ℓ)²/ℓ²` for all `A ≥ A₀`, uniformly in `0 ≤ η ≤ 1` | `bessel_root_eq`, `bessel_root_expansion`, with `bessel_factor`, `Ceta_bounds`, `Beta_bounds` | `AllbinExpansion` |
 | `thm:allbin-expansion`, `eq:allbin-leading` | 4.9, (23) | in part, only the leading term `2√(ab) u_{a,b} ~ log a`, uniformly in `b ≥ a`, also for `1 - p_{a,b}` | `allbin_leading`, `allbin_leading_prob` | `AllbinAsymptotics` |
 | `eq:edge-polynomial` | (25) | `H_a(y) = (y/a) L^(1)_{a-1}(-y)` | `Hedge`, `genLaguerre`, `Hedge_eq_laguerre` | `UniformBessel`, `Edge` |
 | `sec:allbin-edge` | 4.4 | `y_a` exists and is unique, `y_1 = 1`, `y_2 = √3 - 1`, and `y_{a+1} < y_a` | `yEdge_spec`, `yEdge_unique`, `yEdge_one`, `yEdge_two`, `yEdge_succ_lt`, `Hedge_strictMonoOn`, `Hedge_lt_succ` | `Edge` |
 | `eq:edge-exact-series` | (28) | the exact series of `S_{a,b}` in `y = b u²` | `edge_exact_series` | `Edge` |
 | `thm:edge-laguerre` | 4.10 | in part, rational algebra conditional on the coefficient equations, yielding the formal coefficients `d_1`, `d_2`, `γ`, `-1` and `-(1 + c²)`; no specialization to the actual real crossing or its asymptotics | `edge_first_coefficient`, `edge_second_coefficient`, `edge_third_coefficient`, `universal_edge_correction`, `edge_probability_correction` | `EdgeExpansion` |
-| `thm:edge-matching`, `eq:laguerre-bessel-bound` | 4.11, (30) | in part, only `0 ≤ 1 - a H_a(x²/a)/(x I_1(2x)) ≤ x²/(2a)` | `edge_matching` | `UniformBessel` |
+| `eq:edge-exact-series`, `eq:edge-implicit-expansion` | (28), (29) | for `b ≥ a + 1`, `θ = 1/√b` and `0 ≤ c ≤ 2`, `|S_{a,b}(θc) - (H_a(c²) + 2θ c H_a'(c²) + θ² ((c² - c⁴/2) H_a''(c²) - c² H_a'(c²)))| ≤ K_a θ³` | `edge_series_error`, `Qedge`, `Kedge`, with `edge_term_error`, `normCoeff_second`, `edge_k_identity`, `H1`, `H2`, `hasDerivAt_Hedge`, `hasDerivAt_H1` | `EdgeLaguerre` |
+| `thm:edge-laguerre`, `eq:edge-crossing-expansion` | 4.10, (26) | for each `a ≥ 1`, `√b u_{a,b} → c_a`, and there is `M` with `|u_{a,b} - (c_a/√b - 1/b + γ_a/b^{3/2})| ≤ M/b²` for all large `b`, with `γ_a` as in the paper | `edge_leading`, `edge_crossing_expansion`, `edge_root_expansion`, `cEdge`, `gammaEdge`, with `edge_P_expansion`, `edge_root_sign`, `psum_taylor2` | `EdgeLaguerre` |
+| `thm:edge-laguerre`, `eq:edge-q-expansion` | 4.10, (27) | for each `a ≥ 1` there is `M` with `|1 - p_{a,b} - (c_a/√b - (1 + c_a²)/b)| ≤ M/b^{3/2}` for all large `b` | `edge_q_expansion` | `EdgeLaguerre` |
+| `thm:edge-matching`, `eq:laguerre-bessel-bound` | 4.11, (30) | `0 ≤ 1 - a H_a(x²/a)/(x I_1(2x)) ≤ x²/(2a)` | `edge_matching` | `UniformBessel` |
+| `thm:edge-matching`, `eq:edge-matching-expansion` | 4.11, (31) | with `ℓ = log a`, there is `K` with `|2√(a y_a) - (ℓ - (1/2) log ℓ + C(0) + ((1/4) log ℓ - C(0)/2 + 3/8)/ℓ)| ≤ K((log ℓ)²/ℓ² + (log a)²/a)` for all large `a`, where `C(0) = (1/2) log(8π)` | `edge_matching_expansion`, `Ceta_zero_Beta_zero`, with `edge_root_small`, `bessel_root_expansion` | `AllbinExpansion` |
 | `cor:boundary-layer`, `eq:boundary-layer-width` | 4.12, (32) | for any sequence with `v_N > 0` eventually, `Ω_N = 1/(√N v_N) → ∞` and `log Ω_N/(N v_N) → 0`: `ℒ_N ~ Ω_N² log² Ω_N`, where `ℒ_N` counts the bins `1 ≤ k ≤ ⌊N/2⌋` with `P_N(k) < P_N(0)` at `p = 1/(1+v_N)` | `boundary_layer`, `layerCount`, with `layer_eventually`, `layer_core`, `layerCount_bounds`, `below_iff`, `uab_anti` | `BoundaryLayer` |
 | `cor:boundary-layer` | 4.12 | the case `v_N = N^{-κ}`, `1/2 < κ < 1`: `ℒ_N ~ (κ - 1/2)² N^{2κ-1} log² N` | `boundary_layer_power` | `BoundaryLayer` |
 | `cor:boundary-layer` | 4.12 | eventually, the number of interior bins `1 ≤ k ≤ N-1` with `P_N(k) < P_N(0)` is `2ℒ_N` | `boundary_layer_total`, with `total_eq_two_layer` | `BoundaryLayer` |
@@ -280,7 +288,9 @@ Different normalizations.
     `√(1-y)` are used at `y = x²`.
 15. `thm:allbin-expansion`. `allbin_leading` and `allbin_leading_prob` state the leading term with
     `log a`, exactly as in `eq:allbin-leading`. The expansion of the theorem itself is in
-    `ℓ = log A`, and `a/2 ≤ A ≤ a`, so the two leading terms agree.
+    `ℓ = log A` (`allbin_expansion`), and `a/2 ≤ A ≤ a`, so the two leading terms agree. The
+    consequences displayed after the theorem, `eq:allbin-growing-edge` and the case
+    `a/N → α`, are not stated in Lean.
 
 Different proofs of the same statement.
 
@@ -346,9 +356,9 @@ Partial coverage.
     (`Sab_lt_Sab_of_coeff` with `W_le_inward`, `W_three_lt_inward`) and for the crossings
     (`allbin_order_inward`).
 31. `thm:edge-laguerre`. The theorems of `EdgeExpansion` are over the rationals and take the
-    coefficient equations of `eq:edge-implicit-expansion` as hypotheses. The implicit function
-    step, the fixed-edge leading limit, and the higher-order expansion and error terms are not
-    in Lean. These conditional identities do not establish coefficients of the actual crossing.
+    coefficient equations of `eq:edge-implicit-expansion` as hypotheses. They do not by
+    themselves establish coefficients of the actual crossing. The theorem itself is proved
+    separately in `EdgeLaguerre` (see difference 40).
 32. `sec:periodicwindow`. `perRatio` is defined as the polynomial of `eq:periodicratio`, and
     `perBin_ratio` shows that it is the ratio of the bin probabilities. The periodic central root
     `uNP N` is chosen among the roots in `(0, 1]` of `perRatio N (N/2)`, and
@@ -388,6 +398,15 @@ Partial coverage.
     infinite chain and its correlations `⟨σ_0 σ_r⟩ = e^{-r/ξ(J)}` are not formalized, so Lean
     does not show that this formula is a correlation length. In `switching_scale_corrLen` the
     `O(u)` of the paper is the explicit bound `2u`.
+40. `thm:allbin-expansion`, `thm:edge-laguerre`, `thm:edge-matching`. Each `O` term is a bound
+    `K` times the paper's bracket that holds from some `a₀` (or `b₀`) on. Lean shows that `K` and
+    the threshold exist but does not compute them. For Theorem 4.9 they are the same for every
+    `b ≥ a`. For Theorem 4.10 they depend on `a`, as `O_a` allows. Lean proves Theorem 4.10 by a
+    direct root argument rather than the implicit-function theorem. It bounds the exact edge
+    series against its expansion with the second-order bound `1 - σ ≤ U_r(b) ≤ 1 - σ + σ²/2`,
+    `σ = r(r+1)/(2b)`, and then shows that `S_{a,b} - 1` changes sign within `Mθ³` of
+    `c_a - θ + γ_a θ²`. `H_a'` and `H_a''` are the sums `H1` and `H2`, and `hasDerivAt_Hedge`,
+    `hasDerivAt_H1` show that they are the derivatives.
 
 ## Not in Lean
 
@@ -398,12 +417,9 @@ listed above do not supply these omitted limit statements or their error bounds.
 * Section 3. The complete sign pattern of Remark 3.9 (`rem:sign`). The N ≥ 2774 portion of that pattern follows
   from the formalized part (d). The values in the table `tab:every-n` are not formalized.
 * Section 4. Corollary 4.4 (`cor:fixed-M`) as stated (Lean has Theorem 4.3, of which it is a
-  restatement), Remarks 4.5 (`rem:sign-correction`) and 4.7 (`rem:jacobi`), Theorem 4.9
-  (`thm:allbin-expansion`) beyond its leading term as `a → ∞`, uniformly in `b ≥ a`; the entire
-  fixed-edge expansion of Theorem 4.10 (`thm:edge-laguerre`), including its leading limit; the
-  Laguerre-root asymptotics `eq:edge-matching-expansion` of Theorem 4.11 (`thm:edge-matching`),
-  including their leading term. The finite bound
-  `eq:laguerre-bessel-bound` of Theorem 4.11 is in Lean.
+  restatement), Remarks 4.5 (`rem:sign-correction`) and 4.7 (`rem:jacobi`), and the
+  consequences of Theorem 4.9 displayed after it (`eq:allbin-growing-edge` and the case
+  `a/N → α`).
 * Section 5. Theorem 5.3 (`thm:critical-window`) for both free and periodic boundaries,
   Remarks 5.4, 5.6 and 5.8, Proposition 5.7 (`prop:walls`), and the values in the table
   `tab:couplings`.
