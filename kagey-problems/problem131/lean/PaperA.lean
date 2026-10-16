@@ -35,6 +35,7 @@ import PaperA.Supplements
 import PaperA.FixedMagnetization
 import PaperA.AllbinConsequences
 import PaperA.SignCorrection
+import PaperA.Jacobi
 
 /-!
 # Paper A (`paperA/problem131.tex`), root module
