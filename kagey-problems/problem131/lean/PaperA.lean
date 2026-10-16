@@ -24,6 +24,9 @@ import PaperA.CrossingEquation
 import PaperA.BoundaryLayer
 import PaperA.LogInversion
 import PaperA.BesselAsymptotics
+import PaperA.PeriodicCrossing
+import PaperA.PeriodicExpansion
+import PaperA.IsingDictionary
 
 /-!
 # Paper A (`paperA/problem131.tex`), root module
