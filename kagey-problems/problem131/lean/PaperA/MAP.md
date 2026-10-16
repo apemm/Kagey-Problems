@@ -2,7 +2,7 @@
 
 This file maps covered statements of Paper A (`paperA/problem131.tex` and the files it inputs)
 to Lean declarations and records partial coverage and omissions. The library `PaperA` has root
-`PaperA.lean`, which imports all 26 modules in `PaperA/` (27 modules including the root), in
+`PaperA.lean`, which imports all 29 modules in `PaperA/` (30 modules including the root), in
 namespace `Kagey131`. It uses Lean 4 v4.33.1 and Mathlib v4.33.1. Every theorem listed here is
 proved without `sorry`, `admit` or new axioms, and `#print axioms` on each of them reports only
 `propext`, `Classical.choice` and `Quot.sound` (see `build-log.txt`).
@@ -67,6 +67,9 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `CrossingEquation` | Proposition `prop:crossing-eq` for every `N ≥ 2`, analytic for `N ≥ 175` and by rational certificates below |
 | `LogInversion` | Lemma `lem:inversion`, the inversion of `z + (1/2) log z`, with an explicit constant |
 | `BesselAsymptotics` | the large-argument forms of `I_0`, `I_1` and `I_1 + η I_0` with explicit remainders, and the argument shift |
+| `PeriodicCrossing` | the periodic central root `u_N^P`, its first order and the periodic crossing equation |
+| `PeriodicExpansion` | Theorem `thm:periodic-crossing` and Corollary `cor:couplings` |
+| `IsingDictionary` | the Ising dictionary for free ends, and the positivity of the couplings and correlation lengths at the crossings |
 | `BoundaryLayer` | Corollary `cor:boundary-layer`, the moving boundary layer, for arbitrary sequences `v_N` |
 | `Tables` | identities between numerator tables and recursively defined rook and Mathar sequences; retained for the tables note |
 
@@ -80,6 +83,9 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `eq:zN` | (2) | `z_N = N(1 - p_N) = N u_N/(1 + u_N)` | `N_one_sub_pN` | `EveryN` |
 | `sec:setting` | 1.2 | the large-argument forms of `I_0` and `I_1`: for `z ≥ 1`, `|√(2πz) e^{-z} I_0(z) - (1 + 1/(8z))| ≤ 11/z²` and `|√(2πz) e^{-z} I_1(z) - (1 - 3/(8z))| ≤ 11/z²` | `besselI0_asymp`, `besselI1_asymp`, with `besselI0_sub_besselI1_eq`, `besselKint_bounds`, `nu_sub_bound`, `besselE_near`, `besselI0_neg`, `besselI1_neg` | `BesselAsymptotics` |
 | `sec:setting` | 1.2 | uniformly in `0 ≤ η ≤ 1` and for `z ≥ 1`, `|√(2πz) e^{-z} (I_1 + η I_0)(z) - ((1+η) - (3-η)/(8z))| ≤ 22/z²` | `besselI1_add_eta_I0_asymp` | `BesselAsymptotics` |
+| `sec:setting` | 1.2 | Ising dictionary: the energy `∑_{i<N} σ_i σ_{i+1}` of a word is `(N-1) - 2 chg(w)`, so `u^chg(w) = e^{-(N-1)J} exp(J ∑ σ_i σ_{i+1})` with `u = e^{-2J}`, and bin `k` is magnetization `2k - N` | `freeEnergy`, `freeEnergy_eq_rep_sub_chg`, `free_energy`, `free_weight_ising`, `magn`, `magn_eq` | `IsingDictionary` |
+| `sec:setting` | 1.2 | Ising dictionary: `Z_N(N) = e^{(N-1)J}` and `S_{a,b}(u) = Z_N(a-b)/Z_N(N)` for `a, b ≥ 1`, and `J > 0` exactly when `p > 1/2` | `isingZ`, `isingZ_full`, `Sab_eq_isingZ_ratio`, `word_sum_eq_Sab`, `coupling_pos_iff` | `IsingDictionary` |
+| `sec:setting` | 1.2 | Ising dictionary: with `ξ(J) = -1/log tanh J`, `tanh J = (1-u)/(1+u)`, `N/ξ = N log((1+u)/(1-u))` with `|log((1+u)/(1-u)) - 2u| ≤ u³` for `0 ≤ u ≤ 1/2`, `N(1 - tanh J)/2 = τ`, and `|τ - N/(2ξ)| ≤ 2u N/(2ξ)` for `0 < u ≤ 1/2` | `corrLen`, `tanh_neg_half_log`, `N_div_corrLen`, `log_ratio_sub_two`, `adr_scale_eq`, `switching_scale_corrLen` | `PeriodicExpansion`, `IsingDictionary` |
 | `sec:setting` | 1.2 | the argument shift: for `z ≥ 48` and `|h| ≤ z/2`, `|e^{-h} √((z+h)/z) I(z+h)/I(z) - 1| ≤ 48/z` for `I = I_0, I_1` | `besselI0_shift`, `besselI1_shift`, `shift_of_first` | `BesselAsymptotics` |
 
 ## Section 2, the exact law
@@ -169,6 +175,15 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `sec:periodicwindow` | 5 | `S^P_{N,1} = N u²` and the adjacent crossing `J = (log N)/4` | `perRatio_one`, `periodic_adjacent_threshold`, and `periodic_adjacent_crossing`, `periodic_adjacent_root_unique` over the rationals | `Periodic`, `AllbinAsymptotics`, `RunAlgebra` |
 | `sec:periodicwindow` | 5 | the ratios increase strictly toward the middle and are symmetric | `perRatio_lt_inward`, `perRatio_symm` | `AllbinAsymptotics` |
 | `thm:periodic-bessel`, `eq:periodicbound` | 5.1, (34) | `0 ≤ 1 - S^P_{N,k}(u)/Ŝ^P_{N,k}(u) ≤ N u²/2` | `periodic_bessel`, `perRatio_shift` | `UniformBessel` |
+| `thm:periodic-crossing` | 5.2 | for `N ≥ 2` and `1 ≤ k ≤ N-1`, `S^P_{N,k}` increases strictly in `u ≥ 0`, and `S^P_{N,m_N}(u) = 1` has exactly one root `u_N^P > 0`, which lies in `(0, 1]` and is where the central bin ties with an endpoint, with `p_N^P = 1/(1 + u_N^P)` | `uNP`, `pNP`, `uNP_spec`, `perRatio_strictMonoOn`, `perRatio_exists_root`, `perRatio_eq_one_iff`, `perRatio_lt_one_iff`, `periodic_central_tie` | `PeriodicCrossing` |
+| `thm:periodic-crossing` | 5.2 | Steps 1 and 2 of the proof: eventually `L/2 ≤ N u_N^P ≤ 3L`, and `z = N u_N^P` satisfies `z + (1/2) log z = L + c_P + (3/8)/z + ω` with `|ω| ≤ 120/L²` and `c_P = (1/2) log(π/2)` | `uNP_first_order`, `periodic_crossing_eq`, `cP`, with `perRatio_between`, `log_m_piece`, `omega_total` | `PeriodicCrossing` |
+| `eq:periodicasym` | (35) | there is `C` with, for all large `N`, `|N u_N^P - (L - (1/2) log L + c_P + ((1/4) log L - c_P/2 + 3/8)/L)| ≤ C (log L)²/L²`, and the same for `N(1 - p_N^P)` | `periodic_expansion`, `periodic_expansion_prob`, `perMain`, with `log_inversion` | `PeriodicExpansion` |
+| `eq:boundaryshift` | (36) | there is `C` with, for all large `N`, `|N(u_N^P - u_N^F) - (log 2 + (1/4 - (1/2) log 2)/L)| ≤ C (log L)²/L²` | `boundary_shift`, with `free_expansion_uN` | `PeriodicExpansion` |
+| `eq:isingtemperature` | (37) | there is `C` with, for all large `N`, `|J_N^P - ((1/2)(L - log L) + ((1/4) log L - c_P/2)/L)| ≤ C (log L)²/L²`, where `J_N^P = -(1/2) log u_N^P` | `periodic_coupling`, with `coupling_of_expansion`, `log_of_expansion` | `PeriodicExpansion` |
+| `cor:couplings` | 5.5 | for all large `N`, `J_N^F`, `J_N^P`, `ξ(J_N^F)` and `ξ(J_N^P)` are positive | `couplings_eventually_pos` | `IsingDictionary` |
+| `cor:couplings` | 5.5 | (a) for all large `N`, `|J_N^F - ((1/2)(L - log L) + ((1/4) log L - c_0/2)/L)| ≤ 28 (log L)²/L²`, where `J_N^F = -(1/2) log u_N` | `free_coupling` | `PeriodicExpansion` |
+| `cor:couplings` | 5.5 | (b) for all large `N`, `|J_N^F - J_N^P - (log 2)/(2L)| ≤ 2 (log L)/L²` | `coupling_shift`, with `shift_final` | `PeriodicExpansion` |
+| `cor:couplings` | 5.5 | (c) with `ξ(J) = -1/log tanh J`, for all large `N`, `|N/ξ(J_N^F) - (2L - log L + log(π/8))| ≤ 4 (log L)/L` and `|N/ξ(J_N^P) - (2L - log L + log(π/2))| ≤ 4 (log L)/L` | `corrLen`, `corrLen_free`, `corrLen_periodic`, with `N_div_corrLen`, `corrLen_of_expansion` | `PeriodicExpansion` |
 
 ## Appendix A, the crossing at every N
 
@@ -336,9 +351,9 @@ Partial coverage.
     in Lean. These conditional identities do not establish coefficients of the actual crossing.
 32. `sec:periodicwindow`. `perRatio` is defined as the polynomial of `eq:periodicratio`, and
     `perBin_ratio` shows that it is the ratio of the bin probabilities. The periodic central root
-    `u_N^P` is not defined in Lean, and neither its existence nor the strict increase of
-    `S^P_{N,k}` in `u` is stated. The ordering toward the middle is `perRatio_lt_inward` for
-    `k + 2 ≤ N - k`, with `perRatio_symm`.
+    `uNP N` is chosen among the roots in `(0, 1]` of `perRatio N (N/2)`, and
+    `perRatio_eq_one_iff` shows that it is the only positive root. The ordering toward the
+    middle is `perRatio_lt_inward` for `k + 2 ≤ N - k`, with `perRatio_symm`.
 33. Appendix A.3. `Snum` is built from the coefficients `W`, so `Snum_eq` is the identity
     `d^(N-1) S_N(c/d) = Σ_j W(N,m_N,j) c^j d^(N-1-j)`. That this integer is `n_N(m_N)` follows from
     `card_words_eq_W` but is not stated as one theorem.
@@ -361,13 +376,25 @@ Partial coverage.
     `θ ∈ (0, 1/2]` it applies `allbin_leading` with `ε = θ/4` at `a = ⌊(1-θ)d_N⌋` and with
     `ε = θ/10` at `c = ⌈(1+θ)d_N⌉`, where `d_N = Ω_N² log² Ω_N`, and it uses
     `v_N² N d_N = log² Ω_N`. The positivity of `v_N` is assumed only eventually.
+38. `thm:periodic-crossing`, `cor:couplings`. Here `L = log N`. The `O` terms of
+    `eq:periodicasym`, `eq:boundaryshift` and `eq:isingtemperature` are bounds `C (log L)²/L²`
+    that hold for all large `N`, with a constant `C` that Lean shows exists but does not compute.
+    The paper has only `o(1/log N)` in `eq:boundaryshift`, so Lean states more there. The
+    constants of Corollary 5.5 are explicit (28, 2 and 4), and the threshold for "large `N`" is
+    not computed. The couplings are `J = -(1/2) log u` at the crossings and `ξ(J)` is
+    `-1/log tanh J`, as in the paper. Lean does not use the Taylor form of `log tanh` near `J = ∞`
+    but the series of `log((1+u)/(1-u))`.
+39. `sec:setting`, Ising dictionary. Lean defines `ξ(J)` by the formula `-1/log tanh J`. The
+    infinite chain and its correlations `⟨σ_0 σ_r⟩ = e^{-r/ξ(J)}` are not formalized, so Lean
+    does not show that this formula is a correlation length. In `switching_scale_corrLen` the
+    `O(u)` of the paper is the explicit bound `2u`.
 
 ## Not in Lean
 
 The following parts of the paper are not formalized. The finite results and conditional algebra
 listed above do not supply these omitted limit statements or their error bounds.
 
-* Section 1. The Ising dictionary at the end of Section 1.2.
+* Section 1. The infinite chain behind `ξ(J)` (see difference 39).
 * Section 3. The complete sign pattern of Remark 3.9 (`rem:sign`). The N ≥ 2774 portion of that pattern follows
   from the formalized part (d). The values in the table `tab:every-n` are not formalized.
 * Section 4. Corollary 4.4 (`cor:fixed-M`) as stated (Lean has Theorem 4.3, of which it is a
@@ -377,9 +404,8 @@ listed above do not supply these omitted limit statements or their error bounds.
   Laguerre-root asymptotics `eq:edge-matching-expansion` of Theorem 4.11 (`thm:edge-matching`),
   including their leading term. The finite bound
   `eq:laguerre-bessel-bound` of Theorem 4.11 is in Lean.
-* Section 5. Theorem 5.2 (`thm:periodic-crossing`), even its leading term, Theorem 5.3
-  (`thm:critical-window`) for both free and periodic boundaries, Remarks 5.4, 5.6 and 5.8,
-  Corollary 5.5 (`cor:couplings`), Proposition 5.7 (`prop:walls`), and the values in the table
+* Section 5. Theorem 5.3 (`thm:critical-window`) for both free and periodic boundaries,
+  Remarks 5.4, 5.6 and 5.8, Proposition 5.7 (`prop:walls`), and the values in the table
   `tab:couplings`.
 * Appendix A. The outward-interval Python calculations (Lean has its own rational bounds for
   the results listed above).
