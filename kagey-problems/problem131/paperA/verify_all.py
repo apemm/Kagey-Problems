@@ -1,10 +1,11 @@
 """Run the checks for Paper A of Problem 131 with the current interpreter.
 
-The default (--quick) takes about 2 minutes. Paper A has 2 long scripts that run only with
+The default (--quick) takes about 4 minutes. Paper A has 2 long scripts that run only with
 --full. verify_every_n.py takes about 8 minutes and rewrites data/every_n_certificates.csv and
 data/every_n_output.txt, and verify_every_n_sign.py takes about 13 minutes. Both run before
 verify_every_n_guards.py, which reads the certificate file. Without --full the guards read the
-certificate file that is already in data/. The scripts use only the standard library.
+certificate file that is already in data/. The scripts use only the standard library, except
+verify_ising_coupling_tm.py, which needs NumPy.
 
 verify_every_n_sign.py, verify_every_n_guards.py, verify_uniform_llt.py and
 verify_uniform_llt_cor5.py report their checks in their output rather than through the exit code,
@@ -34,7 +35,8 @@ args = parser.parse_args()
 # Each entry is a script name followed by its arguments.
 runs = [('verify.py',), ('check_bessel.py',), ('verify_adjacent.py',),
         ('verify_allbin.py',), ('verify_periodic_window.py',),
-        ('verify_ising_coupling.py',), ('verify_every_n_guards.py',),
+        ('verify_ising_coupling.py',), ('verify_ising_coupling_tm.py',),
+        ('verify_every_n_guards.py',),
         ('verify_uniform_llt.py',), ('verify_uniform_llt.py', '--run2'),
         ('verify_uniform_llt.py', '--run3'), ('verify_uniform_llt_cor5.py',)]
 long_runs = [('verify_every_n.py',), ('verify_every_n_sign.py',)]

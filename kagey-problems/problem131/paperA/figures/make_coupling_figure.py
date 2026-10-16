@@ -63,7 +63,7 @@ def main():
     mf, = ax.plot(Ln[1::2], jf[1::2] / Ln[1::2], "s", ms=2.8, color=ss.PURPLE, mew=0)
     le, = ax.plot(L, eq16(L) / L, color=EQ16, lw=1.1)
     lt, = ax.plot(L, fit(L) / L, color=FIT, lw=1.1)
-    ax.legend([(lp, mp), (lf, mf), le, lt], ["periodic ends", "free ends", "Stepanyan Eq. (16)", "Stepanyan fit"],
+    ax.legend([(lp, mp), (lf, mf), le, lt], ["periodic ends", "free ends", "Stepanyan formula", "Stepanyan fit"],
               loc="upper left", ncol=2, frameon=False, handlelength=2.0, columnspacing=0.9,
               handletextpad=0.5, borderaxespad=0.2, fontsize=7)
     ax.set_xlabel(r"$\log N$")
@@ -84,7 +84,7 @@ def main():
     bx.annotate("main terms", xy=(Ln[i], dm[i]), xytext=(0, 5),
                 textcoords="offset points", ha="center", va="bottom", color=c["exact"])
     j = int(np.argmin(abs(Ln - 10.5)))
-    bx.annotate("Eq. (16)", xy=(Ln[j], eq16(Ln[j]) - jp[j]), xytext=(5, 2),
+    bx.annotate("formula", xy=(Ln[j], eq16(Ln[j]) - jp[j]), xytext=(5, 2),
                 textcoords="offset points", ha="left", va="bottom", color=EQ16)
     bx.annotate("fit", xy=(Ln[j], fit(Ln[j]) - jp[j]), xytext=(-5, -3),
                 textcoords="offset points", ha="right", va="top", color=FIT)

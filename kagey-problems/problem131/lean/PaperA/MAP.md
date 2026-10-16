@@ -33,7 +33,7 @@ word for word the same.
 | `ε_N` | written out as `ζ_N(ζ_N+1)/N + 1/(16 ζ_N²)` |
 | `U_r(m)`, and `A_r`, `B_r` | `normCoeff m m r`, and `normCoeff a h r`, `normCoeff b h r` |
 | `Ŝ_{a,b}(u)`, `J_c(x)`, `G_η(x)` | `Tab a b u`, `Jc c x`, `Geta η x` |
-| the root `x_B` of `G_η(x_B) = A` | `Groot η A` |
+| the root `x̂_{a,b}` of `G_η(x) = A` (Section 4), and `x_B` of `F(x) = h` (Section 3) | `Groot η A` |
 | `p_N^adj` | `padj N` |
 | `H_a(y)`, `y_a` | `Hedge a y`, `yEdge a` |
 | `S^P_{N,k}(u)`, `Ŝ^P_{N,k}(u)` | `perRatio N k u`, `perT N k u` |
@@ -108,7 +108,7 @@ word for word the same.
 | `lem:bracket` (a) | 3.5 | `Φ(w) ≤ N/2` gives `Nw/(N+w) ≤ z_N`, strictly if `Φ(w) < N/2` | `crossing_lower_of_Fcent`, `crossing_lower_of_Fcent_strict` | `EveryN` |
 | `lem:bracket` (b) | 3.5 | `Φ(w)(1 - w(w+2)/(2N)) > N/2` gives `z_N < Nw/(N+w)` | `crossing_upper_of_Fcent` | `EveryN` |
 | `lem:bessel-bounds` | 3.6 | the two cubic bounds on `E(z)` for `z > 0`, `E(z) ≤ 1`, and `E(z) ≤ 1 - 1/(8z)` for `z ≥ 5/4` | `besselE_ge`, `besselE_le`, `besselE_le_one`, `besselE_le_of_ge` | `BesselIntegral` |
-| `cor:every-n` (a) | 3.7 | the interval for `p_N` | `every_N_crossing` | `EveryNLarge` |
+| `cor:every-n` (a) | 3.7 | in part, the interval for `p_N` (the coupling form is not in Lean) | `every_N_crossing` | `EveryNLarge` |
 
 ## Section 4, the crossing of every bin
 
@@ -129,7 +129,7 @@ word for word the same.
 | `eq:allbin-normalized-series` | (17) | the normalized series of `S_{a,b}` | `Sab_series` | `UniformBessel` |
 | `eq:allbin-bessel-root` | (18) | `G_η`, and its root `x_B` exists and is unique | `Geta`, `Groot_spec`, `Groot_unique`, `Geta_strictMonoOn` | `BesselDeriv` |
 | `eq:allbin-logderivative` | (19) | `G_η' - 2G_η = 2x(1-η)(I_0 - I_1) + η I_0 ≥ 0` | `hasDerivAt_Geta`, `Geta_logderiv`, `Geta_deriv_ge`, `besselI1_lt_I0`, `Geta_growth` | `BesselDeriv` |
-| `cor:allbin-root-bound`, `eq:allbin-root-bound` | 4.4, (20) | `x_{a,b} ≥ x_B`, and `x_{a,b} - x_B ≤ -(1/2) log(1 - δ_{a,b})` when `δ_{a,b} < 1` | `allbin_root_bound`, with `Tab_eq_Geta`, `eta_le_one`, `root_comparison` | `RootBounds`, `BesselDeriv` |
+| `cor:allbin-root-bound`, `eq:allbin-root-bound` | 4.4, (20) | `x_{a,b} ≥ x̂_{a,b}`, and `x_{a,b} - x̂_{a,b} ≤ -(1/2) log(1 - δ_{a,b})` when `δ_{a,b} < 1` | `allbin_root_bound`, with `Tab_eq_Geta`, `eta_le_one`, `root_comparison` | `RootBounds`, `BesselDeriv` |
 | `thm:allbin-expansion`, `eq:allbin-leading` | 4.7, (23) | in part, only the leading term `2√(ab) u_{a,b} ~ log a`, uniformly in `b ≥ a`, also for `1 - p_{a,b}` | `allbin_leading`, `allbin_leading_prob` | `AllbinAsymptotics` |
 | `eq:edge-polynomial` | (25) | `H_a(y) = (y/a) L^(1)_{a-1}(-y)` | `Hedge`, `genLaguerre`, `Hedge_eq_laguerre` | `UniformBessel`, `Edge` |
 | `sec:allbin-edge` | 4.4 | `y_a` exists and is unique, `y_1 = 1`, `y_2 = √3 - 1`, and `y_{a+1} < y_a` | `yEdge_spec`, `yEdge_unique`, `yEdge_one`, `yEdge_two`, `yEdge_succ_lt`, `Hedge_strictMonoOn`, `Hedge_lt_succ` | `Edge` |
@@ -262,18 +262,19 @@ Different proofs of the same statement.
     integrating term by term. The paper derives it in Appendix A.1 from the integral
     representation of `I_n` in DLMF 10.32.3.
 22. `thm:every-n` for `N ≥ 175`. Lean follows Steps 1 to 3 of Appendix A with the same test values
-    `W` and `W'`, but with other constants. It has `U/N ≤ 0.0232`, `U²/N ≤ 0.0933`,
-    `U³/N ≤ 0.376` and `ζ(ζ+1)/N ≤ 0.1148` in place of `0.023135`, `0.093262`, `0.375960` and
+    `w̄` and `w̄'` (named `W` and `W'` in Lean, with `U` for the paper's `Y`), but with other
+    constants. It has `Y/N ≤ 0.0232`, `Y²/N ≤ 0.0933`,
+    `Y³/N ≤ 0.376` and `ζ(ζ+1)/N ≤ 0.1148` in place of `0.023135`, `0.093262`, `0.375960` and
     `0.114776`, it gets them from `N ≥ 174.25 e^{ζ_N - 4}` and not from the monotonicity of
-    `U^k/n(ζ)`, it has no bound on `U⁴/N`, and it uses
+    `Y^k/n(ζ)`, it has no bound on `U⁴/N`, and it uses
     `log(1-x) ≥ -(x + x²/2 + x³/(1-x))`. So the decimal constants of Appendix A are not the ones
     Lean checks. The theorem is the same.
 23. `thm:every-n` for `N ≤ 174`. The values `c` and `c'` in `everyNTable` are the columns
     `u_lo_times_1e9` and `u_hi_times_1e9` of `paperA/data/every_n_certificates.csv` for all 173
     values of `N`. Lean evaluates `d^(N-1) S_N(c/d)` by the run-count sum only, and the recursion
     `eq:dp` is the second method of the Python script. Lean brackets `ζ_N` on the grid `10⁻⁴`,
-    with Taylor bounds for `exp` and `3.141592 < π < 3.141593`. The script brackets `ζ_N` within
-    `10⁻⁴⁵` in 60-digit arithmetic. The margins `0.033193` and `0.085591` are those of the script.
+    with Taylor bounds for `exp` and `3.141592 < π < 3.141593`. The script brackets `ζ_N` with
+    half-width `10⁻⁴⁵` in 60-digit arithmetic. The margins `0.033193` and `0.085591` are those of the script.
 
 Partial coverage.
 
@@ -316,15 +317,17 @@ The following parts of the paper are not in Lean. They need the large-argument e
 Bessel functions, an implicit function argument, a limit in two variables, or a computation done in
 Python.
 
-* Section 3. Corollary 3.7 (`cor:every-n`) beyond part (a), Proposition 3.8
+* Section 1. The Ising dictionary at the end of Section 1.2.
+* Section 3. The coupling form in Corollary 3.7(a), Corollary 3.7 (`cor:every-n`) beyond part (a), Proposition 3.8
   (`prop:crossing-eq`) and Remark 3.9 (`rem:sign`). The values in the tables `tab:pn` and
   `tab:every-n`.
 * Section 4. Remark 4.5 (`rem:jacobi`), Lemma 4.6 (`lem:inversion`), Theorem 4.7
   (`thm:allbin-expansion`) beyond its leading term, the expansions of Theorem 4.8
   (`thm:edge-laguerre`), the expansion `eq:edge-matching-expansion` of Theorem 4.9
   (`thm:edge-matching`) and Corollary 4.10 (`cor:boundary-layer`).
-* Section 5. Theorem 5.2 (`thm:periodic-crossing`), even its leading term, and Theorem 5.3
-  (`thm:critical-window`).
+* Section 5. Theorem 5.2 (`thm:periodic-crossing`), even its leading term, Theorem 5.3
+  (`thm:critical-window`) and Corollary 5.4 (`cor:couplings`), and the values in the table
+  `tab:couplings`.
 * Appendix A. The proof of Proposition 3.8, and the 60-digit comparisons of Step 4 (Lean has its
   own rational bounds in their place).
 * The uniform local law (the local law note, not in Lean).
