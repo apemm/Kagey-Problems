@@ -112,7 +112,7 @@ this crossing in the periodic chain as a thermal transition of a finite
 system, the analogue of the temperature of a first-order transition, and
 approximate it by $\beta J\approx(2\log N-1)/5$. Like them, we compare one
 central bin with the single all-up configuration (Remark~\ref{rem:convention}
-says what changes for other comparisons). We find its asymptotics with
+says what changes for other comparisons). We prove its asymptotics with
 explicit constants for free and for periodic ends, and for free ends we bound
 it at every $N$.
 
@@ -300,9 +300,9 @@ says that
 \zeta_N+\frac1{8\zeta_N}-\varepsilon_N<z_N<\zeta_N+\frac1{8\zeta_N}
 \qquad\text{for every }N\ge2.
 \]
-Note that $\varepsilon_N\to0$. In terms of the coupling this traps
-$J_N^{\mathrm F}$ between $\frac12\log(N/y-1)$ at
-$y=\zeta_N+\frac1{8\zeta_N}$ and at $y=\zeta_N+\frac1{8\zeta_N}-\varepsilon_N$
+Note that $\varepsilon_N\to0$. In terms of the coupling, with
+$Y_N=\zeta_N+\frac1{8\zeta_N}$ and $Y_N'=Y_N-\varepsilon_N$, this gives
+$\frac12\log(N/Y_N-1)<J_N^{\mathrm F}<\frac12\log(N/Y_N'-1)$
 (Corollary~\ref{cor:every-n}(a)). For $N\ge175$ the proof is analytic. For
 $2\le N\le174$ we decide the sign of $S_N-1$ at two rationals, one on each side
 of the root, in exact integer arithmetic, and the Lean kernel repeats this
@@ -347,13 +347,13 @@ constant. At
 a first-order transition the two coexisting phases differ in energy by an
 amount proportional to $N$. Accordingly the ratio of the central bin to an
 endpoint changes by a factor $e$ over a range of couplings of width about
-$1/(2\log N)$. The $\log\log N$ term is the cost of comparing full order
-with one bin instead of the whole disordered band. The probability that the
+$1/(2\log N)$. The $\log\log N$ term appears because full order is compared
+with one bin and not with the whole disordered band. The probability that the
 chain is fully ordered is $\frac12$ at a coupling larger than
 $J_N^{\mathrm F}$ by $\frac12\log\log N+O(1)$ (Remark~\ref{rem:ordered}).
 
-\paragraph{A magnetic field.} In a field $\mathcal B>0$ (in units of the
-temperature) both transitions of~\cite{stepanyan2024} come from the edge of
+\paragraph{A magnetic field.} In a fixed dimensionless field
+$\mathcal B=\beta h>0$ both transitions of~\cite{stepanyan2024} come from the edge of
 the row, at $J=\frac14\log N+O(1)$, with explicit limits for the constant,
 for free and for periodic ends. Above $\mathcal B_c=\frac12\log2$ the
 one-spin crossing is the last crossing with full magnetization. Below
@@ -361,7 +361,8 @@ $\mathcal B_c$ another bin crosses later, and at $\mathcal B_c$ the two
 coupling thresholds have a vanishing gap (Theorem~\ref{thm:field}).
 
 We prove these results in Sections~\ref{sec:exact} to~\ref{sec:periodicwindow},
-in this order. Section~\ref{sec:verify} lists what was computed and what is in
+in this order, and discuss them in Section~\ref{sec:discussion}.
+Section~\ref{sec:verify} lists what was computed and what is in
 Lean, and the appendix has the longer proofs of Section~\ref{sec:middle}.
 
 \subsection{Related work}
@@ -403,13 +404,12 @@ which is the equation $F(x_B)=h$ of the Bessel root of
 Theorem~\ref{thm:bessel}(ii) with $\tau=2x_B$. Its root $z$ satisfies
 $z+\frac12\log z=L+c_0+1/(8z)+O(z^{-2})$, the crossing equation of
 Proposition~\ref{prop:crossing-eq} without its remainder. So the scaling law
-gives the Bessel root. What we add is a proof that the Bessel root is the
-crossing up to a relative error $O(L/N)$ in the odds, with explicit bounds
-at every $N$, and the bracket of Theorem~\ref{thm:every-n}. In the same way
-the large-argument form of the known Bessel laws suggests the $\log\log N$
+gives the Bessel root. We prove that the Bessel root is the crossing up to a
+relative error $O(L/N)$ in the odds, with explicit bounds at every $N$, and
+we prove the bracket of Theorem~\ref{thm:every-n}. In the same way the
+large-argument form of the known Bessel laws suggests the $\log\log N$
 term, the periodic shift by $\log2$ and the Gaussian profile of
-Theorem~\ref{thm:critical-window}, and for these our contribution is the
-proof.
+Theorem~\ref{thm:critical-window}, and we prove these.
 Stepanyan et~al.\@~\cite[Section~III.B]{stepanyan2024} study two crossings of
 the periodic chain as thermal transitions. In the first, the all-up
 configuration and magnetization $N-2$ (one flipped spin) are equally likely
@@ -423,16 +423,16 @@ probabilities that exclude $p\to1$ in this symmetric model (see
 \cite[Theorems~1.1--1.3, pp.~220--221]{cekanavicius2001} and
 \cite[Theorems~1.1--1.3, pp.~308--309]{cekanavicius2001ld}).
 
-In short, the exact laws, the Bessel forms and their fixed-scale limits are
-known, and we use them as inputs. What is new here, as far as we know, is
-quantitative. First, we prove relative Bessel bounds that are explicit in
-$N$, in $u$ and in the bin (Theorems~\ref{thm:bessel},
-\ref{thm:allbin-bessel} and~\ref{thm:periodic-bessel}), and that stay small
-when the mean number of domain walls grows like $\log N$. Second, we bracket
-the free crossing at every $N$ (Theorem~\ref{thm:every-n}). Third, we expand
-the actual crossings, uniformly over $b\ge a$ near a growing edge
-(Theorem~\ref{thm:allbin-expansion}), and describe the crossing window about
-the exact root (Theorem~\ref{thm:critical-window}).
+The exact laws, the Bessel forms and their fixed-scale limits are known, and
+we use them as inputs. Our results are quantitative. We prove relative
+Bessel bounds that are explicit in $N$, in $u$ and in the bin
+(Theorems~\ref{thm:bessel}, \ref{thm:allbin-bessel}
+and~\ref{thm:periodic-bessel}), and that stay small when the mean number of
+domain walls grows like $\log N$. We bracket the free crossing at every $N$
+(Theorem~\ref{thm:every-n}). We expand the actual crossings, uniformly over
+$b\ge a$ near a growing edge (Theorem~\ref{thm:allbin-expansion}), describe
+the crossing window about the exact root (Theorem~\ref{thm:critical-window}),
+and locate both crossings in a fixed field (Theorem~\ref{thm:field}).
 
 \input{sec_exact.tex}
 \input{sec_crossing.tex}
@@ -455,8 +455,8 @@ order and disorder rather than a sharpening transition, in line with the
 absence of transition signals in the microcanonical entropy of finite
 chains~\cite{sitarachu2020}. Its location is set
 by the balance of one wall-free state against the entropy of about $\log N$
-walls, which is where the $\log\log N$ term comes from. The boundary shift by
-$\log2$ comes from the parity of the number of walls on a ring.
+walls, and this balance produces the $\log\log N$ term. The boundary shift by
+$\log2$ is a parity effect, since a ring has an even number of walls.
 
 Three couplings organize the row. At the adjacent crossing
 (Proposition~\ref{prop:adjacent}) the odds are about $N^{-1/2}$, so
@@ -483,8 +483,8 @@ the $d$-state Potts chain~\cite{paperB}. Three questions are open. The
 bracket of Theorem~\ref{thm:every-n} is proved only for free ends and for the
 level $1$ of Remark~\ref{rem:convention}, and the same method should give it
 for periodic ends and for other levels. In a field of fixed size
-Theorem~\ref{thm:field} settles where the transitions are and when they
-merge, but a field that shrinks with $N$, which moves the comparison from the
+Theorem~\ref{thm:field} locates both crossings and decides when the one-spin
+crossing is the last one, but a field that shrinks with $N$, which moves the comparison from the
 edge back to the middle of the row, is open. So is a quantitative rate in
 Theorem~\ref{thm:field}.
 
@@ -494,8 +494,8 @@ Aside from Remark~\ref{rem:sign}, which is computer-assisted throughout, the
 proofs use two computations, namely the integer certificates for $N\le174$ in
 Theorem~\ref{thm:every-n} (Step~4) and Proposition~\ref{prop:crossing-eq}, and
 the evaluation at $N=2774$ in Corollary~\ref{cor:every-n}(d). Each one is
-described where it is used. The scripts are Python, and all but one use only
-the standard library. They check the exact law, the orderings, the Bessel
+described where it is used. The check scripts are Python, and all but one of
+them use only the standard library. They check the exact law, the orderings, the Bessel
 bounds, the asymptotic formulas and the couplings of Table~\ref{tab:couplings},
 and where possible each reported number is computed in two independent ways.
 For instance, the couplings of Table~\ref{tab:couplings} come from the run
