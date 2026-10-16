@@ -61,6 +61,12 @@ Paper D. `PaperC` also holds the Lean proofs for Paper E, and `PaperD` those for
 - Lemma 4.8 (`lem:inversion`), the inversion of `z + (1/2) log z` with an explicit constant
   (`LogInversion`), and the large-argument forms of `I_0`, `I_1` and `I_1 + η I_0` with explicit
   remainders, through the integral form of `I_0 - I_1` (`BesselAsymptotics`).
+- Theorem 5.2, the periodic central crossing `u_N^P`: its existence and uniqueness, its
+  expansion, the boundary shift `N(u_N^P - u_N)` and the periodic coupling, each with a bound
+  `C (log log N)²/(log N)²` for all large `N` (`PeriodicCrossing`, `PeriodicExpansion`). Also
+  Corollary 5.5 on the two couplings and the correlation lengths `N/ξ`, with explicit constants.
+- The Ising dictionary of Section 1.2 for free ends, `S_{a,b}(e^{-2J}) = Z_N(a-b)/Z_N(N)`, and
+  the relations between `J`, `τ` and `ξ(J) = -1/log tanh J` (`IsingDictionary`).
 
 ## Paper B (`paperB/problem131_multistate.tex`)
 
@@ -118,22 +124,20 @@ Paper D. `PaperC` also holds the Lean proofs for Paper E, and `PaperD` those for
 
 ## What is not in Lean
 
-The general large-argument asymptotics of the Bessel functions are not formalized. The one
-exception is the explicit bound on `I_0 + I_1` that the every-N crossing theorem of Paper A needs,
-which is proved from its integral form, so that theorem is in Lean for every `N`.
+The general large-argument asymptotics of the Bessel functions are not formalized. Lean has the
+explicit bound on `I_0 + I_1` that the every-N crossing theorem of Paper A needs, and the
+large-argument forms of `I_0`, `I_1` and `I_1 + η I_0` with explicit remainders, all proved from
+integral forms.
 
 For Paper A, the growing-distance all-bin leading term is formalized, but its higher-order
 expansion is not. The fixed-edge crossing expansion and the Laguerre-root asymptotics are not
 formalized, even their leading limits. Only the finite edge results and conditional rational
-coefficient algebra listed above are in Lean. The entire periodic central-crossing theorem
-(even its leading term), the spatial crossing window for both boundary conditions, and the
-moving boundary-layer corollary are also absent.
+coefficient algebra listed above are in Lean. The spatial crossing window for both boundary
+conditions and the domain-wall proposition are also absent.
 
-The remaining omissions in Paper A include the Ising dictionary, the inversion lemma, the
-crossing equation, the complete sign remark, the coupling and correlation-length asymptotic
-corollary, and the uniform local law. In the every-N corollary, the asymptotic conclusion
-of (b) and all of (c) remain outside Lean. Parts (a), (d) and the finite inequalities of (b)
-are formalized. `PaperA/MAP.md` gives the detailed scope.
+The remaining omissions in Paper A include the infinite chain behind `ξ(J)`, the complete sign
+remark, the fixed-magnetization corollary as stated, and the uniform local law. `PaperA/MAP.md` gives the
+detailed scope.
 
 In Paper B the window, the Gaussian volumes and the frontier limits are left out. `PaperB`
 proves the exact law for the uniform start only, so the law with a general start and the tree
