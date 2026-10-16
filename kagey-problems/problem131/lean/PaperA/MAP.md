@@ -2,7 +2,7 @@
 
 This file maps covered statements of Paper A (`paperA/problem131.tex` and the files it inputs)
 to Lean declarations and records partial coverage and omissions. The library `PaperA` has root
-`PaperA.lean`, which imports all 31 modules in `PaperA/` (32 modules including the root), in
+`PaperA.lean`, which imports all 32 modules in `PaperA/` (33 modules including the root), in
 namespace `Kagey131`. It uses Lean 4 v4.33.1 and Mathlib v4.33.1. Every theorem listed here is
 proved without `sorry`, `admit` or new axioms, and `#print axioms` on each of them reports only
 `propext`, `Classical.choice` and `Quot.sound` (see `build-log.txt`).
@@ -71,6 +71,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `PeriodicExpansion` | Theorem `thm:periodic-crossing` and Corollary `cor:couplings` |
 | `AllbinExpansion` | Theorem `thm:allbin-expansion` and the expansion of Theorem `thm:edge-matching`, through the Bessel root |
 | `EdgeLaguerre` | Theorem `thm:edge-laguerre`, the fixed-edge expansion |
+| `CriticalWindow` | Theorem `thm:critical-window`, the profile and the count for both boundary conditions |
 | `IsingDictionary` | the Ising dictionary for free ends, and the positivity of the couplings and correlation lengths at the crossings |
 | `BoundaryLayer` | Corollary `cor:boundary-layer`, the moving boundary layer, for arbitrary sequences `v_N` |
 | `Tables` | identities between numerator tables and recursively defined rook and Mathar sequences; retained for the tables note |
@@ -188,6 +189,8 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `eq:periodicasym` | (35) | there is `C` with, for all large `N`, `|N u_N^P - (L - (1/2) log L + c_P + ((1/4) log L - c_P/2 + 3/8)/L)| ≤ C (log L)²/L²`, and the same for `N(1 - p_N^P)` | `periodic_expansion`, `periodic_expansion_prob`, `perMain`, with `log_inversion` | `PeriodicExpansion` |
 | `eq:boundaryshift` | (36) | there is `C` with, for all large `N`, `|N(u_N^P - u_N^F) - (log 2 + (1/4 - (1/2) log 2)/L)| ≤ C (log L)²/L²` | `boundary_shift`, with `free_expansion_uN` | `PeriodicExpansion` |
 | `eq:isingtemperature` | (37) | there is `C` with, for all large `N`, `|J_N^P - ((1/2)(L - log L) + ((1/4) log L - c_P/2)/L)| ≤ C (log L)²/L²`, where `J_N^P = -(1/2) log u_N^P` | `periodic_coupling`, with `coupling_of_expansion`, `log_of_expansion` | `PeriodicExpansion` |
+| `thm:critical-window`, `eq:criticalprofile` | 5.3, (38) | for free and periodic ends, for every `T, Y ≥ 0` and `ε > 0` there is `N₀` such that for all `N ≥ N₀`, `|t| ≤ T`, `|y| ≤ Y` and every integer `k` with `|k - (N/2 + yN/√(log N))| ≤ 1/2`, `|S^X_{N,k}(u_N^X + t/N) - e^{t-2y²}| ≤ ε` | `free_window_profile`, `periodic_window_profile`, with `window_profile_of_core`, `free_profile_core`, `periodic_profile_core`, `free_form`, `periodic_form`, `profile_identity`, `shift_combo`, `etaR_bounds`, `eta_vs_y`, `h_est`, `uN_near`, `uNP_near` | `CriticalWindow` |
+| `thm:critical-window`, `eq:criticalcount` | 5.3, (39) | for free and periodic ends and every real `t`, `(√(log N)/N) M^X_N(t) → √(2 max(t,0))`, where `M^X_N(t)` is the number of interior bins whose probability is strictly above the endpoint probability at the odds `u_N^X + t/N` | `free_window_count`, `periodic_window_count`, `freeAbove`, `periodicAbove`, with `count_limit`, `countAbove_eq_zero`, `countAbove_le`, `card_near_mid`, `free_mono`, `periodic_mono`, `Sab_comm` | `CriticalWindow` |
 | `cor:couplings` | 5.5 | for all large `N`, `J_N^F`, `J_N^P`, `ξ(J_N^F)` and `ξ(J_N^P)` are positive | `couplings_eventually_pos` | `IsingDictionary` |
 | `cor:couplings` | 5.5 | (a) for all large `N`, `|J_N^F - ((1/2)(L - log L) + ((1/4) log L - c_0/2)/L)| ≤ 28 (log L)²/L²`, where `J_N^F = -(1/2) log u_N` | `free_coupling` | `PeriodicExpansion` |
 | `cor:couplings` | 5.5 | (b) for all large `N`, `|J_N^F - J_N^P - (log 2)/(2L)| ≤ 2 (log L)/L²` | `coupling_shift`, with `shift_final` | `PeriodicExpansion` |
@@ -407,6 +410,11 @@ Partial coverage.
     `σ = r(r+1)/(2b)`, and then shows that `S_{a,b} - 1` changes sign within `Mθ³` of
     `c_a - θ + γ_a θ²`. `H_a'` and `H_a''` are the sums `H1` and `H2`, and `hasDerivAt_Hedge`,
     `hasDerivAt_H1` show that they are the derivatives.
+41. `thm:critical-window`. Lean takes every integer `k` within `1/2` of `N/2 + yN/√(log N)`, which
+    covers both nearest-integer conventions. Uniformity on compact sets is stated on the boxes
+    `|t| ≤ T`, `|y| ≤ Y`, which contain every compact set. For free ends `M^F_N(t)` counts the
+    bins with `P_N(k) > P_N(0)` at `p = 1/(1+u)`, and for periodic ends `M^P_N(t)` uses `perBin`.
+    No rate of convergence is stated.
 
 ## Not in Lean
 
@@ -420,9 +428,8 @@ listed above do not supply these omitted limit statements or their error bounds.
   restatement), Remarks 4.5 (`rem:sign-correction`) and 4.7 (`rem:jacobi`), and the
   consequences of Theorem 4.9 displayed after it (`eq:allbin-growing-edge` and the case
   `a/N → α`).
-* Section 5. Theorem 5.3 (`thm:critical-window`) for both free and periodic boundaries,
-  Remarks 5.4, 5.6 and 5.8, Proposition 5.7 (`prop:walls`), and the values in the table
-  `tab:couplings`.
+* Section 5. Remarks 5.4, 5.6 and 5.8, Proposition 5.7 (`prop:walls`), and the values in the
+  table `tab:couplings`.
 * Appendix A. The outward-interval Python calculations (Lean has its own rational bounds for
   the results listed above).
 * The uniform local law (the local law note, not in Lean).
