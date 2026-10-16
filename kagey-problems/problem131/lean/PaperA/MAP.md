@@ -2,7 +2,7 @@
 
 This file maps covered statements of Paper A (`paperA/problem131.tex` and the files it inputs)
 to Lean declarations and records partial coverage and omissions. The library `PaperA` has root
-`PaperA.lean`, which imports all 35 modules in `PaperA/` (36 modules including the root), in
+`PaperA.lean`, which imports all 43 modules in `PaperA/` (44 modules including the root), in
 namespace `Kagey131`. It uses Lean 4 v4.33.1 and Mathlib v4.33.1. Every theorem listed here is
 proved without `sorry`, `admit` or new axioms, and `#print axioms` on each of them reports only
 `propext`, `Classical.choice` and `Quot.sound` (see `build-log.txt`).
@@ -82,6 +82,10 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `FullOrder` | Remark `rem:ordered`, full order against one bin |
 | `FieldCrossing` | Theorem `thm:field`, the edge crossings in a fixed field, for free and periodic ends |
 | `Tables` | identities between numerator tables and recursively defined rook and Mathar sequences; retained for the tables note |
+| `TableValuesCore` | correct rounding (`RoundsTo`), Taylor certificates for `exp` and `log`, rational bounds on `ζ_N`, and bounds on `u_N` and `u_N^P` from truncated sums with a geometric tail |
+| `TableValuesEveryN` | the values of the table `tab:every-n`, by kernel-checked certificates |
+| `TableValuesCouplings` | the values of the table `tab:couplings`, by kernel-checked certificates |
+| `TableValuesText` | decimals displayed in the text, by kernel-checked certificates |
 
 ## Section 1, setting and notation
 
@@ -146,6 +150,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `prop:crossing-eq`, `eq:crossing-eq` | 3.8, (12) | with `R_N = z + (1/2) log z - L - c₀ - 1/(8z)`, for every `N ≥ 2`: `-(z²+z)/N ≤ R_N ≤ 1/(16z²)`, `L/2 ≤ z ≤ L` and `|R_N| ≤ 1/(4L²) + (L²+L)/N` | `crossing_equation`, `crossRem`, `crossRem_eq` | `CrossingEquation` |
 | `prop:crossing-eq`, `N ≥ 175` | 3.8 | the analytic case | `crossing_eq_large`, with `large_core`, `large_sizes`, `bessel_tail_poly`, `step0_fourth` | `CrossingEquation` |
 | `prop:crossing-eq`, `N ≤ 174` | 3.8 | the case `2 ≤ N ≤ 174`, by certificates | `crossing_eq_small`, with `crossEqTable`, `crossEqTable_ok`, `crossEqTable_sub`, `crossEqTable_covers`, `crossing_eq_of_cert`, `small_core`, `everyNCert_brackets` | `CrossingEquation` |
+| `tab:every-n` | Table 1 | every printed value is the correct rounding of the quantity it names: `z_N` to 12 decimals, `ζ_N` to 10, `z_N - ζ_N - 1/(8ζ_N)` to 7, `-ε_N` to 5 and `R_N` to 6, for `N = 2, 10, 100, 174, 175, 1000, 10⁴` | `tab_every_n_2`, `tab_every_n_10`, `tab_every_n_100`, `tab_every_n_174`, `tab_every_n_175`, `tab_every_n_1000`, `tab_every_n_10000`, with `tv_zN_N`, `tv_zetaN_N`, `RoundsTo`, `lt_uN_of_tail`, `uN_lt_of_partial`, `lt_zetaN_of_tv`, `zetaN_lt_of_tv`, `crossRem_bounds` | `TableValuesEveryN`, `TableValuesCore` |
 
 ## Section 4, the crossing of every bin
 
@@ -213,6 +218,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `thm:field` (a) | 5.9 | for free and periodic ends, every real `𝓑` and every fixed `a ≥ 1`, `N (u^{(a)}_N)² → y_a(𝓑)`, and `N (u^{(1)}_N)² → e^{2𝓑}` | `field_crossing_tendsto`, `field_crossing_one_tendsto`, with `edgeRatio_tendsto`, `free_edge_tendsto`, `periodic_edge_tendsto`, `perRatio_edge_form`, `tendsto_normCoeff_self` | `FieldCrossing` |
 | `thm:field` (b) | 5.9 | the uniform tail bound `R^X_{N,a}(u) ≤ 4√Y e^{2√(Ya) - 2𝓑a}` for `0 < y = N u² ≤ Y` and every `1 ≤ a ≤ N-1`; for `𝓑 > 0`, `y_a(𝓑) → ∞`, the minimum `y_*(𝓑) = min_{a ≥ 2} y_a(𝓑)` is attained, and `N (u^{(≥2)}_N)² → y_*(𝓑)` | `fieldRatio_tail_bound`, `yField_tendsto_atTop`, `yStar_attained`, `field_crossing_ge2_tendsto`, with `edgeRatio_le_exp`, `tail_threshold`, `fieldRoot_tail`, `yField_tail`, `yStar_pos` | `FieldCrossing` |
 | `thm:field` (c) | 5.9 | with `𝓑_c = (1/2) log 2`: `y_* < e^{2𝓑}` for `0 < 𝓑 < 𝓑_c`, `y_* = e^{2𝓑} = 2` at `𝓑_c`, and `y_* > e^{2𝓑}` for `𝓑 > 𝓑_c`; all three parts together for either boundary | `Bcrit`, `field_trichotomy`, `yStar_lt_of_lt`, `yStar_at_critical`, `lt_yStar_of_gt`, `thm_field`, with `Hedge_inv_mul_pow_le`, `Hedge_field_le`, `Hedge_two`, `two_pow_le_factorial_succ` | `FieldCrossing` |
+| `tab:couplings` | Table 2 | every printed value is the correct rounding to three decimals of the quantity it names: `J_N^P`, the main terms of `eq:isingtemperature`, `(2 log N - 1)/5`, `0.3864 log N - 0.21055`, `J_N^F` and `J_N^F - J_N^P` (computed before rounding), for `N = 10, ..., 10⁶` | `tab_couplings_1` to `tab_couplings_6`, with `tv_uN_n`, `tv_uNP_n`, `tv_JP_n`, `tv_JF_n`, `tv_main_n`, `tv_log10`, `tv_cP`, `lt_uNP_of_tail`, `uNP_lt_of_partial` | `TableValuesCouplings`, `TableValuesCore` |
 
 ## Appendix A, the crossing at every N
 
@@ -225,6 +231,26 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `app:every-n` | A.2 | Step 3, the lower bound | `lower_key`, `U_sq_expand`, `every_N_lower_large` | `EveryNLarge` |
 | `app:every-n` | A.3 | `d^(N-1) S_N(c/d)` is an integer, so the sign of `S_N(c/d) - 1` is a comparison of integers | `Snum`, `Snum_eq`, `Wfast_eq`, `chooseMul_eq` | `EveryN` |
 | `eq:RN-formula` | A.4, (41) | the exact formula `R_N = log Λ_N - (log E(w) + 1/(8w)) - 1/(8N) - wz/N - (1/2) log(1 + w/N)`, in the equivalent form `log Λ_N - log E(w) - (w - z) - (1/2) log(w/z) - 1/(8z)` | inside `crossing_eq_large` | `CrossingEquation` |
+
+## Numbers displayed in the text
+
+A decimal written with `...` is a truncation and is stated as two bounds. The others are stated
+with `RoundsTo` (correct rounding). All are in the module `TableValuesText`.
+
+| Where | Number | Statement | Lean |
+| --- | --- | --- | --- |
+| introduction and Section 3 | `c_0 = -0.467...`, `-0.46735...` | `-0.46736 < (1/2) log(π/8) < -0.46735` | `tv_c0` |
+| introduction | `0.84` | `z_N/L` at `N = 10⁴` rounds to `0.84` | `tv_zN_div_L_10000` |
+| introduction | `4.576`, `4.578`, `4.405` | the row `N = 10⁵` of `tab:couplings` | `tab_couplings_5` |
+| Figure 1 | `p_9 = 0.82829...` | `0.82829 ≤ p_9 < 0.82830` | `tv_p9` |
+| after `thm:every-n` | `0.440`, `0.163`, `0.0387`, `0.00778` | `ε_N` at `N = 10, 10², 10³, 10⁴` | `tv_eps_10`, `tv_eps_100`, `tv_eps_1000`, `tv_eps_10000` |
+| proof of `thm:every-n` | `174.25...` | `174.25 ≤ √(32/π) e⁴ < 174.26` | `tv_sqrt_exp4` |
+| proof of `cor:every-n` (b) | `ν_2 > 0.40` | `log 2 - (1/2) log log 2 + c_0 > 0.40` | `tv_nu2` |
+| after `rem:sign` | `0.0230`, `0.00126` | `L/(2N)` at `N = 100` and `N = 3200` | `tv_L_div_2N` |
+| Section 5 | `0.385`, `0.417`, `0.450` | the secant slopes of `J_N^P` against `log N` on `[10, 10²]`, `[10², 10³]`, `[10⁴, 10⁵]` | `tv_secant_1_2`, `tv_secant_2_3`, `tv_secant_4_5` |
+| Section 5 | `0.002`, `0.171`, `0.338` | `|main terms - J_N^P|`, `|(2L - 1)/5 - J_N^P|`, `|0.3864 L - 0.21055 - J_N^P|` at `N = 10⁵` | `tv_off_by_5` |
+| caption of `tab:couplings` | `0.030` | `(log 2)/(2 log N)` at `N = 10⁵` | `tv_shift_100000` |
+| `rem:ordered` | `1.046`, `1.330` | `J_ord - J_N^F` at `N = 10³` and `N = 10⁵`, with `J_ord = -(1/2) log(2^{1/(N-1)} - 1)` | `tv_Jord_3`, `tv_Jord_5` |
 
 ## Not in this paper, kept in the repository for the tables note
 
@@ -448,7 +474,7 @@ Partial coverage.
     value theorem. The `O((log N)⁻²)` at the crossing is the explicit bound `55/(log N)²` for all
     large `N`. The periodic analogue mentioned after the proposition is not stated.
 45. `rem:ordered`. The `O(1/N)`, `O(log N/N)` and `o(1)` of the remark are explicit bounds for
-    all large `N`. The numerical values `1.046` and `1.330` are not stated in Lean.
+    all large `N`. The numerical values `1.046` and `1.330` are certified in `TableValuesText`.
 42. `rem:sign`. For `2 ≤ N ≤ 2773` Lean checks one rational `r_N = n/10⁷` per `N` that lies
     strictly between `z_N` and `ζ_N`. The side of `ζ_N` is an integer inequality from ten-term
     Taylor bounds for `exp(n/(32·10⁷))`, raised to the power `64`, and `π` to twenty decimals. The
@@ -466,18 +492,22 @@ Partial coverage.
     use only the pointwise limit `S^X_{N,a}(√(y/N)) → H_a(y)` and monotonicity, not the uniform
     limit on compact sets. The couplings `J_N^{(1)}`, `J_N^{(≥2)}` displayed after the theorem
     are not formalized.
+48. `tab:every-n`, `tab:couplings`. `RoundsTo x m k` means `|x - m/10^k| < 10^{-k}/2`. Lean
+    brackets `u_N` and `u_N^P` between `c/10²⁵` and `(c+1)/10²⁵` with the first terms of the
+    exact polynomials and a geometric bound on the rest, `ζ_N` with width `10⁻¹⁵`, and each
+    logarithm with Taylor bounds for `exp`, with `π` to 20 decimals. The rationals were chosen
+    in floating point and are data only. The paper computes the tables in 50-digit and
+    floating-point arithmetic instead.
 
 ## Not in Lean
 
 The following parts of the paper are not formalized. The finite results and conditional algebra
 listed above do not supply these omitted limit statements or their error bounds.
 
-* Section 3. The values in the table `tab:every-n`.
 * Section 4. Remarks 4.5 (`rem:sign-correction`) and 4.7 (`rem:jacobi`), and the
   consequences of Theorem 4.9 displayed after it (`eq:allbin-growing-edge` and the case
   `a/N → α`).
-* Section 5. Remarks 5.4 and 5.6, the numbers in Remark 5.8, and the values in the
-  table `tab:couplings`.
+* Section 5. Remarks 5.4 and 5.6.
 * Appendix A. The outward-interval Python calculations (Lean has its own rational bounds for
   the results listed above).
 * The uniform local law (the local law note, not in Lean).

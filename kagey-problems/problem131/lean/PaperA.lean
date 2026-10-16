@@ -37,6 +37,10 @@ import PaperA.DomainWalls
 import PaperA.FullOrder
 import PaperA.InfiniteChain
 import PaperA.FieldCrossing
+import PaperA.TableValuesCore
+import PaperA.TableValuesEveryN
+import PaperA.TableValuesCouplings
+import PaperA.TableValuesText
 
 /-!
 # Paper A (`paperA/problem131.tex`), root module
