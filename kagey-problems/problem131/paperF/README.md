@@ -17,9 +17,9 @@ number only, not as Papers A, B and D.
 - `../paperA`, "Uniform Bessel bounds for magnetization crossings in finite Ising chains",
   arXiv:2610.06935. The crossing for geometric runs (Section 1).
 - `../paperB`, "Vertex crossings in a symmetric Markov multinomial model", arXiv:2610.09258. The
-  first-order scale of its vertex crossing (Remark 3.3).
+  first-order scale of its vertex crossing (Remark 3.5).
 - `../paperD`, "Endpoint crossings for the elephant random walk" (in preparation). Its
-  Proposition 2.3 uses the same argument as Proposition 3.1(b).
+  Proposition 2.3 uses the same argument as Proposition 3.3(b).
 
 Conventions. The walk has N steps, and P_N(k) is the probability of bin k. A_N is the number of
 right steps, C_N = P_N(N/2) is the probability of the center bin and E_N = P_N(N) that of the right
@@ -43,22 +43,25 @@ Heavy-tailed runs (alternating runs, with run lengths xi such that P(xi >= k) = 
   still wins by the factor 1.2884. With a fresh start, E_N/C_N ~ C_fr(alpha) N^(-alpha + 1/alpha),
   so the center wins for every 1 < alpha < 2 (Corollary 2.5).
 - For alpha > 2, C_N ~ sqrt(2 mu/(pi v N)) for every a.s. finite first run, and for alpha = 2,
-  C_N ~ sqrt(2 mu/(pi N log N)). So the center wins for alpha >= 2 with either start (Theorem 2.7).
+  C_N ~ sqrt(2 mu/(pi N log N)). So the center wins for alpha >= 2 with either start (Theorem 2.8).
 - For 0 < alpha < 1 and a fresh start, N C_N tends to the Lamperti density at 1/2, which is
-  (2/pi) tan(pi alpha/2), so the ends win (Theorem 2.8). With a fresh start the threshold is
-  alpha = 1, where the paper has only a heuristic (Remark 2.9 and Table 2).
+  (2/pi) tan(pi alpha/2), so the ends win (Theorem 2.9). With a fresh start the threshold is
+  alpha = 1, where the paper has only a heuristic (Remark 2.10 and Table 2).
 
 The aging walk (switch at step k >= 2 with probability c/k), in its own section, `sec_aging.tex`.
 
 - With the first step fixed, A_N is uniform on {1, ..., N} at c = 1. The ratio of each interior
   bin to the end increases strictly in c, so the crossing is exactly c = 1 for every N and every
-  interior bin (Proposition 3.1).
+  interior bin (Proposition 3.3).
 - With d states (start in state 1, and at step k >= 2 move to each of the other d-1 states with
   probability theta/(k+d-2)), the count vector at theta = 1 is exactly uniform over all
   compositions with n_1 >= 1, and every bin ties with the corner exactly at theta = 1 for every N
-  (Theorem 3.2).
+  (Theorem 3.4).
 - A chain that at each step draws a fresh uniform state or repeats its last state has counts with
-  exactly the law of Pólya's urn with d colors, for every weight theta (Proposition 3.4).
+  exactly the law of Pólya's urn with d colors, for every weight theta (Proposition 3.1). The
+  count law alone follows from Dietz, Lippitt and Sethuraman (Sankhya A 2023, Theorem 2.18 of
+  arXiv:1901.08135); the joint law with the last state, which gives the ties, is what the paper adds.
+  Section 3 now starts with this proposition, and Proposition 3.3(a) and Theorem 3.4(a) follow from it.
 - With a fair first step each interior bin is twice as likely as an end at c = 1, and its crossing
   is unique and below 1 (Proposition 3.6). For the center,
   c_N = 1 - log 2/(log N + gamma + 2 - 2 log 2) + O((log N)^(-3)) (Proposition 3.7, proved in
@@ -67,15 +70,15 @@ The aging walk (switch at step k >= 2 with probability c/k), in its own section,
 ## What rests on computation
 
 No proof in this paper rests on a computation. The tables, the figures and the numbers quoted outside
-the proofs rest on computation alone. The numbers in Remarks 2.6 and 2.9 are of this kind, and the
+the proofs rest on computation alone. The numbers in Remarks 2.7 and 2.10 are of this kind, and the
 row alpha = 1 of Table 2 is a heuristic.
 
 ## Open
 
 - For heavy tails, a rate in Theorem 2.4, monotonicity of E_N/C_N and uniqueness of the crossover
-  size (Remark 2.6), the case alpha = 1 (Remark 2.9), and the full profile of the law.
-- Whether the d-state law of Theorem 3.2 is already in Chapter 7 of Engländer and Volkov's 2024 book.
-  We have not seen that chapter.
+  size (Remark 2.7), the case alpha = 1 (Remark 2.10), and the full profile of the law.
+- Whether the joint law of Proposition 3.1 is already in the urn chapter of Engländer and Volkov's
+  2024 book. We have not seen that chapter.
 
 ## Prior work
 
@@ -93,7 +96,7 @@ to Dietz and Sethuraman (2007) and to Engländer and Volkov (2018).
   figure `../figures/program_F.pdf`.
 - `verify_heavy_runs.py` checks Section 2, Tables 1 and 2, and Appendix A.
 - `verify_aging.py` checks Section 3 and Appendix B.
-- `verify_aging_urn.py` checks Proposition 3.4 in exact arithmetic for d = 2, 3, 4.
+- `verify_aging_urn.py` checks Proposition 3.1 in exact arithmetic for d = 2, 3, 4.
 - `verify_all.py` runs the three scripts.
 - `data/figdata_heavy.json` holds cached data for Figure 1, and `data/ledger_D3.md` and
   `data/ledger_D4.md` are the prediction ledgers (they keep their names from Paper D).
