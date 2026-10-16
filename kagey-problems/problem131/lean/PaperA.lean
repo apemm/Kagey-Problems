@@ -31,6 +31,7 @@ import PaperA.AllbinExpansion
 import PaperA.EdgeLaguerre
 import PaperA.CriticalWindow
 import PaperA.EveryNSignTable
+import PaperA.Supplements
 
 /-!
 # Paper A (`paperA/problem131.tex`), root module
