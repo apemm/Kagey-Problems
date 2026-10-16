@@ -77,6 +77,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `BoundaryLayer` | Corollary `cor:boundary-layer`, the moving boundary layer, for arbitrary sequences `v_N` |
 | `Supplements` | smaller statements: Lemma `lem:clipped` over the reals and in product form, `ζ_N < 4` for `N ≤ 174`, `p_{a,b} = 2/3` only at `a = b = 1`, strict probability ordering, and `Snum` as the numerator |
 | `FixedMagnetization` | Corollary `cor:fixed-M`, the fixed-magnetization weight |
+| `AllbinConsequences` | the consequences of Theorem `thm:allbin-expansion` displayed after it, for sequences of bins |
 | `Tables` | identities between numerator tables and recursively defined rook and Mathar sequences; retained for the tables note |
 
 ## Section 1, setting and notation
@@ -167,6 +168,8 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `thm:allbin-expansion`, `eq:allbin-expansion` | 4.9, (21) | with `ℓ = log A`, `η = 2√(ab)/(a+b)`, `C(η) = (1/2) log(8π) - log(1+η)` and `B(η) = (3-η)/(8(1+η))`, there are `K` and `a₀` with `|2√(ab) u_{a,b} - (ℓ - (1/2) log ℓ + C(η) + ((1/4) log ℓ - C(η)/2 + B(η))/ℓ)| ≤ K((log ℓ)²/ℓ² + (log a)²/a)` for all `a ≥ a₀` and all `b ≥ a`, and the same for `1 - p_{a,b}` | `allbin_expansion`, `allbin_expansion_prob`, `rootMain`, `Ceta`, `Beta`, with `allbin_root_close` | `AllbinExpansion` |
 | `thm:allbin-expansion` | 4.9 | Step 2 of the proof: if `G_η(z/2) = A` and `z ≥ 100`, then `z + (1/2) log z = log A + C(η) + B(η)/z + ω` with `|ω| ≤ 24/z²`, and there are `K` and `A₀` with `|2x̂ - (main terms in ℓ = log A)| ≤ K (log ℓ)²/ℓ²` for all `A ≥ A₀`, uniformly in `0 ≤ η ≤ 1` | `bessel_root_eq`, `bessel_root_expansion`, with `bessel_factor`, `Ceta_bounds`, `Beta_bounds` | `AllbinExpansion` |
 | `thm:allbin-expansion`, `eq:allbin-leading` | 4.9, (23) | in part, only the leading term `2√(ab) u_{a,b} ~ log a`, uniformly in `b ≥ a`, also for `1 - p_{a,b}` | `allbin_leading`, `allbin_leading_prob` | `AllbinAsymptotics` |
+| `eq:allbin-growing-edge` | (24) | for sequences with `a → ∞`, `a ≤ b` and `a/b → 0`: `2√(ab)(1 - p_{a,b}) - (log a - (1/2) log log a + (1/2) log(8π)) → 0` | `allbin_growing_edge`, with `allbin_limit_core`, `rootMain_limit`, `allbin_expansion_prob_symm` | `AllbinConsequences` |
+| `thm:allbin-expansion`, the case `a/N → α` | 4.9 | for sequences with `N → ∞` and `a/N → α`, `0 < α < 1`: `2√(a(N-a))(1 - p_{a,N-a}) - (log N - (1/2) log log N + log(α(1-α)) + C(2√(α(1-α)))) → 0` | `allbin_fixed_fraction`, with `allbin_limit_core` | `AllbinConsequences` |
 | `eq:edge-polynomial` | (25) | `H_a(y) = (y/a) L^(1)_{a-1}(-y)` | `Hedge`, `genLaguerre`, `Hedge_eq_laguerre` | `UniformBessel`, `Edge` |
 | `sec:allbin-edge` | 4.4 | `y_a` exists and is unique, `y_1 = 1`, `y_2 = √3 - 1`, and `y_{a+1} < y_a` | `yEdge_spec`, `yEdge_unique`, `yEdge_one`, `yEdge_two`, `yEdge_succ_lt`, `Hedge_strictMonoOn`, `Hedge_lt_succ` | `Edge` |
 | `eq:edge-exact-series` | (28) | the exact series of `S_{a,b}` in `y = b u²` | `edge_exact_series` | `Edge` |
@@ -299,6 +302,9 @@ Different normalizations.
     `ℓ = log A` (`allbin_expansion`), and `a/2 ≤ A ≤ a`, so the two leading terms agree. The
     consequences displayed after the theorem, `eq:allbin-growing-edge` and the case
     `a/N → α`, are not stated in Lean.
+    They are now stated, for sequences of bins, as `allbin_growing_edge` and `allbin_fixed_fraction`
+    in `AllbinConsequences`. The second one allows `0 < α < 1` (the paper has `0 < α ≤ 1/2`) and
+    does not need `a ≤ N - a`, by the symmetry `p_{a,b} = p_{b,a}`.
 
 Different proofs of the same statement.
 
@@ -436,9 +442,7 @@ listed above do not supply these omitted limit statements or their error bounds.
 
 * Section 1. The infinite chain behind `ξ(J)` (see difference 39).
 * Section 3. The values in the table `tab:every-n`.
-* Section 4. Remarks 4.5 (`rem:sign-correction`) and 4.7 (`rem:jacobi`), and the
-  consequences of Theorem 4.9 displayed after it (`eq:allbin-growing-edge` and the case
-  `a/N → α`).
+* Section 4. Remarks 4.5 (`rem:sign-correction`) and 4.7 (`rem:jacobi`).
 * Section 5. Remarks 5.4, 5.6 and 5.8, Proposition 5.7 (`prop:walls`), Theorem 5.9
   (`thm:field`), and the values in the table `tab:couplings`.
 * Appendix A. The outward-interval Python calculations (Lean has its own rational bounds for
