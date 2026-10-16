@@ -80,6 +80,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `Tables` | identities between numerator tables and recursively defined rook and Mathar sequences; retained for the tables note |
 | `TableValuesCore` | correct rounding (`RoundsTo`), Taylor certificates for `exp` and `log`, rational bounds on `ζ_N`, and bounds on `u_N` and `u_N^P` from truncated sums with a geometric tail |
 | `TableValuesEveryN` | the values of the table `tab:every-n`, by kernel-checked certificates |
+| `TableValuesCouplings` | the values of the table `tab:couplings`, by kernel-checked certificates |
 
 ## Section 1, setting and notation
 
@@ -203,6 +204,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `cor:couplings` | 5.5 | (a) for all large `N`, `|J_N^F - ((1/2)(L - log L) + ((1/4) log L - c_0/2)/L)| ≤ 28 (log L)²/L²`, where `J_N^F = -(1/2) log u_N` | `free_coupling` | `PeriodicExpansion` |
 | `cor:couplings` | 5.5 | (b) for all large `N`, `|J_N^F - J_N^P - (log 2)/(2L)| ≤ 2 (log L)/L²` | `coupling_shift`, with `shift_final` | `PeriodicExpansion` |
 | `cor:couplings` | 5.5 | (c) with `ξ(J) = -1/log tanh J`, for all large `N`, `|N/ξ(J_N^F) - (2L - log L + log(π/8))| ≤ 4 (log L)/L` and `|N/ξ(J_N^P) - (2L - log L + log(π/2))| ≤ 4 (log L)/L` | `corrLen`, `corrLen_free`, `corrLen_periodic`, with `N_div_corrLen`, `corrLen_of_expansion` | `PeriodicExpansion` |
+| `tab:couplings` | Table 2 | every printed value is the correct rounding to three decimals of the quantity it names: `J_N^P`, the main terms of `eq:isingtemperature`, `(2 log N - 1)/5`, `0.3864 log N - 0.21055`, `J_N^F` and `J_N^F - J_N^P` (computed before rounding), for `N = 10, ..., 10⁶` | `tab_couplings_1` to `tab_couplings_6`, with `tv_uN_n`, `tv_uNP_n`, `tv_JP_n`, `tv_JF_n`, `tv_main_n`, `tv_log10`, `tv_cP`, `lt_uNP_of_tail`, `uNP_lt_of_partial` | `TableValuesCouplings`, `TableValuesCore` |
 
 ## Appendix A, the crossing at every N
 
@@ -432,6 +434,13 @@ Partial coverage.
     `decide +kernel`, which takes about ten minutes. The numbers `n` were found in floating point,
     and they are data only. The paper replays its own outward-interval brackets instead.
 
+44. `tab:every-n`, `tab:couplings`. `RoundsTo x m k` means `|x - m/10^k| < 10^{-k}/2`. Lean
+    brackets `u_N` and `u_N^P` between `c/10²⁵` and `(c+1)/10²⁵` with the first terms of the
+    exact polynomials and a geometric bound on the rest, `ζ_N` with width `10⁻¹⁵`, and each
+    logarithm with Taylor bounds for `exp`, with `π` to 20 decimals. The rationals were chosen
+    in floating point and are data only. The paper computes the tables in 50-digit and
+    floating-point arithmetic instead.
+
 ## Not in Lean
 
 The following parts of the paper are not formalized. The finite results and conditional algebra
@@ -441,8 +450,8 @@ listed above do not supply these omitted limit statements or their error bounds.
 * Section 4. Remarks 4.5 (`rem:sign-correction`) and 4.7 (`rem:jacobi`), and the
   consequences of Theorem 4.9 displayed after it (`eq:allbin-growing-edge` and the case
   `a/N → α`).
-* Section 5. Remarks 5.4, 5.6 and 5.8, Proposition 5.7 (`prop:walls`), Theorem 5.9
-  (`thm:field`), and the values in the table `tab:couplings`.
+* Section 5. Remarks 5.4, 5.6 and 5.8, Proposition 5.7 (`prop:walls`) and Theorem 5.9
+  (`thm:field`).
 * Appendix A. The outward-interval Python calculations (Lean has its own rational bounds for
   the results listed above).
 * The uniform local law (the local law note, not in Lean).
