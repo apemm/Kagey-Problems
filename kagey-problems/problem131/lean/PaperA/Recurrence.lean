@@ -1,7 +1,7 @@
 import PaperA.Model
 
 /-!
-# Paper A, `sec:exact` and `app:tables`: recurrences, generating functions, numerators, moments
+# Paper A, `sec:exact` and the tables note: recurrences, generating functions, numerators, moments
 
 For weights `α, β` in any commutative ring, `wordWeight α β w = α^rep(w) β^chg(w)`.
 With `(α, β) = (p, q)` this is twice the word probability, and with natural `α, β` it is

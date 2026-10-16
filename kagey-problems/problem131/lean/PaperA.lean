@@ -22,6 +22,17 @@ import PaperA.EveryNSign
 import PaperA.EveryNAsymptotics
 import PaperA.CrossingEquation
 import PaperA.BoundaryLayer
+import PaperA.LogInversion
+import PaperA.BesselAsymptotics
+import PaperA.PeriodicCrossing
+import PaperA.PeriodicExpansion
+import PaperA.IsingDictionary
+import PaperA.AllbinExpansion
+import PaperA.EdgeLaguerre
+import PaperA.CriticalWindow
+import PaperA.EveryNSignTable
+import PaperA.Supplements
+import PaperA.FixedMagnetization
 
 /-!
 # Paper A (`paperA/problem131.tex`), root module

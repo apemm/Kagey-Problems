@@ -46,6 +46,8 @@ Paper D. `PaperC` also holds the Lean proofs for Paper E, and `PaperD` those for
   inequalities of (b), including the logarithmic bracket for ζ_N (`EveryNCorollary`).
 - The strict inequality `N(1 - p_N) > ζ_N` for every N ≥ 2774 (`EveryNSign`). The kernel checks
   the rational threshold certificate and an exponential comparison for all larger N.
+- Remark 3.9, the complete sign pattern of `z_N - ζ_N` for every `N ≥ 2`, with one kernel-checked
+  rational certificate for each `N ≤ 2773` (`EveryNSignTable`).
 - The asymptotic conclusions of Corollary 3.7(b) and (c), `z_N = ν_N + O(log L/L)` and
   `z_N = ν_N + (log L/4 - c₀/2 + 1/8)/L + O((log L)²/L²)` with `L = log N`, with explicit constants
   for every N ≥ 21, and `0 ≤ N u_N - N(1 - p_N) ≤ 2(L + 1/4)²/N` (`EveryNAsymptotics`).
@@ -54,10 +56,28 @@ Paper D. `PaperC` also holds the Lean proofs for Paper E, and `PaperD` those for
   and `(log N)/2 ≤ z ≤ log N`. For `N ≥ 175` the proof uses the exact formula for `R_N` through
   the uniform Bessel bound, and for `N ≤ 174` the kernel checks rational certificates
   (`CrossingEquation`).
-- Corollary 4.10, the moving boundary layer: for any odds `v_N` with `v_N > 0` eventually,
+- Corollary 4.12, the moving boundary layer: for any odds `v_N` with `v_N > 0` eventually,
   `Ω_N = 1/(√N v_N) → ∞` and `log Ω_N/(N v_N) → 0`, the number of bins `1 ≤ k ≤ N/2` below the
   endpoint is asymptotic to `Ω_N² log² Ω_N`, the total number of interior bins below it is
   eventually twice that, and the case `v_N = N^{-κ}`, `1/2 < κ < 1` (`BoundaryLayer`).
+- Lemma 4.8 (`lem:inversion`), the inversion of `z + (1/2) log z` with an explicit constant
+  (`LogInversion`), and the large-argument forms of `I_0`, `I_1` and `I_1 + η I_0` with explicit
+  remainders, through the integral form of `I_0 - I_1` (`BesselAsymptotics`).
+- Theorem 5.2, the periodic central crossing `u_N^P`: its existence and uniqueness, its
+  expansion, the boundary shift `N(u_N^P - u_N)` and the periodic coupling, each with a bound
+  `C (log log N)²/(log N)²` for all large `N` (`PeriodicCrossing`, `PeriodicExpansion`). Also
+  Corollary 5.5 on the two couplings and the correlation lengths `N/ξ`, with explicit constants.
+- Corollary 4.4, the fixed-magnetization weight `Z_N(μ)` in Bessel form (`FixedMagnetization`).
+- Theorem 4.9, the uniform expansion of every crossing in `log A` for all `b ≥ a`, Theorem 4.10,
+  the fixed-edge expansion `u_{a,b} = c_a/√b - 1/b + γ_a/b^{3/2} + O_a(b^{-2})`, and the expansion
+  of Theorem 4.11 for `2√(a y_a)` (`AllbinExpansion`, `EdgeLaguerre`).
+- Theorem 5.3, the spatial crossing window: the profile `e^{t-2y²}`, uniformly on compact sets,
+  and the count `√(2 max(t,0))`, for free and periodic ends (`CriticalWindow`).
+- Smaller statements (`Supplements`): Lemma 3.2 over the reals and in product form, `ζ_N < 4` for
+  `N ≤ 174`, `p_{a,b} = 2/3` only for `a = b = 1`, the strict ordering of the bin probabilities
+  toward the middle, and `Snum` as the integer numerator.
+- The Ising dictionary of Section 1.2 for free ends, `S_{a,b}(e^{-2J}) = Z_N(a-b)/Z_N(N)`, and
+  the relations between `J`, `τ` and `ξ(J) = -1/log tanh J` (`IsingDictionary`).
 
 ## Paper B (`paperB/problem131_multistate.tex`)
 
@@ -115,22 +135,16 @@ Paper D. `PaperC` also holds the Lean proofs for Paper E, and `PaperD` those for
 
 ## What is not in Lean
 
-The general large-argument asymptotics of the Bessel functions are not formalized. The one
-exception is the explicit bound on `I_0 + I_1` that the every-N crossing theorem of Paper A needs,
-which is proved from its integral form, so that theorem is in Lean for every `N`.
+The general large-argument asymptotics of the Bessel functions are not formalized. Lean has the
+explicit bound on `I_0 + I_1` that the every-N crossing theorem of Paper A needs, and the
+large-argument forms of `I_0`, `I_1` and `I_1 + η I_0` with explicit remainders, all proved from
+integral forms.
 
-For Paper A, the growing-distance all-bin leading term is formalized, but its higher-order
-expansion is not. The fixed-edge crossing expansion and the Laguerre-root asymptotics are not
-formalized, even their leading limits. Only the finite edge results and conditional rational
-coefficient algebra listed above are in Lean. The entire periodic central-crossing theorem
-(even its leading term), the spatial crossing window for both boundary conditions, and the
-moving boundary-layer corollary are also absent.
+For Paper A, the domain-wall proposition is absent.
 
-The remaining omissions in Paper A include the Ising dictionary, the inversion lemma, the
-crossing equation, the complete sign remark, the coupling and correlation-length asymptotic
-corollary, and the uniform local law. In the every-N corollary, the asymptotic conclusion
-of (b) and all of (c) remain outside Lean. Parts (a), (d) and the finite inequalities of (b)
-are formalized. `PaperA/MAP.md` gives the detailed scope.
+The remaining omissions in Paper A include the infinite chain behind `ξ(J)` and the uniform
+local law. `PaperA/MAP.md` gives the
+detailed scope.
 
 In Paper B the window, the Gaussian volumes and the frontier limits are left out. `PaperB`
 proves the exact law for the uniform start only, so the law with a general start and the tree
