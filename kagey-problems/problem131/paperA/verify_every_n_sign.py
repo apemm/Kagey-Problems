@@ -13,6 +13,7 @@ import time
 from decimal import Decimal as D
 
 import verify_every_n as v
+from certified_decimal import zeta_grid
 
 LO, HI, DEN = 1001, 2773, 10 ** 7
 
@@ -22,11 +23,8 @@ def main():
     bad = []
     min_gap = None
     for N in range(LO, HI + 1):
-        zt = v.zeta_dec(N)
-        uz = zt / (N - zt)
-        a = int((uz * DEN).to_integral_value(rounding="ROUND_CEILING"))
-        # v > u_zeta with room for the 1e-45 error in zeta_N (min gap 1.2e-11: verify_every_n_guards.py [G1])
-        assert D(a) / DEN - uz > D(10) ** -40, N
+        floor, _ = zeta_grid(N, DEN)
+        a = floor + 1  # Both adjacent grid points are strictly separated from u_zeta.
         W = v.runcount_coeffs(N)
         target = DEN ** (N - 1)
         val = v.S_int_runcount2(W, a, DEN)
@@ -35,6 +33,8 @@ def main():
         gap = 1 - D(val) / D(target)
         if min_gap is None or gap < min_gap[1]:
             min_gap = (N, gap)
+    if bad:
+        raise ArithmeticError(f"Exact sign check failed at {bad}")
     lines = [
         "verify_every_n_sign.py  run " + time.strftime("%Y-%m-%d %H:%M"),
         f"N = {LO}..{HI}: S_N(v) < 1 exactly (so z_N > zeta_N) fails at {bad}",

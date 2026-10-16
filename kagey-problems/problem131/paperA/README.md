@@ -5,13 +5,21 @@ The arXiv v1 title was "Uniform Bessel bounds for endpoint crossings in the pers
 Paper A treats the walk with 2 states, which is the zero-field 1D Ising chain with free boundaries.
 It gives the exact law and explicit uniform Bessel bounds for every bin, with relative error at most
 N u^2/2 + u at every N. At the center these bracket the crossing p_N for every N >= 2. The proof is
-analytic for N >= 175 and uses exact integer certificates below that, and all of it is checked in
-Lean. This gives the crossing equation z_N + (1/2) log z_N = L + c_0 + 1/(8 z_N) + R_N with
+analytic for N >= 175 and uses exact integer certificates below that. This every-N bracket theorem
+is checked in Lean. The paper also proves the crossing equation
+z_N + (1/2) log z_N = L + c_0 + 1/(8 z_N) + R_N with
 c_0 = (1/2) log(pi/8) and |R_N| <= 1/(4L^2) + (L^2 + L)/N. The paper also expands the crossing of
 every other bin, with a Laguerre law for fixed bins, and compares free and periodic boundaries.
 In Ising terms the coupling at both central crossings is (1/2)(log N - log log N) + o(1), which
 Table 3 compares with the approximations of Stepanyan et al. (J. Stat. Mech. 2024).
 `../README.md` describes the other papers on Problem 131.
+
+Lean coverage is partial. The fixed-edge and Laguerre-root asymptotics (including their leading
+limits), the entire periodic central-crossing theorem, the spatial window, and the crossing
+equation are not formalized. The edge coefficient lemmas are rational algebra conditional on
+coefficient equations. In the every-N corollary, only the `p_N` interval of part (a) follows by
+rewriting the Lean theorem; the positivity chain and coupling interval are not formalized.
+`../lean/PaperA/MAP.md` lists the remaining omissions, including the coupling corollary.
 
 ## Files
 
@@ -31,11 +39,16 @@ Table 3 compares with the approximations of Stepanyan et al. (J. Stat. Mech. 202
   `verify_every_n_sign.py`, `verify_uniform_llt.py` and `verify_uniform_llt_cor5.py` are the checks.
   They use only the standard library, except `verify_ising_coupling_tm.py`, which needs NumPy, and `../SUPPLEMENT.md` says what each one checks. The last
   two belong to the local law note.
+- `certified_decimal.py` provides outward interval arithmetic for the finite certificates.
+  `verify_certified_bounds.py` replays them from the stored rational endpoints, without
+  regenerating roots or running the large parameter sweeps. `test_certified_decimal.py`
+  checks the arithmetic against independent exact rational calculations.
 - `verify_all.py` runs the checks.
 - `data/` holds the recorded output of the checks and the ledgers `data/ledger_every_n.md` and
   `data/ledger_llt.md`. The first predictions for Papers A and B are in `../ledger.md`.
-- `../lean/PaperA/` holds the Lean 4 proofs, and `../lean/PaperA/MAP.md` matches each statement of
-  the paper to its Lean theorem.
+- `../lean/PaperA/` holds the Lean 4 proofs. `../lean/PaperA/MAP.md` maps covered statements to
+  Lean declarations and lists partial coverage and omissions. `Tables.lean` remains imported for
+  the separate tables note; it proves recurrence identities, not the path bijections.
 
 ## How to run the checks and build
 
@@ -47,3 +60,29 @@ their checks in their output rather than through the exit code, and the docstrin
 `verify_all.py` says which ones.
 
 Build the paper with `pdflatex problem131.tex` in this folder, 3 times.
+
+## Replaying the finite certificates
+
+Run `python -B test_certified_decimal.py` and `python -B verify_certified_bounds.py`.
+The replay takes about ten seconds and fails with a nonzero exit code if any comparison
+fails or remains undecided. It checks both exact integer methods for N = 2 through 174,
+all 999 stored brackets through N = 1000, the remaining sign range through N = 2773,
+the 2773/2774 threshold, the crossing-equation remainders and the auxiliary bounds.
+Results and input hashes are saved in `data/certified_bounds_output.txt` and
+`data/certified_bounds_manifest.json`. The regular guard script runs this replay too.
+
+The intervals use eighty decimal digits and private contexts. Each basic operation rounds
+outward. Python guarantees correctly rounded `ln` and `exp` in round-to-nearest mode, so the
+helper widens their endpoint values to the adjacent representable decimals
+([Decimal documentation](https://docs.python.org/3/library/decimal.html#decimal.Decimal.ln)).
+The pi enclosure uses Machin's identity and exact rational alternating-series remainders.
+Newton iteration only proposes a root bracket. Opposite interval signs at its endpoints
+certify it.
+
+The replay also encloses the central run-count sum. With a = floor(N/2), b = N - a and
+T_r = binom(a-1,r) binom(b-1,r) u^(2r+1), its paired terms are
+T_r [2 + (N-2-2r)u/(r+1)]. The ratio T_(r+1)/T_r and the bracketed factor decrease with r.
+Once a ratio bound q is below one, the remaining positive tail is bounded by the last
+paired term times q/(1-q). This permits a short rigorous replay of the intermediate sign
+range. The original full integer sum remains available in `verify_every_n_sign.py`.
+Numerical tables and sampled asymptotic checks elsewhere remain diagnostics.

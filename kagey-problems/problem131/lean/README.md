@@ -2,8 +2,9 @@
 
 This folder has the Lean 4 proofs for the Problem 131 papers. Each paper is a separate library
 with a root file (`PaperA.lean`) and a folder of modules (`PaperA/`). We use Lean 4.33.1 and
-Mathlib v4.33.1. Each module starts with a docstring that lists what it proves. For Papers C and
-D the files `PaperC/MAP.md` and `PaperD/MAP.md` match each statement to its Lean theorems.
+Mathlib v4.33.1. Each module starts with a docstring that lists what it proves. The files
+`PaperA/MAP.md` through `PaperD/MAP.md` map covered statements to Lean declarations and list
+partial coverage and omissions.
 
 On October 13, 2026 Paper E (`paperE/problem131_planar.tex`, the planar walk) was split off
 Paper C, and Paper F (`paperF/problem131_heavy_aging.tex`, heavy-tailed runs and aging walks) off
@@ -18,7 +19,9 @@ Paper D. `PaperC` also holds the Lean proofs for Paper E, and `PaperD` those for
   (`Model`).
 - The three-term recurrence, the generating function, the numerators and the mean and variance
   (`Recurrence`).
-- The rook-path and Mathar-walk counts for the numerator tables (`Tables`).
+- The identities between the numerator tables and the recursively defined rook and Mathar
+  sequences (`Tables`, still imported, although the tables moved to a separate note). The path
+  interpretations and bijections are not formalized.
 - The normal limit, through the characteristic function and Lévy's continuity theorem
   (`NormalLimit`).
 - The central and adjacent crossings, `p_N < p_{N+1}` and the ordering of all the bins
@@ -27,10 +30,13 @@ Paper D. `PaperC` also holds the Lean proofs for Paper E, and `PaperD` those for
   and `I_1` are defined as power series (`Bessel`, `BesselDeriv`, `FiniteBessel`,
   `UniformBessel`).
 - The comparison of the exact crossings with the Bessel roots (`RootBounds`), and the leading
-  terms `1 - p_N ~ (log N)/N` and `2√(ab) u_{a,b} ~ log a` (`Asymptotics`, `AllbinAsymptotics`).
+  terms `1 - p_N ~ (log N)/N` and `2√(ab) u_{a,b} ~ log a`, the latter uniformly as `a → ∞`
+  with `b ≥ a` (`Asymptotics`, `AllbinAsymptotics`).
 - The finite parts of the edge and periodic results. These are the polynomial `H_a` and its root
-  `y_a`, the algebra of the edge expansion, the cyclic count and the adjacent periodic threshold
-  (`Edge`, `EdgeExpansion`, `Periodic`, `AllbinAsymptotics`).
+  `y_a`, the exact edge series, the cyclic count and the adjacent periodic threshold
+  (`Edge`, `Periodic`, `AllbinAsymptotics`). `EdgeExpansion` proves algebraic implications over
+  the rationals, assuming the coefficient equations; it does not establish an expansion of the
+  actual real crossing.
 - The crossing at every `N ≥ 2`, `ζ_N + 1/(8ζ_N) - ε_N < N(1 - p_N) < ζ_N + 1/(8ζ_N)`, where
   `8 ζ_N e^{2ζ_N} = π N²` and `ε_N = ζ_N(ζ_N+1)/N + 1/(16ζ_N²)`. For `N ≤ 174` the kernel checks
   exact integer certificates. For `N ≥ 175` the proof uses the integral form of `I_0 + I_1` and
@@ -95,12 +101,22 @@ Paper D. `PaperC` also holds the Lean proofs for Paper E, and `PaperD` those for
 
 The general large-argument asymptotics of the Bessel functions are not formalized. The one
 exception is the explicit bound on `I_0 + I_1` that the every-N crossing theorem of Paper A needs,
-which is proved from its integral form, so that theorem is in Lean for every `N`. Anything else
-built on the asymptotics is left out, and for those results the libraries only have the exact
-finite steps. In Paper A this means the terms of the all-bin and edge expansions beyond the
-leading ones. The crossing equation, the corollary on the crossing at every `N` beyond its part
-(a), the sign remark, the spatial window and the uniform local law of Paper A are also not in
-Lean. In Paper B the window, the Gaussian volumes and the frontier limits are left out. `PaperB`
+which is proved from its integral form, so that theorem is in Lean for every `N`.
+
+For Paper A, the growing-distance all-bin leading term is formalized, but its higher-order
+expansion is not. The fixed-edge crossing expansion and the Laguerre-root asymptotics are not
+formalized, even their leading limits. Only the finite edge results and conditional rational
+coefficient algebra listed above are in Lean. The entire periodic central-crossing theorem
+(even its leading term), the spatial crossing window for both boundary conditions, and the
+moving boundary-layer corollary are also absent.
+
+The remaining omissions in Paper A include the Ising dictionary, the inversion lemma, the
+crossing equation, the sign remark, the coupling and correlation-length corollary, and the
+uniform local law. In the every-N corollary, only the `p_N` interval of part (a) is an algebraic
+reformulation of `every_N_crossing`; the positivity chain `0 < Y'_N < Y_N < N`, the coupling
+interval, and parts (b)–(d) are not formalized. `PaperA/MAP.md` gives the detailed scope.
+
+In Paper B the window, the Gaussian volumes and the frontier limits are left out. `PaperB`
 proves the exact law for the uniform start only, so the law with a general start and the tree
 form of the constants are not in it, but the arithmetic of the `K_3` window with a start and the
 tree formula for 3 states are checked in `PaperC`. For Papers C and D every statement about large

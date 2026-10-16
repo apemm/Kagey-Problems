@@ -1,17 +1,17 @@
 # Paper A: map from the paper to the Lean theorems
 
-This file matches the statements of Paper A (`paperA/problem131.tex` and the files it inputs) to
-the Lean theorems of the library `PaperA` (root `PaperA.lean`, 19 modules in `PaperA/`, namespace
-`Kagey131`). The library uses Lean 4 v4.33.1 and Mathlib v4.33.1. Every theorem listed here is
+This file maps covered statements of Paper A (`paperA/problem131.tex` and the files it inputs)
+to Lean declarations and records partial coverage and omissions. The library `PaperA` has root
+`PaperA.lean`, which imports all 19 modules in `PaperA/` (20 modules including the root), in
+namespace `Kagey131`. It uses Lean 4 v4.33.1 and Mathlib v4.33.1. Every theorem listed here is
 proved without `sorry`, `admit` or new axioms, and `#print axioms` on each of them reports only
 `propext`, `Classical.choice` and `Quot.sound` (see `build-log.txt`).
 
 The key of each row is the `\label` in the source. The column Number gives the number in the built
 PDF. The numbers can change when the paper is edited, and the labels do not. "In part" means that
-the exact or finite core of the statement is in Lean and the rest is listed under "Not in Lean"
-below. Each Lean statement was compared by hand with the statement in the paper, and the section
-"Differences between the Lean statements and the paper" records every place where the two are not
-word for word the same.
+only the result specified in that row is covered; this can be a finite inequality, a leading
+limit, or conditional rational algebra. The section "Differences between the Lean statements
+and the paper" explains these qualifications, and "Not in Lean" lists the omitted results.
 
 ## Conventions
 
@@ -54,14 +54,14 @@ word for word the same.
 | `UniformBessel` | the uniform Bessel bounds for the center, every bin, the periodic chain and the edge |
 | `RootBounds` | the crossings against the Bessel roots |
 | `Asymptotics` | `1 - p_N ~ (log N)/N` and the bound on `u_N - u_B` |
-| `AllbinAsymptotics` | the leading term for every bin, and the periodic ordering |
+| `AllbinAsymptotics` | the all-bin leading term as `a → ∞`, uniformly in `b ≥ a`, and the periodic ordering |
 | `Edge` | the polynomial `H_a`, its root `y_a` and the exact edge series |
-| `EdgeExpansion` | the algebra of the coefficients of the edge expansion, over the rationals |
+| `EdgeExpansion` | rational algebra conditional on the edge coefficient equations |
 | `Periodic` | the cyclic count and the periodic ratio |
 | `BesselIntegral` | the integral form of `I_0 + I_1` and the bounds on `E` |
 | `EveryN` | the root bracket, `ζ_N`, and the crossing for `2 ≤ N ≤ 174` by certificates |
 | `EveryNLarge` | the crossing for `N ≥ 175` and for every `N ≥ 2` |
-| `Tables` | the numerator tables as lattice-path counts, kept in the repository for the tables note |
+| `Tables` | identities between numerator tables and recursively defined rook and Mathar sequences; retained for the tables note |
 
 ## Section 1, setting and notation
 
@@ -108,7 +108,7 @@ word for word the same.
 | `lem:bracket` (a) | 3.5 | `Φ(w) ≤ N/2` gives `Nw/(N+w) ≤ z_N`, strictly if `Φ(w) < N/2` | `crossing_lower_of_Fcent`, `crossing_lower_of_Fcent_strict` | `EveryN` |
 | `lem:bracket` (b) | 3.5 | `Φ(w)(1 - w(w+2)/(2N)) > N/2` gives `z_N < Nw/(N+w)` | `crossing_upper_of_Fcent` | `EveryN` |
 | `lem:bessel-bounds` | 3.6 | the two cubic bounds on `E(z)` for `z > 0`, `E(z) ≤ 1`, and `E(z) ≤ 1 - 1/(8z)` for `z ≥ 5/4` | `besselE_ge`, `besselE_le`, `besselE_le_one`, `besselE_le_of_ge` | `BesselIntegral` |
-| `cor:every-n` (a) | 3.7 | in part, the interval for `p_N` (the coupling form is not in Lean) | `every_N_crossing` | `EveryNLarge` |
+| `cor:every-n` (a) | 3.7 | in part, only the interval for `p_N`; neither the positivity chain `0 < Y'_N < Y_N < N` nor the coupling interval is in Lean | `every_N_crossing`, by algebraic rewriting | `EveryNLarge` |
 
 ## Section 4, the crossing of every bin
 
@@ -134,7 +134,7 @@ word for word the same.
 | `eq:edge-polynomial` | (25) | `H_a(y) = (y/a) L^(1)_{a-1}(-y)` | `Hedge`, `genLaguerre`, `Hedge_eq_laguerre` | `UniformBessel`, `Edge` |
 | `sec:allbin-edge` | 4.4 | `y_a` exists and is unique, `y_1 = 1`, `y_2 = √3 - 1`, and `y_{a+1} < y_a` | `yEdge_spec`, `yEdge_unique`, `yEdge_one`, `yEdge_two`, `yEdge_succ_lt`, `Hedge_strictMonoOn`, `Hedge_lt_succ` | `Edge` |
 | `eq:edge-exact-series` | (28) | the exact series of `S_{a,b}` in `y = b u²` | `edge_exact_series` | `Edge` |
-| `thm:edge-laguerre` | 4.8 | in part, only the algebra of the coefficients `d_1 = -2c_a`, `d_2`, `γ_a`, the second coefficient `-1` of the odds and `-(1 + c_a²)` of `1 - p_{a,b}` | `edge_first_coefficient`, `edge_second_coefficient`, `edge_third_coefficient`, `universal_edge_correction`, `edge_probability_correction` | `EdgeExpansion` |
+| `thm:edge-laguerre` | 4.8 | in part, rational algebra conditional on the coefficient equations, yielding the formal coefficients `d_1`, `d_2`, `γ`, `-1` and `-(1 + c²)`; no specialization to the actual real crossing or its asymptotics | `edge_first_coefficient`, `edge_second_coefficient`, `edge_third_coefficient`, `universal_edge_correction`, `edge_probability_correction` | `EdgeExpansion` |
 | `thm:edge-matching`, `eq:laguerre-bessel-bound` | 4.9, (30) | in part, only `0 ≤ 1 - a H_a(x²/a)/(x I_1(2x)) ≤ x²/(2a)` | `edge_matching` | `UniformBessel` |
 
 ## Section 5, periodic boundaries
@@ -163,7 +163,8 @@ word for word the same.
 The numerator tables and their bijections left Paper A for a separate note
 (`paperA/tables_note/app_tables.tex`, labels as there). Step 4 of `thm:every-n` and Appendix A.3
 now use Remark 2.3 (`rem:tables`), whose Lean theorems are listed in Section 2 above. The module
-`Tables` holds the two bijections.
+`Tables` remains imported by `PaperA.lean`. It proves identities between the numerators and
+recursively defined sequences; the path interpretations and bijections are not formalized.
 
 | Label in the note | Statement | Lean | Module |
 | --- | --- | --- | --- |
@@ -287,8 +288,9 @@ Partial coverage.
     `N ≤ 174`.
 27. `eq:zetaN`. The Lambert form `ζ_N = (1/2) W_0(πN²/4)`, the monotonicity of `ζ_N` in `N` and
     `ζ_N ≤ L` are not in Lean.
-28. `cor:every-n` (a). There is no separate theorem. Part (a) is `every_N_crossing` with
-    `p_N = 1 - z_N/N`.
+28. `cor:every-n` (a). Only the interval for `p_N` is an algebraic reformulation of
+    `every_N_crossing`, using `p_N = 1 - z_N/N`; there is no separate theorem for it.
+    The positivity chain `0 < Y'_N < Y_N < N` and the coupling interval are not formalized.
 29. `sec:allbin-order`. That `p_{a,b} = 2/3` only for `a = b = 1` is not in Lean.
 30. `prop:adjacent`. `global_min` and `extrema_at_pN` have weak inequalities, so they show that the
     named bins attain the minimum or maximum. The strict inequality `P_N(k) < P_N(k+1)` between
@@ -297,7 +299,8 @@ Partial coverage.
     (`allbin_order_inward`).
 31. `thm:edge-laguerre`. The theorems of `EdgeExpansion` are over the rationals and take the
     coefficient equations of `eq:edge-implicit-expansion` as hypotheses. The implicit function
-    step and the error terms are not in Lean.
+    step, the fixed-edge leading limit, and the higher-order expansion and error terms are not
+    in Lean. These conditional identities do not establish coefficients of the actual crossing.
 32. `sec:periodicwindow`. `perRatio` is defined as the polynomial of `eq:periodicratio`, and
     `perBin_ratio` shows that it is the ratio of the bin probabilities. The periodic central root
     `u_N^P` is not defined in Lean, and neither its existence nor the strict increase of
@@ -313,25 +316,26 @@ Partial coverage.
 
 ## Not in Lean
 
-The following parts of the paper are not in Lean. They need the large-argument expansion of the
-Bessel functions, an implicit function argument, a limit in two variables, or a computation done in
-Python.
+The following parts of the paper are not formalized. The finite results and conditional algebra
+listed above do not supply these omitted limit statements or their error bounds.
 
 * Section 1. The Ising dictionary at the end of Section 1.2.
-* Section 3. The coupling form in Corollary 3.7(a), Corollary 3.7 (`cor:every-n`) beyond part (a), Proposition 3.8
-  (`prop:crossing-eq`) and Remark 3.9 (`rem:sign`). The values in the tables `tab:pn` and
-  `tab:every-n`.
+* Section 3. The positivity chain and coupling interval in Corollary 3.7(a), parts (b)–(d) of
+  Corollary 3.7 (`cor:every-n`), Proposition 3.8 (`prop:crossing-eq`) and Remark 3.9 (`rem:sign`).
+  Only the `p_N` interval of part (a) is covered by rewriting `every_N_crossing`. The values in
+  the tables `tab:pn` and `tab:every-n` are not formalized.
 * Section 4. Remark 4.5 (`rem:jacobi`), Lemma 4.6 (`lem:inversion`), Theorem 4.7
-  (`thm:allbin-expansion`) beyond its leading term, the expansions of Theorem 4.8
-  (`thm:edge-laguerre`), the expansion `eq:edge-matching-expansion` of Theorem 4.9
-  (`thm:edge-matching`) and Corollary 4.10 (`cor:boundary-layer`).
+  (`thm:allbin-expansion`) beyond its leading term as `a → ∞`, uniformly in `b ≥ a`; the entire
+  fixed-edge expansion of Theorem 4.8 (`thm:edge-laguerre`), including its leading limit; the
+  Laguerre-root asymptotics `eq:edge-matching-expansion` of Theorem 4.9 (`thm:edge-matching`),
+  including their leading term; and Corollary 4.10 (`cor:boundary-layer`). The finite bound
+  `eq:laguerre-bessel-bound` of Theorem 4.9 is in Lean.
 * Section 5. Theorem 5.2 (`thm:periodic-crossing`), even its leading term, Theorem 5.3
-  (`thm:critical-window`) and Corollary 5.4 (`cor:couplings`), and the values in the table
-  `tab:couplings`.
+  (`thm:critical-window`) for both free and periodic boundaries, Corollary 5.4 (`cor:couplings`),
+  and the values in the table `tab:couplings`.
 * Appendix A. The proof of Proposition 3.8, and the 60-digit comparisons of Step 4 (Lean has its
   own rational bounds in their place).
 * The uniform local law (the local law note, not in Lean).
-* The numerator tables module `Tables.lean`, kept in the repository for the tables note.
 
 ## Findings while checking
 
