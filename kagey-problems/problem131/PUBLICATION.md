@@ -1,6 +1,14 @@
 # Problem 131: publication notes
 
-Updated October 2, 2026.
+Paper A update, October 15, 2026.
+
+Paper A's current journal target is the Journal of Statistical Mechanics: Theory and
+Experiment. The current revision is on the main branch. The tag paperA-arxiv-v2 records
+the earlier arXiv version. The review corrected numerical certification, source attributions
+and the descriptions of Lean coverage. The paper's Verification section and lean/PaperA/MAP.md
+give the current scope.
+
+The notes below record the earlier plan from October 2, 2026.
 
 Paper A (`paperA/problem131.tex`, 27 pages) and Paper B (`paperB/problem131_multistate.tex`,
 39 pages) are ready for arXiv. Both were revised against the checklists `PaperA_arXiv_edits.md` and

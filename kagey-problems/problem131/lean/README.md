@@ -42,6 +42,10 @@ Paper D. `PaperC` also holds the Lean proofs for Paper E, and `PaperD` those for
   exact integer certificates. For `N ≥ 175` the proof uses the integral form of `I_0 + I_1` and
   explicit bounds on `√(πz/2) e^{-z} (I_0(z) + I_1(z))` (`EveryN`, `BesselIntegral`,
   `EveryNLarge`).
+- The full positivity, probability and coupling bounds of Corollary 3.7(a), and the finite
+  inequalities of (b), including the logarithmic bracket for ζ_N (`EveryNCorollary`).
+- The strict inequality `N(1 - p_N) > ζ_N` for every N ≥ 2774 (`EveryNSign`). The kernel checks
+  the rational threshold certificate and an exponential comparison for all larger N.
 
 ## Paper B (`paperB/problem131_multistate.tex`)
 
@@ -111,10 +115,10 @@ coefficient algebra listed above are in Lean. The entire periodic central-crossi
 moving boundary-layer corollary are also absent.
 
 The remaining omissions in Paper A include the Ising dictionary, the inversion lemma, the
-crossing equation, the sign remark, the coupling and correlation-length corollary, and the
-uniform local law. In the every-N corollary, only the `p_N` interval of part (a) is an algebraic
-reformulation of `every_N_crossing`; the positivity chain `0 < Y'_N < Y_N < N`, the coupling
-interval, and parts (b)–(d) are not formalized. `PaperA/MAP.md` gives the detailed scope.
+crossing equation, the complete sign remark, the coupling and correlation-length asymptotic
+corollary, and the uniform local law. In the every-N corollary, the asymptotic conclusion
+of (b) and all of (c) remain outside Lean. Parts (a), (d) and the finite inequalities of (b)
+are formalized. `PaperA/MAP.md` gives the detailed scope.
 
 In Paper B the window, the Gaussian volumes and the frontier limits are left out. `PaperB`
 proves the exact law for the uniform start only, so the law with a general start and the tree
