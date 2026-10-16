@@ -243,13 +243,13 @@ def part2():
     check("f_L'' in [-0.0792, -0.0786] on [-0.2229, -0.2227], hence below -0.078 (as printed in the paper)",
           bool(f2 < arb('-0.0786')) and bool(f2 > arb('-0.0792')),
           f'enclosure [{float(f2.lower()):.6f}, {float(f2.upper()):.6f}]')
-    # Sharper enclosures, for the record (the paper prints lambda_0 = -0.2228 and f_L''(lambda_0) = -0.0789).
+    # Sharper enclosures, for the record (the paper prints lambda_L = -0.2228 and f_L''(lambda_L) = -0.0789).
     a1, b1 = arb('-0.22278299'), arb('-0.22278297')
     fa1, fb1 = deriv(1, a1), deriv(1, b1)
     check('the mode lies in (-0.22278299, -0.22278297)', bool(fa1 > 0) and bool(fb1 < 0),
           f"f_L' there: {fa1.str(8)} and {fb1.str(8)}")
     f2s = deriv(2, a1.union(b1))
-    check("f_L''(lambda_0) = -0.0789 to 4 decimals", bool(f2s < arb('-0.07885')) and bool(f2s > arb('-0.07895')),
+    check("f_L''(lambda_L) = -0.0789 to 4 decimals", bool(f2s < arb('-0.07885')) and bool(f2s > arb('-0.07895')),
           f'enclosure {f2s.str(10)}  [{time.time() - t0:.1f}s]')
 
 
