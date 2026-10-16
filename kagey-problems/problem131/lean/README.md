@@ -54,10 +54,13 @@ Paper D. `PaperC` also holds the Lean proofs for Paper E, and `PaperD` those for
   and `(log N)/2 ≤ z ≤ log N`. For `N ≥ 175` the proof uses the exact formula for `R_N` through
   the uniform Bessel bound, and for `N ≤ 174` the kernel checks rational certificates
   (`CrossingEquation`).
-- Corollary 4.10, the moving boundary layer: for any odds `v_N` with `v_N > 0` eventually,
+- Corollary 4.12, the moving boundary layer: for any odds `v_N` with `v_N > 0` eventually,
   `Ω_N = 1/(√N v_N) → ∞` and `log Ω_N/(N v_N) → 0`, the number of bins `1 ≤ k ≤ N/2` below the
   endpoint is asymptotic to `Ω_N² log² Ω_N`, the total number of interior bins below it is
   eventually twice that, and the case `v_N = N^{-κ}`, `1/2 < κ < 1` (`BoundaryLayer`).
+- Lemma 4.8 (`lem:inversion`), the inversion of `z + (1/2) log z` with an explicit constant
+  (`LogInversion`), and the large-argument forms of `I_0`, `I_1` and `I_1 + η I_0` with explicit
+  remainders, through the integral form of `I_0 - I_1` (`BesselAsymptotics`).
 
 ## Paper B (`paperB/problem131_multistate.tex`)
 
