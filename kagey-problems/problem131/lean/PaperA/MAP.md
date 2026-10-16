@@ -2,7 +2,7 @@
 
 This file maps covered statements of Paper A (`paperA/problem131.tex` and the files it inputs)
 to Lean declarations and records partial coverage and omissions. The library `PaperA` has root
-`PaperA.lean`, which imports all 22 modules in `PaperA/` (23 modules including the root), in
+`PaperA.lean`, which imports all 23 modules in `PaperA/` (24 modules including the root), in
 namespace `Kagey131`. It uses Lean 4 v4.33.1 and Mathlib v4.33.1. Every theorem listed here is
 proved without `sorry`, `admit` or new axioms, and `#print axioms` on each of them reports only
 `propext`, `Classical.choice` and `Quot.sound` (see `build-log.txt`).
@@ -64,6 +64,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `EveryNCorollary` | full positivity, probability and coupling bounds of Corollary (a), and the finite inequalities of (b) |
 | `EveryNSign` | the rational threshold certificate and the crossing above ζ_N for every N ≥ 2774 |
 | `EveryNAsymptotics` | the asymptotic conclusions of Corollary (b) and (c), with explicit constants, and the conversion between `z_N` and `N u_N` |
+| `CrossingEquation` | Proposition `prop:crossing-eq` for every `N ≥ 2`, analytic for `N ≥ 175` and by rational certificates below |
 | `Tables` | identities between numerator tables and recursively defined rook and Mathar sequences; retained for the tables note |
 
 ## Section 1, setting and notation
@@ -118,6 +119,9 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `eq:zN`, conversion | (2) | `0 ≤ N u_N - z_N ≤ 2(L + 1/4)²/N` for every N ≥ 2 | `N_uN_sub_zN` | `EveryNAsymptotics` |
 | `cor:every-n` (d) | 3.7 | z_N > ζ_N for every N ≥ 2774, with a kernel-checked rational threshold certificate | `every_N_crossing_above_zeta`, `zetaN_2774_lower`, `zetaN_2774_upper` | `EveryNSign` |
 | `eq:zetaN`, auxiliary bounds | (8) | ζ_N is monotone in N, and 1/2 < ζ_N ≤ log N for N ≥ 2 | `zetaN_mono`, `half_lt_zetaN`, `zetaN_le_log` | `EveryNCorollary` |
+| `prop:crossing-eq`, `eq:crossing-eq` | 3.8, (12) | with `R_N = z + (1/2) log z - L - c₀ - 1/(8z)`, for every `N ≥ 2`: `-(z²+z)/N ≤ R_N ≤ 1/(16z²)`, `L/2 ≤ z ≤ L` and `|R_N| ≤ 1/(4L²) + (L²+L)/N` | `crossing_equation`, `crossRem`, `crossRem_eq` | `CrossingEquation` |
+| `prop:crossing-eq`, `N ≥ 175` | 3.8 | the analytic case | `crossing_eq_large`, with `large_core`, `large_sizes`, `bessel_tail_poly`, `step0_fourth` | `CrossingEquation` |
+| `prop:crossing-eq`, `N ≤ 174` | 3.8 | the case `2 ≤ N ≤ 174`, by certificates | `crossing_eq_small`, with `crossEqTable`, `crossEqTable_ok`, `crossEqTable_sub`, `crossEqTable_covers`, `crossing_eq_of_cert`, `small_core`, `everyNCert_brackets` | `CrossingEquation` |
 
 ## Section 4, the crossing of every bin
 
@@ -166,6 +170,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `app:every-n` | A.2 | Step 2, the upper bound, with `B > 0` and `D > 0` | `B_pos`, `D_pos`, `tW_le_tau`, `upper_key`, `every_N_upper_large` | `EveryNLarge` |
 | `app:every-n` | A.2 | Step 3, the lower bound | `lower_key`, `U_sq_expand`, `every_N_lower_large` | `EveryNLarge` |
 | `app:every-n` | A.3 | `d^(N-1) S_N(c/d)` is an integer, so the sign of `S_N(c/d) - 1` is a comparison of integers | `Snum`, `Snum_eq`, `Wfast_eq`, `chooseMul_eq` | `EveryN` |
+| `eq:RN-formula` | A.4, (41) | the exact formula `R_N = log Λ_N - (log E(w) + 1/(8w)) - 1/(8N) - wz/N - (1/2) log(1 + w/N)`, in the equivalent form `log Λ_N - log E(w) - (w - z) - (1/2) log(w/z) - 1/(8z)` | inside `crossing_eq_large` | `CrossingEquation` |
 
 ## Not in this paper, kept in the repository for the tables note
 
@@ -331,6 +336,17 @@ Partial coverage.
     `H_a'(y_a)` and `H_a''(y_a)` are real and in general irrational (for example `y_2 = √3 - 1`).
     The statements are polynomial identities, so the same proof works over the reals, but Lean
     does not state the real version.
+35. `prop:crossing-eq` for `N ≥ 175`. Lean follows Steps 1 to 3 of Appendix A.4 through the exact
+    formula for `R_N`, with constants of its own. It bounds the Bessel part by `0.06/w²` in place
+    of `0.0559/z²`, uses `log(1-x) ≥ -(x + x²/2 + x³/(1-x))` for `log Λ_N` and `log E(w)`, and
+    `Y⁴ ≤ 1.6 N` (`step0_fourth`), and it shows that the terms of order `1/N` add up to at most
+    `-5/N` with the margin `(z - 1/2)² ≥ 11.42`. So the decimal constants of Appendix A.4 are not
+    the ones Lean checks. The bounds proved are the same.
+36. `prop:crossing-eq` for `N ≤ 174`. Lean reuses the brackets of `everyNTable` for `u_N` and
+    `ζ_N`, and checks over the rationals, with `decide +kernel`, that
+    `x - 1 ≥ log x ≥ 1 - 1/x` already gives both remainder bounds at the bracket ends. It
+    checks `L/2 ≤ z_N ≤ L` with the Taylor bounds for `exp` of `EveryN` at two grid points `T`
+    and `T'` per row. The paper uses the outward-interval Python certificates instead.
 
 ## Not in Lean
 
@@ -338,8 +354,7 @@ The following parts of the paper are not formalized. The finite results and cond
 listed above do not supply these omitted limit statements or their error bounds.
 
 * Section 1. The Ising dictionary at the end of Section 1.2.
-* Section 3. Proposition 3.8 (`prop:crossing-eq`), and the complete
-  sign pattern of Remark 3.9 (`rem:sign`). The N ≥ 2774 portion of that pattern follows
+* Section 3. The complete sign pattern of Remark 3.9 (`rem:sign`). The N ≥ 2774 portion of that pattern follows
   from the formalized part (d). The values in the tables `tab:pn` and `tab:every-n`
   are not formalized.
 * Section 4. Remark 4.5 (`rem:jacobi`), Lemma 4.6 (`lem:inversion`), Theorem 4.7
@@ -351,8 +366,8 @@ listed above do not supply these omitted limit statements or their error bounds.
 * Section 5. Theorem 5.2 (`thm:periodic-crossing`), even its leading term, Theorem 5.3
   (`thm:critical-window`) for both free and periodic boundaries, Corollary 5.4 (`cor:couplings`),
   and the values in the table `tab:couplings`.
-* Appendix A. The proof of Proposition 3.8 and the outward-interval Python calculations
-  (Lean has its own rational bounds for the results listed above).
+* Appendix A. The outward-interval Python calculations (Lean has its own rational bounds for
+  the results listed above).
 * The uniform local law (the local law note, not in Lean).
 
 ## Findings while checking
