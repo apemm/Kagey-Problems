@@ -46,6 +46,7 @@ import PaperA.SignCorrection
 import PaperA.Jacobi
 import PaperA.FreeEnergy
 import PaperA.LevelTheta
+import PaperA.WindowBound
 
 /-!
 # Paper A (`paperA/problem131.tex`), root module
