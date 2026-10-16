@@ -65,6 +65,9 @@ Paper D. `PaperC` also holds the Lean proofs for Paper E, and `PaperD` those for
   expansion, the boundary shift `N(u_N^P - u_N)` and the periodic coupling, each with a bound
   `C (log log N)²/(log N)²` for all large `N` (`PeriodicCrossing`, `PeriodicExpansion`). Also
   Corollary 5.5 on the two couplings and the correlation lengths `N/ξ`, with explicit constants.
+- Theorem 4.9, the uniform expansion of every crossing in `log A` for all `b ≥ a`, Theorem 4.10,
+  the fixed-edge expansion `u_{a,b} = c_a/√b - 1/b + γ_a/b^{3/2} + O_a(b^{-2})`, and the expansion
+  of Theorem 4.11 for `2√(a y_a)` (`AllbinExpansion`, `EdgeLaguerre`).
 - The Ising dictionary of Section 1.2 for free ends, `S_{a,b}(e^{-2J}) = Z_N(a-b)/Z_N(N)`, and
   the relations between `J`, `τ` and `ξ(J) = -1/log tanh J` (`IsingDictionary`).
 
@@ -129,11 +132,8 @@ explicit bound on `I_0 + I_1` that the every-N crossing theorem of Paper A needs
 large-argument forms of `I_0`, `I_1` and `I_1 + η I_0` with explicit remainders, all proved from
 integral forms.
 
-For Paper A, the growing-distance all-bin leading term is formalized, but its higher-order
-expansion is not. The fixed-edge crossing expansion and the Laguerre-root asymptotics are not
-formalized, even their leading limits. Only the finite edge results and conditional rational
-coefficient algebra listed above are in Lean. The spatial crossing window for both boundary
-conditions and the domain-wall proposition are also absent.
+For Paper A, the spatial crossing window for both boundary conditions and the domain-wall
+proposition are absent.
 
 The remaining omissions in Paper A include the infinite chain behind `ξ(J)`, the complete sign
 remark, the fixed-magnetization corollary as stated, and the uniform local law. `PaperA/MAP.md` gives the

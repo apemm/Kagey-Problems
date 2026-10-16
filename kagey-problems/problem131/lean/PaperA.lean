@@ -27,6 +27,8 @@ import PaperA.BesselAsymptotics
 import PaperA.PeriodicCrossing
 import PaperA.PeriodicExpansion
 import PaperA.IsingDictionary
+import PaperA.AllbinExpansion
+import PaperA.EdgeLaguerre
 
 /-!
 # Paper A (`paperA/problem131.tex`), root module
