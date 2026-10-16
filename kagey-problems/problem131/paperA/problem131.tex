@@ -38,6 +38,9 @@
 \newcommand{\sL}{\mathord{-}}
 % the Bessel factor E(z) of Lemma 3.6
 \newcommand{\cE}{\mathcal E}
+% Zenodo DOI of the release named in the data availability statement, for
+% example 10.5281/zenodo.1234567. Left empty, the statement omits it.
+\def\zenodoDOI{}
 
 \title{Uniform Bessel bounds for magnetization crossings\\ in finite Ising chains}
 \author{Arjun Pemmasani\\[2pt]
@@ -52,9 +55,9 @@
 In a finite zero-field Ising chain, the all-up configuration and zero
 magnetization become equally likely at a single coupling. This crossing has
 recently been described as a thermal transition of the finite chain, an
-analogue of a first-order transition temperature, and approximated by an
-analytic estimate and a numerical fit. We find its asymptotics, with explicit
-constants, for free and for periodic ends. The coupling at the crossing grows
+analogue of a first-order transition temperature, and estimated by an
+approximate formula and a numerical fit. We prove its asymptotics, with
+explicit constants, for free and for periodic ends. The coupling at the crossing grows
 like half the logarithm of the length of the chain, minus half the logarithm
 of that logarithm. So the correlation length at the crossing is a vanishing
 fraction of the chain. Periodic ends lower the coupling at the crossing by an
@@ -65,12 +68,12 @@ magnetization as the position of a persistent random walk and compare its
 central probability with a modified Bessel function, with a relative error
 bound that is explicit for every length. For free ends this traps the crossing
 in an explicit interval at every length. The proof is analytic for long chains
-and uses exact integer arithmetic for short ones. We also locate, for each
-smaller magnetization, the coupling at which it becomes as likely as full
-magnetization.
+and uses exact integer arithmetic for short ones. For free ends we also
+locate, for each smaller magnetization, the coupling at which it becomes as
+likely as full magnetization.
 \end{abstract}
 
-\noindent\textbf{Keywords:} exact results; persistence; stochastic processes.
+\noindent\textbf{Keywords:} exact results; rigorous results in statistical mechanics; stochastic processes.
 
 \noindent\textbf{MSC2020:} 82B20; 60J10; 60F05; 60G50; 33C10.
 
@@ -118,8 +121,8 @@ for $p>p_N$ the ends are. In terms of the coupling, the crossing is at
 $J=\frac12(\log N-\log\log N)+O(\log\log N/\log N)$ for free and for periodic
 ends, and the correlation length there is about $N/(2\log N)$
 (Corollary~\ref{cor:couplings}). The approximations of~\cite{stepanyan2024}
-have no $\log\log N$ term, and this term explains the slope of their numerical
-fit (Table~\ref{tab:couplings}).
+have no $\log\log N$ term, and this term explains why the slope of their
+numerical fit is below $\frac12$ (Table~\ref{tab:couplings}).
 
 The crossing lies between two regimes in which the law is well understood.
 When $\tau=N(1-p)$ stays bounded, the walk is close to the telegraph process and
@@ -207,6 +210,22 @@ as $z\to\infty$, for $\nu=0,1$.
 We write $f\sim g$ if $f/g\to1$. Each $O(\cdot)$ comes with the parameters it
 is uniform in, and $O_a(\cdot)$ means that the constant may depend on $a$.
 
+\paragraph{Ising dictionary.} Sections~\ref{sec:exact} to~\ref{sec:allbin}
+are written in the variables of the walk, and they translate as follows.
+Bin $k$ is magnetization $X_N=2k-N$, so the endpoints are full magnetization
+$\pm N$ and the middle bin is zero magnetization (magnetization $\pm1$ for
+odd $N$). A switch is a domain wall, and its odds $u=e^{-2J}$ are the
+Boltzmann factor of one wall. The crossing of bin $k$ is the coupling
+$J_{a,b}=-\frac12\log u_{a,b}$ at which magnetization $a-b$ and
+magnetization $N$ are equally likely, and at the center it is
+$J_N^{\mathrm F}=-\frac12\log u_N$. The correlation length of the infinite
+chain is $\xi(J)=-1/\log\tanh J$, and $\tanh J=(1-u)/(1+u)$, so
+$N/\xi=N\log\frac{1+u}{1-u}=2Nu(1+O(u^2))$. Since $\tau=Nu/(1+u)$, this gives
+$\tau=\frac N{2\xi}(1+O(u))$. In words, the switching scale is half the
+length of the chain measured in correlation lengths. It is exactly the
+scaling variable $\zeta=N(1-\tanh J)/2$ of Antal, Droz and
+R\'acz~\cite{antal2004} (we keep the letter $\zeta$ for $\zeta_N$ below).
+
 \subsection{Main results}
 
 \paragraph{The coupling at the crossing.} In Ising terms the free central
@@ -247,7 +266,10 @@ says that
 \zeta_N+\frac1{8\zeta_N}-\varepsilon_N<z_N<\zeta_N+\frac1{8\zeta_N}
 \qquad\text{for every }N\ge2.
 \]
-Note that $\varepsilon_N\to0$. For $N\ge175$ the proof is analytic. For
+Note that $\varepsilon_N\to0$. In terms of the coupling this traps
+$J_N^{\mathrm F}$ between $\frac12\log(N/y-1)$ at
+$y=\zeta_N+\frac1{8\zeta_N}$ and at $y=\zeta_N+\frac1{8\zeta_N}-\varepsilon_N$
+(Corollary~\ref{cor:every-n}(a)). For $N\ge175$ the proof is analytic. For
 $2\le N\le174$ we decide the sign of $S_N-1$ at two rationals, one on each side
 of the root, in exact integer arithmetic, and the Lean kernel repeats this
 check. The theorem has two simpler consequences. With $c_0$ as above, the
@@ -308,12 +330,21 @@ Their criterion already gives the crossing of the bins next to the edges
 For the Ising chain, Antal, Droz and R\'acz~\cite{antal2004} give the
 magnetization law at a fixed scale $\tau$ under several boundary conditions, and
 Dantchev and Rudnick~\cite{dantchev2022} give exact free and periodic
-coefficients. The fixed-$\tau$ scaling law of Antal, Droz and R\'acz already
-predicts the central crossing. If one evaluates it at $\tau$ of order $\log N$
-(a regime in which it is not proved), its endpoint atom and its density at zero magnetization balance at a value $z$ of $\tau$ with
-$z+\frac12\log z=L+c_0+1/(8z)+O(z^{-2})$, which is the crossing equation of
-Proposition~\ref{prop:crossing-eq} without its remainder. What we add is a
-proof in this regime, with explicit bounds, and the crossing at every $N$.
+coefficients. The scaling variable of Antal, Droz and R\'acz is our $\tau$,
+and their fixed-$\tau$ scaling law already predicts the central crossing if
+one evaluates it at $\tau$ of order $\log N$ (a regime in which it is not
+proved). In that law the magnetization per spin has a density, and
+neighboring bins are $2/N$ apart. So the middle bin and an endpoint balance
+when the endpoint atom $e^{-\tau}/2$ equals $2/N$ times the density at zero
+magnetization, which is $\frac12\tau e^{-\tau}(I_0(\tau)+I_1(\tau))$
+by~\cite[Eq.~(47)]{antal2004}. This gives $\tau(I_0(\tau)+I_1(\tau))=N/2$,
+which is the equation $F(x_B)=h$ of the Bessel root of
+Theorem~\ref{thm:bessel}(ii) with $\tau=2x_B$. Its root $z$ satisfies
+$z+\frac12\log z=L+c_0+1/(8z)+O(z^{-2})$, the crossing equation of
+Proposition~\ref{prop:crossing-eq} without its remainder. So the scaling law
+gives the Bessel root. What we add is a proof that the Bessel root is the
+crossing up to a relative error $O(L/N)$ in the odds, with explicit bounds
+at every $N$, and the bracket of Theorem~\ref{thm:every-n}.
 Stepanyan et~al.\@~\cite[Section~III.B]{stepanyan2024} study two crossings of
 the periodic chain as thermal transitions. In the first, the all-up
 configuration and magnetization $N-2$ (one flipped spin) are equally likely
@@ -337,31 +368,33 @@ Aside from Remark~\ref{rem:sign}, which is computer-assisted throughout, the
 proofs use two computations, namely the integer certificates for $N\le174$ in
 Theorem~\ref{thm:every-n} (Step~4) and Proposition~\ref{prop:crossing-eq}, and
 the evaluation at $N=2774$ in Corollary~\ref{cor:every-n}(d). Each one is
-described where it is used. The scripts are standard-library
-Python. They check the exact law, the orderings, the Bessel bounds, the
-asymptotic formulas and the couplings of Table~\ref{tab:couplings}, and where
-possible each reported number is computed in two independent ways.
+described where it is used. The scripts are Python, and all but one use only
+the standard library. They check the exact law, the orderings, the Bessel
+bounds, the asymptotic formulas and the couplings of Table~\ref{tab:couplings},
+and where possible each reported number is computed in two independent ways.
+For instance, the couplings of Table~\ref{tab:couplings} come from the run
+polynomials and again from the transfer matrix of the chain (with NumPy), and
+the two agree to $10^{-12}$.
 
 Many of the results are formalized in Lean~4, in the folder
 \nolinkurl{kagey-problems/problem131/lean/PaperA}. This includes
 Theorem~\ref{thm:every-n} for all $N\ge2$. For $N\le174$ the Lean kernel checks
 the same certificates as Step~4 of its proof, with rational bounds on $\zeta_N$
-that Lean proves itself. Only the standard axioms are used. Not formalized are
-Proposition~\ref{prop:crossing-eq}, Corollary~\ref{cor:couplings}, the
-remarks, and the terms after the leading one in the asymptotic results. The file \nolinkurl{MAP.md} in that
-folder gives the Lean theorem for each result, or says that there is none.
-
-\paragraph{Data and code availability.} Everything is in the folder
-\nolinkurl{kagey-problems/problem131} of
-\url{https://github.com/apemm/Kagey-Problems}, at the release
-\nolinkurl{paperA-arxiv-v2}. To rerun the checks, run
-\texttt{python -B verify\_all.py -{}-paper a} in that folder. The file
-\nolinkurl{SUPPLEMENT.md} says what each script does. Theorem~\ref{thm:every-n}'s
-certificates are listed in \nolinkurl{paperA/data/every_n_certificates.csv},
-and \nolinkurl{paperA/verify_ising_coupling.py} prints
-Table~\ref{tab:couplings}.
-Any number in Sections~\ref{sec:middle} and~\ref{sec:periodicwindow} that no
-script prints is listed in \nolinkurl{paperA/data/quoted_values.txt}.
+that Lean proves itself. Only the standard axioms are used. The following are
+not formalized. In Section~\ref{sec:middle}, the coupling form in
+Corollary~\ref{cor:every-n}(a), parts (b) to (d) of
+Corollary~\ref{cor:every-n} and Proposition~\ref{prop:crossing-eq}. In
+Section~\ref{sec:allbin}, Lemma~\ref{lem:inversion},
+Theorem~\ref{thm:allbin-expansion} beyond its leading term, the limit
+statements of Theorems~\ref{thm:edge-laguerre} and~\ref{thm:edge-matching}
+(Lean has the algebra of the coefficients in the first and the bound
+\eqref{eq:laguerre-bessel-bound} of the second), and
+Corollary~\ref{cor:boundary-layer}. In Section~\ref{sec:periodicwindow},
+Theorem~\ref{thm:periodic-crossing} (even its leading term),
+Theorem~\ref{thm:critical-window} and Corollary~\ref{cor:couplings}. Also not
+formalized are the remarks and the numbers in the tables. The file
+\nolinkurl{MAP.md} in that folder gives the Lean theorem for each result, or
+says that there is none.
 
 \paragraph{Acknowledgments.} I thank Peter Kagey for posing the problem. I
 used two AI tools in this work, Claude Opus 5.5 (Anthropic, through Claude
@@ -398,6 +431,20 @@ responsibility.
 
 \appendix
 \input{app_every_n.tex}
+
+\section*{Data availability statement}
+
+All code and data are in the folder \nolinkurl{kagey-problems/problem131} of
+\url{https://github.com/apemm/Kagey-Problems}, at the release
+\nolinkurl{paperA-arxiv-v3}\ifx\zenodoDOI\empty\else, archived at
+\url{https://doi.org/\zenodoDOI}\fi. To rerun the checks, run
+\texttt{python -B verify\_all.py -{}-paper a} in that folder. The file
+\nolinkurl{SUPPLEMENT.md} says what each script does. The certificates of
+Theorem~\ref{thm:every-n} are listed in
+\nolinkurl{paperA/data/every_n_certificates.csv}, and
+\nolinkurl{paperA/verify_ising_coupling.py} prints Table~\ref{tab:couplings}.
+Any number in Sections~\ref{sec:middle} and~\ref{sec:periodicwindow} that no
+script prints is listed in \nolinkurl{paperA/data/quoted_values.txt}.
 
 \begin{thebibliography}{99}\small\setlength{\baselineskip}{11pt}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}
 
