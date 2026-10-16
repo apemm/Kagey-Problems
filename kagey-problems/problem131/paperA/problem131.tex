@@ -70,8 +70,12 @@ explains why a fit on chains of moderate length finds a slope below one half.
 At the crossing the central magnetization carries about as many domain walls
 as the logarithm of the length, so the crossing sharpens only like the inverse
 logarithm of the length, not like the inverse length as at a first-order
-transition. For free ends we also trap the crossing in an explicit interval at
-every length.
+transition. In a magnetic field of fixed size the comparison moves to the
+edge of the row, and for long chains the two transitions of the finite chain
+become one
+exactly when the field exceeds half the logarithm of two, in units of the
+temperature. For free ends we also trap the crossing in an explicit interval
+at every length.
 \end{abstract}
 
 \noindent\textbf{Keywords:} exact results; finite-size scaling; rigorous results in statistical mechanics.
@@ -348,6 +352,12 @@ with one bin instead of the whole disordered band. The probability that the
 chain is fully ordered is $\frac12$ at a coupling larger than
 $J_N^{\mathrm F}$ by $\frac12\log\log N+O(1)$ (Remark~\ref{rem:ordered}).
 
+\paragraph{A magnetic field.} In a field $\mathcal B>0$ (in units of the
+temperature) both transitions of~\cite{stepanyan2024} come from the edge of
+the row, at $J=\frac14\log N+O(1)$, with explicit limits for the constant,
+and they merge exactly when $\mathcal B\ge\frac12\log2$, for free and for
+periodic ends (Theorem~\ref{thm:field}).
+
 We prove these results in Sections~\ref{sec:exact} to~\ref{sec:periodicwindow},
 in this order. Section~\ref{sec:verify} lists what was computed and what is in
 Lean, and the appendix has the longer proofs of Section~\ref{sec:middle}.
@@ -470,12 +480,11 @@ when the mean number of domain walls grows with $N$. The approach extends to
 the $d$-state Potts chain~\cite{paperB}. Three questions are open. The
 bracket of Theorem~\ref{thm:every-n} is proved only for free ends and for the
 level $1$ of Remark~\ref{rem:convention}, and the same method should give it
-for periodic ends and for other levels. In a magnetic field the two letters
-of the walk get different weights, and the run polynomial becomes a
-polynomial in two variables. Stepanyan et~al.\@~\cite{stepanyan2024} find
-that their two transitions merge above a field of about
-$2J\log2/\log(N/2)$, and the biased walk is the natural route to a proof. We
-do not treat the field here.
+for periodic ends and for other levels. In a field of fixed size
+Theorem~\ref{thm:field} settles where the transitions are and when they
+merge, but a field that shrinks with $N$, which moves the comparison from the
+edge back to the middle of the row, is open. So is a quantitative rate in
+Theorem~\ref{thm:field}.
 
 \section{Verification}\label{sec:verify}
 
@@ -515,8 +524,8 @@ statements of Theorems~\ref{thm:edge-laguerre} and~\ref{thm:edge-matching}
 equations, and for the second it proves the bound
 \eqref{eq:laguerre-bessel-bound}). In Section~\ref{sec:periodicwindow},
 Theorem~\ref{thm:periodic-crossing} (even its leading term),
-Theorem~\ref{thm:critical-window}, Corollary~\ref{cor:couplings} and
-Proposition~\ref{prop:walls}. Also not
+Theorem~\ref{thm:critical-window}, Corollary~\ref{cor:couplings},
+Proposition~\ref{prop:walls} and Theorem~\ref{thm:field}. Also not
 formalized are the remarks and the numbers in the tables. The file
 \nolinkurl{MAP.md} in that folder gives the Lean theorem for each result, or
 says that there is none.
@@ -526,10 +535,12 @@ Collection~\cite{kagey131} asks for this crossing for a Galton board whose
 ball keeps its direction with probability $p$.
 
 \paragraph{Use of AI tools.} I used AI tools in this work, including Claude Opus 5.5 (Anthropic, through Claude
-Code, in September and October 2026) and GPT-6 Astra (OpenAI). Except for the
+Code, in September and October 2026) and GPT-6 Astra (OpenAI, also through
+Codex). Except for the
 proofs of Theorem~\ref{thm:every-n}, Corollary~\ref{cor:couplings},
-Proposition~\ref{prop:walls} and Remarks~\ref{rem:free-energy},
-\ref{rem:convention} and~\ref{rem:ordered}, I wrote
+Proposition~\ref{prop:walls}, Theorem~\ref{thm:field} and
+Remarks~\ref{rem:free-energy}, \ref{rem:convention} and~\ref{rem:ordered},
+I wrote
 the proofs and derivations of this paper by hand, without AI assistance, before
 any revision. I then used Claude Opus 5.5 to check everything I had written for
 typos and for statements that were technically wrong. It found a fair number of
@@ -543,15 +554,16 @@ proof that uses the Bessel bounds of Lemma~\ref{lem:bessel-bounds}. I rechecked
 and rederived its proof by hand.
 In a later revision, which recast the introduction in terms of the Ising
 chain, the model proposed Corollary~\ref{cor:couplings} and the comparison in
-Table~\ref{tab:couplings}, and wrote their proofs and the script that computes
-the table. I checked both by hand. I also checked the proofs, except those of
+Table~\ref{tab:couplings}, drafted their proofs and wrote the script that
+computes the table. I rewrote these proofs by hand. I also checked the proofs, except those of
 Corollary~\ref{cor:couplings}, with GPT-6 Astra, which found nothing beyond the
 earlier check.
 In the revision for this journal the model proposed
 Proposition~\ref{prop:walls}, Remarks~\ref{rem:free-energy},
-\ref{rem:convention} and~\ref{rem:ordered} and Section~\ref{sec:discussion},
-and wrote their proofs. It also drafted the comparisons with the literature
-added in that revision and the revised figures and their scripts.
+\ref{rem:convention} and~\ref{rem:ordered}, Theorem~\ref{thm:field} and
+Section~\ref{sec:discussion}, and drafted their proofs, the comparisons with
+the literature added in that revision, and the revised figures and their
+scripts. I wrote every proof in this paper in its final form by hand.
 
 The Lean~4 formalization in
 \nolinkurl{kagey-problems/problem131/lean/PaperA}, including its later
@@ -561,9 +573,10 @@ were also written by the model, which cross-checked them against each other.
 Lastly, I used it for literature search, namely to find and verify sources
 beyond the ones I had first checked on my own.
 
-I later used Codex (OpenAI) to audit the paper and its sources, implement
-corrections and add outward interval checks to the Python certificates. The
-new Python checks were tested against exact rational calculations.
+I later used GPT-6 Astra through Codex (OpenAI) to review the paper and its
+sources and to revise it, including outward interval checks for the Python
+certificates. The new Python checks were tested against exact rational
+calculations.
 
 All mathematical claims, proofs and computations in this paper are my
 responsibility.
