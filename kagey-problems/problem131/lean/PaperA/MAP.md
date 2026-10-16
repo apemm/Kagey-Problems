@@ -378,8 +378,7 @@ Different normalizations.
     `log a`, exactly as in `eq:allbin-leading`. The expansion of the theorem itself is in
     `ℓ = log A` (`allbin_expansion`), and `a/2 ≤ A ≤ a`, so the two leading terms agree. The
     consequences displayed after the theorem, `eq:allbin-growing-edge` and the case
-    `a/N → α`, are not stated in Lean.
-    They are now stated, for sequences of bins, as `allbin_growing_edge` and `allbin_fixed_fraction`
+    `a/N → α`, are stated for sequences of bins as `allbin_growing_edge` and `allbin_fixed_fraction`
     in `AllbinConsequences`. The second one allows `0 < α < 1` (the paper has `0 < α ≤ 1/2`) and
     does not need `a ≤ N - a`, by the symmetry `p_{a,b} = p_{b,a}`.
 
@@ -406,7 +405,7 @@ Different proofs of the same statement.
     `w̄` and `w̄'` (named `W` and `W'` in Lean, with `U` for the paper's `Y`), but with other
     constants. It has `Y/N ≤ 0.0232`, `Y²/N ≤ 0.0933`,
     `Y³/N ≤ 0.376` and `ζ(ζ+1)/N ≤ 0.1148` in place of `0.023135`, `0.093262`, `0.375960` and
-    `0.114776`, it gets them from `N ≥ 174.25 e^{ζ_N - 4}` and not from the monotonicity of
+    `0.114777`, it gets them from `N ≥ 174.25 e^{ζ_N - 4}` and not from the monotonicity of
     `Y^k/n(ζ)`, it has no bound on `U⁴/N`, and it uses
     `log(1-x) ≥ -(x + x²/2 + x³/(1-x))`. So the decimal constants of Appendix A are not the ones
     Lean checks. The theorem is the same.
@@ -478,7 +477,7 @@ Partial coverage.
 38. `thm:periodic-crossing`, `cor:couplings`. Here `L = log N`. The `O` terms of
     `eq:periodicasym`, `eq:boundaryshift` and `eq:isingtemperature` are bounds `C (log L)²/L²`
     that hold for all large `N`, with a constant `C` that Lean shows exists but does not compute.
-    The paper has only `o(1/log N)` in `eq:boundaryshift`, so Lean states more there. The
+    The paper now states the same `O((log L)²/L²)` in `eq:boundaryshift`. The
     constants of Corollary 5.5 are explicit (28, 2 and 4), and the threshold for "large `N`" is
     not computed. The couplings are `J = -(1/2) log u` at the crossings and `ξ(J)` is
     `-1/log tanh J`, as in the paper. Lean does not use the Taylor form of `log tanh` near `J = ∞`
