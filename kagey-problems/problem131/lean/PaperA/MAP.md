@@ -2,7 +2,7 @@
 
 This file maps covered statements of Paper A (`paperA/problem131.tex` and the files it inputs)
 to Lean declarations and records partial coverage and omissions. The library `PaperA` has root
-`PaperA.lean`, which imports all 23 modules in `PaperA/` (24 modules including the root), in
+`PaperA.lean`, which imports all 24 modules in `PaperA/` (25 modules including the root), in
 namespace `Kagey131`. It uses Lean 4 v4.33.1 and Mathlib v4.33.1. Every theorem listed here is
 proved without `sorry`, `admit` or new axioms, and `#print axioms` on each of them reports only
 `propext`, `Classical.choice` and `Quot.sound` (see `build-log.txt`).
@@ -65,6 +65,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `EveryNSign` | the rational threshold certificate and the crossing above ζ_N for every N ≥ 2774 |
 | `EveryNAsymptotics` | the asymptotic conclusions of Corollary (b) and (c), with explicit constants, and the conversion between `z_N` and `N u_N` |
 | `CrossingEquation` | Proposition `prop:crossing-eq` for every `N ≥ 2`, analytic for `N ≥ 175` and by rational certificates below |
+| `BoundaryLayer` | Corollary `cor:boundary-layer`, the moving boundary layer, for arbitrary sequences `v_N` |
 | `Tables` | identities between numerator tables and recursively defined rook and Mathar sequences; retained for the tables note |
 
 ## Section 1, setting and notation
@@ -149,6 +150,9 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `eq:edge-exact-series` | (28) | the exact series of `S_{a,b}` in `y = b u²` | `edge_exact_series` | `Edge` |
 | `thm:edge-laguerre` | 4.8 | in part, rational algebra conditional on the coefficient equations, yielding the formal coefficients `d_1`, `d_2`, `γ`, `-1` and `-(1 + c²)`; no specialization to the actual real crossing or its asymptotics | `edge_first_coefficient`, `edge_second_coefficient`, `edge_third_coefficient`, `universal_edge_correction`, `edge_probability_correction` | `EdgeExpansion` |
 | `thm:edge-matching`, `eq:laguerre-bessel-bound` | 4.9, (30) | in part, only `0 ≤ 1 - a H_a(x²/a)/(x I_1(2x)) ≤ x²/(2a)` | `edge_matching` | `UniformBessel` |
+| `cor:boundary-layer`, `eq:boundary-layer-width` | 4.10, (32) | for any sequence with `v_N > 0` eventually, `Ω_N = 1/(√N v_N) → ∞` and `log Ω_N/(N v_N) → 0`: `ℒ_N ~ Ω_N² log² Ω_N`, where `ℒ_N` counts the bins `1 ≤ k ≤ ⌊N/2⌋` with `P_N(k) < P_N(0)` at `p = 1/(1+v_N)` | `boundary_layer`, `layerCount`, with `layer_eventually`, `layer_core`, `layerCount_bounds`, `below_iff`, `uab_anti` | `BoundaryLayer` |
+| `cor:boundary-layer` | 4.10 | the case `v_N = N^{-κ}`, `1/2 < κ < 1`: `ℒ_N ~ (κ - 1/2)² N^{2κ-1} log² N` | `boundary_layer_power` | `BoundaryLayer` |
+| `cor:boundary-layer` | 4.10 | eventually, the number of interior bins `1 ≤ k ≤ N-1` with `P_N(k) < P_N(0)` is `2ℒ_N` | `boundary_layer_total`, with `total_eq_two_layer` | `BoundaryLayer` |
 
 ## Section 5, periodic boundaries
 
@@ -347,6 +351,10 @@ Partial coverage.
     `x - 1 ≥ log x ≥ 1 - 1/x` already gives both remainder bounds at the bracket ends. It
     checks `L/2 ≤ z_N ≤ L` with the Taylor bounds for `exp` of `EveryN` at two grid points `T`
     and `T'` per row. The paper uses the outward-interval Python certificates instead.
+37. `cor:boundary-layer`. Lean follows the paper's sandwich with explicit choices. For
+    `θ ∈ (0, 1/2]` it applies `allbin_leading` with `ε = θ/4` at `a = ⌊(1-θ)d_N⌋` and with
+    `ε = θ/10` at `c = ⌈(1+θ)d_N⌉`, where `d_N = Ω_N² log² Ω_N`, and it uses
+    `v_N² N d_N = log² Ω_N`. The positivity of `v_N` is assumed only eventually.
 
 ## Not in Lean
 
@@ -361,7 +369,7 @@ listed above do not supply these omitted limit statements or their error bounds.
   (`thm:allbin-expansion`) beyond its leading term as `a → ∞`, uniformly in `b ≥ a`; the entire
   fixed-edge expansion of Theorem 4.8 (`thm:edge-laguerre`), including its leading limit; the
   Laguerre-root asymptotics `eq:edge-matching-expansion` of Theorem 4.9 (`thm:edge-matching`),
-  including their leading term; and Corollary 4.10 (`cor:boundary-layer`). The finite bound
+  including their leading term. The finite bound
   `eq:laguerre-bessel-bound` of Theorem 4.9 is in Lean.
 * Section 5. Theorem 5.2 (`thm:periodic-crossing`), even its leading term, Theorem 5.3
   (`thm:critical-window`) for both free and periodic boundaries, Corollary 5.4 (`cor:couplings`),
