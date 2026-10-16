@@ -47,7 +47,7 @@ coupling and correlation-length corollary.
   `verify_certified_bounds.py` replays them from the stored rational endpoints, without
   regenerating roots or running the large parameter sweeps. `test_certified_decimal.py`
   checks the arithmetic against independent exact rational calculations.
-- `verify_all.py` runs the checks.
+- `verify_all.py` runs the checks, and `COMPUTATION.md` lists the commands, dependencies and the source of each table and figure.
 - `data/` holds the recorded output of the checks and the ledgers `data/ledger_every_n.md` and
   `data/ledger_llt.md`. The first predictions for Papers A and B are in `../ledger.md`.
 - `../lean/PaperA/` holds the Lean 4 proofs. `../lean/PaperA/MAP.md` maps covered statements to
