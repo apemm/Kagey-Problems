@@ -635,7 +635,7 @@ Partial coverage.
     then `u_{49806,N-49806} < v_N < u_{49805,N-49805}`, and Proposition `prop:allbin-order`
     (`layerCount_bounds`) gives `𝓛_N = 49805`. For `f`, Lean states the value with `N` in place
     of `n(ζ_N)`, which is equal, as the paper says. `₂F₁(-a,-b;1;z)` is defined as the terminating
-    sum `∑_n C(a,n) C(b,n) zⁿ` (`hyp2F1neg`). The values `10.1` and `0.8` percent in the same
+    sum `∑_n C(a,n) C(b,n) zⁿ` (`hyp2F1negMin`, which is `hyp2F1neg` of `SignCorrection` at `a = b`). The values `10.1` and `0.8` percent in the same
     remark are bounded in `SignCorrection` (`sign_correction_numbers`). The certified margins of the Python scripts (`0.03319`,
     `0.08559`, `1.65 × 10⁻⁵`) and the proof constants of Appendix A are not in Lean.
 
