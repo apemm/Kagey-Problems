@@ -48,6 +48,10 @@ import PaperA.FreeEnergy
 import PaperA.LevelTheta
 import PaperA.WindowBound
 import PaperA.FieldWeights
+import PaperA.TableValuesBessel
+import PaperA.TableValuesField
+import PaperA.TableValuesWalls
+import PaperA.TableValuesExtra
 
 /-!
 # Paper A (`paperA/problem131.tex`), root module

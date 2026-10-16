@@ -2,7 +2,7 @@
 
 This file maps covered statements of Paper A (`paperA/problem131.tex` and the files it inputs)
 to Lean declarations and records partial coverage and omissions. The library `PaperA` has root
-`PaperA.lean`, which imports all 50 modules in `PaperA/` (51 modules including the root), in
+`PaperA.lean`, which imports all 54 modules in `PaperA/` (55 modules including the root), in
 namespace `Kagey131`. It uses Lean 4 v4.33.1 and Mathlib v4.33.1. Every theorem listed here is
 proved without `sorry`, `admit` or new axioms, and `#print axioms` on each of them reports only
 `propext`, `Classical.choice` and `Quot.sound` (see `build-log.txt`).
@@ -93,6 +93,10 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `TableValuesEveryN` | the values of the table `tab:every-n`, by kernel-checked certificates |
 | `TableValuesCouplings` | the values of the table `tab:couplings`, by kernel-checked certificates |
 | `TableValuesText` | decimals displayed in the text, by kernel-checked certificates |
+| `TableValuesBessel` | the ratios `u_B/u_N` quoted in Section 3, with rational bounds on the Bessel root `x_B` from the series of `I_0` and `I_1` |
+| `TableValuesField` | the examples after Theorem `thm:field`: the minimizing `a`, `y_*(𝓑)` and `N (u_N^{(≥2)})²` at `N = 10⁴`, with exact rational forms of `H_a`, `S_{a,b}` and `S^P_{N,a}` and an explicit threshold for the tail bound |
+| `TableValuesWalls` | the numbers quoted in Section 5 on domain walls (`𝒲_N(u_N) - z_N`, `1/2 + 1/(8z_N)`, `1/(2𝒲_N(u_N))`), the mean domain length `l_d` and the window profile errors of Figure `fig:window` |
+| `TableValuesExtra` | further numbers in the text: the layer width `𝓛_N = 49805` of Figure `fig:layer`, `f(ζ_2774) - 1 > 2.0 × 10⁻⁴` and `f(ζ_2773) < 1` in the proof of Corollary `cor:every-n`(d), and the `9.5` percent of Remark `rem:sign-correction` |
 
 ## Section 1, setting and notation
 
@@ -262,6 +266,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 
 A decimal written with `...` is a truncation and is stated as two bounds. The others are stated
 with `RoundsTo` (correct rounding). All are in the module `TableValuesText`.
+Rows that name another module in the column Where are in that module.
 
 | Where | Number | Statement | Lean |
 | --- | --- | --- | --- |
@@ -277,6 +282,16 @@ with `RoundsTo` (correct rounding). All are in the module `TableValuesText`.
 | Section 5 | `0.002`, `0.171`, `0.338` | `|main terms - J_N^P|`, `|(2L - 1)/5 - J_N^P|`, `|0.3864 L - 0.21055 - J_N^P|` at `N = 10⁵` | `tv_off_by_5` |
 | caption of `tab:couplings` | `0.030` | `(log 2)/(2 log N)` at `N = 10⁵` | `tv_shift_100000` |
 | `rem:ordered` | `1.046`, `1.330` | `J_ord - J_N^F` at `N = 10³` and `N = 10⁵`, with `J_ord = -(1/2) log(2^{1/(N-1)} - 1)` | `tv_Jord_3`, `tv_Jord_5` |
+| after `rem:sign` (module `TableValuesBessel`) | `0.9761`, `0.9864`, `0.9924`, `0.99579`, `0.99769`, `0.99874` | `u_B/u_N` at `N = 100, 200, 400, 800, 1600, 3200`, with `u_B = x_B/h`, `h = N/2` and `x_B = Groot 1 (h/2)` the root of `F(x_B) = h` | `tv_uB_div_uN_100`, `tv_uB_div_uN_200`, `tv_uB_div_uN_400`, `tv_uB_div_uN_800`, `tv_uB_div_uN_1600`, `tv_uB_div_uN_3200`, with `tv_xB_N`, `tv_uN_N`, `lt_Groot_of_cert`, `Groot_lt_of_cert` |
+| after `thm:field` (module `TableValuesField`) | `11`, `4`, `2`, `2` and `0.757`, `1.287`, `1.764`, `2.972` | for `𝓑 = 0.1, 0.2, 0.3, 0.5`: `y_*(𝓑) = y_{a⋆}(𝓑)` with `a⋆ = 11, 4, 2, 2`, `y_{a⋆}(𝓑) < y_a(𝓑)` for every other `a ≥ 2`, and the rounding of `y_*(𝓑)` | `tv_yStar_01`, `tv_yStar_02`, `tv_yStar_03`, `tv_yStar_05`, with `yStar_eq_of_cert`, `lt_yField_of_cert`, `yField_lt_of_cert`, `tail_explicit`, `tv_exp_field_n` |
+| after `thm:field` (module `TableValuesField`) | `0.758`, `1.288`, `1.764`, `2.973` and `0.741`, `1.266`, `1.738`, `2.939` | `N (u_N^{(≥2)})²` at `N = 10⁴` for periodic and free ends, `u_N^{(≥2)} = fieldRootGe2` the minimum over all bins `2 ≤ a ≤ N-1` | `tv_fieldGe2_periodic_01`, `tv_fieldGe2_periodic_02`, `tv_fieldGe2_periodic_03`, `tv_fieldGe2_periodic_05`, `tv_fieldGe2_free_01`, `tv_fieldGe2_free_02`, `tv_fieldGe2_free_03`, `tv_fieldGe2_free_05`, with `fieldRootGe2_bounds`, `lt_fieldRoot_of_cert`, `fieldRoot_lt_of_cert`, `fieldRatio_tail_bound` |
+| after `prop:walls` (module `TableValuesWalls`) | `0.5191`, `0.5166`, `0.5132` and `0.5224`, `0.5162`, `0.5126` | `𝒲_N(u_N) - z_N` and `1/2 + 1/(8z_N)` at `N = 10³, 10⁴, 10⁵`, with `𝒲_N = wallMean` | `tv_walls_1000`, `tv_walls_10000`, `tv_walls_100000`, with `tv_wallMean_N`, `wallMean_uN_bounds`, `wallMean_uN`, `wallSum_le` |
+| `sec:walls` (module `TableValuesWalls`) | `0.061`, `0.048` | `1/(2𝒲_N(u_N))` at `N = 10⁴` and `N = 10⁵` | `tv_walls_10000`, `tv_walls_100000` |
+| `sec:walls` (module `TableValuesWalls`) | `9.27`, `31.21` | the mean domain length `l_d = ⟨N/(n_d + δ_{0,n_d})⟩` at `u = u_N^P`, `N = 20` and `N = 100`, where `n_d = 2r` has weight proportional to `C(N,2r) u^{2r}` | `tv_domainLength_20`, `tv_domainLength_100`, with `domainLength`, `domainLength_bounds`, `tv_uNP_20` |
+| caption of `fig:window` (module `TableValuesWalls`) | `0.12`, `0.08`, `0.06` | the relative error `|e^{-2} S^X_{N,N/2}(u^X_N + 2/N) - 1|` of the profile at `t = 2`, `y = 0`, against the limit `1`, at `N = 10⁴, 10⁶, 10⁸`, for free and for periodic ends | `tv_window_free_10000`, `tv_window_free_1000000`, `tv_window_free_100000000`, `tv_window_periodic_10000`, `tv_window_periodic_1000000`, `tv_window_periodic_100000000`, with `SN_ge_of_cert`, `SN_le_of_cert`, `perRatio_ge_of_cert`, `perRatio_le_of_cert`, `tv_uN_1e8`, `tv_uNP_1e8`, `tv_exp_neg2` |
+| caption of `fig:layer` (module `TableValuesExtra`) | `49805` | `𝓛_N` (`layerCount`) at `N = 10⁸` and `v_N = N^{-0.7}` | `tv_layer_width`, with `vLayer_bounds`, `Sab_lt_one_of_tail`, `one_lt_Sab_of_partial`, `layerCount_bounds` |
+| proof of `cor:every-n` (d) (module `TableValuesExtra`) | `2.0 × 10⁻⁴` | `f(ζ_2774) - 1 > 2/10⁴` and `f(ζ_2773) < 1`, with `f(ζ) = n(ζ)(1/(8ζ) - 1/(16ζ²))/(ζ(ζ+1))` and `n(ζ_N) = N` | `tv_fSign`, with `fSign`, `tv_zetaN_2774`, `tv_zetaN_2773` |
+| `rem:sign-correction` (module `TableValuesExtra`) | `9.5` percent | `100 (1 - ₂F₁(-200,-200;1;1/1600)/I_0(10))` rounds to `9.5` | `tv_hyp_percent`, with `hyp2F1neg`, `besselI0_two_mul_bounds` |
 
 ## Not in this paper, kept in the repository for the tables note
 
@@ -570,6 +585,60 @@ Partial coverage.
     all-down configuration holds for every `N ≥ 1`, and `allUp_most_likely_iff` takes `𝓑 > 0`
     and `N ≥ 3`, where `u^{(≥2)}_N` is defined.
 
+54. After `rem:sign`, the ratios `u_B/u_N` (module `TableValuesBessel`). The Bessel root is
+    `x_B = Groot 1 (h/2)`, the root of `G_1(x) = x(I_0(2x) + I_1(2x)) = h/2`, which is
+    `F(x_B) = h` (`central_root_bound`). Lean brackets `x_B` with width `10⁻¹⁵` by the first `30`
+    terms of the series of `I_0(2x) + I_1(2x)` at the two rational endpoints, with the geometric
+    bound `ρ = x²/31²` on the rest, and `u_N` with width `10⁻²⁵` as in difference 48. The rational
+    inequalities are checked by `decide +kernel`.
+
+55. After `thm:field`, the examples (module `TableValuesField`). The field is the real number
+    `1/10`, `1/5`, `3/10` or `1/2`, and `e^{2𝓑a}` is compared through `(e^{2𝓑})^a` with rational
+    bounds on `e^{2𝓑}` of width `10⁻²⁰`. For the limit, a separating rational `s` is chosen with
+    `H_{a⋆}(s) > e^{2𝓑a⋆}` and `H_a(s) < e^{2𝓑a}` for every `2 ≤ a < A`, `a ≠ a⋆`
+    (`A = 90, 41, 27, 18`); for `a ≥ A`, `y_a(𝓑) > s` follows from the limit `N → ∞` of
+    `fieldRatio_tail_bound` at `Y = s`. The value `y_{a⋆}(𝓑)` is bracketed with width `10⁻¹²`. At
+    `N = 10⁴` every bin `2 ≤ a < A` (`A ≤ 90`) is checked at a rational `u_l`, the bins
+    `A ≤ a ≤ N-1` are excluded by `fieldRatio_tail_bound` at `Y = N u_l²`, and the bin `a⋆`
+    gives the upper bound at `u_l + 10⁻¹⁵`. The threshold is explicit (`tail_explicit`): for
+    `0 < c ≤ 2𝓑`, `2√(Ya) ≤ Y/c + ca` and `e^E ≥ 1 + E + E²/2`. The polynomials are evaluated
+    exactly over `ℚ` (`HedgeQ`, `SabQ`, `perRatioQ`), with `C(n,k) = n(n-1)⋯(n-k+1)/k!`, and the
+    kernel checks them with `decide +kernel`. Lean does not prove that the minimizing bin at
+    `N = 10⁴` is `a⋆`, which the paper does not state.
+
+56. Section 5, the numbers of module `TableValuesWalls`. Since `S_N(u_N) = 1`,
+    `𝒲_N(u_N) = ∑_j j W_j u_N^j` (`wallMean_uN`), which increases in `u_N`. Lean bounds it
+    below by the first `2T` terms at the lower end of the bracket of `u_N` and above by the first
+    `2T` terms at the upper end and the geometric tail `ρ = (2T+1)(N-2)u/(4T²)`, from
+    `2T W_{j+1} ≤ (N-2) W_j` for `j ≥ 2T` (`T = 16, 19, 22`). The bounds on `z_N` are those of
+    difference 48. For `l_d` Lean takes the law of `n_d` stated in the paper,
+    `n_d = 2r` with weight proportional to `C(N,2r) u^{2r}` (`domainLength`), and does not derive
+    it from the periodic Ising weights; numerator and denominator increase in `u`, so the bracket
+    of `u_N^P` bounds `l_d`. At `y = 0` the bin of Theorem `thm:critical-window` is `k = N/2`, so
+    the profile at `t = 2` is `e^{-2} S_N(u_N + 2/N)` for free ends and
+    `e^{-2} S^P_{N,N/2}(u_N^P + 2/N)` for periodic ends, and its relative error against the
+    limit `e^{-2y²} = 1` is `|e^{-2} S - 1|`. Lean bounds `S` at the two ends of the bracket
+    shifted by `2/N` with the truncated sums of `TableValuesCore`, and `e²` with Taylor bounds.
+    Not certified, because the paper does not define them precisely enough: the least-squares
+    exponent `0.755` of `l_d` on `20 ≤ N ≤ 100` (over the even `N`, as the paper now says; in floating point the fit
+    gives `0.7555`, and over all integers `20 ≤ N ≤ 100` it gives `0.7557`), the local exponent `0.74` of
+    `N/log N` on that range (the local slope `1 - 1/log N` runs from `0.666` to `0.783` there;
+    the least-squares slope over the integers is `0.7400` and the secant slope is `0.733`), and
+    the bound `0.013` after Corollary `cor:boundary-layer` (the values of `N` plotted in panel
+    (b) of Figure `fig:layer` are not listed, and `𝓛_N` up to `N = 10¹²` would need about `10⁶`
+    bins per point).
+
+57. Module `TableValuesExtra`. For `𝓛_N` at `N = 10⁸`, Lean writes `v_N = N^{-0.7}` as
+    `(10⁸)^{-7/10}` (`Real.rpow`) and brackets it with width `10⁻²⁶` through `v_N^{10} = 10^{-56}`.
+    `S_{a,N-a}(v) < 1` at `a = 49805` is checked with the first `260` terms and the geometric
+    tail `ρ = (N-2)v/260`, and `S_{a,N-a}(v) > 1` at `a = 49806` with the first `260` terms;
+    then `u_{49806,N-49806} < v_N < u_{49805,N-49805}`, and Proposition `prop:allbin-order`
+    (`layerCount_bounds`) gives `𝓛_N = 49805`. For `f`, Lean states the value with `N` in place
+    of `n(ζ_N)`, which is equal, as the paper says. `₂F₁(-a,-b;1;z)` is defined as the terminating
+    sum `∑_n C(a,n) C(b,n) zⁿ` (`hyp2F1neg`). The values `10.1` and `0.8` percent in the same
+    remark are bounded in `SignCorrection` (`sign_correction_numbers`). The certified margins of the Python scripts (`0.03319`,
+    `0.08559`, `1.65 × 10⁻⁵`) and the proof constants of Appendix A are not in Lean.
+
 ## Not in Lean
 
 The following parts of the paper are not formalized. The finite results and conditional algebra
@@ -579,9 +648,12 @@ listed above do not supply these omitted limit statements or their error bounds.
   theorem; Lean has natural `α, β`) and the sentences that describe the expansions of Elliott,
   Temme, and Gil, Segura and Temme. In Remark 4.5 the statement about the misprint in Eq. (D.4)
   of Dantchev, Tonchev and Rudnick is about another paper, not a mathematical claim.
+  The number `9.5` percent in Remark 4.5 is certified (difference 57).
 * Appendix A. The outward-interval Python calculations (Lean has its own rational bounds for
   the results listed above).
 * The uniform local law (the local law note, not in Lean).
+* The decimals `0.755` and `0.74` of the fits in Section 5 (least-squares slopes, computed in
+  floating point) and `0.013` after Corollary `cor:boundary-layer`.
 
 ## Findings while checking
 
