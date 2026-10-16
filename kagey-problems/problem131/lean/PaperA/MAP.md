@@ -78,6 +78,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `Supplements` | smaller statements: Lemma `lem:clipped` over the reals and in product form, `ζ_N < 4` for `N ≤ 174`, `p_{a,b} = 2/3` only at `a = b = 1`, strict probability ordering, and `Snum` as the numerator |
 | `FixedMagnetization` | Corollary `cor:fixed-M`, the fixed-magnetization weight |
 | `DomainWalls` | Proposition `prop:walls`, the domain walls at the crossing |
+| `FullOrder` | Remark `rem:ordered`, full order against one bin |
 | `Tables` | identities between numerator tables and recursively defined rook and Mathar sequences; retained for the tables note |
 
 ## Section 1, setting and notation
@@ -198,6 +199,8 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `thm:critical-window`, `eq:criticalprofile` | 5.3, (38) | for free and periodic ends, for every `T, Y ≥ 0` and `ε > 0` there is `N₀` such that for all `N ≥ N₀`, `|t| ≤ T`, `|y| ≤ Y` and every integer `k` with `|k - (N/2 + yN/√(log N))| ≤ 1/2`, `|S^X_{N,k}(u_N^X + t/N) - e^{t-2y²}| ≤ ε` | `free_window_profile`, `periodic_window_profile`, with `window_profile_of_core`, `free_profile_core`, `periodic_profile_core`, `free_form`, `periodic_form`, `profile_identity`, `shift_combo`, `etaR_bounds`, `eta_vs_y`, `h_est`, `uN_near`, `uNP_near` | `CriticalWindow` |
 | `prop:walls` | 5.7 | for `N ≥ 2`, `u > 0`, `w = Nu` with `w(w+2) < 2N`, `Δ = -log(1 - w(w+2)/(2N))` and every `δ > 0`, `|𝒲_N(u) - w - χ(w)| ≤ w(e^δ - 1) + Δ/δ`, where `𝒲_N(u) = u S_N'(u)/S_N(u)` and `χ(w) = I_0(w)/(I_0(w) + I_1(w))` | `walls_bound`, `wallMean`, `wallMean_eq_deriv`, `chiW`, with `wallMean_mono`, `mean_index_mono`, `hasDerivAt_logSN`, `hasDerivAt_logF`, `chiW_antitone`, `turanT_nonneg`, `besselRatio_monotone` | `DomainWalls` |
 | `prop:walls` | 5.7 | for all large `N`, `|𝒲_N(u_N) - (z_N + 1/2 + 1/(8z_N))| ≤ 55/(log N)²` | `walls_at_crossing`, with `chiW_asymp` | `DomainWalls` |
+| `rem:ordered` | 5.8 | `P_N(0) + P_N(N) = p^(N-1)`, which is `1/2` at `u_ord = 2^{1/(N-1)} - 1`; `|J_ord - (1/2) log((N-1)/log 2)| ≤ 1/N` for `N ≥ 2`; `J_N^F = (1/2) log(N/z_N - 1)` | `full_order_prob`, `full_order_half`, `uOrd`, `jOrd`, `jOrd_asymp`, `jF_eq` | `FullOrder` |
+| `rem:ordered` | 5.8 | for all large `N`, `|J_ord - J_N^F - (1/2) log(z_N/log 2)| ≤ 7 log N/N` and `|J_ord - J_N^F - ((1/2) log log N - (1/2) log log 2)| ≤ 7 log N/N + (log log N + 3)/log N` | `ordered_minus_free`, `ordered_minus_free_loglog` | `FullOrder` |
 | `thm:critical-window`, `eq:criticalcount` | 5.3, (39) | for free and periodic ends and every real `t`, `(√(log N)/N) M^X_N(t) → √(2 max(t,0))`, where `M^X_N(t)` is the number of interior bins whose probability is strictly above the endpoint probability at the odds `u_N^X + t/N` | `free_window_count`, `periodic_window_count`, `freeAbove`, `periodicAbove`, with `count_limit`, `countAbove_eq_zero`, `countAbove_le`, `card_near_mid`, `free_mono`, `periodic_mono`, `Sab_comm` | `CriticalWindow` |
 | `cor:couplings` | 5.5 | for all large `N`, `J_N^F`, `J_N^P`, `ξ(J_N^F)` and `ξ(J_N^P)` are positive | `couplings_eventually_pos` | `IsingDictionary` |
 | `cor:couplings` | 5.5 | (a) for all large `N`, `|J_N^F - ((1/2)(L - log L) + ((1/4) log L - c_0/2)/L)| ≤ 28 (log L)²/L²`, where `J_N^F = -(1/2) log u_N` | `free_coupling` | `PeriodicExpansion` |
@@ -431,6 +434,8 @@ Partial coverage.
     `log S_N(e^θ)` is used through the monotonicity of its derivative `𝒲_N(e^θ)`, with the mean
     value theorem. The `O((log N)⁻²)` at the crossing is the explicit bound `55/(log N)²` for all
     large `N`. The periodic analogue mentioned after the proposition is not stated.
+45. `rem:ordered`. The `O(1/N)`, `O(log N/N)` and `o(1)` of the remark are explicit bounds for
+    all large `N`. The numerical values `1.046` and `1.330` are not stated in Lean.
 42. `rem:sign`. For `2 ≤ N ≤ 2773` Lean checks one rational `r_N = n/10⁷` per `N` that lies
     strictly between `z_N` and `ζ_N`. The side of `ζ_N` is an integer inequality from ten-term
     Taylor bounds for `exp(n/(32·10⁷))`, raised to the power `64`, and `π` to twenty decimals. The
@@ -449,7 +454,7 @@ listed above do not supply these omitted limit statements or their error bounds.
 * Section 4. Remarks 4.5 (`rem:sign-correction`) and 4.7 (`rem:jacobi`), and the
   consequences of Theorem 4.9 displayed after it (`eq:allbin-growing-edge` and the case
   `a/N → α`).
-* Section 5. Remarks 5.4, 5.6 and 5.8, Theorem 5.9
+* Section 5. Remarks 5.4 and 5.6, the numbers in Remark 5.8, Theorem 5.9
   (`thm:field`), and the values in the table `tab:couplings`.
 * Appendix A. The outward-interval Python calculations (Lean has its own rational bounds for
   the results listed above).

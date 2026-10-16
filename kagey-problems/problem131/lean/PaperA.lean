@@ -34,6 +34,7 @@ import PaperA.EveryNSignTable
 import PaperA.Supplements
 import PaperA.FixedMagnetization
 import PaperA.DomainWalls
+import PaperA.FullOrder
 
 /-!
 # Paper A (`paperA/problem131.tex`), root module
