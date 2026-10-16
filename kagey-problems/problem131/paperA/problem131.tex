@@ -55,32 +55,25 @@
 \begin{abstract}
 In a finite zero-field Ising chain, the all-up configuration and zero
 magnetization (magnetization one for an odd number of spins) become equally
-likely at a single coupling.
-This crossing has
-recently been described as a thermal transition of the finite chain, an
-analogue of a first-order transition temperature, and estimated by an
-approximate formula and a numerical fit. We prove its asymptotics, with
-explicit constants, for free and for periodic ends. The coupling at the crossing grows
-like half the logarithm of the length of the chain, minus half the logarithm
-of that logarithm. So the correlation length at the crossing is a vanishing
-fraction of the chain. Periodic ends lower the coupling at the crossing by an
-amount that decays like the inverse logarithm of the length. The earlier
-approximations lack the doubly logarithmic term, which explains why a fit on
-chains of moderate length finds a slope below one half. At the crossing the
-central magnetization carries about as many domain walls as the logarithm of
-the length, so its energy exceeds that of the all-up configuration only
-logarithmically, and the crossing sharpens like the inverse logarithm of the
-length, not like the inverse length as at a first-order transition. The proofs treat the
-magnetization as the position of a persistent random walk and compare its
-central probability with a modified Bessel function, with a relative error
-bound that is explicit for every length. For free ends this traps the crossing
-in an explicit interval at every length. The proof is analytic for long chains
-and uses exact integer arithmetic for short ones. For free ends we also
-locate, for each interior magnetization, the coupling at which it becomes as
-likely as the all-up configuration.
+likely at a single coupling. This crossing has recently been described as a
+thermal transition of the finite chain, an analogue of a first-order
+transition temperature, and estimated by an approximate formula and a
+numerical fit. We prove its asymptotics, with explicit constants, for free
+and for periodic ends. The coupling at the crossing grows like half the
+logarithm of the length of the chain, minus half the logarithm of that
+logarithm, and periodic ends lower it by an amount that decays like the
+inverse logarithm of the length. The earlier approximations lack the doubly
+logarithmic term, which explains why a fit on chains of moderate length finds
+a slope below one half. At the crossing the central magnetization carries
+about as many domain walls as the logarithm of the length, so the crossing
+sharpens only like the inverse logarithm of the length, not like the inverse
+length as at a first-order transition. The proofs compare the central
+probability with a modified Bessel function, with a relative error bound
+that is explicit for every length, and for free ends they trap the crossing
+in an explicit interval at every length.
 \end{abstract}
 
-\noindent\textbf{Keywords:} exact results; rigorous results in statistical mechanics; stochastic processes.
+\noindent\textbf{Keywords:} exact results; finite-size scaling; rigorous results in statistical mechanics.
 
 \noindent\textbf{MSC2020:} 82B20; 60J10; 60F05; 60G50; 33C10.
 
@@ -133,7 +126,11 @@ $J=\frac12(\log N-\log\log N)+O(\log\log N/\log N)$ for free and for periodic
 ends, and the correlation length there is about $N/(2\log N)$
 (Corollary~\ref{cor:couplings}). The approximations of~\cite{stepanyan2024}
 have no $\log\log N$ term, and this term explains why the slope of their
-numerical fit is below $\frac12$ (Table~\ref{tab:couplings}).
+numerical fit is below $\frac12$ (Table~\ref{tab:couplings}). At the
+crossing the central bin carries about $\log N$ domain walls, so its energy
+exceeds that of the all-up configuration only by about $2\log N$, and the
+crossing sharpens like $1/\log N$ in the coupling, not like $1/N$ as at a
+first-order transition (Proposition~\ref{prop:walls}).
 
 The crossing lies between two regimes in which the law is well understood.
 When $p=1-\tau/N$ with $\tau>0$ fixed, the rescaled walk tends to the integrated
@@ -457,7 +454,9 @@ Remark~\ref{rem:free-energy}, and it carries about $\log N$ domain walls
 (Proposition~\ref{prop:walls}). So the energy gap between the two compared
 states grows like $\log N$, not like $N$, and the crossing sharpens only like
 $1/\log N$ in the coupling. In this sense it is a finite-size crossover between
-order and disorder rather than a sharpening transition. Its location is set
+order and disorder rather than a sharpening transition, in line with the
+absence of transition signals in the microcanonical entropy of finite
+chains~\cite{sitarachu2020}. Its location is set
 by the balance of one wall-free state against the entropy of about $\log N$
 walls, which is where the $\log\log N$ term comes from. The boundary shift by
 $\log2$ comes from the parity of the number of walls on a ring.
@@ -468,8 +467,7 @@ magnetization $a-b$ to the one at full magnetization, so it gives the
 fixed-magnetization partition function of the free chain, as used
 in~\cite{dantchev2022,dantchev2024}, with an explicit relative error, also
 when the mean number of domain walls grows with $N$. The approach extends to
-the $d$-state Potts chain~\cite{paperB} and to slowly switching
-chains~\cite{paperC}. A magnetic field would change the weights of the two
+the $d$-state Potts chain~\cite{paperB}. A magnetic field would change the weights of the two
 letters, and we do not treat it here.
 
 \paragraph{Acknowledgments.} I thank Peter Kagey, whose Open Problem
@@ -519,9 +517,6 @@ new Python checks were tested against exact rational calculations.
 All mathematical claims, proofs and computations in this paper are my
 responsibility.
 
-\appendix
-\input{app_every_n.tex}
-
 \section*{Data availability statement}
 
 The code and data are in the folder \nolinkurl{kagey-problems/problem131} of
@@ -537,6 +532,9 @@ Theorem~\ref{thm:every-n} are listed in
 \nolinkurl{paperA/verify_ising_coupling.py} prints Table~\ref{tab:couplings}.
 Any number in Sections~\ref{sec:middle} and~\ref{sec:periodicwindow} that no
 script prints is listed in \nolinkurl{paperA/data/quoted_values.txt}.
+
+\appendix
+\input{app_every_n.tex}
 
 \begin{thebibliography}{99}\small\setlength{\baselineskip}{11pt}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}
 
@@ -652,6 +650,12 @@ I.~Balog and A.~Ran\c{c}on, \emph{Constraint correlation functions of the
 one-dimensional Ising model in the scaling limit}, Phys.~Rev.~E \textbf{112}
 (2025), 054127.
 \url{https://doi.org/10.1103/x84b-6yhv}.
+
+\bibitem{sitarachu2020}
+K.~Sitarachu, R.~K.~P.~Zia and M.~Bachmann, \emph{Exact microcanonical
+statistical analysis of transition behavior in Ising chains and strips},
+J.~Stat.~Mech.\ (2020), 073204.
+\url{https://doi.org/10.1088/1742-5468/ab97bc}.
 
 \bibitem{kagey131}
 P.~Kagey, \emph{Problem 131}, Open Problem Collection,
