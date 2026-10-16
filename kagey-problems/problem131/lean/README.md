@@ -46,6 +46,8 @@ Paper D. `PaperC` also holds the Lean proofs for Paper E, and `PaperD` those for
   inequalities of (b), including the logarithmic bracket for ζ_N (`EveryNCorollary`).
 - The strict inequality `N(1 - p_N) > ζ_N` for every N ≥ 2774 (`EveryNSign`). The kernel checks
   the rational threshold certificate and an exponential comparison for all larger N.
+- Remark 3.9, the complete sign pattern of `z_N - ζ_N` for every `N ≥ 2`, with one kernel-checked
+  rational certificate for each `N ≤ 2773` (`EveryNSignTable`).
 - The asymptotic conclusions of Corollary 3.7(b) and (c), `z_N = ν_N + O(log L/L)` and
   `z_N = ν_N + (log L/4 - c₀/2 + 1/8)/L + O((log L)²/L²)` with `L = log N`, with explicit constants
   for every N ≥ 21, and `0 ≤ N u_N - N(1 - p_N) ≤ 2(L + 1/4)²/N` (`EveryNAsymptotics`).
@@ -136,8 +138,8 @@ integral forms.
 
 For Paper A, the domain-wall proposition is absent.
 
-The remaining omissions in Paper A include the infinite chain behind `ξ(J)`, the complete sign
-remark, the fixed-magnetization corollary as stated, and the uniform local law. `PaperA/MAP.md` gives the
+The remaining omissions in Paper A include the infinite chain behind `ξ(J)`, the
+fixed-magnetization corollary as stated, and the uniform local law. `PaperA/MAP.md` gives the
 detailed scope.
 
 In Paper B the window, the Gaussian volumes and the frontier limits are left out. `PaperB`
