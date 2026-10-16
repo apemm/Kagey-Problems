@@ -76,6 +76,10 @@ Paper D. `PaperC` also holds the Lean proofs for Paper E, and `PaperD` those for
 - Smaller statements (`Supplements`): Lemma 3.2 over the reals and in product form, `ζ_N < 4` for
   `N ≤ 174`, `p_{a,b} = 2/3` only for `a = b = 1`, the strict ordering of the bin probabilities
   toward the middle, and `Snum` as the integer numerator.
+- Proposition 5.7, the mean number of domain walls given the central bin, with the bound
+  `|𝒲_N(u) - w - χ(w)| ≤ w(e^δ - 1) + Δ/δ` and its value at the crossing (`DomainWalls`).
+- Remark 5.8, full order against one bin: `J_ord - J_N^F = (1/2) log(z_N/log 2) + O(log N/N)`
+  (`FullOrder`).
 - The Ising dictionary of Section 1.2 for free ends, `S_{a,b}(e^{-2J}) = Z_N(a-b)/Z_N(N)`, and
   the relations between `J`, `τ` and `ξ(J) = -1/log tanh J` (`IsingDictionary`).
 
@@ -139,8 +143,6 @@ The general large-argument asymptotics of the Bessel functions are not formalize
 explicit bound on `I_0 + I_1` that the every-N crossing theorem of Paper A needs, and the
 large-argument forms of `I_0`, `I_1` and `I_1 + η I_0` with explicit remainders, all proved from
 integral forms.
-
-For Paper A, the domain-wall proposition is absent.
 
 The remaining omissions in Paper A include the infinite chain behind `ξ(J)` and the uniform
 local law. `PaperA/MAP.md` gives the
