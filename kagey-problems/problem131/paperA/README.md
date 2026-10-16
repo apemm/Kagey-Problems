@@ -29,9 +29,10 @@ coupling and correlation-length corollary.
 - `problem131.tex` is the paper and `problem131.pdf` the built version. It includes the sections
   `sec_exact.tex`, `sec_crossing.tex`, `allbin_thresholds.tex` and `periodic_window.tex`, and the
   appendix `app_every_n.tex`. It builds from this folder alone.
-- `figures/` holds the five figures. Four of them (`row10`, `crossing`, `allbin` and `window`) are
+- `figures/` holds the six figures. Five of them (`row10`, `crossing`, `allbin`, `window` and `layer`) are
   made by `figures/make_figures.py`, and the coupling figure `coupling` by
-  `figures/make_coupling_figure.py`. Both scripts use the shared style `../figures/series_style.py`.
+  `figures/make_coupling_figure.py`. Both scripts use the shared style `../figures/series_style.py`
+  and write the plotted values to `data/figures/` (they need NumPy, Matplotlib and mpmath).
 - `llt_note/` holds the uniform local law (the former Section 6 and Appendix B), the start of a
   separate paper. `tables_note/` holds the numerator tables and bijections (the former Appendix C
   and its figure), kept for a later note.
