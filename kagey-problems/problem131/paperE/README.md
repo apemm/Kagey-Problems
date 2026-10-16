@@ -10,8 +10,10 @@ The paper cites two other papers by A. Pemmasani, by title:
 
 - "Uniform Bessel bounds for magnetization crossings in finite Ising chains", arXiv:2610.06935
   (`../paperA`). Its persistent random walk on the line is the line walk of this paper.
-- "Face selection for slowly switching Markov chains" (in preparation, `../paperC`). It supplies the
-  first-order heuristic.
+- "Face selection for slowly switching Markov chains" (in preparation, `../paperC`). Its face
+  selection rule gives the same first-order exponents as the survival-and-return estimate used here.
+- "Vertex crossings in a symmetric Markov multinomial model", arXiv:2610.09258 (`../paperB`), for the
+  analogous crossing of the Potts chain.
 
 ## What is proved
 
@@ -31,21 +33,26 @@ ledger and the recorded outputs still use the old numbers.
   (1-rho)^2, rho(1-rho) and rho^2, it is 2 independent copies of the line walk, and the crossing is
   exactly rho = 1 - p_N. Off this curve the crossing is bracketed (Corollary 3.8).
 - With turns only (s = 0), r T = z_N + O(L^2/N) at the crossing (Theorem 3.9).
+- Section 4 reads the walk as the zero-field Ashkin-Teller chain with free ends (turn odds
+  v = e^{-2K-2K_4}, reversal odds u = e^{-4K}). The corner is full order, the origin is zero
+  magnetization, and the product curve u = v^2 is K_4 = 0, where the chain is two independent Ising
+  chains. Section 5 summarizes the checks.
 
 The proofs use arXiv:2610.06935 (the coefficientwise growth of the bin polynomials, the uniform
-Bessel bound and the expansion of z_N). They cite the paper in `../paperC` for the first-order
-face selection and the crossing equation.
+Bessel bound and the expansion of z_N). They do not use the paper in `../paperC`.
 
 ## Open
 
-A first-order rule for linear functions of the composition in general, the next term when turns
+A general theorem behind the survival-and-return estimate, the next term when turns
 dominate, the crossover when s - 2r tends to 0, a closed form off the product curve, a lower bound of
-order L^2/N with turns only, and the walk on Z^d for d >= 3.
+order L^2/N with turns only, the Ashkin-Teller chain at fixed couplings, clock and Potts chains with
+more states, and the walk on Z^d for d >= 3.
 
 ## Files
 
 - `problem131_planar.tex` is the paper. It includes `sec_intro.tex`, `sec_setting.tex`,
-  `sec_planar.tex` and `sec_verify.tex` (Sections 1 to 4) and `app_planar.tex` (Appendix A).
+  `sec_planar.tex`, `sec_discussion.tex` and `sec_verify.tex` (Sections 1 to 5) and
+  `app_planar.tex` (Appendix A).
 - `figures/` holds Figure 2 (`fig_planar`), made by `../paperC/figures/make_figures.py`. Figure 1
   (the 3 kinds of paths) is drawn in the source with TikZ.
 - `verify_planar.py` checks the planar walk (Section 3 and Appendix A). It also tests the identity of
