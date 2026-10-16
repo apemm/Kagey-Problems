@@ -81,6 +81,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `SignCorrection` | Remark `rem:sign-correction`: the sign and size of the first correction to the Bessel form, and the numbers at `a = b = 200` |
 | `Jacobi` | Remark `rem:jacobi`: the Jacobi forms of the run sums, the Laguerre limit at the edge with rates, and the Mehler–Heine limit for natural parameters |
 | `FreeEnergy` | Remark `rem:free-energy`: the constrained free energies, the periodic Ising weight of a magnetization, and their limit in the crossing window |
+| `LevelTheta` | Remark `rem:convention`: the central crossings at a level `Θ`, for free and periodic ends, the shift of the coupling, and the conventions with two bins or two endpoints |
 | `Tables` | identities between numerator tables and recursively defined rook and Mathar sequences; retained for the tables note |
 
 ## Section 1, setting and notation
@@ -212,6 +213,10 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `thm:critical-window`, `eq:criticalcount` | 5.3, (39) | for free and periodic ends and every real `t`, `(√(log N)/N) M^X_N(t) → √(2 max(t,0))`, where `M^X_N(t)` is the number of interior bins whose probability is strictly above the endpoint probability at the odds `u_N^X + t/N` | `free_window_count`, `periodic_window_count`, `freeAbove`, `periodicAbove`, with `count_limit`, `countAbove_eq_zero`, `countAbove_le`, `card_near_mid`, `free_mono`, `periodic_mono`, `Sab_comm` | `CriticalWindow` |
 | `rem:free-energy` | 5.4 | with `F^X_N(μ) = -log Z^X_N(μ)` and `u = e^{-2J}`: `-log S_{a,b}(u) = F_N(a-b) - F_N(N)` for `a, b ≥ 1`, and `-log S^P_{N,k}(u) = F^P_N(2k-N) - F^P_N(N)` for `1 ≤ k ≤ N-1`, for every real `J` | `free_energy_ratio`, `periodic_energy_ratio`, `perIsingZ`, `perIsingZ_full`, `perRatio_eq_perIsingZ_ratio`, with `isingZ` | `FreeEnergy`, `IsingDictionary` |
 | `rem:free-energy` | 5.4 | for free and periodic ends, every `T, Y ≥ 0` and `ε > 0` there is `N₀` with, for `N ≥ N₀`, `|t| ≤ T`, `|y| ≤ Y` and every integer `k` within `1/2` of `N/2 + yN/√(log N)`: `u = u_N^X + t/N > 0` and `|F^X_N(2k-N) - F^X_N(N) - (2y² - t)| ≤ ε` at `J = -(1/2) log u` | `free_energy_window`, `periodic_energy_window`, with `energy_of_profile`, `abs_log_sub_log_le`, `eventually_odds_pos` | `FreeEnergy` |
+| `rem:convention` | 5.6 | for fixed `Θ > 0`, with `u` the root of `S_N(u) = Θ` and `p = 1/(1+u)`: there is `C` with, for all large `N`, `|N u - (L - (1/2) log L + c + ((1/4) log L - c/2 + 1/8)/L)| ≤ C (log L)²/L²` and the same for `N(1-p)`, where `c = c_0 + log Θ` | `free_level_expansion`, `uNL`, `pNL`, `uabL`, `uabL_spec`, `uabL_unique`, `uNL_one`, `levelMain`, with `allbin_level_expansion`, `level_core`, `free_sandwich`, `rootMain_conv`, `level_assembly`, `center_facts`, `log_center_ratio` | `LevelTheta` |
+| `rem:convention` | 5.6 | the same for periodic ends, with the root of `S^P_{N,m_N}(u) = Θ`, `3/8` in place of `1/8` and `c = c_P + log Θ` | `periodic_level_expansion`, `uNPL`, `pNPL`, `uNPL_spec`, `uNPL_one`, with `periodic_sandwich`, `perRatio_exists_level` | `LevelTheta` |
+| `rem:convention` | 5.6 | the coupling moves by `-(log Θ)/(2 log N)` to leading order: there is `C` with `|J^Θ - J + (log Θ)/(2 log N)| ≤ C (log L)²/L²` for all large `N`, for free and periodic ends | `free_level_coupling`, `periodic_level_coupling`, with `coupling_level_shift`, `log_shift_of_expansions` | `LevelTheta` |
+| `rem:convention` | 5.6 | the central bin equals both endpoints together exactly when `S_N = 2`; `c_0 + log 2 = c_P`; the two central bins against the two endpoints give the ratio `S_N` (`Θ = 1`) | `both_endpoints_iff`, `c0_add_log_two`, `odd_two_bins_ratio` | `LevelTheta` |
 | `cor:couplings` | 5.5 | for all large `N`, `J_N^F`, `J_N^P`, `ξ(J_N^F)` and `ξ(J_N^P)` are positive | `couplings_eventually_pos` | `IsingDictionary` |
 | `cor:couplings` | 5.5 | (a) for all large `N`, `|J_N^F - ((1/2)(L - log L) + ((1/4) log L - c_0/2)/L)| ≤ 28 (log L)²/L²`, where `J_N^F = -(1/2) log u_N` | `free_coupling` | `PeriodicExpansion` |
 | `cor:couplings` | 5.5 | (b) for all large `N`, `|J_N^F - J_N^P - (log 2)/(2L)| ≤ 2 (log L)/L²` | `coupling_shift`, with `shift_final` | `PeriodicExpansion` |
@@ -462,6 +467,15 @@ Partial coverage.
     Jacobi–Laguerre limit. The Mehler–Heine limit is proved directly, term by term with a
     dominating series, and holds for `|w| ≤ W`, not only `0 ≤ w ≤ W`.
 
+46. `rem:convention`. Lean does not follow the sketch of the remark (Step 2 of the proof of
+    Theorem 5.2 with `log Θ` added). For both boundaries it compares the root with the Bessel root
+    `G_η(x̂) = ΘA` of Section 4 (`level_core`), with `η = 2√(ab)/N` for free ends and `η = 0`,
+    `A = ab/N` for periodic ends, and then rewrites the expansion in `ℓ = log(ΘA)` in terms of
+    `L = log N` (`rootMain_conv`). The free version holds for every bin as `allbin_level_expansion`.
+    The constants `C` exist but are not computed. The identity of `odd_two_bins_ratio` holds for
+    every `N ≥ 2`. The sentence that the bracket of Theorem 3.4 is proved only for `Θ = 1` makes no
+    claim.
+
 ## Not in Lean
 
 The following parts of the paper are not formalized. The finite results and conditional algebra
@@ -476,7 +490,7 @@ listed above do not supply these omitted limit statements or their error bounds.
 * Section 5. In Remark 5.4, the sentence that each bin of the window has probability of order
   `√(log N)/N`: the paper gives no argument for it (it needs a bound on the total weight of all
   bins at the crossing, which the paper does not prove), so it is not formalized.
-* Section 5. Remarks 5.6 and 5.8, Proposition 5.7 (`prop:walls`), Theorem 5.9
+* Section 5. Remark 5.8, Proposition 5.7 (`prop:walls`), Theorem 5.9
   (`thm:field`), and the values in the table `tab:couplings`.
 * Appendix A. The outward-interval Python calculations (Lean has its own rational bounds for
   the results listed above).

@@ -37,6 +37,7 @@ import PaperA.AllbinConsequences
 import PaperA.SignCorrection
 import PaperA.Jacobi
 import PaperA.FreeEnergy
+import PaperA.LevelTheta
 
 /-!
 # Paper A (`paperA/problem131.tex`), root module
