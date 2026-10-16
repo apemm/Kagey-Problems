@@ -67,6 +67,7 @@ Paper D. `PaperC` also holds the Lean proofs for Paper E, and `PaperD` those for
   expansion, the boundary shift `N(u_N^P - u_N)` and the periodic coupling, each with a bound
   `C (log log N)²/(log N)²` for all large `N` (`PeriodicCrossing`, `PeriodicExpansion`). Also
   Corollary 5.5 on the two couplings and the correlation lengths `N/ξ`, with explicit constants.
+- Corollary 4.4, the fixed-magnetization weight `Z_N(μ)` in Bessel form (`FixedMagnetization`).
 - Theorem 4.9, the uniform expansion of every crossing in `log A` for all `b ≥ a`, Theorem 4.10,
   the fixed-edge expansion `u_{a,b} = c_a/√b - 1/b + γ_a/b^{3/2} + O_a(b^{-2})`, and the expansion
   of Theorem 4.11 for `2√(a y_a)` (`AllbinExpansion`, `EdgeLaguerre`).
@@ -141,8 +142,8 @@ integral forms.
 
 For Paper A, the domain-wall proposition is absent.
 
-The remaining omissions in Paper A include the infinite chain behind `ξ(J)`, the
-fixed-magnetization corollary as stated, and the uniform local law. `PaperA/MAP.md` gives the
+The remaining omissions in Paper A include the infinite chain behind `ξ(J)` and the uniform
+local law. `PaperA/MAP.md` gives the
 detailed scope.
 
 In Paper B the window, the Gaussian volumes and the frontier limits are left out. `PaperB`
