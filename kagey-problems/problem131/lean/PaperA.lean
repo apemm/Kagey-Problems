@@ -32,6 +32,7 @@ import PaperA.EdgeLaguerre
 import PaperA.CriticalWindow
 import PaperA.EveryNSignTable
 import PaperA.Supplements
+import PaperA.FixedMagnetization
 
 /-!
 # Paper A (`paperA/problem131.tex`), root module
