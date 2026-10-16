@@ -79,6 +79,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `FixedMagnetization` | Corollary `cor:fixed-M`, the fixed-magnetization weight |
 | `AllbinConsequences` | the consequences of Theorem `thm:allbin-expansion` displayed after it, for sequences of bins |
 | `SignCorrection` | Remark `rem:sign-correction`: the sign and size of the first correction to the Bessel form, and the numbers at `a = b = 200` |
+| `Jacobi` | Remark `rem:jacobi`: the Jacobi forms of the run sums, the Laguerre limit at the edge with rates, and the Mehler–Heine limit for natural parameters |
 | `Tables` | identities between numerator tables and recursively defined rook and Mathar sequences; retained for the tables note |
 
 ## Section 1, setting and notation
@@ -168,6 +169,10 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `rem:sign-correction` | 4.5 | the clipped products fall short of `1` by about `σ_r = r(r+1)/(2A)`: `σ_r - σ_r²/2 ≤ 1 - U_r V_r ≤ σ_r` for every `r` | `pair_deficit_bounds`, with `pair_product_upper`, `bonferroni_step`, `normCoeff_self_succ` | `SignCorrection` |
 | `rem:sign-correction` | 4.5 | the corrected expansion with falling factorials: `0 ≤ ₂F₁(-a,-b;1;z) - (I_0(2w) - (w² I_0(2w) - w I_1(2w))/(2A)) ≤ M/(8A²)` for `abz = w²`, with `M = Σ_n (n(n-1))² w^{2n}/(n!)²`; the first correction is `-w² I_2(2w)/(2A)` | `hyp2F1neg_expansion`, with `hypCoeff`, `hypCoeff_bounds`, `hyp_term_eq`, `choose_succ_norm`, `hasSum_n_b0`, `hasSum_nn_b0`, `summable_nn_sq_b0` | `SignCorrection` |
 | `rem:sign-correction` | 4.5 | at `a = b = 200`, `c = 1`, `abz = 25`: the exact value is between `9.45` and `9.55` percent below `I_0(10)`, the formula with the sign of Eq. (D.6) is between `10.05` and `10.15` percent above it, and the corrected formula is within `0.8` percent of the exact value | `sign_correction_numbers`, with `besselI0_ten_bounds`, `besselI1_ten_bounds`, `tsum_le_of_ratio_half`, `hyp200_eq`, `i0_bounds_q`, `i1_bounds_q`, `hyp200_bounds_q` | `SignCorrection` |
+| `rem:jacobi` | 4.7 | for `1 ≤ a ≤ b` and `t ≠ 1`, `Σ_r C(a-1,r) C(b-1,r) t^r = ₂F₁(1-a,1-b;1;t) = (1-t)^{a-1} P_{a-1}^{(0,b-a)}((1+t)/(1-t))` | `jacobi_first`, `jacobiP`, `jacobiP_moebius` | `Jacobi` |
+| `rem:jacobi` | 4.7 | for `a + 1 ≤ b` and `u² ≠ 1`, `Σ_r C(a-1,r) C(b-1,r+1) u^{2r+2} = ((b-1)u²/a)(1-u²)^{a-1} P_{a-1}^{(1,b-a-1)}((1+u²)/(1-u²))` | `jacobi_second` | `Jacobi` |
+| `rem:jacobi` | 4.7 | the Mehler–Heine limit at `iw`: for natural `α, β`, every `W` and `ε > 0`, eventually `|n^{-α} P_n^{(α,β)}(1 + w²/(2n²)) - (w/2)^{-α} I_α(w)| ≤ ε` for all `|w| ≤ W` | `mehler_heine`, `jacobiScaled`, `besselScaled`, `besselScaled_zero`, `besselScaled_one`, with `mhTerm_uniform`, `mhTerm_bound`, `mhLimit_bound`, `tendsto_choose_div_pow`, `tendsto_mhCoeff` | `Jacobi` |
+| `rem:jacobi` | 4.7 | for fixed `a` and `u² = y/b`: the run form splits into the odd runs and two even parts; for `0 ≤ y ≤ Y`, `0 ≤ H_a(y) - Σ_r C(a-1,r) C(b-1,r+1)(y/b)^{r+1} ≤ K_a(Y)/b`, the odd-run part with its factor `2u` is at most `K'_a(Y)/√b`, the other even part at most `K''_a(Y)/b`, and `|S_{a,b}(√(y/b)) - H_a(y)| ≤ K/√b` | `edge_run_decomposition`, `edge_even_main`, `edge_odd_part`, `edge_even_other`, `edge_jacobi_limit`, with `choose_le_pow_div` | `Jacobi` |
 | `cor:allbin-root-bound`, `eq:allbin-root-bound` | 4.6, (20) | `x_{a,b} ≥ x̂_{a,b}`, and `x_{a,b} - x̂_{a,b} ≤ -(1/2) log(1 - δ_{a,b})` when `δ_{a,b} < 1` | `allbin_root_bound`, with `Tab_eq_Geta`, `eta_le_one`, `root_comparison` | `RootBounds`, `BesselDeriv` |
 | `lem:inversion` | 4.8 | for every `K > 0` there is `C_K` with `|z - ℓ + (1/2) log ℓ - C - ((1/4) log ℓ - C/2 + B)/ℓ| ≤ C_K((log ℓ)²/ℓ² + |ω|)` whenever `z ≥ 1`, `ℓ ≥ 2`, `|C|, |B| ≤ K`, `|ω| ≤ 1` and `z + (1/2) log z = ℓ + C + B/z + ω` | `log_inversion`, with `abs_log_one_add_sub_le`, `log_le_quarter` | `LogInversion` |
 | `thm:allbin-expansion`, `eq:allbin-expansion` | 4.9, (21) | with `ℓ = log A`, `η = 2√(ab)/(a+b)`, `C(η) = (1/2) log(8π) - log(1+η)` and `B(η) = (3-η)/(8(1+η))`, there are `K` and `a₀` with `|2√(ab) u_{a,b} - (ℓ - (1/2) log ℓ + C(η) + ((1/4) log ℓ - C(η)/2 + B(η))/ℓ)| ≤ K((log ℓ)²/ℓ² + (log a)²/a)` for all `a ≥ a₀` and all `b ≥ a`, and the same for `1 - p_{a,b}` | `allbin_expansion`, `allbin_expansion_prob`, `rootMain`, `Ceta`, `Beta`, with `allbin_root_close` | `AllbinExpansion` |
@@ -447,6 +452,13 @@ Partial coverage.
     `I_1(10)` and on the exact sum are rational and checked with `decide +kernel`; the series of
     `I_0` and `I_1` are cut after thirty terms with a geometric tail bound.
 
+45. `rem:jacobi`. Mathlib has no Jacobi polynomials, so `jacobiP n α β` is the explicit sum
+    `Σ_s C(n+α, n-s) C(n+β, s) ((x-1)/2)^s ((x+1)/2)^{n-s}` (Szegő, Eq. (4.3.2)) for natural `α, β`.
+    The identities hold for every `t ≠ 1` (the paper has `0 ≤ t < 1`). The Laguerre limit is proved
+    with explicit rates, from the run form and the bounds on `U_r(b)`, not from the
+    Jacobi–Laguerre limit. The Mehler–Heine limit is proved directly, term by term with a
+    dominating series, and holds for `|w| ≤ W`, not only `0 ≤ w ≤ W`.
+
 ## Not in Lean
 
 The following parts of the paper are not formalized. The finite results and conditional algebra
@@ -454,7 +466,9 @@ listed above do not supply these omitted limit statements or their error bounds.
 
 * Section 1. The infinite chain behind `ξ(J)` (see difference 39).
 * Section 3. The values in the table `tab:every-n`.
-* Section 4. Remark 4.7 (`rem:jacobi`). In Remark 4.5 the statement about the misprint in Eq. (D.4)
+* Section 4. In Remark 4.7 (`rem:jacobi`), the Mehler–Heine limit for real `α, β > -1` (a cited
+  theorem; Lean has natural `α, β`) and the sentences that describe the expansions of Elliott,
+  Temme, and Gil, Segura and Temme. In Remark 4.5 the statement about the misprint in Eq. (D.4)
   of Dantchev, Tonchev and Rudnick is about another paper, not a mathematical claim.
 * Section 5. Remarks 5.4, 5.6 and 5.8, Proposition 5.7 (`prop:walls`), Theorem 5.9
   (`thm:field`), and the values in the table `tab:couplings`.
