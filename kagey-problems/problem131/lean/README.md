@@ -78,6 +78,8 @@ Paper D. `PaperC` also holds the Lean proofs for Paper E, and `PaperD` those for
   toward the middle, and `Snum` as the integer numerator.
 - Proposition 5.7, the mean number of domain walls given the central bin, with the bound
   `|𝒲_N(u) - w - χ(w)| ≤ w(e^δ - 1) + Δ/δ` and its value at the crossing (`DomainWalls`).
+- Remark 5.8, full order against one bin: `J_ord - J_N^F = (1/2) log(z_N/log 2) + O(log N/N)`
+  (`FullOrder`).
 - The Ising dictionary of Section 1.2 for free ends, `S_{a,b}(e^{-2J}) = Z_N(a-b)/Z_N(N)`, and
   the relations between `J`, `τ` and `ξ(J) = -1/log tanh J` (`IsingDictionary`).
 
