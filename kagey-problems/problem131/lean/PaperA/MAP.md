@@ -78,6 +78,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `Supplements` | smaller statements: Lemma `lem:clipped` over the reals and in product form, `ζ_N < 4` for `N ≤ 174`, `p_{a,b} = 2/3` only at `a = b = 1`, strict probability ordering, and `Snum` as the numerator |
 | `FixedMagnetization` | Corollary `cor:fixed-M`, the fixed-magnetization weight |
 | `AllbinConsequences` | the consequences of Theorem `thm:allbin-expansion` displayed after it, for sequences of bins |
+| `SignCorrection` | Remark `rem:sign-correction`: the sign and size of the first correction to the Bessel form, and the numbers at `a = b = 200` |
 | `Tables` | identities between numerator tables and recursively defined rook and Mathar sequences; retained for the tables note |
 
 ## Section 1, setting and notation
@@ -163,6 +164,10 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `eq:allbin-bessel-root` | (18) | `G_η`, and its root `x_B` exists and is unique | `Geta`, `Groot_spec`, `Groot_unique`, `Geta_strictMonoOn` | `BesselDeriv` |
 | `eq:allbin-logderivative` | (19) | `G_η' - 2G_η = 2x(1-η)(I_0 - I_1) + η I_0 ≥ 0` | `hasDerivAt_Geta`, `Geta_logderiv`, `Geta_deriv_ge`, `besselI1_lt_I0`, `Geta_growth` | `BesselDeriv` |
 | `cor:fixed-M` | 4.4 | for `a, b ≥ 1`, `N = a + b`, `μ = a - b`, `ρ = √(1 - μ²/N²)` and `v = N e^{-2J} ρ`, `Z_N(μ) = 2 e^{(N-3)J} (I_0(v) + I_1(v)/ρ)(1 - θ)` with `0 ≤ θ ≤ (N/2) e^{-4J} + e^{-2J}`, for every real `J` | `fixed_M_weight`, `rho_eq` | `FixedMagnetization` |
+| `rem:sign-correction` | 4.5 | the exact weight lies below its Bessel form: `S_{a,b} ≤ Ŝ_{a,b}`, and `₂F₁(-a,-b;1;w²/(ab)) ≤ I_0(2w)` for `a, b ≥ 1` | `allbin_bessel`, `hyp2F1neg_le_besselI0`, `hyp2F1neg` | `UniformBessel`, `SignCorrection` |
+| `rem:sign-correction` | 4.5 | the clipped products fall short of `1` by about `σ_r = r(r+1)/(2A)`: `σ_r - σ_r²/2 ≤ 1 - U_r V_r ≤ σ_r` for every `r` | `pair_deficit_bounds`, with `pair_product_upper`, `bonferroni_step`, `normCoeff_self_succ` | `SignCorrection` |
+| `rem:sign-correction` | 4.5 | the corrected expansion with falling factorials: `0 ≤ ₂F₁(-a,-b;1;z) - (I_0(2w) - (w² I_0(2w) - w I_1(2w))/(2A)) ≤ M/(8A²)` for `abz = w²`, with `M = Σ_n (n(n-1))² w^{2n}/(n!)²`; the first correction is `-w² I_2(2w)/(2A)` | `hyp2F1neg_expansion`, with `hypCoeff`, `hypCoeff_bounds`, `hyp_term_eq`, `choose_succ_norm`, `hasSum_n_b0`, `hasSum_nn_b0`, `summable_nn_sq_b0` | `SignCorrection` |
+| `rem:sign-correction` | 4.5 | at `a = b = 200`, `c = 1`, `abz = 25`: the exact value is between `9.45` and `9.55` percent below `I_0(10)`, the formula with the sign of Eq. (D.6) is between `10.05` and `10.15` percent above it, and the corrected formula is within `0.8` percent of the exact value | `sign_correction_numbers`, with `besselI0_ten_bounds`, `besselI1_ten_bounds`, `tsum_le_of_ratio_half`, `hyp200_eq`, `i0_bounds_q`, `i1_bounds_q`, `hyp200_bounds_q` | `SignCorrection` |
 | `cor:allbin-root-bound`, `eq:allbin-root-bound` | 4.6, (20) | `x_{a,b} ≥ x̂_{a,b}`, and `x_{a,b} - x̂_{a,b} ≤ -(1/2) log(1 - δ_{a,b})` when `δ_{a,b} < 1` | `allbin_root_bound`, with `Tab_eq_Geta`, `eta_le_one`, `root_comparison` | `RootBounds`, `BesselDeriv` |
 | `lem:inversion` | 4.8 | for every `K > 0` there is `C_K` with `|z - ℓ + (1/2) log ℓ - C - ((1/4) log ℓ - C/2 + B)/ℓ| ≤ C_K((log ℓ)²/ℓ² + |ω|)` whenever `z ≥ 1`, `ℓ ≥ 2`, `|C|, |B| ≤ K`, `|ω| ≤ 1` and `z + (1/2) log z = ℓ + C + B/z + ω` | `log_inversion`, with `abs_log_one_add_sub_le`, `log_le_quarter` | `LogInversion` |
 | `thm:allbin-expansion`, `eq:allbin-expansion` | 4.9, (21) | with `ℓ = log A`, `η = 2√(ab)/(a+b)`, `C(η) = (1/2) log(8π) - log(1+η)` and `B(η) = (3-η)/(8(1+η))`, there are `K` and `a₀` with `|2√(ab) u_{a,b} - (ℓ - (1/2) log ℓ + C(η) + ((1/4) log ℓ - C(η)/2 + B(η))/ℓ)| ≤ K((log ℓ)²/ℓ² + (log a)²/a)` for all `a ≥ a₀` and all `b ≥ a`, and the same for `1 - p_{a,b}` | `allbin_expansion`, `allbin_expansion_prob`, `rootMain`, `Ceta`, `Beta`, with `allbin_root_close` | `AllbinExpansion` |
@@ -435,6 +440,13 @@ Partial coverage.
     `decide +kernel`, which takes about ten minutes. The numbers `n` were found in floating point,
     and they are data only. The paper replays its own outward-interval brackets instead.
 
+44. `rem:sign-correction`. Lean writes `w² I_2(2w)` as `w² I_0(2w) - w I_1(2w)`, since only `I_0`
+    and `I_1` are defined. The formula `I_0(2w) + w² I_2(2w)/(2A)` with the sign of Eq. (D.6) is the
+    one the remark describes; Lean does not quote the other paper. `hyp2F1neg a b z` is the
+    terminating sum `Σ_n C(a,n) C(b,n) z^n`, which is `₂F₁(-a,-b;1;z)`. The bounds on `I_0(10)`,
+    `I_1(10)` and on the exact sum are rational and checked with `decide +kernel`; the series of
+    `I_0` and `I_1` are cut after thirty terms with a geometric tail bound.
+
 ## Not in Lean
 
 The following parts of the paper are not formalized. The finite results and conditional algebra
@@ -442,7 +454,8 @@ listed above do not supply these omitted limit statements or their error bounds.
 
 * Section 1. The infinite chain behind `ξ(J)` (see difference 39).
 * Section 3. The values in the table `tab:every-n`.
-* Section 4. Remarks 4.5 (`rem:sign-correction`) and 4.7 (`rem:jacobi`).
+* Section 4. Remark 4.7 (`rem:jacobi`). In Remark 4.5 the statement about the misprint in Eq. (D.4)
+  of Dantchev, Tonchev and Rudnick is about another paper, not a mathematical claim.
 * Section 5. Remarks 5.4, 5.6 and 5.8, Proposition 5.7 (`prop:walls`), Theorem 5.9
   (`thm:field`), and the values in the table `tab:couplings`.
 * Appendix A. The outward-interval Python calculations (Lean has its own rational bounds for
