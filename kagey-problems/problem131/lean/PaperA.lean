@@ -44,6 +44,7 @@ import PaperA.TableValuesText
 import PaperA.TableValuesBessel
 import PaperA.TableValuesField
 import PaperA.TableValuesWalls
+import PaperA.TableValuesExtra
 
 /-!
 # Paper A (`paperA/problem131.tex`), root module
