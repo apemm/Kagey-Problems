@@ -286,7 +286,7 @@ theorem crossing_eq_large (N : ℕ) (hN : 175 ≤ N) :
   rw [hx, hS, mul_one] at hB1 hB2
   have hF : 0 < Fcent (w / 2) := Fcent_pos (by positivity)
   have hδeq : w / 2 * (w / 2 + 1) / ((N : ℝ) / 2) = w * (w + 2) / (2 * N) := by
-    field_simp <;> ring
+    field_simp
   rw [hδeq] at hB2
   generalize hδdef : w * (w + 2) / (2 * N) = δ at hB2 hδ
   have hδ0 : 0 ≤ δ := by rw [← hδdef]; positivity

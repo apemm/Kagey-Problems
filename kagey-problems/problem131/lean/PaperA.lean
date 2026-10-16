@@ -21,6 +21,7 @@ import PaperA.EveryNCorollary
 import PaperA.EveryNSign
 import PaperA.EveryNAsymptotics
 import PaperA.CrossingEquation
+import PaperA.BoundaryLayer
 
 /-!
 # Paper A (`paperA/problem131.tex`), root module
