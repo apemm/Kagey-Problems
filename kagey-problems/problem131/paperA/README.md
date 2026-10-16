@@ -25,10 +25,11 @@ Table 3 compares with the approximations of Stepanyan et al. (J. Stat. Mech. 202
   separate paper. `tables_note/` holds the numerator tables and bijections (the former Appendix C
   and its figure), kept for a later note.
 - `verify.py`, `check_bessel.py`, `verify_adjacent.py`, `verify_allbin.py`,
-  `verify_periodic_window.py`, `verify_ising_coupling.py`, `verify_every_n.py`,
+  `verify_periodic_window.py`, `verify_ising_coupling.py`, `verify_ising_coupling_tm.py`,
+  `verify_every_n.py`,
   `verify_every_n_guards.py`,
   `verify_every_n_sign.py`, `verify_uniform_llt.py` and `verify_uniform_llt_cor5.py` are the checks.
-  They use only the standard library, and `../SUPPLEMENT.md` says what each one checks. The last
+  They use only the standard library, except `verify_ising_coupling_tm.py`, which needs NumPy, and `../SUPPLEMENT.md` says what each one checks. The last
   two belong to the local law note.
 - `verify_all.py` runs the checks.
 - `data/` holds the recorded output of the checks and the ledgers `data/ledger_every_n.md` and
