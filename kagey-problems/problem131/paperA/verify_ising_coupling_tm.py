@@ -1,4 +1,4 @@
-"""Second method for the couplings of Table 3: the transfer matrix.
+"""Second method for the couplings of Table 2: the transfer matrix.
 
 verify_ising_coupling.py finds the central crossings from the run polynomials. This script
 finds them again from the 2 x 2 transfer matrix of the Ising chain, with no run counting.

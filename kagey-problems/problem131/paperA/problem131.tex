@@ -52,10 +52,9 @@
 \maketitle
 
 \begin{abstract}
-In a finite zero-field Ising chain with at least two spins, the all-up
-configuration and a central magnetization (zero for an even number of spins,
-and one, or likewise minus one, for an odd number) become equally likely at a
-single coupling.
+In a finite zero-field Ising chain, the all-up configuration and zero
+magnetization (magnetization one for an odd number of spins) become equally
+likely at a single coupling.
 This crossing has
 recently been described as a thermal transition of the finite chain, an
 analogue of a first-order transition temperature, and estimated by an
@@ -66,7 +65,11 @@ of that logarithm. So the correlation length at the crossing is a vanishing
 fraction of the chain. Periodic ends lower the coupling at the crossing by an
 amount that decays like the inverse logarithm of the length. The earlier
 approximations lack the doubly logarithmic term, which explains why a fit on
-chains of moderate length finds a slope below one half. The proofs treat the
+chains of moderate length finds a slope below one half. At the crossing the
+central magnetization carries about as many domain walls as the logarithm of
+the length, so its energy exceeds that of the all-up configuration only
+logarithmically, and the crossing sharpens like the inverse logarithm of the
+length, not like the inverse length as at a first-order transition. The proofs treat the
 magnetization as the position of a persistent random walk and compare its
 central probability with a modified Bessel function, with a relative error
 bound that is explicit for every length. For free ends this traps the crossing
@@ -141,9 +144,7 @@ uniformly in $\tau$. Our main tool is a comparison of the middle bin with a
 modified Bessel function, with a relative error that is explicit for every $N$
 (Theorem~\ref{thm:bessel}).
 
-The crossing for free ends is also Problem~131 of Kagey's Open Problem
-Collection~\cite{kagey131}, posed for a Galton board whose ball keeps its
-direction with probability $p$. A walk with $d$ directions, which
+A walk with $d$ directions, which
 is the $d$-state Potts chain, is treated in~\cite{paperB}, and general slowly
 switching chains in~\cite{paperC}.
 
@@ -313,6 +314,18 @@ Under either boundary, at odds $u_N^X+t/N$, where $u_N^X$ is the central
 crossing of that boundary, the ratio of bin $N/2+yN/\sqrt{\log N}$ to an
 endpoint tends to $e^{t-2y^2}$ (Theorem~\ref{thm:critical-window}).
 
+\paragraph{Domain walls and the energy gap.} At the free crossing the central
+bin carries $z_N+\frac12+O(1/z_N)$ domain walls on average
+(Proposition~\ref{prop:walls}), so its mean energy exceeds that of the
+all-up configuration by about $2\log N$ in units of the exchange constant. At
+a first-order transition the two coexisting phases differ in energy by an
+amount proportional to $N$. Accordingly the ratio of the central bin to an
+endpoint changes by a factor $e$ over a range of couplings of width about
+$1/(2\log N)$. The $\log\log N$ term is the cost of comparing full order
+with one bin instead of the whole disordered band. The probability that the
+chain is fully ordered is $\frac12$ at a coupling larger than
+$J_N^{\mathrm F}$ by $\frac12\log\log N+O(1)$ (Remark~\ref{rem:ordered}).
+
 We prove these results in Sections~\ref{sec:exact} to~\ref{sec:periodicwindow},
 in this order. Section~\ref{sec:verify} lists what was computed and what is in
 Lean, and the appendix has the longer proofs of Section~\ref{sec:middle}.
@@ -372,9 +385,9 @@ estimate the coupling. We give the second with its constants under both boundary
 conditions, and for free ends we bound it at every $N$ and find the crossing
 of every bin. The Markov binomial estimates of
 \v{C}ekanavi\v{c}ius and Mikalauskas assume ranges of the transition
-probabilities that exclude $p\to1$ in this symmetric model
-\cite[Theorems~1.1--1.3, pp.~220--221]{cekanavicius2001}
-\cite[Theorems~1.1--1.3, pp.~308--309]{cekanavicius2001ld}.
+probabilities that exclude $p\to1$ in this symmetric model (see
+\cite[Theorems~1.1--1.3, pp.~220--221]{cekanavicius2001} and
+\cite[Theorems~1.1--1.3, pp.~308--309]{cekanavicius2001ld}).
 
 In short, the exact laws, the Bessel forms and their fixed-scale limits are
 known, and we use them as inputs. What is new here, as far as we know, is
@@ -426,15 +439,46 @@ equations, and for the second it proves the bound
 \eqref{eq:laguerre-bessel-bound}), and
 Corollary~\ref{cor:boundary-layer}. In Section~\ref{sec:periodicwindow},
 Theorem~\ref{thm:periodic-crossing} (even its leading term),
-Theorem~\ref{thm:critical-window} and Corollary~\ref{cor:couplings}. Also not
+Theorem~\ref{thm:critical-window}, Corollary~\ref{cor:couplings} and
+Proposition~\ref{prop:walls}. Also not
 formalized are the remarks and the numbers in the tables. The file
 \nolinkurl{MAP.md} in that folder gives the Lean theorem for each result, or
 says that there is none.
 
-\paragraph{Acknowledgments.} I thank Peter Kagey for posing the problem. I
+\section{Discussion}\label{sec:discussion}
+
+The crossing that Stepanyan et~al.\@~\cite{stepanyan2024} read as a thermal
+transition of the finite chain compares one microstate, the all-up
+configuration, with one magnetization of a broad band. At the crossing the
+band has width of order $N/\sqrt{\log N}$ in the magnetization, its free
+energy relative to full order is the parabola of
+Remark~\ref{rem:free-energy}, and it carries about $\log N$ domain walls
+(Proposition~\ref{prop:walls}). So the energy gap between the two compared
+states grows like $\log N$, not like $N$, and the crossing sharpens only like
+$1/\log N$ in the coupling. In this sense it is a finite-size crossover between
+order and disorder rather than a sharpening transition. Its location is set
+by the balance of one wall-free state against the entropy of about $\log N$
+walls, which is where the $\log\log N$ term comes from. The boundary shift by
+$\log2$ comes from the parity of the number of walls on a ring.
+
+The bounds behind these statements hold at every $N$ and every coupling.
+Theorem~\ref{thm:allbin-bessel} bounds the ratio of the partition function at
+magnetization $a-b$ to the one at full magnetization, so it gives the
+fixed-magnetization partition function of the free chain, as used
+in~\cite{dantchev2022,dantchev2024}, with an explicit relative error, also
+when the mean number of domain walls grows with $N$. The approach extends to
+the $d$-state Potts chain~\cite{paperB} and to slowly switching
+chains~\cite{paperC}. A magnetic field would change the weights of the two
+letters, and we do not treat it here.
+
+\paragraph{Acknowledgments.} I thank Peter Kagey, whose Open Problem
+Collection~\cite{kagey131} asks for this crossing for a Galton board whose
+ball keeps its direction with probability $p$. I
 used AI tools in this work, including Claude Opus 5.5 (Anthropic, through Claude
 Code, in September and October 2026) and GPT-6 Astra (OpenAI). Except for the
-proofs of Theorem~\ref{thm:every-n} and Corollary~\ref{cor:couplings}, I wrote
+proofs of Theorem~\ref{thm:every-n}, Corollary~\ref{cor:couplings},
+Proposition~\ref{prop:walls} and Remarks~\ref{rem:free-energy},
+\ref{rem:convention} and~\ref{rem:ordered}, I wrote
 the proofs and derivations of this paper by hand, without AI assistance, before
 any revision. I then used Claude Opus 5.5 to check everything I had written for
 typos and for statements that were technically wrong. It found a fair number of
@@ -452,6 +496,12 @@ Table~\ref{tab:couplings}, and wrote their proofs and the script that computes
 the table. I checked both by hand. I also checked the proofs, except those of
 Corollary~\ref{cor:couplings}, with GPT-6 Astra, which found nothing beyond the
 earlier check.
+In the revision for this journal the model proposed
+Proposition~\ref{prop:walls}, Remarks~\ref{rem:free-energy},
+\ref{rem:convention} and~\ref{rem:ordered} and Section~\ref{sec:discussion},
+and wrote their proofs. It also drafted the comparisons with the literature
+added in that revision and the revised figures and their scripts.
+% TODO (author): say here how you checked these, once you have.
 
 The Lean~4 formalization in
 \nolinkurl{kagey-problems/problem131/lean/PaperA}, including its later
