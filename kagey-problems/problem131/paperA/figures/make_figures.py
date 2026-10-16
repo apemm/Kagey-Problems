@@ -9,11 +9,17 @@ natural size, and is written as vector PDF and 600 dpi PNG
 next to this script. Colours go light to dark within a sweep and line styles
 alternate, so the figures still read in greyscale.
 
-  row10     bin probabilities of row 10 (N = 9) at p = 1/3, 1/2, 2/3, 5/6
+  row10     bin probabilities of row 10 (N = 9) below, at and above p_9
   crossing  N(1 - p_N)/log N against N, with the Bessel root and the expansions
   lattice   the rook paths and blocked walks for the word RRLRLL
-  allbin    1 - p_{a,N-a} against a, with the leading law and the edge law
-  window    the critical window S^X_{N,k}(u^X_N + t/N) against exp(t - 2y^2)
+  allbin    1 - p_{a,N-a} against a, with the leading law and the edge law, and the
+            relative errors of the three approximations of the odds at N = 10^4
+  window    the profile e^{-t} S^X_{N,k}(u^X_N + t/N) against e^{-2y^2}, and the count of bins
+            above the endpoints against sqrt(2 max(t,0)), for N = 10^4, 10^6, 10^8
+  layer     the boundary layer at odds v_N = N^{-kappa}, one row and the width against N
+
+The plotted values are written to ../data/figures/fig_<name>.json, with the method and the
+root tolerance. Run time is about two minutes.
 
 The figures of Paper B are made by paperB/figures/make_figures.py, and the
 program figure by figures/make_program_figure.py in the Problem 131 folder.
@@ -62,13 +68,28 @@ def save(fig, name):
     print(f"wrote {name}.pdf and {name}.png")
 
 
+def save_data(name, obj):
+    """The plotted values, in paperA/data/figures/<name>.json."""
+    import json
+    out = HERE.parent / "data" / "figures"
+    out.mkdir(parents=True, exist_ok=True)
+
+    def conv(v):
+        if isinstance(v, np.ndarray):
+            return v.tolist()
+        if isinstance(v, (np.floating, np.integer)):
+            return v.item()
+        raise TypeError(type(v))
+    (out / f"{name}.json").write_text(json.dumps(obj, default=conv, indent=1) + "\n", encoding="utf-8")
+
+
 def shades(n, cmap=None, lo=0.0, hi=1.0):
     """n colours along the gradient of the series (figures/series_style.py)."""
     return ss.shades(n, lo, hi)
 
 
-def panel(ax, letter, x=0.03, y=0.95):
-    ax.text(x, y, f"({letter})", transform=ax.transAxes, va="top")
+def panel(ax, letter, x=0.03, y=0.95, ha="left", va="top"):
+    ss.panel(ax, letter, x=x, y=y, ha=ha, va=va)
 
 
 # ---------------------------------------------------------------- exact law
@@ -231,27 +252,47 @@ def check():
 
 # ---------------------------------------------------------------- 1 row 10
 
+def pmf_float(n, p):
+    """P_N(k), k = 0..N, in floating point from the run counts of Theorem 2.1."""
+    q = 1 - p
+    return np.array([0.5 * sum(c * p ** (n - 1 - j) * q ** j for j, c in enumerate(run_count(k, n - k)))
+                     for k in range(n + 1)])
+
+
 def fig_row10():
-    ps = [Fraction(1, 3), Fraction(1, 2), Fraction(2, 3), Fraction(5, 6)]
-    cols = shades(4)
-    k = np.arange(10)
-    fig, axs = plt.subplots(1, 4, figsize=(FULL, 1.75), sharey=True)
-    for ax, p, c, letter in zip(axs, ps, cols, "abcd"):
-        P = pmf_exact(9, p)
-        ax.bar(k, [float(v) for v in P], width=0.78, color=c, edgecolor=INK, linewidth=0.4)
-        ax.set_title(rf"$p={p.numerator}/{p.denominator}$", fontsize=8, pad=3)
-        ax.set_xticks([0, 3, 6, 9])
-        ax.set_xlim(-0.7, 9.7)
-        ax.set_xlabel(r"bin $k$")
+    """Row ten (N = 9) below, at and above its crossing p_9, on a common vertical scale."""
+    n = 9
+    with mp.workdps(40):
+        p9 = float(1 / (1 + central_u_mp(n)))
+    ps = [(0.75, r"$p=3/4$, below $p_9$"), (p9, rf"$p=p_9={p9:.5f}$"), (0.9, r"$p=9/10$, above $p_9$")]
+    cols = [ss.PURPLE, ACCENT, ss.GOLD]
+    k = np.arange(n + 1)
+    m = 2 * k - n                                         # the magnetization of bin k
+    fig, axs = plt.subplots(1, 3, figsize=(FULL, 1.95), sharey=True)
+    rows = []
+    for ax, (p, title), c, letter in zip(axs, ps, cols, "abc"):
+        P = pmf_float(n, p)
+        assert abs(P.sum() - 1) < 1e-12
+        rows.append({"p": p, "P": P})
+        ax.bar(m, P, width=1.55, color=c, edgecolor=INK, linewidth=0.4)
+        ax.axhline(P[0], color=INK, lw=0.7, ls=(0, (5, 3)))
+        ax.set_title(title, fontsize=8, pad=3)
+        ax.set_xticks([-9, -5, -1, 1, 5, 9])
+        ax.set_xlim(-10.3, 10.3)
+        ax.set_xlabel(r"magnetization $2k-9$")
         ax.tick_params(top=False)
-        if p == Fraction(5, 6):
-            ax.axhline(float(P[0]), color=ACCENT, lw=0.8, ls="--")
-            ax.annotate("ends", (0, float(P[0])), xytext=(1.2, 0.2), color=ACCENT,
-                        arrowprops=dict(arrowstyle="-", lw=0.5, color=ACCENT))
+        panel(ax, letter)
+    # at p_9 the two central bins tie with the endpoints
+    P9 = rows[1]["P"]
+    assert abs(P9[4] - P9[0]) < 1e-12 and abs(P9[5] - P9[0]) < 1e-12
+    assert rows[0]["P"][4] > rows[0]["P"][0] and rows[2]["P"][4] < rows[2]["P"][0]
     axs[0].set_ylabel(r"$P_9(k)$")
-    axs[0].set_ylim(0, 0.36)
+    axs[0].set_ylim(0, 0.27)
     fig.subplots_adjust(left=0.075, right=0.995, wspace=0.08)
     save(fig, "row10")
+    save_data("fig_row10", {"N": n, "p_9": p9, "rows": rows,
+                            "method": "run counts of Theorem 2.1 in double precision; p_9 by bisection "
+                                      "of the run polynomial at 40 digits"})
 
 
 # ---------------------------------------------------------------- 2 crossing
@@ -280,8 +321,8 @@ def fig_crossing():
     fig, (a, b) = plt.subplots(1, 2, figsize=(FULL, 2.3))
     m = ns >= 3
     a.axhline(1.0, color=ss.SERIES["grid"], lw=0.6)
-    a.plot(ns[m], two[m] / L[m], "-", color=cols[0], lw=1.1, label=r"$\nu_N$")
-    a.plot(ns[m], three[m] / L[m], "-", color=cols[1], lw=1.1, label=r"$\nu_N$ + $1/L$ term")
+    a.plot(ns[m], two[m] / L[m], "-", color=cols[0], lw=1.1, label=r"two-term $\nu_N$")
+    a.plot(ns[m], three[m] / L[m], "-", color=cols[1], lw=1.1, label="three-term")
     a.plot(ns, bessel / L, "--", color=cols[2], lw=1.1, label="Bessel root $u_B$")
     a.plot(ns, exact / L, "-", color=EXACT, lw=1.6, label="exact $z_N$")
     a.set_xscale("log")
@@ -293,8 +334,8 @@ def fig_crossing():
     a.text(0.97, 0.87, "(a)", transform=a.transAxes, ha="right", va="top")   # clear of the line at 1
 
     b.axhline(0.0, color=ss.SERIES["grid"], lw=0.6)
-    b.plot(ns[m], (exact - two)[m], "-", color=cols[0], lw=1.1, label=r"minus $\nu_N$")
-    b.plot(ns[m], (exact - three)[m], "-", color=cols[1], lw=1.1, label=r"minus $\nu_N$ + $1/L$ term")
+    b.plot(ns[m], (exact - two)[m], "-", color=cols[0], lw=1.1, label=r"minus two-term")
+    b.plot(ns[m], (exact - three)[m], "-", color=cols[1], lw=1.1, label="minus three-term")
     b.plot(ns, exact - bessel, "--", color=cols[2], lw=1.1, label="minus Bessel root")
     b.set_xscale("log")
     b.set_xlim(2, 1e4)
@@ -305,6 +346,12 @@ def fig_crossing():
     b.text(0.97, 0.04, "(b)", transform=b.transAxes, ha="right", va="bottom")   # clear of the curves
     fig.subplots_adjust(left=0.075, right=0.985, wspace=0.26)
     save(fig, "crossing")
+    sel = np.unique(np.round(np.geomspace(2, 10000, 200)).astype(int)) - 2
+    save_data("fig_crossing", {"N": ns[sel], "z_N": exact[sel], "bessel_root": bessel[sel],
+                               "two_term": two[sel], "three_term": three[sel],
+                               "method": "u_N by float bisection of the run polynomial "
+                                         "(80 halvings of [0, 1/2]); x_B by bisection of the "
+                                         "Bessel power series"})
 
 
 # ---------------------------------------------------------------- 3 lattice
@@ -450,78 +497,257 @@ def edge_y(a):
     return (lo + hi) / 2
 
 
+def edge_gamma(a):
+    """gamma_a of Theorem 4.8, from H_a' and H_a'' at y_a."""
+    y = edge_y(a)
+    c = [comb(a - 1, r) / factorial(r + 1) for r in range(a)]             # of y^{r+1}
+    h1 = sum(cr * (r + 1) * y ** r for r, cr in enumerate(c))
+    h2 = sum(cr * (r + 1) * r * y ** (r - 1) for r, cr in enumerate(c) if r >= 1)
+    return (1 + y + (y + y * y / 2) * h2 / h1) / (2 * sqrt(y))
+
+
+def uniform_odds(a, b):
+    """The main terms of Theorem 4.7 for u_{a,b}, without the error term."""
+    a, b = np.asarray(a, float), np.asarray(b, float)
+    A = a * b / (a + b)
+    eta = 2 * np.sqrt(a * b) / (a + b)
+    ell = np.log(A)
+    C = 0.5 * log(8 * pi) - np.log(1 + eta)
+    B = (3 - eta) / (8 * (1 + eta))
+    return (ell - 0.5 * np.log(ell) + C + (0.25 * np.log(ell) - 0.5 * C + B) / ell) / (2 * np.sqrt(a * b))
+
+
 def fig_allbin():
     Ns = [100, 1000, 10000]
-    cols = shades(3)
-    styles = ["-", "--", "-"]
-    fig, ax = plt.subplots(figsize=(COL, 2.6))
-    for N, c, ls in zip(Ns, cols, styles):
+    cols = shades(3, hi=0.85)
+    fig, (ax, bx) = plt.subplots(1, 2, figsize=(FULL, 2.6))
+    data = {"method": "u_{a,N-a} by float bisection of the run polynomial (80 halvings of [0, 1/2])"}
+    for N, c in zip(Ns, cols):
         a = np.unique(np.round(np.geomspace(1, N // 2, 300)).astype(int))
         u = root_increasing(lambda v: free_ratio(a, N - a, v), np.zeros(a.shape), np.full(a.shape, 0.5))
         q = u / (1 + u)
-        assert np.all(np.diff(q) < 0), "Proposition 6.1: 1 - p_{a,N-a} decreases toward the middle"
+        assert np.all(np.diff(q) < 0), "Proposition 4.1: 1 - p_{a,N-a} decreases toward the middle"
         if N == 100:          # the center is the table value p_100
             assert abs(1 - q[-1] - float(TABLE_PN[100])) < 1e-8
-        ax.plot(a, q, ls, color=c, lw=1.1, label=rf"$N={N}$")
+        ax.plot(a, q, "-", color=c, lw=1.2, label=rf"$N={N}$")
         g = a >= 2
-        ax.plot(a[g], np.log(a[g]) / (2 * np.sqrt(a[g] * (N - a[g]))), ":", color=c, lw=1.0)
+        ax.plot(a[g], np.log(a[g]) / (2 * np.sqrt(a[g] * (N - a[g]))), ls=(0, (5, 3)), color=c, lw=0.9)
         e = np.arange(1, 7)
         ys = np.array([edge_y(k) for k in e])
         cs = np.sqrt(ys)
         bb = N - e
         ax.plot(e, cs / np.sqrt(bb) - (1 + cs ** 2) / bb, "o", ms=3.2, mfc="white", mec=c, mew=0.8)
-    ax.plot([], [], ":", color="0.3", label=r"$\log a/(2\sqrt{ab})$")
+        data[f"N={N}"] = {"a": a, "one_minus_p": q}
+    ax.plot([], [], ls=(0, (5, 3)), color="0.3", lw=0.9, label=r"$\log a/(2\sqrt{ab})$")
     ax.plot([], [], "o", ms=3.2, mfc="white", mec="0.3", label="edge law")
     ax.set_xscale("log")
     ax.set_yscale("log")
     ax.set_xlim(0.8, 6000)
     ax.set_ylim(5e-4, 0.25)
     ax.set_xlabel(r"distance $a$ from the edge ($b=N-a$)")
-    ax.set_ylabel(r"$1-p_{a,N-a}$")
-    ax.legend(frameon=False, loc="upper right", handlelength=2.0, ncol=1)
+    ax.set_ylabel(r"switching probability $1-p_{a,N-a}$")
+    ax.legend(frameon=False, loc="upper right", bbox_to_anchor=(1.0, 0.9), handlelength=2.2, ncol=1)
+    panel(ax, "a", x=0.97, y=0.95)
+    ax.texts[-1].set_ha("right")
+
+    # (b) relative errors in the odds at N = 10^4
+    N = 10 ** 4
+    a = np.arange(1, N // 2 + 1)
+    u = root_increasing(lambda v: free_ratio(a, N - a, v), np.zeros(a.shape), np.full(a.shape, 0.5), iters=90)
+    b = N - a
+    lead = np.log(a) / (2 * np.sqrt(a * b))
+    unif = uniform_odds(a, b)
+    ae = np.arange(1, 41)
+    edge = np.array([sqrt(edge_y(k)) / sqrt(N - k) - 1 / (N - k) + edge_gamma(k) / (N - k) ** 1.5 for k in ae])
+    gl, gu = a >= 2, a >= 4                         # log a > 0, and log log A defined
+    err_lead = np.abs(lead[gl] / u[gl] - 1)
+    err_unif = np.abs(unif[gu] / u[gu] - 1)
+    err_edge = np.abs(edge / u[ae - 1] - 1)
+    bx.plot(a[gl], err_lead, "-", color=ss.GOLD, lw=1.1, label=r"leading law $\log a/(2\sqrt{ab})$")
+    bx.plot(a[gu], err_unif, "-", color=EXACT, lw=1.1, label="uniform expansion")
+    bx.plot(ae, err_edge, "o", ms=3.0, color=ss.PURPLE, mfc=ss.PURPLE, mew=0, label="edge expansion")
+    bx.set_xscale("log")
+    bx.set_yscale("log")
+    bx.set_xlim(0.8, 6000)
+    bx.set_ylim(1e-7, 2)
+    bx.set_xlabel(r"distance $a$ from the edge, $N=10^4$")
+    bx.set_ylabel(r"relative error in the odds $u_{a,N-a}$")
+    bx.legend(frameon=False, loc="lower right", bbox_to_anchor=(1.0, 0.0), handlelength=2.0)
+    panel(bx, "b", x=0.97, y=0.95)
+    bx.texts[-1].set_ha("right")
+    fig.subplots_adjust(left=0.085, right=0.99, wspace=0.3)
     save(fig, "allbin")
+    i100 = 99
+    print(f"allbin (b): at a = 100 the errors are leading {err_lead[i100 - 1]:.3g}, "
+          f"uniform {err_unif[i100 - 3]:.3g}; edge at a = 1, 6, 40: "
+          f"{err_edge[0]:.2g}, {err_edge[5]:.2g}, {err_edge[39]:.2g}")
+    data["errors_N=10000"] = {"a": a, "u": u, "leading": lead, "uniform": unif,
+                              "edge_a": ae, "edge": edge}
+    save_data("fig_allbin", data)
 
 
 # ---------------------------------------------------------------- 5 window
 
-def fig_window(N=10 ** 6):
-    L = log(N)
-    a0, b0 = N // 2, (N + 1) // 2
-    top = 3 * L / N
-    uF = float(root_increasing(lambda v: free_ratio(a0, b0, v), 0.0, top, 100))
-    uP = float(root_increasing(lambda v: periodic_ratio(a0, b0, v), 0.0, top, 100))
-    # the values recorded in data/periodic-window-verification.json at N = 10^6
-    ref = {("free", -1): (0, "-0.043"), ("free", 1): (0.5, "0.0985"),
-           ("periodic", 2): (1, "0.0033"), ("periodic", 1): (0.25, "0.0543")}
-    ts = [-1, 0, 1, 2]
-    cols = shades(4)
-    ks = np.unique(np.round(N / 2 + np.linspace(-1.3, 1.3, 521) * N / sqrt(L)).astype(int))
-    y = (ks - N / 2) * sqrt(L) / N
+def count_above(N, law, u):
+    """M_N^X: the interior bins strictly above the endpoints, for an array of odds u.
+
+    The interior ratios increase strictly toward the middle and are symmetric, so the bins above
+    form an interval around the middle; its left end is found by bisection over k."""
+    u = np.atleast_1d(np.asarray(u, float))
+    m = N // 2
+    smid = law(np.full(u.shape, m), np.full(u.shape, N - m), u)
+    lo = np.ones(u.shape, dtype=np.int64)
+    hi = np.full(u.shape, m, dtype=np.int64)
+    for _ in range(64):
+        mid = (lo + hi) // 2
+        above = law(mid, N - mid, u) > 1
+        hi = np.where(above, mid, hi)
+        lo = np.where(above, lo, mid + 1)
+    return np.where(smid > 1, N - 2 * lo + 1, 0)
+
+
+def fig_window():
+    """(a) the profile e^{-t} S^X at t = 1, (b) the count of bins above the endpoints."""
+    Ns = [10 ** 4, 10 ** 6, 10 ** 8]
+    cols = shades(3, hi=0.85)
+    laws = [("free", free_ratio, "-"), ("periodic", periodic_ratio, (0, (5, 3)))]
+    fig, (ax, bx) = plt.subplots(1, 2, figsize=(FULL, 2.5))
     yy = np.linspace(-1.3, 1.3, 400)
-    fig, axs = plt.subplots(1, 2, figsize=(FULL, 2.4), sharey=True)
-    for ax, name, law, uc, letter in [(axs[0], "free", free_ratio, uF, "a"),
-                                      (axs[1], "periodic", periodic_ratio, uP, "b")]:
-        for j, (t, c) in enumerate(zip(ts, cols)):
-            u = uc + t / N
-            R = law(ks, N - ks, u)
-            ax.plot(y, R, "-", color=c, lw=1.2, label=rf"$t={t}$")
-            ax.plot(yy, np.exp(t - 2 * yy ** 2), "--", color="k", lw=0.6)
-            for (nm, tt), (y0, s) in ref.items():
-                if nm == name and tt == t:
-                    k0 = int(N / 2 + y0 * N / sqrt(L))
-                    got = law(k0, N - k0, u) / np.exp(t - 2 * y0 ** 2) - 1
-                    assert abs(got - float(s)) < 2e-3, (nm, tt, got, s)
-        ax.axhline(1.0, color="0.6", lw=0.6, ls=":")
-        ax.set_xlim(-1.3, 1.3)
-        ax.set_ylim(0, 8.2)
-        ax.set_xlabel(r"$y=(k-N/2)\sqrt{\log N}/N$")
-        ax.set_title(f"{name} boundary", fontsize=8)
-        panel(ax, letter)
-    axs[0].set_ylabel(r"$S^X_{N,k}(u^X_N+t/N)$")
-    axs[1].plot([], [], "--", color="k", lw=0.6, label=r"$e^{t-2y^2}$")
-    axs[1].legend(frameon=False, loc="upper right", handlelength=1.8)
-    fig.subplots_adjust(left=0.075, right=0.995, wspace=0.06)
+    ts = np.linspace(-1, 4, 101)
+    data = {"method": "central odds u_N^X by float bisection (200 halvings of [0, 3 log N/N]) of the "
+                      "exact run polynomial (free) or cyclic run polynomial (periodic); ratios by the same "
+                      "polynomials in double precision", "t_profile": 1.0}
+    errs = {}
+    for N, c in zip(Ns, cols):
+        L = log(N)
+        a0, b0 = N // 2, (N + 1) // 2
+        ks = np.unique(np.round(N / 2 + np.linspace(-1.3, 1.3, 521) * N / sqrt(L)).astype(np.int64))
+        y = (ks - N / 2) * sqrt(L) / N
+        for name, law, ls in laws:
+            uc = float(root_increasing(lambda v: law(a0, b0, v), 0.0, 3 * L / N, 200))
+            prof = law(ks, N - ks, uc + 1.0 / N) / np.e
+            ax.plot(y, prof, ls=ls, color=c, lw=1.1)
+            M = count_above(N, law, uc + ts / N)
+            bx.plot(ts, sqrt(L) * M / N, ls=ls, color=c, lw=1.1)
+            errs[(N, name)] = float(law(a0, b0, uc + 2.0 / N) / np.exp(2.0) - 1)
+            data[f"{name} N={N}"] = {"u_center": uc, "y": y, "profile_t1": prof, "t": ts, "M": M,
+                                     "rel_err_t2_y0": errs[(N, name)]}
+            if N == 10 ** 6:
+                # the values recorded in data/periodic-window-verification.json at N = 10^6
+                ref = {("free", -1): (0, "-0.043"), ("free", 1): (0.5, "0.0985"),
+                       ("periodic", 2): (1, "0.0033"), ("periodic", 1): (0.25, "0.0543")}
+                for (nm, tt), (y0, s) in ref.items():
+                    if nm == name:
+                        k0 = int(N / 2 + y0 * N / sqrt(L))
+                        got = law(k0, N - k0, uc + tt / N) / np.exp(tt - 2 * y0 ** 2) - 1
+                        assert abs(got - float(s)) < 2e-3, (nm, tt, got, s)
+    ax.plot(yy, np.exp(-2 * yy ** 2), "-", color=INK, lw=0.7, zorder=0)
+    ax.set_xlim(-1.3, 1.3)
+    ax.set_ylim(0, 1.25)
+    ax.set_xlabel(r"$y=(k-N/2)\sqrt{\log N}/N$")
+    ax.set_ylabel(r"$e^{-t}S^X_{N,k}(u^X_N+t/N)$ at $t=1$")
+    tt = np.linspace(-1, 4, 400)
+    bx.plot(tt, np.sqrt(2 * np.maximum(tt, 0)), "-", color=INK, lw=0.7, zorder=0)
+    bx.set_xlim(-1, 4)
+    bx.set_ylim(0, 3.1)
+    bx.set_xlabel(r"$t$")
+    bx.set_ylabel(r"$\sqrt{\log N}\,M^X_N(t)/N$")
+    for N, c in zip(Ns, cols):
+        bx.plot([], [], "-", color=c, lw=1.1, label=rf"$N=10^{{{int(round(log(N, 10)))}}}$")
+    bx.plot([], [], "-", color="0.35", lw=1.1, label="free")
+    bx.plot([], [], ls=(0, (5, 3)), color="0.35", lw=1.1, label="periodic")
+    bx.plot([], [], "-", color=INK, lw=0.7, label="limit")
+    bx.legend(frameon=False, loc="upper left", handlelength=2.2)
+    panel(ax, "a", x=0.97, y=0.95)
+    ax.texts[-1].set_ha("right")
+    panel(bx, "b", x=0.97, y=0.05, va="bottom")
+    bx.texts[-1].set_ha("right")
+    fig.subplots_adjust(left=0.075, right=0.99, wspace=0.27)
     save(fig, "window")
+    for k, v in errs.items():
+        print(f"window: relative error at t = 2, y = 0, {k}: {v:.4f}")
+    save_data("fig_window", data)
+
+
+# ---------------------------------------------------------------- 6 boundary layer
+
+def layer_width(N, v):
+    """L_N = #{1 <= k <= N/2 : P_N(k) < P_N(0)} at odds v, by bisection (ratios increase inward)."""
+    m = N // 2
+    if free_ratio(m, N - m, v) < 1:
+        return m
+    lo, hi = 1, m
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if free_ratio(mid, N - mid, v) >= 1:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo - 1
+
+
+def layer_refined(N, v):
+    """The edge distance a at which the main terms of Theorem 4.7 equal v (real a, by bisection)."""
+    f = lambda a: float(uniform_odds(a, N - a)) - v
+    lo, hi = 4.0, N / 2
+    for _ in range(200):
+        mid = (lo + hi) / 2
+        lo, hi = (mid, hi) if f(mid) > 0 else (lo, mid)
+    return (lo + hi) / 2
+
+
+def fig_layer():
+    kappas = [0.6, 0.7, 0.8]
+    cols = shades(3, hi=0.85)
+    fig, (ax, bx) = plt.subplots(1, 2, figsize=(FULL, 2.5))
+    data = {"method": "ratios S_{k,N-k}(v) from the run polynomial in double precision; L_N by "
+                      "bisection over k using the strict inward ordering of Proposition 4.1"}
+    # (a) one row, N = 10^8 and v = N^{-0.7}
+    N, kap = 10 ** 8, 0.7
+    v = N ** (-kap)
+    k = np.unique(np.round(np.geomspace(1, N // 2, 600)).astype(np.int64))
+    logS = np.log(free_ratio(k, N - k, v))
+    Lw = layer_width(N, v)
+    ax.axvspan(1, Lw + 0.5, color=ss.SERIES["grid"], alpha=0.35, lw=0)
+    ax.axhline(0, color=INK, lw=0.6)
+    ax.plot(k, logS, "-", color=EXACT, lw=1.2)
+    ax.axvline(Lw + 0.5, color=ACCENT, lw=0.8, ls=(0, (5, 3)))
+    ax.set_xscale("log")
+    ax.set_xlim(1, N / 2)
+    ax.set_ylim(-10, 40)
+    ax.set_xlabel(r"distance $k$ from the edge")
+    ax.set_ylabel(r"$\log\,(P_N(k)/P_N(0))$")
+    ax.text(1.6, 30, rf"$N=10^8$, $v_N=N^{{-0.7}}$" "\n" rf"$\mathcal{{L}}_N={Lw}$", va="top")
+    panel(ax, "a", x=0.97, y=0.05, va="bottom")
+    ax.texts[-1].set_ha("right")
+    data["row"] = {"N": N, "kappa": kap, "k": k, "logS": logS, "L_N": Lw}
+    # (b) the width against N
+    es = np.arange(6, 12.01, 0.5)          # below 10^6 the hypotheses fail visibly for kappa = 0.8
+    for kap, c in zip(kappas, cols):
+        rl, rr, Ns = [], [], []
+        for e in es:
+            N = int(round(10 ** e))
+            v = N ** (-kap)
+            Lw = layer_width(N, v)
+            Om = 1 / (sqrt(N) * v)
+            rl.append(Lw / (Om ** 2 * log(Om) ** 2))
+            rr.append(Lw / layer_refined(N, v))
+            Ns.append(N)
+        bx.plot(Ns, rl, "-", color=c, lw=1.1, marker="o", ms=2.6, label=rf"$\kappa={kap}$")
+        data[f"kappa={kap}"] = {"N": Ns, "ratio_leading": rl, "ratio_refined": rr}
+        print(f"layer: kappa = {kap}, L_N/(Omega^2 log^2 Omega) from {rl[0]:.3f} to {rl[-1]:.3f}, "
+              f"L_N/a_refined from {rr[0]:.4f} to {rr[-1]:.4f}, max |.-1| {max(abs(r - 1) for r in rr):.4f}")
+    bx.axhline(1, color=INK, lw=0.6)
+    bx.set_xscale("log")
+    bx.set_xlim(6e5, 1.6e12)
+    bx.set_ylim(0, 4.5)
+    bx.set_xlabel(r"$N$")
+    bx.set_ylabel(r"$\mathcal{L}_N/(\Omega_N^2\log^2\Omega_N)$")
+    bx.legend(frameon=False, loc="upper right", handlelength=2.2)
+    panel(bx, "b", x=0.03, y=0.05, va="bottom")
+    fig.subplots_adjust(left=0.075, right=0.99, wspace=0.27)
+    save(fig, "layer")
+    save_data("fig_layer", data)
 
 
 if __name__ == "__main__":
@@ -532,3 +758,4 @@ if __name__ == "__main__":
     fig_lattice()
     fig_allbin()
     fig_window()
+    fig_layer()
