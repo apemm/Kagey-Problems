@@ -43,6 +43,7 @@ import PaperA.TableValuesCouplings
 import PaperA.TableValuesText
 import PaperA.TableValuesBessel
 import PaperA.TableValuesField
+import PaperA.TableValuesWalls
 
 /-!
 # Paper A (`paperA/problem131.tex`), root module
