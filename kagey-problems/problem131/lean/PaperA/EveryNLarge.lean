@@ -11,7 +11,7 @@ With `U = ζ_N + 1/(8ζ_N)`, proved here:
 
 * `F(w/2) = √(2w/π) e^w E(w)` and `N/2 = √(2ζ_N/π) e^{ζ_N}`, hence
   `log F(w/2) = log(N/2) + (1/2) log(w/ζ_N) + (w - ζ_N) + log E(w)` (`log_Fcent_eq`);
-* Step 0 (the first paragraph of that proof) for `N ≥ 175`: `ζ_N > 4`,
+* Step 1 of that proof for `N ≥ 175`: `ζ_N > 4`,
   `N ≥ 174.25 e^{ζ_N - 4}`, and `U ≤ 0.0232 N`, `U² ≤ 0.0933 N`, `U³ ≤ 0.376 N`,
   `ζ_N(ζ_N+1) ≤ 0.1148 N` (`four_lt_zetaN`, `N_ge_exp`, `step0_bounds`);
 * the two sign conditions `B > 0` and `D > 0` of the upper bound (`B_pos`, `D_pos`);
@@ -108,7 +108,7 @@ theorem log_Fcent_eq (N : ℕ) (hN : 1 ≤ N) {w : ℝ} (hw : 0 < w) :
     Real.log_mul (by positivity) (by positivity)]
   ring
 
-/-! ### Step 0: `ζ_N > 4` and the small quantities for `N ≥ 175` -/
+/-! ### Step 1: `ζ_N > 4` and the small quantities for `N ≥ 175` -/
 
 /-- `ζ_N > 4` for `N ≥ 175`, since `32 e^8 < π · 175²`. -/
 theorem four_lt_zetaN (N : ℕ) (hN : 175 ≤ N) : 4 < zetaN N := by
@@ -150,7 +150,7 @@ theorem N_ge_exp (N : ℕ) (hN : 175 ≤ N) : 174.25 * Real.exp (zetaN N - 4) �
     exact le_of_mul_le_mul_left h1 Real.pi_pos
   exact (pow_le_pow_iff_left₀ (by positivity) hN'.le two_ne_zero).1 key
 
-/-- The small quantities of Step 0, with `U = ζ_N + 1/(8ζ_N)`:
+/-- The small quantities of Step 1, with `U = ζ_N + 1/(8ζ_N)`:
 `U ≤ 0.0232 N`, `U² ≤ 0.0933 N`, `U³ ≤ 0.376 N`, `ζ_N(ζ_N+1) ≤ 0.1148 N`. -/
 theorem step0_bounds (N : ℕ) (hN : 175 ≤ N) :
     zetaN N + 1 / (8 * zetaN N) ≤ 0.0232 * N ∧
@@ -227,7 +227,7 @@ theorem B_pos {ζ τ : ℝ} (hζ : 4 ≤ ζ)
   rw [e]
   exact B_pos_x (by positivity) hx1 hτ'
 
-/-- `D > 0`: the `N`-part of the upper bound, from the Step 0 bounds `r ≤ 0.0232`,
+/-- `D > 0`: the `N`-part of the upper bound, from the Step 1 bounds `r ≤ 0.0232`,
 `rU ≤ 0.0933`, `rU² ≤ 0.376`, where `r = U/N`. -/
 theorem D_pos {ζ U r δ : ℝ} (hζ : 4 ≤ ζ) (hU : U = ζ + 1 / (8 * ζ)) (hr0 : 0 < r)
     (hr1 : r ≤ 0.0232) (hrU : r * U ≤ 0.0933) (hrU2 : r * U ^ 2 ≤ 0.376)
