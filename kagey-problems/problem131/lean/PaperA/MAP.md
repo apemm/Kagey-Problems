@@ -2,7 +2,7 @@
 
 This file maps covered statements of Paper A (`paperA/problem131.tex` and the files it inputs)
 to Lean declarations and records partial coverage and omissions. The library `PaperA` has root
-`PaperA.lean`, which imports all 43 modules in `PaperA/` (44 modules including the root), in
+`PaperA.lean`, which imports all 44 modules in `PaperA/` (45 modules including the root), in
 namespace `Kagey131`. It uses Lean 4 v4.33.1 and Mathlib v4.33.1. Every theorem listed here is
 proved without `sorry`, `admit` or new axioms, and `#print axioms` on each of them reports only
 `propext`, `Classical.choice` and `Quot.sound` (see `build-log.txt`).
@@ -86,6 +86,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `TableValuesEveryN` | the values of the table `tab:every-n`, by kernel-checked certificates |
 | `TableValuesCouplings` | the values of the table `tab:couplings`, by kernel-checked certificates |
 | `TableValuesText` | decimals displayed in the text, by kernel-checked certificates |
+| `TableValuesBessel` | the ratios `u_B/u_N` quoted in Section 3, with rational bounds on the Bessel root `x_B` from the series of `I_0` and `I_1` |
 
 ## Section 1, setting and notation
 
@@ -236,6 +237,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 
 A decimal written with `...` is a truncation and is stated as two bounds. The others are stated
 with `RoundsTo` (correct rounding). All are in the module `TableValuesText`.
+Rows that name another module in the column Where are in that module.
 
 | Where | Number | Statement | Lean |
 | --- | --- | --- | --- |
@@ -251,6 +253,7 @@ with `RoundsTo` (correct rounding). All are in the module `TableValuesText`.
 | Section 5 | `0.002`, `0.171`, `0.338` | `|main terms - J_N^P|`, `|(2L - 1)/5 - J_N^P|`, `|0.3864 L - 0.21055 - J_N^P|` at `N = 10⁵` | `tv_off_by_5` |
 | caption of `tab:couplings` | `0.030` | `(log 2)/(2 log N)` at `N = 10⁵` | `tv_shift_100000` |
 | `rem:ordered` | `1.046`, `1.330` | `J_ord - J_N^F` at `N = 10³` and `N = 10⁵`, with `J_ord = -(1/2) log(2^{1/(N-1)} - 1)` | `tv_Jord_3`, `tv_Jord_5` |
+| after `rem:sign` (module `TableValuesBessel`) | `0.9761`, `0.9864`, `0.9924`, `0.99579`, `0.99769`, `0.99874` | `u_B/u_N` at `N = 100, 200, 400, 800, 1600, 3200`, with `u_B = x_B/h`, `h = N/2` and `x_B = Groot 1 (h/2)` the root of `F(x_B) = h` | `tv_uB_div_uN_100`, `tv_uB_div_uN_200`, `tv_uB_div_uN_400`, `tv_uB_div_uN_800`, `tv_uB_div_uN_1600`, `tv_uB_div_uN_3200`, with `tv_xB_N`, `tv_uN_N`, `lt_Groot_of_cert`, `Groot_lt_of_cert` |
 
 ## Not in this paper, kept in the repository for the tables note
 
@@ -498,6 +501,13 @@ Partial coverage.
     logarithm with Taylor bounds for `exp`, with `π` to 20 decimals. The rationals were chosen
     in floating point and are data only. The paper computes the tables in 50-digit and
     floating-point arithmetic instead.
+
+49. After `rem:sign`, the ratios `u_B/u_N` (module `TableValuesBessel`). The Bessel root is
+    `x_B = Groot 1 (h/2)`, the root of `G_1(x) = x(I_0(2x) + I_1(2x)) = h/2`, which is
+    `F(x_B) = h` (`central_root_bound`). Lean brackets `x_B` with width `10⁻¹⁵` by the first `30`
+    terms of the series of `I_0(2x) + I_1(2x)` at the two rational endpoints, with the geometric
+    bound `ρ = x²/31²` on the rest, and `u_N` with width `10⁻²⁵` as in difference 48. The rational
+    inequalities are checked by `decide +kernel`.
 
 ## Not in Lean
 
