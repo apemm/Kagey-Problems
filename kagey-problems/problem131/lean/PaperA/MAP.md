@@ -2,7 +2,7 @@
 
 This file maps covered statements of Paper A (`paperA/problem131.tex` and the files it inputs)
 to Lean declarations and records partial coverage and omissions. The library `PaperA` has root
-`PaperA.lean`, which imports all 46 modules in `PaperA/` (47 modules including the root), in
+`PaperA.lean`, which imports all 47 modules in `PaperA/` (48 modules including the root), in
 namespace `Kagey131`. It uses Lean 4 v4.33.1 and Mathlib v4.33.1. Every theorem listed here is
 proved without `sorry`, `admit` or new axioms, and `#print axioms` on each of them reports only
 `propext`, `Classical.choice` and `Quot.sound` (see `build-log.txt`).
@@ -89,6 +89,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `TableValuesBessel` | the ratios `u_B/u_N` quoted in Section 3, with rational bounds on the Bessel root `x_B` from the series of `I_0` and `I_1` |
 | `TableValuesField` | the examples after Theorem `thm:field`: the minimizing `a`, `y_*(𝓑)` and `N (u_N^{(≥2)})²` at `N = 10⁴`, with exact rational forms of `H_a`, `S_{a,b}` and `S^P_{N,a}` and an explicit threshold for the tail bound |
 | `TableValuesWalls` | the numbers quoted in Section 5 on domain walls (`𝒲_N(u_N) - z_N`, `1/2 + 1/(8z_N)`, `1/(2𝒲_N(u_N))`), the mean domain length `l_d` and the window profile errors of Figure `fig:window` |
+| `TableValuesExtra` | further numbers in the text: the layer width `𝓛_N = 49805` of Figure `fig:layer`, `f(ζ_2774) - 1 > 2.0 × 10⁻⁴` and `f(ζ_2773) < 1` in the proof of Corollary `cor:every-n`(d), and the `9.5` percent of Remark `rem:sign-correction` |
 
 ## Section 1, setting and notation
 
@@ -262,6 +263,9 @@ Rows that name another module in the column Where are in that module.
 | `sec:walls` (module `TableValuesWalls`) | `0.061`, `0.048` | `1/(2𝒲_N(u_N))` at `N = 10⁴` and `N = 10⁵` | `tv_walls_10000`, `tv_walls_100000` |
 | `sec:walls` (module `TableValuesWalls`) | `9.27`, `31.21` | the mean domain length `l_d = ⟨N/(n_d + δ_{0,n_d})⟩` at `u = u_N^P`, `N = 20` and `N = 100`, where `n_d = 2r` has weight proportional to `C(N,2r) u^{2r}` | `tv_domainLength_20`, `tv_domainLength_100`, with `domainLength`, `domainLength_bounds`, `tv_uNP_20` |
 | caption of `fig:window` (module `TableValuesWalls`) | `0.12`, `0.08`, `0.06` | the relative error `|e^{-2} S^X_{N,N/2}(u^X_N + 2/N) - 1|` of the profile at `t = 2`, `y = 0`, against the limit `1`, at `N = 10⁴, 10⁶, 10⁸`, for free and for periodic ends | `tv_window_free_10000`, `tv_window_free_1000000`, `tv_window_free_100000000`, `tv_window_periodic_10000`, `tv_window_periodic_1000000`, `tv_window_periodic_100000000`, with `SN_ge_of_cert`, `SN_le_of_cert`, `perRatio_ge_of_cert`, `perRatio_le_of_cert`, `tv_uN_1e8`, `tv_uNP_1e8`, `tv_exp_neg2` |
+| caption of `fig:layer` (module `TableValuesExtra`) | `49805` | `𝓛_N` (`layerCount`) at `N = 10⁸` and `v_N = N^{-0.7}` | `tv_layer_width`, with `vLayer_bounds`, `Sab_lt_one_of_tail`, `one_lt_Sab_of_partial`, `layerCount_bounds` |
+| proof of `cor:every-n` (d) (module `TableValuesExtra`) | `2.0 × 10⁻⁴` | `f(ζ_2774) - 1 > 2/10⁴` and `f(ζ_2773) < 1`, with `f(ζ) = n(ζ)(1/(8ζ) - 1/(16ζ²))/(ζ(ζ+1))` and `n(ζ_N) = N` | `tv_fSign`, with `fSign`, `tv_zetaN_2774`, `tv_zetaN_2773` |
+| `rem:sign-correction` (module `TableValuesExtra`) | `9.5` percent | `100 (1 - ₂F₁(-200,-200;1;1/1600)/I_0(10))` rounds to `9.5` | `tv_hyp_percent`, with `hyp2F1neg`, `besselI0_two_mul_bounds` |
 
 ## Not in this paper, kept in the repository for the tables note
 
@@ -554,6 +558,18 @@ Partial coverage.
     (b) of Figure `fig:layer` are not listed, and `𝓛_N` up to `N = 10¹²` would need about `10⁶`
     bins per point).
 
+52. Module `TableValuesExtra`. For `𝓛_N` at `N = 10⁸`, Lean writes `v_N = N^{-0.7}` as
+    `(10⁸)^{-7/10}` (`Real.rpow`) and brackets it with width `10⁻²⁶` through `v_N^{10} = 10^{-56}`.
+    `S_{a,N-a}(v) < 1` at `a = 49805` is checked with the first `260` terms and the geometric
+    tail `ρ = (N-2)v/260`, and `S_{a,N-a}(v) > 1` at `a = 49806` with the first `260` terms;
+    then `u_{49806,N-49806} < v_N < u_{49805,N-49805}`, and Proposition `prop:allbin-order`
+    (`layerCount_bounds`) gives `𝓛_N = 49805`. For `f`, Lean states the value with `N` in place
+    of `n(ζ_N)`, which is equal, as the paper says. `₂F₁(-a,-b;1;z)` is defined as the terminating
+    sum `∑_n C(a,n) C(b,n) zⁿ` (`hyp2F1neg`). The values `10.1` and `0.8` percent in the same
+    remark are those of Eq. (D.6) of Dantchev, Tonchev and Rudnick, which the paper does not
+    state, and are not certified. The certified margins of the Python scripts (`0.03319`,
+    `0.08559`, `1.65 × 10⁻⁵`) and the proof constants of Appendix A are not in Lean.
+
 ## Not in Lean
 
 The following parts of the paper are not formalized. The finite results and conditional algebra
@@ -562,6 +578,7 @@ listed above do not supply these omitted limit statements or their error bounds.
 * Section 4. Remarks 4.5 (`rem:sign-correction`) and 4.7 (`rem:jacobi`), and the
   consequences of Theorem 4.9 displayed after it (`eq:allbin-growing-edge` and the case
   `a/N → α`).
+  The number `9.5` percent in Remark 4.5 is certified (difference 52); the remark itself is not.
 * Section 5. Remarks 5.4 and 5.6.
 * Appendix A. The outward-interval Python calculations (Lean has its own rational bounds for
   the results listed above).
