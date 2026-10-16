@@ -14,8 +14,8 @@ With `Z^X_N(μ)` the Ising weight of the configurations of magnetization `μ` un
    `F^X_N(2k_N(y) - N) - F^X_N(N) → 2y² - t` (`free_energy_window`, `periodic_energy_window`).
 
 The free weight is `isingZ` of `IsingDictionary`; the periodic weight `perIsingZ` uses the cyclic
-energy `Σ_i σ_i σ_{i+1}` of `Periodic`. The last sentence of the remark, that each bin in the
-window has probability of order `√(log N)/N`, is not proved in the paper and is not formalized.
+energy `Σ_i σ_i σ_{i+1}` of `Periodic`. The last sentence of the remark, that each bin of the
+window has probability at most of order `√(log N)/N`, is in `WindowBound`.
 -/
 
 namespace Kagey131
