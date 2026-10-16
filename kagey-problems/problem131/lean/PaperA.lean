@@ -20,6 +20,7 @@ import PaperA.EveryNLarge
 import PaperA.EveryNCorollary
 import PaperA.EveryNSign
 import PaperA.EveryNAsymptotics
+import PaperA.CrossingEquation
 
 /-!
 # Paper A (`paperA/problem131.tex`), root module
