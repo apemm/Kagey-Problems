@@ -2,7 +2,7 @@
 
 This file maps covered statements of Paper A (`paperA/problem131.tex` and the files it inputs)
 to Lean declarations and records partial coverage and omissions. The library `PaperA` has root
-`PaperA.lean`, which imports all 45 modules in `PaperA/` (46 modules including the root), in
+`PaperA.lean`, which imports all 46 modules in `PaperA/` (47 modules including the root), in
 namespace `Kagey131`. It uses Lean 4 v4.33.1 and Mathlib v4.33.1. Every theorem listed here is
 proved without `sorry`, `admit` or new axioms, and `#print axioms` on each of them reports only
 `propext`, `Classical.choice` and `Quot.sound` (see `build-log.txt`).
@@ -88,6 +88,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `TableValuesText` | decimals displayed in the text, by kernel-checked certificates |
 | `TableValuesBessel` | the ratios `u_B/u_N` quoted in Section 3, with rational bounds on the Bessel root `x_B` from the series of `I_0` and `I_1` |
 | `TableValuesField` | the examples after Theorem `thm:field`: the minimizing `a`, `y_*(𝓑)` and `N (u_N^{(≥2)})²` at `N = 10⁴`, with exact rational forms of `H_a`, `S_{a,b}` and `S^P_{N,a}` and an explicit threshold for the tail bound |
+| `TableValuesWalls` | the numbers quoted in Section 5 on domain walls (`𝒲_N(u_N) - z_N`, `1/2 + 1/(8z_N)`, `1/(2𝒲_N(u_N))`), the mean domain length `l_d` and the window profile errors of Figure `fig:window` |
 
 ## Section 1, setting and notation
 
@@ -257,6 +258,10 @@ Rows that name another module in the column Where are in that module.
 | after `rem:sign` (module `TableValuesBessel`) | `0.9761`, `0.9864`, `0.9924`, `0.99579`, `0.99769`, `0.99874` | `u_B/u_N` at `N = 100, 200, 400, 800, 1600, 3200`, with `u_B = x_B/h`, `h = N/2` and `x_B = Groot 1 (h/2)` the root of `F(x_B) = h` | `tv_uB_div_uN_100`, `tv_uB_div_uN_200`, `tv_uB_div_uN_400`, `tv_uB_div_uN_800`, `tv_uB_div_uN_1600`, `tv_uB_div_uN_3200`, with `tv_xB_N`, `tv_uN_N`, `lt_Groot_of_cert`, `Groot_lt_of_cert` |
 | after `thm:field` (module `TableValuesField`) | `11`, `4`, `2`, `2` and `0.757`, `1.287`, `1.764`, `2.972` | for `𝓑 = 0.1, 0.2, 0.3, 0.5`: `y_*(𝓑) = y_{a⋆}(𝓑)` with `a⋆ = 11, 4, 2, 2`, `y_{a⋆}(𝓑) < y_a(𝓑)` for every other `a ≥ 2`, and the rounding of `y_*(𝓑)` | `tv_yStar_01`, `tv_yStar_02`, `tv_yStar_03`, `tv_yStar_05`, with `yStar_eq_of_cert`, `lt_yField_of_cert`, `yField_lt_of_cert`, `tail_explicit`, `tv_exp_field_n` |
 | after `thm:field` (module `TableValuesField`) | `0.758`, `1.288`, `1.764`, `2.973` and `0.741`, `1.266`, `1.738`, `2.939` | `N (u_N^{(≥2)})²` at `N = 10⁴` for periodic and free ends, `u_N^{(≥2)} = fieldRootGe2` the minimum over all bins `2 ≤ a ≤ N-1` | `tv_fieldGe2_periodic_01`, `tv_fieldGe2_periodic_02`, `tv_fieldGe2_periodic_03`, `tv_fieldGe2_periodic_05`, `tv_fieldGe2_free_01`, `tv_fieldGe2_free_02`, `tv_fieldGe2_free_03`, `tv_fieldGe2_free_05`, with `fieldRootGe2_bounds`, `lt_fieldRoot_of_cert`, `fieldRoot_lt_of_cert`, `fieldRatio_tail_bound` |
+| after `prop:walls` (module `TableValuesWalls`) | `0.5191`, `0.5166`, `0.5132` and `0.5224`, `0.5162`, `0.5126` | `𝒲_N(u_N) - z_N` and `1/2 + 1/(8z_N)` at `N = 10³, 10⁴, 10⁵`, with `𝒲_N = wallMean` | `tv_walls_1000`, `tv_walls_10000`, `tv_walls_100000`, with `tv_wallMean_N`, `wallMean_uN_bounds`, `wallMean_uN`, `wallSum_le` |
+| `sec:walls` (module `TableValuesWalls`) | `0.061`, `0.048` | `1/(2𝒲_N(u_N))` at `N = 10⁴` and `N = 10⁵` | `tv_walls_10000`, `tv_walls_100000` |
+| `sec:walls` (module `TableValuesWalls`) | `9.27`, `31.21` | the mean domain length `l_d = ⟨N/(n_d + δ_{0,n_d})⟩` at `u = u_N^P`, `N = 20` and `N = 100`, where `n_d = 2r` has weight proportional to `C(N,2r) u^{2r}` | `tv_domainLength_20`, `tv_domainLength_100`, with `domainLength`, `domainLength_bounds`, `tv_uNP_20` |
+| caption of `fig:window` (module `TableValuesWalls`) | `0.12`, `0.08`, `0.06` | the relative error `|e^{-2} S^X_{N,N/2}(u^X_N + 2/N) - 1|` of the profile at `t = 2`, `y = 0`, against the limit `1`, at `N = 10⁴, 10⁶, 10⁸`, for free and for periodic ends | `tv_window_free_10000`, `tv_window_free_1000000`, `tv_window_free_100000000`, `tv_window_periodic_10000`, `tv_window_periodic_1000000`, `tv_window_periodic_100000000`, with `SN_ge_of_cert`, `SN_le_of_cert`, `perRatio_ge_of_cert`, `perRatio_le_of_cert`, `tv_uN_1e8`, `tv_uNP_1e8`, `tv_exp_neg2` |
 
 ## Not in this paper, kept in the repository for the tables note
 
@@ -526,6 +531,29 @@ Partial coverage.
     kernel checks them with `decide +kernel`. Lean does not prove that the minimizing bin at
     `N = 10⁴` is `a⋆`, which the paper does not state.
 
+51. Section 5, the numbers of module `TableValuesWalls`. Since `S_N(u_N) = 1`,
+    `𝒲_N(u_N) = ∑_j j W_j u_N^j` (`wallMean_uN`), which increases in `u_N`. Lean bounds it
+    below by the first `2T` terms at the lower end of the bracket of `u_N` and above by the first
+    `2T` terms at the upper end and the geometric tail `ρ = (2T+1)(N-2)u/(4T²)`, from
+    `2T W_{j+1} ≤ (N-2) W_j` for `j ≥ 2T` (`T = 16, 19, 22`). The bounds on `z_N` are those of
+    difference 48. For `l_d` Lean takes the law of `n_d` stated in the paper,
+    `n_d = 2r` with weight proportional to `C(N,2r) u^{2r}` (`domainLength`), and does not derive
+    it from the periodic Ising weights; numerator and denominator increase in `u`, so the bracket
+    of `u_N^P` bounds `l_d`. At `y = 0` the bin of Theorem `thm:critical-window` is `k = N/2`, so
+    the profile at `t = 2` is `e^{-2} S_N(u_N + 2/N)` for free ends and
+    `e^{-2} S^P_{N,N/2}(u_N^P + 2/N)` for periodic ends, and its relative error against the
+    limit `e^{-2y²} = 1` is `|e^{-2} S - 1|`. Lean bounds `S` at the two ends of the bracket
+    shifted by `2/N` with the truncated sums of `TableValuesCore`, and `e²` with Taylor bounds.
+    Not certified, because the paper does not define them precisely enough: the least-squares
+    exponent `0.755` of `l_d` on `20 ≤ N ≤ 100` (the paper does not say which `N` enter the fit;
+    the fit of `log l_d` against `log N` over all integers `20 ≤ N ≤ 100` gives `0.7557`, which
+    rounds to `0.756`, and over the even `N` it gives `0.7555`), the local exponent `0.74` of
+    `N/log N` on that range (the local slope `1 - 1/log N` runs from `0.666` to `0.783` there;
+    the least-squares slope over the integers is `0.7400` and the secant slope is `0.733`), and
+    the bound `0.013` after Corollary `cor:boundary-layer` (the values of `N` plotted in panel
+    (b) of Figure `fig:layer` are not listed, and `𝓛_N` up to `N = 10¹²` would need about `10⁶`
+    bins per point).
+
 ## Not in Lean
 
 The following parts of the paper are not formalized. The finite results and conditional algebra
@@ -538,6 +566,7 @@ listed above do not supply these omitted limit statements or their error bounds.
 * Appendix A. The outward-interval Python calculations (Lean has its own rational bounds for
   the results listed above).
 * The uniform local law (the local law note, not in Lean).
+* The decimals `0.755`, `0.74` (Section 5) and `0.013` (after Corollary `cor:boundary-layer`), which the paper does not define precisely enough to certify (difference 51).
 
 ## Findings while checking
 
