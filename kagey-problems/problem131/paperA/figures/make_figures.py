@@ -323,8 +323,8 @@ def fig_crossing():
     fig, (a, b) = plt.subplots(1, 2, figsize=(FULL, 2.3))
     m = ns >= 3
     a.axhline(1.0, color=ss.SERIES["grid"], lw=0.6)
-    a.plot(ns[m], two[m] / L[m], "-", color=cols[0], lw=1.1, marker="s", ms=3.0, mfc="white", mew=0.8, markevery=0.08, label=r"two-term $\nu_N$")
-    a.plot(ns[m], three[m] / L[m], "-", color=cols[1], lw=1.1, marker="^", ms=3.0, mfc="white", mew=0.8, markevery=0.08, label="three-term")
+    a.plot(ns[m], two[m] / L[m], "-", color=cols[0], lw=1.1, label=r"two-term $\nu_N$")
+    a.plot(ns[m], three[m] / L[m], "-", color=cols[1], lw=1.1, label="three-term")
     a.plot(ns, bessel / L, "--", color=cols[2], lw=1.1, label="Bessel root $u_B$")
     a.plot(ns, exact / L, "-", color=EXACT, lw=1.6, label="exact $z_N$")
     a.set_xscale("log")
@@ -336,8 +336,8 @@ def fig_crossing():
     a.text(0.97, 0.87, "(a)", transform=a.transAxes, ha="right", va="top")   # clear of the line at 1
 
     b.axhline(0.0, color=ss.SERIES["grid"], lw=0.6)
-    b.plot(ns[m], (exact - two)[m], "-", color=cols[0], lw=1.1, marker="s", ms=3.0, mfc="white", mew=0.8, markevery=0.08, label=r"minus two-term")
-    b.plot(ns[m], (exact - three)[m], "-", color=cols[1], lw=1.1, marker="^", ms=3.0, mfc="white", mew=0.8, markevery=0.08, label="minus three-term")
+    b.plot(ns[m], (exact - two)[m], "-", color=cols[0], lw=1.1, label=r"minus two-term")
+    b.plot(ns[m], (exact - three)[m], "-", color=cols[1], lw=1.1, label="minus three-term")
     b.plot(ns, exact - bessel, "--", color=cols[2], lw=1.1, label="minus Bessel root")
     b.set_xscale("log")
     b.set_xlim(2, 1e4)
@@ -524,14 +524,14 @@ def fig_allbin():
     cols = shades(3, hi=0.85)
     fig, (ax, bx) = plt.subplots(1, 2, figsize=(FULL, 2.6))
     data = {"method": "u_{a,N-a} by float bisection of the run polynomial (80 halvings of [0, 1/2])"}
-    for N, c, mk in zip(Ns, cols, ["s", "^", "D"]):
+    for N, c in zip(Ns, cols):
         a = np.unique(np.round(np.geomspace(1, N // 2, 300)).astype(int))
         u = root_increasing(lambda v: free_ratio(a, N - a, v), np.zeros(a.shape), np.full(a.shape, 0.5))
         q = u / (1 + u)
         assert np.all(np.diff(q) < 0), "Proposition 4.1: 1 - p_{a,N-a} decreases toward the middle"
         if N == 100:          # the center is the table value p_100
             assert abs(1 - q[-1] - float(TABLE_PN[100])) < 1e-8
-        ax.plot(a, q, "-", color=c, lw=1.2, marker=mk, ms=3.0, mfc=c, mew=0, markevery=0.1, label=rf"$N={N}$")
+        ax.plot(a, q, "-", color=c, lw=1.2, label=rf"$N={N}$")
         g = a >= 2
         ax.plot(a[g], np.log(a[g]) / (2 * np.sqrt(a[g] * (N - a[g]))), ls=(0, (5, 3)), color=c, lw=0.9)
         e = np.arange(1, 7)
@@ -565,7 +565,7 @@ def fig_allbin():
     err_lead = np.abs(lead[gl] / u[gl] - 1)
     err_unif = np.abs(unif[gu] / u[gu] - 1)
     err_edge = np.abs(edge / u[ae - 1] - 1)
-    bx.plot(a[gl], err_lead, ls=(0, (5, 3)), color=ss.GOLD, lw=1.1, label=r"leading law $\log a/(2\sqrt{ab})$")
+    bx.plot(a[gl], err_lead, "-", color=ss.GOLD, lw=1.1, label=r"leading law $\log a/(2\sqrt{ab})$")
     bx.plot(a[gu], err_unif, "-", color=EXACT, lw=1.1, label="uniform expansion")
     bx.plot(ae, err_edge, "o", ms=3.0, color=ss.PURPLE, mfc=ss.PURPLE, mew=0, label="edge expansion")
     bx.set_xscale("log")
@@ -620,8 +620,7 @@ def fig_window():
                       "exact run polynomial (free) or cyclic run polynomial (periodic); ratios by the same "
                       "polynomials in double precision", "t_profile": 1.0}
     errs = {}
-    marks = ["s", "^", "D"]
-    for N, c, mk in zip(Ns, cols, marks):
+    for N, c in zip(Ns, cols):
         L = log(N)
         a0, b0 = N // 2, (N + 1) // 2
         ks = np.unique(np.round(N / 2 + np.linspace(-1.3, 1.3, 521) * N / sqrt(L)).astype(np.int64))
@@ -629,9 +628,9 @@ def fig_window():
         for name, law, ls in laws:
             uc = float(root_increasing(lambda v: law(a0, b0, v), 0.0, 3 * L / N, 200))
             prof = law(ks, N - ks, uc + 1.0 / N) / np.e
-            ax.plot(y, prof, ls=ls, color=c, lw=1.1, marker=mk, ms=3.0, mfc="white", mew=0.8, markevery=0.12)
+            ax.plot(y, prof, ls=ls, color=c, lw=1.1)
             M = count_above(N, law, uc + ts / N)
-            bx.plot(ts, sqrt(L) * M / N, ls=ls, color=c, lw=1.1, marker=mk, ms=3.0, mfc="white", mew=0.8, markevery=0.12)
+            bx.plot(ts, sqrt(L) * M / N, ls=ls, color=c, lw=1.1)
             errs[(N, name)] = float(law(a0, b0, uc + 2.0 / N) / np.exp(2.0) - 1)
             data[f"{name} N={N}"] = {"u_center": uc, "y": y, "profile_t1": prof, "t": ts, "M": M,
                                      "rel_err_t2_y0": errs[(N, name)]}
@@ -655,9 +654,8 @@ def fig_window():
     bx.set_ylim(0, 3.1)
     bx.set_xlabel(r"$t$")
     bx.set_ylabel(r"$\sqrt{\log N}\,M^X_N(t)/N$")
-    for N, c, mk in zip(Ns, cols, marks):
-        bx.plot([], [], "-", color=c, lw=1.1, marker=mk, ms=3.0, mfc="white", mew=0.8,
-                label=rf"$N=10^{{{int(round(log(N, 10)))}}}$")
+    for N, c in zip(Ns, cols):
+        bx.plot([], [], "-", color=c, lw=1.1, label=rf"$N=10^{{{int(round(log(N, 10)))}}}$")
     bx.plot([], [], "-", color="0.35", lw=1.1, label="free")
     bx.plot([], [], ls=(0, (5, 3)), color="0.35", lw=1.1, label="periodic")
     bx.plot([], [], "-", color=INK, lw=0.7, label="limit")
@@ -727,7 +725,7 @@ def fig_layer():
     data["row"] = {"N": N, "kappa": kap, "k": k, "logS": logS, "L_N": Lw}
     # (b) the width against N
     es = np.arange(6, 12.01, 0.5)          # below 10^6 the hypotheses fail visibly for kappa = 0.8
-    for kap, c, mk in zip(kappas, cols, ["o", "s", "^"]):
+    for kap, c in zip(kappas, cols):
         rl, rr, Ns = [], [], []
         for e in es:
             N = int(round(10 ** e))
@@ -737,7 +735,7 @@ def fig_layer():
             rl.append(Lw / (Om ** 2 * log(Om) ** 2))
             rr.append(Lw / layer_refined(N, v))
             Ns.append(N)
-        bx.plot(Ns, rl, "-", color=c, lw=1.1, marker=mk, ms=2.6, label=rf"$\kappa={kap}$")
+        bx.plot(Ns, rl, "-", color=c, lw=1.1, marker="o", ms=2.6, label=rf"$\kappa={kap}$")
         data[f"kappa={kap}"] = {"N": Ns, "ratio_leading": rl, "ratio_refined": rr}
         print(f"layer: kappa = {kap}, L_N/(Omega^2 log^2 Omega) from {rl[0]:.3f} to {rl[-1]:.3f}, "
               f"L_N/a_refined from {rr[0]:.4f} to {rr[-1]:.4f}, max |.-1| {max(abs(r - 1) for r in rr):.4f}")
