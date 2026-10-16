@@ -77,6 +77,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `BoundaryLayer` | Corollary `cor:boundary-layer`, the moving boundary layer, for arbitrary sequences `v_N` |
 | `Supplements` | smaller statements: Lemma `lem:clipped` over the reals and in product form, `ζ_N < 4` for `N ≤ 174`, `p_{a,b} = 2/3` only at `a = b = 1`, strict probability ordering, and `Snum` as the numerator |
 | `FixedMagnetization` | Corollary `cor:fixed-M`, the fixed-magnetization weight |
+| `FieldCrossing` | Theorem `thm:field`, the edge crossings in a fixed field, for free and periodic ends |
 | `Tables` | identities between numerator tables and recursively defined rook and Mathar sequences; retained for the tables note |
 
 ## Section 1, setting and notation
@@ -200,6 +201,10 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `cor:couplings` | 5.5 | (a) for all large `N`, `|J_N^F - ((1/2)(L - log L) + ((1/4) log L - c_0/2)/L)| ≤ 28 (log L)²/L²`, where `J_N^F = -(1/2) log u_N` | `free_coupling` | `PeriodicExpansion` |
 | `cor:couplings` | 5.5 | (b) for all large `N`, `|J_N^F - J_N^P - (log 2)/(2L)| ≤ 2 (log L)/L²` | `coupling_shift`, with `shift_final` | `PeriodicExpansion` |
 | `cor:couplings` | 5.5 | (c) with `ξ(J) = -1/log tanh J`, for all large `N`, `|N/ξ(J_N^F) - (2L - log L + log(π/8))| ≤ 4 (log L)/L` and `|N/ξ(J_N^P) - (2L - log L + log(π/2))| ≤ 4 (log L)/L` | `corrLen`, `corrLen_free`, `corrLen_periodic`, with `N_div_corrLen`, `corrLen_of_expansion` | `PeriodicExpansion` |
+| `sec:field` | 5 | for `1 ≤ a ≤ N-1`, `R^X_{N,a}(u) = S^X_{N,a}(u) e^{-2𝓑a}` increases strictly from `0` to `∞` in `u ≥ 0` and equals `1` at a single `u^{(a)}_N > 0`, and `R^X_{N,a}(u) < 1` exactly when `u < u^{(a)}_N`; `u^{(≥2)}_N = min_{2 ≤ a ≤ N-1} u^{(a)}_N` for `N ≥ 3`; `y_a(𝓑)` is the positive root of `H_a(y) = e^{2𝓑a}`, with `y_1(𝓑) = e^{2𝓑}` and `y_a(0) = y_a` | `Ends`, `edgeRatio`, `fieldRatio`, `fieldRoot`, `fieldRoot_spec`, `fieldRatio_lt_one_iff`, `one_lt_fieldRatio_iff`, `fieldRatio_eq_one_iff`, `fieldRatio_strictMonoOn`, `fieldRootGe2`, `fieldRootGe2_spec`, `yField`, `yField_spec`, `yField_unique`, `yField_one`, `yField_zero_field`, `yStar` | `FieldCrossing` |
+| `thm:field` (a) | 5.9 | for free and periodic ends, every real `𝓑` and every fixed `a ≥ 1`, `N (u^{(a)}_N)² → y_a(𝓑)`, and `N (u^{(1)}_N)² → e^{2𝓑}` | `field_crossing_tendsto`, `field_crossing_one_tendsto`, with `edgeRatio_tendsto`, `free_edge_tendsto`, `periodic_edge_tendsto`, `perRatio_edge_form`, `tendsto_normCoeff_self` | `FieldCrossing` |
+| `thm:field` (b) | 5.9 | the uniform tail bound `R^X_{N,a}(u) ≤ 4√Y e^{2√(Ya) - 2𝓑a}` for `0 < y = N u² ≤ Y` and every `1 ≤ a ≤ N-1`; for `𝓑 > 0`, `y_a(𝓑) → ∞`, the minimum `y_*(𝓑) = min_{a ≥ 2} y_a(𝓑)` is attained, and `N (u^{(≥2)}_N)² → y_*(𝓑)` | `fieldRatio_tail_bound`, `yField_tendsto_atTop`, `yStar_attained`, `field_crossing_ge2_tendsto`, with `edgeRatio_le_exp`, `tail_threshold`, `fieldRoot_tail`, `yField_tail`, `yStar_pos` | `FieldCrossing` |
+| `thm:field` (c) | 5.9 | with `𝓑_c = (1/2) log 2`: `y_* < e^{2𝓑}` for `0 < 𝓑 < 𝓑_c`, `y_* = e^{2𝓑} = 2` at `𝓑_c`, and `y_* > e^{2𝓑}` for `𝓑 > 𝓑_c`; all three parts together for either boundary | `Bcrit`, `field_trichotomy`, `yStar_lt_of_lt`, `yStar_at_critical`, `lt_yStar_of_gt`, `thm_field`, with `Hedge_inv_mul_pow_le`, `Hedge_field_le`, `Hedge_two`, `two_pow_le_factorial_succ` | `FieldCrossing` |
 
 ## Appendix A, the crossing at every N
 
@@ -429,6 +434,16 @@ Partial coverage.
     `decide +kernel`, which takes about ten minutes. The numbers `n` were found in floating point,
     and they are data only. The paper replays its own outward-interval brackets instead.
 
+44. `thm:field`. Lean defines `R^X_{N,a}(u)` by the paper's formula `S^X_{N,a}(u) e^{-2𝓑a}`;
+    the Ising weights with a field, from which the paper reads off this ratio by the symmetry of
+    the row, are not formalized. Part (a) is proved for every real `𝓑`, not only `𝓑 > 0`. The
+    minimum `y_*(𝓑)` is defined as the infimum of `y_a(𝓑)` over `a ≥ 2`, and `yStar_attained`
+    proves that it is attained. The threshold `A(Y)` of the tail bound is explicit,
+    `max(2, ⌈(4√Y + Y/𝓑)/𝓑⌉)`, from `2√(Ya) ≤ Y/𝓑 + 𝓑a` and `x < e^x`. The limits of part (a)
+    use only the pointwise limit `S^X_{N,a}(√(y/N)) → H_a(y)` and monotonicity, not the uniform
+    limit on compact sets. The couplings `J_N^{(1)}`, `J_N^{(≥2)}` displayed after the theorem
+    are not formalized.
+
 ## Not in Lean
 
 The following parts of the paper are not formalized. The finite results and conditional algebra
@@ -439,8 +454,8 @@ listed above do not supply these omitted limit statements or their error bounds.
 * Section 4. Remarks 4.5 (`rem:sign-correction`) and 4.7 (`rem:jacobi`), and the
   consequences of Theorem 4.9 displayed after it (`eq:allbin-growing-edge` and the case
   `a/N → α`).
-* Section 5. Remarks 5.4, 5.6 and 5.8, Proposition 5.7 (`prop:walls`), Theorem 5.9
-  (`thm:field`), and the values in the table `tab:couplings`.
+* Section 5. Remarks 5.4, 5.6 and 5.8, Proposition 5.7 (`prop:walls`), and the values in the
+  table `tab:couplings`.
 * Appendix A. The outward-interval Python calculations (Lean has its own rational bounds for
   the results listed above).
 * The uniform local law (the local law note, not in Lean).
