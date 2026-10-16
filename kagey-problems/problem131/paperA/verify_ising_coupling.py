@@ -1,4 +1,4 @@
-"""Couplings and correlation lengths at the central crossings (Corollary 5.4, Table 3).
+"""Couplings and correlation lengths at the central crossings (Corollary 5.5, Table 2).
 
 For each N the free and periodic central crossings are found from the exact run
 polynomials (ratio of verify_allbin.py and periodic_ratio of
