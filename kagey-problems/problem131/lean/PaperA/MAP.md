@@ -2,7 +2,7 @@
 
 This file maps covered statements of Paper A (`paperA/problem131.tex` and the files it inputs)
 to Lean declarations and records partial coverage and omissions. The library `PaperA` has root
-`PaperA.lean`, which imports all 34 modules in `PaperA/` (35 modules including the root), in
+`PaperA.lean`, which imports all 35 modules in `PaperA/` (36 modules including the root), in
 namespace `Kagey131`. It uses Lean 4 v4.33.1 and Mathlib v4.33.1. Every theorem listed here is
 proved without `sorry`, `admit` or new axioms, and `#print axioms` on each of them reports only
 `propext`, `Classical.choice` and `Quot.sound` (see `build-log.txt`).
@@ -76,6 +76,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `IsingDictionary` | the Ising dictionary for free ends, and the positivity of the couplings and correlation lengths at the crossings |
 | `BoundaryLayer` | Corollary `cor:boundary-layer`, the moving boundary layer, for arbitrary sequences `v_N` |
 | `Supplements` | smaller statements: Lemma `lem:clipped` over the reals and in product form, `ζ_N < 4` for `N ≤ 174`, `p_{a,b} = 2/3` only at `a = b = 1`, strict probability ordering, and `Snum` as the numerator |
+| `FixedMagnetization` | Corollary `cor:fixed-M`, the fixed-magnetization weight |
 | `Tables` | identities between numerator tables and recursively defined rook and Mathar sequences; retained for the tables note |
 
 ## Section 1, setting and notation
@@ -160,6 +161,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `eq:allbin-normalized-series` | (17) | the normalized series of `S_{a,b}` | `Sab_series` | `UniformBessel` |
 | `eq:allbin-bessel-root` | (18) | `G_η`, and its root `x_B` exists and is unique | `Geta`, `Groot_spec`, `Groot_unique`, `Geta_strictMonoOn` | `BesselDeriv` |
 | `eq:allbin-logderivative` | (19) | `G_η' - 2G_η = 2x(1-η)(I_0 - I_1) + η I_0 ≥ 0` | `hasDerivAt_Geta`, `Geta_logderiv`, `Geta_deriv_ge`, `besselI1_lt_I0`, `Geta_growth` | `BesselDeriv` |
+| `cor:fixed-M` | 4.4 | for `a, b ≥ 1`, `N = a + b`, `μ = a - b`, `ρ = √(1 - μ²/N²)` and `v = N e^{-2J} ρ`, `Z_N(μ) = 2 e^{(N-3)J} (I_0(v) + I_1(v)/ρ)(1 - θ)` with `0 ≤ θ ≤ (N/2) e^{-4J} + e^{-2J}`, for every real `J` | `fixed_M_weight`, `rho_eq` | `FixedMagnetization` |
 | `cor:allbin-root-bound`, `eq:allbin-root-bound` | 4.6, (20) | `x_{a,b} ≥ x̂_{a,b}`, and `x_{a,b} - x̂_{a,b} ≤ -(1/2) log(1 - δ_{a,b})` when `δ_{a,b} < 1` | `allbin_root_bound`, with `Tab_eq_Geta`, `eta_le_one`, `root_comparison` | `RootBounds`, `BesselDeriv` |
 | `lem:inversion` | 4.8 | for every `K > 0` there is `C_K` with `|z - ℓ + (1/2) log ℓ - C - ((1/4) log ℓ - C/2 + B)/ℓ| ≤ C_K((log ℓ)²/ℓ² + |ω|)` whenever `z ≥ 1`, `ℓ ≥ 2`, `|C|, |B| ≤ K`, `|ω| ≤ 1` and `z + (1/2) log z = ℓ + C + B/z + ω` | `log_inversion`, with `abs_log_one_add_sub_le`, `log_le_quarter` | `LogInversion` |
 | `thm:allbin-expansion`, `eq:allbin-expansion` | 4.9, (21) | with `ℓ = log A`, `η = 2√(ab)/(a+b)`, `C(η) = (1/2) log(8π) - log(1+η)` and `B(η) = (3-η)/(8(1+η))`, there are `K` and `a₀` with `|2√(ab) u_{a,b} - (ℓ - (1/2) log ℓ + C(η) + ((1/4) log ℓ - C(η)/2 + B(η))/ℓ)| ≤ K((log ℓ)²/ℓ² + (log a)²/a)` for all `a ≥ a₀` and all `b ≥ a`, and the same for `1 - p_{a,b}` | `allbin_expansion`, `allbin_expansion_prob`, `rootMain`, `Ceta`, `Beta`, with `allbin_root_close` | `AllbinExpansion` |
@@ -416,6 +418,9 @@ Partial coverage.
     `|t| ≤ T`, `|y| ≤ Y`, which contain every compact set. For free ends `M^F_N(t)` counts the
     bins with `P_N(k) > P_N(0)` at `p = 1/(1+u)`, and for periodic ends `M^P_N(t)` uses `perBin`.
     No rate of convergence is stated.
+43. `cor:fixed-M`. Lean writes the magnetization as `μ = a - b` with `a, b ≥ 1`, which is the
+    paper's `|μ| < N`, `μ ≡ N (mod 2)`, and proves the statement for every real `J`, not only
+    `J > 0`.
 42. `rem:sign`. For `2 ≤ N ≤ 2773` Lean checks one rational `r_N = n/10⁷` per `N` that lies
     strictly between `z_N` and `ζ_N`. The side of `ζ_N` is an integer inequality from ten-term
     Taylor bounds for `exp(n/(32·10⁷))`, raised to the power `64`, and `π` to twenty decimals. The
@@ -431,8 +436,7 @@ listed above do not supply these omitted limit statements or their error bounds.
 
 * Section 1. The infinite chain behind `ξ(J)` (see difference 39).
 * Section 3. The values in the table `tab:every-n`.
-* Section 4. Corollary 4.4 (`cor:fixed-M`) as stated (Lean has Theorem 4.3, of which it is a
-  restatement), Remarks 4.5 (`rem:sign-correction`) and 4.7 (`rem:jacobi`), and the
+* Section 4. Remarks 4.5 (`rem:sign-correction`) and 4.7 (`rem:jacobi`), and the
   consequences of Theorem 4.9 displayed after it (`eq:allbin-growing-edge` and the case
   `a/N → α`).
 * Section 5. Remarks 5.4, 5.6 and 5.8, Proposition 5.7 (`prop:walls`), and the values in the
