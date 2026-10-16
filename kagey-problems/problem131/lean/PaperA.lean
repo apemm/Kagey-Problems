@@ -36,6 +36,7 @@ import PaperA.FixedMagnetization
 import PaperA.DomainWalls
 import PaperA.FullOrder
 import PaperA.InfiniteChain
+import PaperA.FieldCrossing
 
 /-!
 # Paper A (`paperA/problem131.tex`), root module
