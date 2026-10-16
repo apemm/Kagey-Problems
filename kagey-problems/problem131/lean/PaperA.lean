@@ -35,6 +35,7 @@ import PaperA.Supplements
 import PaperA.FixedMagnetization
 import PaperA.DomainWalls
 import PaperA.FullOrder
+import PaperA.InfiniteChain
 
 /-!
 # Paper A (`paperA/problem131.tex`), root module
