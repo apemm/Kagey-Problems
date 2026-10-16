@@ -396,7 +396,7 @@ def main():
     agree('C(phi), golden-ratio closed form', '0.7761317206', {'general formula': float(d['C']), 'closed form': float(Cclosed)})
     agree('1/C(phi)', '1.2884', {'formula': float(1 / d['C'])})
     agree('|log C(phi)| (research notes, not printed)', '0.25343', {'formula': float(abs(mp.log(d['C'])))})
-    agree('C(5/3) in Remark 2.6', '0.8351', {'formula': float(consts(mp.mpf(5) / 3)['C'])})
+    agree('C(5/3) in Remark 2.7', '0.8351', {'formula': float(consts(mp.mpf(5) / 3)['C'])})
 
     # ------------------------------------------------ Table 1: exact R_n, stationary start
     print('\nExact R_n for the stationary start (Table 1)', flush=True)
@@ -431,8 +431,8 @@ def main():
     if not args.full:
         print('  skip  method A at n = 10^5 (run with --full); method B covers these cells')
 
-    # ------------------------------------------------ Remark 2.6: alpha = 5/3
-    print('\nRemark 2.6 (alpha = 5/3; the values here are research notes, not printed, except Table 1)', flush=True)
+    # ------------------------------------------------ Remark 2.7: alpha = 5/3
+    print('\nRemark 2.7 (alpha = 5/3; the values here are research notes, not printed, except Table 1)', flush=True)
     a = 5 / 3
     Zf, Zs = center_all(a, 200)
     RA = {N: edge(a, N, 'stat') / Zs[N // 2] for N in range(20, 401, 2)}
@@ -452,8 +452,8 @@ def main():
           ', '.join(f'{v:.5f}' for v in Rg))
     agree('R_n/(C(5/3) n^(-1/15)) at n = 10^5 (Table 1 prints 0.9102)', '0.910', {'B': Rg[-1] / (float(consts(a)['C']) * 1e5 ** (-1 / 15))})
 
-    # ------------------------------------------------ Remark 2.6: crossover sizes
-    print('\nCrossover sizes n*(alpha) for the stationary start (Remark 2.6)', flush=True)
+    # ------------------------------------------------ Remark 2.7: crossover sizes
+    print('\nCrossover sizes n*(alpha) for the stationary start (Remark 2.7)', flush=True)
     nstar_p = {1.5: 26, 1.55: 192, 1.58: 2596, 1.59: 14530}
     lead = {1.5: '13.5', 1.55: '41.8', 1.58: '350', 1.59: '1959', 1.60: '7.38e4'}
     found = {}
@@ -518,13 +518,13 @@ def main():
     check('the leading order underestimates n* by factors 1.9 to 7.4 (research notes, not printed)', round(min(facs), 1) == 1.9 and round(max(facs), 1) == 7.4,
           f'factors {", ".join(f"{f:.2f}" for f in facs)}')
     slope = float(abs(mp.log(consts(PHI)['C'])) / (1 + PHI ** -2))
-    agree('|log C(phi)|/|e\'(phi)| in the heuristic for log n* (Remark 2.6)', '0.1834', {'formula': slope})
+    agree('|log C(phi)|/|e\'(phi)| in the heuristic for log n* (Remark 2.7)', '0.1834', {'formula': slope})
     offs = [math.log(ns) - slope / (PHI - a) for a, ns in found.items()]
     check('log n* - 0.1834/(phi - alpha) lies between 1.7 and 3.0 (research notes, not printed)', round(min(offs), 1) >= 1.7 and round(max(offs), 1) <= 3.0,
           ', '.join(f'{o:.2f}' for o in offs))
 
-    # ------------------------------------------------ alpha <= 1, fresh start (Theorem 2.8, Remark 2.9, Table 2)
-    print('\nFresh start with alpha <= 1 (Theorem 2.8, Remark 2.9, Table 2)', flush=True)
+    # ------------------------------------------------ alpha <= 1, fresh start (Theorem 2.9, Remark 2.10, Table 2)
+    print('\nFresh start with alpha <= 1 (Theorem 2.9, Remark 2.10, Table 2)', flush=True)
     ac1 = mp.findroot(lambda a: a - mp.cos(mp.pi * a / 2), 0.6)
 
     def lamperti(y, a):
@@ -568,10 +568,10 @@ def main():
         vals = {'B': R_spectral(1.0, N, 'fresh') / heur}
         if N // 2 <= nmax:
             vals['A'] = edge(1.0, N, 'fresh') / Zf[N // 2] / heur
-        agree(f'alpha = 1: R_n divided by the heuristic pi^2 m_h/(8h), N = {N} (Remark 2.9)', printed, vals)
+        agree(f'alpha = 1: R_n divided by the heuristic pi^2 m_h/(8h), N = {N} (Remark 2.10)', printed, vals)
 
-    # ------------------------------------------------ Theorems 2.7 and 2.8: the leading terms
-    print('\nLeading terms for alpha >= 2 (Theorem 2.7) and 0 < alpha < 1 (Theorem 2.8)', flush=True)
+    # ------------------------------------------------ Theorems 2.8 and 2.9: the leading terms
+    print('\nLeading terms for alpha >= 2 (Theorem 2.8) and 0 < alpha < 1 (Theorem 2.9)', flush=True)
     t0 = time.time()
     for a in (2.5, 3.0):
         mu = float(mp.zeta(a))
@@ -586,11 +586,11 @@ def main():
         check(f'alpha = {a}: C_N/sqrt(2 mu/(pi v N)) (both starts) and R_N/(C_2 N^(3/2-alpha)) approach 1', ok,
               '; '.join(f'N = {N}: stationary {r[0]:.4f}, fresh {r[1]:.4f}, R ratio {r[2]:.4f}' for N, r in zip((1600, 16000), rows)))
         if a == 3.0:
-            agree('alpha = 3: R_N divided by the leading term of Theorem 2.7(a), N = 16000', '0.981', {'A': rows[1][2]})
+            agree('alpha = 3: R_N divided by the leading term of Theorem 2.8(a), N = 16000', '0.981', {'A': rows[1][2]})
     mu = float(mp.zeta(2))
     Zf, Zs = center_all(2.0, 8000)
     lead2 = lambda N: math.sqrt(math.pi * math.log(N) / (8 * mu ** 3 * N))
-    agree('alpha = 2: R_N divided by the leading term of Theorem 2.7(b), N = 1600', '0.885',
+    agree('alpha = 2: R_N divided by the leading term of Theorem 2.8(b), N = 1600', '0.885',
           {'A': edge(2.0, 1600, 'stat') / Zs[800] / lead2(1600), 'B': R_spectral(2.0, 1600) / lead2(1600)})
     agree('alpha = 2: the same at N = 10^5', '0.943', {'B': R_spectral(2.0, 10 ** 5) / lead2(10 ** 5)})
     rows = []
@@ -605,7 +605,7 @@ def main():
         Zf, _ = center_all(a, 8000)
         lim = 2 / math.pi * math.tan(math.pi * a / 2)
         r1, r2 = 1600 * Zf[800] / lim, 16000 * Zf[8000] / lim
-        agree(f'alpha = {a}: N C_N divided by (2/pi) tan(pi alpha/2), N = 16000 (text after Theorem 2.8)', printed,
+        agree(f'alpha = {a}: N C_N divided by (2/pi) tan(pi alpha/2), N = 16000 (text after Theorem 2.9)', printed,
               {'A': r2, 'B': 16000 * law_point(a, 8000, 8000, ('fresh',))['fresh'] / lim})
         check(f'alpha = {a}: the ratio is closer to 1 at N = 16000 than at N = 1600', abs(r2 - 1) < abs(r1 - 1),
               f'{r1:.4f} at 1600, {r2:.4f} at 16000')
