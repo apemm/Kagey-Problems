@@ -12,7 +12,7 @@ unity, which has no aliasing since the degree is N, and evaluate T(x)^n by repea
 squaring in double precision. The crossing is the root of this ratio minus 1 in log u.
 
 The script compares J = -(1/2) log u with the values in data/ising-coupling-verification.json
-written by verify_ising_coupling.py, and asserts agreement within 1e-7.
+written by verify_ising_coupling.py, and asserts agreement within 1e-12.
 
 Needs NumPy. Run with python -B in this folder. Run time is about two minutes.
 """
@@ -23,7 +23,7 @@ from pathlib import Path
 import numpy as np
 
 NS = [10, 20, 50, 100, 1000, 10**4, 10**5, 10**6]
-TOL = 1e-7
+TOL = 1e-12
 
 
 def mat_pow(x, u, n):
