@@ -11,7 +11,7 @@ z_N + (1/2) log z_N = L + c_0 + 1/(8 z_N) + R_N with
 c_0 = (1/2) log(pi/8) and |R_N| <= 1/(4L^2) + (L^2 + L)/N. The paper also expands the crossing of
 every other bin, with a Laguerre law for fixed bins, and compares free and periodic boundaries.
 In Ising terms the coupling at both central crossings is (1/2)(log N - log log N) + o(1), which
-Table 3 compares with the approximations of Stepanyan et al. (J. Stat. Mech. 2024).
+Table 2 compares with the approximations of Stepanyan et al. (J. Stat. Mech. 2024).
 `../README.md` describes the other papers on Problem 131.
 
 Lean coverage is partial. The fixed-edge and Laguerre-root asymptotics (including their leading

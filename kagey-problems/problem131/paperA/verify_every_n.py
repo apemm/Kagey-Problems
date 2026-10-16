@@ -382,7 +382,7 @@ def main():
         for (N, a, a1, zlo, zhi, zt, mu, ml, Rlo, Rhi, both) in rows:
             f.write(f"{N},{a},{a1},{zlo:.12f},{zhi:.12f},{zt:.12f},{mu:.9f},{ml:.9f},{Rlo:.9f},{Rhi:.9f},{int(both)}\n")
     out("  certificates written to data/every_n_certificates.csv")
-    # Paper A's Table tab:pn
+    # Values of p_N for small N (formerly a table in Paper A, now only checked here)
     tab = {2: "0.66666667", 3: "0.70710678", 4: "0.74487450", 5: "0.76759188", 6: "0.78871211",
            7: "0.80361731", 8: "0.81759938", 9: "0.82829163", 10: "0.83840411", 11: "0.84652725",
            12: "0.85426060", 20: "0.89293837", 50: "0.94200405", 100: "0.96496633", 200: "0.97939018",
@@ -395,7 +395,7 @@ def main():
             pt = D(tab[N])
             if not (p_lo - D("5e-9") <= pt <= p_hi + D("5e-9")):
                 bad.append(N)
-    out(f"  Paper A Table tab:pn consistent with the certified brackets (to its 8 decimals): {'yes' if not bad else bad}")
+    out(f"  p_N values (formerly Paper A's Table 1) consistent with the certified brackets (to its 8 decimals): {'yes' if not bad else bad}")
 
     # ---------------- 4. analytic margins and exact sufficient conditions
     out("\n[4a] margin functions of the analytic proof on zeta in [4, 60], step 0.001")
