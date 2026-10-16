@@ -2,7 +2,7 @@
 
 This file maps covered statements of Paper A (`paperA/problem131.tex` and the files it inputs)
 to Lean declarations and records partial coverage and omissions. The library `PaperA` has root
-`PaperA.lean`, which imports all 48 modules in `PaperA/` (49 modules including the root), in
+`PaperA.lean`, which imports all 50 modules in `PaperA/` (51 modules including the root), in
 namespace `Kagey131`. It uses Lean 4 v4.33.1 and Mathlib v4.33.1. Every theorem listed here is
 proved without `sorry`, `admit` or new axioms, and `#print axioms` on each of them reports only
 `propext`, `Classical.choice` and `Quot.sound` (see `build-log.txt`).
@@ -81,10 +81,12 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `DomainWalls` | Proposition `prop:walls`, the domain walls at the crossing |
 | `FullOrder` | Remark `rem:ordered`, full order against one bin |
 | `FieldCrossing` | Theorem `thm:field`, the edge crossings in a fixed field, for free and periodic ends |
+| `FieldWeights` | Section `sec:field`: the Ising weights with a field, their ratio `R^X_{N,a}` to all up, and the crossings as crossings of the weights |
 | `AllbinConsequences` | the consequences of Theorem `thm:allbin-expansion` displayed after it, for sequences of bins |
 | `SignCorrection` | Remark `rem:sign-correction`: the sign and size of the first correction to the Bessel form, and the numbers at `a = b = 200` |
 | `Jacobi` | Remark `rem:jacobi`: the Jacobi forms of the run sums, the Laguerre limit at the edge with rates, and the Mehler–Heine limit for natural parameters |
 | `FreeEnergy` | Remark `rem:free-energy`: the constrained free energies, the periodic Ising weight of a magnetization, and their limit in the crossing window |
+| `WindowBound` | Remark `rem:free-energy`: the bound of order `√(log N)/N` on the probability of an endpoint and of a single bin of the crossing window, for free and periodic ends |
 | `LevelTheta` | Remark `rem:convention`: the central crossings at a level `Θ`, for free and periodic ends, the shift of the coupling, and the conventions with two bins or two endpoints |
 | `Tables` | identities between numerator tables and recursively defined rook and Mathar sequences; retained for the tables note |
 | `TableValuesCore` | correct rounding (`RoundsTo`), Taylor certificates for `exp` and `log`, rational bounds on `ζ_N`, and bounds on `u_N` and `u_N^P` from truncated sums with a geometric tail |
@@ -227,6 +229,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `thm:critical-window`, `eq:criticalcount` | 5.3, (39) | for free and periodic ends and every real `t`, `(√(log N)/N) M^X_N(t) → √(2 max(t,0))`, where `M^X_N(t)` is the number of interior bins whose probability is strictly above the endpoint probability at the odds `u_N^X + t/N` | `free_window_count`, `periodic_window_count`, `freeAbove`, `periodicAbove`, with `count_limit`, `countAbove_eq_zero`, `countAbove_le`, `card_near_mid`, `free_mono`, `periodic_mono`, `Sab_comm` | `CriticalWindow` |
 | `rem:free-energy` | 5.4 | with `F^X_N(μ) = -log Z^X_N(μ)` and `u = e^{-2J}`: `-log S_{a,b}(u) = F_N(a-b) - F_N(N)` for `a, b ≥ 1`, and `-log S^P_{N,k}(u) = F^P_N(2k-N) - F^P_N(N)` for `1 ≤ k ≤ N-1`, for every real `J` | `free_energy_ratio`, `periodic_energy_ratio`, `perIsingZ`, `perIsingZ_full`, `perRatio_eq_perIsingZ_ratio`, with `isingZ` | `FreeEnergy`, `IsingDictionary` |
 | `rem:free-energy` | 5.4 | for free and periodic ends, every `T, Y ≥ 0` and `ε > 0` there is `N₀` with, for `N ≥ N₀`, `|t| ≤ T`, `|y| ≤ Y` and every integer `k` within `1/2` of `N/2 + yN/√(log N)`: `u = u_N^X + t/N > 0` and `|F^X_N(2k-N) - F^X_N(N) - (2y² - t)| ≤ ε` at `J = -(1/2) log u` | `free_energy_window`, `periodic_energy_window`, with `energy_of_profile`, `abs_log_sub_log_le`, `eventually_odds_pos` | `FreeEnergy` |
+| `rem:free-energy` | 5.4 | for free and periodic ends, every real `t` and `Y` there are `C > 0` and `N₀` with, for `N ≥ N₀` and `u = u_N^X + t/N`: `P^X_N(0) ≤ C √(log N)/N` and `P^X_N(k) ≤ C √(log N)/N` for every bin `k` with `|k - N/2| ≤ Y N/√(log N)` (free: `binProb` at `p = 1/(1+u)`; periodic: `perBin u (N-1)`) | `free_window_bin_bound`, `periodic_window_bin_bound`, with `window_bin_core`, `perBin_sum_le`, `perBin_nonneg`, `perBin_zero_pos`, `free_odds_pos`, `periodic_odds_pos` | `WindowBound` |
 | `rem:convention` | 5.6 | for fixed `Θ > 0`, with `u` the root of `S_N(u) = Θ` and `p = 1/(1+u)`: there is `C` with, for all large `N`, `|N u - (L - (1/2) log L + c + ((1/4) log L - c/2 + 1/8)/L)| ≤ C (log L)²/L²` and the same for `N(1-p)`, where `c = c_0 + log Θ` | `free_level_expansion`, `uNL`, `pNL`, `uabL`, `uabL_spec`, `uabL_unique`, `uNL_one`, `levelMain`, with `allbin_level_expansion`, `level_core`, `free_sandwich`, `rootMain_conv`, `level_assembly`, `center_facts`, `log_center_ratio` | `LevelTheta` |
 | `rem:convention` | 5.6 | the same for periodic ends, with the root of `S^P_{N,m_N}(u) = Θ`, `3/8` in place of `1/8` and `c = c_P + log Θ` | `periodic_level_expansion`, `uNPL`, `pNPL`, `uNPL_spec`, `uNPL_one`, with `periodic_sandwich`, `perRatio_exists_level` | `LevelTheta` |
 | `rem:convention` | 5.6 | the coupling moves by `-(log Θ)/(2 log N)` to leading order: there is `C` with `|J^Θ - J + (log Θ)/(2 log N)| ≤ C (log L)²/L²` for all large `N`, for free and periodic ends | `free_level_coupling`, `periodic_level_coupling`, with `coupling_level_shift`, `log_shift_of_expansions` | `LevelTheta` |
@@ -236,6 +239,8 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `cor:couplings` | 5.5 | (b) for all large `N`, `|J_N^F - J_N^P - (log 2)/(2L)| ≤ 2 (log L)/L²` | `coupling_shift`, with `shift_final` | `PeriodicExpansion` |
 | `cor:couplings` | 5.5 | (c) with `ξ(J) = -1/log tanh J`, for all large `N`, `|N/ξ(J_N^F) - (2L - log L + log(π/8))| ≤ 4 (log L)/L` and `|N/ξ(J_N^P) - (2L - log L + log(π/2))| ≤ 4 (log L)/L` | `corrLen`, `corrLen_free`, `corrLen_periodic`, with `N_div_corrLen`, `corrLen_of_expansion` | `PeriodicExpansion` |
 | `sec:field` | 5 | for `1 ≤ a ≤ N-1`, `R^X_{N,a}(u) = S^X_{N,a}(u) e^{-2𝓑a}` increases strictly from `0` to `∞` in `u ≥ 0` and equals `1` at a single `u^{(a)}_N > 0`, and `R^X_{N,a}(u) < 1` exactly when `u < u^{(a)}_N`; `u^{(≥2)}_N = min_{2 ≤ a ≤ N-1} u^{(a)}_N` for `N ≥ 3`; `y_a(𝓑)` is the positive root of `H_a(y) = e^{2𝓑a}`, with `y_1(𝓑) = e^{2𝓑}` and `y_a(0) = y_a` | `Ends`, `edgeRatio`, `fieldRatio`, `fieldRoot`, `fieldRoot_spec`, `fieldRatio_lt_one_iff`, `one_lt_fieldRatio_iff`, `fieldRatio_eq_one_iff`, `fieldRatio_strictMonoOn`, `fieldRootGe2`, `fieldRootGe2_spec`, `yField`, `yField_spec`, `yField_unique`, `yField_one`, `yField_zero_field`, `yStar` | `FieldCrossing` |
+| `sec:field` | 5 | the Ising weight `Z^X_N(J, 𝓑; M)` of magnetization `M` with coupling `J` and field `𝓑` is `e^{𝓑M}` times the zero-field weight (`isingZ`, `perIsingZ`); for `1 ≤ a ≤ N-1` and all real `J`, `𝓑`, `Z^X_N(J, 𝓑; N-2a)/Z^X_N(J, 𝓑; N) = R^X_{N,a}(e^{-2J}) = S^X_{N,a}(e^{-2J}) e^{-2𝓑a}`, for free and periodic ends | `isingZField`, `perIsingZField`, `fieldIsingZ`, `fieldIsingZ_ratio`, `isingZField_ratio`, `perIsingZField_ratio`, with `isingZField_eq`, `perIsingZField_eq`, `isingZField_zero`, `perIsingZField_zero`, `fieldIsingZ_full_pos`, `perIsingZ_full_pos` | `FieldWeights` |
+| `sec:field` | 5 | all up is more likely than magnetization `N-2a` exactly when `e^{-2J} < u^{(a)}_N`, ties exactly at `e^{-2J} = u^{(a)}_N`, and is less likely exactly when `u^{(a)}_N < e^{-2J}`; the all-down configuration has ratio `e^{-2𝓑N}` to all up; for `𝓑 > 0` and `N ≥ 3`, all up is strictly more likely than every other magnetization exactly when `e^{-2J} < min(u^{(1)}_N, u^{(≥2)}_N)` | `fieldIsingZ_lt_full_iff`, `fieldIsingZ_eq_full_iff`, `full_lt_fieldIsingZ_iff`, `fieldIsingZ_allDown_ratio`, `allUp_most_likely_iff`, with `isingZ_allDown`, `perIsingZ_allDown` | `FieldWeights` |
 | `thm:field` (a) | 5.9 | for free and periodic ends, every real `𝓑` and every fixed `a ≥ 1`, `N (u^{(a)}_N)² → y_a(𝓑)`, and `N (u^{(1)}_N)² → e^{2𝓑}` | `field_crossing_tendsto`, `field_crossing_one_tendsto`, with `edgeRatio_tendsto`, `free_edge_tendsto`, `periodic_edge_tendsto`, `perRatio_edge_form`, `tendsto_normCoeff_self` | `FieldCrossing` |
 | `thm:field` (b) | 5.9 | the uniform tail bound `R^X_{N,a}(u) ≤ 4√Y e^{2√(Ya) - 2𝓑a}` for `0 < y = N u² ≤ Y` and every `1 ≤ a ≤ N-1`; for `𝓑 > 0`, `y_a(𝓑) → ∞`, the minimum `y_*(𝓑) = min_{a ≥ 2} y_a(𝓑)` is attained, and `N (u^{(≥2)}_N)² → y_*(𝓑)` | `fieldRatio_tail_bound`, `yField_tendsto_atTop`, `yStar_attained`, `field_crossing_ge2_tendsto`, with `edgeRatio_le_exp`, `tail_threshold`, `fieldRoot_tail`, `yField_tail`, `yStar_pos` | `FieldCrossing` |
 | `thm:field` (c) | 5.9 | with `𝓑_c = (1/2) log 2`: `y_* < e^{2𝓑}` for `0 < 𝓑 < 𝓑_c`, `y_* = e^{2𝓑} = 2` at `𝓑_c`, and `y_* > e^{2𝓑}` for `𝓑 > 𝓑_c`; all three parts together for either boundary | `Bcrit`, `field_trichotomy`, `yStar_lt_of_lt`, `yStar_at_critical`, `lt_yStar_of_gt`, `thm_field`, with `Hedge_inv_mul_pow_le`, `Hedge_field_le`, `Hedge_two`, `two_pow_le_factorial_succ` | `FieldCrossing` |
@@ -508,8 +513,7 @@ Partial coverage.
     and they are data only. The paper replays its own outward-interval brackets instead.
 
 47. `thm:field`. Lean defines `R^X_{N,a}(u)` by the paper's formula `S^X_{N,a}(u) e^{-2𝓑a}`;
-    the Ising weights with a field, from which the paper reads off this ratio by the symmetry of
-    the row, are not formalized. Part (a) is proved for every real `𝓑`, not only `𝓑 > 0`. The
+    `fieldIsingZ_ratio` shows that it is the ratio of the Ising weights in the field (difference 53). Part (a) is proved for every real `𝓑`, not only `𝓑 > 0`. The
     minimum `y_*(𝓑)` is defined as the infimum of `y_a(𝓑)` over `a ≥ 2`, and `yStar_attained`
     proves that it is attained. The threshold `A(Y)` of the tail bound is explicit,
     `max(2, ⌈(4√Y + Y/𝓑)/𝓑⌉)`, from `2√(Ya) ≤ Y/𝓑 + 𝓑a` and `x < e^x`. The limits of part (a)
@@ -546,6 +550,26 @@ Partial coverage.
     every `N ≥ 2`. The sentence that the bracket of Theorem 3.4 is proved only for `Θ = 1` makes no
     claim.
 
+52. `rem:free-energy`, the single-bin bound. The constant `C` and the threshold `N₀` exist but
+    are not computed; `C` depends on `t` and `Y`. Lean follows the remark: by `free_window_profile`
+    or `periodic_window_profile`, every bin with `|k - N/2| ≤ N/√(log N)` has ratio
+    `P(k)/P(0) ≥ e^{-|t|-2}/2`, there are at least `N/√(log N)` of them, and their probabilities
+    add up to at most one; every bin of the window has ratio at most `e^{|t|} + 1`. The window is
+    `|k - N/2| ≤ Y N/√(log N)`; a bin within `1/2` of `N/2 + yN/√(log N)` with `|y| ≤ Y` lies in
+    the window for `Y + 1` once `N ≥ √(log N)`.
+    For periodic ends the law is `perBin u (N-1)`, the bin law of the normalized periodic measure
+    `u^{pchg(w)}/Z` on words of length `N`, whose endpoint bin is `perBin u (N-1) 0`.
+
+53. `sec:field`, the Ising weights in a field (module `FieldWeights`). A word `w` is a
+    configuration with `σ_i = +1` for `R`, so magnetization `N - 2a` (`a` spins down) is the bin
+    `N - a`, and the symmetry of the row (`Sab_symm`, `perRatio_symm`) turns the bin `N - a` into
+    `S^X_{N,a}`. The free weight is `exp(J Σ_{i<N} σ_i σ_{i+1} + 𝓑 Σ_i σ_i)` with the free energy
+    `freeEnergy` of `IsingDictionary`; the periodic weight uses `cyclicEnergy` on words of length
+    `N = (N-1) + 1`, as `perIsingZ` does. The ratio identity holds for every real `J` and `𝓑`,
+    with `u = e^{-2J}`; the comparisons with `u^{(a)}_N` use only `u ≥ 0`. The statement about the
+    all-down configuration holds for every `N ≥ 1`, and `allUp_most_likely_iff` takes `𝓑 > 0`
+    and `N ≥ 3`, where `u^{(≥2)}_N` is defined.
+
 ## Not in Lean
 
 The following parts of the paper are not formalized. The finite results and conditional algebra
@@ -555,9 +579,6 @@ listed above do not supply these omitted limit statements or their error bounds.
   theorem; Lean has natural `α, β`) and the sentences that describe the expansions of Elliott,
   Temme, and Gil, Segura and Temme. In Remark 4.5 the statement about the misprint in Eq. (D.4)
   of Dantchev, Tonchev and Rudnick is about another paper, not a mathematical claim.
-* Section 5. In Remark 5.4, the bound of order `√(log N)/N` on the probability of a bin of the
-  window (it follows from Theorem 5.3, since about `N/√(log N)` bins of the window are each
-  comparable with an endpoint and the probabilities sum to one, but Lean does not state it).
 * Appendix A. The outward-interval Python calculations (Lean has its own rational bounds for
   the results listed above).
 * The uniform local law (the local law note, not in Lean).
