@@ -33,6 +33,8 @@ from verify_periodic_window import periodic_ratio  # noqa: E402
 from verify_ising_coupling import central_odds, coupling  # noqa: E402
 
 ss.use()
+# Times text and STIX (Times-like) mathematics, as IOP recommends for figures
+ss.plt.rcParams.update({"font.serif": ["Times New Roman", "STIXGeneral"], "mathtext.fontset": "stix"})
 C0 = 0.5 * log(np.pi / 8)
 CP = 0.5 * log(np.pi / 2)
 
@@ -70,8 +72,10 @@ def main():
     La, jpa, jfa = Ln[a6], jp[a6], jf[a6]
     mp, = ax.plot(La[::2], jpa[::2] / La[::2], "o", ms=3.2, color=c["exact"], mfc="white", mew=0.9)
     mf, = ax.plot(La[1::2], jfa[1::2] / La[1::2], "s", ms=2.8, color=ss.PURPLE, mew=0)
-    le, = ax.plot(L, eq16(L) / L, color=EQ16, lw=1.1, ls=(0, (5, 3)))
-    lt, = ax.plot(L, fit(L) / L, color=FIT, lw=1.1, ls=(0, (5, 3)))
+    le, = ax.plot(L, eq16(L) / L, color=EQ16, lw=1.1, ls=(0, (5, 3)), marker="^", ms=3.0, mfc="white", mew=0.8,
+                  markevery=0.12)
+    lt, = ax.plot(L, fit(L) / L, color=FIT, lw=1.1, ls=(0, (5, 3)), marker="v", ms=3.0, mfc="white", mew=0.8,
+                  markevery=0.12)
     ax.legend([(lp, mp), (lf, mf), le, lt], ["periodic ends", "free ends", "Stepanyan formula", "Stepanyan fit"],
               loc="upper left", ncol=2, frameon=False, handlelength=2.2, columnspacing=0.9,
               handletextpad=0.5, borderaxespad=0.2)
