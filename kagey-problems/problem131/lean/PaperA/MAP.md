@@ -2,7 +2,7 @@
 
 This file maps covered statements of Paper A (`paperA/problem131.tex` and the files it inputs)
 to Lean declarations and records partial coverage and omissions. The library `PaperA` has root
-`PaperA.lean`, which imports all 33 modules in `PaperA/` (34 modules including the root), in
+`PaperA.lean`, which imports all 34 modules in `PaperA/` (35 modules including the root), in
 namespace `Kagey131`. It uses Lean 4 v4.33.1 and Mathlib v4.33.1. Every theorem listed here is
 proved without `sorry`, `admit` or new axioms, and `#print axioms` on each of them reports only
 `propext`, `Classical.choice` and `Quot.sound` (see `build-log.txt`).
@@ -75,6 +75,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `CriticalWindow` | Theorem `thm:critical-window`, the profile and the count for both boundary conditions |
 | `IsingDictionary` | the Ising dictionary for free ends, and the positivity of the couplings and correlation lengths at the crossings |
 | `BoundaryLayer` | Corollary `cor:boundary-layer`, the moving boundary layer, for arbitrary sequences `v_N` |
+| `Supplements` | smaller statements: Lemma `lem:clipped` over the reals and in product form, `ζ_N < 4` for `N ≤ 174`, `p_{a,b} = 2/3` only at `a = b = 1`, strict probability ordering, and `Snum` as the numerator |
 | `Tables` | identities between numerator tables and recursively defined rook and Mathar sequences; retained for the tables note |
 
 ## Section 1, setting and notation
@@ -114,8 +115,8 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `thm:root` (a) | 3.1 | exactly one `p_N` in `[0,1]`, `p_N ≥ 2/3`, and the sign on each side | `thm_root_a`, `pab_mem`, with `Sab_strictMonoOn`, `Sab_exists_root`, `Sab_eq_one_iff`, `two_mul_le_Sab` | `Crossing` |
 | `thm:root` (b) | 3.1 | `p_2 = 2/3`, `p_3 = 1/√2`, the cubic for `p_4`, and `p_N < p_{N+1}` for `N ≥ 2` | `pN_two`, `pN_three`, `pN_four_cubic`, `pN_four_unique`, `pN_lt_succ`, `uN_lt_succ` | `Crossing` |
 | `thm:root` (c) | 3.1 | `p_N → 1` and `1 - p_N ~ (log N)/N` | `thm_root_c`, with `uN_lower`, `uN_upper`, `tendsto_N_uN_div_log`, `tendsto_uN` | `Asymptotics` |
-| `lem:clipped` (a) | 3.2 | `0 ≤ 1 - Π(1 - t_k)_+ ≤ Σ t_k` | `finite_product_deficit`, `clip_bounds`, `product_deficit`, and `prod_deficit` for two real factors | `FiniteBessel`, `UniformBessel` |
-| `lem:clipped` (b) | 3.2 | `0 ≤ 1 - U_r(m) ≤ r(r+1)/(2m)` | `normCoeff_self_bounds`, `normCoeff_bounds`, `normCoeff_succ`, `normCoeff_eq_zero`, and `falling_product_deficit` over the rationals | `UniformBessel`, `FiniteBessel` |
+| `lem:clipped` (a) | 3.2 | `0 ≤ 1 - Π(1 - t_k)_+ ≤ Σ t_k` | `clipped_product_deficit` over the reals for any finite family, `finite_product_deficit`, `clip_bounds`, `product_deficit`, `prod_deficit` | `Supplements`, `FiniteBessel`, `UniformBessel` |
+| `lem:clipped` (b) | 3.2 | `U_r(m) = Π_{k=1}^r (1 - k/m)_+` and `0 ≤ 1 - U_r(m) ≤ r(r+1)/(2m)` | `normCoeff_eq_prod`, `normCoeff_self_bounds`, `normCoeff_bounds`, `normCoeff_succ`, `normCoeff_eq_zero`, and `falling_product_deficit` over the rationals | `Supplements`, `UniformBessel`, `FiniteBessel` |
 | `lem:clipped` (c) | 3.2 | the three weighted Bessel sums | `hasSum_rr_b0`, `hasSum_rr_b1`, `hasSum_r1_b1` | `Bessel` |
 | `thm:bessel` (i), `eq:uniformbessel` | 3.3, (7) | `0 ≤ 1 - h S_N(x/h)/F(x) ≤ x(x+1)/h` for `N ≥ 2`, `x > 0` | `uniform_bessel_central`, with `central_bessel_core`, `Sab_series`, `weighted_deficit` | `UniformBessel` |
 | `thm:bessel` (ii) | 3.3 | `x_B ≤ x_N`, and `x_N - x_B ≤ -(1/2) log(1 - δ_N)` when `δ_N < 1` | `central_root_bound`, with `Fcent_eq`, `root_comparison`, `Groot_unique` | `RootBounds`, `BesselDeriv` |
@@ -334,13 +335,13 @@ Different proofs of the same statement.
 
 Partial coverage.
 
-24. `lem:clipped` (a). The statement for `r` factors is in Lean over the rationals
-    (`finite_product_deficit`). Over the reals Lean has the case of two factors (`prod_deficit`) and
-    uses it by induction inside `normCoeff_bounds`.
-25. `lem:clipped` (b). `normCoeff m m r` is `r!/m^r C(m-1,r)`. The product form
-    `Π(1 - k/m)_+` appears only as the recursion `normCoeff_succ`.
-26. `thm:every-n`, Step 1. Lean has `ζ_N > 4` for `N ≥ 175`. It does not state that `ζ_N < 4` for
-    `N ≤ 174`.
+24. `lem:clipped` (a). Lean states it over the rationals for a list (`finite_product_deficit`) and
+    over the reals for any finite family (`clipped_product_deficit`).
+25. `lem:clipped` (b). `normCoeff m m r` is defined as `r!/m^r C(m-1,r)`, and `normCoeff_eq_prod`
+    shows that it is the product `Π_{k=1}^r (1 - k/m)_+` for `m ≥ 1`.
+26. `thm:every-n`, Step 1. Lean has `ζ_N > 4` for `N ≥ 175` (`four_lt_zetaN`) and `ζ_N < 4` for
+    `1 ≤ N ≤ 174` (`zetaN_lt_four`). The names `step0_bounds` and `step0_fourth` are kept from an
+    earlier numbering of the steps.
 27. `eq:zetaN`. The Lambert form `ζ_N = (1/2) W_0(πN²/4)` is not in Lean.
     Monotonicity and `ζ_N ≤ L` are proved in `EveryNCorollary`.
 28. `cor:every-n`. Part (a) and the finite inequalities of (b) are standalone theorems
@@ -354,12 +355,10 @@ Partial coverage.
     certificates. It extends the inequality using
     `z³(z+1) ≤ a³(a+1) exp(z-a)` for `4 ≤ a ≤ z` and the defining equation for ζ_N,
     rather than differentiating the function f in the paper.
-29. `sec:allbin-order`. That `p_{a,b} = 2/3` only for `a = b = 1` is not in Lean.
+29. `sec:allbin-order`. That `p_{a,b} = 2/3` exactly when `a = b = 1` is `pab_eq_two_thirds_iff`.
 30. `prop:adjacent`. `global_min` and `extrema_at_pN` have weak inequalities, so they show that the
     named bins attain the minimum or maximum. The strict inequality `P_N(k) < P_N(k+1)` between
-    interior bins, which the paper's proof gives, is in Lean only for the polynomials
-    (`Sab_lt_Sab_of_coeff` with `W_le_inward`, `W_three_lt_inward`) and for the crossings
-    (`allbin_order_inward`).
+    interior bins, for `0 < p < 1`, `k ≥ 1` and `k + 2 ≤ N - k`, is `binProb_lt_inward`.
 31. `thm:edge-laguerre`. The theorems of `EdgeExpansion` are over the rationals and take the
     coefficient equations of `eq:edge-implicit-expansion` as hypotheses. They do not by
     themselves establish coefficients of the actual crossing. The theorem itself is proved
@@ -370,8 +369,8 @@ Partial coverage.
     `perRatio_eq_one_iff` shows that it is the only positive root. The ordering toward the
     middle is `perRatio_lt_inward` for `k + 2 ≤ N - k`, with `perRatio_symm`.
 33. Appendix A.3. `Snum` is built from the coefficients `W`, so `Snum_eq` is the identity
-    `d^(N-1) S_N(c/d) = Σ_j W(N,m_N,j) c^j d^(N-1-j)`. That this integer is `n_N(m_N)` follows from
-    `card_words_eq_W` but is not stated as one theorem.
+    `d^(N-1) S_N(c/d) = Σ_j W(N,m_N,j) c^j d^(N-1-j)`, and `Snum_eq_numer` shows that it is the
+    numerator `n_N(m_N)` with `α = d`, `β = c`, for `N ≥ 2` and `c, d > 0`.
 34. `thm:edge-laguerre`. The variables of `EdgeExpansion` are rationals, while `y_a`, `c_a`,
     `H_a'(y_a)` and `H_a''(y_a)` are real and in general irrational (for example `y_2 = √3 - 1`).
     The statements are polynomial identities, so the same proof works over the reals, but Lean
@@ -449,5 +448,3 @@ listed above do not supply these omitted limit statements or their error bounds.
   paper says is in Lean has a Lean theorem with the same hypotheses, constants and ranges. This
   includes `N ≥ 2` in `thm:root`, `thm:bessel`, `lem:bracket` and `thm:every-n`, the strict
   inequalities of `thm:every-n`, and the definitions of `p_N`, `u_N`, `ζ_N` and `S_N`.
-* The docstrings of the Lean files still refer to "Step 0" of Appendix A (Step 1 in the paper) and
-  to the appendix `app:tables`.

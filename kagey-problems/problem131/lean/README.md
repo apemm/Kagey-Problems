@@ -72,6 +72,9 @@ Paper D. `PaperC` also holds the Lean proofs for Paper E, and `PaperD` those for
   of Theorem 4.11 for `2√(a y_a)` (`AllbinExpansion`, `EdgeLaguerre`).
 - Theorem 5.3, the spatial crossing window: the profile `e^{t-2y²}`, uniformly on compact sets,
   and the count `√(2 max(t,0))`, for free and periodic ends (`CriticalWindow`).
+- Smaller statements (`Supplements`): Lemma 3.2 over the reals and in product form, `ζ_N < 4` for
+  `N ≤ 174`, `p_{a,b} = 2/3` only for `a = b = 1`, the strict ordering of the bin probabilities
+  toward the middle, and `Snum` as the integer numerator.
 - The Ising dictionary of Section 1.2 for free ends, `S_{a,b}(e^{-2J}) = Z_N(a-b)/Z_N(N)`, and
   the relations between `J`, `τ` and `ξ(J) = -1/log tanh J` (`IsingDictionary`).
 
