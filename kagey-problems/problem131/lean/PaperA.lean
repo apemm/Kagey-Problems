@@ -33,6 +33,8 @@ import PaperA.CriticalWindow
 import PaperA.EveryNSignTable
 import PaperA.Supplements
 import PaperA.FixedMagnetization
+import PaperA.TableValuesCore
+import PaperA.TableValuesEveryN
 
 /-!
 # Paper A (`paperA/problem131.tex`), root module
