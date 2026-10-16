@@ -2,7 +2,7 @@
 
 This file maps covered statements of Paper A (`paperA/problem131.tex` and the files it inputs)
 to Lean declarations and records partial coverage and omissions. The library `PaperA` has root
-`PaperA.lean`, which imports all 24 modules in `PaperA/` (25 modules including the root), in
+`PaperA.lean`, which imports all 26 modules in `PaperA/` (27 modules including the root), in
 namespace `Kagey131`. It uses Lean 4 v4.33.1 and Mathlib v4.33.1. Every theorem listed here is
 proved without `sorry`, `admit` or new axioms, and `#print axioms` on each of them reports only
 `propext`, `Classical.choice` and `Quot.sound` (see `build-log.txt`).
@@ -65,6 +65,8 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `EveryNSign` | the rational threshold certificate and the crossing above ζ_N for every N ≥ 2774 |
 | `EveryNAsymptotics` | the asymptotic conclusions of Corollary (b) and (c), with explicit constants, and the conversion between `z_N` and `N u_N` |
 | `CrossingEquation` | Proposition `prop:crossing-eq` for every `N ≥ 2`, analytic for `N ≥ 175` and by rational certificates below |
+| `LogInversion` | Lemma `lem:inversion`, the inversion of `z + (1/2) log z`, with an explicit constant |
+| `BesselAsymptotics` | the large-argument forms of `I_0`, `I_1` and `I_1 + η I_0` with explicit remainders, and the argument shift |
 | `BoundaryLayer` | Corollary `cor:boundary-layer`, the moving boundary layer, for arbitrary sequences `v_N` |
 | `Tables` | identities between numerator tables and recursively defined rook and Mathar sequences; retained for the tables note |
 
@@ -76,6 +78,9 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `sec:setting` | 1.2 | `P_N(0) = P_N(N) = p^(N-1)/2` and `P_N(k) = P_N(N-k)` | `binProb_zero_bin`, `binProb_last_bin`, `binProb_symm` | `Model` |
 | `sec:setting` | 1.2 | `P_N(a) = P_N(0) S_{a,b}(u)` for `p > 0` | `binProb_eq_mul_Sab`, `SN_eq_ratio` | `Crossing` |
 | `eq:zN` | (2) | `z_N = N(1 - p_N) = N u_N/(1 + u_N)` | `N_one_sub_pN` | `EveryN` |
+| `sec:setting` | 1.2 | the large-argument forms of `I_0` and `I_1`: for `z ≥ 1`, `|√(2πz) e^{-z} I_0(z) - (1 + 1/(8z))| ≤ 11/z²` and `|√(2πz) e^{-z} I_1(z) - (1 - 3/(8z))| ≤ 11/z²` | `besselI0_asymp`, `besselI1_asymp`, with `besselI0_sub_besselI1_eq`, `besselKint_bounds`, `nu_sub_bound`, `besselE_near`, `besselI0_neg`, `besselI1_neg` | `BesselAsymptotics` |
+| `sec:setting` | 1.2 | uniformly in `0 ≤ η ≤ 1` and for `z ≥ 1`, `|√(2πz) e^{-z} (I_1 + η I_0)(z) - ((1+η) - (3-η)/(8z))| ≤ 22/z²` | `besselI1_add_eta_I0_asymp` | `BesselAsymptotics` |
+| `sec:setting` | 1.2 | the argument shift: for `z ≥ 48` and `|h| ≤ z/2`, `|e^{-h} √((z+h)/z) I(z+h)/I(z) - 1| ≤ 48/z` for `I = I_0, I_1` | `besselI0_shift`, `besselI1_shift`, `shift_of_first` | `BesselAsymptotics` |
 
 ## Section 2, the exact law
 
@@ -143,16 +148,17 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `eq:allbin-normalized-series` | (17) | the normalized series of `S_{a,b}` | `Sab_series` | `UniformBessel` |
 | `eq:allbin-bessel-root` | (18) | `G_η`, and its root `x_B` exists and is unique | `Geta`, `Groot_spec`, `Groot_unique`, `Geta_strictMonoOn` | `BesselDeriv` |
 | `eq:allbin-logderivative` | (19) | `G_η' - 2G_η = 2x(1-η)(I_0 - I_1) + η I_0 ≥ 0` | `hasDerivAt_Geta`, `Geta_logderiv`, `Geta_deriv_ge`, `besselI1_lt_I0`, `Geta_growth` | `BesselDeriv` |
-| `cor:allbin-root-bound`, `eq:allbin-root-bound` | 4.4, (20) | `x_{a,b} ≥ x̂_{a,b}`, and `x_{a,b} - x̂_{a,b} ≤ -(1/2) log(1 - δ_{a,b})` when `δ_{a,b} < 1` | `allbin_root_bound`, with `Tab_eq_Geta`, `eta_le_one`, `root_comparison` | `RootBounds`, `BesselDeriv` |
-| `thm:allbin-expansion`, `eq:allbin-leading` | 4.7, (23) | in part, only the leading term `2√(ab) u_{a,b} ~ log a`, uniformly in `b ≥ a`, also for `1 - p_{a,b}` | `allbin_leading`, `allbin_leading_prob` | `AllbinAsymptotics` |
+| `cor:allbin-root-bound`, `eq:allbin-root-bound` | 4.6, (20) | `x_{a,b} ≥ x̂_{a,b}`, and `x_{a,b} - x̂_{a,b} ≤ -(1/2) log(1 - δ_{a,b})` when `δ_{a,b} < 1` | `allbin_root_bound`, with `Tab_eq_Geta`, `eta_le_one`, `root_comparison` | `RootBounds`, `BesselDeriv` |
+| `lem:inversion` | 4.8 | for every `K > 0` there is `C_K` with `|z - ℓ + (1/2) log ℓ - C - ((1/4) log ℓ - C/2 + B)/ℓ| ≤ C_K((log ℓ)²/ℓ² + |ω|)` whenever `z ≥ 1`, `ℓ ≥ 2`, `|C|, |B| ≤ K`, `|ω| ≤ 1` and `z + (1/2) log z = ℓ + C + B/z + ω` | `log_inversion`, with `abs_log_one_add_sub_le`, `log_le_quarter` | `LogInversion` |
+| `thm:allbin-expansion`, `eq:allbin-leading` | 4.9, (23) | in part, only the leading term `2√(ab) u_{a,b} ~ log a`, uniformly in `b ≥ a`, also for `1 - p_{a,b}` | `allbin_leading`, `allbin_leading_prob` | `AllbinAsymptotics` |
 | `eq:edge-polynomial` | (25) | `H_a(y) = (y/a) L^(1)_{a-1}(-y)` | `Hedge`, `genLaguerre`, `Hedge_eq_laguerre` | `UniformBessel`, `Edge` |
 | `sec:allbin-edge` | 4.4 | `y_a` exists and is unique, `y_1 = 1`, `y_2 = √3 - 1`, and `y_{a+1} < y_a` | `yEdge_spec`, `yEdge_unique`, `yEdge_one`, `yEdge_two`, `yEdge_succ_lt`, `Hedge_strictMonoOn`, `Hedge_lt_succ` | `Edge` |
 | `eq:edge-exact-series` | (28) | the exact series of `S_{a,b}` in `y = b u²` | `edge_exact_series` | `Edge` |
-| `thm:edge-laguerre` | 4.8 | in part, rational algebra conditional on the coefficient equations, yielding the formal coefficients `d_1`, `d_2`, `γ`, `-1` and `-(1 + c²)`; no specialization to the actual real crossing or its asymptotics | `edge_first_coefficient`, `edge_second_coefficient`, `edge_third_coefficient`, `universal_edge_correction`, `edge_probability_correction` | `EdgeExpansion` |
-| `thm:edge-matching`, `eq:laguerre-bessel-bound` | 4.9, (30) | in part, only `0 ≤ 1 - a H_a(x²/a)/(x I_1(2x)) ≤ x²/(2a)` | `edge_matching` | `UniformBessel` |
-| `cor:boundary-layer`, `eq:boundary-layer-width` | 4.10, (32) | for any sequence with `v_N > 0` eventually, `Ω_N = 1/(√N v_N) → ∞` and `log Ω_N/(N v_N) → 0`: `ℒ_N ~ Ω_N² log² Ω_N`, where `ℒ_N` counts the bins `1 ≤ k ≤ ⌊N/2⌋` with `P_N(k) < P_N(0)` at `p = 1/(1+v_N)` | `boundary_layer`, `layerCount`, with `layer_eventually`, `layer_core`, `layerCount_bounds`, `below_iff`, `uab_anti` | `BoundaryLayer` |
-| `cor:boundary-layer` | 4.10 | the case `v_N = N^{-κ}`, `1/2 < κ < 1`: `ℒ_N ~ (κ - 1/2)² N^{2κ-1} log² N` | `boundary_layer_power` | `BoundaryLayer` |
-| `cor:boundary-layer` | 4.10 | eventually, the number of interior bins `1 ≤ k ≤ N-1` with `P_N(k) < P_N(0)` is `2ℒ_N` | `boundary_layer_total`, with `total_eq_two_layer` | `BoundaryLayer` |
+| `thm:edge-laguerre` | 4.10 | in part, rational algebra conditional on the coefficient equations, yielding the formal coefficients `d_1`, `d_2`, `γ`, `-1` and `-(1 + c²)`; no specialization to the actual real crossing or its asymptotics | `edge_first_coefficient`, `edge_second_coefficient`, `edge_third_coefficient`, `universal_edge_correction`, `edge_probability_correction` | `EdgeExpansion` |
+| `thm:edge-matching`, `eq:laguerre-bessel-bound` | 4.11, (30) | in part, only `0 ≤ 1 - a H_a(x²/a)/(x I_1(2x)) ≤ x²/(2a)` | `edge_matching` | `UniformBessel` |
+| `cor:boundary-layer`, `eq:boundary-layer-width` | 4.12, (32) | for any sequence with `v_N > 0` eventually, `Ω_N = 1/(√N v_N) → ∞` and `log Ω_N/(N v_N) → 0`: `ℒ_N ~ Ω_N² log² Ω_N`, where `ℒ_N` counts the bins `1 ≤ k ≤ ⌊N/2⌋` with `P_N(k) < P_N(0)` at `p = 1/(1+v_N)` | `boundary_layer`, `layerCount`, with `layer_eventually`, `layer_core`, `layerCount_bounds`, `below_iff`, `uab_anti` | `BoundaryLayer` |
+| `cor:boundary-layer` | 4.12 | the case `v_N = N^{-κ}`, `1/2 < κ < 1`: `ℒ_N ~ (κ - 1/2)² N^{2κ-1} log² N` | `boundary_layer_power` | `BoundaryLayer` |
+| `cor:boundary-layer` | 4.12 | eventually, the number of interior bins `1 ≤ k ≤ N-1` with `P_N(k) < P_N(0)` is `2ℒ_N` | `boundary_layer_total`, with `total_eq_two_layer` | `BoundaryLayer` |
 
 ## Section 5, periodic boundaries
 
@@ -363,17 +369,18 @@ listed above do not supply these omitted limit statements or their error bounds.
 
 * Section 1. The Ising dictionary at the end of Section 1.2.
 * Section 3. The complete sign pattern of Remark 3.9 (`rem:sign`). The N ≥ 2774 portion of that pattern follows
-  from the formalized part (d). The values in the tables `tab:pn` and `tab:every-n`
-  are not formalized.
-* Section 4. Remark 4.5 (`rem:jacobi`), Lemma 4.6 (`lem:inversion`), Theorem 4.7
+  from the formalized part (d). The values in the table `tab:every-n` are not formalized.
+* Section 4. Corollary 4.4 (`cor:fixed-M`) as stated (Lean has Theorem 4.3, of which it is a
+  restatement), Remarks 4.5 (`rem:sign-correction`) and 4.7 (`rem:jacobi`), Theorem 4.9
   (`thm:allbin-expansion`) beyond its leading term as `a → ∞`, uniformly in `b ≥ a`; the entire
-  fixed-edge expansion of Theorem 4.8 (`thm:edge-laguerre`), including its leading limit; the
-  Laguerre-root asymptotics `eq:edge-matching-expansion` of Theorem 4.9 (`thm:edge-matching`),
+  fixed-edge expansion of Theorem 4.10 (`thm:edge-laguerre`), including its leading limit; the
+  Laguerre-root asymptotics `eq:edge-matching-expansion` of Theorem 4.11 (`thm:edge-matching`),
   including their leading term. The finite bound
-  `eq:laguerre-bessel-bound` of Theorem 4.9 is in Lean.
+  `eq:laguerre-bessel-bound` of Theorem 4.11 is in Lean.
 * Section 5. Theorem 5.2 (`thm:periodic-crossing`), even its leading term, Theorem 5.3
-  (`thm:critical-window`) for both free and periodic boundaries, Corollary 5.4 (`cor:couplings`),
-  and the values in the table `tab:couplings`.
+  (`thm:critical-window`) for both free and periodic boundaries, Remarks 5.4, 5.6 and 5.8,
+  Corollary 5.5 (`cor:couplings`), Proposition 5.7 (`prop:walls`), and the values in the table
+  `tab:couplings`.
 * Appendix A. The outward-interval Python calculations (Lean has its own rational bounds for
   the results listed above).
 * The uniform local law (the local law note, not in Lean).
