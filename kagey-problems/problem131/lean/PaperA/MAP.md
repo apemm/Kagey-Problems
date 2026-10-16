@@ -2,7 +2,7 @@
 
 This file maps covered statements of Paper A (`paperA/problem131.tex` and the files it inputs)
 to Lean declarations and records partial coverage and omissions. The library `PaperA` has root
-`PaperA.lean`, which imports all 44 modules in `PaperA/` (45 modules including the root), in
+`PaperA.lean`, which imports all 45 modules in `PaperA/` (46 modules including the root), in
 namespace `Kagey131`. It uses Lean 4 v4.33.1 and Mathlib v4.33.1. Every theorem listed here is
 proved without `sorry`, `admit` or new axioms, and `#print axioms` on each of them reports only
 `propext`, `Classical.choice` and `Quot.sound` (see `build-log.txt`).
@@ -87,6 +87,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `TableValuesCouplings` | the values of the table `tab:couplings`, by kernel-checked certificates |
 | `TableValuesText` | decimals displayed in the text, by kernel-checked certificates |
 | `TableValuesBessel` | the ratios `u_B/u_N` quoted in Section 3, with rational bounds on the Bessel root `x_B` from the series of `I_0` and `I_1` |
+| `TableValuesField` | the examples after Theorem `thm:field`: the minimizing `a`, `y_*(𝓑)` and `N (u_N^{(≥2)})²` at `N = 10⁴`, with exact rational forms of `H_a`, `S_{a,b}` and `S^P_{N,a}` and an explicit threshold for the tail bound |
 
 ## Section 1, setting and notation
 
@@ -254,6 +255,8 @@ Rows that name another module in the column Where are in that module.
 | caption of `tab:couplings` | `0.030` | `(log 2)/(2 log N)` at `N = 10⁵` | `tv_shift_100000` |
 | `rem:ordered` | `1.046`, `1.330` | `J_ord - J_N^F` at `N = 10³` and `N = 10⁵`, with `J_ord = -(1/2) log(2^{1/(N-1)} - 1)` | `tv_Jord_3`, `tv_Jord_5` |
 | after `rem:sign` (module `TableValuesBessel`) | `0.9761`, `0.9864`, `0.9924`, `0.99579`, `0.99769`, `0.99874` | `u_B/u_N` at `N = 100, 200, 400, 800, 1600, 3200`, with `u_B = x_B/h`, `h = N/2` and `x_B = Groot 1 (h/2)` the root of `F(x_B) = h` | `tv_uB_div_uN_100`, `tv_uB_div_uN_200`, `tv_uB_div_uN_400`, `tv_uB_div_uN_800`, `tv_uB_div_uN_1600`, `tv_uB_div_uN_3200`, with `tv_xB_N`, `tv_uN_N`, `lt_Groot_of_cert`, `Groot_lt_of_cert` |
+| after `thm:field` (module `TableValuesField`) | `11`, `4`, `2`, `2` and `0.757`, `1.287`, `1.764`, `2.972` | for `𝓑 = 0.1, 0.2, 0.3, 0.5`: `y_*(𝓑) = y_{a⋆}(𝓑)` with `a⋆ = 11, 4, 2, 2`, `y_{a⋆}(𝓑) < y_a(𝓑)` for every other `a ≥ 2`, and the rounding of `y_*(𝓑)` | `tv_yStar_01`, `tv_yStar_02`, `tv_yStar_03`, `tv_yStar_05`, with `yStar_eq_of_cert`, `lt_yField_of_cert`, `yField_lt_of_cert`, `tail_explicit`, `tv_exp_field_n` |
+| after `thm:field` (module `TableValuesField`) | `0.758`, `1.288`, `1.764`, `2.973` and `0.741`, `1.266`, `1.738`, `2.939` | `N (u_N^{(≥2)})²` at `N = 10⁴` for periodic and free ends, `u_N^{(≥2)} = fieldRootGe2` the minimum over all bins `2 ≤ a ≤ N-1` | `tv_fieldGe2_periodic_01`, `tv_fieldGe2_periodic_02`, `tv_fieldGe2_periodic_03`, `tv_fieldGe2_periodic_05`, `tv_fieldGe2_free_01`, `tv_fieldGe2_free_02`, `tv_fieldGe2_free_03`, `tv_fieldGe2_free_05`, with `fieldRootGe2_bounds`, `lt_fieldRoot_of_cert`, `fieldRoot_lt_of_cert`, `fieldRatio_tail_bound` |
 
 ## Not in this paper, kept in the repository for the tables note
 
@@ -508,6 +511,20 @@ Partial coverage.
     terms of the series of `I_0(2x) + I_1(2x)` at the two rational endpoints, with the geometric
     bound `ρ = x²/31²` on the rest, and `u_N` with width `10⁻²⁵` as in difference 48. The rational
     inequalities are checked by `decide +kernel`.
+
+50. After `thm:field`, the examples (module `TableValuesField`). The field is the real number
+    `1/10`, `1/5`, `3/10` or `1/2`, and `e^{2𝓑a}` is compared through `(e^{2𝓑})^a` with rational
+    bounds on `e^{2𝓑}` of width `10⁻²⁰`. For the limit, a separating rational `s` is chosen with
+    `H_{a⋆}(s) > e^{2𝓑a⋆}` and `H_a(s) < e^{2𝓑a}` for every `2 ≤ a < A`, `a ≠ a⋆`
+    (`A = 90, 41, 27, 18`); for `a ≥ A`, `y_a(𝓑) > s` follows from the limit `N → ∞` of
+    `fieldRatio_tail_bound` at `Y = s`. The value `y_{a⋆}(𝓑)` is bracketed with width `10⁻¹²`. At
+    `N = 10⁴` every bin `2 ≤ a < A` (`A ≤ 90`) is checked at a rational `u_l`, the bins
+    `A ≤ a ≤ N-1` are excluded by `fieldRatio_tail_bound` at `Y = N u_l²`, and the bin `a⋆`
+    gives the upper bound at `u_l + 10⁻¹⁵`. The threshold is explicit (`tail_explicit`): for
+    `0 < c ≤ 2𝓑`, `2√(Ya) ≤ Y/c + ca` and `e^E ≥ 1 + E + E²/2`. The polynomials are evaluated
+    exactly over `ℚ` (`HedgeQ`, `SabQ`, `perRatioQ`), with `C(n,k) = n(n-1)⋯(n-k+1)/k!`, and the
+    kernel checks them with `decide +kernel`. Lean does not prove that the minimizing bin at
+    `N = 10⁴` is `a⋆`, which the paper does not state.
 
 ## Not in Lean
 
