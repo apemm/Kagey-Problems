@@ -80,6 +80,7 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `AllbinConsequences` | the consequences of Theorem `thm:allbin-expansion` displayed after it, for sequences of bins |
 | `SignCorrection` | Remark `rem:sign-correction`: the sign and size of the first correction to the Bessel form, and the numbers at `a = b = 200` |
 | `Jacobi` | Remark `rem:jacobi`: the Jacobi forms of the run sums, the Laguerre limit at the edge with rates, and the Mehler–Heine limit for natural parameters |
+| `FreeEnergy` | Remark `rem:free-energy`: the constrained free energies, the periodic Ising weight of a magnetization, and their limit in the crossing window |
 | `Tables` | identities between numerator tables and recursively defined rook and Mathar sequences; retained for the tables note |
 
 ## Section 1, setting and notation
@@ -209,6 +210,8 @@ and the paper" explains these qualifications, and "Not in Lean" lists the omitte
 | `eq:isingtemperature` | (37) | there is `C` with, for all large `N`, `|J_N^P - ((1/2)(L - log L) + ((1/4) log L - c_P/2)/L)| ≤ C (log L)²/L²`, where `J_N^P = -(1/2) log u_N^P` | `periodic_coupling`, with `coupling_of_expansion`, `log_of_expansion` | `PeriodicExpansion` |
 | `thm:critical-window`, `eq:criticalprofile` | 5.3, (38) | for free and periodic ends, for every `T, Y ≥ 0` and `ε > 0` there is `N₀` such that for all `N ≥ N₀`, `|t| ≤ T`, `|y| ≤ Y` and every integer `k` with `|k - (N/2 + yN/√(log N))| ≤ 1/2`, `|S^X_{N,k}(u_N^X + t/N) - e^{t-2y²}| ≤ ε` | `free_window_profile`, `periodic_window_profile`, with `window_profile_of_core`, `free_profile_core`, `periodic_profile_core`, `free_form`, `periodic_form`, `profile_identity`, `shift_combo`, `etaR_bounds`, `eta_vs_y`, `h_est`, `uN_near`, `uNP_near` | `CriticalWindow` |
 | `thm:critical-window`, `eq:criticalcount` | 5.3, (39) | for free and periodic ends and every real `t`, `(√(log N)/N) M^X_N(t) → √(2 max(t,0))`, where `M^X_N(t)` is the number of interior bins whose probability is strictly above the endpoint probability at the odds `u_N^X + t/N` | `free_window_count`, `periodic_window_count`, `freeAbove`, `periodicAbove`, with `count_limit`, `countAbove_eq_zero`, `countAbove_le`, `card_near_mid`, `free_mono`, `periodic_mono`, `Sab_comm` | `CriticalWindow` |
+| `rem:free-energy` | 5.4 | with `F^X_N(μ) = -log Z^X_N(μ)` and `u = e^{-2J}`: `-log S_{a,b}(u) = F_N(a-b) - F_N(N)` for `a, b ≥ 1`, and `-log S^P_{N,k}(u) = F^P_N(2k-N) - F^P_N(N)` for `1 ≤ k ≤ N-1`, for every real `J` | `free_energy_ratio`, `periodic_energy_ratio`, `perIsingZ`, `perIsingZ_full`, `perRatio_eq_perIsingZ_ratio`, with `isingZ` | `FreeEnergy`, `IsingDictionary` |
+| `rem:free-energy` | 5.4 | for free and periodic ends, every `T, Y ≥ 0` and `ε > 0` there is `N₀` with, for `N ≥ N₀`, `|t| ≤ T`, `|y| ≤ Y` and every integer `k` within `1/2` of `N/2 + yN/√(log N)`: `u = u_N^X + t/N > 0` and `|F^X_N(2k-N) - F^X_N(N) - (2y² - t)| ≤ ε` at `J = -(1/2) log u` | `free_energy_window`, `periodic_energy_window`, with `energy_of_profile`, `abs_log_sub_log_le`, `eventually_odds_pos` | `FreeEnergy` |
 | `cor:couplings` | 5.5 | for all large `N`, `J_N^F`, `J_N^P`, `ξ(J_N^F)` and `ξ(J_N^P)` are positive | `couplings_eventually_pos` | `IsingDictionary` |
 | `cor:couplings` | 5.5 | (a) for all large `N`, `|J_N^F - ((1/2)(L - log L) + ((1/4) log L - c_0/2)/L)| ≤ 28 (log L)²/L²`, where `J_N^F = -(1/2) log u_N` | `free_coupling` | `PeriodicExpansion` |
 | `cor:couplings` | 5.5 | (b) for all large `N`, `|J_N^F - J_N^P - (log 2)/(2L)| ≤ 2 (log L)/L²` | `coupling_shift`, with `shift_final` | `PeriodicExpansion` |
@@ -470,7 +473,10 @@ listed above do not supply these omitted limit statements or their error bounds.
   theorem; Lean has natural `α, β`) and the sentences that describe the expansions of Elliott,
   Temme, and Gil, Segura and Temme. In Remark 4.5 the statement about the misprint in Eq. (D.4)
   of Dantchev, Tonchev and Rudnick is about another paper, not a mathematical claim.
-* Section 5. Remarks 5.4, 5.6 and 5.8, Proposition 5.7 (`prop:walls`), Theorem 5.9
+* Section 5. In Remark 5.4, the sentence that each bin of the window has probability of order
+  `√(log N)/N`: the paper gives no argument for it (it needs a bound on the total weight of all
+  bins at the crossing, which the paper does not prove), so it is not formalized.
+* Section 5. Remarks 5.6 and 5.8, Proposition 5.7 (`prop:walls`), Theorem 5.9
   (`thm:field`), and the values in the table `tab:couplings`.
 * Appendix A. The outward-interval Python calculations (Lean has its own rational bounds for
   the results listed above).
