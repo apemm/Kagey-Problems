@@ -1,7 +1,7 @@
 import PaperA.Recurrence
 
 /-!
-# Paper A, Appendix `app:tables`: the numerator tables as lattice-path counts
+# The tables note (`paperA/tables_note`, `app:tables`): the numerator tables as lattice-path counts
 
 `rook a b` counts the ways to move a rook from `(0,0)` to `(a,b)` by moves that increase one
 coordinate by a positive amount, via the recursion of OEIS A035002 (each entry is the sum of
