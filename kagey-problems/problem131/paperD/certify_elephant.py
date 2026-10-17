@@ -3,9 +3,12 @@
 Part 1 (Proposition 3.7 and Corollary 3.6, a supplementary check). The proof of
 Proposition 3.7 now uses certify_center.py for 10 <= N < 1688 and exact rationals
 for N = 2, 4, 6 and 8, and it no longer uses the double-precision run below or the
-rounding lemma of earlier drafts (old Lemma 3.7). The printed labels below still
-carry the old numbers (Lemma 3.7, Proposition 3.8, Lemma 3.11), to match the stored
-output in data/certify_elephant_output.txt. For every even 8 <= N < 1688
+rounding lemma of earlier drafts (old Lemma 3.7). The printed labels use the
+numbers of the build of October 17, 2026, with the TeX label in brackets. The stored
+output data/certify_elephant_output.txt of October 16 carries the old numbers
+(Lemma 3.7, Proposition 3.8, Lemma 3.11), and README.md gives the crosswalk; the
+output with the current labels is data/certify_elephant_output_2026-10-17.txt.
+For every even 8 <= N < 1688
 the script evaluates R_N = C_N/E_N at eps = 2/(N+2) in IEEE 754 double precision,
 by the recursion below, and adds the rounding bound proved in this paragraph. Here C_N = f_N(h) and E_N = f_N(0)/2, with h = N/2 and f_t(b) = P_+(M_t = b).
 At eps = 2/(N+2) the transition probabilities are ratios of integers,
@@ -32,20 +35,20 @@ values of N, including the one with the largest ratio, the recursion is run in
 exact integer arithmetic (the numerators only, since the denominators cancel in
 C_N/E_N), which decides C_N < E_N exactly and confirms the rounding bound.
 
-Part 2 (Lemma 3.10). The Landau density is
+Part 2 (Lemma 3.10, label lem:landau-mode). The Landau density is
 f_L(l) = (1/pi) int_0^oo exp(-t log t - l t) sin(pi t) dt. With ball arithmetic
 (python-flint, acb.integral on [2^-20, 30], plus explicit bounds for the 2 ends)
 the script certifies f_L'(-0.2229) > 0 > f_L'(-0.2227) and f_L'' < -0.078 on
 [-0.2229, -0.2227], and it prints enclosures of the mode and of f_L'' there.
 
-Part 3 (Theorem 2.6(b)). The proof bounds S = sum_(t >= 1) t^2 log(t+1) 2^(-t/2)
+Part 3 (Theorem 2.6(b), label thm:erw-bounds). The proof bounds S = sum_(t >= 1) t^2 log(t+1) 2^(-t/2)
 by the first 60 terms plus 4 times the term at t = 61, since the ratio of
 consecutive terms, (1 + 1/t)^2 (log(t+2)/log(t+1)) 2^(-1/2), decreases in t and
 is below 3/4 at t = 60. The script encloses the 60-term sum, the ratio at t = 60
 and the term at t = 61 in ball arithmetic and certifies that the bound is below
 102.59 and that 3 + 50.4 * 102.59 < 5200.
 
-Run with python -B certify_elephant.py. It takes about one minute.
+Run with python -I -B certify_elephant.py. It takes about one minute. It exits with status 1 if any check fails.
 """
 import sys
 import time
@@ -139,7 +142,7 @@ def ratio_exact(N):
 
 
 def part1():
-    print('Part 1. C_N/E_N at eps = 2/(N+2) for every even 8 <= N < 1688 (Lemma 3.7, Proposition 3.8)', flush=True)
+    print('Part 1. C_N/E_N at eps = 2/(N+2) for every even 8 <= N < 1688 (Proposition 3.7 [prop:dip-hyp], supplementary check)', flush=True)
     # The integers N(t-b) + 2b, 2(t-b) + Nb and (N+2)t are below 2^53, hence exact in double precision.
     big = (N_MAX + 2) * N_MAX
     check('all integers that enter the weights are exact in double precision', big < 2 ** 53, f'largest is below {big} < 2^53')
@@ -156,10 +159,10 @@ def part1():
           smallest >= FLOOR, f'smallest quantity {smallest:.3e}  [{time.time() - t0:.0f}s]')
     k = 6 * (N_MAX - 2) - 5                              # number of roundings that enter the bound, at N = 1686
     slack = 1.0 / (1.0 - 2.0 * k * U) - 1.0              # (1-u)^-k <= 1/(1 - k u), with room to spare
-    check('rounding bound (1-u)^-(6N-5) - 1 <= 3e-12 for N <= 1686 (Lemma 3.7)', slack <= 3e-12,
+    check('rounding bound (1-u)^-(6N-5) - 1 <= 3e-12 for N <= 1686 (the rounding bound of this docstring, old Lemma 3.7)', slack <= 3e-12,
           f'(6N-5) u = {k * U:.3e} at N = 1686')
     certified = worst * (1.0 + 3e-12)
-    check('largest computed C_N/E_N over even 8 <= N < 1688, and the certified upper bound (Proposition 3.8)',
+    check('largest computed C_N/E_N over even 8 <= N < 1688, and the certified upper bound (Proposition 3.7 [prop:dip-hyp], supplementary)',
           certified < 0.9474 and abs(worst - 0.947) < 5e-4,
           f'computed {worst:.15f} at N = {worst_N}; certified upper bound {worst:.6f} (1 + 3e-12) < 0.9474 < 1')
     second = max(v for N, v in values.items() if N != worst_N)
@@ -191,7 +194,7 @@ def part1():
         if N == worst_N:
             exact_worst = R
     check(f'exact rational arithmetic for {len(sample)} values of N: C_N < E_N exactly', ok_sign, f'N in {sample}')
-    check('the double-precision ratios are within the bound of Lemma 3.7 of the exact ones', ok_err,
+    check('the double-precision ratios are within the rounding bound (old Lemma 3.7) of the exact ones', ok_err,
           f'largest relative error {max_err:.2e} against the bound 3e-12  [{time.time() - t0:.0f}s]')
     small = {N: ratio_exact(N) for N in (2, 4, 6)}
     check('for N = 2, 4, 6 the hypothesis fails: C_N > E_N at eps = 2/(N+2), exactly', all(R > 1 for R in small.values()),
@@ -203,7 +206,7 @@ def part1():
 # ---------------------------------------------------------------- Part 2: the Landau density near its mode
 
 def part2():
-    print('\nPart 2. The Landau density near its mode (Lemma 3.11)', flush=True)
+    print('\nPart 2. The Landau density near its mode (Lemma 3.10 [lem:landau-mode])', flush=True)
     try:
         import flint
         from flint import acb, arb, ctx
@@ -267,7 +270,7 @@ def part2():
 # ---------------------------------------------------------------- Part 3: the series in Theorem 2.6(b)
 
 def part3():
-    print('\nPart 3. The series sum_t t^2 log(t+1) 2^(-t/2) in the proof of Theorem 2.6(b)', flush=True)
+    print('\nPart 3. The series sum_t t^2 log(t+1) 2^(-t/2) in the proof of Theorem 2.6(b) [thm:erw-bounds]', flush=True)
     try:
         from flint import arb, ctx
     except ImportError:

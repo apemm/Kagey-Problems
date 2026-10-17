@@ -13,7 +13,7 @@ in $[102.586396,102.586398]$, so the series is below the bound $102.59$ used
 in the proof even with the tail added. Any finite bound suffices for the
 asymptotic statements. The value $5200$ matters for the thresholds $1688$ and
 $1689$ in Propositions~\ref{prop:dip-hyp} and~\ref{prop:odd}(c), and for
-Proposition~\ref{prop:second-order}. Second,
+the second-order bound in Online Resource~1. Second,
 Lemma~\ref{lem:landau-mode} rests on enclosures of $f_L'$ at four points and
 of $f_L''$ on an interval, computed in ball arithmetic with
 rigorous error bounds. These two computations are in
@@ -22,28 +22,46 @@ rigorous error bounds. These two computations are in
 arithmetic and then encloses the whole law $P_N$ at the crossing.
 Proposition~\ref{prop:convex-certified} rests on this computation (about an
 hour for the whole range, with its output in
-\nolinkurl{data/certify_convex_output.txt}). The script
+\nolinkurl{data/certify_convex_output_2026-10-17.txt}). The script
 \texttt{certify\_center.py} repeats it for every even $N$ in the range and
 proves Proposition~\ref{prop:center-small} (about half an hour, with its
-output in \nolinkurl{data/certify_center_output_2026-10-16.txt}). It also
+output in \nolinkurl{data/certify_center_output_2026-10-17.txt}). It also
 checks, by an exact rational comparison, that the lower end of the enclosure
 of $\varepsilon_N$ lies above $2/(N+2)$ for every even $10\le N\le2000$. By
 Proposition~\ref{prop:mlr} this gives $C_N<E_N$ at $\varepsilon=2/(N+2)$,
-which is Proposition~\ref{prop:dip-hyp} for $10\le N<1688$. The tables,
+which is Proposition~\ref{prop:dip-hyp} for $10\le N<1688$. With the option
+\texttt{-{}-witness} the two scripts also write a record for each $N$, with the
+rational ends of the enclosure of $\varepsilon_N$, the indices that can be a
+mode and the certified margins, under a header with the SHA-256 hashes of the
+scripts and the versions of Python and python-flint. The records of these runs
+are in \nolinkurl{data/witnesses_convex_2026-10-17.jsonl} and
+\nolinkurl{data/witnesses_center_2026-10-17.jsonl}. Each of the three
+\texttt{certify} scripts returns a nonzero exit status if any check fails, and
+the two scripts that take a range of $N$ also refuse an empty range. The
+outputs of earlier runs are kept in the folder \nolinkurl{data}, and the file
+\nolinkurl{paperD/README.md} lists the statement numbers they use. The tables,
 the figures and the numbers quoted outside the proofs rest on computation
 alone, and so does the evidence for Conjecture~\ref{conj:convex} beyond what
 Section~\ref{sec:convex} proves. The script \texttt{verify\_elephant\_odd.py} checks the identity
 of Proposition~\ref{prop:odd}(a) in exact rational arithmetic for six values of $N$, and it
 computes the numbers of Remark~\ref{rem:convex-open} for the Landau density in floating point.
 
-Some of the exact and finite statements are also proved in Lean~4, among
-them Proposition~\ref{prop:mlr}, the value $C_N'(0)=4/(N+2)$ of
-Proposition~\ref{prop:first-mutation}(b), Lemma~\ref{lem:unimodal}
-and Theorem~\ref{thm:dip}. The Lean files are in the folder
-\nolinkurl{kagey-problems/problem131/lean/PaperD}. The file
-\nolinkurl{MAP.md} in that folder lists each formalized statement with its
-Lean name. The
-asymptotic results were not formalized. The Lean files use Lean~4.33.1 and
+Some finite statements are also proved in Lean~4. They are the
+correspondence between the words and the counting chain in
+Lemma~\ref{lem:erw-reduction}, Proposition~\ref{prop:mlr}, the value
+$C_N'(0)=4/(N+2)$ of Proposition~\ref{prop:first-mutation}(b),
+Lemma~\ref{lem:unimodal} and Theorem~\ref{thm:dip}. Corollary~\ref{cor:dip}
+is proved in Lean with the dip at the end as a hypothesis. The identification
+of P\'olya's urn with the random recursive tree (Lemma~\ref{lem:tree}), the
+proof of Proposition~\ref{prop:dip-hyp} and the principal analytic and shape
+results are not formalized from end to end, and the certified computations
+in Python and Arb are separate from Lean. The file \nolinkurl{MAP.md} in the
+folder \nolinkurl{kagey-problems/problem131/lean/PaperD} lists each
+formalized statement with its Lean name. It names 136 Lean declarations, but 85
+of them belong to a separate paper and many are lemmas. A recorded build of
+October 16, 2026, whose source hashes match the present files, reports only
+the axioms \texttt{propext}, \texttt{Classical.choice} and
+\texttt{Quot.sound}. The Lean files use Lean~4.33.1 and
 Mathlib at commit \texttt{0df444a360ea} (the full revision is in
 the file \nolinkurl{lake-manifest.json} of the Lean project). The scripts ran under Python~3.14.3 with
 python-flint~0.9.0 (which contains FLINT~3.6.0 and with it Arb),
