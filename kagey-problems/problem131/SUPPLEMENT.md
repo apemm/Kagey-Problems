@@ -251,27 +251,27 @@ The Lean 4 proofs are in `lean/`, one library for each of Papers A to D (`lean/P
 `lean/PaperD`), with Lean 4.33.1 and Mathlib. The library `lean/PaperC` also covers Paper E, and
 `lean/PaperD` also covers Paper F, with the statement numbers from before the split. The command
 `python -B lean/verify_lean.py` builds them with Lake and checks that every theorem and lemma uses
-only the axioms `propext`, `Classical.choice` and `Quot.sound`. The recorded run on October 15, 2026,
-checked 497 declarations for Paper A, 307 for Paper B, 346 for Paper C (with Paper E) and 281 for
+only the axioms `propext`, `Classical.choice` and `Quot.sound`. The recorded run on October 16, 2026,
+checked 1257 declarations for Paper A, 307 for Paper B, 346 for Paper C (with Paper E) and 281 for
 Paper D (with Paper F). The build output, source hashes and axioms are in `lean/build-log.txt` and
-`lean/verification-manifest.json`. The Paper A entries were refreshed from a fresh rebuild
-outside OneDrive, with cached dependencies and initially empty Paper A build artifacts.
-The baseline rebuild checked 481 declarations. The two added modules were then built and
-the integrated library audited again. It now has 22 modules (including the root) and 497
-declarations, with the same 22 linter warnings and no unexpected axioms. Every source hash
-matches the current Lean files.
+`lean/verification-manifest.json`. The Paper A library has 55 modules (including the root), with
+22 linter warnings and no unexpected axioms. Every source hash matches the current Lean files.
 
 The file `lean/README.md` summarizes coverage. The files `lean/PaperA/MAP.md` through
 `lean/PaperD/MAP.md` map covered statements to Lean declarations and list partial coverage and
 omissions. The C/D maps use the numbers from October 9, 2026, and explain where the statements
 of Papers E and F moved.
 
-For Paper A, the every-N bracket and finite Bessel inequalities are formalized. The fixed-edge
-and Laguerre-root asymptotics, including their leading limits, the entire periodic central-crossing
-theorem, and the spatial crossing window are not. The edge coefficient lemmas prove rational
-algebra conditional on coefficient equations. Corollary 3.7(a), including the full positivity
-chain and coupling interval, the finite inequalities of (b), and all of (d) are formalized.
-The asymptotic conclusion of (b) and part (c) remain outside Lean. `lean/PaperA/MAP.md` lists
-the other omissions, including the crossing equation and the separate asymptotic coupling
-corollary. The imported `Tables` module proves recurrence identities for material moved to the
-tables note; the path interpretations and bijections are not formalized.
+For Paper A, every numbered result is formalized in Lean except the Mehler-Heine limit for real
+parameters in Remark 4.7, which the paper cites. Lean proves that limit for nonnegative integer
+parameters. The results stated at every N, among them Theorem 3.4 and Proposition 3.8 for all
+N >= 2, are proved as stated. Each asymptotic error term is replaced by a bound that holds from
+some point on and is at least as strong as the paper's. Lean also checks that every value printed
+in Tables 1 and 2 is the correct rounding of the quantity it names, and it bounds most decimals
+quoted in the text and the captions. As Section 7 of the paper says, the following are not
+formalized. These are the couplings J_N^(1) and J_N^(>=2) displayed after Theorem 5.9, the mean
+number of domain walls at the periodic crossing stated after Proposition 5.7, the Lambert form of
+zeta_N, and the numbers 0.755, 0.74 and 0.013 of Sections 5.4 and 4.5. `lean/PaperA/MAP.md` gives
+the Lean theorem for each result, or says that there is none. The imported `Tables` module proves
+recurrence identities for material moved to the tables note. The path interpretations and
+bijections are not formalized.
