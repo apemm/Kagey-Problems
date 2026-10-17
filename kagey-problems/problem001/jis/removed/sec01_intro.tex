@@ -1,0 +1,270 @@
+\section{Introduction}\label{sec:intro}
+
+Suppose you, the player, are shown a grid of points with $h$ rows and $m$ columns. Each
+point is either white or blacked out, and a blacked-out point cannot tell you anything.
+Before the game starts you choose which points to black out. We call the set of
+blacked-out points the \emph{blackout}. Then the game master draws a rectangle with its
+four corners on grid points. You cannot see the rectangle. You are only told which of
+its corners are white. The rectangle does not have to line up with the grid. Tilted
+rectangles count too. You must be able to say where all four corners are with complete
+confidence, whatever rectangle the game master draws. Kagey's question is how many
+points you can black out and still do this.
+
+The order of play matters. The blackout is fixed before the rectangle is drawn, so a
+blackout is only good if no two rectangles could ever look the same to you.
+
+\begin{figure}[t]
+\centering
+\resizebox{0.95\textwidth}{!}{\input{figs/game.tex}}
+\caption{One round on the $3\times4$ grid. Black dots are blacked out and open dots are
+white. In (d) the grey specks are points we are told nothing about.}
+\label{fig:game}
+\end{figure}
+
+Figure~\ref{fig:game} plays one round on the $3\times4$ grid. We number the columns
+from the left and the rows from the top, and we write $(i,j)$ for the point in column
+$i$ and row $j$, as in Figure~\ref{fig:game}(a). In (b) we black out all of row $1$
+and all of column $1$, which is six points. In (c) the game master draws the tilted
+square with corners $(2,2)$, $(3,1)$, $(4,2)$ and $(3,3)$. The corner $(3,1)$ is in row
+$1$, so it is black, and in (d) we are shown only $(2,2)$, $(4,2)$ and $(3,3)$. That is
+enough. Three corners of a rectangle always determine the fourth
+(Lemma~\ref{lem:threecorners}), and here the fourth corner has to be $(3,1)$.
+Section~\ref{sec:three} shows that this blackout works against every rectangle on the
+$3\times4$ grid, and that six is the most anyone can black out there.
+
+Kagey poses the problem on the web page of his Open Problem
+Collection~\cite{kagey001}, and it is Problem 1 of the printed collection he handed
+out at the fourteenth Gathering 4 Gardner~\cite{kageyG4G14}. The page lists seven
+variants of the question and no results. We write $f(h,m)$ for the largest size of a
+blackout of the $h\times m$ grid that keeps every rectangle identifiable, and $a_h(m)$
+for the number of blackouts of that size. Blackouts are counted with their
+coordinates, so two blackouts that differ by a symmetry of the grid count twice. These
+two quantities are the tables \seqnum{A397315} and \seqnum{A399580} in the
+OEIS~\cite{oeis}, read by antidiagonals with both indices starting at $2$. The entries
+were created in September 2026 from the computations of Section~\ref{sec:verify}. The
+comments on \seqnum{A397315} record the strip values $f(2,m)=m+1$, the formula
+$f(3,m)=m+2$ as a conjecture checked up to width $10$, and the guess that
+$f(h,m)=h+m$ whenever $\min(h,m)\ge4$, apart from $f(4,4)=7$ and $f(4,5)=8$. Both
+statements are settled in this paper. The first is a theorem, with a proof that
+covers every number of rows, and the second is false.
+
+The three-row formula was proved first elsewhere. A machine-checked proof of exactly
+this statement, with the same rectangles and the same rules, was merged into the
+\texttt{trureturing} repository of The Omega Institute on 15 September
+2026~\cite{trureturing2026}, before the argument of this paper was written. That
+proof counts the black points of the three rows by inclusion and exclusion. The proof
+here is the case $h=3$ of a bound for every number of rows
+(Theorem~\ref{thm:rowbound}), and we do not claim the three-row value as new.
+
+The smallest case already shows what matters. On two rows every rectangle is
+axis-aligned, because a tilted rectangle has corners in at least three rows
+(Section~\ref{sec:strip}). So the $2\times3$ strip has three rectangles, one for each
+pair of columns, and we write $R_{a,b}$ for the rectangle on columns $a<b$.
+
+\begin{example}[the $2\times3$ strip]\label{ex:strip23}
+Take the blackout with the four black points $(3,1)$, $(1,2)$, $(2,2)$ and $(3,2)$,
+which keeps $(1,1)$ and $(2,1)$ white. The rectangle $R_{1,2}$ shows $(1,1)$ and
+$(2,1)$, the rectangle $R_{1,3}$ shows $(1,1)$ alone, and $R_{2,3}$ shows $(2,1)$
+alone. The three views differ, so this blackout is good. Now black out columns $1$ and
+$2$ instead, keeping $(3,1)$ and $(3,2)$. Then $R_{1,3}$ and $R_{2,3}$ both show
+exactly the two kept points. If we are shown $(3,1)$ and $(3,2)$, we cannot tell
+whether the left side is in column $1$ or in column $2$. Both blackouts have four
+points, so the size alone decides nothing. Can we black out five points? Then only
+one point is kept, and every view is either empty or that one point. That is two
+possible views for three rectangles, so two of them agree. So the maximum blackout of
+the $2\times3$ strip is $4$, that is, $f(2,3)=4$. Counting the good blackouts of
+size four gives $a_2(3)=12$ (Theorem~\ref{thm:strip}).
+\end{example}
+
+The example contains the two mechanisms of the whole paper. Two rectangles look the
+same exactly when every corner that belongs to only one of them is black
+(Lemma~\ref{lem:diff}), and a rectangle that shows three corners is never confused
+with another one (Lemma~\ref{lem:threecorners}). So everything turns on the
+rectangles that show at most two corners.
+
+\paragraph{Results.} The paper proves the following six statements. Each is restated
+with its numbered proof in the body, and the finite computer checks are marked where
+they occur.
+
+\begin{thmA}[narrow grids]
+For all $h,m\ge1$ we have $f(h,m)\ge h+m-1$, and for $m\ge3$ we have
+$f(h,m)\le m+\lfloor h^2/4\rfloor$. For $m\ge3$ the values on two and three rows
+are $f(2,m)=m+1$ and $f(3,m)=m+2$. On four rows, $f(4,m)=m+4$ for every $m\ge6$,
+while $f(4,4)=7$ and $f(4,5)=8$. On five rows, $f(5,5)=10$ and $f(5,m)=m+6$ for every
+$m\ge21$. [[P2-fiverow]]
+\end{thmA}
+
+The lower bound is the boundary cross of Lemma~\ref{lem:cross} and the upper bound is
+the row bound of Theorem~\ref{thm:rowbound}. The strip value is
+Theorem~\ref{thm:strip}, the three-row value Theorem~\ref{thm:threevalue}, the
+four-row values Theorem~\ref{thm:fourvalue} and Corollary~\ref{cor:fourboundary}, the
+$5\times5$ value Theorem~\ref{thm:fivefive}, the five-row family
+Theorem~\ref{thm:fiverow} and the small five-row widths
+Proposition~\ref{prop:fivesmall}. The values $f(4,4)$ and $f(4,5)$ rest on a finite
+computer check of $72$ and $1{,}440$ candidates. So the excess $f(h,m)-m$ over the
+width is $1$, $2$ and $4$ on two, three and four rows, and it is $6$ on five rows once
+the width is at least $21$. The guess $f(h,m)=h+m$ predicts excess $5$ on five rows,
+and it fails from width $21$ on (Theorem~\ref{thm:refute}).
+
+\begin{thmB}[three-row optima]
+For $m\ge4$,
+\begin{align*}
+a_3(m)&=4(m-1)(3m+2)\,3^{m-5}+E_m,\\
+0&\le E_m\le4\binom m2\kappa^3\rho^{m-2}+m\kappa^2\rho^{m-1},
+\end{align*}
+where $\rho=1+\sqrt3$, $\kappa=9/\rho^2$, and $E_m$, defined in
+Section~\ref{sec:three}, counts the optima in which rows $1$ and $3$ are black
+together in some column. [[P2-Em]] The generating function $\sum_{m\ge3}a_3(m)z^m$ is
+rational, and its reduced denominator is exactly
+$(1-3z)^3(1-2z-2z^2)^3(1+2z^2)^3$. Hence $a_3(m)\sim\frac4{81}m^23^m$, and the
+fraction of the $m^23^{m-1}$ candidates that pass the axis-aligned test and are valid
+tends to $4/27$.
+\end{thmB}
+
+The formula is Theorem~\ref{thm:threecount}, the generating function
+Theorem~\ref{thm:threegf} with Appendix~\ref{app:threegf}, and the asymptotics
+Corollary~\ref{cor:threeasymp}. The sequence $a_3(m)$ starts
+$53,224,892,3420,12704$ at $m=3$, which is row $3$ of \seqnum{A399580}, and it
+satisfies a linear recurrence of order $15$ from $m=19$ on
+(Corollary~\ref{cor:threerec}). In words, almost every three-row optimum has one
+black point in each column plus two more points, one in a column black in rows $1$
+and $2$ and one in a column black in rows $2$ and $3$, and the constant $4/27$ is one
+third, the share of these optima among the candidates, times $(6/9)^2$, the share of
+the nine ways to fill the two columns beside each extra point that survive the tilted
+squares there.
+
+\begin{thmC}[four rows]
+Let $m\ge4$. No valid blackout of the $4\times m$ grid hides all four corners of a
+rectangle. For $m\ge6$,
+\[
+a_4(m)\le3\,(m)_4\,4^{m-4}\Bigl(\frac{53}{64}\Bigr)^{\max(0,\lfloor m/4\rfloor-4)},
+\qquad (m)_4=m(m-1)(m-2)(m-3),
+\]
+so $a_4(m)=O(m^4\,212^{m/4})$, and $\sum_{m\ge6}a_4(m)z^m$ is a rational function.
+The first values are $a_4(6)=26$ and $a_4(7)=292$, found by computer. [[P2-fourrow]]
+\end{thmC}
+
+The hidden-rectangle statement is Theorem~\ref{thm:hidden}, the bound
+Theorem~\ref{thm:foursurvival}, the rationality Theorem~\ref{thm:fourgf} and the
+values Proposition~\ref{prop:fourvalues}. The bound says nothing below $m=20$. Its
+point is the base $212^{1/4}<4$, which says that the fraction of the $3(m)_44^{m-4}$
+candidates passing the axis-aligned test that survive the tilted rectangles tends to
+zero exponentially, unlike the three-row fraction $4/27$. By
+Corollary~\ref{cor:rarity} the same happens at every height $h\ge4$ for the
+blackouts that attain the row bound.
+
+\begin{thmD}[finite collar]
+Let $h\ge3$, put $W_h=1+\lfloor(h-1)^2/4\rfloor$, and let $S$ be a blackout of an
+$h\times m$ grid with $m\ge1$. Choose the top row or the bottom row as the padding
+row, and choose one side of the grid or both. For $L,R\ge0$ let $S(L,R)$ be the
+blackout of the $h\times(L+m+R)$ grid obtained by adding $L$ columns on the left and
+$R$ columns on the right, each black exactly in the padding row, with $L=0$ or $R=0$
+on a side that was not chosen. Then $S(L,R)$ is valid for all such $L$ and $R$ if and
+only if it is valid when $L$ and $R$ equal $W_h$ on each chosen side. In particular,
+the blackout of the $5\times21$ grid in Figure~\ref{fig:witness21} stays valid when
+padded on the left by columns black in row $1$, so $f(5,m)=m+6$ for every $m\ge21$,
+and the conjecture $f(h,m)=h+m$ for $\min(h,m)\ge5$ is false.
+\end{thmD}
+
+The collar statement is Theorem~\ref{thm:collar}, the five-row family is
+Theorem~\ref{thm:fiverow} with its case list in Appendix~\ref{app:fivecases}, and the
+refutation is Theorem~\ref{thm:refute}. The padding row has to be a boundary row
+(Remark~\ref{rem:interior}), and the same witness cannot be padded on the right by
+more than three columns (Remark~\ref{rem:rightpad}). The threshold $21$ is sufficient,
+and we do not claim it is the smallest width with excess six. In words, a tilted
+rectangle that shows at most two corners has a black corner above the padding row, so
+it lives within $W_h$ columns of the original grid, and all that a far-away padding
+column can do is complete an axis-aligned rival, which the same pair of rows already
+completes inside the test grid.
+
+\begin{thmE}[every fixed height]
+Fix $h\ge1$ and encode a blackout of the $h\times m$ grid as the word
+$B_1B_2\cdots B_m$ of its column supports, whose letters are subsets of
+$\{1,\dots,h\}$. The valid words form a regular language, and the series
+$\sum_{m\ge0}\sum_S z^mu^{|S|}$, summed over the valid blackouts $S$ of width $m$, is
+a rational function with constant term $1$. If $h\ge2$, then for $m\ge3$ the excess
+$f(h,m)-m$ lies between $h-1$ and $\lfloor h^2/4\rfloor$, it is eventually periodic
+in $m$, and $\sum_{m\ge0}a_h(m)z^m$ is a rational function, with $a_h(0)=1$.
+\end{thmE}
+
+Regularity is Theorem~\ref{thm:regular}, the bivariate series
+Theorem~\ref{thm:rational}, and the periodicity and the optimum series
+Theorem~\ref{thm:periodic}. Validity is not a property of bounded windows of columns
+(Proposition~\ref{prop:nonlocal}), so the recognizer has to carry pairs of rectangles
+rather than local patterns. Theorem~E explains the shape of Theorems~B and~C, but it
+computes neither the period nor the threshold nor the excess, and it does not say
+whether the row bound is attained on six or more rows.
+
+\begin{thmF}[squares]
+There are constants $c>0$ and $n_0$ such that
+$f(n,n)\ge c\,n^{6/5}(1+\ln n)^{-2/5}$ for all $n\ge n_0$, and
+$f(n,n)\le2n^{4/3}+2n$ for all $n\ge3$.
+\end{thmF}
+
+This is Theorem~\ref{thm:square}, proved in Appendix~\ref{app:square}. The threshold
+$n_0$ is not effective, so the theorem produces no explicit square on which
+$f(n,n)-2n$ is large. The upper bound is elementary, and it is weaker than Neuwirth's
+bound for bipartite graphs of girth eight (Remark~\ref{rem:neuwirth}). The two
+regimes differ. For fixed $h$ the excess $f(h,m)-m$ stays below $\lfloor h^2/4\rfloor$,
+while on squares $f(n,n)-2n$ is unbounded, and Theorem~E cannot be specialized to
+$h=m$ because its thresholds depend on $h$.
+
+\paragraph{Prior work and what is new.} The reduction of the game to a hitting set
+(Corollary~\ref{cor:hitting}) is the test cover formulation.
+Katona~\cite{katona1966} studies separating systems of a finite set,
+Bellitto~\cite[Section~2.1]{bellitto2018} writes the separating code problem as a
+hitting set on symmetric differences, and Foucaud~\cite[Section~1.1]{foucaud2015}
+distinguishes test covers, in which one empty signature is allowed, from
+discriminating codes, in which none is. Our difference lemma is this reduction for
+rectangles. On the graph side, a blackout whose row-column graph has no cycle of
+length four or six keeps the axis-aligned rectangles apart (Lemma~\ref{lem:girth}),
+so the axis-aligned part of the problem asks for the largest bipartite graph with
+given parts and girth at least eight. Erd\H{o}s~\cite{erdos1080} asked about this
+function, de Caen and Sz\'ekely~\cite{decaenszekely1997} bound it for dense graphs,
+and Neuwirth~\cite[Theorem~1]{neuwirth2001} proves $e\le v+\lfloor w^2/4\rfloor$ for
+parts of sizes $v$ and $w$ under the hypothesis $v\ge\lfloor w^2/4\rfloor$. Our row
+bound (Theorem~\ref{thm:rowbound}) has the same value $m+\lfloor h^2/4\rfloor$ for
+every $m\ge3$, with a proof by one tree in each column and Mantel's
+theorem~\cite{mantel1907}, and its equality structure (Theorem~\ref{thm:equality})
+is what the counting results use. Naor and Verstra\"ete~\cite{naorverstraete2005} and
+Gy\H{o}ri~\cite{gyori1997} bound bipartite graphs without six-cycles alone. None of
+these sources sees the tilted rectangles, and the tilted rectangles are what makes
+the counts in Theorems~B and~C smaller than the graph counts. Counting the words
+accepted by a finite automaton by a rational generating function is classical
+(Flajolet and Sedgewick~\cite[Propositions~I.3 and~V.6]{flajolet2009}), and column
+transfer is the usual tool for fixed-height grid problems in this journal, for
+independent sets of grid graphs (Euler~\cite{euler2005}), for juggling patterns
+(Butler, Choi, Kim, and Seo~\cite{butler2019}) and for domination polynomials of
+grids (Mertens~\cite{mertens2024}), as well as for domination numbers of grid graphs
+(Alanko, Crevals, Isopoussu, \"Osterg\r{a}rd, and Pettersson~\cite{alanko2011}).
+Jiang~\cite{jiang2018} proves that optimal identifying codes in strips can be taken
+periodic. Guilhot, Little, and Parkinson~\cite[Theorem~1]{glp2025} prove that the
+words of a regular language attaining the maximum of a bounded additive weight form
+a regular language, and the eventual periodicity of the powers of a max-plus matrix
+is the cyclicity theorem of Baccelli, Cohen, Olsder, and Quadrat~\cite{baccelli1992}.
+What these results do not supply is the recognizer, because validity here is not
+local (Proposition~\ref{prop:nonlocal}). What is new in this paper is the exact
+count of the three-row optima with its generating function and its constant, the
+hidden-rectangle theorem, the forbidden blocks and the finite memory on four rows,
+the finite collar theorem with the five-row family, and the paired-rectangle
+recognizer behind Theorem~E. The square bounds use the alteration method of Alon and
+Spencer~\cite[Section~3.2]{alonspencer2016}, Spencer's bound for independent sets in
+uniform hypergraphs~\cite{spencer1972} in the form stated by Conlon, Fox, and
+Sudakov~\cite[Section~2]{conlonfoxsudakov2016}, and the parametrization of lattice
+rectangles by a primitive direction, which Babichev and
+Babichev~\cite{babichev2026mfcs}, Babichev and Shpakova~\cite{babichevshpakova2026}
+and Babichev and Pinchuk~\cite{babichevpinchuk2026} use to count all rectangles in a
+grid.
+
+\paragraph{Organization.} Section~\ref{sec:conv} fixes the conventions and proves the
+difference lemma and the three-corner lemma. Section~\ref{sec:strip} treats strips.
+Section~\ref{sec:graph} builds the row-column graph, proves the row bound with its
+equality structure and the boundary cross, and lists the facts about tilted
+rectangles that every later section uses. Sections~\ref{sec:three}, \ref{sec:four}
+and~\ref{sec:five} treat three, four and five rows, and Section~\ref{sec:height}
+treats every fixed height and then the squares. Section~\ref{sec:verify} lists what
+was computed, what is formalized in Lean, and where the code and data
+are~\cite{repo}. Section~\ref{sec:open} collects the open questions.
+Appendix~\ref{app:fivecases} has the case list for the five-row family,
+Appendix~\ref{app:threegf} the remaining three-row generating functions, and
+Appendix~\ref{app:square} the proofs for squares.

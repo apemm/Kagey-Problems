@@ -1,0 +1,125 @@
+\section{Introduction}\label{sec:intro}
+
+You are shown a grid of points with $h$ rows and $m$ columns, and you black out some
+of them. We call the set of blacked-out points the \emph{blackout}. Then the game master
+draws a rectangle with its four corners on grid points, tilted or not. You are told which
+of its corners are white, and you must say where all four corners are. Kagey asks how many
+points you can black out so that no two rectangles ever look the same.
+
+We write $(i,j)$ for the point in column $i$ and row $j$, counting columns from the left
+and rows from the top. Figure~\ref{fig:game} plays one round on the $3\times4$ grid with
+row $1$ and column $1$ blacked out. The game master draws the tilted square with corners
+$(2,2)$, $(3,1)$, $(4,2)$, and $(3,3)$, and we are shown $(2,2)$, $(4,2)$, and $(3,3)$.
+Three corners of a rectangle determine the fourth (Lemma~\ref{lem:threecorners}), so the
+fourth corner is $(3,1)$. This blackout of six points is good, and no good blackout of the
+$3\times4$ grid is larger (Section~\ref{sec:three}).
+
+\begin{figure}[t]
+\centering
+\resizebox{0.7\textwidth}{!}{\input{figs/game.tex}}
+\caption{One round on the $3\times4$ grid. Black dots are blacked out and open dots are
+white. In (d) the gray specks are points we are told nothing about.}
+\label{fig:game}
+\end{figure}
+
+Kagey poses the problem in his Open Problem Collection~\cite{kagey001} and in his gift
+for the fourteenth Gathering 4 Gardner~\cite{kageyG4G14}. We write $f(h,m)$ for the
+largest size of a good blackout of the $h\times m$ grid, and $a_h(m)$ for the number of
+good blackouts of that size, counted with their coordinates. From Section~\ref{sec:conv} on, a
+good blackout is called \emph{valid} (Definition~\ref{def:valid}). These are the tables
+\seqnum{A397315} and \seqnum{A399580} of the OEIS~\cite{oeis}, which we contributed. Our
+comments there record the conjecture $f(3,m)=m+2$ and the guess that $f(h,m)=h+m$
+whenever $\min(h,m)\ge4$, apart from $f(4,4)=7$ and $f(4,5)=8$. We show that the guess
+fails. The three-row conjecture was proved in Lean by
+The Omega Institute~\cite{trureturing2026}. It is also the case $h=3$ of our row bound,
+and we do not claim it as new.
+
+\paragraph{Results.} Two rectangles look the same exactly when every corner that belongs
+to only one of them is black (Lemma~\ref{lem:diff}). Put $q_h=\lfloor h^2/4\rfloor$.
+Computer checks are marked in each statement.
+
+\begin{thmA}[narrow grids]
+\begin{enumerate}[(a)]
+\item For all $h,m\ge1$ we have $f(h,m)\ge h+m-1$, and for $m\ge3$ we have
+$f(h,m)\le m+q_h$.
+\item For $m\ge3$ we have $f(2,m)=m+1$ and $f(3,m)=m+2$. Also $f(4,m)=m+4$ for every
+$m\ge6$, and $f(5,5)=10$.
+\item (Computer-assisted.) We have $f(4,4)=7$, $f(4,5)=8$, $f(5,6)=11$, and $f(5,7)=12$, while
+$f(5,m)=m+6$ for every $m\ge8$.
+\item (Computer-assisted for $m\ge9$.) For $8\le m\le14$ we have $f(6,m)\le m+8$, and
+$f(6,m)=m+9$ for every $m\ge15$.
+
+\item (Computer-assisted.) We have $f(6,6)=12$, $f(6,7)=13$, $f(7,7)=14$, and $f(6,8)=15$.
+\end{enumerate}
+\end{thmA}
+
+The lower bound in (a) is the boundary cross of Lemma~\ref{lem:cross}, and the upper
+bound is the row bound of Theorem~\ref{thm:rowbound}, proved with Mantel's theorem. So for
+$h\le6$ the row bound is attained at every large width, and the guess $f(h,m)=h+m$ first
+fails on the $5\times8$ grid (Theorem~\ref{thm:refute}).
+
+\begin{thmB}[three-row optima]
+For $m\ge4$ we have $a_3(m)=4(m-1)(3m+2)\,3^{m-5}+E_m$, where $E_m\ge0$ counts the optima
+with a column black in rows $1$ and $3$. So $a_3(m)\sim\frac4{81}m^23^m$, and a fraction
+tending to $4/27$ of the $m^23^{m-1}$ axis-valid candidates is valid. The series
+$\sum_{m\ge3}a_3(m)z^m$ is rational. (Computer-assisted.) Its reduced denominator is
+$(1-3z)^3(1-2z-2z^2)^3(1+2z^2)^3$, and $E_m$ has a closed form with
+$E_m\sim\frac{19+11\sqrt3}{432}m^2(1+\sqrt3)^m$.
+\end{thmB}
+
+These are Theorems~\ref{thm:threecount}, \ref{thm:threeclosed}, and~\ref{thm:threegf},
+with the last proof finished in Appendix~\ref{app:threegf}. The sequence starts
+$53,224,892,3420,12704$ at $m=3$.
+
+\begin{thmC}[four rows]
+Let $m\ge4$. No valid blackout of the $4\times m$ grid hides all four corners of a
+rectangle. For $m\ge6$,
+\[
+a_4(m)\le3\,(m)_4\,4^{m-4}\Bigl(\frac{53}{64}\Bigr)^{\max(0,\lfloor m/4\rfloor-4)},
+\qquad (m)_4=m(m-1)(m-2)(m-3).
+\]
+(Computer-assisted.) The series $\sum_{m\ge6}a_4(m)z^m$ is rational with reduced
+denominator of degree $420$, and $a_4(m)\sim c\,m^4\rho_4^m$ with $c=8.1611\times10^{-5}$
+and $\rho_4=3.35199\ldots$, an algebraic number of degree $20$.
+\end{thmC}
+
+The bound has the base $212^{1/4}=3.8157\ldots<4$, so valid blackouts become rare
+(Theorems~\ref{thm:hidden}, \ref{thm:foursurvival}, and~\ref{thm:fourgfexact}).
+
+\begin{thmD}[finite collar]
+Let $h\ge3$ and $W_h=1+\lfloor(h-1)^2/4\rfloor$. Pad a blackout of an $h\times m$ grid, on
+one side or on both, by columns black only in the top row, or only in the bottom row.
+Then every such padding is valid if and only if the padding by $W_h$ columns on each
+chosen side is valid. (Computer-assisted.) A blackout of the $5\times8$ grid and one of the
+$6\times16$ grid pass this test with the top row on the right. Hence $f(5,m)=m+6$ for
+$m\ge8$ and $f(6,m)=m+9$ for $m\ge16$, and a stored blackout of the $6\times15$ grid gives
+$f(6,15)=24$.
+\end{thmD}
+
+The collar theorem is Theorem~\ref{thm:collar}, and Section~\ref{sec:five} has the two
+blackouts. The padding row must be a boundary row (Remark~\ref{rem:interior}).
+
+\begin{thmE}[every fixed height]
+Fix $h\ge1$ and write a blackout of the $h\times m$ grid as the word $B_1\cdots B_m$,
+where $B_i$ is the set of black rows of column $i$. The valid words form a regular
+language. If $h\ge2$, the excess $f(h,m)-m$ is eventually periodic in $m$, and
+$\sum_{m\ge0}a_h(m)z^m$ is rational.
+\end{thmE}
+
+These are Theorems~\ref{thm:regular} and~\ref{thm:periodic}, and they give no period and
+no threshold.
+
+\paragraph{Prior work.} In its hitting-set form (Corollary~\ref{cor:hitting}) the game
+asks for a test cover~\cite{katona1966,bellitto2018,foucaud2015}. The axis-aligned
+rectangles alone lead to bipartite graphs without cycles of length four and six
+(Lemma~\ref{lem:girth}), studied by Erd\H{o}s~\cite{erdos1080} and by de Caen and
+Sz\'ekely~\cite{decaenszekely1997}. Neuwirth~\cite[Theorem~1 and
+Proposition~17]{neuwirth2001} proves our row bound for them when $m\ge q_h$. Our proof
+uses Mantel's theorem~\cite{mantel1907}, covers every $m\ge3$, and counts the equality
+case. None of these works sees tilted rectangles. Grids of fixed height are often
+treated by column transfer~\cite{euler2005,mertens2024,alanko2011},
+\cite[Proposition~V.6]{flajolet2009}. Jiang~\cite{jiang2018} proves that optimal
+identifying codes in strips can be taken periodic, and Theorem~E is of the same kind. It
+is close to a theorem of Guilhot, Little, and Parkinson~\cite[Theorem~1]{glp2025}, but we
+maximize separately at each width and prove it directly. The code and data are in the
+repository~\cite{repo}.

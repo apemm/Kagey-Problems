@@ -1,0 +1,157 @@
+\section{Computations and verification}\label{sec:verify}
+
+The results that rest on a computation are marked as computer-assisted where they are
+stated. They are the exclusion of the $72$ and $1{,}440$ equality candidates behind
+$f(4,4)=7$ and $f(4,5)=8$ (Corollary~\ref{cor:fourboundary}), the count of the $8$ optima
+of the $5\times5$ grid among $44{,}640$ candidates (Theorem~\ref{thm:fivefive}(c)), every
+count of optima beyond two rows in Table~\ref{tab:values} and in
+Proposition~\ref{prop:fourvalues}, the transfer inventory and vector certificate of
+Remark~\ref{rem:transfer}, the exact polynomial algebra behind the numerator of
+Theorem~\ref{thm:threegf} and the remainders of Appendix~\ref{app:threegf}, the machine sizes
+of Theorem~\ref{thm:fourgf}, the values $f(5,6)=11$, $f(5,7)=12$ and $f(6,6)=12$ with every
+other value of Table~\ref{tab:values} that no theorem covers, and
+Proposition~\ref{prop:fivesmall}. [[P2-scripts]] Everything else in Sections~\ref{sec:conv}
+to~\ref{sec:height} has a written proof. The finite enumerations of the width-$21$ witness,
+of the $26$-column collar board and of the right-padded boards in Section~\ref{sec:five} are
+cross-checks of the hand proofs there and in Appendix~\ref{app:fivecases}, and those proofs do
+not depend on them.
+
+\paragraph{The programs.} Two programs compute values and counts, and one script checks the
+lemmas and constructions of the narrow grids. The ILP program (\texttt{solver/engine.py})
+lists the rectangles of a grid, builds the difference sets of Lemma~\ref{lem:diff}, prunes them
+by the containment rule of Section~\ref{sec:conv}, and finds a smallest hitting set as an
+integer linear program with one $0$--$1$ variable per point, solved by CBC through
+PuLP~\cite{pulp}. The maximum blackout is $hm$ minus the optimum. To count the optima it then
+lists every kept set of the minimum size and checks it against the pruned difference sets, so
+the count is exact and does not depend on which optimum the solver returns. The brute-force
+check (\texttt{solver/brute.py}) uses no lemma at all. It finds the rectangles by testing every
+set of four points with the diagonal test, and it tests every blackout straight from the
+definition by computing all presentations and looking for a repeat. It shares no code with the
+ILP program and it is slow on purpose. It was run on every grid of Table~\ref{tab:values}
+with at most $28$ points, apart from the strips of width $6$ and $7$, whose counts the Strip
+Theorem gives. The verifier (\texttt{verify\_narrow.py}) uses only the Python
+standard library and runs in about $21$ seconds. It generates rectangles from pairs of equal
+diagonals with a common midpoint, independently of the template lists of
+Lemma~\ref{lem:tilted-narrow}, and it checks the following. The axis criterion of
+Lemma~\ref{lem:girth} holds on all $74{,}304$ blackouts of the grids $2\times3$, $3\times3$,
+$3\times4$, $4\times3$ and $4\times4$. On three and four rows the tilted rectangles are exactly
+those of Lemma~\ref{lem:tilted-narrow}, and the constructions of Theorems~\ref{thm:threevalue}
+and~\ref{thm:fourvalue} are valid, at every width from $3$ to $40$ and at the widths $64$, $100$
+and $128$. The $72$ and $1{,}440$ candidates of Corollary~\ref{cor:fourboundary} all fail. On the
+$5\times5$ grid the largest blackout without a short cycle has $10$ points, exactly $8$ of the
+$44{,}640$ ten-point blackouts without a short cycle are valid, they form one orbit under the
+symmetries of the square, and none of the $1{,}440$ ten-cycle sets is valid. The first row plus
+the first column is valid on every grid up to $10\times10$, and the $21$ stored blackouts of
+$h+m$ points on the grids from $5\times5$ to $10\times10$ with $h\le m$ are valid. The new
+scripts written for this paper, in the folder \texttt{jis/scripts}, are the following.
+[[P2-scripts]]
+
+\paragraph{Two methods and the ledger.} Every value and every count in
+Table~\ref{tab:values} was computed by the ILP program, and on the grids named above also by
+the brute-force check. The two agree wherever both ran. The ILP program
+needed $723$ seconds on the $5\times7$ grid and $1{,}063$ seconds on the $6\times6$ grid, and
+it was not run on larger grids. Before most computations a prediction was written in the
+ledger (\texttt{data/ledger.md}), so that the computation could prove it wrong, and several
+predictions did go wrong, among them the guess $f(5,5)=9$ and the guess $f(4,8)=13$.
+[[P2-scripts]]
+
+\begin{table}[t]
+\centering\small
+\begin{tabular}{@{}lrrrrl@{}}
+\toprule
+grid & rectangles & maximum & kept & optima & checked by \\
+\midrule
+$2\times2$ & $1$ & $4$ & $0$ & $1$ & hand, ILP, brute force \\
+$2\times3$ & $3$ & $4$ & $2$ & $12$ & hand, ILP, brute force \\
+$2\times4$ & $6$ & $5$ & $3$ & $32$ & hand, ILP, brute force \\
+$2\times5$ & $10$ & $6$ & $4$ & $80$ & ILP, brute force (predicted) \\
+$2\times6$ & $15$ & $7$ & $5$ & $192$ & theorem, ILP \\
+$2\times7$ & $21$ & $8$ & $6$ & $448$ & theorem, ILP \\
+$3\times3$ & $10$ & $5$ & $4$ & $53$ & ILP, brute force \\
+$3\times4$ & $20$ & $6$ & $6$ & $224$ & ILP, brute force \\
+$3\times5$ & $33$ & $7$ & $8$ & $892$ & ILP, brute force \\
+$3\times6$ & $49$ & $8$ & $10$ & $3{,}420$ & ILP, brute force (predicted) \\
+$3\times7$ & $68$ & $9$ & $12$ & $12{,}704$ & ILP, brute force \\
+$3\times8$ & $90$ & $10$ & $14$ & $45{,}864$ & ILP, brute force \\
+$3\times9$ & $115$ & $11$ & $16$ & $161{,}992$ & ILP, brute force (predicted) \\
+$3\times10$ & $143$ & $12$ & $18$ & -- & ILP (value only, predicted) \\
+$4\times4$ & $44$ & $7$ & $9$ & $316$ & ILP, brute force \\
+$4\times5$ & $74$ & $8$ & $12$ & $1{,}810$ & ILP, brute force \\
+$4\times6$ & $110$ & $10$ & $14$ & $26$ & ILP, brute force \\
+$4\times7$ & $152$ & $11$ & $17$ & $292$ & ILP, brute force (predicted) \\
+$4\times8$ & $200$ & $12$ & $20$ & -- & ILP (value only) \\
+$5\times5$ & $130$ & $10$ & $15$ & $8$ & ILP, brute force \\
+$5\times6$ & $198$ & $11$ & $19$ & -- & ILP (value only) \\
+$5\times7$ & $276$ & $12$ & $23$ & -- & ILP (value only, predicted) \\
+$6\times6$ & $313$ & $12$ & $24$ & -- & ILP (value only, predicted) \\
+\multicolumn{6}{@{}l@{}}{[[P2-table]]} \\
+\bottomrule
+\end{tabular}
+\caption{The computed values. The columns give the number of rectangles of the grid, the
+maximum blackout $f(h,m)$, the number $hm-f(h,m)$ of kept points, the number $a_h(m)$ of
+maximum blackouts counted with labels, and the programs that found the value and the count.
+The word hand marks a value worked out by hand before any program ran, theorem marks a count
+confirmed by the ILP program only after the Strip Theorem gave it, and predicted marks a value
+written in the ledger before the program first ran on that grid. A dash means that the count
+was not computed.}
+\label{tab:values}
+\end{table}
+
+Table~\ref{tab:values} collects the values. The rectangle counts agree with
+\seqnum{A085582} on the squares and with \seqnum{A289832} on the other grids, where the entry
+$T(n,k)$ of the latter counts the rectangles on an $(n+1)\times(k+1)$ grid of points, so that
+our $h\times m$ grid is its $T(m-1,h-1)$. Every value on two, three and four rows and the
+value on the $5\times5$ grid also follow from the theorems of Sections~\ref{sec:strip}
+to~\ref{sec:five}. The values on the grids $5\times6$, $5\times7$ and $6\times6$ rest on the
+ILP program alone, with the lower bound $h+m$ confirmed by the stored blackouts. The counts of
+optima beyond two rows are computed and not proved, except that from Theorem~\ref{thm:threegf}
+the three-row counts at every width follow from the rational generating function, and the
+counts through width $9$ in the table were found from the definition before that theorem
+existed. [[P2-table]] The values and counts of the table are the entries of \seqnum{A397315}
+and \seqnum{A399580}, read as tables by antidiagonals with offset $2$.
+
+\paragraph{Formal verification.} The file \texttt{lean/KageyProblems/Problem001.lean} of the
+repository is a Lean~4 formalization, against Mathlib \texttt{v4.33.1} and with no
+\texttt{sorry}, of the definitions of Section~\ref{sec:conv} and of the results in the
+following list, named by their declarations.
+\begin{center}\footnotesize
+\begin{tabular}{@{}ll@{}}
+\toprule
+result & declaration \\
+\midrule
+Lemma~\ref{lem:diff} & \texttt{sdiff\_eq\_sdiff\_iff\_symmDiff\_subset} \\
+Corollary~\ref{cor:hitting} & \texttt{valid\_iff\_hitting} \\
+Remark~\ref{rem:empty} & \texttt{at\_most\_one\_hidden} \\
+containment rule (Section~\ref{sec:conv}) & \texttt{hitting\_erase\_superset} \\
+strip rectangles are unions of two columns & \texttt{mem\_rects\_strip} \\
+valid strips have at most one full column & \texttt{valid\_strip\_iff} \\
+the $2\times2$ case & \texttt{valid\_two\_two} \\
+strip upper bound $m+1$ & \texttt{card\_le\_of\_valid} \\
+maximum strip blackouts & \texttt{max\_strip\_iff} \\
+their number $m2^{m-1}$ & \texttt{card\_max\_strip} \\
+Theorem~\ref{thm:strip} & \texttt{strip\_theorem} \\
+\bottomrule
+\end{tabular}
+\end{center}
+The file \texttt{Problem001/Foundations.lean} adds ten lemmas of infrastructure and no
+geometry, namely monotonicity and restriction of validity and a transport lemma.
+\begin{center}\footnotesize
+\begin{tabular}{@{}lll@{}}
+\texttt{Valid.mono} & \texttt{not\_valid\_of\_subset} & \texttt{valid\_empty} \\
+\texttt{pres\_inter\_grid} & \texttt{valid\_inter\_grid\_iff} & \texttt{grid\_mono} \\
+\texttt{rects\_mono} & \texttt{Valid.restrict\_grid} & \texttt{Valid.inter\_grid} \\
+\texttt{presentation\_injective\_map\_iff} & & \\
+\end{tabular}
+\end{center}
+Nothing beyond the strips is formalized. The axis criterion, the row bound, the tilted-rectangle lists, the three-, four-
+and five-row theorems, the collar theorem and the generating functions are not in Lean.
+
+\paragraph{Data and code.} The code and data are in the folder
+\nolinkurl{kagey-problems/problem001} of \url{https://github.com/apemm/Kagey-Problems}
+\cite{repo}. The two programs are in \nolinkurl{solver/}, the verifier is
+\nolinkurl{verify_narrow.py} with its log in \nolinkurl{data/narrow_verification.txt}, the
+ledger is \nolinkurl{data/ledger.md}, the stored blackouts of $h+m$ points are in
+\nolinkurl{game/game.js}, and the scripts and data files of this paper are in
+\nolinkurl{jis/scripts} and \nolinkurl{jis/data}. The programs run under Python~3 with PuLP
+(version $2.7$ or later) and the CBC solver bundled with it~\cite{pulp}. The verifier and the
+brute-force check need the standard library only. [[P2-scripts]]

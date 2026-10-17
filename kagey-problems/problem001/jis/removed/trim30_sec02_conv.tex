@@ -1,0 +1,78 @@
+\section{Conventions and the difference lemma}\label{sec:conv}
+
+These conventions hold throughout the paper.
+\begin{enumerate}[(1),leftmargin=*]
+\item An $h\times m$ grid has $h$ rows and $m$ columns, and $V$ is its set of points.
+A $2\times m$ grid is a \emph{strip}, and an $n\times n$ grid is a \emph{square}.
+\item The point $(i,j)$ is in column $i$ and row $j$, and $(1,1)$ is the top-left
+point. So $i$ grows to the right and $j$ grows downward, as in
+Figure~\ref{fig:game}(a).
+\item A \emph{rectangle} is a set of four grid points that are the corners of a
+rectangle of positive area. Tilted rectangles count. We identify a rectangle $R$ with
+its corner set $C(R)$. It is
+\emph{axis-aligned} if its sides are parallel to the rows and columns, and
+\emph{tilted} otherwise. Four distinct points form a rectangle if and only if they
+split into two segments with the same midpoint and the same length.
+\item A \emph{blackout} is a set $S\subseteq V$, and $K=V\setminus S$ is the
+\emph{kept set}. The \emph{presentation} of a rectangle $R$ is the set
+$\pres(R)=C(R)\setminus S$ of its white corners.
+\item The \emph{black rows} of column $i$ form the set $B_i$ of rows $j$ with
+$(i,j)\in S$. Column $i$ is \emph{empty}, a \emph{singleton}, a \emph{double}, or a
+\emph{triple} when $|B_i|$ is $0$, $1$, $2$, or $3$. It is \emph{full} when $|B_i|=h$.
+\item The \emph{pair set} $F$ is the set of row pairs contained in some $B_i$. We put
+$q_h=\lfloor h^2/4\rfloor$.
+\end{enumerate}
+
+\begin{definition}[valid blackout]\label{def:valid}
+A blackout $S$ is \emph{valid} if different rectangles always have different
+presentations, that is, if $\pres(R_1)\ne\pres(R_2)$ whenever $R_1\ne R_2$. The
+\emph{maximum blackout} $f(h,m)$ is the largest size of a valid blackout of the
+$h\times m$ grid. We write $a_h(m)$ for the number of valid blackouts of size $f(h,m)$.
+They are counted with their coordinates, not up to symmetry.
+\end{definition}
+
+Swapping rows and columns gives $f(h,m)=f(m,h)$ and $a_h(m)=a_m(h)$. The tables
+$f(h,m)$ and $a_h(m)$ are \seqnum{A397315} and \seqnum{A399580}, read by antidiagonals
+with both indices starting at $2$. Section~\ref{sec:height} also uses width $0$ and height $1$, with no
+rectangles, where $f(h,0)=0$, $a_h(0)=1$, $f(1,m)=m$, and $a_1(m)=1$.
+
+\begin{remark}[the empty presentation]\label{rem:empty}
+The empty presentation is allowed, and it means that every corner is black. Two hidden
+rectangles would share it, so a valid blackout hides at most one rectangle.
+\end{remark}
+
+\begin{lemma}[difference sets]\label{lem:diff}
+For all sets $A$, $B$, and $S$ we have $A\setminus S=B\setminus S$ if and only if
+$A\triangle B\subseteq S$, where $\triangle$ is the symmetric difference.
+\end{lemma}
+
+\begin{proof}
+Both conditions say that no point outside $S$ lies in exactly one of $A$ and $B$.
+\end{proof}
+
+\begin{corollary}[hitting sets]\label{cor:hitting}
+A blackout $S$ is valid if and only if the kept set $K$ meets
+$C(R_1)\triangle C(R_2)$ for every pair of distinct rectangles $R_1$, $R_2$. So
+$hm-f(h,m)$ is the least size of a set meeting every such difference set.
+\end{corollary}
+
+\begin{proof}
+Apply Lemma~\ref{lem:diff} to $C(R_1)$, $C(R_2)$, and $S$ for every pair.
+\end{proof}
+
+A larger kept set meets more sets, so every subset of a valid blackout is valid. Hence a
+search that finds no valid blackout of exactly $k$ points proves $f(h,m)<k$. A
+difference set that contains another one is redundant, and the programs of
+Section~\ref{sec:verify} delete such sets before they search.
+
+
+\begin{lemma}[three corners suffice]\label{lem:threecorners}
+Three corners of a rectangle determine the rectangle. So two distinct rectangles with
+the same presentation both show at most two corners.
+\end{lemma}
+
+\begin{proof}
+Three corners $p$, $q$, and $r$ of a rectangle form a right triangle, with the right
+angle at the corner adjacent to both others, say $q$. A triangle has only one right
+angle, so the three points determine $q$ and the fourth corner $p+r-q$.
+\end{proof}

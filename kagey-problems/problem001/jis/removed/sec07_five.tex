@@ -1,0 +1,401 @@
+\section{Five rows and larger grids}\label{sec:five}
+
+On five rows the row bound of Theorem~\ref{thm:rowbound} reads $f(5,m)\le m+6$ for
+$m\ge3$, and Theorem~\ref{thm:equality} says what a blackout of $m+6$ points has to look
+like. Every column is occupied, exactly six columns are doubles, their six row pairs are the
+edges of a complete bipartite graph between two rows and the other three, and every other
+column is a singleton. Such a blackout passes the axis criterion, so the whole question is the
+tilted rectangles. The computed values $f(5,5)=10$, $f(5,6)=11$ and $f(5,7)=12$ of
+Section~\ref{sec:verify} fall one short of the bound. This section shows that the bound is
+attained at every width from $21$ on. We first prove a finite test for padding any board with
+singleton columns in a boundary row, then apply it to one witness of width $21$.
+
+\subsection{A finite test for boundary padding}
+
+Let $h\ge3$ and $m\ge1$, let $S$ be a blackout of the $h\times m$ grid, and call row $1$ or
+row $h$ the \emph{padding row}. For integers $L,R\ge0$ we write $S_{L,R}$ for the blackout of
+the $h\times(L+m+R)$ grid obtained by adding $L$ columns on the left and $R$ columns on the
+right, each new column black exactly in the padding row. We keep the original column indices,
+so the added columns are the columns $1-L,\dots,0$ and $m+1,\dots,m+R$, and the black points of
+$S_{L,R}$ outside the padding row are exactly the black points of $S$ outside the padding row.
+Recall from Section~\ref{sec:graph} that a rectangle is \emph{weak} if it shows at most two
+corners, and that $W_h=1+\lfloor(h-1)^2/4\rfloor$ bounds the column span of a tilted rectangle
+(Lemma~\ref{lem:span}).
+
+\begin{lemma}[weak tilted rectangles stay near the board]\label{lem:five-local}
+Let $h\ge3$.
+\begin{enumerate}[(a)]
+\item A tilted rectangle has at most one corner in row $1$ and at most one corner in row $h$.
+\item In $S_{L,R}$, every weak tilted rectangle has a black corner outside the padding row.
+That corner lies in an original column $e$ with $1\le e\le m$, and every column of the
+rectangle lies in $[e-W_h,e+W_h]$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) By Lemma~\ref{lem:leftmost}, from the leftmost corner $(x,j)$ of a tilted rectangle the
+two sides are $(a,-b)$ and $(c,d)$ with $a,b,c,d\ge1$. So the four corners lie in the rows
+$j$, $j-b$, $j+d$ and $j+d-b$. The smallest of these is $j-b$ and the largest is $j+d$, each
+attained once.
+
+(b) A weak tilted rectangle has at least two black corners, and by (a) at most one of them is
+in the padding row. So some black corner lies outside the padding row, hence in $S$, hence in a
+column $e$ with $1\le e\le m$. By Lemma~\ref{lem:span} the columns of the rectangle differ by
+at most $W_h$, so all of them lie in $[e-W_h,e+W_h]$.
+\end{proof}
+
+\begin{theorem}[finite collar]\label{thm:collar}
+Let $h\ge3$ and $m\ge1$, let $S$ be a blackout of the $h\times m$ grid, let the padding row
+be row $1$ or row $h$, and choose the left side, the right side, or both sides. Put
+$L^*=W_h$ if the left side is chosen and $L^*=0$ otherwise, and define $R^*$ in the same
+way. Then $S_{L,R}$ is valid for every pair $(L,R)$ with $L,R\ge0$, $L=0$ if the left side
+is not chosen and $R=0$ if the right side is not chosen, if and only if $S_{L^*,R^*}$ is valid.
+\end{theorem}
+
+So one finite board decides every padding length on the chosen sides, with the two lengths
+independent. The theorem certifies a proposed padding. It does not say that a given board
+passes the test, and Remark~\ref{rem:rightpad} shows one that does not.
+
+\begin{proof}
+Write $S^*=S_{L^*,R^*}$ for the test board. If every $S_{L,R}$ is valid, then $S^*$ is
+valid, since $(L^*,R^*)$ is one of the admissible pairs. For the converse assume that $S^*$
+is valid, fix an admissible pair $(L,R)$, and put $U=S_{L,R}$. We use two facts. First, a
+rectangle whose columns lie in the column ranges of both $U$ and $S^*$ has the same corners
+and the same presentation in both, because the two blackouts agree on every common column.
+Second, by Lemma~\ref{lem:five-local}(b) every weak tilted rectangle of $U$ has its columns
+in $[1-W_h,m+W_h]\cap[1-L,m+R]$, and this set is contained in $[1-L^*,m+R^*]$, since
+$L=0$ when the left side is not chosen and $R=0$ when the right side is not chosen. So every
+weak tilted rectangle of $U$ is a rectangle of $S^*$ with the same presentation.
+
+Suppose that two distinct rectangles $R_1$ and $R_2$ of $U$ have the same presentation $P$.
+We derive a contradiction in three cases.
+
+\emph{Step 1. Both axis-aligned.} The graph $G_U$ consists of $G_S$ together with one new
+column vertex for each added column, joined by a single edge to the padding row. A vertex of
+degree one lies on no cycle, so every cycle of $G_U$ is a cycle of $G_S$, and $G_S$ is a
+subgraph of $G_{S^*}$. The board $S^*$ is valid and has $m+W_h\ge3$ columns, so by
+Lemma~\ref{lem:girth} the graph $G_{S^*}$ has no cycle of length four or six. Hence $G_U$
+has none either, and the other direction of Lemma~\ref{lem:girth}, which needs no hypothesis
+on the number of columns, says that no two axis-aligned rectangles of $U$ share a
+presentation.
+
+\emph{Step 2. Both tilted.} By Lemma~\ref{lem:threecorners}, $|P|\le2$, so both rectangles
+are weak. By the second fact both are rectangles of $S^*$ with the presentation $P$ there,
+which contradicts the validity of $S^*$.
+
+\emph{Step 3. One of each.} Let $R_1$ be tilted and $R_2$ axis-aligned. Again $|P|\le2$,
+so $R_1$ is weak and lies in the column range of $S^*$. Consider either column of $R_2$. If
+it contains a point of $P$, it is a column of $R_1$. Otherwise both corners of $R_2$ in that
+column are black, so the column contains two black points of $U$, and it is an original
+column, because an added column contains exactly one black point. In both cases the column
+lies in the column range of $S^*$. So $R_2$ is also a rectangle of $S^*$ with presentation
+$P$, which again contradicts the validity of $S^*$.
+
+Every case contradicts the assumption, so $U$ is valid.
+\end{proof}
+
+\begin{remark}[the padding row has to be a boundary row]\label{rem:interior}
+Step 3 uses only that an added column holds a single black point, but Step 2 uses
+Lemma~\ref{lem:five-local}(a), and the theorem fails for an interior padding row. Take
+$h=3$, the original columns $1$, $2$ and $3$ with black rows $\{1\}$, $\{1\}$ and
+$\{1,3\}$, and the padding row $2$. Here $W_3=2$. With the two added columns $0$ and $-1$
+the board is valid. With a third added column $-2$ the diamond
+$\{(-2,2),(-1,1),(-1,3),(0,2)\}$ has both corners of row $2$ black and shows the vertical
+pair $\{(-1,1),(-1,3)\}$, and so does the axis-aligned rectangle on the columns $-1$ and $3$
+and the rows $1$ and $3$, whose corners in column $3$ are black. So the test board with
+$W_3$ added columns passes while a longer padding fails.
+\end{remark}
+
+\subsection{The five-row family}
+
+Figure~\ref{fig:witness21} shows the witness of width $21$. Its six double columns are the
+columns $1$, $5$, $9$, $13$, $17$ and $21$, black exactly in the row pairs $\{1,2\}$,
+$\{1,4\}$, $\{2,3\}$, $\{3,4\}$, $\{2,5\}$ and $\{4,5\}$, and every other column is black
+in row $1$ only. The six pairs are the six edges of the complete bipartite graph between the
+rows $\{1,3,5\}$ and the rows $\{2,4\}$, so the blackout has the shape that
+Theorem~\ref{thm:equality} requires, and it has $21+6=27$ points.
+
+\begin{figure}[t]
+\centering
+\input{figs/witness21.tex}
+\caption{The five-row witness of width $21$. (a) The $27$ black points. The six shaded
+columns are the double columns, and every other column is black in row $1$ only. (b) The six
+row pairs of the double columns, drawn as a graph on the rows $\{1,3,5\}$ and $\{2,4\}$, each
+edge labelled by its column.}
+\label{fig:witness21}
+\end{figure}
+
+We pad this witness to the left by singleton columns in row $1$. To handle every padding
+length at once we work on the half-strip of all columns $x\le21$, with the same six double
+columns and the point of row $1$ in every other column, and we call this blackout $S^{\infty}$.
+For an integer $c\le1$ let $S_c$ be the restriction of $S^{\infty}$ to the columns
+$c,c+1,\dots,21$, a blackout of the $5\times(22-c)$ grid with $22-c+6$ points.
+
+\begin{proposition}[the half-strip is valid]\label{prop:fivecases}
+For every integer $c\le1$ the blackout $S_c$ is valid. More precisely, exactly $59$ tilted
+rectangles with all corners in columns at most $21$ are weak for $S^{\infty}$. All of them
+have their columns in $[-3,21]$, $47$ of them show two corners, $12$ show one corner, none is
+hidden, their $59$ presentations are pairwise distinct, and none of them is the presentation
+of an axis-aligned rectangle with corners in columns at most $21$.
+\end{proposition}
+
+The proof is the hand classification of Appendix~\ref{app:fivecases}. It sorts the tilted
+rectangles of a five-row grid into $18$ templates, shows that only the $12$ templates touching
+row $1$ can be weak, lists the weak translates of each of them, and checks the presentations
+against each other and against the axis-aligned rectangles. Theorem~\ref{thm:collar} gives a
+second route. Since $W_5=5$, the board $S_{-4}$ with $26$ columns is the test board for left
+padding, and its validity alone implies the validity of every $S_c$. The $3{,}658$ rectangles
+of $S_{-4}$ and the $2{,}418$ rectangles of the width-$21$ witness were also enumerated by the
+scripts of Section~\ref{sec:verify}, and no two of them share a presentation. These
+enumerations are cross-checks of the hand proof, and the proof does not depend on them.
+
+\begin{theorem}[five rows]\label{thm:fiverow}
+For every $m\ge21$,
+\[
+f(5,m)=m+6.
+\]
+The bound is attained by the blackout whose columns $m-20$, $m-16$, $m-12$, $m-8$, $m-4$ and
+$m$ are black exactly in the row pairs $\{1,2\}$, $\{1,4\}$, $\{2,3\}$, $\{3,4\}$, $\{2,5\}$
+and $\{4,5\}$, and whose other columns are black in row $1$ only.
+\end{theorem}
+
+\begin{proof}
+The upper bound is Theorem~\ref{thm:rowbound} with $h=5$ and $m\ge3$. For the lower bound take
+$c=22-m\le1$. The blackout $S_c$ of Proposition~\ref{prop:fivecases} occupies the columns
+$c,\dots,21$, and moving it $m-21$ columns to the right gives the blackout of the statement
+on the columns $1,\dots,m$. Validity is unchanged by the move. The blackout has $m$ occupied
+columns and six doubles, so it has $m+6$ points.
+\end{proof}
+
+So $f(5,21)=27$, one more than $5+21$, and the excess $f(5,m)-m$ equals $6$ at every width from
+$21$ on, which is the largest value the row bound allows. The threshold $21$ is sufficient
+and is not claimed to be the smallest, see Proposition~\ref{prop:fivesmall}.
+
+\begin{remark}[padding on the right fails]\label{rem:rightpad}
+The family grows to the left, and the direction matters. Append $k$ columns black in row $1$
+only to the right of the width-$21$ witness, as columns $22,\dots,21+k$. For $k=1$, $2$ and $3$
+the board is valid. For $k=4$ the axis-aligned rectangle $\{(20,1),(20,3),(25,1),(25,3)\}$
+and the tilted rectangle $\{(20,3),(21,5),(24,1),(25,3)\}$ both show exactly
+$\{(20,3),(25,3)\}$. This agrees with Theorem~\ref{thm:collar}. The test board for the right
+side has $W_5=5$ added columns, it contains the board with $k=4$, so it is invalid, and the
+theorem then says that some padding length fails. The half turn $(i,j)\mapsto(22-i,6-j)$ of
+the width-$21$ board maps the six doubles to themselves and the singletons of row $1$ to
+row $5$. So the family turned by a half turn has its doubles at the left end and grows to the
+right by singletons in row $5$, and padding it to the left by singletons in row $5$ fails in the
+same way.
+\end{remark}
+
+\begin{remark}[spacing the doubles further apart does not help]\label{rem:spacing}
+Large gaps between the double columns do not make the tilted rectangles safe. Put the same six
+row pairs, in the same order, at the columns $1$, $12$, $23$, $34$, $45$ and $56$, with row
+$1$ black in every other column of the $5\times56$ grid. Then the axis-aligned rectangle
+$\{(41,1),(46,1),(41,3),(46,3)\}$ and the tilted rectangle
+$\{(41,3),(42,1),(45,5),(46,3)\}$ both show exactly $\{(41,3),(46,3)\}$. The tilted rectangle
+has the horizontal diagonal from $(41,3)$ to $(46,3)$ and the diagonal from $(42,1)$ to
+$(45,5)$, of the same length $5$ and the same midpoint. A horizontal diagonal does not force
+its partner to be vertical, and the gap $4$ of the witness avoids this coincidence while the
+gap $11$ does not.
+\end{remark}
+
+\subsection{The \texorpdfstring{$5\times5$}{5 x 5} grid}
+
+The $5\times5$ grid is the first square on which $h+m-1$ is not the answer. The row bound
+gives $5+\lfloor25/4\rfloor=11$, and Corollary~\ref{cor:small-m} lowers this to $10$, since
+$5<q_5=6$. We give a second proof of the upper bound by counting edges in $G_S$, because it
+also describes every optimum.
+
+\begin{lemma}[few edges without short cycles]\label{lem:tenvertices}
+Let $G$ be a finite simple bipartite graph with $v$ vertices, $1\le v\le10$, and with no cycle
+of length four or six. Then $G$ has at most $v$ edges. If it has exactly $v$ edges, then $G$ is
+connected and has exactly one cycle, of length $8$ or $10$.
+\end{lemma}
+
+\begin{proof}
+Every cycle of a bipartite graph has even length, so every cycle of $G$ has length at least
+$8$.
+
+\emph{Step 1. No component has more edges than vertices.} Suppose that a component $G'$ has
+more edges than vertices. Remove from $G'$ a vertex of degree one together with its edge, and
+repeat until no vertex of degree one is left. Each removal keeps the graph connected and lowers
+the numbers of vertices and of edges by one each. So what remains, $H$, is connected and still
+has more edges than vertices. In particular $H$ has at least two vertices, so it has no vertex
+of degree zero, and every vertex of $H$ has degree at least two. If every degree were exactly
+two, $H$ would have as many edges as vertices. So some vertex $x$ has degree at least three.
+
+Let $D_k$ be the set of vertices of $H$ at distance $k$ from $x$. Two different paths from
+$x$ to the same vertex, each of length at most $3$, would together contain a cycle of length
+at most $6$, which is impossible. So for $k=1,2,3$ every vertex of $D_k$ has exactly one
+neighbour in $D_{k-1}$, its parent. It has no neighbour in $D_k$, because $D_k$ lies on one
+side of the bipartition. Its degree is at least two, so it has a neighbour in $D_{k+1}$. Two
+different vertices of $D_k$ with $k\le2$ cannot share such a neighbour, since that neighbour
+would have two parents. So $|D_1|\ge3$, $|D_2|\ge|D_1|\ge3$, $|D_3|\ge|D_2|\ge3$ and
+$|D_4|\ge1$. That is at least $1+3+3+3+1=11$ vertices, but $v\le10$. This contradiction
+proves Step 1.
+
+\emph{Step 2. Equality.} By Step 1 every component has at most as many edges as vertices, so
+$G$ has at most $v$ edges. If $G$ has exactly $v$ edges, every component has exactly as many
+edges as vertices, and a connected graph with that property has exactly one cycle. Two
+components would mean two disjoint cycles of length at least $8$, which need $16$ vertices.
+So $G$ is connected, and its one cycle has even length between $8$ and $10$.
+\end{proof}
+
+\begin{theorem}[the $5\times5$ grid]\label{thm:fivefive}
+\begin{enumerate}[(a)]
+\item $f(5,5)=10$.
+\item For every maximum blackout $S$ of the $5\times5$ grid, the graph $G_S$ is connected and
+has exactly one cycle, of length $8$ or $10$.
+\item (Computer-assisted.) There are exactly $a_5(5)=8$ maximum blackouts. They are the eight
+images of the blackout of Figure~\ref{fig:fivefive}(a) under the symmetries of the square,
+no two of them coincide, and each has $G_S$ equal to an $8$-cycle with two pendant edges.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{Upper bound and (b).} If $S$ is valid, then $G_S$ has no cycle of length four or six by
+Lemma~\ref{lem:girth}, applied with $m=5\ge3$. The graph is bipartite with $10$ vertices and
+$|S|$ edges, so Lemma~\ref{lem:tenvertices} gives $|S|\le10$, and if $|S|=10$ it gives (b).
+
+\emph{Lower bound.} Let $S_0$ be the blackout of Figure~\ref{fig:fivefive}(a), the ten points
+\[
+(3,1),\ (4,1),\ (5,1),\ (3,2),\ (2,3),\ (3,3),\ (1,4),\ (2,4),\ (1,5),\ (5,5).
+\]
+Its graph is the $8$-cycle $r_1c_3r_3c_2r_4c_1r_5c_5r_1$ with the two pendant edges $r_2c_3$
+and $r_1c_4$, so by Lemma~\ref{lem:girth} no two of the $100$ axis-aligned rectangles share a
+presentation. The grid has $130$ rectangles, so $30$ are tilted, and we list them by
+Lemma~\ref{lem:leftmost}. From the leftmost corner the sides are $(a,-b)$ and $(c,d)$ with
+$ac=bd$, $a+c\le4$ and $b+d\le4$. The case $b+d=2$ gives the nine unit diamonds $D(i,1)$,
+$D(i,2)$ and $D(i,3)$ with $1\le i\le3$. The case $b+d=3$ gives the four kinds $A$, $B$, $C$
+and $E$ of Lemma~\ref{lem:tilted-narrow}, each with two horizontal and two vertical placements,
+sixteen in all. The case $b=d=2$ forces $a=c=2$ and gives the one large diamond
+$\{(1,3),(3,1),(5,3),(3,5)\}$. The cases $(b,d)=(1,3)$ and $(3,1)$ give $(a,c)=(1,3)$ or
+$(3,1)$, four rectangles that each fill the whole grid. Exactly fifteen of the thirty show at
+most two corners, and each of them shows exactly two. They are listed below with the two
+visible corners and, in the last column, a corner of the only axis-aligned rectangle that has
+both visible points as corners.
+\begin{center}\small
+\begin{tabular}{@{}rlll@{}}
+\toprule
+ & tilted rectangle & visible corners & white corner of the rival \\
+\midrule
+1 & $(1,2),(2,1),(2,3),(3,2)$ & $(1,2),(2,1)$ & $(1,1)$ \\
+2 & $(2,2),(3,1),(3,3),(4,2)$ & $(2,2),(4,2)$ & see the text \\
+3 & $(3,2),(4,1),(4,3),(5,2)$ & $(4,3),(5,2)$ & $(4,2)$ \\
+4 & $(1,3),(2,4),(3,1),(4,2)$ & $(1,3),(4,2)$ & $(1,2)$ \\
+5 & $(1,3),(2,2),(2,4),(3,3)$ & $(1,3),(2,2)$ & $(1,2)$ \\
+6 & $(1,2),(2,4),(3,1),(4,3)$ & $(1,2),(4,3)$ & $(1,3)$ \\
+7 & $(2,3),(3,4),(4,1),(5,2)$ & $(3,4),(5,2)$ & $(5,4)$ \\
+8 & $(2,3),(3,2),(3,4),(4,3)$ & $(3,4),(4,3)$ & $(4,4)$ \\
+9 & $(2,3),(3,1),(4,4),(5,2)$ & $(4,4),(5,2)$ & $(4,2)$ \\
+10 & $(1,4),(2,5),(4,1),(5,2)$ & $(2,5),(5,2)$ & $(2,2)$ \\
+11 & $(1,4),(2,5),(3,2),(4,3)$ & $(2,5),(4,3)$ & $(4,5)$ \\
+12 & $(1,4),(2,3),(2,5),(3,4)$ & $(2,5),(3,4)$ & $(3,5)$ \\
+13 & $(2,4),(3,3),(3,5),(4,4)$ & $(3,5),(4,4)$ & $(3,4)$ \\
+14 & $(2,4),(3,2),(4,5),(5,3)$ & $(4,5),(5,3)$ & $(4,3)$ \\
+15 & $(2,3),(3,2),(4,5),(5,4)$ & $(4,5),(5,4)$ & $(4,4)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+The fifteen visible pairs are pairwise distinct, so no two of these rectangles share a
+presentation, and the other fifteen tilted rectangles show at least three corners and are
+determined by Lemma~\ref{lem:threecorners}. It remains to compare the fifteen with the
+axis-aligned rectangles. In every row of the table except row $2$ the two visible points lie
+in different rows and different columns, so only one axis-aligned rectangle has both as
+corners, and the named third corner is white, so that rectangle shows at least three points.
+In row $2$ the visible points $(2,2)$ and $(4,2)$ lie in row $2$, and an axis-aligned
+rectangle through both uses the columns $2$ and $4$ and one further row. Column $2$ is black
+in the rows $3$ and $4$ only and column $4$ in row $1$ only, so no further row is black in
+both columns, and no axis-aligned rectangle shows exactly these two points. Hence $S_0$ is
+valid and $f(5,5)\ge10$.
+
+\emph{(c).} A maximum blackout has a graph with $10$ edges and no cycle of length four or
+six. The script \texttt{verify\_narrow.py} of Section~\ref{sec:verify} lists all $44{,}640$
+sets of $10$ points with this property, adding points one at a time and keeping a point only
+if no short cycle appears, and checks each of them against all $130$ rectangles. Exactly $8$
+are valid, and they are the $8$ images of $S_0$ under the symmetries of the square, all
+distinct. The count $8$ was found earlier and independently by the ILP program and by the
+check of every blackout from the definition (Table~\ref{tab:values}).
+\end{proof}
+
+\begin{figure}[t]
+\centering
+\input{figs/fivefive.tex}
+\caption{The $5\times5$ optimum. (a) The ten black points and the fifteen kept points, which
+form the two shaded blocks of five and ten. The bold path turns only at black points and
+alternates between rows and columns, and its eight corners are the $8$-cycle of (b). The two
+grey points are black points too, and they are the two pendant edges of (b). (b) The graph
+$G_S$, an $8$-cycle with two pendant edges.}
+\label{fig:fivefive}
+\end{figure}
+
+The optimum of Figure~\ref{fig:fivefive}(a) is a staircase of nine points from the top right
+corner to the bottom left corner, the pattern of Lemma~\ref{lem:cross}, plus the corner
+$(5,5)$. The staircase alone has a tree as its graph, and the extra corner closes a cycle of
+length $8$, the shortest the lemma allows. Lemma~\ref{lem:tenvertices} also allows a single
+$10$-cycle, that is, two black points in every row and every column. There are $1{,}440$
+such sets and none of them is valid. Their graphs have no short cycle, so every collision
+involves a tilted rectangle. The count and the exclusion are computed and are not used in any
+proof. A
+hand proof of the uniqueness in (c) therefore comes down to the blackouts of ten points whose
+graph is a connected graph with one cycle of length $8$ or $10$, and to the tilted rectangles
+on them.
+
+\subsection{Small widths and the conjecture recorded in the OEIS}
+
+Between the square and the family there is a gap. By Theorem~\ref{thm:equality} a blackout of
+$m+6$ points on five rows has every column occupied, six doubles whose row pairs form a complete
+bipartite graph between two rows and three rows, and singletons elsewhere. There are
+$\binom52=10$ choices of the two rows, $(m)_6=m(m-1)\cdots(m-5)$ injective assignments of
+the six pairs to columns and $5^{m-6}$ choices of the singleton rows, that is
+$10\,(m)_6\,5^{m-6}$ candidates, which is $7{,}200$ at $m=6$ and $252{,}000$ at $m=7$. All of
+them pass the axis criterion, and whether $f(5,m)=m+6$ holds is the question whether one of
+them passes the tilted rectangles too.
+
+\begin{proposition}[small five-row widths, computer-assisted]\label{prop:fivesmall}
+\begin{enumerate}[(a)]
+\item $f(5,5)=10$, $f(5,6)=11$ and $f(5,7)=12$.
+\item $f(5,m)\ge m+5$ for $5\le m\le10$ and for every $m\ge17$.
+\item {}[[P2-fiverow]]
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(a) The square is Theorem~\ref{thm:fivefive}. For $m=6$ and $m=7$ the ILP program of
+Section~\ref{sec:verify} returns the values $11$ and $12$, and the lower bounds $m+5$ are the
+stored blackouts of (b). [[P2-fiverow]]
+
+(b) For $5\le m\le10$ the repository stores a valid blackout of $m+5$ points of each size,
+found while building the game and rechecked by \texttt{verify\_narrow.py} with its own list of
+rectangles. For $m\ge17$ restrict the half-strip of Proposition~\ref{prop:fivecases} to the
+columns $18-m,\dots,17$. This board has $m$ columns and the five doubles at the columns
+$1$, $5$, $9$, $13$ and $17$, so it has $m+5$ points, and it is valid as the restriction of a
+valid blackout. Moved $m-17$ columns to the right, its doubles sit at the columns $m-16$,
+$m-12$, $m-8$, $m-4$ and $m$ with the row pairs $\{1,2\}$, $\{1,4\}$, $\{2,3\}$, $\{3,4\}$ and
+$\{2,5\}$.
+
+(c) [[P2-fiverow]]
+\end{proof}
+
+The entry \seqnum{A397315} records, with the values through the $6\times6$ grid as evidence,
+the conjecture that $f(h,m)=h+m$ whenever $\min(h,m)\ge4$, apart from $f(4,4)=7$ and
+$f(4,5)=8$. The four-row case and the square $5\times5$ are true (Theorems~\ref{thm:fourvalue}
+and~\ref{thm:fivefive}, Corollary~\ref{cor:fourboundary}), and so are the computed cells
+$5\times6$, $5\times7$ and $6\times6$. The conjecture fails on five rows.
+
+\begin{theorem}[the conjecture $f(h,m)=h+m$ fails]\label{thm:refute}
+$f(5,21)=27>5+21$, and $f(5,m)=m+6=(5+m)+1$ for every $m\ge21$. So the conjecture recorded in
+\seqnum{A397315} is false, and the excess $f(5,m)-m$ over the width is $6$, not $5$, at every
+width from $21$ on.
+\end{theorem}
+
+\begin{proof}
+This is Theorem~\ref{thm:fiverow}.
+\end{proof}
+
+Three things remain open here. The smallest width $m$ with $f(5,m)=m+6$ is addressed in
+Proposition~\ref{prop:fivesmall}(c). Theorem~\ref{thm:periodic} says that at every fixed
+height the excess $f(h,m)-m$ is eventually periodic in $m$ with values between $h-1$ and
+$q_h$, and on five rows it is eventually constant and equal to its largest possible value
+$6$. Whether the same happens at heights six and more, that is, whether $f(h,m)=m+q_h$ for
+all large $m$, is open (Section~\ref{sec:open}). On squares, Theorem~\ref{thm:square} shows
+that $f(n,n)-2n$ is unbounded, but its threshold is not explicit, and no grid smaller than
+$5\times21$ is known to us on which $f$ exceeds $h+m$ (Proposition~\ref{prop:fivesmall}(c)).

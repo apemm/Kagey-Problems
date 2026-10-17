@@ -1,0 +1,1536 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{booktabs}
+\usepackage[shortlabels]{enumitem}
+\setlist{itemsep=1pt,parsep=0pt,topsep=3pt}
+\setlength{\emergencystretch}{2em}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\hypersetup{pdftitle={Maximum Blackouts That Keep Every Lattice Rectangle Identifiable},pdfauthor={Arjun Pemmasani}}
+
+\definecolor{gridcol}{gray}{0.86}
+\definecolor{keptcol}{RGB}{226,236,247}
+\definecolor{keptline}{gray}{0.35}
+\definecolor{hidcol}{gray}{0.62}
+\definecolor{pencol}{gray}{0.55}
+\definecolor{cyccol}{RGB}{31,94,168}
+\definecolor{rectA}{RGB}{0,114,178}
+\definecolor{rectB}{RGB}{213,94,0}
+\definecolor{rectC}{RGB}{0,158,115}
+\definecolor{excesscol}{RGB}{253,214,160}
+\tikzset{
+  lab/.style={font=\scriptsize,text=black!55},
+  capt/.style={font=\small},
+  tiny/.style={font=\scriptsize},
+  rowv/.style={draw,rectangle,fill=white,inner sep=1.5pt,minimum size=13pt,font=\scriptsize},
+  colv/.style={draw,circle,fill=white,inner sep=0.5pt,minimum size=14pt,font=\scriptsize},
+}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem*{thmA}{Theorem A}
+\newtheorem*{thmB}{Theorem B}
+\newtheorem*{thmC}{Theorem C}
+\newtheorem*{thmD}{Theorem D}
+\newtheorem*{thmE}{Theorem E}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\seqnum}[1]{\href{https://oeis.org/#1}{\rm \underline{#1}}}
+\newcommand{\pres}{P_S}
+\newcommand{\kA}{\mathsf{A}}
+\newcommand{\kB}{\mathsf{B}}
+\newcommand{\kC}{\mathsf{C}}
+\newcommand{\kE}{\mathsf{E}}
+
+\title{Maximum Blackouts That Keep Every Lattice Rectangle Identifiable}
+\author{Arjun Pemmasani\\
+Department of Mathematics\\
+Harvey Mudd College\\
+Claremont, CA 91711\\
+USA\\
+\texttt{apemmasani@hmc.edu}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Kagey's Problem 001 concerns a grid of points, some of them blacked out. A rectangle
+with its corners on grid points, tilted or not, shows only its white corners. We ask how
+many points can be blacked out while every rectangle stays determined by what it shows.
+We study the largest such blackout and the number of blackouts of that size, the tables
+A397315 and A399580 of the On-Line Encyclopedia of Integer Sequences. A graph on the rows
+and columns and Mantel's theorem bound the maximum by the width plus a quarter of the
+squared height. We find the maximum on up to five rows at every width, and on six rows
+from width 15 on. On five rows from width 8 on, and on the $6\times8$ grid, the maximum
+exceeds the sum of the two sides, against a guess we recorded there. On three rows we
+count the optima exactly, and on four rows we find their growth rate. For every fixed
+number of rows the maximum minus the width is eventually periodic. Some values rest on
+computer checks.
+\end{abstract}
+
+\section{Introduction}\label{sec:intro}
+
+You are shown a grid of points with $h$ rows and $m$ columns, and you black out some
+of them. We call the set of blacked-out points the \emph{blackout}. Then the game master
+draws a rectangle with its four corners on grid points, tilted or not. You are told which
+of its corners are white, and you must say where all four corners are. Kagey asks how many
+points you can black out so that no two rectangles ever look the same.
+
+We write $(i,j)$ for the point in column $i$ and row $j$, counting columns from the left
+and rows from the top. Figure~\ref{fig:game} plays one round on the $3\times4$ grid with
+row $1$ and column $1$ blacked out. The game master draws the tilted square with corners
+$(2,2)$, $(3,1)$, $(4,2)$, and $(3,3)$, and we are shown $(2,2)$, $(4,2)$, and $(3,3)$.
+Three corners of a rectangle determine the fourth (Lemma~\ref{lem:threecorners}), so the
+fourth corner is $(3,1)$. This blackout of six points is good, and no good blackout of the
+$3\times4$ grid is larger (Section~\ref{sec:three}).
+
+\begin{figure}[t]
+\centering
+\resizebox{0.7\textwidth}{!}{\begin{tikzpicture}[x=0.630cm,y=0.630cm,baseline=(current bounding box.north)]
+  \draw[gridcol] (1,-1) grid (4,-3);
+  \filldraw[fill=white,draw=keptline,line width=0.6pt] (1,-1) circle (0.17);
+  \filldraw[fill=white,draw=keptline,line width=0.6pt] (2,-1) circle (0.17);
+  \filldraw[fill=white,draw=keptline,line width=0.6pt] (3,-1) circle (0.17);
+  \filldraw[fill=white,draw=keptline,line width=0.6pt] (4,-1) circle (0.17);
+  \filldraw[fill=white,draw=keptline,line width=0.6pt] (1,-2) circle (0.17);
+  \filldraw[fill=white,draw=keptline,line width=0.6pt] (2,-2) circle (0.17);
+  \filldraw[fill=white,draw=keptline,line width=0.6pt] (3,-2) circle (0.17);
+  \filldraw[fill=white,draw=keptline,line width=0.6pt] (4,-2) circle (0.17);
+  \filldraw[fill=white,draw=keptline,line width=0.6pt] (1,-3) circle (0.17);
+  \filldraw[fill=white,draw=keptline,line width=0.6pt] (2,-3) circle (0.17);
+  \filldraw[fill=white,draw=keptline,line width=0.6pt] (3,-3) circle (0.17);
+  \filldraw[fill=white,draw=keptline,line width=0.6pt] (4,-3) circle (0.17);
+  \node[lab] at (1,-0.35) {1};
+  \node[lab] at (2,-0.35) {2};
+  \node[lab] at (3,-0.35) {3};
+  \node[lab] at (4,-0.35) {4};
+  \node[lab] at (0.35,-1) {1};
+  \node[lab] at (0.35,-2) {2};
+  \node[lab] at (0.35,-3) {3};
+  \draw[rectB,line width=1.1pt] (3,-2) circle (0.3);
+  \node[capt,anchor=north,text width=3.28cm,align=center] at (2.5,-3.7) {(a) the point $(3,2)$ is ringed};
+  \draw[gridcol] (6.6,-1) grid (9.6,-3);
+  \fill[black] (6.6,-1) circle (0.17);
+  \fill[black] (7.6,-1) circle (0.17);
+  \fill[black] (8.6,-1) circle (0.17);
+  \fill[black] (9.6,-1) circle (0.17);
+  \fill[black] (6.6,-2) circle (0.17);
+  \filldraw[fill=white,draw=keptline,line width=0.6pt] (7.6,-2) circle (0.17);
+  \filldraw[fill=white,draw=keptline,line width=0.6pt] (8.6,-2) circle (0.17);
+  \filldraw[fill=white,draw=keptline,line width=0.6pt] (9.6,-2) circle (0.17);
+  \fill[black] (6.6,-3) circle (0.17);
+  \filldraw[fill=white,draw=keptline,line width=0.6pt] (7.6,-3) circle (0.17);
+  \filldraw[fill=white,draw=keptline,line width=0.6pt] (8.6,-3) circle (0.17);
+  \filldraw[fill=white,draw=keptline,line width=0.6pt] (9.6,-3) circle (0.17);
+  \node[lab] at (6.6,-0.35) {1};
+  \node[lab] at (7.6,-0.35) {2};
+  \node[lab] at (8.6,-0.35) {3};
+  \node[lab] at (9.6,-0.35) {4};
+  \node[lab] at (5.949999999999999,-1) {1};
+  \node[lab] at (5.949999999999999,-2) {2};
+  \node[lab] at (5.949999999999999,-3) {3};
+  \node[capt,anchor=north,text width=3.28cm,align=center] at (8.1,-3.7) {(b) our blackout};
+  \draw[gridcol] (12.2,-1) grid (15.2,-3);
+  \fill[black] (12.2,-1) circle (0.17);
+  \fill[black] (13.2,-1) circle (0.17);
+  \fill[black] (14.2,-1) circle (0.17);
+  \fill[black] (15.2,-1) circle (0.17);
+  \fill[black] (12.2,-2) circle (0.17);
+  \filldraw[fill=white,draw=keptline,line width=0.6pt] (13.2,-2) circle (0.17);
+  \filldraw[fill=white,draw=keptline,line width=0.6pt] (14.2,-2) circle (0.17);
+  \filldraw[fill=white,draw=keptline,line width=0.6pt] (15.2,-2) circle (0.17);
+  \fill[black] (12.2,-3) circle (0.17);
+  \filldraw[fill=white,draw=keptline,line width=0.6pt] (13.2,-3) circle (0.17);
+  \filldraw[fill=white,draw=keptline,line width=0.6pt] (14.2,-3) circle (0.17);
+  \filldraw[fill=white,draw=keptline,line width=0.6pt] (15.2,-3) circle (0.17);
+  \node[lab] at (12.2,-0.35) {1};
+  \node[lab] at (13.2,-0.35) {2};
+  \node[lab] at (14.2,-0.35) {3};
+  \node[lab] at (15.2,-0.35) {4};
+  \node[lab] at (11.549999999999999,-1) {1};
+  \node[lab] at (11.549999999999999,-2) {2};
+  \node[lab] at (11.549999999999999,-3) {3};
+  \draw[draw=rectA,line width=1.6pt,line join=round,dash pattern=on 3pt off 2pt] (14.2,-1) -- (15.2,-2) -- (14.2,-3) -- (13.2,-2) -- cycle;
+  \node[capt,anchor=north,text width=3.28cm,align=center] at (13.7,-3.7) {(c) the rectangle};
+  \draw[gridcol] (17.799999999999997,-1) grid (20.799999999999997,-3);
+  \draw[hidcol,line width=0.5pt] (17.799999999999997,-1) circle (0.09350000000000001);
+  \draw[hidcol,line width=0.5pt] (18.799999999999997,-1) circle (0.09350000000000001);
+  \draw[hidcol,line width=0.5pt] (19.799999999999997,-1) circle (0.09350000000000001);
+  \draw[hidcol,line width=0.5pt] (20.799999999999997,-1) circle (0.09350000000000001);
+  \draw[hidcol,line width=0.5pt] (17.799999999999997,-2) circle (0.09350000000000001);
+  \filldraw[fill=white,draw=keptline,line width=0.6pt] (18.799999999999997,-2) circle (0.17);
+  \draw[hidcol,line width=0.5pt] (19.799999999999997,-2) circle (0.09350000000000001);
+  \filldraw[fill=white,draw=keptline,line width=0.6pt] (20.799999999999997,-2) circle (0.17);
+  \draw[hidcol,line width=0.5pt] (17.799999999999997,-3) circle (0.09350000000000001);
+  \draw[hidcol,line width=0.5pt] (18.799999999999997,-3) circle (0.09350000000000001);
+  \filldraw[fill=white,draw=keptline,line width=0.6pt] (19.799999999999997,-3) circle (0.17);
+  \draw[hidcol,line width=0.5pt] (20.799999999999997,-3) circle (0.09350000000000001);
+  \node[lab] at (17.799999999999997,-0.35) {1};
+  \node[lab] at (18.799999999999997,-0.35) {2};
+  \node[lab] at (19.799999999999997,-0.35) {3};
+  \node[lab] at (20.799999999999997,-0.35) {4};
+  \node[lab] at (17.15,-1) {1};
+  \node[lab] at (17.15,-2) {2};
+  \node[lab] at (17.15,-3) {3};
+  \draw[rectA,line width=1.1pt] (18.799999999999997,-2) circle (0.3);
+  \draw[rectA,line width=1.1pt] (20.799999999999997,-2) circle (0.3);
+  \draw[rectA,line width=1.1pt] (19.799999999999997,-3) circle (0.3);
+  \node[capt,anchor=north,text width=3.28cm,align=center] at (19.299999999999997,-3.7) {(d) what we are shown};
+\end{tikzpicture}}
+\caption{One round on the $3\times4$ grid. Black dots are blacked out and open dots are
+white. In (d) the gray specks are points we are told nothing about.}
+\label{fig:game}
+\end{figure}
+
+Kagey poses the problem in his Open Problem Collection~\cite{kagey001} and in his gift
+for the fourteenth Gathering 4 Gardner~\cite{kageyG4G14}. We write $f(h,m)$ for the
+largest size of a good blackout of the $h\times m$ grid, and $a_h(m)$ for the number of
+good blackouts of that size, counted with their coordinates. From Section~\ref{sec:conv} on, a
+good blackout is called \emph{valid} (Definition~\ref{def:valid}). These are the tables
+\seqnum{A397315} and \seqnum{A399580} of the OEIS~\cite{oeis}, which we contributed. Our
+comments there record the conjecture $f(3,m)=m+2$ and the guess that $f(h,m)=h+m$
+whenever $\min(h,m)\ge4$, apart from $f(4,4)=7$ and $f(4,5)=8$. We show that the guess
+fails. The three-row conjecture was proved in Lean by
+The Omega Institute~\cite{trureturing2026}. It is also the case $h=3$ of our row bound,
+and we do not claim it as new.
+
+\paragraph{Results.} Two rectangles look the same exactly when every corner that belongs
+to only one of them is black (Lemma~\ref{lem:diff}). Put $q_h=\lfloor h^2/4\rfloor$.
+Computer checks are marked in each statement.
+
+\begin{thmA}[narrow grids]
+\begin{enumerate}[(a)]
+\item For all $h,m\ge1$ we have $f(h,m)\ge h+m-1$, and for $m\ge3$ we have
+$f(h,m)\le m+q_h$.
+\item For $m\ge3$ we have $f(2,m)=m+1$ and $f(3,m)=m+2$. Also $f(4,m)=m+4$ for every
+$m\ge6$, and $f(5,5)=10$.
+\item (Computer-assisted.) We have $f(4,4)=7$, $f(4,5)=8$, $f(5,6)=11$, and $f(5,7)=12$, while
+$f(5,m)=m+6$ for every $m\ge8$.
+\item (Computer-assisted for $m\ge9$.) For $8\le m\le14$ we have $f(6,m)\le m+8$, and
+$f(6,m)=m+9$ for every $m\ge15$.
+
+\item (Computer-assisted.) We have $f(6,6)=12$, $f(6,7)=13$, $f(7,7)=14$, and $f(6,8)=15$.
+\end{enumerate}
+\end{thmA}
+
+The lower bound in (a) is the boundary cross of Lemma~\ref{lem:cross}, and the upper
+bound is the row bound of Theorem~\ref{thm:rowbound}, proved with Mantel's theorem. So for
+$h\le6$ the row bound is attained at every large width, and the guess $f(h,m)=h+m$ first
+fails on the $5\times8$ grid (Theorem~\ref{thm:refute}).
+
+\begin{thmB}[three-row optima]
+For $m\ge4$ we have $a_3(m)=4(m-1)(3m+2)\,3^{m-5}+E_m$, where $E_m\ge0$ counts the optima
+with a column black in rows $1$ and $3$. So $a_3(m)\sim\frac4{81}m^23^m$, and a fraction
+tending to $4/27$ of the $m^23^{m-1}$ axis-valid candidates is valid. The series
+$\sum_{m\ge3}a_3(m)z^m$ is rational. (Computer-assisted.) Its reduced denominator is
+$(1-3z)^3(1-2z-2z^2)^3(1+2z^2)^3$, and $E_m$ has a closed form with
+$E_m\sim\frac{19+11\sqrt3}{432}m^2(1+\sqrt3)^m$.
+\end{thmB}
+
+These are Theorems~\ref{thm:threecount}, \ref{thm:threeclosed}, and~\ref{thm:threegf},
+with the last proof finished in Appendix~\ref{app:threegf}. The sequence starts
+$53,224,892,3420,12704$ at $m=3$.
+
+\begin{thmC}[four rows]
+Let $m\ge4$. No valid blackout of the $4\times m$ grid hides all four corners of a
+rectangle. For $m\ge6$,
+\[
+a_4(m)\le3\,(m)_4\,4^{m-4}\Bigl(\frac{53}{64}\Bigr)^{\max(0,\lfloor m/4\rfloor-4)},
+\qquad (m)_4=m(m-1)(m-2)(m-3).
+\]
+(Computer-assisted.) The series $\sum_{m\ge6}a_4(m)z^m$ is rational with reduced
+denominator of degree $420$, and $a_4(m)\sim c\,m^4\rho_4^m$ with $c=8.1611\times10^{-5}$
+and $\rho_4=3.35199\ldots$, an algebraic number of degree $20$.
+\end{thmC}
+
+The bound has the base $212^{1/4}=3.8157\ldots<4$, so valid blackouts become rare
+(Theorems~\ref{thm:hidden}, \ref{thm:foursurvival}, and~\ref{thm:fourgfexact}).
+
+\begin{thmD}[finite collar]
+Let $h\ge3$ and $W_h=1+\lfloor(h-1)^2/4\rfloor$. Pad a blackout of an $h\times m$ grid, on
+one side or on both, by columns black only in the top row, or only in the bottom row.
+Then every such padding is valid if and only if the padding by $W_h$ columns on each
+chosen side is valid. (Computer-assisted.) A blackout of the $5\times8$ grid and one of the
+$6\times16$ grid pass this test with the top row on the right. Hence $f(5,m)=m+6$ for
+$m\ge8$ and $f(6,m)=m+9$ for $m\ge16$, and a stored blackout of the $6\times15$ grid gives
+$f(6,15)=24$.
+\end{thmD}
+
+The collar theorem is Theorem~\ref{thm:collar}, and Section~\ref{sec:five} has the two
+blackouts. The padding row must be a boundary row (Remark~\ref{rem:interior}).
+
+\begin{thmE}[every fixed height]
+Fix $h\ge1$ and write a blackout of the $h\times m$ grid as the word $B_1\cdots B_m$,
+where $B_i$ is the set of black rows of column $i$. The valid words form a regular
+language. If $h\ge2$, the excess $f(h,m)-m$ is eventually periodic in $m$, and
+$\sum_{m\ge0}a_h(m)z^m$ is rational.
+\end{thmE}
+
+These are Theorems~\ref{thm:regular} and~\ref{thm:periodic}, and they give no period and
+no threshold.
+
+\paragraph{Prior work.} In its hitting-set form (Corollary~\ref{cor:hitting}) the game
+asks for a test cover~\cite{katona1966,bellitto2018,foucaud2015}. The axis-aligned
+rectangles alone lead to bipartite graphs without cycles of length four and six
+(Lemma~\ref{lem:girth}), studied by Erd\H{o}s~\cite{erdos1080} and by de Caen and
+Sz\'ekely~\cite{decaenszekely1997}. Neuwirth~\cite[Theorem~1 and
+Proposition~17]{neuwirth2001} proves our row bound for them when $m\ge q_h$. Our proof
+uses Mantel's theorem~\cite{mantel1907}, covers every $m\ge3$, and counts the equality
+case. None of these works sees tilted rectangles. Grids of fixed height are often
+treated by column transfer~\cite{euler2005,mertens2024,alanko2011},
+\cite[Proposition~V.6]{flajolet2009}. Jiang~\cite{jiang2018} proves that optimal
+identifying codes in strips can be taken periodic, and Theorem~E is of the same kind. It
+is close to a theorem of Guilhot, Little, and Parkinson~\cite[Theorem~1]{glp2025}, but we
+maximize separately at each width and prove it directly. The code and data are in the
+repository~\cite{repo}.
+\section{Conventions and the difference lemma}\label{sec:conv}
+
+These conventions hold throughout the paper.
+\begin{enumerate}[(1),leftmargin=*]
+\item An $h\times m$ grid has $h$ rows and $m$ columns, and $V$ is its set of points.
+A $2\times m$ grid is a \emph{strip}, and an $n\times n$ grid is a \emph{square}.
+\item The point $(i,j)$ is in column $i$ and row $j$, and $(1,1)$ is the top-left
+point. So $i$ grows to the right and $j$ grows downward, as in
+Figure~\ref{fig:game}(a).
+\item A \emph{rectangle} is a set of four grid points that are the corners of a
+rectangle of positive area, and tilted rectangles count. We identify a rectangle $R$ with
+its corner set $C(R)$. It is \emph{axis-aligned} if its sides are parallel to the rows and columns, and
+\emph{tilted} otherwise. Four distinct points form a rectangle if and only if they
+split into two segments with the same midpoint and the same length.
+\item A \emph{blackout} is a set $S\subseteq V$, and $K=V\setminus S$ is the
+\emph{kept set}. The \emph{presentation} of a rectangle $R$ is the set
+$\pres(R)=C(R)\setminus S$ of its white corners.
+\item The \emph{black rows} of column $i$ form the set $B_i$ of rows $j$ with
+$(i,j)\in S$. Column $i$ is \emph{empty}, a \emph{singleton}, a \emph{double}, or a
+\emph{triple} when $|B_i|$ is $0$, $1$, $2$, or $3$. It is \emph{full} when $|B_i|=h$.
+\item The \emph{pair set} $F$ is the set of row pairs contained in some $B_i$. We put
+$q_h=\lfloor h^2/4\rfloor$.
+\end{enumerate}
+
+\begin{definition}[valid blackout]\label{def:valid}
+A blackout $S$ is \emph{valid} if different rectangles always have different
+presentations, that is, if $\pres(R_1)\ne\pres(R_2)$ whenever $R_1\ne R_2$. The
+\emph{maximum blackout} $f(h,m)$ is the largest size of a valid blackout of the
+$h\times m$ grid. We write $a_h(m)$ for the number of valid blackouts of size $f(h,m)$.
+They are counted with their coordinates, not up to symmetry.
+\end{definition}
+
+Swapping rows and columns gives $f(h,m)=f(m,h)$ and $a_h(m)=a_m(h)$. The tables
+$f(h,m)$ and $a_h(m)$ are \seqnum{A397315} and \seqnum{A399580}, read by antidiagonals
+with both indices starting at $2$. Section~\ref{sec:height} also uses width $0$ and height $1$, with no
+rectangles, where $f(h,0)=0$, $a_h(0)=1$, $f(1,m)=m$, and $a_1(m)=1$.
+
+The empty presentation is allowed. It means that every corner is black, so a valid
+blackout hides at most one rectangle.
+
+\begin{lemma}[difference sets]\label{lem:diff}
+For all sets $A$, $B$, and $S$ we have $A\setminus S=B\setminus S$ if and only if
+$A\triangle B\subseteq S$, where $\triangle$ is the symmetric difference.
+\end{lemma}
+
+\begin{proof}
+Both conditions say that no point outside $S$ lies in exactly one of $A$ and $B$.
+\end{proof}
+
+\begin{corollary}[hitting sets]\label{cor:hitting}
+A blackout $S$ is valid if and only if the kept set $K$ meets
+$C(R_1)\triangle C(R_2)$ for every pair of distinct rectangles $R_1$, $R_2$. So
+$hm-f(h,m)$ is the least size of a set meeting every such difference set.
+\end{corollary}
+
+\begin{proof}
+Apply Lemma~\ref{lem:diff} to $C(R_1)$, $C(R_2)$, and $S$ for every pair.
+\end{proof}
+
+A larger kept set meets more sets, so every subset of a valid blackout is valid. Hence a
+search that finds no valid blackout of exactly $k$ points proves $f(h,m)<k$.
+
+\begin{lemma}[three corners suffice]\label{lem:threecorners}
+Three corners of a rectangle determine the rectangle. So two distinct rectangles with
+the same presentation both show at most two corners.
+\end{lemma}
+
+\begin{proof}
+Three corners $p$, $q$, and $r$ of a rectangle form a right triangle, with the right
+angle at the corner adjacent to both others, say $q$. A triangle has only one right
+angle, so the three points determine $q$ and the fourth corner $p+r-q$.
+\end{proof}
+\section{Strips}\label{sec:strip}
+
+On two rows every rectangle is axis-aligned. Indeed, a tilted rectangle has no
+horizontal side, so both sides at a lowest corner go strictly up, and the opposite
+corner lies in a third row.
+
+\begin{theorem}[Strip Theorem]\label{thm:strip}
+Let $m\ge3$.
+\begin{enumerate}[(a)]
+\item A blackout of the $2\times m$ strip is valid if and only if at most one of its
+columns is full.
+\item We have $f(2,m)=m+1$, and the maximum blackouts are those with one full column
+and one black point in every other column.
+\item There are $a_2(m)=m\cdot2^{m-1}$ maximum blackouts.
+\end{enumerate}
+For $m=2$ there is only one rectangle, so every blackout is valid, $f(2,2)=4$, and
+$a_2(2)=1$.
+\end{theorem}
+
+\begin{proof}
+(a) Two distinct rectangles share at most one column. If they
+share one, it cancels, and the difference set is the four points of the other two
+columns $p$ and $q$, the \emph{pair constraint} on $\{p,q\}$. If they share
+no column, the difference set is the eight points of four columns, and it contains a
+pair constraint. Every pair constraint occurs, since $m\ge3$ gives a third column $z$,
+and the rectangles on $\{z,p\}$ and $\{z,q\}$ have exactly this difference set. By
+Corollary~\ref{cor:hitting}, $S$ is valid if and only if $K$ meets every two columns,
+that is, if and only if at most one column has no kept point.
+
+(b) By (a) a valid $S$ has $|K|\ge m-1$, so $|S|\le m+1$. Equality holds exactly when
+one column is full and every other column has one kept point, hence one black point.
+Such blackouts are valid by (a).
+
+(c) There are $m$ choices for the full column and two in each other column.
+\end{proof}
+
+So row $2$ of \seqnum{A399580} is \seqnum{A001787}$(m)=m2^{m-1}$ from $m=3$ on.
+
+\begin{remark}[orbits]\label{rem:kings}
+Up to the row reflection and the column reversal, there are
+$o_m=m\,2^{m-3}+[m\text{ odd}]\,2^{(m-3)/2}$ maximum blackouts of the $2\times m$ strip for
+$m\ge3$, by Burnside's lemma (proof omitted). So $o_3,\ldots,o_8$ are $4,8,22,48,116,256$.
+These six values agree with \seqnum{A322284}$(m-1)$, which counts nonattacking kings on a
+$2\times(2m-2)$ board up to symmetry.
+\end{remark}
+\section{The row-column graph and general bounds}\label{sec:graph}
+
+This section proves $h+m-1\le f(h,m)\le m+q_h$ and lists the tilted rectangles of narrow grids. A blackout $S$ of the $h\times m$ grid is \emph{axis-valid} if no two axis-aligned rectangles have the same presentation. A rectangle that shows at most two corners is \emph{weak}, and by Lemma~\ref{lem:threecorners} only weak rectangles can be confused.
+
+The \emph{row-column graph} $G_S$ has a vertex $r_j$ for each row $j$, a vertex $c_i$ for each column $i$, and an edge $r_jc_i$ for each black point $(i,j)$. A fully black axis-aligned rectangle on rows $j,j'$ and columns $i,i'$ is the cycle $r_j\,c_i\,r_{j'}\,c_{i'}$.
+
+\begin{lemma}[axis-aligned rectangles and short cycles]\label{lem:girth}
+If $G_S$ has no four-cycle and no six-cycle, then $S$ is axis-valid. If $m\ge3$ and $S$ is axis-valid, then $G_S$ has no four-cycle and no six-cycle.
+\end{lemma}
+
+\begin{proof}
+Let $m\ge3$. A four-cycle $r_j\,c_i\,r_{j'}\,c_{i'}$ and a third column $w$ give the rectangles on rows $\{j,j'\}$ and columns $\{i,w\}$ or $\{i',w\}$, which both show the white points among $(w,j)$ and $(w,j')$. For a six-cycle $r_a\,c_x\,r_b\,c_y\,r_c\,c_z$ the different rectangles on rows $\{a,b\}$, columns $\{x,y\}$ and on rows $\{a,c\}$, columns $\{y,z\}$ are black except possibly at $(y,a)$.
+
+Conversely, let $R_1\ne R_2$ be axis-aligned with the same presentation, so $C(R_1)\triangle C(R_2)\subseteq S$ by Lemma~\ref{lem:diff}. Opposite corners determine an axis-aligned rectangle, so the common corners lie in one row or one column. Two common corners $(x,a)$ and $(y,a)$ leave rows $b\ne c$ and the black four-cycle $r_b\,c_x\,r_c\,c_y$, and a common column is similar. If $(x,a)$ is the only common corner, with $R_1$ on rows $\{a,b\}$ and columns $\{x,y\}$ and $R_2$ on rows $\{a,c\}$ and columns $\{x,z\}$, then $r_a\,c_y\,r_b\,c_x\,r_c\,c_z$ is a black six-cycle. With no common corner, $R_1$ is a black four-cycle. The all-black $2\times2$ grid shows that $m\ge3$ is needed.
+\end{proof}
+
+\begin{theorem}[row bound]\label{thm:rowbound}
+Let $m\ge3$. Every axis-valid blackout of the $h\times m$ grid has at most $m+q_h$ points, and at most $h+q_m$ points if also $h\ge3$. Hence $f(h,m)\le m+q_h$ for $m\ge3$.
+\end{theorem}
+
+For each nonempty column $i$ choose a tree $T_i$ with vertex set $B_i$, and let $H$ be the graph on the rows whose edges are those of all the trees $T_i$.
+
+\begin{lemma}[row graph]\label{lem:H}
+Let $m\ge3$ and let $S$ be axis-valid, with arbitrary trees $T_i$. Then $H$ has no repeated edge and no triangle, and $e(H)=|S|-t$, where $t$ is the number of nonempty columns.
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:girth}, $G_S$ has no four-cycle and no six-cycle. If columns $i\ne i'$ both gave the edge $r_jr_{j'}$, then $r_j\,c_i\,r_{j'}\,c_{i'}$ would be a four-cycle. So $e(H)=\sum(|B_i|-1)=|S|-t$. A triangle $r_ar_br_c$ does not lie in one tree. If two of its edges come from column $i$ and one from column $i'$, then two of $a,b,c\in B_i$ lie in $B_{i'}$, a four-cycle. If its edges come from columns $i,i',i''$, then $r_a\,c_i\,r_b\,c_{i'}\,r_c\,c_{i''}$ is a six-cycle.
+\end{proof}
+
+\begin{lemma}[Mantel \cite{mantel1907}]\label{lem:mantel}
+Let $H$ be a simple triangle-free graph on $h$ vertices, with degrees $d(\cdot)$. Let $v$ have maximum degree $\Delta$, let $A$ be its set of neighbors, and let $B$ be the set of the other $h-\Delta$ vertices, with $e(B)$ edges inside $B$. Then
+\[
+e(H)=\sum_{b\in B}d(b)-e(B)\le(h-\Delta)\Delta-e(B)\le q_h.
+\]
+\end{lemma}
+
+\begin{proof}
+No two vertices of $A$ are adjacent, so every edge has an end in $B$, and the degree sum over $B$ counts the edges inside $B$ twice. Every degree is at most $\Delta$, $e(B)\ge0$, and $(h-\Delta)\Delta$ is an integer at most $h^2/4$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:rowbound}]
+Lemmas~\ref{lem:H} and~\ref{lem:mantel} give $|S|=t+e(H)\le m+q_h$. Only Lemma~\ref{lem:girth} uses a third column, so for $h\ge3$ the exchange of rows and columns gives $|S|\le h+q_m$.
+\end{proof}
+
+This removes the hypothesis $m\ge q_h$ of Neuwirth's graph form~\cite[Theorem~1(ii)]{neuwirth2001}. His extremal graphs~\cite[Proposition~17]{neuwirth2001} are the blackouts of the next theorem, which adds the converse and the count.
+
+\begin{theorem}[equality structure]\label{thm:equality}
+Let $h\ge4$ and $m\ge3$, and let $S$ be a blackout of the $h\times m$ grid with $m+q_h$ points. Then $S$ is axis-valid if and only if
+\begin{enumerate}[(a)]
+\item every column is a singleton or a double,
+\item exactly $q_h$ columns are doubles, with pairwise distinct row pairs, and
+\item these row pairs are the edges of a complete bipartite graph on the rows whose parts differ in size by at most one.
+\end{enumerate}
+There are $p_h\,(m)_{q_h}\,h^{m-q_h}$ such blackouts, where $(m)_q=m(m-1)\cdots(m-q+1)$ and $p_h$, the number of such unordered partitions of the rows, is $\frac12\binom h{h/2}$ for even $h$ and $\binom h{\lfloor h/2\rfloor}$ for odd $h$.
+\end{theorem}
+
+\begin{proof}
+\emph{Step 1. Equality in Mantel's theorem.} Let $S$ be axis-valid and build $H$ from arbitrary trees. Since $|S|=m+q_h$, Lemmas~\ref{lem:H} and~\ref{lem:mantel} force $t=m$ and equality throughout Lemma~\ref{lem:mantel}. So every column is nonempty, $e(B)=0$, and every $b\in B$ has its $\Delta=|A|$ neighbors in $A$. Hence $H$ is complete bipartite with parts $A$ and $B$, whose sizes differ by at most one since $(h-\Delta)\Delta=q_h$.
+
+\emph{Step 2. No triple.} Suppose $|B_i|\ge3$, so $T_i$ has a vertex $v$ with two neighbors $u,w$, both in the part opposite to $v$. Since $h\ge4$ the part of $v$ has a vertex $z\ne v$. Replacing the edge $vw$ of $T_i$ by $uw$ gives a tree on $B_i$, and the new graph $H'$ keeps $uz$ and $wz$ since $z\ne v$. The triangle $uwz$ contradicts Lemma~\ref{lem:H} and proves (a).
+
+\emph{Step 3. The doubles.} By (a) the edges of $H$ are the row pairs of the $e(H)=q_h$ doubles. Lemma~\ref{lem:H} gives (b) and Step~1 gives (c).
+
+\emph{Step 4. The converse.} Under (a) and (b) no two columns share two black rows, and a six-cycle $r_a\,c_x\,r_b\,c_y\,r_c\,c_z$ would need doubles $\{a,b\}$, $\{b,c\}$, $\{a,c\}$, a triangle in the graph of (c). So Lemma~\ref{lem:girth} applies.
+
+\emph{Step 5. The count.} Choose a partition, an injective assignment of its $q_h$ edges to columns, and a row for each other column. The doubles determine these choices.
+\end{proof}
+
+\begin{corollary}[small widths]\label{cor:small-m}
+Let $h\ge4$ and $3\le m<q_h$. Then $f(h,m)\le m+q_h-1$. In particular $f(5,5)\le10$.
+\end{corollary}
+
+\begin{proof}
+Use Theorem~\ref{thm:rowbound}. A valid blackout of $m+q_h$ points is axis-valid, so by Theorem~\ref{thm:equality}(b) it has $q_h\le m$ doubles. Note that $q_5=6$.
+\end{proof}
+
+For tilted rectangles put $W_h=1+\lfloor(h-1)^2/4\rfloor$, so $W_3=2$, $W_4=3$, and $W_5=5$.
+
+\begin{lemma}[leftmost corner]\label{lem:leftmost}
+A tilted rectangle $R$ has exactly one corner of smallest column and exactly one of smallest row. If $\ell=(x,r)$ is the leftmost corner, the sides from $\ell$ are $(a,-b)$ and $(c,d)$ with positive integers $a,b,c,d$ and $ac=bd$, and the corners are
+\begin{equation}\label{eq:tilt-param}
+(x,r),\qquad(x+a,\,r-b),\qquad(x+c,\,r+d),\qquad(x+a+c,\,r-b+d).
+\end{equation}
+So $R$ occupies the rows $r-b$ to $r+d$, its topmost corner is $(x+a,r-b)$, and its column span is $a+c$.
+\end{lemma}
+
+\begin{proof}
+No side is vertical, so two corners in the smallest column $x$ are opposite and the center is in column $x$. Then the other two corners, with columns at least $x$ and mean $x$, also lie in column $x$, which is impossible. Rows are similar. So both sides from $\ell$ go strictly to the right, and since they are perpendicular, one goes up and one goes down, with $ac=bd$.
+\end{proof}
+
+\begin{lemma}[span bound]\label{lem:span}
+Let $h\ge3$. Every tilted rectangle of the $h\times m$ grid has span $a+c\le W_h$, so it meets at most $W_h+1$ columns. Grids with one or two rows have no tilted rectangles.
+\end{lemma}
+
+\begin{proof}
+Here $b+d\le h-1$, and $(a-1)(c-1)\ge0$ gives $a+c\le bd+1\le W_h$, since $bd$ is an integer at most $(b+d)^2/4$. With at most two rows, $b+d\le1$ is impossible.
+\end{proof}
+
+For $1\le i\le m-2$ and $1\le j\le h-2$ the \emph{diamond} $D(i,j)$ is the square with corners $(i,j+1)$, $(i+1,j)$, $(i+2,j+1)$, and $(i+1,j+2)$. Four rows allow four more kinds, $\kA_i$, $\kB_i$, $\kC_i$, and $\kE_i$ for $1\le i\le m-3$. Each has one corner in each of the columns $i$ to $i+3$. Read from left to right, the rows of these corners are $3412$ for $\kA_i$, $3142$ for $\kB_i$, $2413$ for $\kC_i$, and $2143$ for $\kE_i$.
+
+\begin{lemma}[tilted rectangles on narrow grids]\label{lem:tilted-narrow}
+The tilted rectangles of the $3\times m$ grid are the diamonds $D(i,1)$ with $1\le i\le m-2$. Those of the $4\times m$ grid are the diamonds $D(i,1)$ and $D(i,2)$ with $1\le i\le m-2$ and the rectangles $\kA_i,\kB_i,\kC_i,\kE_i$ with $1\le i\le m-3$.
+\end{lemma}
+
+\begin{proof}
+Each listed set is a rectangle. On three rows $b=d=1$, so $a=c=1$ and $\ell$ is in row $2$. On four rows either $b=d=1$, which gives the diamonds, or $\{b,d\}=\{1,2\}$, $\{a,c\}=\{1,2\}$, and $\ell$ is in row $1+b$. The sides $(2,-2),(1,1)$ give $\kA$, then $(1,-2),(2,1)$ give $\kB$, $(2,-1),(1,2)$ give $\kC$, and $(1,-1),(2,2)$ give $\kE$.
+\end{proof}
+
+\begin{lemma}[boundary cross]\label{lem:cross}
+Let $h,m\ge1$. The first row together with the first column of the $h\times m$ grid is a valid blackout. Hence $f(h,m)\ge h+m-1$.
+\end{lemma}
+
+\begin{proof}
+Let $h,m\ge2$. An axis-aligned rectangle on columns $x_1<x_2$ and rows $y_1<y_2$ shows $X\times Y$, where $X=\{x_1,x_2\}\setminus\{1\}$ and $Y=\{y_1,y_2\}\setminus\{1\}$ are nonempty. Since $|X|=1$ forces $x_1=1$ and $|Y|=1$ forces $y_1=1$, the set $X\times Y$ determines the rectangle. By Lemma~\ref{lem:leftmost} a tilted rectangle has at most two black corners, $\ell$ and the topmost one. If both are black, then $\ell=(1,1+b)$ and it shows $p=(1+c,1+b+d)$ and $q=(1+a+c,1+d)$, which determine $a,b,c,d$. Since $p$ and $q$ differ in both coordinates, no axis-aligned rectangle shows $\{p,q\}$. Lemma~\ref{lem:threecorners} covers the presentations with three or more points.
+\end{proof}
+
+\begin{lemma}[axis-aligned rivals]\label{lem:rival}
+Suppose that no axis-aligned rectangle is fully black, as holds when $S$ is axis-valid and $m\ge3$. Call an axis-aligned rectangle that shows exactly a set $P$ of at most two white points a \emph{rival} of $P$. Then the empty set has no rival, and $P$ has a rival if and only if it is a singleton $\{(x,r)\}$ with $\{r,s\}\in F$ for some $s\in B_x$, a vertical pair $\{(x,r),(x,s)\}$ with $\{r,s\}\in F$, a horizontal pair $\{(x,r),(z,r)\}$ with $B_x\cap B_z\ne\emptyset$, or an oblique pair $\{(x,r),(z,s)\}$ with $x\ne z$, $r\ne s$, and $(x,s),(z,r)\in S$.
+\end{lemma}
+
+\begin{proof}
+A fully black axis-aligned rectangle is a four-cycle of $G_S$, so the clause after ``as holds when'' is Lemma~\ref{lem:girth}. A rival of a nonempty $P$ has rows $\{r,s\}$ and columns $\{x,z\}$ as in the statement, with its other corners black. This says $s\in B_x$ and $\{r,s\}\subseteq B_z$ for a singleton, $\{r,s\}\subseteq B_z$ for a vertical pair, $s\in B_x\cap B_z$ for a horizontal pair, and $(x,s),(z,r)\in S$ for an oblique pair. Conversely, as $r\notin B_x$, these conditions force $z\ne x$ and $s\ne r$, and the rectangle on rows $\{r,s\}$ and columns $\{x,z\}$ shows exactly $P$.
+\end{proof}
+\section{Three rows}\label{sec:three}
+
+On three rows the row bound of Theorem~\ref{thm:rowbound} is attained, and we count the
+maximum blackouts as words. Throughout, $m\ge3$, the rows are $1,2,3$ from top to bottom, and the
+tilted rectangles are the diamonds $D(i,1)=\{(i,2),(i+1,1),(i+2,2),(i+1,3)\}$ for
+$1\le i\le m-2$ (Lemma~\ref{lem:tilted-narrow}).
+
+\begin{theorem}[three rows]\label{thm:threevalue}
+For every $m\ge3$, the maximum blackout of the $3\times m$ grid has $m+2$ points, that is,
+$f(3,m)=m+2$.
+\end{theorem}
+
+\begin{proof}
+The upper bound is the case $h=3$ of Theorem~\ref{thm:rowbound}, since $q_3=2$. The blackout
+of row $1$ and column $1$ has $m+2$ points. It is the boundary cross of Lemma~\ref{lem:cross}
+for $h=3$, so it is valid.
+\end{proof}
+
+From now on every blackout has $m+2$ points. We name the columns $a=\{1\}$, $b=\{2\}$,
+$c=\{3\}$, $A=\{1,2\}$, $B=\{1,3\}$, $C=\{2,3\}$ and $X=\{1,2,3\}$, and call $a$ and $c$
+\emph{outer}. A blackout with no empty column is its \emph{word} $B_1B_2\cdots B_m$. We name each
+pair of $F$ (Section~\ref{sec:conv}) by its double letter.
+
+\begin{proposition}[the two types]\label{prop:threeclass}
+Let $m\ge3$ and let $S$ be a blackout of the $3\times m$ grid with $m+2$ points.
+\begin{enumerate}[(a)]
+\item If $S$ is valid, its word has one letter $X$ and singletons elsewhere (type T), or two
+different doubles and singletons elsewhere (type P).
+\item Conversely, for every word of type T or P the graph $G_S$ is a tree, so no two
+axis-aligned rectangles have the same presentation.
+\item There are exactly $m^23^{m-1}$ words of type T or P.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(a) By Lemma~\ref{lem:H}, $|S|=t+e(H)$ with $t\le m$ nonempty columns and $e(H)\le2$
+(Lemma~\ref{lem:mantel}). So every column is nonempty and $\sum_i(|B_i|-1)=2$. Two equal doubles form a four-cycle in $G_S$, which
+Lemma~\ref{lem:girth} forbids.
+
+(b) The column of $X$, or the two doubles, connect the three rows, and every other column hangs
+on one row. So $G_S$ is a tree, and Lemma~\ref{lem:girth} applies. (c) Types T and P give $m3^{m-1}$ and $\binom m2\cdot6\cdot3^{m-2}=m(m-1)3^{m-1}$ words.
+\end{proof}
+
+We call the words of type T or P \emph{candidates}. They fall into the triple class $X$ and
+the \emph{ordered classes} $AC$, $CA$, $AB$, $BA$, $BC$ and $CB$, named by the doubles from left
+to right. The \emph{class} $\{A,C\}$ is $AC\cup CA$, and likewise for $\{A,B\}$ and
+$\{B,C\}$. Let $AC_m$ be the set of valid words of width $m$ in $AC$, and likewise for the others.
+
+\begin{lemma}[diamond test]\label{lem:diamond}
+Let $S$ be a candidate with pair set $F$. Then $S$ is valid if and only if every diamond
+$D(i,1)$ passes the test below, where $P=D(i,1)\setminus S$ is its presentation.
+\begin{enumerate}[(a)]
+\item If $|P|\ge3$ or $P$ is empty, the diamond passes.
+\item If $P=\{(i+1,1),(i+1,3)\}$, the diamond fails if and only if $B\in F$.
+\item If $P=\{(i,2),(i+2,2)\}$, it fails if and only if $B_i\cap B_{i+2}$ meets $\{1,3\}$.
+\item If $P$ is an oblique pair $\{(x,r),(z,s)\}$, it fails if and only if $(x,s),(z,r)\in S$.
+\item If $P=\{(x,r)\}$, it fails if and only if $\{r,s\}\in F$ for some $s\in B_x$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Axis-aligned rectangles are told apart (Proposition~\ref{prop:threeclass}(b)), and three points
+fix a rectangle (Lemma~\ref{lem:threecorners}). Tests (b) to (e) are Lemma~\ref{lem:rival} for a
+diamond, since in (b) a rival needs $B\in F$ and in (e) it needs $\{r,s\}\in F$. An empty
+diamond has no axis-aligned rival, since $G_S$ has no four-cycle. Two diamonds $D(i,1)$
+and $D(j,1)$ with $i<j$ share at most one point, so a common presentation has at most one point.
+Then columns $i+1$ and $j+1$ are both black in rows $1$ and $3$, which no candidate allows.
+\end{proof}
+
+A \emph{window} is a string of three consecutive letters, at columns $i$, $i+1$ and $i+2$. It
+\emph{passes} or \emph{fails} with the diamond $D(i,1)$. We call $(i,2)$ and $(i+2,2)$ the
+\emph{tips}. A tip is black exactly when its letter is $b$, $A$, $C$ or $X$.
+
+\begin{lemma}[singleton dichotomy]\label{lem:dichotomy}
+Let $S$ be a candidate and let $stu$ be a window of three singletons.
+\begin{enumerate}[(a)]
+\item If $B\notin F$, the window passes.
+\item If $B\in F$, the window fails if and only if it is $bab$, $bbb$ or $bcb$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+If $s=u=b$, the diamond shows the vertical pair (for $t=b$) or one point of column $i+1$ (for
+$t$ outer), and tests (b) and (e) fail it exactly when $B\in F$. With one black tip it shows
+three corners or an oblique pair whose test (d) needs $(i+1,2)$, which is white. With no black
+tip three corners show.
+\end{proof}
+
+\begin{lemma}[six of nine in the class $\{A,C\}$]\label{lem:sixofnine}
+Let $S$ be a candidate of class $\{A,C\}$, so $F=\{A,C\}$, and let $s,t$ be singletons.
+\begin{enumerate}[(a)]
+\item A window $sAt$ fails if and only if $st$ is $bb$, $bc$ or $cb$.
+\item A window $sCt$ fails if and only if $st$ is $bb$, $ba$ or $ab$.
+\item A window with one double, at a tip, passes.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) Here $(i+1,1)$ and $(i+1,2)$ are black and $(i+1,3)$ is white. For $s=t=b$ the diamond shows
+$(i+1,3)$ alone, and test (e) fails it through $2\in B_{i+1}$ and $C\in F$. For $s=b\ne t$ it
+shows $(i+2,2)$ and $(i+1,3)$, and test (d) asks whether $(i+2,3)$ is black, that is, whether
+$t=c$. The case $t=b\ne s$ is the mirror image, and with no black tip three corners show.
+Part (b) follows by the reflection in the middle row, which swaps $a,c$ and $A,C$.
+
+(c) Let the window be $Ast$, so the tip $(i,2)$ is black. If $t=b$, the diamond shows the
+vertical pair or one point of column $i+1$, and both pass by tests (b) and (e), since
+$B\notin F$. If $t\ne b$, it shows three corners or an oblique pair whose test (d)
+needs $(i+1,2)$ black, and that point is white. Reflection and reversal give the other windows.
+\end{proof}
+
+Heuristically, each double of the class $\{A,C\}$ passes for six of its nine neighbor pairs,
+and this class holds about a third of the candidates. So about $\frac13\cdot(\frac69)^2=\frac4{27}$
+of the candidates are valid (Corollary~\ref{cor:threeasymp}).
+
+By Lemma~\ref{lem:diamond}, for $m\ge3$ the set $AC_m$ consists of the words $UAVCW$ of width
+$m$, with $U$, $V$ and $W$ strings of singletons, whose windows all pass the test with
+$F=\{A,C\}$. We use the same description for $m=2$, put $G_{AC}(z)=\sum_{m\ge2}|AC_m|z^m$, and define $G_{AB}$ and $G_X$ in the same way
+from the words $UAVBW$ and $UXW$, with $F=\{A,B\}$ and $F=\{A,B,C\}$. Put $R=1-3z$. The strings of $n\ge1$ singletons with a prescribed letter
+next to a double have the generating function $z/R$.
+
+\begin{proposition}[the class $\{A,C\}$]\label{prop:threeGAC}
+The generating function of the ordered class $AC$ is
+\begin{equation}\label{eq:GAC}
+G_{AC}(z)=\frac{z^2-4z^3+10z^4-8z^5-3z^6}{(1-3z)^3},
+\end{equation}
+so $|AC_2|=1$, $|AC_3|=5$ and
+\begin{equation}\label{eq:GACcoef}
+|AC_m|=2(m-1)(3m+2)3^{m-5}\qquad(m\ge4).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+\emph{Step 1. The windows with both doubles.} In a window $tAC$ the points $(i+1,1)$ and
+$(i+2,2)$ are black and $(i+1,3)$ is white. For $t=b$ the diamond shows $(i+1,3)$ alone, and
+test (e) fails it. For $t\ne b$ it shows $(i,2)$ and $(i+1,3)$, and test (d) fails it exactly
+when $t=c$. By the half turn $ACt$ passes only for $t=c$, and $AtC$ passes by tests (b) and (e).
+
+\emph{Step 2. Adjacent doubles.} In $UACW$ every window passes except possibly the two of
+Step~1 (Lemmas~\ref{lem:dichotomy}(a) and~\ref{lem:sixofnine}(c)). So $U$ ends in $a$ and $W$
+begins with $c$, if nonempty, and this case contributes $z^2(1+z/R)^2$.
+
+\emph{Step 3. One singleton between.} In $UAtCW$ the window $AtC$ passes. By
+Lemma~\ref{lem:sixofnine}(a), the last letter of $U$ has $p_t=3,1,2$ allowed values for
+$t=a,b,c$, and by (b) the first letter of $W$ has $q_t=2,1,3$. So this case contributes
+$z^3\sum_t(1+p_tz/R)(1+q_tz/R)=z^3(3+12z/R+13z^2/R^2)$, since $\sum p_t=\sum q_t=6$ and
+$\sum p_tq_t=13$.
+
+\emph{Step 4. At least two singletons between.} In $UAv_1\cdots v_kCW$ with $k\ge2$ only
+$uAv_1$ and $v_kCw$ can fail. If $U$ is empty, $v_1$ is free, and otherwise six of the nine
+pairs $(u,v_1)$ pass. So each end contributes $3+6z/R$, the free middle letters give $1/R$, and
+this case contributes $z^4(3+6z/R)^2/R=9z^4(1-z)^2/R^3$.
+
+\emph{Step 5. The coefficients.} The three cases sum to~\eqref{eq:GAC}. The coefficient of $z^m$ in $z^kR^{-3}$ is
+$\binom{m-k+2}23^{m-k}$ for $m\ge k$ and $0$ otherwise. For $m\ge4$ the five terms with
+$k=2,\dots,6$ sum to the polynomial $2(m-1)(3m+2)3^{m-5}$, and at $m=2,3$ they give $1$ and $5$.
+\end{proof}
+
+\begin{theorem}[the number of three-row optima]\label{thm:threecount}
+For $m\ge3$ let $E_m$ be the number of maximum blackouts of the $3\times m$ grid whose word is
+outside $AC$ and $CA$. Then for every $m\ge4$,
+\begin{equation}\label{eq:threecount}
+a_3(m)=4(m-1)(3m+2)3^{m-5}+E_m.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Column reversal maps $AC$, $AB$ and $BC$ onto $CA$, $BA$ and $CB$, and the reflection in the
+middle row maps $AB$ onto $CB$. Both preserve optima, so
+\begin{equation}\label{eq:classsum}
+a_3(m)=2|AC_m|+4|AB_m|+|X_m|=2|AC_m|+E_m\qquad(m\ge3),
+\end{equation}
+and~\eqref{eq:GACcoef} gives~\eqref{eq:threecount}.
+\end{proof}
+
+A column black in rows $1$ and $3$ is $B$ or $X$, so $E_m$ is as in Theorem~B. At $m=3$,
+$a_3(3)=53=2\cdot5+4\cdot7+15$ by Propositions~\ref{prop:GAB} and~\ref{prop:GX}.
+
+\subsection{The generating function}
+
+Put $L=1-2z-2z^2$, $N=1+2z^2$ and $D=LN$.
+
+\begin{theorem}[three-row generating function, parts (b) and (c) computer-assisted]\label{thm:threegf}
+\leavevmode
+\begin{enumerate}[(a)]
+\item The series $\sum_{m\ge3}a_3(m)z^m$ equals $2G_{AC}+4G_{AB}+G_X-z-12z^2$. Here $G_{AC}$
+is~\eqref{eq:GAC}, and $G_{AB}$ and $G_X$ are the rational functions of
+Propositions~\ref{prop:GAB} and~\ref{prop:GX}, with denominators dividing $D^3$ and $D^2$.
+\item The reduced denominator of the series is exactly $Q=R^3L^3N^3$.
+\item With
+\begin{align*}
+P(z)={}&z-3z^2-34z^3+228z^4-641z^5+1307z^6-2186z^7\\
+&+2056z^8-236z^9-1060z^{10}+2584z^{11}-4264z^{12}\\
+&-1440z^{13}+704z^{14}-1024z^{15}+2080z^{16}+2176z^{17}+384z^{18},
+\end{align*}
+we have
+\begin{equation}\label{eq:PQ}
+\sum_{m\ge3}a_3(m)z^m=\frac{P(z)}{Q(z)}-z-12z^2.
+\end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(a) Use~\eqref{eq:classsum}. The coefficients $1$ and $12$ of $z$ and $z^2$ count the word $X$,
+the six words $sX$ and $Xs$, and the six words of two different doubles.
+
+(b) This is Theorem~\ref{thm:denominator} in Appendix~\ref{app:threegf}. The orders at the
+roots of $L$ and $N$ rest on the computer-assisted form~\eqref{eq:PB} of $G_{AB}$.
+
+(c) Clearing denominators in (a) gives $P$, exactly in SymPy
+(\nolinkurl{three_row_closed_form.py}). The script \nolinkurl{three_row_closed_form_check.py}
+checks~\eqref{eq:PQ} against an independent transfer matrix with $350$ states, in exact integers
+through width $100$.
+\end{proof}
+
+\begin{corollary}[asymptotics]\label{cor:threeasymp}
+Let $\rho=1+\sqrt3$. As $m\to\infty$,
+\begin{equation}\label{eq:asymp1}
+a_3(m)=\frac4{81}m^23^m-\frac4{243}(m+2)3^m+O(m^2\rho^m).
+\end{equation}
+So the valid fraction $a_3(m)/(m^23^{m-1})$ of the candidates is
+$\frac4{27}-\frac4{81m}-\frac8{81m^2}+O\bigl((\rho/3)^m\bigr)$.
+\end{corollary}
+
+\begin{proof}
+The main term of~\eqref{eq:threecount} is
+$4(3m^2-m-2)3^{m-5}=\frac4{81}m^23^m-\frac4{243}(m+2)3^m$. By Theorem~\ref{thm:threegf}(a)
+and~\eqref{eq:classsum}, $E_m$ is the coefficient of $z^m$ in $4G_{AB}+G_X$, whose poles are roots of $D$ of order at
+most three. The root of least modulus is $1/\rho$, so $E_m=O(m^2\rho^m)$.
+\end{proof}
+
+\begin{theorem}[three-row closed form, computer-assisted exact algebra]\label{thm:threeclosed}
+Let $\sigma=1-\sqrt3$. For every $m\ge3$,
+\begin{equation}\label{eq:Eclosed}
+E_m=p_+(m)\rho^m+p_-(m)\sigma^m+T_m,
+\end{equation}
+where $432\,p_\pm(m)=(19\pm11\sqrt3)m^2+(61\pm41\sqrt3)m+104\pm28\sqrt3$ and $T_m=(-2)^{\lfloor m/2\rfloor}\,\tau(m)$ with $\tau(m)=(2m^2+41m-104)/216$ for even $m$ and
+$\tau(m)=(7m^2-32m-175)/432$ for odd $m$. Hence $E_m\sim\frac{19+11\sqrt3}{432}m^2\rho^m$, and $E_m>0$ for every $m\ge4$.
+\end{theorem}
+
+\begin{proof}
+Let $c_m$ be the coefficient of $z^m$ in $4G_{AB}+G_X$, whose denominator divides $L^3N^3$.
+By Theorem~\ref{thm:threegf}(a), $E_m=c_m$ for $m\ge3$. The roots $1/\rho$, $1/\sigma$
+and $\pm1/(i\sqrt2)$ of $L^3N^3$ are triple, so beyond a polynomial part of degree one the
+$c_m$ have the form~\eqref{eq:Eclosed}, and \nolinkurl{three_row_closed_form.py} finds the
+twelve rational coefficients. Both sides satisfy the order-$12$ recurrence of $L^3N^3$
+from $m=14$ on, so agreement at $m=2,\dots,13$ proves equality for every $m\ge2$. The asymptotic follows since $|\sigma|<1$
+and $|T_m|=O(m^22^{m/2})$. Finally $E_m>0$, since the cross $Xaa\cdots a$ of
+Theorem~\ref{thm:threevalue} lies in the triple class.
+\end{proof}
+
+\begin{remark}[optima up to symmetry, computer-assisted]\label{rem:threeorbits}
+Up to reflection and reversal there are $15$, $58$, $227$, $864$, $3190$ and $11502$ optima at
+widths $3$ to $8$. For even $m\le14$ only the half turn fixes optima, $2m3^{m/2-2}$ of them, so
+there are $(a_3(m)+2m3^{m/2-2})/4$ orbits (\nolinkurl{three_row_orbits.py}, proof omitted).
+\end{remark}
+\section{Four rows}\label{sec:four}
+
+On four rows the row bound of Theorem~\ref{thm:rowbound} is $m+4$, attained for every $m\ge6$. We write $(m)_k=m(m-1)\cdots(m-k+1)$ and use the tilted rectangles $D(i,1)$, $D(i,2)$, $\kA_i$, $\kB_i$, $\kC_i$, $\kE_i$ of Lemma~\ref{lem:tilted-narrow}.
+
+\begin{theorem}[four rows]\label{thm:fourvalue}
+For every $m\ge6$ we have $f(4,m)=m+4$.
+\end{theorem}
+
+The upper bound is Theorem~\ref{thm:rowbound} with $h=4$. For the lower bound we take
+\begin{equation}\label{eq:fourS}
+S=\{(i,1):2\le i\le m-1\}\cup\{(m-1,2),(m,2),(1,3),(2,3),(1,4),(m,4)\},
+\end{equation}
+which has $m+4$ points. The double columns are column $1$ (rows $3,4$), column $2$ (rows $1,3$), column $m-1$ (rows $1,2$), and column $m$ (rows $2,4$). So $G_S$ is the eight-cycle $r_1\,c_2\,r_3\,c_1\,r_4\,c_m\,r_2\,c_{m-1}$ with the columns $c_3,\ldots,c_{m-2}$ hanging off $r_1$.
+
+\begin{proof}[Proof of Theorem~\ref{thm:fourvalue}]
+\emph{Step 1. Axis-aligned rectangles.} The graph $G_S$ has no cycle of length four or six. So by Lemma~\ref{lem:girth} the axis-aligned rectangles have distinct presentations, and none is hidden.
+
+\emph{Step 2. The weak tilted rectangles.} By Lemma~\ref{lem:tilted-narrow}, a corner of a tilted rectangle in row $1$ is always black, and one in row $4$ is always white. The other black corners are $(i+2,2)$ for $i\ge m-3$ and $(i+1,3)$ for $i=1$ in $D(i,1)$, and $(i,3)$ for $i\le2$ and $(i+1,2)$ for $i=m-2$ in $D(i,2)$. In $\kA_i$ and $\kB_i$ they are $(i,3)$ for $i\le2$ and $(i+3,2)$ for $i\ge m-4$, and in $\kC_i$ and $\kE_i$ there are none. As $m\ge6$, the two conditions for $D(i,2)$ exclude each other. A rectangle with at most one black corner is safe by Lemma~\ref{lem:threecorners}. So only the rectangles below need a check, with $s=1$ for $\kA_i$ and $s=2$ for $\kB_i$.
+\begin{center}\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+rectangle & which $i$ & corners shown\\
+\midrule
+$D(1,1)$ & & $(1,2),(3,2)$\\
+$D(i,1)$ & $i\in\{m-3,m-2\}$ & $(i,2),(i+1,3)$\\
+$\kA_i$ or $\kB_i$ & $i\in\{1,2\}$, $i\notin\{m-4,m-3\}$ & $(i+s,4),(i+3,2)$\\
+$\kA_i$ or $\kB_i$ & $i\in\{m-4,m-3\}$, $i\notin\{1,2\}$ & $(i,3),(i+s,4)$\\
+$\kA_i$ or $\kB_i$ & $i=2$, $m=6$ & $(i+s,4)$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\emph{Step 3. Against each other.} The rows of the shown points are $2,2$ and $2,3$ and $4,2$ and $3,4$ in the first four lines, so different lines never agree. Within a line the point in row $2$ or $3$ determines $i$, and the point in row $4$ then determines $s$.
+
+\emph{Step 4. Against axis-aligned rectangles.} A rival of $\{(1,2),(3,2)\}$ needs a row $r$ with $(1,r)$ and $(3,r)$ black, but there is none. In the next three lines the axis-aligned rectangle through the shown points has the white corner $(i,3)$, $(i+s,2)$, or $(i,4)$, respectively, since $i\ge3$, $i+s\le4<m-1$, and $3\le i\le m-3$ there. In the last line $m=6$, and the shown point is $(z,4)$ with $z=i+s\in\{3,4\}$. Column $z$ is black only in row $1$, so a rival needs a column black in rows $1$ and $4$, and there is none. By Steps~1 and~2 no rectangle is hidden, so $S$ is valid.
+\end{proof}
+
+\begin{lemma}[equality in the row bound on four rows]\label{lem:fourequality}
+Let $m\ge4$. A blackout of the $4\times m$ grid with $m+4$ points is axis-valid if and only if it has the form described next. Exactly four columns have two black points, their row pairs are the edges of a four-cycle on the rows, and every other column has one black point. There are $3\,(m)_4\,4^{m-4}$ such blackouts, which is $72$ and $1{,}440$ for $m=4$ and $5$.
+\end{lemma}
+
+\begin{proof}
+This is Theorem~\ref{thm:equality} with $h=4$. There are three four-cycles on the rows, $(m)_4$ ways to place their labeled edges, and four rows for each other column.
+\end{proof}
+
+\begin{corollary}[widths four and five, computer-assisted]\label{cor:fourboundary}
+We have $f(4,4)=7$ and $f(4,5)=8$.
+\end{corollary}
+
+\begin{proof}
+The lower bounds are Lemma~\ref{lem:cross}. For the upper bounds, the script \texttt{verify\_narrow.py} finds a repeated presentation in each of the $72$ and $1{,}440$ candidates of Lemma~\ref{lem:fourequality}. The brute-force check of Section~\ref{sec:verify} confirms both values without the lemma.
+\end{proof}
+
+\begin{theorem}[no hidden rectangle]\label{thm:hidden}
+Let $m\ge4$. A valid blackout of the $4\times m$ grid hides no rectangle.
+\end{theorem}
+
+\begin{proof}
+By Lemma~\ref{lem:diff}, two rectangles have the same presentation exactly when the symmetric difference of their corner sets is black. So it suffices to write each corner set as $C(R_1)\triangle C(R_2)$ with $R_1\ne R_2$. For the axis-aligned rectangle on rows $r,s$ and columns $x,y$, take rows $r,s$ with columns $\{x,w\}$ and $\{y,w\}$ for a third column $w$. For $1\le i\le m-3$ let $\mathsf Q_i=\{(i,2),(i,3),(i+3,2),(i+3,3)\}$. Checking corners gives
+\begin{equation}\label{eq:fourxor}
+\begin{gathered}
+\kC_i=\kA_i\,\triangle\,\mathsf Q_i,\qquad \kE_i=\kB_i\,\triangle\,\mathsf Q_i,\\
+D(i+1,1)=D(i,2)\,\triangle\,\kA_i,\qquad D(i+1,2)=D(i,1)\,\triangle\,\kE_i,
+\end{gathered}
+\end{equation}
+and each identity can be solved for each of its three rectangles. The first line handles $\kA_i$, $\kB_i$, $\kC_i$, and $\kE_i$. A diamond $D(j,1)$ or $D(j,2)$ has $j\ge2$ or $j\le m-3$, since $m\ge4$, and the second line with $i=j-1$ or $i=j$ handles it.
+\end{proof}
+
+The hypothesis $m\ge4$ is needed, since the valid blackout $\{(1,2),\allowbreak(2,1),\allowbreak(3,2),\allowbreak(2,3)\}$ of the $4\times3$ grid hides $D(1,1)$ (checked by computer).
+
+Let $m\ge6$. By Lemma~\ref{lem:fourequality} an optimum has four double columns, whose pairs form a four-cycle $F$ on the rows, and singletons elsewhere. We name $F$ by its parts, $\{1,2\}\mid\{3,4\}$, $\{1,3\}\mid\{2,4\}$, or $\{1,4\}\mid\{2,3\}$. A \emph{block} is a run of four consecutive singleton columns, and its \emph{word} lists their black rows. The \emph{template words} $2413$, $3412$, $2143$, and $3142$ are the corner rows of $\kC_x$, $\kA_x$, $\kE_x$, and $\kB_x$. A \emph{swap word} exchanges two letters of a template word, for example $4213$. An \emph{edit word for $F$} replaces one letter $r$ of a template word by a row $s$ with $\{r,s\}\in F$.
+
+\begin{lemma}[forbidden blocks]\label{lem:blocks}
+Let $S$ be a valid blackout of the $4\times m$ grid with $m+4$ points and pair set $F$, where $m\ge6$. No block of $S$ has a swap word or an edit word for $F$. There are $20$ swap words, and $24$, $24$, or $32$ edit words for the three pair sets, none of them a swap word. So at most $212$ of the $256$ words of a block are allowed.
+\end{lemma}
+
+\begin{proof}
+Let the block start in column $x$, and let $T$ be one of $\kC_x$, $\kA_x$, $\kE_x$, $\kB_x$, with template word $t_1t_2t_3t_4$. In both steps an axis-aligned rectangle has the same presentation as $T$.
+\emph{Step 1. Swap words.} If the letters in positions $p\ne q$ are exchanged, $T$ shows exactly $(x+p-1,t_p)$ and $(x+q-1,t_q)$, and so does the axis-aligned rectangle on these two points. The template words are the permutations with both end letters in $\{2,3\}$. Exchanging two end letters, or two middle letters, gives a template word again, and exchanging an end letter with a middle letter gives every permutation with exactly one end letter in $\{2,3\}$. These are the $20$ swap words.
+
+\emph{Step 2. Edit words.} If $t_p=r$ is replaced by $s$ with $\{r,s\}\in F$, then $T$ shows only $(x+p-1,r)$. So does the rectangle on rows $r,s$ and the columns $x+p-1$ and $d$, where $d$ is the double column black in rows $r,s$. Each template word has $8$ edit words.
+
+Two template words share an edit word only if they differ in two positions, carrying letters $r,s$ in opposite orders, and then they share two if $\{r,s\}\in F$. This happens for $2413,3412$ and $2143,3142$ with $\{r,s\}=\{2,3\}$, and for $2413,2143$ and $3412,3142$ with $\{r,s\}=\{1,4\}$. So there are $32-4[\{2,3\}\in F]-4[\{1,4\}\in F]$ edit words. They repeat a letter, so they are not swap words.
+\end{proof}
+
+\begin{theorem}[forbidden-block bound]\label{thm:foursurvival}
+For every $m\ge6$,
+\begin{equation}\label{eq:survival}
+a_4(m)\le3\,(m)_4\,4^{m-4}\,(53/64)^k=O\bigl(m^4\,212^{m/4}\bigr),
+\end{equation}
+where $k=\max(0,\lfloor m/4\rfloor-4)$.
+\end{theorem}
+
+\begin{proof}
+Fix $F$, the double columns, and their pairs, in one of $3\,(m)_4$ ways. Of the $\lfloor m/4\rfloor$ groups of columns $4k-3,\ldots,4k$, at most four contain a double column. So at least $k$ are blocks, each with at most $212=4^4\cdot53/64$ words by Lemma~\ref{lem:blocks}. Every other column has at most $4$ values, which gives \eqref{eq:survival}.
+\end{proof}
+
+So the valid fraction of the candidates tends to zero (compare Corollary~\ref{cor:threeasymp}).
+
+\begin{remark}[six columns of memory, proof omitted]\label{rem:fourmemory}
+Fix a pair set $F$. A finite automaton reads a blackout column by column, remembers its last six columns and the pairs of $F$ already used, and accepts exactly the optima with pair set $F$. So their generating function is rational (Flajolet and Sedgewick~\cite[Section~V.5]{flajolet2009}). The proof uses Lemma~\ref{lem:rival} and Theorem~\ref{thm:hidden}, and we omit it (see the repository notes~\cite{repo}).
+\end{remark}
+
+\begin{proposition}[small widths, computer-assisted]\label{prop:fourvalues}
+In the row $h=4$ of \seqnum{A399580}, $a_4(4)=316$, $a_4(5)=1{,}810$, $a_4(6)=26$, and $a_4(7)=292$.
+\end{proposition}
+
+\begin{proof}
+The ILP program and the brute-force check of Section~\ref{sec:verify} both find these values. For $m=6,7$ the script \texttt{four\_row\_direct.py} tests the candidates of Lemma~\ref{lem:fourequality}, and the automaton of Remark~\ref{rem:fourmemory} in \texttt{four\_row\_counts.py} also gives $26$ and $292$ (Table~\ref{tab:fourvalues}).
+\end{proof}
+
+\begin{table}[htbp]
+\centering\small
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+$m$ & $6$ & $7$ & $8$ & $9$ & $10$ & $11$ & $12$\\
+\midrule
+$a_4(m)$ & $26$ & $292$ & $2{,}118$ & $13{,}332$ & $75{,}398$ & $402{,}656$ & $2{,}037{,}848$\\
+$\{1,2\}\mid\{3,4\}$ & $0$ & $4$ & $128$ & $920$ & $4{,}852$ & $24{,}112$ & $114{,}424$\\
+$\{1,3\}\mid\{2,4\}$ & $20$ & $256$ & $1{,}780$ & $11{,}128$ & $63{,}540$ & $346{,}320$ & $1{,}785{,}768$\\
+$\{1,4\}\mid\{2,3\}$ & $6$ & $32$ & $210$ & $1{,}284$ & $7{,}006$ & $32{,}224$ & $137{,}656$\\
+\bottomrule
+\end{tabular}
+\caption{Four-row optimum counts by pair set, computer-assisted. Two transfer counters agree to width $1500$ (data file \texttt{four\_row\_counts.json}), and a direct test of every candidate agrees to width $10$.}
+\label{tab:fourvalues}
+\end{table}
+
+\begin{theorem}[the four-row generating function, computer-assisted]\label{thm:fourgfexact}
+There are coprime integer polynomials $P_4=26z^6-826z^7+\cdots$ of degree $444$ and $Q_4=\sum_{j=0}^{420}q_jz^j$ of degree $420$ with $q_0=1$ and $\sum_{m\ge6}a_4(m)z^m=P_4/Q_4$. The recurrence $\sum_jq_j\,a_4(n-j)=0$ holds for every $n\ge445$ and fails at $n=444$. Over the integers
+\[
+Q_4=(1-z)^2(1+z)^2\,g_5^3\,\tilde g_5^3\,g_6^3\,g_{11}^5\,g_{17}^3\,g_{19}^3\,g_{20}^5\,g_{21}^5,
+\]
+where $g_d$ and $\tilde g_d$ are irreducible of degree $d$ with constant term $1$, and all of $g_{20}$ comes from the pair set $\{1,3\}\mid\{2,4\}$.
+\end{theorem}
+
+\begin{proof}
+The Berlekamp--Massey algorithm modulo eight primes, run on the values $a_4(m)$ for $m\le1500$ from the automaton of Proposition~\ref{prop:fourvalues}, gives $P_4$ and $Q_4$. With a register of used pairs the automaton has a transfer matrix $T_F$ with $6{,}128$, $7{,}792$, or $4{,}912$ states. Its state vectors $v(n)=v(0)T_F^n$ satisfy $\sum_jq_jv(n_F-j)=0$ at $n_F=436$, $435$, and $445$. Multiplying by powers of $T_F$ gives the recurrence for every $n\ge445$, and $\deg P_4=444$ forces the failure at $n=444$. We factor $Q_4$ in SymPy, and \texttt{four\_row\_\allowbreak recurrence.json} lists the factors.
+\end{proof}
+
+\begin{corollary}[growth, computer-assisted]\label{cor:fourgrowth}
+Let $\rho_4=3.351996777310\ldots$ be the largest real root of the irreducible polynomial $p(x)=x^{20}g_{20}(1/x)=x^{20}-4x^{19}+2x^{18}+\cdots-26x^2-4x+8$. Then $a_4(m)\sim c\,m^4\rho_4^m$ with $c=8.1611\times10^{-5}$.
+\end{corollary}
+
+\begin{proof}
+The script \texttt{four\_row\_root\_isolation.py} isolates the complex roots of every factor of $Q_4$ in rational rectangles, in exact arithmetic in SymPy. The only root of modulus below $0.341$ is the positive root $1/\rho_4=0.29832\ldots$ of $g_{20}$, which is simple in $g_{20}$ and so has order five in $Q_4$. It is not a root of $P_4$, since the two are coprime. So $c$ is the coefficient of $(1-\rho_4 z)^{-5}$ in the partial fraction divided by $4!$ (Flajolet and Sedgewick~\cite[Section~IV.5]{flajolet2009}), computed to high precision.
+\end{proof}
+\section{Five and six rows}\label{sec:five}
+
+One finite padding test settles every large width on five and on six rows.
+
+\subsection{A finite test for boundary padding}
+
+For a blackout $S$ of the $h\times m$ grid and $L,R\ge0$, let $S_{L,R}$ add $L$ columns on
+the left and $R$ on the right. They are the columns $1-L,\dots,0$ and $m+1,\dots,m+R$. Each
+is black exactly in the \emph{padding row}, which is row $1$ or row $h$. As before, $W_h$ is
+the span bound of Lemma~\ref{lem:span}.
+
+\begin{theorem}[finite collar]\label{thm:collar}
+Let $h\ge3$ and $m\ge1$, and let $S$ be a blackout of the $h\times m$ grid. Fix the padding
+row and choose the left side, the right side, or both. Call $(L,R)$ \emph{admissible} if
+$L=0$ when the left side is not chosen and $R=0$ when the right side is not chosen. Put
+$L^*=W_h$ if the left side is chosen and $L^*=0$ otherwise, and define $R^*$ in the same
+way. Then $S_{L,R}$ is valid for every admissible $(L,R)$ if and only if $S_{L^*,R^*}$ is
+valid.
+\end{theorem}
+
+\begin{proof}
+Write $S^*=S_{L^*,R^*}$. If every admissible padding is valid, then so is $S^*$.
+Conversely, let $S^*$ be valid and
+$U=S_{L,R}$ with $(L,R)$ admissible. By Lemma~\ref{lem:leftmost} the corners of a tilted
+rectangle lie in the rows $j$, $j-b$, $j+d$, $j+d-b$ with $b,d\ge1$, so at most one lies in
+row $1$ and at most one in row $h$. Hence a weak tilted rectangle of $U$ has a black corner in an
+original column $e$, and by Lemma~\ref{lem:span} its columns lie in
+$[e-W_h,e+W_h]\cap[1-L,m+R]\subseteq[1-L^*,m+R^*]$. Since $U$ and $S^*$ agree on their common
+columns, it is a rectangle of $S^*$ with the same presentation. Suppose that two distinct
+rectangles $R_1$ and $R_2$ of $U$ have the same presentation $P$.
+
+\emph{Step 1. Both axis-aligned.} The graph $G_U$ is $G_S$ plus one vertex of degree one for
+each added column, so its cycles are cycles of $G_{S^*}$. Since $S^*$ is valid with at least
+three columns, neither graph has a cycle of length four or six, and $U$ is axis-valid
+(Lemma~\ref{lem:girth}).
+
+\emph{Step 2. Both tilted.} By Lemma~\ref{lem:threecorners}, $|P|\le2$, so both are weak and
+are rectangles of $S^*$ with the same presentation, which is impossible.
+
+\emph{Step 3. One of each.} Let $R_1$ be tilted, so it is a rectangle of $S^*$. A column of
+$R_2$ with a point of $P$ is a column of $R_1$, and one without has two black corners and is
+an original column. So $R_2$ is a rectangle of $S^*$ too, a contradiction.
+\end{proof}
+
+\begin{remark}[the padding row has to be a boundary row]\label{rem:interior}
+Take $h=3$, $B_1=B_2=\{1\}$, $B_3=\{1,3\}$, and the interior padding row $2$. The added
+columns $0$ and $-1$ keep the board valid, but $-2$ breaks it. The diamond $(-2,2)$,
+$(-1,1)$, $(0,2)$, $(-1,3)$ and the rectangle on columns $-1$, $3$ and rows $1$, $3$ both
+show $\{(-1,1),(-1,3)\}$.
+\end{remark}
+
+\subsection{Five rows}
+
+Let $S_8$ be the blackout of the $5\times8$ grid with $B_1=\{1,4\}$, $B_2=\{4,5\}$,
+$B_3=\{2,5\}$, $B_4=B_5=\{5\}$, $B_6=\{3,4\}$, $B_7=\{2,3\}$, and $B_8=\{1,2\}$. Its
+doubles carry the edges of $K_{2,3}$ between $\{2,4\}$ and $\{1,3,5\}$. With five more
+columns black in row $1$ it gives the $5\times13$ board below, rows $1$ to $5$, with \# for
+a black point.
+\begin{center}\footnotesize
+\texttt{\#......\#\#\#\#\#\#}\quad \texttt{..\#...\#\#.....}\quad
+\texttt{.....\#\#......}\quad \texttt{\#\#...\#.......}\quad \texttt{.\#\#\#\#........}
+\end{center}
+
+\begin{theorem}[five rows, computer-assisted]\label{thm:fiverow}
+\begin{enumerate}[(a)]
+\item We have $f(5,m)=m+5$ for $m=5$, $6$, and $7$.
+\item We have $f(5,m)=m+6$ for every $m\ge8$, attained by $S_8$ followed by $m-8$ columns black in
+row $1$ only.
+\item The $5\times8$ grid has exactly four maximum blackouts, the images of $S_8$ under the row
+reflection and the column reversal.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(b) The upper bound is Theorem~\ref{thm:rowbound}. Apply Theorem~\ref{thm:collar} to $S_8$
+with the padding row $1$ on the right. Since $W_5=5$, the test board is the $5\times13$
+board shown above. Three rectangle enumerators list its $954$
+rectangles and find no repeated presentation.
+
+(a) The lower bounds are $S_0$ of Theorem~\ref{thm:fivefive} below for $m=5$ and the stored
+blackouts of $h+m$ points (Section~\ref{sec:verify}) for $m=6,7$. For
+$m=5$ the upper bound is Corollary~\ref{cor:small-m}. For $m=6$ and $m=7$ a valid blackout of
+$m+6$ points would be one of the $10\,(m)_6\,5^{m-6}$ candidates of Theorem~\ref{thm:equality}.
+Two SAT encodings exclude all of them. Two more encodings and a column search, which use no
+structure theorem, agree.
+
+(c) Among the $10\,(8)_6\,5^2=5{,}040{,}000$ candidates of Theorem~\ref{thm:equality}, two
+SAT enumerations and a column search find exactly the four images of $S_8$.
+\end{proof}
+
+\begin{remark}[five-row counts, computer-assisted]\label{rem:fivecounts}
+Table~\ref{tab:values} gives $a_5(m)$ for $8\le m\le12$. For $m=13,14,\dots,23$ the numbers
+$a_5(m)$ are $193{,}406$, $1{,}346{,}758$, $8{,}650{,}416$, $52{,}128{,}242$,
+$299{,}349{,}210$, $1{,}653{,}637{,}492$, $8{,}828{,}301{,}226$, $45{,}743{,}165{,}894$,
+$230{,}934{,}909{,}328$, $1{,}139{,}486{,}126{,}866$, and $5{,}510{,}071{,}794{,}736$. The
+values for $m\le12$ come from two independent programs and the others from two exact transfer
+counters, all based on Theorem~\ref{thm:equality}. No proof uses them.
+\end{remark}
+
+\subsection{Six rows and small grids}
+
+Let $S_{16}$ be the blackout of the $6\times16$ grid whose rows $1$ to $6$ are shown below.
+\begin{center}\footnotesize
+\texttt{.\#...\#.........\#}\quad \texttt{..\#...........\#\#}\quad
+\texttt{\#............\#\#.}\\
+\texttt{.\#.......\#\#\#\#\#..}\quad \texttt{..\#.....\#\#......}\quad
+\texttt{\#..\#\#\#\#\#\#.......}
+\end{center}
+Its doubles, in the columns $1,2,3,6,9,10,14,15,16$, carry the edges of the complete bipartite
+graph between $\{1,3,5\}$ and $\{2,4,6\}$.
+
+\begin{theorem}[six rows, computer-assisted]\label{thm:sixrow}
+\begin{enumerate}[(a)]
+\item For $8\le m\le14$ we have $f(6,m)\le m+8$.
+\item For every $m\ge15$ we have $f(6,m)=m+9$.
+\end{enumerate}
+So for $m\ge8$ we have $f(6,m)=m+9$ if and only if $m\ge15$.
+\end{theorem}
+
+\begin{proof}
+(a) For $m=8$ this is Corollary~\ref{cor:small-m}. For $9\le m\le14$, by
+Theorem~\ref{thm:equality} the doubles of a valid blackout of $m+9$ points carry the edges of
+$K_{3,3}$ for one of ten row partitions. Two SAT encoders find none for any width and
+partition. A column search for $m\le13$ and a third encoder for $m=13$ and $m=14$ give a third
+check at every width.
+
+(b) The upper bound is Theorem~\ref{thm:rowbound}. A valid blackout of $24$ points on the
+$6\times15$ grid is in \nolinkurl{jis/data/six_row_sat_w15_A.json}. For $m\ge16$ apply
+Theorem~\ref{thm:collar} to $S_{16}$ with the padding row $1$ on the right. Since $W_6=7$,
+the test board adds $(17,1),\dots,(23,1)$, and the three enumerators find no repeated
+presentation among its $4{,}627$ rectangles.
+\end{proof}
+
+\begin{theorem}[the guess fails, computer-assisted]\label{thm:refute}
+\begin{enumerate}[(a)]
+\item We have $f(6,6)=12$, $f(6,7)=13$, $f(7,7)=14$, and $f(6,8)=15$. The blackout $(1,1)$,
+$(1,5)$, $(2,1)$, $(3,1)$, $(3,2)$, $(3,3)$, $(4,3)$, $(4,4)$, $(5,4)$, $(6,4)$, $(7,4)$,
+$(7,5)$, $(7,6)$, $(8,2)$, $(8,6)$ of the $6\times8$ grid attains the last value.
+\item The guess of Section~\ref{sec:intro} fails. Indeed $f(5,8)=14$ and $f(6,8)=15$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(a) The other lower bounds are stored blackouts of $h+m$ points. Encoding A of
+Section~\ref{sec:verify} on CaDiCaL and encoding B on Glucose and MiniSat find no valid
+blackout of $13$, $14$, $15$, or $16$ points on the $6\times6$, $6\times7$, $7\times7$, or
+$6\times8$ grid, respectively. A third encoding agrees on the last three, and the ILP program
+on the first.
+
+(b) This is Theorem~\ref{thm:fiverow}(b) and part (a).
+\end{proof}
+
+If a side is at most four, then $f(h,m)\le h+m$ by Sections~\ref{sec:strip}
+to~\ref{sec:four}. Also $f(h,m)=h+m$ on $5\times5$, $5\times6$, $5\times7$, and $6\times6$,
+the other grids of area below $40$. So $f$ first exceeds $h+m$ on the $5\times8$ grid.
+
+Neuwirth~\cite[Remark~18]{neuwirth2001} states the case $5+5$ of the next lemma without
+proof.
+
+\begin{lemma}[few edges without short cycles]\label{lem:tenvertices}
+Let $G$ be a finite simple bipartite graph with $v$ vertices, $1\le v\le10$, and with no cycle
+of length four or six. Then $G$ has at most $v$ edges. If it has exactly $v$ edges, then $G$ is
+connected and has exactly one cycle, of length $8$ or $10$.
+\end{lemma}
+
+\begin{proof}
+Every cycle of $G$ has length at least $8$. Suppose a component has more edges than
+vertices. Removing vertices of degree one with their edges until none is left gives a connected
+$H$ with more edges than vertices and minimum degree two, so some vertex $x$ of $H$ has degree
+at least three. Let $D_k$ be the set of vertices at distance $k$ from $x$. Two paths of length
+at most $3$ from $x$ to one vertex would close a cycle of length at most $6$. So for $k=1,2,3$
+every vertex of $D_k$ has exactly one neighbor in $D_{k-1}$ and none in $D_k$. Its degree is
+at least two, so it also has a neighbor in $D_{k+1}$. For $k\le2$ no other vertex of $D_k$
+shares that neighbor. Hence $|D_1|\ge3$, $|D_3|\ge|D_2|\ge|D_1|$ and $|D_4|\ge1$, at least
+$11$ vertices in all. So $G$ has at most $v$ edges, and with exactly $v$ edges every
+component has one cycle. Two disjoint cycles of length at least $8$ need $16$ vertices, so $G$ is connected.
+\end{proof}
+
+\begin{theorem}[the $5\times5$ grid]\label{thm:fivefive}
+\begin{enumerate}[(a)]
+\item We have $f(5,5)=10$, and $G_S$ is connected with exactly one cycle for every optimum $S$.
+\item (Computer-assisted.) There are exactly $a_5(5)=8$ maximum blackouts, the eight distinct
+images of $S_0$ below under the symmetries of the square.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{Upper bound.} If $S$ is valid, $G_S$ has $10$ vertices, $|S|$ edges and no cycle of
+length four or six (Lemma~\ref{lem:girth}), so Lemma~\ref{lem:tenvertices} applies.
+
+\emph{Lower bound.} Let $S_0$ be the staircase of nine points plus the corner $(5,5)$ with
+$B_1=\{4,5\}$, $B_2=\{3,4\}$, $B_3=\{1,2,3\}$, $B_4=\{1\}$, and $B_5=\{1,5\}$. Its graph is an $8$-cycle with two pendant
+edges, so $S_0$ is axis-valid. By Lemma~\ref{lem:leftmost} the $30$ tilted rectangles among
+the $130$ are the nine unit diamonds, the four kinds of Lemma~\ref{lem:tilted-narrow} in four
+positions each, one large diamond, and four that fill the grid. Exactly fifteen are weak. The
+table lists the two corners each one shows and, after a bar for an oblique pair, the white
+corner of its axis-aligned rectangle.
+\begin{center}\footnotesize
+\begin{tabular}{@{}llll@{}}
+$(1,2),(2,1)\mid(1,1)$ & $(1,3),(2,2)\mid(1,2)$ & $(3,4),(4,3)\mid(4,4)$ & $(2,5),(3,4)\mid(3,5)$ \\
+$(2,2),(4,2)$ & $(1,2),(4,3)\mid(1,3)$ & $(4,4),(5,2)\mid(4,2)$ & $(3,5),(4,4)\mid(3,4)$ \\
+$(4,3),(5,2)\mid(4,2)$ & $(3,4),(5,2)\mid(5,4)$ & $(2,5),(5,2)\mid(2,2)$ & $(4,5),(5,3)\mid(4,3)$ \\
+$(1,3),(4,2)\mid(1,2)$ & $(2,5),(4,3)\mid(4,5)$ & & $(4,5),(5,4)\mid(4,4)$ \\
+\end{tabular}
+\end{center}
+The fifteen pairs are distinct, and the other tilted rectangles are determined by
+Lemma~\ref{lem:threecorners}. Each listed white corner lies on the only axis-aligned rectangle
+through its pair, and $(2,2),(4,2)$ has no rival since $B_2\cap B_4=\emptyset$. So $S_0$ is valid.
+
+\emph{(b).} Of the $44{,}640$ sets of $10$ points without a short cycle, the script
+\texttt{verify\_narrow.py} finds exactly the $8$ images of $S_0$ valid. The ILP program and the
+brute-force check agree.
+\end{proof}
+\section{Every fixed height}\label{sec:height}
+
+Fix $h$. A blackout of the $h\times m$ grid is a \emph{column word} $w=B_1B_2\cdots B_m$ over the subsets of $\{1,\dots,h\}$, with length $|w|$ and blackout $S(w)$. Let $\mathcal L_h$ be the set of words with a valid blackout, the empty word included. A \emph{factor} of $w$ is a word $B_iB_{i+1}\cdots B_j$.
+
+\begin{proposition}[validity is not a window property]\label{prop:nonlocal}
+Let $g\ge1$. The blackout $S=\{(1,2),(3,2),(g+3,1),(g+3,3)\}$ of the $3\times(g+3)$ grid is not valid, but every factor of at most $g$ columns is valid.
+\end{proposition}
+
+\begin{proof}
+The diamond $D(1,1)$ and the rectangle on columns $2,g+3$ and rows $1,3$ both show $\{(2,1),(2,3)\}$, while a factor of at most $g$ columns has at most two black points and two different rectangles differ in at least four corners (Lemmas~\ref{lem:diff} and~\ref{lem:threecorners}).
+\end{proof}
+
+\begin{theorem}[regularity and rational series]\label{thm:regular}
+For every $h\ge1$ the language $\mathcal L_h$ is regular, and $G_h(z,u)=\sum_{w\in\mathcal L_h}z^{|w|}u^{|S(w)|}$ is rational in $z$ and $u$.
+\end{theorem}
+
+\begin{proof}
+The \emph{trace} of a rectangle $R$ is the word whose $i$th letter is the set of rows of its corners in column $i$, and it determines $C(R)$. By Lemma~\ref{lem:diff}, $w\notin\mathcal L_h$ exactly when two different traces $Y,Y'$ of length $|w|$ have $Y_i\triangle Y'_i\subseteq B_i$ for every $i$. The traces form a regular language, $\emptyset^*\{r,s\}\emptyset^*\{r,s\}\emptyset^*$ for axis-aligned rectangles and, by Lemmas~\ref{lem:leftmost} and~\ref{lem:span}, $\emptyset^*Y_0Y_1\cdots Y_n\emptyset^*$ for finitely many templates \eqref{eq:tilt-param} of span $n\le W_h$. So a finite automaton that reads $w$ and two traces in parallel recognizes the complement of $\mathcal L_h$, and $\mathcal L_h$ is regular. With the weight $u^{|B|}$ on a letter $B$, the transfer matrix $M(u)$ of a deterministic automaton for $\mathcal L_h$ gives $G_h=\alpha(I-zM(u))^{-1}\beta$, rational by Cramer's rule \cite[Proposition~I.3]{flajolet2009}.
+\end{proof}
+
+\begin{theorem}[fixed height]\label{thm:periodic}
+Let $h\ge2$. (a) There are integers $m_0\ge3$, $p\ge1$, and $k_0,\dots,k_{p-1}$ such that $f(h,m)=m+k_{m\bmod p}$ for every $m\ge m_0$. (b) The series $\sum_{m\ge0}a_h(m)z^m$ is rational, with the conventions of Section~\ref{sec:conv}, and the words of optimum blackouts form a regular language.
+\end{theorem}
+
+\begin{proof}
+Let $E(w)=|S(w)|-|w|$. Theorem~\ref{thm:rowbound} and $|S(v)|\le h|v|$ bound the excess of every factor of a valid word by $C_h=\max(q_h,2h-2)$. So a counter for the excess of prefixes, kept in $[k-C_h,C_h]$, gives an automaton for the valid words $\mathcal L_{h,k}$ of excess $k$, and their lengths are eventually periodic. For $m\ge3$, Lemma~\ref{lem:cross} and Theorem~\ref{thm:rowbound} make $f(h,m)-m$ the largest $k$ from $h-1$ to $q_h$ with a word of length $m$ in $\mathcal L_{h,k}$, which gives (a). The optimum words are those of $\mathcal L_{h,k_r}$ of lengths $m\ge m_0$ with $m\equiv r\pmod p$, and finitely many shorter ones, so (b) follows as in Theorem~\ref{thm:regular}.
+\end{proof}
+
+Guilhot, Little, and Parkinson \cite[Theorem~1(3)]{glp2025} prove that the words of maximal weight in a regular language form a regular language for an additive weight bounded above. This does not give (b), since we maximize at each width separately. Longer proofs are in \nolinkurl{jis/removed/sec08_height.tex} of the repository~\cite{repo}.
+\section{Computations and verification}\label{sec:verify}
+
+The results that rest on a computation are labeled computer-assisted. Every other result in
+Sections~\ref{sec:conv} to~\ref{sec:height} has a written proof, unless a remark says that
+its proof is sketched or omitted. Only Remark~\ref{rem:fourmemory} of these is used later,
+in the design of a count. Every computed value and count comes from at least two programs
+written separately, which agree wherever both ran. Before most computations a prediction went
+into the ledger \nolinkurl{kagey-problems/problem001/data/ledger.md}, and several were wrong,
+among them
+$f(5,5)=9$, $f(4,8)=13$, $f(5,8)=13$, and $f(6,8)=14$.
+
+All programs are in Python~3.14.3. The ILP program \texttt{solver/engine.py} finds a smallest
+hitting set for the difference sets of Lemma~\ref{lem:diff} with CBC through
+PuLP~\cite{pulp}. It took $723$ seconds on the $5\times7$ grid and $1{,}063$ seconds on the
+$6\times6$ grid. The brute-force check \texttt{solver/brute.py} uses no lemma and shares no
+code with it. The verifier \texttt{verify\_narrow.py} checks the lemmas and constructions of
+Sections~\ref{sec:graph} to~\ref{sec:four} and the $5\times5$ grid in $21$ seconds. The
+blackouts of $h+m$ points on the grids $5\times6$, $5\times7$, $6\times6$, $6\times7$, and
+$7\times7$ are stored in \nolinkurl{jis/data/small_cells_sat_*.json}. The SAT solvers are
+CaDiCaL~1.5.3 and~1.9.5, Glucose~3, 4, and~4.2, MiniSat~2.2, MapleChrono, and Lingeling from
+pysat~1.9.dev15, and the algebra uses SymPy~1.14.
+
+A SAT instance asks for a valid blackout of at least $k$ points, so by the observation after
+Corollary~\ref{cor:hitting} an unsatisfiable instance proves $f(h,m)<k$. Encoding A has a
+variable for each point and a clause ``not all black'' for each inclusion-minimal symmetric
+difference of two rectangles, with a sequential counter for the size. Encoding B has a clause
+for each pair of rectangles that share a corner and an indicator for each hidden rectangle, at
+most one of them true, with a totalizer for the size. The third encoding,
+\texttt{cells\_sat\_check.py}, is of type A but written from scratch. The structured encoders of
+Section~\ref{sec:five} add the column structure of Theorem~\ref{thm:equality} for one row
+partition and keep only the clauses that involve a tilted rectangle. The collar test boards of
+Section~\ref{sec:five} are checked by three separately written enumerators, which list every
+rectangle of the board and compare the presentations. The column searches use no solver. They place columns from left to right and stop
+when two rectangles inside the placed columns show the same points, which is sound since every
+interval of columns of a valid blackout is valid. We did not produce DRAT proofs, and rely on
+the agreement of independent encodings on different solvers.
+
+The scripts in \nolinkurl{jis/scripts} form five groups, by the prefixes
+\texttt{three\_row}, \texttt{four\_row}, \texttt{five\_row}, \texttt{six\_row}, and
+\texttt{small\_cells} or \texttt{cells}. The file \nolinkurl{jis/scripts/README.md} lists the
+scripts behind each computer-assisted result and the longest run of each, at most $1{,}578$
+seconds. Table~\ref{tab:values} collects the values, and the rectangle counts of the programs
+agree with \seqnum{A085582} and \seqnum{A289832}. The Lean~4 file
+\nolinkurl{Problem001.lean} in \nolinkurl{kagey-problems/lean/KageyProblems} formalizes
+Section~\ref{sec:conv} and the Strip Theorem with no \texttt{sorry}. Code and data are in the
+folder \nolinkurl{kagey-problems/problem001} of the repository~\cite{repo}.
+
+\begin{table}[!htb]
+\centering\scriptsize\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrl@{}}
+\toprule
+grid & $f$ & $a_h(m)$ & by \\
+\midrule
+$2\times2$ & $4$ & $1$ & HIB \\
+$2\times3$ & $4$ & $12$ & HIB \\
+$2\times4$ & $5$ & $32$ & HIB \\
+$2\times5$ & $6$ & $80$ & IB \\
+$2\times6$ & $7$ & $192$ & TI \\
+$2\times7$ & $8$ & $448$ & TI \\
+$3\times3$ & $5$ & $53$ & IB \\
+$3\times4$ & $6$ & $224$ & IB \\
+\bottomrule
+\end{tabular}\hspace{1em}
+\begin{tabular}{@{}lrrl@{}}
+\toprule
+grid & $f$ & $a_h(m)$ & by \\
+\midrule
+$3\times5$ & $7$ & $892$ & IB \\
+$3\times6$ & $8$ & $3{,}420$ & IB \\
+$3\times7$ & $9$ & $12{,}704$ & IB \\
+$3\times8$ & $10$ & $45{,}864$ & IB \\
+$3\times9$ & $11$ & $161{,}992$ & IB \\
+$3\times10$ & $12$ & $562{,}912$ & ITD \\
+$4\times4$ & $7$ & $316$ & IB \\
+$4\times5$ & $8$ & $1{,}810$ & IB \\
+\bottomrule
+\end{tabular}\hspace{1em}
+\begin{tabular}{@{}lrrl@{}}
+\toprule
+grid & $f$ & $a_h(m)$ & by \\
+\midrule
+$4\times6$ & $10$ & $26$ & IB \\
+$4\times7$ & $11$ & $292$ & IB \\
+$4\times8$ & $12$ & $2{,}118$ & IMD \\
+$5\times5$ & $10$ & $8$ & IB \\
+$5\times6$ & $11$ & -- & IS \\
+$5\times7$ & $12$ & -- & IS \\
+$5\times8$ & $14$ & $4$ & SDC \\
+$5\times9$ & $15$ & $44$ & SC \\
+\bottomrule
+\end{tabular}\hspace{1em}
+\begin{tabular}{@{}lrrl@{}}
+\toprule
+grid & $f$ & $a_h(m)$ & by \\
+\midrule
+$5\times10$ & $16$ & $350$ & SC \\
+$5\times11$ & $17$ & $3{,}004$ & SC \\
+$5\times12$ & $18$ & $24{,}706$ & SCM \\
+$6\times6$ & $12$ & -- & IS \\
+$6\times7$ & $13$ & -- & S \\
+$6\times8$ & $15$ & -- & S \\
+$6\times15$ & $24$ & -- & S \\
+$7\times7$ & $14$ & -- & S \\
+\bottomrule
+\end{tabular}
+\caption{Computed values for $h\le m$ and the methods that agree. H is by hand, T a theorem,
+I the ILP program (value only on $3\times10$, $4\times8$, $5\times6$, $5\times7$, and
+$6\times6$), B brute force, D every equality candidate, C a column search, S two SAT
+encodings, M a transfer counter, and a dash not computed.}
+\label{tab:values}
+\end{table}
+\section{Open questions}\label{sec:open}
+
+\begin{enumerate}[(1),leftmargin=*]
+\item \emph{Five-row counts.} The series $\sum_{m\ge0}a_5(m)z^m$ is rational by
+Theorem~\ref{thm:periodic}. Find it, and the growth rate of $a_5(m)$ (Remark~\ref{rem:fivecounts}).
+\item \emph{Six rows below width $15$.} By the stored witnesses
+\nolinkurl{jis/data/small_cells_sat_6x9_b16.json} and \nolinkurl{small_cells_sat_6x10_b17.json},
+the bound $f(h,m)\ge h+m-1$,
+and Theorem~\ref{thm:sixrow}, $f(6,9)$ is $16$ or $17$, $f(6,10)$ is $17$ or $18$, and $m+5\le f(6,m)\le m+8$ for
+$11\le m\le14$. What are these values?
+\item \emph{Seven and more rows.} Is the row bound $m+q_h$ attained at every large width for
+every $h\ge7$? By Theorem~\ref{thm:collar}, one valid $7\times m$ blackout of $m+12$ points
+that passes the collar test would settle $h=7$.
+\item \emph{Squares.} For some $c>0$ and all large $n$,
+$c\,n^{6/5}(1+\ln n)^{-2/5}\le f(n,n)=O(n^{4/3})$ by an alteration
+argument~\cite[Section~3.2]{alonspencer2016} (proof omitted, see
+\nolinkurl{jis/removed/appC_square.tex}) and by Neuwirth~\cite[Corollary~16]{neuwirth2001}.
+What is the true order, and the least $n$ with $f(n,n)>2n$?
+\item \emph{Proofs by hand.} Is there a proof without a computer that the $5\times5$ optimum
+is unique up to symmetry, or that the four-row generating function has a dominant pole of
+order five?
+\end{enumerate}
+\section{Acknowledgments}\label{sec:ack}
+
+I thank Peter Kagey for posing the problem.
+
+\appendix
+\section{Three-row generating functions}\label{app:threegf}
+
+We finish the proof of Theorem~\ref{thm:threegf}, with $D=LN=1-2z-4z^3-4z^4$. A
+\emph{restricted run} is a string of singletons with no two letters $b$ at distance two.
+Reversal and reflection carry the next lemma to $BA$, $BC$ and $CB$.
+
+\begin{lemma}[forbidden windows in the classes containing $B$]\label{lem:threewindows}
+Let $S$ be a candidate in the ordered class $AB$ or in the triple class. A window fails if
+and only if the table lists it for its class, where $s$ is any singleton.
+\begin{center}\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+class & windows & forbidden \\
+\midrule
+$AB$, $X$ & singletons only & $bab$, $bbb$, $bcb$ \\
+$AB$ & one double & $bsA$, $Asb$, $bAb$, $bAc$, $cAb$, $aBa$, $aBb$, $bBa$, $cBc$ \\
+ & two doubles & $bAB$, $ABa$ \\
+$X$ & one triple & $bsX$, $Xsb$, $aXa$, $aXb$, $bXa$, $bXc$, $cXb$, $cXc$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{lemma}
+
+\begin{proof}
+The tests (a) to (e) are those of Lemma~\ref{lem:diamond}, and
+Lemma~\ref{lem:dichotomy}(b) gives the singleton windows. A window $sAt$ behaves as in
+Lemma~\ref{lem:sixofnine}(a), except that test (e) also fails $bAb$, by $1\in B_{i+1}$ and
+$B\in F$. In $sBt$ and $sXt$ column $i+1$ is black. The diamond is empty if $s=t=b$. If
+$s=b\ne t$ it shows $(i+2,2)$ alone and fails by test (e) exactly when $\{2,t\}\in F$, and
+symmetrically for $t=b\ne s$. If $s$ and $t$ are outer it shows the horizontal pair and fails
+by test (c) exactly when $s=t$. In $uAB$ the diamond fails by test (d) for $u=b$, since
+$(i+2,3)$ and $(i+1,2)$ are black, and shows three corners otherwise. In $ABw$ it is empty for
+$w=b$ and otherwise fails by test (e) exactly for $w=a$. In $Asb$ and $Xsb$ it shows the
+vertical pair or one point of column $i+1$, and tests (b) and (e) fail it as $B\in F$. Every
+other window with a double or $X$ at the left tip shows three corners or an oblique pair whose
+test (d) needs the white point $(i+1,2)$, so it passes. Reversal gives the right tip.
+\end{proof}
+
+We count restricted runs by a transfer on the last two bits. An outer letter has the bit $0$
+and the weight $2$, and $b$ has the bit $1$. Let $h_{ij}$ count, by $z^n$, the continuations of
+length $n\ge0$ of a restricted run ending in the bits $i,j$. Since $b$ is forbidden after $1,j$, $h_{00}=1+z(2h_{00}+h_{01})$, $h_{01}=1+z(2h_{10}+h_{11})$, $h_{10}=1+2zh_{00}$ and
+$h_{11}=1+2zh_{10}$, and eliminating gives $Dh_{00}=1+z+3z^2+2z^3$. Read runs $w_1\cdots w_n$
+with $n\ge1$ outward from a double. Let $g_0$ count those with $w_1$ a prescribed outer letter and
+$g_1$ those with $w_1=b$. Let $u$ and $v$ count the same runs with $w_2$, if present, outer. A fictitious outer letter before $w_1$ restricts nothing, so $g_0=zh_{00}$,
+$g_1=zh_{01}$, $u=z+2z^2h_{00}=zh_{10}$ and $v=z+2z^2h_{10}=zh_{11}$. Hence
+\begin{equation}\label{eq:runs}
+Dg_0=z(1+z+3z^2+2z^3),\ \ Dg_1=z(1+z),\ \ Du=z(1+2z^2+2z^3),\ \ Dv=z.
+\end{equation}
+
+\begin{proposition}[the triple class]\label{prop:GX}
+In the notation of~\eqref{eq:runs}, $G_X(z)=z\bigl(1+4u+2v+2u^2+v^2\bigr)$ has a denominator
+dividing $D^2$.
+\end{proposition}
+
+\begin{proof}
+In $UXW$ the runs are restricted, and $bsX$ and $Xsb$ make the second letters from $X$ outer
+(Lemma~\ref{lem:threewindows}). So one nonempty run gives $2u+v$ on either side. With
+two, the window at $X$ allows only the neighbor pairs $(a,c)$, $(b,b)$ and $(c,a)$, which give $2u^2+v^2$.
+\end{proof}
+
+A word of $AB$ is $UAVBW$ with restricted runs $U$, $V$ and $W$. By
+Lemma~\ref{lem:threewindows}, a nonempty $U$ read from $A$ has an outer second letter and is
+counted by $u$ or $v$, and a nonempty $W$ read from $B$ is counted by $g_0$ or $g_1$. Let
+$\ell_t$ and $r_t$ count the allowed $U$ and $W$, the empty one included, when a singleton $t$
+stands right of $A$ or left of $B$. The windows with the
+double in the middle give
+\begin{equation}\label{eq:lr}
+(\ell_a,\ell_b,\ell_c)=(1+2u+v,1+u,1+2u),\ (r_a,r_b,r_c)=(1+g_0,1+g_0+g_1,1+g_0+g_1).
+\end{equation}
+For $s\in\{00,10\}$ and a bit $\beta$ let $J_{s\beta}$ count, as for $h$, the continuations
+from $s$ whose last letter has the bit $\beta$. Solving as for $h$ gives
+\begin{equation}\label{eq:J}
+J=\frac1D\begin{pmatrix}1+2z^2+2z^3&z+z^2\\1&2z^2+2z^3\end{pmatrix}.
+\end{equation}
+
+\begin{proposition}[the class $\{A,B\}$, polynomial form computer-assisted]\label{prop:GAB}
+In the notation of~\eqref{eq:runs} to~\eqref{eq:J},
+\begin{equation}\label{eq:GAB}
+\begin{aligned}
+G_{AB}(z)={}&z^2(1+2u)(1+g_0+g_1)+z^3(\ell_ar_a+\ell_br_b+\ell_cr_c)\\
+&+z^4\,(\ell_a+\ell_c,\ \ell_b)\,J\,(r_a+r_c,\ 2r_b)^{T}.
+\end{aligned}
+\end{equation}
+Moreover $G_{AB}=P_B/D^3$ with
+\begin{equation}\label{eq:PB}
+P_B(z)=z^2(1+z)(1+z^2-3z^3+4z^6+4z^7).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The runs cover the windows inside them, and we split by the length $k$ of $V$. For $k=0$ the windows $uAB$ and $ABw$ require $u\ne b$ and
+$w\ne a$, which gives the first term. For $k=1$ the window $AtB$ passes, and $uAt$ and $tBw$
+give $\ell_t$ and $r_t$. For $k\ge2$ the window $Av_1v_2$ makes $v_2$ outer, $v_{k-1}v_kB$ passes,
+and the weight is $\ell_{v_1}r_{v_k}$. After $v_2$ the bits are $00$ or $10$ as $v_1$ is outer or
+$b$, and the rest is a continuation in which $v_2$ keeps its factor $2$ for $k\ge3$. Summing
+over the last letter gives $J_{s0}(r_a+r_c)+J_{s1}\,2r_b$, and $k=2$ is the constant term of $J$.
+
+The script \nolinkurl{three_row_closed_form.py} finds~\eqref{eq:PB} in SymPy. Its first coefficients $7$, $31$, $120$, $449$ and $1622$ match
+\nolinkurl{three_row_definition_check.json}.
+\end{proof}
+
+\begin{theorem}[the exact denominator, computer-assisted]\label{thm:denominator}
+The reduced denominator of $\sum_{m\ge3}a_3(m)z^m$ is $Q=R^3L^3N^3$, with five triple poles.
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:threegf}(a) the denominator divides $R^3D^3=Q$. The factors $R$, $L$ and
+$N$ are coprime, since $L-N=-2z-4z^2$ vanishes only at $0$ and $-\frac12$, where $N\ne0$, and
+$L$ and $N$ are positive at $\frac13$. The numerator in~\eqref{eq:GAC} is $\frac4{81}$ at
+$z=\frac13$, where $G_{AB}$ and $G_X$ are analytic. Division gives $P_B\bmod L=\frac z2$ and
+$P_B\bmod N=\frac14-\frac z2$, so $P_B$ vanishes at no root of $L$ or $N$. At these roots $G_{AB}$ has a
+pole of order three, $G_X$ one of order at most two, and $G_{AC}$ none.
+\end{proof}
+
+\begin{thebibliography}{99}
+\small\setlength{\baselineskip}{11pt}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}
+
+\bibitem{alanko2011}
+S. Alanko, S. Crevals, A. Isopoussu, P. R. J. \"Osterg\r{a}rd, and V. Pettersson,
+Computing the domination number of grid graphs, \emph{Electron. J. Combin.}
+\textbf{18} (2011), Paper P141.
+
+\bibitem{alonspencer2016}
+N. Alon and J. H. Spencer, \emph{The Probabilistic Method}, 4th ed., Wiley, 2016.
+
+\bibitem{bellitto2018}
+T. Bellitto, Separating codes and traffic monitoring, \emph{Theoret. Comput. Sci.}
+\textbf{717} (2018), 73--85.
+
+\bibitem{decaenszekely1997}
+D. de Caen and L. A. Sz\'ekely, On dense bipartite graphs of girth eight and upper
+bounds for certain configurations in planar point-line systems, \emph{J. Combin.
+Theory Ser. A} \textbf{77} (1997), 268--278.
+
+\bibitem{erdos1080}
+P. Erd\H{o}s, Problem 1080, \emph{Erd\H{o}s Problems},
+\url{https://www.erdosproblems.com/1080} (accessed October 2026).
+
+\bibitem{euler2005}
+R. Euler, The Fibonacci number of a grid graph and a new class of integer sequences,
+\emph{J. Integer Sequences} \textbf{8} (2005), Article 05.2.6.
+
+\bibitem{flajolet2009}
+P. Flajolet and R. Sedgewick, \emph{Analytic Combinatorics}, Cambridge University
+Press, 2009.
+
+\bibitem{foucaud2015}
+F. Foucaud, Decision and approximation complexity for identifying codes and
+locating-dominating sets in restricted graph classes, \emph{J. Discrete Algorithms}
+\textbf{31} (2015), 48--68.
+
+\bibitem{glp2025}
+J. Guilhot, E. Little, and J. Parkinson, Bounded weight functions on regular languages
+and groups, arXiv preprint arXiv:2510.17061 [math.GR], 2025. Available at
+\url{https://arxiv.org/abs/2510.17061}.
+
+\bibitem{jiang2018}
+M. Jiang, Periodicity of identifying codes in strips, \emph{Inform. Process. Lett.}
+\textbf{135} (2018), 77--84.
+
+\bibitem{kageyG4G14}
+P. Kagey, Open problem collection, Problem 1, G4G14 gift exchange, 2020,
+\url{https://www.gathering4gardner.org/g4g14gift/G4G14-PeterKagey-OpenishProblems.pdf}.
+
+\bibitem{kagey001}
+P. Kagey, Problem 001, Open Problem Collection,
+\url{https://peterkagey.com/problems/001/} (accessed October 2026).
+
+\bibitem{katona1966}
+G. Katona, On separating systems of a finite set, \emph{J. Combin. Theory}
+\textbf{1} (1966), 174--194.
+
+\bibitem{mantel1907}
+W. Mantel, Problem 28, \emph{Wiskundige Opgaven} \textbf{10} (1907), 60--61.
+
+\bibitem{mertens2024}
+S. Mertens, Domination polynomials of the grid, the cylinder, the torus, and the king
+graph, \emph{J. Integer Sequences} \textbf{27} (2024), Article 24.7.6.
+
+\bibitem{pulp}
+S. Mitchell, M. O'Sullivan, and I. Dunning, PuLP: a linear programming toolkit for
+Python, technical report, 2011, \url{https://optimization-online.org/2011/09/3178/}.
+We use version 3.3.2.
+
+\bibitem{neuwirth2001}
+S. Neuwirth, The size of bipartite graphs with girth eight, arXiv preprint
+arXiv:math/0102210 [math.CO], 2001. Available at
+\url{https://arxiv.org/abs/math/0102210}.
+
+\bibitem{oeis}
+OEIS Foundation Inc., \emph{The On-Line Encyclopedia of Integer Sequences}, 2026,
+\url{https://oeis.org}.
+
+\bibitem{trureturing2026}
+The Omega Institute, Prove the exact Three-Row blackout maximum, pull request 8084,
+merged on 15 September 2026 into the branch \texttt{dev} as commit \texttt{ace272f},
+\url{https://github.com/the-omega-institute/trureturing/pull/8084}.
+
+\bibitem{repo}
+A. Pemmasani, Kagey-Problems repository, folder \texttt{kagey-problems/problem001},
+2026, \url{https://github.com/apemm/Kagey-Problems}.
+
+\end{thebibliography}
+
+\noindent 2020 {\it Mathematics Subject Classification}: Primary 05A15; Secondary
+05C35, 05B40, 52C05.
+
+\noindent \emph{Keywords:} blackout, lattice rectangle, test cover, girth, transfer matrix.
+
+\noindent (Concerned with sequences
+\seqnum{A001787},
+\seqnum{A085582},
+\seqnum{A289832},
+\seqnum{A322284},
+\seqnum{A397315}, and
+\seqnum{A399580}.)
+
+\end{document}

@@ -1,0 +1,248 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{booktabs}
+\usepackage[shortlabels]{enumitem}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\hypersetup{pdftitle={Maximum Blackouts That Keep Every Lattice Rectangle Identifiable},pdfauthor={Arjun Pemmasani}}
+
+\definecolor{gridcol}{gray}{0.86}
+\definecolor{keptcol}{RGB}{226,236,247}
+\definecolor{keptline}{gray}{0.35}
+\definecolor{hidcol}{gray}{0.62}
+\definecolor{pencol}{gray}{0.55}
+\definecolor{cyccol}{RGB}{31,94,168}
+\definecolor{rectA}{RGB}{0,114,178}
+\definecolor{rectB}{RGB}{213,94,0}
+\definecolor{rectC}{RGB}{0,158,115}
+\definecolor{excesscol}{RGB}{253,214,160}
+\tikzset{
+  lab/.style={font=\scriptsize,text=black!55},
+  capt/.style={font=\small},
+  tiny/.style={font=\scriptsize},
+  rowv/.style={draw,rectangle,fill=white,inner sep=1.5pt,minimum size=13pt,font=\scriptsize},
+  colv/.style={draw,circle,fill=white,inner sep=0.5pt,minimum size=14pt,font=\scriptsize},
+}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem*{thmA}{Theorem A}
+\newtheorem*{thmB}{Theorem B}
+\newtheorem*{thmC}{Theorem C}
+\newtheorem*{thmD}{Theorem D}
+\newtheorem*{thmE}{Theorem E}
+\newtheorem*{thmF}{Theorem F}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\seqnum}[1]{\href{https://oeis.org/#1}{\rm \underline{#1}}}
+\newcommand{\pres}{P_S}
+\newcommand{\kA}{\mathsf{A}}
+\newcommand{\kB}{\mathsf{B}}
+\newcommand{\kC}{\mathsf{C}}
+\newcommand{\kE}{\mathsf{E}}
+
+\title{Maximum Blackouts That Keep Every Lattice Rectangle Identifiable}
+\author{Arjun Pemmasani\\
+Department of Mathematics\\
+Harvey Mudd College\\
+Claremont, CA 91711\\
+USA\\
+\texttt{apemmasani@hmc.edu}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Kagey's Problem 001 asks how many points of a rectangular grid of points can be
+blacked out so that every rectangle with its four corners on grid points, tilted
+rectangles included, can still be told apart from every other rectangle by its white
+corners alone. We study the largest size of such a blackout and the number of
+blackouts of that size, the tables A397315 and A399580 in the On-Line Encyclopedia
+of Integer Sequences. We prove the exact maximum on two, three and four rows, count
+the three-row optima exactly, and show that their number grows like a constant times
+$m^2 3^m$ with an explicit rational generating function. On four rows
+the optima are an exponentially small fraction of the candidates. A finite collar
+theorem decides when a construction extends to every width, and it gives a five-row
+family that refutes a conjecture recorded in the encyclopedia. For every fixed number
+of rows the maximum minus the width is eventually periodic, and on squares the
+maximum grows faster than linearly. The main tools are a hitting-set reduction, a
+bipartite graph without four-cycles and six-cycles, and a classification of the tilted
+rectangles that show at most two corners.
+\end{abstract}
+
+\input{sections/sec01_intro}
+\input{sections/sec02_conv}
+\input{sections/sec03_strip}
+\input{sections/sec04_graph}
+\input{sections/sec05_three}
+\input{sections/sec06_four}
+\input{sections/sec07_five}
+\input{sections/sec08_height}
+\input{sections/sec09_verify}
+\input{sections/sec10_open}
+\input{sections/sec11_ack}
+
+\appendix
+\input{sections/appA_fivecases}
+\input{sections/appB_threegf}
+\input{sections/appC_square}
+
+\begin{thebibliography}{99}
+
+\bibitem{alanko2011}
+S. Alanko, S. Crevals, A. Isopoussu, P. R. J. \"Osterg\r{a}rd, and V. Pettersson,
+Computing the domination number of grid graphs, \emph{Electron. J. Combin.}
+\textbf{18} (2011), Paper P141.
+
+\bibitem{alonspencer2016}
+N. Alon and J. H. Spencer, \emph{The Probabilistic Method}, 3rd ed., Wiley, 2008.
+
+\bibitem{babichev2026mfcs}
+D. Babichev and S. Babichev, Counting all lattice rectangles in the square grid in
+near-linear time, in \emph{51st International Symposium on Mathematical Foundations of
+Computer Science (MFCS 2026)}, Leibniz International Proceedings in Informatics,
+Vol.\ 386, Schloss Dagstuhl, 2026, pp.\ 26:1--26:17.
+
+\bibitem{babichevpinchuk2026}
+D. Babichev and D. Pinchuk, Computing all lattice-rectangle counts by rational
+staircase sums, arxiv preprint arXiv:2607.17982 [cs.CG], 2026. Available at
+\url{https://arxiv.org/abs/2607.17982}.
+
+\bibitem{babichevshpakova2026}
+D. Babichev and T. Shpakova, Counting lattice rectangles in $O(n\log n)$ operations,
+arxiv preprint arXiv:2607.17961 [cs.CG], 2026. Available at
+\url{https://arxiv.org/abs/2607.17961}.
+
+\bibitem{baccelli1992}
+F. Baccelli, G. Cohen, G. J. Olsder, and J.-P. Quadrat, \emph{Synchronization and
+Linearity: An Algebra for Discrete Event Systems}, Wiley, 1992.
+
+\bibitem{bellitto2018}
+T. Bellitto, Separating codes and traffic monitoring, \emph{Theoret. Comput. Sci.}
+\textbf{717} (2018), 73--85.
+
+\bibitem{butler2019}
+S. Butler, J. Choi, K. Kim, and K. Seo, Enumerating multiplex juggling patterns,
+\emph{J. Integer Sequences} \textbf{22} (2019), Article 19.1.7.
+
+\bibitem{conlonfoxsudakov2016}
+D. Conlon, J. Fox, and B. Sudakov, Short proofs of some extremal results II,
+\emph{J. Combin. Theory Ser. B} \textbf{121} (2016), 173--196.
+
+\bibitem{decaenszekely1997}
+D. de Caen and L. A. Sz\'ekely, On dense bipartite graphs of girth eight and upper
+bounds for certain configurations in planar point-line systems, \emph{J. Combin.
+Theory Ser. A} \textbf{77} (1997), 268--278.
+
+\bibitem{erdos1080}
+P. Erd\H{o}s, Problem 1080, in T. Bloom, ed., \emph{Erd\H{o}s Problems},
+\url{https://www.erdosproblems.com/1080} (accessed October 2026).
+
+\bibitem{euler2005}
+R. Euler, The Fibonacci number of a grid graph and a new class of integer sequences,
+\emph{J. Integer Sequences} \textbf{8} (2005), Article 05.2.6.
+
+\bibitem{flajolet2009}
+P. Flajolet and R. Sedgewick, \emph{Analytic Combinatorics}, Cambridge University
+Press, 2009.
+
+\bibitem{foucaud2015}
+F. Foucaud, Decision and approximation complexity for identifying codes and
+locating-dominating sets in restricted graph classes, \emph{J. Discrete Algorithms}
+\textbf{31} (2015), 48--68.
+
+\bibitem{glp2025}
+J. Guilhot, E. Little, and J. Parkinson, Bounded weight functions on regular languages
+and groups, arxiv preprint arXiv:2510.17061 [math.GR], 2025. Available at
+\url{https://arxiv.org/abs/2510.17061}.
+
+\bibitem{gyori1997}
+E. Gy\H{o}ri, $C_6$-free bipartite graphs and product representation of squares,
+\emph{Discrete Math.} \textbf{165/166} (1997), 371--375.
+
+\bibitem{hardywright2008}
+G. H. Hardy and E. M. Wright, \emph{An Introduction to the Theory of Numbers}, 6th ed.,
+Oxford University Press, 2008.
+
+\bibitem{jiang2018}
+M. Jiang, Periodicity of identifying codes in strips, \emph{Inform. Process. Lett.}
+\textbf{135} (2018), 77--84.
+
+\bibitem{kageyG4G14}
+P. Kagey, Open problem collection, Problem 1, Gathering 4 Gardner 14 gift exchange,
+2020. Available at
+\url{https://www.gathering4gardner.org/g4g14gift/G4G14-PeterKagey-OpenishProblems.pdf}.
+
+\bibitem{kagey001}
+P. Kagey, Problem 001, Open Problem Collection,
+\url{https://peterkagey.com/problems/001/} (accessed October 2026).
+
+\bibitem{katona1966}
+G. Katona, On separating systems of a finite set, \emph{J. Combin. Theory}
+\textbf{1} (1966), 174--194.
+
+\bibitem{mantel1907}
+W. Mantel, Problem 28 (solutions by H. Gouwentak, W. Mantel, J. Teixeira de Mattes,
+F. Schuh, and W. A. Wythoff), \emph{Wiskundige Opgaven} \textbf{10} (1907), 60--61.
+
+\bibitem{mertens2024}
+S. Mertens, Domination polynomials of the grid, the cylinder, the torus, and the king
+graph, \emph{J. Integer Sequences} \textbf{27} (2024), Article 24.7.6.
+
+\bibitem{pulp}
+S. Mitchell, M. O'Sullivan, and I. Dunning, PuLP: a linear programming toolkit for
+Python, technical report, University of Auckland, 2011. Available at
+\url{https://optimization-online.org/2011/09/3178/}.
+
+\bibitem{naorverstraete2005}
+A. Naor and J. Verstra\"ete, A note on bipartite graphs without $2k$-cycles,
+\emph{Combin. Probab. Comput.} \textbf{14} (2005), 845--849.
+
+\bibitem{neuwirth2001}
+S. Neuwirth, The size of bipartite graphs with girth eight, arxiv preprint
+arXiv:math/0102210 [math.CO], 2001. Available at
+\url{https://arxiv.org/abs/math/0102210}.
+
+\bibitem{oeis}
+OEIS Foundation Inc., \emph{The On-Line Encyclopedia of Integer Sequences}, 2026.
+Available at \url{https://oeis.org}.
+
+\bibitem{trureturing2026}
+The Omega Institute, Prove the exact Three-Row blackout maximum, pull request 8084 to
+the \texttt{trureturing} repository, merged 15 September 2026. Available at
+\url{https://github.com/the-omega-institute/trureturing/pull/8084}.
+
+\bibitem{repo}
+A. Pemmasani, Kagey-Problems repository, 2026, folder
+\texttt{kagey-problems/problem001} of \url{https://github.com/apemm/Kagey-Problems}.
+
+\bibitem{spencer1972}
+J. Spencer, Tur\'an's theorem for $k$-graphs, \emph{Discrete Math.} \textbf{2} (1972),
+183--186.
+
+\end{thebibliography}
+
+\noindent 2020 {\it Mathematics Subject Classification}: Primary 05A15; Secondary
+05C35, 05B40, 52C05.
+
+\noindent \emph{Keywords:} blackout, lattice rectangle, rectangle identification, test
+cover, bipartite graph of girth eight, transfer matrix, rational generating function.
+
+\noindent (Concerned with sequences
+\seqnum{A001787},
+\seqnum{A322284},
+\seqnum{A397315}, and
+\seqnum{A399580}.)
+
+\end{document}
