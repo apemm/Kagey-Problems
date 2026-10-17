@@ -1,0 +1,303 @@
+\section{Three rows}\label{sec:three}
+
+On three rows the row bound of Theorem~\ref{thm:rowbound} is attained, and we count the
+maximum blackouts as words. Throughout, $m\ge3$, the rows are $1,2,3$ from top to bottom, and the
+tilted rectangles are the diamonds $D(i,1)=\{(i,2),(i+1,1),(i+2,2),(i+1,3)\}$ for
+$1\le i\le m-2$ (Lemma~\ref{lem:tilted-narrow}).
+
+\begin{theorem}[three rows]\label{thm:threevalue}
+For every $m\ge3$, the maximum blackout of the $3\times m$ grid has $m+2$ points, that is,
+$f(3,m)=m+2$.
+\end{theorem}
+
+\begin{proof}
+The upper bound is the case $h=3$ of Theorem~\ref{thm:rowbound}, since $q_3=2$. The blackout
+of row $1$ and column $1$ has $m+2$ points. It is the boundary cross of Lemma~\ref{lem:cross}
+for $h=3$, so it is valid.
+\end{proof}
+
+As said in Section~\ref{sec:intro}, the trureturing project~\cite{trureturing2026} proved this
+value earlier, by machine.
+
+From now on every blackout has $m+2$ points. We name the columns by letters, $a=\{1\}$,
+$b=\{2\}$ and $c=\{3\}$ for the singletons, $A=\{1,2\}$, $B=\{1,3\}$ and $C=\{2,3\}$ for the
+doubles, and $X=\{1,2,3\}$ for the triple. The letters $a$ and $c$ are \emph{outer}. A blackout
+with no empty column is the same thing as its \emph{word} $B_1B_2\cdots B_m$. Here $F$ is the
+pair set of Section~\ref{sec:conv}, and we name each pair by its double letter.
+
+\begin{proposition}[the two types]\label{prop:threeclass}
+Let $m\ge3$ and let $S$ be a blackout of the $3\times m$ grid with $m+2$ points.
+\begin{enumerate}[(a)]
+\item If $S$ is valid, then its word has either exactly one letter $X$ and singletons elsewhere
+(type T), or exactly two different doubles and singletons elsewhere (type P).
+\item Conversely, for every word of type T or P the graph $G_S$ is a tree, so no two
+axis-aligned rectangles have the same presentation.
+\item There are exactly $m^23^{m-1}$ words of type T or P.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(a) By Lemma~\ref{lem:H}, $|S|=t+e(H)$, where $t\le m$ counts the nonempty columns and the row
+graph $H$ has at most two edges (Lemma~\ref{lem:mantel}). Both bounds are attained, so every
+column is nonempty and $\sum_i(|B_i|-1)=2$. Two equal doubles form a four-cycle in $G_S$, which
+Lemma~\ref{lem:girth} forbids.
+
+(b) The column of $X$, or the two doubles, connect the three rows, and every other column hangs
+on one row. So $G_S$ is a tree with $m+3$ vertices, and Lemma~\ref{lem:girth} applies.
+
+(c) Type T gives $m3^{m-1}$ words, and type P gives $\binom m2\cdot6\cdot3^{m-2}=m(m-1)3^{m-1}$.
+\end{proof}
+
+We call the words of type T or P \emph{candidates}. They fall into the three \emph{classes}
+$\{A,C\}$, $\{A,B\}$ and $\{B,C\}$ of type P and the triple class $X$. The left-to-right order of
+the doubles splits a class of type P into two \emph{ordered classes}, such as $AC$ and $CA$. For
+an ordered class such as $AC$, let $AC_m$ be its set of valid words of width $m$, and likewise
+for the others.
+
+\begin{lemma}[diamond test]\label{lem:diamond}
+Let $S$ be a candidate with pair set $F$. Then $S$ is valid if and only if every diamond
+$D(i,1)$ passes the test below, where $P=D(i,1)\setminus S$ is its presentation.
+\begin{enumerate}[(a)]
+\item If $|P|\ge3$ or $P$ is empty, the diamond passes.
+\item If $P=\{(i+1,1),(i+1,3)\}$, the diamond fails if and only if $B\in F$.
+\item If $P=\{(i,2),(i+2,2)\}$, it fails if and only if $B_i\cap B_{i+2}$ meets $\{1,3\}$.
+\item If $P=\{(x,r),(z,s)\}$ with $x\ne z$, $r\ne s$, it fails if and only if $(x,s),(z,r)\in S$.
+\item If $P=\{(x,r)\}$, it fails if and only if $\{r,s\}\in F$ for some $s\in B_x$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+The axis-aligned rectangles are told apart (Proposition~\ref{prop:threeclass}(b)), and three
+points fix a rectangle (Lemma~\ref{lem:threecorners}). Tests (b) to (e) are the cases of Lemma~\ref{lem:rival} for a diamond. In (b) a rival needs
+another column black in rows $1$ and $3$, that is, $B\in F$. In (e) it needs a second column
+black in rows $r$ and $s$, that is, $\{r,s\}\in F$. An empty diamond has no axis-aligned rival, since $G_S$ has no four-cycle. Two diamonds $D(i,1)$
+and $D(j,1)$ with $i<j$ share at most one point, so a common presentation has at most one point.
+Then columns $i+1$ and $j+1$ are both black in rows $1$ and $3$, which no candidate allows.
+\end{proof}
+
+A \emph{window} is a string of three consecutive letters, at columns $i$, $i+1$ and $i+2$. It
+\emph{passes} or \emph{fails} with the diamond $D(i,1)$. We call $(i,2)$ and $(i+2,2)$ the
+\emph{tips} of the window. A tip is black exactly when its letter is $b$, $A$, $C$ or $X$.
+
+\begin{lemma}[singleton dichotomy]\label{lem:dichotomy}
+Let $S$ be a candidate and let $stu$ be a window of three singletons.
+\begin{enumerate}[(a)]
+\item If $B\notin F$, the window passes.
+\item If $B\in F$, the window fails if and only if it is $bab$, $bbb$ or $bcb$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+If $s=u=b$, the diamond shows the vertical pair (for $t=b$) or one point of column $i+1$ (for
+$t$ outer), and tests (b) and (e) fail it exactly when $B\in F$. If exactly one tip is black,
+the diamond shows three corners or an oblique pair, and test (d) for that pair needs $(i+1,2)$
+black, which it is not. If no tip is black, three corners show.
+\end{proof}
+
+\begin{lemma}[six of nine in the class $\{A,C\}$]\label{lem:sixofnine}
+Let $S$ be a candidate of class $\{A,C\}$, so $F=\{A,C\}$, and let $s,t$ be singletons.
+\begin{enumerate}[(a)]
+\item A window $sAt$ fails if and only if $st$ is $bb$, $bc$ or $cb$.
+\item A window $sCt$ fails if and only if $st$ is $bb$, $ba$ or $ab$.
+\item A window with one double, at a tip, passes.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) Here $(i+1,1)$ and $(i+1,2)$ are black and $(i+1,3)$ is white. For $s=t=b$ the diamond shows
+$(i+1,3)$ alone, and test (e) fails it through $2\in B_{i+1}$ and $C\in F$. For $s=b\ne t$ it
+shows $(i+2,2)$ and $(i+1,3)$, and test (d) asks whether $(i+2,3)$ is black, that is, whether
+$t=c$. The case $t=b\ne s$ is the mirror image, and with no black tip three corners show.
+
+(b) This is (a) after the reflection in the middle row, which swaps $a$ with $c$ and $A$ with $C$.
+
+(c) Let the window be $Ast$, so the tip $(i,2)$ is black. If $t=b$, the diamond shows the
+vertical pair or one point of column $i+1$, and both pass by tests (b) and (e), since
+$B\notin F$. If $t\ne b$, it shows three corners or an oblique pair whose test (d)
+needs $(i+1,2)$ black, and that point is white. Reflection and reversal give the other windows.
+\end{proof}
+
+\begin{figure}[t]
+\centering
+\resizebox{0.85\textwidth}{!}{\input{figs/sixofnine.tex}}
+\caption{The nine windows $sAt$ of class $\{A,C\}$ with the diamond $D(i,1)$. Black dots are
+blacked out. The diamond is solid where the window passes and dashed where it fails.}
+\label{fig:sixofnine}
+\end{figure}
+
+We first give a heuristic, and Corollary~\ref{cor:threeasymp} makes it precise. By
+
+Lemma~\ref{lem:sixofnine}, a double of the class $\{A,C\}$ passes for six of its nine pairs of
+neighbors (Figure~\ref{fig:sixofnine}). This rule holds only in this class (compare
+Lemma~\ref{lem:threewindows}). Suppose the two doubles avoid the end columns and are at least
+three columns apart. Then only the two windows centered at them can fail, and each passes for
+six of nine neighbor choices, independently. All but $O(m)$ positions of the doubles are of
+this kind. The class holds the fraction $(m-1)/(3m)$ of the candidates. So about
+$\frac13\cdot\bigl(\frac69\bigr)^2=\frac4{27}$ of the candidates are valid.
+
+By Lemma~\ref{lem:diamond}, for $m\ge3$ the set $AC_m$ consists of the words $UAVCW$ of width
+$m$, with $U$, $V$ and $W$ strings of singletons, whose windows all pass the test with
+$F=\{A,C\}$. We use the same description for $m=2$ and put $G_{AC}(z)=\sum_{m\ge2}|AC_m|z^m$.
+We define $G_{AB}$ and $G_X$ in the same way from the words $UAVBW$ and $UXW$, with $F=\{A,B\}$
+and $F=\{A,B,C\}$. Put $R=1-3z$. The strings of $n\ge1$ singletons with a prescribed letter
+next to a double have the generating function $z/R$.
+
+\begin{proposition}[the class $\{A,C\}$]\label{prop:threeGAC}
+The generating function of the ordered class $AC$ is
+\begin{equation}\label{eq:GAC}
+G_{AC}(z)=\frac{z^2-4z^3+10z^4-8z^5-3z^6}{(1-3z)^3},
+\end{equation}
+so $|AC_2|=1$, $|AC_3|=5$ and
+\begin{equation}\label{eq:GACcoef}
+|AC_m|=2(m-1)(3m+2)3^{m-5}\qquad(m\ge4).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+\emph{Step 1. The windows with both doubles.} In a window $tAC$ the points $(i+1,1)$ and
+$(i+2,2)$ are black and $(i+1,3)$ is white. For $t=b$ the diamond shows $(i+1,3)$ alone, and
+test (e) fails it. For $t\ne b$ it shows $(i,2)$ and $(i+1,3)$, and test (d) fails it exactly
+when $t=c$. By the half turn $ACt$ passes only for $t=c$, and $AtC$ passes by tests (b) and (e).
+
+\emph{Step 2. Adjacent doubles.} In $UACW$ every window passes except possibly the two of
+Step~1 (Lemmas~\ref{lem:dichotomy}(a) and~\ref{lem:sixofnine}(c)). So $U$ ends in $a$ and $W$
+begins with $c$, if nonempty, and this case contributes $z^2(1+z/R)^2$.
+
+\emph{Step 3. One singleton between.} In $UAtCW$ the window $AtC$ passes. By
+Lemma~\ref{lem:sixofnine}(a), the last letter of $U$ has $p_t=3,1,2$ allowed values for
+$t=a,b,c$, and by (b) the first letter of $W$ has $q_t=2,1,3$. So this case contributes
+$z^3\sum_t(1+p_tz/R)(1+q_tz/R)=z^3(3+12z/R+13z^2/R^2)$, since $\sum p_t=\sum q_t=6$ and
+$\sum p_tq_t=13$.
+
+\emph{Step 4. At least two singletons between.} In $UAv_1\cdots v_kCW$ with $k\ge2$ only
+$uAv_1$ and $v_kCw$ can fail. If $U$ is empty, $v_1$ is free, and otherwise six of the nine
+pairs $(u,v_1)$ pass. So each end contributes $3+6z/R$, the free middle letters give $1/R$, and
+this case contributes $z^4(3+6z/R)^2/R=9z^4(1-z)^2/R^3$.
+
+\emph{Step 5. The coefficients.} The three cases sum to~\eqref{eq:GAC}. The coefficient of $z^m$ in $z^kR^{-3}$ is
+$\binom{m-k+2}23^{m-k}$ for $m\ge k$ and $0$ otherwise. For $m\ge4$ the five terms with
+$k=2,\dots,6$ sum to the polynomial $2(m-1)(3m+2)3^{m-5}$, and at $m=2,3$ they give $1$ and $5$.
+\end{proof}
+
+\begin{theorem}[the number of three-row optima]\label{thm:threecount}
+For $m\ge3$ let $E_m$ be the number of maximum blackouts of the $3\times m$ grid whose word is
+outside $AC$ and $CA$. Then for every $m\ge4$,
+\begin{equation}\label{eq:threecount}
+a_3(m)=4(m-1)(3m+2)3^{m-5}+E_m.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The reversal of the columns maps $AC$ onto $CA$, $AB$ onto $BA$ and $BC$ onto $CB$. The
+reflection in the middle row maps $AB$ onto $CB$. Both map optima to optima, so
+\begin{equation}\label{eq:classsum}
+a_3(m)=2|AC_m|+4|AB_m|+|X_m|=2|AC_m|+E_m\qquad(m\ge3),
+\end{equation}
+and~\eqref{eq:GACcoef} gives~\eqref{eq:threecount}.
+\end{proof}
+
+Note that $E_m$ is also the number of optima with a column black in rows $1$ and $3$, as in
+Theorem~B, since such a column is $B$ or $X$. At $m=3$ the right side of~\eqref{eq:GACcoef} is
+$44/9$, which is not an integer, so~\eqref{eq:threecount} holds only from $m=4$ on. Directly,
+$a_3(3)=53=2\cdot5+4\cdot7+15$, with $|AB_3|=7$ and $|X_3|=15$ from
+Propositions~\ref{prop:GAB} and~\ref{prop:GX}.
+
+\subsection{The generating function}
+
+Put $L=1-2z-2z^2$, $N=1+2z^2$ and $D=LN$.
+
+\begin{theorem}[three-row generating function, parts (b) and (c) computer-assisted]\label{thm:threegf}
+\leavevmode
+\begin{enumerate}[(a)]
+\item The series $\sum_{m\ge3}a_3(m)z^m$ equals $2G_{AC}+4G_{AB}+G_X-z-12z^2$. Here $G_{AC}$
+is~\eqref{eq:GAC}, and $G_{AB}$ and $G_X$ are the rational functions of
+Propositions~\ref{prop:GAB} and~\ref{prop:GX}, with denominators dividing $D^3$ and $D^2$.
+\item The reduced denominator of the series is exactly
+\[
+Q(z)=(1-3z)^3(1-2z-2z^2)^3(1+2z^2)^3.
+\]
+\item With
+\begin{align*}
+P(z)={}&z-3z^2-34z^3+228z^4-641z^5+1307z^6-2186z^7\\
+&+2056z^8-236z^9-1060z^{10}+2584z^{11}-4264z^{12}\\
+&-1440z^{13}+704z^{14}-1024z^{15}+2080z^{16}+2176z^{17}+384z^{18},
+\end{align*}
+we have
+\begin{equation}\label{eq:PQ}
+\sum_{m\ge3}a_3(m)z^m=\frac{P(z)}{Q(z)}-z-12z^2.
+\end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(a) Use~\eqref{eq:classsum}. The coefficients $1$ and $12$ of $z$ and $z^2$ count the word $X$,
+the six words $sX$ and $Xs$, and the six words of two different doubles.
+
+(b) This is Theorem~\ref{thm:denominator} in Appendix~\ref{app:threegf}. The orders at the
+roots of $L$ and $N$ rest on the computer-assisted form~\eqref{eq:PB} of $G_{AB}$.
+
+(c) Clearing denominators in (a) gives $P$, which is coprime to $Q$. The script
+\texttt{three\_row\_closed\_form.py} does this algebra exactly in SymPy. The script
+\texttt{three\_row\_closed\_form\_check.py} checks~\eqref{eq:PQ} against an independent transfer
+matrix with $350$ states, in exact integer arithmetic through width $100$.
+\end{proof}
+
+By~\eqref{eq:PQ}, $Q\sum_{m\ge3}a_3(m)z^m=P-(z+12z^2)Q$ has degree $18$ and leading
+coefficient $384$. So the recurrence of order $15$ with the coefficients of $Q$ holds for
+every $m\ge19$ and fails at $m=18$.
+
+\begin{corollary}[asymptotics]\label{cor:threeasymp}
+Let $\rho=1+\sqrt3$. As $m\to\infty$,
+\begin{equation}\label{eq:asymp1}
+a_3(m)=\frac4{81}m^23^m-\frac4{243}(m+2)3^m+O(m^2\rho^m).
+\end{equation}
+So the valid fraction $a_3(m)/(m^23^{m-1})$ of the candidates is
+$\frac4{27}-\frac4{81m}-\frac8{81m^2}+O\bigl((\rho/3)^m\bigr)$.
+\end{corollary}
+
+\begin{proof}
+The main term of~\eqref{eq:threecount} is
+$4(3m^2-m-2)3^{m-5}=\frac4{81}m^23^m-\frac4{243}(m+2)3^m$. By Theorem~\ref{thm:threegf}(a)
+and~\eqref{eq:classsum}, $E_m$ is the coefficient of $z^m$ in $4G_{AB}+G_X$, whose poles are roots of $D$ of order at
+most three. The root of least modulus is $1/\rho$, so $E_m=O(m^2\rho^m)$.
+\end{proof}
+
+\begin{theorem}[three-row closed form, computer-assisted exact algebra]\label{thm:threeclosed}
+Let $\sigma=1-\sqrt3$. For every $m\ge3$,
+\begin{equation}\label{eq:Eclosed}
+E_m=p_+(m)\rho^m+p_-(m)\sigma^m+T_m,
+\end{equation}
+where
+\[
+p_\pm(m)=\frac{(19\pm11\sqrt3)m^2+(61\pm41\sqrt3)m+(104\pm28\sqrt3)}{432},
+\]
+and $T_m=(-2)^{\lfloor m/2\rfloor}\,\tau(m)$ with $\tau(m)=(2m^2+41m-104)/216$ for even $m$ and
+$\tau(m)=(7m^2-32m-175)/432$ for odd $m$. Hence $E_m\sim\frac{19+11\sqrt3}{432}m^2\rho^m$, and $E_m>0$ for every $m\ge4$.
+\end{theorem}
+
+\begin{proof}
+Let $c_m$ be the coefficient of $z^m$ in $4G_{AB}+G_X$, a rational function with denominator
+$L^3N^3$. By Theorem~\ref{thm:threegf}(a), $E_m=c_m$ for $m\ge3$. The roots $1/\rho$, $1/\sigma$
+and $\pm1/(i\sqrt2)$ of $L^3N^3$ are triple, so beyond a polynomial part of degree one the
+$c_m$ have the form~\eqref{eq:Eclosed}. The script \texttt{three\_row\_closed\_form.py} solves for
+the twelve rational coefficients in SymPy. Both $c_m$ and the right side of~\eqref{eq:Eclosed}
+satisfy the order-$12$ recurrence of $L^3N^3$ from $m=14$ on. So agreement at $m=2,\dots,13$
+proves that they are equal for every $m\ge2$. The script \texttt{three\_row\_closed\_form\_check.py}
+confirms it over $\mathbb Q(\sqrt3)$ for $m\le100$. The asymptotic follows since $|\sigma|<1$
+and $|T_m|=O(m^22^{m/2})$. Finally $E_m>0$, since the cross $Xaa\cdots a$ of
+Theorem~\ref{thm:threevalue} lies in the triple class.
+\end{proof}
+
+
+The values at widths $3$ to $12$ are $53$, $224$, $892$, $3420$, $12704$, $45864$, $161992$,
+$562912$, $1930312$ and $6545496$. They start row $3$ of \seqnum{A399580}. The ILP program and
+the brute-force check of Section~\ref{sec:verify} find them through width $9$. A search over
+every blackout of size $m+2$ gives the class counts at widths $3$ to $10$
+(\texttt{three\_row\_definition\_check.json}), and they agree with the series.
+
+\begin{remark}[optima up to symmetry, computer-assisted]\label{rem:threeorbits}
+Up to reflection and reversal, \texttt{three\_row\_orbits.py} finds $15$, $58$, $227$, $864$,
+$3190$, $11502$, $40549$ and $140863$ optima at widths $3$ to $10$. For even $m$ from $4$ to
+$14$ only the half turn fixes optima, exactly $2m3^{m/2-2}$ of them. We do not prove this here.
+
+\end{remark}

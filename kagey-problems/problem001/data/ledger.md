@@ -133,3 +133,95 @@ cell up to 10 x 10 with both sides at least 5, now by 2 independent programs.
 5 x 5 is proved: a bipartite graph on 10 vertices with no C4 or C6 has at most 10 edges, so the
 upper bound is 10 by hand. The same script lists all 44,640 ten-point blackouts of the 5 x 5 grid
 with no short cycle and finds exactly the 8 optima, one D4 orbit.
+
+## Pre-registered predictions for the paper computations (2026-10-17)
+
+Written before any of these runs. Coordinates here are one-based as in the notes, (column, row),
+(1,1) top left. Two independent methods for every value, as always.
+
+1. Five rows, whole row. Prediction: blackout(5,m) = m+5 for 5 <= m <= 12, and the smallest width
+   m_0 with blackout(5,m) = m+6 is 17 (interval 13 <= m_0 <= 20; the known family starts at 21).
+   Once m+6 is reached it stays reached at every larger width through 20. Excess-5 witnesses
+   (staircase plus one, or any) exist at every 11 <= m <= 16. Falsifiers: an m+6 witness at
+   m <= 12, non-monotone attainment, or a width 11..16 with no m+5 witness.
+   Method: the equality structure (six doubles forming K_{3,2} on the rows, singletons elsewhere)
+   turns "exists a blackout of m+6 points" into a SAT instance per 2+3 row partition. UNSAT for all
+   partitions proves m+5. Second method: a second SAT backend on an independently written encoding,
+   and at m <= 12 the unstructured encoding and CBC where it finishes. Every witness is rechecked by
+   verify_narrow.collision.
+2. Small cells: blackout(5,8) = 13, blackout(5,9) = 14, blackout(6,7) = 13, blackout(6,8) = 14,
+   blackout(7,7) = 14 (excess 1 on all five). Same SAT route, UNSAT confirmed by a second backend.
+3. Four rows, optimum counts. Prediction: a_4(8) between 1,500 and 4,000; the dominant row support
+   is rows {1,3} against {2,4} (the middle partition); the growth rate rho of a_4(m) satisfies
+   3.4 <= rho < 212^(1/4) = 3.8158; the generating function has a pole of order 5 at 1/rho; the
+   recurrence order lies between 20 and 300; a_4(m) / (3 (m)_4 4^(m-4)) decreases from m = 7 on.
+   Method: exact DP over (used edges, geometry state) on the exported machines, then a guessed
+   recurrence certified by an all-coordinate annihilation identity. Second method: direct
+   enumeration of all 1,290,240 equality candidates at width 8 against every rectangle.
+4. Three rows. Prediction: E_4, E_5, E_6 = 168, 620, 2220 (these follow from the stored class
+   counts, so they are a consistency check); the closed form of E_m has quadratic coefficient
+   polynomials on (1+sqrt3)^m and (1-sqrt3)^m with a positive leading coefficient on the first;
+   E_m > 0 for all m >= 4. Orbits under row reflection and column reversal: o_3(3) = 15,
+   o_3(4) = 58; no reversal-fixed optimum at even width; reflection-fixed optima only at m = 3.
+   Second method: exact fractions arithmetic without sympy against the transfer counts, and brute
+   enumeration of the group action for m <= 10.
+5. Five rows at width 21: between 4 and 1,000 labelled optima; the published witness is fixed by
+   the half turn, so its orbit under reflections has size 2.
+6. Six rows: about even odds that some width at most 60 attains the row bound m+9. Nothing is
+   claimed either way until a witness passes the collar test or the searches finish.
+
+## Outcomes, part 1 (2026-10-17): three rows and four rows
+
+Item 4 (three rows) confirmed on every point. E_4, E_5, E_6 = 168, 620, 2220, and the closed form
+is E_m = p_+(m)(1+sqrt3)^m + p_-(m)(1-sqrt3)^m + T_m with
+p_+-(m) = ((19 +- 11 sqrt3) m^2 + (61 +- 41 sqrt3) m + (104 +- 28 sqrt3))/432 and
+T_m = (-1)^(m/2) 2^(m/2) (2m^2+41m-104)/216 for even m, (-1)^((m-1)/2) 2^((m-1)/2) (7m^2-32m-175)/432
+for odd m. Proved as an exact identity two ways (sympy partial fractions of 4G_AB+G_X; fractions-only
+recurrence check against the transfer counts through width 100). E_m > 0 for m >= 4. Orbits:
+o_3(3..15) = 15, 58, 227, 864, 3190, 11502, 40549, 140863, 482755, 1636860, 5497794, 18325769,
+60680951; no reversal-fixed optimum at even width; reflection-fixed only bXb at m = 3. Burnside
+formulas and definitional enumeration (m <= 10) agree. Scripts jis/scripts/three_row_*.py.
+
+Item 3 (four rows): a_4(8) = 2118 (in the predicted range), a_4(9) = 13332, a_4(10) = 75398, each by
+the machine DP and by enumerating every equality candidate against every rectangle; a_4(m) for
+m <= 1500 by the machine. The dominant support is rows {1,3} against {2,4} (confirmed), the pole
+order is 5 (confirmed), the survival ratio decreases from m = 7 on (confirmed, exactly through 1500).
+Two guesses were WRONG: the growth rate is rho = 3.351996777310..., below the predicted 3.4
+(the largest real root of a degree-20 polynomial), and the minimal recurrence has order 420, not
+20..300. The generating function is P_4/Q_4 with deg P_4 = 444, deg Q_4 = 420, certified by an
+all-coordinate annihilation check on the three product automata (6,128, 7,792 and 4,912 states),
+and rechecked by independent polynomial arithmetic. Scripts jis/scripts/four_row_*.py, data in
+jis/data/four_row_*.json.
+
+## Outcomes, part 2 (2026-10-17): five, six and seven rows
+
+Item 1 (five rows): REFUTED in the interesting direction. blackout(5,m) = m+5 for m = 5, 6, 7 and
+blackout(5,m) = m+6 for every m >= 8, so m_0 = 8, not the predicted 17 (interval 13..20 also wrong).
+blackout(5,8) = 14 and blackout(5,9) = 15, against the predicted 13 and 14. Attainment is monotone, as
+predicted. The four 5 x 8 optima form one orbit. Every width from 8 on comes from one board: the
+width-8 optimum (1,1),(1,4),(2,4),(2,5),(3,2),(3,5),(4,5),(5,5),(6,3),(6,4),(7,2),(7,3),(8,1),(8,2)
+padded on the right by top-row singletons; the width-13 collar board is valid, so the collar theorem
+gives every width. Checked by three SAT routes (two encodings, cadical153 and glucose4, plus the
+unstructured one through width 12), a solver-free enumeration of all 5,040,000 width-8 candidates,
+brute.py, and a separate check with its own code (glucose3, lingeling). Counts: a_5(8..12) = 4, 44,
+350, 3004, 24706 (two methods); a_5(13..23) = 193406, 1346758, 8650416, 52128242, 299349210,
+1653637492, 8828301226, 45743165894, 230934909328, 1139486126866, 5510071794736 (two exact counters,
+both using the equality theorem). The published width-21 witness is NOT fixed by the half turn.
+
+Item 2 (small cells): blackout(6,7) = 13 and blackout(7,7) = 14 as predicted. blackout(6,8) = 15,
+NOT 14: the first cell where the excess over n+m-1 reaches 2. Witness (1,1),(1,5),(2,1),(3,1),(3,2),
+(3,3),(4,3),(4,4),(5,4),(6,4),(7,4),(7,5),(7,6),(8,2),(8,6). Upper bounds by UNSAT in two independent
+encodings (three solvers), rechecked by separate code. Excess-1 is dead on a small grid.
+
+Item 6 (six rows): yes. blackout(6,m) = m+9 exactly from m = 15 on (for m >= 8). Widths 8..14: all ten
+3+3 partitions UNSAT with two encoders (the separate recheck did not finish this part). Width 15: one
+partition SAT. The width-16 witness passes the W_6 = 7 collar test, so every m >= 16 follows. Side
+facts: blackout(6,9) in {16,17}, blackout(6,10) in {17,18}.
+
+Item 5 (five rows at width 21): REFUTED. a_5(21) = 230,934,909,328, not between 4 and 1,000. Three
+independently written exact counters agree on a_5(m) for every 5 <= m <= 23, partition by partition
+(all three rest on the equality theorem and the span bound W_5 = 5); explicit listings of 10,001
+optima at widths 21, 22 and 23 were each checked against the definition. The published width-21
+witness is NOT fixed by the half turn (its image has the singletons in row 5), so its orbit has size
+4. Under the equality theorem no five-row optimum is fixed by a reflection, so every orbit has size 4
+or 2.

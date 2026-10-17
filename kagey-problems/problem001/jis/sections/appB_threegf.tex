@@ -1,0 +1,113 @@
+\section{Three-row generating functions}\label{app:threegf}
+
+We finish the proof of Theorem~\ref{thm:threegf}, with $D=LN=1-2z-4z^3-4z^4$. A
+\emph{restricted run} is a string of singletons with no two letters $b$ at distance two.
+Reversal and reflection carry the next lemma to $BA$, $BC$ and $CB$.
+
+\begin{lemma}[forbidden windows in the classes containing $B$]\label{lem:threewindows}
+Let $S$ be a candidate in the ordered class $AB$ or in the triple class. A window fails if
+and only if the table lists it for its class, where $s$ is any singleton.
+\begin{center}\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+class & windows & forbidden \\
+\midrule
+$AB$, $X$ & singletons only & $bab$, $bbb$, $bcb$ \\
+$AB$ & one double & $bsA$, $Asb$, $bAb$, $bAc$, $cAb$, $aBa$, $aBb$, $bBa$, $cBc$ \\
+ & two doubles & $bAB$, $ABa$ \\
+$X$ & one triple & $bsX$, $Xsb$, $aXa$, $aXb$, $bXa$, $bXc$, $cXb$, $cXc$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{lemma}
+
+\begin{proof}
+The tests (a) to (e) are those of Lemma~\ref{lem:diamond}, and
+Lemma~\ref{lem:dichotomy}(b) gives the singleton windows. A window $sAt$ behaves as in
+Lemma~\ref{lem:sixofnine}(a), except that test (e) also fails $bAb$, by $1\in B_{i+1}$ and
+$B\in F$. In $sBt$ and $sXt$ column $i+1$ is black. The diamond is empty if $s=t=b$. If
+$s=b\ne t$ it shows $(i+2,2)$ alone and fails by test (e) exactly when $\{2,t\}\in F$, and
+symmetrically for $t=b\ne s$. If $s$ and $t$ are outer it shows the horizontal pair and fails
+by test (c) exactly when $s=t$. In $uAB$ the diamond fails by test (d) for $u=b$, since
+$(i+2,3)$ and $(i+1,2)$ are black, and shows three corners otherwise. In $ABw$ it is empty for
+$w=b$ and otherwise fails by test (e) exactly for $w=a$. In $Asb$ and $Xsb$ it shows the
+vertical pair or one point of column $i+1$, and tests (b) and (e) fail it as $B\in F$. Every
+other window with a double or $X$ at the left tip shows three corners or an oblique pair whose
+test (d) needs the white point $(i+1,2)$, so it passes. Reversal gives the right tip.
+\end{proof}
+
+We count restricted runs by a transfer on the last two bits. An outer letter has the bit $0$
+and the weight $2$, and $b$ has the bit $1$. Let $h_{ij}$ count, by $z^n$, the continuations of
+length $n\ge0$ of a restricted run ending in the bits $i,j$. Since $b$ is forbidden after $1,j$, $h_{00}=1+z(2h_{00}+h_{01})$, $h_{01}=1+z(2h_{10}+h_{11})$, $h_{10}=1+2zh_{00}$ and
+$h_{11}=1+2zh_{10}$, and eliminating gives $Dh_{00}=1+z+3z^2+2z^3$. Read runs $w_1\cdots w_n$
+with $n\ge1$ outward from a double. Let $g_0$ count those with $w_1$ a prescribed outer letter and
+$g_1$ those with $w_1=b$. Let $u$ and $v$ count the same runs with $w_2$, if present, outer. A fictitious outer letter before $w_1$ restricts nothing, so $g_0=zh_{00}$,
+$g_1=zh_{01}$, $u=z+2z^2h_{00}=zh_{10}$ and $v=z+2z^2h_{10}=zh_{11}$. Hence
+\begin{equation}\label{eq:runs}
+Dg_0=z(1+z+3z^2+2z^3),\ \ Dg_1=z(1+z),\ \ Du=z(1+2z^2+2z^3),\ \ Dv=z.
+\end{equation}
+
+\begin{proposition}[the triple class]\label{prop:GX}
+In the notation of~\eqref{eq:runs}, $G_X(z)=z\bigl(1+4u+2v+2u^2+v^2\bigr)$ has a denominator
+dividing $D^2$.
+\end{proposition}
+
+\begin{proof}
+In $UXW$ the runs are restricted, and $bsX$ and $Xsb$ make the second letters from $X$ outer
+(Lemma~\ref{lem:threewindows}). So one nonempty run gives $2u+v$ on either side. With
+two, the window at $X$ allows only the neighbor pairs $(a,c)$, $(b,b)$ and $(c,a)$, which give $2u^2+v^2$.
+\end{proof}
+
+A word of $AB$ is $UAVBW$ with restricted runs $U$, $V$ and $W$. By
+Lemma~\ref{lem:threewindows}, a nonempty $U$ read from $A$ has an outer second letter and is
+counted by $u$ or $v$, and a nonempty $W$ read from $B$ is counted by $g_0$ or $g_1$. Let
+$\ell_t$ and $r_t$ count the allowed $U$ and $W$, the empty one included, when a singleton $t$
+stands right of $A$ or left of $B$. The windows with the
+double in the middle give
+\begin{equation}\label{eq:lr}
+(\ell_a,\ell_b,\ell_c)=(1+2u+v,1+u,1+2u),\ (r_a,r_b,r_c)=(1+g_0,1+g_0+g_1,1+g_0+g_1).
+\end{equation}
+For $s\in\{00,10\}$ and a bit $\beta$ let $J_{s\beta}$ count, as for $h$, the continuations
+from $s$ whose last letter has the bit $\beta$. Solving as for $h$ gives
+\begin{equation}\label{eq:J}
+J=\frac1D\begin{pmatrix}1+2z^2+2z^3&z+z^2\\1&2z^2+2z^3\end{pmatrix}.
+\end{equation}
+
+\begin{proposition}[the class $\{A,B\}$, polynomial form computer-assisted]\label{prop:GAB}
+In the notation of~\eqref{eq:runs} to~\eqref{eq:J},
+\begin{equation}\label{eq:GAB}
+\begin{aligned}
+G_{AB}(z)={}&z^2(1+2u)(1+g_0+g_1)+z^3(\ell_ar_a+\ell_br_b+\ell_cr_c)\\
+&+z^4\,(\ell_a+\ell_c,\ \ell_b)\,J\,(r_a+r_c,\ 2r_b)^{T}.
+\end{aligned}
+\end{equation}
+Moreover $G_{AB}=P_B/D^3$ with
+\begin{equation}\label{eq:PB}
+P_B(z)=z^2(1+z)(1+z^2-3z^3+4z^6+4z^7).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The runs cover the windows inside them, and we split by the length $k$ of $V$. For $k=0$ the windows $uAB$ and $ABw$ require $u\ne b$ and
+$w\ne a$, which gives the first term. For $k=1$ the window $AtB$ passes, and $uAt$ and $tBw$
+give $\ell_t$ and $r_t$. For $k\ge2$ the window $Av_1v_2$ makes $v_2$ outer, $v_{k-1}v_kB$ passes,
+and the weight is $\ell_{v_1}r_{v_k}$. After $v_2$ the bits are $00$ or $10$ as $v_1$ is outer or
+$b$, and the rest is a continuation in which $v_2$ keeps its factor $2$ for $k\ge3$. Summing
+over the last letter gives $J_{s0}(r_a+r_c)+J_{s1}\,2r_b$, and $k=2$ is the constant term of $J$.
+
+The script \nolinkurl{three_row_closed_form.py} finds~\eqref{eq:PB} in SymPy. Its first coefficients $7$, $31$, $120$, $449$ and $1622$ match
+\nolinkurl{three_row_definition_check.json}.
+\end{proof}
+
+\begin{theorem}[the exact denominator, computer-assisted]\label{thm:denominator}
+The reduced denominator of $\sum_{m\ge3}a_3(m)z^m$ is $Q=R^3L^3N^3$, with five triple poles.
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:threegf}(a) the denominator divides $R^3D^3=Q$. The factors $R$, $L$ and
+$N$ are coprime, since $L-N=-2z-4z^2$ vanishes only at $0$ and $-\frac12$, where $N\ne0$, and
+$L$ and $N$ are positive at $\frac13$. The numerator in~\eqref{eq:GAC} is $\frac4{81}$ at
+$z=\frac13$, where $G_{AB}$ and $G_X$ are analytic. Division gives $P_B\bmod L=\frac z2$ and
+$P_B\bmod N=\frac14-\frac z2$, so $P_B$ vanishes at no root of $L$ or $N$. At these roots $G_{AB}$ has a
+pole of order three, $G_X$ one of order at most two, and $G_{AC}$ none.
+\end{proof}
