@@ -82,6 +82,28 @@ Paper D. `PaperC` also holds the Lean proofs for Paper E, and `PaperD` those for
   (`FullOrder`).
 - The Ising dictionary of Section 1.2 for free ends, `S_{a,b}(e^{-2J}) = Z_N(a-b)/Z_N(N)`, and
   the relations between `J`, `τ` and `ξ(J) = -1/log tanh J` (`IsingDictionary`).
+- The correlations of the chain in zero field: `⟨σ_i σ_{i+r}⟩ = tanh^r J` in every finite free
+  chain, the infinite-volume limit `⟨σ_0 σ_r⟩ = e^{-r/ξ(J)}`, and `ξ(J)` as its correlation length
+  (`InfiniteChain`).
+- Section 5.5 and Theorem 5.9, the Ising weights in a field, their ratio `R^X_{N,a}` to all up as
+  the ratio of the weights of the magnetizations `N - 2a` and `N`, and the edge crossings in a fixed
+  field for free and periodic ends (`FieldWeights`, `FieldCrossing`).
+- The consequences displayed after Theorem 4.9, for sequences of bins (`AllbinConsequences`).
+- Remark 4.5 on the first correction to the Bessel form (`SignCorrection`), Remark 4.7 on the
+  Jacobi forms, the Laguerre limit at the edge with rates and the Mehler–Heine limit for natural
+  parameters (`Jacobi`), Remark 5.4 on the constrained free energies and the bound on the
+  probability of an endpoint and of a single bin of the crossing window (`FreeEnergy`,
+  `WindowBound`), and Remark 5.6 on the
+  crossings at a level `Θ` (`LevelTheta`).
+- Kernel-checked rational bounds showing that every value printed in Tables 1 and 2 is the
+  correct rounding of the quantity it names, and bounds on most decimals quoted in the text and
+  the captions (`TableValuesCore`, `TableValuesEveryN`, `TableValuesCouplings`, `TableValuesText`,
+  `TableValuesBessel`, `TableValuesField`, `TableValuesWalls`, `TableValuesExtra`).
+
+The library has 55 modules (including the root) and 1257 theorem and lemma declarations. Every
+numbered result of Paper A is formalized except the Mehler–Heine limit for real parameters in
+Remark 4.7, which the paper cites. The items that are not formalized are listed below under
+"What is not in Lean".
 
 ## Paper B (`paperB/problem131_multistate.tex`)
 
@@ -144,9 +166,13 @@ explicit bound on `I_0 + I_1` that the every-N crossing theorem of Paper A needs
 large-argument forms of `I_0`, `I_1` and `I_1 + η I_0` with explicit remainders, all proved from
 integral forms.
 
-The remaining omissions in Paper A include the infinite chain behind `ξ(J)` and the uniform
-local law. `PaperA/MAP.md` gives the
-detailed scope.
+In Paper A the Mehler–Heine limit for real parameters in Remark 4.7 is cited and not formalized
+(Lean proves it for nonnegative integer parameters). As Section 7 of the paper says, the
+following are also not formalized. These are the couplings `J_N^{(1)}` and `J_N^{(≥2)}` displayed
+after Theorem 5.9, the mean number of domain walls at the periodic crossing stated after
+Proposition 5.7, the Lambert form of `ζ_N`, and the numbers `0.755`, `0.74` and `0.013` of
+Sections 5.4 and 4.5. The uniform local law moved to a separate note and is not part of Paper A.
+`PaperA/MAP.md` gives the Lean theorem for each result, or says that there is none.
 
 In Paper B the window, the Gaussian volumes and the frontier limits are left out. `PaperB`
 proves the exact law for the uniform start only, so the law with a general start and the tree

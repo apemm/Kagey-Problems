@@ -14,15 +14,20 @@ In Ising terms the coupling at both central crossings is (1/2)(log N - log log N
 Table 2 compares with the approximations of Stepanyan et al. (J. Stat. Mech. 2024).
 `../README.md` describes the other papers on Problem 131.
 
-Lean coverage is partial. The fixed-edge and Laguerre-root asymptotics (including their leading
-limits), the entire periodic central-crossing theorem, the spatial window, and the crossing
-equation are not formalized. The edge coefficient lemmas are rational algebra conditional on
-coefficient equations. In the every-N corollary, parts (a), (d) and the finite inequalities
-of (b) are formalized. This includes the positivity chain, the probability and coupling
-intervals, the logarithmic bracket for ζ_N, and the strict crossing above ζ_N for every
-N ≥ 2774. The asymptotic conclusion of (b) and part (c) remain outside Lean.
-`../lean/PaperA/MAP.md` lists the remaining omissions, including the separate asymptotic
-coupling and correlation-length corollary.
+Every numbered result of Paper A is formalized in Lean 4 (`../lean/PaperA`, 55 modules including
+the root and 1257 theorem and lemma declarations) except the Mehler-Heine limit for real
+parameters in Remark 4.7, which the paper cites. Lean proves that limit for nonnegative integer
+parameters. The results stated at every N, among them Theorem 3.4 and Proposition 3.8 for all
+N ≥ 2, are proved as stated. Each asymptotic error term is replaced by a bound that holds from
+some point on and is at least as strong as the paper's, with explicit constants in
+Corollary 3.7(b) and (c), Corollary 5.5 and Proposition 5.7. Lean also checks that every value
+printed in Tables 1 and 2 is the correct rounding of the quantity it names, and it bounds most
+decimals quoted in the text and the captions. As Section 7 of the paper says, the following are
+not formalized. These are the couplings J_N^(1) and J_N^(≥2) displayed after Theorem 5.9, the
+mean number of domain walls at the periodic crossing stated after Proposition 5.7, the Lambert
+form of ζ_N, and the numbers 0.755, 0.74 and 0.013 of Sections 5.4 and 4.5. Only the standard
+axioms are used. `../lean/PaperA/MAP.md` gives the Lean theorem for each result, or says that
+there is none.
 
 ## Files
 
@@ -50,8 +55,8 @@ coupling and correlation-length corollary.
 - `verify_all.py` runs the checks, and `COMPUTATION.md` lists the commands, dependencies and the source of each table and figure.
 - `data/` holds the recorded output of the checks and the ledgers `data/ledger_every_n.md` and
   `data/ledger_llt.md`. The first predictions for Papers A and B are in `../ledger.md`.
-- `../lean/PaperA/` holds the Lean 4 proofs. `../lean/PaperA/MAP.md` maps covered statements to
-  Lean declarations and lists partial coverage and omissions. `Tables.lean` remains imported for
+- `../lean/PaperA/` holds the Lean 4 proofs. `../lean/PaperA/MAP.md` maps each result to its
+  Lean declarations and lists the differences from the paper and the omissions. `Tables.lean` remains imported for
   the separate tables note; it proves recurrence identities, not the path bijections.
 
 ## How to run the checks and build
