@@ -9,7 +9,9 @@ partial coverage and omissions.
 On October 13, 2026 Paper E (`paperE/problem131_planar.tex`, the planar walk) was split off
 Paper C, and Paper F (`paperF/problem131_heavy_aging.tex`, heavy-tailed runs and aging walks) off
 Paper D. `PaperC` also holds the Lean proofs for Paper E, and `PaperD` those for Paper F. Their
-`MAP.md` files give the statement numbers from before the split.
+`MAP.md` files give the statement numbers from before the split for the parts that moved.
+`PaperD/MAP.md` gives the numbers of Paper D itself in the build of October 17, 2026, and lists
+the numbers that changed that day.
 
 ## Paper A (`paperA/problem131.tex`)
 
@@ -146,7 +148,9 @@ Remark 4.7, which the paper cites. The items that are not formalized are listed 
 
 ## Paper D (`paperD/problem131_memory.tex`)
 
-`PaperD/` is about walks with memory. It proves the following.
+Paper D is "The center and the ends of the elephant random walk with rare reversals" (titled
+"Endpoint crossings for the elephant random walk" before October 17, 2026). `PaperD/` is about
+walks with memory, and it also covers Paper F. It proves the following.
 
 - The law of the elephant walk, `c_1 = 4/(n+2)`, the monotone likelihood ratio and the unique
   crossing of every bin, the endpoint dip and unimodality with a fixed first step (`Elephant`,

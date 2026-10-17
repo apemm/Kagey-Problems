@@ -1,9 +1,13 @@
 # Paper D: map from the research notes to the Lean proofs
 
-Paper D is `paperD/problem131_memory.tex`, the last of the four papers A, B, C and D on Problem 131.
-The tables cite the statement labels of the 4 research notes D1 to D4, and the column Paper gives
-the number in the paper, in the build of October 9, 2026 (for example D1 S9 is Proposition 2.3, D2
-Theorem 1 is Theorem 3.5, D3 Prop 1 is Proposition 4.1, and D4 Prop 9 is Proposition 5.1). "Not in
+Paper D is `paperD/problem131_memory.tex`, "The center and the ends of the elephant random walk
+with rare reversals" (before October 17, 2026 it was titled "Endpoint crossings for the elephant
+random walk"). The tables cite the statement labels of the 4 research notes D1 to D4. For D1 and D2
+the column Paper gives the number in the paper in the build of October 17, 2026 (for example D1 S9
+is Proposition 2.3 and D2 Theorem 1 is Theorem 3.5). For D3 and D4, which are now Paper F, it gives
+the number in Paper D before the split of October 13, 2026 (for example D3 Prop 1 was Proposition
+4.1 and D4 Prop 9 was Proposition 5.1), and the note at the end says how these numbers moved. The
+section "Renumbering of October 17, 2026" below lists the D1 and D2 numbers that changed. "Not in
 the paper" marks results of the notes that the paper does not state. The Lean
 library is `PaperD` (root `PaperD.lean` and 16 modules in `PaperD/`, so 17 modules in all,
 namespace `Kagey131.PaperD`),
@@ -40,9 +44,9 @@ the elephant walk, `law ε n` and `ewBin ε n` use the number of steps `n` direc
 | S5(c) (pseudo-count Pólya form) | Lemma A.1(c) | `upProb_pseudocount` | `ElephantAlgebra.lean` |
 | S6(a) (numerator identity), S6(b) (choice of `κ`) | Proposition A.4(a), (b) | `supersolution_numerator`, `upProb_half_minus`, `kappa_identity`, `kappa_eq` | `ElephantAlgebra.lean` |
 | S9 (monotone likelihood ratio, every bin vs endpoint) | Proposition 2.3 | `lawRatio_mono`, `law_ratio_strictMonoOn`, `ewBin_ratio_strictMonoOn` | `ElephantCrossing.lean` |
-| S9 (`C_n ≥ 2E_n` for `ε ≥ ½`; crossing exists, is unique, `ε_n < ½`; same for every bin) | Proposition 2.3 | `law_ge_of_half`, `ewBin_ge_two_top`, `crossing_exists_unique`, `center_crossing_exists_unique` | `ElephantCrossing.lean` |
+| S9 (`C_n ≥ 2E_n` for `ε ≥ ½`; crossing exists, is unique, `ε_n < ½`; same for every bin) | Proposition 2.3, restated in Theorem 1.1(a) | `law_ge_of_half`, `ewBin_ge_two_top`, `crossing_exists_unique`, `center_crossing_exists_unique` | `ElephantCrossing.lean` |
 | S11 (constants `2c₀ + log 2 = log(π/4)`, `log(π/4) - log 2π = -log 8`) | proof of Theorem 2.8 | `s11_log_constants` | `ElephantAlgebra.lean` |
-| S15(a) (finite-`n` unimodality with the first step fixed) | Lemma 3.4 | `law_unimodal_delta`, `law_isUnimodal` | `ElephantUnimodal.lean` |
+| S15(a) (finite-`n` unimodality with the first step fixed) | Lemma 3.4, quoted in Theorem 1.3(b) | `law_unimodal_delta`, `law_isUnimodal` | `ElephantUnimodal.lean` |
 | S15(b) (`P(A_n=n-1) ≥ x/(2(1-ε)) P(A_n=n)`; not unimodal when `C_n ≤ E_n`) | Theorem 3.5, Corollary 3.6 | `law_one_ge`, `endpoint_dip`, `not_unimodal_of_dip`, `not_unimodal_at_crossing` | `ElephantCrossing.lean` |
 
 ## D2: the profile and the random recursive tree
@@ -109,10 +113,10 @@ following.
   comparison with the crossing of Paper A, Theorem 2.8, where only the constants are checked),
   S13 (limit `K₂`, which needs series over `t` and `u`, and which the paper no longer states), S14, S16 (heuristic),
   S3(c) (limit weights `t 2^{-t-1}`, Lemma A.6).
-* D2 Theorem 2 (compound Poisson bulk, Theorem 3.9), Theorem 3 and Corollaries 6.2, 6.3
-  (explicit but very long error terms, and the profile statements are asymptotic), Theorem 4
-  (Landau limit, Theorem 3.10), Theorem 5, Conjecture 5.1 (Conjecture 3.16), Heuristics H1, H1',
-  H2, H3.
+* D2 Theorem 2 (compound Poisson bulk, Theorem 3.8 and Theorem 1.2(a)), Theorem 3 and
+  Corollaries 6.2, 6.3 (explicit but very long error terms, and the profile statements are
+  asymptotic), Theorem 4 (Landau limit, Theorem 3.9 and Theorem 1.2(b)), Theorem 5, Conjecture 5.1
+  (Conjecture 3.15), Heuristics H1, H1', H2, H3.
 * D3 Lemmas 3 to 5, Theorem 6 (Theorem 4.4), the asymptotic halves of Corollary 7 and
   Theorems 8, 9 (Theorems 4.7 and 4.8, including the local min/max test at `α_c`), Heuristics 10,
   11, Remarks 12, 13 (numerics, Remark 4.6).
@@ -143,9 +147,37 @@ Some exact or finite statements are not formalized either.
   (Godrèche and Luck 2001, Section 7). A formal proof would need a composition model of the run
   walk, and it was not attempted.
 * The records interpretation of D4 Proposition 3 (Rényi) was not attempted.
-* Results that the paper gained in October 2026 are not in Lean. They are Lemma 3.7,
-  Proposition 3.8 and Lemma 3.11 (certified computations, see `paperD/certify_elephant.py`),
-  Theorem 5.2 (the aging chain on `d` states) and Proposition 5.4 for `d ≥ 3`.
+* Results that the paper gained in October 2026 are not in Lean. They are Proposition 3.7 and
+  Lemma 3.10 (computer-assisted, see `paperD/certify_center.py` and `paperD/certify_elephant.py`),
+  Lemma 3.23 (the center from convexity, new on October 17), Theorem 5.2 (the aging chain on `d`
+  states, now in Paper F) and Proposition 5.4 for `d ≥ 3` (now in Paper F). Theorems 1.1 to 1.3
+  collect results of Sections 2 and 3 and are covered only through the rows above (Theorem 1.1(a)
+  is Proposition 2.3, and Theorem 1.3(b) quotes Lemma 3.4).
+
+## Renumbering of October 17, 2026
+
+The build of October 17, 2026 removed two results of Section 3 and added two. None of the removed
+results has a Lean counterpart, so no Lean theorem lost its place in the paper.
+
+* Removed. Lemma 3.7 (the rounding error of the double-precision computation for `8 ≤ n < 1688`)
+  is gone, since Proposition 3.7 now uses the ball-arithmetic enclosure of the crossing from
+  `paperD/certify_center.py`. Theorem 3.15 (the window around the center, with constants `C_w` and
+  `N_0`) is gone, together with part (b) of Proposition B.5, which only it used. The double-precision
+  certificate of the old Lemma 3.7 is still in `paperD/certify_elephant.py` as a supplementary
+  check. Both statements, in an earlier wording, are in
+  `paperD/removed_proofs/cuts_2026-10-15/sec_erw_shape.tex`, and the git history has their last
+  versions. Old Section 3.5 (the center), which held only Theorem 3.15 and the conjecture, is gone,
+  and the conjecture moved to the section on convexity.
+* Added. Definition 3.14 (convex between the humps) and Lemma 3.23 (the center from convexity).
+  The introduction now has Theorems 1.1, 1.2 and 1.3, which do not change the numbers of the other
+  sections.
+* Old to new. Proposition 3.8 is now 3.7, Theorem 3.9 is 3.8, Theorem 3.10 is 3.9, Lemma 3.11 is
+  3.10, Corollary 3.12 is 3.11, Remark 3.13 is 3.12, Theorem 3.14 is 3.13, Conjecture 3.16 is 3.15,
+  Lemma 3.17 is 3.16, Lemma 3.18 is 3.17, Lemma 3.19 is 3.18, Theorem 3.20 is 3.19, Theorem 3.21 is
+  3.20, Corollary 3.22 is 3.21 and Theorem 3.23 is 3.22. Section 3.6 (convexity) is now Section 3.5.
+  Lemmas 3.1 to 3.4, Theorem 3.5, Corollary 3.6, Corollary 3.24 and Propositions 3.25 to 3.27,
+  Remark 3.28, all of Section 2 and Appendices A to C keep their numbers. Appendix D now has
+  Subsections D.1 to D.4.
 
 ## Gaps and remarks found while formalizing
 
