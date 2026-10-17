@@ -28,3 +28,25 @@ Run time under one second.
    rest of Table 2, the free couplings, the values of N/xi at both crossings and
    the secant slopes 0.385, 0.417 and 0.450 quoted in Section 5. It asserts the
    two values of J above to 6 decimals.
+
+3. Section 5, mean domain length l_d = <N/(n_d + delta_{0,n_d})> at the periodic
+   central crossing, for even N with 20 <= N <= 100.
+   Here n_d is the number of domain walls of the whole periodic chain. At odds u
+   the value n_d = 2r has weight proportional to C(N,2r) u^(2r), so
+   l_d = sum_r C(N,2r) u^(2r) N/(2r + delta_{0,r}) / sum_r C(N,2r) u^(2r),
+   evaluated at u = u_N^P.
+   Method: u_N^P by bisection in exact rationals on the cyclic run polynomial
+   (eq:periodicratio) with a = b = N/2, 200 steps from [0, 1], checked against
+   root and periodic_ratio of verify_periodic_window.py to 1e-50. Then l_d in
+   exact rationals at both ends of the final bracket and in mpmath with 60
+   digits (the two ends agree to all printed digits). The exponents are
+   least-squares slopes of log l_d and of log(N/log N) against log N over the
+   41 even N from 20 to 100.
+   N = 20:   u_N^P = 0.15148043263011737   l_d = 9.269333970525
+   N = 100:  u_N^P = 0.04292803720573503   l_d = 31.210717974514
+   Least-squares exponent of l_d, even N in [20, 100]:      0.7554709
+   Least-squares exponent of N/log N, even N in [20, 100]:  0.7394336
+   (over all N from 20 to 100 the second slope is 0.7399673)
+   Quoted in the text: 9.27, 31.21, 0.755 and 0.74 (Section 5, after
+   Proposition 5.7). These are compared with the fit l_d ~ N^0.757 of
+   Stepanyan et al. Eq. (18).
