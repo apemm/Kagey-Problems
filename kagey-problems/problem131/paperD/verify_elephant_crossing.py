@@ -625,7 +625,7 @@ def main():
             agree(f'x_{n} to 10 decimals (research notes, not printed)', notes10[n], vals)
         else:
             agree(f'x_{n} (research notes, not printed)', recorded[n], vals, f'  [{dt:.1f}s]')
-        check(f'x_{n} >= 2(1 - eps_{n}) (hypothesis of Corollary 3.6; Proposition 3.8 proves it for every even n >= 8)', xa >= 2 * (1 - xa / n), f'{xa:.4f}')
+        check(f'x_{n} >= 2(1 - eps_{n}) (hypothesis of Corollary 3.6; Proposition 3.7 proves it for every even n >= 8)', xa >= 2 * (1 - xa / n), f'{xa:.4f}')
         if n in table:
             g1, g2 = g_root(n), g_lambert(n)
             agree(f'g_{n}', table[n][1], {'root finder': g1, 'Lambert W': g2})

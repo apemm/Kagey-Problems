@@ -10,8 +10,9 @@ On October 13, 2026 Paper E (`paperE/problem131_planar.tex`, the planar walk) wa
 Paper C, and Paper F (`paperF/problem131_heavy_aging.tex`, heavy-tailed runs and aging walks) off
 Paper D. `PaperC` also holds the Lean proofs for Paper E, and `PaperD` those for Paper F. Their
 `MAP.md` files give the statement numbers from before the split for the parts that moved.
-`PaperD/MAP.md` gives the numbers of Paper D itself in the build of October 17, 2026, and lists
-the numbers that changed that day.
+`PaperD/MAP.md` gives the numbers of Paper D itself in its shortened build of October 17, 2026,
+which moved some results to Online Resource 1 (`paperD/online_resource.tex`), and lists the
+numbers that changed that day.
 
 ## Paper A (`paperA/problem131.tex`)
 
@@ -163,6 +164,18 @@ walks with memory, and it also covers Paper F. It proves the following.
   fair-start values and the arcsine law at `c = 1/2` (`Aging`, `AgingExact`, `AgingCrossing`,
   `AgingSmall`, `AgingAveraging`, `AgingSwitches`, `BetaBinomial`).
 
+For Paper D only selected finite statements are formalized. They are the correspondence between
+sign words and the count chain, the strict monotonicity of every bin relative to the end and the
+unique crossing, the derivative `C_n'(0) = 4/(n+2)`, unimodality with a fixed first step and the
+inequalities for the end and its neighbor. The conclusion that the law is not unimodal at the
+crossing keeps the endpoint dip as a hypothesis. The subtree identities are proved for a Pólya
+chain, and its identification with the subtree of a random recursive tree is not formalized. The
+principal analytic and shape results of Paper D (the bounds on the center, the crossing
+asymptotics, the compound Poisson and Landau results and the sign and convexity results for the
+second difference) are not formalized end to end, and its Python and Arb certificates are separate
+from Lean. `PaperD/MAP.md` names 136 declarations, but 85 of them are for Paper F and many are
+support lemmas, so they are not 136 theorems of Paper D.
+
 ## What is not in Lean
 
 The general large-argument asymptotics of the Bessel functions are not formalized. Lean has the
@@ -182,7 +195,9 @@ In Paper B the window, the Gaussian volumes and the frontier limits are left out
 proves the exact law for the uniform start only, so the law with a general start and the tree
 form of the constants are not in it, but the arithmetic of the `K_3` window with a start and the
 tree formula for 3 states are checked in `PaperC`. For Papers C and D every statement about large
-`N` or large `n` is left out, and `MAP.md` lists the reason for each.
+`N` or large `n` is left out, and `MAP.md` lists the reason for each. In Paper D the identification
+of the Pólya chain with the random recursive tree, the proof that the endpoint dip holds for every
+even `N >= 8`, and the interval certificates are also left out.
 
 ## Building and checking
 

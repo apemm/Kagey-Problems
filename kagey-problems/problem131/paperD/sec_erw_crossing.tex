@@ -2,8 +2,7 @@
 
 We reduce the elephant walk to a counting chain and prove that the crossing is
 unique. We then compute the center to first order in $\varepsilon$, bound it
-from both sides, and locate the crossing. The last subsection gives one more term of the center
-and of the crossing.
+from both sides, and locate the crossing.
 
 \begin{definition}[elephant walk]\label{def:erw}
 Fix $0<\varepsilon<1$. Let $X_1$ be uniform on $\{\pm1\}$. For $t\ge1$ let
@@ -131,8 +130,14 @@ $a_d\binom N{d+1}$ and $2a_d\binom N{d+2}$, and these are the values in the
 statement.
 \end{proof}
 
-We need some more notation. Let $V_s(b)=\Prob_+(M_N=h\mid M_s=b)$ be the
-chance of ending at the center from state $b$ at time $s$. For $1\le t\le h$
+We need some more notation. Let $V_s(b)$ be the chance of ending at the
+center from state $b$ at time $s$. We define it by the backward recursion
+$V_N(b)=\mathbf 1\{b=h\}$ and
+$V_s(b)=r_s(b)V_{s+1}(b+1)+(1-r_s(b))V_{s+1}(b)$ for $s<N$. So
+$V_s(b)=\Prob_+(M_N=h\mid M_s=b)$ whenever $\Prob_+(M_s=b)>0$, and $V_s(b)$
+is a polynomial in $\varepsilon$. In particular it is defined at
+$\varepsilon=0$, where we do not condition on an event of probability zero.
+For $1\le t\le h$
 let
 \[
  \pi_t=\beta_{t+1}(h)=\frac t{N-t}\prod_{i=1}^{t-1}\frac{h-i}{N-i},\qquad
@@ -140,7 +145,19 @@ let
 \]
 so that $(w_t)_{1\le t\le h}$ is a probability vector.
 
-\begin{proposition}\label{prop:first-mutation}
+The first-order coefficient in part (b) below is known. With both switching
+probabilities equal to $\varepsilon$ and one sensitive cell at the start, the
+number of resistant cells in the reversible fluctuation assay of Bokes,
+Hlubinov\'a and Singh~\cite[Section~2 and Eq.~(1)]{bhs2023} is our chain $M$.
+They condition on the first switch and use P\'olya's urn, as we do, and their
+first-order formula~\cite[Eqs.~(6)--(10)]{bhs2023} gives
+$\varepsilon N/(m(m+1))$ as the part of $f_N(m)$ of first order in
+$\varepsilon$, which is $\frac{4\varepsilon}{N+2}$ at
+$m=h$. We include the short proof because the decomposition (a) and the
+weights (c) are what the uniform bounds of Theorem~\ref{thm:erw-bounds} and
+Appendix~\ref{app:erw} start from.
+
+\begin{proposition}[first order, as in~{\cite[Eqs.~(6)--(10)]{bhs2023}}]\label{prop:first-mutation}
 Let $N\ge2$ be even.
 \begin{enumerate}[(a)]
 \item The center is
@@ -188,7 +205,9 @@ In words, to first order the walk flips once, at some step $t+1$, and then
 runs as P\'olya's urn from $t$ balls of one color and one of the other. As
 $N\to\infty$ the final fraction of the color that started with one ball tends
 in law to a Beta$(1,t)$ variable, whose density at $\frac12$ is $t2^{1-t}$, and $\sum_tt2^{1-t}=4$ explains the constant
-$4/(N+2)$. Since $w_t\le2t2^{-t}$, only an early flip counts.
+$4/(N+2)$. Since $w_t\le2t2^{-t}$, only an early flip counts in this
+first-order term. (A walk at the crossing has about $x$ flips in all, and most
+of them come late.)
 
 \subsection{Two-sided bounds on the center}
 
@@ -241,20 +260,19 @@ since $G$ increases from $-\infty$ to $\infty$ on $(0,\infty)$.
 These values are numerical and are not used in any proof. We computed $x_N$ in double precision from
 the recursion of Lemma~\ref{lem:erw-reduction}, by Brent's method with an
 absolute tolerance of $10^{-12}$ in $x$, and we found $g_N$ and the Markov
-crossing $z_N$ with a tolerance of about $10^{-15}$. Here $x_{\mathrm{2nd}}$ is
-the formula of Proposition~\ref{prop:refined} without its error term, and
+crossing $z_N$ with a tolerance of about $10^{-15}$. Here
 $\Upsilon_N$ is the difference of Theorem~\ref{thm:erw-markov}.}
 \label{tab:erw-crossing}
-\begin{tabular}{@{}rlllll@{}}
+\begin{tabular}{@{}rllll@{}}
 \toprule
-$N$ & $x_N$ & $g_N$ & $x_N-x_{\mathrm{2nd}}$ & $x_N/\log N$ & $\Upsilon_N\log N$\\
+$N$ & $x_N$ & $g_N$ & $x_N/\log N$ & $\Upsilon_N\log N$\\
 \midrule
-50 & 3.940487 & 4.288636 & $+0.3452$ & 1.007 & $-0.083$\\
-400 & 7.629217 & 7.843768 & $+0.0621$ & 1.273 & $-0.199$\\
-1600 & 10.240565 & 10.340051 & $+0.0179$ & 1.388 & $+0.215$\\
-3200 & 11.546834 & 11.610464 & $+0.0097$ & 1.431 & $+0.386$\\
-12800 & 14.158845 & 14.182921 & $+0.0028$ & 1.497 & $+0.607$\\
-51200 & 16.778468 & 16.786946 & $+0.0008$ & 1.547 & $+0.707$\\
+50 & 3.940487 & 4.288636 & 1.007 & $-0.083$\\
+400 & 7.629217 & 7.843768 & 1.273 & $-0.199$\\
+1600 & 10.240565 & 10.340051 & 1.388 & $+0.215$\\
+3200 & 11.546834 & 11.610464 & 1.431 & $+0.386$\\
+12800 & 14.158845 & 14.182921 & 1.497 & $+0.607$\\
+51200 & 16.778468 & 16.786946 & 1.547 & $+0.707$\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -271,13 +289,6 @@ $x_N=2\log N-\log\log N-\log16+O(\log\log N/\log N)$.
 
 In words, the root $g_N$ locates the crossing to within $O(L^2/N)$, and the
 expected number of flips at the crossing is about $2\log N$.
-
-\paragraph{Idea of the proof.}
-Let $F(x)$ be the logarithm of $C_N/E_N$ at $\varepsilon=x/N$. It increases
-in $x$, and its only zero is $x_N$. Theorem~\ref{thm:erw-bounds} and the
-formula for $E_N$ show that $F(x)$ is within $O(L^2/N)$ of $G(x)-\Lambda_N$
-when $x$ is of order $L$. Since $G'\ge1$, the zero of $F$ is within
-$O(L^2/N)$ of the zero $g_N$ of $G-\Lambda_N$.
 
 \begin{proof}
 (a) \emph{Step 1: both sides near the crossing.} Put
@@ -372,12 +383,6 @@ In words, the elephant needs twice as many flips as the persistent walk needs
 switches, less $\log(2\pi)=1.837\ldots$, and the difference from this tends
 to 0 like $c_*/\log N$.
 
-\paragraph{Idea of the proof.}
-Both crossings solve an equation of the form $x+\log x=2L+\text{constant}$
-up to small errors. We put the Markov crossing into the equation
-$G(x)=\Lambda_N$ of the elephant, find that $2z_N-\log(2\pi)$ misses it by
-$c_*/L$, and divide by $G'\approx1$.
-
 \begin{proof}
 Write $\ell=\log(2\pi)$ and $\bar z=2z_N$. We compute $G(\bar z-\ell)$ in three steps
 and then compare it with $G(x_N)$.
@@ -420,102 +425,6 @@ difference $\Upsilon_N$ changes sign between $N=400$ and $N=1600$, and
 $\Upsilon_N\log N$ is $0.707$ at $N=51200$ against the limit $c_*=0.669$
 (Table~\ref{tab:erw-crossing}). So the asymptotic regime is reached slowly.
 
-\subsection{The crossing to second order}\label{sec:erw-second}
-
-Theorem~\ref{thm:erw-bounds} gives $\log C_N$ up to an error
-$O(\varepsilon\log N)$. A lower bound that matches part (b) of that theorem
-brings the error down to $O(\varepsilon)$.
-
-\begin{proposition}[the center to second order]\label{prop:second-order}
-Let $N\ge64$ be even and $0<\varepsilon(1+\log N)\le\frac1{100}$. Then
-\[
- -11\varepsilon-\varepsilon^2(84\log N+1.05\cdot10^5)
- \le\log C_N-\log\frac{4\varepsilon}{N+2}-2\varepsilon\log N\le5200\,\varepsilon .
-\]
-In particular
-$\bigl\lvert\log C_N-\log\frac{4\varepsilon}{N+2}-2\varepsilon\log N\bigr\rvert
-\le5200\,\varepsilon$ there.
-\end{proposition}
-
-In words, $C_N$ is $\frac{4\varepsilon}{N+2}N^{2\varepsilon}$ times a factor
-$1+O(\varepsilon)$.
-
-\paragraph{Idea of the proof.}
-The proof is in Appendix~\ref{app:erw}. The upper bound is
-Theorem~\ref{thm:erw-bounds}(b). For the lower bound we compare $M$ after
-the first flip with P\'olya's urn conditioned to end at $h$, which we call
-the bridge. Then $V_{t+1}(1)/\pi_t$ is the mean over the bridge of a product
-of factors $1+O(\varepsilon)$, one for each step
-(Proposition~\ref{prop:A-bridge}). By Jensen's inequality the mean of the
-product is at least the exponential of the mean of the sum of the
-logarithms. The step at time $u$ adds about $2\varepsilon/u$ to this mean,
-and the sum over $u\le N$ is about $2\varepsilon\log N$.
-
-With this bound the proof of Theorem~\ref{thm:erw-crossing} gives one more
-term of the crossing.
-
-\begin{proposition}[the crossing to second order]\label{prop:refined}
-As $N\to\infty$ over even $N$,
-\[
- x_N=g_N-\frac{2g_N\log N+g_N^2/2}{N(1+1/g_N)}+O\Bigl(\frac{\log N}N\Bigr).
-\]
-So $x_N<g_N$ for large $N$.
-\end{proposition}
-
-In words, the root $g_N$ overshoots the crossing by an amount of order $\log^2N/N$. The
-amount is $6\log^2N/N$ in the limit, but only about 60 percent of that at $N=51200$
-(Table~\ref{tab:erw-crossing}).
-
-\begin{proof}
-We repeat the proof of Theorem~\ref{thm:erw-crossing}(a) with one more term
-on each side. The center gains the term $2\varepsilon\log N$ and the end
-gains the term $-x^2/(2N)$, and both push $F$ up.
-
-\emph{Step 1: both sides.} Let $F$ be as in the proof of
-Theorem~\ref{thm:erw-crossing}, and let $1\le x\le2\Lambda_N$ and
-$\varepsilon=x/N$. For large $N$ Proposition~\ref{prop:second-order} applies,
-and its error $5200\,\varepsilon$ is $O(x/N)$, as is the term
-$\log(1+2/N)$ in $\log\frac{4\varepsilon}{N+2}$. For the end we use
-$\log(1-y)=-y-\frac{y^2}2+O(y^3)$ for $0\le y\le\frac12$ with $y=x/N$. So
-\[
- \log C_N=\log x+\log4-2L+\frac{2xL}N+O\Bigl(\frac xN\Bigr),\qquad
- \log E_N=-\log2-x-\frac{x^2}{2N}+O\Bigl(\frac xN\Bigr).
-\]
-In the second formula we multiplied the expansion by $N-1$, and the terms
-left over are $O(x/N)$ because $x^2/N$ is bounded for $x\le4L$. Subtracting
-gives
-\[
- F(x)=G(x)-\Lambda_N+\frac{2xL+x^2/2}{N}+O\Bigl(\frac xN\Bigr)
- \qquad(1\le x\le2\Lambda_N).
-\]
-
-\emph{Step 2: solve for $x_N$.} By Theorem~\ref{thm:erw-crossing}, $x_N$ lies
-in this range for large $N$. So $F(x_N)=0$ gives $G(x_N)=\Lambda_N-\eta_N$
-with $\eta_N=(2x_NL+x_N^2/2)/N+O(L/N)$. Since $G(g_N)=\Lambda_N$, the mean
-value theorem gives
-$x_N-g_N=-\eta_N/G'(\xi)$ for some $\xi$ between $x_N$ and $g_N$. Here
-$G'(\xi)=1+1/\xi=(1+1/g_N)(1+O(1/N))$, since $\lvert\xi-g_N\rvert=O(L^2/N)$
-and $g_N\ge L$ for large $N$. As $\eta_N=O(L^2/N)$, we get
-$x_N-g_N=-\eta_N/(1+1/g_N)+O(L^2/N^2)$. Replacing $x_N$ by $g_N$ in the main
-term of $\eta_N$ changes it by $O(L^3/N^2)$, again because
-$\lvert x_N-g_N\rvert=O(L^2/N)$. All these errors are $O(L/N)$, which gives
-the formula. Its main term is of order $L^2/N$ and is larger than the error
-for large $N$, so $x_N<g_N$.
-\end{proof}
-
-\begin{remark}[numerical values and open points]\label{rem:refined}
-The formula of Proposition~\ref{prop:refined} without its error term is
-within $0.07$ of $x_N$ already at $N=400$ (Table~\ref{tab:erw-crossing}).
-Proposition~\ref{prop:second-order} does not identify the term of order
-$\varepsilon$. At fixed $N$ the center is a polynomial
-$c_1\varepsilon+c_2\varepsilon^2+\cdots$ in $\varepsilon$, by
-Proposition~\ref{prop:first-mutation}(b). From its Taylor coefficients,
-computed in double precision (\texttt{verify\_elephant\_crossing.py}), we get
-$c_2/c_1-2\log N=-1.585878$, $-1.546572$ and $-1.541005$ at $N=1600$, $12800$
-and $51200$. These values approach $2\gamma-2-\log2=-1.5387\ldots$, but we do
-not prove this limit here. We do not know whether, for some fixed $k$, the
-bound
-$\log C_N\le\log(c_1\varepsilon)+\varepsilon c_2/c_1+O(\varepsilon^2(\log N)^k)$
-holds uniformly in $N$ in the range of Proposition~\ref{prop:second-order}.
-We also do not know an explicit $N$ beyond which $g_N>x_N$.
-\end{remark}
+Online Resource~1 proves a lower bound for $C_N$ that matches
+Theorem~\ref{thm:erw-bounds}(b) up to a factor $1+O(\varepsilon)$, and with it
+one more term of the crossing, which shows that $x_N<g_N$ for large $N$.
