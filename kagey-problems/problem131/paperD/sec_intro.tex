@@ -1,22 +1,31 @@
 \section{Introduction}\label{sec:intro}
 
-The elephant random walk of Sch\"utz and Trimper~\cite{schutz2004} remembers
-its whole past. In~\cite{schutz2004} the first step is $+1$ with a
-probability that is a parameter of the model, and we take it to be
-$\frac12$, so that the first step is $+1$ or $-1$ with probability $\frac12$
-each. Each later step picks one of the earlier steps uniformly at random and
-repeats it, except that with probability $\varepsilon$ it reverses it. For a
-walk with $N$ steps we write $x=N\varepsilon$. The expected number of
+The elephant random walk of Sch\"utz and Trimper~\cite{schutz2004} has steps
+$X_1,\dots,X_N\in\{\pm1\}$ and remembers its whole past.
+In~\cite{schutz2004} the first step is $+1$ with a probability that is a
+parameter of the model, and we take it to be $\frac12$, so that the first
+step is $+1$ or $-1$ with probability $\frac12$ each. Each later step picks
+one of the earlier steps uniformly at random and repeats it, except that with
+probability $\varepsilon$ it reverses it. The steps are the colors of
+broadcasting on a random recursive tree~\cite{adlv2022,ahs2026}, in which each
+new vertex attaches to a uniform earlier vertex, copies its color and changes
+it with probability $\varepsilon$ (Lemma~\ref{lem:tree}). Most limit theorems
+for the walk fix $\varepsilon$ as $N\to\infty$~\cite{coletti2017,bercu2018,kubotatakei2019,glrs2025,tv2026}.
+For a walk with $N$ steps we write $x=N\varepsilon$. The expected number of
 reversals is $(N-1)\varepsilon=x-\varepsilon$, so $x$ is this number up to an
-error below one. We let $A_N$ be the number of steps equal to $+1$.
+error below one. We study the regime in which $x$ is of order $\log N$, so
+that $\varepsilon\to0$ and the walk reverses only about $x$ times, and we
+describe the law of its endpoint site by site.
 
 We ask when the walk is as likely to end in the middle as at each end. Let $N$
-be even. The walk ends at the origin, which we call the middle, when
-$A_N=N/2$. It ends at $N$ or at $-N$, which we call the ends, when $A_N=N$ or
-$A_N=0$. If $\varepsilon$ is close to 0 the walk rarely reverses, so the ends
-win. If $\varepsilon=\frac12$ the steps are independent and fair, so the
-middle wins. The crossing is the value of $\varepsilon$ in between at which the
-middle and each end are equally likely.
+be even, and let $A_N$ be the number of steps equal to $+1$. The walk ends at
+the origin, which we call the middle, when $A_N=N/2$. It ends at $N$ or at
+$-N$, which we call the ends, when $A_N=N$ or $A_N=0$. If $\varepsilon$ is
+close to 0 the walk rarely reverses, so the ends win. If $\varepsilon=\frac12$
+the steps are independent and fair, so the middle wins. The crossing is the
+value of $\varepsilon$ in between at which the middle and each end are equally
+likely. In the language of broadcasting, the walk ends in the middle when the
+two colors tie.
 
 In the persistent random walk each step repeats the previous one with
 probability $p$ and switches with probability $q=1-p$. So with $q=\varepsilon$
@@ -31,14 +40,158 @@ crossing within explicit bounds for every $N\ge2$.
 
 In this paper we find the crossing of the elephant walk. The middle needs
 about twice as many reversals as the persistent walk needs switches. Namely,
-the crossing value of $x$ is about $2\log N$, not $\log N$. The limit theorems
-of~\cite{glrs2025,tv2026} for the elephant walk fix the memory parameter, here
-$1-\varepsilon$, as $N$ grows, while we let $\varepsilon\to0$. K\"ursten's
+the crossing value of $x$ is about $2\log N$, not $\log N$. K\"ursten's
 coupling~\cite{kursten2016} splits the steps into the clusters of bond
 percolation on a random recursive tree, and our regime $x\asymp\log N$ lies in
 the strongly supercritical regime of this
 percolation~\cite{baur2016}. The results there describe cluster
 sizes, not the probability of the middle (Section~\ref{sec:prior}).
+
+\subsection{Setting and notation}\label{sec:notation}
+
+The walk takes $N$ steps $X_1,\dots,X_N\in\{+1,-1\}$, where
+$+1$ means right. Let $A_N=\#\{i\le N:X_i=+1\}$ be the number of right steps,
+and write $P_N(k)=\Prob(A_N=k)$ for the probability of bin $k$. Unless we say otherwise the first
+step is fair, $\Prob(X_1=+1)=\frac12$, and the rules treat the two directions
+alike, so $P_N(k)=P_N(N-k)$. We write $\Prob_+$ and $\E_+$ for probability and
+expectation given $X_1=+1$. For even $N$ we put $h=N/2$ and call
+$C_N=P_N(h)$ the center and $E_N=P_N(N)=P_N(0)$ the end. Whenever $C_N$
+appears, $N$ is even. The crossing is the value of the parameter at which
+$C_N=E_N$. All logarithms are natural, $L=\log N$,
+$H_k=\sum_{j\le k}1/j$ is the $k$-th harmonic number, and $\gamma$ is Euler's
+constant. Limits, $O(\cdot)$ and $o(\cdot)$ refer to $N\to\infty$, over even
+$N$ when $C_N$ appears. The constants implied by $O(\cdot)$ are absolute
+unless we name what they depend on.
+
+The elephant walk (Definition~\ref{def:erw}) has the reversal probability
+$\varepsilon\in(0,1)$ and $x=N\varepsilon$. Its crossing is $\varepsilon_N$,
+and $x_N=N\varepsilon_N$. The symbols that only one section uses are defined in that section, where
+they first appear.
+
+\subsection{Main results}\label{sec:results}
+
+Our first theorem gives the center to first order with explicit bounds, and
+with it the crossing.
+
+\begin{theorem}[the center and the crossing]\label{thm:main-center}
+Let $N\ge2$ be even.
+\begin{enumerate}[(a)]
+\item The ratio $C_N/E_N$ is strictly increasing in $\varepsilon\in(0,1)$, and
+the crossing $\varepsilon_N$ exists, is unique and lies in $(0,\frac12)$
+(Proposition~\ref{prop:mlr}).
+\item For $0<\varepsilon<\frac12$ we have
+$C_N\ge\frac{4\varepsilon}{N+2}(1-2\varepsilon)$. If $N\ge64$ and
+$\varepsilon(1+\log N)\le\frac1{100}$, then
+$C_N\le\frac{4\varepsilon}{N+2}\,N^{2\varepsilon}e^{5200\varepsilon}$
+(Theorem~\ref{thm:erw-bounds}, whose constant $5200$ uses an enclosure in ball
+arithmetic).
+\item As $N\to\infty$ over even $N$, the crossing satisfies
+$x_N+\log x_N=2\log N-\log8+O(\log^2N/N)$, and so
+\[
+ x_N=2\log N-\log\log N-\log16+O\Bigl(\frac{\log\log N}{\log N}\Bigr)
+\]
+(Theorem~\ref{thm:erw-crossing}).
+\end{enumerate}
+\end{theorem}
+
+So $C_N=\frac{4\varepsilon}{N+2}(1+O(\varepsilon\log N))$ when
+$\varepsilon\log N$ is small, and the error factor is $1+O(\log^2N/N)$ at the
+crossing. The persistent walk has its crossing at $T$ close to $\log N$, and
+Theorem~\ref{thm:erw-markov} compares the two crossings to the next order.
+
+For the rest of the law let $M_N$ be the number of steps that disagree with
+the first step. Its law $f_N(m)=\Prob(M_N=m)$ does not depend on $X_1$, and
+$P_N(k)=\frac12[f_N(N-k)+f_N(k)]$ (Lemma~\ref{lem:erw-reduction}). Let
+$\CP_N$ be the law of $\sum_{d=1}^{N-1}d\,\mathcal N_d$, where the
+$\mathcal N_d$ are independent Poisson variables with means $x/(d(d+1))$.
+Put $\lambda_m=(m-x\log x)/x$, and let
+\[
+ f_L(\lambda)=\frac1{2\pi}\int_{-\infty}^{\infty}e^{-i\lambda t}e^{B(t)}\,dt,
+ \qquad B(t)=-it\log\lvert t\rvert-\frac\pi2\lvert t\rvert,
+\]
+be the Landau density.
+
+\begin{theorem}[the bulk]\label{thm:main-bulk}
+\begin{enumerate}[(a)]
+\item For $N\ge2$ and $0<\varepsilon\le\frac14$,
+\[
+ \sup_{m\ge0}\bigl\lvert f_N(m)-\CP_N(m)\bigr\rvert\le\delta_B
+ :=\frac{x^2\log N}{N}+\frac{4x^2}{N}e^{4x^2/N}+\frac{4x^2(H_N^2+H_N)}{N}
+\]
+(Theorem~\ref{thm:cp}).
+\item There is an absolute constant $C$ such that if $N\ge64$,
+$0<\varepsilon\le\frac14$ and $x\ge1$, then
+$\bigl\lvert xf_N(m)-f_L(\lambda_m)\bigr\rvert\le
+C\bigl(\frac{1+\log x}x+\frac xN\bigr)+x\delta_B$ for every integer $m\ge0$.
+If moreover $x\to\infty$ and $x^3\log^2N/N\to0$, then $(M_N-x\log x)/x$
+converges in law to the law with density $f_L$ (Theorem~\ref{thm:landau}).
+We do not compute $C$.
+\item The density $f_L$ has exactly one mode $\lambda_{\mathrm L}$, and
+$-0.22278299<\lambda_{\mathrm L}<-0.22278297$ (Lemma~\ref{lem:landau-mode},
+computer-assisted). As $N\to\infty$ over even $N$, at the crossing, with
+$x=x_N$, every mode $a^*\ge N/2$ of $P_N$ satisfies
+\[
+ N-a^*=x\log x+\lambda_{\mathrm L}x+O\bigl(\sqrt{x\log x}\bigr),
+\]
+and the largest mode $m_h$ of $f_N$ satisfies the same with $m_h$ in place
+of $N-a^*$ (Corollary~\ref{cor:mode-location}(b)). The implied constant is not effective.
+\end{enumerate}
+\end{theorem}
+
+So at the crossing the law of the final position has a hump near each end, at
+distance about $x\log x-0.2228\,x$ from it. For the shape of the law between
+the humps let $D_N(a)=P_N(a+1)-2P_N(a)+P_N(a-1)$ be its second difference,
+and for a mode $a^*\ge N/2$ of $P_N$ put $m^*=N-a^*$.
+
+\begin{theorem}[the shape]\label{thm:main-shape}
+\begin{enumerate}[(a)]
+\item Let $N\ge3$ and $0<\varepsilon<\frac12$. Delete the zeros from the list
+$D_N(1),\dots,D_N(N-1)$, replace each entry by its sign, and merge equal
+neighbors. The result is a subsequence of $(+,-,+,-,+)$. In particular the
+second difference changes sign at most four times
+(Theorem~\ref{thm:five-blocks}).
+\item For every even $N\ge8$, at the crossing, $E_N=C_N<P_N(N-1)$, so $P_N$
+is not unimodal (Proposition~\ref{prop:dip-hyp}, computer-assisted through a
+certified enclosure of $\varepsilon_N$ for $N<1688$ and through the constant
+$5200$ of Theorem~\ref{thm:erw-bounds}(b) for $N\ge1688$). By contrast $f_N$ is unimodal for every $N$ and every
+$\varepsilon$ (Lemma~\ref{lem:unimodal}, from~\cite{glrs2025}).
+\item For every large even $N$, at the crossing, the following hold, with
+thresholds that are not effective. For every mode $a^*\ge N/2$ of $P_N$ we
+have $D_N(a)>0$ for $2m^*+1\le a\le N-2m^*-1$, so $P_N$ is strictly convex on
+$\{2m^*,\dots,N-2m^*\}$. Also $P_N(a)>C_N$ for every $1\le a\le N-1$ with
+$a\ne h$ (Theorem~\ref{thm:convex-large} and
+Corollary~\ref{cor:unique-min}). Both conclusions rest on the computer-assisted
+Lemma~\ref{lem:landau-mode}.
+\item The two conclusions of (c) hold for every even $N$ with
+$10\le N\le2000$ (Propositions~\ref{prop:convex-certified}
+and~\ref{prop:center-small}, computer-assisted).
+\end{enumerate}
+\end{theorem}
+
+For the even $N$ above $2000$ and below the thresholds of (c) both
+conclusions are open (Conjecture~\ref{conj:convex} and
+Remark~\ref{rem:convex-open}). The second would follow from the first by
+Lemma~\ref{lem:center-convex} whenever each mode lies within $(N-2)/4$ of the
+nearer end.
+
+Three inputs to the proofs rest on computation, and Section~\ref{sec:verify}
+describes each of them. First, the constant $5200$ in
+Theorem~\ref{thm:erw-bounds}(b) uses an enclosure in ball arithmetic of a sum
+of 60 positive terms, while the asymptotic statements need only that this
+series converges. The value $5200$ matters for the thresholds $1688$ and
+$1689$ in Propositions~\ref{prop:dip-hyp} and~\ref{prop:odd}(c), and for
+Proposition~\ref{prop:second-order}. Second, Lemma~\ref{lem:landau-mode}, on
+the mode of the Landau density, is proved in ball arithmetic.
+Corollary~\ref{cor:mode-location}, Theorem~\ref{thm:convex-large} and the
+results that use them (Corollary~\ref{cor:unique-min} and
+Proposition~\ref{prop:odd}(d)) rely on it. Third, for every $10\le N\le2000$
+a certified enclosure of $\varepsilon_N$ and of the law at the crossing proves
+Propositions~\ref{prop:convex-certified} and~\ref{prop:center-small}, and for
+even $10\le N<1688$ the same enclosure of $\varepsilon_N$ gives
+Proposition~\ref{prop:dip-hyp}. Short exact computations, such as the ratio
+$C_N/E_N$ for $N=8$ in that proposition, are done in rational arithmetic.
+Every other statement is proved by hand, and no proof uses the tables or the
+figures.
 
 \paragraph{Why the elephant needs twice as many reversals.}
 The following argument is heuristic, and Sections~\ref{sec:erw} and~\ref{sec:shape} make it precise.
@@ -73,137 +226,67 @@ probability about $x/(2m^2)$ over a wide range of $m$. So the law has a hump
 near each end, and the middle is where the two tails meet. Indeed, twice
 $x/(2m^2)$ at $m=N/2$ is the $4x/N^2$ above.
 
-\subsection{Setting and notation}\label{sec:notation}
+\paragraph{Further results.}
+Table~\ref{tab:further} lists the other results of the paper, with their
+hypotheses and the kind of proof that each one has.
 
-The walk takes $N$ steps $X_1,\dots,X_N\in\{+1,-1\}$, where
-$+1$ means right. Let $A_N=\#\{i\le N:X_i=+1\}$ be the number of right steps,
-and write $P_N(k)=\Prob(A_N=k)$ for the probability of bin $k$. Unless we say otherwise the first
-step is fair, $\Prob(X_1=+1)=\frac12$, and the rules treat the two directions
-alike, so $P_N(k)=P_N(N-k)$. We write $\Prob_+$ and $\E_+$ for probability and
-expectation given $X_1=+1$. For even $N$ we put $h=N/2$ and call
-$C_N=P_N(h)$ the center and $E_N=P_N(N)=P_N(0)$ the end. Whenever $C_N$
-appears, $N$ is even. The crossing is the value of the parameter at which
-$C_N=E_N$. All logarithms are natural, $L=\log N$,
-$H_k=\sum_{j\le k}1/j$ is the $k$-th harmonic number, and $\gamma$ is Euler's
-constant. Limits, $O(\cdot)$ and $o(\cdot)$ refer to $N\to\infty$, over even
-$N$ when $C_N$ appears. The constants implied by $O(\cdot)$ are absolute
-unless we name what they depend on.
-
-The elephant walk (Definition~\ref{def:erw}) has the reversal probability
-$\varepsilon\in(0,1)$ and $x=N\varepsilon$. Its crossing is $\varepsilon_N$,
-and $x_N=N\varepsilon_N$. The symbols that only one section uses are defined in that section, where
-they first appear.
-
-For the persistent walk, $p$, $q=1-p$ and $T=Nq$ are as above. Its end is
-$E_N=p^{N-1}/2$, its crossing is $p_N$, and $z_N=N(1-p_N)$. So $x=N\varepsilon$
-corresponds to $T$, and the crossing $x_N$ corresponds to $z_N$. We compare the
-two crossings through the crossing equation of~\cite[Proposition~3.8]{paperA},
-which says that for every $N\ge2$
-\begin{equation}\label{eq:markov-crossing}
- z_N+\tfrac12\log z_N=L+c_0+\frac1{8z_N}+O(L^{-2}),\qquad
- c_0=\tfrac12\log\tfrac\pi8,
-\end{equation}
-where the error term is at most $\frac1{4L^2}+\frac{L^2+L}N$ in absolute
-value, and that $L/2\le z_N\le L$. This is the only result of~\cite{paperA}
-that we use, and we use it only to compare the two crossings in
-Section~\ref{sec:erw}. The letters $p$ and $q$ have their meaning
-for the persistent walk only in this introduction, and later sections reuse
-them locally.
-
-\subsection{Results}\label{sec:results}
-
-For every even $N\ge2$ the crossing $\varepsilon_N$ exists, is unique and is
-below $\frac12$ (Proposition~\ref{prop:mlr}). The center has derivative
-exactly $4/(N+2)$ at $\varepsilon=0$
-(Proposition~\ref{prop:first-mutation}), and
-$C_N=\frac{4\varepsilon}{N+2}(1+O(\varepsilon\log N))$ for even $N\ge64$ and
-$\varepsilon(1+\log N)\le\frac1{100}$, with explicit constants
-(Theorem~\ref{thm:erw-bounds}). Let $g_N$ be the root of
-$g+\log g=2L-\log8$. Then $x_N=g_N+O(L^2/N)$, and so
-$x_N=2L-\log L-\log16+O(\log L/L)$ (Theorem~\ref{thm:erw-crossing}). Compared
-with the persistent walk, $x_N=2z_N-\log(2\pi)+c_*/L+O(\log L/L^2)$ with
-$c_*=\frac12\log(2\pi)-\frac14$ (Theorem~\ref{thm:erw-markov}). We collect
-the main statements.
-
-\begin{mainthm}
-\begin{enumerate}[(a)]
-\item For every even $N\ge2$ the elephant walk has a unique crossing
-$\varepsilon_N\in(0,\frac12)$. As $N\to\infty$ over even $N$, the value
-$x_N=N\varepsilon_N$ satisfies
-\begin{gather*}
- x_N=2\log N-\log\log N-\log16+O\Bigl(\frac{\log\log N}{\log N}\Bigr),\\
- x_N=2z_N-\log(2\pi)+\frac{c_*}{\log N}+O\Bigl(\frac{\log\log N}{\log^2N}\Bigr),
-\end{gather*}
-where $z_N$ is the crossing value of $T$ for the persistent walk and
-$c_*=\frac12\log(2\pi)-\frac14$. The second display uses the crossing
-equation~\eqref{eq:markov-crossing} of~\cite[Proposition~3.8]{paperA}.
-\item Let $N$ be even and large, and take $\varepsilon=\varepsilon_N$. Every
-mode $a^*\ge N/2$ of $P_N$ satisfies
-$N-a^*=x_N\log x_N+\lambda_{\mathrm L}x_N+O(\sqrt{x_N\log x_N})$, where
-$\lambda_{\mathrm L}\approx-0.2228$ is the mode of the Landau density. The law $P_N$ is
-strictly convex on $\{2(N-a^*),\dots,2a^*-N\}$, and $P_N(a)>C_N$ for every
-$1\le a\le N-1$ with $a\ne N/2$. For every even $N$ with $10\le N\le2000$ the last two
-statements also hold, by a computer-assisted proof
-(Propositions~\ref{prop:convex-certified} and~\ref{prop:center-small}).
-\end{enumerate}
-The thresholds for large $N$ in (b) are not explicit (Remark~\ref{rem:convex-open}). So for the
-even $N$ above $2000$ that are below them, the convexity in (b) is open
-(Conjecture~\ref{conj:convex}), and so is its last statement, which would follow
-from the convexity by Proposition~\ref{prop:center-small}(a) whenever each mode lies within $(N-2)/4$ of the nearer end.
-\end{mainthm}
-
-Part (a) collects Proposition~\ref{prop:mlr} and
-Theorems~\ref{thm:erw-crossing} and~\ref{thm:erw-markov}. Part (b) collects
-Corollaries~\ref{cor:mode-location} and~\ref{cor:unique-min},
-Theorem~\ref{thm:convex-large} and Proposition~\ref{prop:center-small}.
-
-We also go one order further. In the same range of $\varepsilon$ the center
-is $\frac{4\varepsilon}{N+2}N^{2\varepsilon}(1+O(\varepsilon))$, with
-explicit constants (Proposition~\ref{prop:second-order}). This gives
-$x_N=g_N-(2g_NL+g_N^2/2)/(N(1+1/g_N))+O(L/N)$, so the root $g_N$ is above the
-crossing for large $N$ (Proposition~\ref{prop:refined}).
-
-The remaining results describe the whole law near the crossing. At the
-crossing the end is below its neighbor for every even $N\ge8$
-(Corollary~\ref{cor:dip} and Proposition~\ref{prop:dip-hyp}). For $N<1688$
-this rests on a floating-point computation whose rounding error we bound
-(Lemma~\ref{lem:rounding}). Let $M_N$ be the number of steps that disagree
-with the first step. For $N\ge2$ and $\varepsilon\le\frac14$ the law of $M_N$
-is within an explicit $\delta_B$ of a compound Poisson law, bin by bin, and
-$\delta_B=O(x^2\log^2N/N)$ when $x^2\le N$ (Theorem~\ref{thm:cp}). If
-$x\to\infty$ and $x^3\log^2N/N\to0$, then $(M_N-x\log x)/x$ converges in law
-to the Landau law, with a bound for each bin (Theorem~\ref{thm:landau}). So at
-the crossing every mode lies at distance
-$x_N\log x_N+\lambda_{\mathrm L}x_N+O(\sqrt{x_N\log x_N})$ from the nearer end, where
-$\lambda_{\mathrm L}\approx-0.2228$ is the mode of the Landau density
-(Corollary~\ref{cor:mode-location}). Farther from the ends, bin $N-m$ has
-probability $\frac x{2m^2}(1+o(1))$ for $x\log^2(x+1)\ll m\ll N$, when
-$x\ge1$ and $x\log^2N/N\to0$ (Theorem~\ref{thm:profile}). Finally, for large
-even $N$ the center at the crossing is below every interior bin outside a
-window of width of order $N^{1/2}\log N$ around it
-(Theorem~\ref{thm:shape}). Inside the window we use second differences. For every
-$N\ge3$ and every $0<\varepsilon<\frac12$ the signs of the second difference
-of the law follow the pattern convex, concave, convex, concave, convex, where
-some blocks may be empty (Theorem~\ref{thm:five-blocks}). So the law has at
-most two concave stretches. For large even $N$ the law at the
-crossing is strictly convex between the humps (from $2m^*$ to $N-2m^*$, with
-$m^*$ the distance of a mode from the nearer end), and the center is its unique
-interior minimum (Theorem~\ref{thm:convex-large} and
-Corollary~\ref{cor:unique-min}). For odd $N$ we define the crossing as the
-value of $\varepsilon$ at which the two central bins are as likely as each end.
-The convexity also holds at this crossing for large odd $N$, because the two
-central bins of an odd $N$ are the center of $N+1$ up to an explicit factor
-(Proposition~\ref{prop:odd}). A certified computation gives the convexity
-for $10\le N\le2000$ (Proposition~\ref{prop:convex-certified}), and with it the unique interior
-minimum for every even $N$ in this range (Proposition~\ref{prop:center-small}). For
-the $N$ above $2000$ that these results do not cover, the convexity is open
-(Conjecture~\ref{conj:convex}).
+\begin{table}[htbp]
+\centering\small
+\caption{Further results. ``Exact'' means a statement for every $N$ in the
+stated range with no unknown constant, and ``asymptotic'' means a statement as
+$N\to\infty$ whose constants we do not compute. ``Lean'' marks the statements
+that are also proved in Lean~4 (Section~\ref{sec:verify}).}
+\label{tab:further}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}>{\raggedright}p{5.6cm}>{\raggedright}p{2.0cm}>{\raggedright}p{3.9cm}>{\raggedright\arraybackslash}p{3.1cm}@{}}
+\toprule
+Result & Where & Hypotheses & Status\\
+\midrule
+$C_N$ is a polynomial in $\varepsilon$ with $C_N'(0)=4/(N+2)$
+ & Prop.~\ref{prop:first-mutation} & even $N\ge2$ & exact, Lean\\
+$-11\varepsilon-\varepsilon^2(84\log N+1.05\cdot10^5)\le\log C_N-\log\frac{4\varepsilon}{N+2}-2\varepsilon\log N\le5200\varepsilon$
+ & Prop.~\ref{prop:second-order} & even $N\ge64$, $\varepsilon(1+\log N)\le\frac1{100}$ & explicit constants\\
+$x_N=g_N-\frac{2g_N\log N+g_N^2/2}{N(1+1/g_N)}+O(\frac{\log N}N)$, where $g_N+\log g_N=2\log N-\log8$, so $x_N<g_N$
+ & Prop.~\ref{prop:refined} & even $N\to\infty$ & asymptotic\\
+$x_N=2z_N-\log(2\pi)+\frac{c_*}{\log N}+O(\frac{\log\log N}{\log^2N})$, with $z_N$ the crossing of the persistent walk
+ & Thm.~\ref{thm:erw-markov} & even $N\to\infty$ & asymptotic, uses~\cite[Prop.~3.8]{paperA}\\
+$f_N$ is unimodal
+ & Lemma~\ref{lem:unimodal} & every $N$ and $\varepsilon$ & from~\cite{glrs2025}, Lean\\
+$\frac x{2(1-\varepsilon)}<\frac{P_N(N-1)}{E_N}\le\frac{x(1+1/N)^2}{2-3\varepsilon}+\frac\varepsilon{1-\varepsilon}$
+ & Thm.~\ref{thm:dip} & $N\ge3$, $0<\varepsilon\le\frac12$ & exact, Lean\\
+$\lvert m^*-x\log x-\lambda_{\mathrm L}x\rvert\le x\sqrt{2E'/\kappa_L}$ for every mode $a^*\ge N/2$
+ & Cor.~\ref{cor:mode-location}(a) & $N\ge64$, $0<\varepsilon\le\frac14$, $x\ge1$, $E'<\kappa_L/2$, $m_h\le N/4$ & explicit except the constant $C$ of Thm.~\ref{thm:main-bulk}(b), computer-assisted\\
+$P_N(N-m)=\frac x{2m^2}(1+o(1))$
+ & Thm.~\ref{thm:profile} & even $N$, $x\ge1$, $x\log^2N/N\to0$, $\omega_Nx\log^2(x+1)\le m\le\delta'_NN$ & asymptotic\\
+$D_N(a_0)<0<D_N(a_1)$ with $a_0<a_1\le N/2$ gives $D_N>0$ on $\{a_1,\dots,N-a_1\}$
+ & Thm.~\ref{thm:no-holes} & $N\ge5$, $0<\varepsilon<\frac12$ & exact\\
+one point $a_1\le N/2$ of convexity between $m^*$ and $2m^*+1$ gives convexity between the humps
+ & Cor.~\ref{cor:one-point} & even $N\ge8$ at the crossing, or $N\ge5$, $0<\varepsilon<\frac12$ and $P_N(0)<P_N(1)$ & exact\\
+the two central bins of odd $N$ are $(1-\frac{1-2\varepsilon}N)^{-1}C_{N+1}$, the crossing is as for even $N$, and the law at the crossing is convex between the humps for large $N$
+ & Prop.~\ref{prop:odd} & odd $N\ge3$, and $0<\varepsilon<\frac12$ for the identity & identity exact, crossing asymptotic, convexity not effective\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection{Prior work}\label{sec:prior}
 
 The asymptotic behavior of the elephant walk for a fixed memory parameter is
 well understood~\cite{coletti2017,bercu2018,kubotatakei2019}, and
-Bertoin~\cite{bertoin2022zeros} counts its returns to the origin. For
+Bertoin~\cite{bertoin2022zeros} counts its returns to the origin. Fang~\cite{fang2024}
+counts the returns to the origin of the critical walk, whose memory parameter
+is $\frac34$. The coin-turning walk of Engl\"ander and
+Volkov~\cite{ev2018,evw2020} is the persistent walk with a switch probability
+$p_n$ that depends on the time $n$. For $p_n=a/n$ with $n\ge2$ the frequency
+of heads tends to the Beta$(a,a)$ law~\cite[Theorem~2]{ev2018}, which is
+U-shaped for $a<1$ and humped for $a>1$, so in that limit the ends and the
+middle trade places at $a=1$. Our question is a finite-$N$ version of this
+comparison for the elephant walk, whose reversal probability depends on $N$
+and not on the time. C\'enac, Le~Ny, de~Loynes and
+Offret~\cite{clnlo2018,clnlo2019} study persistent walks with a variable
+memory, with criteria for recurrence and transience and functional scaling
+limits.
+
+For
 $\varepsilon\le\frac12$ the steps of the elephant walk split into clusters, since a step either
 copies an earlier step exactly, with probability $1-2\varepsilon$, or starts
 a new cluster with a fair sign. This is K\"ursten's coupling with bond
@@ -213,8 +296,8 @@ regime $N\varepsilon\asymp\log N$ lies in the strongly supercritical regime
 of Baur~\cite{baur2016}, who extends the results of
 Bertoin~\cite{bertoin2014} for retention probability $1-t/\log n$. Baur's
 Corollary~1 gives the sizes of the largest clusters other than the root's (a
-Poisson limit with intensity $a^{-2}\,da$). In our regime this is the picture
-of about $2x/m^2$ clusters of size $m$, since a new cluster starts with
+Poisson limit with intensity $a^{-2}\,da$). Heuristically, in our regime this
+suggests the picture of about $2x/m^2$ clusters of size $m$, since a new cluster starts with
 probability $2\varepsilon$. Half of them have the sign opposite to the root,
 which gives the $x/m^2$ families of size $m$ behind Theorem~\ref{thm:profile}. These results
 describe cluster sizes, not the center probability, which is a large deviation
@@ -243,28 +326,82 @@ of the elephant walk with this law in our regime (with an explicit error in
 Theorem~\ref{thm:cp}), the dip and the modes for the walk itself rather
 than for the compound Poisson law, and a certified enclosure of the Landau
 mode.
-Gu\'erin, Laulin, Raschel and Simon~\cite[proof of Theorem~1.1]{glrs2025}
+
+The same model is studied as broadcasting on random recursive trees. Each new
+vertex attaches to a uniform earlier vertex, copies its color and changes it
+with probability $\varepsilon$, so by Lemma~\ref{lem:tree} the colors are our
+steps. Addario-Berry, Devroye, Lugosi and Velona~\cite{adlv2022} and Althaus,
+Hartung and Steiner~\cite{ahs2026} study how well the color of the root can be
+recovered from the colors at time $N$, with the flip probability fixed as
+$N\to\infty$. In that language $N-2M_N$ is the number of vertices with the
+color of the root minus the number with the other color, and the center $C_N$
+is the probability of a tie, which enters the error of the majority vote.
+Desmarais, Holmgren and Wagner~\cite{dhw2023} prove limit laws for the color
+counts of broadcasting on linear preferential attachment trees, a class that
+contains the random recursive tree, and Kardas, Shneer and
+Wachtel~\cite{ksw2026} give martingale methods and error bounds, again with a
+fixed flip probability.
+
+Gu\'erin, Laulin, Raschel and Simon~\cite[Section~2, proof of Theorem~1.1]{glrs2025}
 prove that the law with a fixed first step is unimodal, and their other
 results fix the memory parameter as $N$ grows. So do the local limit theorem
 of Trinas and Valle~\cite[Theorem~3.1]{tv2026} for the superdiffusive walk
-and their bounds on where log-concavity fails. We did not find an asymptotic
-formula for the center probability when $\varepsilon\to0$ as $N$ grows in
-the elephant-walk, percolation or Luria--Delbr\"uck literature that we
-read. The Luria--Delbr\"uck results concern the number of mutants, which is
-our $M_N$, and they do not reach the center $M_N=N/2$.
+and their bounds on where log-concavity fails. The work of~\cite{glrs2025}
+builds on the fixed-point equation of Gu\'erin, Laulin and
+Raschel~\cite{glr2026} for the superdiffusive limit. Moments of the
+superdiffusive limit are computed in~\cite{bercu2018,bcr2019}, and for a
+general step distribution in~\cite{kissveto2022}. Exact formulas for the
+second, third and fourth moments of the position after $N$ steps are
+in~\cite[Appendix~B]{bercu2018}, and Bercu, Chabanol and
+Ruch~\cite[(4.8)]{bcr2019} give a recursion for the moments of every order. Da Silva et al.~\cite{dasilva2013}
+give numerical and Fokker--Planck evidence that the propagator is not Gaussian
+in the superdiffusive regime. Roy, Takei and Tanemura~\cite{rtt2025} keep the
+memory parameter fixed and let the number of remembered steps grow with $N$
+in a triangular array. Gut and Stadtm\"uller~\cite{gs2026} study a walk with
+steps in $\{0,1\}$ in which each step copies an earlier one or is $0$, which is
+the elephant walk with stops and not our count $A_N$. We did not find an
+asymptotic formula for the center probability when $N\varepsilon$ is of order
+$\log N$ in the elephant-walk, broadcasting, percolation or
+Luria--Delbr\"uck literature that we read. The broadcasting results fix the
+flip probability as $N$ grows, and the Luria--Delbr\"uck results concern the
+number of mutants, which is our $M_N$, and do not reach the center $M_N=N/2$.
 
 \subsection{Organization}\label{sec:organization}
 
 Section~\ref{sec:erw} reduces the elephant walk to a counting chain, proves
-that its crossing is unique, finds the crossing, and then gives the center
-and the crossing to second order. Section~\ref{sec:shape} describes the whole
+that its crossing is unique, finds the crossing and compares it with the
+crossing of the persistent walk, and then gives the center and the crossing to
+second order. Section~\ref{sec:shape} describes the whole
 law near the crossing, namely the dip at each end, the compound Poisson and
 Landau approximations of the bulk with the place of the modes, the tail
-$x/(2m^2)$, the window around the center, and the convexity between the humps.
+$x/(2m^2)$, and the convexity between the humps.
 Section~\ref{sec:verify} describes the checks. The longer proofs are in
 the appendices. Appendix~\ref{app:erw} holds the proofs for
 Section~\ref{sec:erw}. Appendix~\ref{app:shape} holds the proofs for the
 tail in Section~\ref{sec:shape}, Appendix~\ref{app:bulk}
 holds the proofs for the bulk and the place of the modes, and
 Appendix~\ref{app:signs} holds the proofs for the sign pattern of the second
-difference and for the rounding error of Lemma~\ref{lem:rounding}.
+difference.
+
+Theorem~\ref{thm:main-center} uses only Section~\ref{sec:erw} and
+Appendix~\ref{app:erw}. Parts (a) and (b) of Theorem~\ref{thm:main-bulk} use
+the tree representation (Lemma~\ref{lem:tree}) and Appendix~\ref{app:bulk}.
+Part (c) also uses Lemma~\ref{lem:landau-mode}, the crossing
+(Theorem~\ref{thm:erw-crossing}), the
+unimodality of $f_N$ (Lemma~\ref{lem:unimodal}) and the bound on its mode in
+Lemma~\ref{lem:B-mode}, which rests on the first flip
+(Lemma~\ref{lem:firstmark}) and on Appendix~\ref{app:shape}. In
+Theorem~\ref{thm:main-shape}, part (a) is proved in Appendix~\ref{app:signs}
+from the recurrence~\eqref{eq:D-rec}, and part (b) uses the dip at the end
+(Theorem~\ref{thm:dip}), Proposition~\ref{prop:mlr},
+Theorem~\ref{thm:erw-bounds}(b) and, for $N<1688$, the certified enclosure. Part (c) uses
+the sign pattern of the second difference (Theorems~\ref{thm:five-blocks}
+and~\ref{thm:no-holes}), which together with part (b) reduces the convexity
+to one inequality (Corollary~\ref{cor:one-point}), and the Landau limit,
+which supplies that inequality for large $N$ (Theorem~\ref{thm:convex-large}).
+The place of the modes and Lemma~\ref{lem:center-convex} then give the
+center. Part (d) uses the certified enclosure together with
+Theorem~\ref{thm:no-holes} and Lemma~\ref{lem:center-convex}. The tail
+(Theorem~\ref{thm:profile}) is not used in the proofs of
+Theorems~\ref{thm:main-center} to~\ref{thm:main-shape}, although some lemmas
+of Appendix~\ref{app:shape} are.

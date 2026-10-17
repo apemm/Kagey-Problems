@@ -4,28 +4,32 @@
 All computations are in Python, and the main ones were done by two independent
 methods (for example, forward and backward recursions for the elephant center
 agree to about $10^{-14}$ at $N=12800$). Apart from short exact computations
-that can be checked by hand, such as the ratios $C_N/E_N$ for $N=2$, $4$ and
-$6$ in Proposition~\ref{prop:dip-hyp}, the proofs use computation in four
+that can be checked by hand, such as the ratios $C_N/E_N$ for $N=2$, $4$, $6$
+and $8$ in Proposition~\ref{prop:dip-hyp}, the proofs use computation in three
 places. First, some constants are values of
 explicit sums and integrals, such as the 60-term sum in the proof of
-Theorem~\ref{thm:erw-bounds}(b), which we evaluated in 30-digit arithmetic
-(\texttt{verify\_elephant\_crossing.py}). Its value $102.58640$ is below the
-bound $102.59$ used in the proof by more than $3\cdot10^{-3}$, even with the
-tail added, and this margin is far larger than any rounding error in a sum of
-60 positive terms at this precision. Second,
+Theorem~\ref{thm:erw-bounds}(b), which we enclosed in ball arithmetic. It lies
+in $[102.586396,102.586398]$, so the series is below the bound $102.59$ used
+in the proof even with the tail added. Any finite bound suffices for the
+asymptotic statements. The value $5200$ matters for the thresholds $1688$ and
+$1689$ in Propositions~\ref{prop:dip-hyp} and~\ref{prop:odd}(c), and for
+Proposition~\ref{prop:second-order}. Second,
 Lemma~\ref{lem:landau-mode} rests on enclosures of $f_L'$ at four points and
 of $f_L''$ on an interval, computed in ball arithmetic with
-rigorous error bounds. Third, Proposition~\ref{prop:dip-hyp}, which makes
-Corollary~\ref{cor:dip} hold for every even $N\ge8$, rests for $N<1688$ on a
-double-precision computation of $C_N/E_N$ at $\varepsilon=2/(N+2)$ whose
-rounding error is bounded in Lemma~\ref{lem:rounding}. The second and third
-computations are in \texttt{certify\_elephant.py}, which also repeats the
-third one in exact integer arithmetic for 20 values of $N$. Fourth,
-Proposition~\ref{prop:convex-certified} rests on a computation in ball
-arithmetic (\texttt{certify\_convex.py}, about an hour for the whole range,
-with its output in \nolinkurl{data/certify_convex_output.txt}), and so does
-Proposition~\ref{prop:center-small}(b) (\texttt{certify\_center.py}, about half an hour, with its
-output in \nolinkurl{data/certify_center_output.txt}). The tables,
+rigorous error bounds. These two computations are in
+\texttt{certify\_elephant.py}. Third, for every $10\le N\le2000$ the script
+\texttt{certify\_convex.py} encloses the crossing $\varepsilon_N$ in ball
+arithmetic and then encloses the whole law $P_N$ at the crossing.
+Proposition~\ref{prop:convex-certified} rests on this computation (about an
+hour for the whole range, with its output in
+\nolinkurl{data/certify_convex_output.txt}). The script
+\texttt{certify\_center.py} repeats it for every even $N$ in the range and
+proves Proposition~\ref{prop:center-small} (about half an hour, with its
+output in \nolinkurl{data/certify_center_output_2026-10-16.txt}). It also
+checks, by an exact rational comparison, that the lower end of the enclosure
+of $\varepsilon_N$ lies above $2/(N+2)$ for every even $10\le N\le2000$. By
+Proposition~\ref{prop:mlr} this gives $C_N<E_N$ at $\varepsilon=2/(N+2)$,
+which is Proposition~\ref{prop:dip-hyp} for $10\le N<1688$. The tables,
 the figures and the numbers quoted outside the proofs rest on computation
 alone, and so does the evidence for Conjecture~\ref{conj:convex} beyond what
 Section~\ref{sec:convex} proves. The script \texttt{verify\_elephant\_odd.py} checks the identity
@@ -39,9 +43,13 @@ and Theorem~\ref{thm:dip}. The Lean files are in the folder
 \nolinkurl{kagey-problems/problem131/lean/PaperD}. The file
 \nolinkurl{MAP.md} in that folder lists each formalized statement with its
 Lean name. The
-asymptotic results were not formalized.
+asymptotic results were not formalized. The Lean files use Lean~4.33.1 and
+Mathlib at commit \texttt{0df444a360ea} (the full revision is in
+the file \nolinkurl{lake-manifest.json} of the Lean project). The scripts ran under Python~3.14.3 with
+python-flint~0.9.0 (which contains FLINT~3.6.0 and with it Arb),
+mpmath~1.3.0, numpy~2.4.2 and scipy~1.17.1.
 
-The scripts and the Lean files are in the repository named under ``Data and code
-availability'' at the end of the paper, which also says how to rerun the
+The scripts and the Lean files are in the repository named under ``Code
+availability'' in the Declarations, which also says how to rerun the
 checks.
 \par}

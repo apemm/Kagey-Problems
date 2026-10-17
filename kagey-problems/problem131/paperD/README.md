@@ -1,4 +1,6 @@
-# Endpoint crossings for the elephant random walk
+# The center and the ends of the elephant random walk with rare reversals
+
+Before October 17, 2026 the paper was titled "Endpoint crossings for the elephant random walk".
 
 In the elephant random walk each step copies a uniformly chosen earlier step and reverses (flips) it
 with probability eps. For an even number N of steps the paper studies the crossing, the value of eps
@@ -24,8 +26,10 @@ the check scripts and Lean files, write n for N.)
 
 ## What is proved
 
-The statement numbers below are those of the build of October 15, 2026. Check them against the
-current PDF if the paper has changed since then.
+The statement numbers below are those of the build of October 17, 2026. Check them against the
+current PDF if the paper has changed since then. That build removed the rounding lemma (Lemma 3.7
+before) and the window theorem (Theorem 3.15 before), and `../lean/PaperD/MAP.md` lists the
+numbers that moved. Theorems 1.1, 1.2 and 1.3 in the introduction collect the main results below.
 
 The elephant walk (each step copies a uniformly chosen earlier step and flips it with probability
 eps). Put x = N eps.
@@ -48,35 +52,33 @@ eps). Put x = N eps.
   g + log g = 2 log N - log 8, and x_N < g_N for large N (Proposition 2.10).
 - The end is strictly below its neighbor whenever x >= 2(1 - eps), with two-sided bounds on their
   ratio (Theorem 3.5). So the law at the crossing is not unimodal once x_N >= 2(1 - eps_N)
-  (Corollary 3.6). This hypothesis holds for every even N >= 8 (Proposition 3.8). For N >= 1688
-  the proof uses Theorem 2.6(b) at eps = 2/N. For 8 <= N < 1688 it uses a double-precision
-  computation of C_N/E_N at eps = 2/(N+2), whose rounding error Lemma 3.7 bounds. For N = 2, 4 and 6
-  the hypothesis fails.
+  (Corollary 3.6). This hypothesis holds for every even N >= 8 (Proposition 3.7). For N >= 1688
+  the proof uses Theorem 2.6(b) at eps = 2/N. For 10 <= N < 1688 it uses the ball-arithmetic
+  enclosure of eps_N from `certify_center.py`, whose lower end lies above 2/(N+2), and for N = 8 an
+  exact computation. For N = 2, 4 and 6 the hypothesis fails.
 - Given the first step, let M_N be the number of steps that differ from it. For N >= 2 and
   eps <= 1/4 its law is within an explicit delta_B of a compound Poisson law with jumps d at rates
-  x/(d(d+1)), bin by bin (Theorem 3.9). The bulk (M_N - x log x)/x tends to the Landau law when
+  x/(d(d+1)), bin by bin (Theorem 3.8). The bulk (M_N - x log x)/x tends to the Landau law when
   x -> oo and x^3 (log N)^2/N -> 0, in particular at the crossing, with a bound for each bin
-  (Theorem 3.10).
+  (Theorem 3.9).
 - The Landau density f_L has exactly one mode lambda_L, with -0.22278299 < lambda_L < -0.22278297,
-  and -0.0792 <= f_L'' <= -0.0786 near it (Lemma 3.11, by ball arithmetic). So at the crossing every
+  and -0.0792 <= f_L'' <= -0.0786 near it (Lemma 3.10, by ball arithmetic). So at the crossing every
   mode is at distance x log x + lambda_L x + O(sqrt(x log x)) from the nearer end
-  (Corollary 3.12).
+  (Corollary 3.11).
 - For even N with x >= 1 and x (log N)^2/N -> 0, bin N-m has probability (x/(2m^2))(1 + o(1)),
   uniformly for omega_N x log^2(x+1) <= m <= delta_N N, for any omega_N -> oo with
   omega_N x log^2(x+1) = o(N) and any delta_N -> 0. So the tail is x/(2m^2) for
-  x log^2 x << m << N (Theorem 3.14).
-- There are absolute constants C_w and N_0 such that for even N >= N_0 with 2 <= x_N <= N^(1/4),
-  every interior bin at distance at least C_w (N x_N log N)^(1/2) from the center is above the
-  center at the crossing (Theorem 3.15). This window has width O(sqrt(N) log N).
+  x log^2 x << m << N (Theorem 3.13).
 - For every N >= 3 and every 0 < eps < 1/2 the second difference of the law changes sign at most
-  four times (Theorem 3.20), and once the law has turned convex to the right of its left hump it
-  stays strictly convex up to the mirror point (Theorem 3.21). So strict convexity between the
-  humps follows from one inequality (Corollary 3.22). It holds for all large even N
-  (Theorem 3.23), where the center is then the unique interior minimum (Corollary 3.24), for
+  four times (Theorem 3.19), and once the law has turned convex to the right of its left hump it
+  stays strictly convex up to the mirror point (Theorem 3.20). So strict convexity between the
+  humps (Definition 3.14) follows from one inequality (Corollary 3.21). It holds for all large even
+  N (Theorem 3.22), where the center is then the unique interior minimum (Lemma 3.23 and
+  Corollary 3.24), for
   10 <= N <= 2000 by a certified computation (Proposition 3.25), and for all large odd N
   (Proposition 3.26). For odd N the two central bins equal the center of N+1 divided by
   1 - (1 - 2 eps)/N. For every even N from 10 to 2000 the center is the unique interior minimum
-  (Proposition 3.27, from the certified convexity and the bound on the sign changes).
+  (Proposition 3.27, from the certified convexity and Lemma 3.23).
 
 Heavy-tailed runs and aging walks, which earlier versions treated in Sections 4 and 5 and
 Appendices D and E, are now a separate paper in `../paperF`.
@@ -84,20 +86,25 @@ Appendices D and E, are now a separate paper in `../paperF`.
 ## What rests on computation
 
 No statement is left with its details omitted. Section 4 of the paper (`sec_verify.tex`) gives the
-full account. The proofs use computation in 4 places only (the three below, and Proposition 3.25,
-which rests on the ball-arithmetic computation of `certify_convex.py` for 10 <= N <= 2000).
+full account. The proofs use computation in 3 places only.
 
 - Some constants are values of explicit sums and integrals, such as the 60-term sum in the proof of
-  Theorem 2.6(b), evaluated in 30-digit arithmetic (`verify_elephant_crossing.py`).
-- Lemma 3.11 rests on enclosures of f_L' at 4 points and of f_L'' on an interval, computed in
+  Theorem 2.6(b), enclosed in ball arithmetic (`certify_elephant.py`, and without certification
+  `verify_elephant_crossing.py`).
+- Lemma 3.10 rests on enclosures of f_L' at 4 points and of f_L'' on an interval, computed in
   ball arithmetic with rigorous error bounds (`certify_elephant.py`).
-- Proposition 3.8 rests for N < 1688 on a double-precision computation of C_N/E_N at
-  eps = 2/(N+2), with the rounding error bounded in Lemma 3.7 (`certify_elephant.py`, which also
-  repeats it in exact integer arithmetic for 20 values of N).
+- For every 10 <= N <= 2000 a ball-arithmetic enclosure of eps_N and of the law at the crossing
+  proves Propositions 3.25 and 3.27 (`certify_convex.py` and `certify_center.py`), and for even
+  10 <= N < 1688 the same enclosure of eps_N gives Proposition 3.7 (`certify_center.py`).
+
+Short exact computations, such as C_N/E_N for N = 2, 4, 6 and 8 in Proposition 3.7, are done in
+rational arithmetic (`certify_elephant.py`). The double-precision computation with a rounding bound
+that the paper used for Proposition 3.7 before October 17 is still in `certify_elephant.py` as a
+supplementary check.
 
 The tables, the figures and the numbers quoted outside the proofs rest on computation alone, and so
-does the evidence for Conjecture 3.16 beyond what Section 3.6 proves (double precision at
-N = 3200, 6400, 12800 and 25600). The numbers in Remarks 2.11, 3.13 and 3.28 are of this
+does the evidence for Conjecture 3.15 beyond what Section 3.5 proves (double precision at
+N = 3200, 6400, 12800 and 25600). The numbers in Remarks 2.11, 3.12 and 3.28 are of this
 kind.
 
 ## Open
@@ -105,14 +112,14 @@ kind.
 - An upper bound log C_N <= log(eps c_1) + eps c_2/c_1 + O(eps^2 (log N)^k), where
   C_N = c_1 eps + c_2 eps^2 + ... at fixed N,, and an explicit N beyond
   which the root g_N exceeds x_N (Remark 2.11).
-- Conjecture 3.16 (strict convexity between the humps) for N between 2000 and the constants N_1 and
-  N_1' of Theorem 3.23 (even N) and Proposition 3.26 (odd N). Section 3.6 proves it for all large N,
+- Conjecture 3.15 (strict convexity between the humps) for N between 2000 and the constants N_1 and
+  N_1' of Theorem 3.22 (even N) and Proposition 3.26 (odd N). Section 3.5 proves it for all large N,
   and `certify_convex.py` certifies it for 10 <= N <= 2000. The constants are not explicit, and the
   proof as it stands cannot work below N of about 3.5 * 10^56, so no computation closes the gap
   (Remark 3.28). For even N >= 8 and odd N >= 1689 the conjecture follows from one inequality
-  (Corollary 3.22 and Proposition 3.26(c)).
-- The tail for m between x log x and x log^2 x, effective constants in Theorems 3.14 and 3.15, and
-  an effective error term in Corollary 3.12 (Remark 3.13).
+  (Corollary 3.21 and Proposition 3.26(c)).
+- The tail for m between x log x and x log^2 x, effective constants in Theorem 3.13, and
+  an effective error term in Corollary 3.11 (Remark 3.12).
 
 ## Prior work
 
@@ -128,7 +135,7 @@ grows.
   main text and Appendices A to D in one PDF, `problem131_memory.pdf`. The sections are
   `sec_intro`, `sec_erw_crossing`, `sec_erw_shape` and `sec_verify`, and the
   appendices are `app_erw_bounds`, `app_erw_profile`, `app_erw_bulk` and `app_erw_signs`
-  (the proofs for the sign pattern of the second difference and the rounding lemma).
+  (the proofs for the sign pattern of the second difference).
 - `figures/` holds the two figures of the paper, with the captions in `figures/captions.md`.
   Figure 1 (`family.pdf`) is made by `figures/make_family_figure.py` and Figure 2 (`shape.pdf`) by
   `figures/make_figures.py`, both in the shared style `../figures/series_style.py`. The second script makes the
@@ -139,13 +146,19 @@ grows.
   numbers printed in the paper.
 - `verify_elephant_crossing.py` checks Section 2, Table 1 and Appendix A.
 - `verify_elephant_shape.py` checks Section 3 and Appendices B and C.
-- `certify_elephant.py` certifies the computations behind Lemma 3.7, Proposition 3.8 and
-  Lemma 3.11. It needs python-flint.
+- `certify_elephant.py` certifies Lemma 3.10, the series in Theorem 2.6(b) and the exact ratios
+  for N = 2, 4, 6 and 8 in Proposition 3.7. It also keeps, as a supplementary check, the
+  double-precision computation for 8 <= N < 1688 with the rounding bound of the removed lemma. Its
+  output is in `data/certify_elephant_output.txt`, whose labels still use the numbers of
+  October 15. It needs python-flint.
 - `certify_center.py` certifies that every possible mode has 2m*+1 <= N/2 for even N from 10 to
-  2000, which with Proposition 3.25 makes the center the unique interior minimum there
-  (Proposition 3.27). It takes about half an hour, so `verify_all.py` does not run it. Its output is
-  in `data/certify_center_output.txt`.
-- `certify_convex.py` certifies convexity between the humps (the property of Conjecture 3.16) for a range
+  2000, which with Proposition 3.25 and Lemma 3.23 makes the center the unique interior minimum
+  there (Proposition 3.27). It also certifies that the enclosure of eps_N lies above 2/(N+2), which
+  gives Proposition 3.7 for 10 <= N < 1688. It takes about half an hour, so `verify_all.py` does not
+  run it. Its output is in `data/certify_center_output_2026-10-16.txt` (the earlier
+  `data/certify_center_output.txt` lacks the check for Proposition 3.7).
+- `certify_convex.py` certifies convexity between the humps (Definition 3.14, the property of
+  Conjecture 3.15) for a range
   of N in ball arithmetic
   (Proposition 3.25). The whole range 10 to 2000 takes about an hour, so `verify_all.py` does not
   run it. Its output is in `data/certify_convex_output.txt`.

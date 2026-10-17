@@ -5,11 +5,13 @@ For each even N the script encloses the crossing eps_N and the whole law P_N exa
 certify_convex.py does (it imports that script). Then it certifies one of two things.
  (A) For every index a* >= N/2 that can be a mode, with m* = N - a*, the range
      2m*+1 <= a <= N-2m*-1 contains the center N/2. By Proposition 3.25 the second difference is
-     positive on this range, and the criterion of Proposition 3.27(a) then gives the claim.
+     positive on this range, and the criterion of Lemma 3.23 then gives the claim.
  (B) Otherwise, directly: the enclosure of P_N(a) - P_N(N/2) is positive for every
      1 <= a <= N-1 with a != N/2.
 It prints how many N fall under (A) and under (B), the N under (B), and for (A) the smallest value
 of N/2 - (2m*+1). As a second check it also reports for how many N the direct test (B) succeeds.
+It also certifies, by an exact rational comparison, that the lower end lo of the enclosure of eps_N
+exceeds 2/(N+2) (the hypothesis of Proposition 3.7), and prints the smallest lo*(N+2)/2.
 Usage: python -B certify_center.py Nlo Nhi     (10 2000 takes about half an hour)"""
 import os
 import sys
@@ -35,30 +37,36 @@ def certify(N):
             break
     else:
         return None, 'crossing not enclosed'
+    # the hypothesis of Proposition 3.7: eps_N > 2/(N+2), exact rational comparison
+    margin = lo * (N + 2) / 2
+    if not lo > fmpq(2, N + 2):
+        return None, f'enclosure lower end {lo} not above 2/(N+2)'
     P = cc.law(N, arb(lo).union(arb(hi)))
     best_lower = max(P[a].lower() for a in range(h, N + 1))
     cand = [a for a in range(h, N + 1) if not (P[a].upper() < best_lower)]
     slack = min(h - (2 * (N - a) + 1) for a in cand)
     direct = all((P[a] - P[h]) > 0 for a in range(1, N) if a != h)
     if slack >= 0:
-        return 'A', (slack, direct)
+        return 'A', (slack, direct, margin)
     if direct:
-        return 'B', (slack, direct)
+        return 'B', (slack, direct, margin)
     return None, f'neither test works, slack {slack}'
 
 
 if __name__ == '__main__':
     lo, hi = int(sys.argv[1]), int(sys.argv[2])
     t0 = time.time()
-    A, B, bad, ndirect, minslack = 0, [], [], 0, None
+    A, B, bad, ndirect, minslack, minmargin = 0, [], [], 0, None, None
     for N in range(lo + lo % 2, hi + 1, 2):
         kind, info = certify(N)
         if kind is None:
             bad.append((N, info))
             print('FAIL', N, info, flush=True)
             continue
-        slack, direct = info
+        slack, direct, margin = info
         ndirect += bool(direct)
+        if minmargin is None or margin < minmargin[0]:
+            minmargin = (margin, N)
         if kind == 'A':
             A += 1
             if minslack is None or slack < minslack[0]:
@@ -68,4 +76,9 @@ if __name__ == '__main__':
     print(f'even N = {lo}..{hi}: (A) {A}; (B) {len(B)}, namely {B}; failures {bad}; '
           f'smallest N/2 - (2m*+1) under (A): {minslack}; direct test succeeds for {ndirect} of them; '
           f'{time.time() - t0:.0f}s', flush=True)
+    mm = 'none' if minmargin is None else f'{float(minmargin[0]):.6f} at N = {minmargin[1]} (exact {minmargin[0]})'
+    allpass = not any('not above 2/(N+2)' in str(i) or 'not enclosed' in str(i) for _, i in bad)
+    print(f'eps_N > 2/(N+2) (lower end of the enclosure, exact rational comparison): '
+          f'{"every N passed" if allpass else "FAILED for some N"}; '
+          f'smallest lo*(N+2)/2: {mm}', flush=True)
     sys.exit(1 if bad else 0)
