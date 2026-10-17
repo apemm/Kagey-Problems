@@ -3,19 +3,40 @@
 Paper D is `paperD/problem131_memory.tex`, "The center and the ends of the elephant random walk
 with rare reversals" (before October 17, 2026 it was titled "Endpoint crossings for the elephant
 random walk"). The tables cite the statement labels of the 4 research notes D1 to D4. For D1 and D2
-the column Paper gives the number in the paper in the build of October 17, 2026 (for example D1 S9
-is Proposition 2.3 and D2 Theorem 1 is Theorem 3.5). For D3 and D4, which are now Paper F, it gives
+the column Paper gives the number in the shortened build of October 17, 2026, which moved some
+results to Online Resource 1 (`paperD/online_resource.tex`, numbers S1.1 and so on), for example
+D1 S9 is Proposition 2.3 and D2 Theorem 1 is Theorem 3.5. For D3 and D4, which are now Paper F, it gives
 the number in Paper D before the split of October 13, 2026 (for example D3 Prop 1 was Proposition
 4.1 and D4 Prop 9 was Proposition 5.1), and the note at the end says how these numbers moved. The
-section "Renumbering of October 17, 2026" below lists the D1 and D2 numbers that changed. "Not in
+sections "Renumbering of October 17, 2026" and "Online Resource 1" below list the D1 and D2
+numbers that changed. "Not in
 the paper" marks results of the notes that the paper does not state. The Lean
 library is `PaperD` (root `PaperD.lean` and 16 modules in `PaperD/`, so 17 modules in all,
 namespace `Kagey131.PaperD`),
 built against Lean 4 v4.33.1 and Mathlib v4.33.1.
 
-Every theorem below is proved without `sorry`, `admit` or new axioms. `#print axioms` on each of
-the 136 theorems named in the tables reports only `propext`, `Classical.choice` and
-`Quot.sound`. A clean build of the 17 `PaperD` modules takes about 2.5 minutes (Mathlib cached).
+The tables name 136 Lean declarations. Of these, 51 are in the tables D1 and D2 (Paper D) and 85 in
+the tables D3 and D4 (Paper F), and many are support lemmas. So 136 is not the number of Paper D
+theorems that are formalized. The recorded audit of October 16, 2026
+(`../verification-manifest.json` and `../build-log.txt`, whose source hashes match the current
+files) covers all 281 theorem and lemma declarations of the 17 `PaperD` modules. It found no
+`sorry`, `admit` or new axioms, and `#print axioms` reports only `propext`, `Classical.choice`
+and `Quot.sound`. Lean was not rebuilt for the shortened build of October 17, which changed no
+Lean file. A clean build of the 17 `PaperD` modules takes about 2.5 minutes (Mathlib cached).
+
+Coverage of Paper D. Selected finite statements are formalized. They are the finite
+correspondence between sign words and the count chain (Lemma 2.2), the strict monotonicity of
+every bin relative to the end and the unique crossing (Proposition 2.3), the derivative
+`C_n'(0) = 4/(n+2)` (Proposition 2.5(b)), unimodality with a fixed first step (Lemma 3.4) and the
+two inequalities for the end and its neighbor (Theorem 3.5). The conclusion that the law is not
+unimodal at the crossing (`not_unimodal_at_crossing`, Corollary 3.6) keeps the endpoint dip as a
+hypothesis, and the proof that the dip holds for every even `n >= 8` (Proposition 3.7) is not
+formalized. The subtree identities are proved for the Pólya chain `stLaw`, and its identification
+with the subtree of a random recursive tree (Lemma 3.1) is not formalized. The principal analytic
+and shape results are not formalized end to end. These are the bounds on the center (Theorem 2.6),
+the crossing asymptotics, the compound Poisson and Landau results, the sign pattern of the second
+difference and the convexity and center results of Section 3.5. The Python and Arb certificates
+(`paperD/certify_*.py`) are separate from Lean.
 
 ## Models
 
@@ -58,7 +79,7 @@ the elephant walk, `law ε n` and `ewBin ε n` use the number of steps `n` direc
 | Lemma 2.3(6): `∑_v (v-2) β_v(d) = 2n(n-d-1)/(d(d+1)(d+2))` | Lemma 2.4 | `subtreeCountW_eq` | `RecursiveTree.lean` |
 | §11 item 2 (first-order term of `h(m)` is exactly `x/(m(m+1))`) | Section 3.1 | `profile_hasDerivAt`, `subtreeCount_eq_coef1` | `ElephantFirstOrder.lean`, `RecursiveTree.lean` |
 | Lemma 2.7 (unimodality given the first step) | Lemma 3.4 | `law_unimodal_delta`, `law_isUnimodal` (`delta_succ_succ`, `delta_succ_zero`, `delta_zero_neg`) | `ElephantUnimodal.lean` |
-| Lemma 3.3 (first-marked subtree: two-sided bound, tail bound) | Lemma B.4 (for the urn model) | `firstMark_bounds`, `firstMark_tail` | `RecursiveTree.lean` |
+| Lemma 3.3 (first-marked subtree: two-sided bound, tail bound) | Lemma B.3 (for the urn model) | `firstMark_bounds`, `firstMark_tail` | `RecursiveTree.lean` |
 | Theorem 1, lower bound (`R₁ > x/(2(1-ε))`) | Theorem 3.5 | `endpoint_dip`, `endpoint_below_neighbour` | `ElephantCrossing.lean` |
 | Theorem 1, upper bound (`R₁ ≤ x(1+1/n)²/(2-3ε) + ε/(1-ε)`) | Theorem 3.5 | `endpoint_ratio_upper`, `endpoint_above_neighbour` (via `law_one_eq`, `dipS_le`, `law_top_le`) | `ElephantEndpoint.lean` |
 
@@ -109,14 +130,14 @@ The asymptotic statements are out of scope. They need the Laplace method, stable
 local limit theorems, Bessel or Landau limits, and `o(1)` and `O(·)` error terms. They are the
 following.
 
-* D1 S8 (uniform asymptotic), S10 (the crossing `x_n`, Theorem 2.7 and Proposition 2.10), S11 (the
+* D1 S8 (uniform asymptotic), S10 (the crossing `x_n`, Theorem 2.7 and Proposition S1.2), S11 (the
   comparison with the crossing of Paper A, Theorem 2.8, where only the constants are checked),
   S13 (limit `K₂`, which needs series over `t` and `u`, and which the paper no longer states), S14, S16 (heuristic),
-  S3(c) (limit weights `t 2^{-t-1}`, Lemma A.6).
+  S3(c) (limit weights `t 2^{-t-1}`, Lemma S1.5).
 * D2 Theorem 2 (compound Poisson bulk, Theorem 3.8 and Theorem 1.2(a)), Theorem 3 and
   Corollaries 6.2, 6.3 (explicit but very long error terms, and the profile statements are
-  asymptotic), Theorem 4 (Landau limit, Theorem 3.9 and Theorem 1.2(b)), Theorem 5, Conjecture 5.1
-  (Conjecture 3.15), Heuristics H1, H1', H2, H3.
+  asymptotic, among them the tail of Theorem S2.1), Theorem 4 (Landau limit, Theorem 3.9 and
+  Theorem 1.2(b)), Theorem 5, Conjecture 5.1 (Conjecture 3.14), Heuristics H1, H1', H2, H3.
 * D3 Lemmas 3 to 5, Theorem 6 (Theorem 4.4), the asymptotic halves of Corollary 7 and
   Theorems 8, 9 (Theorems 4.7 and 4.8, including the local min/max test at `α_c`), Heuristics 10,
   11, Remarks 12, 13 (numerics, Remark 4.6).
@@ -128,7 +149,7 @@ Some exact or finite statements are not formalized either.
 
 * D1 S3(a) (first-mutation decomposition, Proposition 2.5(a)), S4 (Duhamel identity),
   S5(a),(b),(d) (Pólya(`c`) hitting functions, bridge, Lemma A.1), S6 (supersolution bound,
-  Proposition A.4), S7 (bridge product formula, Proposition A.5), S12. These need the Pólya hitting function
+  Proposition A.4), S7 (bridge product formula, Proposition S1.4), S12. These need the Pólya hitting function
   `Φ^c` (Beta functions of real arguments), a comparison lemma for backward recursions, and
   digamma bounds, which would be a separate project. The exact first
   coefficient `c₁ = 4/(n+2)` of S3(b) is proved here by a different route (a first-order
@@ -149,7 +170,7 @@ Some exact or finite statements are not formalized either.
 * The records interpretation of D4 Proposition 3 (Rényi) was not attempted.
 * Results that the paper gained in October 2026 are not in Lean. They are Proposition 3.7 and
   Lemma 3.10 (computer-assisted, see `paperD/certify_center.py` and `paperD/certify_elephant.py`),
-  Lemma 3.23 (the center from convexity, new on October 17), Theorem 5.2 (the aging chain on `d`
+  Lemma 3.22 (the center from convexity, new on October 17), Theorem 5.2 (the aging chain on `d`
   states, now in Paper F) and Proposition 5.4 for `d ≥ 3` (now in Paper F). Theorems 1.1 to 1.3
   collect results of Sections 2 and 3 and are covered only through the rows above (Theorem 1.1(a)
   is Proposition 2.3, and Theorem 1.3(b) quotes Lemma 3.4).
@@ -178,6 +199,28 @@ results has a Lean counterpart, so no Lean theorem lost its place in the paper.
   Lemmas 3.1 to 3.4, Theorem 3.5, Corollary 3.6, Corollary 3.24 and Propositions 3.25 to 3.27,
   Remark 3.28, all of Section 2 and Appendices A to C keep their numbers. Appendix D now has
   Subsections D.1 to D.4.
+
+## Online Resource 1
+
+Later on October 17, 2026 the paper moved three parts to Online Resource 1
+(`paperD/online_resource.tex`), whose numbers carry the prefix S. None of the moved results has a
+Lean counterpart except through the rows above, so no Lean theorem lost its place.
+
+* Moved. Section 2.4 (the second order) with Propositions 2.9 and 2.10 and Remark 2.11 is now
+  Section S1 with Propositions S1.1 and S1.2 and Remark S1.3. Section A.1 (the bridge) with
+  Proposition A.5 and Lemmas A.6 and A.7 is now Section S1.A with Proposition S1.4 and Lemmas
+  S1.5 and S1.6. Theorem 3.13 (the tail) is now Theorem S2.1, Lemma B.3 (late start) is
+  Lemma S2.2, and Propositions B.6 and B.8 are Propositions S2.3 and S2.4. The proof of
+  Proposition 3.26(b), (c) and (d) (odd N) is now in Section S3, and the statement stays in the
+  paper as Proposition 3.25.
+* Old to new in the paper. Table 1 (further results) is gone, so Table 2 is now Table 1.
+  Lemma B.4 is now B.3, Proposition B.5 is B.4 and Lemma B.7 is B.5. Definition 3.14 is now 3.13,
+  Conjecture 3.15 is 3.14, Lemmas 3.16 to 3.18 are 3.15 to 3.17, Theorems 3.19 and 3.20 are 3.18 and
+  3.19, Corollary 3.21 is 3.20, Theorem 3.22 is 3.21, Lemma 3.23 is 3.22, Corollary 3.24 is 3.23,
+  Propositions 3.25 to 3.27 are 3.24 to 3.26 and Remark 3.28 is 3.27. Section 3.4 (the tail) keeps
+  its number with a summary, and Section 3.5 (convexity) keeps its number. Sections 1 and 2 up to
+  Theorem 2.8, Section 3 up to Remark 3.12, Appendix A up to Proposition A.4, Lemmas B.1 and B.2 and
+  Appendices C and D keep their numbers.
 
 ## Gaps and remarks found while formalizing
 
