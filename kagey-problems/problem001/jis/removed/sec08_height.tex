@@ -1,0 +1,118 @@
+\section{Every fixed height}\label{sec:height}
+
+Sections~\ref{sec:three} and~\ref{sec:four} describe a blackout by its column word and count the valid words with a finite machine. This section does the same at every height. The valid words form a regular language, their counts have a rational bivariate generating function, the excess $f(h,m)-m$ is eventually periodic in $m$, and the optimum counts $a_h(m)$ have a rational generating function. We end with the square grids, where the picture is different.
+
+\subsection{Column words and a nonlocal collision}
+
+Let $[h]=\{1,\dots,h\}$. A blackout $S$ of the $h\times m$ grid is the same thing as its \emph{column word} $w=B_1B_2\cdots B_m$ over the alphabet $\Sigma_h=2^{[h]}$, where $B_i$ is the set of black rows of column $i$. We write $S(w)$ for the blackout of a word $w$, $|w|$ for its length, and $\mathcal L_h$ for the set of words $w$ for which $S(w)$ is a valid blackout of the $h\times|w|$ grid. The empty word is in $\mathcal L_h$, since the grid with no columns has no rectangles. A \emph{window} of $w$ is a factor $B_iB_{i+1}\cdots B_j$ of consecutive letters, and it is valid when it is valid as a word. Validity cannot be tested on the windows of a fixed length.
+
+\begin{proposition}[validity is not a window property]\label{prop:nonlocal}
+Let $g\ge1$ and let $S$ be the blackout of the $3\times(g+3)$ grid with the four black points $(1,2)$, $(3,2)$, $(g+3,1)$, and $(g+3,3)$. Then $S$ is axis-valid and every window of at most $g$ columns is valid, but $S$ is not valid.
+\end{proposition}
+
+\begin{proof}
+The graph $G_S$ has four edges and consists of the two paths $c_1\,r_2\,c_3$ and $r_1\,c_{g+3}\,r_3$, so it has no cycle at all, and $S$ is axis-valid by Lemma~\ref{lem:girth}. The diamond $D(1,1)$, with corners $(1,2)$, $(2,1)$, $(3,2)$, and $(2,3)$, and the axis-aligned rectangle on columns $2$ and $g+3$ and rows $1$ and $3$ both show exactly $(2,1)$ and $(2,3)$, so $S$ is not valid. A window of at most $g$ columns cannot contain column $g+3$ together with column $1$ or column $3$, so it has at most two black points, and a blackout with at most three black points is valid, since by Lemma~\ref{lem:threecorners} the symmetric difference of two different rectangles has at least four points.
+\end{proof}
+
+The obstruction has four black points but arbitrarily large diameter, which is why the three-row machine of Section~\ref{sec:three} carries the global pair set $F$.
+
+\subsection{Regularity}
+
+A finite automaton can nevertheless recognize $\mathcal L_h$, because a tilted rectangle has bounded span and an axis-aligned rectangle is described by two columns and a fixed pair of rows. We build a nondeterministic automaton $N_h$ that guesses two rectangles with the same presentation.
+
+\emph{Types and generators.} An \emph{axis type} is a pair of rows $r<s$ in $[h]$. A \emph{tilted type} is a template of Lemma~\ref{lem:leftmost}, namely positive integers $a,b,c,d$ with $ac=bd$ and $a+c\le W_h$ and a row $r$ with $b+1\le r\le h-d$. By Lemmas~\ref{lem:leftmost} and~\ref{lem:span}, the tilted rectangles of the $h\times m$ grid are exactly the sets \eqref{eq:tilt-param} with a tilted type and a leftmost column $x$ with $x+a+c\le m$, so there are finitely many types, depending only on $h$. For a tilted type with span $n=a+c$ and $0\le j\le n$, let $Y_j\subseteq[h]$ be the set of rows of the corners of \eqref{eq:tilt-param} in column $x+j$. The \emph{generator} of a type emits a subset of $[h]$ at each letter. For an axis type it has the states $\mathsf{wait}$, $\mathsf{open}$, and $\mathsf{done}$. In $\mathsf{wait}$ and in $\mathsf{open}$ it may stay and emit $\emptyset$, or move to the next state and emit $\{r,s\}$, and in $\mathsf{done}$ it stays and emits $\emptyset$. For a tilted type with span $n$ it has the states $\mathsf{wait}$, $1,\dots,n$, and $\mathsf{done}$. In $\mathsf{wait}$ it may stay and emit $\emptyset$, or move to state $1$ and emit $Y_0$. In state $j<n$ it moves to state $j+1$ and emits $Y_j$, in state $n$ it moves to $\mathsf{done}$ and emits $Y_n$, and in $\mathsf{done}$ it stays and emits $\emptyset$. A run that reaches $\mathsf{done}$ emits, column by column, the corner rows of one rectangle of its type, which we say the run \emph{describes}, and each rectangle of the grid is described by exactly one run of its type.
+
+\emph{The pair machine.} The states of $N_h$ are the tuples $(\tau_1,\sigma_1,\tau_2,\sigma_2,\phi)$ with $\tau_1,\tau_2$ types, $\sigma_i$ a state of the generator of $\tau_i$, and a flag $\phi\in\{0,1\}$. The initial states are $(\tau_1,\mathsf{wait},\tau_2,\mathsf{wait},0)$ for every ordered pair of types, equal types allowed. On a letter $B$ the machine chooses a transition of each generator, with emitted sets $Y^{(1)}$ and $Y^{(2)}$, and the transition is allowed if and only if
+\begin{equation}\label{eq:pairstep}
+Y^{(1)}\,\triangle\,Y^{(2)}\subseteq B .
+\end{equation}
+The flag becomes $1$ if $Y^{(1)}\ne Y^{(2)}$ and is otherwise unchanged. The accepting states have both generators in $\mathsf{done}$ and $\phi=1$.
+
+\begin{theorem}[regularity]\label{thm:regular}
+For every $h\ge1$, the automaton $N_h$ accepts exactly the words not in $\mathcal L_h$. Hence $\mathcal L_h$ is a regular language over $\Sigma_h$. It is recognized by the total deterministic automaton $D_h$ obtained from $N_h$ by the subset construction, where a subset is accepting if and only if it contains no accepting state of $N_h$. The empty word is in $\mathcal L_h$ for every $h$, and $\mathcal L_1=\Sigma_1^*$.
+\end{theorem}
+
+\begin{proof}
+\emph{Step 1. Soundness.} Let $N_h$ accept $w$. The two runs describe rectangles $R_1$ and $R_2$ of the $h\times|w|$ grid, and at each column the emitted sets are their corner rows there. So a point $(i,j)$ of $C(R_1)\triangle C(R_2)$ has $j\in Y^{(1)}\triangle Y^{(2)}$ at column $i$, hence $j\in B_i$ by \eqref{eq:pairstep}, and $C(R_1)\triangle C(R_2)\subseteq S(w)$. The flag is $1$, so $C(R_1)\ne C(R_2)$. By Lemma~\ref{lem:diff}, $R_1\ne R_2$ have the same presentation, and $w\notin\mathcal L_h$.
+
+\emph{Step 2. Completeness.} Let $w\notin\mathcal L_h$, so some rectangles $R_1\ne R_2$ have the same presentation, and $C(R_1)\triangle C(R_2)\subseteq S(w)$ by Lemma~\ref{lem:diff}. Run the generators of their types, which may coincide, along the runs that describe $R_1$ and $R_2$. The emitted sets are the corner rows of $R_1$ and $R_2$, so \eqref{eq:pairstep} holds at every letter, both runs reach $\mathsf{done}$, and the flag is set at the first column where the corner sets differ. So $N_h$ accepts $w$.
+
+\emph{Step 3. The deterministic machine.} The subset construction gives the total deterministic automaton $D_h$ whose state after a prefix is the set of states of $N_h$ reachable by that prefix, so with the complementary acceptance condition $D_h$ accepts exactly $\mathcal L_h$. The initial subset has flag $0$ in every state, so the empty word is accepted. For $h=1$ there are no types, $N_1$ has no states, and $D_1$ has the single accepting state $\emptyset$.
+\end{proof}
+
+Equal types are needed, since two axis-aligned rectangles on the same pair of rows are the collision of a black four-cycle.
+
+\subsection{Rational generating functions}
+
+Let $F_{h,m}(u)=\sum_Su^{|S|}$, the sum over the valid blackouts $S$ of the $h\times m$ grid, and let $G_h(z,u)=\sum_{m\ge0}F_{h,m}(u)z^m=\sum_{w\in\mathcal L_h}z^{|w|}u^{|S(w)|}$, so that $F_{h,0}=1$ and $F_{h,1}=(1+u)^h$.
+
+\begin{theorem}[rational bivariate series]\label{thm:rational}
+For every $h\ge1$, $G_h(z,u)$ is a rational function of $z$ and $u$ with constant term $1$.
+\end{theorem}
+
+\begin{proof}
+Number the states of $D_h$ from $1$ to $s$, let $\alpha$ be the row vector that is $1$ at the initial state and $0$ elsewhere, and let $\beta$ be the column vector that is $1$ at the accepting states and $0$ elsewhere. Let $M_h(u)$ be the $s\times s$ matrix whose entry $(i,j)$ is $\sum u^{|B|}$ over the letters $B$ that lead from state $i$ to state $j$. Since $D_h$ is total and deterministic, every word $w$ of length $m$ has exactly one path, with weight $u^{|S(w)|}$, so $\alpha M_h(u)^m\beta=F_{h,m}(u)$ and $G_h(z,u)=\alpha(I-zM_h(u))^{-1}\beta$. The adjugate formula writes each entry of the inverse as a quotient of polynomials in $z$ and $u$ whose denominator $\det(I-zM_h(u))$ has constant term $1$.
+\end{proof}
+
+This is the transfer-matrix principle for deterministic automata, as in Flajolet and Sedgewick \cite[Proposition~I.3]{flajolet2009}. It says nothing by itself about the leading coefficients $a_h(m)$ recorded in \seqnum{A399580}, and for those we bound the excess.
+
+\subsection{Bounded excess and eventual periodicity}
+
+The \emph{excess} of a word $w=B_1\cdots B_m$ is $E(w)=|S(w)|-|w|$, an integer that can be negative. Every optimum blackout of the $h\times m$ grid with $m\ge3$ has excess $f(h,m)-m$, which lies between $h-1$ and $q_h$ by Lemma~\ref{lem:cross} and Theorem~\ref{thm:rowbound}. Put $C_h=\max(q_h,\,2h-2)$.
+
+\begin{lemma}[bounded excess]\label{lem:excess}
+Let $h\ge2$.
+\begin{enumerate}[(a)]
+\item If $w=w_1vw_2$ is in $\mathcal L_h$, then the window $v$ is in $\mathcal L_h$.
+\item Every $v\in\mathcal L_h$ has $E(v)\le C_h$.
+\item For every integer $k$, the language $\mathcal L_{h,k}=\{w\in\mathcal L_h:E(w)=k\}$ is regular, and its counting series $\sum_mz^m\,|\mathcal L_{h,k}\cap\Sigma_h^m|$ is rational.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) The rectangles of the $h\times|v|$ grid, placed in the columns of $v$ inside $w$, are rectangles of the $h\times|w|$ grid with the same corner colors, so a collision in $v$ is a collision in $w$.
+
+(b) If $|v|\ge3$, Theorem~\ref{thm:rowbound} gives $|S(v)|\le|v|+q_h$, and if $|v|\le2$ then $|S(v)|\le h|v|$. So $E(v)\le\max(q_h,2h-2)=C_h$. The two terms come from the windows of at least three columns and of at most two, and either can be the larger, as $2h-2=4>2=q_h$ at $h=3$ while $q_h=16>14=2h-2$ at $h=8$.
+
+(c) Let $w=w_1w_2\in\mathcal L_{h,k}$ be split at an arbitrary position. Both $w_1$ and $w_2$ are in $\mathcal L_h$ by (a), and $E(w_1)+E(w_2)=k$, so (b) gives
+\begin{equation}\label{eq:prefix}
+k-C_h\le E(w_1)\le C_h .
+\end{equation}
+If $k>C_h$ then $\mathcal L_{h,k}$ is empty by (b). Otherwise let $J$ be the set of integers in $[k-C_h,C_h]$, which contains $0$ and $k$, and build the automaton with states $(q,\ell)$, where $q$ is a state of $D_h$ and $\ell\in J$, together with a rejecting sink. Its initial state is $(q_0,0)$ with $q_0$ the initial state of $D_h$, a letter $B$ leads from $(q,\ell)$ to $(\delta(q,B),\ell+|B|-1)$ if that counter lies in $J$ and to the sink otherwise, and $(q,k)$ accepts when $q$ accepts in $D_h$. An accepted word is in $\mathcal L_h$ and has excess $k$. Conversely a word of $\mathcal L_{h,k}$ never enters the sink, because every prefix satisfies \eqref{eq:prefix}, and it ends at counter $k$ in an accepting state of $D_h$. So the automaton accepts $\mathcal L_{h,k}$, and the proof of Theorem~\ref{thm:rational} with $u=1$ gives the rational counting series.
+\end{proof}
+
+\begin{theorem}[fixed height]\label{thm:periodic}
+Let $h\ge2$.
+\begin{enumerate}[(a)]
+\item For every $m\ge3$, $h-1\le f(h,m)-m\le q_h$.
+\item There are integers $N\ge3$ and $p\ge1$ and values $k_0,\dots,k_{p-1}$ in $\{h-1,\dots,q_h\}$ such that $f(h,m)=m+k_{m\bmod p}$ for every $m\ge N$.
+\item The words $w$ for which $S(w)$ is a valid blackout of size $f(h,|w|)$ form a regular language, and $\sum_{m\ge0}a_h(m)z^m$ is a rational function of $z$. Here $a_h(m)$ counts the coordinate-labeled optimum blackouts of the $h\times m$ grid, with $a_h(0)=a_h(1)=1$, and $a_h(m)=\seqnum{A399580}(h,m)$ for $m\ge2$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(a) Lemma~\ref{lem:cross} gives $f(h,m)\ge h+m-1$, Theorem~\ref{thm:rowbound} gives $f(h,m)\le m+q_h$, and $h-1\le q_h$ for $h\ge2$.
+
+(b) For each $k$ in $\{h-1,\dots,q_h\}$ fix a deterministic automaton $D_k$ for $\mathcal L_{h,k}$ by Lemma~\ref{lem:excess}(c), and let $\mathcal Q_m$ be the set of its states reachable by some word of length $m$. Then $\mathcal Q_{m+1}$ is the image of $\mathcal Q_m$ under a fixed map on a finite set, so the sequence $(\mathcal Q_m)$ is eventually periodic, with a threshold $N_k$ and a period $p_k$, and so is the statement that $\mathcal Q_m$ meets the accepting states, which says that $\mathcal L_{h,k}$ has a word of length $m$. Let $N$ be the maximum of $3$ and the $N_k$, and let $p$ be the least common multiple of the $p_k$. For $m\ge N$, the set of excesses $k$ in $\{h-1,\dots,q_h\}$ attained by a valid word of length $m$ depends only on $m\bmod p$. By (a) it is nonempty, and $f(h,m)-m$ is its largest element, which we call $k_{m\bmod p}$.
+
+(c) For $m\ge N$ the optimum words of length $m$ are the words of $\mathcal L_{h,k_r}$ of length $m$, where $r=m\bmod p$. The words of length at least $N$ and congruent to $r$ modulo $p$ form a regular language, so the optimum words form the regular language $\bigcup_{r=0}^{p-1}\bigl(\mathcal L_{h,k_r}\cap\{w:|w|\ge N,\ |w|\equiv r\pmod p\}\bigr)$ together with the finite set of optimum words of length less than $N$. Its counting series is rational by the proof of Theorem~\ref{thm:rational} with $u=1$. The empty word and the full one-column blackout give $a_h(0)=a_h(1)=1$.
+\end{proof}
+
+In words, after a finite start the excess runs through a periodic pattern, and the number of optima satisfies a linear recurrence with constant coefficients. The theorem does not say that the pattern is constant, and it gives no usable bound on $N$ or $p$. On two, three, and four rows the excess is eventually constant, with values $1$, $2$, and $4$ (Theorems~\ref{thm:strip}, \ref{thm:threevalue}, and~\ref{thm:fourvalue}), and on five rows it is $6$ from width $21$ on (Theorem~\ref{thm:fiverow}). Whether this happens at every height is asked in Section~\ref{sec:open}. For $h=1$ every blackout is valid, so $f(1,m)=m$ and $a_1(m)=1$. Guilhot, Little, and Parkinson \cite[Theorem~1(3)]{glp2025} prove that the words of maximal weight for an additive weight bounded above on a regular language form a regular language, but Theorem~\ref{thm:periodic} needs the maximum at each width separately, which is why we keep the counter proof. Transfer matrices on grids of fixed width are a standard tool, as in Euler \cite{euler2005}, Butler, Choi, Kim, and Seo \cite{butler2019}, and Mertens \cite{mertens2024}, and Theorem~\ref{thm:regular} justifies them at every height.
+
+\subsection{Fixed height against growing squares}
+
+Theorem~\ref{thm:periodic} fixes the height first, and its threshold, period, and bound depend on it. On the diagonal the excess $f(n,n)-n$ grows faster than $n$, so faster than every fixed-height excess, which is no contradiction, since a statement that holds beyond a threshold depending on $h$ says nothing at $h=m$.
+
+\begin{theorem}[squares]\label{thm:square}
+\begin{enumerate}[(a)]
+\item There are constants $c>0$ and $n_0$ such that $f(n,n)\ge c\,n^{6/5}(1+\ln n)^{-2/5}$ for all $n\ge n_0$. One may take $c=512^{-1/5}/2$. In particular $f(n,n)-2n\to\infty$.
+\item For every $n\ge3$, $f(n,n)\le2n^{4/3}+2n$.
+\end{enumerate}
+\end{theorem}
+
+We prove (a) in Appendix~\ref{app:square} as Theorem~\ref{thm:alteration}, by a random construction with deletions, and (b) there as Proposition~\ref{prop:upper}, by a breadth-first count in $G_S$. We do not compute the threshold $n_0$. The proof gives $n_0=(4A_0\alpha^3)^5$, where $A_0$ is built from the constant $K_{1/10}$ of Lemma~\ref{lem:divisor}, and we do not evaluate that constant. So (a) gives no specific square on which $f(n,n)>2n$, and the explicit instances of $f(h,m)>h+m$ remain those of Section~\ref{sec:five}.
+
+\begin{remark}[Neuwirth's bound]\label{rem:neuwirth}
+Part (b) is not the best known upper bound. Neuwirth \cite[Corollary~16]{neuwirth2001} proves that a bipartite graph with $n$ vertices in each class and no cycle of length four or six has fewer than $n^{4/3}+\frac23n-\frac29n^{2/3}-\frac{20}{81}n^{1/3}$ edges. By Lemma~\ref{lem:girth} this applies to $G_S$ for every valid blackout $S$ of the $n\times n$ grid with $n\ge3$, so $f(n,n)<n^{4/3}+\frac23n$. Neuwirth's paper is an arXiv preprint, and we include the weaker bound (b) because its proof is short and self-contained.
+\end{remark}

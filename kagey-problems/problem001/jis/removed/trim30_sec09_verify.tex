@@ -1,0 +1,148 @@
+\section{Computations and verification}\label{sec:verify}
+
+The results that rest on a computation are labeled computer-assisted. Everything else in
+Sections~\ref{sec:conv} to~\ref{sec:height} has a written proof, except for the few remarks
+that say a proof is only sketched or not written out. Of these, only
+Remark~\ref{rem:fourmemory} is used later, as the design of a computer-assisted count. Every computed value and count
+was found by at least two programs written separately. They agree wherever both ran. Before
+most computations a prediction was written in the ledger
+\nolinkurl{kagey-problems/problem001/data/ledger.md}. Several were wrong, among them
+$f(5,5)=9$, $f(4,8)=13$, $f(5,8)=13$ and $f(6,8)=14$.
+
+All programs are in Python~3.14.3. The ILP program \texttt{solver/engine.py} finds a smallest
+hitting set for the difference sets of Lemma~\ref{lem:diff}. It has a binary variable for each
+kept point and a constraint for each inclusion-minimal difference set. It uses CBC through
+PuLP~\cite{pulp} and lists every optimum. It took $723$ seconds on the $5\times7$ grid and
+$1{,}063$ seconds on the $6\times6$ grid. On the larger grids of Section~\ref{sec:five} it did
+not finish in $30$ minutes. The brute-force check \texttt{solver/brute.py} uses no lemma and
+shares no code with the ILP program. The verifier \texttt{verify\_narrow.py} uses only the
+standard library and runs in $21$ seconds. It checks the lemmas and constructions of
+Sections~\ref{sec:graph} to~\ref{sec:four} and the $5\times5$ grid. The blackouts of $h+m$
+points on the grids $5\times6$, $5\times7$, $6\times6$, $6\times7$ and $7\times7$ come from
+\nolinkurl{game/game.js}. They are rechecked and stored in the files
+\nolinkurl{jis/data/small_cells_sat_*.json}. The SAT solvers come from pysat~1.9.dev15
+(CaDiCaL~1.5.3 and~1.9.5, Glucose~3, 4 and~4.2, MiniSat~2.2, MapleChrono and Lingeling), and
+the algebra uses SymPy~1.14.
+
+Every SAT instance asks for a valid blackout of at least $k$ points. By the observation after
+Corollary~\ref{cor:hitting}, an
+ unsatisfiable instance proves $f(h,m)<k$. Encoding A has a
+variable for each point and a clause ``not all black'' for each inclusion-minimal symmetric
+difference of two rectangles, with a sequential counter for the size. Encoding B finds
+the rectangles separately, from a corner and two perpendicular sides. It has a clause for
+each pair of rectangles that share a corner, and an indicator for each hidden rectangle, of
+which at most one may be true. A totalizer encodes the size. The third encoding,
+\texttt{cells\_sat\_check.py}, is of type A but written from scratch. The structured encoders of
+
+Section~\ref{sec:five} add the column structure of Theorem~\ref{thm:equality} for one row
+partition and keep only the clauses that involve a tilted rectangle. The column searches use
+no solver. They place columns from left to right and stop as soon as two rectangles inside
+the placed columns show the same points. This is sound, since every interval of columns of a
+valid blackout is valid. We did not produce DRAT proofs. The safeguard is that independent
+encodings on different solvers always gave the same answer.
+
+\begin{table}[!htb]
+\centering\footnotesize
+\begin{tabular}{@{}p{0.19\textwidth}p{0.77\textwidth}@{}}
+\toprule
+result & scripts, with the longest single run \\
+\midrule
+Section~\ref{sec:three}  & \raggedright \texttt{three\_row\_closed\_form}, \texttt{three\_row\_closed\_form\_check}
+(SymPy identity and exact fractions to $m=100$, $4$ s), \texttt{three\_row\_definition\_check},
+\texttt{three\_row\_orbits}, \texttt{three\_row\_symmetry\_check} (counts and orbits from the
+definition, $55$ s) \tabularnewline
+Section~\ref{sec:four}  & \raggedright \texttt{four\_row\_counts}, \texttt{four\_row\_dp\_check} (two counts on
+the machines to $m=1500$, $6$ s), \texttt{four\_row\_direct}, \texttt{four\_row\_direct\_check}
+(every equality candidate, $84$ s), \texttt{four\_row\_recurrence},
+\texttt{four\_row\_recurrence\_check}, \texttt{four\_row\_window\_check},
+\texttt{four\_row\_rho\_check}, \texttt{four\_row\_root\_isolation} (certificates and growth, $48$ s) \tabularnewline
+Theorem~\ref{thm:fiverow}(a)  & \raggedright \texttt{five\_row\_structured\_sat}, \texttt{five\_row\_column\_sat},
+\texttt{five\_row\_unstructured\_sat}, \texttt{five\_row\_sat\_check} (four SAT encodings,
+$14$ s), \texttt{five\_row\_unstructured\_dfs\_check} (column search, $431$ s) \tabularnewline
+Theorem~\ref{thm:fiverow}(b), (c)  & \raggedright \texttt{five\_row\_collar\_family},
+\texttt{five\_row\_family\_brute\_check}, \texttt{five\_row\_geometry\_check} (three enumerators,
+$35$ s), \texttt{five\_row\_width8\_candidates} (all $5{,}040{,}000$ candidates, $145$ s) \tabularnewline
+Remark~\ref{rem:fivecounts}  & \raggedright counting runs of the SAT scripts,
+\texttt{five\_row\_count\_dfs\_check} (column search, $854$ s), \texttt{five\_row\_optima\_dp},
+\texttt{row\_bound\_count\_dp} (transfer counters, $185$ s per width) \tabularnewline
+Theorem~\ref{thm:sixrow}  & \raggedright \texttt{six\_row\_structured\_sat}, \texttt{six\_row\_sat\_check}
+(three encoders, $606$ s), \texttt{six\_row\_dfs\_check} (column search, $948$ s),
+\texttt{six\_row\_witness\_brute}, \texttt{six\_row\_collar\_brute} (definition, $25$ s) \tabularnewline
+Theorem~\ref{thm:refute}(a)  & \raggedright \texttt{small\_cells\_sat}, \texttt{small\_cells\_split} (two
+encodings and a case split, $1{,}578$ s), \texttt{cells\_sat\_check} (third encoding, $989$ s),
+\texttt{cells\_witness\_check} \tabularnewline
+\bottomrule
+\end{tabular}
+\caption{The scripts behind the computer-assisted results. Each name stands for a Python file in \nolinkurl{jis/scripts}.}
+\label{tab:scripts}
+\end{table}
+
+\begin{table}[!htb]
+\centering\scriptsize
+\begin{tabular}{@{}lrrrl@{}}
+\toprule
+grid & rect. & $f$ & $a_h(m)$ & by \\
+\midrule
+$2\times2$ & $1$ & $4$ & $1$ & HIB \\
+$2\times3$ & $3$ & $4$ & $12$ & HIB \\
+$2\times4$ & $6$ & $5$ & $32$ & HIB \\
+$2\times5$ & $10$ & $6$ & $80$ & IB \\
+$2\times6$ & $15$ & $7$ & $192$ & TI \\
+$2\times7$ & $21$ & $8$ & $448$ & TI \\
+$3\times3$ & $10$ & $5$ & $53$ & IB \\
+$3\times4$ & $20$ & $6$ & $224$ & IB \\
+$3\times5$ & $33$ & $7$ & $892$ & IB \\
+$3\times6$ & $49$ & $8$ & $3{,}420$ & IB \\
+$3\times7$ & $68$ & $9$ & $12{,}704$ & IB \\
+\bottomrule
+\end{tabular}\hspace{0.6em}
+\begin{tabular}{@{}lrrrl@{}}
+\toprule
+grid & rect. & $f$ & $a_h(m)$ & by \\
+\midrule
+$3\times8$ & $90$ & $10$ & $45{,}864$ & IB \\
+$3\times9$ & $115$ & $11$ & $161{,}992$ & IB \\
+$3\times10$ & $143$ & $12$ & $562{,}912$ & ITD \\
+$4\times4$ & $44$ & $7$ & $316$ & IB \\
+$4\times5$ & $74$ & $8$ & $1{,}810$ & IB \\
+$4\times6$ & $110$ & $10$ & $26$ & IB \\
+$4\times7$ & $152$ & $11$ & $292$ & IB \\
+$4\times8$ & $200$ & $12$ & $2{,}118$ & IMD \\
+$5\times5$ & $130$ & $10$ & $8$ & IB \\
+$5\times6$ & $198$ & $11$ & -- & IS \\
+$5\times7$ & $276$ & $12$ & -- & IS \\
+\bottomrule
+\end{tabular}\hspace{0.6em}
+\begin{tabular}{@{}lrrrl@{}}
+\toprule
+grid & rect. & $f$ & $a_h(m)$ & by \\
+\midrule
+$5\times8$ & $364$ & $14$ & $4$ & SDC \\
+$5\times9$ & $462$ & $15$ & $44$ & SC \\
+$5\times10$ & $570$ & $16$ & $350$ & SC \\
+$5\times11$ & $688$ & $17$ & $3{,}004$ & SC \\
+$5\times12$ & $816$ & $18$ & $24{,}706$ & SCM \\
+$6\times6$ & $313$ & $12$ & -- & IS \\
+$6\times7$ & $443$ & $13$ & -- & S \\
+$6\times8$ & $592$ & $15$ & -- & S \\
+$6\times15$ & $2{,}055$ & $24$ & -- & S \\
+$7\times7$ & $640$ & $14$ & -- & S \\
+\bottomrule
+\end{tabular}
+\caption{The computed values for $h\le m$, with the number of rectangles. The last column
+names the methods that agree, namely H by hand, T a theorem, I the ILP program, B the
+brute-force check, D every equality candidate, C a column search, S two SAT encodings, M a
+transfer counter. On the grids $3\times10$, $4\times8$, $5\times6$, $5\times7$ and $6\times6$ the ILP program gives the value $f$ only. A dash means not computed.}
+\label{tab:values}
+\end{table}
+
+Table~\ref{tab:values} collects the values. The rectangle counts agree with
+\seqnum{A085582} on the squares and with \seqnum{A289832} on the other grids. Note that the
+entry $T(n,k)$ of \seqnum{A289832} counts the rectangles of an $(n+1)\times(k+1)$ grid of
+points. So our $h\times m$ grid is its entry $T(m-1,h-1)$.
+
+The Lean~4 file \nolinkurl{Problem001.lean} in the folder
+\nolinkurl{kagey-problems/lean/KageyProblems} formalizes Section~\ref{sec:conv} and the Strip Theorem (\texttt{strip\_theorem}) with no
+\texttt{sorry}. The code and data are in the folder \nolinkurl{kagey-problems/problem001} of
+the repository~\cite{repo}, with the scripts in
+\nolinkurl{jis/scripts} and their results in \nolinkurl{jis/data}.

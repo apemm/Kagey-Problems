@@ -1,0 +1,214 @@
+\section{The row-column graph and general bounds}\label{sec:graph}
+
+This section sets up the graph that controls the axis-aligned rectangles, proves the upper bound $f(h,m)\le m+q_h$ with its equality structure and the lower bound $f(h,m)\ge h+m-1$, and collects what the later sections need about tilted rectangles. Throughout, $S$ is a blackout of the $h\times m$ grid. We say that $S$ is \emph{axis-valid} if no two axis-aligned rectangles have the same presentation, so a valid blackout is axis-valid. A rectangle that shows at most two corners under $S$ is \emph{weak}, and by Lemma~\ref{lem:threecorners} only weak rectangles can be confused with one another.
+
+\subsection{The graph of a blackout}
+
+The \emph{row-column graph} $G_S$ of $S$ has a vertex $r_j$ for each row $j$, a vertex $c_i$ for each column $i$, and an edge $r_jc_i$ for each black point $(i,j)\in S$. In pictures rows are squares and columns are circles. All graphs in this paper are finite and simple. The corners of an axis-aligned rectangle on rows $j,j'$ and columns $i,i'$ are the four possible edges between these vertices, and if all four are black they form the cycle $r_j\,c_i\,r_{j'}\,c_{i'}$ of length four. We call a cycle of length four a \emph{four-cycle} and a cycle of length six a \emph{six-cycle}. Figure~\ref{fig:c6} shows the two rectangles that a black six-cycle confuses.
+
+\begin{figure}[t]
+\centering
+\input{figs/c6.tex}
+\caption{A black six-cycle on the $3\times3$ grid. (a) The black points $(1,1)$, $(1,2)$, $(2,2)$, $(2,3)$, $(3,3)$, $(3,1)$. The solid rectangle on rows $1,2$ and columns $1,2$ and the dashed rectangle on rows $1,3$ and columns $2,3$ both show only the ringed point $(2,1)$. (b) The cycle $r_1c_1r_2c_2r_3c_3$ in $G_S$.}
+\label{fig:c6}
+\end{figure}
+
+\begin{lemma}[axis-aligned rectangles and short cycles]\label{lem:girth}
+Let $S$ be a blackout of the $h\times m$ grid. If $G_S$ has no cycle of length four and no cycle of length six, then $S$ is axis-valid. If $m\ge3$ and $S$ is axis-valid, then $G_S$ has no cycle of length four and no cycle of length six.
+\end{lemma}
+
+The hypothesis $m\ge3$ cannot be dropped, since on the $2\times2$ grid the all-black blackout is valid and its graph is a four-cycle. By symmetry, $h\ge3$ in place of $m\ge3$ also suffices.
+
+\begin{proof}
+\emph{Step 1. Short cycles confuse.} Let $m\ge3$. If $G_S$ has the four-cycle $r_j\,c_i\,r_{j'}\,c_{i'}$, choose a third column $w$. The rectangles on rows $\{j,j'\}$ with column pairs $\{i,w\}$ and $\{i',w\}$ are different, and both show exactly the white points among $(w,j)$ and $(w,j')$. This is the only place where $m\ge3$ is used. If $G_S$ has the six-cycle $r_a\,c_x\,r_b\,c_y\,r_c\,c_z$, the six points $(x,a)$, $(x,b)$, $(y,b)$, $(y,c)$, $(z,c)$, $(z,a)$ are black. The rectangles on rows $\{a,b\}$, columns $\{x,y\}$ and on rows $\{a,c\}$, columns $\{y,z\}$ are different because $b\ne c$, and every corner of each is black except possibly the shared corner $(y,a)$. So both show $\{(y,a)\}\setminus S$.
+
+\emph{Step 2. No short cycle, no confusion.} Let $R_1\ne R_2$ be axis-aligned rectangles with the same presentation, so $C(R_1)\triangle C(R_2)\subseteq S$ by Lemma~\ref{lem:diff}. We show that $G_S$ has a four-cycle or a six-cycle. Two common corners are not opposite, since opposite corners determine an axis-aligned rectangle, so they lie in one row $a$, at columns $x$ and $y$, or in one column. In the first case both rectangles use the columns $\{x,y\}$, their other rows $b\ne c$ give the black corners $(x,b),(y,b),(x,c),(y,c)$, and $r_b\,c_x\,r_c\,c_y$ is a four-cycle. The second case is the same with rows and columns exchanged. If the only common corner is $(x,a)$, write $R_1$ as rows $\{a,b\}$, columns $\{x,y\}$ and $R_2$ as rows $\{a,c\}$, columns $\{x,z\}$. Then $b\ne c$ and $y\ne z$, since otherwise $(y,a)$ or $(x,b)$ would be a second common corner. The six black points $(y,a)$, $(x,b)$, $(y,b)$, $(z,a)$, $(x,c)$, $(z,c)$ form the six-cycle $r_a\,c_y\,r_b\,c_x\,r_c\,c_z$ on six distinct vertices. If there is no common corner, the four corners of $R_1$ are black and form a four-cycle.
+\end{proof}
+
+\subsection{The row bound}
+
+For each column $i$ let $B_i\subseteq\{1,\dots,h\}$ be the set of rows in which column $i$ is black, so $|S|=\sum_i|B_i|$. Column $i$ is \emph{empty}, a \emph{singleton}, a \emph{double}, or a \emph{triple} according as $|B_i|$ is $0$, $1$, $2$, or $3$. Write $q_h=\lfloor h^2/4\rfloor$.
+
+\begin{theorem}[row bound]\label{thm:rowbound}
+Let $m\ge3$. Every axis-valid blackout of the $h\times m$ grid, and in particular every valid one, has at most $m+q_h$ points. If also $h\ge3$, it has at most $h+q_m$ points. Hence $f(h,m)\le m+q_h$ for $m\ge3$.
+\end{theorem}
+
+We turn $G_S$ into a graph $H$ on the rows alone, with no triangle, and apply Mantel's theorem. For each nonempty column $i$ choose a tree $T_i$ with vertex set $B_i$, for example a path, and let $H$ be the graph on the rows $\{1,\dots,h\}$ whose edge set is the union of the edge sets of the trees $T_i$. The choice of trees is free, and the proof of Theorem~\ref{thm:equality} uses this freedom. Figure~\ref{fig:rowbound} shows two blackouts of the $5\times4$ grid with their graphs $H$ built from paths.
+
+\begin{figure}[t]
+\centering
+\input{figs/rowbound.tex}
+\caption{(a) An axis-valid blackout of the $5\times4$ grid, with the black points of each column joined. Column $1$ is black in rows $1,3,5$, column $2$ in rows $2,3$, column $3$ in row $4$, and column $4$ in rows $4,5$. (b) The graph $H$, with a path on the black rows of each column, in the same color. (c), (d) The same with column $4$ black in rows $2$ and $5$, which creates the triangle $r_2r_3r_5$ in $H$.}
+\label{fig:rowbound}
+\end{figure}
+
+\begin{lemma}[row graph]\label{lem:H}
+Let $m\ge3$, let $S$ be axis-valid, and let $H$ be built from an arbitrary choice of trees $T_i$. Then $H$ has no repeated edge and no triangle, and
+\[
+e(H)=\sum_{B_i\ne\emptyset}\bigl(|B_i|-1\bigr)=|S|-t,
+\]
+where $t$ is the number of nonempty columns and $e(H)$ the number of edges of $H$.
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:girth}, $G_S$ has no four-cycle and no six-cycle. One tree never uses an edge twice, and if two columns $i\ne i'$ both contributed the edge $r_jr_{j'}$, then $r_j\,c_i\,r_{j'}\,c_{i'}$ would be a four-cycle. So $H$ has no repeated edge, and $e(H)=\sum(|B_i|-1)=|S|-t$ since a tree on $|B_i|$ vertices has $|B_i|-1$ edges. The edges of a triangle $r_ar_br_c$ in $H$ do not all come from one column, because a tree has no cycle. If two come from column $i$ and the third from column $i'\ne i$, then $a,b,c\in B_i$ and two of them lie in $B_{i'}$, a four-cycle. If the edges $r_ar_b$, $r_br_c$, $r_ar_c$ come from three different columns $i,i',i''$, then $r_a\,c_i\,r_b\,c_{i'}\,r_c\,c_{i''}$ is a six-cycle in $G_S$.
+\end{proof}
+
+\begin{lemma}[Mantel]\label{lem:mantel}
+Let $H$ be a simple graph on $h$ vertices with no triangle, let $v$ be a vertex of maximum degree $\Delta$, let $A$ be the set of neighbors of $v$, and let $B$ be the set of the other $h-\Delta$ vertices. Then
+\[
+e(H)=\sum_{b\in B}d(b)-e(B)\le(h-\Delta)\Delta-e(B)\le(h-\Delta)\Delta\le q_h=\Bigl\lfloor\frac{h^2}4\Bigr\rfloor,
+\]
+where $d(b)$ is the degree of $b$ and $e(B)$ is the number of edges inside $B$.
+\end{lemma}
+
+\begin{proof}
+The bound $e(H)\le q_h$ is Mantel's theorem \cite{mantel1907}. No two vertices of $A$ are adjacent, since with $v$ they would form a triangle. So every edge has an end in $B$, and counting the edges by their ends in $B$ counts the edges inside $B$ twice, which is the equality. Every degree is at most $\Delta$, and $(h-\Delta)\Delta$ is an integer at most $h^2/4$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:rowbound}]
+By Lemma~\ref{lem:H}, $|S|=t+e(H)$ with $t\le m$, and $e(H)\le q_h$ by Lemma~\ref{lem:mantel}. Hence $|S|\le m+q_h$. The argument is symmetric in rows and columns except where Lemma~\ref{lem:girth} needs a third column, so for $h\ge3$ the exchange of rows and columns gives $|S|\le h+q_m$.
+\end{proof}
+
+Neuwirth~\cite[Theorem~1(ii)]{neuwirth2001} proves the graph form of the bound, namely $e\le v+\lfloor w^2/4\rfloor$ for a bipartite graph with parts of sizes $v$ and $w$ and no four-cycle or six-cycle, under the hypothesis $v\ge\lfloor w^2/4\rfloor$. The tree argument gives it for every $m\ge3$, and its free choice of trees is what the next theorem uses.
+
+\subsection{Equality in the row bound}
+
+A complete bipartite graph $K_{A,B}$ on the row set is \emph{balanced} if $|A|$ and $|B|$ differ by at most one, and then it has $|A|\,|B|=q_h$ edges.
+
+\begin{theorem}[equality structure]\label{thm:equality}
+Let $h\ge4$ and $m\ge3$, and let $S$ be a blackout of the $h\times m$ grid with exactly $m+q_h$ points. Then $S$ is axis-valid if and only if (a), (b), and (c) below hold.
+\begin{enumerate}[(a)]
+\item Every column is nonempty, and no column has three or more black points.
+\item Exactly $q_h$ columns are doubles, and their row pairs $B_i$ are pairwise distinct.
+\item The row pairs of the doubles are exactly the edges of a balanced complete bipartite graph on the rows $\{1,\dots,h\}$.
+\end{enumerate}
+The number of blackouts satisfying (a) to (c) is $p_h\,(m)_{q_h}\,h^{m-q_h}$ for $m\ge q_h$ and $0$ for $m<q_h$. Here $(m)_q=m(m-1)\cdots(m-q+1)$, and $p_h$ is the number of unordered balanced partitions of the rows, namely $p_h=\frac12\binom h{h/2}$ for even $h$ and $p_h=\binom h{\lfloor h/2\rfloor}$ for odd $h$.
+\end{theorem}
+
+In words, a blackout that attains the row bound on four or more rows is a balanced complete bipartite graph of doubles in $q_h$ distinct columns, with one black point in every other column. On three rows an optimum can have a triple column (Section~\ref{sec:three}), and Step~2 below fails when a part has size one.
+
+\begin{proof}
+\emph{Step 1. The equality case of Mantel's theorem.} Suppose $S$ is axis-valid with $|S|=m+q_h$, and build $H$ from an arbitrary choice of trees. Lemmas~\ref{lem:H} and~\ref{lem:mantel} give $|S|=t+e(H)$ with $t\le m$ and $e(H)\le q_h$, so $t=m$, every column is nonempty, and $e(H)=q_h$. Then every inequality in Lemma~\ref{lem:mantel} is an equality. So $e(B)=0$, every $b\in B$ has degree $\Delta=|A|$, and $(h-\Delta)\Delta=q_h$, which says that $\Delta$ is $\lfloor h/2\rfloor$ or $\lceil h/2\rceil$. Neither part contains an edge and every $b\in B$ has $|A|$ neighbors, so every vertex of $B$ is adjacent to every vertex of $A$, and $H$ is the balanced complete bipartite graph $K_{A,B}$.
+
+\emph{Step 2. No column has three black points (the tree swap).} Suppose column $i$ has $|B_i|\ge3$. Then $T_i$ has a vertex $v$ with two neighbors $u$ and $w$ in $T_i$. By Step~1, $u$ and $w$ lie in the part of $K_{A,B}$ not containing $v$. Since $h\ge4$, the part of $v$ contains a vertex $z\ne v$, which is adjacent in $H$ to $u$ and to $w$. Let $T_i'$ be $T_i$ with the edge $vw$ removed and the edge $uw$ added. Removing $vw$ splits $T_i$ into a tree containing $v$ and $u$ and a tree containing $w$, and $uw$ joins them again, so $T_i'$ is a tree with vertex set $B_i$. Let $H'$ be built from $T_i'$ and the unchanged trees of the other columns. The edge $uw$ is in $H'$, and so are $uz$ and $wz$, because the only edge removed is $vw$ and $z\ne v$. So $u,w,z$ form a triangle in $H'$. But Lemma~\ref{lem:H} applies to $H'$, since the choice of trees there is free, and it says that $H'$ has no triangle. This contradiction proves (a).
+
+\emph{Step 3. The doubles.} By (a), $e(H)=\sum(|B_i|-1)$ is the number of doubles, so there are exactly $q_h$ doubles. A tree on two vertices is the single edge $B_i$, so the edges of $H$ are the row pairs of the doubles. They are distinct by Lemma~\ref{lem:H}, which is (b), and they form a balanced complete bipartite graph by Step~1, which is (c).
+
+\emph{Step 4. The converse.} Suppose $S$ satisfies (a) to (c). A four-cycle in $G_S$ would be two columns black in the same two rows, which (a) and (b) exclude. A six-cycle $r_a\,c_x\,r_b\,c_y\,r_c\,c_z$ would make columns $x,y,z$ doubles with row pairs $\{a,b\},\{b,c\},\{a,c\}$, a triangle in the bipartite graph of (c). By Lemma~\ref{lem:girth} and $m\ge3$, $S$ is axis-valid.
+
+\emph{Step 5. The count.} A blackout satisfying (a) to (c) is built by choosing an unordered balanced partition $\{A,B\}$ of the rows, an injective assignment of the $q_h$ edges of $K_{A,B}$ to columns, and a row for each remaining column. This needs $m\ge q_h$, and the choices number $p_h\,(m)_{q_h}\,h^{m-q_h}$. Different choices give different blackouts, since $S$ determines its doubles, their row pairs, and hence $K_{A,B}$ and $\{A,B\}$. For even $h$ the partition is determined by either part, which gives the factor $\frac12$ in $p_h$.
+\end{proof}
+
+At $h=4$ the count is $3\,(m)_4\,4^{m-4}$, the candidate list of Section~\ref{sec:four}.
+
+\begin{corollary}[small widths]\label{cor:small-m}
+Let $h\ge4$ and $3\le m<q_h$. Then $f(h,m)\le m+q_h-1$. In particular $f(5,5)\le10$.
+\end{corollary}
+
+\begin{proof}
+A valid blackout with $m+q_h$ points would be axis-valid and would satisfy Theorem~\ref{thm:equality}(b), which needs $q_h$ distinct columns. For $h=m=5$ we have $q_5=6>5$, so $f(5,5)\le5+6-1=10$.
+\end{proof}
+
+\subsection{The boundary cross}
+
+One construction matches the upper bound up to the excess $q_h-h+1$ on every grid.
+
+\begin{lemma}[boundary cross]\label{lem:cross}
+Let $h,m\ge1$. The blackout $S$ consisting of the first row and the first column of the $h\times m$ grid is valid. Hence $f(h,m)\ge h+m-1$.
+\end{lemma}
+
+\begin{proof}
+The set $S$ has $h+m-1$ points. If $h=1$ or $m=1$ there are no rectangles, so let $h,m\ge2$. We show that the presentation of every rectangle determines the rectangle.
+
+\emph{Step 1. Axis-aligned rectangles.} Let $R$ have columns $x_1<x_2$ and rows $y_1<y_2$. Its white corners form the product set $\pres(R)=X\times Y$ with $X=\{x_1,x_2\}\setminus\{1\}$ and $Y=\{y_1,y_2\}\setminus\{1\}$, and both factors are nonempty since $x_2,y_2\ge2$. The presentation determines $X$, and $X$ determines the columns, since $|X|=1$ means $x_1=1$. The same holds for the rows. So two axis-aligned rectangles with the same presentation are equal, and every axis-aligned presentation is a product set with at least one point.
+
+\emph{Step 2. Tilted rectangles.} Let $R$ be tilted. By Lemma~\ref{lem:leftmost} below, $R$ has a unique leftmost corner $\ell=(x,r)$, its sides from $\ell$ are $(a,-b)$ and $(c,d)$ with positive integers $a,b,c,d$, and its topmost corner is $\ell+(a,-b)$. A corner in column $1$ is $\ell$ and a corner in row $1$ is the topmost corner, so $R$ has at most two black corners. If it shows at least three corners, Lemma~\ref{lem:threecorners} determines it. Otherwise its black corners are $\ell=(1,1+b)$ and $(1+a,1)$, and its white corners are
+\[
+p=\ell+(c,d)=(1+c,\,1+b+d),\qquad q=\ell+(a+c,\,d-b)=(1+a+c,\,1+d).
+\]
+Here $p$ has the smaller column, and $\{p,q\}$ returns the parameters through $a=q_x-p_x$, $b=p_y-q_y$, $c=p_x-1$, and $d=q_y-1$. So two tilted rectangles with the same presentation are equal. Moreover $p$ and $q$ differ in both coordinates, and a product set containing two such points has at least four points, so by Step~1 no axis-aligned rectangle shows exactly $\{p,q\}$.
+\end{proof}
+
+\subsection{Tilted rectangles}
+
+A tilted rectangle has no vertical and no horizontal side, since its sides are perpendicular.
+
+\begin{lemma}[leftmost corner]\label{lem:leftmost}
+A tilted rectangle $R$ has exactly one corner of smallest column and exactly one corner of smallest row. If $\ell=(x,r)$ is the leftmost corner, then the two sides from $\ell$ are $(a,-b)$ and $(c,d)$ with positive integers $a,b,c,d$ satisfying $ac=bd$. The corners of $R$ are then
+\begin{equation}\label{eq:tilt-param}
+(x,r),\qquad(x+a,\,r-b),\qquad(x+c,\,r+d),\qquad(x+a+c,\,r-b+d).
+\end{equation}
+So $R$ occupies the rows $r-b$ to $r+d$ and the columns $x$ to $x+a+c$, its topmost corner is $(x+a,r-b)$, and its column span $a+c$ is at least two.
+\end{lemma}
+
+\begin{proof}
+Suppose two corners both have the smallest column $x$. They are not adjacent, since no side is vertical, so they are opposite, and the center of $R$ lies in column $x$. The other two corners have the same center, so their columns add up to $2x$ and both are at least $x$. Then all four corners lie on one vertical line, which is impossible. The same argument with rows gives the unique topmost corner. From $\ell$ both sides go strictly to the right, since $\ell$ is alone in its column. They are perpendicular and neither is horizontal, so one goes up and the other goes down. Write them as $(a,-b)$ and $(c,d)$ with $a,b,c,d\ge1$. Perpendicularity says $ac=bd$, the corners are $\ell$, $\ell+(a,-b)$, $\ell+(c,d)$, and $\ell+(a,-b)+(c,d)$, and the second has the smallest row.
+\end{proof}
+
+The parametrization bounds the width of a tilted rectangle by the height of the grid. Put $W_h=1+\lfloor(h-1)^2/4\rfloor$.
+
+\begin{lemma}[span bound]\label{lem:span}
+Let $h\ge3$. Every tilted rectangle in an $h\times m$ grid has column span $a+c\le W_h$, so it occupies at most $W_h+1$ columns. For every $m\ge W_h+1$ some tilted rectangle in the $h\times m$ grid has span exactly $W_h$. Grids with one or two rows have no tilted rectangles.
+\end{lemma}
+
+\begin{proof}
+In the notation of Lemma~\ref{lem:leftmost}, the rectangle occupies $b+d+1$ rows, so $b+d\le h-1$. Since $(a-1)(c-1)\ge0$ we have $a+c\le ac+1=bd+1$, and $bd$ is an integer at most $(b+d)^2/4$, so $a+c\le W_h$. For one or two rows, $b+d\le1$ has no solution in positive integers. For sharpness let $b=\lfloor(h-1)/2\rfloor$, $d=h-1-b$, $a=1$, and $c=bd$, with leftmost corner $(1,1+b)$. Then $ac=bd$, and \eqref{eq:tilt-param} gives the corners $(1,1+b)$, $(2,1)$, $(1+bd,h)$, and $(2+bd,1+d)$, inside the rows $1$ to $h$ and the columns $1$ to $1+W_h$, with span $1+bd=W_h$.
+\end{proof}
+
+On three rows $W_3=2$, on four rows $W_4=3$, and on five rows $W_5=5$. For $1\le i\le m-2$ and $1\le j\le h-2$ the \emph{diamond} is the tilted square
+\[
+D(i,j)=\{(i,j+1),\,(i+1,j),\,(i+2,j+1),\,(i+1,j+2)\}.
+\]
+On four rows there are four more kinds, defined for $1\le i\le m-3$ by
+\begin{align*}
+\kA_i&=\{(i,3),(i+1,4),(i+2,1),(i+3,2)\},\\
+\kB_i&=\{(i,3),(i+2,4),(i+1,1),(i+3,2)\},\\
+\kC_i&=\{(i,2),(i+1,4),(i+2,1),(i+3,3)\},\\
+\kE_i&=\{(i,2),(i+2,4),(i+1,1),(i+3,3)\}.
+\end{align*}
+Figure~\ref{fig:tilted} draws the five kinds in a $4\times4$ window.
+
+\begin{figure}[t]
+\centering
+\resizebox{\textwidth}{!}{\input{figs/tilted.tex}}
+\caption{The diamond $D(1,1)$ and the four other kinds $\kA_1,\kB_1,\kC_1,\kE_1$, in a $4\times4$ window. The ringed corner is the leftmost one.}
+\label{fig:tilted}
+\end{figure}
+
+\begin{lemma}[tilted rectangles on narrow grids]\label{lem:tilted-narrow}
+On three rows, the tilted rectangles of the $3\times m$ grid are exactly the diamonds $D(i,1)$ with $1\le i\le m-2$. On four rows, the tilted rectangles of the $4\times m$ grid are exactly the diamonds $D(i,1)$ and $D(i,2)$ with $1\le i\le m-2$ and the rectangles $\kA_i,\kB_i,\kC_i,\kE_i$ with $1\le i\le m-3$.
+\end{lemma}
+
+\begin{proof}
+We use Lemma~\ref{lem:leftmost}. On three rows $b+d\le2$ forces $b=d=1$, then $ac=1$ gives $a=c=1$, and \eqref{eq:tilt-param} is the diamond with leftmost corner $(x,2)$. On four rows either $b=d=1$ again, which gives $D(i,1)$ and $D(i,2)$, or $b+d=3$, so $\{b,d\}=\{1,2\}$, $ac=2$, and $\{a,c\}=\{1,2\}$. The four choices of the sides $(a,-b)$ and $(c,d)$ are $(2,-2),(1,1)$ for $\kA$, $(1,-2),(2,1)$ for $\kB$, $(2,-1),(1,2)$ for $\kC$, and $(1,-1),(2,2)$ for $\kE$. The leftmost corner needs $b$ rows above it and $d$ rows below it, so it lies in row $3$ for $\kA$ and $\kB$ and in row $2$ for $\kC$ and $\kE$, which gives the formulas. Conversely each listed set is an instance of \eqref{eq:tilt-param}.
+\end{proof}
+
+\subsection{Axis-aligned rivals of a weak presentation}
+
+The last lemma decides, for a set $P$ of at most two white points, whether some axis-aligned rectangle shows exactly $P$. Sections~\ref{sec:three} and~\ref{sec:five} apply it to weak tilted rectangles. Write
+\[
+F=F(S)=\bigl\{\{r,s\}:r\ne s\text{ and }\{r,s\}\subseteq B_i\text{ for some column }i\bigr\}
+\]
+for the set of row pairs that are black together in some column.
+
+\begin{lemma}[axis-aligned rivals]\label{lem:rival}
+Let $S$ be a blackout of the $h\times m$ grid under which no axis-aligned rectangle is fully black, which holds whenever $S$ is axis-valid and $m\ge3$. Let $P$ be a set of at most two white points, and call an axis-aligned rectangle with presentation $P$ a \emph{rival} of $P$. Then $P$ has a rival if and only if the condition in the table holds.
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+presentation $P$ & a rival exists if and only if\\
+\midrule
+empty & never\\
+singleton $\{(x,r)\}$ & some $s\in B_x$ has $\{r,s\}\in F$\\
+vertical pair $\{(x,r),(x,s)\}$, $r\ne s$ & $\{r,s\}\in F$\\
+horizontal pair $\{(x,r),(z,r)\}$, $x\ne z$ & $B_x\cap B_z\ne\emptyset$\\
+oblique pair $\{(x,r),(z,s)\}$, $x\ne z$, $r\ne s$ & $(x,s)\in S$ and $(z,r)\in S$\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{lemma}
+
+\begin{proof}
+A rival has the points of $P$ among its corners, and its other corners are black. If $S$ is axis-valid and $m\ge3$, then by Lemma~\ref{lem:girth} no two columns are black in the same two rows, so no axis-aligned rectangle is fully black, which settles the empty case. In the other four cases a rival has rows $\{r,s\}$ and columns $\{x,z\}$ with $s\ne r$ and $z\ne x$, in the notation of the table, and its corners outside $P$ are black. For a singleton this says $s\in B_x$ and $\{r,s\}\subseteq B_z$, for a vertical pair $\{r,s\}\subseteq B_z$, for a horizontal pair $s\in B_x\cap B_z$, and for an oblique pair $(x,s),(z,r)\in S$, which are the conditions in the table. Conversely, in the singleton and vertical cases a column $z$ with $\{r,s\}\subseteq B_z$ satisfies $z\ne x$ because $r\notin B_x$, in the horizontal case a row $s\in B_x\cap B_z$ satisfies $s\ne r$ because $r\notin B_x$, and in the oblique case the two points are opposite corners. In each case the rectangle on rows $\{r,s\}$ and columns $\{x,z\}$ shows exactly $P$.
+\end{proof}

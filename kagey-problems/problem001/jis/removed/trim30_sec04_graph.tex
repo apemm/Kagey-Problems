@@ -1,0 +1,152 @@
+\section{The row-column graph and general bounds}\label{sec:graph}
+
+This section proves $h+m-1\le f(h,m)\le m+q_h$ and lists the tilted rectangles of narrow grids.
+
+A blackout $S$ of the $h\times m$ grid is \emph{axis-valid} if no two axis-aligned rectangles have the same presentation. A rectangle that shows at most two corners is \emph{weak}, and by Lemma~\ref{lem:threecorners} only weak rectangles can be confused.
+
+\subsection{The row bound and its equality case}
+
+The \emph{row-column graph} $G_S$ has a vertex $r_j$ for each row $j$, a vertex $c_i$ for each column $i$, and an edge $r_jc_i$ for each black point $(i,j)$. A fully black axis-aligned rectangle on rows $j,j'$ and columns $i,i'$ is the cycle $r_j\,c_i\,r_{j'}\,c_{i'}$.
+
+\begin{lemma}[axis-aligned rectangles and short cycles]\label{lem:girth}
+If $G_S$ has no four-cycle and no six-cycle, then $S$ is axis-valid. If $m\ge3$ and $S$ is axis-valid, then $G_S$ has no four-cycle and no six-cycle.
+\end{lemma}
+
+The all-black $2\times2$ grid shows that $m\ge3$ is needed.
+
+\begin{proof}
+Let $m\ge3$. If $r_j\,c_i\,r_{j'}\,c_{i'}$ is a four-cycle and $w$ is a third column, the rectangles on rows $\{j,j'\}$ and columns $\{i,w\}$ or $\{i',w\}$ both show the white points among $(w,j)$ and $(w,j')$. If $r_a\,c_x\,r_b\,c_y\,r_c\,c_z$ is a six-cycle, the different rectangles on rows $\{a,b\}$, columns $\{x,y\}$ and on rows $\{a,c\}$, columns $\{y,z\}$ are black except possibly at $(y,a)$.
+
+Conversely, let $R_1\ne R_2$ be axis-aligned with the same presentation, so $C(R_1)\triangle C(R_2)\subseteq S$ by Lemma~\ref{lem:diff}. Opposite corners determine an axis-aligned rectangle, so the common corners lie in one row or one column. If they are $(x,a)$ and $(y,a)$, the other rows $b\ne c$ give the black four-cycle $r_b\,c_x\,r_c\,c_y$, and a common column is similar. If $(x,a)$ is the only common corner, let $R_1$ have rows $\{a,b\}$ and columns $\{x,y\}$ and $R_2$ rows $\{a,c\}$ and columns $\{x,z\}$. Then $b\ne c$, $y\ne z$, and $r_a\,c_y\,r_b\,c_x\,r_c\,c_z$ is a black six-cycle. With no common corner, $R_1$ is a black four-cycle.
+\end{proof}
+
+\begin{theorem}[row bound]\label{thm:rowbound}
+Let $m\ge3$. Every axis-valid blackout of the $h\times m$ grid has at most $m+q_h$ points, and at most $h+q_m$ points if also $h\ge3$. Hence $f(h,m)\le m+q_h$ for $m\ge3$.
+\end{theorem}
+
+For each nonempty column $i$ choose a tree $T_i$ with vertex set $B_i$, and let $H$ be the graph on the rows whose edges are those of all the trees $T_i$.
+
+\begin{lemma}[row graph]\label{lem:H}
+Let $m\ge3$ and let $S$ be axis-valid, with arbitrary trees $T_i$. Then $H$ has no repeated edge and no triangle, and $e(H)=|S|-t$, where $t$ is the number of nonempty columns.
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:girth}, $G_S$ has no four-cycle and no six-cycle. If columns $i\ne i'$ both gave the edge $r_jr_{j'}$, then $r_j\,c_i\,r_{j'}\,c_{i'}$ would be a four-cycle. So $e(H)=\sum(|B_i|-1)=|S|-t$. A triangle $r_ar_br_c$ does not lie in one tree. If two of its edges come from column $i$ and one from column $i'$, then two of $a,b,c\in B_i$ lie in $B_{i'}$, a four-cycle. If its edges come from columns $i,i',i''$, then $r_a\,c_i\,r_b\,c_{i'}\,r_c\,c_{i''}$ is a six-cycle.
+\end{proof}
+
+\begin{lemma}[Mantel \cite{mantel1907}]\label{lem:mantel}
+Let $H$ be a simple triangle-free graph on $h$ vertices. Let $v$ be a vertex of maximum degree $\Delta$, let $A$ be its set of neighbors, and let $B$ be the set of the other $h-\Delta$ vertices. Write $d(b)$ for the degree of $b$ and $e(B)$ for the number of edges inside $B$. Then
+\[
+e(H)=\sum_{b\in B}d(b)-e(B)\le(h-\Delta)\Delta-e(B)\le q_h.
+\]
+\end{lemma}
+
+\begin{proof}
+No two vertices of $A$ are adjacent, so every edge has an end in $B$, and the degree sum over $B$ counts the edges inside $B$ twice. Every degree is at most $\Delta$, $e(B)\ge0$, and $(h-\Delta)\Delta$ is an integer at most $h^2/4$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:rowbound}]
+Lemmas~\ref{lem:H} and~\ref{lem:mantel} give $|S|=t+e(H)\le m+q_h$. Only Lemma~\ref{lem:girth} uses a third column, so for $h\ge3$ the exchange of rows and columns gives $|S|\le h+q_m$.
+\end{proof}
+
+This removes the hypothesis $m\ge q_h$ of Neuwirth's graph form~\cite[Theorem~1(ii)]{neuwirth2001}. His extremal graphs~\cite[Proposition~17]{neuwirth2001} are the blackouts of the next theorem, which adds the converse and the count.
+
+
+\begin{theorem}[equality structure]\label{thm:equality}
+Let $h\ge4$ and $m\ge3$, and let $S$ be a blackout of the $h\times m$ grid with $m+q_h$ points. Then $S$ is axis-valid if and only if
+\begin{enumerate}[(a)]
+\item every column is a singleton or a double,
+\item exactly $q_h$ columns are doubles, with pairwise distinct row pairs, and
+\item these row pairs are the edges of a complete bipartite graph on the rows whose parts differ in size by at most one.
+\end{enumerate}
+There are $p_h\,(m)_{q_h}\,h^{m-q_h}$ such blackouts, where $(m)_q=m(m-1)\cdots(m-q+1)$ and $p_h$, the number of such unordered partitions of the rows, is $\frac12\binom h{h/2}$ for even $h$ and $\binom h{\lfloor h/2\rfloor}$ for odd $h$.
+\end{theorem}
+
+\begin{proof}
+\emph{Step 1. Equality in Mantel's theorem.} Let $S$ be axis-valid and build $H$ from arbitrary trees. Since $|S|=m+q_h$, Lemmas~\ref{lem:H} and~\ref{lem:mantel} force $t=m$ and equality throughout Lemma~\ref{lem:mantel}. So every column is nonempty, $e(B)=0$, and every $b\in B$ has its $\Delta=|A|$ neighbors in $A$. Hence $H$ is complete bipartite with parts $A$ and $B$, whose sizes differ by at most one since $(h-\Delta)\Delta=q_h$.
+
+\emph{Step 2. No triple.} Suppose $|B_i|\ge3$, so $T_i$ has a vertex $v$ with two neighbors $u,w$. They lie in the part opposite to $v$, and since $h\ge4$ the part of $v$ has a vertex $z\ne v$. Replacing the edge $vw$ of $T_i$ by $uw$ gives another tree on $B_i$. The new graph $H'$ contains $uw$, and also $uz$ and $wz$ because $z\ne v$. This triangle contradicts Lemma~\ref{lem:H} and proves (a).
+
+\emph{Step 3. The doubles.} By (a) the edges of $H$ are the row pairs of the doubles, so there are $e(H)=q_h$ doubles. Lemma~\ref{lem:H} gives (b) and Step~1 gives (c).
+
+\emph{Step 4. The converse.} Under (a) and (b) no two columns share two black rows. A six-cycle $r_a\,c_x\,r_b\,c_y\,r_c\,c_z$ would need doubles $\{a,b\}$, $\{b,c\}$, $\{a,c\}$, a triangle in the graph of (c). So Lemma~\ref{lem:girth} applies.
+
+\emph{Step 5. The count.} Choose such a partition, an injective assignment of its $q_h$ edges to columns, and a row for each other column. The doubles of the blackout determine these choices.
+\end{proof}
+
+\begin{corollary}[small widths]\label{cor:small-m}
+Let $h\ge4$ and $3\le m<q_h$. Then $f(h,m)\le m+q_h-1$. In particular $f(5,5)\le10$.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:rowbound} a valid blackout has at most $m+q_h$ points. One with exactly $m+q_h$ points is axis-valid, so by Theorem~\ref{thm:equality}(b) it has $q_h$ double columns. This needs $q_h\le m$. Since $q_5=6>5$, we get $f(5,5)\le10$.
+\end{proof}
+
+For $m<q_h$ the cubic inequality of Neuwirth~\cite[Theorem~1(i)]{neuwirth2001} is often stronger. For example, it gives $f(7,8)\le18$, where Corollary~\ref{cor:small-m} gives $19$.
+
+\subsection{Tilted rectangles}
+
+Put $W_h=1+\lfloor(h-1)^2/4\rfloor$, so $W_3=2$, $W_4=3$, and $W_5=5$.
+
+\begin{lemma}[leftmost corner]\label{lem:leftmost}
+A tilted rectangle $R$ has exactly one corner of smallest column and exactly one of smallest row. If $\ell=(x,r)$ is the leftmost corner, the sides from $\ell$ are $(a,-b)$ and $(c,d)$ with positive integers $a,b,c,d$ and $ac=bd$, and the corners are
+\begin{equation}\label{eq:tilt-param}
+(x,r),\qquad(x+a,\,r-b),\qquad(x+c,\,r+d),\qquad(x+a+c,\,r-b+d).
+\end{equation}
+So $R$ occupies the rows $r-b$ to $r+d$, its topmost corner is $(x+a,r-b)$, and its column span is $a+c$.
+\end{lemma}
+
+\begin{proof}
+The sides are neither vertical nor horizontal. So two corners in the smallest column $x$ are not adjacent, hence opposite, and the center is in column $x$. The other two corners then have columns at least $x$ with sum $2x$, so all four lie in column $x$, which is impossible. Rows are similar. So both sides from $\ell$ go strictly to the right, and since they are perpendicular, one goes up and one goes down, with $ac=bd$.
+\end{proof}
+
+\begin{lemma}[span bound]\label{lem:span}
+Let $h\ge3$. Every tilted rectangle of the $h\times m$ grid has span $a+c\le W_h$, so it meets at most $W_h+1$ columns, and for $m\ge W_h+1$ the span $W_h$ occurs. Grids with one or two rows have no tilted rectangles.
+\end{lemma}
+
+\begin{proof}
+Here $b+d\le h-1$, and $(a-1)(c-1)\ge0$ gives $a+c\le bd+1\le W_h$, since $bd$ is an integer at most $(b+d)^2/4$. With at most two rows, $b+d\le1$ is impossible. For sharpness take $a=1$, $b=\lfloor(h-1)/2\rfloor$, $d=h-1-b$, $c=bd=W_h-1$, and $\ell=(1,1+b)$, with the corners $(1,1+b)$, $(2,1)$, $(1+bd,h)$, and $(2+bd,1+d)$.
+\end{proof}
+
+For $1\le i\le m-2$ and $1\le j\le h-2$ the \emph{diamond} $D(i,j)$ is the square with corners $(i,j+1)$, $(i+1,j)$, $(i+2,j+1)$, and $(i+1,j+2)$. Four rows allow four more kinds, $\kA_i$, $\kB_i$, $\kC_i$, and $\kE_i$ for $1\le i\le m-3$. Each has one corner in each of the columns $i$ to $i+3$. Read from left to right, the rows of these corners are $3412$ for $\kA_i$, $3142$ for $\kB_i$, $2413$ for $\kC_i$, and $2143$ for $\kE_i$.
+
+\begin{lemma}[tilted rectangles on narrow grids]\label{lem:tilted-narrow}
+The tilted rectangles of the $3\times m$ grid are the diamonds $D(i,1)$ with $1\le i\le m-2$. Those of the $4\times m$ grid are the diamonds $D(i,1)$ and $D(i,2)$ with $1\le i\le m-2$ and the rectangles $\kA_i,\kB_i,\kC_i,\kE_i$ with $1\le i\le m-3$.
+\end{lemma}
+
+\begin{proof}
+Each listed set is a rectangle. On three rows $b=d=1$, so $a=c=1$ and $\ell$ is in row $2$. On four rows either $b=d=1$, which gives the diamonds, or $\{b,d\}=\{1,2\}$, $\{a,c\}=\{1,2\}$, and $\ell$ is in row $1+b$. The sides $(2,-2),(1,1)$ give $\kA$, then $(1,-2),(2,1)$ give $\kB$, $(2,-1),(1,2)$ give $\kC$, and $(1,-1),(2,2)$ give $\kE$.
+\end{proof}
+
+\subsection{The boundary cross and axis-aligned rivals}
+
+\begin{lemma}[boundary cross]\label{lem:cross}
+Let $h,m\ge1$. The first row together with the first column of the $h\times m$ grid is a valid blackout. Hence $f(h,m)\ge h+m-1$.
+\end{lemma}
+
+\begin{proof}
+Let $h,m\ge2$. Take an axis-aligned rectangle on columns $x_1<x_2$ and rows $y_1<y_2$, and put $X=\{x_1,x_2\}\setminus\{1\}$ and $Y=\{y_1,y_2\}\setminus\{1\}$. It shows $X\times Y$, and both sets are nonempty. If $|X|=1$ then $x_1=1$, and if $|Y|=1$ then $y_1=1$. So $X\times Y$ determines the rectangle. By Lemma~\ref{lem:leftmost} a tilted rectangle has at most two black corners, $\ell$ and the topmost one. If both are black, then $\ell=(1,1+b)$ and it shows $p=(1+c,1+b+d)$ and $q=(1+a+c,1+d)$. Then $a=q_x-p_x$, $b=p_y-q_y$, $c=p_x-1$, and $d=q_y-1$, so $\{p,q\}$ determines it. Note that $p$ and $q$ differ in both coordinates, so no axis-aligned rectangle shows $\{p,q\}$. Lemma~\ref{lem:threecorners} covers the presentations with three or more points.
+\end{proof}
+
+\begin{lemma}[axis-aligned rivals]\label{lem:rival}
+Suppose that no axis-aligned rectangle is fully black, as holds when $S$ is axis-valid and $m\ge3$. Let $P$ be a set of at most two white points, and call an axis-aligned rectangle that shows exactly $P$ a \emph{rival} of $P$. Then $P$ has a rival if and only if the condition in the table holds.
+\begin{center}
+\small
+\begin{tabular}{@{}ll@{}}
+\toprule
+presentation $P$ & a rival exists if and only if\\
+\midrule
+empty & never\\
+singleton $\{(x,r)\}$ & $\{r,s\}\in F$ for some $s\in B_x$\\
+vertical pair $\{(x,r),(x,s)\}$ & $\{r,s\}\in F$\\
+horizontal pair $\{(x,r),(z,r)\}$ & $B_x\cap B_z\ne\emptyset$\\
+oblique pair $\{(x,r),(z,s)\}$, $x\ne z$, $r\ne s$ & $(x,s)\in S$ and $(z,r)\in S$\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{lemma}
+
+\begin{proof}
+A fully black axis-aligned rectangle is a four-cycle of $G_S$. So the clause after ``as holds when'' is Lemma~\ref{lem:girth}.
+ A rival of a nonempty $P$ has rows $\{r,s\}$ and columns $\{x,z\}$ as in the table, with its other corners black. For a singleton this says $s\in B_x$ and $\{r,s\}\subseteq B_z$, for a vertical pair $\{r,s\}\subseteq B_z$, for a horizontal pair $s\in B_x\cap B_z$, and for an oblique pair $(x,s),(z,r)\in S$. Conversely, as $r\notin B_x$, these conditions force $z\ne x$ and $s\ne r$, and the rectangle on rows $\{r,s\}$ and columns $\{x,z\}$ shows exactly $P$.
+\end{proof}
