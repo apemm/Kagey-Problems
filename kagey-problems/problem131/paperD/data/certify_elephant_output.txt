@@ -1,0 +1,30 @@
+Paper D: certified computations for the elephant walk
+Part 1. C_N/E_N at eps = 2/(N+2) for every even 8 <= N < 1688 (Lemma 3.7, Proposition 3.8)
+  ok    all integers that enter the weights are exact in double precision: largest is below 2852720 < 2^53
+  ok    no underflow: every weight, product and sum in the recursion is at least 1e-290: smallest quantity 1.237e-09  [11s]
+  ok    rounding bound (1-u)^-(6N-5) - 1 <= 3e-12 for N <= 1686 (Lemma 3.7): (6N-5) u = 1.123e-12 at N = 1686
+  ok    largest computed C_N/E_N over even 8 <= N < 1688, and the certified upper bound (Proposition 3.8): computed 0.947307477678571 at N = 8; certified upper bound 0.947307 (1 + 3e-12) < 0.9474 < 1
+  ok    every computed ratio is below 0.9474, so every true ratio is below 1: 840 values of N; the largest for N other than 8 is 0.729948, and the value at N = 1686 is 0.000042
+  ok    plain Python floats give the same bits as numpy: N in [8, 10, 16, 50, 100, 256, 400, 1000, 1686]  [0s]
+  ok    exact rational arithmetic for 20 values of N: C_N < E_N exactly: N in [8, 10, 12, 16, 22, 32, 50, 64, 100, 128, 200, 256, 400, 512, 800, 1000, 1200, 1400, 1600, 1686]
+  ok    the double-precision ratios are within the bound of Lemma 3.7 of the exact ones: largest relative error 6.05e-14 against the bound 3e-12  [7s]
+  ok    for N = 2, 4, 6 the hypothesis fails: C_N > E_N at eps = 2/(N+2), exactly: N = 2: 2/1, N = 4: 5/3, N = 6: 508/405
+  ok    exact value of C_N/E_N at the worst case N = 8: 67903/71680 = 0.947307477678571
+
+Part 2. The Landau density near its mode (Lemma 3.11)
+  ok    the 2 neglected ends [0, 2^-20] and [30, oo) are below 1e-17: python-flint 0.9.0, 128 bits; at most 1.31e-18 (k = 1) and 9.39e-25 (k = 2)
+  ok    f_L'(-0.2229) > 0 > f_L'(-0.2227): enclosures [9.23296724678e-6 +/- 1.94e-18] and [-6.54665416543e-6 +/- 1.21e-18]
+  ok    f_L'(-0.2229) in [9.232e-6, 9.234e-6] and f_L'(-0.2227) in [-6.548e-6, -6.546e-6] (as printed in the paper): both enclosures lie inside the printed intervals
+  ok    f_L'' in [-0.0792, -0.0786] on [-0.2229, -0.2227], hence below -0.078 (as printed in the paper): enclosure [-0.079041, -0.078755]
+  ok    the mode lies in (-0.22278299, -0.22278297): f_L' there: [6.8984026e-10 +/- 1.17e-18] and [-8.8809315e-10 +/- 5.24e-18]
+  ok    f_L''(lambda_L) = -0.0789 to 4 decimals: enclosure [-0.0788967 +/- 4.41e-8]  [0.0s]
+
+Part 3. The series sum_t t^2 log(t+1) 2^(-t/2) in the proof of Theorem 2.6(b)
+  ok    first 60 terms: 102.5864 to four decimals (proof of Theorem 2.6(b)): enclosure [102.58639693300819079 +/- 2.63e-18]
+  ok    ratio of consecutive terms at t = 60 is below 3/4: enclosure [0.7337643884 +/- 2.37e-11]
+  ok    the ratio decreases in t (certified for t < 2000, in general by the comment in the code): ball arithmetic
+  ok    4 times the term at t = 61 is below 1e-4: enclosure [4.045324865e-5 +/- 5.55e-16]
+  ok    the series is below 102.59: S_60 + 4 term(61) in [102.58643738625684023 +/- 3.16e-18] < 102.59
+  ok    3 + 50.4 * 102.59 < 5200, exactly: 646692/125 (any bound on the series below (5200 - 3)/50.4 = 103.1151 would do)
+
+Certification done in 18s: all passed.

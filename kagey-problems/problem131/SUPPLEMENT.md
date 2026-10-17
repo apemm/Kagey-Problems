@@ -7,12 +7,13 @@ This supplement serves the 6 papers on Kagey's Problem 131 by A. Pemmasani. Pape
 | A | Uniform Bessel bounds for magnetization crossings in finite Ising chains (arXiv v1: Uniform Bessel bounds for endpoint crossings in the persistent random walk) | `paperA/problem131.tex` |
 | B | Vertex crossings in a symmetric Markov multinomial model | `paperB/problem131_multistate.tex` |
 | C | Face selection for slowly switching Markov chains | `paperC/problem131_switching.tex` |
-| D | Endpoint crossings for the elephant random walk | `paperD/problem131_memory.tex` |
+| D | The center and the ends of the elephant random walk with rare reversals (before October 17, 2026: Endpoint crossings for the elephant random walk) | `paperD/problem131_memory.tex` |
 | E | Endpoint crossings for the planar persistent walk | `paperE/problem131_planar.tex` |
 | F | Endpoint crossings for random walks with heavy-tailed runs and for aging walks | `paperF/problem131_heavy_aging.tex` |
 
 The Lean files and the older recorded outputs and ledgers use the statement numbers from before
-Papers E and F were split off Papers C and D on October 13, 2026.
+Papers E and F were split off Papers C and D on October 13, 2026. The exception is
+`lean/PaperD/MAP.md`, which gives the numbers of Paper D in its build of October 17, 2026.
 
 The proofs are in the papers. The scripts check the finite statements exactly and the asymptotic
 ones numerically, and where possible each number is computed in 2 independent ways. For each paper
@@ -155,8 +156,13 @@ check exits with an error, and the runner then names it and exits with an error 
 does not run `certify_convex.py` (about an hour for 10 <= N <= 2000) or `certify_center.py` (about
 half an hour), so run them by hand as `python -B certify_convex.py 10 2000` and
 `python -B certify_center.py 10 2000`. Their outputs are `paperD/data/certify_convex_output.txt`,
-from October 9, 2026, and `paperD/data/certify_center_output.txt`, from October 13, 2026, and they
-cite no statement numbers. The other stored outputs predate the split and use the old statement
+from October 9, 2026, and `paperD/data/certify_center_output_2026-10-16.txt`, from October 16,
+2026, which adds the check that the enclosure of the crossing lies above 2/(N+2). The earlier
+`paperD/data/certify_center_output.txt`, from October 13, 2026, lacks that check. These outputs
+cite no statement numbers. The output of `certify_elephant.py` from October 16, 2026, is
+`paperD/data/certify_elephant_output.txt`, and its labels still use the numbers of October 15
+(Lemma 3.7, Proposition 3.8 and Lemma 3.11 there are the removed rounding lemma, Proposition 3.7
+and Lemma 3.10 now). The other stored outputs predate the split and use the old statement
 numbers, and they include the checks of heavy-tailed runs and aging walks that now belong to Paper
 F. They are `paperD/data/verify_output.txt` and `verify_output_full.txt`, a quick run and a full run
 of 4 scripts from September 26, 2026 (before `verify_aging_urn.py`, `certify_elephant.py` and
@@ -165,29 +171,33 @@ from October 9, 2026 (still without `verify_elephant_odd.py`). The ledgers are
 `paperD/data/ledger_D1.md` and `ledger_D2.md`, indexed by `paperD/data/ledger.md`. Labels that say
 "research notes, not printed" check numbers that the paper no longer prints.
 
-The proofs use computation in 4 places, which take the first 5 rows below. Some constants are values
-of explicit sums and integrals, Proposition 3.8 uses a certified double-precision computation for
-N < 1688, Lemma 3.11 uses ball arithmetic, and Propositions 3.25 and 3.27(b) use ball arithmetic for
-10 <= N <= 2000. The other rows are numbers quoted outside the proofs.
+The statement numbers in this section are those of the build of October 17, 2026. That build
+removed Lemma 3.7 (the rounding error of a double-precision computation) and Theorem 3.15 (the
+window around the center), and `lean/PaperD/MAP.md` lists the numbers that moved.
+
+The proofs use computation in 3 places, which take the first 5 rows below. Some constants are values
+of explicit sums and integrals, Lemma 3.10 uses ball arithmetic, and the ball-arithmetic enclosure
+of the crossing and of the law for 10 <= N <= 2000 proves Propositions 3.25 and 3.27 and, for even
+10 <= N < 1688, Proposition 3.7. The other rows are numbers quoted outside the proofs.
 
 | Result that rests on computation | Script | The 2 methods |
 | --- | --- | --- |
-| The upper bound on C_N in Theorem 2.6(b) (the constant 5200) | `verify_elephant_crossing.py` | The series sum over t of t^2 log(t+1) 2^(-t/2) = 102.59 by mpmath and by a direct sum, and its first 60 terms exactly at 30 digits (102.5864). So 3 + 50.4 times 102.59 is below 5200. |
-| Proposition 3.8 for 8 <= N < 1688 (C_N < E_N at eps = 2/(N+2)), with the rounding bound of Lemma 3.7 | `certify_elephant.py`, and without certification `verify_elephant_shape.py` | The recursion in double precision, with only the operations that Lemma 3.7 counts, for the 840 even N. The same recursion in exact integer arithmetic for 20 values of N. |
-| Lemma 3.11, the mode lambda_L of the Landau density and f_L'' near it | `certify_elephant.py` (needs python-flint), and without certification `verify_elephant_shape.py` | Ball arithmetic with rigorous error bounds, with enclosures of f_L' at 4 points and of f_L'' on 2 intervals. The uncertified check uses a real integral and Fourier inversion. |
-| Proposition 3.25, convexity between the humps for every 10 <= N <= 2000 | `certify_convex.py` (needs python-flint), and without certification `verify_elephant_shape.py` for N <= 600 | Ball arithmetic. For each N the crossing is enclosed and the law is run with that enclosure. For every possible mode the second difference is certified positive between the humps directly, and the 2 inequalities that Theorem 3.21 needs are certified as well. The uncertified check is in double precision. |
-| Proposition 3.27(b), the center is the unique interior minimum for every even 10 <= N <= 2000 | `certify_center.py` (needs python-flint) | Ball arithmetic, with the enclosures of `certify_convex.py`. The criterion of Proposition 3.27(a) together with Proposition 3.25 holds for all 996 even N, and the direct test P_N(a) > C_N for every other interior a also succeeds for all of them. |
-| Conjecture 3.16, checked for 10 <= N <= 600 and on the grid N = 50, 100, ..., 12800 (and 25600 with `--full`) | `verify_elephant_shape.py` | The law from the minority-count chain and from the law of A_N directly. |
-| The numbers in Remarks 2.11, 3.13 and 3.28 | `verify_elephant_crossing.py`, `verify_elephant_shape.py` and `verify_elephant_odd.py` | For Remark 2.11 the Taylor coefficients from 2 dynamic programs (the second at N = 51200 only with `--full`), and the limit from its closed form and from a series. For Remark 3.13 the minority-count chain and the full law of A_N where a law is computed. For Remark 3.28 one method only, the Landau density by quadrature in mpmath. |
+| The upper bound on C_N in Theorem 2.6(b) (the constant 5200) | `certify_elephant.py` (Part 3, needs python-flint), and without certification `verify_elephant_crossing.py` | Ball arithmetic encloses the first 60 terms of the series sum over t of t^2 log(t+1) 2^(-t/2) in [102.586396, 102.586398], and with a geometric bound on the tail the series is below 102.59. So 3 + 50.4 times 102.59 is below 5200. The uncertified check sums the series by mpmath and directly. |
+| Proposition 3.7 for 8 <= N < 1688 (C_N < E_N at eps = 2/(N+2)) | `certify_center.py` (needs python-flint), and `certify_elephant.py` for N = 2, 4, 6 and 8 | For even 10 <= N <= 2000, an exact rational comparison shows that the lower end of the ball-arithmetic enclosure of eps_N lies above 2/(N+2), with smallest margin 1.107 at N = 10. For N = 2, 4, 6 and 8 the ratio C_N/E_N in exact rational arithmetic. As a supplementary check, which the paper no longer uses, Part 1 of `certify_elephant.py` still runs the recursion in double precision with a rounding bound for the 840 even N, and in exact integer arithmetic for 20 values of N. |
+| Lemma 3.10, the mode lambda_L of the Landau density and f_L'' near it | `certify_elephant.py` (needs python-flint), and without certification `verify_elephant_shape.py` | Ball arithmetic with rigorous error bounds, with enclosures of f_L' at 4 points and of f_L'' on 2 intervals. The uncertified check uses a real integral and Fourier inversion. |
+| Proposition 3.25, convexity between the humps for every 10 <= N <= 2000 | `certify_convex.py` (needs python-flint), and without certification `verify_elephant_shape.py` for N <= 600 | Ball arithmetic. For each N the crossing is enclosed and the law is run with that enclosure. For every possible mode the second difference is certified positive between the humps directly, and the 2 inequalities that Theorem 3.20 needs are certified as well. The uncertified check is in double precision. |
+| Proposition 3.27, the center is the unique interior minimum for every even 10 <= N <= 2000 | `certify_center.py` (needs python-flint) | Ball arithmetic, with the enclosures of `certify_convex.py`. The hypothesis 2m*+1 <= N/2 of Lemma 3.23 holds for every possible mode, for all 996 even N, and with Proposition 3.25 the lemma applies. The direct test P_N(a) > C_N for every other interior a also succeeds for all of them. |
+| Conjecture 3.15, checked for 10 <= N <= 600 and on the grid N = 50, 100, ..., 12800 (and 25600 with `--full`) | `verify_elephant_shape.py` | The law from the minority-count chain and from the law of A_N directly. |
+| The numbers in Remarks 2.11, 3.12 and 3.28 | `verify_elephant_crossing.py`, `verify_elephant_shape.py` and `verify_elephant_odd.py` | For Remark 2.11 the Taylor coefficients from 2 dynamic programs (the second at N = 51200 only with `--full`), and the limit from its closed form and from a series. For Remark 3.12 the minority-count chain and the full law of A_N where a law is computed. For Remark 3.28 one method only, the Landau density by quadrature in mpmath. |
 
 | Script | What it checks |
 | --- | --- |
 | `verify_elephant_crossing.py` | The crossing of the elephant walk (Section 2, Table 1 and Appendix A). The dynamic programs against exact rationals and 40-digit arithmetic, the constants in the proofs of Theorem 2.6(b), Proposition 2.9 and the lemmas of Appendix A, the monotone ratio of Proposition 2.3 for N <= 12, the crossings of Table 1 by the minority-count chain on a window and by the full law of A_N, the comparison with Paper A's walk in Theorem 2.8, and the coefficients of Remark 2.11. For Paper A's walk it uses an exact run-count formula and a dynamic program. |
-| `verify_elephant_shape.py` | The shape of the law at the crossing (Section 3 and Appendices B and C). Lemma 2.4 in exact arithmetic for N <= 30 and against all recursive trees for N <= 7, the inequalities in the proof of Proposition 3.8, the dip, the sign changes and convexity between the humps for 10 <= N <= 600 and on the grid, the bounds of Theorem 3.5, the profile of Theorem 3.14, the facts behind Theorem 3.10, Lemma 3.11 in double precision, and the numbers of Figure 2 and Remark 3.13. |
+| `verify_elephant_shape.py` | The shape of the law at the crossing (Section 3 and Appendices B and C). Lemma 2.4 in exact arithmetic for N <= 30 and against all recursive trees for N <= 7, the inequalities in the proof of Proposition 3.7, the dip, the sign changes and convexity between the humps for 10 <= N <= 600 and on the grid, the bounds of Theorem 3.5, the profile of Theorem 3.13, the facts behind Theorem 3.9, Lemma 3.10 in double precision, and the numbers of Figure 2 and Remark 3.12. |
 | `verify_elephant_odd.py` | Proposition 3.26 and Remark 3.28 (about 10 seconds). The identity of Proposition 3.26(a) in exact rational arithmetic for 6 odd N and in double precision for 4 more, the crossing for odd N against the root g_N, the constants of part (c) at eps = 2/N, and the half-maximum and inflection points of the Landau density quoted in Remark 3.28. |
-| `certify_elephant.py` | Lemma 3.7, Proposition 3.8 and Lemma 3.11 (about a minute). The double-precision recursion with checks that its integers are exact and that nothing underflows, the same bits from plain Python floats, exact integer arithmetic for 20 values of N, the failure of the hypothesis for N = 2, 4 and 6, and the ball-arithmetic enclosures for the Landau density. |
+| `certify_elephant.py` | Proposition 3.7 for N = 2, 4, 6 and 8, Lemma 3.10 and the series in Theorem 2.6(b) (about a minute). The exact ratios C_N/E_N at eps = 2/(N+2) for N = 2, 4, 6 and 8, the ball-arithmetic enclosures for the Landau density, and the ball-arithmetic enclosure of the series. As a supplementary check it also keeps the double-precision recursion for 8 <= N < 1688 with checks that its integers are exact and that nothing underflows, the same bits from plain Python floats, and exact integer arithmetic for 20 values of N (this was the proof through the rounding lemma, which the paper removed on October 17, 2026). |
 | `certify_convex.py` | Proposition 3.25 in ball arithmetic for the range of N given on the command line (not run by `verify_all.py`). |
-| `certify_center.py` | Proposition 3.27(b) in ball arithmetic for the even N in the range given on the command line (not run by `verify_all.py`). It imports `certify_convex.py`. |
+| `certify_center.py` | Proposition 3.27, and Proposition 3.7 for even 10 <= N < 1688, in ball arithmetic for the even N in the range given on the command line (not run by `verify_all.py`). It imports `certify_convex.py`. |
 
 ## Paper E: the planar persistent walk
 
@@ -259,8 +269,9 @@ Paper D (with Paper F). The build output, source hashes and axioms are in `lean/
 
 The file `lean/README.md` summarizes coverage. The files `lean/PaperA/MAP.md` through
 `lean/PaperD/MAP.md` map covered statements to Lean declarations and list partial coverage and
-omissions. The C/D maps use the numbers from October 9, 2026, and explain where the statements
-of Papers E and F moved.
+omissions. The C map uses the numbers from October 9, 2026. The D map uses the numbers of Paper D
+from October 17, 2026, and for Paper F those from before the split. Both explain where the
+statements of Papers E and F moved.
 
 For Paper A, every numbered result is formalized in Lean except the Mehler-Heine limit for real
 parameters in Remark 4.7, which the paper cites. Lean proves that limit for nonnegative integer

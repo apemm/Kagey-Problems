@@ -1,9 +1,13 @@
 """Certified computations for the elephant walk in Paper D.
 
-Part 1 (Lemma 3.7, Proposition 3.8 and Corollary 3.6). For every even 8 <= N < 1688
+Part 1 (Proposition 3.7 and Corollary 3.6, a supplementary check). The proof of
+Proposition 3.7 now uses certify_center.py for 10 <= N < 1688 and exact rationals
+for N = 2, 4, 6 and 8, and it no longer uses the double-precision run below or the
+rounding lemma of earlier drafts (old Lemma 3.7). The printed labels below still
+carry the old numbers (Lemma 3.7, Proposition 3.8, Lemma 3.11), to match the stored
+output in data/certify_elephant_output.txt. For every even 8 <= N < 1688
 the script evaluates R_N = C_N/E_N at eps = 2/(N+2) in IEEE 754 double precision,
-by the recursion that Lemma 3.7 analyzes, and adds the rounding bound of that
-lemma. Here C_N = f_N(h) and E_N = f_N(0)/2, with h = N/2 and f_t(b) = P_+(M_t = b).
+by the recursion below, and adds the rounding bound proved in this paragraph. Here C_N = f_N(h) and E_N = f_N(0)/2, with h = N/2 and f_t(b) = P_+(M_t = b).
 At eps = 2/(N+2) the transition probabilities are ratios of integers,
 
     1 - r_t(b) = (N(t-b) + 2b) / ((N+2)t),      r_t(b) = (2(t-b) + N b) / ((N+2)t),
@@ -28,11 +32,18 @@ values of N, including the one with the largest ratio, the recursion is run in
 exact integer arithmetic (the numerators only, since the denominators cancel in
 C_N/E_N), which decides C_N < E_N exactly and confirms the rounding bound.
 
-Part 2 (Lemma 3.11). The Landau density is
+Part 2 (Lemma 3.10). The Landau density is
 f_L(l) = (1/pi) int_0^oo exp(-t log t - l t) sin(pi t) dt. With ball arithmetic
 (python-flint, acb.integral on [2^-20, 30], plus explicit bounds for the 2 ends)
 the script certifies f_L'(-0.2229) > 0 > f_L'(-0.2227) and f_L'' < -0.078 on
 [-0.2229, -0.2227], and it prints enclosures of the mode and of f_L'' there.
+
+Part 3 (Theorem 2.6(b)). The proof bounds S = sum_(t >= 1) t^2 log(t+1) 2^(-t/2)
+by the first 60 terms plus 4 times the term at t = 61, since the ratio of
+consecutive terms, (1 + 1/t)^2 (log(t+2)/log(t+1)) 2^(-1/2), decreases in t and
+is below 3/4 at t = 60. The script encloses the 60-term sum, the ratio at t = 60
+and the term at t = 61 in ball arithmetic and certifies that the bound is below
+102.59 and that 3 + 50.4 * 102.59 < 5200.
 
 Run with python -B certify_elephant.py. It takes about one minute.
 """
@@ -43,7 +54,7 @@ from fractions import Fraction
 import numpy as np
 
 U = 2.0 ** -53
-N_MAX = 1688                 # Corollary 3.6 is proved by hand for even N >= 1688
+N_MAX = 1688                 # Proposition 3.7 is proved by hand for even N >= 1688
 FLOOR = 1e-290               # every computed quantity must stay above this
 FAILS = []
 
@@ -58,7 +69,7 @@ def check(label, ok, detail):
 
 def ratio_numpy(N):
     """Computed value of C_N/E_N at eps = 2/(N+2), and the smallest quantity met.
-    Only the operations counted in Lemma 3.7 are used: for each term one division
+    Only the operations counted in the rounding bound of the module docstring are used: for each term one division
     (the weight), one multiplication and at most one addition."""
     h = N // 2
     p = np.zeros(h + 1, dtype=np.float64)
@@ -253,11 +264,49 @@ def part2():
           f'enclosure {f2s.str(10)}  [{time.time() - t0:.1f}s]')
 
 
+# ---------------------------------------------------------------- Part 3: the series in Theorem 2.6(b)
+
+def part3():
+    print('\nPart 3. The series sum_t t^2 log(t+1) 2^(-t/2) in the proof of Theorem 2.6(b)', flush=True)
+    try:
+        from flint import arb, ctx
+    except ImportError:
+        check('python-flint is installed', False, 'pip install python-flint')
+        return
+    ctx.prec = 128
+
+    def term(t):
+        return arb(t) ** 2 * arb(t + 1).log() * (arb(-t) / 2 * arb(2).log()).exp()
+
+    def ratio(t):
+        # term(t+1)/term(t). Both (1 + 1/t)^2 and log(t+2)/log(t+1) = 1 + log(1 + 1/(t+1))/log(t+1)
+        # are positive and decrease in t, so the ratio decreases in t.
+        return (1 + arb(1) / t) ** 2 * arb(t + 2).log() / arb(t + 1).log() / arb(2).sqrt()
+
+    S60 = sum((term(t) for t in range(2, 61)), term(1))
+    check('first 60 terms: 102.5864 to four decimals (proof of Theorem 2.6(b))',
+          bool(S60 > arb('102.58635')) and bool(S60 < arb('102.58645')),
+          f'enclosure {S60.str(20, radius=True)}')
+    r60 = ratio(60)
+    check('ratio of consecutive terms at t = 60 is below 3/4', bool(r60 < arb(3) / 4), f'enclosure {r60.str(10)}')
+    dec = all(bool(ratio(t) > ratio(t + 1)) for t in range(1, 2000))
+    check('the ratio decreases in t (certified for t < 2000, in general by the comment in the code)', dec, 'ball arithmetic')
+    tail = 4 * term(61)
+    check('4 times the term at t = 61 is below 1e-4', bool(tail < arb('1e-4')), f'enclosure {tail.str(10)}')
+    bound = S60 + tail
+    check('the series is below 102.59', bool(bound < arb('102.59')),
+          f'S_60 + 4 term(61) in {bound.str(20, radius=True)} < 102.59')
+    check('3 + 50.4 * 102.59 < 5200, exactly', 3 + Fraction('50.4') * Fraction('102.59') < 5200,
+          f"{3 + Fraction('50.4') * Fraction('102.59')} (any bound on the series below (5200 - 3)/50.4 = "
+          f"{float(Fraction(5197) / Fraction('50.4')):.4f} would do)")
+
+
 def main():
     T0 = time.time()
     print('Paper D: certified computations for the elephant walk')
     part1()
     part2()
+    part3()
     print(f'\nCertification done in {time.time() - T0:.0f}s: '
           + ('all passed.' if not FAILS else f'{len(FAILS)} FAILED: ' + '; '.join(FAILS)))
     sys.exit(1 if FAILS else 0)

@@ -1,7 +1,7 @@
 """Figure 2 of Paper D: one elephant walk and its memory tree (Lemma 3.1).
 
 (a) The position of the walk against the step, with the steps that disagree with the first
-    step drawn in blue.
+    step drawn heavier and in blue (so that they still stand out in grayscale).
 (b) The random recursive tree of the same walk: step k+1 copies step U_k, drawn as an arc from
     U_k to k+1. Arcs in vermilion are flips. A step disagrees with the first step exactly when
     the path from it to step 1 crosses an odd number of flips, so each flip turns its whole
@@ -64,7 +64,7 @@ def main():
     c = ss.SERIES
     for k in range(1, N + 1):
         col = c["exact"] if odd[k] else c["ink"]
-        ax.plot([k - 1, k], [S[k - 1], S[k]], color=col, lw=1.4 if odd[k] else 1.0,
+        ax.plot([k - 1, k], [S[k - 1], S[k]], color=col, lw=2.4 if odd[k] else 0.9,
                 solid_capstyle="round")
     ax.axhline(0, color=c["grid"], lw=0.5, zorder=0)
     ax.set_ylabel("position")

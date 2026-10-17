@@ -104,26 +104,22 @@ $\Prob(G_t\ge z)\le e^{-\nu z/t}\,\E e^{\theta_tG_t}$, which is the claim.
 \begin{lemma}[the first flipped family]\label{lem:B-D}
 For $1\le d\le N-1$,
 \[
- \frac{x}{d(d+1)}\Bigl(1-\frac{2x(N-d-1)}{N(d+2)}\Bigr)\le\Prob(D=d)\le\frac{x}{d(d+1)},
- \qquad\Prob(D\ge d)\le x\Bigl(\frac1d-\frac1N\Bigr).
+ \frac{x}{d(d+1)}\Bigl(1-\frac{2x(N-d-1)}{N(d+2)}\Bigr)\le\Prob\bigl(\lvert\mathcal T_V\rvert=d\bigr)\le\frac{x}{d(d+1)},
+ \qquad\Prob\bigl(\lvert\mathcal T_V\rvert\ge d\bigr)\le x\Bigl(\frac1d-\frac1N\Bigr).
 \]
 \end{lemma}
 
 \begin{proof}
 By Lemma~\ref{lem:firstmark},
-$\Prob(D=d)=\sum_j\varepsilon(1-\varepsilon)^{j-2}\beta_j(d)$, and
+$\Prob(\lvert\mathcal T_V\rvert=d)=\sum_j\varepsilon(1-\varepsilon)^{j-2}\beta_j(d)$, and
 $1-(j-2)\varepsilon\le(1-\varepsilon)^{j-2}\le1$. Apply the two sums of
 Lemma~\ref{lem:urn}, and sum the upper bound over $d'\ge d$.
 \end{proof}
 
 \begin{proposition}[local lower bound]\label{thm:B-local-lower}
-There is an absolute constant $C$ such that the following hold.
-\begin{enumerate}[(a)]
-\item For $2\le m\le N/4$, $f_N(m)\ge\frac{x}{m(m+1)}(1-e_1(m))$ with
+Assume~\eqref{eq:H}. There is an absolute constant $C$ such that for
+$2\le m\le N/4$ we have $f_N(m)\ge\frac{x}{m(m+1)}(1-e_1(m))$ with
 $e_1(m)=C\bigl(\frac{x\log(m+1)}m+\varepsilon\log N+me^{-m/9}\bigr)$.
-\item For $N/4<m\le N-16$ and $r=N-m$, $f_N(m)\ge\frac{x}{m(m+1)}(1-e_2(m))$
-with $e_2(m)=C\bigl(\frac{x\log N}r+\frac{x\log N}m+Ne^{-r/40}\bigr)$.
-\end{enumerate}
 \end{proposition}
 
 \paragraph{Idea of the proof.}
@@ -134,13 +130,13 @@ most one, so it hits $m$ at some $d$ close to $m$ unless $Y$ or $Z$ is
 large. (If no step of the family flips back and the rest of the tree has no
 flip, then $Y=Z=0$ and the quantity is $d$ itself, which hits $m$ at
 $d=m$.) The law $\beta_j$ of $d$ is nearly flat near $m$, and this gives
-almost the full weight $\beta_j(m)$. Then we sum over $j$. The errors
-$e_1$ and $e_2$ collect the chance that $Y$ or $Z$ is large, the small
+almost the full weight $\beta_j(m)$. Then we sum over $j$. The error
+$e_1$ collects the chance that $Y$ or $Z$ is large, the small
 slope of $\beta_j$, and the first flips that come too late to be treated
 this way.
 
 \begin{proof}
-(a) We bound the inner sum of Lemma~\ref{lem:firstmark} from below for each
+We bound the inner sum of Lemma~\ref{lem:firstmark} from below for each
 early first flip, namely for $2\le j\le J:=\lfloor N/8\rfloor$. The terms
 with $j>J$ are nonnegative and we drop them.
 
@@ -202,7 +198,7 @@ Lemma~\ref{lem:urn}. So the second term is at most
  \frac{4\varepsilon m\log N}N\cdot\frac{2x(N-m-1)}{m(m+1)(m+2)}
  \le\frac{x}{m(m+1)}\,8\varepsilon\log N .
 \]
-The first sum is $\Prob(D=m)$ without the terms $j>J$. So by
+The first sum is $\Prob(\lvert\mathcal T_V\rvert=m)$ without the terms $j>J$. So by
 Lemma~\ref{lem:B-D} it is at least
 $\frac{x}{m(m+1)}(1-\frac{2x}{m+2})-\varepsilon\sum_{j>J}\beta_j(m)$.
 
@@ -222,66 +218,31 @@ $(1-p)(1-q)\ge1-p-q$. So Steps 3 and 4 give
 \[
  f_N(m)\ge\frac{x}{m(m+1)}\Bigl(1-p-\frac{2x}{m+2}-Cme^{-m/9}-8\varepsilon\log N\Bigr),
 \]
-and by the bound for $p$ in Step 2 this is (a).
-
-(b) Now the first flipped family has more than $N/4$ vertices and leaves
-only $r=N-m$ vertices outside. So we run the same argument on the scale
-$r$ instead of $m$. We take $J=w:=\lfloor r/8\rfloor$ (so that $w\ge2$),
-the event $\mathcal E=\{Z^{(j)}_{N-1}\le m-1,\ Y_{m+w}\le w\}$ and
-$d^\circ=m+Y_{m+w}\le m+w$. The index $d^\circ$ is allowed, because
-$m+w+j\le m+2w\le N$. As in Step 1, on $\mathcal E$ we have $\Gamma_1\le m$
-and $\Gamma_{d^\circ}\ge m$, so $\Gamma_d=m$ for some $d\le d^\circ$. Three
-estimates change.
-
-\emph{The slope of $\beta_j$.} For $i\le y\le w$ we have
-$N-m-i\ge r-w\ge\frac78r$. So each fraction in the product of Step 1 is at
-most $\frac{8(j-2)}{7r}\le\frac17$, and
-$\beta_j(m+y)\ge\beta_j(m)(1-\frac{8y(j-2)}{7r})$.
-
-\emph{The chance that $Y$ or $Z$ is large.} Since $w+1\ge r/8$ and
-$m+w\le N$, Lemma~\ref{lem:B-tail} gives $\Prob(Y_{m+w}>w)\le8xH_N/r$ and
-$\E Y_{m+w}\le x\log N$, and as before $\Prob(Z^{(j)}_{N-1}\ge m)\le
-xH_m/m$. So $p$ is replaced by $p'=8xH_N/r+xH_m/m\le C(\frac{x\log
-N}r+\frac{x\log N}m)$, and we may assume $p'\le1$. With
-$\Prob(V=j)\le\varepsilon$ and the second sum in Lemma~\ref{lem:urn}, the
-terms with $\E Y_{m+w}$ add up to at most
-\[
- \varepsilon\cdot\frac{8x\log N}{7r}\cdot\frac{2N(r-1)}{m(m+1)(m+2)}
- \le\frac{x}{m(m+1)}\cdot\frac{3x\log N}m .
-\]
-
-\emph{The late first flips.} Now $a=\frac{m-1}{N-1}\ge\frac15$ and $N-m=r$,
-so \eqref{eq:B-subtail} gives $\beta_j(m)\le\frac{j-1}re^{-(j-1)/5}$. We sum
-over $j-1\ge J$ and use $J\ge\frac{r-7}8$ and $J+1\le r$. This gives
-\[
- \varepsilon\sum_{j>J}\beta_j(m)\le\frac{C\varepsilon(J+1)}re^{-J/5}
- \le C\varepsilon e^{-r/40}\le\frac{x}{m(m+1)}\,CNe^{-r/40},
-\]
-since $\varepsilon=\frac{x}{m(m+1)}\cdot\frac{m(m+1)}N$ and $m+1\le N$.
-Collecting the terms as in Step 5, with $\frac{2x}{m+2}\le\frac{x\log N}m$,
-gives (b).
+and by the bound for $p$ in Step 2 this is the claim.
 \end{proof}
 
 \begin{proposition}[cumulative upper bound]\label{thm:B-cum-upper}
-There is an absolute constant $C$ such that for $6\le m\le N/2$ with
+Assume~\eqref{eq:H}. There is an absolute constant $C$ such that for $6\le m\le N/2$ with
 $m\ge16x\log m$ we have $\Prob(M_N\ge m)\le\frac
 xm\bigl(1+C\,\frac{x\log^2m}m\bigr)$.
 \end{proposition}
 
 \paragraph{Idea of the proof.}
-Given the first flip at time $j$, the count $M_N$ is at most $D+Z_j$, the
+Given the first flip at time $j$, the count $M_N$ is at most $\lvert\mathcal T_V\rvert+Z_j$, the
 size of the first flipped family plus the count from the rest of the tree.
-The event $D\ge m$ gives the main term $x/m$. The other terms come from a
-shift of $D$ by $Z_j$, from a large $Z_j$, and from a late first flip, and
+The event $\lvert\mathcal T_V\rvert\ge m$ gives the main term $x/m$. The other terms come from a
+shift of $\lvert\mathcal T_V\rvert$ by $Z_j$, from a large $Z_j$, and from a late first flip, and
 each is smaller by a factor of order $x\log^2m/m$.
 
 \begin{proof}
 \emph{Step 1: split by the first flip.} Let $J=\lfloor N/4\rfloor$ and
 $Z_j=Z^{(j)}_{N-1}$. First let $2\le j\le J$. By Lemma~\ref{lem:firstmark},
-given $V=j$ the count $M_N$ has the law of $D-Y_D+Z^{(j)}_{N-D}$, where $D$
-has the law $\beta_j$ and is independent of $Y$ and $Z^{(j)}$. This is at
-most $D+Z_j$, because $Y\ge0$ and $Z^{(j)}$ is nondecreasing in time. So
-$M_N\ge m$ needs $Z_j>m/8$, or $Z_j\le m/8$ and $D\ge m-Z_j$. Hence
+given $V=j$ the count $M_N$ has the law of
+$\lvert\mathcal T_V\rvert-Y_{\lvert\mathcal T_V\rvert}+Z^{(j)}_{N-\lvert\mathcal T_V\rvert}$, where,
+given $V=j$, $\lvert\mathcal T_V\rvert$ has the law $\beta_j$ and is independent of $Y$ and
+$Z^{(j)}$. This is at most $\lvert\mathcal T_V\rvert+Z_j$, because $Y\ge0$ and $Z^{(j)}$ is
+nondecreasing in time. So $M_N\ge m$ needs $Z_j>m/8$, or $Z_j\le m/8$ and
+$\lvert\mathcal T_V\rvert\ge m-Z_j$. Hence
 \[
  \Prob(M_N\ge m\mid V=j)\le\Prob\Bigl(Z_j>\frac m8\Bigr)
  +\E\Bigl[\bar\beta_j(m-Z_j);\,Z_j\le\frac m8\Bigr].
@@ -303,7 +264,7 @@ $M_N$ is a copy of $M^{[J]}_N$ independent of $\{V>J\}$. Altogether
  +\Prob(V>J)\,\Prob\bigl(M^{[J]}_N\ge m\bigr).
 \]
 This gives four terms, which we bound in turn. The main term is
-$\sum_j\Prob(V=j)\bar\beta_j(m)\le\Prob(D\ge m)\le\frac xm$ by
+$\sum_j\Prob(V=j)\bar\beta_j(m)\le\Prob(\lvert\mathcal T_V\rvert\ge m)\le\frac xm$ by
 Lemma~\ref{lem:B-D}.
 
 \emph{Step 2: the shift term.} This is the sum over $2\le j\le J$ of
@@ -383,7 +344,7 @@ $\frac xm\cdot\frac{Cx\log^2m}m$ because $x\ge1$.
 \end{proof}
 
 \begin{lemma}[mode bound]\label{lem:B-mode}
-There are absolute constants $\bar c>0$ and $A_0$ such that if $\varepsilon\log
+Assume~\eqref{eq:H}. There are absolute constants $\bar c>0$ and $A_0$ such that if $\varepsilon\log
 N\le\bar c$ and $A_0x\log(x+2)\le N/4$, then $m_h\le A_0x\log^2(x+1)$.
 \end{lemma}
 
@@ -397,7 +358,7 @@ Let $\ell=\lceil Ax\log(x+2)\rceil$. Since
 $\log(\ell+1)\le\log(A+2)+2\log(x+2)$, we have
 $\frac{x\log(\ell+1)}\ell\le\frac{\log(A+2)+2}A$, and $\ell e^{-\ell/9}$ is
 small when $A$ is large. So we can fix the absolute constants $A$ and $\bar c$
-such that $e_1(\ell)\le\frac12$ in Proposition~\ref{thm:B-local-lower}(a)
+such that $e_1(\ell)\le\frac12$ in Proposition~\ref{thm:B-local-lower}
 whenever $\varepsilon\log N\le\bar c$. We take $A_0\ge A+1$, so that
 $2\le\ell\le N/4$. Then $f_N(\ell)\ge\frac x{2\ell(\ell+1)}$. If $m_h\ge\ell$,
 Lemmas~\ref{lem:B-sandwich} (with $a=\ell$, $b=m_h$) and~\ref{lem:B-tail} give
@@ -408,7 +369,7 @@ large.
 \end{proof}
 
 \begin{proposition}[local upper bound]\label{thm:B-local-upper}
-There are absolute constants $A_1$ and $C$ such that if $\varepsilon\log
+Assume~\eqref{eq:H}. There are absolute constants $A_1$ and $C$ such that if $\varepsilon\log
 N\le\bar c$ and $A_1x\log^2(x+1)\le m\le N/8$, then
 \[
  f_N(m)\le\frac{x}{m(m+1)}\bigl(1+C\Delta(m)^{1/2}\bigr),\qquad
@@ -437,7 +398,7 @@ $(k+1)f_N(m)\le\Prob(M_N\ge m-k)-\Prob(M_N\ge m+1)$.
 \emph{Step 2: bound each tail.} Proposition~\ref{thm:B-cum-upper} at $m-k$
 bounds the first term by $\frac
 x{m-k}+\frac{Cx^2\log^2m}{m^2}$. For the second we sum
-Proposition~\ref{thm:B-local-lower}(a) over $m<\ell\le N/4$. Since
+Proposition~\ref{thm:B-local-lower} over $m<\ell\le N/4$. Since
 $\sum_{m<\ell\le N/4}\frac1{\ell(\ell+1)}\ge\frac1{m+1}-\frac4N$,
 $\frac{\log(\ell+1)}\ell$ and $\ell e^{-\ell/9}$ decrease for $\ell\ge9$, and
 $me^{-m/9}\le C/m\le C\Delta(m)$, we get $\Prob(M_N\ge m+1)\ge\frac
@@ -457,7 +418,7 @@ $m=A_1x\log^2(x+1)$).
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{thm:profile}]
-We check that Propositions~\ref{thm:B-local-lower}(a)
+We check that Propositions~\ref{thm:B-local-lower}
 and~\ref{thm:B-local-upper} apply on the whole range of $m$ and that their
 error terms tend to $0$ uniformly there. Then we show that the mirror term
 $f_N(N-m)$ is negligible.
@@ -467,7 +428,7 @@ $\mathcal R_N$ be the range
 $\omega_Nx\ell_x^2\le m\le\delta'_NN$. Since $x\log^2N/N\to0$, for large $N$
 we have $\varepsilon(1+\log N)\le\min(\bar c,\frac1{100})$,
 $\omega_N\ge\max(A_1,16)$, $\delta'_N\le\frac18$ and $A_0x\log(x+2)\le N/4$.
-The standing assumptions $N\ge64$ and $\varepsilon\le\frac14$ hold as well.
+So \eqref{eq:H} holds as well.
 
 \emph{Step 2: the errors are small on $\mathcal R_N$.} The function
 $\frac{x\log^2m}m$ decreases for $m\ge e^2$. At
@@ -477,7 +438,7 @@ $x\ge1$,
 $\frac{x\log^2m}m\le\frac{(\log\omega_N+3\ell_x)^2}{\omega_N\ell_x^2}
 \le\frac1{\omega_N}(\frac{\log\omega_N}{\log2}+3)^2\to0$. Also
 $m\ge\omega_N\log^22\to\infty$ on $\mathcal R_N$. Since $\log(m+1)\le2\log^2m$ for
-$m\ge3$, Proposition~\ref{thm:B-local-lower}(a) has $e_1(m)\le
+$m\ge3$, Proposition~\ref{thm:B-local-lower} has $e_1(m)\le
 C(\frac{x\log^2m}m+\varepsilon\log N+me^{-m/9})\to0$ uniformly on $\mathcal R_N$. Also
 $\Delta(m)\le\frac{x\log^2m}m+\varepsilon\log N+\delta'_N\to0$ there, and
 Proposition~\ref{thm:B-local-upper} applies. So

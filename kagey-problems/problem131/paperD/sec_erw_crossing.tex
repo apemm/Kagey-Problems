@@ -12,8 +12,8 @@ probability $1-\varepsilon$ and $X_{t+1}=-X_{U_t}$ with probability
 $\varepsilon$. All these choices are independent. We call the event
 $X_{t+1}=-X_{U_t}$ a flip. As in Section~\ref{sec:notation},
 $A_N=\#\{i\le N:X_i=+1\}$ and $P_N(k)=\Prob(A_N=k)$. The crossing
-$\varepsilon_N$ is the value of $\varepsilon$ with $C_N=E_N$, and
-$x_N=N\varepsilon_N$.
+$\varepsilon_N$ is the value of $\varepsilon$ with $C_N=E_N$ (it exists and is
+unique by Proposition~\ref{prop:mlr}), and $x_N=N\varepsilon_N$.
 \end{definition}
 
 A flip is what the introduction called a reversal. In the notation
@@ -145,7 +145,8 @@ Let $N\ge2$ be even.
 \begin{enumerate}[(a)]
 \item The center is
 $C_N=\sum_{t=1}^h\varepsilon(1-\varepsilon)^{t-1}V_{t+1}(1)$.
-\item The center $C_N$ is a polynomial in $\varepsilon$ with $C_N(0)=0$. At
+\item The center $C_N$ is a polynomial in $\varepsilon$ with $C_N(0)=0$
+(extended as a polynomial to $\varepsilon=0$). At
 $\varepsilon=0$ we have $V_{t+1}(1)=\pi_t$, and
 $C_N'(0)=c_1=\frac4{N+2}$ exactly.
 \item The weights satisfy $\sum_tw_tt=3-\frac6{h+2}$, and $w_t\le2t2^{-t}$
@@ -203,8 +204,9 @@ $C_N\ge\frac{4\varepsilon}{N+2}(1-2\varepsilon)$.
 $C_N\le\frac{4\varepsilon}{N+2}\,N^{2\varepsilon}e^{5200\varepsilon}$ holds
 whenever $N\ge64$ and $0<\varepsilon(1+\log N)\le\frac1{100}$.
 \end{enumerate}
-In particular $\log C_N=\log\frac{4\varepsilon}{N+2}+O(\varepsilon\log N)$
-in the range of (b), with an absolute implied constant.
+In particular
+$\log(1-2\varepsilon)\le\log C_N-\log\frac{4\varepsilon}{N+2}\le\varepsilon(2\log N+5200)$
+in the range of (b).
 \end{theorem}
 
 In words, when $\varepsilon\log N$ is small the first-order term is correct up to a factor
@@ -235,6 +237,14 @@ since $G$ increases from $-\infty$ to $\infty$ on $(0,\infty)$.
 
 \begin{table}[t]
 \centering\small
+\caption{Elephant crossings $x_N$ and the root $g_N$ of $G(g)=\Lambda_N$.
+These values are numerical and are not used in any proof. We computed $x_N$ in double precision from
+the recursion of Lemma~\ref{lem:erw-reduction}, by Brent's method with an
+absolute tolerance of $10^{-12}$ in $x$, and we found $g_N$ and the Markov
+crossing $z_N$ with a tolerance of about $10^{-15}$. Here $x_{\mathrm{2nd}}$ is
+the formula of Proposition~\ref{prop:refined} without its error term, and
+$\Upsilon_N$ is the difference of Theorem~\ref{thm:erw-markov}.}
+\label{tab:erw-crossing}
 \begin{tabular}{@{}rlllll@{}}
 \toprule
 $N$ & $x_N$ & $g_N$ & $x_N-x_{\mathrm{2nd}}$ & $x_N/\log N$ & $\Upsilon_N\log N$\\
@@ -247,12 +257,6 @@ $N$ & $x_N$ & $g_N$ & $x_N-x_{\mathrm{2nd}}$ & $x_N/\log N$ & $\Upsilon_N\log N$
 51200 & 16.778468 & 16.786946 & $+0.0008$ & 1.547 & $+0.707$\\
 \bottomrule
 \end{tabular}
-\caption{Elephant crossings $x_N$, computed in double precision from the
-recursion of Lemma~\ref{lem:erw-reduction}, and the root $g_N$ of
-$G(g)=\Lambda_N$. Here $x_{\mathrm{2nd}}$ is the formula of
-Proposition~\ref{prop:refined} without its error term, and $\Upsilon_N$ is the
-difference of Theorem~\ref{thm:erw-markov}.}
-\label{tab:erw-crossing}
 \end{table}
 
 \begin{theorem}\label{thm:erw-crossing}
@@ -301,6 +305,14 @@ We subtract. Since $\log4+\log2=\log8$, the main terms give
 $x+\log x-2L+\log8=G(x)-\Lambda_N$, and both errors are $O(L^2/N)$ because
 $x\le2\Lambda_N\le4L$. This is \eqref{eq:F-G}.
 
+Keeping the constants gives an explicit $\rho_N$. Suppose that
+$400L(1+L)\le N$. Then $N\ge64$ and $\varepsilon(1+\log N)\le4L(1+L)/N\le\frac1{100}$,
+so the inequality after part (b) of Theorem~\ref{thm:erw-bounds} applies. With
+$\log(1-y)\ge-y-y^2$ for $0\le y\le\frac12$ and $x\le4L$, the error term for
+$\log C_N$ above lies between $-(3+8L)/N$ and $(8L^2+20800L)/N$, and the one
+for $\log E_N$ lies between $-16L^2/N$ and $4L/N$. So \eqref{eq:F-G} holds
+with $\rho_N=(24L^2+20800L)/N$.
+
 \emph{Step 2: trap the zero.} We have $G'=1+1/x\ge1$ and $G(g_N)=\Lambda_N$.
 So $G(x)-\Lambda_N<-\rho_N$ for $x<g_N-\rho_N$, and
 $G(x)-\Lambda_N>\rho_N$ for $x>g_N+\rho_N$. By \eqref{eq:F-G}, $F(x)<0$ for
@@ -327,14 +339,28 @@ form $50\cdot2^k$, computed from the recursion for $f_N$ in
 Lemma~\ref{lem:erw-reduction}. The limit $2$ of $x_N/\log N$ is approached
 slowly, because of the term $-\log\log N$.
 
-Now we compare with the persistent walk. Doubling \eqref{eq:markov-crossing}
+Now we compare with the persistent walk of the introduction, in which each
+step repeats the previous one with probability $p$ and switches with
+probability $q=1-p$. Here $p$ and $q$ refer to that walk, and later sections
+reuse these letters locally. Put $T=Nq$. Its end is $p^{N-1}/2$, its crossing
+is $p_N$, and $z_N=N(1-p_N)$. So $x=N\varepsilon$ corresponds to $T$, and the
+crossing $x_N$ corresponds to $z_N$. We compare the two crossings through the
+crossing equation of~\cite[Proposition~3.8]{paperA}, which says that for every
+$N\ge2$
+\begin{equation}\label{eq:markov-crossing}
+ z_N+\tfrac12\log z_N=L+c_0+\frac1{8z_N}+O(L^{-2}),\qquad
+ c_0=\tfrac12\log\tfrac\pi8,
+\end{equation}
+where the error term is at most $\frac1{4L^2}+\frac{L^2+L}N$ in absolute
+value, and that $L/2\le z_N\le L$. This is the only result of~\cite{paperA}
+that we use. Doubling \eqref{eq:markov-crossing}
 without its last two terms and adding $\log2$ gives $2z_N+\log(2z_N)=\Lambda_N+\log(2\pi)$, so
 $2z_N-\log(2\pi)$ nearly solves $G(x)=\Lambda_N$. What is left is of order
 $1/L$.
 
 \begin{theorem}\label{thm:erw-markov}
 Let $z_N$ be the crossing value of $T$ for the persistent walk with $N$ steps, as
-in Section~\ref{sec:notation}. As $N\to\infty$ over even $N$,
+above. As $N\to\infty$ over even $N$,
 \[
  \Upsilon_N:=x_N-\bigl(2z_N-\log(2\pi)\bigr)=\frac{c_*}{\log N}
  +O\Bigl(\frac{\log\log N}{(\log N)^2}\Bigr),\qquad
@@ -353,40 +379,40 @@ $G(x)=\Lambda_N$ of the elephant, find that $2z_N-\log(2\pi)$ misses it by
 $c_*/L$, and divide by $G'\approx1$.
 
 \begin{proof}
-Write $\ell=\log(2\pi)$ and $Y=2z_N$. We compute $G(Y-\ell)$ in three steps
+Write $\ell=\log(2\pi)$ and $\bar z=2z_N$. We compute $G(\bar z-\ell)$ in three steps
 and then compare it with $G(x_N)$.
 
-\emph{Step 1: the size of $z_N$.} By Section~\ref{sec:notation}, the error term
-in \eqref{eq:markov-crossing} is $O(L^{-2})$ and $L/2\le z_N\le L$. So
+\emph{Step 1: the size of $z_N$.} By the bounds after \eqref{eq:markov-crossing},
+the error term there is $O(L^{-2})$ and $L/2\le z_N\le L$. So
 $\log z_N=\log L+O(1)$ and $\frac1{8z_N}=O(1)$, and
 \eqref{eq:markov-crossing} gives $z_N=L-\frac12\log L+O(1)$. Hence
-$Y=2L-\log L+O(1)$, and
+$\bar z=2L-\log L+O(1)$, and
 \[
  \frac1{8z_N}=\frac1{8L}+\frac{L-z_N}{8Lz_N}=\frac1{8L}+O\Bigl(\frac{\log L}{L^2}\Bigr),
- \qquad\frac1Y=\frac1{2L}+O\Bigl(\frac{\log L}{L^2}\Bigr).
+ \qquad\frac1{\bar z}=\frac1{2L}+O\Bigl(\frac{\log L}{L^2}\Bigr).
 \]
 
-\emph{Step 2: the equation for $Y$.} We double \eqref{eq:markov-crossing} and
-add $\log2$. The left side becomes $2z_N+\log z_N+\log2=Y+\log Y$. On the
+\emph{Step 2: the equation for $\bar z$.} We double \eqref{eq:markov-crossing} and
+add $\log2$. The left side becomes $2z_N+\log z_N+\log2=\bar z+\log\bar z$. On the
 right, $2c_0+\log2=\log\frac\pi4$, and $\frac1{4z_N}=\frac1{4L}+O(\log L/L^2)$
-by Step~1. So $Y+\log Y=2L+\log\frac\pi4+\frac1{4L}+O(\log L/L^2)$.
+by Step~1. So $\bar z+\log\bar z=2L+\log\frac\pi4+\frac1{4L}+O(\log L/L^2)$.
 
-\emph{Step 3: the value $G(Y-\ell)$.} We have
-$\log(Y-\ell)=\log Y+\log(1-\ell/Y)$, and
-$\log(1-\ell/Y)=-\ell/(2L)+O(\log L/L^2)$ by Step~1. With Step~2 and
+\emph{Step 3: the value $G(\bar z-\ell)$.} We have
+$\log(\bar z-\ell)=\log\bar z+\log(1-\ell/\bar z)$, and
+$\log(1-\ell/\bar z)=-\ell/(2L)+O(\log L/L^2)$ by Step~1. With Step~2 and
 $\log\frac\pi4-\ell=-\log8$ this gives
 \[
- G(Y-\ell)=Y+\log Y-\ell+\log\Bigl(1-\frac\ell Y\Bigr)
+ G(\bar z-\ell)=\bar z+\log\bar z-\ell+\log\Bigl(1-\frac\ell{\bar z}\Bigr)
  =\Lambda_N+\frac1{4L}-\frac\ell{2L}+O\Bigl(\frac{\log L}{L^2}\Bigr)
  =\Lambda_N-\frac{c_*}L+O\Bigl(\frac{\log L}{L^2}\Bigr).
 \]
 
 \emph{Step 4: compare with $x_N$.} By Theorem~\ref{thm:erw-crossing}(a),
 $G(x_N)=\Lambda_N+O(L^2/N)$. So
-$G(x_N)-G(Y-\ell)=c_*/L+O(\log L/L^2)$. Both $x_N$ and
-$Y-\ell=2z_N-\log(2\pi)$ are $2L+O(\log L)$, so $G'(x)=1+1/x=1+O(1/L)$
+$G(x_N)-G(\bar z-\ell)=c_*/L+O(\log L/L^2)$. Both $x_N$ and
+$\bar z-\ell=2z_N-\log(2\pi)$ are $2L+O(\log L)$, so $G'(x)=1+1/x=1+O(1/L)$
 between them. By the mean value theorem we may divide by $G'$, and we get
-$x_N-(Y-\ell)=c_*/L+O(\log L/L^2)$.
+$x_N-(\bar z-\ell)=c_*/L+O(\log L/L^2)$.
 \end{proof}
 
 We computed $z_N$ from the exact law of the persistent walk~\cite{paperA}. The
