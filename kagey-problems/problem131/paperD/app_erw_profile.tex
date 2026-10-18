@@ -3,9 +3,9 @@
 This appendix proves the bound on the mode in Lemma~\ref{lem:B-mode}, which
 Corollary~\ref{cor:mode-location} uses. Online Resource~1 uses the same lemmas
 for the tail. We keep the conventions of
-Section~\ref{sec:shape}. We write $C$ for an
-absolute constant whose value may change from line to line, and $\bar c$,
-$A_0$, $A_1$ for fixed absolute constants. Since $M$ is independent of $X_1$,
+Section~\ref{sec:shape}. All constants in this appendix are explicit. Online
+Resource~1 writes $C$ for an absolute constant whose value may change from line to
+line. Since $M$ is independent of $X_1$,
 $f_N(m)=\Prob(M_N=m)$. Every path of a chain $M^{[k_0]}$ is nondecreasing in
 time, and we use the paths of $Y$ and $Z^{(j)}$ fixed after
 Lemma~\ref{lem:firstmark}. The size $\lvert\mathcal T_v\rvert$ of the family has the law $\beta_v$ of
@@ -84,9 +84,15 @@ Lemma~\ref{lem:urn}, and sum the upper bound over $d'\ge d$.
 \end{proof}
 
 \begin{proposition}[local lower bound]\label{thm:B-local-lower}
-Assume~\eqref{eq:H}. There is an absolute constant $C$ such that for
-$2\le m\le N/4$ we have $f_N(m)\ge\frac{x}{m(m+1)}(1-e_1(m))$ with
-$e_1(m)=C\bigl(\frac{x\log(m+1)}m+\varepsilon\log N+me^{-m/9}\bigr)$.
+Let $N\ge64$, $0<\varepsilon<1$ and $2\le m\le N/4$. Then
+$f_N(m)\ge\frac{x}{m(m+1)}(1-e_1'(m))\ge\frac{x}{m(m+1)}(1-e_1(m))$, where
+\[
+ e_1'(m)=2\varepsilon H_{m+1}+\frac{xH_m}m+\frac{2x}{m+2}+8\varepsilon\log N+20me^{-m/9}
+\]
+and
+\[
+ e_1(m)=20\Bigl(\frac{x\log(m+1)}m+\varepsilon\log N+me^{-m/9}\Bigr).
+\]
 \end{proposition}
 
 \paragraph{Idea of the proof.}
@@ -148,9 +154,8 @@ gives
  \Prob(Z^{(j)}_{N-1}\ge m)\le\frac{xH_m}m,\qquad
  \E Y_{2m}\le2\varepsilon m\log N .
 \]
-None of these bounds depends on $j$. Put $p=2\varepsilon H_{m+1}+xH_m/m$,
-so that $p\le C(\frac{x\log(m+1)}m+\varepsilon\log N)$. If $p>1$, then
-$e_1(m)>1$ (once $C$ is large) and there is nothing to prove. So let
+None of these bounds depends on $j$. Put $p=2\varepsilon H_{m+1}+xH_m/m$.
+If $p>1$, then $e_1'(m)>1$ and there is nothing to prove. So let
 $p\le1$.
 
 \emph{Step 3: sum over $j$.} By Lemma~\ref{lem:firstmark},
@@ -171,26 +176,35 @@ $\frac{x}{m(m+1)}(1-\frac{2x}{m+2})-\varepsilon\sum_{j>J}\beta_j(m)$.
 
 \emph{Step 4: the late first flips $j>J$.} A family that starts after time
 $N/8$ rarely reaches size $m$. By \eqref{eq:B-subtail},
-$\beta_j(m)\le\frac{j-1}{N-m}e^{-(j-1)a}$ with
-$a=\frac{m-1}{N-1}\le\frac14$. We sum this over $j-1\ge J$, using
-$1-e^{-a}\ge a/2$ and $N-m\ge\frac34N$. Since $\lfloor
-N/8\rfloor\ge\frac{N-1}9$ for $N\ge64$, we have $aJ\ge\frac{m-1}9$, and so
+$\beta_j(m)\le\frac{j-1}{N-m}r^{j-1}$ with $r=e^{-a}$ and
+$a=\frac{m-1}{N-1}\le\frac14$. We sum this over $j-1\ge J$. With
+$\sum_{i\ge J}ir^i\le r^J\bigl(\frac J{1-r}+\frac1{(1-r)^2}\bigr)$, $1-e^{-a}\ge a/2$ and
+$N-m\ge\frac34N$ we get
+$\varepsilon\sum_{j>J}\beta_j(m)\le\frac{4\varepsilon}{3N}\bigl(\frac{2J}a+\frac4{a^2}\bigr)e^{-aJ}$.
+Since $\lfloor N/8\rfloor\ge\frac{N-1}9$ for $N\ge64$, we have $aJ\ge\frac{m-1}9$. Also
+$J\le N/8$ and $a\ge\frac{m-1}N$. So
 \[
- \varepsilon\sum_{j>J}\beta_j(m)\le\frac{C\varepsilon}{N}\Bigl(\frac
- Ja+\frac1{a^2}\Bigr)e^{-(m-1)/9}\le\frac{x}{m(m+1)}\,Cme^{-m/9}.
+ \varepsilon\sum_{j>J}\beta_j(m)\le x\Bigl(\frac1{3(m-1)}+\frac{16}{3(m-1)^2}\Bigr)e^{-(m-1)/9}
+ \le\frac{x}{m(m+1)}\,20me^{-m/9}.
 \]
+The last step uses $m+1\le3(m-1)$ and $m+1\le3(m-1)^2$, which hold for $m\ge2$, and
+$e^{1/9}\le\frac98$, since $17\cdot\frac98\le20$.
 
 \emph{Step 5: collect.} For $0\le p\le1$ and $q\ge0$ we have
 $(1-p)(1-q)\ge1-p-q$. So Steps 3 and 4 give
 \[
- f_N(m)\ge\frac{x}{m(m+1)}\Bigl(1-p-\frac{2x}{m+2}-Cme^{-m/9}-8\varepsilon\log N\Bigr),
+ f_N(m)\ge\frac{x}{m(m+1)}\Bigl(1-p-\frac{2x}{m+2}-20me^{-m/9}-8\varepsilon\log N\Bigr),
 \]
-and by the bound for $p$ in Step 2 this is the claim.
+which is the bound with $e_1'(m)$. For $e_1'\le e_1$ we use $\log(m+1)\ge\log3>1$ and
+$\log N\ge\log64>4$. So $H_m\le1+\log m\le2\log(m+1)$, $H_{m+1}\le1+\log N\le\frac54\log N$ and
+$\frac{2x}{m+2}\le\frac{2x\log(m+1)}m$. Hence
+$e_1'(m)\le\frac{4x\log(m+1)}m+\frac{21}2\varepsilon\log N+20me^{-m/9}\le e_1(m)$.
 \end{proof}
 
 \begin{lemma}[mode bound]\label{lem:B-mode}
-Assume~\eqref{eq:H}. There are absolute constants $\bar c>0$ and $A_0$ such that if $\varepsilon\log
-N\le\bar c$ and $A_0x\log(x+2)\le N/4$, then $m_h\le A_0x\log^2(x+1)$.
+Let $N\ge64$ and $x\ge1$, and put $\bar c=\frac1{40}$ and $A_0=15400$. If $\varepsilon\log
+N\le\bar c$ and $804x\log(x+2)\le N$, then $m_h\le A_0x\log^2(x+1)$. In particular this holds if
+$\varepsilon\log N\le\bar c$ and $A_0x\log(x+2)\le N/4$.
 \end{lemma}
 
 \begin{proof}
@@ -199,16 +213,21 @@ half of $\frac x{\ell(\ell+1)}$. Up to its mode $f_N$ is nondecreasing. So
 if the mode were far to the right of $\ell$, the bins from $\ell$ to the
 mode would carry more mass than the tail $\Prob(M_N\ge\ell)$ has.
 
-Let $\ell=\lceil Ax\log(x+2)\rceil$. Since
-$\log(\ell+1)\le\log(A+2)+2\log(x+2)$, we have
-$\frac{x\log(\ell+1)}\ell\le\frac{\log(A+2)+2}A$, and $\ell e^{-\ell/9}$ is
-small when $A$ is large. So we can fix the absolute constants $A$ and $\bar c$
-such that $e_1(\ell)\le\frac12$ in Proposition~\ref{thm:B-local-lower}
-whenever $\varepsilon\log N\le\bar c$. We take $A_0\ge A+1$, so that
-$2\le\ell\le N/4$. Then $f_N(\ell)\ge\frac x{2\ell(\ell+1)}$. If $m_h\ge\ell$,
+Put $L_2=\log(x+2)\ge\log3>1$ and $\ell=\lceil200xL_2\rceil$, so that $200\le\ell\le201xL_2$
+and $4\ell\le804xL_2\le N$. Since $\log N\ge4$, we have $\varepsilon\le\frac1{160}$. We bound
+the five terms of $e_1'(\ell)$ in Proposition~\ref{thm:B-local-lower}. As $(1+\log s)/s$
+decreases for $s\ge1$, and $\log200\le6$, $\log x\le L_2$ and $\log L_2\le L_2$, we get
+$\frac{xH_\ell}\ell\le\frac{x(1+\log(200xL_2))}{200xL_2}\le\frac{7+2L_2}{200L_2}\le\frac9{200}$.
+Next $\frac{2x}{\ell+2}\le\frac1{100}$,
+$2\varepsilon H_{\ell+1}\le2\varepsilon(1+\log N)\le\frac1{80}+\frac1{20}$ and
+$8\varepsilon\log N\le\frac15$. Finally $se^{-s/9}$ decreases for $s\ge9$, so
+$20\ell e^{-\ell/9}\le4000e^{-200/9}<10^{-5}$. The five terms add up to less than $\frac12$, so
+$f_N(\ell)\ge\frac x{2\ell(\ell+1)}$. If $m_h\ge\ell$,
 Lemmas~\ref{lem:B-sandwich} (with $a=\ell$, $b=m_h$) and~\ref{lem:B-tail} give
 $(m_h-\ell+1)f_N(\ell)\le\Prob(M_N\ge\ell)\le xH_\ell/\ell$. So
-$m_h\le(\ell+1)(1+2H_\ell)$ in every case. As $\log\ell\le C\log(x+2)$ and
-$\log(x+2)\le2\log(x+1)$, this is at most $A_0x\log^2(x+1)$ once $A_0$ is
-large.
+$m_h\le(\ell+1)(1+2H_\ell)$ in every case. Here $\ell+1\le202xL_2$, because $xL_2\ge1$. Also
+$H_\ell\le1+\log(201xL_2)\le7+2L_2\le9L_2$, so $1+2H_\ell\le19L_2$. Hence
+$m_h\le3838\,xL_2^2$. Since $(x+1)^2\ge x+2$, we have $L_2\le2\log(x+1)$, and so
+$m_h\le15352\,x\log^2(x+1)\le A_0x\log^2(x+1)$. The last claim holds because
+$804x\log(x+2)\le4A_0x\log(x+2)$.
 \end{proof}

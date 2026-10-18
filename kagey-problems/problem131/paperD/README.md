@@ -51,9 +51,11 @@ eps). Put x = N eps.
   x_N = 2 z_N - log(2 pi) + c_*/log N + O(log log N/(log N)^2), where
   c_* = (1/2) log(2 pi) - 1/4 (Theorem 2.8).
 - The center to second order. For even N >= 64 and eps(1 + log N) <= 1/100,
-  log C_N = log(4 eps/(N+2)) + 2 eps log N + O(eps), with explicit constants (Proposition S1.1 of Online Resource 1). So
+  log C_N = log(4 eps/(N+2)) + 2 eps log N + O(eps), with explicit constants, and the lower bound
+  holds for every 0 < eps < 1/2 (Proposition S1.1 of Online Resource 1). So
   x_N = g_N - (2 g_N log N + g_N^2/2)/(N(1 + 1/g_N)) + O(log N/N), where g_N is the root of
-  g + log g = 2 log N - log 8, and x_N < g_N for large N (Proposition S1.2).
+  g + log g = 2 log N - log 8, with the error at most 20822 log N/N for log N >= 30, and
+  x_N < g_N for every even N with log N >= 3500 (Proposition S1.2).
 - The end is strictly below its neighbor whenever x >= 2(1 - eps), for every N >= 2 and
   0 < eps < 1, with a lower bound on their ratio for these N and eps and an upper bound for
   N >= 3 and eps <= 1/2 (Theorem 3.5). So the law is not unimodal whenever x >= 2(1 - eps) and
@@ -62,29 +64,30 @@ eps). Put x = N eps.
   the proof uses Theorem 2.6(b) at eps = 2/N. For 10 <= N < 1688 it uses the ball-arithmetic
   enclosure of eps_N from `certify_center.py`, whose lower end lies above 2/(N+2), and for N = 8 an
   exact computation. For N = 2, 4 and 6 the hypothesis fails.
-- Given the first step, let M_N be the number of steps that differ from it. For N >= 2 and
-  eps <= 1/4 its law is within an explicit delta_B of a compound Poisson law with jumps d at rates
-  x/(d(d+1)), bin by bin (Theorem 3.8). The bulk (M_N - x log x)/x tends to the Landau law when
-  x -> oo and x^3 (log N)^2/N -> 0, in particular at the crossing, with a bound for each bin
+- Given the first step, let M_N be the number of steps that differ from it. For N >= 1 and
+  0 < eps < 1 its law is within an explicit delta_Sigma <= delta_B of a compound Poisson law with
+  jumps d at rates x/(d(d+1)), bin by bin (Theorem 3.8). The bulk (M_N - x log x)/x tends to the
+  Landau law when x -> oo and x^3 (log N)^2/N -> 0, in particular at the crossing, with the bound
+  (889 + 165 log x)/x + 6.6 x/N + x delta_Sigma for each bin when eps <= 1/4 and x >= 1
   (Theorem 3.9).
 - The Landau density f_L has exactly one mode lambda_L, with -0.22278299 < lambda_L < -0.22278297,
-  and -0.0792 <= f_L'' <= -0.0786 near it (Lemma 3.10, by ball arithmetic). So at the crossing every
-  mode is at distance x log x + lambda_L x + O(sqrt(x log x)) from the nearer end
-  (Corollary 3.11).
+  and -0.0792 <= f_L'' <= -0.0786 near it (Lemma 3.10, by ball arithmetic, and also in Lean by
+  kernel-checked integration given the unimodality of f_L). So for every large N, even or odd, and
+  every eps with log N <= x <= 2 log N, in particular at the crossing, every mode is at distance
+  x log x + lambda_L x + O(sqrt(x log x)) from the nearer end (Corollary 3.11).
 - For even N with x >= 1 and x (log N)^2/N -> 0, bin N-m has probability (x/(2m^2))(1 + o(1)),
-  uniformly for omega_N x log^2(x+1) <= m <= delta_N N, for any omega_N -> oo with
-  omega_N x log^2(x+1) = o(N) and any delta_N -> 0. So the tail is x/(2m^2) for
-  x log^2 x << m << N (Theorem S2.1 of Online Resource 1).
+  uniformly for omega_N x log^2(x+1) <= m <= delta_N N, for any omega_N -> oo and any
+  delta_N -> 0. So the tail is x/(2m^2) for x log^2 x << m << N (Theorem S2.1 of Online
+  Resource 1).
 - For every N >= 3 and every 0 < eps < 1/2 the second difference of the law changes sign at most
   four times, and so does that of the law given the first step for every N >= 2 (Theorem 3.18),
   and once the law has turned convex to the right of its left hump it
   stays strictly convex up to the mirror point (Theorem 3.19). So strict convexity between the
-  humps (Definition 3.13) follows from one inequality (Corollary 3.20). It holds for all large even
-  N (Theorem 3.21), where the center is then the unique interior minimum (Lemma 3.22 and
-  Corollary 3.23), for
-  5 <= N <= 2000 by a certified computation (Proposition 3.24, for N <= 9 in Lean only), and for
-  all large odd N
-  (Proposition 3.25). For odd N the two central bins equal the center of N+1 divided by
+  humps (Definition 3.13) follows from one inequality (Corollary 3.20). It holds for every large
+  N, even or odd, and every eps with log N <= x <= 2 log N, so at the crossing for every large N
+  (Theorem 3.21 and Proposition 3.25), and for large even N the center is then the unique interior
+  minimum (Lemma 3.22 and Corollary 3.23). It holds for
+  5 <= N <= 2000 by a certified computation (Proposition 3.24, for N <= 9 in Lean only). For odd N the two central bins equal the center of N+1 divided by
   1 - (1 - 2 eps)/N. For every even N from 8 to 2000 the center is the unique interior minimum
   (Proposition 3.26, from the certified convexity and Lemma 3.22).
 
@@ -100,7 +103,8 @@ full account. The proofs use computation in 3 places only.
   Theorem 2.6(b), enclosed in ball arithmetic (`certify_elephant.py`, and without certification
   `verify_elephant_crossing.py`).
 - Lemma 3.10 rests on enclosures of f_L' at 4 points and of f_L'' on an interval, computed in
-  ball arithmetic with rigorous error bounds (`certify_elephant.py`).
+  ball arithmetic with rigorous error bounds (`certify_elephant.py`). Lean proves
+  enclosures of the same quantities by an integration that its kernel checks, so the Arb run is an independent check.
 - For every 10 <= N <= 2000 a ball-arithmetic enclosure of eps_N and of the law at the crossing
   proves Propositions 3.24 and 3.26 (`certify_convex.py` and `certify_center.py`), and for even
   10 <= N < 1688 the same enclosure of eps_N gives Proposition 3.7 (`certify_center.py`). For
@@ -120,16 +124,17 @@ Online Resource 1, are of this kind.
 ## Open
 
 - An upper bound log C_N <= log(eps c_1) + eps c_2/c_1 + O(eps^2 (log N)^k), where
-  C_N = c_1 eps + c_2 eps^2 + ... at fixed N,, and an explicit N beyond
-  which the root g_N exceeds x_N (Remark S1.3 of Online Resource 1).
+  C_N = c_1 eps + c_2 eps^2 + ... at fixed N, and the smallest N beyond which the root g_N exceeds
+  x_N. Proposition S1.2 proves g_N > x_N for log N >= 3500, while Table 1 has it already at N = 50
+  (Remark S1.3 of Online Resource 1).
 - Conjecture 3.14 (strict convexity between the humps) for N between 2000 and the constants N_1 and
   N_1' of Theorem 3.21 (even N) and Proposition 3.25 (odd N). Section 3.5 proves it for all large N,
-  and `certify_convex.py` certifies it for 10 <= N <= 2000 (Lean also for 5 <= N <= 9). The constants are not explicit, and the
+  and `certify_convex.py` certifies it for 10 <= N <= 2000 (Lean also for 5 <= N <= 9). The thresholds are not computed, and the
   proof as it stands cannot work below N of about 3.5 * 10^56, so no computation closes the gap
   (Remark 3.27). For even N >= 8 and odd N >= 1689 the conjecture follows from one inequality
   (Corollary 3.20 and Proposition 3.25(c)).
 - The tail for m between x log x and x log^2 x, effective constants in Theorem S2.1, and
-  an effective error term in Corollary 3.11 (Remark 3.12).
+  an effective constant K in Corollary 3.11(b) (Remark 3.12).
 
 ## Prior work
 
@@ -149,8 +154,9 @@ grows.
 - `online_resource.tex` is Online Resource 1, a separate PDF `online_resource.pdf` with the center
   and the crossing to second order, the tail and the proof of parts (b) to (d) of Proposition 3.25.
   It reads the labels of the paper through the package `xr-hyper`, so build the paper, then the
-  Online Resource, then the paper again. Its text is in `online_resource_body.tex`, and its one
-  extra bibliography item is in `online_resource_bib.tex`. Its caption on the submission form is
+  Online Resource, then the paper again. Its text is in `online_resource_body.tex`. Its one
+  bibliography item (Hoeffding 1963) is listed in `online_resource.tex` itself, because the paper
+  cites it too, so `online_resource_bib.tex` holds no item at present. Its caption on the submission form is
   "Online Resource 1. The center and the crossing to second order, the tail theorem, and the
   proofs for odd N."
 - `problem131_arxiv.tex` is the arXiv version. It inputs `problem131_memory.tex` unchanged and
@@ -208,19 +214,27 @@ grows.
   October revision put several of those proofs back.
 - `../lean/PaperD/` holds the Lean 4 proofs. Every proof is checked by the Lean kernel, no module
   uses `native_decide`, and every theorem depends only on `propext`, `Classical.choice` and
-  `Quot.sound`. Lean proves Theorem 1.1 as stated (Lemmas 2.2 and 2.4, Propositions 2.3 and 2.5,
-  Theorems 2.6 and 2.7), Theorem 2.8 with its input from Paper A (Proposition 3.8 there, proved
-  in the Paper A library) as a hypothesis, Lemmas 3.1 to 3.4 (with the relabeling in Lemma 3.2),
-  Theorem 3.5, Corollary 3.6, Proposition 3.7 for every even N >= 8, Lemmas 3.15 to 3.17,
-  Theorems 3.18 and 3.19, Corollary 3.20, Lemma 3.22, Propositions 3.24 and 3.26, the first
-  paragraph and parts (a) and (c) of Proposition 3.25, Appendix A, Lemma B.3 and Appendix D. So
-  parts (a), (b) and (d) of Theorem 1.3 are proved. The finite ranges of Propositions 3.7, 3.24
-  and 3.26 rest on certificate runs in integer arithmetic whose soundness Lean proves, and the
-  kernel evaluates every step of every run. Not formalized are Theorems 3.8 and 3.9, Lemma 3.10
-  (the Arb computation), Corollary 3.11, Theorem 1.2, Appendix C, Appendix B apart from Lemma B.3,
-  Steps 1 to 3 of the proof of Theorem 3.21 (so Theorem 3.21, Corollary 3.23 for large N,
-  Proposition 3.25(d) and Theorem 1.3(c) are proved only from those steps), Proposition 3.25(b)
-  and Online Resource 1. The Python and Arb scripts are separate from Lean. `MAP.md` there gives
+  `Quot.sound`. With no hypothesis Lean proves Theorem 1.1 as stated (Lemmas 2.2 and 2.4,
+  Propositions 2.3 and 2.5, Theorems 2.6 and 2.7), Theorem 2.8 (its input from Paper A,
+  Proposition 3.8 there, is proved in the Paper A library, and the library `PaperAD` joins the
+  two), Lemmas 3.1 to 3.4 (with the relabeling in Lemma 3.2), Theorem 3.5, Corollary 3.6,
+  Proposition 3.7 for every even N >= 8, Lemmas 3.15 to 3.17, Theorems 3.18 and 3.19,
+  Corollary 3.20, Lemma 3.22, Propositions 3.24 and 3.26, the first paragraph and parts (a) to (c)
+  of Proposition 3.25, Appendices A, B and D, Section S2 and Section S3 apart from part (d) of
+  Proposition 3.25, and Proposition S1.4, Lemma S1.5 and Lemma S1.6(a), (b). So parts (a), (b)
+  and (d) of Theorem 1.3 are proved with no hypothesis. The finite ranges of Propositions 3.7,
+  3.24 and 3.26 rest on certificate runs in integer arithmetic whose soundness Lean proves, and the
+  kernel evaluates every step of every run. The rest is proved from six named classical results,
+  each stated in Lean as a hypothesis. They are Fourier inversion on Z (Katznelson), the characteristic
+  function of a compound Poisson sum (Durrett), the Efron-Stein inequality (Efron and Stein,
+  Steele), Scheffé's lemma, the unimodality of class L laws (Yamazato) and Hoeffding's inequality
+  for the hypergeometric law. Theorem 3.8 uses the first three, Theorem 3.9 the first three and,
+  for the limit in law, Scheffé's lemma. Lemma 3.10 uses unimodality alone, with the certified
+  numbers proved by kernel-checked integration and the real integral by a rotation of the contour.
+  Corollary 3.11(b), Theorem 3.21, Corollary 3.23, Proposition 3.25(d) and Theorem 1.3(c)
+  use the first three and unimodality, and Theorem 1.2 uses these and Scheffé's lemma. Propositions S1.1 and S1.2 (with the
+  threshold log N >= 3500) and Lemma S1.6(c), (d) use Hoeffding's inequality. The classical results
+  themselves are not formalized. The Python and Arb scripts are separate from Lean. `MAP.md` there gives
   the Lean names and the status of each statement of the paper. The library also holds the Lean
   proofs for Paper F, and most of its theorems are generated certificate steps, so the
   declaration count is not a count of results (see `MAP.md`).

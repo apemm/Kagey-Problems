@@ -336,22 +336,23 @@ same stable law appears for the root cluster of a random recursive
 tree~\cite{bertoin2014ejp}, and~\cite[Eqs.~(58)--(60)]{bhs2023} use it for
 the reversible chain itself, without error bounds. So the limit law in the
 two theorems below is not new. What they add is the truncation at $d=N-1$, a
-rate (an explicit error in Theorem~\ref{thm:cp} and an absolute constant in
-Theorem~\ref{thm:landau}), and the transfer to the elephant walk in sup norm. Numerical values of $f_L$ and
+rate with explicit constants in both theorems, and the transfer to the elephant walk in sup norm. Numerical values of $f_L$ and
 of its mode are standard (see K\"olbig and Schorr~\cite{ks1984}). What
 Lemma~\ref{lem:landau-mode} adds is a certified enclosure.
 
 \begin{theorem}[compound Poisson bulk]\label{thm:cp}
-For $N\ge2$ and $0<\varepsilon\le\frac14$,
+For $N\ge1$ and $0<\varepsilon<1$,
 \[
- \sup_{m\ge0}\bigl\lvert f_N(m)-\CP_N(m)\bigr\rvert\le\delta_B
- :=\frac{x^2\log N}{N}+\frac{4x^2}{N}e^{4x^2/N}+\frac{4x^2(H_N^2+H_N)}{N}.
+ \sup_{m\ge0}\bigl\lvert f_N(m)-\CP_N(m)\bigr\rvert\le\delta_\Sigma
+ :=\varepsilon^2(NH_N-2N+1)+2\varepsilon^2(N-1)+4\varepsilon^2\sum_{k=0}^{N-2}(H_k^2+H_k).
 \]
+Also $\delta_\Sigma\le\delta_B
+ :=\frac{x^2\log N}{N}+\frac{4x^2}{N}e^{4x^2/N}+\frac{4x^2(H_N^2+H_N)}{N}$.
 \end{theorem}
 
 In words, bin by bin the law of the number of disagreeing steps is within
-$\delta_B$ of the compound Poisson law, and $\delta_B=O(x^2\log^2N/N)$ when
-$x^2\le N$.
+$\delta_\Sigma$ of the compound Poisson law. Bounding each $H_k$ by $H_N$ gives
+$\delta_\Sigma\le\frac{x^2}N(\log N+2+4H_N^2+4H_N)$, so $\delta_\Sigma=O(x^2\log^2N/N)$.
 
 \paragraph{Idea of the proof.}
 The proof is in Appendix~\ref{app:bulk}. Let $Z_+$ be the total size of the
@@ -376,17 +377,21 @@ probability law of class $L$, so that $f_L$ is a unimodal probability
 density by~\cite{yamazato1978}.
 
 \begin{theorem}[Landau limit]\label{thm:landau}
-Assume~\eqref{eq:H}. There is an absolute constant $C$ such that the
-following hold.
 \begin{enumerate}[(a)]
-\item For every integer $m\ge0$, $\bigl\lvert x\,\CP_N(m)-f_L(\lambda_m)\bigr\rvert
-\le C\bigl(\frac{1+\log x}x+\frac xN\bigr)$.
-\item For every integer $m\ge0$, $\bigl\lvert xf_N(m)-f_L(\lambda_m)\bigr\rvert
-\le C\bigl(\frac{1+\log x}x+\frac xN\bigr)+x\delta_B$.
-\item If $x\to\infty$ and $x^3\log^2N/N\to0$, then $(M_N-x\log x)/x$
-converges in law to the law with density $f_L$.
+\item Let $x\ge1$ and $N\ge4x$. For every integer $m$, with $\CP_N(m)=0$ for $m<0$,
+\[
+ \bigl\lvert x\,\CP_N(m)-f_L(\lambda_m)\bigr\rvert\le E_0:=\frac{889+165\log x}x+\frac{6.6\,x}N
+ \le889\Bigl(\frac{1+\log x}x+\frac xN\Bigr).
+\]
+\item Let $0<\varepsilon\le\frac14$ and $x\ge1$. For every integer $m\ge0$,
+\[
+ \bigl\lvert xf_N(m)-f_L(\lambda_m)\bigr\rvert\le E_0+x\delta_\Sigma
+ \le889\Bigl(\frac{1+\log x}x+\frac xN\Bigr)+x\delta_B .
+\]
+\item Let $N_n\ge1$ and $0<\varepsilon_n<1$ for $n\ge1$, and put $x_n=N_n\varepsilon_n$. If
+$x_n\to\infty$ and $x_n^3\log^2N_n/N_n\to0$, then $(M_{N_n}-x_n\log x_n)/x_n$ converges in
+law to the law with density $f_L$.
 \end{enumerate}
-We do not compute $C$.
 \end{theorem}
 
 In words, near the crossing the number of disagreeing steps is about
@@ -403,15 +408,16 @@ $\chi(e^{i\theta})=-i\theta\log(-i\theta)+O(\theta^2\lvert\log\lvert\theta\rvert
 With $\theta=t/x$ the exponent becomes $B(t)+it\log x$ plus an error of
 order $t^2\log x/x$. The term $it\log x$ is the centering at $x\log x$. Both
 characteristic functions decay like $e^{-c\lvert t\rvert}$, so Fourier
-inversion turns this into a bound for each bin. Part (b) then follows from
-Theorem~\ref{thm:cp}.
+inversion turns this into a bound for each bin, and keeping the constants gives
+$889$ and $165$. Part (b) then follows from Theorem~\ref{thm:cp}.
 
 To locate the modes we need to know that $f_L$ is curved at its maximum.
 
 \begin{lemma}[the mode of the Landau density, computer-assisted]\label{lem:landau-mode}
 \begin{enumerate}[(a)]
 \item The density $f_L$ has exactly one mode $\lambda_{\mathrm L}$, and
-$-0.22278299<\lambda_{\mathrm L}<-0.22278297$.
+$-0.22278299<\lambda_{\mathrm L}<-0.22278297$. It is nondecreasing on
+$(-\infty,\lambda_{\mathrm L}]$ and nonincreasing on $[\lambda_{\mathrm L},\infty)$.
 \item The derivative vanishes at the mode, $f_L'(\lambda_{\mathrm L})=0$, and
 $-0.0792\le f_L''(\lambda)\le-0.0786$ for
 $-0.2229\le\lambda\le-0.2227$.
@@ -432,10 +438,19 @@ of~\cite{johansson2018} on $[2^{-20},30]$, with explicit bounds for the rest
 (\texttt{certify\_elephant.py}). The run takes under a second. Part (c) follows from (b) and the
 unimodality of $f_L$.
 
+Lean proves the lemma as well, and its only input there is the unimodality of $f_L$ that
+\cite{yamazato1978} gives (Section~\ref{sec:verify}). Lean derives the real integral by the same
+rotation of the contour, and it encloses the integrals for $f_L'$ and $f_L''$ by an integration
+whose every step the Lean kernel checks. Its enclosures are about $10^{-12}$ wide. This is wider
+than the radii of the Arb run but enough for the brackets in (a) and (b). So the Arb computation
+is an independent check of the same numbers. Lean also shows that
+$f_L(\lambda_{\mathrm L})\ge0.1806$, which we do not use.
+
 \begin{corollary}[where the modes are]\label{cor:mode-location}
 \begin{enumerate}[(a)]
 \item Assume~\eqref{eq:H}. Let $\kappa_L$ be as in
-Lemma~\ref{lem:landau-mode}(c), let $E_1$ be the bound of
+Lemma~\ref{lem:landau-mode}(c), let
+$E_1=889\bigl(\frac{1+\log x}x+\frac xN\bigr)+x\delta_B$ be the bound of
 Theorem~\ref{thm:landau}(b), and put
 \[
  E'=E_1+\frac{16x^2H_N}{N^2}+\frac{\lVert f_L''\rVert_\infty}{8x^2}.
@@ -443,17 +458,18 @@ Theorem~\ref{thm:landau}(b), and put
 If $E'<\kappa_L/2$ and $m_h\le N/4$, then every mode $a^*\ge N/2$ of $P_N$
 satisfies $\lvert m^*-x\log x-\lambda_{\mathrm L}x\rvert\le x\sqrt{2E'/\kappa_L}$,
 and so does every mode of $f_N$.
-\item Let $N\to\infty$ over even $N$. At the crossing, with $x=x_N$, every mode
-$a^*\ge N/2$ of $P_N$ has
+\item There are $K$ and $N_2$ such that the following holds for every $N\ge N_2$, even or
+odd, and every $\varepsilon$ with $\log N\le x\le2\log N$. Every mode $a^*\ge N/2$ of $P_N$ has
 \[
- m^*=x\log x+\lambda_{\mathrm L}x+O\bigl(\sqrt{x\log x}\bigr),
+ \bigl\lvert m^*-x\log x-\lambda_{\mathrm L}x\bigr\rvert\le K\sqrt{x\log x},
 \]
-and so has the largest mode $m_h$ of $f_N$.
+and so has every mode of $f_N$ in place of $m^*$. In particular this holds at the crossing,
+with $x=x_N$, for every large even $N$ (Theorem~\ref{thm:erw-crossing}(b)) and every large
+odd $N$ (Proposition~\ref{prop:odd}(b)).
 \end{enumerate}
-In (a) the only constant that we do not compute is the constant $C$ of
-Theorem~\ref{thm:landau}, which enters $E_1$. (Here
+In (a) every constant is explicit. (Here
 $\lVert f_L''\rVert_\infty\le16/\pi^4$, since $\lvert e^{B(t)}\rvert=e^{-\pi\lvert t\rvert/2}$.)
-We do not compute the implied constant in (b).
+We do not compute $K$ and $N_2$ in (b).
 \end{corollary}
 
 In words, each hump of the law at the crossing sits about
@@ -468,10 +484,10 @@ compute. At $N=10^6$ and $x=22.4407$ the bound $\delta_B$ is still about
 $0.46$, but there the computed law has
 $\lvert f_N(m)/\CP_N(m)-1\rvert\le3.6\cdot10^{-4}$ for $1\le m\le10^4$. At
 every tested crossing $m^*$ equals the mode of $\CP_N$. We do not compute the
-error term in Corollary~\ref{cor:mode-location}(b). Its proof needs the
+constant $K$ in Corollary~\ref{cor:mode-location}(b). Its proof needs the
 bound of Theorem~\ref{thm:landau}(b) to be below $\kappa_L/2$, where
-$\kappa_L$ is the constant of Lemma~\ref{lem:landau-mode}(c), and
-numerically the best $\kappa_L$ is about $0.026$. These numbers are computed
+$\kappa_L=2.6\cdot10^{-10}$ is the constant of Lemma~\ref{lem:landau-mode}(c). With the
+constant $889$ this needs $x>2\cdot10^{14}$, and numerically the best $\kappa_L$ is about $0.026$. These numbers are computed
 in double precision and are not used in any proof.
 \end{remark}
 
@@ -481,8 +497,7 @@ Beyond the humps the law falls like $x/(2m^2)$. Theorem~S2.1 of Online
 Resource~1 proves that
 $P_N(N-m)=\frac{x}{2m^2}(1+o(1))$ for even $N$ with $x\ge1$ and
 $x\log^2N/N\to0$, uniformly for $\omega_Nx\log^2(x+1)\le m\le\delta'_NN$, for
-every $\omega_N\to\infty$ with $\omega_Nx\log^2(x+1)=o(N)$ and every
-$\delta'_N\to0$.
+every $\omega_N\to\infty$ and every $\delta'_N\to0$.
 
 At $N=10^6$, $x=22.4407$ and $m=10^4$ the computed ratio
 $P_N(N-m)/(x/(2m^2))$ is $1.03777$. Heuristically, at moderate $m$ the law
@@ -505,7 +520,7 @@ for odd $N$). At the crossing $m^*=o(N)$ by
 Corollary~\ref{cor:mode-location}(b), so for large even $N$ the property
 makes the center the unique interior minimum (Corollary~\ref{cor:unique-min}).
 This subsection proves the property for all large $N$, even
-(Theorem~\ref{thm:convex-large}) or odd (Proposition~\ref{prop:odd}), and,
+(Theorem~\ref{thm:convex-large}) or odd (Proposition~\ref{prop:odd}(d)), and,
 with a certified computation, for $5\le N\le2000$
 (Proposition~\ref{prop:convex-certified}). For every even $N\ge8$ and every
 odd $N\ge1689$ it reduces the property to one inequality
@@ -661,13 +676,14 @@ $2m^*+1\le N/2$ whenever the range $2m^*+1\le a\le N-2m^*-1$ is not empty.
 If $a^*<N/2$, then $m^*>N/2$, and no $a_1$ meets the conditions.
 
 \begin{theorem}[convexity between the humps for large $N$]\label{thm:convex-large}
-There is $N_1$ such that the law at the crossing is convex between the humps
-for every even $N\ge N_1$. That is, for even $N\ge N_1$, $x=x_N$ and every mode $a^*\ge N/2$
-of $P_N$ with $m^*=N-a^*$,
+There is $N_1$ such that the following holds for every $N\ge N_1$, even or odd, and every
+$\varepsilon$ with $\log N\le x\le2\log N$. For every mode $a^*\ge N/2$ of $P_N$ with
+$m^*=N-a^*$ we have $4m^*+4\le N$ and
 \[
  P_N(a-1)-2P_N(a)+P_N(a+1)>0\qquad\text{for }2m^*+1\le a\le N-2m^*-1 .
 \]
-We do not compute the threshold $N_1$ (Remark~\ref{rem:convex-open}).
+In particular, after enlarging $N_1$, the law at the crossing is convex between the humps for
+every even $N\ge N_1$. We do not compute the threshold $N_1$ (Remark~\ref{rem:convex-open}).
 \end{theorem}
 
 \paragraph{Idea of the proof.}
@@ -677,11 +693,11 @@ concave on $[m^*,2m^*+2]$, and then its value halfway would be at least half of
 its maximum. The Landau limit shows that the value halfway is much smaller.
 
 \begin{proof}
-Let $N$ be even and large, and let $x=x_N$ and $\varepsilon=\varepsilon_N$. By
-Theorem~\ref{thm:erw-crossing}, $x\to\infty$ and $x=O(\log N)$. So \eqref{eq:H}
-holds, and $(1+\log x)/x$, $x/N$ and
-$x\delta_B=O(x^3\log^2N/N)$ tend to $0$. So by Theorem~\ref{thm:landau}(b)
-there are numbers $\Theta_N\to0$ with
+Let $N$ be large, and let $\log N\le x\le2\log N$. Then $\varepsilon\le2\log N/N$, so
+\eqref{eq:H} holds and $\varepsilon<\frac12$. Also $(1+\log x)/x\le(1+\log\log N)/\log N$,
+$x/N\le2\log N/N$ and $x\delta_B=O(x^3\log^2N/N)=O(\log^5N/N)$. So by
+Theorem~\ref{thm:landau}(b) there are numbers $\Theta_N\to0$, which depend on $N$ alone, such
+that for every $x$ in this range
 \begin{equation}\label{eq:llt-used}
  \bigl\lvert xf_N(m)-f_L(\lambda_m)\bigr\rvert\le\Theta_N\qquad\text{for every integer }m\ge0 .
 \end{equation}
@@ -690,10 +706,12 @@ integrable function. It is unimodal with mode $\lambda_{\mathrm L}$
 (Lemma~\ref{lem:landau-mode}), so it is nonincreasing on
 $[\lambda_{\mathrm L},\infty)$, and it is integrable. So
 $f_L(\lambda)\to0$ as $\lambda\to\infty$. We write $o(1)$ for a quantity that
-is bounded in absolute value by a function of $N$ alone that tends to $0$.
+is bounded in absolute value by a function of $N$ alone that tends to $0$. So every bound
+below holds uniformly in $x$.
 
 \emph{Step 1: the mirror term.} Let $0\le m\le N/2$. Then
-$\lambda_{N-m}\ge\frac N{2x}-\log x\to\infty$. So \eqref{eq:llt-used} gives
+$\lambda_{N-m}\ge\frac N{2x}-\log x\ge\frac N{4\log N}-\log(2\log N)$, which tends to
+$\infty$. So \eqref{eq:llt-used} gives
 $xf_N(N-m)\le f_L(\lambda_{N-m})+\Theta_N=o(1)$. Since
 $P_N(m)=P_N(N-m)=\frac12[f_N(m)+f_N(N-m)]$, we get
 \[
@@ -717,8 +735,10 @@ In particular $m^*\to\infty$ and $2m^*+2\le N/2$ for large $N$.
 \emph{Step 3: halfway.} Let $v=m^*+\lfloor m^*/2\rfloor$. Then
 $v\ge\frac32m^*-1$, so by Step~2
 \[
- \lambda_v\ge\tfrac12\log x+\tfrac32(\lambda_{\mathrm L}-1)-\tfrac1x\to\infty .
+ \lambda_v\ge\tfrac12\log x+\tfrac32(\lambda_{\mathrm L}-1)-\tfrac1x
+ \ge\tfrac12\log\log N+\tfrac32(\lambda_{\mathrm L}-1)-1 ,
 \]
+which tends to $\infty$.
 Also $v\le N/2$. So Step~1 gives $2xP_N(v)=f_L(\lambda_v)+o(1)=o(1)$. Since
 $f_L(\lambda_{\mathrm L})>0$, Step~2 shows that $P_N(v)<\frac12P_N(m^*)$ for large $N$.
 
@@ -731,7 +751,10 @@ With $u=m^*$ and $w=2m^*+2$ this gives
 \]
 because $w-v\ge\frac12(m^*+2)=\frac12(w-u)$. This contradicts Step~3. So
 $D_N(a_1)>0$ for some $m^*<a_1\le2m^*+1$, and $a_1\le N/2$ by Step~2.
-Corollary~\ref{cor:one-point} gives the claim.
+By Theorem~\ref{thm:dip}, $P_N(1)=P_N(N-1)>\frac x2E_N>P_N(0)$, since $x\ge\log N>2$. As
+$\varepsilon<\frac12$, the second case of Corollary~\ref{cor:one-point} applies and gives the
+claim. Finally, Theorem~\ref{thm:erw-crossing}(b) gives $\log N\le x_N\le2\log N$ for every
+large even $N$, which is the last claim.
 \end{proof}
 
 \begin{lemma}[the center from convexity]\label{lem:center-convex}
@@ -834,7 +857,9 @@ equals $1$ at exactly one $\varepsilon_N\in(0,\frac12)$. Put $x_N=N\varepsilon_N
 \]
 where $C_{N+1}$ is the center of the walk with $N+1$ steps and the same $\varepsilon$.
 \item As $N\to\infty$ over odd $N$, $x_N+\log x_N=\Lambda_N+O(L^2/N)$. So both parts of
-Theorem~\ref{thm:erw-crossing} hold for odd $N$ as well.
+Theorem~\ref{thm:erw-crossing} hold for odd $N$ as well. More precisely, if $L\ge30$, then
+$\lvert x_N-g_N\rvert\le\tilde\rho_N$ and $\lvert x_N+\log x_N-\Lambda_N\rvert\le\tilde\rho_N$,
+where $\tilde\rho_N=(24L^2+20812L)/N\le1/L^2$.
 \item For every odd $N\ge1689$ we have $x_N>2$, and at the crossing $P_N(0)<P_N(1)$. So
 Corollary~\ref{cor:one-point} applies to these $N$ with $x=x_N$.
 \item There is $N_1'$ such that the law at the crossing is convex between the humps for
@@ -889,8 +914,9 @@ every $1\le a\le N-1$ with $a\ne h$, and this succeeds for all $996$ values of $
 $N/2-(2m^*+1)$ is $1$, at $N=8$ and at $N=12$.
 
 \begin{remark}[what is still open]\label{rem:convex-open}
-We do not compute the constant $N_1$ of Theorem~\ref{thm:convex-large},
-because we do not compute the constant $C$ in Theorem~\ref{thm:landau}. Even with explicit constants, Step~3 needs $f_L(\frac32\lambda_{\mathrm L}+\frac12\log x)<\frac12f_L(\lambda_{\mathrm L})$ up
+We do not compute the constant $N_1$ of Theorem~\ref{thm:convex-large}. The constants of
+Theorem~\ref{thm:landau} are explicit, but the proof uses them only through a limit. Even if
+we followed them, Step~3 needs $f_L(\frac32\lambda_{\mathrm L}+\frac12\log x)<\frac12f_L(\lambda_{\mathrm L})$ up
 to the error $\Theta_N$, and at the sizes we can compute the ratio
 $P_N(v)/P_N(m^*)$ is still about $0.8$. Numerically $f_L$ falls to half of its maximum at
 $\lambda=2.432$. So even without the error $\Theta_N$, Step~3 needs
@@ -907,7 +933,6 @@ differences of $P_N$ near $2m^*$ with an error below their size. At a fixed Land
 $\lambda$ this size is of order $x^{-3}$. Near $2m^*$, however, $\lambda$ is close to $\log x$, and
 $f_L''(\lambda)\sim6/\lambda^4$ as $\lambda\to\infty$, so there the Landau density suggests the
 much smaller size $3/[x^3(\log x)^4]$. This is a heuristic, not a local limit theorem for second
-differences. The main error in Theorem~\ref{thm:landau} is $C(1+\log x)/x$ for each value of
-$xf_N$, with a constant $C$ that we do not compute, and this is far too large for the $N$ in
-question.
+differences. The main error in Theorem~\ref{thm:landau} is $(889+165\log x)/x$ for each value
+of $xf_N$, and this is far too large for the $N$ in question.
 \end{remark}

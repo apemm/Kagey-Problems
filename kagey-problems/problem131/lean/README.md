@@ -160,8 +160,9 @@ uses `native_decide`, and every theorem depends only on `propext`, `Classical.ch
   `C_N'(0) = 4/(N+2)` (Proposition 2.5), both bounds on the center with the constant 5200
   (Theorem 2.6, the 60-term series bounded by exact partial sums) and the crossing asymptotics
   (Theorem 2.7) (`Elephant*`, `T3_*`, `T4_*`, `T6_*`, `EndToEnd`).
-- Theorem 2.8, with Paper A's Proposition 3.8 as a hypothesis. `PaperA` proves that
-  proposition, but `PaperD` does not import `PaperA`.
+- Theorem 2.8, with Paper A's Proposition 3.8 as a hypothesis (`thm_erw_markov`). `PaperD`
+  does not import `PaperA`. The library `PaperAD` (below) discharges the hypothesis, so
+  Theorem 2.8 is proved in Lean with no hypothesis.
 - The random recursive tree with its marks, with Lemmas 3.1, 3.2 (with the relabeling into two trees)
   and 3.3, and Lemma B.3 (`T2_*`, `T8_RRTRelabel`).
 - Lemma 3.4, Theorem 3.5, Corollary 3.6, and Proposition 3.7 for every even `N ≥ 8` (exact
@@ -176,13 +177,27 @@ uses `native_decide`, and every theorem depends only on `propext`, `Classical.ch
   For the longest runs the checkpoint rows are computed at elaboration time by the elaborator
   `t7val%` of `T7_Eval`. Its output is not trusted, since the kernel recomputes every segment between two
   checkpoints and compares.
-- Appendix A, except the reading of Lemma A.1(a) as a probability for `c > 0`, which the proofs
-  do not use.
+- Appendix A, including the reading of Lemma A.1(a) as a probability for every `c ≥ 0`
+  (`U4.polya_hit`).
+- Appendix B (Lemmas B.1, B.2, B.3, Proposition B.4 with `C = 20`, Lemma B.5 with
+  `A₀ = 15400`), Proposition 3.25(b), and Sections S2 and S3 of Online Resource 1 apart from Proposition 3.25(d)
+  (`U5_*`, `U3_OddCrossing`), with no hypothesis.
+- Section S1 of Online Resource 1 (`U4_*`), including the conditioning and the uniform placement
+  of S1.A. Propositions S1.1, S1.2, Remark S1.3 (`x_N < g_N` for `log N ≥ 3500`) and Lemma
+  S1.6(c), (d) take Hoeffding's inequality for the hypergeometric law as a named hypothesis.
+- The bulk, modulo named classical hypotheses (`U1_*`, `U2_*`, `U3_*`, `U6_*`, `U_EndToEnd`). Fourier
+  inversion on `ℤ`, the characteristic function of a compound Poisson sum and the Efron–Stein
+  inequality give Theorem 3.8 (for `N ≥ 1`, `0 ≤ ε ≤ 1`) and Theorem 3.9(a), (b) (with
+  `C = 889`). Scheffé's lemma is added for Theorem 3.9(c). Steps 1 and 2 of the proof of
+  Lemma 3.10 are proved in Lean. A contour rotation gives the real integral for `f_L`, and
+  kernel-checked integration with integer Taylor models gives its certified numbers (`U6_*`).
+  So Lemma 3.10 needs only the unimodality of `f_L` (Yamazato 1978). With all of these Lean
+  proves Corollary 3.11(b), Theorem 3.21,
+  Corollary 3.23 (even `N`), Proposition 3.25(d), and so Theorems 1.2 and 1.3(c)
+  (`main_shape_cd_final` and the other `*_final` theorems).
 
-Not formalized are Theorems 3.8 and 3.9, Lemma 3.10 (an Arb computation), Corollary 3.11 and so
-Theorem 1.2, Appendix C and Appendix B apart from Lemma B.3, Proposition 3.25(b), and Online
-Resource 1. For Theorem 3.21, Corollary 3.23 (large `N`) and Proposition 3.25(d) Lean proves the
-last step, with Steps 1 to 3 of the proof of Theorem 3.21 as hypotheses. The Python and Arb
+Not formalized are the classical tools named above, Corollary 3.11(a) word for word (Lean has a different form,
+`mode_master`), and Corollary 3.23 for odd `N` on the whole interior. The Python and Arb
 scripts are separate from Lean. `PaperD/MAP.md` gives every statement label with its Lean names
 and its status.
 
@@ -192,12 +207,31 @@ the aging walk, with unique crossings, the uniform law at `c = 1` with a fixed f
 fair-start values and the arcsine law at `c = 1/2` (`Aging`, `AgingExact`, `AgingCrossing`,
 `AgingSmall`, `AgingAveraging`, `AgingSwitches`, `BetaBinomial`).
 
-The library has 146 modules (including the root) and 21591 theorem and lemma declarations. Of
+The library has 216 modules (including the root) and 22416 theorem and lemma declarations. Of
 these 20517 are steps of the generated certificates in `T7_Gen_*`, 163 are for Paper F, and most
 of the rest are support lemmas, so the count is not a count of results. `lake build PaperD`
 takes about 40 minutes on 24 cores. The 69 `T7_Gen_*` modules take 1 to 4 minutes each and a few GB
-of memory each. With less memory, build them a few at a time
-(`lake build PaperD.T7_Gen_0101_0300 …`) before `lake build PaperD`.
+of memory each. The module `U6_Cert` takes about 14 minutes and 3 GB. With less memory, build
+them a few at a time (`lake build PaperD.T7_Gen_0101_0300 …`) before `lake build PaperD`.
+
+## Papers A and D together (`PaperAD`)
+
+`PaperAD/Bridge.lean` imports the modules of `PaperA` and `PaperD` that Theorem 2.8 of Paper D
+(`thm:erw-markov`) needs, and not the roots, so the certificates `T7_Gen_*` are not built.
+
+- `paperA_prop38`: Paper A's Proposition 3.8 (`Kagey131.crossing_equation`) gives the hypothesis
+  `PaperAProp38` of `PaperD/T6_Markov.lean` for the persistent-walk crossing `z_N = N(1 - p_N)`.
+- `thm_erw_markov_persistent`: Theorem 2.8 with no hypothesis. For `N = 2h → ∞`,
+  `x_N - (2 z_N - log(2π)) - c_*/log N = O(log log N / (log N)²)`, `c_* = (1/2) log(2π) - 1/4`,
+  where `x_N = N ε_N` is the elephant crossing (`crossingX`) and `p_N` is Paper A's central
+  crossing (`pN`).
+- `thm_erw_markov_spec`: the same, with both crossings given by their defining equations
+  instead of by the Lean definitions: `x_N = N ε` for an `ε ∈ (0,1)` with `C_N = E_N` for the
+  elephant walk, and `z_N = N(1 - p)` for a `p ∈ [0,1]` with `P_N(⌊N/2⌋) = P_N(0)` for the
+  persistent walk (Paper A, Theorem `thm:root` (a)).
+
+The library has 2 modules (including the root). Its workspace (`~/lean-work/paperAD`) has the
+three libraries `PaperA`, `PaperD` and `PaperAD` with `srcDir` set to this folder.
 
 ## What is not in Lean
 
@@ -220,7 +254,7 @@ form of the constants are not in it, but the arithmetic of the `K_3` window with
 tree formula for 3 states are checked in `PaperC`. For Papers C and D every statement about large
 `N` or large `n` is left out, and `MAP.md` lists the reason for each, except that in Paper D the
 center bounds and the crossing asymptotics of Section 2 are formalized. In Paper D the bulk
-(Theorems 3.8 and 3.9, Lemma 3.10 and what rests on them) is left out, as listed above.
+and the large-`N` shape are now formalized modulo named classical hypotheses, as listed above.
 
 ## Building and checking
 
@@ -234,7 +268,7 @@ The first command downloads the compiled Mathlib. Then run
     python -B verify_lean.py --workspace .
 
 This builds each library with Lake and runs `#print axioms` on every `theorem` and `lemma`.
-For `PaperD` the build takes about 40 minutes and the axiom check of its 21591 declarations a
+For `PaperD` the build takes about 40 minutes and the axiom check of its 22416 declarations a
 few more (see the Paper D section for the memory needed). It
 checks that only `propext`, `Classical.choice` and `Quot.sound` appear. It also checks that the
 declarations it reads from the source are exactly the theorems Lean finds in the library. The
@@ -243,6 +277,8 @@ the SHA-256 of every source file and the axioms of every declaration. To check o
 libraries, name them (for example `python -B verify_lean.py PaperB --workspace .`).
 
 We build outside OneDrive, with one Lake workspace per paper (`~/lean-work/paperA` and so on).
-Each workspace has a `lakefile.toml` whose `lean_lib` has `srcDir` set to this folder. This is the
+Each workspace has a `lakefile.toml` whose `lean_lib` has `srcDir` set to this folder. The
+workspace `~/lean-work/paperAD` for `PaperAD` also has `PaperA` and `PaperD`, since `PaperAD`
+imports them. This is the
 default for `verify_lean.py`, and it writes its temporary Lean files inside the workspace.
 

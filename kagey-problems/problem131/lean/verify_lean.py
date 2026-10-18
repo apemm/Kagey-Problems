@@ -1,13 +1,15 @@
 """Build the Problem 131 Lean libraries and check the axioms of every theorem.
 
-For each requested library (default: every one of PaperA, PaperB, PaperC, PaperD
-whose root file exists in this folder) the script
+For each requested library (default: every one of PaperA, PaperB, PaperC, PaperD,
+PaperAD whose root file exists in this folder) the script
 
 1. collects the modules imported by the root file `<Lib>.lean`, and every
    `theorem` and `lemma` declared in them,
 2. runs `lake build <Lib>` in a Lake workspace whose lakefile has
    `lean_lib <Lib>` with `srcDir` equal to this folder (a workspace inside
-   OneDrive is refused, since Lake writes many files into `.lake`),
+   OneDrive is refused, since Lake writes many files into `.lake`); for a
+   library that imports other libraries (PaperAD imports PaperA and PaperD,
+   see DEPENDS) the lakefile must also have those, with the same `srcDir`,
 3. writes a temporary Lean file inside the workspace that imports the library,
    runs `#print axioms` on each declaration, and lists every theorem the
    library actually contains (so a declaration missed by the parser is caught),
@@ -41,7 +43,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
-LIBS = ['PaperA', 'PaperB', 'PaperC', 'PaperD']
+LIBS = ['PaperA', 'PaperB', 'PaperC', 'PaperD', 'PaperAD']
+# Libraries whose modules import other libraries of this folder. PaperAD is the bridge between
+# Paper A and Paper D (Theorem 2.8 of Paper D with Paper A's Proposition 3.8).
+DEPENDS = {'PaperAD': ['PaperA', 'PaperD']}
 ALLOWED = {'propext', 'Classical.choice', 'Quot.sound'}
 LOG_FILE = BASE / 'build-log.txt'
 MANIFEST_FILE = BASE / 'verification-manifest.json'
@@ -58,7 +63,7 @@ def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(
         description='Build the Problem 131 Lean libraries and check their axioms.')
     p.add_argument('libs', nargs='*', metavar='LIB',
-                   help='libraries to check (default: all of PaperA..PaperD that exist)')
+                   help='libraries to check (default: all of PaperA..PaperD, PaperAD that exist)')
     p.add_argument('--workspace', default=str(Path.home() / 'lean-work' / '{name}'),
                    help='Lake workspace, or a pattern with {lib} or {name} '
                         '(default: ~/lean-work/{name}). Use "." for this folder.')
@@ -150,11 +155,12 @@ def resolve_workspace(lib: str, pattern: str) -> Path:
     if toml.is_file():
         config = tomllib.loads(toml.read_text(encoding='utf-8'))
         libs = {entry.get('name'): entry for entry in config.get('lean_lib', [])}
-        if lib not in libs:
-            raise CheckFailed(f'{toml} has no lean_lib {lib}')
-        src = ws / libs[lib].get('srcDir', '.')
-        if not same_path(src, BASE):
-            raise CheckFailed(f'lean_lib {lib} in {toml} reads {src.resolve()}, not {BASE}')
+        for need in [lib] + DEPENDS.get(lib, []):
+            if need not in libs:
+                raise CheckFailed(f'{toml} has no lean_lib {need}')
+            src = ws / libs[need].get('srcDir', '.')
+            if not same_path(src, BASE):
+                raise CheckFailed(f'lean_lib {need} in {toml} reads {src.resolve()}, not {BASE}')
     elif (ws / 'lakefile.lean').is_file():
         print(f'   note: {ws / "lakefile.lean"} is not parsed; assuming it builds {BASE}')
     else:
@@ -436,7 +442,7 @@ def tidy(text: str) -> str:
 def read_log_sections() -> dict[str, str]:
     if not LOG_FILE.is_file():
         return {}
-    parts = re.split(r'^#{5} (Paper[A-Z]) #{5}\n', LOG_FILE.read_text(encoding='utf-8'),
+    parts = re.split(r'^#{5} (Paper[A-Z]+) #{5}\n', LOG_FILE.read_text(encoding='utf-8'),
                      flags=re.M)
     return {parts[i]: parts[i + 1] for i in range(1, len(parts) - 1, 2)}
 

@@ -9,14 +9,15 @@ $O(\varepsilon\log N)$. A lower bound that matches part (b) of that theorem
 brings the error down to $O(\varepsilon)$.
 
 \begin{proposition}[the center to second order]\label{prop:second-order}
-Let $N\ge64$ be even and $0<\varepsilon(1+\log N)\le\frac1{100}$. Then
+Let $N\ge64$ be even. For every $0<\varepsilon<\frac12$,
 \[
  -11\varepsilon-\varepsilon^2(84\log N+1.05\cdot10^5)
- \le\log C_N-\log\frac{4\varepsilon}{N+2}-2\varepsilon\log N\le5200\,\varepsilon .
+ \le\log C_N-\log\frac{4\varepsilon}{N+2}-2\varepsilon\log N .
 \]
-In particular
+If moreover $\varepsilon(1+\log N)\le\frac1{100}$, then the middle term is at most
+$5200\,\varepsilon$, and so
 $\bigl\lvert\log C_N-\log\frac{4\varepsilon}{N+2}-2\varepsilon\log N\bigr\rvert
-\le5200\,\varepsilon$ there.
+\le5200\,\varepsilon$.
 \end{proposition}
 
 In words, $C_N$ is $\frac{4\varepsilon}{N+2}N^{2\varepsilon}$ times a factor
@@ -43,7 +44,8 @@ As $N\to\infty$ over even $N$,
 \[
  x_N=g_N-\frac{2g_N\log N+g_N^2/2}{N(1+1/g_N)}+O\Bigl(\frac{\log N}N\Bigr).
 \]
-So $x_N<g_N$ for large $N$.
+More precisely, for every even $N$ with $\log N\ge30$ the error term is at most
+$20822\log N/N$ in absolute value. So $x_N<g_N$ for every even $N$ with $\log N\ge3500$.
 \end{proposition}
 
 In words, the root $g_N$ overshoots the crossing by an amount of order $\log^2N/N$. The
@@ -85,6 +87,41 @@ term of $\eta_N$ changes it by $O(L^3/N^2)$, again because
 $\lvert x_N-g_N\rvert=O(L^2/N)$. All these errors are $O(L/N)$, which gives
 the formula. Its main term is of order $L^2/N$ and is larger than the error
 for large $N$, so $x_N<g_N$.
+
+\emph{Step 3: the explicit bound.} Let $L\ge30$. By the proof of
+Theorem~\ref{thm:erw-crossing}, $24L^4+20800L^3\le N$, and $d=x_N-g_N$ has
+$\lvert d\rvert\le\rho_N\le1/L^2$. Let $1\le x\le4L$ and $\varepsilon=x/N$. Then
+$\varepsilon(1+\log N)\le\frac1{100}$, so Proposition~\ref{prop:second-order} bounds
+$\log C_N-\log\frac{4\varepsilon}{N+2}-2\varepsilon L$ by $5200\,\varepsilon$ in absolute value.
+Here $\log\frac{4\varepsilon}{N+2}=\log x+\log4-2L-\log(1+\frac2N)$ with
+$0\le\log(1+\frac2N)\le\frac{2x}N$. For $0\le y\le\frac12$ the series of the logarithm gives
+$\lvert\log(1-y)+y+\frac{y^2}2\rvert\le\frac{y^3}{3(1-y)}\le2y^3$. So
+$(N-1)\log(1-\varepsilon)=-x+\varepsilon-\frac{x^2}{2N}+\frac{\varepsilon^2}2+R$ with
+$\lvert R\rvert\le2N\varepsilon^3=2x^3/N^2\le x/N$, because $2x^2\le32L^2\le N$. Collecting
+terms, and using $\frac{\varepsilon^2}2\le\varepsilon$,
+\begin{equation}\tag{$\ast\ast$}
+ \Bigl\lvert F(x)-G(x)+\Lambda_N-\frac{2xL+x^2/2}N\Bigr\rvert
+ \le5200\varepsilon+\frac{2x}N+2\varepsilon+\frac xN=\frac{5205\,x}N .
+\end{equation}
+Now $x_N\in[1,4L]$ and $F(x_N)=0$. Put $\eta=(2g_NL+g_N^2/2)/N$. Since
+$\Lambda_N/2\le\Lambda_N-\log\Lambda_N\le g_N\le\Lambda_N$, we have $L/2\le g_N\le2L$, so
+$\lvert d/g_N\rvert\le\frac12$. Also $G(x_N)-\Lambda_N=d+\log(1+d/g_N)$, and
+$d/g_N-(d/g_N)^2\le\log(1+d/g_N)\le d/g_N$. The main term of ($\ast\ast$) at $x_N$ differs from
+$\eta$ by $d(2L+\frac{x_N+g_N}2)/N$, which is at most $5L\rho_N/N\le L/N$ in absolute value.
+So ($\ast\ast$) at $x_N$ gives
+\[
+ \Bigl\lvert d\Bigl(1+\frac1{g_N}\Bigr)+\eta\Bigr\rvert\le\frac{5205\,x_N}N+\frac LN
+ +\Bigl(\frac d{g_N}\Bigr)^2\le\frac{20822\,L}N ,
+\]
+since $5205\,x_N\le20820L$ and $(d/g_N)^2\le4\rho_N^2/L^2\le L/N$. The last inequality holds
+because $\rho_N\le718L^2/N$ and $4\cdot718^2L\le20800L^3\le N$. Dividing by $1+1/g_N\ge1$ gives
+$\lvert x_N-g_N+\eta/(1+1/g_N)\rvert\le20822L/N$, which is the explicit bound.
+
+Finally let $L\ge3500$. The tangent of the logarithm at $8192$ gives
+$\log\Lambda_N\le\Lambda_N/8192+\log8192-1$, so $g_N\ge\Lambda_N-\log\Lambda_N\ge1.996L$. Then
+$2g_NL+g_N^2/2\ge5.984L^2$ and $1+1/g_N\le1+1/(1.996L)$. As
+$20822L+20822/1.996<5.984L^2$ for $L\ge3500$, we get $\eta/(1+1/g_N)>20822L/N$, and the
+explicit bound gives $x_N<g_N$.
 \end{proof}
 
 \begin{remark}[numerical values and open points]\label{rem:refined}
@@ -101,7 +138,8 @@ not prove this limit here. We do not know whether, for some fixed $k$, the
 bound
 $\log C_N\le\log(c_1\varepsilon)+\varepsilon c_2/c_1+O(\varepsilon^2(\log N)^k)$
 holds uniformly in $N$ in the range of Proposition~\ref{prop:second-order}.
-We also do not know an explicit $N$ beyond which $g_N>x_N$.
+Table~\ref{tab:erw-crossing} has $x_N<g_N$ already at $N=50$, while
+Proposition~\ref{prop:refined} proves it only for $\log N\ge3500$.
 \end{remark}
 
 \begin{table}[htbp]
@@ -314,7 +352,8 @@ $8\sum_{u\ge1}u^2q^u=8q(1+q)/(1-q)^3<19100$.
 
 \begin{proof}[Proof of Proposition~\ref{prop:second-order}]
 The upper bound is Theorem~\ref{thm:erw-bounds}(b). For the lower bound let
-$t_0=\lfloor N/8\rfloor\ge8$. By Proposition~\ref{prop:first-mutation}(a),
+$0<\varepsilon<\frac12$ and $t_0=\lfloor N/8\rfloor\ge8$. Every step below uses only this
+range of $\varepsilon$. By Proposition~\ref{prop:first-mutation}(a),
 $C_N=\varepsilon c_1\sum_tw_t(1-\varepsilon)^{t-1}V_{t+1}(1)/\pi_t$. This is
 $\varepsilon c_1$ times a mean over the probability vector $(w_t)$. By
 Jensen's inequality the logarithm of the mean is at least the mean of the
@@ -372,8 +411,7 @@ This section shows that the law falls like $x/(2m^2)$ beyond the humps.
 
 \begin{theorem}[the tail]\label{thm:profile}
 Let $N$ be even, and let $x=N\varepsilon\ge1$ depend on $N$ with
-$x\log^2N/N\to0$. Let $\omega_N\to\infty$ with $\omega_Nx\log^2(x+1)=o(N)$,
-and let $\delta'_N\to0$. Then
+$x\log^2N/N\to0$. Let $\omega_N\to\infty$ and $\delta'_N\to0$. Then
 \[
  f_N(m)=\frac{x}{m(m+1)}\bigl(1+o(1)\bigr)\qquad\text{and}\qquad
  P_N(N-m)=\frac{x}{2m^2}\bigl(1+o(1)\bigr),
@@ -431,9 +469,9 @@ $\Prob(G_t\ge z)\le e^{-\nu z/t}\,\E e^{\theta_tG_t}$, which is the claim.
 \end{proof}
 
 \begin{proposition}[cumulative upper bound]\label{thm:B-cum-upper}
-Assume~\eqref{eq:H}. There is an absolute constant $C$ such that for $6\le m\le N/2$ with
+Assume~\eqref{eq:H}. For $6\le m\le N/2$ with
 $m\ge16x\log m$ we have $\Prob(M_N\ge m)\le\frac
-xm\bigl(1+C\,\frac{x\log^2m}m\bigr)$.
+xm\bigl(1+800\,\frac{x\log^2m}m\bigr)$.
 \end{proposition}
 
 \paragraph{Idea of the proof.}
@@ -502,8 +540,7 @@ positive only for $i<1/a$. There $i\log\frac1{ai}\le\frac1{ea}$, so these
 at most $1/a$ terms add up to at most $\frac1{ea^2}$. Hence the shift term
 is at most
 \[
- \frac{4\varepsilon x}N\cdot\frac{\log m+1}{a^2}=\frac{36x^2(\log m+1)}{m^2}
- \le\frac xm\cdot\frac{Cx\log m}m .
+ \frac{4\varepsilon x}N\cdot\frac{\log m+1}{a^2}=\frac{36x^2(\log m+1)}{m^2} .
 \]
 
 \emph{Step 3: the big-$Z$ term.} This is
@@ -522,7 +559,7 @@ $\mathcal KN/m$ such $j$, and $\mathcal K\le32\log m$. So they contribute at
 most
 \[
  \varepsilon\cdot\frac{\mathcal KN}m\cdot\frac{8xH_m}m
- =\frac xm\cdot\frac{8\mathcal KxH_m}m\le\frac xm\cdot\frac{Cx\log^2m}m .
+ =\frac{8\mathcal Kx^2H_m}{m^2} .
 \]
 
 Let $j>j_{\mathcal K}$, so that $j-1>\mathcal KN/m$. We use
@@ -548,15 +585,22 @@ $\Prob(V>J)=(1-\varepsilon)^{J-1}\le e^{\varepsilon-3x/16}$, since
 $J\ge3N/16$, and Lemma~\ref{lem:B-late} with $j-1=J\in[\frac{3N}{16},\frac N4]$
 and $t=N$ gives $\Prob(M^{[J]}_N\ge m)\le\exp\{-\frac{3m}{32}+\frac
 x8\log\frac{32}3\}$. As $x\le m/28$ and $\varepsilon\le\frac14$, the product
-of the two is at most $e^{1/4-m/13}$, and this is at most
-$\frac xm\cdot\frac{Cx\log^2m}m$ because $x\ge1$.
+of the two is at most $e^{1/4-m/13}$.
+
+\emph{Step 5: collect.} Put $\ell=\log m\ge\log6>1.79$, so that $\ell^2>3.2$. We compare
+each of the four error terms with $x^2\ell^2/m^2$. First $36(\ell+1)\le40\ell^2$. Next
+$\mathcal K\le32\ell$ because $x\ge1$, and $H_m\le1+\ell\le1.6\,\ell$, so
+$8\mathcal KH_m\le410\ell^2$. Also $33\le12\ell^2$. Finally $y^2e^{-y}\le4$ for $y\ge0$, which
+with $y=m/13$ gives $e^{1/4-m/13}\le676e^{1/4}/m^2\le304\ell^2x^2/m^2$, since $x\ge1$ and
+$676e^{1/4}<870<304\cdot3.2$. As $40+410+12+304\le800$, the four error terms add up to at most
+$800x^2\ell^2/m^2$, which is the claim.
 \end{proof}
 
 \begin{proposition}[local upper bound]\label{thm:B-local-upper}
-Assume~\eqref{eq:H}. There are absolute constants $A_1$ and $C$ such that if $\varepsilon\log
+Let $N\ge64$ and $x\ge1$, and put $\bar c=\frac1{40}$ and $A_1=34000$. If $\varepsilon\log
 N\le\bar c$ and $A_1x\log^2(x+1)\le m\le N/8$, then
 \[
- f_N(m)\le\frac{x}{m(m+1)}\bigl(1+C\Delta(m)^{1/2}\bigr),\qquad
+ f_N(m)\le\frac{x}{m(m+1)}\bigl(1+20000\,\Delta(m)^{1/2}\bigr),\qquad
  \Delta(m)=\frac{x\log^2m}m+\varepsilon\log N+\frac mN .
 \]
 \end{proposition}
@@ -570,35 +614,56 @@ Proposition~\ref{thm:B-local-lower}. Then we choose $k$ to balance the
 errors.
 
 \begin{proof}
-We take $A_1\ge2A_0$ so large that Lemma~\ref{lem:B-mode} applies and every
-$m'\ge m/2$ satisfies $m'\ge6$ and $m'\ge16x\log m'$ (as $t/\log t$ increases
-for $t\ge e$).
+\emph{Step 0: three facts.} Put $L_1=\log(x+1)\ge\log2$, so that $xL_1^2\ge0.48$,
+$m\ge16200$ and $\log m\ge9$. Also $\log N\ge4$, so $\varepsilon\le\frac1{160}$. For
+$0<A\le59000$ we have $\log(AxL_1^2)\le11+3L_1$, since $\log A\le11$, $\log x\le L_1$ and
+$\log L_1\le L_1$. First, $\log(x+2)\le2L_1\le2.9L_1^2$, so
+$804x\log(x+2)\le8A_1xL_1^2\le8m\le N$, and Lemma~\ref{lem:B-mode} gives
+$m_h\le15400xL_1^2\le m/2$. Second, let $m'\ge m/2\ge s_0:=17000xL_1^2$. As $\log s/s$
+decreases for $s\ge e$, we get
+$16x\log m'/m'\le16x(11+3L_1)/s_0\le1$, because $16(11+3L_1)\le17000L_1^2$. So
+$m'\ge16x\log m'$, and also $m'\ge6$. Third, $\log^2s/s$ decreases for $s\ge e^2$. At
+$s_1=A_1xL_1^2$ we have $\log^2s_1\le(11+3L_1)^2\le242+18L_1^2$, and
+$x(242+18L_1^2)\le s_1$. So $x\log^2m/m\le1$, and $\Delta(m)\le1+\frac1{40}+\frac18\le1.15$.
 
-\emph{Step 1: a difference of tails.} Let $1\le k\le m/2$. Then
+\emph{Step 1: a difference of tails.} Let $0\le k\le m/2$. Then
 $m-k\ge m/2\ge m_h$, and
 Lemma~\ref{lem:B-sandwich} with $a=m-k$ and $b=m$ gives
 $(k+1)f_N(m)\le\Prob(M_N\ge m-k)-\Prob(M_N\ge m+1)$.
 
-\emph{Step 2: bound each tail.} Proposition~\ref{thm:B-cum-upper} at $m-k$
-bounds the first term by $\frac
-x{m-k}+\frac{Cx^2\log^2m}{m^2}$. For the second we sum
-Proposition~\ref{thm:B-local-lower} over $m<\ell\le N/4$. Since
-$\sum_{m<\ell\le N/4}\frac1{\ell(\ell+1)}\ge\frac1{m+1}-\frac4N$,
-$\frac{\log(\ell+1)}\ell$ and $\ell e^{-\ell/9}$ decrease for $\ell\ge9$, and
-$me^{-m/9}\le C/m\le C\Delta(m)$, we get $\Prob(M_N\ge m+1)\ge\frac
-x{m+1}(1-C\Delta(m))$. As $\frac x{m-k}-\frac
-x{m+1}=\frac{x(k+1)}{(m-k)(m+1)}$, this gives
-$f_N(m)\le\frac{x}{(m-k)(m+1)}+\frac{Cx\Delta(m)}{(k+1)m}$.
+\emph{Step 2: bound each tail.} Write $\Delta=\Delta(m)$. Here \eqref{eq:H} holds.
+Proposition~\ref{thm:B-cum-upper} at $m-k$, which applies by Step~0, bounds the first term by
+\[
+ \frac x{m-k}+\frac{800x^2\log^2(m-k)}{(m-k)^2}\le\frac x{m-k}+\frac{3200x^2\log^2m}{m^2}
+ \le\frac x{m-k}+\frac{3200x\Delta}m .
+\]
+For the second we sum Proposition~\ref{thm:B-local-lower} over $m<\ell\le\lfloor N/4\rfloor$.
+The main terms give
+$x\bigl(\frac1{m+1}-\frac1{\lfloor N/4\rfloor+1}\bigr)\ge\frac x{m+1}\bigl(1-\frac{8m}N\bigr)$.
+As $\frac{\log(\ell+1)}\ell$ decreases for $\ell\ge3$ and $\sum_{\ell>m}\frac1{\ell(\ell+1)}\le\frac1{m+1}$,
+the terms with $\frac{x\log(\ell+1)}\ell$ cost at most
+$\frac x{m+1}\cdot20x\frac{\log(m+2)}{m+1}\le\frac x{m+1}\cdot\frac{40x\log^2m}m$. The terms
+with $\varepsilon\log N$ cost at most $\frac x{m+1}\cdot20\varepsilon\log N$. The last terms are
+$\frac{20x}{\ell(\ell+1)}\ell e^{-\ell/9}\le\frac{20x}{m+1}e^{-\ell/9}$, and they cost at most
+$\frac{20x}{m+1}\cdot\frac{e^{-m/9}}{e^{1/9}-1}\le\frac x{m+1}\cdot200e^{-m/9}$. Since
+$e^{-y}\le2/y^2$ for $y>0$ and $m\ge16200$, we have
+$200e^{-m/9}\le32400/m^2\le2/m\le2x\log^2m/m$. So
+$\Prob(M_N\ge m+1)\ge\frac x{m+1}(1-42\Delta)$. As $\frac x{m-k}-\frac
+x{m+1}=\frac{x(k+1)}{(m-k)(m+1)}$ and $\frac{42x\Delta}{m+1}\le\frac{42x\Delta}m$, this gives
+\[
+ f_N(m)\le\frac{x}{(m-k)(m+1)}+\frac{3242\,x\Delta}{(k+1)m} .
+\]
 
-\emph{Step 3: choose $k$.} If
-$\Delta(m)\le\frac1{16}$, take $k=\lceil m\Delta(m)^{1/2}\rceil\le\frac m2$.
-Then $\frac m{m-k}\le1+\frac{2k}m\le1+2\Delta^{1/2}+\frac2m$ and
-$\frac\Delta{k+1}\le\frac{\Delta^{1/2}}m$, which gives the claim, as
-$\frac1m\le\Delta(m)\le\Delta(m)^{1/2}$. If $\Delta(m)>\frac1{16}$, take
-$k=\lfloor m/2\rfloor$. Then $f_N(m)\le\frac{x}{m(m+1)}(2+C\Delta(m))$, and the
-claim follows after enlarging $C$, since $\Delta(m)$ is bounded by an absolute
-constant ($\frac{x\log^2m}m$ decreases for $m\ge e^2$ and is bounded at
-$m=A_1x\log^2(x+1)$).
+\emph{Step 3: choose $k$.} Put $\delta=\Delta^{1/2}$ and $X=\frac x{m(m+1)}$. Note that
+$\frac1m\le\frac{x\log^2m}m\le\Delta$, and $\frac1{m^2}\le\frac2{m(m+1)}$. If $\Delta\le\frac1{16}$,
+take $k=\lceil m\delta\rceil$, so that $k\le\frac m4+1\le\frac m2$. Then
+$\frac m{m-k}\le1+\frac{2k}m\le1+2\delta+\frac2m\le1+4\delta$, because $\frac1m\le\Delta\le\delta$.
+Also $\frac\Delta{k+1}\le\frac\delta m$. So
+$f_N(m)\le X(1+4\delta)+\frac{3242x\delta}{m^2}\le X(1+4\delta+6484\delta)$, which gives the
+claim. If $\Delta>\frac1{16}$, take $k=\lfloor m/2\rfloor$, so that $m-k\ge\frac m2$ and
+$k+1\ge\frac m2$. Then $f_N(m)\le2X+\frac{6484x\Delta}{m^2}\le X(2+12968\Delta)$. Here
+$\frac14<\delta\le1.073$, so $1<4\delta$ and $\Delta\le1.073\,\delta$. Hence
+$2+12968\Delta\le1+4\delta+13915\delta$, which again gives the claim.
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{thm:profile}]
@@ -611,8 +676,8 @@ $f_N(N-m)$ is negligible.
 $\mathcal R_N$ be the range
 $\omega_Nx\ell_x^2\le m\le\delta'_NN$. Since $x\log^2N/N\to0$, for large $N$
 we have $\varepsilon(1+\log N)\le\min(\bar c,\frac1{100})$,
-$\omega_N\ge\max(A_1,16)$, $\delta'_N\le\frac18$ and $A_0x\log(x+2)\le N/4$.
-So \eqref{eq:H} holds as well.
+$\omega_N\ge\max(A_1,16)$, $\delta'_N\le\frac18$ and $804x\log(x+2)\le N$.
+So \eqref{eq:H} holds as well. If $\mathcal R_N$ is empty there is nothing to prove.
 
 \emph{Step 2: the errors are small on $\mathcal R_N$.} The function
 $\frac{x\log^2m}m$ decreases for $m\ge e^2$. At
@@ -662,6 +727,25 @@ $E_N=\frac12(1-\varepsilon)^{N-1}$ holds for every $N$ (Lemma~\ref{lem:erw-reduc
 $\lvert x_N-g_N\rvert=O(L^2/N)$ and the claim. Part (b) of Theorem~\ref{thm:erw-crossing} follows
 from part (a) as before.
 
+For the explicit bound let $L\ge30$. As in the proof of Theorem~\ref{thm:erw-crossing},
+$e^L\ge L^{12}/12!$ gives $26L^4+20802L^3\le N$. Let $1\le x\le4L$ and $\varepsilon=x/N$. Since
+$\log(N+1)\le L+1$, we get $\varepsilon(1+\log(N+1))\le4L(L+2)/N\le\frac1{100}$, so
+Theorem~\ref{thm:erw-bounds} applies to $N+1$. By (a),
+$\log\widetilde C_N=\log C_{N+1}-\log(1-u)$ with $u=c/N\le\frac1N$, and
+$0\le-\log(1-u)\le u+u^2\le\frac2N$. Next
+$\log\frac{4\varepsilon}{N+3}=\log x+\log4-2L-\log(1+\frac3N)$ with
+$0\le\log(1+\frac3N)\le\frac3N$. Theorem~\ref{thm:erw-bounds} gives
+$\log(1-2\varepsilon)\le\log C_{N+1}-\log\frac{4\varepsilon}{N+3}\le2\varepsilon\log(N+1)+5200\varepsilon$.
+Here $\log(1-2\varepsilon)\ge-2\varepsilon-4\varepsilon^2$, $4\varepsilon^2\le\frac1N$,
+$2\varepsilon\log(N+1)\le\frac{8L^2+8L}N$ and $5200\varepsilon\le\frac{20800L}N$. For the end,
+$\log E_N=(N-1)\log(1-\varepsilon)-\log2$ lies between $-\log2-x-\frac{16L^2}N$ and
+$-\log2-x+\varepsilon$, by $-y-y^2\le\log(1-y)\le-y$. Adding up, and using
+$\varepsilon\le\frac{4L}N$, we find that $\widetilde F(x)-G(x)+\Lambda_N$ lies between
+$-\frac{12L+4}N$ and $\frac{24L^2+20808L+2}N$. So \eqref{eq:F-G} holds for $\widetilde F$ with
+$\tilde\rho_N=(24L^2+20812L)/N$. Then $\tilde\rho_N\le1/L^2$, both ranges in Step~2 of that
+proof are nonempty, and Step~2 gives $\lvert x_N-g_N\rvert\le\tilde\rho_N$ and
+$\lvert G(x_N)-\Lambda_N\rvert\le\tilde\rho_N$.
+
 (c) We argue as in the proof of Proposition~\ref{prop:dip-hyp}. Let $N\ge1689$ be odd and take
 $\varepsilon=2/N$. Then $\varepsilon(1+\log(N+1))\le\frac1{100}$, so
 Theorem~\ref{thm:erw-bounds}(b) for $N+1$ and part (a) give
@@ -674,9 +758,8 @@ $\varepsilon=2/N$, and hence $\varepsilon_N>2/N$ and $x_N>2\ge2(1-\varepsilon_N)
 Theorem~\ref{thm:dip} then gives $P_N(N-1)>E_N$ at the crossing, which is $P_N(0)<P_N(1)$ by
 symmetry. This is the hypothesis of the second case of Corollary~\ref{cor:one-point}.
 
-(d) The proof of Theorem~\ref{thm:convex-large} uses that $N$ is even in two places only. The
-first is $x\to\infty$ and $x=O(\log N)$, which holds for odd $N$ by (b). The second is
-Corollary~\ref{cor:one-point} at the end of Step~4, which applies by (c). The rest of that proof
-uses Theorem~\ref{thm:landau}, Lemma~\ref{lem:landau-mode} and
-$P_N(m)=\frac12[f_N(m)+f_N(N-m)]$, and these hold for every $N$.
+(d) Theorem~\ref{thm:convex-large} holds for every large $N$, even or odd, and every
+$\varepsilon$ with $\log N\le x\le2\log N$. By (b), $x_N=2\log N-\log\log N+O(1)$ for odd $N$, so
+$\log N\le x_N\le2\log N$ for every large odd $N$. So Theorem~\ref{thm:convex-large} applies at
+the crossing.
 \end{proof}

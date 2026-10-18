@@ -8,20 +8,30 @@ the numbers S1.1 and so on). The later tables cite the statement labels of the
 the number in Paper D before the split of October 13, 2026, and the note at the end says how these
 numbers moved.
 
-The Lean library is `PaperD`: the root `PaperD.lean` and 145 modules in `PaperD/`, so 146 modules
+The Lean library is `PaperD`: the root `PaperD.lean` and 215 modules in `PaperD/`, so 216 modules
 in all, in namespace `Kagey131.PaperD` (tracks T2 and T8 in `Kagey131.PaperD.RRT`, track T5 in
-`Kagey131.PaperD.T5`, track T7 in `Kagey131.PaperD.T7`). It is built against Lean 4 v4.33.1 and
+`Kagey131.PaperD.T5`, track T7 in `Kagey131.PaperD.T7`, tracks U1, U2, U4 in
+`Kagey131.PaperD.U1`, `Kagey131.PaperD.U2`, `Kagey131.PaperD.U4`, and the copy of
+Proposition 3.25(b) of track U5 in `Kagey131.PaperD.U5`, track U6 in `Kagey131.PaperD.U6`). It is built against Lean 4 v4.33.1 and
 Mathlib v4.33.1. The 22 modules of September and early October 2026 are unchanged. On October 17,
 2026 the tracks T1 to T8 were integrated (sign chain, random recursive tree, first flip and lower
 bound, upper bound, certificate checker, crossing analysis, kernel-checked certificates for
 `101 ≤ N ≤ 2000`, relabeling in Lemma 3.2), and two modules compose them, `EndToEnd` (no
 certificates) and `EndToEnd_Cert` (with the certificates of T5 and T7). Every theorem of the
 library is checked by the kernel and depends only on `propext`, `Classical.choice` and
-`Quot.sound`. No module uses `native_decide`.
+`Quot.sound`. No module uses `native_decide`. On October 18, 2026 the tracks U1 to U5 were
+integrated (section "Tracks U1 to U5" at the end), with the module `U_EndToEnd` that composes
+U1, U2 and U3. Since then every numbered statement about the bulk (Theorems 1.2, 3.8, 3.9,
+Lemma 3.10, Corollary 3.11(b)) and every large-`N` statement of Section 3.5 is proved in Lean,
+some of them modulo the named classical hypotheses of the section "Named classical hypotheses".
+Later on October 18, 2026 track U6 was integrated (section "Track U6" at the end). It proves
+Steps 1 and 2 of the proof of Lemma 3.10, the real integral for `f_L` and its certified numbers,
+in the kernel. So the certificate of Lemma 3.10 is no longer a hypothesis, and Lemma 3.10 rests
+only on the unimodality of `f_L`.
 
 ### Declaration count
 
-The library has 21591 `theorem` and `lemma` declarations (the count of `verify_lean.py`, which
+The library has 22416 `theorem` and `lemma` declarations (the count of `verify_lean.py`, which
 checks that it equals the set of theorems Lean finds). They split as follows.
 
 * 20517 in the 69 generated certificate modules `T7_Gen_*` (for each `N` with `101 ≤ N ≤ 2000`,
@@ -30,6 +40,7 @@ checks that it equals the set of theorems Lean finds). They split as follows.
 * 101 in the other T7 modules (the packed arithmetic, its soundness and the aggregates).
 * 163 in the Paper F modules `HeavyRuns`, `Aging`, `AgingExact`, `AgingCrossing`, `AgingSmall`,
   `AgingAveraging`, `AgingSwitches`, `BetaBinomial` (notes D3 and D4).
+* 825 in the modules of the tracks U1 to U6 and `U_EndToEnd`, most of them support lemmas.
 * 810 in the remaining Paper D modules, most of them support lemmas. The table "Paper D by
   statement label" below names the main ones.
 
@@ -40,9 +51,9 @@ checks that it equals the set of theorems Lean finds). They split as follows.
   whole library. The 69 modules `T7_Gen_*` take 1 to 4 minutes each and need a few GB of memory
   each, so at most 7 of them were elaborated at once (on 24 cores and 32 GB, 1946 s of wall time, after a first attempt with no limit had run out of memory).
 * `python -B verify_lean.py PaperD` in `problem131/lean` (workspace `~/lean-work/paperD`) builds
-  the library again from the repository copy, runs `#print axioms` on all 21591 declarations and
-  finds only `propext`, `Classical.choice` and `Quot.sound` (`build-log.txt`,
-  `verification-manifest.json`).
+  the library again from the repository copy, runs `#print axioms` on all 22416 declarations
+  (216 modules, after the track U6 of October 18) and finds only `propext`,
+  `Classical.choice` and `Quot.sound` (`build-log.txt`, `verification-manifest.json`).
 * `axioms-final.lean` (output `axioms-final.log`, in the project root of `paperD-next`) runs
   `#print axioms` on 499 named declarations, every main theorem of every track and every
   name in this file. All depend only on the three standard axioms or a subset of them (for
@@ -77,15 +88,18 @@ checks that it equals the set of theorems Lean finds). They split as follows.
 ## Paper D by statement label
 
 Status. "Kernel" means proved without hypotheses beyond those of the paper and checked by the
-kernel. "Kernel, hypotheses ..." means proved with the named hypotheses of the next section.
+kernel. "Kernel, hypotheses ..." means proved with named hypotheses. The abbreviations LFI, CP,
+ES, SCH, UNI and HOEF stand for the named classical hypotheses of the section "Named
+classical hypotheses" below. The certificate of Lemma 3.10 (formerly the hypothesis CERT) is
+proved by track U6 (`landauCertHyp_landauDensity`).
 "Not formalized" means that no Lean statement exists. Throughout, `N = 2h` for even `N`, and Lean
 indexes the count chain by the number of steps.
 
 | Label | No. | Statement | Lean | Status |
 |---|---|---|---|---|
 | `thm:main-center` | 1.1 | (a) crossing; (b) the two bounds on `C_N`; (c) `x_N` asymptotics | (a) as `prop:mlr`; (b) `thm_erw_bounds_a`, `thm_erw_bounds_b`; (c) `thm_erw_crossing_a_G`, `thm_erw_crossing_b` | kernel |
-| `thm:main-bulk` | 1.2 | compound Poisson bulk, Landau limit, modes | none | not formalized |
-| `thm:main-shape` | 1.3 | (a) five blocks; (b) dip at the crossing for even `N ≥ 8`, `f_N` unimodal; (c) large `N`; (d) `10 ≤ N ≤ 2000` | (a) `five_blocks_signPattern`; (b) `prop_dip_hyp`, `law_isUnimodal`; (c) see `thm:convex-large`, `cor:unique-min`; (d) `convex_certified`, `center_small_at_crossing` | (a) kernel; (b) kernel; (c) not formalized (finite part kernel, hypotheses H6 to H8); (d) kernel |
+| `thm:main-bulk` | 1.2 | compound Poisson bulk, Landau limit, modes | (a) `thm_cp_paper_final`, sharper `thm_cp_final`; (b) `U2.landau_local_fN_final_deltaB` (with `C = 889`), `U2.thm_landau_c_final`; (c) `lem_landau_mode_final` (Lemma 3.10), `cor_mode_location_b_final` | kernel, modulo named classical hypotheses: (a) LFI, CP, ES; (b) LFI, CP, ES, and SCH for the limit in law; (c) UNI for the mode, and LFI, CP, ES, UNI for the location of the modes. Stronger than the paper: (a) for `N ≥ 1`, `0 ≤ ε ≤ 1` with a smaller error; (b) `C = 889`, no `N ≥ 64`; (c) every large `N`, even or odd |
+| `thm:main-shape` | 1.3 | (a) five blocks; (b) dip at the crossing for even `N ≥ 8`, `f_N` unimodal; (c) large `N`; (d) `10 ≤ N ≤ 2000` | (a) `five_blocks_signPattern`; (b) `prop_dip_hyp`, `law_isUnimodal`; (c) see `thm:convex-large`, `cor:unique-min`; (d) `convex_certified`, `center_small_at_crossing` | (a) kernel; (b) kernel; (c) kernel, hypotheses LFI, CP, ES, UNI: `main_shape_c_final`, and (c) with (d) `main_shape_cd_final`; track U3 (`main_shape_c_cert`, `main_shape_c`); the clause "so `P_N` is strictly convex on `{2m*,…,N-2m*}`" is the definition of strict convexity of a sequence and is the same statement, and its consequence for the minimum is `shape_crossing_final`; (d) kernel |
 | `def:erw` | 2.1 | the walk | `stepProb`, `ewProb`, `ewBin`, `sum_ewProb` | kernel (definition) |
 | `lem:erw-reduction` | 2.2 | `M` is a Markov chain, `P_N(k) = ½[f_N(N-k)+f_N(k)]`, `E_N` | `sum_plus_ewProb`, `sum_minus_ewProb`, `ewBin_eq`, `ewBin_center`, `ewBin_top`; the process statement `RRT.rrt_path_law` | kernel |
 | `prop:mlr` | 2.3 | monotone likelihood ratio, unique crossing `ε_N < ½`, `C_N ≥ 2E_N` for `ε ≥ ½` | `law_ratio_strictMonoOn`, `ewBin_ratio_strictMonoOn`, `crossing_exists_unique`, `center_crossing_exists_unique`, `ewBin_ge_two_top`; the crossing as a function `crossingEps`, `crossingEps_spec` | kernel |
@@ -93,7 +107,7 @@ indexes the count chain by the number of steps.
 | `prop:first-mutation` | 2.5 | (a) first-flip decomposition; (b) `C_N(0) = 0`, `V_{t+1}(1) = π_t` at `0`, `C_N'(0) = 4/(N+2)`; (c) `∑ w_t t = 3 - 6/(h+2)`, `w_t ≤ 2t2^{-t}` | (a) `center_first_flip` (T4), `center_first_flip_Icc` (T3); (b) `center_poly_and_deriv`, `hitV_zero_eq_pi`, `center_deriv_eq_sum_hit`, `center_hasDerivAt`; (c) `weights_mean`, `sum_w_mul`, `weight_le`, `w_le`, `weights_sum_one` | kernel |
 | `thm:erw-bounds` | 2.6 | (a) lower bound; (b) upper bound with `5200`; the logarithmic display | `thm_erw_bounds_a`, `center_lower`, `center_lower_bound_even` (T3); `thm_erw_bounds_b`, `center_upper_all` (every even `N ≥ 2`); `thm_erw_bounds_in_particular` | kernel. The 60-term series is bounded in Lean by exact partial sums (`seriesBound_holds`, value at most `102.635`), so no ball arithmetic enters. |
 | `thm:erw-crossing` | 2.7 | (a) `x_N + log x_N = Λ_N + O(L²/N)`, `x_N = g_N + O(L²/N)`; (b) `x_N = 2L - log L - log 16 + O(log L/L)` | `thm_erw_crossing_a_G`, `thm_erw_crossing_a_g`, `thm_erw_crossing_b`; explicit form `crossing_explicit` for `log N ≥ 30`; equation (*) `star_bound`, Step 2 `crossing_trap` | kernel (explicit constants 20824, 20824, 7; the explicit form needs `log N ≥ 30` in place of the paper's `400L(1+L) ≤ N`) |
-| `thm:erw-markov` | 2.8 | `Υ_N = c_*/log N + O(log log N/log² N)` | `thm_erw_markov` (hypothesis H1 for `z`); `thm_erw_markov_persistent` for Paper A's `z_N = N(1-p_N)` in `T6Bridge/T6_PaperABridge.lean` | kernel, outside the lake library for the persistent walk; inside the library with hypothesis H1 |
+| `thm:erw-markov` | 2.8 | `Υ_N = c_*/log N + O(log log N/log² N)` | `thm_erw_markov` (hypothesis H1 for `z`, library `PaperD`); `thm_erw_markov_persistent` and `thm_erw_markov_spec` (library `PaperAD`, `PaperAD/Bridge.lean`, for Paper A's `z_N = N(1-p_N)`) | kernel, no hypothesis, in the library `PaperAD` (which imports `PaperA` and `PaperD`); inside `PaperD` alone with hypothesis H1 |
 | `lem:tree` | 3.1 | tree and marks, `X_v = X_1(-1)^{σ(v)}`, `M_N` = odd vertices, forced marks give `M^{[k_0]}` | `RRT.rrt_word_law`, `RRT.rrt_bin_law`, `RRT.rrt_oddCount_law`, `RRT.rrt_forced_path_law`, `RRT.rrt_path_law` | kernel (the whole process, not one time) |
 | `lem:split` | 3.2 | given `𝒯_v = S`, the two restrictions are independent random recursive trees | `RRT.split_relabel` (the lemma), `RRT.split_relabel_marked` (with independent marks), `RRT.split_relabel_point`, `RRT.split_famSet_prob`, `RRT.relabel_eq_iff` (T8); the parent-choice form `RRT.famSet_eq_iff`, `RRT.treeProb_box`, `RRT.split_law`, `RRT.split_cond` (T2) | kernel (Lemma 3.3 is proved without it) |
 | `lem:firstmark` | 3.3 | law of `(V, |𝒯_V|)` and the formula for `f_N(m)` | `RRT.rrt_firstMark_joint_const`, `RRT.rrt_firstFlip_joint` (joint law with `Y`, `Z`, stronger), `RRT.rrt_fN_decomp`, `RRT.rrt_famD_law` | kernel (by induction on `N`, not through Lemma 3.2) |
@@ -101,10 +115,10 @@ indexes the count chain by the number of steps.
 | `thm:dip` | 3.5 | `x/(2(1-ε)) < ρ_1 ≤ …` | `endpoint_dip`, `endpoint_below_neighbour`, `endpoint_ratio_upper`, `endpoint_above_neighbour` | kernel |
 | `cor:dip` | 3.6 | dip at the crossing if `x_N ≥ 2(1-ε_N)` | `not_unimodal_at_crossing`, `even_dip_of_le` | kernel (the hypothesis is the paper's) |
 | `prop:dip-hyp` | 3.7 | `C_N < E_N` at `2/(N+2)` for every even `N ≥ 8`, the dip, and failure for `N = 2, 4, 6` | `prop_dip_hyp` (all even `N ≥ 8`); `dip_hyp_kernel` (`8 ≤ N ≤ 200` and `N ≥ 1688`); `dip_hyp_exact`, `dip_hyp_large_holds`, `dip_of_center_lt_top`, `dip_hyp_fails_small`, `ewBin_ratio_two` to `ewBin_ratio_eight`, `ratio_eight`, `crossing_eight_dip`; `T7.dipHyp_crossing_8_2000` | kernel: exact integer recursion for `8 ≤ N ≤ 200`, Theorem 2.6(b) for `N ≥ 1688`, certificates of T7 for `200 < N < 1688`; `dip_hyp_of_mid` is the composition with that range as hypothesis H2 |
-| `thm:cp` | 3.8 | compound Poisson bulk | none | not formalized |
-| `thm:landau` | 3.9 | Landau limit | none | not formalized |
-| `lem:landau-mode` | 3.10 | mode of `f_L` (computer-assisted, Arb) | none | not formalized |
-| `cor:mode-location` | 3.11 | where the modes are | none | not formalized |
+| `thm:cp` | 3.8 | compound Poisson bulk | `U1.thm_cp` (the paper's statement), `U1.thm_cp_sharp` (closed form `δ_♯`), `U1.thm_cp_sum` (sharpest, `δ_Σ`); with one lattice hypothesis `thm_cp_paper_final`, `thm_cp_final`; Steps 1 to 4 `U1.step1`, `U1.step2`, `U1.cond_char`, `U1.step3`, `U1.var_F_le_sum`, `U1.mean_W`, `U1.depth_mean`; `U1.deltaSum_le_deltaSharp`, `U1.deltaSharp_le_deltaB` | kernel, hypotheses LFI (or `U1.LatticeFourierHyp`, which follows from it by `U2.latticeFourierHyp_of_inversion`), CP and ES; track U1. Stronger than the paper: `N ≥ 1`, `0 ≤ ε ≤ 1`, and `δ_Σ = ε²(NH_N - 2N + 1) + 2ε²(N-1) + 4ε²∑_{k=0}^{N-2}(H_k² + H_k) ≤ δ_♯ ≤ δ_B` |
+| `thm:landau` | 3.9 | Landau limit | (a) `U2.landau_local_cp_final` (every integer `m`, `x ≥ 1`, `4x ≤ N`, error `(889 + 165 log x)/x + 6.6x/N`), `U2.landau_local_cp_C`; (b) `U2.landau_local_fN_final` (error with `δ_Σ`), `U2.landau_local_fN_final_deltaB` (the paper's form, `C = 889`), and in the exact form of U3's hypothesis `landauLimitHyp_of_classical`; (c) `U2.thm_landau_c_final`, `U2.thm_landau_c_sharp`; the law with density `f_L` `U2.landauLaw`, `U2.landauDensityHyp_of_U1` (`f_L ≥ 0`, `∫ f_L = 1`, proved); class `L` `U2.charFun_landauLaw`, `U2.charFun_landauLaw_selfDecomposable` | kernel, hypotheses (a) LFI, CP; (b) LFI, CP, ES; (c) LFI, CP, ES, SCH; track U2. Stronger than the paper: `C = 889` is explicit, no `N ≥ 64`, (a) for every integer `m`, (c) for `0 ≤ ε ≤ 1` |
+| `lem:landau-mode` | 3.10 | mode of `f_L` (computer-assisted, Arb) | statement `LandauModeHyp`; `lem_landau_mode_final` (U3's form), `lem_landau_mode_landauDensity` and `U6.lem_landau_mode` (U6's form), `U6.lem_landau_mode_fourier`, `landauModeCert_of_unimodal`, `landauModeCert_of`, `landauModeHyp_of_cert`, `cert_quadratic` (`U3_LandauMode`); Step 1 `U6.fLFourier_eq_fL` (contour rotation, `U6_Contour`), `U6.hasDerivAt_Fk` (differentiation under the integral sign); Step 2 `U6.fL1_at_a`, `U6.fL1_at_b`, `U6.fL1_at_c1`, `U6.fL1_at_c2`, `U6.fL2_at_mid`, `U6.abs_fL3_le`, `U6.fL2_bounds` (`U6_Cert`, `U6_Lemma`); the former hypothesis CERT is `landauCertHyp_landauDensity` (`U6_Bridge`) | kernel, hypothesis UNI (Yamazato 1978); tracks U3 and U6. Step 2 is kernel-checked integration with integer Taylor models on `[2^-14, 16]` and proved bounds on the two ends, in place of Arb. Its enclosures are about `10^-12` wide, not `10^-17`, but they give the paper's brackets. Stronger than the paper: `f_L` is monotone up to `λ_L` and antitone after it, and `f_L(λ_L) ≥ 0.1806` |
+| `cor:mode-location` | 3.11 | where the modes are | (a) replaced by `mode_master` (a different form, not a stronger one: no `m_h ≤ N/4`, no Lemmas B.1, B.2, B.5; error `2E+δ` for `f_N`, `2E+δ+8x/(3N)` for `P_N`); (b) `cor_mode_location_b_final`, `cor_mode_location_b_cert`, `cor_mode_location_b`, `cor_mode_location_b_diff`, window form `uniform_mode_rate`, `uniform_mode_rate_diff` | (b) kernel, hypotheses LFI, CP, ES, UNI (`cor_mode_location_b_final`); track U3; stronger than the paper (every large `N`, even or odd; every maximizer of `f_N`; whole window `log N ≤ x ≤ 2 log N`; only differentiability of `f_L` at `λ_L`); (a) different form |
 | `rem:bulk` | 3.12 | numerics | none | not applicable |
 | `def:convex` | 3.13 | convex between the humps | `T5.ConvexBetweenHumps` (every crossing in `(0,1)`, every mode `a* ≥ N/2`) | definition |
 | `conj:convex` | 3.14 | `N > 2000` | none | open |
@@ -114,25 +128,36 @@ indexes the count chain by the number of steps.
 | `thm:five-blocks` | 3.18 | five blocks for `P_N` and `f_N` | `five_blocks`, `five_blocks_signPattern`; `five_blocks_f`, `five_blocks_f_signPattern` | kernel (for `f_N` from `N ≥ 2`) |
 | `thm:no-holes` | 3.19 | no holes | `no_holes` | kernel |
 | `cor:one-point` | 3.20 | one inequality is enough, two branches | branch `P_N(0) < P_N(1)`: `one_point`, `one_point_of_hx`; branch `x = x_N`, even `N ≥ 8`: `one_point_at_crossing`, `one_point_at_crossing_of` | kernel (both branches; the second uses Proposition 3.7) |
-| `thm:convex-large` | 3.21 | convex between the humps for large even `N` | Step 4 and the appeal to 3.20: `convex_of_halfway`, `exists_convex_point`, `concave_chord` | kernel, hypotheses H6 to H8 (Steps 1 to 3); not formalized end to end |
+| `thm:convex-large` | 3.21 | convex between the humps for large even `N` | `thm_convex_large_final`; `thm_convex_large_cert`, `thm_convex_large`; Steps 1 to 3 `uniform_halfway`; Step 4 and the appeal to 3.20 `convex_of_halfway`, `exists_convex_point`, `concave_chord`; window form `convex_window_final`, `convex_window` | kernel, hypotheses LFI, CP, ES, UNI; tracks U3 and U6. Stronger window form: every `ε` with `log N ≤ Nε ≤ 2 log N`, every large `N`, even or odd |
 | `lem:center-convex` | 3.22 | the center from convexity | `lem_center_convex_at_crossing` (paper's hypotheses, every even `N ≥ 8`), `lem_center_convex_at_crossing_of`, `center_min_at_crossing`, `ewBin_center_min_of_convex`, `center_min_of_convex_five_blocks` | kernel; the convexity is the lemma's own hypothesis |
-| `cor:unique-min` | 3.23 | center unique interior minimum for large even `N` | `ewBin_center_min_of_halfway` (finite part); `center_small_at_crossing` for `8 ≤ N ≤ 2000` | not formalized for large `N` (kernel with H6 to H8); kernel for `8 ≤ N ≤ 2000` |
+| `cor:unique-min` | 3.23 | center unique interior minimum for large even `N` | `cor_unique_min_final`, `cor_unique_min_cert`, `cor_unique_min`; `ewBin_center_min_of_halfway` (finite part); `center_small_at_crossing` for `8 ≤ N ≤ 2000`; odd `N` on `[2m*, N-2m*]` `shape_crossing_final`, `shape_window` | kernel for large even `N`, hypotheses LFI, CP, ES, UNI; tracks U3 and U6; kernel for `8 ≤ N ≤ 2000`. For odd `N` only the minimum on `[2m*, N-2m*]` is proved (at the two central bins); the odd form on the whole interior is not formalized |
 | `prop:convex-certified` | 3.24 | `10 ≤ N ≤ 2000`, even or odd | `convex_certified`, `T7.convexBetweenHumps_5_2000` (from `N = 5`), `T7.kernel_convexBetweenHumps_10_2000`; soundness `T5.convexBetweenHumps_of_check`, `T7.convex_of_runs` | kernel (T5 runs for `5 ≤ N ≤ 100`, T7 runs for `101 ≤ N ≤ 2000`; empty range at `N = 5`) |
-| `prop:odd` | 3.25 | crossing for odd `N`; (a) `C̃_N = (1-c/N)^{-1}C_{N+1}`; (b) asymptotics; (c) `x_N > 2` and the dip for odd `N ≥ 1689`; (d) convexity for large odd `N` | first paragraph `odd_crossing_exists_unique`; (a) `odd_center_succ`, `odd_central_eq`; (c) `odd_hx_large`, `odd_dip_large`, `odd_one_point_large`, `odd_hB_large`, `odd_center_le`; (d) `odd_convex_of_halfway` | first paragraph, (a) and (c) kernel ((a) multiplied out); (b) not formalized; (d) kernel with H6 to H8 |
+| `prop:odd` | 3.25 | crossing for odd `N`; (a) `C̃_N = (1-c/N)^{-1}C_{N+1}`; (b) asymptotics; (c) `x_N > 2` and the dip for odd `N ≥ 1689`; (d) convexity for large odd `N` | first paragraph `odd_crossing_exists_unique`; (a) `odd_center_succ`, `odd_central_eq`; (c) `odd_hx_large`, `odd_dip_large`, `odd_one_point_large`, `odd_hB_large`, `odd_center_le`; (d) `odd_convex_of_halfway` | first paragraph, (a) and (c) kernel ((a) multiplied out); (b) kernel, no hypotheses: `prop_odd_b_G`, `prop_odd_b_g`, `prop_odd_b_expansion`, explicit `odd_crossing_explicit` for `log N ≥ 30` with `ρ̃_N = (24L²+20812L)/N` (`U3_OddCrossing`), and the crude window `odd_crossing_window`; (d) kernel, hypotheses LFI, CP, ES, UNI: `prop_odd_d_final`, `convex_large_all_final`; track U3: `prop_odd_d`, `prop_odd_d_cert`, `convex_large_all_cert`; track U5 proves (b) again as `U5.odd_crossing_*` |
 | `prop:center-small` | 3.26 | center for even `10 ≤ N ≤ 2000` | `center_small_at_crossing`, `T7.centerUniqueMin_8_2000`, `T7.kernel_center_min_at_crossing_8_2000`, `T7.onePointHyps_8_2000`; soundness `T5.centerUniqueMin_of_check`, `T7.center_of_runs` | kernel (from `N = 8`) |
 | `rem:convex-open` | 3.27 | what is open | the warning in the docstrings of `convex_of_halfway`, `ewBin_center_min_of_halfway` | not applicable |
-| `lem:A-polya` | A.1 | (a) `Φ^c` is a hitting probability; (b) one step; (c) pseudo-count form; (d) `V_s ≥ Φ^c_s` | (a) `phiU_up`, `phiU_stay`, and for `c = 0` `hitV_zero_eq_phiU`, `hit_zero_closed`; (b) `phiU_up`; (c) `upProb_pseudocount`; (d) `hitV_ge_phiU`, `hitV_ge_pi`, `phiU_sub_step` | kernel, except (a) for `c > 0`, whose probabilistic reading is not formalized (the proof uses only the recursion) |
+| `lem:A-polya` | A.1 | (a) `Φ^c` is a hitting probability; (b) one step; (c) pseudo-count form; (d) `V_s ≥ Φ^c_s` | (a) `phiU_up`, `phiU_stay`, and for `c = 0` `hitV_zero_eq_phiU`, `hit_zero_closed`; for every `c ≥ 0` `U4.polya_hit` (`Φ^c_u(b)` is the probability that the Pólya(`c`) chain is at `h` at the final time), `U4.polya_doob`; (b) `phiU_up`; (c) `upProb_pseudocount`; (d) `hitV_ge_phiU`, `hitV_ge_pi`, `phiU_sub_step` | kernel ((a) for `c > 0` by track U4) |
 | `lem:A-compare` | A.2 | comparison with super- and subsolutions | (a) `hitV_le_of_super`; (b) `hitV_ge_of_sub` | kernel |
 | `lem:A-cderiv` | A.3 | `∂_τ log Φ^τ_s(b)` bound | `logPhi_deriv_lt`, with the digamma bounds `binetDigammaBounds_holds` | kernel |
 | `prop:A-super` | A.4 | (a) the step identity; (b) `log Δ_s`; (c) `V_{t+1}(1)` bound; (d) the center | (a) `prop_A4a`, `J_eq`, `step_eq_J`; (b) `super_step_Sg`, `delta_le`, `log_delta_le`; (c) `hitV_le_pi`; (d) `center_upper` | kernel ((c) with a weaker exponent that suffices) |
-| `lem:B-sandwich` | B.1 | monotone sandwich | none | not formalized |
-| `lem:B-tail` | B.2 | tail of `M^{[k_0]}` | none | not formalized |
+| `lem:B-sandwich` | B.1 | monotone sandwich | `lem_B_sandwich_right`, `lem_B_sandwich_left`; the largest mode `modeH`, `modeH_spec`, `law_mono_below_modeH`, `law_anti_above_modeH`; general form `sandwich_of_antitoneOn`, `sandwich_of_monotoneOn` | kernel; track U5 |
+| `lem:B-tail` | B.2 | tail of `M^{[k_0]}` | `lem_B_tail`, `lem_B_tail_mean`, `lem_B_tail_law`, `lem_B_tail_Z`; the chains as processes `chainReal_exists`, `Inner_eq_real`, `RS_eq_real`; the displays (`eq:B-subtail`), (`eq:B-ratio`) `stLaw_succ_mul`, `bTail_closed`, `bTail_le_exp`, `stLaw_eq_mul_bTail`, `bTail_pred_mul` | kernel; track U5; for `0 ≤ ε ≤ 1` (the paper has `0 < ε < 1`) |
 | `lem:B-D` | B.3 | the first flipped family | `lem_B_D_tree`, `lem_B_D_tree_tail` (tree model), `firstMark_bounds`, `firstMark_tail` (urn sum) | kernel |
-| `thm:B-local-lower` | B.4 | local lower bound | none | not formalized |
-| `lem:B-mode` | B.5 | mode bound | none | not formalized |
-| Appendix C | | proofs of 3.8 to 3.11 | none | not formalized |
+| `thm:B-local-lower` | B.4 | local lower bound | `thm_B_local_lower` (`C = 20`), `lem_B4_explicit` (every error term explicit), `B4_pointwise`, `B4_one_j`, `B4_late_tail` | kernel; track U5; for `N ≥ 64`, `0 ≤ ε ≤ 1` (no `ε ≤ 1/4`, no `x ≥ 1`) |
+| `lem:B-mode` | B.5 | mode bound | `lem_B_mode_paper` (`c̄ = 1/40`, `A₀ = 15400`), `lem_B_mode` (under `804 x log(x+2) ≤ N`), `lem_B5_strong`, `B5_ell_lower` | kernel; track U5 |
+| Appendix C | | proofs of 3.8 to 3.11 | C.1 as `thm:cp` (U1); C.2 as `thm:landau` (U2); C.3 as `lem:landau-mode` (Steps 1 and 2 U6, Steps 3 and 4 U3); C.4 as `cor:mode-location` (U3) | kernel, modulo the named classical hypotheses of those rows. Steps 1 and 2 of C.3 are proved by track U6, so C.3 needs only UNI |
 | Appendix D | | proofs of 3.16 to 3.19 | as in the rows of 3.16 to 3.19, with `Y_step`, `Yf_step`, `holes_step`, `dU_neg`, `dU_pos`, `fZ_diag_pos` | kernel |
-| Online Resource S1 to S3 | | second order, bridge, tail, odd `N` | `odd_center_le` (S3, first inequality of the proof of 3.25(c)) | not formalized otherwise |
+| `prop:second-order` | S1.1 | second order of the center | `U4.center_second_order_lower`, `U4.prop_second_order` | kernel, hypothesis HOEF; track U4; the lower bound for `0 < ε < 1/2` and even `N ≥ 64` |
+| `prop:refined` | S1.2 | refined crossing | `U4.star_second_order`, `U4.prop_refined_explicit` (error `20822 log N/N` for `log N ≥ 30`), `U4.prop_refined` | kernel, hypothesis HOEF; track U4 |
+| `rem:refined` | S1.3 | `x_N < g_N` | `U4.crossing_lt_gRoot_3500` (every even `N` with `log N ≥ 3500`), `U4.crossing_lt_gRoot` (`log N ≥ 21000`) | kernel, hypothesis HOEF; track U4. The paper says no explicit `N` is known. The numbers of the remark are not theorems |
+| `app:erw-bridge` | S1.A | the conditioned chain is the bridge, the `h-1` up steps are placed uniformly | `U4.polya_doob`, `U4.polya_hit`, `U4.polya_conditioned`, `U4.rbar_path_prob`, `U4.bridge_uniform`, `U4.bridge_support_card`, `U4.polya_conditioned_uniform` | kernel, no hypothesis; track U4; path by path and for every `c ≥ 0` |
+| `prop:A-bridge` | S1.4 | bridge product formula | `U4.bridge_formula`, `U4.hitV_eq_phiU_mul_bridge`, `U4.bridge_lower` | kernel; track U4; for every real `ε` |
+| `lem:A-w` | S1.5 | limit weights | `U4.wT_tendsto`, `U4.sum_w_cube_le` | kernel; track U4 |
+| `lem:A-AB` | S1.6 | moments of the bridge | `U4.second_moment`, `U4.second_moment_le`, `U4.Acal_ge`, `U4.bridge_marginal`, `U4.omegaC_le`, `U4.Bcal_le` | kernel; (c) and (d) with hypothesis HOEF; track U4; no `N ≥ 16` |
+| `thm:profile` | S2.1 | the tail profile | `thm_profile` (sequence form), `thm_profile_uniform` (uniform form, `W` and `δ` exist), `profile_f_bounds`, `profile_mirror`; `thm_profile_witness` (the hypotheses can hold, and the conclusion applies at bins `m → ∞`) | kernel, no hypothesis; track U5. Stronger than the paper: no `ω_N x log²(x+1) = o(N)`, and `ε > 0`, `x ≥ 1` only eventually |
+| `lem:B-late` | S2.2 | late start | `lem_B_late` | kernel; track U5; for `0 ≤ ε ≤ 1` and real `z ≥ 0` |
+| `thm:B-cum-upper` | S2.3 | cumulative upper bound | `thm_B_cum_upper` (`C = 800`), `cum_upper_explicit`, `cum_decomp`, `cum_one_j`, `cum_main`, `cum_shift`, `cum_bigZ`, `cum_noEarly` | kernel; track U5 |
+| `thm:B-local-upper` | S2.4 | local upper bound | `thm_B_local_upper` (`c̄ = 1/40`, `A₁ = 34000`, `C = 20000`), `lower_tail_sum`, `upper_comb` | kernel; track U5 |
+| `or:odd` | S3 | proofs of Proposition 3.25(b) to (d) | as in the row of `prop:odd`; (b) also `U5.odd_crossing_explicit`, `U5.odd_crossing_isBigO_G`, `U5.odd_crossing_isBigO_g`, `U5.odd_crossing_isBigO_expansion` (track U5, written independently of U3); `odd_center_le` | kernel ((d) with LFI, CP, ES, UNI) |
 
 ## Named hypotheses that remain
 
@@ -142,9 +167,10 @@ No hypothesis of Theorem 2.6 remains. The hypotheses `CenterLowerBound`, `Center
 the hypothesis `hB` of track T1 for odd `N ≥ 1689` (`odd_hB_large`). The ones left are these.
 
 * H1 `PaperAProp38 z` (Paper A, Proposition 3.8) in `thm_erw_markov`, `markov_isBigO`,
-  `markov_isBigO_ev`. Discharged for Paper A's crossing by `paperA_prop38` in
-  `T6Bridge/T6_PaperABridge.lean`. It would leave the library hypotheses once the lakefile
-  requires Paper A.
+  `markov_isBigO_ev`. Discharged for Paper A's crossing by `paperA_prop38` in the library
+  `PaperAD` of the repository (`PaperAD/Bridge.lean`, which imports `PaperA` and `PaperD`), so
+  `thm_erw_markov_persistent` and `thm_erw_markov_spec` there have no hypothesis.
+  `T6Bridge/T6_PaperABridge.lean` in `paperD-next` is the earlier form of the same bridge.
 * H2 `hmid : ∀ h, 101 ≤ h → h ≤ 843 → CenterBelowTopAtTwoDiv h` in `dip_hyp_of_mid` and
   `dip_hyp`. Discharged in the kernel by the T7 certificates in `prop_dip_hyp`
   (`EndToEnd_Cert`).
@@ -159,15 +185,54 @@ the hypothesis `hB` of track T1 for odd `N ≥ 1689` (`odd_hB_large`). The ones 
   `dip_hyp_kernel` for `8 ≤ N ≤ 200` and `N ≥ 1688`, and by `prop_dip_hyp` for all even `N ≥ 8`.
 * H6 `hmode` (a mode `a* = N - m*`), H7 `hm` (`2m*+2 ≤ h`, or `2(2m+2) ≤ N`), H8 `hhalf`
   (`P_N(m* + ⌊m*/2⌋) < P_N(m*)/2`) in `convex_of_halfway`, `ewBin_center_min_of_halfway` and
-  `odd_convex_of_halfway`. These are Steps 1 to 3 of Theorem 3.21. They need Theorem 3.9 (Landau
-  limit), Lemma 3.10 and Corollary 3.11, which are not formalized. At the crossing `hhalf` holds
+  `odd_convex_of_halfway`. These are Steps 1 to 3 of Theorem 3.21. For large `N` they are now
+  proved (`uniform_halfway`, track U3), from Theorem 3.9(b), Lemma 3.10 and Corollary 3.11, so
+  the large-`N` theorems `*_final` of `U_EndToEnd` do not have them. At the crossing `hhalf` holds
   only asymptotically (the ratio is about 0.8 to 0.9 for `N ≤ 3200`, Remark 3.27).
 * H9 `hD : 0 < D_N(2m*+1)` and `hm : 2m*+1 ≤ h` in `center_min_at_crossing` and
   `ewBin_center_min_of_one_point`. These are the paper's inputs from Propositions 3.24 and 3.26
   (discharged by T5 and T7 for `N ≤ 2000`, `T7.onePointHyps_8_2000`) or from Theorem 3.21 for
-  large `N` (open).
+  large `N` (track U3, `thm_convex_large_final`).
 * The intermediate premises `BinetDigammaBounds` and `SeriesBound` of track T4 are proved
   (`binetDigammaBounds_holds`, `seriesBound_holds`) and do not appear in any headline theorem.
+* The hypotheses that the tracks U1 to U5 introduced for results of the paper itself are all
+  proved. `LandauLimitHyp landauDensity` (Theorem 3.9(b) in the paper's form, the input of
+  track U3) is `landauLimitHyp_of_classical`. `LandauModeHyp` and `LandauModeCert` (Lemma 3.10)
+  are `landauModeHyp_of_cert`, `landauModeCert_of`, `landauModeCert_of_unimodal`.
+  `LandauCertHyp landauDensity` (the certified numbers of Lemma 3.10, formerly CERT) is
+  `landauCertHyp_landauDensity`. Track U6's input `U6.LandauFacts` has two fields. The first,
+  `real_integral` (the real integral for `f_L`, Möhle 2005, Eq. (4.3)), is
+  `U6.fLFourier_eq_fL`. The second is UNI (`U6.landauFacts_of_unimodal`,
+  `landauFacts_of_unimodalHyp`). `U2.ThmCPConclusion` and
+  `U2.ThmCPConclusionNat` (Theorem 3.8 as an input of track U2) are `U2.thmCPConclusionNat_U1`.
+  `U2.CPCharFun` (the law `CP_N` has the right characteristic function) is
+  `U2.cpCharFunNat_CPN` from CP. `U2.LandauDensityHyp` (`f_L ≥ 0`, `∫ f_L = 1`) is
+  `U2.landauDensityHyp_of_U1`. `U1.LatticeFourierHyp` is `U2.latticeFourierHyp_of_inversion`.
+
+## Named classical hypotheses
+
+These are the only hypotheses left in the theorems about the bulk and in Online Resource S1.
+Each is a definition of type `Prop` that states a classical result. None of them is original to
+the paper, and none is formalized, by design. The certificate of Lemma 3.10 was the hypothesis
+CERT until track U6 proved it.
+
+| Abbr. | Lean | Statement | Source | Used in |
+|---|---|---|---|---|
+| LFI | `U2.LatticeFourierInversionHyp` | for absolutely summable `a : ℤ → ℂ`, `a_m = (1/2π)∫_{-π}^{π} e^{-imθ} ∑_k a_k e^{ikθ} dθ` | Katznelson, *An Introduction to Harmonic Analysis*, Ch. I §1 (uniform convergence and orthogonality of `e^{ikθ}`); Durrett, *Probability*, §3.3 | 3.8 (through `U1.LatticeFourierHyp`), 3.9, and all that rests on them |
+| CP | `U1.CPCharHyp` | the law `cpLaw r n` of `∑_{d=1}^{n} d 𝒩_d` (`𝒩_d` independent Poisson with means `r_d ≥ 0`) has the characteristic function `exp(∑_d r_d(e^{idθ} - 1))` | Feller, Vol. I, XII.2; Durrett, *Probability*, §3.3 | 3.8, 3.9, and all that rests on them |
+| ES | `U1.EfronSteinHyp` | the Efron–Stein inequality for a complex function of independent uniform coordinates on finite sets | Efron and Stein, *Ann. Statist.* 9 (1981); Steele, *Ann. Statist.* 14 (1986); Boucheron, Lugosi and Massart, *Concentration Inequalities*, Thm 3.1 | 3.8 (Step 4), 3.9(b), (c), and all that rests on them |
+| SCH | `U2.ScheffeHyp` | Scheffé's lemma: densities converging a.e. to a density converge in `L¹` | Scheffé, *Ann. Math. Statist.* 18 (1947); Billingsley, *Probability and Measure*, Thm 16.12 | 3.9(c) and 1.2(b) (the limit in law) only |
+| UNI | `UnimodalHyp landauDensity` | `f_L` is nondecreasing on `(-∞, c]` and nonincreasing on `[c, ∞)` for some `c` | Yamazato, *Ann. Probab.* 6 (1978) (class `L` laws are unimodal); `f_L` is the density of a 1-stable, hence self-decomposable, law (Zolotarev; Samorodnitsky and Taqqu; Lean proves self-decomposability, `U2.charFun_landauLaw_selfDecomposable`). The same predicate as U6's `Unimodal` (`unimodalHyp_iff_unimodal`), and the same statement for each form of `f_L` (`unimodalHyp_landauDensity_iff`) | 3.10, and with it 1.2(c), 1.3(c), 3.11(b), 3.21, 3.23, 3.25(d) |
+| HOEF | `U4.HoeffdingHypergeomHyp` | the lower-tail Hoeffding bound `exp(-2σ²k)` for the hypergeometric law | Hoeffding, *J. Amer. Statist. Assoc.* 58 (1963), Theorem 1 with Section 6 | S1.1, S1.2, S1.3, S1.6(c), (d) |
+
+The end-to-end theorems of `U_EndToEnd` (`thm_cp_final`, `thm_cp_paper_final`,
+`landauLimitHyp_of_classical`, `main_shape_c_final`, `main_shape_cd_final`,
+`thm_convex_large_final`, `prop_odd_d_final`, `convex_large_all_final`, `convex_window_final`,
+`cor_unique_min_final`, `shape_crossing_final`, `cor_mode_location_b_final`,
+`lem_landau_mode_final`) take only these hypotheses. None of them takes CERT any more. The
+definitions of the Landau density agree everywhere. U3's `landauDensity` is U2's `U2.fL`
+(`landauDensity_eq_U2_fL`) and U6's Fourier form `U6.fLFourier` (`landauDensity_eq_fLFourier`),
+and it equals U6's real integral `U6.fL` (`landauDensity_eq_U6_fL`, `U2_fL_eq_U6_fL`).
 
 ## Certificates (tracks T5 and T7)
 
@@ -345,19 +410,14 @@ for Paper D. These note statements were formalized on October 17.
 
 ## Not formalized, and why
 
-Paper D. The statements that are not formalized are the following.
+Paper D. Since October 18, 2026 every numbered statement of the paper and of Online Resource 1
+has a Lean counterpart, except the following.
 
-* The bulk and the modes: Theorem 3.8 (compound Poisson), Theorem 3.9 (Landau limit),
-  Lemma 3.10 (mode of `f_L`, an Arb computation), Corollary 3.11, and so Theorem 1.2. They need
-  characteristic functions, Fourier inversion, the Efron and Stein inequality and a certified
-  enclosure of the Landau density.
-* Because of this, Theorem 3.21, Corollary 3.23 and Proposition 3.25(d) are formalized only in
-  their finite part, with Steps 1 to 3 as the hypotheses H6 to H8. Proposition 3.25(b) (the
-  crossing asymptotics for odd `N`) is not formalized.
-* Appendix B except Lemma B.3, Appendix C, and Online Resource 1 (Sections S1 to S3) except the
-  first inequality of the proof of Proposition 3.25(c).
-* The probabilistic reading of Lemma A.1(a) for `c > 0`. The proofs use only the recursion.
-* Conjecture 3.14 is open.
+* The classical tools LFI, CP, ES, SCH, UNI and HOEF (section "Named classical hypotheses").
+* Corollary 3.11(a) word for word. Lean has `mode_master`, a different form.
+* Corollary 3.23 for odd `N` on the whole interior. Lean proves the minimum on `[2m*, N-2m*]`.
+* The explicit `W` of Theorem S2.1 in uniform form. Lean proves that some `W` exists.
+* Remarks 3.12 and S1.3 (numerics) and Conjecture 3.14 (open).
 
 The Python and Arb scripts (`paperD/certify_*.py`) are separate from Lean. The Lean checkers of
 tracks T5 and T7 do not run them. They take the crossing brackets from the witness files,
@@ -381,8 +441,8 @@ terms. They are the following.
   aging chain on `d` states) and Proposition 5.4 for `d ≥ 3` are not in Lean.
 
 The notes D1 and D2 also have statements that the paper no longer states or that are asymptotic.
-They are not formalized: D1 S4 (Duhamel identity), S7 (bridge product formula, Proposition S1.4),
-S8, S12, S13, S14, S16, the limit weights of S3(c) (Lemma S1.5), D2 Theorem 2 to Theorem 5,
+They are not formalized: D1 S4 (Duhamel identity),
+S8, S12, S13, S14, S16, D2 Theorem 2 to Theorem 5,
 Corollaries 6.2 and 6.3, Conjecture 5.1, Heuristics H1, H1', H2, H3, Lemmas 3.1 and 3.2 of D2
 and Remark 3.4 (tail bounds).
 
@@ -475,3 +535,71 @@ Points of October 17, 2026.
   `T7.centerUniqueMin_8_2000`), not only from `N = 10`.
 
 Note of October 13, 2026. Heavy-tailed runs and aging walks (Sections 4 and 5 below) are now Paper F, where their statements are numbered 2.x and 3.x.
+
+## Tracks U1 to U5 (October 18, 2026)
+
+The five tracks were written in the workspaces `paperD-u1` to `paperD-u5` and integrated into
+`paperD-next` on October 18. Each started from the library of October 17, so no earlier module
+changed. `U_EndToEnd` composes them.
+
+* U1 (7 modules `U1_*`, namespace `Kagey131.PaperD.U1`): Theorem 3.8 and Appendix C.1. Hypotheses
+  CP, ES and `U1.LatticeFourierHyp` (which follows from LFI).
+* U2 (13 modules `U2_*`, namespace `Kagey131.PaperD.U2`): Theorem 3.9 and Appendix C.2, with
+  `C = 889`, the law with density `f_L`, and the class `L` paragraph. `U2_Bridge` discharges
+  U2's input Theorem 3.8 with U1's theorem. Hypotheses LFI, CP, ES, SCH.
+* U3 (10 modules `U3_*`): Lemma 3.10 Steps 3 and 4, Corollary 3.11(b), Theorem 3.21,
+  Corollary 3.23, Proposition 3.25(b) (no hypothesis) and (d), Theorem 1.3(c), and the window
+  forms. Its input Theorem 3.9(b) is `LandauLimitHyp`, discharged in `U_EndToEnd`. Hypotheses
+  CERT and UNI. CERT is now proved by track U6.
+* U4 (12 modules `U4_*`, namespace `Kagey131.PaperD.U4`): Online Resource S1, including the
+  conditioning and uniform placement of S1.A. Hypothesis HOEF.
+* U5 (17 modules `U5_*`): Appendix B (Lemmas B.1, B.2, Proposition B.4, Lemma B.5), Online
+  Resource S2 (Theorem S2.1, Lemma S2.2, Propositions S2.3, S2.4) and a second proof of
+  Proposition 3.25(b). No hypothesis.
+* Name clashes. U3 (`U3_OddCrossing`) and U5 (`U5_Odd`) proved Proposition 3.25(b) independently
+  under the same names. The U5 copy now lives in the namespace `Kagey131.PaperD.U5`. Track U2
+  had copied the U1 files for its bridge. The integration keeps one copy.
+* Build. `lake build PaperD` completes with 8912 jobs and no errors. `axioms-u.lean` in
+  `paperD-next` (output `axioms-u.log`) prints the axioms of 212 main declarations of the five
+  tracks and of `U_EndToEnd`. All depend on `propext`, `Classical.choice` and `Quot.sound`
+  (`U1.isAnc_change` on `propext` and `Quot.sound` only). The axiom files of the tracks are
+  `axioms-u5.lean` (formerly `PaperD/U5_Axioms.lean`) and the files in the track workspaces.
+
+## Track U6 (October 18, 2026)
+
+Track U6 was written in the workspace `paperD-u6` and integrated into `paperD-next` later on
+October 18. Its modules import only Mathlib. Two new modules join it to the rest.
+
+* `U6_Code`, `U6_TMSound`, `U6_Series`, `U6_Scalar`, `U6_Piece` (namespace
+  `Kagey131.PaperD.U6`). Integer Taylor models (scale `2^96`, degree 12) and the proof that they
+  are sound, with exp, log, sin and cos bounded by proved series remainders and `π` from Mathlib.
+* `U6_Landau`. The real integral `U6.fL λ = (1/π) ∫_0^∞ e^{-s log s - λ s} sin(π s) ds`, its
+  absolute convergence, its derivatives `U6.Fk (k+1)` and the bounds on `[0, 2^-14]` and
+  `[16, ∞)`.
+* `U6_Cert`. The 28 chunk checks by `decide +kernel` (seven integrands, four chains each). This
+  module takes about 14 minutes and 3 GB to check.
+* `U6_Lemma`. Lemma 3.10 for `U6.fL` from `U6.Unimodal U6.fL` (`U6.lem_landau_mode`), and for
+  the Fourier form from `U6.LandauFacts` (`U6.lem_landau_mode_fourier`).
+* `U6_Contour` (new). The contour rotation `U6.fLFourier_eq_fL`, which proves the field
+  `real_integral` of `U6.LandauFacts`. The half line `t > 0` is turned to the ray
+  `t = r e^{iθ}`, with `θ` from `0` to `-π/2`. On the ray the integrand is written with its real
+  and imaginary parts, so no complex logarithm appears. Its `θ`-derivative is `i` times an
+  `r`-derivative (`rotGθ_eq`), and it is bounded by `e^K e^{-r}` for `-π/2 ≤ θ ≤ 0`
+  (`norm_rotG_le`). So the integral over the ray has derivative `0` in `θ` (`hasDerivAt_rotF`).
+  The negative half line gives the complex conjugate (`fourierIntegrand_neg`).
+* `U6_Bridge` (new). `landauDensity = U6.fLFourier` by definition, `landauDensity = U6.fL`, and
+  `landauCertHyp_landauDensity`, which proves U3's former hypothesis CERT. `UnimodalHyp` and
+  `U6.Unimodal` are the same predicate. Lemma 3.10 for `landauDensity` from UNI alone is
+  `landauModeCert_of_unimodal` (U3's form) and `lem_landau_mode_landauDensity` (U6's form).
+* `U_EndToEnd` no longer takes `LandauCertHyp landauDensity`. Its large-`N` theorems take LFI,
+  CP, ES and UNI only, and `lem_landau_mode_final` takes UNI only.
+* `axioms-u6.lean` (formerly `PaperD/U6_Axioms.lean`) is the axiom script of the track, now in
+  the project root of `paperD-next`.
+* Build. `lake build PaperD` completes with 8922 jobs and no errors. The built files of the
+  eight U6 modules were copied from `paperD-u6`, and Lake accepted them. `axioms-u.lean` now
+  also prints the axioms of 31 declarations of U6, `U6_Contour` and `U6_Bridge` (243 in all).
+  Each depends on `propext`, `Classical.choice` and `Quot.sound`, or on a subset of them
+  (`U6.sA1` and `U6.sJ4` use only `propext`).
+* Still not formalized from the analysis of `f_L`. The bound `‖f_L''‖_∞ ≤ 16/π⁴`, the limit
+  `f_L → 0` at infinity and the integrability of `f_L` from the real integral. The Lean proofs of
+  Corollary 3.11 and Theorem 3.21 do not use them. An improved `κ_L` is not proved either.
