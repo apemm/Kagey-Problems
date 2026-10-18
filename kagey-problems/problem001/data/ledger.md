@@ -225,3 +225,30 @@ optima at widths 21, 22 and 23 were each checked against the definition. The pub
 witness is NOT fixed by the half turn (its image has the singletons in row 5), so its orbit has size
 4. Under the equality theorem no five-row optimum is fixed by a reflection, so every orbit has size 4
 or 2.
+
+## Pre-registered predictions for the remaining table counts (2026-10-17)
+
+Written before any of these runs. These are guesses at orders of magnitude only, with no model behind
+them beyond the nearby counts a_4(5) = 1,810, a_4(6) = 26, a_5(5) = 8 and a_5(8) = 4. Here a_h(m) is
+the number of valid blackouts of the h x m grid of size f(h,m).
+
+1. a_5(6) (11 points): order 10^2, anywhere from 10 to 1,000.
+2. a_5(7) (12 points): order 10^3, anywhere from 100 to 10,000.
+3. a_6(6) (12 points): order 10 to 10^2, a multiple of 8 orbits counted with their sizes.
+4. a_6(7) (13 points): order 10^2, anywhere from 10 to 10,000.
+5. a_7(7) (14 points): order 10 to 10^2.
+6. a_6(8) (15 points): very few, between 1 and 50, since 6 x 8 is the first cell with excess 2.
+7. f(7,8): 16, with low confidence (15 is also plausible).
+Method: SAT model enumeration with blocking clauses on encoding A of small_cells_sat.py, with the
+cardinality fixed to f(h,m) and every model rechecked by verify_narrow.collision. Second method: a
+separately written column-by-column search with its own rectangle list, pruned by the known values
+of f on narrower grids. A count is recorded as established only if both agree.
+
+## Outcomes for the remaining table counts (2026-10-17)
+
+a_5(6) = 76 (guess 10..1,000, right order), a_5(7) = 1,184 (guess 100..10,000, right), a_6(6) = 160 (guess
+10..100, a bit above), a_6(7) = 2,536 (guess 10..10,000, right), a_7(7) = 7,300 (guess 10..100, WRONG by
+two orders), a_6(8) = 8 (guess 1..50, right). Each by two SAT encodings on different solvers and a
+column search without a solver; 7 x 7 also by a split SAT run. f(7,8) = 16 (guess 16, right): no valid
+17-point blackout by two split SAT runs, and 16 points are attained. The count a_7(8) = 18 comes from one
+method only; the second count was stopped before it finished. Data in jis/data/table_counts/.

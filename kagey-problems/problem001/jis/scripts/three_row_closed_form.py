@@ -28,14 +28,13 @@ import math
 import os
 import sys
 import time
+from pathlib import Path
 
 import sympy as sp
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(os.path.dirname(HERE), 'data')
-ARCHIVE = os.path.join(os.path.expanduser('~'), 'Downloads', 'Problem 001 Research 2026-10-16',
-                       'research_notes', 'Problem 001 structural improvements', 'three_row',
-                       'verification_results.json')
+ARCHIVE = Path(__file__).resolve().parent.parent / 'data' / 'three_row_reference' / 'three_row_classes.json'
 
 z = sp.symbols('z')
 

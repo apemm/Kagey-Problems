@@ -25,6 +25,7 @@ import sys
 import time
 from fractions import Fraction
 from itertools import combinations
+from pathlib import Path
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
@@ -32,10 +33,10 @@ DATA = os.path.join(os.path.dirname(HERE), 'data')
 sys.path.insert(0, ROOT)
 import verify_narrow  # noqa: E402
 
-ARCH = os.path.join(os.path.expanduser('~'), 'Downloads', 'Problem 001 Research 2026-10-16', 'research_notes')
-TRANSFER = os.path.join(ARCH, 'Problem 001 JIS research plan', 'math', 'three_row_transfer_matrix.json')
-RECUR = os.path.join(ARCH, 'Problem 001 JIS research plan', 'math', 'three_row_recurrence.json')
-COUNTS = os.path.join(ARCH, 'Problem 001 structural improvements', 'three_row', 'verification_results.json')
+REFERENCE = Path(__file__).resolve().parent.parent / 'data' / 'three_row_reference'
+TRANSFER = REFERENCE / 'three_row_transfer_matrix.json'
+RECUR = REFERENCE / 'three_row_recurrence.json'
+COUNTS = REFERENCE / 'three_row_classes.json'
 
 
 def transfer_counts(n):

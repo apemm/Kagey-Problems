@@ -19,12 +19,12 @@ import json
 import os
 import sys
 import time
+from pathlib import Path
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PROBLEM = os.path.dirname(os.path.dirname(HERE))
 DATA = os.path.join(PROBLEM, 'jis', 'data')
-ARCHIVE = os.path.join(os.path.expanduser('~'), 'Downloads', 'Problem 001 Research 2026-10-16',
-                       'research_notes', 'Problem 001 structural improvements', 'four_row')
+MACHINE_DIR = Path(__file__).resolve().parent.parent / 'data' / 'four_row_machines'
 MACHINES = {'{1,2}|{3,4}': 'machine_56910.json',
             '{1,3}|{2,4}': 'machine_36912.json',
             '{1,4}|{2,3}': 'machine_351012.json'}
@@ -34,7 +34,7 @@ PARTITION_ROWS = {'{1,2}|{3,4}': ((0, 1), (2, 3)),
 
 
 def load_machine(name):
-    with open(os.path.join(ARCHIVE, MACHINES[name])) as f:
+    with open(MACHINE_DIR / MACHINES[name]) as f:
         m = json.load(f)
     alphabet = m['alphabet']
     left, right = PARTITION_ROWS[name]

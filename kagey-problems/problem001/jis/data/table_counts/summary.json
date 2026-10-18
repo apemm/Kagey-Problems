@@ -1,0 +1,17 @@
+{
+  "description": "Numbers of maximum blackouts a_h(m) for the small table cells, and f(7,8). Each value is established only when separately written programs agree. Coordinates and definitions as in the paper.",
+  "methods": {
+    "sat": "table_counts_sat.py: SAT model enumeration with blocking clauses, one clause per minimal difference set, Glucose 4; every model checked by verify_narrow.collision",
+    "sat2": "table_counts_sat2.py: a separately written SAT encoding on MiniSat 2.2; 'split' runs split the search by the first column",
+    "search": "table_counts_search.py: a column-by-column search with its own rectangle list, no SAT solver"
+  },
+  "results": [
+    {"grid": "5x6", "f": 11, "a": 76, "agree": ["sat", "sat2", "search"]},
+    {"grid": "5x7", "f": 12, "a": 1184, "agree": ["sat", "sat2", "search"]},
+    {"grid": "6x6", "f": 12, "a": 160, "agree": ["sat", "sat2", "search"]},
+    {"grid": "6x7", "f": 13, "a": 2536, "agree": ["sat", "sat2", "search"]},
+    {"grid": "6x8", "f": 15, "a": 8, "agree": ["sat", "sat2", "search"]},
+    {"grid": "7x7", "f": 14, "a": 7300, "agree": ["sat", "sat split", "sat2 split", "search (split by two columns)"]},
+    {"grid": "7x8", "f": 16, "a": 18, "f_status": "no valid blackout of 17 points by sat split and sat2 split; 16 points attained", "a_status": "one method only (sat2 split); the second count did not finish"}
+  ]
+}
