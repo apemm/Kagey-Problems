@@ -30,6 +30,6 @@ corners.
   has at most 10 edges. The 8 optima (one D4 orbit) are computational.
 - Upper bound: max blackout <= m+floor(n^2/4) for m>=3, and the transposed bound when n>=3.
   Proof: the row-column incidence graph has no C4 or C6, then Mantel.
-- Proofs in `paper/narrow_rows.tex`; checks in `verify_narrow.py`.
+- Proofs in `jis/pemmasani.tex` (the paper); checks in `verify_narrow.py` and `jis/scripts`.
 - Still open: classifying and counting optima beyond strips; Excess-1 when both dimensions are
   >= 5, beyond 5 x 5; comparing the incidence-graph formulation with the literature.
