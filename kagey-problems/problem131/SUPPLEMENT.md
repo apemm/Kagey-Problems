@@ -269,8 +269,9 @@ The Lean 4 proofs are in `lean/`, one library for each of Papers A to D (`lean/P
 `lean/PaperD` also covers Paper F, with the statement numbers from before the split. The command
 `python -B lean/verify_lean.py` builds them with Lake and checks that every theorem and lemma uses
 only the axioms `propext`, `Classical.choice` and `Quot.sound`. The recorded run on October 16, 2026,
-checked 1257 declarations for Paper A, 307 for Paper B, 346 for Paper C (with Paper E) and 281 for
-Paper D (with Paper F). The build output, source hashes and axioms are in `lean/build-log.txt` and
+checked 1257 declarations for Paper A, 307 for Paper B and 346 for Paper C (with Paper E). The run
+on October 18, 2026, checked 21591 for Paper D (with Paper F), of which 20517 are steps of the
+generated certificates for 101 <= N <= 2000 and 163 are for Paper F. The build output, source hashes and axioms are in `lean/build-log.txt` and
 `lean/verification-manifest.json`. The Paper A library has 55 modules (including the root), with
 22 linter warnings and no unexpected axioms. Every source hash matches the current Lean files.
 
@@ -278,10 +279,12 @@ The file `lean/README.md` summarizes coverage. The files `lean/PaperA/MAP.md` th
 `lean/PaperD/MAP.md` map covered statements to Lean declarations and list partial coverage and
 omissions. The C map uses the numbers from October 9, 2026. The D map uses the numbers of Paper D
 from October 17, 2026, and for Paper F those from before the split. Both explain where the
-statements of Papers E and F moved. For Paper D only selected finite statements are formalized,
-and the principal analytic and shape results are not formalized end to end. The 136 declarations
-named in `lean/PaperD/MAP.md` include 85 for Paper F and many support lemmas, so they are not 136
-theorems of Paper D.
+statements of Papers E and F moved. For Paper D, Lean proves Theorem 1.1 as stated, Lemmas 3.1
+to 3.4, Proposition 3.7 for every even N >= 8, the sign chain of Section 3.5, Propositions 3.24
+and 3.26, Appendices A and D and Lemma B.3, all checked by the kernel with no `native_decide`.
+The bulk (Theorems 3.8 and 3.9, Lemma 3.10 and what rests on them) is not formalized, and
+Theorem 3.21 is proved only from Steps 1 to 3 of its proof as hypotheses. `lean/PaperD/MAP.md`
+gives the status of every statement.
 
 For Paper A, every numbered result is formalized in Lean except the Mehler-Heine limit for real
 parameters in Remark 4.7, which the paper cites. Lean proves that limit for nonnegative integer

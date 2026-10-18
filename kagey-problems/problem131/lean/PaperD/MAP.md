@@ -1,42 +1,241 @@
-# Paper D: map from the research notes to the Lean proofs
+# Paper D: map from the paper and the research notes to the Lean proofs
 
 Paper D is `paperD/problem131_memory.tex`, "The center and the ends of the elephant random walk
-with rare reversals" (before October 17, 2026 it was titled "Endpoint crossings for the elephant
-random walk"). The tables cite the statement labels of the 4 research notes D1 to D4. For D1 and D2
-the column Paper gives the number in the shortened build of October 17, 2026, which moved some
-results to Online Resource 1 (`paperD/online_resource.tex`, numbers S1.1 and so on), for example
-D1 S9 is Proposition 2.3 and D2 Theorem 1 is Theorem 3.5. For D3 and D4, which are now Paper F, it gives
-the number in Paper D before the split of October 13, 2026 (for example D3 Prop 1 was Proposition
-4.1 and D4 Prop 9 was Proposition 5.1), and the note at the end says how these numbers moved. The
-sections "Renumbering of October 17, 2026" and "Online Resource 1" below list the D1 and D2
-numbers that changed. "Not in
-the paper" marks results of the notes that the paper does not state. The Lean
-library is `PaperD` (root `PaperD.lean` and 16 modules in `PaperD/`, so 17 modules in all,
-namespace `Kagey131.PaperD`),
-built against Lean 4 v4.33.1 and Mathlib v4.33.1.
+with rare reversals". The first table below lists every numbered statement of the paper by its
+label, with its number in a fresh build of the paper of October 17, 2026 (Online Resource 1 has
+the numbers S1.1 and so on). The later tables cite the statement labels of the
+4 research notes D1 to D4, as before. For D3 and D4, which are now Paper F, the column Paper gives
+the number in Paper D before the split of October 13, 2026, and the note at the end says how these
+numbers moved.
 
-The tables name 136 Lean declarations. Of these, 51 are in the tables D1 and D2 (Paper D) and 85 in
-the tables D3 and D4 (Paper F), and many are support lemmas. So 136 is not the number of Paper D
-theorems that are formalized. The recorded audit of October 16, 2026
-(`../verification-manifest.json` and `../build-log.txt`, whose source hashes match the current
-files) covers all 281 theorem and lemma declarations of the 17 `PaperD` modules. It found no
-`sorry`, `admit` or new axioms, and `#print axioms` reports only `propext`, `Classical.choice`
-and `Quot.sound`. Lean was not rebuilt for the shortened build of October 17, which changed no
-Lean file. A clean build of the 17 `PaperD` modules takes about 2.5 minutes (Mathlib cached).
+The Lean library is `PaperD`: the root `PaperD.lean` and 145 modules in `PaperD/`, so 146 modules
+in all, in namespace `Kagey131.PaperD` (tracks T2 and T8 in `Kagey131.PaperD.RRT`, track T5 in
+`Kagey131.PaperD.T5`, track T7 in `Kagey131.PaperD.T7`). It is built against Lean 4 v4.33.1 and
+Mathlib v4.33.1. The 22 modules of September and early October 2026 are unchanged. On October 17,
+2026 the tracks T1 to T8 were integrated (sign chain, random recursive tree, first flip and lower
+bound, upper bound, certificate checker, crossing analysis, kernel-checked certificates for
+`101 ≤ N ≤ 2000`, relabeling in Lemma 3.2), and two modules compose them, `EndToEnd` (no
+certificates) and `EndToEnd_Cert` (with the certificates of T5 and T7). Every theorem of the
+library is checked by the kernel and depends only on `propext`, `Classical.choice` and
+`Quot.sound`. No module uses `native_decide`.
 
-Coverage of Paper D. Selected finite statements are formalized. They are the finite
-correspondence between sign words and the count chain (Lemma 2.2), the strict monotonicity of
-every bin relative to the end and the unique crossing (Proposition 2.3), the derivative
-`C_n'(0) = 4/(n+2)` (Proposition 2.5(b)), unimodality with a fixed first step (Lemma 3.4) and the
-two inequalities for the end and its neighbor (Theorem 3.5). The conclusion that the law is not
-unimodal at the crossing (`not_unimodal_at_crossing`, Corollary 3.6) keeps the endpoint dip as a
-hypothesis, and the proof that the dip holds for every even `n >= 8` (Proposition 3.7) is not
-formalized. The subtree identities are proved for the Pólya chain `stLaw`, and its identification
-with the subtree of a random recursive tree (Lemma 3.1) is not formalized. The principal analytic
-and shape results are not formalized end to end. These are the bounds on the center (Theorem 2.6),
-the crossing asymptotics, the compound Poisson and Landau results, the sign pattern of the second
-difference and the convexity and center results of Section 3.5. The Python and Arb certificates
-(`paperD/certify_*.py`) are separate from Lean.
+### Declaration count
+
+The library has 21591 `theorem` and `lemma` declarations (the count of `verify_lean.py`, which
+checks that it equals the set of theorems Lean finds). They split as follows.
+
+* 20517 in the 69 generated certificate modules `T7_Gen_*` (for each `N` with `101 ≤ N ≤ 2000`,
+  the checked runs, their links and the per-`N` results `cvxN`, `cenN`). These are steps of a
+  computation, not results.
+* 101 in the other T7 modules (the packed arithmetic, its soundness and the aggregates).
+* 163 in the Paper F modules `HeavyRuns`, `Aging`, `AgingExact`, `AgingCrossing`, `AgingSmall`,
+  `AgingAveraging`, `AgingSwitches`, `BetaBinomial` (notes D3 and D4).
+* 810 in the remaining Paper D modules, most of them support lemmas. The table "Paper D by
+  statement label" below names the main ones.
+
+## Build of October 17 and 18, 2026
+
+* A clean `lake build PaperD` (the PaperD outputs deleted first, Mathlib reused) completes with
+  8852 jobs, no errors and no warnings. The root imports every module, so this checks the
+  whole library. The 69 modules `T7_Gen_*` take 1 to 4 minutes each and need a few GB of memory
+  each, so at most 7 of them were elaborated at once (on 24 cores and 32 GB, 1946 s of wall time, after a first attempt with no limit had run out of memory).
+* `python -B verify_lean.py PaperD` in `problem131/lean` (workspace `~/lean-work/paperD`) builds
+  the library again from the repository copy, runs `#print axioms` on all 21591 declarations and
+  finds only `propext`, `Classical.choice` and `Quot.sound` (`build-log.txt`,
+  `verification-manifest.json`).
+* `axioms-final.lean` (output `axioms-final.log`, in the project root of `paperD-next`) runs
+  `#print axioms` on 499 named declarations, every main theorem of every track and every
+  name in this file. All depend only on the three standard axioms or a subset of them (for
+  example `logTab_spec` and `logTab_least` use only `propext`).
+* A scan of the sources with comments and strings removed finds no `sorry`, `admit`, `axiom`,
+  `native_decide`, `ofReduceBool`, `implemented_by`, `extern` or `opaque`. The only
+  metaprogram is the term elaborator `t7val%` of `T7_Eval` (see the section on T7). There is no
+  `private` theorem (`choose_succ_real` in `T2_UrnClosed` was made public so that the verifier
+  can print its axioms).
+* The 89 `*_Native` modules of track T5 (`native_decide` runs for `N > 100`) and
+  `EndToEnd_Native` were removed. Their statements are proved in the kernel by T7 and
+  `EndToEnd_Cert`, under the same names (`prop_dip_hyp`, `one_point_at_crossing`,
+  `center_min_at_crossing`, `lem_center_convex_at_crossing`, `center_small_at_crossing`,
+  `convex_certified`, `centerBelowTopAtTwoDiv_cert`), and `T7.convexBetweenHumps_5_2000`,
+  `T7.centerUniqueMin_8_2000`, `T7.dipHyp_8_2000`, `T7.dipHyp_crossing_8_2000`,
+  `T7.onePointHyps_8_2000` replace the `T5.` theorems of the same names.
+* Name clashes between the tracks were resolved by renaming. In track T3, `hitV`,
+  `center_first_flip`, `hitV_ge_pi` and `sum_pi` are now `hitVc`, `center_first_flip_Icc`,
+  `hitVc_ge_piW` and `sum_piW` (track T4 keeps the original names). In track T2,
+  `stLaw_closed` and `stLaw_mean` are now `stLaw_closed_choose` and `stLaw_mean_succ` (track T3
+  keeps the original names).
+* `T1_All`, `T2_All`, `T4_All`, `T5_Kernel` and `T7_Kernel_All` are aggregates (`T4_All` no
+  longer imports the root). `T4_MAP.md` is the coverage table of track T4 and is superseded by
+  this file. In the docstrings of track T4, "Lemma A.3" and "Lemma A.5" are the numbers before
+  October 17. They are now Lemma A.2 (`lem:A-compare`) and Lemma A.3 (`lem:A-cderiv`).
+* `T6Bridge/T6_PaperABridge.lean` (in the development workspace `paperD-next`, not in the
+  repository) is outside the lake library, because the lakefile does not require Paper A.
+  `T6Bridge/check.sh` checks it against Paper D and the built library of Paper A. Its output
+  reports only the three standard axioms for `crossing_equation` (Paper A), `paperA_prop38`,
+  `markov_isBigO_persistent` and `thm_erw_markov_persistent`.
+
+## Paper D by statement label
+
+Status. "Kernel" means proved without hypotheses beyond those of the paper and checked by the
+kernel. "Kernel, hypotheses ..." means proved with the named hypotheses of the next section.
+"Not formalized" means that no Lean statement exists. Throughout, `N = 2h` for even `N`, and Lean
+indexes the count chain by the number of steps.
+
+| Label | No. | Statement | Lean | Status |
+|---|---|---|---|---|
+| `thm:main-center` | 1.1 | (a) crossing; (b) the two bounds on `C_N`; (c) `x_N` asymptotics | (a) as `prop:mlr`; (b) `thm_erw_bounds_a`, `thm_erw_bounds_b`; (c) `thm_erw_crossing_a_G`, `thm_erw_crossing_b` | kernel |
+| `thm:main-bulk` | 1.2 | compound Poisson bulk, Landau limit, modes | none | not formalized |
+| `thm:main-shape` | 1.3 | (a) five blocks; (b) dip at the crossing for even `N ≥ 8`, `f_N` unimodal; (c) large `N`; (d) `10 ≤ N ≤ 2000` | (a) `five_blocks_signPattern`; (b) `prop_dip_hyp`, `law_isUnimodal`; (c) see `thm:convex-large`, `cor:unique-min`; (d) `convex_certified`, `center_small_at_crossing` | (a) kernel; (b) kernel; (c) not formalized (finite part kernel, hypotheses H6 to H8); (d) kernel |
+| `def:erw` | 2.1 | the walk | `stepProb`, `ewProb`, `ewBin`, `sum_ewProb` | kernel (definition) |
+| `lem:erw-reduction` | 2.2 | `M` is a Markov chain, `P_N(k) = ½[f_N(N-k)+f_N(k)]`, `E_N` | `sum_plus_ewProb`, `sum_minus_ewProb`, `ewBin_eq`, `ewBin_center`, `ewBin_top`; the process statement `RRT.rrt_path_law` | kernel |
+| `prop:mlr` | 2.3 | monotone likelihood ratio, unique crossing `ε_N < ½`, `C_N ≥ 2E_N` for `ε ≥ ½` | `law_ratio_strictMonoOn`, `ewBin_ratio_strictMonoOn`, `crossing_exists_unique`, `center_crossing_exists_unique`, `ewBin_ge_two_top`; the crossing as a function `crossingEps`, `crossingEps_spec` | kernel |
+| `lem:urn` | 2.4 | closed form of `β_v`, support, monotone, mean `N/v`, the two sums | `urn_binomial`, `urn_support`, `urn_antitone`, `urn_mean`, `urn_mass_N`, `subtreeCount_eq`, `subtreeCountW_eq`; also `stLaw_closed_paper`, `stLaw_antitone`, `stLaw_mean_succ` (T2) | kernel (the mean by telescoping, not by the martingale) |
+| `prop:first-mutation` | 2.5 | (a) first-flip decomposition; (b) `C_N(0) = 0`, `V_{t+1}(1) = π_t` at `0`, `C_N'(0) = 4/(N+2)`; (c) `∑ w_t t = 3 - 6/(h+2)`, `w_t ≤ 2t2^{-t}` | (a) `center_first_flip` (T4), `center_first_flip_Icc` (T3); (b) `center_poly_and_deriv`, `hitV_zero_eq_pi`, `center_deriv_eq_sum_hit`, `center_hasDerivAt`; (c) `weights_mean`, `sum_w_mul`, `weight_le`, `w_le`, `weights_sum_one` | kernel |
+| `thm:erw-bounds` | 2.6 | (a) lower bound; (b) upper bound with `5200`; the logarithmic display | `thm_erw_bounds_a`, `center_lower`, `center_lower_bound_even` (T3); `thm_erw_bounds_b`, `center_upper_all` (every even `N ≥ 2`); `thm_erw_bounds_in_particular` | kernel. The 60-term series is bounded in Lean by exact partial sums (`seriesBound_holds`, value at most `102.635`), so no ball arithmetic enters. |
+| `thm:erw-crossing` | 2.7 | (a) `x_N + log x_N = Λ_N + O(L²/N)`, `x_N = g_N + O(L²/N)`; (b) `x_N = 2L - log L - log 16 + O(log L/L)` | `thm_erw_crossing_a_G`, `thm_erw_crossing_a_g`, `thm_erw_crossing_b`; explicit form `crossing_explicit` for `log N ≥ 30`; equation (*) `star_bound`, Step 2 `crossing_trap` | kernel (explicit constants 20824, 20824, 7; the explicit form needs `log N ≥ 30` in place of the paper's `400L(1+L) ≤ N`) |
+| `thm:erw-markov` | 2.8 | `Υ_N = c_*/log N + O(log log N/log² N)` | `thm_erw_markov` (hypothesis H1 for `z`); `thm_erw_markov_persistent` for Paper A's `z_N = N(1-p_N)` in `T6Bridge/T6_PaperABridge.lean` | kernel, outside the lake library for the persistent walk; inside the library with hypothesis H1 |
+| `lem:tree` | 3.1 | tree and marks, `X_v = X_1(-1)^{σ(v)}`, `M_N` = odd vertices, forced marks give `M^{[k_0]}` | `RRT.rrt_word_law`, `RRT.rrt_bin_law`, `RRT.rrt_oddCount_law`, `RRT.rrt_forced_path_law`, `RRT.rrt_path_law` | kernel (the whole process, not one time) |
+| `lem:split` | 3.2 | given `𝒯_v = S`, the two restrictions are independent random recursive trees | `RRT.split_relabel` (the lemma), `RRT.split_relabel_marked` (with independent marks), `RRT.split_relabel_point`, `RRT.split_famSet_prob`, `RRT.relabel_eq_iff` (T8); the parent-choice form `RRT.famSet_eq_iff`, `RRT.treeProb_box`, `RRT.split_law`, `RRT.split_cond` (T2) | kernel (Lemma 3.3 is proved without it) |
+| `lem:firstmark` | 3.3 | law of `(V, |𝒯_V|)` and the formula for `f_N(m)` | `RRT.rrt_firstMark_joint_const`, `RRT.rrt_firstFlip_joint` (joint law with `Y`, `Z`, stronger), `RRT.rrt_fN_decomp`, `RRT.rrt_famD_law` | kernel (by induction on `N`, not through Lemma 3.2) |
+| `lem:unimodal` | 3.4 | `f_N` unimodal | `law_unimodal_delta`, `law_isUnimodal` | kernel (cited from GLRS 2025, also proved) |
+| `thm:dip` | 3.5 | `x/(2(1-ε)) < ρ_1 ≤ …` | `endpoint_dip`, `endpoint_below_neighbour`, `endpoint_ratio_upper`, `endpoint_above_neighbour` | kernel |
+| `cor:dip` | 3.6 | dip at the crossing if `x_N ≥ 2(1-ε_N)` | `not_unimodal_at_crossing`, `even_dip_of_le` | kernel (the hypothesis is the paper's) |
+| `prop:dip-hyp` | 3.7 | `C_N < E_N` at `2/(N+2)` for every even `N ≥ 8`, the dip, and failure for `N = 2, 4, 6` | `prop_dip_hyp` (all even `N ≥ 8`); `dip_hyp_kernel` (`8 ≤ N ≤ 200` and `N ≥ 1688`); `dip_hyp_exact`, `dip_hyp_large_holds`, `dip_of_center_lt_top`, `dip_hyp_fails_small`, `ewBin_ratio_two` to `ewBin_ratio_eight`, `ratio_eight`, `crossing_eight_dip`; `T7.dipHyp_crossing_8_2000` | kernel: exact integer recursion for `8 ≤ N ≤ 200`, Theorem 2.6(b) for `N ≥ 1688`, certificates of T7 for `200 < N < 1688`; `dip_hyp_of_mid` is the composition with that range as hypothesis H2 |
+| `thm:cp` | 3.8 | compound Poisson bulk | none | not formalized |
+| `thm:landau` | 3.9 | Landau limit | none | not formalized |
+| `lem:landau-mode` | 3.10 | mode of `f_L` (computer-assisted, Arb) | none | not formalized |
+| `cor:mode-location` | 3.11 | where the modes are | none | not formalized |
+| `rem:bulk` | 3.12 | numerics | none | not applicable |
+| `def:convex` | 3.13 | convex between the humps | `T5.ConvexBetweenHumps` (every crossing in `(0,1)`, every mode `a* ≥ N/2`) | definition |
+| `conj:convex` | 3.14 | `N > 2000` | none | open |
+| `lem:D-rec` | 3.15 | the recurrences for `P_t`, `D_t`, the symmetries, the same for `f_t` | `lawZ_succ`, `D_succ`, `lawZ_symm`, `D_symm`; for `f_t` `fZ_succ`, `Df_succ` | kernel |
+| `lem:interleave` | 3.16 | `sp(w) = sp(ζ)`, `sp(η) ⪯ sp(ζ)` | `interleave_signPattern`, `step_signPattern_sublist`, `HasMPMPM.of_step` | kernel, for `n ≥ 1` (the case `n = 0` is trivial and excluded) |
+| `lem:level-one` | 3.17 | `sp(s_2, …, s_{t_1}) ⪯ Π_3`; `s_3`, `s_4` not both zero | `level_one`, `level_one_signPattern`, `sEdge_three_four`; for `f` `level_one_f`, `level_one_f_signPattern` | kernel |
+| `thm:five-blocks` | 3.18 | five blocks for `P_N` and `f_N` | `five_blocks`, `five_blocks_signPattern`; `five_blocks_f`, `five_blocks_f_signPattern` | kernel (for `f_N` from `N ≥ 2`) |
+| `thm:no-holes` | 3.19 | no holes | `no_holes` | kernel |
+| `cor:one-point` | 3.20 | one inequality is enough, two branches | branch `P_N(0) < P_N(1)`: `one_point`, `one_point_of_hx`; branch `x = x_N`, even `N ≥ 8`: `one_point_at_crossing`, `one_point_at_crossing_of` | kernel (both branches; the second uses Proposition 3.7) |
+| `thm:convex-large` | 3.21 | convex between the humps for large even `N` | Step 4 and the appeal to 3.20: `convex_of_halfway`, `exists_convex_point`, `concave_chord` | kernel, hypotheses H6 to H8 (Steps 1 to 3); not formalized end to end |
+| `lem:center-convex` | 3.22 | the center from convexity | `lem_center_convex_at_crossing` (paper's hypotheses, every even `N ≥ 8`), `lem_center_convex_at_crossing_of`, `center_min_at_crossing`, `ewBin_center_min_of_convex`, `center_min_of_convex_five_blocks` | kernel; the convexity is the lemma's own hypothesis |
+| `cor:unique-min` | 3.23 | center unique interior minimum for large even `N` | `ewBin_center_min_of_halfway` (finite part); `center_small_at_crossing` for `8 ≤ N ≤ 2000` | not formalized for large `N` (kernel with H6 to H8); kernel for `8 ≤ N ≤ 2000` |
+| `prop:convex-certified` | 3.24 | `10 ≤ N ≤ 2000`, even or odd | `convex_certified`, `T7.convexBetweenHumps_5_2000` (from `N = 5`), `T7.kernel_convexBetweenHumps_10_2000`; soundness `T5.convexBetweenHumps_of_check`, `T7.convex_of_runs` | kernel (T5 runs for `5 ≤ N ≤ 100`, T7 runs for `101 ≤ N ≤ 2000`; empty range at `N = 5`) |
+| `prop:odd` | 3.25 | crossing for odd `N`; (a) `C̃_N = (1-c/N)^{-1}C_{N+1}`; (b) asymptotics; (c) `x_N > 2` and the dip for odd `N ≥ 1689`; (d) convexity for large odd `N` | first paragraph `odd_crossing_exists_unique`; (a) `odd_center_succ`, `odd_central_eq`; (c) `odd_hx_large`, `odd_dip_large`, `odd_one_point_large`, `odd_hB_large`, `odd_center_le`; (d) `odd_convex_of_halfway` | first paragraph, (a) and (c) kernel ((a) multiplied out); (b) not formalized; (d) kernel with H6 to H8 |
+| `prop:center-small` | 3.26 | center for even `10 ≤ N ≤ 2000` | `center_small_at_crossing`, `T7.centerUniqueMin_8_2000`, `T7.kernel_center_min_at_crossing_8_2000`, `T7.onePointHyps_8_2000`; soundness `T5.centerUniqueMin_of_check`, `T7.center_of_runs` | kernel (from `N = 8`) |
+| `rem:convex-open` | 3.27 | what is open | the warning in the docstrings of `convex_of_halfway`, `ewBin_center_min_of_halfway` | not applicable |
+| `lem:A-polya` | A.1 | (a) `Φ^c` is a hitting probability; (b) one step; (c) pseudo-count form; (d) `V_s ≥ Φ^c_s` | (a) `phiU_up`, `phiU_stay`, and for `c = 0` `hitV_zero_eq_phiU`, `hit_zero_closed`; (b) `phiU_up`; (c) `upProb_pseudocount`; (d) `hitV_ge_phiU`, `hitV_ge_pi`, `phiU_sub_step` | kernel, except (a) for `c > 0`, whose probabilistic reading is not formalized (the proof uses only the recursion) |
+| `lem:A-compare` | A.2 | comparison with super- and subsolutions | (a) `hitV_le_of_super`; (b) `hitV_ge_of_sub` | kernel |
+| `lem:A-cderiv` | A.3 | `∂_τ log Φ^τ_s(b)` bound | `logPhi_deriv_lt`, with the digamma bounds `binetDigammaBounds_holds` | kernel |
+| `prop:A-super` | A.4 | (a) the step identity; (b) `log Δ_s`; (c) `V_{t+1}(1)` bound; (d) the center | (a) `prop_A4a`, `J_eq`, `step_eq_J`; (b) `super_step_Sg`, `delta_le`, `log_delta_le`; (c) `hitV_le_pi`; (d) `center_upper` | kernel ((c) with a weaker exponent that suffices) |
+| `lem:B-sandwich` | B.1 | monotone sandwich | none | not formalized |
+| `lem:B-tail` | B.2 | tail of `M^{[k_0]}` | none | not formalized |
+| `lem:B-D` | B.3 | the first flipped family | `lem_B_D_tree`, `lem_B_D_tree_tail` (tree model), `firstMark_bounds`, `firstMark_tail` (urn sum) | kernel |
+| `thm:B-local-lower` | B.4 | local lower bound | none | not formalized |
+| `lem:B-mode` | B.5 | mode bound | none | not formalized |
+| Appendix C | | proofs of 3.8 to 3.11 | none | not formalized |
+| Appendix D | | proofs of 3.16 to 3.19 | as in the rows of 3.16 to 3.19, with `Y_step`, `Yf_step`, `holes_step`, `dU_neg`, `dU_pos`, `fZ_diag_pos` | kernel |
+| Online Resource S1 to S3 | | second order, bridge, tail, odd `N` | `odd_center_le` (S3, first inequality of the proof of 3.25(c)) | not formalized otherwise |
+
+## Named hypotheses that remain
+
+No hypothesis of Theorem 2.6 remains. The hypotheses `CenterLowerBound`, `CenterUpperBound`,
+`CenterLowerBoundAt`, `CenterUpperBoundAt` and `CenterBoundsEventually` of track T6 are proved
+(`centerLowerBound_holds`, `centerUpperBound_holds`, `centerBoundsEventually_holds`), and so is
+the hypothesis `hB` of track T1 for odd `N ≥ 1689` (`odd_hB_large`). The ones left are these.
+
+* H1 `PaperAProp38 z` (Paper A, Proposition 3.8) in `thm_erw_markov`, `markov_isBigO`,
+  `markov_isBigO_ev`. Discharged for Paper A's crossing by `paperA_prop38` in
+  `T6Bridge/T6_PaperABridge.lean`. It would leave the library hypotheses once the lakefile
+  requires Paper A.
+* H2 `hmid : ∀ h, 101 ≤ h → h ≤ 843 → CenterBelowTopAtTwoDiv h` in `dip_hyp_of_mid` and
+  `dip_hyp`. Discharged in the kernel by the T7 certificates in `prop_dip_hyp`
+  (`EndToEnd_Cert`).
+* H3 `hB` for even `N` in `even_le_of_below_two_div` (`C_N < E_N` at `2/N`). It is an
+  intermediate form and is not needed any more, since `prop_dip_hyp` gives the conclusion.
+* H4 the dip condition `hx : 2(1-ε) ≤ 2hε` in `ewBin_center_min_of_one_point`,
+  `ewBin_center_min_of_convex`, `ewBin_center_min_of_halfway` and `one_point_of_hx`. At the
+  crossing it is discharged by `hx_at_crossing_of` with Proposition 3.7 (the theorems
+  `*_at_crossing`). It stays a hypothesis only for general `ε`.
+* H5 `CenterBelowTopAtTwoDiv h` in the kernel theorems `one_point_at_crossing_of`,
+  `center_min_at_crossing_of` and `lem_center_convex_at_crossing_of`. Discharged by
+  `dip_hyp_kernel` for `8 ≤ N ≤ 200` and `N ≥ 1688`, and by `prop_dip_hyp` for all even `N ≥ 8`.
+* H6 `hmode` (a mode `a* = N - m*`), H7 `hm` (`2m*+2 ≤ h`, or `2(2m+2) ≤ N`), H8 `hhalf`
+  (`P_N(m* + ⌊m*/2⌋) < P_N(m*)/2`) in `convex_of_halfway`, `ewBin_center_min_of_halfway` and
+  `odd_convex_of_halfway`. These are Steps 1 to 3 of Theorem 3.21. They need Theorem 3.9 (Landau
+  limit), Lemma 3.10 and Corollary 3.11, which are not formalized. At the crossing `hhalf` holds
+  only asymptotically (the ratio is about 0.8 to 0.9 for `N ≤ 3200`, Remark 3.27).
+* H9 `hD : 0 < D_N(2m*+1)` and `hm : 2m*+1 ≤ h` in `center_min_at_crossing` and
+  `ewBin_center_min_of_one_point`. These are the paper's inputs from Propositions 3.24 and 3.26
+  (discharged by T5 and T7 for `N ≤ 2000`, `T7.onePointHyps_8_2000`) or from Theorem 3.21 for
+  large `N` (open).
+* The intermediate premises `BinetDigammaBounds` and `SeriesBound` of track T4 are proved
+  (`binetDigammaBounds_holds`, `seriesBound_holds`) and do not appear in any headline theorem.
+
+## Certificates (tracks T5 and T7)
+
+There is no trust boundary left. Every theorem is checked by the kernel. The finite ranges of
+Propositions 3.7, 3.24 and 3.26 rest on certificate runs.
+
+* `N ≤ 100`: the list checker of T5 (`T5_Run`), evaluated by kernel reduction, at scale `2^80`
+  with the crossing brackets of `witnesses_convex_2026-10-17.jsonl` rounded outward. Soundness:
+  `T5.rows_sound`, `T5.convexBetweenHumps_of_check`, `T5.centerUniqueMin_of_check`,
+  `T5.onePointHyps_of_check`, `T5.dipHyp_of_checkCenter`.
+* `101 ≤ N ≤ 2000`: the packed checker of T7 (section "Track T7" below), evaluated by
+  `decide +kernel`.
+
+## Track T7: kernel-checked finite ranges up to `N = 2000`
+
+The modules `T7_Compute`, `T7_Digits`, `T7_Step`, `T7_Sound`, `T7_Final`, `T7_Eval`, the 69
+generated certificate modules `T7_Gen_<a>_<b>` (`101 ≤ N ≤ 2000`) and the aggregates `T7_All` and
+`T7_Kernel_All` replace the former `native_decide` runs of T5 by kernel evaluation
+(`decide +kernel`).
+
+* Arithmetic (`T7_Compute`). A row of the law at time `t` is stored as one natural number in base
+  `2^w` ("packed row"), as a lower row `X` and an upper row `Y`. One step of the forward recursion
+  acts on a whole row with a fixed number of big-number operations, which the kernel evaluates
+  with GMP. Coefficients are rounded down for `X` and up for `Y`.
+* Soundness (`T7_Digits`, `T7_Step`, `T7_Sound`). `Inv p ε t X Y` says that the digits of `X` and
+  `Y` enclose `2^s P_t` at `ε`. `step_inv`, `runFrom_inv` and `runOK_seg` prove that a checked
+  step, run or segment keeps `Inv` for every `ε ∈ [pl/q, ph/q]` (`q = 2^64`).
+* From runs to the paper (`T7_Final`). For each `N` two point runs at `pl/q` and `ph/q` bracket
+  the crossing (`bracket_of_runs`, through Proposition 2.3), and an interval run on the bracket
+  gives `convex_of_runs` (`T5.ConvexBetweenHumps N`), `center_of_runs` (`T5.CenterUniqueMin N`),
+  `dip_of_runs` (`C_N < E_N` at `2/(N+2)`) and `onePoint_of_runs`.
+* Certificates (`T7_Gen_*`, written by `t7gen.py` from the parameter table of `t7params.py`, which
+  takes the brackets of the T5 witness data). Each gives `cvxN` and, for even `N`, `cenN`.
+* Results (`T7_All`, `T7_Kernel_All`): `T7.convexBetweenHumps_5_2000`, `T7.centerUniqueMin_8_2000`,
+  `T7.dipHyp_8_2000`, `T7.dipHyp_crossing_8_2000`, `T7.onePointHyps_8_2000`, and
+  `T7.kernel_convexBetweenHumps_10_2000`, `T7.kernel_centerUniqueMin_8_2000`,
+  `T7.kernel_dipHyp_8_2000`, `T7.kernel_dipHyp_crossing_8_2000`, `T7.kernel_onePointHyps_8_2000`,
+  `T7.kernel_center_min_at_crossing_8_2000`, `T7.kernel_centerUniqueMin_8_2000'` (the last one
+  by composition through `ewBin_center_min_of_one_point`, independently of the center runs).
+* The elaborator `t7val%` (`T7_Eval`). For `N ≥ 1183` a run is split into segments. The rows at
+  the checkpoints are written into the file as numerals by `t7val% (fastRun …)`, which evaluates
+  compiled code (`evalExpr`) at elaboration time. Its output is untrusted data. Each checkpoint is
+  a `noncomputable def` whose value is the numeral, and every theorem that uses it is proved by
+  `decide +kernel` on `segOK`, which recomputes the segment from the previous checkpoint with the
+  kernel's own definition `runFrom` and compares both rows. A wrong numeral makes the kernel check
+  fail, so it cannot make a false statement provable, and `t7val%` adds no axiom.
+* Build. The 69 `T7_Gen_*` modules take about 1 to 4 minutes each (about 37 minutes with 7 in
+  parallel). `axioms-t7.lean` in `paperD-next` (formerly `PaperD/T7_Axioms.lean`) prints the
+  axioms of the T7 results.
+
+## Track T8: Lemma 3.2 in full
+
+`T8_RRTRelabel.lean` adds the relabeling step to the parent-choice form `RRT.split_cond` of
+`T2_RRTSplit.lean`. `relabel P m T` is the restriction of `T` to the vertices satisfying `P`,
+relabeled in increasing order (`relabel_eq_iff` characterizes it). `relabelIn S d T` is the tree on
+`S` relabeled to `{0, …, d-1}`, and `relabelOut S t d T` the tree on the complement.
+
+* `RRT.split_famSet_prob`: `P(𝒯_v = S) = (d-1)! (t-d)! a / t!`, positive (`split_famSet_prob_pos`).
+* `RRT.split_relabel_point`: the joint probability of `𝒯_v = S`, both relabeled trees and the
+  parent of `v` factors as `P(𝒯_v = S) · 1/(d-1)! · 1/(t-d)! · 1/a`.
+* `RRT.split_relabel` (Lemma 3.2): for all events `A₁`, `A₂`, `A₃`,
+  `P(𝒯_v = S, A₁(tree on S), A₂(tree off S), A₃(parent of v)) =
+  P(𝒯_v = S) · P_RRT(d)(A₁) · P_RRT(N-d)(A₂) · |A₃ ∩ [0,a)|/a`.
+* `RRT.split_relabel_marked`: the same with an event on the independent marks (the form used in
+  the proof of Lemma 3.3).
+
+Lean vertex `i` is the paper's vertex `i+1`, a tree on `t+1` vertices is `IncTree t`, and the
+paper's `v` is `a+1`.
 
 ## Models
 
@@ -124,56 +323,68 @@ the elephant walk, `law ε n` and `ewBin ε n` use the number of steps `n` direc
 | Prop 16(ii): uniform law at `c = 1` | Proposition 5.4 with `d = 2` and `θ = 1` (a special case, not stated separately) | `agBin_dls_one` | `BetaBinomial.lean` |
 | Prop 16(iii): ratio increasing in `c`, crossing exactly `1` | Proposition 5.4 with `d = 2` (equation (8), which the paper states for the center bin and Lean proves for every bin) | `dls_ratio_strictMonoOn`, `dls_crossing` | `BetaBinomial.lean` |
 
+## Additions of October 17, 2026 to the tables D1 and D2
+
+The rows above are those of October 16. The table "Paper D by statement label" supersedes them
+for Paper D. These note statements were formalized on October 17.
+
+| Note statement | Paper | Lean theorem(s) | File |
+|---|---|---|---|
+| D1 S3(a) (first-mutation decomposition) | Proposition 2.5(a) | `center_first_flip`, `center_first_flip_Icc`, `law_first_flip` | `T4_Hitting.lean`, `T3_FirstFlip.lean` |
+| D1 S3(c), first-order weights | Proposition 2.5(c) | `weights_mean`, `sum_w_mul`, `weight_le`, `w_le`, `weights_sum_one`, `piW_prod`, `piW_binomial` | `T3_FirstFlip.lean`, `T3_Weights.lean`, `T3_Urn.lean`, `T4_Lower.lean` |
+| D1 S5(a),(d) (Pólya(`c`) hitting function, comparison) | Lemma A.1, Lemma A.2 | `phiU_up`, `phiU_stay`, `hitV_zero_eq_phiU`, `hit_zero_closed`, `hitV_ge_phiU`, `hitV_le_of_super`, `hitV_ge_of_sub` | `T4_Polya.lean`, `T4_Hitting.lean`, `T4_Lower.lean`, `T3_CenterLower.lean` |
+| D1 S6 (supersolution bound) | Proposition A.4, Lemma A.3 | `prop_A4a`, `super_step_Sg`, `hitV_le_pi`, `center_upper`, `logPhi_deriv_lt`, `binetDigammaBounds_holds`, `seriesBound_holds` | `T4_Super.lean`, `T4_Upper.lean`, `T4_Digamma.lean`, `T4_Binet.lean`, `T4_Series.lean` |
+| D1 the two-sided bounds on the center | Theorem 2.6 | `thm_erw_bounds_a`, `thm_erw_bounds_b`, `thm_erw_bounds_in_particular` | `T4_Bounds.lean`, `T4_Main.lean` |
+| D1 S10 (the crossing `x_n`) | Theorem 2.7 | `thm_erw_crossing_a_G`, `thm_erw_crossing_a_g`, `thm_erw_crossing_b`, `crossing_explicit` | `EndToEnd.lean`, `T6_CrossingAsymp.lean` |
+| D1 S11 (comparison with Paper A) | Theorem 2.8 | `thm_erw_markov`, `markov_explicit`; `thm_erw_markov_persistent` | `EndToEnd.lean`, `T6_Markov.lean`, `T6Bridge/T6_PaperABridge.lean` |
+| D2 Lemma 2.3(1) to (4) (closed form, support, monotone, mean) | Lemma 2.4 | `urn_binomial`, `urn_support`, `urn_antitone`, `urn_mean` | `T3_Urn.lean`, `T2_UrnClosed.lean` |
+| D2 Lemmas 2.2, 2.4, 2.5 (tree and marks, splitting, first flip) | Lemmas 3.1, 3.2, 3.3 | `RRT.rrt_word_law`, `RRT.rrt_forced_path_law`, `RRT.split_cond`, `RRT.split_relabel`, `RRT.rrt_firstFlip_joint`, `RRT.rrt_fN_decomp` | `T2_RRT*.lean`, `T8_RRTRelabel.lean` |
+| D2 Lemma 3.3 for the tree | Lemma B.3 | `lem_B_D_tree`, `lem_B_D_tree_tail`, `RRT.rrt_famD_law` | `EndToEnd.lean`, `T2_RRTFirstD.lean` |
+| D2 the dip at the crossing for even `n ≥ 8` | Proposition 3.7 | `prop_dip_hyp`, `dip_hyp_kernel` | `EndToEnd_Cert.lean`, `EndToEnd.lean`, `T6_DipHypExact.lean`, `T6_DipHyp.lean` |
+| D2 shape (sign chain, convexity, center) | Section 3.5 | see the rows of 3.15 to 3.26 | `SignChain*.lean`, `CenterConvex.lean`, `T1_*.lean`, `T5_*.lean` |
+
 ## Not formalized, and why
 
-The asymptotic statements are out of scope. They need the Laplace method, stable and Gaussian
-local limit theorems, Bessel or Landau limits, and `o(1)` and `O(·)` error terms. They are the
-following.
+Paper D. The statements that are not formalized are the following.
 
-* D1 S8 (uniform asymptotic), S10 (the crossing `x_n`, Theorem 2.7 and Proposition S1.2), S11 (the
-  comparison with the crossing of Paper A, Theorem 2.8, where only the constants are checked),
-  S13 (limit `K₂`, which needs series over `t` and `u`, and which the paper no longer states), S14, S16 (heuristic),
-  S3(c) (limit weights `t 2^{-t-1}`, Lemma S1.5).
-* D2 Theorem 2 (compound Poisson bulk, Theorem 3.8 and Theorem 1.2(a)), Theorem 3 and
-  Corollaries 6.2, 6.3 (explicit but very long error terms, and the profile statements are
-  asymptotic, among them the tail of Theorem S2.1), Theorem 4 (Landau limit, Theorem 3.9 and
-  Theorem 1.2(b)), Theorem 5, Conjecture 5.1 (Conjecture 3.14), Heuristics H1, H1', H2, H3.
+* The bulk and the modes: Theorem 3.8 (compound Poisson), Theorem 3.9 (Landau limit),
+  Lemma 3.10 (mode of `f_L`, an Arb computation), Corollary 3.11, and so Theorem 1.2. They need
+  characteristic functions, Fourier inversion, the Efron and Stein inequality and a certified
+  enclosure of the Landau density.
+* Because of this, Theorem 3.21, Corollary 3.23 and Proposition 3.25(d) are formalized only in
+  their finite part, with Steps 1 to 3 as the hypotheses H6 to H8. Proposition 3.25(b) (the
+  crossing asymptotics for odd `N`) is not formalized.
+* Appendix B except Lemma B.3, Appendix C, and Online Resource 1 (Sections S1 to S3) except the
+  first inequality of the proof of Proposition 3.25(c).
+* The probabilistic reading of Lemma A.1(a) for `c > 0`. The proofs use only the recursion.
+* Conjecture 3.14 is open.
+
+The Python and Arb scripts (`paperD/certify_*.py`) are separate from Lean. The Lean checkers of
+tracks T5 and T7 do not run them. They take the crossing brackets from the witness files,
+rounded outward, and check them with checkers whose soundness is proved in Lean (section
+"Certificates" above).
+
+Papers F (the notes D3 and D4). The asymptotic statements are out of scope. They need the Laplace
+method, stable and Gaussian local limit theorems, Bessel limits, and `o(1)` and `O(·)` error
+terms. They are the following.
+
 * D3 Lemmas 3 to 5, Theorem 6 (Theorem 4.4), the asymptotic halves of Corollary 7 and
   Theorems 8, 9 (Theorems 4.7 and 4.8, including the local min/max test at `α_c`), Heuristics 10,
   11, Remarks 12, 13 (numerics, Remark 4.6).
 * D4 Theorem 4, Lemma 5, Theorems 6 and 8 (Beta limit, Kolmogorov rate, local limit, crossing
   expansion, which are Proposition 5.7 and the rest of Appendix E), the asymptotic half of
   Theorem 7 and of Corollary 12, Proposition 14(d), Statements 11 and 13 (heuristic or numerical).
-
-Some exact or finite statements are not formalized either.
-
-* D1 S3(a) (first-mutation decomposition, Proposition 2.5(a)), S4 (Duhamel identity),
-  S5(a),(b),(d) (Pólya(`c`) hitting functions, bridge, Lemma A.1), S6 (supersolution bound,
-  Proposition A.4), S7 (bridge product formula, Proposition S1.4), S12. These need the Pólya hitting function
-  `Φ^c` (Beta functions of real arguments), a comparison lemma for backward recursions, and
-  digamma bounds, which would be a separate project. The exact first
-  coefficient `c₁ = 4/(n+2)` of S3(b) is proved here by a different route (a first-order
-  recursion with invariant `n/(k(k+1))`), which does not need S3(a) or S5. The purely algebraic
-  identities of S2, S5(c), S6(a),(b) are proved (`ElephantAlgebra.lean`).
-* D1 S3(c), the moment identity `∑ w_t t = 3 - 6/(h+2)` of Proposition 2.5(c), was not
-  attempted.
-* D2 Lemmas 2.2, 2.4, 2.5 (tree and marks, splitting, first flip, Lemmas 3.1 to 3.3) and
-  Lemma 2.3(1)–(4) (the closed form `β_v(d) = C(n-d-1,v-2)/C(n-1,v-1)`, subtree tails, mean)
-  are not formalized, since there is no formal random recursive tree here. The subtree chain
-  `stLaw` is the Pólya-urn description that the note's proof of Lemma 2.3(1) starts from. Its
-  identification with the subtree of a uniform random recursive tree is taken from the note.
-  Lemma 2.3(5),(6) and Lemma 3.3 are proved for this chain.
-* D2 Lemmas 3.1, 3.2 and Remark 3.4 (tail bounds) were not attempted.
 * D3 Proposition 2 (the two-renewal representation, Proposition 4.2) is a known identity
   (Godrèche and Luck 2001, Section 7). A formal proof would need a composition model of the run
   walk, and it was not attempted.
-* The records interpretation of D4 Proposition 3 (Rényi) was not attempted.
-* Results that the paper gained in October 2026 are not in Lean. They are Proposition 3.7 and
-  Lemma 3.10 (computer-assisted, see `paperD/certify_center.py` and `paperD/certify_elephant.py`),
-  Lemma 3.22 (the center from convexity, new on October 17), Theorem 5.2 (the aging chain on `d`
-  states, now in Paper F) and Proposition 5.4 for `d ≥ 3` (now in Paper F). Theorems 1.1 to 1.3
-  collect results of Sections 2 and 3 and are covered only through the rows above (Theorem 1.1(a)
-  is Proposition 2.3, and Theorem 1.3(b) quotes Lemma 3.4).
+* The records interpretation of D4 Proposition 3 (Rényi) was not attempted. Theorem 5.2 (the
+  aging chain on `d` states) and Proposition 5.4 for `d ≥ 3` are not in Lean.
+
+The notes D1 and D2 also have statements that the paper no longer states or that are asymptotic.
+They are not formalized: D1 S4 (Duhamel identity), S7 (bridge product formula, Proposition S1.4),
+S8, S12, S13, S14, S16, the limit weights of S3(c) (Lemma S1.5), D2 Theorem 2 to Theorem 5,
+Corollaries 6.2 and 6.3, Conjecture 5.1, Heuristics H1, H1', H2, H3, Lemmas 3.1 and 3.2 of D2
+and Remark 3.4 (tail bounds).
 
 ## Renumbering of October 17, 2026
 
@@ -224,7 +435,8 @@ Lean counterpart except through the rows above, so no Lean theorem lost its plac
 
 ## Gaps and remarks found while formalizing
 
-No statement that was formalized turned out to be false. We record 4 points.
+No statement that was formalized turned out to be false. We record 4 points from October 16 and
+8 from October 17.
 
 * D1 S15(b) and the lower half of D2 Theorem 1. The inequality
   `P(A_n = n-1) ≥ x/(2(1-ε)) P(A_n = n)` holds, strictly, for every `n ≥ 2` and every
@@ -239,5 +451,27 @@ No statement that was formalized turned out to be false. We record 4 points.
 * D4 Proposition 10's conclusion for `n ≥ 6` depends on Theorem 7's lower bracket, which in turn
   depends on Proposition 2(b). Both are formalized, so Proposition 10 is proved for every even
   `n ≥ 4` without numerics.
+
+Points of October 17, 2026.
+
+* Theorem 2.6(b) holds for every even `N ≥ 2` (`center_upper_all`), not only `N ≥ 64`. The
+  60-term series is bounded by exact partial sums at most `102.635`, which is weaker than the
+  paper's `102.59` but enough for the constant `5200`.
+* The halfway inequality of Step 3 of Theorem 3.21 fails at the crossing for every tested `N`.
+  The ratio `P_N(v)/P_N(m*)` is 0.896, 0.868, 0.821 and 0.812 at `N = 100`, 400, 1600 and 3200,
+  as Remark 3.27 says (double precision, not a proof). The docstring of `convex_of_halfway` gives
+  an example away from the crossing where the hypothesis holds, so the theorem is not vacuous,
+  but at the crossing H8 holds only asymptotically.
+* Proposition 3.7 for `8 ≤ N ≤ 200` is proved by an exact integer recursion in the kernel
+  (`dipCheckZ_table`), so in that range no ball arithmetic and no compiled code is needed.
+* The explicit form of Theorem 2.7 in Lean (`crossing_explicit`) assumes `log N ≥ 30` in place of
+  the paper's `400L(1+L) ≤ N`. This changes only the threshold, not the asymptotic statements.
+* Lemma 3.3 holds in a stronger form. The joint law of `(V, |𝒯_V|, Y, Z)` factors
+  (`RRT.rrt_firstFlip_joint`), which gives the independence of `Y` and `Z` directly.
+* Corollary 3.20 does not need `a* ≥ N/2`. `one_point` takes any mode `a*`.
+* The second claim of Lemma 3.17 (`s_3` and `s_4` do not both vanish) holds for every real `ε`
+  (`sEdge_three_four`).
+* Propositions 3.24 and 3.26 hold from `N = 5` and from `N = 8` (`T7.convexBetweenHumps_5_2000`,
+  `T7.centerUniqueMin_8_2000`), not only from `N = 10`.
 
 Note of October 13, 2026. Heavy-tailed runs and aging walks (Sections 4 and 5 below) are now Paper F, where their statements are numbered 2.x and 3.x.
