@@ -7,14 +7,12 @@ corner lies in a third row.
 \begin{theorem}[strip theorem]\label{thm:strip}
 Let $m\ge3$.
 \begin{enumerate}[(a)]
-\item A blackout of the $2\times m$ strip is valid if and only if at most one of its
-columns is full.
+\item A blackout of the $2\times m$ strip is valid if and only if at most one of its columns is full.
 \item We have $f(2,m)=m+1$, and the maximum blackouts are those with one full column
 and one black point in every other column.
 \item There are $a_2(m)=m\cdot2^{m-1}$ maximum blackouts.
 \end{enumerate}
-For $m=2$ there is only one rectangle, so every blackout is valid, $f(2,2)=4$, and
-$a_2(2)=1$.
+For $m=2$ there is one rectangle, so $f(2,2)=4$ and $a_2(2)=1$.
 \end{theorem}
 
 \begin{proof}
@@ -36,12 +34,27 @@ Such blackouts are valid by (a).
 
 So row $2$ of \seqnum{A399580} is \seqnum{A001787}$(m)=m2^{m-1}$ from $m=3$ on.
 
-\begin{remark}[orbits]\label{rem:kings}
-Up to the row reflection and the column reversal, there are
-$o_m=m\,2^{m-3}+[m\text{ odd}]\,2^{(m-3)/2}$ maximum blackouts of the $2\times m$ strip for
-$m\ge3$, by Burnside's lemma. Only the identity, and for odd $m$ the reversal and the
-half turn, fix maximum blackouts. Each of the last two fixes $2^{(m-1)/2}$, with the full
-column in the middle. So $o_3,\ldots,o_8$ are $4,8,22,48,116,256$.
-These values agree with \seqnum{A322284}$(m-1)$ for $3\le m\le33$. That sequence counts
-the ways to place $m-1$ nonattacking kings on a $2\times(2m-2)$ board up to symmetry.
-\end{remark}
+\begin{proposition}[orbits and kings]\label{prop:kings}
+For $m\ge3$ the number $o_m$ of maximum blackouts of the $2\times m$ strip up to the row
+reflection and the column reversal is $m\,2^{m-3}+[m\text{ odd}]\,2^{(m-3)/2}$. It equals
+\seqnum{A322284}$(m-1)$, the number of ways to place $m-1$ nonattacking kings on a
+$2\times(2m-2)$ board up to the symmetries of the rectangle. So $o_3,\ldots,o_8$ are
+$4,8,22,48,116,256$.
+\end{proposition}
+
+\begin{proof}
+By Burnside's lemma $4o_m$ is $a_2(m)$ plus the numbers of optima fixed by the reflection,
+which is $0$ since it moves every singleton column, and by the reversal and the half turn. These fix none for even $m$, and
+$2^{(m-1)/2}$ each for odd $m$, with a central full column.
+
+Put $n=m-1$. An optimum is given by its full column $e$ and the rows $r_1,\ldots,r_n$ of its
+other black points, from left to right. Two kings attack exactly when their columns are
+equal or adjacent. So $n$ nonattacking kings on the $2\times2n$ board are given by columns
+$c_1<\cdots<c_n$ with $c_{j+1}\ge c_j+2$ and any rows $r_1,\ldots,r_n$. The $n+1$ gaps
+$c_1-1$, $c_{j+1}-c_j-2$ for $1\le j<n$, and $2n-c_n$ are nonnegative and sum to $1$. So
+exactly one of them is $1$, say the $e$th, and $c_j=2j-1+[j\ge e]$. Hence the kings at
+$(c_j,r_j)$ correspond bijectively to the optima. The reflection swaps the rows in both
+pictures. The reversal sends $e$ to $n+2-e$ and reverses the rows, and on the board it
+sends $c$ to $2n+1-c$, where $2n+1-c_{n+1-j}=2j-1+[j\ge n+2-e]$. So the bijection commutes
+with both actions, and the orbits correspond.
+\end{proof}

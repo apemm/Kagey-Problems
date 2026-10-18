@@ -1,4 +1,4 @@
-"""Difference-set table + preprocessing. OWNER: Arjun.
+r"""Difference-set table + preprocessing. OWNER: Arjun.
 
 difference_table(rects) -> list[frozenset]
     All pairwise symmetric differences C1 ^ C2 of corner sets, one per unordered pair.

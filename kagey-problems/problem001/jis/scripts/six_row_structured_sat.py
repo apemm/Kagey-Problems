@@ -28,7 +28,6 @@ output; zero-based inside. Usage: python six_row_structured_sat.py WIDTH A|B [CA
 import json
 import os
 import sys
-import threading
 import time
 from itertools import combinations
 
@@ -38,7 +37,7 @@ sys.path.insert(0, ROOT)
 
 import pysat
 from pysat.card import CardEnc, EncType
-from pysat.solvers import Solver
+from supervised_solver import solve_with_deadline
 
 from verify_narrow import axis_rectangles, collision, mask, rectangles
 
@@ -252,16 +251,9 @@ def collar_tests(pts, cols):
 
 
 def solve_capped(name, clauses, cap):
-    t0 = time.time()
-    with Solver(name=name, bootstrap_with=clauses) as s:
-        timer = threading.Timer(cap, s.interrupt)
-        timer.start()
-        try:
-            r = s.solve_limited(expect_interrupt=True)
-        finally:
-            timer.cancel()
-        model = s.get_model() if r else None
-    return ('SAT' if r else 'UNSAT' if r is False else 'unresolved'), model, time.time() - t0
+    """Solve with a wall-clock cap enforced by a supervising process (supervised_solver.py),
+    since CaDiCaL ignores Solver.interrupt(); a call that reaches the cap is unresolved."""
+    return solve_with_deadline(name, clauses, cap)
 
 
 def main():

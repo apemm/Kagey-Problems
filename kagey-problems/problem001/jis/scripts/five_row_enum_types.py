@@ -30,13 +30,12 @@ import argparse
 import json
 import os
 import sys
-import threading
 import time
 from itertools import combinations
 
 import pysat
 from pysat.card import CardEnc, EncType
-from pysat.solvers import Solver
+from supervised_solver import SupervisedSolver
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))
@@ -166,39 +165,35 @@ def main():
         'coordinates': 'one-based (column, row), (1,1) top-left',
         'models': [], 'complete': True, 'status': 'complete',
     }
-    with Solver(name=args.solver, bootstrap_with=clauses) as s:
-        timer = threading.Timer(max(1.0, deadline - time.time()), s.interrupt)
-        timer.start()
-        try:
-            while True:
-                if len(result['models']) >= args.cap:
-                    result['complete'] = False
-                    result['status'] = f'more than {args.cap} models; enumeration stopped at the cap'
-                    break
-                sat = s.solve_limited(expect_interrupt=True)
-                if sat is None:
-                    result['complete'] = False
-                    result['status'] = 'wall-clock limit reached; solver interrupted'
-                    break
-                if not sat:
-                    break
-                model = s.get_model()
-                truth = set(l for l in model if 0 < l <= nbase)
-                pts = []
-                chosen = []
-                for c in range(cols):
-                    ts = [t for t in range(len(TYPES)) if var(c, t) in truth]
-                    assert len(ts) == 1
-                    chosen.append(var(c, ts[0]))
-                    pts.extend((c, y) for y in TYPES[ts[0]])
-                pts.sort()
-                mask = sum(1 << (y * cols + x) for x, y in pts)
-                pair = verify_narrow.collision(rects, mask)
-                result['models'].append({'points': [[x + 1, y + 1] for x, y in pts],
-                                         'verify_narrow_valid': pair is None})
-                s.add_clause([-v for v in chosen])
-        finally:
-            timer.cancel()
+    # the solver runs in a worker process that is killed at the deadline (supervised_solver.py)
+    with SupervisedSolver(args.solver, bootstrap_with=clauses) as s:
+        while True:
+            if len(result['models']) >= args.cap:
+                result['complete'] = False
+                result['status'] = f'more than {args.cap} models; enumeration stopped at the cap'
+                break
+            sat = s.solve_limited(timeout=max(0.0, deadline - time.time()))
+            if sat is None:
+                result['complete'] = False
+                result['status'] = 'unresolved: wall-clock limit reached; solver process stopped'
+                break
+            if not sat:
+                break
+            model = s.get_model()
+            truth = set(l for l in model if 0 < l <= nbase)
+            pts = []
+            chosen = []
+            for c in range(cols):
+                ts = [t for t in range(len(TYPES)) if var(c, t) in truth]
+                assert len(ts) == 1
+                chosen.append(var(c, ts[0]))
+                pts.extend((c, y) for y in TYPES[ts[0]])
+            pts.sort()
+            mask = sum(1 << (y * cols + x) for x, y in pts)
+            pair = verify_narrow.collision(rects, mask)
+            result['models'].append({'points': [[x + 1, y + 1] for x, y in pts],
+                                     'verify_narrow_valid': pair is None})
+            s.add_clause([-v for v in chosen])
     result['model_count'] = len(result['models'])
     result['all_models_verified'] = all(m['verify_narrow_valid'] for m in result['models'])
     result['wall_seconds'] = round(time.time() - t0, 2)
