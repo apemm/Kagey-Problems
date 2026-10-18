@@ -270,10 +270,10 @@ The Lean 4 proofs are in `lean/`, one library for each of Papers A to D (`lean/P
 `python -B lean/verify_lean.py` builds them with Lake and checks that every theorem and lemma uses
 only the axioms `propext`, `Classical.choice` and `Quot.sound`. The recorded run on October 16, 2026,
 checked 1257 declarations for Paper A, 307 for Paper B and 346 for Paper C (with Paper E). The run
-on October 18, 2026, checked 22416 for Paper D (with Paper F), of which 20517 are steps of the
+on October 18, 2026, checked 22427 for Paper D (with Paper F), of which 20517 are steps of the
 generated certificates for 101 <= N <= 2000 and 163 are for Paper F, and 4 for the library
 `lean/PaperAD`, which joins the libraries of Papers A and D for Theorem 2.8 of Paper D. All
-24330 declarations passed. The build output, source hashes and axioms are in `lean/build-log.txt` and
+24341 declarations passed. The build output, source hashes and axioms are in `lean/build-log.txt` and
 `lean/verification-manifest.json`. The Paper A library has 55 modules (including the root), with
 22 linter warnings and no unexpected axioms. Every source hash matches the current Lean files.
 
