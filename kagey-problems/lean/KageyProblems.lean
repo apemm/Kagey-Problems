@@ -1,2 +1,7 @@
 import KageyProblems.Problem137
 import KageyProblems.Problem001
+import KageyProblems.Problem001.Foundations
+import KageyProblems.Problem001.Compute
+import KageyProblems.Problem001.RowBound
+import KageyProblems.Problem001.Kernel
+import KageyProblems.Problem001.Boards
