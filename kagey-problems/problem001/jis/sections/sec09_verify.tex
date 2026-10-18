@@ -1,31 +1,29 @@
 \section{Computations and verification}\label{sec:verify}
 
 The results that rest on a computation are labeled computer-assisted. Every other result in
-Sections~\ref{sec:conv} to~\ref{sec:height} has a written proof, unless a remark says that
-its proof is sketched or omitted. Only Remark~\ref{rem:fourmemory} of these is used later,
-in the design of a count. Every computed value and count comes from at least two programs
+Sections~\ref{sec:conv} to~\ref{sec:height} has a written proof. Every computed value and count comes from at least two programs
 written separately, which agree wherever both ran. Before most computations a prediction went
 into the ledger \nolinkurl{kagey-problems/problem001/data/ledger.md}, and several were wrong,
 among them
 $f(5,5)=9$, $f(4,8)=13$, $f(5,8)=13$, and $f(6,8)=14$.
 
 All programs are in Python~3.14.3. The ILP program \texttt{solver/engine.py} finds a smallest
-hitting set for the difference sets of Lemma~\ref{lem:diff} with CBC through
-PuLP~\cite{pulp}. It took $723$ seconds on the $5\times7$ grid and $1{,}063$ seconds on the
+hitting set for the difference sets of Lemma~\ref{lem:diff} with CBC~2.10.3~\cite{cbc}
+through PuLP~3.3.2~\cite{pulp}. It took $723$ seconds on the $5\times7$ grid and $1{,}063$ seconds on the
 $6\times6$ grid. The brute-force check \texttt{solver/brute.py} uses no lemma and shares no
 code with it. The verifier \texttt{verify\_narrow.py} checks the lemmas and constructions of
 Sections~\ref{sec:graph} to~\ref{sec:four} and the $5\times5$ grid in $21$ seconds. The
 blackouts of $h+m$ points on the grids $5\times6$, $5\times7$, $6\times6$, $6\times7$, and
 $7\times7$ are stored in \nolinkurl{jis/data/small_cells_sat_*.json}. The SAT solvers are
-CaDiCaL~1.5.3 and~1.9.5, Glucose~3, 4, and~4.2, MiniSat~2.2, MapleChrono, and Lingeling from
-pysat~1.9.dev15, and the algebra uses SymPy~1.14.
+CaDiCaL~1.5.3 and~1.9.5, Glucose~3, 4, and~4.2, MiniSat~2.2~\cite{een2004}, MapleChrono, and Lingeling from
+pysat~1.9.dev15~\cite{pysat2018}, and the algebra uses SymPy~1.14~\cite{sympy2017}.
 
 A SAT instance asks for a valid blackout of at least $k$ points, so by the observation after
 Corollary~\ref{cor:hitting} an unsatisfiable instance proves $f(h,m)<k$. Encoding A has a
 variable for each point and a clause ``not all black'' for each inclusion-minimal symmetric
-difference of two rectangles, with a sequential counter for the size. Encoding B has a clause
+difference of two rectangles, with a sequential counter~\cite{sinz2005} for the size. Encoding B has a clause
 for each pair of rectangles that share a corner and an indicator for each hidden rectangle, at
-most one of them true, with a totalizer for the size. The third encoding,
+most one of them true, with a totalizer~\cite{bailleux2003} for the size. The third encoding,
 \texttt{cells\_sat\_check.py}, is of type A but written from scratch. The structured encoders of
 Section~\ref{sec:five} add the column structure of Theorem~\ref{thm:equality} for one row
 partition and keep only the clauses that involve a tilted rectangle. The collar test boards of
@@ -33,16 +31,24 @@ Section~\ref{sec:five} are checked by three separately written enumerators, whic
 rectangle of the board and compare the presentations. The column searches use no solver. They place columns from left to right and stop
 when two rectangles inside the placed columns show the same points, which is sound since every
 interval of columns of a valid blackout is valid. We did not produce DRAT proofs, and rely on
-the agreement of independent encodings on different solvers.
+the agreement of independent encodings on different solvers. This matters only for
+$f(6,7)$, $f(7,7)$ and $f(6,8)$ in Theorem~\ref{thm:refute}(a) and for $m=14$ in
+Theorem~\ref{thm:sixrow}(a), since the other upper bounds also follow from proofs by hand or
+from exhaustive searches with no SAT solver.
 
 The scripts in \nolinkurl{jis/scripts} form five groups, by the prefixes
 \texttt{three\_row}, \texttt{four\_row}, \texttt{five\_row}, \texttt{six\_row}, and
 \texttt{small\_cells} or \texttt{cells}. The file \nolinkurl{jis/scripts/README.md} lists the
 scripts behind each computer-assisted result and the longest run of each, at most $1{,}578$
-seconds. Table~\ref{tab:values} collects the values, and the rectangle counts of the programs
-agree with \seqnum{A085582} and \seqnum{A289832}. The Lean~4 file
-\nolinkurl{Problem001.lean} in \nolinkurl{kagey-problems/lean/KageyProblems} formalizes
-Section~\ref{sec:conv} and the Strip Theorem with no \texttt{sorry}. Code and data are in the
+seconds. The counts of the optima on the grids $5\times6$ to $7\times7$ in Table~\ref{tab:values} come from two SAT encodings that list every optimum, on Glucose~4 and MiniSat~2.2, and from a column search, all three in the scripts \texttt{table\_counts\_*}. On the $7\times8$ grid no valid blackout of $17$ points exists, by two SAT runs split by the first column, so $f(7,8)=16$. One of them finds $18$ optima there, and the second count did not finish.
+Table~\ref{tab:values} collects the values, and the rectangle counts of the programs
+agree with \seqnum{A085582} and \seqnum{A289832}. Babichev and Babichev~\cite{babichev2026}
+count the rectangles of the square grid in near-linear time. The Lean~4 file
+\nolinkurl{Problem001.lean} in \nolinkurl{kagey-problems/lean/KageyProblems} checks
+Lemma~\ref{lem:diff}, Corollary~\ref{cor:hitting}, the fact that a valid blackout hides at
+most one rectangle, the fact that every rectangle on a strip is axis-aligned, and
+Theorem~\ref{thm:strip}, with no \texttt{sorry}. Lemma~\ref{lem:threecorners} and the
+results from Section~\ref{sec:graph} on are not formalized. Code and data are in the
 folder \nolinkurl{kagey-problems/problem001} of the repository~\cite{repo}.
 
 \begin{table}[!htb]
@@ -83,29 +89,31 @@ $4\times6$ & $10$ & $26$ & IB \\
 $4\times7$ & $11$ & $292$ & IB \\
 $4\times8$ & $12$ & $2{,}118$ & IMD \\
 $5\times5$ & $10$ & $8$ & IB \\
-$5\times6$ & $11$ & -- & IS \\
-$5\times7$ & $12$ & -- & IS \\
-$5\times8$ & $14$ & $4$ & SDC \\
-$5\times9$ & $15$ & $44$ & SC \\
+$5\times6$ & $11$ & $76$ & ISC \\
+$5\times7$ & $12$ & $1{,}184$ & ISC \\
+$5\times8$ & $14$ & $4$ & TSDC \\
+$5\times9$ & $15$ & $44$ & TSC \\
 \bottomrule
 \end{tabular}\hspace{1em}
 \begin{tabular}{@{}lrrl@{}}
 \toprule
 grid & $f$ & $a_h(m)$ & by \\
 \midrule
-$5\times10$ & $16$ & $350$ & SC \\
-$5\times11$ & $17$ & $3{,}004$ & SC \\
-$5\times12$ & $18$ & $24{,}706$ & SCM \\
-$6\times6$ & $12$ & -- & IS \\
-$6\times7$ & $13$ & -- & S \\
-$6\times8$ & $15$ & -- & S \\
-$6\times15$ & $24$ & -- & S \\
-$7\times7$ & $14$ & -- & S \\
+$5\times10$ & $16$ & $350$ & TSC \\
+$5\times11$ & $17$ & $3{,}004$ & TSC \\
+$5\times12$ & $18$ & $24{,}706$ & TSCM \\
+$6\times6$ & $12$ & $160$ & ISC \\
+$6\times7$ & $13$ & $2{,}536$ & SC \\
+$6\times8$ & $15$ & $8$ & SC \\
+$6\times15$ & $24$ & -- & TS \\
+$7\times7$ & $14$ & $7{,}300$ & SC \\
+$7\times8$ & $16$ & -- & S \\
 \bottomrule
 \end{tabular}
 \caption{Computed values for $h\le m$ and the methods that agree. H is by hand, T a theorem,
 I the ILP program (value only on $3\times10$, $4\times8$, $5\times6$, $5\times7$, and
 $6\times6$), B brute force, D every equality candidate, C a column search, S two SAT
-encodings, M a transfer counter, and a dash not computed.}
+encodings, M a transfer counter, and a dash not computed. For the counts, S and C enumerate every optimum.}
 \label{tab:values}
 \end{table}
+% TODO(author): A-number once approved (the square diagonal f(n,n) = 1, 4, 5, 7, 10, 12, 14).

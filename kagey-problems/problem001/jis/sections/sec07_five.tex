@@ -54,12 +54,16 @@ show $\{(-1,1),(-1,3)\}$.
 Let $S_8$ be the blackout of the $5\times8$ grid with $B_1=\{1,4\}$, $B_2=\{4,5\}$,
 $B_3=\{2,5\}$, $B_4=B_5=\{5\}$, $B_6=\{3,4\}$, $B_7=\{2,3\}$, and $B_8=\{1,2\}$. Its
 doubles carry the edges of $K_{2,3}$ between $\{2,4\}$ and $\{1,3,5\}$. With five more
-columns black in row $1$ it gives the $5\times13$ board below, rows $1$ to $5$, with \# for
-a black point.
-\begin{center}\footnotesize
-\texttt{\#......\#\#\#\#\#\#}\quad \texttt{..\#...\#\#.....}\quad
-\texttt{.....\#\#......}\quad \texttt{\#\#...\#.......}\quad \texttt{.\#\#\#\#........}
-\end{center}
+columns black in row $1$ it gives the $5\times13$ board of Figure~\ref{fig:boards}(a).
+
+\begin{figure}[htbp]
+\centering
+\input{figs/board13.tex}
+\par\medskip
+\input{figs/board16.tex}
+\caption{The $5\times13$ test board of $S_8$ in (a) and the blackout $S_{16}$ of the $6\times16$ grid in (b). Gray crossed circles are blacked out and white circles are visible, and rows are numbered from the top.}
+\label{fig:boards}
+\end{figure}
 
 \begin{theorem}[five rows, computer-assisted]\label{thm:fiverow}
 \begin{enumerate}[(a)]
@@ -74,7 +78,7 @@ reflection and the column reversal.
 \begin{proof}
 (b) The upper bound is Theorem~\ref{thm:rowbound}. Apply Theorem~\ref{thm:collar} to $S_8$
 with the padding row $1$ on the right. Since $W_5=5$, the test board is the $5\times13$
-board shown above. Three rectangle enumerators list its $954$
+board of Figure~\ref{fig:boards}(a). Three rectangle enumerators list its $954$
 rectangles and find no repeated presentation.
 
 (a) The lower bounds are $S_0$ of Theorem~\ref{thm:fivefive} below for $m=5$ and the stored
@@ -95,18 +99,12 @@ $299{,}349{,}210$, $1{,}653{,}637{,}492$, $8{,}828{,}301{,}226$, $45{,}743{,}165
 $230{,}934{,}909{,}328$, $1{,}139{,}486{,}126{,}866$, and $5{,}510{,}071{,}794{,}736$. The
 values for $m\le12$ come from two independent programs and the others from two exact transfer
 counters, all based on Theorem~\ref{thm:equality}. No proof uses them.
+% TODO(author): A-number once approved (the counts a_5(m) for m >= 8).
 \end{remark}
 
 \subsection{Six rows and small grids}
 
-Let $S_{16}$ be the blackout of the $6\times16$ grid whose rows $1$ to $6$ are shown below.
-\begin{center}\footnotesize
-\texttt{.\#...\#.........\#}\quad \texttt{..\#...........\#\#}\quad
-\texttt{\#............\#\#.}\\
-\texttt{.\#.......\#\#\#\#\#..}\quad \texttt{..\#.....\#\#......}\quad
-\texttt{\#..\#\#\#\#\#\#.......}
-\end{center}
-Its doubles, in the columns $1,2,3,6,9,10,14,15,16$, carry the edges of the complete bipartite
+Let $S_{16}$ be the blackout of the $6\times16$ grid in Figure~\ref{fig:boards}(b). Its doubles, in the columns $1,2,3,6,9,10,14,15,16$, carry the edges of the complete bipartite
 graph between $\{1,3,5\}$ and $\{2,4,6\}$.
 
 \begin{theorem}[six rows, computer-assisted]\label{thm:sixrow}
@@ -145,9 +143,13 @@ $(7,5)$, $(7,6)$, $(8,2)$, $(8,6)$ of the $6\times8$ grid attains the last value
 Section~\ref{sec:verify} on CaDiCaL and encoding B on Glucose and MiniSat find no valid
 blackout of $13$, $14$, $15$, or $16$ points on the $6\times6$, $6\times7$, $7\times7$, or
 $6\times8$ grid, respectively. A third encoding agrees on the last three, and the ILP program
-on the first.
+on the first. On the $7\times7$ and $6\times8$ grids the third encoding splits the search
+into cases by the first row with at least three black points.
 
-(b) This is Theorem~\ref{thm:fiverow}(b) and part (a).
+(b) The values are Theorem~\ref{thm:fiverow}(b) and part (a). The guess gives $13$ and $14$
+on these grids. The blackout $S_8$ has $14$ points and the blackout of part~(a) has $15$, and
+a check of their $364$ and $592$ rectangles shows that both are valid. So the guess fails,
+and this uses no solver.
 \end{proof}
 
 If a side is at most four, then $f(h,m)\le h+m$ by Sections~\ref{sec:strip}
@@ -192,7 +194,7 @@ length four or six (Lemma~\ref{lem:girth}), so Lemma~\ref{lem:tenvertices} appli
 $B_1=\{4,5\}$, $B_2=\{3,4\}$, $B_3=\{1,2,3\}$, $B_4=\{1\}$, and $B_5=\{1,5\}$. Its graph is an $8$-cycle with two pendant
 edges, so $S_0$ is axis-valid. By Lemma~\ref{lem:leftmost} the $30$ tilted rectangles among
 the $130$ are the nine unit diamonds, the four kinds of Lemma~\ref{lem:tilted-narrow} in four
-positions each, one large diamond, and four that fill the grid. Exactly fifteen are weak. The
+positions each, and five that span the whole grid, one of them a large diamond. Exactly fifteen are weak. The
 table lists the two corners each one shows and, after a bar for an oblique pair, the white
 corner of its axis-aligned rectangle.
 \begin{center}\footnotesize

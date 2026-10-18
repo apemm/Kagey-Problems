@@ -18,15 +18,16 @@ import sys
 import time
 from collections import defaultdict
 from fractions import Fraction as Fr
+from pathlib import Path
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(os.path.dirname(HERE), 'data')
 TABLE_FILE = os.path.join(DATA, 'three_row_definition_check.json')
 OUT = os.path.join(DATA, 'three_row_formula_check.json')
-ARCHIVE = r'C:\Users\arjun\Downloads\Problem 001 Research 2026-10-16\research_notes'
-ARCHIVE_TABLE = os.path.join(ARCHIVE, 'Problem 001 structural improvements', 'review_three', 'results.json')
-ARCHIVE_COUNTS = os.path.join(ARCHIVE, 'Problem 001 JIS research plan', 'math', 'three_row_results.json')
-ARCHIVE_RECURRENCE = os.path.join(ARCHIVE, 'Problem 001 JIS research plan', 'math', 'three_row_recurrence.json')
+ARCHIVE = Path(__file__).resolve().parent.parent / 'data' / 'three_row_reference'
+ARCHIVE_TABLE = ARCHIVE / 'three_row_windows.json'
+ARCHIVE_COUNTS = ARCHIVE / 'three_row_transfer_counts.json'
+ARCHIVE_RECURRENCE = ARCHIVE / 'three_row_recurrence.json'
 M_MAX = 240
 
 STATED_A3 = {3: 53, 4: 224, 5: 892, 6: 3420, 7: 12704, 8: 45864, 9: 161992, 10: 562912,

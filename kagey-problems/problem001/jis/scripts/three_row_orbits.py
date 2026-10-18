@@ -34,6 +34,7 @@ import os
 import sys
 import time
 from itertools import combinations, product
+from pathlib import Path
 
 import sympy as sp
 
@@ -43,9 +44,9 @@ DATA = os.path.join(os.path.dirname(HERE), 'data')
 sys.path.insert(0, ROOT)
 import verify_narrow  # noqa: E402
 
-ARCH = os.path.join(os.path.expanduser('~'), 'Downloads', 'Problem 001 Research 2026-10-16', 'research_notes')
-COUNTS = os.path.join(ARCH, 'Problem 001 structural improvements', 'three_row', 'verification_results.json')
-WINDOWS = os.path.join(ARCH, 'Problem 001 structural improvements', 'review_three', 'results.json')
+REFERENCE = Path(__file__).resolve().parent.parent / 'data' / 'three_row_reference'
+COUNTS = REFERENCE / 'three_row_classes.json'
+WINDOWS = REFERENCE / 'three_row_windows.json'
 
 LETTERS = {'a': (0,), 'b': (1,), 'c': (2,), 'A': (0, 1), 'B': (0, 2), 'C': (1, 2), 'X': (0, 1, 2)}
 ROWSET = {v: k for k, v in LETTERS.items()}
