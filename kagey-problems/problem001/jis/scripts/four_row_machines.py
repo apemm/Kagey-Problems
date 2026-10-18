@@ -13,12 +13,10 @@ Rows are translated to one-based (column, row) coordinates only when a witness i
 written out.
 """
 import json
-import os
+from pathlib import Path
 
-ARCHIVE = os.environ.get(
-    "PROBLEM001_ARCHIVE",
-    r"C:\Users\arjun\Downloads\Problem 001 Research 2026-10-16\research_notes"
-    r"\Problem 001 structural improvements\four_row")
+# The machine files are stored in jis/data/four_row_machines.
+MACHINE_DIR = Path(__file__).resolve().parent.parent / "data" / "four_row_machines"
 
 MACHINES = [
     ("01|23", "machine_56910.json"),
@@ -37,7 +35,7 @@ def partition_rows_one_based(name):
 
 
 def load_machine(filename):
-    with open(os.path.join(ARCHIVE, filename)) as f:
+    with open(MACHINE_DIR / filename) as f:
         d = json.load(f)
     alphabet = d["alphabet"]
     edges = d["edges"]
