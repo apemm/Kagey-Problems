@@ -100,8 +100,15 @@ freely among the smaller elements of $[N]\setminus S$. This is the claim.
 \end{proof}
 
 \begin{lemma}[the first flip]\label{lem:firstmark}
-Let $V=\min\{v\ge2:\mu_v=1\}$, with $V=\infty$ and $\lvert\mathcal T_V\rvert=0$ if there is no mark. Then
-$\Prob(V=j,\,\lvert\mathcal T_V\rvert=d)=\varepsilon(1-\varepsilon)^{j-2}\beta_j(d)$, and for $m\ge1$
+Let $V=\min\{v\ge2:\mu_v=1\}$, with $V=\infty$ and $\lvert\mathcal T_V\rvert=0$ if there is no mark. If
+$V<\infty$, let $\bar Y$ be the number of vertices $u$ of $\mathcal T_V$ with $\sigma(u)$ even, and
+let $\bar Z$ be the number of odd vertices outside $\mathcal T_V$. Then for $2\le j\le N$,
+$1\le d\le N-j+1$ and integers $y,z$,
+\[
+ \Prob\bigl(V=j,\,\lvert\mathcal T_V\rvert=d,\,\bar Y=y,\,\bar Z=z\bigr)
+ =\varepsilon(1-\varepsilon)^{j-2}\beta_j(d)\,\Prob(Y_d=y)\,\Prob\bigl(Z^{(j)}_{N-d}=z\bigr).
+\]
+In particular $\Prob(V=j,\,\lvert\mathcal T_V\rvert=d)=\varepsilon(1-\varepsilon)^{j-2}\beta_j(d)$, and for $m\ge1$
 \[
  f_N(m)=\sum_{j=2}^N\varepsilon(1-\varepsilon)^{j-2}\sum_{d=1}^{N-j+1}
  \beta_j(d)\,\Prob\bigl(d-Y_d+Z^{(j)}_{N-d}=m\bigr),
@@ -110,19 +117,23 @@ where $Y_d$ and $Z^{(j)}_{N-d}$ are independent.
 \end{lemma}
 
 \begin{proof}
-Marks and tree are independent, which gives the law of $(V,\lvert\mathcal T_V\rvert)$. Condition on
+Marks and tree are independent, and $\lvert\mathcal T_j\rvert$ has the law $\beta_j$, which gives
+the law of $(V,\lvert\mathcal T_V\rvert)$. Condition on
 $V=j$ and on the vertex set $S$ of $\mathcal T_j$, with $\lvert S\rvert=d$.
 The marks on $j+1,\dots,N$ are still i.i.d., and by Lemma~\ref{lem:split} the
 trees on $S$ and on $[N]\setminus S$ are independent random recursive trees.
-The vertices $1,\dots,j-1$ carry no mark, so $j$ is odd, and $u\in S$ is odd
-exactly when the path from $u$ up to $j$, with $j$ excluded, has an even
+The vertices $1,\dots,j-1$ carry no mark, so $j$ is odd, and $u\in S$ is even
+exactly when the path from $u$ up to $j$, with $j$ excluded, has an odd
 number of marks. So by Lemma~\ref{lem:tree} for the tree on $S$ rooted at
-$j$, the number of odd vertices in $S$ has the law of $d-Y_d$. Paths from
+$j$, the count $\bar Y$ has the law of $Y_d$. Paths from
 outside $S$ stay outside $S$, and the tree on $[N]\setminus S$ has the
-unmarked vertices $1,\dots,j-1$ first. So by Lemma~\ref{lem:tree} its odd
-count has the law of $Z^{(j)}_{N-d}$. The two counts are independent, and their
-law depends on $S$ only through $d$. Sum over $j$ and $d$, and note that
-$M_N=0$ if there is no mark.
+unmarked vertices $1,\dots,j-1$ first. So by Lemma~\ref{lem:tree} the count
+$\bar Z$ has the law of $Z^{(j)}_{N-d}$. The two counts are functions of the two
+trees and of the marks on the two disjoint sets $S$ and $[N]\setminus S$, so they
+are independent, and their joint law depends on $S$ only through $d$. This gives
+the joint law. On $\{V=j\}$ we have $M_N=d-\bar Y+\bar Z$, and $M_N=0$ if there is
+no mark. Summing over $j$, $d$ and the pairs $(y,z)$ with $d-y+z=m$ gives the
+formula for $f_N(m)$.
 \end{proof}
 
 In words, the first flip turns its whole family except the steps of that
@@ -176,13 +187,17 @@ $x=g_N=22.4407$.}
 \end{figure}
 
 \begin{theorem}[endpoint dip]\label{thm:dip}
-Let $N\ge3$ and $0<\varepsilon\le\frac12$, and put $\rho_1=P_N(N-1)/E_N$.
-Then
+Let $N\ge2$ and $0<\varepsilon<1$, and put $\rho_1=P_N(N-1)/E_N$. Then
 \[
- \frac{x}{2(1-\varepsilon)}<\rho_1\le\frac{x(1+1/N)^2}{2-3\varepsilon}+\frac{\varepsilon}{1-\varepsilon}.
+ \rho_1>\frac{x}{2(1-\varepsilon)}.
 \]
-Hence the end is strictly below its neighbor if $x\ge2(1-\varepsilon)$, and
-strictly above it if the right side is below $1$.
+If moreover $N\ge3$ and $\varepsilon\le\frac12$, then
+\[
+ \rho_1\le\frac{x(1+1/N)^2}{2-3\varepsilon}+\frac{\varepsilon}{1-\varepsilon}.
+\]
+Hence the end is strictly below its neighbor if $x\ge2(1-\varepsilon)$. If $N\ge3$,
+$\varepsilon\le\frac12$ and the right side of the second bound is below $1$, the end is
+strictly above its neighbor.
 \end{theorem}
 
 In words, when $\varepsilon$ is small the neighbor of the end is about $x/2$
@@ -198,7 +213,7 @@ stays at $0$ for $j-2$ steps, each with probability
 $1-r_t(0)=1-\varepsilon$. The move up has probability $\varepsilon$. After it
 the chain stays at $1$ at the times $k=j,\dots,N-1$, each with probability
 $1-r_k(1)=(1-\varepsilon)(1-c'/k)$, where
-$c'=(1-2\varepsilon)/(1-\varepsilon)\in[0,1]$. Multiplying and summing over
+$c'=(1-2\varepsilon)/(1-\varepsilon)\le1$. Multiplying and summing over
 $j$ gives
 \[
  f_N(1)=\varepsilon(1-\varepsilon)^{N-2}\sum_{j=2}^N\vartheta_j,\qquad
@@ -207,7 +222,8 @@ $j$ gives
 For the lower bound we use $c'\le1$. Then
 $\vartheta_j\ge\prod_{k=j}^{N-1}(1-1/k)=(j-1)/(N-1)$, and these lower bounds sum to
 $N/2$ over $2\le j\le N$. So $f_N(1)/f_N(0)\ge x/(2(1-\varepsilon))$. For
-the upper bound, $1-c'/k\le e^{-c'/k}$ and $\sum_{k=j}^{N-1}1/k\ge\log(N/j)$
+the upper bound let $N\ge3$ and $\varepsilon\le\frac12$, so that $c'\ge0$. Then
+$1-c'/k\le e^{-c'/k}$ and $\sum_{k=j}^{N-1}1/k\ge\log(N/j)$
 give $\vartheta_j\le(j/N)^{c'}$. As $(t/N)^{c'}$ is nondecreasing in $t$, we can compare
 the sum with an integral, namely
 \[
@@ -219,27 +235,34 @@ $f_N(1)/f_N(0)\le x(1+1/N)^2/(2-3\varepsilon)$.
 
 \emph{The term $f_N(N-1)$.} The event $M_N=N-1$ needs an up move at every
 time. The first has probability $r_1(0)=\varepsilon$, and the one at time
-$k\ge2$ has probability
-$r_k(k-1)=1-\varepsilon-(1-2\varepsilon)/k\in[\frac12,1-\varepsilon]$. So
-$0<f_N(N-1)\le\varepsilon(1-\varepsilon)^{N-2}$. This makes the lower bound
-strict and gives the term $\varepsilon/(1-\varepsilon)$ in the upper bound.
+$k\ge2$ has probability $r_k(k-1)=1-\varepsilon-(1-2\varepsilon)/k$. This lies
+strictly between $0$ and $1$, as every $r_k(b)$ with $0<b<k$ does, and it lies in
+$[\frac12,1-\varepsilon]$ when $\varepsilon\le\frac12$. So $f_N(N-1)>0$, and
+$f_N(N-1)\le\varepsilon(1-\varepsilon)^{N-2}$ when $\varepsilon\le\frac12$. This makes
+the lower bound strict and gives the term $\varepsilon/(1-\varepsilon)$ in the upper bound.
+(For $N=2$ the bins $1$ and $N-1$ coincide, and the argument is the same.)
 \end{proof}
 
 \begin{corollary}[the dip at the crossing]\label{cor:dip}
-Let $N\ge4$ be even and suppose that $x_N\ge2(1-\varepsilon_N)$. Then at the
-crossing $E_N=C_N<P_N(N-1)$, and $P_N$ is not unimodal.
+Let $N\ge2$ be even and $0<\varepsilon<1$, and suppose that $x\ge2(1-\varepsilon)$
+and $C_N\le E_N$. Then $C_N\le E_N<P_N(N-1)$, and $P_N$ is not unimodal. In
+particular, if $x_N\ge2(1-\varepsilon_N)$, then at the crossing $E_N=C_N<P_N(N-1)$, and
+$P_N$ is not unimodal.
 \end{corollary}
 
 \begin{proof}
-By Proposition~\ref{prop:mlr}, $\varepsilon_N<\frac12$, so
-Theorem~\ref{thm:dip} gives $P_N(N-1)>E_N=C_N$. Suppose that $P_N$ is
+Theorem~\ref{thm:dip} gives $P_N(N-1)>E_N\ge C_N$. Suppose that $P_N$ is
 nondecreasing on $\{0,\dots,a_0\}$ and nonincreasing on $\{a_0,\dots,N\}$.
 It is symmetric about $h$, so we may replace $a_0$ by $N-a_0$ and assume
 $a_0\le h$. Then $P_N(a)\le C_N$ for every $a\ge h$, including $a=N-1$, which
 is a contradiction.
 \end{proof}
 
-The hypothesis $x_N\ge2(1-\varepsilon_N)$ says that
+By Proposition~\ref{prop:mlr}, $C_N\le E_N$ holds exactly when
+$\varepsilon\le\varepsilon_N$, and $x\ge2(1-\varepsilon)$ says that
+$\varepsilon\ge2/(N+2)$. So the corollary covers the $\varepsilon$ with
+$2/(N+2)\le\varepsilon\le\varepsilon_N$. In particular the condition
+$x_N\ge2(1-\varepsilon_N)$ says that
 $\varepsilon_N\ge2/(N+2)$. By Proposition~\ref{prop:mlr} it holds exactly
 when $C_N\le E_N$ at $\varepsilon=2/(N+2)$. We now show that this is so for
 every even $N\ge8$. For $N\ge1688$ we use Theorem~\ref{thm:erw-bounds}(b),
@@ -252,7 +275,8 @@ Proposition~\ref{prop:convex-certified}, and for $N=8$ an exact computation.
 For every even $N\ge8$ we have $C_N<E_N$ at $\varepsilon=2/(N+2)$, and hence
 $x_N>2(1-\varepsilon_N)$. So for every even $N\ge8$, at the crossing
 $E_N=C_N<P_N(N-1)$, and $P_N$ is not unimodal. For $N=2$, $4$ and $6$ the
-hypothesis of Corollary~\ref{cor:dip} fails.
+condition $x_N\ge2(1-\varepsilon_N)$ fails, and no $\varepsilon$ meets the hypotheses of
+Corollary~\ref{cor:dip}.
 \end{proposition}
 
 In words, for every even $N$ from $8$ on the end is below its neighbor at the crossing, so
@@ -469,7 +493,7 @@ do not prove. This factor is still about $2$ near $m=70$ when $N=3200$
 \subsection{Convexity between the humps}\label{sec:convex}
 
 \begin{definition}[convex between the humps]\label{def:convex}
-Let $N\ge10$. The law at the crossing is \emph{convex between the humps} if,
+Let $N\ge5$. The law at the crossing is \emph{convex between the humps} if,
 for $x=x_N$ and every mode $a^*\ge N/2$ of $P_N$ with $m^*=N-a^*$, the second
 difference $P_N(a-1)-2P_N(a)+P_N(a+1)$ is positive for
 $2m^*+1\le a\le N-2m^*-1$.
@@ -482,7 +506,7 @@ Corollary~\ref{cor:mode-location}(b), so for large even $N$ the property
 makes the center the unique interior minimum (Corollary~\ref{cor:unique-min}).
 This subsection proves the property for all large $N$, even
 (Theorem~\ref{thm:convex-large}) or odd (Proposition~\ref{prop:odd}), and,
-with a certified computation, for $10\le N\le2000$
+with a certified computation, for $5\le N\le2000$
 (Proposition~\ref{prop:convex-certified}). For every even $N\ge8$ and every
 odd $N\ge1689$ it reduces the property to one inequality
 (Corollary~\ref{cor:one-point} and Proposition~\ref{prop:odd}(c)). The
@@ -585,7 +609,8 @@ Let $N\ge3$ and $0<\varepsilon<\frac12$. Then
  \operatorname{sp}\bigl(D_N(1),D_N(2),\dots,D_N(N-1)\bigr)\preceq(+,-,+,-,+).
 \]
 So the second difference of $P_N$ changes sign at most four times on
-$\{1,\dots,N-1\}$. The same holds for the second difference of $f_N$.
+$\{1,\dots,N-1\}$. The same holds for the second difference of $f_N$, and for
+$f_N$ it holds for $N=2$ as well.
 \end{theorem}
 
 In words, for every $N\ge3$ and every $0<\varepsilon<\frac12$ the law has at most two
@@ -765,7 +790,7 @@ Lemma~\ref{lem:center-convex} applies.
 \end{proof}
 
 \begin{proposition}[small $N$, computer-assisted]\label{prop:convex-certified}
-For every $10\le N\le N_{\rm c}=2000$, even or odd, the law at the crossing is
+For every $5\le N\le N_{\rm c}=2000$, even or odd, the law at the crossing is
 convex between the humps.
 \end{proposition}
 
@@ -782,7 +807,20 @@ is positive for every $2m^*+1\le a\le N-2m^*-1$. When this range is not
 empty, so that $2m^*+1\le N/2$, it also checks that $D_N(a_0)<0$ for some
 $1\le a_0\le2m^*$ and that $D_N(2m^*+1)>0$. By
 Theorem~\ref{thm:no-holes} these two inequalities already imply the claim, so the test of
-every $a$ is a second check.
+every $a$ is a second check. This covers $10\le N\le2000$.
+
+For $5\le N\le9$ the script is not run, and the check is done in Lean
+(Section~\ref{sec:verify}) by a computation in exact integer arithmetic with
+outward rounding, whose soundness Lean proves. Two rationals found by bisection
+in exact rational arithmetic bracket $\varepsilon_N$, and Proposition~\ref{prop:mlr}
+proves this from enclosures of $P_N(\lceil N/2\rceil)$ and $E_N$ at the two rationals. Then
+Lean encloses $P_N$ for every $\varepsilon$ between them at once. It checks that the
+upper rational is below $\frac12$, that $P_N(0)<P_N(1)$, and that every index
+$a^*\ge N/2$ that can be a mode either has an empty range
+$2m^*+1\le a\le N-2m^*-1$ or has $2m^*+1\le N/2$ and $D_N(2m^*+1)>0$. By
+Corollary~\ref{cor:one-point}, with $a_1=2m^*+1$, this gives the claim. At $N=5$
+the only index that can be a mode is $a^*=4$, so the range is empty and the claim
+holds trivially.
 \end{proof}
 
 \begin{proposition}[odd $N$]\label{prop:odd}
@@ -827,26 +865,28 @@ and $a=k$ gives
 We prove (b), (c) and (d) in Section~S3 of Online Resource~1.
 \end{proof}
 
-\begin{proposition}[the center for $10\le N\le2000$, computer-assisted]\label{prop:center-small}
-For every even $10\le N\le2000$, at the crossing, $P_N(a)>C_N$ for every $1\le a\le N-1$
+\begin{proposition}[the center for $8\le N\le2000$, computer-assisted]\label{prop:center-small}
+For every even $8\le N\le2000$, at the crossing, $P_N(a)>C_N$ for every $1\le a\le N-1$
 with $a\ne h$.
 \end{proposition}
 
-So Corollary~\ref{cor:unique-min} holds for every even $N$ from $10$ to $2000$, and not only for
+So Corollary~\ref{cor:unique-min} holds for every even $N$ from $8$ to $2000$, and not only for
 large $N$.
 
 \begin{proof}
-Let $10\le N\le2000$ be even. By Proposition~\ref{prop:convex-certified}, $D_N(a)>0$ for
-$2m^*+1\le a\le N-2m^*-1$ and every mode. The script \texttt{certify\_center.py} encloses
-$\varepsilon_N$ and the law $P_N$ in the same way as \texttt{certify\_convex.py}, lists every
-index $a^*\ge N/2$ that can be a mode, and checks that $2(N-a^*)+1\le N/2$ for each of them. This
-holds for every even $N$ in the range. So Lemma~\ref{lem:center-convex} applies.
+Let $8\le N\le2000$ be even. By Proposition~\ref{prop:convex-certified}, $D_N(a)>0$ for
+$2m^*+1\le a\le N-2m^*-1$ and every mode. For $N\ge10$ the script \texttt{certify\_center.py}
+encloses $\varepsilon_N$ and the law $P_N$ in the same way as \texttt{certify\_convex.py}, lists
+every index $a^*\ge N/2$ that can be a mode, and checks that $2(N-a^*)+1\le N/2$ for each of them.
+For $N=8$ Lean checks the same, with an enclosure as in the proof of
+Proposition~\ref{prop:convex-certified} for $N\le9$. This holds for every even $N$ in the range.
+So Lemma~\ref{lem:center-convex} applies.
 \end{proof}
 
-As a second check, for each even $N$
+As a second check, for each even $N\ge10$
 in the range the script also tests directly that the enclosure of $P_N(a)-P_N(h)$ is positive for
 every $1\le a\le N-1$ with $a\ne h$, and this succeeds for all $996$ values of $N$. The smallest value of
-$N/2-(2m^*+1)$ is $1$, at $N=12$.
+$N/2-(2m^*+1)$ is $1$, at $N=8$ and at $N=12$.
 
 \begin{remark}[what is still open]\label{rem:convex-open}
 We do not compute the constant $N_1$ of Theorem~\ref{thm:convex-large},

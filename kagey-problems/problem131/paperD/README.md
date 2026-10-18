@@ -8,7 +8,7 @@ at which the walk is as likely to end at the origin (the middle bin, N/2 right s
 end bin, N right steps). The crossing is unique, and x_N = N eps_N = 2 log N - log log N - log 16 +
 o(1), about twice the value for the persistent random walk, because a walk that ends in the middle
 usually has a reversal among its first few steps. At the crossing the law has a hump near each end,
-and for large even N, and for every even N from 10 to 2000, the middle is the lowest interior bin.
+and for large even N, and for every even N from 8 to 2000, the middle is the lowest interior bin.
 
 For the persistent (Markov) walk, which copies its last step instead, the question is part of
 Problem 131 of Kagey's Open Problem Collection (https://peterkagey.com/problems/131/), posed for a
@@ -54,9 +54,11 @@ eps). Put x = N eps.
   log C_N = log(4 eps/(N+2)) + 2 eps log N + O(eps), with explicit constants (Proposition S1.1 of Online Resource 1). So
   x_N = g_N - (2 g_N log N + g_N^2/2)/(N(1 + 1/g_N)) + O(log N/N), where g_N is the root of
   g + log g = 2 log N - log 8, and x_N < g_N for large N (Proposition S1.2).
-- The end is strictly below its neighbor whenever x >= 2(1 - eps), with two-sided bounds on their
-  ratio (Theorem 3.5). So the law at the crossing is not unimodal once x_N >= 2(1 - eps_N)
-  (Corollary 3.6). This hypothesis holds for every even N >= 8 (Proposition 3.7). For N >= 1688
+- The end is strictly below its neighbor whenever x >= 2(1 - eps), for every N >= 2 and
+  0 < eps < 1, with a lower bound on their ratio for these N and eps and an upper bound for
+  N >= 3 and eps <= 1/2 (Theorem 3.5). So the law is not unimodal whenever x >= 2(1 - eps) and
+  C_N <= E_N, in particular at the crossing once x_N >= 2(1 - eps_N) (Corollary 3.6). This
+  hypothesis holds for every even N >= 8 (Proposition 3.7). For N >= 1688
   the proof uses Theorem 2.6(b) at eps = 2/N. For 10 <= N < 1688 it uses the ball-arithmetic
   enclosure of eps_N from `certify_center.py`, whose lower end lies above 2/(N+2), and for N = 8 an
   exact computation. For N = 2, 4 and 6 the hypothesis fails.
@@ -74,14 +76,16 @@ eps). Put x = N eps.
   omega_N x log^2(x+1) = o(N) and any delta_N -> 0. So the tail is x/(2m^2) for
   x log^2 x << m << N (Theorem S2.1 of Online Resource 1).
 - For every N >= 3 and every 0 < eps < 1/2 the second difference of the law changes sign at most
-  four times (Theorem 3.18), and once the law has turned convex to the right of its left hump it
+  four times, and so does that of the law given the first step for every N >= 2 (Theorem 3.18),
+  and once the law has turned convex to the right of its left hump it
   stays strictly convex up to the mirror point (Theorem 3.19). So strict convexity between the
   humps (Definition 3.13) follows from one inequality (Corollary 3.20). It holds for all large even
   N (Theorem 3.21), where the center is then the unique interior minimum (Lemma 3.22 and
   Corollary 3.23), for
-  10 <= N <= 2000 by a certified computation (Proposition 3.24), and for all large odd N
+  5 <= N <= 2000 by a certified computation (Proposition 3.24, for N <= 9 in Lean only), and for
+  all large odd N
   (Proposition 3.25). For odd N the two central bins equal the center of N+1 divided by
-  1 - (1 - 2 eps)/N. For every even N from 10 to 2000 the center is the unique interior minimum
+  1 - (1 - 2 eps)/N. For every even N from 8 to 2000 the center is the unique interior minimum
   (Proposition 3.26, from the certified convexity and Lemma 3.22).
 
 Heavy-tailed runs and aging walks, which earlier versions treated in Sections 4 and 5 and
@@ -99,7 +103,9 @@ full account. The proofs use computation in 3 places only.
   ball arithmetic with rigorous error bounds (`certify_elephant.py`).
 - For every 10 <= N <= 2000 a ball-arithmetic enclosure of eps_N and of the law at the crossing
   proves Propositions 3.24 and 3.26 (`certify_convex.py` and `certify_center.py`), and for even
-  10 <= N < 1688 the same enclosure of eps_N gives Proposition 3.7 (`certify_center.py`).
+  10 <= N < 1688 the same enclosure of eps_N gives Proposition 3.7 (`certify_center.py`). For
+  5 <= N <= 9 (only N = 8 for Proposition 3.26) the two propositions rest on the certificate runs
+  in Lean alone, with brackets of eps_N found by bisection in exact rational arithmetic.
 
 Short exact computations, such as C_N/E_N for N = 2, 4, 6 and 8 in Proposition 3.7, are done in
 rational arithmetic (`certify_elephant.py`). The double-precision computation with a rounding bound
@@ -118,7 +124,7 @@ Online Resource 1, are of this kind.
   which the root g_N exceeds x_N (Remark S1.3 of Online Resource 1).
 - Conjecture 3.14 (strict convexity between the humps) for N between 2000 and the constants N_1 and
   N_1' of Theorem 3.21 (even N) and Proposition 3.25 (odd N). Section 3.5 proves it for all large N,
-  and `certify_convex.py` certifies it for 10 <= N <= 2000. The constants are not explicit, and the
+  and `certify_convex.py` certifies it for 10 <= N <= 2000 (Lean also for 5 <= N <= 9). The constants are not explicit, and the
   proof as it stands cannot work below N of about 3.5 * 10^56, so no computation closes the gap
   (Remark 3.27). For even N >= 8 and odd N >= 1689 the conjecture follows from one inequality
   (Corollary 3.20 and Proposition 3.25(c)).
