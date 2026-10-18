@@ -25,7 +25,8 @@ upper bound. The constructions for three and four rows are checked against every
 The main write-up is `notes/notes.pdf` (source `notes/notes.tex`): detailed notes that walk
 through every result with small examples and about 25 figures. The figures are drawn by
 `notes/make_figures.py`, which checks every blackout it draws against the definition first. The
-older paper version is `paper/main.tex` (compiled: `paper/main.pdf`).
+paper is `jis/pemmasani.tex` (sections in `jis/sections`, compiled: `jis/pemmasani.pdf`), and
+`jis/pemmasani_jis.tex` is the same paper as one file, built by `jis/scripts/make_jis_single_file.py`.
 
 ## Verification
 
@@ -38,7 +39,7 @@ their tests; they need the packages in `requirements.txt`. The predictions and t
 in `data/ledger.md`.
 
 Build the notes from `notes/` with `python make_figures.py` and then `pdflatex notes.tex` (3
-times). Build the paper from `paper/` with `pdflatex main.tex` (twice).
+times). Build the paper from `jis/` with `pdflatex pemmasani.tex` (three times).
 
 `game/index.html` is a playable version of the problem on grids up to 10 x 10 (open it in a
 browser). It is the rectangle game from my website, with larger grids.

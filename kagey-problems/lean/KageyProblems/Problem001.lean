@@ -3,8 +3,9 @@ import Mathlib
 /-!
 # Kagey's Problem 001 — blackouts preserving rectangle identifiability
 
-Lean 4 / Mathlib formalization of the *proved* results of `paper/main.tex`
-(A. Pemmasani, 2026).  Nothing about the open conjectures (Three-Row, Excess-1) is stated here.
+Lean 4 / Mathlib formalization of the difference lemma, the hitting-set corollary and the Strip
+Theorem of `problem001/jis/pemmasani.tex` (A. Pemmasani, 2026). The other results of the paper are
+not formalized here.
 
 Black out as many points of an `n × m` grid as possible so that every rectangle with corners
 on grid points (tilted ones included) stays uniquely identifiable from its visible corners.
