@@ -11,7 +11,8 @@ is compared with verify_narrow's.
 
 Each model is rechecked by verify_narrow.collision and blocked by the clause that negates the
 full point assignment, so a blackout of m+7 or more points would also be found if one existed.
-The run stops at the cap or at the wall-clock limit (solver interrupted) and says so.
+The run stops at the cap or at the wall-clock limit (the solver process is stopped by the
+parent, see supervised_solver.py) and says so.
 
 Usage: python five_row_enum_unstructured.py WIDTH [--solver glucose4] [--cap 10000]
                                                 [--minutes 30] [--excess 6] [--out FILE]
@@ -21,12 +22,11 @@ import argparse
 import json
 import os
 import sys
-import threading
 import time
 
 import pysat
 from pysat.card import CardEnc, EncType
-from pysat.solvers import Solver
+from supervised_solver import SupervisedSolver
 
 from five_row_common import (DATA_DIR, collision_report, difference_sets, one_based,
                              points_of, prune_supersets, rectangles_by_quads, verify_narrow)
@@ -86,34 +86,30 @@ def main():
         'models': [], 'complete': True, 'status': 'complete',
     }
 
-    with Solver(name=args.solver, bootstrap_with=clauses) as s:
-        timer = threading.Timer(max(1.0, deadline - time.time()), s.interrupt)
-        timer.start()
-        try:
-            while True:
-                if len(result['models']) >= args.cap:
-                    result['complete'] = False
-                    result['status'] = f'more than {args.cap} models; enumeration stopped at the cap'
-                    break
-                sat = s.solve_limited(expect_interrupt=True)
-                if sat is None:
-                    result['complete'] = False
-                    result['status'] = 'wall-clock limit reached; solver interrupted'
-                    break
-                if not sat:
-                    break
-                model = s.get_model()
-                truth = set(l for l in model if 0 < l <= npts)
-                pts = sorted((x, y) for x in range(cols) for y in range(ROWS) if var(x, y) in truth)
-                mask = sum(1 << (y * cols + x) for x, y in pts)
-                check = collision_report(rects, mask, ROWS, cols)
-                result['models'].append({'size': len(pts), 'points': one_based(pts),
-                                         'verify_narrow_valid': check is None,
-                                         'collision': check})
-                s.add_clause([-var(x, y) if var(x, y) in truth else var(x, y)
-                              for x in range(cols) for y in range(ROWS)])
-        finally:
-            timer.cancel()
+    # the solver runs in a worker process that is killed at the deadline (supervised_solver.py)
+    with SupervisedSolver(args.solver, bootstrap_with=clauses) as s:
+        while True:
+            if len(result['models']) >= args.cap:
+                result['complete'] = False
+                result['status'] = f'more than {args.cap} models; enumeration stopped at the cap'
+                break
+            sat = s.solve_limited(timeout=max(0.0, deadline - time.time()))
+            if sat is None:
+                result['complete'] = False
+                result['status'] = 'unresolved: wall-clock limit reached; solver process stopped'
+                break
+            if not sat:
+                break
+            model = s.get_model()
+            truth = set(l for l in model if 0 < l <= npts)
+            pts = sorted((x, y) for x in range(cols) for y in range(ROWS) if var(x, y) in truth)
+            mask = sum(1 << (y * cols + x) for x, y in pts)
+            check = collision_report(rects, mask, ROWS, cols)
+            result['models'].append({'size': len(pts), 'points': one_based(pts),
+                                     'verify_narrow_valid': check is None,
+                                     'collision': check})
+            s.add_clause([-var(x, y) if var(x, y) in truth else var(x, y)
+                          for x in range(cols) for y in range(ROWS)])
     result['model_count'] = len(result['models'])
     result['sizes_found'] = sorted(set(m['size'] for m in result['models']))
     result['all_models_verified'] = all(m['verify_narrow_valid'] for m in result['models'])

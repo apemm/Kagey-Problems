@@ -25,7 +25,6 @@ import json
 import os
 import re
 import sys
-import threading
 import time
 from itertools import combinations
 
@@ -35,9 +34,11 @@ sys.path.insert(0, ROOT)
 
 import pysat
 from pysat.card import CardEnc, EncType
-from pysat.solvers import Solver
 
 from verify_narrow import collision, mask, rectangles
+
+sys.path.insert(0, HERE)
+from supervised_solver import solve_with_deadline  # noqa: E402
 
 CAP_SECONDS = 1800
 
@@ -54,19 +55,12 @@ def points_one_based(black, cols):
 
 
 def solve_capped(name, clauses, cap=CAP_SECONDS):
-    """Run a pysat solver with a wall-clock cap. Returns (status, model, seconds)."""
-    t0 = time.time()
-    with Solver(name=name, bootstrap_with=clauses) as s:
-        timer = threading.Timer(cap, s.interrupt)
-        timer.start()
-        try:
-            r = s.solve_limited(expect_interrupt=True)
-        finally:
-            timer.cancel()
-        model = s.get_model() if r else None
-    dt = time.time() - t0
-    status = 'SAT' if r else ('UNSAT' if r is False else 'unresolved')
-    return status, model, dt
+    """Run a pysat solver with a wall-clock cap. Returns (status, model, seconds).
+
+    The solver runs in a worker process and the cap is enforced by killing it (see
+    supervised_solver.py), since CaDiCaL ignores Solver.interrupt(). A call that reaches the
+    cap is recorded as unresolved."""
+    return solve_with_deadline(name, clauses, cap)
 
 
 def game_witness(rows, cols):
