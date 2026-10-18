@@ -251,9 +251,9 @@ calling `verify_all.py` here. Run `python -B verify_all.py` here (or `python -B 
 heavy cells. The scripts need numpy, scipy, mpmath and python-flint. Build the
 paper with `pdflatex problem131_memory.tex`, run three times so that the references settle, and
 then `pdflatex online_resource.tex` twice and the paper once more. The Code availability statement
-of the paper pins the supporting code and certificate records to commit
-`b83d9b469edc4ded17f4557bdd74078d01aa2393`. Later edits to the text of the paper do not change
-that pin, but a change to a script or to a record would need a new checked commit. The arXiv
+of the paper pins the supporting code, certificate records and Lean files to commit
+`db218c518a39a333d75bb8c9f6d16ada2b7f0c85`. Later edits to the text of the paper do not change
+that pin, but a change to a script, a record or a Lean file would need a new checked commit. The arXiv
 version is `problem131_arxiv.tex`. Build it with `pdflatex problem131_arxiv.tex` three times. It
 gives the paper followed by Online Resource 1 in one PDF, with one bibliography and no `xr`.
 
