@@ -151,30 +151,53 @@ Remark 4.7, which the paper cites. The items that are not formalized are listed 
 
 Paper D is "The center and the ends of the elephant random walk with rare reversals" (titled
 "Endpoint crossings for the elephant random walk" before October 17, 2026). `PaperD/` is about
-walks with memory, and it also covers Paper F. It proves the following.
+walks with memory, and it also covers Paper F. Every module is checked by the kernel, no module
+uses `native_decide`, and every theorem depends only on `propext`, `Classical.choice` and
+`Quot.sound`. It proves the following for Paper D (numbers of the build of October 17, 2026).
 
-- The law of the elephant walk, `c_1 = 4/(n+2)`, the monotone likelihood ratio and the unique
-  crossing of every bin, the endpoint dip and unimodality with a fixed first step (`Elephant`,
-  `ElephantAlgebra`, `ElephantFirstOrder`, `ElephantCrossing`, `ElephantEndpoint`,
-  `ElephantUnimodal`).
-- The subtree counts behind the elephant profile (`RecursiveTree`).
-- The exponent of the heavy-tailed runs and the golden ratio, `K_α = -Γ(1-α)` and the Lamperti
-  value at `1/2` (`HeavyRuns`).
-- The aging walk, with unique crossings, the uniform law at `c = 1` with a fixed first step, the
-  fair-start values and the arcsine law at `c = 1/2` (`Aging`, `AgingExact`, `AgingCrossing`,
-  `AgingSmall`, `AgingAveraging`, `AgingSwitches`, `BetaBinomial`).
+- Theorem 1.1 as stated: the reduction to the count chain (Lemma 2.2), the urn (Lemma 2.4), the
+  monotone likelihood ratio and the unique crossing (Proposition 2.3), the first flip and
+  `C_N'(0) = 4/(N+2)` (Proposition 2.5), both bounds on the center with the constant 5200
+  (Theorem 2.6, the 60-term series bounded by exact partial sums) and the crossing asymptotics
+  (Theorem 2.7) (`Elephant*`, `T3_*`, `T4_*`, `T6_*`, `EndToEnd`).
+- Theorem 2.8, with Paper A's Proposition 3.8 as a hypothesis. `PaperA` proves that
+  proposition, but `PaperD` does not import `PaperA`.
+- The random recursive tree with its marks, with Lemmas 3.1, 3.2 (with the relabeling into two trees)
+  and 3.3, and Lemma B.3 (`T2_*`, `T8_RRTRelabel`).
+- Lemma 3.4, Theorem 3.5, Corollary 3.6, and Proposition 3.7 for every even `N ≥ 8` (exact
+  integer recursion for `N ≤ 200`, Theorem 2.6(b) for `N ≥ 1688`, certificates in between).
+- The sign chain, with Lemmas 3.15 to 3.17, Theorems 3.18 and 3.19, Corollary 3.20, Lemma 3.22 and
+  Appendix D (`SignChain*`, `CenterConvex`, `T1_*`).
+- Propositions 3.24 (`5 ≤ N ≤ 2000`) and 3.26 (even `8 ≤ N ≤ 2000`), and the first paragraph and
+  parts (a) and (c) of Proposition 3.25. The finite ranges rest on certificate runs that enclose
+  the law in integer arithmetic with outward rounding, with soundness proved in Lean. For
+  `N ≤ 100` the kernel reduces the checker of `T5_Run`. For `101 ≤ N ≤ 2000` the 69 generated
+  modules `T7_Gen_*` store each row as one packed integer and are checked by `decide +kernel`.
+  For the longest runs the checkpoint rows are computed at elaboration time by the elaborator
+  `t7val%` of `T7_Eval`. Its output is not trusted, since the kernel recomputes every segment between two
+  checkpoints and compares.
+- Appendix A, except the reading of Lemma A.1(a) as a probability for `c > 0`, which the proofs
+  do not use.
 
-For Paper D only selected finite statements are formalized. They are the correspondence between
-sign words and the count chain, the strict monotonicity of every bin relative to the end and the
-unique crossing, the derivative `C_n'(0) = 4/(n+2)`, unimodality with a fixed first step and the
-inequalities for the end and its neighbor. The conclusion that the law is not unimodal at the
-crossing keeps the endpoint dip as a hypothesis. The subtree identities are proved for a Pólya
-chain, and its identification with the subtree of a random recursive tree is not formalized. The
-principal analytic and shape results of Paper D (the bounds on the center, the crossing
-asymptotics, the compound Poisson and Landau results and the sign and convexity results for the
-second difference) are not formalized end to end, and its Python and Arb certificates are separate
-from Lean. `PaperD/MAP.md` names 136 declarations, but 85 of them are for Paper F and many are
-support lemmas, so they are not 136 theorems of Paper D.
+Not formalized are Theorems 3.8 and 3.9, Lemma 3.10 (an Arb computation), Corollary 3.11 and so
+Theorem 1.2, Appendix C and Appendix B apart from Lemma B.3, Proposition 3.25(b), and Online
+Resource 1. For Theorem 3.21, Corollary 3.23 (large `N`) and Proposition 3.25(d) Lean proves the
+last step, with Steps 1 to 3 of the proof of Theorem 3.21 as hypotheses. The Python and Arb
+scripts are separate from Lean. `PaperD/MAP.md` gives every statement label with its Lean names
+and its status.
+
+For Paper F (the topics D3 and D4) it proves the exponent of the heavy-tailed runs and the golden
+ratio, `K_α = -Γ(1-α)` and the Lamperti value at `1/2` (`HeavyRuns`), and the finite results on
+the aging walk, with unique crossings, the uniform law at `c = 1` with a fixed first step, the
+fair-start values and the arcsine law at `c = 1/2` (`Aging`, `AgingExact`, `AgingCrossing`,
+`AgingSmall`, `AgingAveraging`, `AgingSwitches`, `BetaBinomial`).
+
+The library has 146 modules (including the root) and 21591 theorem and lemma declarations. Of
+these 20517 are steps of the generated certificates in `T7_Gen_*`, 163 are for Paper F, and most
+of the rest are support lemmas, so the count is not a count of results. `lake build PaperD`
+takes about 40 minutes on 24 cores. The 69 `T7_Gen_*` modules take 1 to 4 minutes each and a few GB
+of memory each. With less memory, build them a few at a time
+(`lake build PaperD.T7_Gen_0101_0300 …`) before `lake build PaperD`.
 
 ## What is not in Lean
 
@@ -195,9 +218,9 @@ In Paper B the window, the Gaussian volumes and the frontier limits are left out
 proves the exact law for the uniform start only, so the law with a general start and the tree
 form of the constants are not in it, but the arithmetic of the `K_3` window with a start and the
 tree formula for 3 states are checked in `PaperC`. For Papers C and D every statement about large
-`N` or large `n` is left out, and `MAP.md` lists the reason for each. In Paper D the identification
-of the Pólya chain with the random recursive tree, the proof that the endpoint dip holds for every
-even `N >= 8`, and the interval certificates are also left out.
+`N` or large `n` is left out, and `MAP.md` lists the reason for each, except that in Paper D the
+center bounds and the crossing asymptotics of Section 2 are formalized. In Paper D the bulk
+(Theorems 3.8 and 3.9, Lemma 3.10 and what rests on them) is left out, as listed above.
 
 ## Building and checking
 
@@ -210,7 +233,9 @@ The first command downloads the compiled Mathlib. Then run
 
     python -B verify_lean.py --workspace .
 
-This builds each library with Lake and runs `#print axioms` on every `theorem` and `lemma`. It
+This builds each library with Lake and runs `#print axioms` on every `theorem` and `lemma`.
+For `PaperD` the build takes about 40 minutes and the axiom check of its 21591 declarations a
+few more (see the Paper D section for the memory needed). It
 checks that only `propext`, `Classical.choice` and `Quot.sound` appear. It also checks that the
 declarations it reads from the source are exactly the theorems Lean finds in the library. The
 results go to `build-log.txt` and `verification-manifest.json`. The manifest has the module list,

@@ -42,7 +42,7 @@ eps). Put x = N eps.
   (Proposition 2.3).
 - C_N'(0) = 4/(N+2) exactly (Proposition 2.5).
 - C_N >= (4 eps/(N+2))(1 - 2 eps) for 0 < eps < 1/2, and C_N <= (4 eps/(N+2)) N^(2 eps) e^(5200 eps)
-  for even N >= 64 and eps(1 + log N) <= 1/100 (Theorem 2.6). So
+  for even N >= 2 and eps(1 + log N) <= 1/100 (Theorem 2.6). So
   log C_N = log(4 eps/(N+2)) + O(eps log N) there.
 - x_N = N eps_N satisfies x_N + log x_N = 2 log N - log 8 + O((log N)^2/N), so
   x_N = 2 log N - log log N - log 16 + O(log log N/log N) (Theorem 2.7).
@@ -50,7 +50,7 @@ eps). Put x = N eps.
   crossing z_N,
   x_N = 2 z_N - log(2 pi) + c_*/log N + O(log log N/(log N)^2), where
   c_* = (1/2) log(2 pi) - 1/4 (Theorem 2.8).
-- The center to second order. In the range of Theorem 2.6(b),
+- The center to second order. For even N >= 64 and eps(1 + log N) <= 1/100,
   log C_N = log(4 eps/(N+2)) + 2 eps log N + O(eps), with explicit constants (Proposition S1.1 of Online Resource 1). So
   x_N = g_N - (2 g_N log N + g_N^2/2)/(N(1 + 1/g_N)) + O(log N/N), where g_N is the root of
   g + log g = 2 log N - log 8, and x_N < g_N for large N (Proposition S1.2).
@@ -143,7 +143,17 @@ grows.
 - `online_resource.tex` is Online Resource 1, a separate PDF `online_resource.pdf` with the center
   and the crossing to second order, the tail and the proof of parts (b) to (d) of Proposition 3.25.
   It reads the labels of the paper through the package `xr-hyper`, so build the paper, then the
-  Online Resource, then the paper again.
+  Online Resource, then the paper again. Its text is in `online_resource_body.tex`, and its one
+  extra bibliography item is in `online_resource_bib.tex`. Its caption on the submission form is
+  "Online Resource 1. The center and the crossing to second order, the tail theorem, and the
+  proofs for odd N."
+- `problem131_arxiv.tex` is the arXiv version. It inputs `problem131_memory.tex` unchanged and
+  appends `online_resource_body.tex` before the bibliography, so the S numbers and the references
+  between the two parts resolve inside one PDF. Make it the top-level file of the arXiv
+  submission. The upload holds `problem131_arxiv.tex`, `problem131_memory.tex`, the `sec_*` and
+  `app_*` files, `online_resource_body.tex`, `online_resource_bib.tex`, `figures/*.pdf` and a
+  `00README.json` that names `problem131_arxiv.tex` as the top-level file. It does not hold
+  `online_resource.tex`.
 - `figures/` holds the two figures of the paper, with the captions in `figures/captions.md`.
   Figure 1 (`family.pdf`) is made by `figures/make_family_figure.py` and Figure 2 (`shape.pdf`) by
   `figures/make_figures.py`, both in the shared style `../figures/series_style.py`. The second script makes the
@@ -190,16 +200,24 @@ grows.
   includes `verify_aging_urn.py` and `certify_elephant.py` but not `verify_elephant_odd.py`.
 - `removed_proofs/` keeps the paper as first written in September 2026, before it was shortened. The
   October revision put several of those proofs back.
-- `../lean/PaperD/` holds Lean 4 proofs of selected finite statements. They are the
-  correspondence between sign words and the count chain, the strict monotonicity relative to the
-  end and the unique crossing, the derivative C_N'(0) = 4/(N+2), unimodality with a fixed first
-  step and the inequalities for the end and its neighbor. The non-unimodality at the crossing is
-  proved with the endpoint dip as a hypothesis. The identification of the Pólya chain with the
-  random recursive tree and the principal analytic and shape results are not formalized end to
-  end, and the Python and Arb certificates are separate from Lean. `MAP.md` there gives the Lean
-  name of each formalized statement, with its number in the paper. It names 136 declarations, but
-  85 of them are for Paper F and many are support lemmas, so they are not 136 theorems of
-  Paper D.
+- `../lean/PaperD/` holds the Lean 4 proofs. Every proof is checked by the Lean kernel, no module
+  uses `native_decide`, and every theorem depends only on `propext`, `Classical.choice` and
+  `Quot.sound`. Lean proves Theorem 1.1 as stated (Lemmas 2.2 and 2.4, Propositions 2.3 and 2.5,
+  Theorems 2.6 and 2.7), Theorem 2.8 with its input from Paper A (Proposition 3.8 there, proved
+  in the Paper A library) as a hypothesis, Lemmas 3.1 to 3.4 (with the relabeling in Lemma 3.2),
+  Theorem 3.5, Corollary 3.6, Proposition 3.7 for every even N >= 8, Lemmas 3.15 to 3.17,
+  Theorems 3.18 and 3.19, Corollary 3.20, Lemma 3.22, Propositions 3.24 and 3.26, the first
+  paragraph and parts (a) and (c) of Proposition 3.25, Appendix A, Lemma B.3 and Appendix D. So
+  parts (a), (b) and (d) of Theorem 1.3 are proved. The finite ranges of Propositions 3.7, 3.24
+  and 3.26 rest on certificate runs in integer arithmetic whose soundness Lean proves, and the
+  kernel evaluates every step of every run. Not formalized are Theorems 3.8 and 3.9, Lemma 3.10
+  (the Arb computation), Corollary 3.11, Theorem 1.2, Appendix C, Appendix B apart from Lemma B.3,
+  Steps 1 to 3 of the proof of Theorem 3.21 (so Theorem 3.21, Corollary 3.23 for large N,
+  Proposition 3.25(d) and Theorem 1.3(c) are proved only from those steps), Proposition 3.25(b)
+  and Online Resource 1. The Python and Arb scripts are separate from Lean. `MAP.md` there gives
+  the Lean names and the status of each statement of the paper. The library also holds the Lean
+  proofs for Paper F, and most of its theorems are generated certificate steps, so the
+  declaration count is not a count of results (see `MAP.md`).
 
 Each check script recomputes the numbers of its section and compares them with the printed values.
 Where two independent methods were used when the numbers were first found, the script runs both. The
@@ -212,15 +230,22 @@ calling `verify_all.py` here. Run `python -B verify_all.py` here (or `python -B 
 --quick`, the same thing) for the quick run, which takes a few minutes, or add `--full` for the
 heavy cells. The scripts need numpy, scipy, mpmath and python-flint. Build the
 paper with `pdflatex problem131_memory.tex`, run three times so that the references settle, and
-then `pdflatex online_resource.tex` twice and the paper once more. The arXiv version is pinned
-in the paper's Code availability statement.
+then `pdflatex online_resource.tex` twice and the paper once more. The Code availability statement
+of the paper pins the supporting code and certificate records to commit
+`b83d9b469edc4ded17f4557bdd74078d01aa2393`. Later edits to the text of the paper do not change
+that pin, but a change to a script or to a record would need a new checked commit. The arXiv
+version is `problem131_arxiv.tex`. Build it with `pdflatex problem131_arxiv.tex` three times. It
+gives the paper followed by Online Resource 1 in one PDF, with one bibliography and no `xr`.
 
 ## Statement labels and old numbers
 
 The `certify_*.py` scripts and `verify_elephant_crossing.py` name statements by their numbers in
 the first build of October 17, 2026, before the move to Online Resource 1. `verify_all.py` and
 `verify_elephant_shape.py` still use the numbers before October 17 (column four). The
-`certify_*.py` scripts add the TeX label, which does not change when statements move. Outputs of
+`certify_*.py` scripts add the TeX label, which does not change when statements move. The
+docstrings and comments of the scripts keep these older numbers on purpose. The witness headers
+record the sha256 of the raw bytes of the scripts, so even an edit to a comment would break the
+link between a script and its archived witnesses. Use the table below to read them. Outputs of
 earlier runs are kept in `data/` exactly as they were printed, so some of them use older numbers.
 The table gives, for each label the scripts use and for each statement of Section 3, the number now,
 the number in the first build of October 17 (the numbers of the check scripts) and the number in the

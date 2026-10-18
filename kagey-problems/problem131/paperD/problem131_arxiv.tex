@@ -1,0 +1,43 @@
+% arXiv version of Paper D: the paper followed by the mathematics of Online
+% Resource 1, in one PDF with one bibliography and internal references.
+% Make this file the top-level file of the arXiv submission. It inputs
+% problem131_memory.tex (the journal version, unchanged), skips the
+% \documentclass line there, and appends online_resource_body.tex (the text
+% that online_resource.tex also uses) just before the bibliography. It does
+% not use xr or xr-hyper.
+% Build: pdflatex problem131_arxiv.tex, three times.
+\documentclass[11pt]{article}
+
+% problem131_memory.tex begins with the same \documentclass line, which we skip.
+\renewcommand{\documentclass}[2][]{}
+
+\newcommand{\appendonlineresource}{%
+  \clearpage
+  \setcounter{section}{0}%
+  \setcounter{subsection}{0}%
+  \setcounter{equation}{0}%
+  \setcounter{table}{0}%
+  \renewcommand{\thesection}{S\arabic{section}}%
+  \renewcommand{\thesubsection}{\thesection.\Alph{subsection}}%
+  \renewcommand{\theequation}{S\arabic{equation}}%
+  \renewcommand{\thetable}{S\arabic{table}}%
+  \phantomsection\pdfbookmark[1]{Online Resource 1}{online-resource-1}%
+  \begin{center}\Large\bfseries Online Resource 1\end{center}
+  \par\medskip
+  This part holds Online Resource~1, which the journal version of the paper
+  prints as a separate file. Section~\ref{sec:erw-second} gives the center and
+  the crossing to second order, Section~\ref{or:tail} proves the tail of the
+  law, and Section~\ref{or:odd} proves parts (b), (c) and (d) of
+  Proposition~\ref{prop:odd}. Numbers with the prefix S refer to this part.
+  None of Theorems~\ref{thm:main-center} to~\ref{thm:main-shape} uses it.
+  \par
+  \input{online_resource_body.tex}%
+  \clearpage
+}
+
+% The Online Resource goes just before the bibliography, and its one extra
+% item goes at the end of the bibliography.
+\AddToHook{env/thebibliography/before}{\appendonlineresource}
+\AddToHook{env/thebibliography/end}{\input{online_resource_bib.tex}}
+
+\input{problem131_memory.tex}
