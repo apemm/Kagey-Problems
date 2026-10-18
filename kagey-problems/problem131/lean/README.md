@@ -207,7 +207,7 @@ the aging walk, with unique crossings, the uniform law at `c = 1` with a fixed f
 fair-start values and the arcsine law at `c = 1/2` (`Aging`, `AgingExact`, `AgingCrossing`,
 `AgingSmall`, `AgingAveraging`, `AgingSwitches`, `BetaBinomial`).
 
-The library has 216 modules (including the root) and 22416 theorem and lemma declarations. Of
+The library has 217 modules (including the root) and 22427 theorem and lemma declarations. Of
 these 20517 are steps of the generated certificates in `T7_Gen_*`, 163 are for Paper F, and most
 of the rest are support lemmas, so the count is not a count of results. `lake build PaperD`
 takes about 40 minutes on 24 cores. The 69 `T7_Gen_*` modules take 1 to 4 minutes each and a few GB
@@ -268,7 +268,7 @@ The first command downloads the compiled Mathlib. Then run
     python -B verify_lean.py --workspace .
 
 This builds each library with Lake and runs `#print axioms` on every `theorem` and `lemma`.
-For `PaperD` the build takes about 40 minutes and the axiom check of its 22416 declarations a
+For `PaperD` the build takes about 40 minutes and the axiom check of its 22427 declarations a
 few more (see the Paper D section for the memory needed). It
 checks that only `propext`, `Classical.choice` and `Quot.sound` appear. It also checks that the
 declarations it reads from the source are exactly the theorems Lean finds in the library. The

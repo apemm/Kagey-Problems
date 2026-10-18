@@ -8,7 +8,7 @@ the numbers S1.1 and so on). The later tables cite the statement labels of the
 the number in Paper D before the split of October 13, 2026, and the note at the end says how these
 numbers moved.
 
-The Lean library is `PaperD`: the root `PaperD.lean` and 215 modules in `PaperD/`, so 216 modules
+The Lean library is `PaperD`: the root `PaperD.lean` and 216 modules in `PaperD/`, so 217 modules
 in all, in namespace `Kagey131.PaperD` (tracks T2 and T8 in `Kagey131.PaperD.RRT`, track T5 in
 `Kagey131.PaperD.T5`, track T7 in `Kagey131.PaperD.T7`, tracks U1, U2, U4 in
 `Kagey131.PaperD.U1`, `Kagey131.PaperD.U2`, `Kagey131.PaperD.U4`, and the copy of
@@ -28,10 +28,12 @@ Later on October 18, 2026 track U6 was integrated (section "Track U6" at the end
 Steps 1 and 2 of the proof of Lemma 3.10, the real integral for `f_L` and its certified numbers,
 in the kernel. So the certificate of Lemma 3.10 is no longer a hypothesis, and Lemma 3.10 rests
 only on the unimodality of `f_L`.
+The module `A4_Full` of October 18, 2026 proves Proposition A.4(c) and (d) at full strength, as
+stated in the paper, for `0 < ε < 1/4` and every even `N ≥ 2` with no hypothesis.
 
 ### Declaration count
 
-The library has 22416 `theorem` and `lemma` declarations (the count of `verify_lean.py`, which
+The library has 22427 `theorem` and `lemma` declarations (the count of `verify_lean.py`, which
 checks that it equals the set of theorems Lean finds). They split as follows.
 
 * 20517 in the 69 generated certificate modules `T7_Gen_*` (for each `N` with `101 ≤ N ≤ 2000`,
@@ -41,7 +43,7 @@ checks that it equals the set of theorems Lean finds). They split as follows.
 * 163 in the Paper F modules `HeavyRuns`, `Aging`, `AgingExact`, `AgingCrossing`, `AgingSmall`,
   `AgingAveraging`, `AgingSwitches`, `BetaBinomial` (notes D3 and D4).
 * 825 in the modules of the tracks U1 to U6 and `U_EndToEnd`, most of them support lemmas.
-* 810 in the remaining Paper D modules, most of them support lemmas. The table "Paper D by
+* 821 in the remaining Paper D modules, most of them support lemmas. The table "Paper D by
   statement label" below names the main ones.
 
 ## Build of October 17 and 18, 2026
@@ -51,8 +53,8 @@ checks that it equals the set of theorems Lean finds). They split as follows.
   whole library. The 69 modules `T7_Gen_*` take 1 to 4 minutes each and need a few GB of memory
   each, so at most 7 of them were elaborated at once (on 24 cores and 32 GB, 1946 s of wall time, after a first attempt with no limit had run out of memory).
 * `python -B verify_lean.py PaperD` in `problem131/lean` (workspace `~/lean-work/paperD`) builds
-  the library again from the repository copy, runs `#print axioms` on all 22416 declarations
-  (216 modules, after the track U6 of October 18) and finds only `propext`,
+  the library again from the repository copy, runs `#print axioms` on all 22427 declarations
+  (217 modules, after `A4_Full` of October 18) and finds only `propext`,
   `Classical.choice` and `Quot.sound` (`build-log.txt`, `verification-manifest.json`).
 * `axioms-final.lean` (output `axioms-final.log`, in the project root of `paperD-next`) runs
   `#print axioms` on 499 named declarations, every main theorem of every track and every
@@ -138,7 +140,7 @@ indexes the count chain by the number of steps.
 | `lem:A-polya` | A.1 | (a) `Φ^c` is a hitting probability; (b) one step; (c) pseudo-count form; (d) `V_s ≥ Φ^c_s` | (a) `phiU_up`, `phiU_stay`, and for `c = 0` `hitV_zero_eq_phiU`, `hit_zero_closed`; for every `c ≥ 0` `U4.polya_hit` (`Φ^c_u(b)` is the probability that the Pólya(`c`) chain is at `h` at the final time), `U4.polya_doob`; (b) `phiU_up`; (c) `upProb_pseudocount`; (d) `hitV_ge_phiU`, `hitV_ge_pi`, `phiU_sub_step` | kernel ((a) for `c > 0` by track U4) |
 | `lem:A-compare` | A.2 | comparison with super- and subsolutions | (a) `hitV_le_of_super`; (b) `hitV_ge_of_sub` | kernel |
 | `lem:A-cderiv` | A.3 | `∂_τ log Φ^τ_s(b)` bound | `logPhi_deriv_lt`, with the digamma bounds `binetDigammaBounds_holds` | kernel |
-| `prop:A-super` | A.4 | (a) the step identity; (b) `log Δ_s`; (c) `V_{t+1}(1)` bound; (d) the center | (a) `prop_A4a`, `J_eq`, `step_eq_J`; (b) `super_step_Sg`, `delta_le`, `log_delta_le`; (c) `hitV_le_pi`, a relaxed form; (d) no separate statement, and `center_upper` proves the resulting bound on `C_N` (Theorem 2.6(b)) | kernel; (a) and (b) as stated; (c) only in a relaxed form, with the weaker exponent `κ(1 + log N) + κ(t+11) log(t+1)` and the extra assumption `ε ≤ 1/100`, which suffices for Theorem 2.6(b); (d) the intermediate bound `U_N` is not stated in Lean |
+| `prop:A-super` | A.4 | (a) the step identity; (b) `log Δ_s`; (c) `V_{t+1}(1)` bound; (d) the center | (a) `prop_A4a`, `J_eq`, `step_eq_J`; (b) `super_step_Sg`, `delta_le`, `log_delta_le`; (c) `prop_A4_c` (with `piPaper` for `π_t`); (d) `prop_A4_d`, `prop_A4_d'` (with `cOne`, `wPaper`, `GA4` for `c₁`, `w_t`, `𝒢`, and `UN` for `U_N`), in `A4_Full.lean`; `hitV_le_pi` and `center_upper` are the earlier relaxed forms used for Theorem 2.6(b) | kernel; (a) to (d) as stated, for `0 < ε < 1/4` and every even `N ≥ 2`, no hypothesis |
 | `lem:B-sandwich` | B.1 | monotone sandwich | `lem_B_sandwich_right`, `lem_B_sandwich_left`; the largest mode `modeH`, `modeH_spec`, `law_mono_below_modeH`, `law_anti_above_modeH`; general form `sandwich_of_antitoneOn`, `sandwich_of_monotoneOn` | kernel; track U5 |
 | `lem:B-tail` | B.2 | tail of `M^{[k_0]}` | `lem_B_tail`, `lem_B_tail_mean`, `lem_B_tail_law`, `lem_B_tail_Z`; the chains as processes `chainReal_exists`, `Inner_eq_real`, `RS_eq_real`; the displays (`eq:B-subtail`), (`eq:B-ratio`) `stLaw_succ_mul`, `bTail_closed`, `bTail_le_exp`, `stLaw_eq_mul_bTail`, `bTail_pred_mul` | kernel; track U5; for `0 ≤ ε ≤ 1` (the paper has `0 < ε < 1`) |
 | `lem:B-D` | B.3 | the first flipped family | `lem_B_D_tree`, `lem_B_D_tree_tail` (tree model), `firstMark_bounds`, `firstMark_tail` (urn sum) | kernel |
@@ -398,7 +400,7 @@ for Paper D. These note statements were formalized on October 17.
 | D1 S3(a) (first-mutation decomposition) | Proposition 2.5(a) | `center_first_flip`, `center_first_flip_Icc`, `law_first_flip` | `T4_Hitting.lean`, `T3_FirstFlip.lean` |
 | D1 S3(c), first-order weights | Proposition 2.5(c) | `weights_mean`, `sum_w_mul`, `weight_le`, `w_le`, `weights_sum_one`, `piW_prod`, `piW_binomial` | `T3_FirstFlip.lean`, `T3_Weights.lean`, `T3_Urn.lean`, `T4_Lower.lean` |
 | D1 S5(a),(d) (Pólya(`c`) hitting function, comparison) | Lemma A.1, Lemma A.2 | `phiU_up`, `phiU_stay`, `hitV_zero_eq_phiU`, `hit_zero_closed`, `hitV_ge_phiU`, `hitV_le_of_super`, `hitV_ge_of_sub` | `T4_Polya.lean`, `T4_Hitting.lean`, `T4_Lower.lean`, `T3_CenterLower.lean` |
-| D1 S6 (supersolution bound) | Proposition A.4, Lemma A.3 | `prop_A4a`, `super_step_Sg`, `hitV_le_pi`, `center_upper`, `logPhi_deriv_lt`, `binetDigammaBounds_holds`, `seriesBound_holds` | `T4_Super.lean`, `T4_Upper.lean`, `T4_Digamma.lean`, `T4_Binet.lean`, `T4_Series.lean` |
+| D1 S6 (supersolution bound) | Proposition A.4, Lemma A.3 | `prop_A4a`, `super_step_Sg`, `prop_A4_c`, `prop_A4_d`, `hitV_le_pi`, `center_upper`, `logPhi_deriv_lt`, `binetDigammaBounds_holds`, `seriesBound_holds` | `T4_Super.lean`, `A4_Full.lean`, `T4_Upper.lean`, `T4_Digamma.lean`, `T4_Binet.lean`, `T4_Series.lean` |
 | D1 the two-sided bounds on the center | Theorem 2.6 | `thm_erw_bounds_a`, `thm_erw_bounds_b`, `thm_erw_bounds_in_particular` | `T4_Bounds.lean`, `T4_Main.lean` |
 | D1 S10 (the crossing `x_n`) | Theorem 2.7 | `thm_erw_crossing_a_G`, `thm_erw_crossing_a_g`, `thm_erw_crossing_b`, `crossing_explicit` | `EndToEnd.lean`, `T6_CrossingAsymp.lean` |
 | D1 S11 (comparison with Paper A) | Theorem 2.8 | `thm_erw_markov`, `markov_explicit`; `thm_erw_markov_persistent` | `EndToEnd.lean`, `T6_Markov.lean`, `T6Bridge/T6_PaperABridge.lean` |

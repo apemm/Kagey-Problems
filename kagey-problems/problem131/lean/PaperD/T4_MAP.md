@@ -25,13 +25,15 @@ for 56 declarations and `[propext]` for `logTab_spec` and `logTab_least`.
 | Proposition A.4(a) | `prop_A4a`, `J_eq`, `step_eq_J` | `T4_Super` | faithful |
 | Proposition A.4(b) | `super_step_Sg`, `delta_le`, `log_delta_le` (Steps 3-4: `exponent_le_Sg`; Step 1: `J_le`, `rho_sub_one`) | `T4_Super` | faithful |
 | Proposition A.4(b), weakened to `s` | `super_step`, `exponent_le` | `T4_Super` | weaker (what A.4(c) uses) |
-| Proposition A.4(c) | `hitV_le_pi` | `T4_Upper` | weaker (exponent already relaxed as in Step 1 of 2.6(b)) |
-| Proposition A.4(d) + proof of 2.6(b) | `center_upper` (premises `BinetDigammaBounds`, `SeriesBound`, both proved) | `T4_Upper` | faithful |
+| Proposition A.4(c) | `prop_A4_c` (`π_t` as `piPaper`) | `A4_Full` | faithful (`0 < ε < 1/4`, every even `N ≥ 2`) |
+| Proposition A.4(c), relaxed | `hitV_le_pi` | `T4_Upper` | weaker (exponent already relaxed as in Step 1 of 2.6(b)) |
+| Proposition A.4(d) | `prop_A4_d`, `prop_A4_d'` (`U_N` as `UN`, with `cOne`, `wPaper`, `GA4`) | `A4_Full` | faithful (`0 < ε < 1/4`, every even `N ≥ 2`) |
+| Proof of 2.6(b) | `center_upper` (premises `BinetDigammaBounds`, `SeriesBound`, both proved) | `T4_Upper` | faithful |
 | Series bound `S < 102.59` | `seriesBound_holds` (partial sums `≤ 102.635`) | `T4_Series` | weaker, sufficient (`< 103.1`) |
 
-Not formalized: the probabilistic reading of Lemma A.1(a) for `c > 0` (not needed), the
-duplication-formula route of Lemma A.5 (replaced by the Binet bounds), and the sharper exponent of
-A.4(c) (not needed).
+Not formalized: the probabilistic reading of Lemma A.1(a) for `c > 0` (not needed) and the
+duplication-formula route of Lemma A.5 (replaced by the Binet bounds). The sharper exponent of
+A.4(c) is now proved in `A4_Full` (`prop_A4_c`).
 
 ## Proposed edits to existing files (not applied)
 
