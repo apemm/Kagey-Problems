@@ -6,16 +6,24 @@ before the rectangle.
 
 ## Results
 
-For m columns:
+These are proved in the paper `jis/pemmasani.tex`. Results marked (computer) rest on a finite
+computation, checked by at least two separately written programs. f(h,m) is the maximum blackout of
+h rows and m columns, and a_h(m) is the number of maximum blackouts.
 
-- Two rows, m >= 3: maximum blackout m+1, with exactly m*2^(m-1) optima (Strip Theorem).
-- Three rows, m >= 3: maximum blackout m+2.
-- Four rows, m >= 6: maximum blackout m+4.
-- Four rows, m = 4, 5: maximum blackout m+3, by an exhaustive computer check of all 72 and 1,440
-  blackouts that could reach the upper bound.
-- Any n, m >= 3: maximum blackout at most m + floor(n^2/4).
-- 5 x 5: maximum blackout 10, by hand: the incidence graph has 10 vertices and no 4- or 6-cycle,
-  so at most 10 edges. By computer, the optimum is unique up to the 8 symmetries of the square.
+- Every grid: h+m-1 <= f(h,m), and f(h,m) <= m + floor(h^2/4) for m >= 3.
+- Two rows, m >= 3: f = m+1, with exactly m*2^(m-1) optima (Strip Theorem).
+- Three rows, m >= 3: f = m+2. The optima are counted exactly:
+  a_3(m) = 4(m-1)(3m+2)3^(m-5) + E_m for m >= 4, with a closed form for E_m, a rational generating
+  function, and a_3(m) ~ (4/81) m^2 3^m.
+- Four rows: f = m+4 for m >= 6, and f(4,4) = 7, f(4,5) = 8 (computer). No valid blackout hides a
+  rectangle for m >= 4. The generating function of a_4(m) is rational with a denominator of degree
+  420, and a_4(m) ~ c m^4 3.3520^m (computer).
+- Five rows: f(5,5) = 10, f(5,6) = 11, f(5,7) = 12, and f(5,m) = m+6 for every m >= 8 (computer,
+  with the finite collar theorem).
+- Six rows: f(6,m) = m+9 for every m >= 15, and f(6,m) <= m+8 for 8 <= m <= 14 (computer).
+- Small cells (computer): f(6,6) = 12, f(6,7) = 13, f(7,7) = 14, f(6,8) = 15, f(7,8) = 16. The guess
+  f = h+m for both sides at least 4 fails at 5 x 8 and 6 x 8.
+- Square grids: f(n,n) >= c n^(6/5) (1+ln n)^(-2/5) for some c > 0 and all large n.
 
 The key step is that the axis-aligned rectangles are identifiable exactly when the row-column
 incidence graph of the blackout has no 4-cycle and no 6-cycle (m >= 3). Replacing each column by a
