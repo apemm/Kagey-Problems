@@ -25,6 +25,7 @@ import PaperD.T2_All
 import PaperD.T8_RRTRelabel
 import PaperD.T3_Urn
 import PaperD.T4_All
+import PaperD.A4_Full
 import PaperD.T5_Kernel
 import PaperD.T6_Crossing
 import PaperD.T6_CrossingAsymp
