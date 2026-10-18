@@ -15,7 +15,7 @@ clause forbidding its exact black set. Optional restrictions: the columns of the
 the bound "every column black in one or two rows" (the first conclusion of the equality
 theorem, without the bipartite shape of the doubles).
 
-The run stops at the model cap or at the wall-clock cap (the solver is interrupted), and the
+The run stops at the model cap or at the wall-clock cap (the solver process is stopped), and the
 JSON records whether the enumeration was complete. Coordinates in the output are one-based
 (column, row).
 
@@ -26,13 +26,12 @@ import argparse
 import json
 import os
 import sys
-import threading
 import time
 from itertools import combinations
 
 from pysat.card import CardEnc, EncType
 from pysat.formula import IDPool
-from pysat.solvers import Solver
+from supervised_solver import SupervisedSolver
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -146,18 +145,16 @@ def main():
     points = list(var)
     models = []
     status = 'complete'
-    with Solver(name=a.solver, bootstrap_with=clauses) as s:
+    # the solver runs in a worker process that is killed at the deadline (supervised_solver.py)
+    with SupervisedSolver(a.solver, bootstrap_with=clauses) as s:
         while len(models) < a.cap:
             remaining = deadline - time.time()
             if remaining <= 0:
                 status = 'unresolved: wall-clock limit'
                 break
-            timer = threading.Timer(remaining, s.interrupt)
-            timer.start()
-            res = s.solve_limited(expect_interrupt=True)
-            timer.cancel()
+            res = s.solve_limited(timeout=remaining)
             if res is None:
-                status = 'unresolved: wall-clock limit (solver interrupted)'
+                status = 'unresolved: wall-clock limit (solver process stopped)'
                 break
             if not res:
                 break

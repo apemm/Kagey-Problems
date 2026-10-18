@@ -11,13 +11,17 @@ dropping differences the column constraints already satisfy and differences
 that contain a smaller difference reachable by deleting one or two points.
 
 Single run:  python six_row_sat_check.py run WIDTH PARTITION_INDEX SOLVER OUT.json
-Batch:       python six_row_sat_check.py batch JOBS.json CONCURRENCY CAP_SECONDS
+Batch:       python six_row_sat_check.py batch JOBS.json CONCURRENCY CAP_SECONDS [--overwrite]
   JOBS.json is a list of [width, partition_index, solver, out].
-Output coordinates are one-based (column, row), (1,1) top left.
+Each batch job runs in its own process and is killed at the cap; a killed job is
+recorded as "unresolved", a failed or rejected job as "error".  A result is accepted
+only after a successful exit and a check of a fresh attempt file (see batch_jobs.py);
+the batch exits nonzero unless every job ended SAT or UNSAT.  Without --overwrite a batch
+refuses to start (exit code 3) when the output path of some job already exists.  A single run writes its
+output atomically.  Output coordinates are one-based (column, row), (1,1) top left.
 """
 import json
 import os
-import subprocess
 import sys
 import time
 from itertools import combinations
@@ -26,11 +30,14 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 from cells_common_check import rectangles_by_triples, first_collision  # noqa: E402
 from six_row_dfs_check import partitions  # noqa: E402
+import batch_jobs  # noqa: E402
+
+INPUTS = ['six_row_sat_check.py', 'cells_common_check.py', 'six_row_dfs_check.py']
 
 ROWS = 6
 
 
-def run(width, idx, solver_name, out):
+def run(width, idx, solver_name, out, job_key=None):
     from pysat.card import CardEnc, EncType
     from pysat.solvers import Solver
     import pysat
@@ -108,7 +115,7 @@ def run(width, idx, solver_name, out):
         sat = s.solve()
         model = s.get_model() if sat else None
     solve = time.time() - t1
-    result = {'rows': ROWS, 'width': width, 'target': width + 9,
+    result = {'rows': ROWS, 'width': width, 'target': width + 9, 'partition_index': idx,
               'partition_one_based_rows': [list(a), list(b)],
               'method': 'structured SAT, point variables, column constraints, edge indicators, difference clauses',
               'solver': solver_name, 'pysat_version': pysat.__version__,
@@ -121,54 +128,38 @@ def run(width, idx, solver_name, out):
         result['witness'] = black
         result['witness_size'] = len(black)
         result['witness_valid_by_triples'] = first_collision(rects, set(black)) is None
-    json.dump(result, open(out, 'w'), indent=1)
+    result['job_key'] = job_key
+    result['input_sha256'] = batch_jobs.input_hashes(INPUTS)
+    result['complete'] = True
+    batch_jobs.atomic_write_json(out, result)
     print(json.dumps({k: v for k, v in result.items() if k != 'witness'}))
 
 
-def batch(jobs_path, concurrency, cap):
-    jobs = json.load(open(jobs_path))
-    pending = list(jobs)
-    running = []
-    summary = []
-    while pending or running:
-        while pending and len(running) < concurrency:
-            job = pending.pop(0)
-            width, idx, solver, out = job
-            args = [sys.executable, os.path.abspath(__file__), 'run', str(width), str(idx), solver, out]
-            log = open(out + '.log', 'w')
-            p = subprocess.Popen(args, stdout=log, stderr=subprocess.STDOUT)
-            running.append((job, p, time.time(), log))
-        time.sleep(5)
-        still = []
-        for job, p, start, log in running:
-            rc = p.poll()
-            elapsed = time.time() - start
-            if rc is None and elapsed > cap:
-                p.kill()
-                p.wait()
-                log.close()
-                width, idx, solver, out = job
-                json.dump({'rows': ROWS, 'width': width, 'partition_index': idx, 'solver': solver,
-                           'status': 'unresolved', 'cap_seconds': cap, 'wall_seconds': round(elapsed, 1),
-                           'note': 'process killed at the cap'}, open(out, 'w'), indent=1)
-                summary.append([job, 'unresolved', round(elapsed, 1)])
-                print('killed', job, round(elapsed, 1), flush=True)
-            elif rc is None:
-                still.append((job, p, start, log))
-            else:
-                log.close()
-                try:
-                    status = json.load(open(job[3]))['status']
-                except Exception:
-                    status = 'error rc=%s' % rc
-                summary.append([job, status, round(elapsed, 1)])
-                print('done', job, status, round(elapsed, 1), flush=True)
-        running = still
-    json.dump(summary, open(jobs_path.replace('.json', '_summary.json'), 'w'), indent=1)
+def describe(job):
+    width, idx, solver, out = job
+    params = {'rows': ROWS, 'width': width, 'partition_index': idx, 'solver': solver}
+    return params, out, [width, idx, solver], []
+
+
+def check(res):
+    if res['status'] == 'SAT':
+        if res.get('witness_valid_by_triples') is not True:
+            return 'SAT witness not valid'
+        if res.get('witness_size') != res['width'] + 9:
+            return 'SAT witness does not have width + 9 points'
+    return None
+
+
+def batch(jobs_path, concurrency, cap, overwrite=False):
+    return batch_jobs.run_batch('six_row_sat_check.py', jobs_path, concurrency, cap,
+                                describe, INPUTS, check, overwrite=overwrite)
 
 
 if __name__ == '__main__':
-    if sys.argv[1] == 'run':
-        run(int(sys.argv[2]), int(sys.argv[3]), sys.argv[4], sys.argv[5])
+    argv = sys.argv[1:]
+    key = batch_jobs.pop_job_key(argv)
+    if argv[0] == 'run':
+        run(int(argv[1]), int(argv[2]), argv[3], argv[4], key)
     else:
-        batch(sys.argv[2], int(sys.argv[3]), float(sys.argv[4]))
+        jobs_path, concurrency, cap, overwrite = batch_jobs.batch_args(argv)
+        sys.exit(batch(jobs_path, concurrency, cap, overwrite))

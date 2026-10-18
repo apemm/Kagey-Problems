@@ -2,16 +2,12 @@
 
 The results that rest on a computation are labeled computer-assisted. Every other result in
 Sections~\ref{sec:conv} to~\ref{sec:height} has a written proof. Every computed value and count comes from at least two programs
-written separately, which agree wherever both ran. Before most computations a prediction went
-into the ledger \nolinkurl{kagey-problems/problem001/data/ledger.md}, and several were wrong,
-among them
-$f(5,5)=9$, $f(4,8)=13$, $f(5,8)=13$, and $f(6,8)=14$.
+written separately, which agree wherever both ran, with the one exception of the $7\times8$ count below.
 
 All programs are in Python~3.14.3. The ILP program \texttt{solver/engine.py} finds a smallest
 hitting set for the difference sets of Lemma~\ref{lem:diff} with CBC~2.10.3~\cite{cbc}
-through PuLP~3.3.2~\cite{pulp}. It took $723$ seconds on the $5\times7$ grid and $1{,}063$ seconds on the
-$6\times6$ grid. The brute-force check \texttt{solver/brute.py} uses no lemma and shares no
-code with it. The verifier \texttt{verify\_narrow.py} checks the lemmas and constructions of
+through PuLP~3.3.2~\cite{pulp}. The brute-force check, \texttt{solver/brute.py}, uses no lemma
+and shares no code with it. The verifier \texttt{verify\_narrow.py} checks the lemmas and constructions of
 Sections~\ref{sec:graph} to~\ref{sec:four} and the $5\times5$ grid in $21$ seconds. The
 blackouts of $h+m$ points on the grids $5\times6$, $5\times7$, $6\times6$, $6\times7$, and
 $7\times7$ are stored in \nolinkurl{jis/data/small_cells_sat_*.json}. The SAT solvers are
@@ -28,19 +24,26 @@ most one of them true, with a totalizer~\cite{bailleux2003} for the size. The th
 Section~\ref{sec:five} add the column structure of Theorem~\ref{thm:equality} for one row
 partition and keep only the clauses that involve a tilted rectangle. The collar test boards of
 Section~\ref{sec:five} are checked by three separately written enumerators, which list every
-rectangle of the board and compare the presentations. The column searches use no solver. They place columns from left to right and stop
+rectangle of the board and compare the presentations. The column searches call no solver. They place columns from left to right and stop
 when two rectangles inside the placed columns show the same points, which is sound since every
-interval of columns of a valid blackout is valid. We did not produce DRAT proofs, and rely on
-the agreement of independent encodings on different solvers. This matters only for
-$f(6,7)$, $f(7,7)$ and $f(6,8)$ in Theorem~\ref{thm:refute}(a) and for $m=14$ in
-Theorem~\ref{thm:sixrow}(a), since the other upper bounds also follow from proofs by hand or
-from exhaustive searches with no SAT solver.
+interval of columns of a valid blackout is valid. The search \texttt{table\_counts\_search.py}
+also stops when the remaining columns cannot reach the target by the values of $f$ on narrower
+grids. So its counts on the $6\times7$ and $6\times8$ grids use $f(6,6)\le12$, from the SAT runs
+and the ILP program, and those on the $6\times8$ and $7\times7$ grids use the SAT bound $f(6,7)\le13$.
+The five-row and six-row searches use no such bound.
 
-The scripts in \nolinkurl{jis/scripts} form five groups, by the prefixes
-\texttt{three\_row}, \texttt{four\_row}, \texttt{five\_row}, \texttt{six\_row}, and
-\texttt{small\_cells} or \texttt{cells}. The file \nolinkurl{jis/scripts/README.md} lists the
-scripts behind each computer-assisted result and the longest run of each, at most $1{,}578$
-seconds. The counts of the optima on the grids $5\times6$ to $7\times7$ in Table~\ref{tab:values} come from two SAT encodings that list every optimum, on Glucose~4 and MiniSat~2.2, and from a column search, all three in the scripts \texttt{table\_counts\_*}. On the $7\times8$ grid no valid blackout of $17$ points exists, by two SAT runs split by the first column, so $f(7,8)=16$. One of them finds $18$ optima there, and the second count did not finish.
+We did not produce DRAT or LRAT proofs. So $f(6,7)<14$, $f(7,7)<15$, $f(6,8)<16$,
+$f(7,8)<17$, and the ten row partitions that exclude $m+9$ points at $m=14$ in
+Theorem~\ref{thm:sixrow}(a) rest on unsatisfiable SAT instances without a checked certificate,
+and on the agreement of independent encodings on different solvers. Every other upper bound
+also follows from a proof by hand, the ILP program, or an exhaustive search with no SAT
+solver. The ILP program gives no certificate either, so $f(6,6)<13$ rests on solvers alone. Found blackouts need no such trust, since the stored witnesses and every model of the
+counting programs are checked against the definition. A count needs in addition that the
+enumeration is complete.
+
+The file \nolinkurl{jis/scripts/README.md} gives, for each computer-assisted result, the
+command, the evidence file with its SHA-256 hash, and the stored time with what it measures.
+The file \nolinkurl{requirements.txt} pins the package versions. The counts of the optima on the grids $5\times6$ to $7\times7$ in Table~\ref{tab:values} come from two SAT encodings that list every optimum, on Glucose~4 and MiniSat~2.2, and from a column search, all three in the scripts \texttt{table\_counts\_*}. On the $7\times8$ grid no valid blackout of $17$ points exists, by two SAT runs split by the first column, so $f(7,8)=16$. One completed enumeration finds $18$ optima there. The second count did not finish, so the table omits this count.
 Table~\ref{tab:values} collects the values, and the rectangle counts of the programs
 agree with \seqnum{A085582} and \seqnum{A289832}. Babichev and Babichev~\cite{babichev2026}
 count the rectangles of the square grid in near-linear time. The Lean~4 file

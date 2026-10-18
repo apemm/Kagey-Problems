@@ -112,7 +112,7 @@ In the row $h=4$ of \seqnum{A399580}, $a_4(4)=316$, $a_4(5)=1{,}810$, $a_4(6)=26
 \end{proposition}
 
 \begin{proof}
-The ILP program and the brute-force check of Section~\ref{sec:verify} both find these values. For $m=6,7$ the script \texttt{four\_row\_direct.py} tests the candidates of Lemma~\ref{lem:fourequality}, and the transfer counter \texttt{four\_row\_counts.py} also gives $26$ and $292$ (Table~\ref{tab:fourvalues}). Its automaton is the exported machine read by \texttt{four\_row\_machines.py}. The script \texttt{four\_row\_\allowbreak equivalence\_\allowbreak check.py} builds the automaton of Lemma~\ref{lem:fourmemory} from the definition and checks that the two automata accept the same words. A direct test of every candidate also agrees to width $10$.
+The ILP program and the brute-force check of Section~\ref{sec:verify} both find these values. For $m=6,7$ the script \texttt{four\_row\_direct.py} tests the candidates of Lemma~\ref{lem:fourequality}, and the transfer counter \texttt{four\_row\_counts.py} also gives $26$ and $292$ (Table~\ref{tab:fourvalues}). Its automaton is the exported machine read by \texttt{four\_row\_machines.py}. The script \texttt{four\_row\_\allowbreak equivalence\_\allowbreak check.py} builds the automaton of Lemma~\ref{lem:fourmemory} from the definition and checks that the two automata accept the same words.
 \end{proof}
 
 \begin{table}[htbp]
@@ -144,9 +144,9 @@ The Berlekamp--Massey algorithm modulo eight primes, run on the values $a_4(m)$ 
 \end{proof}
 
 \begin{corollary}[growth, computer-assisted]\label{cor:fourgrowth}
-Let $\rho_4=3.351996777310\ldots$ be the largest real root of the irreducible polynomial $p(x)=x^{20}g_{20}(1/x)=x^{20}-4x^{19}+2x^{18}+\cdots-26x^2-4x+8$. Then $a_4(m)\sim c\,m^4\rho_4^m$ with $c=8.1611\times10^{-5}$.
+Let $\rho_4=3.351996777310\ldots$ be the largest real root of the irreducible polynomial $p(x)=x^{20}g_{20}(1/x)=x^{20}-4x^{19}+2x^{18}+\cdots-26x^2-4x+8$, and let $r=1/\rho_4$. Put $H(z)=P_4(z)(1-z/r)^5/Q_4(z)$, $c_j=(-r)^{5-j}H^{(5-j)}(r)/(5-j)!$, and $B(m)=\sum_{j=1}^{5}c_j\binom{m+j-1}{j-1}$. Then $\deg B=4$ and $a_4(m)=\rho_4^m B(m)+O((1000/341)^m)$, with a large constant. So $a_4(m)\sim c\,m^4\rho_4^m$ with $c=c_5/24\approx8.1611\times10^{-5}$.
 \end{corollary}
 
 \begin{proof}
-The script \texttt{four\_row\_root\_isolation.py} isolates the complex roots of every factor of $Q_4$ in rational rectangles, in exact arithmetic in SymPy. The only root of modulus below $0.341$ is the positive root $1/\rho_4=0.29832\ldots$ of $g_{20}$, which is simple in $g_{20}$ and so has order five in $Q_4$. It is not a root of $P_4$, since the two are coprime. So $c$ is the coefficient of $(1-\rho_4 z)^{-5}$ in the partial fraction divided by $4!$ (Flajolet and Sedgewick~\cite[Theorem~IV.9]{flajolet2009}), computed to high precision.
+The script \texttt{four\_row\_root\_isolation.py} isolates the complex roots of every factor of $Q_4$ in rational rectangles, in exact arithmetic in SymPy. The only root of modulus at most $0.341$ is $r=0.29832\ldots$, which is simple in $g_{20}$ and so has order five in $Q_4$. It is not a root of $P_4$, since the two are coprime. So $H$ is analytic at $r$ and $c_5=H(r)\ne0$. Taylor expansion of $H$ at $r$, with $z-r=-r(1-z/r)$, shows that the principal part of $P_4/Q_4$ at $r$ is $\sum_{j=1}^{5}c_j(1-z/r)^{-j}$. What remains is a polynomial plus a rational function with no pole in $|z|\le0.341$, so its coefficients are $O((1000/341)^m)$ by the Cauchy bound. As $[z^m](1-z/r)^{-j}=\rho_4^m\binom{m+j-1}{j-1}$, this gives the expansion, and $B$ has leading coefficient $c_5/24$. Interval arithmetic on a rational interval of width below $2^{-700}$ around $r$ puts $c$ between $0.000081610970775$ and $0.000081610970776$.
 \end{proof}
