@@ -17,7 +17,7 @@ $\widehat{\CP}_N(\theta)=e^{x\Psi_N(\theta)}$.
 
 \subsection{Proof of Theorem~\ref{thm:cp}}\label{app:bulk-cp}
 
-Here we assume only $N\ge2$ and $0<\varepsilon\le\frac14$. Let
+Here we assume only $N\ge1$ and $0<\varepsilon<1$. Let
 $Z_+=\sum_{v=2}^N\mu_v\lvert\mathcal T_v\rvert$ be the total size of the
 flipped families.
 
@@ -31,22 +31,24 @@ $\varepsilon^2\,\E\sum_v(\lvert\mathcal T_v\rvert-1)$, since marks and tree are
 independent. Hence
 \[
  \Prob(M_N\ne Z_+)\le\varepsilon^2\sum_{v=2}^N\Bigl(\frac Nv-1\Bigr)
- \le\varepsilon^2N(H_N-1)\le\frac{x^2\log N}{N}.
+ =\varepsilon^2(NH_N-2N+1).
 \]
 
 \emph{Step 2: given the tree, a product.} Fix $\theta\in[-\pi,\pi]$. Given
 $\mathcal T$ the marks are independent, so
 $\E[e^{i\theta Z_+}\mid\mathcal T]=\prod_{v=2}^N(1+a_v)$ with
 $a_v=\varepsilon(e^{i\theta\lvert\mathcal T_v\rvert}-1)$. Here
-$\lvert a_v\rvert\le2\varepsilon\le\frac12$ and $\operatorname{Re}a_v\le0$.
-Put $W=\sum_va_v$, so that $\operatorname{Re}W\le0$. For complex $a$ with
-$\lvert a\rvert\le\frac12$ the series of the logarithm gives
-$\lvert\log(1+a)-a\rvert\le\lvert a\rvert^2$. So $\prod_v(1+a_v)=e^{W+\varrho}$
-with $\lvert\varrho\rvert\le\sum_v\lvert a_v\rvert^2\le4\varepsilon^2(N-1)$.
-Since $\lvert e^w-1\rvert\le\lvert w\rvert e^{\lvert w\rvert}$,
+$\lvert a_v\rvert\le2\varepsilon$, $\operatorname{Re}a_v\le0$ and
+$\lvert1+a_v\rvert=\lvert1-\varepsilon+\varepsilon e^{i\theta\lvert\mathcal T_v\rvert}\rvert\le1$.
+Put $W=\sum_va_v$, so that $\operatorname{Re}W\le0$ and $e^W=\prod_ve^{a_v}$ with
+$\lvert e^{a_v}\rvert\le1$. For complex $a$ with $\operatorname{Re}a\le0$, Taylor's formula
+$e^a-1-a=a^2\int_0^1(1-s)e^{sa}\,ds$ gives $\lvert e^a-(1+a)\rvert\le\frac12\lvert a\rvert^2$. For
+complex numbers $u_v$ and $w_v$ of modulus at most $1$ we have
+$\lvert\prod_vu_v-\prod_vw_v\rvert\le\sum_v\lvert u_v-w_v\rvert$, by changing one factor at a
+time. So
 \[
- \Bigl\lvert\prod_v(1+a_v)-e^W\Bigr\rvert\le e^{\operatorname{Re}W}\,
- 4\varepsilon^2(N-1)\,e^{4\varepsilon^2(N-1)}\le\frac{4x^2}Ne^{4x^2/N}.
+ \Bigl\lvert\prod_v(1+a_v)-e^W\Bigr\rvert\le\sum_{v=2}^N\tfrac12\lvert a_v\rvert^2
+ \le2\varepsilon^2(N-1).
 \]
 
 \emph{Step 3: replace $W$ by its mean.} Write $W=\varepsilon F$ with
@@ -92,10 +94,14 @@ $u\,g_{u+1}(s)=s\sum_{j\le u}g_j(s)$. Subtracting the same identity for $u-1$
 gives $u\,g_{u+1}(s)=(u-1+s)\,g_u(s)$ for $u\ge2$, and $g_2(s)=s$. So
 $g_u(s)=\prod_{i=1}^{u-1}\frac{i-1+s}{i}$. Thus $\mathrm{dp}(u)$ is a sum of
 independent Bernoulli$(1/i)$ variables with $1\le i<u$, and
-$\E\,\mathrm{dp}(u)^2\le H_{u-1}^2+H_{u-1}$. The parent $U_k$ is independent
-of the depths of $1,\dots,k$, so $\E\,\mathrm{dp}(U_k)^2\le H_N^2+H_N$. We
-get $\Var F\le\frac12(N-1)\cdot16(H_N^2+H_N)\le8N(H_N^2+H_N)$, and the bound
-of Step 3 is at most $4x^2(H_N^2+H_N)/N$.
+$\E\,\mathrm{dp}(u)^2\le H_{u-1}^2+H_{u-1}$. The parent $U_k$ is uniform on
+$\{1,\dots,k\}$ and independent of the depths of $1,\dots,k$, so
+$\E\,\mathrm{dp}(U_k)^2\le H_{k-1}^2+H_{k-1}$. We get
+\[
+ \Var F\le\frac12\sum_{k=1}^{N-1}16\bigl(H_{k-1}^2+H_{k-1}\bigr)
+ =8\sum_{k=0}^{N-2}\bigl(H_k^2+H_k\bigr),
+\]
+and the bound of Step 3 is at most $4\varepsilon^2\sum_{k=0}^{N-2}(H_k^2+H_k)$.
 
 \emph{Step 5: Fourier inversion.} For every integer $m$,
 \[
@@ -105,8 +111,12 @@ of Step 3 is at most $4x^2(H_N^2+H_N)/N$.
 so the left side is at most
 $\sup_\theta\lvert\E e^{i\theta Z_+}-\widehat{\CP}_N(\theta)\rvert$ in absolute
 value. By Steps 2 to 4 this is at most
-$\frac{4x^2}Ne^{4x^2/N}+\frac{4x^2(H_N^2+H_N)}N$. Finally
+$2\varepsilon^2(N-1)+4\varepsilon^2\sum_{k=0}^{N-2}(H_k^2+H_k)$. Finally
 $\lvert f_N(m)-\Prob(Z_+=m)\rvert\le\Prob(M_N\ne Z_+)$, and Step 1 bounds it.
+The three bounds add up to $\delta_\Sigma$. For $\delta_\Sigma\le\delta_B$ we compare term by
+term. Since $H_N\le1+\log N$, we have $\varepsilon^2(NH_N-2N+1)\le\varepsilon^2N\log N=x^2\log N/N$.
+Next $2\varepsilon^2(N-1)\le4\varepsilon^2N\le\frac{4x^2}Ne^{4x^2/N}$. Finally
+$H_k\le H_N$ for $k\le N-2$, so the sum is at most $4\varepsilon^2N(H_N^2+H_N)=4x^2(H_N^2+H_N)/N$.
 This proves Theorem~\ref{thm:cp}. \qed
 
 \subsection{Proof of Theorem~\ref{thm:landau}}\label{app:bulk-landau}
@@ -223,24 +233,41 @@ Let $\lvert t\rvert\le\pi x$. By \eqref{eq:bulk-AB} and Fact 1,
 and by Facts 1 and 3,
 $\max(\operatorname{Re}A(t),\operatorname{Re}B(t))\le-\frac{\lvert t\rvert}{2\pi}+\frac{2x}N$.
 Now $\lvert e^A-e^B\rvert\le\lvert A-B\rvert\,e^{\max(\operatorname{Re}A,\operatorname{Re}B)}$,
-and $\frac{2x}N\le\frac12$. The integrals of $t^2e^{-\lvert t\rvert/2\pi}$,
-of $t^2\lvert\log\lvert t\rvert\rvert e^{-\lvert t\rvert/2\pi}$ and of
-$e^{-\lvert t\rvert/2\pi}$ over the real line are finite. So
+and $\frac{2x}N\le\frac12$ because $N\ge4x$. So for $\lvert t\rvert\le\pi x$
+\[
+ \lvert e^{A(t)}-e^{B(t)}\rvert\le e^{1/2}e^{-\lvert t\rvert/2\pi}
+ \Bigl[\frac{t^2}x\bigl(0.631(\lvert\log\lvert t\rvert\rvert+\log x)+1.53\bigr)+\frac{2x}N\Bigr].
+\]
+For $s\ge1$ the tangent of the logarithm at $16$ gives $\log s\le s/16+\log16-1$, and for
+$0<s<1$ we have $s\lvert\log s\rvert\le1/e$. So
+$s^2\lvert\log s\rvert\le s^3/16+(4\log2-1)s^2+s/e$ for every $s\ge0$. We insert this with
+$s=\lvert t\rvert$ and integrate, using $\int_0^\infty t^ke^{-t/2\pi}\,dt=k!\,(2\pi)^{k+1}$.
+This gives
 \[
  \frac1{2\pi}\int_{-\pi x}^{\pi x}\lvert e^{A(t)}-e^{B(t)}\rvert\,dt
- \le C\Bigl(\frac{1+\log x}x+\frac xN\Bigr).
+ \le e^{1/2}\Bigl[\frac{K_0+16\pi^2\cdot0.631\log x}x+\frac{4x}N\Bigr],
 \]
+where $K_0=6\pi^3\cdot0.631+16\pi^2\bigl(0.631(4\log2-1)+1.53\bigr)+4\pi\cdot0.631/e\le538.6$.
 Beyond $\pi x$ we use $\lvert e^{B(t)}\rvert=e^{-\pi\lvert t\rvert/2}$, which
 gives $\frac1{2\pi}\int_{\lvert t\rvert>\pi x}\lvert e^{B(t)}\rvert\,dt
-=\frac2{\pi^2}e^{-\pi^2x/2}\le\frac Cx$. Since
-$f_L(\lambda_m)=\frac1{2\pi}\int_{\mathbb R}e^{-i\lambda_mt}e^{B(t)}\,dt$,
-this proves (a).
+=\frac2{\pi^2}e^{-\pi^2x/2}\le\frac4{\pi^4x}\le\frac{0.042}x$, since $e^{-y}\le1/y$ for $y>0$.
+Since $f_L(\lambda_m)=\frac1{2\pi}\int_{\mathbb R}e^{-i\lambda_mt}e^{B(t)}\,dt$,
+the error is at most the sum of the two integrals. With $e^{1/2}\le1.6488$ and
+$16\pi^2\cdot0.631\le99.66$ this sum is at most
+\[
+ \frac{1.6488\cdot538.6+0.042+1.6488\cdot99.66\log x}x+\frac{6.5952\,x}N
+ \le\frac{889+165\log x}x+\frac{6.6\,x}N .
+\]
+The second bound in (a) holds because $165\le889$. This proves (a). Fourier inversion on $\Z$
+holds at every integer $m$, and $\CP_N(m)=0$ for $m<0$, so the proof covers every integer $m$.
 
-\emph{Proof of (b).} By Theorem~\ref{thm:cp},
-$\lvert xf_N(m)-x\,\CP_N(m)\rvert\le x\delta_B$. Add (a).
+\emph{Proof of (b).} Since $\varepsilon\le\frac14$, we have $N\ge4x$. By Theorem~\ref{thm:cp},
+$\lvert xf_N(m)-x\,\CP_N(m)\rvert\le x\delta_\Sigma\le x\delta_B$. Add (a).
 
-\emph{Proof of (c).} Let $x\to\infty$ and $x^3\log^2N/N\to0$. Then
-$x\delta_B\to0$ and $x/N\to0$, so the bound of (b) tends to $0$. Let $U$ be
+\emph{Proof of (c).} We drop the index $n$. Let $x\to\infty$ and $x^3\log^2N/N\to0$. Then
+$N\ge x\to\infty$, so $\log N\ge1$ for large $n$, and $x/N\to0$. Hence for large $n$ we have
+$\varepsilon\le\frac14$ and $x\ge1$, and (b) applies. Its bound tends to $0$, since
+$x\delta_B=O(x^3\log^2N/N)$. Only large $n$ matter for convergence in law. Let $U$ be
 uniform on $[0,1)$ and independent of $M_N$. Then $(M_N+U-x\log x)/x$ has
 the density $q_N$ with $q_N(\lambda)=xf_N(m)$ for
 $\lambda_m\le\lambda<\lambda_m+\frac1x$. On a compact set of $\lambda$ the
@@ -316,7 +343,8 @@ unimodal, there is a point $\lambda_*$ such that $f_L$ is nondecreasing on
 $(-\infty,\lambda_*]$ and nonincreasing on $[\lambda_*,\infty)$. If
 $\lambda_*>\lambda_{\mathrm L}$, then $f_L$ would be nondecreasing just to the right of
 $\lambda_{\mathrm L}$, which is false. In the same way $\lambda_*<\lambda_{\mathrm L}$ is
-impossible. So $\lambda_*=\lambda_{\mathrm L}$. By Step 2 again,
+impossible. So $\lambda_*=\lambda_{\mathrm L}$, and $f_L$ is nondecreasing on
+$(-\infty,\lambda_{\mathrm L}]$ and nonincreasing on $[\lambda_{\mathrm L},\infty)$. By Step 2 again,
 $\lambda_{\mathrm L}\in(-0.22278299,-0.22278297)$. This proves (a) and (b).
 
 \emph{Step 4: the constant $\kappa_L$.} Let
@@ -341,7 +369,8 @@ $f_L$ falls off quadratically away from $\lambda_{\mathrm L}$. So a mode cannot 
 from $m'$.
 
 We first prove (a). Assume~\eqref{eq:H}, let $\kappa_L$ be as in
-Lemma~\ref{lem:landau-mode}(c), and let $E_1$ be the bound of
+Lemma~\ref{lem:landau-mode}(c), and let
+$E_1=889\bigl(\frac{1+\log x}x+\frac xN\bigr)+x\delta_B$ be the bound of
 Theorem~\ref{thm:landau}(b). Put
 \[
  E'=E_1+\frac{16x^2H_N}{N^2}+\frac{\lVert f_L''\rVert_\infty}{8x^2}.
@@ -378,10 +407,13 @@ Now Theorem~\ref{thm:landau}(b), used at $\tilde m$ and at $m'$, gives
 Since $2E'<\kappa_L$, Lemma~\ref{lem:landau-mode}(c) gives
 $(\lambda_{\tilde m}-\lambda_{\mathrm L})^2\le2E'/\kappa_L$, which is the claim.
 
-Now take $x=x_N$ at the crossing. By Theorem~\ref{thm:erw-crossing},
-$x\sim2\log N$. So $x\delta_B$, $x/N$, $16x^2H_N/N^2$ and
-$\lVert f_L''\rVert_\infty/(8x^2)$ are all $O(\log x/x)$, and
-$E'=O(\log x/x)$. For large $N$, \eqref{eq:H} holds, $E'<\kappa_L/2$,
-and Lemma~\ref{lem:B-mode} gives $m_h\le A_0x\log^2(x+1)\le N/4$. Hence
-$\lvert m^*-x\log x-\lambda_{\mathrm L}x\rvert\le x\sqrt{2E'/\kappa_L}=O(\sqrt{x\log x})$,
-and the same holds for $m_h$. \qed
+Now we prove (b). Let $N$ be large and $\log N\le x\le2\log N$. Then $x\delta_B$, $x/N$,
+$16x^2H_N/N^2$ and $\lVert f_L''\rVert_\infty/(8x^2)$ are all at most $\log x/x$, because each
+is $O(\log^5N/N)$ or $O(1/\log^2N)$. So $E'\le C_1\log x/x$ with an absolute constant $C_1$. As
+$\log x/x\le\log\log N/\log N$, for large $N$ we have $E'<\kappa_L/2$. Also \eqref{eq:H}
+holds, $\varepsilon\log N\le2\log^2N/N\le\frac1{40}$ and $804x\log(x+2)\le N$, so
+Lemma~\ref{lem:B-mode} gives $m_h\le A_0x\log^2(x+1)\le N/4$. Hence by (a)
+$\lvert m^*-x\log x-\lambda_{\mathrm L}x\rvert\le x\sqrt{2E'/\kappa_L}\le K\sqrt{x\log x}$
+with $K=\sqrt{2C_1/\kappa_L}$, and the same holds for every mode of $f_N$. At the crossing
+$x_N=2\log N-\log\log N+O(1)$, by Theorem~\ref{thm:erw-crossing}(b) for even $N$ and by
+Proposition~\ref{prop:odd}(b) for odd $N$. So $\log N\le x_N\le2\log N$ for large $N$. \qed

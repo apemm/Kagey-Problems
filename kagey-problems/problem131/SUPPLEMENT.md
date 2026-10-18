@@ -191,7 +191,7 @@ of the crossing and of the law for 10 <= N <= 2000 proves Propositions 3.24 and 
 | --- | --- | --- |
 | The upper bound on C_N in Theorem 2.6(b) (the constant 5200) | `certify_elephant.py` (Part 3, needs python-flint), and without certification `verify_elephant_crossing.py` | Ball arithmetic encloses the first 60 terms of the series sum over t of t^2 log(t+1) 2^(-t/2) in [102.586396, 102.586398], and with a geometric bound on the tail the series is below 102.59. So 3 + 50.4 times 102.59 is below 5200. The uncertified check sums the series by mpmath and directly. |
 | Proposition 3.7 for 8 <= N < 1688 (C_N < E_N at eps = 2/(N+2)) | `certify_center.py` (needs python-flint), and `certify_elephant.py` for N = 2, 4, 6 and 8 | For even 10 <= N <= 2000, an exact rational comparison shows that the lower end of the ball-arithmetic enclosure of eps_N lies above 2/(N+2), with smallest margin 1.107 at N = 10. For N = 2, 4, 6 and 8 the ratio C_N/E_N in exact rational arithmetic. As a supplementary check, which the paper no longer uses, Part 1 of `certify_elephant.py` still runs the recursion in double precision with a rounding bound for the 840 even N, and in exact integer arithmetic for 20 values of N. |
-| Lemma 3.10, the mode lambda_L of the Landau density and f_L'' near it | `certify_elephant.py` (needs python-flint), and without certification `verify_elephant_shape.py` | Ball arithmetic with rigorous error bounds, with enclosures of f_L' at 4 points and of f_L'' on 2 intervals. The uncertified check uses a real integral and Fourier inversion. |
+| Lemma 3.10, the mode lambda_L of the Landau density and f_L'' near it | `certify_elephant.py` (needs python-flint), and without certification `verify_elephant_shape.py` | Ball arithmetic with rigorous error bounds, with enclosures of f_L' at 4 points and of f_L'' on 2 intervals. The uncertified check uses a real integral and Fourier inversion. Lean proves enclosures of the same quantities by an integration that its kernel checks (`lean/PaperD/U6_Cert.lean`), so the Arb run is an independent check. |
 | Proposition 3.24, convexity between the humps for every 10 <= N <= 2000 | `certify_convex.py` (needs python-flint), and without certification `verify_elephant_shape.py` for N <= 600 | Ball arithmetic. For each N the crossing is enclosed and the law is run with that enclosure. For every possible mode the second difference is certified positive between the humps directly, and the 2 inequalities that Theorem 3.19 needs are certified as well. The uncertified check is in double precision. |
 | Proposition 3.26, the center is the unique interior minimum for every even 10 <= N <= 2000 | `certify_center.py` (needs python-flint) | Ball arithmetic, with the enclosures of `certify_convex.py`. The hypothesis 2m*+1 <= N/2 of Lemma 3.22 holds for every possible mode, for all 996 even N, and with Proposition 3.24 the lemma applies. The direct test P_N(a) > C_N for every other interior a also succeeds for all of them. |
 | Conjecture 3.14, checked for 10 <= N <= 600 and on the grid N = 50, 100, ..., 12800 (and 25600 with `--full`) | `verify_elephant_shape.py` | The law from the minority-count chain and from the law of A_N directly. |
@@ -270,8 +270,10 @@ The Lean 4 proofs are in `lean/`, one library for each of Papers A to D (`lean/P
 `python -B lean/verify_lean.py` builds them with Lake and checks that every theorem and lemma uses
 only the axioms `propext`, `Classical.choice` and `Quot.sound`. The recorded run on October 16, 2026,
 checked 1257 declarations for Paper A, 307 for Paper B and 346 for Paper C (with Paper E). The run
-on October 18, 2026, checked 21591 for Paper D (with Paper F), of which 20517 are steps of the
-generated certificates for 101 <= N <= 2000 and 163 are for Paper F. The build output, source hashes and axioms are in `lean/build-log.txt` and
+on October 18, 2026, checked 22416 for Paper D (with Paper F), of which 20517 are steps of the
+generated certificates for 101 <= N <= 2000 and 163 are for Paper F, and 4 for the library
+`lean/PaperAD`, which joins the libraries of Papers A and D for Theorem 2.8 of Paper D. All
+24330 declarations passed. The build output, source hashes and axioms are in `lean/build-log.txt` and
 `lean/verification-manifest.json`. The Paper A library has 55 modules (including the root), with
 22 linter warnings and no unexpected axioms. Every source hash matches the current Lean files.
 
@@ -279,12 +281,20 @@ The file `lean/README.md` summarizes coverage. The files `lean/PaperA/MAP.md` th
 `lean/PaperD/MAP.md` map covered statements to Lean declarations and list partial coverage and
 omissions. The C map uses the numbers from October 9, 2026. The D map uses the numbers of Paper D
 from October 17, 2026, and for Paper F those from before the split. Both explain where the
-statements of Papers E and F moved. For Paper D, Lean proves Theorem 1.1 as stated, Lemmas 3.1
-to 3.4, Proposition 3.7 for every even N >= 8, the sign chain of Section 3.5, Propositions 3.24
-and 3.26, Appendices A and D and Lemma B.3, all checked by the kernel with no `native_decide`.
-The bulk (Theorems 3.8 and 3.9, Lemma 3.10 and what rests on them) is not formalized, and
-Theorem 3.21 is proved only from Steps 1 to 3 of its proof as hypotheses. `lean/PaperD/MAP.md`
-gives the status of every statement.
+statements of Papers E and F moved. For Paper D, Lean proves with no hypothesis Theorem 1.1 as
+stated, Theorem 2.8, Lemmas 3.1 to 3.4, Proposition 3.7 for every even N >= 8, the sign chain of
+Section 3.5, Propositions 3.24 and 3.26, Proposition 3.25 apart from part (d), Appendices A, B
+and D, and Sections S2 and S3 of Online Resource 1 apart from Proposition 3.25(d), all checked by
+the kernel with no `native_decide`. The bulk is proved from named classical results that Lean
+states as hypotheses. Theorems 3.8 and 3.9 use Fourier inversion on Z, the characteristic function
+of a compound Poisson sum and the Efron-Stein inequality, and the limit in law of Theorem 3.9
+also Scheffe's lemma. Lemma 3.10 uses only the unimodality of class L laws (Yamazato 1978), since
+Lean checks its numbers by its own integration. Corollary 3.11(b), Theorem 3.21, Corollary 3.23,
+Proposition 3.25(d) and Theorem 1.3(c) use the first three and unimodality, and Theorem 1.2
+uses these and Scheffe's lemma.
+Propositions S1.1 and S1.2 and Lemma S1.6(c), (d) use Hoeffding's inequality for the
+hypergeometric law. `lean/PaperD/MAP.md` gives the status of every statement and the source of
+each classical result.
 
 For Paper A, every numbered result is formalized in Lean except the Mehler-Heine limit for real
 parameters in Remark 4.7, which the paper cites. Lean proves that limit for nonnegative integer
