@@ -45,7 +45,7 @@ below, where it was rerun, and whether the regenerated file equals the committed
 
 ### R0. Section 9 programs
 
-- `python solver/engine.py` (ILP, CBC through PuLP), `python solver/brute.py` (from the
+- `python -m solver.engine` (ILP, CBC through PuLP), `python -m solver.brute` (from the
   definition, no lemma) and `python verify_narrow.py` (the lemmas and constructions of Sections 4
   to 6, and the 5 x 5 grid) print their results and store no evidence file. `verify_narrow.py`
   exits 0 when every check passes. Rerun: `verify_narrow.py` 10.0 s invocation, exit 0.
@@ -210,7 +210,8 @@ that the batch exits nonzero.
 The stored `cells_check` results were made by the earlier drivers, which did not test the exit
 code. The command
 `python jis/scripts/batch_log_check.py jis/data/cells_check/sat_jobs.json jis/data/cells_check/sat_jobs_satcases.json jis/data/cells_check/ssat_jobs.json`
-compares each stored result with the last line of its child log, which the batch opened fresh for
+compares each stored result with the last line of its child log (the `*.json.log` files next to
+the results in `jis/data/cells_check`, which are committed), which the batch opened fresh for
 that child. On 2026-10-17 all 87 SAT and UNSAT results matched the result line of their own child
 log. The one other job is the unresolved one killed at the cap, with an empty log.
 
@@ -233,10 +234,9 @@ new virtual environment with `python -m venv` and `pip install -r requirements.t
 the committed one after dropping the fields that record times, dates, versions and paths. Every
 compared file was equal, with two kinds of difference, in four files, that change no result.
 
-- `cells_witness_check.json`. The rerun checks 12 stored small-grid files and the committed file
-  10, since the committed file was made before `small_cells_sat_6x6.json` and
-  `small_cells_sat_5x7_b12.json` were stored. The rerun finds no problem in any of the 12, and its
-  six-row and collar records equal the committed ones.
+- `cells_witness_check.json`. The committed file and the rerun both check 12 stored small-grid
+  files and find no problem. (An earlier committed version covered 10, from before
+  `small_cells_sat_6x6.json` and `small_cells_sat_5x7_b12.json` were stored. It was regenerated.)
 - `table_counts/sat_5x6_11.json`, `table_counts/sat2_5x7_12.json` and
   `table_counts/search_5x6_11.json`. The committed files were written before the scripts recorded
   `models_sha256` and `first_column`, and they list the first models in another order. The counts

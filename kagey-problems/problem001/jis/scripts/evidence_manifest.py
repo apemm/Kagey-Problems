@@ -112,18 +112,23 @@ def check():
     stored = dict((m.group(2), m.group(1))
                   for m in re.finditer(r'^([0-9a-f]{64})  (\S+)$', text, re.M))
     bad = 0
-    for _, rel in files():
+    present = files()
+    present_names = set(rel for _, rel in present)
+    for _, rel in present:
         path = os.path.join(ROOT, rel)
         if rel not in stored:
             print('not in README.md:', rel)
             bad += 1
-        elif not os.path.exists(path):
-            print('missing:', rel)
-            bad += 1
         elif sha256(path) != stored[rel]:
             print('hash differs:', rel)
             bad += 1
-    print('%d files checked, %d problems' % (len(files()), bad))
+    # A file listed in README.md must still exist. The glob patterns above only see the files that
+    # are there, so a deleted file would otherwise go unnoticed.
+    for rel in sorted(stored):
+        if rel not in present_names:
+            print('missing:', rel)
+            bad += 1
+    print('%d files listed, %d found, %d problems' % (len(stored), len(present), bad))
     return 1 if bad else 0
 
 
