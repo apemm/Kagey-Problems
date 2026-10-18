@@ -46,13 +46,24 @@ command, the evidence file with its SHA-256 hash, and the stored time with what 
 The file \nolinkurl{requirements.txt} pins the package versions. The counts of the optima on the grids $5\times6$ to $7\times7$ in Table~\ref{tab:values} come from two SAT encodings that list every optimum, on Glucose~4 and MiniSat~2.2, and from a column search, all three in the scripts \texttt{table\_counts\_*}. On the $7\times8$ grid no valid blackout of $17$ points exists, by two SAT runs split by the first column, so $f(7,8)=16$. One completed enumeration finds $18$ optima there. The second count did not finish, so the table omits this count.
 Table~\ref{tab:values} collects the values, and the rectangle counts of the programs
 agree with \seqnum{A085582} and \seqnum{A289832}. Babichev and Babichev~\cite{babichev2026}
-count the rectangles of the square grid in near-linear time. The Lean~4 file
-\nolinkurl{Problem001.lean} in \nolinkurl{kagey-problems/lean/KageyProblems} checks
+count the rectangles of the square grid in near-linear time.
+
+The Lean~4 files in \nolinkurl{kagey-problems/lean/KageyProblems} check
 Lemma~\ref{lem:diff}, Corollary~\ref{cor:hitting}, the fact that a valid blackout hides at
-most one rectangle, the fact that every rectangle on a strip is axis-aligned, and
-Theorem~\ref{thm:strip}, with no \texttt{sorry}. Lemma~\ref{lem:threecorners} and the
-results from Section~\ref{sec:graph} on are not formalized. Code and data are in the
-folder \nolinkurl{kagey-problems/problem001} of the repository~\cite{repo}.
+most one rectangle, and Theorem~\ref{thm:strip}. They also check the second half of
+Lemma~\ref{lem:girth}, the part of Lemma~\ref{lem:H} that the bound needs for one choice of
+trees, and Theorem~\ref{thm:rowbound}, with Mantel's theorem from Mathlib. A finite list of rectangles
+is proved to hold exactly the rectangles of the grid. With it the Lean kernel decides that
+$S_0$, $S_8$, the blackout of Theorem~\ref{thm:refute}(a), the stored blackout of the
+$6\times15$ grid, and the $5\times13$ and $6\times23$ test boards are valid. It also decides
+that the blackout $\{(1,2),\allowbreak(2,1),\allowbreak(3,2),\allowbreak(2,3)\}$ of the
+$4\times3$ grid hides $D(1,1)$. So $f(5,8)=14$ and $f(6,15)=24$ are checked in full, and so
+are $f(5,5)\ge10$ and $f(6,8)\ge15$. No proof uses \texttt{sorry} or
+\texttt{native\_decide}, so the Lean compiler is not trusted. Lemma~\ref{lem:threecorners}, the
+collar theorem and so the values for every width, the rectangle counts, the generating
+functions, the bound $f(5,5)\le10$, and the upper bounds from SAT runs are not formalized.
+Neither are the other results of Sections~\ref{sec:three} to~\ref{sec:height}. Code and data
+are in the folder \nolinkurl{kagey-problems/problem001} of the repository~\cite{repo}.
 
 \begin{table}[!htb]
 \centering\scriptsize\setlength{\tabcolsep}{3pt}
