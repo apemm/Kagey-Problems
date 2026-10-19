@@ -1,35 +1,15 @@
 \section{Computations and verification}\label{sec:verify}
 
-The results that rest on a computation are labeled computer-assisted. Every other result in
-Sections~\ref{sec:conv} to~\ref{sec:height} has a written proof. Every computed value and count comes from at least two programs
-written separately, which agree wherever both ran, with the one exception of the $7\times8$ count below.
+Each computed value and count comes from two separately written programs, except the $7\times8$
+count, where one enumeration found $18$ optima and a second did not finish. Code, data, and
+commands are in the repository~\cite{repo}.
 
-The search and counting programs use Python~3.14.3. The ILP program \texttt{solver/engine.py} finds a smallest
-hitting set for the difference sets of Lemma~\ref{lem:diff} with CBC~2.10.3~\cite{cbc}
-through PuLP~3.3.2~\cite{pulp}. The brute-force check, \texttt{solver/brute.py}, uses no lemma
-and shares no code with it. The verifier \texttt{verify\_narrow.py} checks the lemmas and constructions of
-Sections~\ref{sec:graph} to~\ref{sec:four} and the $5\times5$ grid in $21$ seconds. The
-blackouts of $h+m$ points on the grids $5\times6$, $5\times7$, $6\times6$, $6\times7$, and
-$7\times7$ are stored in \nolinkurl{jis/data/small_cells_sat_*.json}. The SAT solvers are
-CaDiCaL~1.5.3 and~1.9.5, Glucose~3, 4, and~4.2, MiniSat~2.2~\cite{een2004}, MapleChrono, and Lingeling from
-pysat~1.9.dev15~\cite{pysat2018}, and the algebra uses SymPy~1.14~\cite{sympy2017}.
-
-A SAT instance asks for a valid blackout of at least $k$ points, so by the observation after
-Corollary~\ref{cor:hitting} an unsatisfiable instance proves $f(h,m)<k$. Encoding A has a
-variable for each point and a clause ``not all black'' for each inclusion-minimal symmetric
-difference of two rectangles, with a sequential counter~\cite{sinz2005} for the size. Encoding B has a clause
-for each pair of rectangles that share a corner and an indicator for each hidden rectangle, at
-most one of them true, with a totalizer~\cite{bailleux2003} for the size. The third encoding,
-\texttt{cells\_sat\_check.py}, is of type A but written from scratch. The structured encoders of
-Section~\ref{sec:five} add the column structure of Theorem~\ref{thm:equality} for one row
-partition and keep only the clauses that involve a tilted rectangle. Three separately written
-enumerators and the Lean kernel check the collar test boards of Section~\ref{sec:five}. The column searches call no solver. They place columns from left to right and stop
-when two rectangles inside the placed columns show the same points, which is sound since every
-interval of columns of a valid blackout is valid. The search \texttt{table\_counts\_search.py}
-also stops when the remaining columns cannot reach the target by the values of $f$ on narrower
-grids. So its counts on the $6\times7$ and $6\times8$ grids use $f(6,6)\le12$,
-and those on the $6\times8$ and $7\times7$ grids use $f(6,7)\le13$.
-The five-row and six-row searches use no such bound.
+An ILP program with CBC~\cite{cbc} finds a smallest hitting set for the sets of
+Lemma~\ref{lem:diff}, and brute force checks it. SAT encoding A forbids each minimal symmetric
+difference of two rectangles. Encoding B has a clause for each pair of rectangles with a common
+corner and allows one hidden rectangle. Column searches add columns from left to right, using
+$f(6,6)\le12$ on the $6\times7$ and $6\times8$ grids and $f(6,7)\le13$ on the $6\times8$ and
+$7\times7$ grids.
 
 \begin{table}[!htb]
 \centering\scriptsize\setlength{\tabcolsep}{3pt}
@@ -90,60 +70,28 @@ $7\times7$ & $14$ & $7{,}300$ & SC \\
 $7\times8$ & $16$ & -- & S \\
 \bottomrule
 \end{tabular}
-\caption{Computed values for $h\le m$ and the methods that agree. H is by hand, T a theorem,
-I the ILP program (value only on $3\times10$, $4\times8$, $5\times6$, $5\times7$, and
-$6\times6$), B brute force, D every equality candidate, C a column search, S two SAT
-encodings, M a transfer counter, and a dash not computed. For the counts, S and C enumerate every optimum.}
+\caption{Computed values for $h\le m$. H: hand, T: theorem, I: ILP (value only on
+$3\times10$, $4\times8$, $5\times6$, $5\times7$, and $6\times6$), B: brute force, D: equality
+candidates, C: column search, S: two SAT encodings, listing all optima where a count is given, M: transfer counter,
+--: not computed.}
 \label{tab:values}
 \end{table}
 
-The bounds $f(5,6)<12$, $f(5,7)<13$, $f(6,6)<13$, $f(6,7)<14$, $f(7,7)<15$, $f(6,8)<16$, $f(7,8)<17$, and the $70$ instances of
-Theorem~\ref{thm:sixrow}(a), at widths $8$ to $14$, have LRAT certificates. Two separately
-written generators give the same clauses for all $77$ instances, in encoding A for the seven
-grids and the structured encoding B for six rows. CaDiCaL~2.1.2~\cite{biere2024} writes the proofs, after
-splitting the $6\times8$ instance into the $64$ cases of its first column and the $7\times7$
-and $7\times8$ instances into $128$. All $394$ proofs ($28.6$~GB of text) pass
-\texttt{lrat-check} of drat-trim~\cite{wetzler2014,cruzfilipe2017} and the LRAT checker of the Lean standard library, which is
-proved sound but runs compiled, so it trusts the compiler. That a valid blackout of at least
-$k$ points satisfies every clause, by Theorem~\ref{thm:equality} for six rows, is argued in
-\nolinkurl{jis/data/unsat_certificates.json} and not formalized.
-Every other upper bound uses no SAT solver. Found blackouts need no such trust, since the
-stored witnesses and the models of the counting programs are checked against the definition,
-but a count also needs a complete enumeration.
+CaDiCaL~\cite{biere2024} gives LRAT certificates for $f(5,6)<12$, $f(5,7)<13$, $f(6,6)<13$,
+$f(6,7)<14$, $f(7,7)<15$, $f(6,8)<16$, $f(7,8)<17$, and the $70$ instances of
+Theorem~\ref{thm:sixrow}(a). Two separate generators give the clauses, and
+\texttt{lrat-check} of drat-trim~\cite{wetzler2014,cruzfilipe2017} and the Lean LRAT checker
+accept the certificates. The encodings are argued faithful in the repository, not formally.
 
-For each computer-assisted result, \nolinkurl{jis/scripts/README.md} gives the command, the
-evidence file with its SHA-256 hash, and the stored time, and \nolinkurl{requirements.txt} pins the package versions. The counts of the optima on the grids $5\times6$ to $7\times7$ in Table~\ref{tab:values} come from two SAT encodings that list every optimum, on Glucose~4 and MiniSat~2.2, and from a column search, all three in the scripts \texttt{table\_counts\_*}. On the $7\times8$ grid, where $f(7,8)=16$ by the certificates above, one enumeration finds $18$ optima, and a second did not finish, so the table omits this count.
-The rectangle counts of the programs agree with \seqnum{A085582} and \seqnum{A289832}. Babichev and Babichev~\cite{babichev2026}
-count the rectangles of the square grid in near-linear time.
-
-The Lean~4 files in \nolinkurl{kagey-problems/lean/KageyProblems} check
-Lemma~\ref{lem:diff}, Corollary~\ref{cor:hitting}, the fact that a valid blackout hides at
-most one rectangle, Theorem~\ref{thm:strip}, the second half of Lemma~\ref{lem:girth}, the part
-of Lemma~\ref{lem:H} that the bound needs for one choice of trees, and
-Theorem~\ref{thm:rowbound} and its transpose, with Mantel's theorem (the case of triangles of
-the bound of Tur\'an in Mathlib). They prove Lemma~\ref{lem:threecorners} as stated, and
-Theorem~\ref{thm:collar} as stated, for either padding row and for one or both sides.
-
-With a list of rectangles
-proved complete, the kernel decides that $S_0$, $S_8$, the blackout of
-Theorem~\ref{thm:refute}(a), the stored $6\times15$ blackout, and the $5\times13$ and
-$6\times23$ test boards are valid, and that the blackout
-$\{(1,2),\allowbreak(2,1),\allowbreak(3,2),\allowbreak(2,3)\}$ of the $4\times3$ grid hides
-$D(1,1)$, which shows that Theorem~\ref{thm:hidden} needs its hypothesis $m\ge4$. So Lean proves $f(5,m)=m+6$ for $m\ge8$ and $f(6,m)=m+9$ for $m\ge15$, the
-case $m=15$ by the stored blackout, and $f(5,5)\ge10$ and $f(6,8)\ge15$. No proof uses
-\texttt{sorry} or \texttt{native\_decide}, and the only axioms are \texttt{propext},
-\texttt{Classical.choice}, and \texttt{Quot.sound}.
-
-The formalization changed no statement of the paper, and it found no error or missing
-hypothesis. It changes how some results are established. Lemma~\ref{lem:threecorners},
-Theorem~\ref{thm:rowbound} and Theorem~\ref{thm:collar} had proofs only by hand, and the
-application of Theorem~\ref{thm:collar} to five and six rows rested on Python checks of the
-test boards. Lean now proves all of these.
-
-Not formalized are Lemma~\ref{lem:leftmost}
-as stated, Theorem~\ref{thm:equality}, $f(5,5)\le10$, the faithfulness of the
-encodings, and the rest of Sections~\ref{sec:three} to~\ref{sec:height},
-\ref{app:threegf}, and~\ref{app:square}. Code and data are in
-\nolinkurl{kagey-problems/problem001} of the repository~\cite{repo}.
+Lean~4 proves Lemmas~\ref{lem:diff} and~\ref{lem:threecorners}, Corollary~\ref{cor:hitting},
+Theorems~\ref{thm:strip}, \ref{thm:rowbound} (both orientations), and~\ref{thm:collar}, and that a
+valid blackout hides at most one rectangle. The kernel checks that $S_0$, $S_8$, the blackout of
+Theorem~\ref{thm:refute}, the $6\times15$ blackout, and the $5\times13$ and $6\times23$ test
+boards are valid, and that $\{(1,2),\allowbreak(2,1),\allowbreak(3,2),\allowbreak(2,3)\}$ hides
+$D(1,1)$ on the $4\times3$ grid, so Theorem~\ref{thm:hidden} needs $m\ge4$. Hence Lean proves
+$f(5,m)=m+6$ for $m\ge8$, $f(6,m)=m+9$ for $m\ge15$, $f(5,5)\ge10$, and $f(6,8)\ge15$, from the
+three standard Lean axioms alone. It found no error. Before it, Theorems~\ref{thm:rowbound} and~\ref{thm:collar}
+had only hand proofs. Lemma~\ref{lem:leftmost}, Theorem~\ref{thm:equality}, $f(5,5)\le10$, and
+most of Sections~\ref{sec:three} to~\ref{app:square} are not formalized.
 
 % TODO(author): A-number once approved (the square diagonal f(n,n) = 1, 4, 5, 7, 10, 12, 14).

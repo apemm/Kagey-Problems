@@ -1,0 +1,124 @@
+% Removed 2026-10-19 (cut round two): full previous text of sections/sec09_verify.tex before cutting.
+\section{Computations and verification}\label{sec:verify}
+
+The results that rest on a computation are labeled computer-assisted. Every other result in
+Sections~\ref{sec:conv} to~\ref{sec:height} has a written proof. Every computed value and count
+comes from at least two separately written programs, which agree wherever both ran, with the one
+exception of the $7\times8$ count below. Code, data, and stored witnesses are in
+\nolinkurl{kagey-problems/problem001} of the repository~\cite{repo}, and
+\nolinkurl{jis/scripts/README.md} gives for each result the command, the evidence file with its
+SHA-256 hash, the software versions, and the run time.
+
+An ILP program finds a smallest hitting set for the difference sets of Lemma~\ref{lem:diff} with
+CBC~\cite{cbc}, and a brute-force search that uses no lemma checks it. A SAT instance asks for a
+valid blackout of at least $k$ points, so by the observation after Corollary~\ref{cor:hitting} an
+unsatisfiable instance proves $f(h,m)<k$. Encoding A has a clause ``not all black'' for each
+inclusion-minimal symmetric difference of two rectangles. Encoding B has a clause for each pair of
+rectangles that share a corner and an indicator for each hidden rectangle, at most one of them
+true. The structured encoders of Section~\ref{sec:five} add the column structure of
+Theorem~\ref{thm:equality} for one row partition. Three separately written enumerators and the
+Lean kernel check the collar test boards of Section~\ref{sec:five}. The column searches call no
+solver. They place columns from left to right and stop when two rectangles inside the placed
+columns show the same points, which is sound since every interval of columns of a valid blackout
+is valid. One of them also prunes by the values of $f$ on narrower grids, so its counts on the
+$6\times7$ and $6\times8$ grids use $f(6,6)\le12$, and those on the $6\times8$ and $7\times7$
+grids use $f(6,7)\le13$. The five-row and six-row searches use no such bound.
+
+\begin{table}[!htb]
+\centering\scriptsize\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrl@{}}
+\toprule
+grid & $f$ & $a_h(m)$ & by \\
+\midrule
+$2\times2$ & $4$ & $1$ & HIB \\
+$2\times3$ & $4$ & $12$ & HIB \\
+$2\times4$ & $5$ & $32$ & HIB \\
+$2\times5$ & $6$ & $80$ & IB \\
+$2\times6$ & $7$ & $192$ & TI \\
+$2\times7$ & $8$ & $448$ & TI \\
+$3\times3$ & $5$ & $53$ & IB \\
+$3\times4$ & $6$ & $224$ & IB \\
+\bottomrule
+\end{tabular}\hspace{1em}
+\begin{tabular}{@{}lrrl@{}}
+\toprule
+grid & $f$ & $a_h(m)$ & by \\
+\midrule
+$3\times5$ & $7$ & $892$ & IB \\
+$3\times6$ & $8$ & $3{,}420$ & IB \\
+$3\times7$ & $9$ & $12{,}704$ & IB \\
+$3\times8$ & $10$ & $45{,}864$ & IB \\
+$3\times9$ & $11$ & $161{,}992$ & IB \\
+$3\times10$ & $12$ & $562{,}912$ & ITD \\
+$4\times4$ & $7$ & $316$ & IB \\
+$4\times5$ & $8$ & $1{,}810$ & IB \\
+\bottomrule
+\end{tabular}\hspace{1em}
+\begin{tabular}{@{}lrrl@{}}
+\toprule
+grid & $f$ & $a_h(m)$ & by \\
+\midrule
+$4\times6$ & $10$ & $26$ & IB \\
+$4\times7$ & $11$ & $292$ & IB \\
+$4\times8$ & $12$ & $2{,}118$ & IMD \\
+$5\times5$ & $10$ & $8$ & IB \\
+$5\times6$ & $11$ & $76$ & ISC \\
+$5\times7$ & $12$ & $1{,}184$ & ISC \\
+$5\times8$ & $14$ & $4$ & TSDC \\
+$5\times9$ & $15$ & $44$ & TSC \\
+\bottomrule
+\end{tabular}\hspace{1em}
+\begin{tabular}{@{}lrrl@{}}
+\toprule
+grid & $f$ & $a_h(m)$ & by \\
+\midrule
+$5\times10$ & $16$ & $350$ & TSC \\
+$5\times11$ & $17$ & $3{,}004$ & TSC \\
+$5\times12$ & $18$ & $24{,}706$ & TSCM \\
+$6\times6$ & $12$ & $160$ & ISC \\
+$6\times7$ & $13$ & $2{,}536$ & SC \\
+$6\times8$ & $15$ & $8$ & SC \\
+$6\times15$ & $24$ & -- & TS \\
+$7\times7$ & $14$ & $7{,}300$ & SC \\
+$7\times8$ & $16$ & -- & S \\
+\bottomrule
+\end{tabular}
+\caption{Computed values for $h\le m$ and the methods that agree. H is by hand, T a theorem,
+I the ILP program (value only on $3\times10$, $4\times8$, $5\times6$, $5\times7$, and
+$6\times6$), B brute force, D every equality candidate, C a column search, S two SAT
+encodings, M a transfer counter, and a dash not computed. For the counts, S and C enumerate every optimum.}
+\label{tab:values}
+\end{table}
+
+The counts of the optima on the grids $5\times6$ to $7\times7$ in Table~\ref{tab:values} come
+from two SAT encodings that list every optimum and from a column search. On the $7\times8$ grid
+one enumeration finds $18$ optima and a second did not finish, so the table omits this count.
+
+The bounds $f(5,6)<12$, $f(5,7)<13$, $f(6,6)<13$, $f(6,7)<14$, $f(7,7)<15$, $f(6,8)<16$,
+$f(7,8)<17$, and the $70$ instances of Theorem~\ref{thm:sixrow}(a) have LRAT certificates. Two
+separately written generators give the same clauses for all $77$ instances. The proofs, written by
+CaDiCaL~\cite{biere2024}, pass \texttt{lrat-check} of drat-trim~\cite{wetzler2014,cruzfilipe2017}
+and the LRAT checker of the Lean standard library, which is proved sound but runs compiled, so it trusts the compiler. That a
+valid blackout of at least $k$ points satisfies every clause, by Theorem~\ref{thm:equality} for six
+rows, is argued in the repository and not
+formalized. Every other upper bound uses no SAT solver. Found blackouts are checked against the
+definition, but a count also needs a complete enumeration.
+
+The Lean~4 files in \nolinkurl{kagey-problems/lean/KageyProblems} prove Lemma~\ref{lem:diff},
+Corollary~\ref{cor:hitting}, the fact that a valid blackout hides at most one rectangle,
+Theorem~\ref{thm:strip}, the second half of Lemma~\ref{lem:girth}, the part of Lemma~\ref{lem:H}
+that the bound needs for one choice of trees, Theorem~\ref{thm:rowbound} and its transpose,
+Lemma~\ref{lem:threecorners}, and Theorem~\ref{thm:collar}. With a list of rectangles proved
+complete, the kernel decides that $S_0$, $S_8$, the blackout of Theorem~\ref{thm:refute}(a), the
+stored $6\times15$ blackout, and the $5\times13$ and $6\times23$ test boards are valid, and that
+the blackout $\{(1,2),\allowbreak(2,1),\allowbreak(3,2),\allowbreak(2,3)\}$ of the $4\times3$
+grid hides $D(1,1)$, so Theorem~\ref{thm:hidden} needs $m\ge4$. So Lean proves $f(5,m)=m+6$ for
+$m\ge8$, $f(6,m)=m+9$ for $m\ge15$, $f(5,5)\ge10$, and $f(6,8)\ge15$. No proof uses
+\texttt{sorry} or \texttt{native\_decide}, and the only axioms are \texttt{propext},
+\texttt{Classical.choice}, and \texttt{Quot.sound}. The formalization found no error. Before it,
+Lemma~\ref{lem:threecorners} and Theorems~\ref{thm:rowbound} and~\ref{thm:collar} had proofs only
+by hand, and the test boards had only Python checks. Not formalized are Lemma~\ref{lem:leftmost}
+as stated, Theorem~\ref{thm:equality}, $f(5,5)\le10$, the faithfulness of the encodings, and the
+rest of Sections~\ref{sec:three} to~\ref{sec:height}, \ref{app:threegf}, and~\ref{app:square}.
+
+% TODO(author): A-number once approved (the square diagonal f(n,n) = 1, 4, 5, 7, 10, 12, 14).

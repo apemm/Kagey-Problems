@@ -1,8 +1,7 @@
 \section{Strips}\label{sec:strip}
 
-On two rows every rectangle is axis-aligned. Indeed, a tilted rectangle has no
-horizontal side, so both sides at a lowest corner go strictly up, and the opposite
-corner lies in a third row.
+On two rows every rectangle is axis-aligned, since a tilted one meets three rows: the
+neighbors of a lowest corner lie strictly above it, as no side is horizontal, and the opposite corner lies above them.
 
 \begin{theorem}[strip theorem]\label{thm:strip}
 Let $m\ge3$.
@@ -10,51 +9,40 @@ Let $m\ge3$.
 \item A blackout of the $2\times m$ strip is valid if and only if at most one of its columns is full.
 \item We have $f(2,m)=m+1$, and the maximum blackouts are those with one full column
 and one black point in every other column.
-\item There are $a_2(m)=m\cdot2^{m-1}$ maximum blackouts.
+\item There are $a_2(m)=m\cdot2^{m-1}$ maximum blackouts, so row $2$ of
+\seqnum{A399580} is \seqnum{A001787} from $m=3$ on.
 \end{enumerate}
 For $m=2$ there is one rectangle, so $f(2,2)=4$ and $a_2(2)=1$.
 \end{theorem}
 
 \begin{proof}
-(a) Two distinct rectangles share at most one column. If they
-share one, it cancels, and the difference set is the four points of the other two
-columns $p$ and $q$, the \emph{pair constraint} on $\{p,q\}$. If they share
-no column, the difference set is the eight points of four columns, and it contains a
-pair constraint. Every pair constraint occurs, since $m\ge3$ gives a third column $z$,
-and the rectangles on $\{z,p\}$ and $\{z,q\}$ have exactly this difference set. By
-Corollary~\ref{cor:hitting}, $S$ is valid if and only if $K$ meets every two columns,
-that is, if and only if at most one column has no kept point.
+(a) Distinct rectangles share at most one column, so their difference set contains all
+four points of two columns $p$ and $q$. Every pair arises, since $m\ge3$ gives a third column $z$ and the rectangles on
+$\{z,p\}$ and $\{z,q\}$. By Corollary~\ref{cor:hitting}, $S$ is
+valid if and only if $K$ meets every two columns, that is, at most one column is full.
 
-(b) By (a) a valid $S$ has $|K|\ge m-1$, so $|S|\le m+1$. Equality holds exactly when
-one column is full and every other column has one kept point, hence one black point.
-Such blackouts are valid by (a).
-
-(c) There are $m$ choices for the full column and two in each other column.
+(b, c) By (a), $|K|\ge m-1$, so $|S|\le m+1$, with equality exactly for the blackouts
+in (b). There are $m$ choices of full column and two in each other column.
 \end{proof}
-
-So row $2$ of \seqnum{A399580} is \seqnum{A001787}$(m)=m2^{m-1}$ from $m=3$ on.
 
 \begin{proposition}[orbits and kings]\label{prop:kings}
 For $m\ge3$ the number $o_m$ of maximum blackouts of the $2\times m$ strip up to the row
 reflection and the column reversal is $m\,2^{m-3}+[m\text{ odd}]\,2^{(m-3)/2}$. It equals
-\seqnum{A322284}$(m-1)$, the number of ways to place $m-1$ nonattacking kings on a
-$2\times(2m-2)$ board up to the symmetries of the rectangle. So $o_3,\ldots,o_8$ are
-$4,8,22,48,116,256$.
+\seqnum{A322284}$(m-1)$, which counts $m-1$ nonattacking kings on a $2\times(2m-2)$
+board up to symmetry.
 \end{proposition}
 
 \begin{proof}
-By Burnside's lemma $4o_m$ is $a_2(m)$ plus the numbers of optima fixed by the reflection,
-which is $0$ since it moves every singleton column, and by the reversal and the half turn. These fix none for even $m$, and
-$2^{(m-1)/2}$ each for odd $m$, with a central full column.
+By Burnside's lemma, $4o_m$ is $a_2(m)$ plus the optima fixed by the reflection (none)
+and by the reversal and the half turn (each fixes none for even $m$, and $2^{(m-1)/2}$
+with a central full column for odd $m$).
 
-Put $n=m-1$. An optimum is given by its full column $e$ and the rows $r_1,\ldots,r_n$ of its
-other black points, from left to right. Two kings attack exactly when their columns are
-equal or adjacent. So $n$ nonattacking kings on the $2\times2n$ board are given by columns
-$c_1<\cdots<c_n$ with $c_{j+1}\ge c_j+2$ and any rows $r_1,\ldots,r_n$. The $n+1$ gaps
-$c_1-1$, $c_{j+1}-c_j-2$ for $1\le j<n$, and $2n-c_n$ are nonnegative and sum to $1$. So
-exactly one of them is $1$, say the $e$th, and $c_j=2j-1+[j\ge e]$. Hence the kings at
-$(c_j,r_j)$ correspond bijectively to the optima. The reflection swaps the rows in both
-pictures. The reversal sends $e$ to $n+2-e$ and reverses the rows, and on the board it
-sends $c$ to $2n+1-c$, where $2n+1-c_{n+1-j}=2j-1+[j\ge n+2-e]$. So the bijection commutes
-with both actions, and the orbits correspond.
+Put $n=m-1$. Nonattacking kings on the $2\times2n$ board are columns $c_1<\cdots<c_n$ with
+$c_{j+1}\ge c_j+2$, and any rows $r_j$. The gaps $c_1-1$, $c_{j+1}-c_j-2$, and $2n-c_n$
+are nonnegative and sum to $1$, so exactly one, say the $e$th, is $1$, and
+$c_j=2j-1+[j\ge e]$. Sending this to the optimum with full column $e$ and other black
+points in rows $r_1,\ldots,r_n$ from left to right is a bijection. It commutes with the
+reflection, which swaps the rows on both sides, and with the reversal, which sends $e$ to
+$n+2-e$ and $c$ to $2n+1-c$ and reverses the rows, since $2n+1-c_{n+1-j}=2j-1+[j\ge n+2-e]$.
+So the orbits correspond.
 \end{proof}
