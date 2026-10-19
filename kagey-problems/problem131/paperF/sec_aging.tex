@@ -117,10 +117,22 @@ $Y$, with the uniform law in the role of their $\mu$ and $d\theta$ in the role
 of their $\theta$. The limit is then the Dirichlet law with every parameter
 $\theta$~\cite[Theorem~1.4]{ds2007}, and its moments give $Q_T$. The footnote
 of~\cite{evw2020} quoted below also announces a general connection with
-P\'olya urns, and the book~\cite{ev2024} has a chapter on urn models and
-time-inhomogeneous Markov processes, which we have not been able to consult.
-What the proposition adds is the joint law with the last state. The induction
-needs it, and it gives the ties that follow.
+P\'olya urns.
+% AUTHOR CHECK: Theorem 7.2 and Chapter 7 of [ev2024] are the numbers of the
+% draft of March 18, 2024. Check them, and that the theorem is stated for
+% d = 2, integer a and p_n = a/(2a+n-1) with the last state, against the
+% published Chapter 7.
+Engl\"ander and Volkov work it out in Chapter~7 of their
+book~\cite{ev2024}. For two states and an integer weight $\theta$
+they prove~\eqref{eq:aging-urn}, with the last state, for every
+$T$~\cite[Theorem~7.2]{ev2024}, and they credit this result to E.~Crane.
+What the proposition adds is the joint law with the last state for $d\ge3$
+states, and for a weight $\theta$ that is not an integer. The induction
+needs the last state, and it gives the ties that follow. As $T\to\infty$,
+\eqref{eq:aging-urn} turns into the joint limit of the fractions of time and
+the current state found by Bouguet and Cloez~\cite[Proposition~4.1]{bc2018},
+in which the Dirichlet law is size-biased by the coordinate of the current
+state.
 
 \begin{remark}\label{rem:aging-feller}
 Here is another way to see the law of the counts in
@@ -132,8 +144,12 @@ gets a uniform color. There a table is opened with the same probabilities
 $f_t$. The lengths of the runs are the spacings between the successes of
 independent trials with success probabilities $f_t$, and it is a classical
 fact (the Feller coupling, see~\cite{abt2003}) that the multiset of these spacings has
-the same law as the multiset of the table sizes (the two ordered lists do not). We do not know whether this is the relation
-to P\'olya urns that the footnote of~\cite{evw2020} has in mind. We
+the same law as the multiset of the table sizes (the two ordered lists do not).
+% AUTHOR CHECK: confirm against the published Chapter 7 of [ev2024] that the
+% book relates the walk to the urn through the joint law with the last state
+% (mimicking), as in the draft of March 18, 2024, and not through this coupling.
+This route is different from the one of~\cite[Chapter~7]{ev2024}, which, like
+Proposition~\ref{prop:aging-urn}, goes through the last state. We
 checked~\eqref{eq:aging-urn} in exact arithmetic for four values of $\theta$,
 with $T\le7$ for $d=2,3$ and $T\le5$ for $d=4$
 (\texttt{verify\_aging\_urn.py}).
@@ -194,11 +210,18 @@ After a shift of one step, part (a) is the exercise
 in~\cite[Section~3.1, footnote~1]{evw2020}. That footnote also says that the fact
 can be related to P\'olya urns (the authors credit M.~Bal\'azs) and that a
 more general connection of their model with P\'olya urns will appear in a
-later paper. So the uniform law for two states is not new. What we add for
+later paper.
+% AUTHOR CHECK: Claim 7.1 of [ev2024] is the number in the draft of March 18,
+% 2024 (p_1 = 1/2, p_n = 1/(n+1), P(T_n = k, X_n = 1) = k/(n(n+1))). Check it
+% against the published Chapter 7.
+That connection is Chapter~7 of the book~\cite{ev2024}, and after the same
+shift part (a), with the last state, is~\cite[Claim~7.1]{ev2024}. So part (a)
+is not new. What we add for
 two states is part (b), and the count law also follows
-from~\cite[Theorem~2.18]{dls2023} (Section~\ref{sec:aging-urn}). The argument for
-(b) is the path-weight argument that gives the unique crossing of the
-elephant walk in~\cite{paperD}. Both parts of
+from~\cite[Theorem~2.18]{dls2023} (Section~\ref{sec:aging-urn}). The proof of
+(b) above is complete in itself. It is the same path-weight argument that
+gives the unique crossing of the elephant walk in~\cite{paperD}, but it does
+not use that paper. Both parts of
 Proposition~\ref{prop:aging-two} are also proved in Lean
 (Section~\ref{sec:verify}).
 
@@ -208,16 +231,28 @@ The same thing happens for a chain on $d$ states that leaves its current
 state for each other state at the same aging rate. For such chains Dietz and
 Sethuraman~\cite[Theorem~1.4]{ds2007} proved that the fractions of time
 converge in law to the Dirichlet law with every parameter $\theta$, which is
-uniform on the simplex exactly at $\theta=1$ (see also~\cite{bc2018}). Their
-chain moves to each other state with probability $\theta/n$ at time $n$ once
+uniform on the simplex exactly at $\theta=1$. Bouguet and
+Cloez~\cite[Propositions~4.1 and~4.5]{bc2018} find the joint limit of the
+fractions and the current state. The chain of~\cite{ds2007}
+moves to each other state with probability $\theta/n$ at time $n$ once
 $n>\lceil(d-1)\theta\rceil$, and it does not move before that. Ours, defined
 below for $\theta<d/(d-1)$, moves to each other state with probability
-$\theta/(k+d-2)$ at every step $k\ge2$. If $\theta\le1$ then
-$\lceil(d-1)\theta\rceil\le d-1$, so our step $k$ has the transition
-probabilities of their time $k+d-2$ for every $k\ge2$, and the two chains
-differ by a shift of $d-2$ steps. If $\theta>1$ the ceiling is $d$. Then
-their chain stays put at time $d$, which corresponds to our step $2$, and the
-later steps agree. A change at a single step does not change the limit law.
+$\theta/(k+d-2)$ at every step $k\ge2$. We index our chain by their time, so
+that our step $k$ happens at time $n=k+d-2$ and our chain is in state $1$ at
+time $d-1$. Then the two chains have the same transition probabilities at
+every time $n\ge d$ with $n>\lceil(d-1)\theta\rceil$, and in particular at every $n\ge d+1$,
+since $(d-1)\theta<d$. They also have the same limit law of the fractions of
+time. To see this, put $n_1=\max(d+1,\lceil d\theta\rceil)$. At every time
+$n\ge n_1$ each chain stays with probability $1-d\theta/n$ and otherwise draws
+a state uniformly from all $d$ states (the draw may give the old state), and
+here $d\theta/n\le1$. We couple the two chains from time $n_1$ on, with the
+same decisions to draw and the same draws. Since $\sum_nd\theta/n=\infty$,
+almost surely there is a draw at some time $\tau\ge n_1$, and from time $\tau$
+on the two chains agree. So up to time $N+d-2$ their vectors of visit counts
+differ by at most $2\tau$ in total, and their fractions of time differ by
+$O((\tau+d)/N)$, which tends to $0$ almost surely. Hence our fractions of
+time converge in law to the Dirichlet limit of~\cite[Theorems~1.3
+and~1.4]{ds2007}.
 At $\theta=1$, part~(a) of the theorem below is an exact finite-$N$ form of
 their limit.
 Fix $d\ge2$ and $\theta$
@@ -306,14 +341,23 @@ fixed $N$, the pair $(L_N-e_1,X_N)$ has the law of the counts and the last
 color after $N-1$ draws. The two processes are different, though. The
 chain is a Markov chain, and the draws are exchangeable. For $d=2$ and $N=4$
 the path $1,1,2,2$ has probability $\frac18$ for the chain, and the draws
-$1,2,2$ have probability $\frac1{12}$. Also, at $\theta=1$ the chain moves at
+$1,2,2$ have probability $\frac1{12}$.
+% AUTHOR CHECK: Definition 7.1, Lemma 7.1 and Example 7.1 ("Triples") of
+% [ev2024] are the numbers of the draft of March 18, 2024. Check them against
+% the published Chapter 7.
+For two states Engl\"ander and Volkov call this relation
+mimicking~\cite[Definition~7.1 and Lemma~7.1]{ev2024}, and they show with an
+example of three steps that the coin-turning walk and the urn have different
+path laws~\cite[Example~7.1]{ev2024}. Also, at $\theta=1$ the chain moves at
 step $k$ with probability $(d-1)/(k+d-2)$, independently over $k$. This is
 the probability that customer $k$ opens a new table in the Chinese restaurant
 process with parameter $d-1$. So the expected number of moves in $N$ steps at
-the tie is $\sum_{k=2}^N\frac{d-1}{k+d-2}=(d-1)\log N+O(1)$, which is the
-first-order scale of the vertex crossing in~\cite{paperB}.
+the tie is $\sum_{k=2}^N\frac{d-1}{k+d-2}=(d-1)\log N+O(1)$, which has the
+same order, $\log N$, as the number of turns at the crossing from the corners
+to the center for $d$ directions and runs of geometric length~\cite{paperB}.
 
-We checked~\eqref{eq:aging-d} and the strict ordering in (b) in exact
+We checked~\eqref{eq:aging-d}, and the strict ordering in (b) along the five
+values $\theta=\frac12,\frac9{10},1,\frac{11}{10},\frac54$, in exact
 rational arithmetic for $d=2,3,4$ and $2\le N\le8$
 (\texttt{verify\_aging.py}).
 \end{remark}
@@ -345,6 +389,13 @@ $C_N=E_N$ exactly at $c=c_N$. In words, at $c=1$ every interior bin still has
 probability $\frac1N$, and the two ends share the probability $\frac1N$ that
 the fixed start gave to one end. So at $c=1$ the center is twice as likely as
 an end, and the crossing moves below $1$.
+% AUTHOR CHECK: Section 5.7 of [ev2024] is the number in the draft of March 18,
+% 2024. In that draft the formula for p_n = 1/(n+a) is off by a factor of two
+% (ends (1+a)/(n+a), interior 2/(n+a), which sum to 2). The correct values are
+% (1+a)/(2(n+a)) and 1/(n+a), as checked in exact arithmetic. Check the
+% published Section 5.7 before saying anything about this.
+Part (a) is the case $a=0$ of the exact laws that Engl\"ander and Volkov give
+for the switch probabilities $1/(n+a)$~\cite[Section~5.7]{ev2024}.
 
 \begin{proof}
 (a) This follows from~\eqref{eq:aging-fair} and
@@ -373,7 +424,7 @@ applies. The end is explicit, namely
 $E_N=\Gamma(N+1-c)/(2\Gamma(2-c)\Gamma(N+1))$, which is
 $N^{-c}/(2\Gamma(2-c))$ with relative error $O(1/N)$. For the center we prove
 a local limit theorem with a rate, namely $NC_N=d_c+O(N^{-0.4})$ uniformly
-for $c$ near $1$, where $d_c=4^{1-c}/\mathrm B(c,c)$ is the density of
+for $c\in[c^{(3)},1]$, where $c^{(3)}=(9-\sqrt{57})/2\approx0.725$ and $d_c=4^{1-c}/\mathrm B(c,c)$ is the density of
 $\mathrm{Beta}(c,c)$ at $\frac12$. So
 $\log(C_N/E_N)=(c-1)\log N+\Theta(c)+O(N^{-0.4})$ with
 $\Theta(c)=\log(2\Gamma(2-c)d_c)$. Here $\Theta(1)=\log2$ and

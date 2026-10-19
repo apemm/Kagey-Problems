@@ -9,7 +9,7 @@ are a standard model of superdiffusion~\cite{zdk2015}, and they model
 anomalous heat transport in one-dimensional lattices~\cite{dsd2013,wlh2016}.
 The profile of a L\'evy walk has a central peak and two ballistic side
 peaks~\cite{zdh2011,dzh2012,zdk2015}, and the part of the profile between
-them is described by an infinite density~\cite{rdhb2014}. On the lattice we compare the end bins $A_N=N$
+them is described by an infinite density~\cite{rdhb2014,rdhb2014b}. On the lattice we compare the end bins $A_N=N$
 and $A_N=0$, which the walk reaches only if one run covers all $N$ steps, with
 the center $A_N=N/2$, which it reaches in many ways. In the picture of heat
 spreading, the end bins are the lattice form of the ballistic side peaks of
@@ -19,7 +19,8 @@ center bin is the top of the central peak, and the stationary start used below
 is the equilibrated initial ensemble~\cite{dzh2012}. We ask when the ballistic
 ends beat the center. For runs with geometric lengths this question is
 Problem~131 of Kagey's Open Problem Collection~\cite{kagey131}, posed for a
-Galton board. The walk is then the persistent random walk, which remembers
+Galton board. The walk is then the persistent random
+walk~\cite{kac1974,renshawhenderson1981}, which remembers
 only its last step, and the center catches up with the ends when the expected
 number of switches is about $\log N$~\cite{paperA}.
 
@@ -32,9 +33,9 @@ and the run lengths $\xi$ are independent with $\Prob(\xi\ge k)=k^{-\alpha}$
 for $k\ge1$.
 \item An aging walk remembers how old it is. It switches at step $k\ge2$ with
 probability $c/k$. This is the coin-turning walk of Engl\"ander and
-Volkov~\cite{ev2018,evw2020} with $p_k=c/k$. (In the literature on L\'evy
-walks, aging means instead that the walk depends on the time since it was
-prepared.) We also give the walk $d$ directions. Then at step $k\ge2$
+Volkov~\cite{ev2018,evw2020} with $p_k=c/k$. (In the literature on renewal processes and L\'evy
+walks, aging means instead that the process depends on the time since it was
+prepared~\cite[Sections~8 and~9]{godrecheluck2001}.) We also give the walk $d$ directions. Then at step $k\ge2$
 it turns to each of the other $d-1$ directions with probability
 $\theta/(k+d-2)$, which is $c/k$ with $c=\theta$ when $d=2$.
 \end{itemize}
@@ -56,7 +57,8 @@ average, which is about $\log N$, as at the crossing for geometric runs.
 Earlier work on the aging walk gives the limit law of
 $A_N/N$~\cite{ds2007,ev2018} and the scaling limit of the
 walk~\cite{evw2020}, and the uniform law for two directions is an exercise
-in~\cite{evw2020}, as we explain in Section~\ref{sec:prior}. In both models the start
+in~\cite{evw2020}. Its joint law with the last step is in the book of
+Engl\"ander and Volkov~\cite{ev2024}, as we explain in Section~\ref{sec:prior}. In both models the start
 matters. For heavy-tailed runs it decides whether the threshold is $\varphi$
 or $1$, and for the aging walk it decides whether the crossing is exactly
 $c=1$. The main results are Theorem~\ref{thm:center} and
@@ -150,32 +152,73 @@ crossing is
 $c_N=1-\log2/(\log N+\gamma+2-2\log2)+O((\log N)^{-3})$
 (Proposition~\ref{prop:aging-expansion}).
 
+\paragraph{Methods.}
+For heavy-tailed runs the walk is made of two independent renewal processes,
+one for the runs of each sign (Proposition~\ref{prop:tworenewal}). At the
+center we need a local limit theorem for each of them, with a delay for the
+first run. We obtain it from Gnedenko's local limit theorem for the sums of the
+run lengths. Sums of few runs that lie far above their mean are controlled by
+local bounds in the big-jump domain. For $\alpha<1$ these bounds need one more
+step, in which we cut the runs into two halves. Then a Mellin transform
+identifies the limit with Lamperti's density. For the aging walk all the exact
+laws come from one chain that draws afresh or repeats its state. The ties come
+from writing each ratio of a bin to the end as a sum over paths of products of
+odds that increase in $c$. For the fair start we couple the walk with a sign
+process that switches at the points of a Poisson process, and summation by
+parts turns the coupling into a local limit theorem with a rate.
+
 \subsection{Prior work}\label{sec:prior}
 
 For heavy-tailed runs, Godr\`eche and Luck~\cite{godrecheluck2001} give the
-transform of the occupation time of an alternating renewal process and the
-scalings of the center and of both ends, and Zaburdaev, Denisov and
+transform of the occupation time of an alternating renewal process started at
+a renewal. They give the decay of the end for both
+starts~\cite[Eqs.~(1.6) and~(8.7)]{godrecheluck2001}, and from the transform
+they derive, by a formal Laplace analysis in continuous time, the stable law
+of the occupation time for
+$1<\alpha<2$~\cite[Section~7(iii)]{godrecheluck2001}. Read at the center, that
+law gives the constant of Theorem~\ref{thm:center}. In probability theory the
+walk is the one-dimensional directionally reinforced random walk of Mauldin,
+Monticino and von Weizs\"acker~\cite{mmw1996}, whose limit laws were found by
+Horv\'ath and Shao~\cite{horvathshao1998}. C\'enac, Le~Ny, de~Loynes and Offret
+study it as a persistent random walk whose runs have general lengths. They give
+criteria for recurrence~\cite{clnlo2018} and prove functional scaling
+limits~\cite{clnlo2019}, a Brownian motion for $\alpha\ge2$, a stable L\'evy
+process for $1<\alpha<2$ and an arcsine Lamperti process for $\alpha<1$. Theorems~\ref{thm:center},
+\ref{thm:alpha2} and~\ref{thm:lamperti} are local forms of the marginals of
+these limits at the center. The end $E_N$ is a persistence event, and it is
+not a local form of these limits. Magdziarz, Scheffler, Straka and
+\.Zebrowski~\cite{mssz2015} prove limit theorems for L\'evy walks in continuous
+space and time. Zaburdaev, Denisov and
 Klafter~\cite{zdk2015} and Dhar, Saito and Derrida~\cite{dsd2013} describe the
 profile of a L\'evy walk. The scalings of the central peak and of the side
 peaks were known before~\cite{cdp2005,zdh2011,dzh2012,zdk2015}, but we did
 not find the balance of the two stated there. The observation that equal
 decay of the two singles out the golden ratio is due, as far as we know, to
-Wang, Li and H\"anggi~\cite[Section~6.2.1]{wlh2016}, who used it as a
+Wang, Li and H\"anggi~\cite[Section~6.2.1.3, Eq.~(6.49)]{wlh2016}, who used it as a
 heuristic for the exponent of anomalous heat conduction. They also mention that
 Lee-Dadswell, Nickel and Gray~\cite{ldng2005} had found the same conduction
 exponent $(3-\sqrt5)/2$ by a hydrodynamic argument. The two decay rates of the end,
 $N^{1-\alpha}$ and $N^{-\alpha}$, are the scalings of the ballistic peaks of a
-L\'evy walk with and without an equilibrated start~\cite[Table~I]{dzh2012}. We
-prove the lattice statement with a local limit at the center, treat both
-starts, and compute $C(\alpha)$. The comparison concerns the unbroadened
+L\'evy walk with and without an equilibrated start~\cite[Table~I]{dzh2012}.
+What we add for heavy-tailed runs is the following. We prove a lattice local
+limit theorem at the center for every first run that is finite almost surely,
+so for both starts. With it the comparison of the end with the center becomes
+a theorem with the explicit constant $C(\alpha)$. At $\alpha=\varphi$ the
+center wins strictly, since $C(\varphi)<1$. On the lattice the end and the
+center are both probabilities of bins, so the comparison of a weight with a
+height in~\cite{wlh2016} becomes exact. The comparison concerns the unbroadened
 peaks, and with velocity fluctuations the balance moves away from the golden
 ratio (Remark~\ref{rem:humps}). For $\alpha<1$ the limit law of $A_N/N$ is
-Lamperti's~\cite{lamperti1958}.
+Lamperti's~\cite{lamperti1958}, and we prove its local form at the center. We
+found only the integral law in the literature.
+
 For aging walks, Dietz and Sethuraman~\cite{ds2007} proved the limit law of
 $A_N/N$, Engl\"ander and Volkov~\cite{ev2018} gave a second proof, and
 Engl\"ander, Volkov and Wang~\cite{evw2020} found the scaling limit of the
 walk. For $d$ states the limit is a Dirichlet
-law~\cite[Theorem~1.4]{ds2007}. The exact uniform law for two states is an
+law~\cite[Theorem~1.4]{ds2007}, and Bouguet and
+Cloez~\cite[Propositions~4.1 and~4.5]{bc2018} find the joint limit of the
+fractions of time and the current state. The exact uniform law for two states is an
 exercise in~\cite[Section~3.1, footnote~1]{evw2020}, which also announces a general
 connection with P\'olya urns. Dietz, Lippitt and
 Sethuraman~\cite[Theorem~2.18]{dls2023} write the moments of these limit laws
@@ -183,9 +226,27 @@ as occupation probabilities at finite $N$ of a related chain. For the chain
 that redraws or repeats its state (Proposition~\ref{prop:aging-urn}), which is
 a conservative random walk in the sense of~\cite{ev2022}, this gives the law
 of the counts, and at $\theta=1$ the uniform law of
-Theorem~\ref{thm:aging-d}(a). The book~\cite{ev2024} has a chapter on urn
-models, which we have not been able to consult. What we add in
-Section~\ref{sec:aging} is the joint law of the counts and the last state,
+Theorem~\ref{thm:aging-d}(a).
+% AUTHOR CHECK: the numbers Chapter 7, Claim 7.1, Theorem 7.2, Definition 7.1,
+% Lemma 7.1 and Section 5.7 of [ev2024] below, and what they contain, are taken
+% from the draft of the book dated March 18, 2024 (Chapter 7 on pp. 133-142
+% there). Check them against the published Chapter 7 (pp. 161-170 by zbMATH
+% 1567.60003) and Section 5.7 before submission.
+Engl\"ander and Volkov work out the connection with urns in Chapter~7 of their
+book~\cite{ev2024}. For two states they give the joint law of the counts and
+the last state in the case that becomes our $c=1$ after a shift of one
+step~\cite[Claim~7.1]{ev2024}. For an integer weight they show that the counts
+and the last state have the law of P\'olya's urn at every time, which is
+Proposition~\ref{prop:aging-urn} for $d=2$ and an integer
+$\theta$~\cite[Theorem~7.2]{ev2024}. They credit this result to E.~Crane, and
+they call the relation mimicking~\cite[Definition~7.1 and Lemma~7.1]{ev2024}.
+The book also gives exact laws for a fair first step~\cite[Section~5.7]{ev2024}.
+Pradhan, Roy and Ray~\cite{prr2026} study, with the methods of physics, a
+persistent walk whose probability of reversal decays like a power of the time.
+When the power is one it is close to our aging walk, and they find its second
+moment and the tail of its runs. What we add in
+Section~\ref{sec:aging} is the joint law of the counts and the last state for
+$d\ge3$ states or a weight $\theta$ that is not an integer,
 the strict ordering that turns the uniform laws into ties
 (Proposition~\ref{prop:aging-two}(b) and Theorem~\ref{thm:aging-d}(b)), and
 for the fair start the expansion of the crossing
