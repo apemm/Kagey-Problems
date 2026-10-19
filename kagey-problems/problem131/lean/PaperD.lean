@@ -107,6 +107,65 @@ import PaperD.U6_Scalar
 import PaperD.U6_Series
 import PaperD.U6_TMSound
 import PaperD.U_EndToEnd
+import PaperD.FL1_Bridge
+import PaperD.FL1_DState
+import PaperD.FL1_Extra
+import PaperD.FL1_Polya
+import PaperD.FL1_Urn
+import PaperD.FL2_Golden
+import PaperD.FL2_Numerics
+import PaperD.FL2_ZetaBridge
+import PaperD.FL3_AE
+import PaperD.FL3_End
+import PaperD.FL3_Model
+import PaperD.FL3_Prob
+import PaperD.FL3_Side
+import PaperD.FL3_Walk
+import PaperD.FL4_All
+import PaperD.FL4_Beta
+import PaperD.FL4_Binom
+import PaperD.FL4_Bracket
+import PaperD.FL4_Compare
+import PaperD.FL4_Crossing
+import PaperD.FL4_Expansion
+import PaperD.FL4_Gamma
+import PaperD.FL4_LLT
+import PaperD.FL4_LLTRate
+import PaperD.FL4_Lambda
+import PaperD.FL4_Main
+import PaperD.FL4_Second
+import PaperD.FL4_Tail
+import PaperD.FL4_Theta
+import PaperD.FL5_BigJump
+import PaperD.FL5_Center
+import PaperD.FL5_Final
+import PaperD.FL5_FirstPassage
+import PaperD.FL5_GenFun
+import PaperD.FL5_Hyp
+import PaperD.FL5_LampBigJump
+import PaperD.FL5_LampLaplace
+import PaperD.FL5_LampLogRiemann
+import PaperD.FL5_LampMain
+import PaperD.FL5_LampRiemann
+import PaperD.FL5_LampStep1
+import PaperD.FL5_LampStep2
+import PaperD.FL5_Lamperti
+import PaperD.FL5_Lemma23a
+import PaperD.FL5_Lemma23b
+import PaperD.FL5_LemmaA4a
+import PaperD.FL5_LemmaA4b
+import PaperD.FL5_Main
+import PaperD.FL5_PropA3
+import PaperD.FL5_Renewal
+import PaperD.FL5_Riemann
+import PaperD.FL5_Shift
+import PaperD.FL5_SinhInt
+import PaperD.FL5_Stable
+import PaperD.FL5_Step4a
+import PaperD.FL5_Step4b
+import PaperD.FL5_Thm24
+import PaperD.FL5_Walk
+import PaperD.FLC_Cor25Walk
 
 /-!
 # Paper D (Problem 131 under memory), root module
@@ -130,6 +189,13 @@ Lemma 3.10 by kernel-checked integration (U6), and the contour rotation that tur
 form of the Landau density into the real integral. `U_EndToEnd` composes U1 to U3 and U6, so
 that every statement about the bulk rests only on the named classical inputs listed in
 `PaperD/MAP.md`.
+
+The modules `FL1_*` to `FL5_*` are the Paper F tracks of October 19, 2026: Proposition 3.1 for
+every `d`, Theorem 3.4 and Remark 3.5 (FL1), Corollary 2.5 and its constants (FL2),
+Propositions 2.1 and 2.2 (FL3), Proposition 3.7, Appendix B and the remark after
+Proposition 3.7 (FL4), and Lemma 2.3, Theorems 2.4 and 2.9 and Appendix A (FL5). The module
+`FLC_Cor25Walk` composes FL2 with FL5, so that Corollary 2.5 holds for the walk itself from the
+classical inputs of Theorem 2.4. `PaperD/MAP.md` lists the Paper F statements by label.
 
 Every module is checked by the kernel. No module uses `native_decide`, and every theorem depends only on `propext`, `Classical.choice` and `Quot.sound`.
 `lake build PaperD` checks the whole library.
