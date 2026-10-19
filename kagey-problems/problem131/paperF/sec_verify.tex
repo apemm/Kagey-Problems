@@ -6,11 +6,7 @@ were computed in two ways, both from Proposition~\ref{prop:tworenewal},
 namely by its formula and by a spectral method that reads each factor off as
 a Taylor coefficient of a generating function. For small $N$ they were also
 checked against a recursion on the first run and a sum over all run
-compositions, which do not use Proposition~\ref{prop:tworenewal}. At
-$N=10^5$ the formula is used only in the full run of the scripts, which takes
-about twenty minutes, and the quick run uses the spectral method alone there.
-The same holds for the check that $R_N$ increases at every even $N$ up to
-$10^5$ at $\alpha=\varphi$, which the quick run makes up to $10^4$. The aging
+compositions, which do not use Proposition~\ref{prop:tworenewal}. The aging
 probabilities, and with them the crossing $c_{200}$, were computed in three
 ways, namely by a forward recursion, from transfer matrices at roots of unity,
 and from the sums over paths in~\eqref{eq:aging-ratio}. In exact rational
@@ -30,15 +26,19 @@ is shared with an earlier version of this work. The file \nolinkurl{MAP.md} ther
 statement of this paper by its label, with its Lean names, its status in Lean and the source of
 each classical input. The kernel checks every proof, and every theorem depends only on the
 axioms \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}.
-Table~\ref{tab:lean} lists the results that Lean proves. Some of them rest on the six classical
-results of Table~\ref{tab:lean-inputs}, which Lean states as named hypotheses, and nothing else
-is assumed.
+Table~\ref{tab:lean} lists the results that Lean proves. Some of them rest on six classical
+results, which Lean states as named hypotheses, and nothing else is assumed. These are the local
+limit theorem of Gnedenko (GN)~\cite[Theorem~4.2.1]{ibragimovlinnik1971}, the expansion of
+$\mathrm{Li}_s(e^{-v})$ near $v=0$ (POLY)~\cite[25.12.12]{dlmf}, the continuity theorem of
+L\'evy (LEVY) and Fourier inversion for an integrable characteristic function
+(FI)~\cite[Section~XV.3]{feller1971}, the continuity theorem for Laplace transforms
+(LAP)~\cite[Section~XIII.1]{feller1971} and the uniqueness theorem of Lerch for Laplace
+transforms (LERCH)~\cite[Chapter~II]{widder1941}.
 
-\begin{table}[htbp]
+\begin{table}[t]
 \centering\footnotesize
 \setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{0.9}
-\caption{The statements proved in Lean, with the abbreviations of
-Table~\ref{tab:lean-inputs}.}\label{tab:lean}
+\caption{The statements proved in Lean, with the abbreviations above.}\label{tab:lean}
 \begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.28\linewidth}>{\raggedright\arraybackslash}p{0.22\linewidth}>{\raggedright\arraybackslash}p{\dimexpr0.5\linewidth-4\tabcolsep\relax}@{}}
 \toprule
 Results & Status in Lean & Notes\\
@@ -47,8 +47,7 @@ Results & Status in Lean & Notes\\
 Propositions~\ref{prop:edge} and~\ref{prop:tworenewal} & proved & For every law of $D$, and
 with $N\ge1$ in Proposition~\ref{prop:edge}\\
 Lemma~\ref{lem:stable} & (i) from POLY, (ii) from POLY, LEVY and FI, (iii) from GN, (iv)
-proved & Part (ii) without the Laplace transform of $G$ and the remark on its skewness and
-scale, and part (iv) for the value of $I_\alpha$\\
+proved & Part (iv) for the value of $I_\alpha$\\
 Theorem~\ref{thm:center} & from GN, POLY, LEVY and FI & For every first run $D$\\
 Corollary~\ref{cor:golden} & from GN, POLY, LEVY and FI & With $\Gamma(\varphi)\ge0.8856$ in
 place of the minimum of $\Gamma$, and without the decimals of $C(\varphi)$ and
@@ -71,42 +70,15 @@ Lemma~\ref{lem:C-firstpassage}, Proposition~\ref{prop:C-center} & proved for
 $a_m=m^\kappa$ & The case that Theorem~\ref{thm:center} uses\\
 Lemma~\ref{lem:C-stable1} & (i) from POLY, LAP and FI, (ii) from GN, (iii) and (iv)
 proved & \\
-Lemma~\ref{lem:D-average}, Propositions~\ref{prop:D-bracket} and~\ref{prop:D-llt} & proved &
-Proposition~\ref{prop:D-llt} by a different proof (see below), with the rate
-$\sqrt{\log N/N}$\\
+Lemma~\ref{lem:D-average}, Propositions~\ref{prop:D-bracket} and~\ref{prop:D-llt} & proved & \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\begin{table}[htbp]
-\centering\small
-\caption{The classical results that Lean states as hypotheses.}\label{tab:lean-inputs}
-\begin{tabular}{@{}lll@{}}
-\toprule
-Abbr. & Result & Source\\
-\midrule
-GN & local limit theorem of Gnedenko & \cite[Theorem~4.2.1]{ibragimovlinnik1971}\\
-POLY & expansion of $\mathrm{Li}_s(e^\mu)$ near $\mu=0$ & \cite[25.12.12]{dlmf}\\
-LEVY & continuity theorem of L\'evy & \cite[Section~XV.3]{feller1971}\\
-FI & Fourier inversion for an integrable characteristic function &
-\cite[Section~XV.3]{feller1971}\\
-LAP & continuity theorem for Laplace transforms & \cite[Section~XIII.1]{feller1971}\\
-LERCH & uniqueness theorem of Lerch for Laplace transforms & \cite[Chapter~II]{widder1941}\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Two proofs in Lean differ from ours. In Step~4 of the proof of Theorem~\ref{thm:lamperti},
+One proof in Lean differs from ours. In Step~4 of the proof of Theorem~\ref{thm:lamperti},
 Lean finds $\int_0^\infty tg(t)^2\,dt$ from $\E G^{i\tau}$ by Parseval's identity for the
-density of $\log G$, so it does not identify the law of $G_1/(G_1+G_2)$. For
-Proposition~\ref{prop:D-llt} Lean uses Proposition~\ref{prop:aging-urn} with $d=2$ and
-$\theta=c$ in place of the coupling, so it does not need Proposition~\ref{prop:D-beta} or
-Lemma~\ref{lem:D-coupling}. Lean does not formalize the six classical results,
-Theorem~\ref{thm:alpha2}, Proposition~\ref{prop:D-beta}, Lemma~\ref{lem:D-coupling},
-Remarks~\ref{rem:humps}, \ref{rem:crossover}, \ref{rem:aging-feller} and~\ref{rem:other}, or
+density of $\log G$, so it does not identify the law of $G_1/(G_1+G_2)$. Lean does not
+formalize the six classical results, Theorem~\ref{thm:alpha2},
+Remarks~\ref{rem:humps}, \ref{rem:aging-feller} and~\ref{rem:other}, or
 the numbers that rest on computation.
-
-The scripts and the Lean files are in the repository named under ``Code
-availability'' at the end of the paper, which also says how to rerun the
-checks.
 \par}

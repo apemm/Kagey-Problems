@@ -12,8 +12,8 @@ Theorem~\ref{thm:erw-bounds}(b), which we enclosed in ball arithmetic. It lies
 in $[102.586396,102.586398]$, so the series is below the bound $102.59$ used
 in the proof even with the tail added. Any finite bound suffices for the
 asymptotic statements. The value $5200$ matters for the thresholds $1688$ and
-$1689$ in Propositions~\ref{prop:dip-hyp} and~\ref{prop:odd}(c), and for
-the second-order bound in Online Resource~1. Second,
+$1689$ in Proposition~\ref{prop:dip-hyp} and in Proposition~S3.1(b) of Online Resource~1, and for
+the second-order bound there. Second,
 Lemma~\ref{lem:landau-mode} rests on enclosures of $f_L'$ at four points and
 of $f_L''$ on an interval, computed in ball arithmetic with
 rigorous error bounds. These two computations are in
@@ -21,16 +21,12 @@ rigorous error bounds. These two computations are in
 we describe below. Third, for every $10\le N\le2000$ the script
 \texttt{certify\_convex.py} encloses the crossing $\varepsilon_N$ in ball
 arithmetic and then encloses the whole law $P_N$ at the crossing.
-Proposition~\ref{prop:convex-certified} rests on this computation (about an
-hour for the whole range, with its output in
+Proposition~\ref{prop:convex-certified} rests on this computation (with its output in
 \nolinkurl{data/certify_convex_output_2026-10-17.txt}). The script
 \texttt{certify\_center.py} repeats it for every even $N$ in the range and
-proves Proposition~\ref{prop:center-small} (about half an hour, with its
-output in \nolinkurl{data/certify_center_output_2026-10-17.txt}). It also
-checks, by an exact rational comparison, that the lower end of the enclosure
-of $\varepsilon_N$ lies above $2/(N+2)$ for every even $10\le N\le2000$. By
-Proposition~\ref{prop:mlr} this gives $C_N<E_N$ at $\varepsilon=2/(N+2)$,
-which is Proposition~\ref{prop:dip-hyp} for $10\le N<1688$. For $5\le N\le9$,
+proves Proposition~\ref{prop:center-small}, and Proposition~\ref{prop:dip-hyp} for
+$10\le N<1688$ (with its
+output in \nolinkurl{data/certify_center_output_2026-10-17.txt}). For $5\le N\le9$,
 Propositions~\ref{prop:convex-certified} and~\ref{prop:center-small} rest instead on the
 checks in Lean described below. With the option
 \texttt{-{}-witness} the two scripts also write a record for each $N$, with the
@@ -41,10 +37,7 @@ are in \nolinkurl{data/witnesses_convex_2026-10-17.jsonl} and
 \nolinkurl{data/witnesses_center_2026-10-17.jsonl}. Each of the three
 \texttt{certify} scripts exits with nonzero status if any required
 certification fails, and the two scripts that take a range of $N$ also refuse
-an empty range. In \texttt{certify\_center.py} the direct comparison of every
-bin with the center is a diagnostic. It is required only for an $N$ at which
-the test on the modes fails, and in the run of October~17 it succeeded for
-all $996$ values of $N$.
+an empty range.
 % AUTHOR REWRITE: earlier runs and what rests on computation alone
 The folder \nolinkurl{data} also keeps the outputs of earlier runs, and the file
 \nolinkurl{paperD/README.md} lists the statement numbers that they use. The tables, the
@@ -81,8 +74,6 @@ Theorem~\ref{thm:erw-bounds} & proved & By the argument of Appendix~\ref{app:erw
 $N\ge2$ and the 60-term sum bounded by exact partial sums. The last display for $N\ge64$ (for
 smaller $N$ it follows from (a) and (b) by taking logarithms)\\
 Theorem~\ref{thm:erw-crossing} & proved & With the explicit bound for $L\ge30$ in the proof\\
-Theorem~\ref{thm:erw-markov} & proved, with the Lean files of~\cite{paperA} & Those files
-prove its one input~\cite[Prop.~3.8]{paperA}, and a small library joins the two proofs\\
 \midrule
 \multicolumn{3}{@{}l}{\emph{Section~\ref{sec:shape}, finite shape and certificates}}\\
 Lemmas~\ref{lem:tree}, \ref{lem:split} and~\ref{lem:firstmark} & proved & For the random
@@ -93,8 +84,9 @@ and~\ref{thm:no-holes}, Corollaries~\ref{cor:dip} and~\ref{cor:one-point},
 Theorem~\ref{thm:main-shape}(a), (b) and~(d) & proved & \\
 Propositions~\ref{prop:dip-hyp}, \ref{prop:convex-certified} and~\ref{prop:center-small} &
 proved & By certificates, for every $N$ in the range (see below)\\
-Proposition~\ref{prop:odd}, first paragraph and (a) to (c) & proved & With the explicit bound
-in~(b)\\
+Proposition~\ref{prop:odd}, and Proposition~S3.1(a), (b) & proved & With the explicit bound
+in~S3.1(a). The last claim of S3.1(a) from LFI, CP, ES, UNI, as for
+Corollary~\ref{cor:mode-location}(b)\\
 \midrule
 \multicolumn{3}{@{}l}{\emph{Section~\ref{sec:shape}, bulk and mode}}\\
 Theorem~\ref{thm:cp} & proved from LFI, CP, ES & With the error $\delta_\Sigma$, and also for
@@ -108,7 +100,7 @@ Also $f_L(\lambda_{\mathrm L})\ge0.1806$, which we do not use\\
 Corollary~\ref{cor:mode-location} & (b) from LFI, CP, ES, UNI, and (a) in a different form & The
 form of~(a) does the same job in the proofs\\
 Theorem~\ref{thm:convex-large}, Corollary~\ref{cor:unique-min},
-Proposition~\ref{prop:odd}(d) & proved from LFI, CP, ES, UNI & For odd $N$
+Proposition~S3.1(c) & proved from LFI, CP, ES, UNI & For odd $N$
 Lean proves the conclusion of Corollary~\ref{cor:unique-min} only on
 $\{2m^*,\dots,N-2m^*\}$\\
 Theorems~\ref{thm:main-bulk} and~\ref{thm:main-shape}(c) & proved from LFI, CP, ES, UNI, and
@@ -129,9 +121,11 @@ Proposition~S1.4, Lemmas~S1.5 and~S1.6(a), (b) & proved & Proposition~S1.4 for e
 $\varepsilon$, and Lemma~S1.6 under conditions weaker than $N\ge16$\\
 Propositions~S1.1 and~S1.2, Lemma~S1.6(c), (d) & proved from HOEF & With the threshold
 $\log N\ge3500$ of Proposition~S1.2\\
+Theorem~S1.7 & proved, with the Lean files of~\cite{paperA} & Those files
+prove its one input~\cite[Prop.~3.8]{paperA}, and a small library joins the two proofs\\
 Section~S2 & proved & With the constants of Propositions~S2.3 and~S2.4. Theorem~S2.1 needs
 $\varepsilon>0$ and $x\ge1$ only for large $N$\\
-Section~S3 & proved & Part~(d) of Proposition~\ref{prop:odd} as in the row above\\
+Section~S3 & proved & Part~(c) of Proposition~S3.1 as in the row above\\
 \bottomrule
 \end{tabular}
 \end{table}

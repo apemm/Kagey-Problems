@@ -144,21 +144,22 @@ Proposition~\ref{prop:refined} proves it only for $\log N\ge3500$.
 
 \begin{table}[htbp]
 \centering\small
-\caption{The crossings $x_N$ of Table~\ref{tab:erw-crossing} and their
+\caption{The crossings $x_N$ of Table~\ref{tab:erw-crossing}, their
 distance to $x_{\mathrm{2nd}}$, the formula of
-Proposition~\ref{prop:refined} without its error term. These values are
+Proposition~\ref{prop:refined} without its error term, and the difference
+$\Upsilon_N$ of Theorem~\ref{thm:erw-markov}. These values are
 numerical and are not used in any proof.}
 \label{tab:second}
-\begin{tabular}{@{}rll@{}}
+\begin{tabular}{@{}rlll@{}}
 \toprule
-$N$ & $x_N$ & $x_N-x_{\mathrm{2nd}}$\\
+$N$ & $x_N$ & $x_N-x_{\mathrm{2nd}}$ & $\Upsilon_N\log N$\\
 \midrule
-50 & 3.940487 & $+0.3452$\\
-400 & 7.629217 & $+0.0621$\\
-1600 & 10.240565 & $+0.0179$\\
-3200 & 11.546834 & $+0.0097$\\
-12800 & 14.158845 & $+0.0028$\\
-51200 & 16.778468 & $+0.0008$\\
+50 & 3.940487 & $+0.3452$ & $-0.083$\\
+400 & 7.629217 & $+0.0621$ & $-0.199$\\
+1600 & 10.240565 & $+0.0179$ & $+0.215$\\
+3200 & 11.546834 & $+0.0097$ & $+0.386$\\
+12800 & 14.158845 & $+0.0028$ & $+0.607$\\
+51200 & 16.778468 & $+0.0008$ & $+0.707$\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -400,6 +401,78 @@ $\varepsilon^2(84\log N+1.05\cdot10^5)\le\varepsilon\,
 $N$, and its value at $N=64$ is below $205$. Since $11+205<5200$, the
 two-sided bound follows.
 \end{proof}
+
+\subsection{Comparison with the persistent walk}\label{or:markov}
+
+We compare with the persistent walk of the introduction of the paper, in which each
+step repeats the previous one with probability $p$ and switches with
+probability $q=1-p$. Here $p$ and $q$ refer to that walk. Put $T=Nq$. Its end is $p^{N-1}/2$,
+its crossing is $p_N$, and $z_N=N(1-p_N)$. So $x=N\varepsilon$ corresponds to $T$, and the
+crossing $x_N$ corresponds to $z_N$. We compare the two crossings through the
+crossing equation of~\cite[Proposition~3.8]{paperA}, which says that for every
+$N\ge2$
+\begin{equation}\label{eq:markov-crossing}
+ z_N+\tfrac12\log z_N=L+c_0+\frac1{8z_N}+O(L^{-2}),\qquad
+ c_0=\tfrac12\log\tfrac\pi8,
+\end{equation}
+where the error term is at most $\frac1{4L^2}+\frac{L^2+L}N$ in absolute
+value, and that $L/2\le z_N\le L$. This is the only result of~\cite{paperA}
+that we use. Doubling \eqref{eq:markov-crossing}
+without its last two terms and adding $\log2$ gives $2z_N+\log(2z_N)=\Lambda_N+\log(2\pi)$, so
+$2z_N-\log(2\pi)$ nearly solves $G(x)=\Lambda_N$. What is left is of order
+$1/L$.
+
+\begin{theorem}\label{thm:erw-markov}
+Let $z_N$ be the crossing value of $T$ for the persistent walk with $N$ steps, as
+above. As $N\to\infty$ over even $N$,
+\[
+ \Upsilon_N:=x_N-\bigl(2z_N-\log(2\pi)\bigr)=\frac{c_*}{\log N}
+ +O\Bigl(\frac{\log\log N}{(\log N)^2}\Bigr),\qquad
+ c_*=\tfrac12\log(2\pi)-\tfrac14=0.668939\ldots
+\]
+\end{theorem}
+
+\begin{proof}
+Write $\ell=\log(2\pi)$ and $\bar z=2z_N$. We compute $G(\bar z-\ell)$ in three steps
+and then compare it with $G(x_N)$.
+
+\emph{Step 1. The size of $z_N$.} By the bounds after \eqref{eq:markov-crossing},
+the error term there is $O(L^{-2})$ and $L/2\le z_N\le L$. So
+$\log z_N=\log L+O(1)$ and $\frac1{8z_N}=O(1)$, and
+\eqref{eq:markov-crossing} gives $z_N=L-\frac12\log L+O(1)$. Hence
+$\bar z=2L-\log L+O(1)$, and
+\[
+ \frac1{8z_N}=\frac1{8L}+\frac{L-z_N}{8Lz_N}=\frac1{8L}+O\Bigl(\frac{\log L}{L^2}\Bigr),
+ \qquad\frac1{\bar z}=\frac1{2L}+O\Bigl(\frac{\log L}{L^2}\Bigr).
+\]
+
+\emph{Step 2. The equation for $\bar z$.} We double \eqref{eq:markov-crossing} and
+add $\log2$. The left side becomes $2z_N+\log z_N+\log2=\bar z+\log\bar z$. On the
+right, $2c_0+\log2=\log\frac\pi4$, and $\frac1{4z_N}=\frac1{4L}+O(\log L/L^2)$
+by Step~1. So $\bar z+\log\bar z=2L+\log\frac\pi4+\frac1{4L}+O(\log L/L^2)$.
+
+\emph{Step 3. The value $G(\bar z-\ell)$.} We have
+$\log(\bar z-\ell)=\log\bar z+\log(1-\ell/\bar z)$, and
+$\log(1-\ell/\bar z)=-\ell/(2L)+O(\log L/L^2)$ by Step~1. With Step~2 and
+$\log\frac\pi4-\ell=-\log8$ this gives
+\[
+ G(\bar z-\ell)=\bar z+\log\bar z-\ell+\log\Bigl(1-\frac\ell{\bar z}\Bigr)
+ =\Lambda_N+\frac1{4L}-\frac\ell{2L}+O\Bigl(\frac{\log L}{L^2}\Bigr)
+ =\Lambda_N-\frac{c_*}L+O\Bigl(\frac{\log L}{L^2}\Bigr).
+\]
+
+\emph{Step 4. Compare with $x_N$.} By Theorem~\ref{thm:erw-crossing}(a),
+$G(x_N)=\Lambda_N+O(L^2/N)$. So
+$G(x_N)-G(\bar z-\ell)=c_*/L+O(\log L/L^2)$. Both $x_N$ and
+$\bar z-\ell=2z_N-\log(2\pi)$ are $2L+O(\log L)$, so $G'(x)=1+1/x=1+O(1/L)$
+between them. By the mean value theorem we may divide by $G'$, and we get
+$x_N-(\bar z-\ell)=c_*/L+O(\log L/L^2)$.
+\end{proof}
+
+We computed $z_N$ from the exact law of the persistent walk~\cite{paperA}, with a tolerance
+of about $10^{-15}$. The difference $\Upsilon_N$ changes sign between $N=400$ and $N=1600$, and
+$\Upsilon_N\log N$ is $0.707$ at $N=51200$ against the limit $c_*=0.669$
+(Table~\ref{tab:second}). So the asymptotic regime is reached slowly.
 
 \section{The tail}\label{or:tail}
 
@@ -706,16 +779,30 @@ on $\mathcal R_N$, and $m(m+1)=m^2(1+o(1))$ because $m\to\infty$.
 
 \section{Odd \texorpdfstring{$N$}{N}}\label{or:odd}
 
-We prove parts (b), (c) and (d) of Proposition~\ref{prop:odd}. As there,
-$N\ge3$ is odd, $c=1-2\varepsilon$ and $\widetilde C_N$ is the probability of
-each of the two central bins.
+We show that the crossing for odd $N$ behaves as for even $N$. As in
+Proposition~\ref{prop:odd}, $N\ge3$ is odd, $c=1-2\varepsilon$, $\widetilde C_N$ is the
+probability of each of the two central bins, and $x_N=N\varepsilon_N$ is the crossing.
 
-\begin{proof}[Proof of Proposition~\ref{prop:odd}(b), (c) and (d)]
-(b) We follow the proof of Theorem~\ref{thm:erw-crossing}(a), with
+\begin{proposition}[odd $N$, the crossing]\label{prop:odd-more}
+\begin{enumerate}[(a)]
+\item As $N\to\infty$ over odd $N$, $x_N+\log x_N=\Lambda_N+O(L^2/N)$. So both parts of
+Theorem~\ref{thm:erw-crossing} hold for odd $N$ as well. More precisely, if $L\ge30$, then
+$\lvert x_N-g_N\rvert\le\tilde\rho_N$ and $\lvert x_N+\log x_N-\Lambda_N\rvert\le\tilde\rho_N$,
+where $\tilde\rho_N=(24L^2+20812L)/N\le1/L^2$. In particular the last claim of
+Corollary~\ref{cor:mode-location}(b) holds at the crossing for every large odd $N$.
+\item For every odd $N\ge1689$ we have $x_N>2$, and at the crossing $P_N(0)<P_N(1)$. So
+Corollary~\ref{cor:one-point} applies to these $N$ with $x=x_N$.
+\item There is $N_1'$ such that the law at the crossing is convex between the humps for
+every odd $N\ge N_1'$. We do not compute the threshold $N_1'$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(a) We follow the proof of Theorem~\ref{thm:erw-crossing}(a), with
 $\widetilde F(x)=\log\widetilde C_N-\log E_N$ at $\varepsilon=x/N$ in place of $F$. Let
 $1\le x\le2\Lambda_N$. For large $N$, Theorem~\ref{thm:erw-bounds} applies to the even number
 $N+1$ at this $\varepsilon$ and gives
-$\log C_{N+1}=\log\frac{4\varepsilon}{N+3}+O(\varepsilon L)$. By (a),
+$\log C_{N+1}=\log\frac{4\varepsilon}{N+3}+O(\varepsilon L)$. By Proposition~\ref{prop:odd}(a),
 $\log\widetilde C_N=\log C_{N+1}+O(1/N)$. Here $\log\frac{4\varepsilon}{N+3}=\log x+\log4-2L+O(1/N)$,
 and $1/N\le xL/N$. So
 \[
@@ -730,7 +817,7 @@ from part (a) as before.
 For the explicit bound let $L\ge30$. As in the proof of Theorem~\ref{thm:erw-crossing},
 $e^L\ge L^{12}/12!$ gives $26L^4+20802L^3\le N$. Let $1\le x\le4L$ and $\varepsilon=x/N$. Since
 $\log(N+1)\le L+1$, we get $\varepsilon(1+\log(N+1))\le4L(L+2)/N\le\frac1{100}$, so
-Theorem~\ref{thm:erw-bounds} applies to $N+1$. By (a),
+Theorem~\ref{thm:erw-bounds} applies to $N+1$. By Proposition~\ref{prop:odd}(a),
 $\log\widetilde C_N=\log C_{N+1}-\log(1-u)$ with $u=c/N\le\frac1N$, and
 $0\le-\log(1-u)\le u+u^2\le\frac2N$. Next
 $\log\frac{4\varepsilon}{N+3}=\log x+\log4-2L-\log(1+\frac3N)$ with
@@ -746,9 +833,13 @@ $\tilde\rho_N=(24L^2+20812L)/N$. Then $\tilde\rho_N\le1/L^2$, both ranges in Ste
 proof are nonempty, and Step~2 gives $\lvert x_N-g_N\rvert\le\tilde\rho_N$ and
 $\lvert G(x_N)-\Lambda_N\rvert\le\tilde\rho_N$.
 
-(c) We argue as in the proof of Proposition~\ref{prop:dip-hyp}. Let $N\ge1689$ be odd and take
+For the last claim, $x_N=2\log N-\log\log N+O(1)$ for odd $N$, so
+$\log N\le x_N\le2\log N$ for every large odd $N$, and Corollary~\ref{cor:mode-location}(b)
+applies with $x=x_N$.
+
+(b) We argue as in the proof of Proposition~\ref{prop:dip-hyp}. Let $N\ge1689$ be odd and take
 $\varepsilon=2/N$. Then $\varepsilon(1+\log(N+1))\le\frac1{100}$, so
-Theorem~\ref{thm:erw-bounds}(b) for $N+1$ and part (a) give
+Theorem~\ref{thm:erw-bounds}(b) for $N+1$ and Proposition~\ref{prop:odd}(a) give
 \[
  \widetilde C_N\le\frac N{N-1}\,C_{N+1}\le\frac N{N-1}\cdot\frac8{N(N+3)}(N+1)^{4/N}e^{10400/N}.
 \]
@@ -758,8 +849,7 @@ $\varepsilon=2/N$, and hence $\varepsilon_N>2/N$ and $x_N>2\ge2(1-\varepsilon_N)
 Theorem~\ref{thm:dip} then gives $P_N(N-1)>E_N$ at the crossing, which is $P_N(0)<P_N(1)$ by
 symmetry. This is the hypothesis of the second case of Corollary~\ref{cor:one-point}.
 
-(d) Theorem~\ref{thm:convex-large} holds for every large $N$, even or odd, and every
-$\varepsilon$ with $\log N\le x\le2\log N$. By (b), $x_N=2\log N-\log\log N+O(1)$ for odd $N$, so
-$\log N\le x_N\le2\log N$ for every large odd $N$. So Theorem~\ref{thm:convex-large} applies at
-the crossing.
+(c) Theorem~\ref{thm:convex-large} holds for every large $N$, even or odd, and every
+$\varepsilon$ with $\log N\le x\le2\log N$. By (a), $\log N\le x_N\le2\log N$ for every large
+odd $N$. So Theorem~\ref{thm:convex-large} applies at the crossing.
 \end{proof}

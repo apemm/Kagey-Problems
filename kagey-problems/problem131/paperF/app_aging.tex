@@ -18,21 +18,6 @@ even $N$ we write $h=N/2$ and $C_N=\Prob(A_N=h)$. Changing the sign of every
 step preserves the law of the walk and sends $A_N$ to $N-A_N$. We call this
 flip symmetry.
 
-\paragraph{Idea of the proof.}
-A walk that ends in the center with last step $-1$ takes its $h$-th step
-$+1$ at some time $r$, switches at time $r+1$, and never switches again. So
-$C_N$ is an average of the explicit numbers $\lambda_{r+1,N}$ over the law of
-$T^+_h$ (Lemma~\ref{lem:D-average}). For $c\le1$ these numbers are monotone in
-$r$, which already traps $c_N$ between two explicit roots and gives
-$1-c_N=O(1/\log N)$ (Proposition~\ref{prop:D-bracket}). For the constant we
-need the law of $T^+_h$. We have $T^+_h\le r$ exactly when $A_r\ge h$, and
-$A_r/r$ is close to a Beta$(c,c)$ variable with an error that is a power of
-$r$ (Lemma~\ref{lem:D-coupling}). This is proved by coupling the walk with a
-sign process in continuous time that switches at the points of a Poisson
-process of intensity $c\,dt/t$, whose occupation fraction is exactly
-Beta$(c,c)$ at every time (Proposition~\ref{prop:D-beta}). Summation by parts
-then gives $NC_N=d_c+O(N^{-0.4})$ (Proposition~\ref{prop:D-llt}).
-
 \subsection{A gamma ratio}
 
 Gautschi's inequality~\cite[5.6.4]{dlmf} says that
@@ -124,211 +109,95 @@ expansion. The limit
 of $(1-c_N)\log N$ follows since $\log(h+1)\sim\log N$.
 \end{proof}
 
-\subsection{The continuum occupation}
-
-\begin{proposition}[continuum occupation]\label{prop:D-beta}
-Let $\Pi$ be a Poisson process on $(0,\infty)$ with intensity $c\,dt/t$, and
-let $Y(1)$ be a fair sign independent of $\Pi$. Put
-$Y(t)=Y(1)(-1)^{\Pi((1,t])}$ for $t\ge1$ and $Y(t)=Y(1)(-1)^{\Pi((t,1])}$ for
-$0<t<1$. Then for every $r>0$ the fraction
-$Z_r=\frac1r\int_0^r\mathbf 1\{Y(t)=+1\}\,dt$ has exactly the Beta$(c,c)$ law.
-\end{proposition}
-
-This agrees with~\cite[Section~6.1]{evw2020}, where a remark obtains the
-Beta$(c,c)$ one-dimensional marginals of the zigzag process defined there
-from a scaling limit and mentions an
-unpublished direct proof by E.~Crane. We give a direct proof.
-
-\begin{proof}
-We pass to logarithmic time, where the sign process is stationary, and then
-we condition on the last switch before time $1$. This gives an equation for
-the law of $Z_1$ that has only one solution, and we check that Beta laws
-solve it.
-
-\emph{Step 1 (the law of $Z_r$ does not depend on $r$).} The points $\log t$,
-$t\in\Pi$, form a Poisson process $\tilde\Pi$ of rate $c$ on $\mathbb R$, and
-$W(u)=Y(e^u)$ satisfies $W(v)=W(u)(-1)^{\tilde\Pi((u,v])}$ for $u<v$. Fix a
-real $\ell$. Then $W(\ell)$ is $W(0)$ times a function of $\tilde\Pi$, and
-$W(0)$ is a fair sign independent of $\tilde\Pi$. So $W(\ell)$ is a fair sign
-independent of $\tilde\Pi$ too. As $\tilde\Pi-\ell$ has the law of
-$\tilde\Pi$, the pair $(W(\ell),\tilde\Pi-\ell)$ has the law of
-$(W(0),\tilde\Pi)$, and so the process $W(\ell+\cdot)$ has the law of $W$.
-With $\ell=\log r$ this says that $Y(r\,\cdot)$ has the law of $Y$. Hence
-$Z_r=\int_0^1\mathbf 1\{Y(rt)=+1\}\,dt$ has the law of $Z_1$.
-
-\emph{Step 2 (an equation for the law of $Z_1$).} The substitution $t=e^{-s}$
-gives $Z_1=\int_0^\infty e^{-s}\mathbf 1\{V_s=+1\}\,ds$, where $V_s=W(-s)$.
-The process $V$ looks backward from time $1$. It starts at a fair sign and
-switches at the points of a Poisson process of rate $c$. Let $\pi_\pm$ be the
-law of $Z_1$ given $V_0=\pm1$, let $\tau$ be the first switch of $V$, and let
-$U=e^{-\tau}$ (in the original time, $U$ is the last switch of $Y$ before
-time $1$). Then $\Prob(U\le u)=\Prob(\tau\ge-\log u)=u^c$ for $0\le u\le1$, so
-$U$ is Beta$(c,1)$. After $\tau$ the process $V$ starts afresh from $-V_0$,
-independently of $\tau$. We split the integral at $\tau$. Given $V_0=+1$ the
-part before $\tau$ is $\int_0^\tau e^{-s}ds=1-U$, and the part after $\tau$
-is $U$ times a copy of $Z_1$ for a process started at $-1$. Given $V_0=-1$
-the part before $\tau$ is $0$, and the part after is $U$ times a copy of
-$Z_1$ for a process started at $+1$. So $\pi_+$ is the law of $1-U+UZ_-$ and
-$\pi_-$ is the law of $UZ_+$, where $Z_\pm$ has law $\pi_\pm$ and is
-independent of $U$. In other words, $(\pi_+,\pi_-)$ is a fixed point of the
-map $\Psi$ that sends a pair $(\nu_+,\nu_-)$ of laws on $[0,1]$ to the laws
-of $1-U+UZ_-$ and $UZ_+$, where $Z_\pm\sim\nu_\pm$ are independent of $U$.
-
-\emph{Step 3 ($\Psi$ has only one fixed point).} We measure the distance
-between two laws $\nu,\nu'$ on $[0,1]$ by the Wasserstein distance, namely
-the smallest value of $\E\lvert Z-Z'\rvert$ over all pairs with $Z\sim\nu$
-and $Z'\sim\nu'$. Take two pairs $(\nu_+,\nu_-)$ and $(\nu'_+,\nu'_-)$, and
-take $Z_\pm\sim\nu_\pm$ and $Z'_\pm\sim\nu'_\pm$ that attain these distances,
-independently of $U$. Then
-$\E\lvert UZ_\pm-UZ'_\pm\rvert=\E U\,\E\lvert Z_\pm-Z'_\pm\rvert$. So $\Psi$
-multiplies the larger of the two distances by at most $\E U=c/(c+1)<1$. Two
-fixed points are then at distance $0$, so they are equal.
-
-\emph{Step 4 (Beta laws solve the equation).} We claim that the pair
-Beta$(c+1,c)$, Beta$(c,c+1)$ is a fixed point of $\Psi$. (This is the natural
-guess. If the sign is $+$ at time $1$, then more of the time before is spent
-at $+$.) We need one fact, namely that $UZ$ is Beta$(c,c+1)$ whenever $Z$ is
-Beta$(c+1,c)$ and independent of $U$. To prove it let $G_a,G_b,G_d$ be
-independent Gamma variables with shapes $a,b,d$ and unit scale. A change of
-variables shows that $G_a/(G_a+G_b)$ is Beta$(a,b)$ and independent of
-$G_a+G_b$. Hence it is independent of the pair $(G_a+G_b,G_d)$ and of
-$(G_a+G_b)/(G_a+G_b+G_d)$, which is Beta$(a+b,d)$. Their product
-$G_a/(G_a+G_b+G_d)$ is Beta$(a,b+d)$. With $(a,b,d)=(c,1,c)$ this is the
-fact.
-
-Now let $Z_+$ be Beta$(c+1,c)$ and $Z_-$ be Beta$(c,c+1)$, independent of
-$U$. By the fact $UZ_+$ is Beta$(c,c+1)$. Also $1-Z_-$ is Beta$(c+1,c)$, so
-$U(1-Z_-)$ is Beta$(c,c+1)$ and $1-U+UZ_-=1-U(1-Z_-)$ is Beta$(c+1,c)$. This
-proves the claim. By Step 3, $\pi_+$ is Beta$(c+1,c)$ and $\pi_-$ is
-Beta$(c,c+1)$. Since $V_0$ is a fair sign, $Z_1$ has the equal mixture of
-these two laws. As $\mathrm B(c+1,c)=\mathrm B(c,c+1)=\frac12\mathrm B(c,c)$,
-the mixture has density $x^{c-1}(1-x)^{c-1}(x+1-x)/\mathrm B(c,c)$, which is
-the Beta$(c,c)$ density.
-\end{proof}
-
-\begin{lemma}[coupling]\label{lem:D-coupling}
-Let $J\subset(0,2)$ be compact, $a_J=\min(\min J,1)$ and
-$\kappa_J=a_J/(1+a_J)$. There is $C_J$ such that for $c\in J$ and every
-integer $r\ge2$,
-\[
-\sup_{y\in\mathbb R}\bigl\lvert\Prob(A_r\ge y)-\Prob(rB\ge y)\bigr\rvert
-\le C_J\,(\log r)\,r^{-\kappa_J}.
-\]
-\end{lemma}
-
-\begin{proof}
-We build the walk and the process $Y$ of Proposition~\ref{prop:D-beta} on one
-probability space so that $X_k=Y(k)$ for most $k\le r$. This works because
-$Y$ changes sign between the times $k-1$ and $k$ with probability close to
-$c/k$. Then $A_r$ is close to $rZ_r$, which has the law of $rB$. The first
-$K$ steps are left uncoupled, and we choose $K$ at the end.
-
-\emph{Step 1 (the coupling).} Take $\Pi$ and $Y$ as in
-Proposition~\ref{prop:D-beta} and an integer $1\le K\le r$. For $k>K$ let
-$\chi'_k=\mathbf 1\{\Pi((k-1,k])\text{ is odd}\}$, so that
-$Y(k)=Y(k-1)(-1)^{\chi'_k}$. These variables depend on $\Pi$ in disjoint
-intervals, so they are independent of each other and of $Y(K)$. The number
-$\Pi((k-1,k])$ is Poisson with mean $\nu=c\log\frac k{k-1}$, and a
-Poisson variable with mean $\nu$ is odd with probability
-$\frac12(1-e^{-2\nu})$. So
-$\Prob(\chi'_k=1)=p'_k=\frac12\bigl(1-(1-1/k)^{2c}\bigr)$. By Taylor's theorem
-for the function $\frac12(1-(1-x)^{2c})$ at $x=1/k$,
-$\lvert p'_k-c/k\rvert=\frac12c\lvert2c-1\rvert(1-\vartheta)^{2c-2}k^{-2}$ for
-some $0<\vartheta<1/k$. This is at most $3k^{-2}$. Indeed, if $c\ge1$ then
-$\frac12c\lvert2c-1\rvert<3$ and the power of $1-\vartheta$ is at most $1$.
-If $c<1$ then $\frac12c\lvert2c-1\rvert\le\frac12$ and the power is at most
-$(1-\frac12)^{-2}=4$, as $k\ge2$.
-
-For $K<k\le r$ we couple $\chi_k\sim\text{Bernoulli}(c/k)$ with $\chi'_k$ so
-that $\Prob(\chi_k\ne\chi'_k)=\lvert p'_k-c/k\rvert$, using independent extra
-randomness. We put $X_K=Y(K)$ and $X_k=X_{k-1}(-1)^{\chi_k}$ for $K<k\le r$,
-and we draw $X_1,\dots,X_{K-1}$ from the law of the walk given $X_K$, again
-with independent randomness. In the walk $X_K$ is a fair sign and
-$(\chi_k)_{k>K}$ is independent of $(X_1,\dots,X_K)$. The same holds here, so
-$(X_1,\dots,X_r)$ has the law of the walk.
-
-\emph{Step 2 ($A_r$ is close to $rZ_r$).} Let $\mathcal A$ be the event that
-$\chi_k=\chi'_k$ for $K<k\le r$. Then
-$\Prob(\mathcal A^c)\le\sum_{k>K}3k^{-2}\le3/K$, and on $\mathcal A$ we have
-$X_k=Y(k)$ for $K\le k\le r$. Now $A_r$ is the sum of
-$\mathbf 1\{X_k=+1\}$ over the steps $k\le r$, and $rZ_r$ is the sum of
-$\int_{k-1}^k\mathbf 1\{Y(t)=+1\}\,dt$ over the same $k$. Let $K<k\le r$. If
-$\Pi((k-1,k])=0$, then $Y=Y(k)$ on $(k-1,k]$, so on $\mathcal A$ the two
-terms for this $k$ are equal. The other $k\le r$ number at most
-$K+\Pi((K,r])$, and for each of them the two terms differ by at most $1$.
-Hence $\lvert A_r-rZ_r\rvert\le K+\Pi((K,r])$ on $\mathcal A$. The variable
-$\Pi((K,r])$ is Poisson with mean $c\log(r/K)\le2\log r$, so by Markov's
-inequality it exceeds $K$ with probability at most $2\log r/K$. So with
-$b_K=(3+2\log r)/K$ we have $\lvert A_r-rZ_r\rvert\le2K$ outside an event of
-probability at most $b_K$.
-
-\emph{Step 3 (the distribution functions).} By Step 2, for every real $y$,
-\[
-\Prob(rZ_r\ge y+2K)-b_K\le\Prob(A_r\ge y)\le\Prob(rZ_r\ge y-2K)+b_K ,
-\]
-and $rZ_r$ has the law of $rB$ by Proposition~\ref{prop:D-beta}. So
-$\Prob(A_r\ge y)$ and $\Prob(rB\ge y)$ differ by at most $b_K$ plus the
-probability that $rB$ lies in an interval of length $2K$. Hence the left
-side of the lemma is at most $b_K+\sup_x\Prob(x\le B\le x+2K/r)$.
-
-\emph{Step 4 (short intervals and the choice of $K$).} We bound the mass
-that $B$ gives to an interval of length $\delta$. For $c\le1$ the density of
-$B$ is at most $2^{1-c}\bigl(x^{c-1}+(1-x)^{c-1}\bigr)/\mathrm B(c,c)$, and
-$x^{c-1}$ has integral at most $\delta^c/c$ over such an interval. For
-$c\ge1$ the density is at most $d_c$. The mass of an interval is also at
-most $1$. So there is $C'_J$ such that an interval of length $\delta$ has
-mass at most $C'_J\delta^{a_J}$ for all $\delta>0$ and $c\in J$. A large $K$
-makes $b_K$ small and the interval long, and we balance the two. Take
-$K=\lceil r^{\kappa_J}\rceil$. Then $b_K\le(3+2\log r)r^{-\kappa_J}$ and
-$2K/r\le4r^{\kappa_J-1}$, and $(r^{\kappa_J-1})^{a_J}=r^{-\kappa_J}$ because
-$(1-\kappa_J)a_J=\kappa_J$. So both terms are at most a constant times
-$(\log r)\,r^{-\kappa_J}$.
-\end{proof}
-
 \subsection{A local limit at the center}
 
 \begin{proposition}[local limit at the center]\label{prop:D-llt}
 For each compact $J\subset(0,2)$ there is $C_J$ such that
-$\bigl\lvert NC_N-d_c\bigr\rvert\le C_J\,(\log N)\,N^{-\kappa_J}$ for $c\in J$
+$\bigl\lvert NC_N-d_c\bigr\rvert\le C_J\sqrt{\log N/N}$ for $c\in J$
 and even $N\ge4$.
 \end{proposition}
 
 \begin{proof}
 We start from the averaging identity of Lemma~\ref{lem:D-average} and replace
 the law of $T=T^+_h$ by its continuum version. Since $T\le r$ exactly when
-$A_r\ge h$, and $A_r$ is close to $rB$ by Lemma~\ref{lem:D-coupling}, the
-time $T$ is close in law to $h/B$. The weights $\lambda_{r+1,N}$ are
-explicit, so the average becomes an explicit integral against the
-Beta$(c,c)$ density.
+$A_r\ge h$, we need the law of $A_r$. The chain of
+Proposition~\ref{prop:aging-urn} with $d=2$ and $\theta=c$ switches with
+nearly the same probabilities as the walk, and its counts are binomial with a
+random parameter $B$. So $A_r$ is close in law to $rB$, and the time $T$ is
+close in law to $h/B$. The weights $\lambda_{r+1,N}$ are explicit, so the
+average becomes an explicit integral against the Beta$(c,c)$ density.
 
 Let $F(r)=\Prob(T\le r)=\Prob(A_r\ge h)$, $\Phi(r)=\Prob(rB\ge h)$ and
 $\Lambda_r=N\lambda_{r+1,N}$. By Lemma~\ref{lem:D-average},
 \[
 NC_N=2\sum_{r=h}^{N-1}\bigl(F(r)-F(r-1)\bigr)\Lambda_r .
 \]
+In this proof $C$ depends only on $J$ and may change from line to line. Since
+$NC_N\le N$ and $d_c$ is bounded on $J$, it is enough to prove the claim for
+large $N$. We put $K=\lceil\sqrt N\rceil$, $u=\sqrt{N\log N}$ and $w=K+u$, and
+we take $N$ so large that $w\le h/4$. Note that $K\le h$.
 
-\emph{Step 1 (replacing $F$ by $\Phi$).} Put $\Delta(r)=F(r)-\Phi(r)$. Then
-$\Delta(h-1)=0$, because $A_{h-1}<h$ and $B<1$. For $h\le r\le N-1$ we have
-$r\ge2$ and $N/2\le r<N$, so Lemma~\ref{lem:D-coupling} gives
-$\lvert\Delta(r)\rvert\le\delta_N:=C_J(\log N)N^{-\kappa_J}$ after enlarging
-$C_J$. Summation by parts gives
+\emph{Step 1 (a chain with binomial counts).} Let $X'$ be the chain of
+Proposition~\ref{prop:aging-urn} with $d=2$ and $\theta=c$, written with the
+states $\pm1$, and let $A'_r$ be its number of steps $+1$ among the first $r$.
+Its first step is a fair sign, and at step $k\ge2$ it switches with
+probability $q_k=c/(k-1+2c)$, independently of the past. By
+Proposition~\ref{prop:aging-urn} and $x^{(m)}=\Gamma(x+m)/\Gamma(x)$,
+\[
+\Prob(A'_r=s)=\binom rs\frac{c^{(s)}c^{(r-s)}}{(2c)^{(r)}}
+=\binom rs\frac{\mathrm B(c+s,c+r-s)}{\mathrm B(c,c)}
+=\E\Bigl[\binom rsB^s(1-B)^{r-s}\Bigr].
+\]
+So $A'_r$ has the law of a binomial variable with $r$ trials and the random
+success probability $B$. By Hoeffding's inequality~\cite[Theorem~1]{hoeffding1963},
+a binomial variable with $r$ trials and success probability $x$ is at least
+$rx+u$ with probability at most $e^{-2u^2/r}$, and the same holds for being at
+most $rx-u$. Hence for every real $y$
+\[
+\Prob(rB\ge y+u)-e^{-2u^2/r}\le\Prob(A'_r\ge y)\le\Prob(rB\ge y-u)+e^{-2u^2/r}.
+\]
+
+\emph{Step 2 (coupling the walk with $X'$).} The switch probabilities differ
+by $c/k-q_k=c(2c-1)/(k(k-1+2c))$, which is at most $6/(k(k-1))$ in absolute
+value since $c<2$. Let $K\le r\le N$. For $K<k\le r$ we couple the switch
+indicator $\chi_k$ of the walk with the switch indicator $\chi'_k$ of $X'$ so
+that $\Prob(\chi_k\ne\chi'_k)=\lvert c/k-q_k\rvert$, using independent extra
+randomness. We put $X_K=X'_K$ and $X_k=X_{k-1}(-1)^{\chi_k}$ for $K<k\le r$,
+and we draw $X_1,\dots,X_{K-1}$ from the law of the walk given $X_K$, again
+with independent randomness. In both processes the sign at step $K$ is fair,
+and the later switches are independent of the first $K$ steps. So
+$(X_1,\dots,X_r)$ has the law of the walk. Outside an event of probability at
+most $\sum_{k>K}6/(k(k-1))=6/K$ the two processes agree at the steps
+$K,\dots,r$, and then $\lvert A_r-A'_r\rvert<K$. With Step 1, $w=K+u$ and
+$e^{-2u^2/r}\le e^{-2\log N}$, this gives
+\[
+\lvert F(r)-\Phi(r)\rvert\le\Prob(h-w\le rB<h+w)+\frac1{N^2}+\frac6K
+\qquad(K\le r\le N).
+\]
+
+\emph{Step 3 (replacing $F$ by $\Phi$).} Put $\Delta(r)=F(r)-\Phi(r)$. Then
+$\Delta(h-1)=0$, because $A_{h-1}<h$ and $B<1$. Summation by parts gives
 \[
 \sum_{r=h}^{N-1}\bigl(\Delta(r)-\Delta(r-1)\bigr)\Lambda_r
 =\Delta(N-1)\Lambda_{N-1}-\sum_{r=h}^{N-2}\Delta(r)\bigl(\Lambda_{r+1}-\Lambda_r\bigr).
 \]
-The ratio $\lambda_{t+1,N}/\lambda_{t,N}=t/(t+1-c)$ shows that $\Lambda_r$ is
-monotone in $r$ (it decreases for $c\le1$ and increases for $c\ge1$). So the
-differences $\Lambda_{r+1}-\Lambda_r$ have one sign, and their absolute
-values add up to $\lvert\Lambda_{N-1}-\Lambda_h\rvert$. Hence the right side
-is at most
-$\delta_N\bigl(\Lambda_{N-1}+\lvert\Lambda_{N-1}-\Lambda_h\rvert\bigr)$ in
-absolute value. Now $\Lambda_{N-1}=N\lambda_{N,N}=c$ and $0<\Lambda_h<2c$. For
-$c\le1$ the latter holds because $\Lambda_h=\frac{Nc}{h+1}\rho(h+1,N)$ with
-$\rho\le1$ and $N<2(h+1)$, and for $c>1$ because $\Lambda_r$ increases to
-$c$. So $\Lambda_{N-1}+\lvert\Lambda_{N-1}-\Lambda_h\rvert\le2c$, and
-replacing $F$ by $\Phi$ changes $NC_N$ by at most $4c\,\delta_N$.
+The ratio $\lambda_{t+1,N}/\lambda_{t,N}=t/(t+1-c)$ gives
+$\Lambda_{r+1}-\Lambda_r=\Lambda_r(c-1)/(r+2-c)$. Every factor of
+$\rho(r+1,N)$ lies in $(0,1)$, so $\Lambda_r=\frac{Nc}{r+1}\rho(r+1,N)\le2c$
+for $r\ge h$. Hence $\Lambda_{N-1}=c$ and
+$\lvert\Lambda_{r+1}-\Lambda_r\rvert\le2c/h\le8/N$, and the right side is at
+most $c\lvert\Delta(N-1)\rvert+\frac8N\sum_{r=h}^{N-2}\lvert\Delta(r)\rvert$
+in absolute value. For each value $b$ of $B$ the number $rb$ lies in
+$[h-w,h+w)$ for at most $2w/b+1$ integers $r$, and for no $r\le N$ unless
+$b\ge(h-w)/N\ge\frac38$. So the probabilities in Step 2 add up to at most
+$6w+1$ over $r$, and
+$\sum_{r=h}^{N-2}\lvert\Delta(r)\rvert\le6w+2+6\sqrt N$. For $r=N-1$ the
+event in Step 2 puts $B$ in an interval of length $2w/(N-1)$ inside
+$[\frac38,\frac34]$, where the density of $B$ is at most $C$ for $c\in J$. So
+$\lvert\Delta(N-1)\rvert\le Cw/N+N^{-2}+6/K$. Together, replacing $F$ by
+$\Phi$ changes $NC_N$ by at most $C(w/N+1/K)\le C\sqrt{\log N/N}$.
 
-\emph{Step 2 (the new sum is an expectation).} After the replacement the sum
+\emph{Step 4 (the new sum is an expectation).} After the replacement the sum
 is $2\sum_{r=h}^{N-1}(\Phi(r)-\Phi(r-1))\Lambda_r$. The term with $r=h$
 vanishes, since $\Phi(h)=\Phi(h-1)=0$. For $h<r\le N-1$ we have
 $\Phi(r)-\Phi(r-1)=\Prob(h/r\le B<h/(r-1))$, and on this event
@@ -336,7 +205,7 @@ $\lceil h/B\rceil=r$. These events are disjoint, and their union is
 $\{h/(N-1)\le B<1\}$. So the new sum is
 $2\,\E\bigl[\Lambda_{\lceil h/B\rceil};\,B\ge h/(N-1)\bigr]$.
 
-\emph{Step 3 (evaluating the expectation).} By~\eqref{eq:D-gamma} with $y=N$
+\emph{Step 5 (evaluating the expectation).} By~\eqref{eq:D-gamma} with $y=N$
 and $y=r+1\ge3$,
 $\Lambda_r=c\bigl((r+1)/N\bigr)^{c-1}(1+O(1/N))$ for $h\le r\le N-1$. On the
 event above with $r=\lceil h/B\rceil$, the number $(r+1)/N$ lies in
@@ -346,8 +215,8 @@ $\Lambda_{\lceil h/B\rceil}=c(2B)^{1-c}+O(1/N)$. Also
 $\Prob\bigl(\frac12\le B<h/(N-1)\bigr)=O_J(1/N)$, since the density of $B$ is
 bounded near $\frac12$ uniformly on $J$. So we may replace the event
 $\{B\ge h/(N-1)\}$ by $\{B\ge\frac12\}$. In the remaining integral the factor
-$b^{1-c}$ cancels the factor $b^{c-1}$ of the density. Hence $NC_N$ is within
-$4c\,\delta_N$ of
+$b^{1-c}$ cancels the factor $b^{c-1}$ of the density. Hence, by Step 3,
+$NC_N$ is within $C\sqrt{\log N/N}$ of
 \[
 2c\,\E\bigl[(2B)^{1-c};\,B\ge\tfrac12\bigr]+O_J(1/N)
 =\frac{2c\,2^{1-c}}{\mathrm B(c,c)}\int_{1/2}^1(1-b)^{c-1}\,db+O_J(1/N)=d_c+O_J(1/N).\qedhere
@@ -358,15 +227,15 @@ $4c\,\delta_N$ of
 
 \begin{proof}[Proof of Proposition~\ref{prop:aging-expansion}]
 We write $\log C_N-\log E_N$ as an explicit function of $c$ with a small
-error, and we solve for its zero near $c=1$. Let $J=[c^{(3)},1]$. Then $\kappa_J=c^{(3)}/(1+c^{(3)})>0.42$, and $d_c$ is
+error, and we solve for its zero near $c=1$. Let $J=[c^{(3)},1]$. Then $d_c$ is
 bounded below on $J$ by a positive constant. By~\eqref{eq:D-gamma} with
 $y=N$,
 $\log E_N=\log\bigl(\tfrac12\rho(1,N)\bigr)=-\log2-\log\Gamma(2-c)-c\log N+O(1/N)$.
 By Proposition~\ref{prop:D-llt},
-$\log C_N=\log d_c-\log N+O(N^{-0.4})$ for large $N$. Both hold uniformly for
+$\log C_N=\log d_c-\log N+O(\sqrt{\log N/N})$ for large $N$. Both hold uniformly for
 $c\in J$, so
 \begin{equation}\label{eq:D-logratio}
-\log C_N-\log E_N=(c-1)\log N+\Theta(c)+O(N^{-0.4})\qquad(c\in J).
+\log C_N-\log E_N=(c-1)\log N+\Theta(c)+O(\sqrt{\log N/N})\qquad(c\in J).
 \end{equation}
 Here $\Theta(1)=\log2$ because $d_1=1$. Next,
 $\Theta'(c)=-\psi(2-c)-\log4-2\psi(c)+2\psi(2c)$, and with $\psi(1)=-\gamma$
@@ -378,9 +247,9 @@ of~\eqref{eq:D-logratio} vanishes at $c=c_N$, because $C_N=E_N$ there. As
 $\Theta$ is smooth on $J$, Taylor's theorem gives
 $\Theta(c_N)=\log2-\varepsilon\,\Theta'(1)+O(\varepsilon^2)$.
 So~\eqref{eq:D-logratio} at $c=c_N$ reads
-$0=-\varepsilon\log N+\log2-\varepsilon\,\Theta'(1)+O(\varepsilon^2)+O(N^{-0.4})$,
+$0=-\varepsilon\log N+\log2-\varepsilon\,\Theta'(1)+O(\varepsilon^2)+O(\sqrt{\log N/N})$,
 that is
-$\varepsilon L=\log2+O(\varepsilon^2)+O(N^{-0.4})=\log2+O(L^{-2})$. So
+$\varepsilon L=\log2+O(\varepsilon^2)+O(\sqrt{\log N/N})=\log2+O(L^{-2})$. So
 $\varepsilon=\log2/L+O(L^{-3})$, which is the expansion.
 \end{proof}
 

@@ -6,9 +6,7 @@ where $0<c<2$. So the walk switches less and less often, and the expected
 number of switches in $N$ steps is $c(H_N-1)$, which is about $c\log N$. With
 a fair first step, $A_N/N$ converges in law to
 $\mathrm{Beta}(c,c)$~\cite[Example~1.1 and Theorem~1.4]{ds2007},
-\cite[Theorem~1]{ev2018}. (The chain of~\cite{ds2007} is this walk when
-$c\le1$.) The law Beta$(c,c)$ is uniform exactly when $c=1$, and that case
-is~\cite[Remark~2]{ev2018}. At finite $N$ the first step
+\cite[Theorem~1]{ev2018}. At finite $N$ the first step
 matters. We first give one exact law behind all the ties, then fix the first
 step, pass to $d$ states, and return to the fair first step.
 
@@ -157,8 +155,6 @@ with $T\le7$ for $d=2,3$ and $T\le5$ for $d=4$
 
 \subsection{A fixed first step}
 
-With the first step fixed, every interior bin ties with the end exactly at $c=1$.
-
 \begin{proposition}[two states, fixed first step]\label{prop:aging-two}
 Let $N\ge2$ and let the first step be $+1$.
 \begin{enumerate}[(a)]
@@ -173,11 +169,9 @@ strictly in $c\in(0,2)$, and it equals $1$ exactly at $c=1$.
 \end{enumerate}
 \end{proposition}
 
-In words, with a fixed first step every bin from $1$ to $N-1$ ties with the
-end bin $N$ at $c=1$, for every $N$. For $c<1$ the end bin is the most likely
+For $c<1$ the end bin is the most likely
 bin, and for $c>1$ it is the least likely of the bins $1,\dots,N$ (bin $0$
-has probability $0$). So the fixed-start crossing is exactly $c=1$, and it
-does not depend on $N$ or on the bin.
+has probability $0$).
 
 \begin{proof}
 (a) Put $Y_t=X_{t+1}$. Given $X_1=+1$, step $2$ switches with probability
@@ -218,44 +212,14 @@ That connection is Chapter~7 of the book~\cite{ev2024}, and after the same
 shift part (a), with the last state, is~\cite[Claim~7.1]{ev2024}. So part (a)
 is not new. What we add for
 two states is part (b), and the count law also follows
-from~\cite[Theorem~2.18]{dls2023} (Section~\ref{sec:aging-urn}). The proof of
-(b) above is complete in itself. It is the same path-weight argument that
-gives the unique crossing of the elephant walk in~\cite{paperD}, but it does
-not use that paper. Both parts of
+from~\cite[Theorem~2.18]{dls2023} (Section~\ref{sec:aging-urn}). Both parts of
 Proposition~\ref{prop:aging-two} are also proved in Lean
 (Section~\ref{sec:verify}).
 
 \subsection{\texorpdfstring{$d$}{d} states}
 
 The same thing happens for a chain on $d$ states that leaves its current
-state for each other state at the same aging rate. For such chains Dietz and
-Sethuraman~\cite[Theorem~1.4]{ds2007} proved that the fractions of time
-converge in law to the Dirichlet law with every parameter $\theta$, which is
-uniform on the simplex exactly at $\theta=1$. Bouguet and
-Cloez~\cite[Propositions~4.1 and~4.5]{bc2018} find the joint limit of the
-fractions and the current state. The chain of~\cite{ds2007}
-moves to each other state with probability $\theta/n$ at time $n$ once
-$n>\lceil(d-1)\theta\rceil$, and it does not move before that. Ours, defined
-below for $\theta<d/(d-1)$, moves to each other state with probability
-$\theta/(k+d-2)$ at every step $k\ge2$. We index our chain by their time, so
-that our step $k$ happens at time $n=k+d-2$ and our chain is in state $1$ at
-time $d-1$. Then the two chains have the same transition probabilities at
-every time $n\ge d$ with $n>\lceil(d-1)\theta\rceil$, and in particular at every $n\ge d+1$,
-since $(d-1)\theta<d$. They also have the same limit law of the fractions of
-time. To see this, put $n_1=\max(d+1,\lceil d\theta\rceil)$. At every time
-$n\ge n_1$ each chain stays with probability $1-d\theta/n$ and otherwise draws
-a state uniformly from all $d$ states (the draw may give the old state), and
-here $d\theta/n\le1$. We couple the two chains from time $n_1$ on, with the
-same decisions to draw and the same draws. Since $\sum_nd\theta/n=\infty$,
-almost surely there is a draw at some time $\tau\ge n_1$, and from time $\tau$
-on the two chains agree. So up to time $N+d-2$ their vectors of visit counts
-differ by at most $2\tau$ in total, and their fractions of time differ by
-$O((\tau+d)/N)$, which tends to $0$ almost surely. Hence our fractions of
-time converge in law to the Dirichlet limit of~\cite[Theorems~1.3
-and~1.4]{ds2007}.
-At $\theta=1$, part~(a) of the theorem below is an exact finite-$N$ form of
-their limit.
-Fix $d\ge2$ and $\theta$
+state for each other state at the same aging rate. Fix $d\ge2$ and $\theta$
 with $0<\theta<d/(d-1)$. The chain $X_1,X_2,\dots$ on $\{1,\dots,d\}$ starts at
 $X_1=1$. At step $k\ge2$ it moves to each of the other $d-1$ states with
 probability $\theta/(k+d-2)$, and it stays with probability
@@ -267,6 +231,15 @@ $n=(n_1,\dots,n_d)$ of $N$ into $d$ nonnegative parts with $n_1\ge1$. There
 are $\binom{N+d-2}{d-1}$ of them (subtract one from $n_1$). We call them
 bins. The corner $Ne_1$, where $e_i$ is the $i$-th unit vector, is the bin of
 the chain that never moves.
+
+For such chains Dietz and Sethuraman~\cite[Theorem~1.4]{ds2007} proved that
+the fractions of time converge in law to the Dirichlet law with every
+parameter $\theta$, which is uniform on the simplex exactly at $\theta=1$.
+After a shift of the time index by $d-2$, their chain and ours have the same
+transition probabilities at every time $n\ge d+1$, and after one common fresh
+draw the two chains agree, so their fractions of time have the same limit. At
+$\theta=1$, part~(a) of the theorem below is an exact finite-$N$ form of this
+limit.
 
 \begin{theorem}[$d$ states]\label{thm:aging-d}
 Let $d\ge2$, $0<\theta<d/(d-1)$ and $N\ge2$.
@@ -281,20 +254,11 @@ increases strictly in $\theta$, and it equals $1$ exactly at $\theta=1$.
 \end{enumerate}
 \end{theorem}
 
-In words, at $\theta=1$ all bins are equally likely, and given the counts the
+In words, at $\theta=1$, given the counts, the
 last state is distributed as the state at a uniformly chosen one of the steps
-$2,\dots,N$ (the forced first visit to state $1$ is left out). Every other bin
-ties with the corner exactly at $\theta=1$, for every $N\ge2$ and every $d$.
+$2,\dots,N$ (the forced first visit to state $1$ is left out).
 Below $\theta=1$ the corner is the most likely bin, and above it the corner
 is the least likely.
-
-\paragraph{Idea of the proof.}
-At $\theta=1$ step $N$ stays with weight $N-1$ and moves to each other state
-with weight $1$. We read the weight $N-1$ as $(N-2)+1$. So the chain copies
-its last state with weight $N-2$, and it picks each of the $d$ states with
-weight $1$. Shifted by one step, this is the chain of
-Proposition~\ref{prop:aging-urn} with $\theta=1$, and its counts are uniform.
-Part (b) is the path-weight argument of Proposition~\ref{prop:aging-two}(b).
 
 \begin{proof}
 (a) Put $Y_t=X_{t+1}$. At $\theta=1$ step $2$ moves to each other state with
@@ -423,16 +387,18 @@ A monotonicity argument first traps $c_N$ within $O(1/\log N)$ of $1$, so an exp
 applies. The end is explicit, namely
 $E_N=\Gamma(N+1-c)/(2\Gamma(2-c)\Gamma(N+1))$, which is
 $N^{-c}/(2\Gamma(2-c))$ with relative error $O(1/N)$. For the center we prove
-a local limit theorem with a rate, namely $NC_N=d_c+O(N^{-0.4})$ uniformly
+a local limit theorem with a rate, namely $NC_N=d_c+O(\sqrt{\log N/N})$ uniformly
 for $c\in[c^{(3)},1]$, where $c^{(3)}=(9-\sqrt{57})/2\approx0.725$ and $d_c=4^{1-c}/\mathrm B(c,c)$ is the density of
 $\mathrm{Beta}(c,c)$ at $\frac12$. So
-$\log(C_N/E_N)=(c-1)\log N+\Theta(c)+O(N^{-0.4})$ with
+$\log(C_N/E_N)=(c-1)\log N+\Theta(c)+O(\sqrt{\log N/N})$ with
 $\Theta(c)=\log(2\Gamma(2-c)d_c)$. Here $\Theta(1)=\log2$ and
 $\Theta'(1)=\gamma+2-2\log2$, and solving for the zero gives the expansion.
-The proof is in Appendix~\ref{app:aging}. The local limit theorem comes from
-an averaging identity for $C_N$ and a coupling of the walk with a sign
-process driven by a Poisson process of intensity $c\,dt/t$, whose occupation
-fraction is exactly $\mathrm{Beta}(c,c)$.
+The proof is in Appendix~\ref{app:aging}. There $C_N$ is an average of
+explicit numbers over the law of the time of the $h$-th step $+1$
+(Lemma~\ref{lem:D-average}). The local limit theorem comes from a coupling of
+the walk with the chain of Proposition~\ref{prop:aging-urn} with $d=2$ and
+$\theta=c$, whose counts are a mixture of binomial laws with a
+$\mathrm{Beta}(c,c)$ parameter (Proposition~\ref{prop:D-llt}).
 
 The error term decays only like $(\log N)^{-3}$, but the expansion is
 already accurate at moderate $N$. The computed crossing at $N=200$ is
