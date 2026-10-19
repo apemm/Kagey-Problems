@@ -13,8 +13,9 @@ Mathlib `v4.33.1` (Lean `v4.33.1`).  All files compile with no `sorry`, no `axio
   and the positive part equal to Narayana's cows A000930.
 - Problem 001 (blackouts preserving rectangle identifiability), `problem001/jis/pemmasani.tex`.
   Files are under `KageyProblems/`.  Points are `(column, row)` with `(1, 1)` at the top left.
-  No function `f` is defined, so each value is a witness together with a bound for every valid
-  blackout.  Open conjectures are not stated.
+  Each value is a witness together with a bound for every valid blackout; `fval h m` (the
+  maximum size of a valid blackout, in `CollarBoards.lean`) is stated only for the values for
+  every width.  Open conjectures are not stated.
   - `Problem001.lean` (proof): the difference lemma and its hitting-set corollary, at most one
     hidden rectangle, every rectangle on a two-row strip is axis-aligned, and the Strip Theorem
     (`m ≥ 3`: maximum `m + 1`, exactly `m · 2^(m-1)` maxima, characterized), plus `2 × 2`.
@@ -30,9 +31,32 @@ Mathlib `v4.33.1` (Lean `v4.33.1`).  All files compile with no `sorry`, no `axio
   - `Problem001/Boards.lean` (proof of a faster test, then kernel decision): the blackout of
     Theorem "the guess fails" (a) and the stored `6 × 15` blackout are valid, so `f(6,8) ≥ 15`
     and `f(6,15) = 24` in full; the `5 × 13` and `6 × 23` collar test boards are valid.
-  - Not formalized: three corners suffice, the collar theorem (so the values for every width),
-    the rectangle counts, Sections 5–6, the generating functions, `f(5,5) ≤ 10`, and every
-    SAT-based upper bound.
+  - `Problem001/ThreeCorners.lean` (proof): Lemma "three corners suffice": two rectangles sharing
+    three corners are equal (`eq_of_three_le_card_inter`), so distinct rectangles share at most
+    two (`card_inter_le_two`), and two distinct rectangles with the same presentation both show
+    at most two corners (`pres_card_le_two_of_ne`); also every corner set has four points.
+  - `Problem001/Tilt.lean` (proof): every rectangle is axis-aligned or tilted
+    (`IsRect.axis_or_tilt`), a tilted rectangle has at most one corner in row `1` and at most
+    one in row `h`, and its corners are at most `W_h = 1 + ⌊(h-1)²/4⌋` columns apart
+    (`IsTilt.col_sub_le`, Lemma "span bound").
+  - `Problem001/Padding.lean` (proof): the padded boards `S_{L,R}` (`pad`), validity on a window
+    of columns and its translation to `Valid` (`valid_pad_iff`), the column structure of a
+    padded board, and the two localization steps of the collar proof (`weak_tilt_local`,
+    `axis_tie_local`).
+  - `Problem001/AxisCycles.lean` (proof): two distinct axis-aligned rectangles with the same
+    presentation give a black four- or six-cycle (`axis_collision_cycle`), and Step 1 of the
+    collar proof (`pad_axis_tie`).
+  - `Problem001/Collar.lean` (proof): Theorem "finite collar" (`finite_collar`, with the
+    one-based form `finite_collar_valid` and the right-padding form `finite_collar_right`):
+    for `h ≥ 3`, `m ≥ 1`, padding row `1` or `h` and at least one side chosen, every admissible
+    `S_{L,R}` is valid iff `S_{L*,R*}` is.
+  - `Problem001/CollarBoards.lean` (proof from the kernel-checked test boards): `f(5,m) = m + 6`
+    for every `m ≥ 8` (`fval_five`) and `f(6,m) = m + 9` for every `m ≥ 15` (`fval_six`).
+    In `fval_six` the width `m = 15` comes from the stored 24-point board and every `m ≥ 16` from
+    the collar theorem.
+  - Not formalized: Lemma "leftmost corner" itself (only the row and span facts the collar
+    proof uses), the rectangle counts, Sections 5–6, the generating functions, `f(5,5) ≤ 10`,
+    and every SAT-based upper bound.
 
 ## Building
 
