@@ -208,7 +208,8 @@ Computer checks are marked in each statement.
 $f(h,m)\le m+q_h$.
 \item For $m\ge3$ we have $f(2,m)=m+1$ and $f(3,m)=m+2$. Also $f(4,m)=m+4$ for every
 $m\ge6$, and $f(5,5)=10$.
-\item (Computer-assisted, the last claim checked in Lean.) We have $f(4,4)=7$, $f(4,5)=8$,
+\item (Computer-assisted, with checked certificates for $f(5,6)$ and $f(5,7)$, and the last
+claim checked in Lean.) We have $f(4,4)=7$, $f(4,5)=8$,
 $f(5,6)=11$, and $f(5,7)=12$, while $f(5,m)=m+6$ for every $m\ge8$.
 \item (Computer-assisted for $m\ge9$, with checked certificates for $m\le14$ and checked in Lean
 for $m\ge15$.) For $8\le m\le14$ we have $f(6,m)\le m+8$, and $f(6,m)=m+9$ for every $m\ge15$.
@@ -1347,7 +1348,7 @@ blackouts of $h+m$ points (Section~\ref{sec:verify}) for $m=6,7$. For
 $m=5$ the upper bound is Corollary~\ref{cor:small-m}. For $m=6$ and $m=7$ a valid blackout of
 $m+6$ points would be one of the $10\,(m)_6\,5^{m-6}$ candidates of Theorem~\ref{thm:equality}.
 Two SAT encodings exclude all of them. Two more encodings and a column search, which use no
-structure theorem, agree.
+structure theorem, agree, and the bounds have checked certificates (Section~\ref{sec:verify}).
 
 (c) Among the $10\,(8)_6\,5^2=5{,}040{,}000$ candidates of Theorem~\ref{thm:equality}, two
 SAT enumerations and a column search find exactly the four images of $S_8$.
@@ -1615,17 +1616,17 @@ encodings, M a transfer counter, and a dash not computed. For the counts, S and 
 \label{tab:values}
 \end{table}
 
-The bounds $f(6,6)<13$, $f(6,7)<14$, $f(7,7)<15$, $f(6,8)<16$, $f(7,8)<17$, and the $70$ instances of
+The bounds $f(5,6)<12$, $f(5,7)<13$, $f(6,6)<13$, $f(6,7)<14$, $f(7,7)<15$, $f(6,8)<16$, $f(7,8)<17$, and the $70$ instances of
 Theorem~\ref{thm:sixrow}(a), at widths $8$ to $14$, have LRAT certificates. Two separately
-written generators give the same clauses for all $75$ instances, in encoding A for the five
+written generators give the same clauses for all $77$ instances, in encoding A for the seven
 grids and the structured encoding B for six rows. CaDiCaL~2.1.2~\cite{biere2024} writes the proofs, after
 splitting the $6\times8$ instance into the $64$ cases of its first column and the $7\times7$
-and $7\times8$ instances into $128$. All $392$ proofs ($28.5$~GB of text) pass
+and $7\times8$ instances into $128$. All $394$ proofs ($28.6$~GB of text) pass
 \texttt{lrat-check} of drat-trim~\cite{wetzler2014,cruzfilipe2017} and the LRAT checker of the Lean standard library, which is
 proved sound but runs compiled, so it trusts the compiler. That a valid blackout of at least
 $k$ points satisfies every clause, by Theorem~\ref{thm:equality} for six rows, is argued in
-\nolinkurl{jis/data/unsat_certificates.json} and not formalized. The bounds $f(5,6)\le11$ and
-$f(5,7)\le12$ rest on SAT runs and a column search. Other upper bounds use no SAT solver. Found blackouts need no such trust, since the
+\nolinkurl{jis/data/unsat_certificates.json} and not formalized.
+Every other upper bound uses no SAT solver. Found blackouts need no such trust, since the
 stored witnesses and the models of the counting programs are checked against the definition,
 but a count also needs a complete enumeration.
 

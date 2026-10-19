@@ -1,6 +1,6 @@
 """Write the unsatisfiable SAT instances of Section 9 as DIMACS files, for proof checking.
 
-These are the instances behind f(6,6) < 13, f(6,7) < 14, f(6,8) < 16, f(7,7) < 15, f(7,8) < 17, and the
+These are the instances behind f(5,6) < 12, f(5,7) < 13, f(6,6) < 13, f(6,7) < 14, f(6,8) < 16, f(7,7) < 15, f(7,8) < 17, and the
 six-row partition instances of the six-row theorem, part (a) (no valid blackout of m+9 points on the 6 x m
 grid with the equality structure, for one of the ten row partitions). Each file is written
 from the encodings the paper describes, with the cardinality constraint written out here as
@@ -61,7 +61,7 @@ sys.path.insert(0, ROOT)
 
 from verify_narrow import rectangles  # noqa: E402
 
-CELLS = [(6, 6, 13, False), (6, 7, 14, False), (6, 8, 16, True), (7, 7, 15, True), (7, 8, 17, True)]
+CELLS = [(5, 6, 12, False), (5, 7, 13, False), (6, 6, 13, False), (6, 7, 14, False), (6, 8, 16, True), (7, 7, 15, True), (7, 8, 17, True)]
 SIX_ROW_WIDTHS = range(8, 15)
 
 
