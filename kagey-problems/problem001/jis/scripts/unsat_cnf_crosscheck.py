@@ -200,12 +200,12 @@ def main():
         print(json.dumps(rec), flush=True)
         return b
 
-    for h, m, k in ((6, 6, 13), (6, 7, 14), (6, 8, 16), (7, 7, 15), (7, 8, 17)):
+    for h, m, k in ((5, 6, 12), (5, 7, 13), (6, 6, 13), (6, 7, 14), (6, 8, 16), (7, 7, 15), (7, 8, 17)):
         cls, nv, nr, nmin = cell_clauses(h, m, k)
         name = f'cell_{h}x{m}_k{k}'
         base = compare(name, nv, cls)
         report['instances'][-1].update(rectangles=nr, minimal_differences=nmin)
-        if (h, m) in ((6, 6), (6, 7)):
+        if (h, m) in ((5, 6), (5, 7), (6, 6), (6, 7)):
             continue
         col = [v((0, y), m) for y in range(h)]
         patterns = set()
