@@ -67,7 +67,8 @@ Theorem "three-row generating function" (b), (c), Theorem "three-row closed form
 
 ### R2. Four rows, small widths
 
-Corollary "widths four and five", and the four-row counts of Table "computed values" (the
+Corollary "widths four and five", and the counts on 4 x 6 to 4 x 8 of Table "computed values"
+(4 x 4 and 4 x 5 come from the brute-force check, R0; the
 per-pair-set counts are in the longer version, `jis/long_version_2026-10-18.pdf`).
 
 | Command | Inputs | Evidence | Stored time | Rerun |
