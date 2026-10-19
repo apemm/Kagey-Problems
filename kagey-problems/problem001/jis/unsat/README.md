@@ -6,13 +6,13 @@ proofs, is `jis/data/unsat_certificates.json`. The CNF files themselves are in `
 
 The certified instances are these.
 
-- f(6,6) < 13, f(6,7) < 14 (one instance each).
+- f(5,6) < 12, f(5,7) < 13, f(6,6) < 13, f(6,7) < 14 (one instance each).
 - f(6,8) < 16 (64 parts), f(7,7) < 15 (128 parts) and f(7,8) < 17 (128 parts). These are split by
   the content of the first column.
 - The six-row instances of Theorem "six rows" (a), one for each of the ten balanced 3+3 partitions
   of the rows at each width 8 to 14 (70 instances).
 
-That is 75 base instances and 392 proofs. CaDiCaL 2.1.2 wrote each proof as text LRAT, and each
+That is 77 base instances and 394 proofs. CaDiCaL 2.1.2 wrote each proof as text LRAT, and each
 proof was accepted by two checkers, `lrat-check` from drat-trim and the verified LRAT checker of the
 Lean core library.
 
@@ -37,8 +37,8 @@ is `jis/scripts/unsat_cnf_crosscheck.py`.
 
 ## Where the proofs are
 
-The proofs are not in the repository. The 392 proofs take 28,534,178,795 bytes as text LRAT
-(28.5 GB) and 10.3 GB as kept on disk, where every proof over 50 MB is gzipped. The SHA-256 of
+The proofs are not in the repository. The 394 proofs take 28,589,975,952 bytes as text LRAT
+(28.6 GB) and 10.4 GB as kept on disk, where every proof over 50 MB is gzipped. The SHA-256 of
 each proof, taken on the text before gzip, is in `jis/data/unsat_certificates.json` (field
 `proof.sha256` of the instance or of each part). A rerun of CaDiCaL gives a proof that the
 checkers can check in the same way, but it need not have the same bytes.
@@ -73,7 +73,7 @@ Python commands run in `kagey-problems/problem001`. `pipeline.py` needs psutil.
 
 4. Solve and check. With `UNSAT_WORK=WORK` and `CADICAL=T/bin/cadical.exe` set,
 
-       python -B jis/unsat/pipeline.py cell_6x6_k13 cell_6x7_k14 "cell_*_part*" "six_*"
+       python -B jis/unsat/pipeline.py cell_5x6_k12 cell_5x7_k13 cell_6x6_k13 cell_6x7_k14 "cell_*_part*" "six_*"
 
    CaDiCaL runs as `cadical --lrat --binary=false CNF PROOF`. The caps are `SOLVE_CAP` and
    `CHECK_CAP` in seconds (default 7200 each). The 6 x 6 instance was run with a cap of 3600 s and

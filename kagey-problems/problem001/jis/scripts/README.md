@@ -192,15 +192,15 @@ collects the counts.
 
 ### R12. LRAT certificates
 
-f(6,6) < 13, f(6,7) < 14, f(6,8) < 16, f(7,7) < 15, f(7,8) < 17, and the six-row instances of
+f(5,6) < 12, f(5,7) < 13, f(6,6) < 13, f(6,7) < 14, f(6,8) < 16, f(7,7) < 15, f(7,8) < 17, and the six-row instances of
 Theorem "six rows" (a) for widths 8 to 14. The sources, the commands and the faithfulness argument
-are in `jis/unsat/README.md`. The 392 proofs (28.5 GB as text LRAT) are not in the repository.
+are in `jis/unsat/README.md`. The 394 proofs (28.6 GB as text LRAT) are not in the repository.
 Their SHA-256 are in the evidence file.
 
 | Command | Evidence | Stored time | Rerun |
 |---|---|---|---|
-| `python -B jis/scripts/unsat_export_cnf.py WORK/cnf --parts` | `unsat/cell_*.cnf`, `unsat/six_w*_p*.cnf.gz`, `unsat/splits.json` (copied by `collect.py`) | not stored | 186.6 s invocation on 2026-10-18, all 394 earlier files equal |
-| `python -B jis/scripts/unsat_cnf_crosscheck.py WORK/cnf WORK/crosscheck.json` | `second_generator_identical` and `split.covering_checked_by_second_generator` in `unsat_certificates.json` | not stored | 75 of 75 base instances agree |
+| `python -B jis/scripts/unsat_export_cnf.py WORK/cnf --parts` | `unsat/cell_*.cnf`, `unsat/six_w*_p*.cnf.gz`, `unsat/splits.json` (copied by `collect.py`) | not stored | 240.9 s invocation on 2026-10-19 with the 5 x 6 and 5 x 7 instances added, all 395 earlier files equal |
+| `python -B jis/scripts/unsat_cnf_crosscheck.py WORK/cnf WORK/crosscheck.json` | `second_generator_identical` and `split.covering_checked_by_second_generator` in `unsat_certificates.json` | not stored | 77 of 77 base instances agree |
 | `python -B jis/unsat/pipeline.py NAMES` (CaDiCaL 2.1.2, `lrat-check`, Lean `LRAT.check`), then `python -B jis/unsat/collect.py` | `unsat_certificates.json` | `solver.seconds` and the two checker times of each instance or part. 6 x 6 at 13 solved in 4.5 s and checked in 1.2 s and 1.8 s | not rerun |
 
 ## Batch drivers and solver deadlines
@@ -590,8 +590,10 @@ a294c3eed170d7336d301f4b61a7d6aa6925b2fe8f70f03c39739fb3136f2b90  jis/data/table
 16ba1a42645985cb24dd1b9b96426a783fa46ef8cc0a76516cb49a56210eeea3  jis/data/small_cells_sat_6x9_b16.json
 fe4a52c99a67bedb0c3f3176f8f21d2af76b3660f3b8e954382fc572cd346cef  jis/data/six_row_collar_6x9_check.json
 # R12 LRAT certificates
-c9939d11d57ea9b2964be40ac8d00e8a65d3c176eae5cd44103b04e823745740  jis/data/unsat_certificates.json
+8659aa6d8c5c51c2b23f75d955f78ff976ca5206329be0fbbdac72e7a1e64206  jis/data/unsat_certificates.json
 2de7ccc6c8d89cd3f3b187dc666486641db66b5146f6f1d38291865762f85751  jis/data/unsat/splits.json
+75d2a03168825f82d50f97f9a2981717b3cc3b8722b30fc5654cac955046ff7e  jis/data/unsat/cell_5x6_k12.cnf
+2402da40ddf0ede6f6b9df71ddaae7d79bc5861372ed4e1bd157acc03bf91493  jis/data/unsat/cell_5x7_k13.cnf
 42ae9c1e0f3d9f8bd85afedb9023ac0f5e5fc8e750b9ef109b4bc34717a7c056  jis/data/unsat/cell_6x6_k13.cnf
 6c448703c5f29da78d8d02e46c63d259ba47531018b665a54e2afed66f451cf1  jis/data/unsat/cell_6x7_k14.cnf
 60beb1244451a468f72c01058ae2ad6f79a26b198a3aea4262c88f05d5e5caad  jis/data/unsat/cell_6x8_k16.cnf
@@ -668,8 +670,8 @@ bb3bd45862dcc81fb7381f78baacde13a2386cef003ecb1720233cba370cacb9  jis/data/unsat
 13449281b2bc31df10493b51fe15e5d936b1791832255a1cd185afb7d111de56  jis/data/unsat/six_w9_p8.cnf.gz
 5552198509849d3bfb343e4dfd877239464679e6017981fd5bc76830d724ace9  jis/data/unsat/six_w9_p9.cnf.gz
 # R12 certificate sources
-a1f4d872dc2c053856df757670b861845e9dddeec27d600f1cfec71347d601dc  jis/scripts/unsat_export_cnf.py
-0167f9ddb6dfb3d23b80ac9a9f7a0c5b04c61916f41d8754dd55185a0dad7c1a  jis/scripts/unsat_cnf_crosscheck.py
+c10a9b940cd2e2753015f14aed616c904ffa1831aacf6e3168dba8755d54ca90  jis/scripts/unsat_export_cnf.py
+193ab168a3b62b3caef3013c944832fcddcd702728746f2d29668702b5d7cf93  jis/scripts/unsat_cnf_crosscheck.py
 e9be6d9df988c7bbdee4f05befba5f9d9f37dceb7aeb9af75430293a5866db9f  jis/unsat/pipeline.py
 8fd7abf4719caf41750c3ede10c762e23773a0d1cc547bb4dcd7ca5ab0678e86  jis/unsat/collect.py
 4cdc01fa05097f58998f65b60dd189ad6105a566c5459160010ed4cab2db8883  jis/unsat/faithfulness.txt
