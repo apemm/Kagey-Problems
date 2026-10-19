@@ -21,7 +21,7 @@ proves that a passing test gives the paper's `Valid`.
 ## Contents
 
 * `valid_of_boardOK`: soundness of the test.
-* `kB68_valid`, `kB68_card`: the `15`-point blackout of Theorem "the guess fails" (a) is a valid
+* `kB68_valid`, `kB68_card`: the `15`-point blackout of Theorem "small grids" is a valid
   blackout of the `6 × 8` grid; `ksix_eight_lower`: `f(6, 8) ≥ 15` (the upper bound
   `f(6, 8) ≤ 15` is a SAT computation and is not formalized here).
 * `kS15_valid`, `kS15_card`: the stored `24`-point blackout of the `6 × 15` grid is valid;
@@ -292,7 +292,7 @@ theorem valid_of_boardOK {n m M : ℕ} {B : List Pt} (hM : 0 < M)
 
 /-! ### The boards -/
 
-/-- The blackout of Theorem "the guess fails" (a) on the `6 × 8` grid. -/
+/-- The blackout of Theorem "small grids" on the `6 × 8` grid. -/
 def kB68 : Finset Pt :=
   {(1, 1), (1, 5), (2, 1), (3, 1), (3, 2), (3, 3), (4, 3), (4, 4), (5, 4), (6, 4), (7, 4),
     (7, 5), (7, 6), (8, 2), (8, 6)}
