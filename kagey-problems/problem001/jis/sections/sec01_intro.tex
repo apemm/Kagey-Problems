@@ -1,28 +1,32 @@
 \section{Introduction}\label{sec:intro}
 
-You black out points, the \emph{blackout}, of the $h\times m$ grid. A game master
+You black out some points of the $h\times m$ grid, and we call this set the
+\emph{blackout}. A game master
 draws a rectangle, tilted or not, with corners on grid points, and says which corners are
-white. You must name all four. Kagey~\cite{kagey001,kageyG4G14} asks for the largest
+white. You must name all four. Kagey~\cite{kageyG4G14,kagey001} asks for the largest
 \emph{valid} blackout, where no two rectangles look the same (Definition~\ref{def:valid}). Figure~\ref{fig:game} plays one round.
 
 \begin{figure}[t]
 \centering
 \resizebox{\textwidth}{!}{\input{figs/game.tex}}
 \caption{One round on a largest valid blackout of the $3\times4$ grid
-(Section~\ref{sec:three}). Gray crossed circles are black. Panel (c) shows the red
-rectangle, and (d) its yellow corners.}
+(Section~\ref{sec:three}). Points are (column, row). Gray crossed circles are black. Panel (c) shows the red
+rectangle, and (d) its yellow corners. The three yellow corners fix the fourth by
+Lemma~\ref{lem:threecorners}.}
 \label{fig:game}
 \end{figure}
 
 Let $f(h,m)$ be the largest size of a valid blackout, and
-$a_h(m)$ the number of these. Our OEIS tables \seqnum{A397315} and
-\seqnum{A399580}~\cite{oeis} conjectured $f(3,m)=m+2$, which the Omega
-Institute~\cite{trureturing2026} proved in Lean, and guessed $f(h,m)=h+m$ for
+$a_h(m)$ the number of these. Our OEIS entries \seqnum{A397315} and
+\seqnum{A399580}~\cite{oeis} first recorded the conjecture $f(3,m)=m+2$, which the Omega
+Institute~\cite{trureturing2026} proved in Lean, and the guess $f(h,m)=h+m$ for
 $\min(h,m)\ge4$ apart from $f(4,4)=7$ and $f(4,5)=8$. The guess first fails at
-$5\times8$ (Theorem~\ref{thm:fiverow}). Put $q_h=\lfloor h^2/4\rfloor$.
+$5\times8$ (Theorem~\ref{thm:fiverow}). Put $q_h=\lfloor h^2/4\rfloor$. Results that rest on
+a computer check are marked computer-assisted in their statements.
 % TODO(author): A-numbers for rows 3, 4 of A399580.
 
 \begin{introthm}[narrow grids]\label{thm:A}
+\leavevmode
 \begin{enumerate}[(a)]
 \item We have $f(h,m)\ge h+m-1$, and $f(h,m)\le m+q_h$ if $m\ge3$.
 \item We have $f(2,m)=m+1$ and $f(3,m)=m+2$ for $m\ge3$, $f(4,m)=m+4$ for $m\ge6$,
@@ -37,12 +41,18 @@ $f(6,7)=13$, $f(7,7)=14$, and $f(6,8)=15$.
 \end{enumerate}
 \end{introthm}
 
-Part (a) is Lemma~\ref{lem:cross} and Theorem~\ref{thm:rowbound}.
+Part (a) is Lemma~\ref{lem:cross} and Theorem~\ref{thm:rowbound}, (b) is
+Theorem~\ref{thm:strip}, Section~\ref{sec:three}, and Theorems~\ref{thm:fourvalue}
+and~\ref{thm:fivefive}, (c) is Corollary~\ref{cor:fourboundary} and
+Theorem~\ref{thm:fiverow}, (d) is Theorem~\ref{thm:sixrow}, and (e) is
+Theorem~\ref{thm:refute}. For (c) and (d) the finite collar theorem
+(Theorem~\ref{thm:collar}) reduces validity at every larger width to one finite board.
 
 \begin{introthm}[three-row optima]\label{thm:B}
 For $m\ge4$ we have $a_3(m)=4(m-1)(3m+2)\,3^{m-5}+E_m$, where $E_m>0$ counts the optima
 with a column black in rows $1$ and $3$, and $E_m=O(m^2(1+\sqrt3)^m)$. So
-$a_3(m)\sim\frac4{81}m^23^m$, asymptotically $4/27$ of the $m^23^{m-1}$ axis-valid candidates.
+$a_3(m)\sim\frac4{81}m^23^m$, and a fraction tending to $4/27$ of the $m^23^{m-1}$
+axis-valid candidates is valid.
 The series $\sum_{m\ge3}a_3(m)z^m$ is rational. (Computer-assisted.) Its reduced
 denominator is $(1-3z)^3(1-2z-2z^2)^3(1+2z^2)^3$, and
 $E_m\sim\frac{19+11\sqrt3}{432}m^2(1+\sqrt3)^m$.
@@ -60,7 +70,6 @@ $20$. (Computer-assisted.)
 \end{introthm}
 
 See Theorems~\ref{thm:hidden} and~\ref{thm:fourgfexact} and Corollary~\ref{cor:fourgrowth}.
-Theorem~\ref{thm:collar} reduces validity at larger widths to one finite board.
 
 \begin{introthm}[every fixed height]\label{thm:E}
 Fix $h\ge1$ and write a blackout as the word $B_1\cdots B_m$ of the black rows of its
@@ -71,12 +80,20 @@ eventually periodic in $m$, and $\sum_{m\ge0}a_h(m)z^m$ is rational.
 See Theorems~\ref{thm:regular} and~\ref{thm:periodic}.
 
 \paragraph{Prior work.} The game asks for a test
-cover~\cite{katona1966,moretshapiro1985,bellitto2018,foucaud2015}
+cover~\cite{bellitto2018,foucaud2015,katona1966,moretshapiro1985}
 (Corollary~\ref{cor:hitting}). Forbidding black axis-aligned rectangles is the
 Zarankiewicz problem~\cite{reiman1958}. Distinguishing them forbids four- and six-cycles
-in the row-column graph (Lemma~\ref{lem:girth}), so
-Neuwirth~\cite[Theorem~1(ii) and Proposition~17]{neuwirth2001} gives the row bound; we
-use Mantel's theorem~\cite{mantel1907}. None of these works sees tilted rectangles. Column transfer~\cite{euler2005,mertens2024,alanko2011},
+in the row-column graph (Lemma~\ref{lem:girth}), and de Caen and
+Sz\'ekely~\cite{decaenszekely1992,decaenszekely1997} study such graphs with unbalanced parts.
+Neuwirth~\cite[Theorem~1(ii) and Proposition~17]{neuwirth2001} bounds their edges, so the row
+bound is known in graph form. Our proof with Mantel's theorem~\cite{mantel1907} also finds and
+counts the equality case. None of these works sees tilted rectangles. Column transfer~\cite{alanko2011,euler2005,mertens2024},
 \cite[Proposition~V.6]{flajolet2009} handles fixed heights, and Theorem~1(3) of Guilhot,
 Little, and Parkinson~\cite{glp2025} with Theorem~\ref{thm:regular} also gives
 Theorem~\ref{thm:E}.
+
+\paragraph{Outline.} Sections~\ref{sec:conv} to~\ref{sec:graph} prove the general bounds,
+Sections~\ref{sec:three} to~\ref{sec:five} treat three to six rows with the finite collar
+theorem in Section~\ref{sec:five}, and Section~\ref{sec:height} treats every fixed height.
+Section~\ref{sec:verify} describes the computations, Section~\ref{sec:open} lists open
+questions, and Appendix~\ref{app:square} treats square grids.

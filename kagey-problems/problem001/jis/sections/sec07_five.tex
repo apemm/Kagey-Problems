@@ -43,11 +43,12 @@ $B_3=\{2,5\}$, $B_4=B_5=\{5\}$, $B_6=\{3,4\}$, $B_7=\{2,3\}$, and $B_8=\{1,2\}$.
 \input{figs/board13.tex}
 \par\medskip
 \input{figs/board16.tex}
-\caption{(a) The $5\times13$ test board of $S_8$. (b) The $6\times16$ blackout $S_{16}$.}
+\caption{(a) The $5\times13$ test board of $S_8$, whose last five columns are black only in row $1$. (b) The $6\times16$ blackout $S_{16}$. Its test board adds seven columns black only in row $1$ on the right.}
 \label{fig:boards}
 \end{figure}
 
-\begin{theorem}[five rows, (a) and (c) computer-assisted]\label{thm:fiverow}
+\begin{theorem}[five rows, (a) and (c) computer-assisted, (b) checked in Lean]\label{thm:fiverow}
+\leavevmode
 \begin{enumerate}[(a)]
 \item We have $f(5,m)=m+5$ for $m=5$, $6$, and $7$.
 \item We have $f(5,m)=m+6$ for every $m\ge8$, attained by $S_8$ followed by $m-8$ columns black in
@@ -63,12 +64,18 @@ padding row $1$ on the right reduces $S_8$ to the test board of Figure~\ref{fig:
 $954$ rectangles have distinct presentations, by three enumerators and Lean.
 
 (a) For $m=5$ the bounds are Corollary~\ref{cor:small-m} and $S_0$ of
-Theorem~\ref{thm:fivefive}. For $m=6,7$ stored blackouts give the lower bound, and checked SAT
-certificates exclude the $10\,(m)_6\,5^{m-6}$ candidates of Theorem~\ref{thm:equality}.
+Theorem~\ref{thm:fivefive}. For $m=6,7$ the stored blackouts in
+\nolinkurl{jis/data/small_cells_sat_5x6.json} and \nolinkurl{jis/data/small_cells_sat_5x7_b12.json}
+give the lower bound. Checked SAT certificates show that no blackout of $m+6$ points is valid
+(Section~\ref{sec:verify}).
 
 (c) Two SAT enumerations and a column search over the $10\,(8)_6\,5^2=5{,}040{,}000$
 candidates of Theorem~\ref{thm:equality} find exactly the four images.
 \end{proof}
+
+By Theorem~\ref{thm:A}, $f(h,m)\le h+m$ when a side is at most four, and also on the
+$5\times5$, $5\times6$, $5\times7$, and $6\times6$ grids. These are the other grids of area
+below $40$, so the guess $f(h,m)=h+m$ first fails at $5\times8$.
 
 \begin{remark}[five-row counts, computer-assisted]\label{rem:fivecounts}
 For $m=13,\dots,23$ the counts $a_5(m)$ are
@@ -84,7 +91,12 @@ independent transfer counters based on Theorem~\ref{thm:equality} agree on each.
 
 \subsection{Six rows and small grids}
 
-\begin{theorem}[six rows, (a) computer-assisted]\label{thm:sixrow}
+Let $S_{16}$ be the blackout of the $6\times16$ grid in Figure~\ref{fig:boards}(b). Its doubles,
+in the columns $1,2,3,6,9,10,14,15,16$, carry the edges of $K_{3,3}$ between $\{1,3,5\}$ and
+$\{2,4,6\}$.
+
+\begin{theorem}[six rows, (a) computer-assisted, (b) checked in Lean]\label{thm:sixrow}
+\leavevmode
 \begin{enumerate}[(a)]
 \item For $8\le m\le14$ we have $f(6,m)\le m+8$.
 \item For every $m\ge15$ we have $f(6,m)=m+9$.
@@ -97,24 +109,28 @@ Theorem~\ref{thm:equality} the doubles of a valid blackout of $m+9$ points carry
 $K_{3,3}$ for one of ten row partitions. Checked LRAT certificates from two SAT encoders exclude
 every case.
 
-(b) The upper bound is Theorem~\ref{thm:rowbound}. For $m=15$ a stored blackout~\cite{repo} gives
-the lower bound. For $m\ge16$, since $W_6=7$, the test board of
+(b) The upper bound is Theorem~\ref{thm:rowbound}. For $m=15$ the blackout with $B_1=\{5,6\}$, $B_2=\{4,5\}$,
+$B_3=\{3,4\}$, $B_4=\{2,3\}$, $B_5=B_6=\{1\}$, $B_7=\{1,4\}$, $B_8=B_9=\{1\}$, $B_{10}=\{1,2\}$,
+$B_{11}=\{3,6\}$, $B_{12}=\{1\}$, $B_{13}=\{2,5\}$, $B_{14}=\{6\}$, and $B_{15}=\{1,6\}$, stored in
+\nolinkurl{jis/data/six_row_sat_w15_A.json}, gives the lower bound with $24$ points. For $m\ge16$, since $W_6=7$, the test board of
 Theorem~\ref{thm:collar} adds $(17,1),\dots,(23,1)$ to $S_{16}$ of Figure~\ref{fig:boards}(b). Its $4{,}627$
 rectangles have distinct presentations, by three enumerators and Lean.
 \end{proof}
 
-\begin{theorem}[the guess fails, computer-assisted]\label{thm:refute}
+\begin{theorem}[small grids, computer-assisted]\label{thm:refute}
 We have $f(6,6)=12$, $f(6,7)=13$, $f(7,7)=14$, and $f(6,8)=15$. The blackout $(1,1)$,
 $(1,5)$, $(2,1)$, $(3,1)$, $(3,2)$, $(3,3)$, $(4,3)$, $(4,4)$, $(5,4)$, $(6,4)$, $(7,4)$,
 $(7,5)$, $(7,6)$, $(8,2)$, $(8,6)$ of the $6\times8$ grid attains the last value.
 \end{theorem}
 
 \begin{proof}
-Stored blackouts give the other lower bounds. Checked SAT certificates exclude one more point
-in each case.
+The stored blackouts in \nolinkurl{jis/data/small_cells_sat_6x6.json},
+\nolinkurl{jis/data/small_cells_sat_6x7.json}, and \nolinkurl{jis/data/small_cells_sat_7x7.json}
+give the other lower bounds. Checked SAT certificates exclude one more point in each case.
 \end{proof}
 
 \begin{theorem}[the $5\times5$ grid]\label{thm:fivefive}
+\leavevmode
 \begin{enumerate}[(a)]
 \item We have $f(5,5)=10$.
 \item (Computer-assisted.) The $a_5(5)=8$ maximum blackouts are the images of $S_0$
@@ -141,6 +157,6 @@ The fifteen pairs are distinct, and Lemma~\ref{lem:threecorners} settles the oth
 tilted rectangles. Each listed white corner lies on the only axis-aligned rectangle
 through its pair, and $(2,2),(4,2)$ has no rival since $B_2\cap B_4=\emptyset$. So $S_0$ is valid.
 
-(b) Of the $44{,}640$ sets of $10$ points without a short cycle, exactly the
+(b) Of the $44{,}640$ sets of $10$ points whose graph $G_S$ has no four- or six-cycle, exactly the
 images of $S_0$ are valid, by three programs.
 \end{proof}
