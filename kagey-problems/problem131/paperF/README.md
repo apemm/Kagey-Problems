@@ -18,7 +18,7 @@ number only, not as Papers A, B and D.
   arXiv:2610.06935. The crossing for geometric runs (Section 1).
 - `../paperB`, "Vertex crossings in a symmetric Markov multinomial model", arXiv:2610.09258. The
   first-order scale of its vertex crossing (Remark 3.5).
-- `../paperD`, "Endpoint crossings for the elephant random walk" (in preparation). Its
+- `../paperD`, "The center and the ends of the elephant random walk with rare reversals" (in preparation). Its
   Proposition 2.3 uses the same argument as Proposition 3.3(b).
 
 Conventions. The walk has N steps, and P_N(k) is the probability of bin k. A_N is the number of
@@ -27,7 +27,7 @@ end. The first step is fair unless we say otherwise.
 
 ## What is proved
 
-The statement numbers are those of the build of October 13, 2026. Before the split the statements of
+The statement numbers are those of the build of October 15, 2026. Before the split the statements of
 Section 2 were numbered 4.x in Paper D and those of Section 3 were numbered 5.x, and the Lean files,
 the ledgers and the recorded outputs still use the old numbers.
 
