@@ -215,12 +215,12 @@ Computer checks are marked in each statement.
 $f(h,m)\le m+q_h$.
 \item For $m\ge3$ we have $f(2,m)=m+1$ and $f(3,m)=m+2$. Also $f(4,m)=m+4$ for every
 $m\ge6$, and $f(5,5)=10$.
-\item (Computer-assisted.) We have $f(4,4)=7$, $f(4,5)=8$, $f(5,6)=11$, and $f(5,7)=12$, while
-$f(5,m)=m+6$ for every $m\ge8$.
-\item (Computer-assisted for $m\ge9$.) For $8\le m\le14$ we have $f(6,m)\le m+8$, and
-$f(6,m)=m+9$ for every $m\ge15$.
-
-\item (Computer-assisted.) We have $f(6,6)=12$, $f(6,7)=13$, $f(7,7)=14$, and $f(6,8)=15$.
+\item (Computer-assisted, the last claim checked in Lean.) We have $f(4,4)=7$, $f(4,5)=8$,
+$f(5,6)=11$, and $f(5,7)=12$, while $f(5,m)=m+6$ for every $m\ge8$.
+\item (Computer-assisted for $m\ge9$, with checked certificates for $m\le14$ and checked in Lean
+for $m\ge15$.) For $8\le m\le14$ we have $f(6,m)\le m+8$, and $f(6,m)=m+9$ for every $m\ge15$.
+\item (Computer-assisted, with checked certificates.) We have $f(6,6)=12$,
+$f(6,7)=13$, $f(7,7)=14$, and $f(6,8)=15$.
 \end{enumerate}
 \end{introthm}
 
@@ -259,13 +259,13 @@ The base $212^{1/4}=3.8157\ldots<4$ makes valid blackouts rare (Theorems~\ref{th
 Let $h\ge3$ and $W_h=1+\lfloor(h-1)^2/4\rfloor$. Pad a blackout of an $h\times m$ grid, on
 one side or on both, by columns black only in the top row, or only in the bottom row.
 Then every such padding is valid if and only if the padding by $W_h$ columns on each
-chosen side is valid. (Computer-assisted.) A blackout of the $5\times8$ grid and one of the
+chosen side is valid. (Computer-assisted, checked in Lean.) A blackout of the $5\times8$ grid and one of the
 $6\times16$ grid pass this test with the top row on the right. Hence $f(5,m)=m+6$ for
 $m\ge8$ and $f(6,m)=m+9$ for $m\ge16$, and a stored blackout of the $6\times15$ grid gives
 $f(6,15)=24$.
 \end{introthm}
 
-See Theorem~\ref{thm:collar} and Section~\ref{sec:five}. The padding row must be a
+See Theorem~\ref{thm:collar}, proved by hand and in Lean, and Section~\ref{sec:five}. The padding row must be a
 boundary row (Remark~\ref{rem:interior}).
 
 \begin{introthm}[every fixed height]\label{thm:E}
@@ -1337,7 +1337,8 @@ reflection and the column reversal.
 (b) The upper bound is Theorem~\ref{thm:rowbound}. Apply Theorem~\ref{thm:collar} to $S_8$
 with the padding row $1$ on the right. Since $W_5=5$, the test board is the $5\times13$
 board of Figure~\ref{fig:boards}(a). Three rectangle enumerators list its $954$
-rectangles and find no repeated presentation.
+rectangles and find no repeated presentation. Lean proves part~(b) in full
+(Section~\ref{sec:verify}).
 
 (a) The lower bounds are $S_0$ of Theorem~\ref{thm:fivefive} below for $m=5$ and the stored
 blackouts of $h+m$ points (Section~\ref{sec:verify}) for $m=6,7$. For
@@ -1376,14 +1377,15 @@ So for $m\ge8$ we have $f(6,m)=m+9$ if and only if $m\ge15$.
 (a) For $m=8$ this is Corollary~\ref{cor:small-m}. For $9\le m\le14$, by
 Theorem~\ref{thm:equality} the doubles of a valid blackout of $m+9$ points carry the edges of
 $K_{3,3}$ for one of ten row partitions. Two SAT encoders find none for any width and
-partition. A column search for $m\le13$ and a third encoder for $m=13$ and $m=14$ give a third
+partition, and checked LRAT certificates confirm this (Section~\ref{sec:verify}).
+A column search for $m\le13$ and a third encoder for $m=13$ and $m=14$ give a third
 check at every width.
 
 (b) The upper bound is Theorem~\ref{thm:rowbound}. A valid blackout of $24$ points on the
 $6\times15$ grid is in \nolinkurl{jis/data/six_row_sat_w15_A.json}. For $m\ge16$ apply
 Theorem~\ref{thm:collar} to $S_{16}$ with the padding row $1$ on the right. Since $W_6=7$,
 the test board adds $(17,1),\dots,(23,1)$, and the three enumerators find no repeated
-presentation among its $4{,}627$ rectangles.
+presentation among its $4{,}627$ rectangles. Lean proves part~(b) in full.
 \end{proof}
 
 \begin{theorem}[the guess fails, computer-assisted]\label{thm:refute}
@@ -1400,8 +1402,7 @@ $(7,5)$, $(7,6)$, $(8,2)$, $(8,6)$ of the $6\times8$ grid attains the last value
 Section~\ref{sec:verify} on CaDiCaL and encoding B on Glucose and MiniSat find no valid
 blackout of $13$, $14$, $15$, or $16$ points on the $6\times6$, $6\times7$, $7\times7$, or
 $6\times8$ grid, respectively. A third encoding agrees on the last three, and the ILP program
-on the first. On the $7\times7$ and $6\times8$ grids the third encoding splits the search
-into cases by the first row with at least three black points.
+on the first. All four bounds have checked certificates (Section~\ref{sec:verify}).
 
 (b) The values are Theorem~\ref{thm:fiverow}(b) and part (a). The guess gives $13$ and $14$
 on these grids. The blackout $S_8$ has $14$ points and the blackout of part~(a) has $15$, and
@@ -1531,48 +1532,14 @@ for each pair of rectangles that share a corner and an indicator for each hidden
 most one of them true, with a totalizer~\cite{bailleux2003} for the size. The third encoding,
 \texttt{cells\_sat\_check.py}, is of type A but written from scratch. The structured encoders of
 Section~\ref{sec:five} add the column structure of Theorem~\ref{thm:equality} for one row
-partition and keep only the clauses that involve a tilted rectangle. The collar test boards of
-Section~\ref{sec:five} are checked by three separately written enumerators, which list every
-rectangle of the board and compare the presentations. The column searches call no solver. They place columns from left to right and stop
+partition and keep only the clauses that involve a tilted rectangle. Three separately written
+enumerators and the Lean kernel check the collar test boards of Section~\ref{sec:five}. The column searches call no solver. They place columns from left to right and stop
 when two rectangles inside the placed columns show the same points, which is sound since every
 interval of columns of a valid blackout is valid. The search \texttt{table\_counts\_search.py}
 also stops when the remaining columns cannot reach the target by the values of $f$ on narrower
-grids. So its counts on the $6\times7$ and $6\times8$ grids use $f(6,6)\le12$, from the SAT runs
-and the ILP program, and those on the $6\times8$ and $7\times7$ grids use the SAT bound $f(6,7)\le13$.
+grids. So its counts on the $6\times7$ and $6\times8$ grids use $f(6,6)\le12$,
+and those on the $6\times8$ and $7\times7$ grids use $f(6,7)\le13$.
 The five-row and six-row searches use no such bound.
-
-We did not produce DRAT or LRAT proofs. So $f(6,7)<14$, $f(7,7)<15$, $f(6,8)<16$,
-$f(7,8)<17$, and the ten row partitions that exclude $m+9$ points at $m=14$ in
-Theorem~\ref{thm:sixrow}(a) rest on unsatisfiable SAT instances without a checked certificate,
-and on the agreement of independent encodings on different solvers. Every other upper bound
-also follows from a proof by hand, the ILP program, or an exhaustive search with no SAT
-solver. The ILP program gives no certificate either, so $f(6,6)<13$ rests on solvers alone. Found blackouts need no such trust, since the stored witnesses and every model of the
-counting programs are checked against the definition. A count needs in addition that the
-enumeration is complete.
-
-The file \nolinkurl{jis/scripts/README.md} gives, for each computer-assisted result, the
-command, the evidence file with its SHA-256 hash, and the stored time with what it measures.
-The file \nolinkurl{requirements.txt} pins the package versions. The counts of the optima on the grids $5\times6$ to $7\times7$ in Table~\ref{tab:values} come from two SAT encodings that list every optimum, on Glucose~4 and MiniSat~2.2, and from a column search, all three in the scripts \texttt{table\_counts\_*}. On the $7\times8$ grid no valid blackout of $17$ points exists, by two SAT runs split by the first column, so $f(7,8)=16$. One completed enumeration finds $18$ optima there. The second count did not finish, so the table omits this count.
-Table~\ref{tab:values} collects the values, and the rectangle counts of the programs
-agree with \seqnum{A085582} and \seqnum{A289832}. Babichev and Babichev~\cite{babichev2026}
-count the rectangles of the square grid in near-linear time.
-
-The Lean~4 files in \nolinkurl{kagey-problems/lean/KageyProblems} check
-Lemma~\ref{lem:diff}, Corollary~\ref{cor:hitting}, the fact that a valid blackout hides at
-most one rectangle, and Theorem~\ref{thm:strip}. They also check the second half of
-Lemma~\ref{lem:girth}, the part of Lemma~\ref{lem:H} that the bound needs for one choice of
-trees, and Theorem~\ref{thm:rowbound}, with Mantel's theorem from Mathlib. A finite list of rectangles
-is proved to hold exactly the rectangles of the grid. With it the Lean kernel decides that
-$S_0$, $S_8$, the blackout of Theorem~\ref{thm:refute}(a), the stored blackout of the
-$6\times15$ grid, and the $5\times13$ and $6\times23$ test boards are valid. It also decides
-that the blackout $\{(1,2),\allowbreak(2,1),\allowbreak(3,2),\allowbreak(2,3)\}$ of the
-$4\times3$ grid hides $D(1,1)$. So $f(5,8)=14$ and $f(6,15)=24$ are checked in full, and so
-are $f(5,5)\ge10$ and $f(6,8)\ge15$. No proof uses \texttt{sorry} or
-\texttt{native\_decide}, so the Lean compiler is not trusted. Lemma~\ref{lem:threecorners}, the
-collar theorem and so the values for every width, the rectangle counts, the generating
-functions, the bound $f(5,5)\le10$, and the upper bounds from SAT runs are not formalized.
-Neither are the other results of Sections~\ref{sec:three} to~\ref{sec:height}. Code and data
-are in the folder \nolinkurl{kagey-problems/problem001} of the repository~\cite{repo}.
 
 \begin{table}[!htb]
 \centering\scriptsize\setlength{\tabcolsep}{3pt}
@@ -1639,6 +1606,45 @@ $6\times6$), B brute force, D every equality candidate, C a column search, S two
 encodings, M a transfer counter, and a dash not computed. For the counts, S and C enumerate every optimum.}
 \label{tab:values}
 \end{table}
+
+The bounds $f(6,6)<13$, $f(6,7)<14$, $f(7,7)<15$, $f(6,8)<16$, $f(7,8)<17$, and the $70$ instances of
+Theorem~\ref{thm:sixrow}(a), at widths $8$ to $14$, have LRAT certificates. Two separately
+written generators give the same clauses for all $75$ instances, in encoding A for the five
+grids and the structured encoding B for six rows. CaDiCaL~2.1.2~\cite{biere2024} writes the proofs, after
+splitting the $6\times8$ instance into the $64$ cases of its first column and the $7\times7$
+and $7\times8$ instances into $128$. All $392$ proofs ($28.5$~GB of text) pass
+\texttt{lrat-check} of drat-trim~\cite{wetzler2014,cruzfilipe2017} and the LRAT checker of the Lean standard library, which is
+proved sound but runs compiled, so it trusts the compiler. That a valid blackout of at least
+$k$ points satisfies every clause, by Theorem~\ref{thm:equality} for six rows, is argued in
+\nolinkurl{jis/data/unsat_certificates.json} and not formalized. The bounds $f(5,6)\le11$ and
+$f(5,7)\le12$ rest on SAT runs and a column search. Other upper bounds use no SAT solver. Found blackouts need no such trust, since the
+stored witnesses and the models of the counting programs are checked against the definition,
+but a count also needs a complete enumeration.
+
+For each computer-assisted result, \nolinkurl{jis/scripts/README.md} gives the command, the
+evidence file with its SHA-256 hash, and the stored time, and \nolinkurl{requirements.txt} pins the package versions. The counts of the optima on the grids $5\times6$ to $7\times7$ in Table~\ref{tab:values} come from two SAT encodings that list every optimum, on Glucose~4 and MiniSat~2.2, and from a column search, all three in the scripts \texttt{table\_counts\_*}. On the $7\times8$ grid, where $f(7,8)=16$ by the certificates above, one enumeration finds $18$ optima, and a second did not finish, so the table omits this count.
+The rectangle counts of the programs agree with \seqnum{A085582} and \seqnum{A289832}. Babichev and Babichev~\cite{babichev2026}
+count the rectangles of the square grid in near-linear time.
+
+The Lean~4 files in \nolinkurl{kagey-problems/lean/KageyProblems} check
+Lemma~\ref{lem:diff}, Corollary~\ref{cor:hitting}, the fact that a valid blackout hides at
+most one rectangle, Theorem~\ref{thm:strip}, the second half of Lemma~\ref{lem:girth}, the part
+of Lemma~\ref{lem:H} that the bound needs for one choice of trees, and
+Theorem~\ref{thm:rowbound}, with Mantel's theorem from Mathlib. They prove
+Lemma~\ref{lem:threecorners} and Theorem~\ref{thm:collar} as stated. With a list of rectangles
+proved complete, the kernel decides that $S_0$, $S_8$, the blackout of
+Theorem~\ref{thm:refute}(a), the stored $6\times15$ blackout, and the $5\times13$ and
+$6\times23$ test boards are valid, and that the blackout
+$\{(1,2),\allowbreak(2,1),\allowbreak(3,2),\allowbreak(2,3)\}$ of the $4\times3$ grid hides
+$D(1,1)$. So Lean proves $f(5,m)=m+6$ for $m\ge8$ and $f(6,m)=m+9$ for $m\ge15$, the
+case $m=15$ by the stored blackout, and $f(5,5)\ge10$ and $f(6,8)\ge15$. No proof uses
+\texttt{sorry} or \texttt{native\_decide}, and the only axioms are \texttt{propext},
+\texttt{Classical.choice}, and \texttt{Quot.sound}. Not formalized are Lemma~\ref{lem:leftmost}
+as stated, Theorem~\ref{thm:equality}, $f(5,5)\le10$, the faithfulness of the
+encodings, and the rest of Sections~\ref{sec:three} to~\ref{sec:height},
+\ref{app:threegf}, and~\ref{app:square}. Code and data are in
+\nolinkurl{kagey-problems/problem001} of the repository~\cite{repo}.
+
 \section{Three-row generating functions}\label{app:threegf}
 
 We finish the proof of Theorem~\ref{thm:threegf}, with $D=LN=1-2z-4z^3-4z^4$. A
@@ -1857,7 +1863,7 @@ Spencer~\cite[Section~3.2]{alonspencer2016}.
 \item \emph{Five-row counts.} The series $\sum_{m\ge0}a_5(m)z^m$ is rational by
 Theorem~\ref{thm:periodic}. Find it, and the growth rate of $a_5(m)$ (Remark~\ref{rem:fivecounts}).
 \item \emph{Six rows below width $15$.} The first stored blackout in
-\nolinkurl{jis/data/small_cells_sat_6x9_b16.json}, found by encoding A on CaDiCaL, passes the
+\nolinkurl{jis/data/small_cells_sat_6x9_b16.json} passes the
 test of Theorem~\ref{thm:collar} with seven columns black only in row $1$ added on each side
 (\nolinkurl{six_row_collar_6x9_check.py}). With Theorem~\ref{thm:sixrow} this gives
 $m+7\le f(6,m)\le m+8$ for $9\le m\le14$. What are these values?
@@ -1908,6 +1914,11 @@ constraints, in F. Rossi, ed., \emph{Principles and Practice of Constraint Progr
 T. Bellitto, Separating codes and traffic monitoring, \emph{Theoret. Comput. Sci.}
 \textbf{717} (2018), 73--85, \url{https://doi.org/10.1016/j.tcs.2017.03.044}.
 
+\bibitem{biere2024}
+A. Biere, T. Faller, K. Fazekas, M. Fleury, N. Froleyks, and F. Pollitt, CaDiCaL 2.0, in
+A. Gurfinkel and V. Ganesh, eds., \emph{Computer Aided Verification, CAV 2024}, Lecture Notes in
+Comput. Sci., Vol.~14681, Springer, 2024, pp.~133--152, \url{https://doi.org/10.1007/978-3-031-65627-9_7}.
+
 \bibitem{erdos1080}
 T. F. Bloom, Erd\H{o}s Problem \#1080, \url{https://www.erdosproblems.com/1080},
 accessed October 2026.
@@ -1926,6 +1937,11 @@ M. Bouznif, J. Darlay, J. Moncel, and M. Preissmann, Exact values for three
 domination-like problems in circular and infinite grid graphs of small height,
 \emph{Discrete Math. Theor. Comput. Sci.} \textbf{21} (3) (2019), Paper 12,
 \url{https://doi.org/10.23638/DMTCS-21-3-12}.
+
+\bibitem{cruzfilipe2017}
+L. Cruz-Filipe, M. J. H. Heule, W. A. Hunt, Jr., M. Kaufmann, and P. Schneider-Kamp, Efficient
+certified RAT verification, in L. de Moura, ed., \emph{Automated Deduction -- CADE 26}, Lecture Notes
+in Comput. Sci., Vol.~10395, Springer, 2017, pp.~220--236, \url{https://doi.org/10.1007/978-3-319-63046-5_14}.
 
 \bibitem{decaenszekely1992}
 D. de Caen and L. A. Sz\'ekely, The maximum size of 4- and 6-cycle free bipartite
@@ -2055,6 +2071,12 @@ C. Sinz, Towards an optimal CNF encoding of Boolean cardinality constraints, in
 P. van Beek, ed., \emph{Principles and Practice of Constraint Programming -- CP 2005},
 Lecture Notes in Comput. Sci., Vol.~3709, Springer, 2005, pp.~827--831,
 \url{https://doi.org/10.1007/11564751_73}.
+
+\bibitem{wetzler2014}
+N. Wetzler, M. J. H. Heule, and W. A. Hunt, Jr., DRAT-trim: efficient checking and trimming
+using expressive clausal proofs, in C. Sinz and U. Egly, eds., \emph{Theory and Applications of
+Satisfiability Testing -- SAT 2014}, Lecture Notes in Comput. Sci., Vol.~8561, Springer, 2014,
+pp.~422--429, \url{https://doi.org/10.1007/978-3-319-09284-3_31}.
 
 \bibitem{oeis}
 N. J. A. Sloane and The OEIS Foundation Inc., \emph{The On-Line Encyclopedia of

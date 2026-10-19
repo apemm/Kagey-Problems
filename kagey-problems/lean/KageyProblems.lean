@@ -5,3 +5,9 @@ import KageyProblems.Problem001.Compute
 import KageyProblems.Problem001.RowBound
 import KageyProblems.Problem001.Kernel
 import KageyProblems.Problem001.Boards
+import KageyProblems.Problem001.ThreeCorners
+import KageyProblems.Problem001.Tilt
+import KageyProblems.Problem001.Padding
+import KageyProblems.Problem001.AxisCycles
+import KageyProblems.Problem001.Collar
+import KageyProblems.Problem001.CollarBoards
