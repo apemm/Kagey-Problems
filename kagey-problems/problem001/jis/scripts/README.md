@@ -67,7 +67,8 @@ Theorem "three-row generating function" (b), (c), Theorem "three-row closed form
 
 ### R2. Four rows, small widths
 
-Corollary "widths four and five", Proposition "small widths", Table "four-row optimum counts".
+Corollary "widths four and five", and the four-row counts of Table "computed values" (the
+per-pair-set counts are in the longer version, `jis/long_version_2026-10-18.pdf`).
 
 | Command | Inputs | Evidence | Stored time | Rerun |
 |---|---|---|---|---|
@@ -157,7 +158,8 @@ finished, so the cap did not bind.
 
 ### R9. Small grids
 
-Theorem "the guess fails" (a), and the stored blackouts of h+m points of Section 9.
+Theorem "small grids", and the stored blackouts of h+m points named in Section 7 (Theorem "five
+rows" (a) and Theorem "small grids").
 
 | Command | Evidence | Stored time | Rerun |
 |---|---|---|---|
