@@ -1,67 +1,49 @@
 \section{Five and six rows}\label{sec:five}
 
-One finite padding test settles every large width on five and on six rows.
+\subsection{Boundary padding}
 
-\subsection{A finite test for boundary padding}
-
-For a blackout $S$ of the $h\times m$ grid and $L,R\ge0$, let $S_{L,R}$ add $L$ columns on
-the left and $R$ on the right. They are the columns $1-L,\dots,0$ and $m+1,\dots,m+R$. Each
-is black exactly in the \emph{padding row}, which is row $1$ or row $h$. As before, $W_h$ is
-the span bound of Lemma~\ref{lem:span}.
+For a blackout $S$ of the $h\times m$ grid and $L,R\ge0$, let $S_{L,R}$ add the columns
+$1-L,\dots,0$ and $m+1,\dots,m+R$, each black exactly in the \emph{padding row}, row $1$ or
+row $h$.
 
 \begin{theorem}[finite collar]\label{thm:collar}
-Let $h\ge3$ and $m\ge1$, and let $S$ be a blackout of the $h\times m$ grid. Fix the padding
-row and choose the left side, the right side, or both. Call $(L,R)$ \emph{admissible} if
-$L=0$ when the left side is not chosen and $R=0$ when the right side is not chosen. Put
-$L^*=W_h$ if the left side is chosen and $L^*=0$ otherwise, and define $R^*$ in the same
-way. Then $S_{L,R}$ is valid for every admissible $(L,R)$ if and only if $S_{L^*,R^*}$ is
-valid.
+Let $h\ge3$, fix the padding row and the padded sides, and let $L^*$ and $R^*$ be $W_h$ of
+Lemma~\ref{lem:span} on padded sides and $0$ otherwise. Then $S_{L,R}$ is valid for all
+$L,R\ge0$ vanishing on unpadded sides if and only if $S_{L^*,R^*}$ is valid.
 \end{theorem}
 
 \begin{proof}
-Write $S^*=S_{L^*,R^*}$. If every admissible padding is valid, then so is $S^*$.
-Conversely, let $S^*$ be valid and
-$U=S_{L,R}$ with $(L,R)$ admissible. By Lemma~\ref{lem:leftmost} the corners of a tilted
-rectangle lie in the rows $j$, $j-b$, $j+d$, $j+d-b$ with $b,d\ge1$, so at most one lies in
-row $1$ and at most one in row $h$. Hence a weak tilted rectangle of $U$ has a black corner in an
-original column $e$, and by Lemma~\ref{lem:span} its columns lie in
-$[e-W_h,e+W_h]\cap[1-L,m+R]\subseteq[1-L^*,m+R^*]$. Since $U$ and $S^*$ agree on their common
-columns, it is a rectangle of $S^*$ with the same presentation. Suppose that two distinct
+Write $S^*=S_{L^*,R^*}$. One direction is clear. Let $S^*$ be valid and $U=S_{L,R}$. By
+Lemma~\ref{lem:leftmost} and \eqref{eq:tilt-param}, a tilted rectangle has at most one corner
+in row $1$ and at most one in row $h$. Hence a weak tilted rectangle of $U$ has a black corner in an original column $e$,
+and by Lemma~\ref{lem:span} its columns lie in
+$[e-W_h,e+W_h]\cap[1-L,m+R]\subseteq[1-L^*,m+R^*]$. As $U$ and $S^*$ agree on their common
+columns, it is a rectangle of $S^*$ with the same presentation. Suppose distinct
 rectangles $R_1$ and $R_2$ of $U$ have the same presentation $P$.
 
-\emph{Step 1. Both axis-aligned.} The graph $G_U$ is $G_S$ plus one vertex of degree one for
-each added column, so its cycles are cycles of $G_{S^*}$. Since $S^*$ is valid with at least
-three columns, neither graph has a cycle of length four or six, and $U$ is axis-valid
-(Lemma~\ref{lem:girth}).
+\emph{Step 1. Both axis-aligned.} Added columns are vertices of degree one, so the cycles of
+$G_U$ lie in $G_{S^*}$. As $S^*$ is valid with at least three columns, $U$ is axis-valid by
+Lemma~\ref{lem:girth}.
 
-\emph{Step 2. Both tilted.} By Lemma~\ref{lem:threecorners}, $|P|\le2$, so both are weak and
-are rectangles of $S^*$ with the same presentation, which is impossible.
+\emph{Step 2. Both tilted.} By Lemma~\ref{lem:threecorners}, $|P|\le2$, so both are weak, hence
+rectangles of $S^*$ with the same presentation, a contradiction.
 
-\emph{Step 3. One of each.} Let $R_1$ be tilted, so it is a rectangle of $S^*$. A column of
-$R_2$ with a point of $P$ is a column of $R_1$, and one without has two black corners and is
+\emph{Step 3. One of each.} Let $R_1$ be tilted, hence a rectangle of $S^*$. A column of
+$R_2$ that meets $P$ is a column of $R_1$, and one that does not has two black corners and is
 an original column. So $R_2$ is a rectangle of $S^*$ too, a contradiction.
 \end{proof}
-
-\begin{remark}[the padding row has to be a boundary row]\label{rem:interior}
-Take $h=3$, $B_1=B_2=\{1\}$, $B_3=\{1,3\}$, and the interior padding row $2$. The added
-columns $0$ and $-1$ keep the board valid, but $-2$ breaks it. The diamond $(-2,2)$,
-$(-1,1)$, $(0,2)$, $(-1,3)$ and the rectangle on columns $-1$, $3$ and rows $1$, $3$ both
-show $\{(-1,1),(-1,3)\}$.
-\end{remark}
 
 \subsection{Five rows}
 
 Let $S_8$ be the blackout of the $5\times8$ grid with $B_1=\{1,4\}$, $B_2=\{4,5\}$,
-$B_3=\{2,5\}$, $B_4=B_5=\{5\}$, $B_6=\{3,4\}$, $B_7=\{2,3\}$, and $B_8=\{1,2\}$. Its
-doubles carry the edges of $K_{2,3}$ between $\{2,4\}$ and $\{1,3,5\}$. With five more
-columns black in row $1$ it gives the $5\times13$ board of Figure~\ref{fig:boards}(a).
+$B_3=\{2,5\}$, $B_4=B_5=\{5\}$, $B_6=\{3,4\}$, $B_7=\{2,3\}$, and $B_8=\{1,2\}$.
 
-\begin{figure}[htbp]
+\begin{figure}[!t]
 \centering
 \input{figs/board13.tex}
 \par\medskip
 \input{figs/board16.tex}
-\caption{The $5\times13$ test board of $S_8$ in (a) and the blackout $S_{16}$ of the $6\times16$ grid in (b). Gray crossed circles are blacked out and white circles are visible, and rows are numbered from the top.}
+\caption{(a) The $5\times13$ test board of $S_8$. (b) The $6\times16$ blackout $S_{16}$.}
 \label{fig:boards}
 \end{figure}
 
@@ -70,133 +52,83 @@ columns black in row $1$ it gives the $5\times13$ board of Figure~\ref{fig:board
 \item We have $f(5,m)=m+5$ for $m=5$, $6$, and $7$.
 \item We have $f(5,m)=m+6$ for every $m\ge8$, attained by $S_8$ followed by $m-8$ columns black in
 row $1$ only.
-\item The $5\times8$ grid has exactly four maximum blackouts, the images of $S_8$ under the row
-reflection and the column reversal.
+\item The $5\times8$ grid has exactly four maximum blackouts, the images of $S_8$ under row
+reflection and column reversal.
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-(b) The upper bound is Theorem~\ref{thm:rowbound}. Apply Theorem~\ref{thm:collar} to $S_8$
-with the padding row $1$ on the right. Since $W_5=5$, the test board is the $5\times13$
-board of Figure~\ref{fig:boards}(a). Three rectangle enumerators list its $954$
-rectangles and find no repeated presentation. Lean proves part~(b) in full
-(Section~\ref{sec:verify}).
+(b) The upper bound is Theorem~\ref{thm:rowbound}. Since $W_5=5$, Theorem~\ref{thm:collar} with
+padding row $1$ on the right reduces $S_8$ to the test board of Figure~\ref{fig:boards}(a). Its
+$954$ rectangles have distinct presentations, by three enumerators and Lean.
 
-(a) The lower bounds are $S_0$ of Theorem~\ref{thm:fivefive} below for $m=5$ and the stored
-blackouts of $h+m$ points (Section~\ref{sec:verify}) for $m=6,7$. For
-$m=5$ the upper bound is Corollary~\ref{cor:small-m}. For $m=6$ and $m=7$ a valid blackout of
-$m+6$ points would be one of the $10\,(m)_6\,5^{m-6}$ candidates of Theorem~\ref{thm:equality}.
-Two SAT encodings exclude all of them. Two more encodings and a column search, which use no
-structure theorem, agree, and the bounds have checked certificates (Section~\ref{sec:verify}).
+(a) For $m=5$ the bounds are Corollary~\ref{cor:small-m} and $S_0$ of
+Theorem~\ref{thm:fivefive}. For $m=6,7$ stored blackouts give the lower bound, and checked SAT
+certificates exclude the $10\,(m)_6\,5^{m-6}$ candidates of Theorem~\ref{thm:equality}.
 
-(c) Among the $10\,(8)_6\,5^2=5{,}040{,}000$ candidates of Theorem~\ref{thm:equality}, two
-SAT enumerations and a column search find exactly the four images of $S_8$.
+(c) Two SAT enumerations and a column search over the $10\,(8)_6\,5^2=5{,}040{,}000$
+candidates of Theorem~\ref{thm:equality} find exactly the four images.
 \end{proof}
 
 \begin{remark}[five-row counts, computer-assisted]\label{rem:fivecounts}
-Table~\ref{tab:values} gives $a_5(m)$ for $8\le m\le12$. For $m=13,14,\dots,23$ the numbers
-$a_5(m)$ are $193{,}406$, $1{,}346{,}758$, $8{,}650{,}416$, $52{,}128{,}242$,
-$299{,}349{,}210$, $1{,}653{,}637{,}492$, $8{,}828{,}301{,}226$, $45{,}743{,}165{,}894$,
-$230{,}934{,}909{,}328$, $1{,}139{,}486{,}126{,}866$, and $5{,}510{,}071{,}794{,}736$. The
-values for $m\le12$ come from two independent programs and the others from two exact transfer
-counters, all based on Theorem~\ref{thm:equality}. No proof uses them.
+For $m=13,\dots,23$ the counts $a_5(m)$ are
+\begin{gather*}
+193{,}406,\quad 1{,}346{,}758,\quad 8{,}650{,}416,\quad 52{,}128{,}242,\\
+299{,}349{,}210,\quad 1{,}653{,}637{,}492,\quad 8{,}828{,}301{,}226,\quad 45{,}743{,}165{,}894,\\
+230{,}934{,}909{,}328,\quad 1{,}139{,}486{,}126{,}866,\quad 5{,}510{,}071{,}794{,}736.
+\end{gather*}
+Two
+independent transfer counters based on Theorem~\ref{thm:equality} agree on each.
 % TODO(author): A-number once approved (the counts a_5(m) for m >= 8).
 \end{remark}
 
 \subsection{Six rows and small grids}
-
-Let $S_{16}$ be the blackout of the $6\times16$ grid in Figure~\ref{fig:boards}(b). Its doubles, in the columns $1,2,3,6,9,10,14,15,16$, carry the edges of the complete bipartite
-graph between $\{1,3,5\}$ and $\{2,4,6\}$.
 
 \begin{theorem}[six rows, (a) computer-assisted]\label{thm:sixrow}
 \begin{enumerate}[(a)]
 \item For $8\le m\le14$ we have $f(6,m)\le m+8$.
 \item For every $m\ge15$ we have $f(6,m)=m+9$.
 \end{enumerate}
-So for $m\ge8$ we have $f(6,m)=m+9$ if and only if $m\ge15$.
 \end{theorem}
 
 \begin{proof}
 (a) For $m=8$ this is Corollary~\ref{cor:small-m}. For $9\le m\le14$, by
 Theorem~\ref{thm:equality} the doubles of a valid blackout of $m+9$ points carry the edges of
-$K_{3,3}$ for one of ten row partitions. Two SAT encoders find none for any width and
-partition, and checked LRAT certificates confirm this (Section~\ref{sec:verify}).
-A column search for $m\le13$ and a third encoder for $m=13$ and $m=14$ give a third
-check at every width.
+$K_{3,3}$ for one of ten row partitions. Checked LRAT certificates from two SAT encoders exclude
+every case.
 
-(b) The upper bound is Theorem~\ref{thm:rowbound}. A valid blackout of $24$ points on the
-$6\times15$ grid is in \nolinkurl{jis/data/six_row_sat_w15_A.json}. For $m\ge16$ apply
-Theorem~\ref{thm:collar} to $S_{16}$ with the padding row $1$ on the right. Since $W_6=7$,
-the test board adds $(17,1),\dots,(23,1)$, and the three enumerators find no repeated
-presentation among its $4{,}627$ rectangles. Lean proves part~(b) in full.
+(b) The upper bound is Theorem~\ref{thm:rowbound}. For $m=15$ a stored blackout~\cite{repo} gives
+the lower bound. For $m\ge16$, since $W_6=7$, the test board of
+Theorem~\ref{thm:collar} adds $(17,1),\dots,(23,1)$ to $S_{16}$ of Figure~\ref{fig:boards}(b). Its $4{,}627$
+rectangles have distinct presentations, by three enumerators and Lean.
 \end{proof}
 
 \begin{theorem}[the guess fails, computer-assisted]\label{thm:refute}
-\begin{enumerate}[(a)]
-\item We have $f(6,6)=12$, $f(6,7)=13$, $f(7,7)=14$, and $f(6,8)=15$. The blackout $(1,1)$,
+We have $f(6,6)=12$, $f(6,7)=13$, $f(7,7)=14$, and $f(6,8)=15$. The blackout $(1,1)$,
 $(1,5)$, $(2,1)$, $(3,1)$, $(3,2)$, $(3,3)$, $(4,3)$, $(4,4)$, $(5,4)$, $(6,4)$, $(7,4)$,
 $(7,5)$, $(7,6)$, $(8,2)$, $(8,6)$ of the $6\times8$ grid attains the last value.
-\item The guess of Section~\ref{sec:intro} fails. Indeed $f(5,8)=14$ and $f(6,8)=15$.
-\end{enumerate}
 \end{theorem}
 
 \begin{proof}
-(a) The other lower bounds are stored blackouts of $h+m$ points. Encoding A of
-Section~\ref{sec:verify} on CaDiCaL and encoding B on Glucose and MiniSat find no valid
-blackout of $13$, $14$, $15$, or $16$ points on the $6\times6$, $6\times7$, $7\times7$, or
-$6\times8$ grid, respectively. A third encoding agrees on the last three, and the ILP program
-on the first. All four bounds have checked certificates (Section~\ref{sec:verify}).
-
-(b) The blackouts $S_8$ and that of part~(a) have $14$ and $15$ points, against the guessed
-$13$ and $14$. Checking their $364$ and $592$ rectangles confirms validity, so the
-refutation itself uses no solver.
-\end{proof}
-
-If a side is at most four, then $f(h,m)\le h+m$ by Sections~\ref{sec:strip}
-to~\ref{sec:four}. Also $f(h,m)=h+m$ on $5\times5$, $5\times6$, $5\times7$, and $6\times6$,
-the other grids of area below $40$. So $f$ first exceeds $h+m$ on the $5\times8$ grid.
-
-Neuwirth~\cite[Remark~18]{neuwirth2001} states the case $5+5$ of the next lemma without
-proof.
-
-\begin{lemma}[few edges without short cycles]\label{lem:tenvertices}
-Let $G$ be a finite simple bipartite graph with $v$ vertices, $1\le v\le10$, and with no cycle
-of length four or six. Then $G$ has at most $v$ edges. If it has exactly $v$ edges, then $G$ is
-connected and has exactly one cycle, of length $8$ or $10$.
-\end{lemma}
-
-\begin{proof}
-Every cycle of $G$ has length at least $8$. Suppose a component has more edges than
-vertices. Removing vertices of degree one with their edges until none is left gives a connected
-$H$ with more edges than vertices and minimum degree two, so some vertex $x$ of $H$ has degree
-at least three. Let $D_k$ be the set of vertices at distance $k$ from $x$. Two paths of length
-at most $3$ from $x$ to one vertex would close a cycle of length at most $6$. So for $k=1,2,3$
-every vertex of $D_k$ has exactly one neighbor in $D_{k-1}$ and none in $D_k$. Its degree is
-at least two, so it also has a neighbor in $D_{k+1}$. For $k\le2$ no other vertex of $D_k$
-shares that neighbor. Hence $|D_1|\ge3$, $|D_3|\ge|D_2|\ge|D_1|$ and $|D_4|\ge1$, at least
-$11$ vertices in all. So $G$ has at most $v$ edges, and with exactly $v$ edges every
-component has one cycle. Two disjoint cycles of length at least $8$ need $16$ vertices, so $G$ is connected.
+Stored blackouts give the other lower bounds. Checked SAT certificates exclude one more point
+in each case.
 \end{proof}
 
 \begin{theorem}[the $5\times5$ grid]\label{thm:fivefive}
 \begin{enumerate}[(a)]
-\item We have $f(5,5)=10$, and $G_S$ is connected with exactly one cycle for every optimum $S$.
-\item (Computer-assisted.) There are exactly $a_5(5)=8$ maximum blackouts, the eight distinct
-images of $S_0$ below under the symmetries of the square.
+\item We have $f(5,5)=10$.
+\item (Computer-assisted.) The $a_5(5)=8$ maximum blackouts are the images of $S_0$
+below under the square's symmetries.
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-\emph{Upper bound.} If $S$ is valid, $G_S$ has $10$ vertices, $|S|$ edges and no cycle of
-length four or six (Lemma~\ref{lem:girth}), so Lemma~\ref{lem:tenvertices} applies.
-
-\emph{Lower bound.} Let $S_0$ be the staircase of nine points plus the corner $(5,5)$ with
-$B_1=\{4,5\}$, $B_2=\{3,4\}$, $B_3=\{1,2,3\}$, $B_4=\{1\}$, and $B_5=\{1,5\}$. Its graph is an $8$-cycle with two pendant
-edges, so $S_0$ is axis-valid. By Lemma~\ref{lem:leftmost} the $30$ tilted rectangles among
-the $130$ are the nine unit diamonds, the four kinds of Lemma~\ref{lem:tilted-narrow} in four
-positions each, and five that span the whole grid, one of them a large diamond. Exactly fifteen are weak. The
-table lists the two corners each one shows and, after a bar for an oblique pair, the white
-corner of its axis-aligned rectangle.
+(a) The upper bound is Corollary~\ref{cor:small-m}. For the lower bound let $S_0$ have
+$B_1=\{4,5\}$, $B_2=\{3,4\}$, $B_3=\{1,2,3\}$, $B_4=\{1\}$, and $B_5=\{1,5\}$. Its graph is an
+$8$-cycle with two pendant edges, so $S_0$ is axis-valid. By Lemma~\ref{lem:leftmost} its $30$
+tilted rectangles are nine unit diamonds, sixteen from Lemma~\ref{lem:tilted-narrow}, and five
+spanning the grid. The fifteen weak ones are listed by their two shown corners and, after a bar
+for an oblique pair, the white corner of its axis-aligned rectangle.
 \begin{center}\footnotesize
 \begin{tabular}{@{}llll@{}}
 $(1,2),(2,1)\mid(1,1)$ & $(1,3),(2,2)\mid(1,2)$ & $(3,4),(4,3)\mid(4,4)$ & $(2,5),(3,4)\mid(3,5)$ \\
@@ -205,11 +137,10 @@ $(4,3),(5,2)\mid(4,2)$ & $(3,4),(5,2)\mid(5,4)$ & $(2,5),(5,2)\mid(2,2)$ & $(4,5
 $(1,3),(4,2)\mid(1,2)$ & $(2,5),(4,3)\mid(4,5)$ & & $(4,5),(5,4)\mid(4,4)$ \\
 \end{tabular}
 \end{center}
-The fifteen pairs are distinct, and the other tilted rectangles are determined by
-Lemma~\ref{lem:threecorners}. Each listed white corner lies on the only axis-aligned rectangle
+The fifteen pairs are distinct, and Lemma~\ref{lem:threecorners} settles the other
+tilted rectangles. Each listed white corner lies on the only axis-aligned rectangle
 through its pair, and $(2,2),(4,2)$ has no rival since $B_2\cap B_4=\emptyset$. So $S_0$ is valid.
 
-\emph{(b).} Of the $44{,}640$ sets of $10$ points without a short cycle, the script
-\texttt{verify\_narrow.py} finds exactly the $8$ images of $S_0$ valid. The ILP program and the
-brute-force check agree.
+(b) Of the $44{,}640$ sets of $10$ points without a short cycle, exactly the
+images of $S_0$ are valid, by three programs.
 \end{proof}

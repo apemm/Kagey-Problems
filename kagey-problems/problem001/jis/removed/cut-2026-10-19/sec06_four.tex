@@ -1,0 +1,343 @@
+% Removed 2026-10-19 from sections/sec06_four.tex (second cutting round): Lemma lem:fourequality, the forbidden-block material (Lemma lem:blocks, Theorem thm:foursurvival), Proposition prop:fourvalues, and the old proofs of thm:fourvalue, thm:fourgfexact and cor:fourgrowth before compression.
+
+% --- old construction text and proof of Theorem thm:fourvalue (lines 10-37) ---
+The upper bound is Theorem~\ref{thm:rowbound} with $h=4$. For the lower bound we take
+\begin{equation}\label{eq:fourS}
+S=\{(i,1):2\le i\le m-1\}\cup\{(m-1,2),(m,2),(1,3),(2,3),(1,4),(m,4)\},
+\end{equation}
+with $m+4$ points. The double columns are column $1$ (rows $3,4$), column $2$ (rows $1,3$), column $m-1$ (rows $1,2$), and column $m$ (rows $2,4$). So $G_S$ is the eight-cycle $r_1\,c_2\,r_3\,c_1\,r_4\,c_m\,r_2\,c_{m-1}$ with the columns $c_3,\ldots,c_{m-2}$ hanging off $r_1$.
+
+\begin{proof}[Proof of Theorem~\ref{thm:fourvalue}]
+\emph{Step 1. Axis-aligned rectangles.} As $G_S$ has no cycle of length four or six, Lemma~\ref{lem:girth} shows that the axis-aligned rectangles have distinct presentations and none is hidden.
+
+\emph{Step 2. The weak tilted rectangles.} By Lemma~\ref{lem:tilted-narrow}, a corner of a tilted rectangle in row $1$ is always black, and one in row $4$ is always white. The other black corners are $(i+2,2)$ for $i\ge m-3$ and $(i+1,3)$ for $i=1$ in $D(i,1)$, and $(i,3)$ for $i\le2$ and $(i+1,2)$ for $i=m-2$ in $D(i,2)$. In $\kA_i$ and $\kB_i$ they are $(i,3)$ for $i\le2$ and $(i+3,2)$ for $i\ge m-4$, and in $\kC_i$ and $\kE_i$ there are none. As $m\ge6$, the two conditions for $D(i,2)$ exclude each other. By Lemma~\ref{lem:threecorners} only the rectangles below need a check, with $s=1$ for $\kA_i$ and $s=2$ for $\kB_i$.
+\begin{center}\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+rectangle & which $i$ & corners shown\\
+\midrule
+$D(1,1)$ & & $(1,2),(3,2)$\\
+$D(i,1)$ & $i\in\{m-3,m-2\}$ & $(i,2),(i+1,3)$\\
+$\kA_i$ or $\kB_i$ & $i\in\{1,2\}$, $i\notin\{m-4,m-3\}$ & $(i+s,4),(i+3,2)$\\
+$\kA_i$ or $\kB_i$ & $i\in\{m-4,m-3\}$, $i\notin\{1,2\}$ & $(i,3),(i+s,4)$\\
+$\kA_i$ or $\kB_i$ & $i=2$, $m=6$ & $(i+s,4)$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\emph{Step 3. Against each other.} The rows of the shown points differ between the first four lines. Within a line the point in row $2$ or $3$ determines $i$, and the point in row $4$ determines $s$.
+
+\emph{Step 4. Against axis-aligned rectangles.} A rival of $\{(1,2),(3,2)\}$ needs a row $r$ with $(1,r)$ and $(3,r)$ black, but there is none. In the next three lines the axis-aligned rectangle through the shown points has the white corner $(i,3)$, $(i+s,2)$, or $(i,4)$, respectively, since $i\ge3$, $i+s\le4<m-1$, and $3\le i\le m-3$ there. In the last line $m=6$, and the shown point is $(z,4)$ with $z=i+s\in\{3,4\}$. Column $z$ is black only in row $1$, so a rival needs a column black in rows $1$ and $4$, and there is none. By Steps~1 and~2 no rectangle is hidden, so $S$ is valid.
+\end{proof}
+
+% --- Lemma lem:fourequality (lines 39-45) ---
+\begin{lemma}[equality in the row bound on four rows]\label{lem:fourequality}
+Let $m\ge4$. A blackout of the $4\times m$ grid with $m+4$ points is axis-valid if and only if exactly four columns have two black points, their row pairs are the edges of a four-cycle on the rows, and every other column has one black point. There are $3\,(m)_4\,4^{m-4}$ such blackouts.
+\end{lemma}
+
+\begin{proof}
+This is Theorem~\ref{thm:equality} with $h=4$. There are three four-cycles on the rows, $(m)_4$ ways to place their labeled edges, and four rows for each other column.
+\end{proof}
+
+% --- block definitions, Lemma lem:blocks, Theorem thm:foursurvival (lines 70-94) ---
+Let $m\ge6$. By Lemma~\ref{lem:fourequality} an optimum has four double columns, whose pairs form a four-cycle $F$ on the rows, and singletons elsewhere. We name $F$ by its parts, $\{1,2\}\mid\{3,4\}$, $\{1,3\}\mid\{2,4\}$, or $\{1,4\}\mid\{2,3\}$. A \emph{block} is a run of four consecutive singleton columns, and its \emph{word} lists their black rows. The \emph{template words} $2413$, $3412$, $2143$, and $3142$ are the corner rows of $\kC_x$, $\kA_x$, $\kE_x$, and $\kB_x$. A \emph{swap word} exchanges two letters of a template word. An \emph{edit word for $F$} replaces one letter $r$ of a template word by a row $s$ with $\{r,s\}\in F$.
+
+\begin{lemma}[forbidden blocks]\label{lem:blocks}
+Let $S$ be a valid blackout of the $4\times m$ grid with $m+4$ points and pair set $F$, where $m\ge6$. No block of $S$ has a swap word or an edit word for $F$. There are $20$ swap words, and $24$, $24$, or $32$ edit words for the three pair sets, none of them a swap word. So at most $212$ of the $256$ words of a block are allowed.
+\end{lemma}
+
+\begin{proof}
+Let the block start in column $x$, and let $T$ be one of $\kC_x$, $\kA_x$, $\kE_x$, $\kB_x$, with template word $t_1t_2t_3t_4$. In both steps an axis-aligned rectangle has the same presentation as $T$.
+
+\emph{Step 1. Swap words.} If the letters in positions $p\ne q$ are exchanged, $T$ shows exactly $(x+p-1,t_p)$ and $(x+q-1,t_q)$, and so does the axis-aligned rectangle on these two points. The template words are the permutations with both end letters in $\{2,3\}$. Exchanging two end letters or two middle letters gives a template word again, and exchanging an end letter with a middle letter gives the rest, so the $20$ swap words are these four and the sixteen permutations with exactly one end letter in $\{2,3\}$.
+
+\emph{Step 2. Edit words.} If $t_p=r$ is replaced by $s$ with $\{r,s\}\in F$, then $T$ shows only $(x+p-1,r)$. So does the rectangle on rows $r,s$ and the columns $x+p-1$ and $d$, where $d$ is the double column black in rows $r,s$. Each template word has $8$ edit words. Two template words share an edit word only if they differ in two positions, carrying letters $r,s$ in opposite orders, and then they share two if $\{r,s\}\in F$. This happens for $2413,3412$ and $2143,3142$ with $\{r,s\}=\{2,3\}$, and for $2413,2143$ and $3412,3142$ with $\{r,s\}=\{1,4\}$. So there are $32-4[\{2,3\}\in F]-4[\{1,4\}\in F]$ edit words. They repeat a letter, so they are not swap words.
+\end{proof}
+
+\begin{theorem}[forbidden-block bound]\label{thm:foursurvival}
+For every $m\ge6$,
+\begin{equation}\label{eq:survival}
+a_4(m)\le3\,(m)_4\,4^{m-4}\,(53/64)^k=O\bigl(m^4\,212^{m/4}\bigr),
+\end{equation}
+where $k=\max(0,\lfloor m/4\rfloor-4)$.
+\end{theorem}
+
+\begin{proof}
+Fix $F$, the double columns, and their pairs, in one of $3\,(m)_4$ ways. Of the $\lfloor m/4\rfloor$ groups of columns $4j-3,\ldots,4j$, at most four contain a double column. So at least $k$ are blocks, each with at most $212=4^4\cdot53/64$ words by Lemma~\ref{lem:blocks}. Every other column has at most $4$ values, which gives \eqref{eq:survival}.
+\end{proof}
+
+% --- old proof of Lemma lem:fourmemory (lines 100-102) ---
+\begin{proof}
+An optimum satisfies the three conditions (the first by Theorem~\ref{thm:hidden}). Conversely, by Lemma~\ref{lem:fourequality} the word is axis-valid and hides no axis-aligned rectangle, which would be a four-cycle of $G_S$. With the first condition, two distinct rectangles with the same presentation $P$ have $P\ne\emptyset$, and one of them is tilted. If the other is axis-aligned, each of its columns either meets $P$, and so is a column of the tilted one, or has two black corners and is a double column. The second condition excludes this. If both are tilted, they share a column $c$ that meets $P$. Each meets at most four consecutive columns, so both lie in the columns $c-3$ to $c+3$, and the third condition excludes this.
+\end{proof}
+
+% --- Proposition prop:fourvalues (lines 106-112) ---
+\begin{proposition}[small widths, computer-assisted]\label{prop:fourvalues}
+In the row $h=4$ of \seqnum{A399580}, $a_4(4)=316$, $a_4(5)=1{,}810$, $a_4(6)=26$, and $a_4(7)=292$.
+\end{proposition}
+
+\begin{proof}
+The ILP program and the brute-force check of Section~\ref{sec:verify} both find these values. For $m=6,7$ a direct test of the candidates of Lemma~\ref{lem:fourequality} and a transfer counter also give $26$ and $292$. The counter runs an exported automaton, and a separate script builds the automaton of Lemma~\ref{lem:fourmemory} from the definition and checks that the two accept the same words; see the repository~\cite{repo}. The counter continues with $a_4(8),\ldots,a_4(12)=2{,}118$, $13{,}332$, $75{,}398$, $402{,}656$, and $2{,}037{,}848$.
+\end{proof}
+
+% --- old proof of Theorem thm:fourgfexact (lines 122-124) ---
+\begin{proof}
+The Berlekamp--Massey algorithm modulo eight primes, run on the values $a_4(m)$ for $m\le1500$, on which two transfer counters agree, gives $P_4$ and $Q_4$. With a register of used pairs, the automaton of Proposition~\ref{prop:fourvalues} has a transfer matrix $T_F$ for each pair set $F$. Its state vectors $v(n)=v(0)T_F^n$ satisfy $\sum_jq_jv(n_F-j)=0$ at $n_F=436$, $435$, and $445$. Multiplying by powers of $T_F$ gives the recurrence for every $n\ge445$, and $\deg P_4=444$ forces the failure at $n=444$. The factorization is computed in SymPy.
+\end{proof}
+
+% --- old proof of Corollary cor:fourgrowth (lines 130-132) ---
+\begin{proof}
+Exact isolation of the complex roots of every factor of $Q_4$ in rational rectangles shows that the only root of modulus at most $0.341$ is $r=0.29832\ldots$, which is simple in $g_{20}$ and so has order five in $Q_4$. As $P_4$ and $Q_4$ are coprime, $H$ is analytic at $r$ and $c_5=H(r)\ne0$. Taylor expansion of $H$ at $r$ shows that the principal part of $P_4/Q_4$ at $r$ is $\sum_{j=1}^{5}c_j(1-z/r)^{-j}$. The rest has no pole in $|z|\le0.341$, so its coefficients are $O((1000/341)^m)$. As $[z^m](1-z/r)^{-j}=\rho_4^m\binom{m+j-1}{j-1}$, this gives the expansion, and $B$ has leading coefficient $c_5/24$. Interval arithmetic around $r$ gives the stated value of $c$.
+\end{proof}
+
+% Round 3 (2026-10-19): full text of sections/sec06_four.tex before the third cut (proofs of thm:fourvalue, thm:foursurvival, lem:fourmemory, thm:fourgfexact, cor:fourgrowth compressed).
+\section{Four rows}\label{sec:four}
+
+\begin{theorem}[four rows]\label{thm:fourvalue}
+For every $m\ge6$ we have $f(4,m)=m+4$.
+\end{theorem}
+
+The upper bound is Theorem~\ref{thm:rowbound} with $h=4$. For the lower bound we take
+\begin{equation}\label{eq:fourS}
+S=\{(i,1):2\le i\le m-1\}\cup\{(m-1,2),(m,2),(1,3),(2,3),(1,4),(m,4)\},
+\end{equation}
+with $m+4$ points. Its double columns are $1$ (rows $3,4$), $2$ (rows $1,3$), $m-1$ (rows $1,2$), and $m$ (rows $2,4$), so $G_S$ is the eight-cycle $r_1\,c_2\,r_3\,c_1\,r_4\,c_m\,r_2\,c_{m-1}$ with $c_3,\ldots,c_{m-2}$ hanging off $r_1$.
+
+\begin{proof}[Proof of Theorem~\ref{thm:fourvalue}]
+\emph{Step 1.} As $G_S$ has no cycle of length four or six, Lemma~\ref{lem:girth} shows that the axis-aligned rectangles have distinct presentations and none is hidden.
+
+\emph{Step 2.} By Lemma~\ref{lem:tilted-narrow}, tilted corners in row $1$ are black and those in row $4$ are white. The other black corners are $(i+2,2)$ for $i\ge m-3$ and $(i+1,3)$ for $i=1$ in $D(i,1)$, and $(i,3)$ for $i\le2$ and $(i+1,2)$ for $i=m-2$ in $D(i,2)$. In $\kA_i$ and $\kB_i$ they are $(i,3)$ for $i\le2$ and $(i+3,2)$ for $i\ge m-4$, and in $\kC_i$ and $\kE_i$ there are none. As $m\ge6$, the two conditions for $D(i,2)$ exclude each other. By Lemma~\ref{lem:threecorners} a rectangle with at most one black corner is safe, so only the rectangles below need a check, with $s=1$ for $\kA_i$ and $s=2$ for $\kB_i$.
+\begin{center}\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+rectangle & which $i$ & corners shown\\
+\midrule
+$D(1,1)$ & & $(1,2),(3,2)$\\
+$D(i,1)$ & $i\in\{m-3,m-2\}$ & $(i,2),(i+1,3)$\\
+$\kA_i$ or $\kB_i$ & $i\in\{1,2\}$, $i\notin\{m-4,m-3\}$ & $(i+s,4),(i+3,2)$\\
+$\kA_i$ or $\kB_i$ & $i\in\{m-4,m-3\}$, $i\notin\{1,2\}$ & $(i,3),(i+s,4)$\\
+$\kA_i$ or $\kB_i$ & $i=2$, $m=6$ & $(i+s,4)$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\emph{Step 3.} The rows of the shown points differ between the first four lines, and within a line the point in row $2$ or $3$ fixes $i$ and the one in row $4$ fixes $s$.
+
+\emph{Step 4.} No row $r$ has $(1,r)$ and $(3,r)$ black, so $\{(1,2),(3,2)\}$ has no rival. In the next three lines the axis-aligned rectangle through the shown points has the white corner $(i,3)$, $(i+s,2)$, or $(i,4)$, respectively, since $i\ge3$, $i+s\le4<m-1$, and $3\le i\le m-3$ there. In the last line $m=6$, the shown point is $(z,4)$ with $z=i+s\in\{3,4\}$, and column $z$ is black only in row $1$, so a rival needs a column black in rows $1$ and $4$, and there is none. With Steps~1 and~2 no rectangle is hidden, so $S$ is valid.
+\end{proof}
+
+By Theorem~\ref{thm:equality} with $h=4$, a blackout with $m+4$ points, $m\ge4$, is axis-valid exactly when its four doubles have row pairs forming a four-cycle on the rows and the rest are singletons. Three four-cycles, $(m)_4$ placements of their edges, and four rows for each other column give $3\,(m)_4\,4^{m-4}$ such candidates.
+
+\begin{corollary}[widths four and five, computer-assisted]\label{cor:fourboundary}
+We have $f(4,4)=7$ and $f(4,5)=8$.
+\end{corollary}
+
+\begin{proof}
+Lemma~\ref{lem:cross} gives the lower bounds, and a computer finds a repeated presentation in each of the $72$ and $1{,}440$ candidates.
+\end{proof}
+
+\begin{theorem}[no hidden rectangle]\label{thm:hidden}
+Let $m\ge4$. A valid blackout of the $4\times m$ grid hides no rectangle.
+\end{theorem}
+
+\begin{proof}
+By Lemma~\ref{lem:diff} it suffices to write each corner set as $C(R_1)\triangle C(R_2)$ with $R_1\ne R_2$. For the axis-aligned rectangle on rows $r,s$ and columns $x,y$, take rows $r,s$ with columns $\{x,w\}$ and $\{y,w\}$ for a third column $w$. For $1\le i\le m-3$ let $\mathsf Q_i=\{(i,2),(i,3),(i+3,2),(i+3,3)\}$. Checking corners gives
+\begin{equation}\label{eq:fourxor}
+\begin{gathered}
+\kC_i=\kA_i\,\triangle\,\mathsf Q_i,\qquad \kE_i=\kB_i\,\triangle\,\mathsf Q_i,\\
+D(i+1,1)=D(i,2)\,\triangle\,\kA_i,\qquad D(i+1,2)=D(i,1)\,\triangle\,\kE_i,
+\end{gathered}
+\end{equation}
+and each identity can be solved for each of its three rectangles. The first line handles $\kA_i$, $\kB_i$, $\kC_i$, and $\kE_i$. A diamond $D(j,1)$ or $D(j,2)$ has $j\ge2$ or $j\le m-3$, as $m\ge4$, and the second line with $i=j-1$ or $i=j$ handles it.
+\end{proof}
+
+\begin{theorem}[forbidden-block bound]\label{thm:foursurvival}
+For every $m\ge6$ we have $a_4(m)\le3\,(m)_4\,4^{m-4}(53/64)^k$, where
+$k=\max(0,\lfloor m/4\rfloor-4)$. So $a_4(m)=O\bigl(m^4\,212^{m/4}\bigr)$.
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:equality} an optimum has four double columns, whose pairs form a
+four-cycle $F$ on the rows, and singletons elsewhere. There are $3\,(m)_4$ choices of $F$, the
+double columns, and their pairs. A \emph{block} is a run of four consecutive singleton
+columns, and its word lists their black rows. For a block starting in column $x$, the
+\emph{template words} $2413$, $3412$, $2143$, and $3142$ are the corner rows of $\kC_x$,
+$\kA_x$, $\kE_x$, and $\kB_x$. Let $T$ be one of these rectangles, with template word
+$t_1t_2t_3t_4$.
+
+A block cannot carry a \emph{swap word}, which exchanges the letters $t_p$ and $t_q$ with
+$p\ne q$. Then $T$ shows exactly $(x+p-1,t_p)$ and $(x+q-1,t_q)$, and so does the
+axis-aligned rectangle on these two points. The template words are the permutations with
+both end letters in $\{2,3\}$. Exchanging two end letters or two middle letters gives a
+template word again, and exchanging an end letter with a middle letter gives the rest. So the
+$20$ swap words are the four template words and the sixteen permutations with exactly one end
+letter in $\{2,3\}$.
+
+A block cannot carry an \emph{edit word}, which replaces a letter $t_p=r$ by a row $s$ with
+$\{r,s\}\in F$. Then $T$ shows only $(x+p-1,r)$, and so does the rectangle on rows $r,s$ and
+the columns $x+p-1$ and $d$, where $d$ is the double column black in rows $r,s$. Each template
+word has $8$ edit words. Two template words share an edit word only if they differ in two
+positions, carrying letters $r,s$ in opposite orders, and then they share two if
+$\{r,s\}\in F$. This happens for $2413,3412$ and $2143,3142$ with $\{r,s\}=\{2,3\}$, and for
+$2413,2143$ and $3412,3142$ with $\{r,s\}=\{1,4\}$. So there are
+$32-4[\{2,3\}\in F]-4[\{1,4\}\in F]\ge24$ edit words. They repeat a letter, so they are not
+swap words, and at most $256-20-24=212=4^4\cdot53/64$ words are allowed in a block.
+
+Of the $\lfloor m/4\rfloor$ groups of columns $4j-3,\ldots,4j$, at most four contain a double
+column, so at least $k$ are blocks. Every other column has at most $4$ values.
+\end{proof}
+
+\begin{lemma}[six columns of memory]\label{lem:fourmemory}
+Fix a pair set $F$ and let $m\ge6$. A word over the four singleton letters and the pairs of $F$, with each pair used once, is the word of an optimum if and only if no tilted rectangle is hidden, no tilted rectangle shares its presentation with an axis-aligned rectangle whose columns are among its own columns and the double columns, and no two tilted rectangles inside seven consecutive columns share a presentation.
+\end{lemma}
+
+\begin{proof}
+An optimum satisfies the three conditions, the first by Theorem~\ref{thm:hidden}. Conversely, by Theorem~\ref{thm:equality} the word is axis-valid, and a hidden axis-aligned rectangle would be a four-cycle of $G_S$. With the first condition, two distinct rectangles with the same presentation $P$ have $P\ne\emptyset$, and one of them is tilted. If the other is axis-aligned, each of its columns either meets $P$, and so is a column of the tilted one, or has two black corners and is a double column, which the second condition excludes. If both are tilted, they share a column $c$ that meets $P$. Each meets at most four consecutive columns, so both lie in the columns $c-3$ to $c+3$, which the third condition excludes.
+\end{proof}
+
+By Lemma~\ref{lem:rival} the second condition is decided by the columns of the tilted rectangle and $F$. So a finite automaton that reads a blackout column by column and remembers its last six columns and the pairs of $F$ already used accepts exactly the optima with pair set $F$, and their generating function is rational~\cite[Section~V.5]{flajolet2009}.
+
+\begin{theorem}[the four-row generating function, computer-assisted]\label{thm:fourgfexact}
+There are coprime integer polynomials $P_4=26z^6-826z^7+\cdots$ of degree $444$ and $Q_4=\sum_{j=0}^{420}q_jz^j$ of degree $420$ with $q_0=1$ and $\sum_{m\ge6}a_4(m)z^m=P_4/Q_4$. The recurrence $\sum_jq_j\,a_4(n-j)=0$ holds for every $n\ge445$ and fails at $n=444$. Over the integers
+\[
+Q_4=(1-z)^2(1+z)^2\,g_5^3\,\tilde g_5^3\,g_6^3\,g_{11}^5\,g_{17}^3\,g_{19}^3\,g_{20}^5\,g_{21}^5,
+\]
+where $g_d$ and $\tilde g_d$ are irreducible of degree $d$ with constant term $1$, and all of $g_{20}$ comes from the pair set $\{1,3\}\mid\{2,4\}$.
+\end{theorem}
+
+\begin{proof}
+Two transfer counters, one checked against the automaton of Lemma~\ref{lem:fourmemory} built from the definition~\cite{repo}, agree on $a_4(m)$ for $m\le1500$, with a direct test of the candidates for $m=6,7$, and with Table~\ref{tab:values}. The Berlekamp--Massey algorithm modulo eight primes on these values gives $P_4$ and $Q_4$. The automaton has a transfer matrix $T_F$ for each pair set $F$, and its state vectors $v(n)=v(0)T_F^n$ satisfy $\sum_jq_jv(n_F-j)=0$ at $n_F=436$, $435$, and $445$. Powers of $T_F$ then give the recurrence for every $n\ge445$, and $\deg P_4=444$ forces the failure at $n=444$. SymPy gives the factorization.
+\end{proof}
+
+\begin{corollary}[growth, computer-assisted]\label{cor:fourgrowth}
+Let $\rho_4=3.351996777310\ldots$ be the largest real root of the irreducible polynomial $p(x)=x^{20}g_{20}(1/x)=x^{20}-4x^{19}+2x^{18}+\cdots-26x^2-4x+8$, and let $r=1/\rho_4$. Put $H(z)=P_4(z)(1-z/r)^5/Q_4(z)$, $c_j=(-r)^{5-j}H^{(5-j)}(r)/(5-j)!$, and $B(m)=\sum_{j=1}^{5}c_j\binom{m+j-1}{j-1}$. Then $\deg B=4$ and $a_4(m)=\rho_4^m B(m)+O((1000/341)^m)$. So $a_4(m)\sim c\,m^4\rho_4^m$ with $c=c_5/24\approx8.1611\times10^{-5}$.
+\end{corollary}
+
+\begin{proof}
+Exact root isolation for every factor of $Q_4$ shows that $r=0.29832\ldots$ is the only root of modulus at most $0.341$, simple in $g_{20}$ and so of order five in $Q_4$. As $P_4$ and $Q_4$ are coprime, $H$ is analytic at $r$ and $c_5=H(r)\ne0$. By Taylor expansion of $H$ at $r$, the principal part of $P_4/Q_4$ at $r$ is $\sum_{j=1}^{5}c_j(1-z/r)^{-j}$, and the rest has no pole in $|z|\le0.341$, so its coefficients are $O((1000/341)^m)$. As $[z^m](1-z/r)^{-j}=\rho_4^m\binom{m+j-1}{j-1}$, this gives the expansion with leading coefficient $c_5/24$, and interval arithmetic around $r$ gives $c$.
+\end{proof}
+
+% --- round-4 pass, 2026-10-19: full text of sections/sec06_four.tex before compression ---
+\section{Four rows}\label{sec:four}
+
+\begin{theorem}[four rows]\label{thm:fourvalue}
+For every $m\ge6$ we have $f(4,m)=m+4$.
+\end{theorem}
+
+The upper bound is Theorem~\ref{thm:rowbound} with $h=4$. For the lower bound take
+\begin{equation}\label{eq:fourS}
+S=\{(i,1):2\le i\le m-1\}\cup\{(m-1,2),(m,2),(1,3),(2,3),(1,4),(m,4)\}.
+\end{equation}
+Here $|S|=m+4$ and $G_S$ is the eight-cycle $r_1\,c_2\,r_3\,c_1\,r_4\,c_m\,r_2\,c_{m-1}$ with $c_3,\ldots,c_{m-2}$ hanging off $r_1$.
+
+\begin{proof}[Proof of Theorem~\ref{thm:fourvalue}]
+\emph{Step 1.} As $G_S$ has no four- or six-cycle, Lemma~\ref{lem:girth} shows that axis-aligned rectangles have distinct presentations and none is hidden.
+
+\emph{Step 2.} By Lemma~\ref{lem:tilted-narrow}, tilted corners in row $1$ are black and those in row $4$ are white. The other black corners are $(i+2,2)$ for $i\ge m-3$ and $(i+1,3)$ for $i=1$ in $D(i,1)$, and $(i,3)$ for $i\le2$ and $(i+1,2)$ for $i=m-2$ in $D(i,2)$. In $\kA_i$ and $\kB_i$ they are $(i,3)$ for $i\le2$ and $(i+3,2)$ for $i\ge m-4$, and in $\kC_i$ and $\kE_i$ there are none. As $m\ge6$, the two conditions for $D(i,2)$ exclude each other. By Lemma~\ref{lem:threecorners} a rectangle with at most one black corner is safe, so only the rectangles below need a check, with $s=1$ for $\kA_i$ and $s=2$ for $\kB_i$.
+\begin{center}\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+rectangle & which $i$ & corners shown\\
+\midrule
+$D(1,1)$ & & $(1,2),(3,2)$\\
+$D(i,1)$ & $i\in\{m-3,m-2\}$ & $(i,2),(i+1,3)$\\
+$\kA_i$ or $\kB_i$ & $i\in\{1,2\}$, $i\notin\{m-4,m-3\}$ & $(i+s,4),(i+3,2)$\\
+$\kA_i$ or $\kB_i$ & $i\in\{m-4,m-3\}$, $i\notin\{1,2\}$ & $(i,3),(i+s,4)$\\
+$\kA_i$ or $\kB_i$ & $i=2$, $m=6$ & $(i+s,4)$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\emph{Step 3.} The rows of the shown points differ between the first four lines, and within a line the point in row $2$ or $3$ fixes $i$ and the one in row $4$ fixes $s$.
+
+\emph{Step 4.} No row $r$ has $(1,r)$ and $(3,r)$ black, so $\{(1,2),(3,2)\}$ has no rival. In the next three lines the axis-aligned rectangle through the shown points has the white corner $(i,3)$, $(i+s,2)$, or $(i,4)$, respectively, since $i\ge3$, $i+s\le4<m-1$, and $3\le i\le m-3$ there. In the last line $m=6$, the shown point is $(z,4)$ with $z\in\{3,4\}$, column $z$ is black only in row $1$, and no column is black in rows $1$ and $4$, so no rival exists. With Steps~1 and~2 no rectangle is hidden.
+\end{proof}
+
+By Theorem~\ref{thm:equality} with $h=4$, a blackout with $m+4$ points, $m\ge4$, is axis-valid exactly when it has four doubles, with row pairs forming a four-cycle $F$, and singletons elsewhere. There are $3\,(m)_4\,4^{m-4}$ such candidates.
+
+\begin{corollary}[widths four and five, computer-assisted]\label{cor:fourboundary}
+We have $f(4,4)=7$ and $f(4,5)=8$.
+\end{corollary}
+
+\begin{proof}
+Lemma~\ref{lem:cross} gives the lower bounds, and a computer finds a repeated presentation in all $72$ and $1{,}440$ candidates.
+\end{proof}
+
+\begin{theorem}[no hidden rectangle]\label{thm:hidden}
+Let $m\ge4$. A valid blackout of the $4\times m$ grid hides no rectangle.
+\end{theorem}
+
+\begin{proof}
+By Lemma~\ref{lem:diff} it suffices to write each corner set as $C(R_1)\triangle C(R_2)$ with $R_1\ne R_2$. For the axis-aligned rectangle on rows $r,s$ and columns $x,y$, take rows $r,s$ with columns $\{x,w\}$ and $\{y,w\}$ for a third column $w$. For $1\le i\le m-3$ let $\mathsf Q_i=\{(i,2),(i,3),(i+3,2),(i+3,3)\}$. Checking corners gives
+\begin{equation}\label{eq:fourxor}
+\begin{gathered}
+\kC_i=\kA_i\,\triangle\,\mathsf Q_i,\qquad \kE_i=\kB_i\,\triangle\,\mathsf Q_i,\\
+D(i+1,1)=D(i,2)\,\triangle\,\kA_i,\qquad D(i+1,2)=D(i,1)\,\triangle\,\kE_i,
+\end{gathered}
+\end{equation}
+and each identity solves for any of its three rectangles. The first line covers $\kA_i$, $\kB_i$, $\kC_i$, and $\kE_i$, and the second, with $i=j-1$ or $i=j$, covers $D(j,1)$ and $D(j,2)$, since $j\ge2$ or $j\le m-3$ as $m\ge4$.
+\end{proof}
+
+\begin{theorem}[forbidden-block bound]\label{thm:foursurvival}
+For every $m\ge6$ we have $a_4(m)\le3\,(m)_4\,4^{m-4}(53/64)^k$, where
+$k=\max(0,\lfloor m/4\rfloor-4)$. So $a_4(m)=O\bigl(m^4\,212^{m/4}\bigr)$.
+\end{theorem}
+
+\begin{proof}
+An optimum is a candidate, with $3\,(m)_4$ choices of $F$, the double columns, and their
+pairs. A \emph{block} is a run of four consecutive singleton columns, and its word lists
+their black rows. For a block starting in column $x$, the \emph{template words} $2413$,
+$3412$, $2143$, and $3142$ are the corner rows of $\kC_x$, $\kA_x$, $\kE_x$, and $\kB_x$. Let
+$T$ be one, with template word $t_1t_2t_3t_4$.
+
+No block carries a \emph{swap word}, which exchanges two letters $t_p$ and $t_q$, since then
+$T$ and the axis-aligned rectangle on $(x+p-1,t_p)$ and $(x+q-1,t_q)$ both show exactly these
+two points. The template words are the permutations with both end letters in $\{2,3\}$.
+Exchanging two end letters or two middle letters gives a template word again, and exchanging
+an end letter with a middle letter gives the rest. So the $20$ swap words are these four and
+the sixteen with exactly one end letter in $\{2,3\}$.
+
+No block carries an \emph{edit word}, which replaces a letter $t_p=r$ by a row $s$ with
+$\{r,s\}\in F$, since then $T$ and the rectangle on rows $r,s$ and columns $x+p-1$ and $d$,
+the double column black in rows $r,s$, both show only $(x+p-1,r)$. Each
+template word has $8$ edit words. Two template words share an edit word only if they differ
+in two positions, carrying letters $r,s$ in opposite orders, and then they share two if
+$\{r,s\}\in F$. This happens for $2413,3412$ and $2143,3142$ with $\{r,s\}=\{2,3\}$, and for
+$2413,2143$ and $3412,3142$ with $\{r,s\}=\{1,4\}$. So there
+are
+$32-4[\{2,3\}\in F]-4[\{1,4\}\in F]\ge24$ edit words. They repeat a letter, so none is a swap word, and at most
+$256-20-24=212=4^4\cdot53/64$ words are allowed in a block.
+
+Of the $\lfloor m/4\rfloor$ groups of columns $4j-3,\ldots,4j$, at most four contain a double
+column, so at least $k$ are blocks. Other columns have at most $4$ values.
+\end{proof}
+
+\begin{lemma}[six columns of memory]\label{lem:fourmemory}
+Fix a pair set $F$ and let $m\ge6$. A word over the four singleton letters and the pairs of $F$, with each pair used once, is the word of an optimum exactly when no tilted rectangle is hidden, no tilted rectangle shares its presentation with an axis-aligned rectangle whose columns are among its own columns and the double columns, and no two tilted rectangles inside seven consecutive columns share a presentation.
+\end{lemma}
+
+\begin{proof}
+An optimum satisfies the conditions, the first by Theorem~\ref{thm:hidden}. Conversely, the word is axis-valid by Theorem~\ref{thm:equality}, and a hidden axis-aligned rectangle would be a four-cycle of $G_S$. With the first condition, two distinct rectangles with one presentation $P$ have $P\ne\emptyset$, and one is tilted. If the other is axis-aligned, each of its columns meets $P$, and so is a column of the tilted one, or has two black corners and is a double column, against the second condition. If both are tilted, they share a column $c$ meeting $P$. Each meets at most four consecutive columns, so both lie in columns $c-3$ to $c+3$, against the third condition.
+\end{proof}
+
+By Lemma~\ref{lem:rival} the second condition depends only on $F$ and the columns of the tilted rectangle. So an automaton remembering the last six columns and the pairs of $F$ used accepts exactly the optima with pair set $F$, whose generating function is rational~\cite[Section~V.5]{flajolet2009}.
+
+\begin{theorem}[the four-row generating function, computer-assisted]\label{thm:fourgfexact}
+There are coprime integer polynomials $P_4=26z^6-826z^7+\cdots$ of degree $444$ and $Q_4=\sum_{j=0}^{420}q_jz^j$ of degree $420$ with $q_0=1$ and $\sum_{m\ge6}a_4(m)z^m=P_4/Q_4$. The recurrence $\sum_jq_j\,a_4(n-j)=0$ holds for every $n\ge445$ and fails at $n=444$. Over the integers
+\[
+Q_4=(1-z)^2(1+z)^2\,g_5^3\,\tilde g_5^3\,g_6^3\,g_{11}^5\,g_{17}^3\,g_{19}^3\,g_{20}^5\,g_{21}^5,
+\]
+where $g_d$ and $\tilde g_d$ are irreducible of degree $d$ with constant term $1$.
+\end{theorem}
+
+\begin{proof}
+Two transfer counters, one checked against the automaton of Lemma~\ref{lem:fourmemory}, built from the definition~\cite{repo}, agree on $a_4(m)$ for $m\le1500$ and with Table~\ref{tab:values}. Berlekamp--Massey modulo eight primes gives $P_4$ and $Q_4$. For each $F$ the state vectors $v(n)=v(0)T_F^n$ satisfy $\sum_jq_jv(n_F-j)=0$ at $n_F=436$, $435$, and $445$, so powers of $T_F$ give the recurrence for $n\ge445$, and $\deg P_4=444$ forces its failure at $n=444$. SymPy factors $Q_4$.
+\end{proof}
+
+\begin{corollary}[growth, computer-assisted]\label{cor:fourgrowth}
+Let $\rho_4=3.351996777310\ldots$ be the largest real root of the irreducible polynomial $p(x)=x^{20}g_{20}(1/x)=x^{20}-4x^{19}+2x^{18}+\cdots-26x^2-4x+8$, and let $r=1/\rho_4$. There is a polynomial $B$ of degree $4$ with $a_4(m)=\rho_4^m B(m)+O((1000/341)^m)$, so $a_4(m)\sim c\,m^4\rho_4^m$ with $c\approx8.1611\times10^{-5}$.
+\end{corollary}
+
+\begin{proof}
+Exact root isolation for every factor of $Q_4$ shows that $r=0.29832\ldots$ is the only root of modulus at most $0.341$, simple in $g_{20}$ and so of order five in $Q_4$. As $P_4$ and $Q_4$ are coprime, $H(z)=P_4(z)(1-z/r)^5/Q_4(z)$ has $H(r)\ne0$. With $c_j=(-r)^{5-j}H^{(5-j)}(r)/(5-j)!$, the principal part of $P_4/Q_4$ at $r$ is $\sum_{j=1}^{5}c_j(1-z/r)^{-j}$, and the rest has coefficients $O((1000/341)^m)$. As $[z^m](1-z/r)^{-j}=\rho_4^m\binom{m+j-1}{j-1}$, we get $B(m)=\sum_{j=1}^{5}c_j\binom{m+j-1}{j-1}$ and $c=c_5/24$, which interval arithmetic evaluates.
+\end{proof}
