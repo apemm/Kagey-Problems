@@ -252,7 +252,7 @@ heavy cells. The scripts need numpy, scipy, mpmath and python-flint. Build the
 paper with `pdflatex problem131_memory.tex`, run three times so that the references settle, and
 then `pdflatex online_resource.tex` twice and the paper once more. The Code availability statement
 of the paper pins the supporting code, certificate records and Lean files to commit
-`db218c518a39a333d75bb8c9f6d16ada2b7f0c85`. Later edits to the text of the paper do not change
+`4825316506a2da03a5eb0fd93b52484a5942115b`. Later edits to the text of the paper do not change
 that pin, but a change to a script, a record or a Lean file would need a new checked commit. The arXiv
 version is `problem131_arxiv.tex`. Build it with `pdflatex problem131_arxiv.tex` three times. It
 gives the paper followed by Online Resource 1 in one PDF, with one bibliography and no `xr`.
