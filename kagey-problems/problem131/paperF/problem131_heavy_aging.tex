@@ -46,24 +46,25 @@ Consider a random walk on $\Z$ whose direction is an alternating renewal
 process started in equilibrium, with independent run lengths of tail
 $k^{-\alpha}$, $1<\alpha<2$. This is a lattice analogue of a L\'evy walk. We
 compare the probability of each end, $\pm N$, after $N$ steps with that of
-the center. Wang, Li and H\"anggi observed, as a heuristic for heat
+the center. Wang, Li and H\"anggi (2016) observed, as a heuristic for heat
 conduction, that the ends and the center decay at the same rate when $\alpha$
 is the golden ratio. We prove the lattice form of their observation, with its
 constant. Namely, the ends beat the center for large $N$ exactly when $\alpha$
 is below the golden ratio, and at the golden ratio the center still wins by a
-constant factor. We also study an aging walk (the coin-turning walk), which switches at step
+constant factor. The proof rests on a local limit theorem at the center, which
+holds for every first run that is finite almost surely. For runs of infinite
+mean we also prove a local form of Lamperti's law at the center. We also study an aging walk (the coin-turning walk), which switches at step
 $k$ with probability $c/k$. With a fixed first step, every interior position ties with
 the end exactly at $c=1$, for every $N$. The same holds for an aging walk with
 $d$ states, whose vector of counts is exactly uniform at the tie.
 \end{abstract}
 
 \medskip
-\noindent\textbf{Keywords.} L\'evy walk, alternating renewal process, heavy
-tails, local limit theorem, golden ratio, persistent random walk, aging
-random walk, coin-turning walk, P\'olya urn.
+\noindent\textbf{Keywords.} L\'evy walk, alternating renewal process, local
+limit theorem, persistent random walk, coin-turning walk, P\'olya urn.
 
-\noindent\textbf{Mathematics Subject Classification (2020).} 60G50, 60K05,
-60F05, 60J10, 60C05, 82C41, 82C70.
+\noindent\textbf{Mathematics Subject Classification (2020).} Primary 60G50,
+60K05. Secondary 60F05, 60J10, 60C05, 82C41, 82C70.
 
 \input{sec_intro.tex}
 \input{sec_heavy.tex}
@@ -82,182 +83,254 @@ responsibility.
 \input{app_heavy.tex}
 \input{app_aging.tex}
 
-\section*{Statements and declarations}
+\section*{Statements and Declarations}
+\paragraph{Funding.} No funding was received for this work.
+
 \paragraph{Competing interests.} The author has no competing interests to
 declare.
 
-\paragraph{Funding.} No funding was received for this work.
+\paragraph{Ethics approval and consent.} Not applicable.
 
-\paragraph{Data and code availability.} All code, data and Lean files supporting this
-paper are in the folder \nolinkurl{kagey-problems/problem131} of
-\url{https://github.com/apemm/Kagey-Problems}, at the release
-\nolinkurl{paperF-arxiv-v1}. To rerun the checks, run
+% TODO(author): the release tag paperF-arxiv-v1 named below does not exist yet.
+% Create it at submission (a Zenodo DOI for it is recommended), save fresh quick
+% and full outputs of the checks under the current numbering in paperF/data/,
+% and then cite the tag (and the DOI) here.
+\paragraph{Data availability.} This paper uses no external data. The data
+computed for it (the cached data of Figure~\ref{fig:heavy} and the
+prediction ledgers) are in the folder \nolinkurl{kagey-problems/problem131/paperF}
+of \url{https://github.com/apemm/Kagey-Problems}, at the release
+\nolinkurl{paperF-arxiv-v1}.
+
+{\sloppy
+\paragraph{Code availability.} All code and Lean files supporting this
+paper are in the folder \nolinkurl{kagey-problems/problem131} of the same
+repository, at the same release. To rerun the checks, run
 \texttt{python -B verify\_all.py -{}-paper f} in that folder, which takes
-a few minutes. The scripts are in the subfolder \nolinkurl{paperF} and need
-\texttt{numpy}, \texttt{scipy} and \texttt{mpmath}.
+a few minutes. With the option \texttt{-{}-full} it also runs the heavy cells
+(among them the formula of Proposition~\ref{prop:tworenewal} at $N=10^5$), and
+it then takes about twenty minutes. The scripts are in the subfolder
+\nolinkurl{paperF} and need \texttt{numpy}, \texttt{scipy} and \texttt{mpmath}.
+Figure~\ref{fig:heavy} is made by \nolinkurl{paperD/figures/make_figures.py}
+and Figure~\ref{fig:aging} by \nolinkurl{paperF/figures/make_aging_figure.py}.
 The file \nolinkurl{SUPPLEMENT.md} says what each script checks and where to
 find the predictions that we wrote down before each computation.
 Section~\ref{sec:verify} describes the checks.
+\par}
 
 \begin{thebibliography}{99}\small\setlength{\baselineskip}{11pt}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}
 
 \bibitem{kagey131}
-P.~Kagey, \emph{Problem 131}, Open Problem Collection,
-\url{https://peterkagey.com/problems/131/} (accessed October 2026).
+Kagey, P.: Problem 131. Open Problem Collection.
+\url{https://peterkagey.com/problems/131/}. Accessed October 2026
 
 \bibitem{paperA}
-A.~Pemmasani, \emph{Uniform Bessel bounds for magnetization crossings in
-finite Ising chains}, preprint, 2026, \url{https://arxiv.org/abs/2610.06935}.
+Pemmasani, A.: Uniform Bessel bounds for magnetization crossings in finite
+Ising chains. Preprint at \url{https://arxiv.org/abs/2610.06935} (2026)
 
 \bibitem{paperB}
-A.~Pemmasani, \emph{Vertex crossings in a symmetric Markov multinomial
-model}, preprint, 2026, \url{https://arxiv.org/abs/2610.09258}.
+Pemmasani, A.: Vertex crossings in a symmetric Markov multinomial model.
+Preprint at \url{https://arxiv.org/abs/2610.09258} (2026)
 
+% TODO(author): Paper D is not public yet. Post it on arXiv before F is
+% submitted and add its arXiv number here, or drop this entry and mention D in
+% the text only. The proof of Proposition 3.3(b) does not use D.
 \bibitem{paperD}
-A.~Pemmasani, \emph{The center and the ends of the elephant random walk with rare
-reversals}, in preparation.
+Pemmasani, A.: The center and the ends of the elephant random walk with rare
+reversals. In preparation
 
 \bibitem{glrs2025}
-H.~Gu\'erin, L.~Laulin, K.~Raschel and T.~Simon, \emph{On the limit law of
-the superdiffusive elephant random walk}, Electron.\ J.\ Probab.\
-\textbf{30} (2025), 1--25. \href{https://doi.org/10.1214/25-EJP1362}{doi:10.1214/25-EJP1362}.
+Gu\'erin, H., Laulin, L., Raschel, K., Simon, T.: On the limit law of the
+superdiffusive elephant random walk. Electron. J. Probab. \textbf{30}, 102
+(2025). \url{https://doi.org/10.1214/25-EJP1362}
 
 \bibitem{tv2026}
-H.~Trinas and G.~Valle, \emph{A superdiffusive local limit theorem for the
-elephant random walk and the breakdown of log-concavity}, preprint, 2026,
-\href{https://arxiv.org/abs/2609.14753}{arXiv:2609.14753}.
+Trinas, H., Valle, G.: A superdiffusive local limit theorem for the elephant
+random walk and the breakdown of log-concavity. Preprint at
+\url{https://arxiv.org/abs/2609.14753} (2026)
 
 \bibitem{godrecheluck2001}
-C.~Godr\`eche and J.~M.~Luck, \emph{Statistics of the occupation time of
-renewal processes}, J.\ Stat.\ Phys.\ \textbf{104} (2001), 489--524.
-\href{https://doi.org/10.1023/A:1010364003250}{doi:10.1023/A:1010364003250}.
+Godr\`eche, C., Luck, J.M.: Statistics of the occupation time of renewal
+processes. J. Stat. Phys. \textbf{104}(3--4), 489--524 (2001).
+\url{https://doi.org/10.1023/A:1010364003250}. Section and equation numbers
+refer to arXiv:cond-mat/0010428v1
 
 \bibitem{lamperti1958}
-J.~Lamperti, \emph{An occupation time theorem for a class of stochastic
-processes}, Trans.\ Amer.\ Math.\ Soc.\ \textbf{88} (1958), 380--387.
-\href{https://doi.org/10.1090/S0002-9947-1958-0094863-X}{doi:10.1090/S0002-9947-1958-0094863-X}.
+Lamperti, J.: An occupation time theorem for a class of stochastic processes.
+Trans. Am. Math. Soc. \textbf{88}(2), 380--387 (1958).
+\url{https://doi.org/10.1090/S0002-9947-1958-0094863-X}
 
 \bibitem{dzh2012}
-S.~Denisov, V.~Zaburdaev and P.~H\"anggi, \emph{L\'evy walks with velocity
-fluctuations}, Phys.~Rev.~E \textbf{85} (2012), 031148.
-\href{https://doi.org/10.1103/PhysRevE.85.031148}{doi:10.1103/PhysRevE.85.031148}.
+Denisov, S., Zaburdaev, V., H\"anggi, P.: L\'evy walks with velocity
+fluctuations. Phys. Rev. E \textbf{85}(3), 031148 (2012).
+\url{https://doi.org/10.1103/PhysRevE.85.031148}
 
 \bibitem{zdk2015}
-V.~Zaburdaev, S.~Denisov and J.~Klafter, \emph{L\'evy walks}, Rev.\ Mod.\
-Phys.\ \textbf{87} (2015), 483--530.
-\href{https://doi.org/10.1103/RevModPhys.87.483}{doi:10.1103/RevModPhys.87.483}.
+Zaburdaev, V., Denisov, S., Klafter, J.: L\'evy walks. Rev. Mod. Phys.
+\textbf{87}(2), 483--530 (2015).
+\url{https://doi.org/10.1103/RevModPhys.87.483}
 
 \bibitem{dsd2013}
-A.~Dhar, K.~Saito and B.~Derrida, \emph{Exact solution of a L\'evy walk model
-for anomalous heat transport}, Phys.\ Rev.\ E \textbf{87} (2013),
-010103(R). \href{https://doi.org/10.1103/PhysRevE.87.010103}{doi:10.1103/PhysRevE.87.010103}.
+Dhar, A., Saito, K., Derrida, B.: Exact solution of a L\'evy walk model for
+anomalous heat transport. Phys. Rev. E \textbf{87}(1), 010103(R) (2013).
+\url{https://doi.org/10.1103/PhysRevE.87.010103}
 
 \bibitem{cdp2005}
-P.~Cipriani, S.~Denisov and A.~Politi, \emph{From anomalous energy diffusion
-to L\'evy walks and heat conductivity in one-dimensional systems}, Phys.\
-Rev.\ Lett.\ \textbf{94} (2005), 244301.
-\href{https://doi.org/10.1103/PhysRevLett.94.244301}{doi:10.1103/PhysRevLett.94.244301}.
+Cipriani, P., Denisov, S., Politi, A.: From anomalous energy diffusion to
+L\'evy walks and heat conductivity in one-dimensional systems. Phys. Rev.
+Lett. \textbf{94}(24), 244301 (2005).
+\url{https://doi.org/10.1103/PhysRevLett.94.244301}
 
 \bibitem{zdh2011}
-V.~Zaburdaev, S.~Denisov and P.~H\"anggi, \emph{Perturbation spreading in
-many-particle systems: a random walk approach}, Phys.\ Rev.\ Lett.\
-\textbf{106} (2011), 180601.
-\href{https://doi.org/10.1103/PhysRevLett.106.180601}{doi:10.1103/PhysRevLett.106.180601}.
+Zaburdaev, V., Denisov, S., H\"anggi, P.: Perturbation spreading in
+many-particle systems: a random walk approach. Phys. Rev. Lett.
+\textbf{106}(18), 180601 (2011).
+\url{https://doi.org/10.1103/PhysRevLett.106.180601}
 
 \bibitem{fsbz2015}
-D.~Froemberg, M.~Schmiedeberg, E.~Barkai and V.~Zaburdaev, \emph{Asymptotic
-densities of ballistic L\'evy walks}, Phys.\ Rev.\ E \textbf{91} (2015),
-022131. \href{https://doi.org/10.1103/PhysRevE.91.022131}{doi:10.1103/PhysRevE.91.022131}.
+Froemberg, D., Schmiedeberg, M., Barkai, E., Zaburdaev, V.: Asymptotic
+densities of ballistic L\'evy walks. Phys. Rev. E \textbf{91}(2), 022131
+(2015). \url{https://doi.org/10.1103/PhysRevE.91.022131}
 
 \bibitem{wlh2016}
-L.~Wang, N.~Li and P.~H\"anggi, \emph{Simulation of heat transport in
-low-dimensional oscillator lattices}, in: S.~Lepri (ed.), \emph{Thermal
-Transport in Low Dimensions}, Lecture Notes in Physics \textbf{921},
-Springer, Cham, 2016, pp.~239--274.
-\href{https://doi.org/10.1007/978-3-319-29261-8_6}{doi:10.1007/978-3-319-29261-8\_6}.
+Wang, L., Li, N., H\"anggi, P.: Simulation of heat transport in
+low-dimensional oscillator lattices. In: Lepri, S. (ed.) Thermal Transport in
+Low Dimensions. Lecture Notes in Physics, vol. 921, pp. 239--274. Springer,
+Cham (2016). \url{https://doi.org/10.1007/978-3-319-29261-8_6}
 
 \bibitem{ldng2005}
-G.~R.~Lee-Dadswell, B.~G.~Nickel and C.~G.~Gray, \emph{Thermal conductivity
-and bulk viscosity in quartic oscillator chains}, Phys.\ Rev.\ E \textbf{72}
-(2005), 031202.
-\href{https://doi.org/10.1103/PhysRevE.72.031202}{doi:10.1103/PhysRevE.72.031202}.
+Lee-Dadswell, G.R., Nickel, B.G., Gray, C.G.: Thermal conductivity and bulk
+viscosity in quartic oscillator chains. Phys. Rev. E \textbf{72}(3), 031202
+(2005). \url{https://doi.org/10.1103/PhysRevE.72.031202}
 
 \bibitem{ibragimovlinnik1971}
-I.~A.~Ibragimov and Yu.~V.~Linnik, \emph{Independent and Stationary
-Sequences of Random Variables}, Wolters-Noordhoff, Groningen, 1971.
+Ibragimov, I.A., Linnik, Yu.V.: Independent and Stationary Sequences of
+Random Variables. Edited by J.F.C. Kingman. Wolters-Noordhoff, Groningen
+(1971)
 
 \bibitem{doney1997}
-R.~A.~Doney, \emph{One-sided local large deviation and renewal theorems in
-the case of infinite mean}, Probab.\ Theory Relat.\ Fields \textbf{107}
-(1997), 451--465.
-\href{https://doi.org/10.1007/s004400050093}{doi:10.1007/s004400050093}.
+Doney, R.A.: One-sided local large deviation and renewal theorems in the case
+of infinite mean. Probab. Theory Relat. Fields \textbf{107}(4), 451--465
+(1997). \url{https://doi.org/10.1007/s004400050093}
 
 \bibitem{dds2008}
-D.~Denisov, A.~B.~Dieker and V.~Shneer, \emph{Large deviations for random
-walks under subexponentiality: the big-jump domain}, Ann.\ Probab.\
-\textbf{36} (2008), 1946--1991.
-\href{https://doi.org/10.1214/07-AOP382}{doi:10.1214/07-AOP382}.
+Denisov, D., Dieker, A.B., Shneer, V.: Large deviations for random walks under
+subexponentiality: the big-jump domain. Ann. Probab. \textbf{36}(5),
+1946--1991 (2008). \url{https://doi.org/10.1214/07-AOP382}
 
 \bibitem{feller1971}
-W.~Feller, \emph{An Introduction to Probability Theory and Its
-Applications}, Vol.~II, 2nd ed., Wiley, New York, 1971.
+Feller, W.: An Introduction to Probability Theory and Its Applications,
+vol.~II, 2nd edn. Wiley, New York (1971)
 
 \bibitem{zolotarev1986}
-V.~M.~Zolotarev, \emph{One-Dimensional Stable Distributions}, Transl.\
-Math.\ Monogr.\ \textbf{65}, Amer.\ Math.\ Soc., Providence, RI, 1986.
-\href{https://doi.org/10.1090/mmono/065}{doi:10.1090/mmono/065}.
+Zolotarev, V.M.: One-Dimensional Stable Distributions. Translations of
+Mathematical Monographs, vol. 65. American Mathematical Society, Providence,
+RI (1986). \url{https://doi.org/10.1090/mmono/065}
 
 \bibitem{dlmf}
-F.~W.~J.~Olver et al.\ (eds.), \emph{NIST Digital Library of Mathematical
-Functions},
-Section~5.4(iii) and Eqs.~5.4.12, 5.4.14, 5.5.3, 5.6.4, 5.15.5 and~25.12.12, \url{https://dlmf.nist.gov}.
+Olver, F.W.J., et al. (eds.): NIST Digital Library of Mathematical Functions.
+Section~5.4(iii) and Eqs.~5.4.12, 5.4.14, 5.5.3, 5.6.4, 5.15.5 and~25.12.12.
+\url{https://dlmf.nist.gov}
 
 \bibitem{ds2007}
-Z.~Dietz and S.~Sethuraman, \emph{Occupation laws for some
-time-nonhomogeneous Markov chains}, Electron.\ J.\ Probab.\ \textbf{12}
-(2007), 661--683. \href{https://doi.org/10.1214/EJP.v12-413}{doi:10.1214/EJP.v12-413}.
+Dietz, Z., Sethuraman, S.: Occupation laws for some time-nonhomogeneous
+Markov chains. Electron. J. Probab. \textbf{12}, 661--683 (2007).
+\url{https://doi.org/10.1214/EJP.v12-413}. Example and theorem numbers refer
+to arXiv:math/0701798v1
 
 \bibitem{ev2018}
-J.~Engl\"ander and S.~Volkov, \emph{Turning a coin over instead of tossing
-it}, J.\ Theoret.\ Probab.\ \textbf{31} (2018), 1097--1118.
-\href{https://doi.org/10.1007/s10959-016-0725-1}{doi:10.1007/s10959-016-0725-1}.
+Engl\"ander, J., Volkov, S.: Turning a coin over instead of tossing it. J.
+Theor. Probab. \textbf{31}(2), 1097--1118 (2018).
+\url{https://doi.org/10.1007/s10959-016-0725-1}
 
 \bibitem{abt2003}
-R.~Arratia, A.~D.~Barbour and S.~Tavar\'e, \emph{Logarithmic Combinatorial
-Structures: A Probabilistic Approach}, EMS Monographs in Mathematics, European
-Mathematical Society, Z\"urich, 2003.
+Arratia, R., Barbour, A.D., Tavar\'e, S.: Logarithmic Combinatorial
+Structures: A Probabilistic Approach. EMS Monographs in Mathematics. European
+Mathematical Society, Z\"urich (2003). \url{https://doi.org/10.4171/000}
 
 \bibitem{bc2018}
-F.~Bouguet and B.~Cloez, \emph{Fluctuations of the empirical measure of
-freezing Markov chains}, Electron.~J.~Probab. \textbf{23} (2018), 1--31.
-\href{https://doi.org/10.1214/17-EJP130}{doi:10.1214/17-EJP130}.
+Bouguet, F., Cloez, B.: Fluctuations of the empirical measure of freezing
+Markov chains. Electron. J. Probab. \textbf{23}, 2 (2018).
+\url{https://doi.org/10.1214/17-EJP130}. Proposition numbers refer to
+arXiv:1705.02121v1
 
 \bibitem{dls2023}
-Z.~Dietz, W.~Lippitt and S.~Sethuraman, \emph{Stick-breaking processes,
-clumping, and Markov chain occupation laws}, Sankhy\=a A \textbf{85} (2023),
-129--171. \href{https://doi.org/10.1007/s13171-020-00236-x}{doi:10.1007/s13171-020-00236-x}.
-Theorem numbers refer to arXiv:1901.08135v1.
+Dietz, Z., Lippitt, W., Sethuraman, S.: Stick-breaking processes, clumping,
+and Markov chain occupation laws. Sankhy\=a A \textbf{85}(1), 129--171
+(2023). \url{https://doi.org/10.1007/s13171-020-00236-x}. Theorem numbers
+refer to arXiv:1901.08135v1
 
 \bibitem{rdhb2014}
-A.~Rebenshtok, S.~Denisov, P.~H\"anggi and E.~Barkai, \emph{Non-normalizable
-densities in strong anomalous diffusion: beyond the central limit theorem},
-Phys.\ Rev.\ Lett.\ \textbf{112} (2014), 110601.
-\href{https://doi.org/10.1103/PhysRevLett.112.110601}{doi:10.1103/PhysRevLett.112.110601}.
+Rebenshtok, A., Denisov, S., H\"anggi, P., Barkai, E.: Non-normalizable
+densities in strong anomalous diffusion: beyond the central limit theorem.
+Phys. Rev. Lett. \textbf{112}(11), 110601 (2014).
+\url{https://doi.org/10.1103/PhysRevLett.112.110601}
+
+\bibitem{rdhb2014b}
+Rebenshtok, A., Denisov, S., H\"anggi, P., Barkai, E.: Infinite densities for
+L\'evy walks. Phys. Rev. E \textbf{90}(6), 062135 (2014).
+\url{https://doi.org/10.1103/PhysRevE.90.062135}
 
 \bibitem{ev2022}
-J.~Engl\"ander and S.~Volkov, \emph{Conservative random walk},
-Electron.~J.~Probab. \textbf{27} (2022), paper no.~138, 1--29.
-\href{https://doi.org/10.1214/22-EJP863}{doi:10.1214/22-EJP863}.
+Engl\"ander, J., Volkov, S.: Conservative random walk. Electron. J. Probab.
+\textbf{27}, 138 (2022). \url{https://doi.org/10.1214/22-EJP863}
 
+% AUTHOR CHECK: the chapter, section, claim, theorem, definition, lemma and
+% example numbers of this book are cited from the draft of March 18, 2024.
+% Check them against the published book.
 \bibitem{ev2024}
-J.~Engl\"ander and S.~Volkov, \emph{Coin-Turning, Random Walks and
-Inhomogeneous Markov Chains}, World Scientific, Singapore, 2025.
-\href{https://doi.org/10.1142/13837}{doi:10.1142/13837}.
+Engl\"ander, J., Volkov, S.: Coin-Turning, Random Walks and Inhomogeneous
+Markov Chains. World Scientific, Singapore (2025).
+\url{https://doi.org/10.1142/13837}
 
 \bibitem{evw2020}
-J.~Engl\"ander, S.~Volkov and Z.~Wang, \emph{The coin-turning walk and its
-scaling limit}, Electron.\ J.\ Probab.\ \textbf{25} (2020), paper no.~3,
-1--38. \href{https://doi.org/10.1214/19-EJP406}{doi:10.1214/19-EJP406}.
+Engl\"ander, J., Volkov, S., Wang, Z.: The coin-turning walk and its scaling
+limit. Electron. J. Probab. \textbf{25}, 3 (2020).
+\url{https://doi.org/10.1214/19-EJP406}
+
+\bibitem{clnlo2018}
+C\'enac, P., Le~Ny, A., de~Loynes, B., Offret, Y.: Persistent random walks.
+I. Recurrence versus transience. J. Theor. Probab. \textbf{31}(1), 232--243
+(2018). \url{https://doi.org/10.1007/s10959-016-0714-4}
+
+\bibitem{clnlo2019}
+C\'enac, P., Le~Ny, A., de~Loynes, B., Offret, Y.: Persistent random walks.
+II. Functional scaling limits. J. Theor. Probab. \textbf{32}(2), 633--658
+(2019). \url{https://doi.org/10.1007/s10959-018-0852-y}. Theorem and
+equation numbers refer to arXiv:1612.00238v1
+
+\bibitem{mmw1996}
+Mauldin, R.D., Monticino, M., von Weizs\"acker, H.: Directionally reinforced
+random walks. Adv. Math. \textbf{117}(2), 239--252 (1996).
+\url{https://doi.org/10.1006/aima.1996.0011}
+
+\bibitem{horvathshao1998}
+Horv\'ath, L., Shao, Q.-M.: Limit distributions of directionally reinforced
+random walks. Adv. Math. \textbf{134}(2), 367--383 (1998).
+\url{https://doi.org/10.1006/aima.1997.1707}
+
+\bibitem{mssz2015}
+Magdziarz, M., Scheffler, H.P., Straka, P., \.Zebrowski, P.: Limit theorems
+and governing equations for L\'evy walks. Stoch. Process. Appl.
+\textbf{125}(11), 4021--4038 (2015).
+\url{https://doi.org/10.1016/j.spa.2015.05.014}
+
+\bibitem{kac1974}
+Kac, M.: A stochastic model related to the telegrapher's equation. Rocky Mt.
+J. Math. \textbf{4}(3), 497--510 (1974).
+\url{https://doi.org/10.1216/RMJ-1974-4-3-497}
+
+\bibitem{renshawhenderson1981}
+Renshaw, E., Henderson, R.: The correlated random walk. J. Appl. Probab.
+\textbf{18}(2), 403--414 (1981). \url{https://doi.org/10.2307/3213286}
+
+\bibitem{prr2026}
+Pradhan, A., Roy, R., Ray, P.: Diffusive-to-ballistic transition in a
+persistent random walk. Preprint at \url{https://arxiv.org/abs/2605.20116}
+(2026)
+
+\bibitem{widder1941}
+Widder, D.V.: The Laplace Transform. Princeton Mathematical Series, vol.~6.
+Princeton University Press, Princeton (1941)
 
 \end{thebibliography}
 

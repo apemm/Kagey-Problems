@@ -27,7 +27,7 @@ end. The first step is fair unless we say otherwise.
 
 ## What is proved
 
-The statement numbers are those of the build of October 15, 2026. Before the split the statements of
+The statement numbers are those of the build of October 18, 2026. Before the split the statements of
 Section 2 were numbered 4.x in Paper D and those of Section 3 were numbered 5.x, and the Lean files,
 the ledgers and the recorded outputs still use the old numbers.
 
@@ -60,7 +60,9 @@ The aging walk (switch at step k >= 2 with probability c/k), in its own section,
 - A chain that at each step draws a fresh uniform state or repeats its last state has counts with
   exactly the law of Pólya's urn with d colors, for every weight theta (Proposition 3.1). The
   count law alone follows from Dietz, Lippitt and Sethuraman (Sankhya A 2023, Theorem 2.18 of
-  arXiv:1901.08135); the joint law with the last state, which gives the ties, is what the paper adds.
+  arXiv:1901.08135). For d = 2 and an integer theta the joint law with the last state is Theorem 7.2
+  of Engländer and Volkov's book (number from the draft of March 2024, to be checked against the
+  published book). The paper adds the joint law for d >= 3 or a theta that is not an integer.
   Section 3 now starts with this proposition, and Proposition 3.3(a) and Theorem 3.4(a) follow from it.
 - With a fair first step each interior bin is twice as likely as an end at c = 1, and its crossing
   is unique and below 1 (Proposition 3.6). For the center,
@@ -77,12 +79,15 @@ row alpha = 1 of Table 2 is a heuristic.
 
 - For heavy tails, a rate in Theorem 2.4, monotonicity of E_N/C_N and uniqueness of the crossover
   size (Remark 2.7), the case alpha = 1 (Remark 2.10), and the full profile of the law.
-- Whether the joint law of Proposition 3.1 is already in the urn chapter of Engländer and Volkov's
-  2024 book. We have not seen that chapter.
+- The paper credits Engländer and Volkov's book (World Scientific 2025) with Claim 7.1, Theorem 7.2,
+  Definition 7.1, Lemma 7.1, Example 7.1 and Section 5.7, in the numbering of a draft of March 2024.
+  Check these against the published book. The comments `% AUTHOR CHECK` in the source mark each place.
 
 ## Prior work
 
-For heavy tails, both scalings are in Godrèche and Luck (2001), and Wang, Li and Hänggi (2016)
+For heavy tails, both scalings are in Godrèche and Luck (2001), who also give the constant of the
+center by a formal argument. Cénac, Le Ny, de Loynes and Offret (J. Theor. Probab. 2018 and 2019)
+prove the functional scaling limits of this walk, and Wang, Li and Hänggi (2016)
 already noted the golden ratio as a heuristic for Lévy walks. The Beta limit of the aging walk is due
 to Dietz and Sethuraman (2007) and to Engländer and Volkov (2018).
 

@@ -9,7 +9,10 @@ $\xi$, where
 \]
 for some $\alpha>0$. So $\Prob(\xi=k)=k^{-\alpha}-(k+1)^{-\alpha}>0$ for every
 $k\ge1$. The first direction is fair, and $D$, $(\xi_i)$ and the first
-direction are independent. With a fresh start $D$ has the law of $\xi$. For
+direction are independent. In probability theory this is the one-dimensional
+directionally reinforced random walk~\cite{mmw1996,horvathshao1998}, and a
+persistent random walk in the sense of~\cite{clnlo2018,clnlo2019}. In physics
+it is a lattice L\'evy walk. With a fresh start $D$ has the law of $\xi$. For
 $\alpha>1$ the stationary start is $\Prob(D=\ell)=\bar F(\ell)/\mu$, where
 $\mu=\E\xi=\zeta(\alpha)$. This law is stationary in the following sense. The
 number of steps left in the current run, counting the current one, is a Markov
@@ -21,7 +24,7 @@ Section~\ref{sec:notation}, and put $R_N=E_N/C_N$. In this section the constants
 $O(\cdot)$ may depend on $\alpha$.
 
 \begin{proposition}[the end]\label{prop:edge}
-For every law of $D$, $E_N=\frac12\Prob(D\ge N)$. With a fresh start
+For every law of $D$ and every $N\ge1$, $E_N=\frac12\Prob(D\ge N)$. With a fresh start
 $E_N=\frac12N^{-\alpha}$. With the stationary start
 \[
  E_N=\frac{\zeta(\alpha,N)}{2\zeta(\alpha)}
@@ -107,9 +110,10 @@ $C_N=\frac12[\Prob_+(A_N=h)+\Prob_+(A_N=N-h)]=\Prob_+(A_N=h)$. With a fresh
 start $u^D_m=u_m$ and $q^D_m=q_m$, which gives the last formula.
 \end{proof}
 
-This identity is the coefficient form of the double transform of Godr\`eche
+For a fresh start this identity is the coefficient form of the double transform of Godr\`eche
 and Luck~\cite[Section~7]{godrecheluck2001} for the occupation time of an
-alternating renewal process. To evaluate it we need the stable limit of
+alternating renewal process. A general first run only changes the factors
+$u^D_m$ and $q^D_{m+1}$. To evaluate it we need the stable limit of
 $\tau_m$ and its local form.
 
 \begin{lemma}[stable and local limits]\label{lem:stable}
@@ -122,7 +126,9 @@ as $\theta\to0$, with the principal branch.
 \item $(\tau_m-m\mu)/a_m$ converges in law to a variable $G$ with
 $\E e^{-sG}=e^{K_\alpha s^\alpha}$ for $s\ge0$ and
 $\E e^{i\theta G}=\exp(K_\alpha(-i\theta)^\alpha)$. The law of $G$ is totally
-skewed to the right and has a bounded, uniformly continuous density $g$ with
+skewed to the right (skewness $\beta=1$ and scale
+$(K_\alpha\lvert\cos\frac{\pi\alpha}2\rvert)^{1/\alpha}$ in the usual
+parametrization) and has a bounded, uniformly continuous density $g$ with
 $g(z)\to0$ as $\lvert z\rvert\to\infty$.
 \item (Gnedenko) The constant $\bar u:=\sup_{m\ge1}\sup_ka_mu_m(k)$ is
 finite, and $a_mu_m(k)-g((k-m\mu)/a_m)\to0$ uniformly in $k$ as
@@ -170,9 +176,13 @@ $0$, so by L\'evy's continuity theorem it is the characteristic function of a
 variable $G$, and $Z_m$ converges in law to $G$. It is integrable, so by
 Fourier inversion $G$ has a bounded, uniformly continuous density $g$, and
 $g$ vanishes at infinity by the Riemann--Lebesgue lemma (the domain of
-attraction also follows from~\cite[Section~XVII.5]{feller1971}). A stable
-law with this characteristic function is the one called totally skewed to
-the right.
+attraction also follows from~\cite[Section~XVII.5]{feller1971}). Since
+$\cos\frac{\pi\alpha}2<0$, we can write
+$K_\alpha(-i\theta)^\alpha=-K_\alpha\lvert\cos\frac{\pi\alpha}2\rvert\,
+\lvert\theta\rvert^\alpha\bigl(1-i\operatorname{sign}(\theta)\tan\frac{\pi\alpha}2\bigr)$.
+So in the usual parametrization of stable laws $G$ has skewness $\beta=1$ and
+scale $(K_\alpha\lvert\cos\frac{\pi\alpha}2\rvert)^{1/\alpha}$, and this is
+what totally skewed to the right means.
 
 For the Laplace transform let $s>0$ be real and take $v=s/a_m$ in the
 expansion above. In the same way
@@ -215,7 +225,12 @@ either start. As $N\to\infty$ over even $N$,
 \end{theorem}
 
 In words, the center decays like $N^{-1/\alpha}$, and the first run does not
-affect the leading term.
+affect the leading term. The constant agrees with the formal prediction of
+Godr\`eche and Luck~\cite[Eqs.~(7.12) to~(7.15)]{godrecheluck2001}, who work in
+continuous time with a start at a renewal. Their stable law for the occupation
+time, read at the center with lattice spacing two, gives the constant above.
+The theorem is a local form, at the center, of the marginal of the functional
+limit of C\'enac et al.~\cite[Theorem~3.2]{clnlo2019}.
 
 \paragraph{Idea of the proof.}
 By Proposition~\ref{prop:tworenewal} the walk ends in the center when, for
@@ -325,9 +340,9 @@ $C(\varphi)\le\pi\varphi(\sqrt3\varphi^3/2)^{1/\varphi}/(4\cdot0.8856\,(\varphi+
 \end{proof}
 
 Corollary~\ref{cor:golden} is the lattice form, with its constant, of the
-heuristic of~\cite[Section~6.2.1]{wlh2016}. The approach to $C(\varphi)$ is
+heuristic of~\cite[Section~6.2.1.3, Eq.~(6.49)]{wlh2016}. The approach to $C(\varphi)$ is
 slow. At $\alpha=\varphi$ we have $R_{10^5}/C(\varphi)=0.938$, and $R_N$
-increases on the computed grid (Table~\ref{tab:heavy} and
+increases at every even $N$ from $10$ to $10^5$ (Table~\ref{tab:heavy} and
 Figure~\ref{fig:heavy}).
 
 The golden ratio also appears for the elephant random walk with first step
@@ -340,17 +355,20 @@ $N$~\cite[Theorem~4.4]{tv2026}. We know of no connection.
 \begin{remark}[broadened side peaks]\label{rem:humps}
 The end bins correspond to the ballistic side peaks of the standard L\'evy
 walk, in which every flight has the same speed. These peaks are
-$\delta$-functions whose weight decays like $t^{1-\gamma}$ for the
-equilibrated start~\cite[Table~I]{dzh2012}, with $\gamma$ in the role of $\alpha$, while the central
-peak has height of order $t^{-1/\gamma}$~\cite[Section~6.2.1]{wlh2016}. With
+$\delta$-functions whose weight decays like $t^{1-\alpha}$ for the
+equilibrated start~\cite[Table~I]{dzh2012}, with the tail exponent of the
+flight times in the role of $\alpha$, while the central
+peak has height of order $t^{-1/\alpha}$~\cite[Section~6.2.1.3, Eq.~(6.49)]{wlh2016}. With
 velocity fluctuations the side peaks broaden into humps. If the speed is
 redrawn at each collision, the humps have width of order $t$ and height of
-order $t^{-\gamma}$, and if it fluctuates during each flight, they have width
+order $t^{-\alpha}$, and if it fluctuates during each flight, they have width
 of order $t^{1/2}$ and height of order
-$t^{1/2-\gamma}$~\cite[Table~I]{dzh2012}. Matching these heights with
-$t^{-1/\gamma}$ gives $\gamma=1$ in the first case, so the center wins for
-every $1<\gamma<2$, and in the second case the root
-$\gamma=(1+\sqrt{17})/4=1.28\ldots$ of $\gamma^2-\gamma/2-1=0$. So the golden
+$t^{1/2-\alpha}$~\cite[Table~I]{dzh2012}. Matching these heights with
+$t^{-1/\alpha}$ gives $\alpha=1$ in the first case, so the center wins for
+every $1<\alpha<2$, and in the second case the root
+$\alpha=(1+\sqrt{17})/4=1.28\ldots$ of $\alpha^2-\alpha/2-1=0$. So in the
+second case the side humps are higher than the central peak exactly when
+$\alpha<(1+\sqrt{17})/4$. The golden
 ratio belongs to the unbroadened peaks, which our lattice walk has.
 \end{remark}
 
@@ -458,8 +476,11 @@ Hence $R_N\sim\frac{\pi}{4\tan(\pi\alpha/2)}N^{1-\alpha}\to\infty$.
 In words, for $\alpha<1$ the center is an ordinary bin of size about $1/N$,
 while the end has the much larger probability $\frac12N^{-\alpha}$ that the
 first run goes right and lasts all $N$ steps. So the ends win for every $\alpha<1$.
-For the continuum L\'evy walk with $0<\gamma<1$, the ballistic regime,
-Froemberg et al.~\cite{fsbz2015} find the asymptotic densities.
+For the continuum L\'evy walk with $0<\alpha<1$, the ballistic regime,
+Froemberg et al.~\cite{fsbz2015} find the asymptotic densities. For our walk
+the integral form of the theorem is the arcsine Lamperti marginal of the
+scaling limit of C\'enac et al.~\cite[Theorem~3.3 and Eq.~(3.25)]{clnlo2019},
+and the theorem is its local form at the center.
 
 \paragraph{Idea of the proof.}
 Now $\tau_m$ is of order $a_m=m^{1/\alpha}$ with no centering, and $\tau_m/a_m$

@@ -8,11 +8,13 @@ the numbers S1.1 and so on). The later tables cite the statement labels of the
 the number in Paper D before the split of October 13, 2026, and the note at the end says how these
 numbers moved.
 
-The Lean library is `PaperD`: the root `PaperD.lean` and 216 modules in `PaperD/`, so 217 modules
+The Lean library is `PaperD`: the root `PaperD.lean` and 275 modules in `PaperD/`, so 276 modules
 in all, in namespace `Kagey131.PaperD` (tracks T2 and T8 in `Kagey131.PaperD.RRT`, track T5 in
 `Kagey131.PaperD.T5`, track T7 in `Kagey131.PaperD.T7`, tracks U1, U2, U4 in
 `Kagey131.PaperD.U1`, `Kagey131.PaperD.U2`, `Kagey131.PaperD.U4`, and the copy of
-Proposition 3.25(b) of track U5 in `Kagey131.PaperD.U5`, track U6 in `Kagey131.PaperD.U6`). It is built against Lean 4 v4.33.1 and
+Proposition 3.25(b) of track U5 in `Kagey131.PaperD.U5`, track U6 in `Kagey131.PaperD.U6`, and the Paper F tracks FL1, FL2 in `Kagey131.PaperF.FL1`,
+`Kagey131.PaperF.FL2`, FL3 to FL5 in `Kagey131.PaperD.FL3` to `Kagey131.PaperD.FL5`, and their
+composition in `Kagey131.PaperF.Compose`). It is built against Lean 4 v4.33.1 and
 Mathlib v4.33.1. The 22 modules of September and early October 2026 are unchanged. On October 17,
 2026 the tracks T1 to T8 were integrated (sign chain, random recursive tree, first flip and lower
 bound, upper bound, certificate checker, crossing analysis, kernel-checked certificates for
@@ -30,10 +32,13 @@ in the kernel. So the certificate of Lemma 3.10 is no longer a hypothesis, and L
 only on the unimodality of `f_L`.
 The module `A4_Full` of October 18, 2026 proves Proposition A.4(c) and (d) at full strength, as
 stated in the paper, for `0 < ε < 1/4` and every even `N ≥ 2` with no hypothesis.
+On October 19, 2026 the Paper F tracks FL1 to FL5 were integrated, 58 modules `FL1_*` to
+`FL5_*`, with the module `FLC_Cor25Walk` that composes FL2 and FL5. The section "Paper F by
+statement label" below lists every numbered statement of Paper F with its status.
 
 ### Declaration count
 
-The library has 22427 `theorem` and `lemma` declarations (the count of `verify_lean.py`, which
+The library has 23240 `theorem` and `lemma` declarations (the count of `verify_lean.py`, which
 checks that it equals the set of theorems Lean finds). They split as follows.
 
 * 20517 in the 69 generated certificate modules `T7_Gen_*` (for each `N` with `101 ≤ N ≤ 2000`,
@@ -43,10 +48,12 @@ checks that it equals the set of theorems Lean finds). They split as follows.
 * 163 in the Paper F modules `HeavyRuns`, `Aging`, `AgingExact`, `AgingCrossing`, `AgingSmall`,
   `AgingAveraging`, `AgingSwitches`, `BetaBinomial` (notes D3 and D4).
 * 825 in the modules of the tracks U1 to U6 and `U_EndToEnd`, most of them support lemmas.
+* 813 in the Paper F modules of the tracks FL1 to FL5 and `FLC_Cor25Walk` (section "Paper F by
+  statement label").
 * 821 in the remaining Paper D modules, most of them support lemmas. The table "Paper D by
   statement label" below names the main ones.
 
-## Build of October 17 and 18, 2026
+## Builds of October 17 to 19, 2026
 
 * A clean `lake build PaperD` (the PaperD outputs deleted first, Mathlib reused) completes with
   8852 jobs, no errors and no warnings. The root imports every module, so this checks the
@@ -56,6 +63,19 @@ checks that it equals the set of theorems Lean finds). They split as follows.
   the library again from the repository copy, runs `#print axioms` on all 22427 declarations
   (217 modules, after `A4_Full` of October 18) and finds only `propext`,
   `Classical.choice` and `Quot.sound` (`build-log.txt`, `verification-manifest.json`).
+* October 19, 2026, after the tracks FL1 to FL5: `lake build PaperD` in `paperD-next` completes
+  with 8982 jobs and no errors (the 10 warnings are linter and deprecation notes in
+  `FL1_DState`, `FL3_Prob`, `FL3_Model` and four U3 modules). `axioms-fl-all.lean` (output
+  `axioms-fl-all.log`) runs `#print axioms` on all 812 FL declarations of that moment and lists
+  the theorems Lean finds in the FL modules (the same set), and `axioms-fl-main.lean` (output
+  `axioms-fl-main.log`) on 46 main theorems. All depend only on `propext`,
+  `Classical.choice` and `Quot.sound`. Then `python -B verify_lean.py PaperD` in
+  `problem131/lean` (workspace `~/lean-work/paperD`, incremental) checks all 23240
+  declarations of the 276 modules and passes. Three `instance` declarations of a `Prop` were
+  turned into theorems with `attribute [instance]` (`FL2.evenAtTop_neBot`,
+  `FL3.Model.fair_isProbabilityMeasure`, `FL5.lawZ_isProbabilityMeasure`), so that the
+  parser of `verify_lean.py` sees them. The axiom script of track FL2 is
+  `axioms-fl2.lean` in the project root, not a module of the library.
 * `axioms-final.lean` (output `axioms-final.log`, in the project root of `paperD-next`) runs
   `#print axioms` on 499 named declarations, every main theorem of every track and every
   name in this file. All depend only on the three standard axioms or a subset of them (for
@@ -390,6 +410,110 @@ the elephant walk, `law ε n` and `ewBin ε n` use the number of steps `n` direc
 | Prop 16(ii): uniform law at `c = 1` | Proposition 5.4 with `d = 2` and `θ = 1` (a special case, not stated separately) | `agBin_dls_one` | `BetaBinomial.lean` |
 | Prop 16(iii): ratio increasing in `c`, crossing exactly `1` | Proposition 5.4 with `d = 2` (equation (8), which the paper states for the center bin and Lean proves for every bin) | `dls_ratio_strictMonoOn`, `dls_crossing` | `BetaBinomial.lean` |
 
+## Paper F by statement label (tracks FL1 to FL5, October 19, 2026)
+
+Paper F is `paperF/problem131_heavy_aging.tex`, "Heavy-tailed runs and aging". Its Lean files
+are the modules `HeavyRuns`, `Aging*`, `BetaBinomial` (the notes D3 and D4, sections "D3" and
+"D4" above) and the 58 modules of the tracks FL1 to FL5 of October 19, 2026, with the module
+`FLC_Cor25Walk` that composes FL2 and FL5. The tracks are in the namespaces
+`Kagey131.PaperF.FL1` (FL1), `Kagey131.PaperF.FL2` (FL2), `Kagey131.PaperD.FL3` (FL3),
+`Kagey131.PaperD.FL4` (FL4), `Kagey131.PaperD.FL5` (FL5) and `Kagey131.PaperF.Compose`. The
+table names them `FL1.`, `FL2.` and so on, and `Compose.`. Names without a prefix are in
+`Kagey131.PaperD`. The numbers are those of a fresh build of Paper F. Every declaration listed
+depends only on `propext`, `Classical.choice` and `Quot.sound`. The abbreviations in the column
+Status are the named classical hypotheses of the next table. "Proved" means proved with no
+hypothesis beyond those of the paper's statement.
+
+| Label | No. | Lean theorem(s) | Status |
+|---|---|---|---|
+| `prop:edge` | 2.1 | every law of `D`: `FL3.prop_end_ae`, `FL5.end_eq`; fresh start: `FL3.prop_end_fresh_ae`, `FL5.end_fresh`, `fresh_edge`; stationary start `P(D = d) = F̄(d)/μ`, `μ = E L = ζ(α)`, with `ζ(α,N)` and the `θ_N` form: `FL3.prop_end_stationary_paper_ae`, `FL3.mean_eq_zetaR`, `zeta_tail_bounds` | proved, for `N ≥ 1` (at `N = 0` the first sentence is false: `E_0 = 1`) |
+| `prop:tworenewal` | 2.2 | `FL3.prop_two_renewal_ae`, `FL3.prop_two_renewal_end_ae`, `FL3.prop_two_renewal_center_ae`, `FL3.prop_two_renewal_center_fresh_ae`, `FL3.prop_two_renewal_center_stationary_ae`; the definitions of `q_m`, `u^D_m`: `FL3.qRen_eq_conv`, `FL3.uDel_eq_conv`, `FL3.uDel_stationary`; for the walk of FL5: `FL5.PosLaw.walk_eq_renewal`, `FL5.PosLaw.walkBin_center_eq` | proved, for every law of `L` (FL3, a measure-theoretic model of the runs) and for the walk (FL5) |
+| `lem:stable` | 2.3 | (i) `FL5.genC_expansion` (the Laplace form `1 - E e^{-vξ} = μv - K_α v^α + O(|v|²)` for `Re v ≥ 0`, which contains (i) at `v = -iθ`), `FL5.one_sub_genC_runP_exp`, `gammaK_eq`, `gammaK_pos`; (ii) `FL5.stableCharHyp_holds`, `FL5.tendsto_charZ`; (iii) `FL5.LocalSetting.ubar_exists` with GN; (iv) `FL5.integral_sq_eq_stableI` | (i) from POLY; (ii) from POLY, LEVY, FI, without the clause `E e^{-sG} = e^{K_α s^α}` and the remark on skewness and scale; (iii) GN; (iv) proved from (ii) (Parseval by Mathlib's Fourier inversion) |
+| `thm:center` | 2.4 | `FL5.thm_center_walk_classical`, limit form `FL5.thm_center_walk_limit`; in the form of FL2 `Compose.thm24_walk` | from GN, POLY, LEVY, FI, for every first run `D` |
+| `cor:golden` | 2.5 | for the walk: `Compose.cor25_stationary_walk`, `Compose.cor25_fresh_walk`, `Compose.cor25_ends_win_walk`, `Compose.cor25_center_wins_above_walk`, `Compose.cor25_center_wins_golden_walk`, `Compose.cor25_golden_limit_walk`, `Compose.cor25_fresh_center_wins_walk`, `Compose.cor25_fresh_tendsto_zero_walk`, `Compose.cor25_stationary_tendsto_zero_walk`, `Compose.cor25_stationary_tendsto_atTop_walk`, the general formula `Compose.cor25_general_walk`; from the hypotheses `Thm24`, `PropEdge`: `FL2.cor25_general`, `FL2.cor25_stationary`, `FL2.cor25_fresh` and the others; constants `FL2.constStat_eq`, `FL2.constFresh_eq`, `FL2.constC_golden_closed`, `FL2.constC_golden_lt_one`, `FL2.constC_golden_lt_0952`; exponent `runExp_eq`, `runExp_pos_iff`, `golden_identities` | from GN, POLY, LEVY, FI (FL2's hypotheses `Thm24` and `PropEdge` are discharged for the walk in `FLC_Cor25Walk`). Not formalized: the decimals `C(φ) = 0.7761317206…`, `1/C(φ) = 1.2884…`, and the minimum `0.8856…` of `Γ` on `(0,∞)` (Lean proves `Γ(φ) ≥ 0.8856`, `FL2.constC_golden_le_paper`, which is the instance the proof uses) |
+| `rem:humps` | 2.6 | none | not formalized (heuristic) |
+| `rem:crossover` | 2.7 | `runExp_five_thirds` (`e(5/3) = -1/15`) | the exponent only; the rest is heuristic and numerical |
+| `thm:alpha2` | 2.8 | `runExp_two` (`e(2) = -1/2`) | not formalized (needs (F1) with a log factor) |
+| `thm:lamperti` | 2.9 | `FL5.thm_lamperti_walk_classical`, `FL5.thm_lamperti_ratio_classical`, `FL5.thm_lamperti_walk_limit_classical`; Steps 1 and 2 `FL5.thm_lamperti_center_limit`, `FL5.step1b_of_lerch`; Step 4 `FL5.step4_holds`, `FL5.integral_sinh_div_sinh`; constants `lamperti_half`, `lamperti_ratio_constant` | from GN, POLY, LAP, FI, LERCH. Step 4 by a different route: Parseval for `log G` with `|E G^{iτ}|² = sinh(πτ)/(α sinh(πτ/α))` and the integral of Gradshteyn and Ryzhik 3.511.2, proved in `FL5_SinhInt`. Not formalized: the claim of Step 3 that `f` is the density of `G₁/(G₁+G₂)`, which this route does not need |
+| `rem:other` | 2.10 | none | not formalized |
+| `prop:aging-urn` | 3.1 | `FL1.prop_aging_urn`, `FL1.urnLaw_eq`, `FL1.urn_ratio_formula`, `FL1.urn_ratio_strictMonoOn`, `FL1.urn_ratio_eq_one_iff`, `FL1.urn_prob_ratio_strictMonoOn`, `FL1.urn_prob_ratio_eq_one_iff`; `d = 2`: `agEnd_dls`, `agBin_dls`, `dls_ratio_strictMonoOn`, `dls_crossing` | proved, for every `d` and every `θ > 0` |
+| `rem:aging-feller` | 3.2 | none | not formalized (the Feller coupling) |
+| `prop:aging-two` | 3.3 | `plusEnd_one`, `plusBin_one`, `plusBin_ratio_strictMonoOn`, `plusBin_ratio_one`, `plus_top_strict_max`, `plus_top_strict_min`; from Theorem 3.4 as in Remark 3.5: `FL1.prop_aging_two_a_of_thm`, `FL1.prop_aging_two_b_of_thm` | proved |
+| `thm:aging-d` | 3.4 | (a) `FL1.thm_aging_d_a`, `FL1.thm_aging_d_a_uniform`; (b) `FL1.thm_aging_d_b`; the sentence after the theorem `FL1.corner_strict_max`, `FL1.corner_strict_min`; the bins `FL1.mem_ageBins`, `FL1.card_ageBins`, `FL1.ageBin_pos_iff`, `FL1.mem_thetaRange_iff` | proved |
+| `rem:aging-d` | 3.5 | the urn `FL1.polyaSeq_eq`, `FL1.polyaLaw_eq`, `FL1.polyaJoint_eq`, `FL1.ageJoint_eq_polyaJoint`, `FL1.chain_ne_urn`; two states `FL1.thm_aging_two_state`, `FL1.thm_aging_two_state_bin`, and the chain of Proposition 3.3 is the case `d = 2`, `θ = c`: `FL1.plusBin_eq_ageBin`, `FL1.agEndStart_eq_ageJoint`; the moves `FL1.movePat_law`, `FL1.crp_new_table`, `FL1.expected_moves`, `FL1.moves_sum_eq_harmonic`, `FL1.expected_moves_one_bounds`, `FL1.expected_moves_one_isBigO` | the exact statements and `(d-1) log N + O(1)` are proved; not formalized: the coupling with the chain of Dietz and Sethuraman and the Dirichlet and Beta limits |
+| `prop:aging-fair` | 3.6 | `agBin_one_interior`, `agBin_one_top`, `agBin_one_bottom`, `agBin_ratio_strictMonoOn`, `aging_crossing_exists_unique`, `aging_crossing_sides` | proved |
+| `prop:aging-expansion` | 3.7 | `FL4.aging_expansion`, `FL4.aging_expansion_cN`; the steps of the idea of the proof: `FL1.end_gamma` (`E_N` by Gamma functions), `FL4.gamma_ratio`, `FL4.logratio_paper`, `FL4.logratio_uniform`, `FL4.logratio`, `FL4.Theta_one`, `FL4.hasDerivAt_Theta_one` | proved, with the bracket `c_N ≥ c^{(3)}` as in the paper |
+| (end of App. B) | remark after the proof of 3.7 | `FL4.aging_expansion2`, `FL4.theta_taylor2` | the `L^{-3}` term with error `O(L^{-4})` is proved; the numbers at `N = 200` are not formalized |
+| `lem:C-bigjump` | A.1 | `FL5.bigJumpHyp_holds` | proved for `1 < α < 2` (the case of Theorem 2.4); the paper states `α > 1` |
+| `lem:C-firstpassage` | A.2 | `FL5.LocalSetting.lemA2_q`, `FL5.LocalSetting.lemA2_uD`, `FL5.LocalSetting.lemA2_qD`, `FL5.LocalSetting.q_le_ubar`, `FL5.LocalSetting.uD_le_ubar` | proved, with (F1) for `a_m = m^κ` (`β = 0`, `c_a = 1`) |
+| `prop:C-center` | A.3 | `FL5.CenterSetting.propA3` | proved, with (F1) for `a_m = m^κ`, and (F2), (F3) as in the paper |
+| `lem:C-stable1` | A.4 | (i) `FL5.stablePosHyp_holds`, `FL5.charFun_of_laplace`; (ii) `FL5.LampSetting.ub_exists` with GN; (iii) `FL5.lampBigJump`; (iv) `FL5.LampSetting.g_tail` | (i) from POLY, LAP, FI; (ii) GN; (iii), (iv) proved |
+| `lem:D-average` | B.1 | `agBin_averaging`, `agBin_center_averaging`, `agBin_ge`, `agBin_le` | proved |
+| `prop:D-bracket` | B.2 | `FL4.bracket`, `FL4.cM_spec`, `FL4.cM_strictMono`, `FL4.cM_three`, `FL4.cN_ge_cM_three`, `FL4.cM_expansion`, `FL4.crossing_log_limit`; earlier `end_below_all_bins`, `hN_mono` | proved (`FL4.cM_expansion` for `M ≥ 3`) |
+| `prop:D-beta` | B.3 | none | not formalized (needs Poisson processes; Proposition B.5 does not use it in Lean) |
+| `lem:D-coupling` | B.4 | none | not formalized (as for B.3) |
+| `prop:D-llt` | B.5 | `FL4.llt_paper`, `FL4.llt_rate` | proved by a different proof (through Proposition 3.1 with `d = 2` at `θ = c`), with the sharper rate `C_J √(log N / N)` |
+
+The figures, the tables and the numbers quoted outside the proofs are not formalized.
+
+### Named classical hypotheses of Paper F
+
+| Abbr. | Lean name | Result | Source |
+|---|---|---|---|
+| GN | `FL5.GnedenkoLLTHyp` | Gnedenko's local limit theorem for a lattice law of maximal span 1 | Ibragimov and Linnik 1971, Theorem 4.2.1 |
+| POLY | `FL5.PolylogHyp` | the expansion of `Li_s(e^μ)` at `μ = 0`, for real `0 < s < 2`, `s ≠ 1`, principal branch | DLMF 25.12.12 |
+| LEVY | `FL5.LevyContinuityHyp` | Lévy's continuity theorem for characteristic functions | Feller, vol. II (1971), Section XV.3 |
+| FI | `FL5.FourierInversionHyp` | an integrable characteristic function gives a bounded continuous density, by the inversion formula | Feller, vol. II (1971), Section XV.3 |
+| LAP | `FL5.LaplaceContinuityHyp` | the continuity theorem for Laplace transforms on `[0, ∞)`, with a proper limit | Feller, vol. II (1971), Section XIII.1 |
+| LERCH | `FL5.LerchHyp` | Lerch's uniqueness theorem: two continuous functions on `(0, ∞)` with the same absolutely convergent Laplace integrals are equal | Lerch 1903; Widder, *The Laplace Transform* (1941), Chapter II |
+
+The theorem numbers in Feller, sections XV.3 and XIII.1, and in Widder were not checked; the
+docstrings cite the sections. The statements in Lean are special cases of the classical ones, or
+add assumptions that only weaken them (for GN: values in `ℕ`, `B_n → ∞`, a continuous limit
+density). The intermediate statements `FL5.StableLimitHyp`, `FL5.StableCharHyp`,
+`FL5.StablePosHyp`, `FL5.BigJumpHyp` and `FL5.Step4Claim` are proved and are not hypotheses of
+any final theorem. FL2's `Thm24` and `PropEdge` are discharged for the walk by
+`Compose.thm24_walk` and `Compose.propEdge_walk`. Tracks FL1, FL3 and FL4 use no named
+hypothesis. Non-vacuity: `FL3.Model.hind1`, `FL3.Model.hsind1`, `FL3.Model.hfair1` (a model of
+the hypotheses of FL3), and `FL2.thm24_model`, `FL2.propEdge_model`, `FL2.not_thm24_two_mul`.
+
+### Track FL3: the measure-theoretic model
+
+Paper F is `paperF/`, Section 2 (`sec_heavy.tex`, "Heavy-tailed runs"). Six modules, all in
+namespace `Kagey131.PaperD.FL3`, imported by the root `PaperD.lean`. No existing declaration
+was changed. The model: run lengths `R : ℕ → Ω → ℕ` with `R 0 = D` and
+`R i = L_i` (`i ≥ 1`), first direction `sgn : Ω → Bool`, `iIndepFun R μ`,
+`IndepFun sgn (runVec R) μ`, `IdentDistrib (R i) (R 1)` for `i ≥ 1`, and runs `≥ 1` almost surely
+(`hae`). The `_ae` theorems are the formal counterparts of the paper's statements; the versions
+without `_ae` assume runs `≥ 1` at every `ω`. Paper index `m ≥ 1` is Lean `m + 1`.
+
+| Paper statement | Lean theorem(s) | File |
+|---|---|---|
+| Prop 2.1 (edge), every law of `D`, `N ≥ 1`: `E_N = P(A_N = N) = P(A_N = 0) = ½P(D ≥ N)` | `prop_end_ae` (`prop_end`) | `FL3_AE.lean` (`FL3_End.lean`) |
+| Prop 2.1, fresh start: `E_N = ½N^(-α)` (content exactly for `α > 0`: `alpha_pos_of_tail`) | `prop_end_fresh_ae` (`prop_end_fresh`) | `FL3_AE.lean` (`FL3_End.lean`) |
+| Prop 2.1, stationary start `P(D = d) = F̄(d)/μ`, `μ = E L`: `E_N = ζ(α,N)/(2ζ(α))` and the `θ_N` form | `prop_end_stationary_paper_ae`; with the law given as `d^(-α)/ζ(α)`: `prop_end_stationary_ae` | `FL3_Side.lean`, `FL3_AE.lean` |
+| `μ = E L = ζ(α)` for `α > 1`; `E X = ∑_{k ≥ 1} P(X ≥ k)` | `mean_eq_zetaR`, `lintegral_eq_tsum_tail` | `FL3_Side.lean` |
+| the stationary law has mass 1; `zetaR α = ζ(α)` | `stationary_law_sum_one`, `zetaR_eq_riemannZeta` | `FL3_Side.lean`, `FL3_End.lean` |
+| `q_m(k) = ∑_{j ≥ 1} F̄(j) u_{m-1}(k-j)` | `qRen_eq_conv` | `FL3_Side.lean` |
+| `u^D_m(k) = ∑_d P(D = d) u_{m-1}(k-d)`; stationary start `u^D_m = q_m/μ` (any law of `L`) | `uDel_eq_conv`, `uDel_stationary` | `FL3_Side.lean` |
+| Prop 2.2: `P_+(A_n = a) = ∑_{m ≥ 1}[u_m(b) q^D_{m+1}(a) + u^D_m(a) q_m(b)]`, any law of `L` | `prop_two_renewal_ae` (`prop_two_renewal`) | `FL3_AE.lean` (`FL3_Prob.lean`) |
+| Prop 2.2: `P_+(A_n = n) = P(D ≥ n)` | `prop_two_renewal_end_ae` | `FL3_AE.lean` |
+| Prop 2.2: `C_n = ∑[u_m(h)q^D_{m+1}(h) + u^D_m(h)q_m(h)]` (no fairness needed) | `prop_two_renewal_center_ae` | `FL3_AE.lean` |
+| Prop 2.2, fresh start: `C_n = ∑ u_m(h)[q_m(h) + q_{m+1}(h)]` | `prop_two_renewal_center_fresh_ae` | `FL3_AE.lean` |
+| Prop 2.2, stationary start: `C_n = ∑[u_m(h)q^D_{m+1}(h) + q_m(h)²/μ]` | `prop_two_renewal_center_stationary_ae` | `FL3_Side.lean` |
+| the walk, by runs (proof of Prop 2.2, three cases) | `numUp_true_formula`, `runsDone_even_numUp_iff`, `runsDone_odd_numUp_iff`, `runsDone_zero_numUp`, `numUp_true_eq_self_iff` | `FL3_Walk.lean` |
+| non-vacuity: a model satisfying the hypotheses | `Model.hind1`, `Model.hsind1`, `Model.hfair1` | `FL3_Model.lean` |
+
+Remarks.
+* Prop 2.1 is false at `n = 0` as written in the paper (`E_0 = 1`, `½P(D ≥ 0) = ½`); Lean
+  assumes `N ≥ 1`. Suggested wording: "For every law of `D` and every `n ≥ 1`".
+* No named classical hypotheses are used. `zeta_tail_bounds` of `HeavyRuns` is reused.
+* `D` is `ℕ`-valued (finite everywhere); up to a null set this is the paper's a.s. finite first
+  run.
+* The values of `qRen`, `uDel`, `qDel` at Lean index `0` are conventions only and never used.
+* Axioms: every declaration above depends only on `propext`, `Classical.choice`, `Quot.sound`.
+  `lake build PaperD.FL3_Side PaperD.FL3_Model` completes with 8712 jobs.
+
 ## Additions of October 17, 2026 to the tables D1 and D2
 
 The rows above are those of October 16. The table "Paper D by statement label" supersedes them
@@ -426,21 +550,13 @@ tracks T5 and T7 do not run them. They take the crossing brackets from the witne
 rounded outward, and check them with checkers whose soundness is proved in Lean (section
 "Certificates" above).
 
-Papers F (the notes D3 and D4). The asymptotic statements are out of scope. They need the Laplace
-method, stable and Gaussian local limit theorems, Bessel limits, and `o(1)` and `O(·)` error
-terms. They are the following.
-
-* D3 Lemmas 3 to 5, Theorem 6 (Theorem 4.4), the asymptotic halves of Corollary 7 and
-  Theorems 8, 9 (Theorems 4.7 and 4.8, including the local min/max test at `α_c`), Heuristics 10,
-  11, Remarks 12, 13 (numerics, Remark 4.6).
-* D4 Theorem 4, Lemma 5, Theorems 6 and 8 (Beta limit, Kolmogorov rate, local limit, crossing
-  expansion, which are Proposition 5.7 and the rest of Appendix E), the asymptotic half of
-  Theorem 7 and of Corollary 12, Proposition 14(d), Statements 11 and 13 (heuristic or numerical).
-* D3 Proposition 2 (the two-renewal representation, Proposition 4.2) is a known identity
-  (Godrèche and Luck 2001, Section 7). A formal proof would need a composition model of the run
-  walk, and it was not attempted.
-* The records interpretation of D4 Proposition 3 (Rényi) was not attempted. Theorem 5.2 (the
-  aging chain on `d` states) and Proposition 5.4 for `d ≥ 3` are not in Lean.
+Paper F (the notes D3 and D4). Since October 19, 2026 the section "Paper F by statement label"
+lists what is not formalized: Theorem 2.8, Remarks 2.6, 2.7, 2.10 and 3.2, Proposition B.3 and
+Lemma B.4, the claim of Step 3 of the proof of Theorem 2.9 that `f` is the density of
+`G₁/(G₁+G₂)` (not needed by the route of Lean), the decimals in Corollary 2.5 and the minimum of
+`Γ`, and the numerics. The statements of the notes D3 and D4 that Paper F does not state (the
+records interpretation of D4 Proposition 3, the heuristics, Proposition 14(d) of D4) are not
+formalized either.
 
 The notes D1 and D2 also have statements that the paper no longer states or that are asymptotic.
 They are not formalized: D1 S4 (Duhamel identity),

@@ -428,6 +428,12 @@ def main():
             r5 = R_spectral(a, 10 ** 5)
             agree('R_(10^5) at alpha = phi (Table 1 prints 0.727689)', '0.72769', {'B': r5})
             agree('R_(10^5)/C(phi) (text after Corollary 2.5)', '0.938', {'B': r5 / C})
+            Ns = np.arange(10, 2 * nmax + 1, 2)
+            Rall = np.array([edge(a, int(N), 'stat') for N in Ns]) / Zs[Ns // 2]
+            steps = np.diff(Rall)
+            check(f'R_n increases at every even n in [10, {2 * nmax}] at alpha = phi (text after Corollary 2.5; '
+                  f'the paper states it up to 10^5, which needs --full)', bool(np.all(steps > 0)),
+                  f'method A; smallest relative step {float((steps / Rall[:-1]).min()):.1e}')
     if not args.full:
         print('  skip  method A at n = 10^5 (run with --full); method B covers these cells')
 
