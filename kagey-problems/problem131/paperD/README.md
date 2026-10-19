@@ -15,7 +15,7 @@ Problem 131 of Kagey's Open Problem Collection (https://peterkagey.com/problems/
 Galton board, which is why the values of the number of right steps are called bins. The paper uses
 one result on the persistent walk, the crossing equation of A. Pemmasani, "Uniform Bessel bounds
 for magnetization crossings in finite Ising chains", arXiv:2610.06935 (Proposition 3.8 there, with
-its source in `../paperA`), and only to compare the two crossings (Theorem 2.8).
+its source in `../paperA`), and only to compare the two crossings (Theorem S1.7 of Online Resource 1).
 
 Conventions. The walk has N steps, L = log N, A_N is the number of right steps, and P_N(k) is the
 probability of bin k. C_N = P_N(N/2) is the probability of the center bin and E_N = P_N(N) that of
@@ -49,7 +49,7 @@ eps). Put x = N eps.
 - With the crossing equation of the persistent walk (arXiv:2610.06935, Proposition 3.8) for its
   crossing z_N,
   x_N = 2 z_N - log(2 pi) + c_*/log N + O(log log N/(log N)^2), where
-  c_* = (1/2) log(2 pi) - 1/4 (Theorem 2.8).
+  c_* = (1/2) log(2 pi) - 1/4 (Theorem S1.7).
 - The center to second order. For even N >= 64 and eps(1 + log N) <= 1/100,
   log C_N = log(4 eps/(N+2)) + 2 eps log N + O(eps), with explicit constants, and the lower bound
   holds for every 0 < eps < 1/2 (Proposition S1.1 of Online Resource 1). So
@@ -132,7 +132,7 @@ Online Resource 1, are of this kind.
   and `certify_convex.py` certifies it for 10 <= N <= 2000 (Lean also for 5 <= N <= 9). The thresholds are not computed, and the
   proof as it stands cannot work below N of about 3.5 * 10^56, so no computation closes the gap
   (Remark 3.27). For even N >= 8 and odd N >= 1689 the conjecture follows from one inequality
-  (Corollary 3.20 and Proposition 3.25(c)).
+  (Corollary 3.20 and Proposition S3.1(b)).
 - The tail for m between x log x and x log^2 x, effective constants in Theorem S2.1, and
   an effective constant K in Corollary 3.11(b) (Remark 3.12).
 
@@ -215,7 +215,7 @@ grows.
 - `../lean/PaperD/` holds the Lean 4 proofs. Every proof is checked by the Lean kernel, no module
   uses `native_decide`, and every theorem depends only on `propext`, `Classical.choice` and
   `Quot.sound`. With no hypothesis Lean proves Theorem 1.1 as stated (Lemmas 2.2 and 2.4,
-  Propositions 2.3 and 2.5, Theorems 2.6 and 2.7), Theorem 2.8 (its input from Paper A,
+  Propositions 2.3 and 2.5, Theorems 2.6 and 2.7), Theorem S1.7 (its input from Paper A,
   Proposition 3.8 there, is proved in the Paper A library, and the library `PaperAD` joins the
   two), Lemmas 3.1 to 3.4 (with the relabeling in Lemma 3.2), Theorem 3.5, Corollary 3.6,
   Proposition 3.7 for every even N >= 8, Lemmas 3.15 to 3.17, Theorems 3.18 and 3.19,
@@ -231,7 +231,7 @@ grows.
   for the hypergeometric law. Theorem 3.8 uses the first three, Theorem 3.9 the first three and,
   for the limit in law, Scheffé's lemma. Lemma 3.10 uses unimodality alone, with the certified
   numbers proved by kernel-checked integration and the real integral by a rotation of the contour.
-  Corollary 3.11(b), Theorem 3.21, Corollary 3.23, Proposition 3.25(d) and Theorem 1.3(c)
+  Corollary 3.11(b), Theorem 3.21, Corollary 3.23, Proposition S3.1(c) and Theorem 1.3(c)
   use the first three and unimodality, and Theorem 1.2 uses these and Scheffé's lemma. Propositions S1.1 and S1.2 (with the
   threshold log N >= 3500) and Lemma S1.6(c), (d) use Hoeffding's inequality. The classical results
   themselves are not formalized. The Python and Arb scripts are separate from Lean. `MAP.md` there gives
@@ -278,7 +278,7 @@ shift as in `../lean/PaperD/MAP.md`). Numbers with the prefix S are in Online Re
 | `prop:first-mutation` | Proposition 2.5 | Proposition 2.5 | Proposition 2.5 |
 | `thm:erw-bounds` | Theorem 2.6 | Theorem 2.6 | Theorem 2.6 |
 | `thm:erw-crossing` | Theorem 2.7 | Theorem 2.7 | Theorem 2.7 |
-| `thm:erw-markov` | Theorem 2.8 | Theorem 2.8 | Theorem 2.8 |
+| `thm:erw-markov` | Theorem S1.7 (Theorem 2.8 before October 19) | Theorem 2.8 | Theorem 2.8 |
 | `prop:second-order`, `prop:refined`, `rem:refined` | Propositions S1.1, S1.2, Remark S1.3 | Propositions 2.9, 2.10, Remark 2.11 | Propositions 2.9, 2.10, Remark 2.11 |
 | `lem:tree`, `lem:split`, `lem:firstmark`, `lem:unimodal` | Lemmas 3.1 to 3.4 | Lemmas 3.1 to 3.4 | Lemmas 3.1 to 3.4 |
 | `thm:dip` | Theorem 3.5 | Theorem 3.5 | Theorem 3.5 |
@@ -304,7 +304,7 @@ shift as in `../lean/PaperD/MAP.md`). Numbers with the prefix S are in Online Re
 | `lem:center-convex` | Lemma 3.22 | Lemma 3.23 | none (new) |
 | `cor:unique-min` | Corollary 3.23 | Corollary 3.24 | Corollary 3.24 |
 | `prop:convex-certified` | Proposition 3.24 | Proposition 3.25 | Proposition 3.25 |
-| `prop:odd` | Proposition 3.25 | Proposition 3.26 | Proposition 3.26 |
+| `prop:odd` | Proposition 3.25 (first paragraph and (a)), with (b) to (d) now Proposition S3.1(a) to (c) | Proposition 3.26 | Proposition 3.26 |
 | `prop:center-small` | Proposition 3.26 | Proposition 3.27 | Proposition 3.27 |
 | `rem:convex-open` | Remark 3.27 | Remark 3.28 | Remark 3.28 |
 | `sec:convex` | Section 3.5 | Section 3.5 | Section 3.6 |
