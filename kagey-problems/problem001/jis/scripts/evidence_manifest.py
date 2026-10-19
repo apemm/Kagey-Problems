@@ -70,6 +70,14 @@ GROUPS = [
     ('R10 table counts and f(7,8)', [D + 'table_counts/*.json']),
     ('R11 six rows, widths 9 to 14 (open question)', [D + 'small_cells_sat_6x9_b16.json',
                                                       D + 'six_row_collar_6x9_check.json']),
+    ('R12 LRAT certificates', [D + 'unsat_certificates.json', D + 'unsat/splits.json',
+                               D + 'unsat/cell_*.cnf', D + 'unsat/six_w*_p*.cnf.gz']),
+    ('R12 certificate sources', ['jis/scripts/unsat_export_cnf.py',
+                                 'jis/scripts/unsat_cnf_crosscheck.py',
+                                 'jis/unsat/pipeline.py', 'jis/unsat/collect.py',
+                                 'jis/unsat/faithfulness.txt', 'jis/unsat/lean/Main.lean',
+                                 'jis/unsat/lean/lakefile.lean', 'jis/unsat/lean/lean-toolchain',
+                                 'jis/unsat/cshim/*.h', 'jis/unsat/cshim/sys/time.h']),
 ]
 
 

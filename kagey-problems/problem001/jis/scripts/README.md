@@ -190,6 +190,19 @@ collects the counts.
 |---|---|---|---|---|
 | `python jis/scripts/six_row_collar_6x9_check.py` | `small_cells_sat_6x9_b16.json` | `six_row_collar_6x9_check.json` | 6.8 s invocation | 8.1 s, equal |
 
+### R12. LRAT certificates
+
+f(6,6) < 13, f(6,7) < 14, f(6,8) < 16, f(7,7) < 15, f(7,8) < 17, and the six-row instances of
+Theorem "six rows" (a) for widths 8 to 14. The sources, the commands and the faithfulness argument
+are in `jis/unsat/README.md`. The 392 proofs (28.5 GB as text LRAT) are not in the repository.
+Their SHA-256 are in the evidence file.
+
+| Command | Evidence | Stored time | Rerun |
+|---|---|---|---|
+| `python -B jis/scripts/unsat_export_cnf.py WORK/cnf --parts` | `unsat/cell_*.cnf`, `unsat/six_w*_p*.cnf.gz`, `unsat/splits.json` (copied by `collect.py`) | not stored | 186.6 s invocation on 2026-10-18, all 394 earlier files equal |
+| `python -B jis/scripts/unsat_cnf_crosscheck.py WORK/cnf WORK/crosscheck.json` | `second_generator_identical` and `split.covering_checked_by_second_generator` in `unsat_certificates.json` | not stored | 75 of 75 base instances agree |
+| `python -B jis/unsat/pipeline.py NAMES` (CaDiCaL 2.1.2, `lrat-check`, Lean `LRAT.check`), then `python -B jis/unsat/collect.py` | `unsat_certificates.json` | `solver.seconds` and the two checker times of each instance or part. 6 x 6 at 13 solved in 4.5 s and checked in 1.2 s and 1.8 s | not rerun |
+
 ## Batch drivers and solver deadlines
 
 `cells_sat_check.py` and `six_row_sat_check.py` run their jobs through `batch_jobs.py`. A batch
@@ -250,14 +263,16 @@ The long searches were not rerun.
 `batch_jobs.py`, `supervised_solver.py`, `cells_common_check.py`, `five_row_common.py`,
 `five_row_sidevec.py`, `four_row_machines.py` and `verify21_common_check.py` are shared code.
 `cells_check_summary.py`, `cells_sixrows_summary.py` and `five_row_summary.py` collect results.
-`evidence_manifest.py` checks the hashes below and `batch_log_check.py` the batch logs. The
+`evidence_manifest.py` checks the hashes below and `batch_log_check.py` the batch logs. `unsat_export_cnf.py` and `unsat_cnf_crosscheck.py` write and cross-check the CNF files of R12, and
+`jis/unsat/` holds the rest of the certificate sources. The
 `verify21_*` scripts and `five_row_w21_compare.py` recheck an earlier five-row witness of width
 21, which the paper no longer needs, since the width-8 blackout covers every width from 8 on.
 `make_jis_single_file.py` builds `pemmasani_jis.tex`.
 
 ## Evidence hashes
 
-SHA-256 of each evidence file as committed, for text files with LF line ends. Check them with
+SHA-256 of each evidence file as committed, for text files with LF line ends. The group "R12
+certificate sources" lists the sources of the certificate runs as well. Check them with
 `python jis/scripts/evidence_manifest.py --check`. The child logs (`*.log`) are not listed.
 
 ```
@@ -574,4 +589,95 @@ a294c3eed170d7336d301f4b61a7d6aa6925b2fe8f70f03c39739fb3136f2b90  jis/data/table
 # R11 six rows, widths 9 to 14 (open question)
 16ba1a42645985cb24dd1b9b96426a783fa46ef8cc0a76516cb49a56210eeea3  jis/data/small_cells_sat_6x9_b16.json
 fe4a52c99a67bedb0c3f3176f8f21d2af76b3660f3b8e954382fc572cd346cef  jis/data/six_row_collar_6x9_check.json
+# R12 LRAT certificates
+c9939d11d57ea9b2964be40ac8d00e8a65d3c176eae5cd44103b04e823745740  jis/data/unsat_certificates.json
+2de7ccc6c8d89cd3f3b187dc666486641db66b5146f6f1d38291865762f85751  jis/data/unsat/splits.json
+42ae9c1e0f3d9f8bd85afedb9023ac0f5e5fc8e750b9ef109b4bc34717a7c056  jis/data/unsat/cell_6x6_k13.cnf
+6c448703c5f29da78d8d02e46c63d259ba47531018b665a54e2afed66f451cf1  jis/data/unsat/cell_6x7_k14.cnf
+60beb1244451a468f72c01058ae2ad6f79a26b198a3aea4262c88f05d5e5caad  jis/data/unsat/cell_6x8_k16.cnf
+d126027236543b17e0a0bec920f3492ec0c057236e4e17d0bd560e93047b2bf6  jis/data/unsat/cell_7x7_k15.cnf
+feadc54d091f6b0704c321aecb04b3f8abe019538abaf2188c7713bc2f5bb8f1  jis/data/unsat/cell_7x8_k17.cnf
+50d387112649b4278486f337227a9bfb9577e9968f995f1bf0c2ea4d61473259  jis/data/unsat/six_w10_p0.cnf.gz
+260a12e587ba092ac398cc77cb42d5eefa34c0202ba6c951655b93889f45f1ae  jis/data/unsat/six_w10_p1.cnf.gz
+cfe7d61855be6a25024c2f6b7361347b2331f0086116b478950d1a1cc97b4625  jis/data/unsat/six_w10_p2.cnf.gz
+199a71eea61718099b82b0c1f742b399a82d05f122a7e54ee3d89f5d29a2bef2  jis/data/unsat/six_w10_p3.cnf.gz
+1f86a2c99669b2aa3e2ecea0876dce1a718844ac0142938c016cc43d23fa1e93  jis/data/unsat/six_w10_p4.cnf.gz
+16d8c7a67992697d69e7e9f4c5e44d16174a04ea0e35dbf2df9b1033aa1c7e14  jis/data/unsat/six_w10_p5.cnf.gz
+73bac9e31974d41963a4be55797eb1518efa240195e6afafeb14a5ffe74529ea  jis/data/unsat/six_w10_p6.cnf.gz
+f59d418cb2643a349603fc26c9ee22682a8f1fdeae25930e44a86bbd200bc8b9  jis/data/unsat/six_w10_p7.cnf.gz
+86246f5e945b78705c2011d09321c4098d4b602660a3e3ffddb4cc2c31edee3f  jis/data/unsat/six_w10_p8.cnf.gz
+71436ed2561b7f71e8f165f740502478b7239f6dfe61171199551fa0d297086f  jis/data/unsat/six_w10_p9.cnf.gz
+f1a6d0f632600af07aa6d81d8b1872b1dcde2a547fba1ebdc1a5494539dd891e  jis/data/unsat/six_w11_p0.cnf.gz
+5a0f52f7b7cef322601408c6c32a9e87e49858ceadc6b2672cd2b18d98162e88  jis/data/unsat/six_w11_p1.cnf.gz
+42ab026e2f92dcb97c1ea08ef9b042121edf87696d814924eef1c7036b130af4  jis/data/unsat/six_w11_p2.cnf.gz
+a04e26d8d186907c56efc079d83cafcd01de9e4944589b5f02f65a6d49c7d4a0  jis/data/unsat/six_w11_p3.cnf.gz
+94330bac610087bba68bb6d61464f43a560af9db45521dc9b56e49a27abffbb9  jis/data/unsat/six_w11_p4.cnf.gz
+50be1768820141d809378000a248f2b9095a0b725e63ddac34e62f32a1f77e9f  jis/data/unsat/six_w11_p5.cnf.gz
+d7416ad611d0457fa5ba0ce6b9cb22cc977b6b507c8ed511c603bf4d754ae592  jis/data/unsat/six_w11_p6.cnf.gz
+cb663b4b5a56401666341c2ae62763e7f28a3723acc0019663c24235ae4d009a  jis/data/unsat/six_w11_p7.cnf.gz
+06506407490bd750aa43348c1888caba3a141423182dc4fee12681e60313e646  jis/data/unsat/six_w11_p8.cnf.gz
+991bdab32b61cf10b583d82778cad97c3a9ee3b857f8f205c9895bc84c600c7d  jis/data/unsat/six_w11_p9.cnf.gz
+8709e4f380c97aab5e549f5b063332d88eaa32b4b697fd5eda52dd3d740a782c  jis/data/unsat/six_w12_p0.cnf.gz
+a8360714560d77fc776fb9d2bffd7ba8cc8beff6915bd1e39f314f35b0373bdb  jis/data/unsat/six_w12_p1.cnf.gz
+aab0ee4c9c2380695d29b3e37fc102a941381aa6b87047543077901412c61aa3  jis/data/unsat/six_w12_p2.cnf.gz
+438819cf3f4fa6958b49a25a261f6b7152ed721a0b10f2e89f3e34018ba01404  jis/data/unsat/six_w12_p3.cnf.gz
+e928b44fa963811902da5b0a266bbf64a183e6941d6be76c7fc8e095294eeeda  jis/data/unsat/six_w12_p4.cnf.gz
+aa01fa38c22bd1a99915f803edbc08a901723ca4ebb53ff33fc0113a91065f11  jis/data/unsat/six_w12_p5.cnf.gz
+c8d7d64ccf26afd741ef4517bf07d139a03f83cb92d12cd7dfe86b99fbbe572a  jis/data/unsat/six_w12_p6.cnf.gz
+a7879180ef15d14b297223ee4649cd1657566cdac3c9b3c9aef927d2232a9c10  jis/data/unsat/six_w12_p7.cnf.gz
+97cbe74c73c7b36b76dd077d978bfd7644443c63e242ccd8a6cde330f0677432  jis/data/unsat/six_w12_p8.cnf.gz
+6f930cf012659f58a816723e4769c9745bb162cb23e6b1b8d6bb95d072483b37  jis/data/unsat/six_w12_p9.cnf.gz
+d64f4c21a68acfd7d678269b688cc4d963e6c4877fd554f04dd44309e316d470  jis/data/unsat/six_w13_p0.cnf.gz
+0d368b412a4baffbe1488697ee2fedbf4f48b66b5d49ce4eaec899e181ae355c  jis/data/unsat/six_w13_p1.cnf.gz
+8e4b7e4ea224acf786321176f008fe13274a5de6e92283f21328d20745ae92e8  jis/data/unsat/six_w13_p2.cnf.gz
+f1db875bf99e33c1860ed5d854017e17846ce2694cf670c67954acbcccee63c1  jis/data/unsat/six_w13_p3.cnf.gz
+3e0a4d0579cc7e02ce6eb390a4b07d882d2c439effff4cb104a7570337cf334e  jis/data/unsat/six_w13_p4.cnf.gz
+0a3b718e905f771e9f9967cc1e1479dc67bef239c68d8e00502e9739a887c022  jis/data/unsat/six_w13_p5.cnf.gz
+11bfe46eecb0ff429c3baa015a98fe926bf9fe685f9f239cfdc00587d80706fb  jis/data/unsat/six_w13_p6.cnf.gz
+aa2c09400b927ca027a995bd167d4cdd96d38f365c934a6b38e3fb4dee83a56f  jis/data/unsat/six_w13_p7.cnf.gz
+4faa5b17ec88a95d2894fbb8435389854ea42bb52d96c81b84e65c99f37059e2  jis/data/unsat/six_w13_p8.cnf.gz
+350f1f981347a7d44b0b002d44164be17ed5ded9ab06c452fb464b13389b58a3  jis/data/unsat/six_w13_p9.cnf.gz
+6eedb7d75b3f8f5640fa864eae988b5bc4253bea2e074add8075f73a2b9f46c8  jis/data/unsat/six_w14_p0.cnf.gz
+fb8334ef08461b34613b3f1a40ac6ff99402858713b24a0ea9eac875dc7c3bbf  jis/data/unsat/six_w14_p1.cnf.gz
+cb32da56b68f741e65e28eb6f1e5298d73ab7dfc439e8413afb60cc5c792139c  jis/data/unsat/six_w14_p2.cnf.gz
+360cefde31791361c7816b6946d7816884024d775c01c4a1a7e909f2b43f71b1  jis/data/unsat/six_w14_p3.cnf.gz
+7fd934bce7f2269bbcde96370223923e03d5910f6caa3d2adb18ece98c647cbe  jis/data/unsat/six_w14_p4.cnf.gz
+54d69fca61b840a24fd6d3261806b924346a6da0c17174db0d149cfceda60c65  jis/data/unsat/six_w14_p5.cnf.gz
+db22e4744774a7a1b28b43186d2becffe1b5032bd5766872cc3da1bea9067bd4  jis/data/unsat/six_w14_p6.cnf.gz
+ac2b92cec3c3c63640f5058e214486b114f96163bbdce116f2de3d27969179d1  jis/data/unsat/six_w14_p7.cnf.gz
+08cd83885e68d4bf7c690f126428cbd336fed12e0eeb72bb6d64efd6f07b4e0b  jis/data/unsat/six_w14_p8.cnf.gz
+aeb7b98d6a23e0ee7480088fccb354a404f4d01288372d3d9feeef6951c39222  jis/data/unsat/six_w14_p9.cnf.gz
+c3dffe3f11dbbc35c0049dd3595a40afa000acef11096b5f281d4b1a2706fcef  jis/data/unsat/six_w8_p0.cnf.gz
+de71abe8fbb048d130e0f5ff82e53b7205199b896c2ea29602f4e6260c5e1df6  jis/data/unsat/six_w8_p1.cnf.gz
+2d541c63a25d78b7913a1dfbf9ef0efeb066d3768602633dc753716316acf7bf  jis/data/unsat/six_w8_p2.cnf.gz
+e35ebe56fa0b9018d759d5d15d0b538d89e26a55fb7e380ebe35d5a43cf0c16a  jis/data/unsat/six_w8_p3.cnf.gz
+ea34669ec38e53117f17e2beb84451544d92aab52c3304a10f679803a367c80a  jis/data/unsat/six_w8_p4.cnf.gz
+95e2e851a33f751aab9416b113d7e4d5caee0171e144daac1f80255a2bb437e9  jis/data/unsat/six_w8_p5.cnf.gz
+a38409cea485d077a79a9904f3e12ed588a777be746a606da0f27af2ab2b414f  jis/data/unsat/six_w8_p6.cnf.gz
+cada9a1443e6f5ac883c233b662803e3beed032a71e6d452ebabb0e2516375c1  jis/data/unsat/six_w8_p7.cnf.gz
+311e0d3565a2f898f36b94a8baafd8eae80c9d82f75ec8abc56e91d7b30aed73  jis/data/unsat/six_w8_p8.cnf.gz
+29b119f34e1c4aa878703b43ac614f17e7e96442115272dd471659f59ef109c2  jis/data/unsat/six_w8_p9.cnf.gz
+6063eb1c68d5504a625a11e456e42f93f6d3bdfacff61f836d6aafc30b35aa8b  jis/data/unsat/six_w9_p0.cnf.gz
+d9de66f9a1281dd0978f606adaac5310b81aeb908172207e6aa2dc3ca0137802  jis/data/unsat/six_w9_p1.cnf.gz
+01cc1df11117b2c61423e034b5d54f9a106778c7ec22637743e517b9adfd47fc  jis/data/unsat/six_w9_p2.cnf.gz
+7f2ad4c0499e4c60c49f15d54238a8c77c3ccbe0ba0d4d10b78e9a5ed57aa3f7  jis/data/unsat/six_w9_p3.cnf.gz
+f4312fdccee9ebf86175e81aa83663ec791c75e8a8d10e0df6a247652ea500f8  jis/data/unsat/six_w9_p4.cnf.gz
+bb3bd45862dcc81fb7381f78baacde13a2386cef003ecb1720233cba370cacb9  jis/data/unsat/six_w9_p5.cnf.gz
+618c374a1077a7aa89df08cbe3e63dee3c3d19d72171d2a42a15e7ba7358c1f9  jis/data/unsat/six_w9_p6.cnf.gz
+7b915b9a9e1068908a636d43fdb4a200eaf4503fd2047537da2a58f100982d4f  jis/data/unsat/six_w9_p7.cnf.gz
+13449281b2bc31df10493b51fe15e5d936b1791832255a1cd185afb7d111de56  jis/data/unsat/six_w9_p8.cnf.gz
+5552198509849d3bfb343e4dfd877239464679e6017981fd5bc76830d724ace9  jis/data/unsat/six_w9_p9.cnf.gz
+# R12 certificate sources
+a1f4d872dc2c053856df757670b861845e9dddeec27d600f1cfec71347d601dc  jis/scripts/unsat_export_cnf.py
+0167f9ddb6dfb3d23b80ac9a9f7a0c5b04c61916f41d8754dd55185a0dad7c1a  jis/scripts/unsat_cnf_crosscheck.py
+e9be6d9df988c7bbdee4f05befba5f9d9f37dceb7aeb9af75430293a5866db9f  jis/unsat/pipeline.py
+8fd7abf4719caf41750c3ede10c762e23773a0d1cc547bb4dcd7ca5ab0678e86  jis/unsat/collect.py
+4cdc01fa05097f58998f65b60dd189ad6105a566c5459160010ed4cab2db8883  jis/unsat/faithfulness.txt
+6323e3d9c62c861f82a719d976c8b697668540af6798432d1967f6cefcd69b40  jis/unsat/lean/Main.lean
+30bba7c35b42e20333deb144c5613a73390d0e674ff44f828905bfb64638a6b1  jis/unsat/lean/lakefile.lean
+3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71  jis/unsat/lean/lean-toolchain
+c0b2cfc198f2d25e7f45af81585b1abe4091542b2d0249abe4c9e12210b30b37  jis/unsat/cshim/assert.h
+8cee1ece01171b9bcb3c75bc9b8869ab5a336be0a908e009a0ce07f1caef974b  jis/unsat/cshim/stdio.h
+78f38de06b9e0e7b210c509392e09558056555031c821b156e5e1ca38ae9c84d  jis/unsat/cshim/stdlib.h
+4209e5778784aeeaf384661eb1de13232679d38451a0206340ae0b6322288203  jis/unsat/cshim/sys/time.h
 ```
