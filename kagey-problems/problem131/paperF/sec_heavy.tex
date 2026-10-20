@@ -1,6 +1,7 @@
 \section{Heavy-tailed runs}\label{sec:heavy}
 
-In this section the walk remembers the time since its last switch. The steps
+In this section the walk remembers the time since its last switch, and we
+compare its ends with its center for every exponent $\alpha>0$. The steps
 form maximal runs whose directions alternate. The first run has length $D$,
 and the later runs have i.i.d.\ lengths $\xi_1,\xi_2,\dots$ distributed as
 $\xi$, where
@@ -9,18 +10,17 @@ $\xi$, where
 \]
 for some $\alpha>0$. So $\Prob(\xi=k)=k^{-\alpha}-(k+1)^{-\alpha}>0$ for every
 $k\ge1$. The first direction is fair, and $D$, $(\xi_i)$ and the first
-direction are independent. In probability theory this is the one-dimensional
-directionally reinforced random walk~\cite{mmw1996,horvathshao1998}, and a
-persistent random walk in the sense of~\cite{clnlo2018,clnlo2019}. In physics
-it is a lattice L\'evy walk. With a fresh start $D$ has the law of $\xi$. For
+direction are independent.
+
+With a fresh start $D$ has the law of $\xi$. For
 $\alpha>1$ the stationary start is $\Prob(D=\ell)=\bar F(\ell)/\mu$, where
 $\mu=\E\xi=\zeta(\alpha)$. This law is stationary in the following sense. The
 number of steps left in the current run, counting the current one, is a Markov
 chain that moves from $k\ge2$ to $k-1$ and from $1$ to a fresh copy of $\xi$.
 Since $\bar F(k)=\bar F(k+1)+\Prob(\xi=k)\bar F(1)$, the law $\bar F(k)/\mu$
 is invariant for this chain. So the stationary start sees the runs at a
-typical time. We define $A_N$, $P_N$, $C_N$ and $E_N$ as in
-Section~\ref{sec:notation}, and put $R_N=E_N/C_N$. In this section the constants implied by
+typical time. We define $A_N$, $P_N$, $C_N$, $E_N$ and $R_N=E_N/C_N$ as in
+Section~\ref{sec:notation}. In this section the constants implied by
 $O(\cdot)$ may depend on $\alpha$.
 
 \begin{proposition}[the end]\label{prop:edge}
@@ -113,7 +113,7 @@ start $u^D_m=u_m$ and $q^D_m=q_m$, which gives the last formula.
 For a fresh start this identity is the coefficient form of the double transform of Godr\`eche
 and Luck~\cite[Section~7]{godrecheluck2001} for the occupation time of an
 alternating renewal process. A general first run only changes the factors
-$u^D_m$ and $q^D_{m+1}$. To evaluate it we need the stable limit of
+$u^D_m$ and $q^D_{m+1}$. To evaluate the sum we need the stable limit of
 $\tau_m$ and its local form.
 
 \begin{lemma}[stable and local limits]\label{lem:stable}
@@ -170,7 +170,7 @@ $\lvert\theta\rvert^\alpha\cos\frac{\pi\alpha}2$, which is negative because
 $1<\alpha<2$. So the limit has modulus
 $\exp(-\frac12\sigma_\alpha\lvert\theta\rvert^\alpha)$. It is continuous at
 $0$, so by L\'evy's continuity theorem it is the characteristic function of a
-variable $G$, and $Z_m$ converges in law to $G$. It is integrable, so by
+variable $G$, and $Z_m$ converges in law to $G$. This characteristic function is integrable, so by
 Fourier inversion $G$ has a bounded, uniformly continuous density $g$, and
 $g$ vanishes at infinity by the Riemann--Lebesgue lemma (the domain of
 attraction also follows from~\cite[Section~XVII.5]{feller1971}).
@@ -225,7 +225,7 @@ $\lvert m\mu-h\rvert$ of order $b_h$, and there are $b_h/\mu$ of them for
 each unit of $z$. Proposition~\ref{prop:tworenewal} has two terms of this
 kind for each $m$, so $C_N$ is about
 $2\cdot\frac1{b_h}\cdot\frac\mu{b_h}\cdot\frac{b_h}\mu\int g^2=2I_\alpha/b_h$.
-The proof is in Appendix~\ref{app:heavy}.
+The proof is in Appendices~\ref{app:heavy-setting} to~\ref{app:heavy-center}.
 
 \begin{table}[t]
 \centering\footnotesize
@@ -252,9 +252,9 @@ brackets.}
 \centering
 \includegraphics{figures/heavy}
 \caption{Alternating runs with a stationary start. (a)
-$R_N/(C(\alpha)N^{e(\alpha)})$ for even $N$ from 100 to $10^5$, with the
+$R_N/(C(\alpha)N^{e(\alpha)})$ for even $N$ from $100$ to $10^5$, with the
 entries of Table~\ref{tab:heavy} as dots. (b) $R_N$ for
-$\alpha=1.5,1.55,1.58,1.59$ below $\varphi$. Each curve crosses 1 once on
+$\alpha=1.5,1.55,1.58,1.59$ below $\varphi$. Each curve crosses $1$ once on
 $10\le N\le3\cdot10^4$, at $N^*(\alpha)$ (circles).}
 \label{fig:heavy}
 \end{figure}
@@ -285,7 +285,8 @@ start $e(\alpha)-1<0$, and the center wins for every $1<\alpha<2$.
 \end{corollary}
 
 \begin{proof}
-By Proposition~\ref{prop:edge} and Theorem~\ref{thm:center}, with $h=N/2$, we
+We prove the general formula, then read off the two starts, and then treat
+$\alpha=\varphi$. By Proposition~\ref{prop:edge} and Theorem~\ref{thm:center}, with $h=N/2$, we
 have $R_N=\Prob(D\ge N)/(2C_N)$, and this is asymptotic to
 $c_DN^{-\beta_D}/(4I_\alpha(2\mu/N)^{1/\alpha})$, which is the general formula.
 By Lemma~\ref{lem:stable}(iv),
@@ -297,7 +298,7 @@ $e(\alpha)=-(\alpha^2-\alpha-1)/\alpha$, and $\varphi$ is the positive root of
 $\alpha^2-\alpha-1$. At $\alpha=\varphi$ we have $\alpha-1=1/\varphi$,
 $1+1/\alpha=\varphi$ and $2-\alpha=\varphi^{-2}$. So
 $K_\varphi=\varphi\,\Gamma(\varphi^{-2})$, and substituting these into
-$C(\alpha)$ gives the closed form. To see that $C(\varphi)<1$, use four
+$C(\alpha)$ gives the closed form. To see that $C(\varphi)<1$, we use four
 elementary bounds. Since $x^{-\varphi}$ is convex, the trapezoid rule
 overestimates its integral over $[1,\infty)$, so
 $\zeta(\varphi)-\frac12\ge1/(\varphi-1)=\varphi$. The minimum of $\Gamma$ on
@@ -323,7 +324,7 @@ into humps. If the speed is
 redrawn at each collision, the humps have width of order $t$ and height of
 order $t^{-\alpha}$, and if it fluctuates during each flight, they have width
 of order $t^{1/2}$ and height of order
-$t^{1/2-\alpha}$~\cite[Table~I]{dzh2012}. Matching these heights with the
+$t^{1/2-\alpha}$~\cite[Table~I]{dzh2012}. As a heuristic, matching these heights with the
 height $t^{-1/\alpha}$ of the central
 peak~\cite[Section~6.2.1.3, Eq.~(6.49)]{wlh2016} gives $\alpha=1$ in the first case, so the center wins for
 every $1<\alpha<2$, and in the second case the root
