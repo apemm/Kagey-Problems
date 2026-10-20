@@ -144,7 +144,7 @@ def boards():
            (15, 2), (15, 3), (16, 1), (16, 2)}
     assert len(s16) == 16 + 9
     check_valid(6, 16, s16)
-    s = 0.8
+    s = 0.68
     write('board13.tex', tikz(s, picture(5, 13, board13, s, caption='(a)')))
     write('board16.tex', tikz(s, picture(6, 16, s16, s, caption='(b)')))
 
