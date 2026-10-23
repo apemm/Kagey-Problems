@@ -7,6 +7,12 @@ N = 150 and 300, the census of graphs on 6 states, the sticky switches at
 N = 480, the telegraph comparison at N = 16000, and the cells at N = 160 of the
 first-order section. The planar cells are now in ../paperE.
 Needs numpy, scipy, sympy and mpmath.
+
+Since October 2026 this paper incorporates Paper B (../paperB). The checks of the statements that
+came from Paper B are the scripts of ../paperB, run by ../paperB/verify_all.py (or
+`python -B verify_all.py --paper b` in the folder problem131). The sticky-prior checks in
+verify_sticky_fisher.py belong to the note ../S3_sticky_note, and its Fisher checks to the note
+../S1_endpoint_information_note.
 """
 from pathlib import Path
 import argparse
@@ -23,10 +29,11 @@ args = parser.parse_args()
 # one script per topic, matching the ledgers ledger_C1.md to ledger_C5.md
 scripts = ('verify_first_order.py',      # C1: exact law, the rate on a face, first-order selection
            'verify_examples.py',         # C2: complete graphs, cycles, paths, 2 triangles, the paw and the house
-           'verify_sticky_fisher.py',    # C4: sticky priors (and the endpoint information note S1)
+           'verify_sticky_fisher.py',    # C4: sticky priors (now the note S3) and the endpoint information note S1
            'verify_second_order.py',     # C5: the local law, the constants and the crossings
-           'verify_forest.py',           # Proposition 4.15 and Lemma A.3: the tree formula (about five minutes)
-           'verify_rate_flows.py')       # Proposition 4.16: the rate through flows
+           'verify_forest.py',           # Proposition 4.9 and Lemma A.3: the tree formula (about five minutes)
+           'verify_rate_flows.py',       # Remark 4.12: the rate through flows
+           'verify_weak_field.py')       # Proposition 4.16: a weak field (about a minute)
 t0 = time.time()
 for name in scripts:
     print(f'\nRunning {name}' + (' --full' if args.full else ''), flush=True)

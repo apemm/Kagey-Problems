@@ -1,0 +1,107 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1.05in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,microtype,xcolor,graphicx}
+\usepackage[shortlabels]{enumitem}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\usepackage{xr}
+% Statement numbers of the merged Paper C, read from its build. Build
+% ../paperC/problem131_switching.tex first.
+\externaldocument[C-]{../paperC/problem131_switching}
+\hypersetup{pdftitle={Sticky priors and the most likely count vector},pdfauthor={Arjun Pemmasani}}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\R}{\mathbb R}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Prob}{\mathbb P}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\ones}{\mathbf 1}
+\emergencystretch=1.5em
+\title{Sticky priors and the most likely count vector\\[4pt]
+\large Working note S3 (moved out of Paper~C, October 2026)}
+\author{Arjun Pemmasani}
+\date{October 2026}
+\begin{document}
+\maketitle
+
+\section{Setting}\label{sec:setting}
+
+This note was Section~6 and Appendix~D of an earlier version of Paper~C,
+``Face selection for slowly switching Markov chains''~\cite{paperC}. When
+Paper~B~\cite{paperB} was merged into Paper~C in October 2026, the application
+to sticky priors moved here. The mathematics is unchanged. The statement
+numbers of~\cite{paperC} that we quote are those of the merged paper.
+
+We recall what we need from~\cite{paperC}. A chain on $d$ states has the
+transition matrix $I+hQ$, where $Q$ is a generator with rates $q_{ij}\ge0$ for
+$i\ne j$ and exit rates $q_i=\sum_{j\ne i}q_{ij}$. It runs for $N$ steps, its
+first state has the law $\mu$, and $h=T/N$, $L=\log N$ and $\tau=T/L$. The
+composition $n$ counts the visits to each state, and $P_N(n)$ is its law. A
+face is a nonempty set $F$ of states, its exit rate $\lambda_F$ is minus the
+Perron root of $Q$ restricted to $F$, and for an irreducible face
+$\alpha^*_F=l_F\circ r_F$ is its quasi-ergodic law, the entrywise product of
+the left and right Perron vectors with $l_F\cdot r_F=1$. Put
+$\Phi_\tau(F)=\tau\lambda_F+|F|-1$. First-order face selection
+(Theorem~\ref*{C-thm:first} of~\cite{paperC}) says that for large $N$ every most
+likely composition has a support that minimizes $\Phi_\tau$ among the faces that
+a path can use, and that its fractions are within $O(1/L)$ of $\alpha^*_F$
+when these faces are irreducible.
+
+For two states with $q_{12}=q_{21}=1$, $S_{a,b}(u)$ is the sum of $u^{s(w)}$
+over the words $w$ with $a$ letters $1$ and $b$ letters $2$, where $s(w)$ is
+the number of switches of $w$, and $S_N=S_{\lfloor N/2\rfloor,\lceil
+N/2\rceil}$. The equation $S_N(u)=1$ has exactly one positive root $u_N$. Put
+$p_N=1/(1+u_N)$, $z_N=N(1-p_N)$ and $c_0=\frac12\log(\pi/8)$. Paper~A~\cite{paperA}
+studies these numbers at every $N$.
+
+\input{s3_body.tex}
+
+\appendix
+\input{s3_appendix.tex}
+
+\section*{Computations}
+The checks of this note are in the script \texttt{verify\_sticky\_fisher.py} in the
+folder \nolinkurl{kagey-problems/problem131/paperC} of
+\url{https://github.com/apemm/Kagey-Problems} (its part on sticky priors), and
+the finite steps are in the Lean module \nolinkurl{lean/PaperC/Sticky.lean}.
+
+\begin{thebibliography}{9}\small
+
+\bibitem{bermanplemmons1994}
+A.~Berman and R.~J.~Plemmons, \emph{Nonnegative Matrices in the
+Mathematical Sciences}, SIAM, Philadelphia, 1994.
+\url{https://doi.org/10.1137/1.9781611971262}.
+
+\bibitem{fox2011}
+E.~B.~Fox, E.~B.~Sudderth, M.~I.~Jordan and A.~S.~Willsky, \emph{A sticky
+HDP-HMM with application to speaker diarization}, Ann.~Appl.~Stat.~\textbf{5}
+(2011), 1020--1056. \url{https://doi.org/10.1214/10-AOAS395}.
+
+\bibitem{paperA}
+A.~Pemmasani, \emph{Uniform Bessel bounds for magnetization crossings in finite
+Ising chains}, preprint, 2026.
+\href{https://arxiv.org/abs/2610.06935}{arXiv:2610.06935}.
+
+\bibitem{paperB}
+A.~Pemmasani, \emph{Vertex crossings in a symmetric Markov multinomial
+model}, preprint, 2026.
+\href{https://arxiv.org/abs/2610.09258}{arXiv:2610.09258}.
+
+\bibitem{paperC}
+A.~Pemmasani, \emph{Face selection for slowly switching Markov chains}, in
+preparation. Draft in the folder \nolinkurl{kagey-problems/problem131/paperC}
+of \url{https://github.com/apemm/Kagey-Problems}.
+
+\end{thebibliography}
+
+\end{document}

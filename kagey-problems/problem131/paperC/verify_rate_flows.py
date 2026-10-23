@@ -1,4 +1,9 @@
-"""Checks for the rate on a face written through flows (Proposition `prop:flows`).
+"""Checks for the rate on a face written through flows (Remark `rem:flows` of the paper).
+
+Until the merge with Paper B in October 2026 this was Proposition 4.16 of the paper, with the
+worked Example 4.18 (a cycle with a drift). The merged paper keeps its content as Remark 4.12,
+with the minimizing flow cited from Bertini, Faggionato and Gabrielli and from Kim and Landim.
+Part G checks the numbers of that example, which is no longer in the paper.
 
 For an irreducible face F and alpha in the open simplex, the rate is
    I_F(alpha) = sup_psi  sum_i alpha_i q_i - sum_{i != j} alpha_i q_ij exp(psi_j - psi_i).

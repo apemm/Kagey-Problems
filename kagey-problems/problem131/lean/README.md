@@ -14,6 +14,11 @@ Paper D. `PaperC` also holds the Lean proofs for Paper E, and `PaperD` those for
 which moved some results to Online Resource 1 (`paperD/online_resource.tex`), and lists the
 numbers that changed that day.
 
+In October 2026 Paper B was merged into Paper C, which keeps its title and folder, and the
+application to sticky priors moved out of Paper C to the note `S3_sticky_note`. `PaperC/MAP.md`
+now maps the merged paper, including its statements from Paper B, whose Lean files stay in
+`PaperB/`. `PaperB/MAP.md` keeps the numbers of Paper B as posted on arXiv.
+
 ## Paper A (`paperA/problem131.tex`)
 
 `PaperA/` is about the binary walk. It proves the following.
@@ -108,7 +113,7 @@ numbered result of Paper A is formalized except the Mehler–Heine limit for rea
 Remark 4.7, which the paper cites. The items that are not formalized are listed below under
 "What is not in Lean".
 
-## Paper B (`paperB/problem131_multistate.tex`)
+## Paper B (`paperB/problem131_multistate.tex`, now incorporated into Paper C)
 
 `PaperB/` is about the walk with `d` states. It proves the following.
 
@@ -142,8 +147,9 @@ Remark 4.7, which the paper cites. The items that are not formalized are listed 
   `DisjointJumps`).
 - The planar walk to first order, the exact origin/corner identity and the unique crossing
   (`Planar`).
-- The direct-jump criterion and the other finite facts about sticky priors, and the Fisher
-  efficiency identity (`Sticky`, `Fisher`).
+- The direct-jump criterion and the other finite facts about sticky priors (now the note
+  `S3_sticky_note`), and the Fisher efficiency identity (now the note
+  `S1_endpoint_information_note`) (`Sticky`, `Fisher`).
 - The second-order constants in finite form, namely the directed 3-cycle, the tree formula for small
   faces, the constants of Papers A and B and the `K_3` edge window (`Constants`, `ChainApps`).
 

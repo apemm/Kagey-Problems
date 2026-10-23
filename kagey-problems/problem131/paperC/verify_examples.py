@@ -1,4 +1,4 @@
-"""Checks for Sections 3 and 5 of Paper C (the geometry of the winners and the examples).
+"""Checks for Sections 3 and 7 of Paper C (the geometry of the winners and the examples).
 
 First order. The exit rate of a face F is lambda_F = -(Perron root of Q_F), and
 the winners for a given tau minimize tau lambda_F + |F| - 1 over the admissible
@@ -375,7 +375,7 @@ def check_complete_and_census(full):
 def check_cycles():
     print('\nTable 2, row C_d: arcs and the cycle cascade', flush=True)
     lam = lambda k: 4 * sin(pi / (2 * (k + 1))) ** 2        # = 2 - 2cos(pi/(k+1)), without cancellation
-    # arcs, and non-arc faces (Remark 5.3)
+    # arcs, and non-arc faces (Remark 7.2)
     worst = 0.0
     for d in range(3, 11):
         lA = exit_rates(W_cycle(d))
@@ -561,7 +561,7 @@ def check_C5(full):
     printed = {40: ('2.538112', '5.122981', '6.883529'), 72: ('3.077562', '6.389395', '8.601750')}
     for N in ((40, 72) if full else (40,)):
         fm = {n: FaceMax(W, F, mu, mmax=N if len(F) < 5 else N // 5 + 3) for n, F in faces.items()}
-        # the balanced pair is exact by Proposition 4.9 and Paper A
+        # the balanced pair is exact by Proposition 5.1 and Paper A
         u_of = lambda T: (T / N) / (1 - 2 * T / N)
         t1 = brentq(lambda T: S_ab(N // 2, N // 2, u_of(T)) - 1, 0.5, 6, xtol=1e-12)
         t1b = brentq(lambda T: fm['arc2'].value(N, T)[0] - fm['arc1'].value(N, T)[0], 0.5, 6, xtol=1e-10)

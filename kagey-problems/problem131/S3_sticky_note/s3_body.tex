@@ -1,29 +1,25 @@
-\section{Application: sticky priors for hidden Markov models}\label{sec:sticky}
-
-This section is an application for readers from statistics. Nothing earlier
-depends on it, and a reader who is interested only in the general theory
-can skip to Section~\ref{sec:verify}.
+\section{Sticky priors and the most likely count vector}\label{sec:sticky}
 
 In a hidden Markov model the hidden states $X_1,\dots,X_N$ form a Markov chain
 on $d$ states. Before any data are seen, the model already says how the $N$
 time steps are likely to be shared among the states. This is the law $P_N$ of
 the count vector $n=(n_1,\dots,n_d)$, where $n_i$ is the number of time steps in
-state $i$ (the composition of Section~\ref{sec:model}). A sticky prior makes
-the chain leave its current state rarely, which is the regime of this paper.
+state $i$ (the composition of~\cite{paperC}). A sticky prior makes
+the chain leave its current state rarely, which is the regime of~\cite{paperC}.
 We ask which states the most likely count vector uses.
 
-Here is what we use from the earlier sections. Suppose the chain leaves its
+Here is what we use from~\cite{paperC}. Suppose the chain leaves its
 state with probability $h=\tau\log N/N$ at each step and then picks the next
 state from a kernel $\Pi$. For a set $F$ of states (a face) let $\rho_F$ be
 the Perron root of $\Pi$ restricted to $F$. The chain stays in $F$ for all $N$
 steps with probability about $N^{-\tau(1-\rho_F)}$, and about $N^{|F|-1}$ count
-vectors use exactly the states of $F$. Theorem~\ref{thm:first} says that for
+vectors use exactly the states of $F$. Theorem~\ref*{C-thm:first} of~\cite{paperC} says that for
 large $N$ the most likely count vector uses a set $F$ that minimizes
 $\Phi_\tau(F)=\tau(1-\rho_F)+|F|-1$, and that its fractions $n/N$ are then
 close to the law $\alpha^*_F$, the entrywise product of the left and right
 Perron vectors of $\Pi$ on $F$. Besides this we use the description of a tie
-between several minimizers (Theorem~\ref{thm:window}) and the exact identity
-for a symmetric pair of states (Proposition~\ref{prop:pair}), once each.
+between several minimizers (Theorem~\ref*{C-thm:window} of~\cite{paperC}) and the exact identity
+for a symmetric pair of states (Proposition~\ref*{C-prop:pair} of~\cite{paperC}), once each.
 
 The answer is as follows. As the stickiness decreases, that is, as $\tau$
 grows, the most likely count vector moves from one state to larger sets of
@@ -54,7 +50,7 @@ treat it. All results of this section are about the law given $\Pi$ and $h$.
 So let $\Pi=(\pi_{ij})$ be a stochastic matrix on $[d]$ with zero diagonal,
 $\tau>0$ and $h=\tau L/N<1$. The hidden chain has transition matrix
 $(1-h)I+h\Pi=I+hQ$ with $Q=\Pi-I$, so
-$q_i=1$ and $T=\tau L$ (Example~\ref{ex:models}(iii)). We assume that
+$q_i=1$ and $T=\tau L$ (Example~\ref*{C-ex:models}(iii) of~\cite{paperC}). We assume that
 $\pi_{ij}>0$ for all $i\ne j$, which we call (A+), and that the start $\mu$ has
 full support. Under the prior, \textup{(A+)} holds almost surely. Let
 $\rho_F=\varrho(\Pi_F)$ for the principal submatrix $\Pi_F$ on $F$. Then the
@@ -89,13 +85,13 @@ proportions $\alpha^*_F$.
 
 \begin{proof}
 By (A+) every face is irreducible and, as $\mu$ has full support,
-admissible. So Theorem~\ref{thm:first}(iii) and~(iv) give the claims, with
+admissible. So Theorem~\ref*{C-thm:first}(iii) and~(iv) of~\cite{paperC} give the claims, with
 $\alpha^*_F=l\circ r$.
 \end{proof}
 
 The threshold $N_0(\tau)$ is not uniform in $\tau$. At $\tau=\tau_-$ the
 vertices tie with the faces that attain $\tau_-$, and
-Theorem~\ref{thm:window}(iii) with $\tau^*=\tau_-$ and a fixed large $t=t_0$
+Theorem~\ref*{C-thm:window}(iii) of~\cite{paperC} with $\tau^*=\tau_-$ and a fixed large $t=t_0$
 shows that for large $N$ the conditional mode is not a single state at
 $\tau=\tau_-(1-\frac{\log L-2t_0}{2L})<\tau_-$. So $N_0(\tau)\to\infty$ as
 $\tau\uparrow\tau_-$.
@@ -174,7 +170,7 @@ $\tau=d-1$. For the uniform kernel $\pi_{ij}=1/(d-1)$ the matrix $\Pi_F$ has
 constant row sums, so $\rho_F=(|F|-1)/(d-1)$. Hence
 \eqref{eq:directjump} says that every set of states is at least as easy to
 leave as under the uniform kernel. That kernel has $Q=(J-dI)/(d-1)$, and all its faces tie at
-$\tau=d-1$. This is the degeneracy of~\cite{paperB} (Corollary~\ref{cor:paperB}).
+$\tau=d-1$. This is the degeneracy of the complete graph, the Potts chain of~\cite{paperB}, which~\cite[Section~\ref*{C-sec:complete}]{paperC} treats.
 The next corollary shows that a direct jump is special.
 
 \begin{corollary}[only the uniform kernel]\label{cor:uniform-kernel}
@@ -269,7 +265,7 @@ value of $\tau$ at which the pair overtakes the state is known at every $N$ and
 not only in the limit.
 
 \begin{proof}
-We apply Proposition~\ref{prop:pair}. Every exit rate is $1$, so its
+We apply Proposition~\ref*{C-prop:pair} of~\cite{paperC}. Every exit rate is $1$, so its
 hypotheses hold with $a=\pi_0$ and $q=1$, and its odds are $u=\pi_0h/(1-h)$. It
 says that the balanced compositions are the most likely ones on $\{i,j\}$ and
 that they beat $Ne_i$ exactly when $u>u_N$. Solving for $h$, this is
@@ -282,7 +278,7 @@ $u_N/(\pi_0+u_N)<1$.
 
 Finally $Nu_N=z_N/p_N$ and $u_N=O(L/N)$, so
 $\tau^{\rm pair}(N)=\frac{z_N}{\pi_0L}(1+O(L/N))$. By
-Corollary~\ref{cor:paperA}, $z_N+\frac12\log z_N=L+c_0+O(1/L)$ and $z_N$ is of
+Corollary~\ref*{C-cor:paperA} of~\cite{paperC}, $z_N+\frac12\log z_N=L+c_0+O(1/L)$ and $z_N$ is of
 order $L$, so $\log z_N=\log L+O(\log L/L)$ and
 $z_N=L-\frac12\log L+c_0+O(\log L/L)$. Dividing by $\pi_0L$ gives the claim.
 \end{proof}

@@ -1,30 +1,23 @@
-\documentclass[11pt]{article}
+\documentclass[EJP,preprint]{ejpecp}
+% Paper C of Problem 131, merged with Paper B (arXiv:2610.09258) in October 2026.
+% The class ejpecp is in TeX Live (package texlive-publishers on Debian and Ubuntu).
+% The supplement supplement.tex builds on its own. Build this file and the supplement
+% three times each; the cross-references between them are read from their .aux files.
 
-\usepackage[margin=1.05in]{geometry}
-\usepackage{amsmath,amssymb,amsthm}
-\usepackage{mathtools}
-\usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{array}
-\usepackage{microtype}
 \usepackage{xcolor}
 \usepackage{tikz}
 \usepackage[shortlabels]{enumitem}
-\usepackage[colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
-\hypersetup{pdftitle={Face selection for slowly switching Markov chains},pdfauthor={Arjun Pemmasani}}
+\usepackage{xr}
+\externaldocument[S-]{supplement}
+\newcommand{\sref}[1]{\ref*{S-#1}}
 
-% ---------- theorem environments ----------
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{corollary}[theorem]{Corollary}
+% ---------- theorem environments (the class defines theorem, lemma, proposition,
+% corollary, definition, example and remark, numbered within sections) ----------
+\theoremstyle{ejpecpbodyit}
 \newtheorem{introtheorem}{Theorem}
 \renewcommand{\theintrotheorem}{\Alph{introtheorem}}
-\theoremstyle{definition}
-\newtheorem{definition}[theorem]{Definition}
-\newtheorem{example}[theorem]{Example}
-\theoremstyle{remark}
-\newtheorem{remark}[theorem]{Remark}
 
 % ---------- notation macros ----------
 \newcommand{\Z}{\mathbb{Z}}
@@ -39,18 +32,17 @@
 \newcommand{\arb}{\operatorname{arb}}
 
 \graphicspath{{figures/}{../figures/}}
+\emergencystretch=1em
 
-\title{Face selection for slowly switching Markov chains}
-\author{Arjun Pemmasani\\[2pt]
- \small Department of Mathematics, Harvey Mudd College\\
- \small Claremont, CA 91711, USA\\
- \small \texttt{apemmasani@hmc.edu}}
-\date{}
-\begin{document}
-\maketitle
-
-\begin{abstract}
-We consider a Markov chain on a finite state space that rarely switches
+\TITLE{Face selection for slowly switching Markov chains}
+\SHORTTITLE{Face selection for slowly switching Markov chains}
+\AUTHORS{Arjun Pemmasani\footnote{Department of Mathematics, Harvey Mudd College,
+Claremont, CA 91711, USA. \EMAIL{apemmasani@hmc.edu}}}
+\KEYWORDS{occupation times of Markov chains; mode; principal Dirichlet eigenvalue;
+quasi-stationary distribution; local limit theorem; persistent random walk; correlated
+random walk; Potts chain; spanning trees}
+\AMSSUBJ{60J10; 60J27; 60F05; 60F10; 60G50; 82B20; 05C05}
+\ABSTRACT{We consider a Markov chain on a finite state space that rarely switches
 states, and its occupation counts, the numbers of steps that it spends in each
 state up to time $N$. The most likely vector of counts uses only some set of
 states, and we find which set. Two effects compete. The chain must never
@@ -64,103 +56,112 @@ set without leaving it, a local limit theorem inside the set gives the
 constant in front. With it we locate the value of $T$ at which two such sets
 are equally likely, up to an error that tends to zero, and we find the next
 term. A chain that cycles through three states shows that the answer can
-change without this condition. We also apply the rule to sticky hidden Markov
-models, given the kernel of the switches and a common exit probability.
-\end{abstract}
+change without this condition. On the complete graph, which is the finite Potts
+chain, every set ties at first order, and explicit constants rank the sets at second
+order, so the most likely vector jumps once, from one state to all states, while a
+start law or a weak field can let a set of intermediate size win, and a suitable
+field lets every size win in turn. Near a single state, the value of $T$ at which a
+vector with a few rare counts is as likely as that state is given by the root of a
+product of Laguerre polynomials, with an explicit error.}
 
-\medskip
-\noindent\textbf{Keywords:} occupation times of Markov chains; mode; principal
-Dirichlet eigenvalue; quasi-stationary distribution; local limit theorem;
-persistent random walk; correlated random walk; hidden Markov model.
-
-\noindent\textbf{MSC2020:} 60J10; 60J27; 60F05; 60F10; 60G50; 62M05.
+\begin{document}
 
 \input{sec_intro.tex}
 \input{sec_model.tex}
 \input{sec_firstorder.tex}
 \input{sec_secondorder.tex}
+\input{sec_complete.tex}
+\input{sec_vertex.tex}
 \input{sec_examples.tex}
-\input{sec_sticky.tex}
 \input{sec_verify.tex}
-
-\paragraph{Acknowledgments.} I thank Peter Kagey for posing the problem.
-
-\section*{A note on the use of AI}
-% AI NOTE: to be written by the author.
-All mathematical claims, proofs and computations in this paper are my responsibility.
 
 \appendix
 \input{app_torus.tex}
 \input{app_laplace.tex}
-\input{app_examples.tex}
-\input{app_hdp.tex}
+\input{app_complete.tex}
+\input{app_vertex.tex}
 
-\section*{Statements and declarations}
-\paragraph{Competing interests.} The author has no competing interests to
-declare.
+\begin{acks}
+I thank Peter Kagey for posing the problem, and Chase Hameetman and Aidan Deshong for
+insightful conversations about some of the proofs of the preprint~\cite{paperB}, which this
+paper incorporates. The author has no competing interests to declare. No funding was received for
+this work.
+\end{acks}
 
-\paragraph{Funding.} No funding was received for this work.
+\section*{A note on the use of AI}
+% TODO(author): the author will complete this note.
+Most results of Sections~\ref{sec:complete} and~\ref{sec:vertex} come from
+the preprint~\cite{paperB}. For that preprint I brainstormed conjectures with Claude Opus 5.5
+(Anthropic, through Claude Code), and several results came from it together with proofs. Of these,
+this paper contains the tree form of the constants
+(Example~\ref{ex:complete-face} and the constant $D(\alpha)$ in~\eqref{eq:interior}), the global
+modes with a start (Corollary~\ref{cor:start-modes}) and the example in which the start decides
+which face wins (Example~\ref{ex:K3-start}). I rechecked and rederived these proofs by hand. I
+also checked the proofs with GPT-6 Astra (OpenAI), which found nothing beyond the earlier check.
+The Lean~4 files in \nolinkurl{kagey-problems/problem131/lean/PaperC} and
+\nolinkurl{kagey-problems/problem131/lean/PaperB} were generated by the model, and those in
+\nolinkurl{lean/PaperB} were then revised and checked by hand against the corresponding results
+(see \nolinkurl{MAP.md} in each folder).
 
-\paragraph{Data and code availability.} All code, data and Lean files supporting this
-paper are in the folder \nolinkurl{kagey-problems/problem131} of
-\url{https://github.com/apemm/Kagey-Problems}, at the release
-\nolinkurl{paperC-arxiv-v1}. The scripts are in the subfolder
-\nolinkurl{paperC} and need numpy, scipy, sympy and mpmath. To rerun the
-checks, run \texttt{python -B verify\_all.py -{}-paper c} in the folder
-\nolinkurl{problem131}. The largest cases run only with the option \texttt{-{}-full}.
-Section~\ref{sec:verify} describes what each check does.
+All mathematical claims, proofs and computations in this paper are my responsibility.
 
-\begin{thebibliography}{99}\small\setlength{\baselineskip}{11pt}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}
+\begin{supplement}
+\stitle{Supplement to ``Face selection for slowly switching Markov chains''}
+\sdescription{Section~\sref{supp:examples} proves the rows $P_d$ and $\Theta_\varepsilon$ of
+Table~\ref{tab:outcomes}, and Section~\sref{supp:threecycle} gives the full proof of
+Proposition~\ref{prop:threecycle}. The supplement is the file \nolinkurl{supplement.tex} in the
+folder \nolinkurl{kagey-problems/problem131/paperC} of
+\url{https://github.com/apemm/Kagey-Problems}.}
+\end{supplement}
 
-\bibitem{kagey131}
-P.~Kagey, \emph{Problem 131}, Open Problem Collection,
-\url{https://peterkagey.com/problems/131/} (accessed October 2026).
+\begin{thebibliography}{99}
 
-\bibitem{paperA}
-A.~Pemmasani, \emph{Uniform Bessel bounds for magnetization crossings in finite
-Ising chains}, preprint, 2026.
-\href{https://arxiv.org/abs/2610.06935}{arXiv:2610.06935}.
+\bibitem{bermanplemmons1994}
+A.~Berman and R.~J.~Plemmons, \emph{Nonnegative Matrices in the
+Mathematical Sciences}, SIAM, Philadelphia, 1994.
+\url{https://doi.org/10.1137/1.9781611971262}.
 
-\bibitem{paperB}
-A.~Pemmasani, \emph{Vertex crossings in a symmetric Markov multinomial
-model}, preprint, 2026.
-\href{https://arxiv.org/abs/2610.09258}{arXiv:2610.09258}.
+\bibitem{bfg2014}
+L.~Bertini, A.~Faggionato and D.~Gabrielli, \emph{From level 2.5 to level 2
+large deviations for continuous time Markov chains}, Markov Process.~Related
+Fields \textbf{20} (2014), 545--562.
+\href{https://arxiv.org/abs/1212.6908}{arXiv:1212.6908}.
 
-\bibitem{paperE}
-A.~Pemmasani, \emph{Endpoint crossings for the planar persistent walk}, in
-preparation. Draft in the folder \nolinkurl{kagey-problems/problem131/paperE}
-of \url{https://github.com/apemm/Kagey-Problems}.
+\bibitem{bfg2015}
+L.~Bertini, A.~Faggionato and D.~Gabrielli, \emph{Large deviations of the
+empirical flow for continuous time Markov chains}, Ann.~Inst.~H.~Poincar\'e
+Probab.~Stat. \textbf{51} (2015), 867--900.
+\url{https://doi.org/10.1214/14-AIHP601}.
 
-\bibitem{dupuisliu2015}
-P.~Dupuis and Y.~Liu, \emph{On the large deviation rate function for the
-empirical measures of reversible jump Markov processes}, Ann.~Probab.~\textbf{43}
-(2015), 1121--1156. \url{https://doi.org/10.1214/13-AOP883}.
+\bibitem{bgl2024}
+L.~Bertini, D.~Gabrielli and C.~Landim, \emph{Metastable $\Gamma$-expansion
+of finite state Markov chains level two large deviations rate functions},
+Ann.~Appl.~Probab.~\textbf{34} (2024), 3820--3869.
+\url{https://doi.org/10.1214/24-AAP2051}.
 
-\bibitem{gnw2024}
-A.~Guillin, B.~Nectoux and L.~Wu, \emph{Large deviations of the empirical
-measures of a strong-Feller Markov process inside a subset and quasi-ergodic
-distribution}, preprint, 2024.
-\href{https://arxiv.org/abs/2411.17216}{arXiv:2411.17216}.
+\bibitem{bollobas1998}
+B.~Bollob\'as, \emph{Modern Graph Theory}, Springer, New York, 1998.
+\url{https://doi.org/10.1007/978-1-4612-0619-4}.
+
+\bibitem{bhk2007}
+D.~Brydges, R.~van~der~Hofstad and W.~K\"onig, \emph{Joint density for the
+local times of continuous-time Markov chains}, Ann.~Probab. \textbf{35}
+(2007), 1307--1332. \url{https://doi.org/10.1214/009171906000001024}.
+
+\bibitem{cvc2022}
+G.~Carugno, P.~Vivo and F.~Coghi, \emph{Graph-combinatorial approach for
+large deviations of Markov chains}, J.~Phys.~A \textbf{55} (2022), 295001.
+\url{https://doi.org/10.1088/1751-8121/ac79e6}.
+
+\bibitem{chaiken1982}
+S.~Chaiken, \emph{A combinatorial proof of the all minors matrix tree theorem},
+SIAM J.~Algebraic Discrete Methods \textbf{3} (1982), 319--329.
+\url{https://doi.org/10.1137/0603033}.
 
 \bibitem{chendeng2013}
 J.~Chen and X.~Deng, \emph{Large deviations and related problems for absorbing
 Markov chains}, Stochastic Process.~Appl.~\textbf{123} (2013), 2398--2418.
 \url{https://doi.org/10.1016/j.spa.2013.02.014}.
-
-\bibitem{dv1975}
-M.~D.~Donsker and S.~R.~S.~Varadhan, \emph{On a variational formula for the
-principal eigenvalue for operators with maximum principle}, Proc.~Natl.~Acad.~Sci.~USA
-\textbf{72} (1975), 780--783. \url{https://doi.org/10.1073/pnas.72.3.780}.
-
-\bibitem{darrochseneta1965}
-J.~N.~Darroch and E.~Seneta, \emph{On quasi-stationary distributions in
-absorbing discrete-time finite Markov chains}, J.~Appl.~Probab.~\textbf{2}
-(1965), 88--100. \url{https://doi.org/10.2307/3211876}.
-
-\bibitem{darrochseneta1967}
-J.~N.~Darroch and E.~Seneta, \emph{On quasi-stationary distributions in
-absorbing continuous-time finite Markov chains}, J.~Appl.~Probab.~\textbf{4}
-(1967), 192--196. \url{https://doi.org/10.2307/3212311}.
 
 \bibitem{cmsm2013}
 P.~Collet, S.~Mart\'inez and J.~San Mart\'in, \emph{Quasi-Stationary
@@ -172,46 +173,93 @@ F.~Colonius and M.~Rasmussen, \emph{Quasi-ergodic limits for finite
 absorbing Markov chains}, Linear Algebra Appl.~\textbf{609} (2021), 253--288.
 \url{https://doi.org/10.1016/j.laa.2020.09.011}.
 
-\bibitem{dietz2007}
-Z.~Dietz and S.~Sethuraman, \emph{Occupation laws for some
-time-nonhomogeneous Markov chains}, Electron.~J.~Probab.~\textbf{12} (2007),
-no.~23, 661--683. \url{https://doi.org/10.1214/EJP.v12-413}.
+\bibitem{darrochseneta1965}
+J.~N.~Darroch and E.~Seneta, \emph{On quasi-stationary distributions in
+absorbing discrete-time finite Markov chains}, J.~Appl.~Probab.~\textbf{2}
+(1965), 88--100. \url{https://doi.org/10.2307/3211876}.
 
-\bibitem{dietz2005}
-Z.~Dietz and S.~Sethuraman, \emph{Large deviations for a class of
-nonhomogeneous Markov chains}, Ann.~Appl.~Probab.~\textbf{15} (2005),
-421--486. \url{https://doi.org/10.1214/105051604000000990}.
-
-\bibitem{whittle1955}
-P.~Whittle, \emph{Some distribution and moment formulae for the Markov
-chain}, J.~R.~Stat.~Soc.~Ser.~B \textbf{17} (1955), 235--242.
-\url{https://doi.org/10.1111/j.2517-6161.1955.tb00197.x}.
+\bibitem{darrochseneta1967}
+J.~N.~Darroch and E.~Seneta, \emph{On quasi-stationary distributions in
+absorbing continuous-time finite Markov chains}, J.~Appl.~Probab.~\textbf{4}
+(1967), 192--196. \url{https://doi.org/10.2307/3212311}.
 
 \bibitem{dawsongood1957}
 R.~Dawson and I.~J.~Good, \emph{Exact Markov probabilities from oriented
 linear graphs}, Ann.~Math.~Statist.~\textbf{28} (1957), 946--956.
 \url{https://doi.org/10.1214/aoms/1177706795}.
 
+\bibitem{dekkingkong2011}
+F.~M.~Dekking and D.~Kong, \emph{Multimodality of the Markov binomial distribution},
+J.~Appl.~Probab.\ \textbf{48} (2011), 938--953.
+\url{https://doi.org/10.1239/jap/1324046011}.
+
+\bibitem{dietz2005}
+Z.~Dietz and S.~Sethuraman, \emph{Large deviations for a class of
+nonhomogeneous Markov chains}, Ann.~Appl.~Probab.~\textbf{15} (2005),
+421--486. \url{https://doi.org/10.1214/105051604000000990}.
+
+\bibitem{dietz2007}
+Z.~Dietz and S.~Sethuraman, \emph{Occupation laws for some
+time-nonhomogeneous Markov chains}, Electron.~J.~Probab.~\textbf{12} (2007),
+no.~23, 661--683. \url{https://doi.org/10.1214/EJP.v12-413}.
+
+\bibitem{dv1975}
+M.~D.~Donsker and S.~R.~S.~Varadhan, \emph{On a variational formula for the
+principal eigenvalue for operators with maximum principle}, Proc.~Natl.~Acad.~Sci.~USA
+\textbf{72} (1975), 780--783. \url{https://doi.org/10.1073/pnas.72.3.780}.
+
+\bibitem{dupuisliu2015}
+P.~Dupuis and Y.~Liu, \emph{On the large deviation rate function for the
+empirical measures of reversible jump Markov processes}, Ann.~Probab.~\textbf{43}
+(2015), 1121--1156. \url{https://doi.org/10.1214/13-AOP883}.
+
+\bibitem{edwards1960}
+A.~W.~F.~Edwards, \emph{The meaning of binomial distribution}, Nature
+\textbf{186} (1960), no.~4730, 1074. \url{https://doi.org/10.1038/1861074a0}.
+
 \bibitem{goodman1958}
 L.~A.~Goodman, \emph{Exact probabilities and asymptotic relationships for
 some statistics from $m$-th order Markov chains}, Ann.~Math.~Statist.~\textbf{29}
 (1958), 476--490. \url{https://doi.org/10.1214/aoms/1177706623}.
 
-\bibitem{polettini2015}
-M.~Polettini, \emph{BEST statistics of Markovian fluxes: a tale of Eulerian
-tours and Fermionic ghosts}, J.~Phys.~A \textbf{48} (2015), 365005.
-\url{https://doi.org/10.1088/1751-8113/48/36/365005}.
+\bibitem{gnw2024}
+A.~Guillin, B.~Nectoux and L.~Wu, \emph{Large deviations of the empirical
+measures of a strong-Feller Markov process inside a subset and quasi-ergodic
+distribution}, preprint, 2024.
+\href{https://arxiv.org/abs/2411.17216}{arXiv:2411.17216}.
 
-\bibitem{cvc2022}
-G.~Carugno, P.~Vivo and F.~Coghi, \emph{Graph-combinatorial approach for
-large deviations of Markov chains}, J.~Phys.~A \textbf{55} (2022), 295001.
-\url{https://doi.org/10.1088/1751-8121/ac79e6}.
+\bibitem{hsiau1997}
+S.-R.~Hsiau, \emph{Compound Poisson limit theorems for Markov chains},
+J.~Appl.~Probab.~\textbf{34} (1997), 24--34.
+\url{https://doi.org/10.2307/3215171}.
 
-\bibitem{bgl2024}
-L.~Bertini, D.~Gabrielli and C.~Landim, \emph{Metastable $\Gamma$-expansion
-of finite state Markov chains level two large deviations rate functions},
-Ann.~Appl.~Probab.~\textbf{34} (2024), 3820--3869.
-\url{https://doi.org/10.1214/24-AAP2051}.
+\bibitem{hkst2018}
+R.~Huang, D.~Kious, V.~Sidoravicius and P.~Tarr\`es, \emph{Explicit formula for
+the density of local times of Markov jump processes}, Electron.~Commun.~Probab.
+\textbf{23} (2018), no.~90, 1--7. \url{https://doi.org/10.1214/18-ECP194}.
+
+\bibitem{jkb1997}
+N.~L.~Johnson, S.~Kotz and N.~Balakrishnan, \emph{Discrete Multivariate
+Distributions}, Wiley, New York, 1997.
+
+\bibitem{kagey131}
+P.~Kagey, \emph{Problem 131}, Open Problem Collection,
+\url{https://peterkagey.com/problems/131/} (accessed October 2026).
+
+\bibitem{kassanogly2003}
+F.~A.~Kassan-Ogly and B.~N.~Filippov, \emph{Exact solutions of one-dimensional
+Potts models in magnetic field}, J.~Magn.~Magn.~Mater.~\textbf{258--259} (2003),
+219--221. \url{https://doi.org/10.1016/S0304-8853(02)01017-X}.
+
+\bibitem{kl2024}
+S.~Kim and C.~Landim, \emph{$\Gamma$-expansion of the measure-current large
+deviations rate functional of non-reversible finite-state Markov chains},
+preprint, 2024. \href{https://arxiv.org/abs/2412.13515}{arXiv:2412.13515}.
+
+\bibitem{km2003}
+I.~Kontoyiannis and S.~P.~Meyn, \emph{Spectral theory and limit theorems for
+geometrically ergodic Markov processes}, Ann.~Appl.~Probab.~\textbf{13} (2003),
+304--362. \url{https://doi.org/10.1214/aoap/1042765670}.
 
 \bibitem{landim2023}
 C.~Landim, \emph{Metastability from the large deviations point of view: a
@@ -219,82 +267,55 @@ $\Gamma$-expansion of the level two large deviations rate functional of
 non-reversible finite-state Markov chains}, Stochastic Process.~Appl.~\textbf{165}
 (2023), 275--315. \url{https://doi.org/10.1016/j.spa.2023.09.001}.
 
-\bibitem{fox2011}
-E.~B.~Fox, E.~B.~Sudderth, M.~I.~Jordan and A.~S.~Willsky, \emph{A sticky
-HDP-HMM with application to speaker diarization}, Ann.~Appl.~Stat.~\textbf{5}
-(2011), 1020--1056. \url{https://doi.org/10.1214/10-AOAS395}.
+\bibitem{dlmf}
+F.~W.~J.~Olver, A.~B.~Olde Daalhuis, D.~W.~Lozier, B.~I.~Schneider,
+R.~F.~Boisvert, C.~W.~Clark, B.~R.~Miller, B.~V.~Saunders, H.~S.~Cohl and
+M.~A.~McClain (eds.), \emph{NIST Digital Library of Mathematical Functions},
+\url{https://dlmf.nist.gov/}.
 
-\bibitem{bhk2007}
-D.~Brydges, R.~van~der~Hofstad and W.~K\"onig, \emph{Joint density for the
-local times of continuous-time Markov chains}, Ann.~Probab. \textbf{35}
-(2007), 1307--1332. \url{https://doi.org/10.1214/009171906000001024}.
+\bibitem{paperE}
+A.~Pemmasani, \emph{Endpoint crossings for the planar persistent walk}, in
+preparation. Draft in the folder \nolinkurl{kagey-problems/problem131/paperE}
+of \url{https://github.com/apemm/Kagey-Problems}.
 
-\bibitem{hkst2018}
-R.~Huang, D.~Kious, V.~Sidoravicius and P.~Tarr\`es, \emph{Explicit formula for
-the density of local times of Markov jump processes}, Electron.~Commun.~Probab.
-\textbf{23} (2018), no.~90, 1--7. \url{https://doi.org/10.1214/18-ECP194}.
+\bibitem{supplement}
+A.~Pemmasani, \emph{Supplement to ``Face selection for slowly switching Markov chains''},
+2026. The file \nolinkurl{supplement.tex} in the folder
+\nolinkurl{kagey-problems/problem131/paperC} of \url{https://github.com/apemm/Kagey-Problems}.
 
-\bibitem{kl2024}
-S.~Kim and C.~Landim, \emph{$\Gamma$-expansion of the measure-current large
-deviations rate functional of non-reversible finite-state Markov chains},
-preprint, 2024. \href{https://arxiv.org/abs/2412.13515}{arXiv:2412.13515}.
+\bibitem{paperA}
+A.~Pemmasani, \emph{Uniform Bessel bounds for magnetization crossings in finite
+Ising chains}, preprint, 2026.
+\href{https://arxiv.org/abs/2610.06935}{arXiv:2610.06935}.
 
-\bibitem{bfg2015}
-L.~Bertini, A.~Faggionato and D.~Gabrielli, \emph{Large deviations of the
-empirical flow for continuous time Markov chains}, Ann.~Inst.~H.~Poincar\'e
-Probab.~Stat. \textbf{51} (2015), 867--900.
-\url{https://doi.org/10.1214/14-AIHP601}.
+\bibitem{paperB}
+A.~Pemmasani, \emph{Vertex crossings in a symmetric Markov multinomial
+model}, preprint, 2026. \href{https://arxiv.org/abs/2610.09258}{arXiv:2610.09258} (v1).
 
-\bibitem{bfg2014}
-L.~Bertini, A.~Faggionato and D.~Gabrielli, \emph{From level 2.5 to level 2
-large deviations for continuous time Markov chains}, Markov Process.~Related
-Fields \textbf{20} (2014), 545--562.
-\href{https://arxiv.org/abs/1212.6908}{arXiv:1212.6908}.
-
-\bibitem{dekkingkong2011}
-F.~M.~Dekking and D.~Kong, \emph{Multimodality of the Markov binomial distribution},
-J.~Appl.~Probab.\ \textbf{48} (2011), 938--953.
-\url{https://doi.org/10.1239/jap/1324046011}.
+\bibitem{polettini2015}
+M.~Polettini, \emph{BEST statistics of Markovian fluxes: a tale of Eulerian
+tours and Fermionic ghosts}, J.~Phys.~A \textbf{48} (2015), 365005.
+\url{https://doi.org/10.1088/1751-8113/48/36/365005}.
 
 \bibitem{stadje1999}
 W.~Stadje, \emph{Joint distributions of the numbers of visits for finite-state
 Markov chains}, J.~Multivariate Anal.~\textbf{70} (1999), 157--176.
 \url{https://doi.org/10.1006/jmva.1999.1814}.
 
-\bibitem{km2003}
-I.~Kontoyiannis and S.~P.~Meyn, \emph{Spectral theory and limit theorems for
-geometrically ergodic Markov processes}, Ann.~Appl.~Probab.~\textbf{13} (2003),
-304--362. \url{https://doi.org/10.1214/aoap/1042765670}.
-
 \bibitem{tutte1948}
 W.~T.~Tutte, \emph{The dissection of equilateral triangles into equilateral
 triangles}, Proc.~Cambridge Philos.~Soc. \textbf{44} (1948), 463--482.
 \url{https://doi.org/10.1017/S030500410002449X}.
 
-\bibitem{chaiken1982}
-S.~Chaiken, \emph{A combinatorial proof of the all minors matrix tree theorem},
-SIAM J.~Algebraic Discrete Methods \textbf{3} (1982), 319--329.
-\url{https://doi.org/10.1137/0603033}.
+\bibitem{wangtang2003}
+Y.~H.~Wang and L.~Tang, \emph{Poisson style convergence theorems for
+additive processes defined on Markov chains},
+Statist.~Sinica \textbf{13} (2003), 227--242.
 
-\bibitem{schwenk1986}
-A.~J.~Schwenk, \emph{Tight bounds on the spectral radius of asymmetric
-nonnegative matrices}, Linear Algebra Appl.~\textbf{75} (1986), 257--265.
-\url{https://doi.org/10.1016/0024-3795(86)90193-X}.
-
-\bibitem{bermanplemmons1994}
-A.~Berman and R.~J.~Plemmons, \emph{Nonnegative Matrices in the
-Mathematical Sciences}, SIAM, Philadelphia, 1994.
-\url{https://doi.org/10.1137/1.9781611971262}.
-
-\bibitem{bollobas1998}
-B.~Bollob\'as, \emph{Modern Graph Theory}, Springer, New York, 1998.
-\url{https://doi.org/10.1007/978-1-4612-0619-4}.
-
-\bibitem{dlmf}
-F.~W.~J.~Olver, A.~B.~Olde Daalhuis, D.~W.~Lozier, B.~I.~Schneider,
-R.~F.~Boisvert, C.~W.~Clark, B.~R.~Miller, B.~V.~Saunders, H.~S.~Cohl and
-M.~A.~McClain (eds.), \emph{NIST Digital Library of Mathematical Functions},
-\url{https://dlmf.nist.gov/}.
+\bibitem{whittle1955}
+P.~Whittle, \emph{Some distribution and moment formulae for the Markov
+chain}, J.~R.~Stat.~Soc.~Ser.~B \textbf{17} (1955), 235--242.
+\url{https://doi.org/10.1111/j.2517-6161.1955.tb00197.x}.
 
 \end{thebibliography}
 

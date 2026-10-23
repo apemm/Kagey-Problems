@@ -1,21 +1,55 @@
-\section{Proofs for the table of outcomes}\label{app:examples}
+\documentclass[EJP,preprint]{ejpecp}
+% Supplement to the paper problem131_switching.tex (Paper C of Problem 131).
+% It builds on its own. The statement numbers of the paper are read from
+% problem131_switching.aux, so build the paper first for them to resolve.
+\usepackage{booktabs}
+\usepackage[shortlabels]{enumitem}
+\usepackage{xr}
+\externaldocument[M-]{problem131_switching}
+\newcommand{\mref}[1]{\ref*{M-#1}}
+\renewcommand{\thesection}{S\arabic{section}}
 
-This appendix proves the rows $P_d$ and $\Theta_\varepsilon$ of
-Table~\ref{tab:outcomes}. In both rows $Q$ is symmetric and the start has full
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\ones}{\mathbf{1}}
+
+\TITLE{Supplement to ``Face selection for slowly switching Markov chains''}
+\SHORTTITLE{Supplement to ``Face selection for slowly switching Markov chains''}
+\AUTHORS{Arjun Pemmasani\footnote{Department of Mathematics, Harvey Mudd College,
+Claremont, CA 91711, USA. \EMAIL{apemmasani@hmc.edu}}}
+\KEYWORDS{occupation times of Markov chains; mode; principal Dirichlet eigenvalue}
+\AMSSUBJ{60J10; 60J27; 05C50}
+\ABSTRACT{This supplement holds two sets of proofs for the paper ``Face selection for slowly
+switching Markov chains''. Section~\ref{supp:examples} proves the rows of the table of
+outcomes (Table~\mref{tab:outcomes} of the paper) that are proved by hand and not in the text,
+namely the path $P_d$ and two triangles joined by a link. Section~\ref{supp:threecycle} gives
+the full proof of Proposition~\mref{prop:threecycle} of the paper, the directed 3-cycle, whose
+proof the paper only sketches. Numbers with the prefix S refer to this supplement, and all other
+numbers refer to the paper.}
+
+\begin{document}
+
+\section{Proofs for the table of outcomes}\label{supp:examples}\label{app:examples}
+
+This section proves the rows $P_d$ and $\Theta_\varepsilon$ of
+Table~\mref{tab:outcomes}. In both rows $Q$ is symmetric and the start has full
 support. So the admissible faces are the connected faces
-(Lemma~\ref{lem:admissible}), and the winners at $\tau$ are the connected faces
+(Lemma~\mref{lem:admissible}), and the winners at $\tau$ are the connected faces
 that minimize $\Phi_\tau(F)=\tau\lambda_F+\lvert F\rvert-1$
-(Theorem~\ref{thm:hull}). We use three facts about a connected face $F$. First,
+(Theorem~\mref{thm:hull}). We use three facts about a connected face $F$. First,
 $-Q_F$ is symmetric, $\lambda_F$ is its least eigenvalue, and an eigenvector of
 $-Q_F$ with positive entries belongs to $\lambda_F$ (the second fact at the
-start of Appendix~\ref{app:torus}). Second, $-Q_F$ is the Laplacian of the
+start of Appendix~\mref{app:torus} of the paper). Second, $-Q_F$ is the Laplacian of the
 graph on $F$, which is positive semidefinite, plus the diagonal matrix of the
 rates out of $F$. So $\lambda_F$ is the least value of
 \begin{equation}\label{eq:rayleigh}
  \sum_{\{i,j\}\subseteq F}q_{ij}(f_i-f_j)^2+\sum_{i\in F}q_i^{\rm out}(F)f_i^2
 \end{equation}
 over unit vectors $f\in\R^F$. Third, if $F'\subsetneq F$ is nonempty, then
-$\lambda_{F'}>\lambda_F$ (Proposition~\ref{prop:rate}(d)).
+$\lambda_{F'}>\lambda_F$ (Proposition~\mref{prop:rate}(d)).
 
 Each proof has two steps, namely the exit rates and then the lower-left boundary
 of the hull. For the second step we use the following lemma. It says that a
@@ -451,3 +485,117 @@ switch values of Proposition~\ref{prop:triangles}. For $\varepsilon=1.5$, $3$,
 $4.4$, $4.6$ and $8$ it finds that the faces $\{1,2,3,4\}$ and $\{3,4,5,6\}$
 win on an interval of $\tau$, which agrees with
 Proposition~\ref{prop:triangles}(e).
+
+\section{The directed 3-cycle}\label{supp:threecycle}
+
+This section proves Proposition~\mref{prop:threecycle} of the paper, whose statement we
+recall. Let $d=3$, $q_{12}=b>2$, $q_{23}=q_{31}=1$, all other rates $0$, and $\mu_1=1$.
+\begin{enumerate}[(i)]
+\item The admissible faces are $\{1\}$, $\{1,2\}$ (reducible, $\lambda=1$) and
+$\{1,2,3\}$ (irreducible, $\lambda=0$). Exactly
+$M_{\{1\}}=(1-bh)^{N-1}$ and $M_{\{1,2\}}=bh(1-h)^{N-2}$, and the latter is
+attained only at $n=(1,N-1,0)$. For the full face,
+$\alpha^*=(1,b,b)/(1+2b)$, $\det\nabla^2I=(1+2b)^4/(3b^2)$ and
+$K_{\{1,2,3\}}=(1+2b)^2/(2\sqrt3\,\pi b)$.
+\item The equation $M_{\{1\}}=M_{\{1,2\}}$ has exactly one root $T^{(1)}_N$ with $bh<1$. It
+satisfies $(b-1)T+\log T=L-\log b+O(T^2/N)$, so
+$T^{(1)}_N=\frac1{b-1}[L-\log L+\log\frac{b-1}b]+O(\log L/L)$.
+\item Every root $T\in[L/2,2L]$ of $M_{\{1,2\}}=M_{\{1,2,3\}}$ satisfies
+$T=L+\log\frac{2\sqrt3\,\pi b^2}{(1+2b)^2}+O(1/L)$, and these roots lie in an interval of
+length $O(1/L)$.
+\item For large $N$ and $T\le N^{1/3}$,
+the mode is $(N,0,0)$ for $T<T^{(1)}_N$, it is $(1,N-1,0)$ between
+$T^{(1)}_N$ and the smallest root in (iii), and it lies on the full face above
+the largest root in (iii).
+\end{enumerate}
+
+\begin{proof}
+(i) \emph{The faces.} From state $1$ the chain can only move along $1\to2\to3\to1$. So a path
+that starts at $1$ has support $\{1\}$, $\{1,2\}$ or $\{1,2,3\}$, and these are the admissible
+faces. Inside $\{1,2\}$ the chain cannot return from $2$ to $1$, so this face is reducible with
+components $\{1\}$ and $\{2\}$, of exit rates $b$ and $1$, and $\lambda_{\{1,2\}}=1$. The only
+path with support $\{1\}$ stays at $1$ for $N-1$ steps, which gives $M_{\{1\}}$. A path with
+support $\{1,2\}$ is $1^{n_1}2^{n_2}$, of probability $(1-bh)^{n_1-1}\,bh\,(1-h)^{n_2-1}$.
+Raising $n_1$ by one multiplies this by $(1-bh)/(1-h)<1$, so the maximum is at $n_1=1$ only,
+and it is $bh(1-h)^{N-2}$.
+
+\emph{The full face.} Here $Q$ is a generator on $\{1,2,3\}$, so $\lambda=0$ and $r=\ones$. The
+left vector $l$ is the stationary law. In it the three flows $b\,l_1$, $l_2$ and $l_3$ around the
+cycle are equal, so $l=\alpha^*=(1,b,b)/(1+2b)$ and $(\mu\cdot r)(l\cdot\ones)=1$. By
+Proposition~\mref{prop:constant}(a) it remains to find $\det\nabla^2I$ at $\alpha^*$, and then
+$K_{\{1,2,3\}}=\sqrt{\det\nabla^2I}/(2\pi)$.
+
+We first find the rate in closed form. By definition
+\[
+I(\alpha)=\sum_iq_i\alpha_i-\inf_{u>0}\Bigl[b\alpha_1\frac{u_2}{u_1}+\alpha_2\frac{u_3}{u_2}
++\alpha_3\frac{u_1}{u_3}\Bigr].
+\]
+The three ratios are positive numbers with product $1$, and every such triple occurs. So by the
+AM--GM inequality the infimum is $3(b\alpha_1\alpha_2\alpha_3)^{1/3}$, and
+\[
+I(\alpha)=\sum_iq_i\alpha_i-3b^{1/3}g(\alpha),\qquad g(\alpha)=(\alpha_1\alpha_2\alpha_3)^{1/3}.
+\]
+The first sum is linear, so the Hessian of $I$ is $-3b^{1/3}$ times the Hessian of $g$. In all
+three coordinates, $\partial_i\partial_jg=-g\,\Omega_{ij}$ with
+$\Omega=\frac13\operatorname{diag}(w)^2-\frac19ww^\top$ and $w=1/\alpha$ (entrywise). In the
+coordinates $(\alpha_2,\alpha_3)$ we have $\alpha_1=1-\alpha_2-\alpha_3$, so raising $\alpha_2$ or
+$\alpha_3$ moves $\alpha$ in the direction $v_2=e_2-e_1$ or $v_3=e_3-e_1$. Hence $\nabla^2I$ is
+the $2\times2$ matrix with entries $3b^{1/3}g\,v_i^\top\Omega v_j$.
+
+Now we evaluate at $\alpha^*$. Put $s=1+2b$ and $y=1/b$. Then $3b^{1/3}g=3b/s$ and
+$w=s(1,y,y)$, and a short computation gives
+\[
+v_2^\top\Omega v_2=v_3^\top\Omega v_3=\tfrac29s^2(1+y+y^2),\qquad
+v_2^\top\Omega v_3=\tfrac19s^2(2+2y-y^2).
+\]
+The determinant of this $2\times2$ matrix is a difference of two squares, namely
+\[
+\frac{s^4}{81}\bigl[(2+2y+2y^2)^2-(2+2y-y^2)^2\bigr]=\frac{s^4}{81}\cdot3y^2(2+y)^2
+=\frac{s^6}{27b^4},
+\]
+since $2+y=s/b$. Hence $\det\nabla^2I=(3b/s)^2s^6/(27b^4)=s^4/(3b^2)$ and
+$K_{\{1,2,3\}}=s^2/(2\sqrt3\,\pi b)$. The exact parts of (i) are checked in Lean.
+
+(ii) We show that $D_1=\log M_{\{1,2\}}-\log M_{\{1\}}$ increases in $h$. By (i),
+$D_1=\log(bh)+(N-2)\log(1-h)-(N-1)\log(1-bh)$, so
+\[
+D_1'(h)=\frac1h-\frac{N-2}{1-h}+\frac{b(N-1)}{1-bh}>0\qquad(bh<1),
+\]
+because $b>1$ gives $b/(1-bh)>1/(1-h)$. Also $D_1\to-\infty$ as $h\to0$ and $D_1\to\infty$ as
+$bh\to1$. So there is exactly one root (this is checked in Lean). To locate it we expand in
+$T=Nh$, which gives
+\[
+D_1=\log b+\log T-L+(b-1)T+O(T^2/N).
+\]
+This is negative at $T=L/(2(b-1))$ and positive at $T=L/(b-1)$ for large $N$. So the root lies
+between them, and it satisfies the equation in (ii). Since the root is of order $L$, that
+equation gives $\log T=\log L-\log(b-1)+O(\log L/L)$, and putting this back gives the expansion.
+
+(iii) By (i), $\log M_{\{1,2\}}=\log b+\log T-L-T+O(T^2/N)$. The full face satisfies (H), and
+Theorem~\mref{thm:facemax} with $k=3$ and $\lambda=0$ gives
+$\log M_{\{1,2,3\}}=-2L+\log T+\log K_{\{1,2,3\}}+O(1/T+T^2/N)$. So on $[L/2,2L]$
+\[
+\log M_{\{1,2\}}-\log M_{\{1,2,3\}}=L-T+\log b-\log K_{\{1,2,3\}}+O(1/L).
+\]
+At a root the left side is $0$, which gives the formula in (iii) with the value of
+$K_{\{1,2,3\}}$ from (i). Two roots then differ by $O(1/L)$.
+
+(iv) We compare the three face maxima on three ranges of $T$. Note first that
+Lemma~\mref{lem:upper} with $\theta=q$ gives $M_{\{1,2,3\}}\le C(T/N)^2$ for $T\le N^{1/3}$.
+
+Let $T<T^{(1)}_N$. Then $M_{\{1\}}>M_{\{1,2\}}$ by (ii). Also $T<L/(b-1)$ by (ii), so
+$M_{\{1\}}=(1-bh)^{N-1}\ge N^{-b/(b-1)-o(1)}$. This is larger than $C(T/N)^2$ because
+$b>2$ gives $b/(b-1)<2$. So the mode is $(N,0,0)$.
+
+Let $T>T^{(1)}_N$. Then $M_{\{1,2\}}>M_{\{1\}}$ by (ii), and we compare $\{1,2\}$ with the full
+face. For $T\le L/2$ the bound on $M_{\{1,2,3\}}$ gives
+$\log M_{\{1,2\}}-\log M_{\{1,2,3\}}\ge L-T-\log T-C>0$. On $[L/2,2L]$ the
+difference in (iii) is continuous in $T$, positive at $L/2$ and negative at
+$2L$. So it is positive below its smallest root and negative above its largest root. For
+$2L\le T\le N^{1/3}$ the same expansions give a difference of at most $-L+C<0$. Since the
+maximum of $M_{\{1,2\}}$ is attained only at $(1,N-1,0)$, this proves (iv).
+\end{proof}
+
+
+
+\end{document}

@@ -1,5 +1,7 @@
 # Problem 131, Paper B: vertex crossings in a symmetric Markov multinomial model
 
+Paper B is incorporated into the merged paper in `../paperC` ("Face selection for slowly switching Markov chains", October 2026). This folder keeps Paper B as posted on arXiv (2610.09258).
+
 Paper B treats the complete graph on d states, which is the 1D d-state Potts chain. Every face of
 the simplex ties with the vertices at first order when T is near log N, and Paper B resolves the
 tie at second order. A balanced bin with k states crosses a vertex at T = z, where
