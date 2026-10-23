@@ -1,6 +1,8 @@
 \section{Computations and verification}\label{sec:verify}
 
-Each computed value and count comes from two separately written programs. Code, data, and commands are in the repository~\cite{repo}, and the paths below are relative to its folder
+Each computed maximum and each exact count is checked by two separately written
+programs. The lower bound $a_7(8)\ge18$ comes from one enumeration. Code, data, and
+commands are in the repository~\cite{repo}, and the paths below are relative to its folder
 \nolinkurl{kagey-problems/problem001}. For each computer-assisted result,
 \nolinkurl{jis/scripts/README.md} gives the command, the evidence file with its SHA-256 hash, and
 the stored time, and Table~\ref{tab:evidence} summarizes them.
@@ -66,7 +68,8 @@ $7\times8$ & $16$ & $\ge18$ & S \\
 \end{tabular}
 \caption{Computed values for $h\le m$. H: hand, T: theorem, I: ILP (value only on
 $3\times10$, $4\times8$, $5\times6$, $5\times7$, and $6\times6$), B: brute force, D: equality
-candidates, C: column search, S: two SAT encodings, listing all optima where a count is given, M: transfer counter,
+candidates, C: column search, S: two SAT encodings, with complete enumeration for exact
+counts, M: transfer counter,
 --: not established. On $7\times8$ only a lower bound for the count is given.}
 \label{tab:values}
 \end{table}
@@ -75,7 +78,8 @@ Our rectangle lists agree with \seqnum{A085582} on squares and \seqnum{A289832} 
 grids.
 
 SAT encoding A forbids each inclusion-minimal set $C(R_1)\triangle C(R_2)$, $R_1\ne R_2$, from being
-all black. Encoding B forbids this for rectangles with a common corner, and has a variable $y_R$
+all black. Encoding B instead forbids $C(R_1)\triangle C(R_2)$ for every pair of distinct
+rectangles sharing a corner, and has a variable $y_R$
 for each rectangle $R$, forced true when its corners are black, with at most one $y_R$ true. The
 structured encodings for six rows fix a partition $A\mid B$ of the rows into triples. They give
 each column a type, a row or one of the nine pairs meeting both $A$ and $B$, which fixes its black
@@ -85,19 +89,34 @@ generator for the certified instances, or the totalizer~\cite{bailleux2003}; eac
 exactly when the bound holds.
 
 \begin{lemma}[faithful encodings]\label{lem:enc}
-Let $S$ be a blackout of the $h\times m$ grid.
-(a) $S$ is valid if and only if it contains no inclusion-minimal $C(R_1)\triangle C(R_2)$.
-(b) $S$ is valid if and only if it contains no $C(R_1)\triangle C(R_2)$ with $R_1\ne R_2$ sharing
-a corner, and hides at most one rectangle.
-(c) If $h=6$, $m\ge3$, and $S$ is valid with $m+9$ points, then $S$, with types $B_i$, satisfies
-the structured instance of some partition.
+Let $S$ be a blackout of the $h\times m$ grid, and let
+$\mathcal D=\{C(R_1)\triangle C(R_2)\mid R_1\ne R_2\}$, where $R_1$ and $R_2$ range over
+rectangles of this grid.
+\begin{enumerate}[(a)]
+\item $S$ is valid if and only if it contains no inclusion-minimal member of $\mathcal D$.
+\item $S$ is valid if and only if it hides at most one rectangle and contains no
+$C(R_1)\triangle C(R_2)$ for distinct rectangles $R_1,R_2$ sharing a corner.
+\item Suppose $h=6$, $m\ge3$, and $S$ is valid with $m+9$ points. For some partition of
+the rows into two triples, selecting the black-row set $B_i$ as the type of column $i$
+extends to a satisfying assignment of the structured instance.
+\end{enumerate}
 \end{lemma}
 
 \begin{proof}
-(a) Each $C(R_1)\triangle C(R_2)$ contains a minimal one; use Corollary~\ref{cor:hitting}. (b) If
-$R_1,R_2$ share no corner, $C(R_1)\triangle C(R_2)=C(R_1)\cup C(R_2)$ lies in $S$ exactly when both
-are hidden. (c) Theorem~\ref{thm:equality} gives the types, (b) with $y_R=[R\text{ hidden}]$ the
-other clauses, and dropped clauses only weaken the instance.
+(a) The grid is finite, so every member of $\mathcal D$ contains an inclusion-minimal
+member. Thus $S$ contains a member of $\mathcal D$ if and only if it contains a minimal
+one. Corollary~\ref{cor:hitting} gives the claim.
+
+(b) It remains to consider pairs with no common corner. Their symmetric difference is
+$C(R_1)\cup C(R_2)$, which lies in $S$ exactly when both rectangles are hidden. The
+condition that at most one rectangle is hidden therefore handles precisely these pairs.
+
+(c) By Theorem~\ref{thm:equality}, the rows have a partition into two triples such that
+every $B_i$ is a singleton or a pair crossing the partition, and each of the nine pairs
+occurs once. These choices satisfy the column-type constraints. Set each indicator
+$y_R$ to $1$ exactly when $R$ is hidden. Part (b) shows that these indicators and the
+black points satisfy encoding B. Omitting clauses preserves satisfaction, so the
+assignment extends to the structured instance for this partition.
 \end{proof}
 
 So the models of encodings A and B, read on the points, are the valid blackouts of the required
