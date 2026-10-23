@@ -28,7 +28,8 @@ $\kA_i$ or $\kB_i$ & $i=2$, $m=6$ & $(i+s,4)$\\
 \end{tabular}
 \end{center}
 
-Shown rows differ between the first four lines, and within a line the point in row $2$ or $3$ fixes $i$ and that in row $4$ fixes $s$.
+The first four lines show different row sets. Within a line, the point in row
+$2$ or $3$ fixes $i$, and the point in row $4$ fixes $s$.
 
 No row $r$ has $(1,r)$ and $(3,r)$ black, so $\{(1,2),(3,2)\}$ has no rival. In the next three lines the axis-aligned rectangle through the shown points has white corner $(i,3)$, $(i+s,2)$, or $(i,4)$, respectively, since $i\ge3$, $i+s\le4<m-1$, and $3\le i\le m-3$ there. In the last line $m=6$, and the shown point $(z,4)$ has $z\in\{3,4\}$ and no rival, as column $z$ is black only in row $1$ and no column is black in rows $1$ and $4$.
 \end{proof}
@@ -55,7 +56,7 @@ By Lemma~\ref{lem:diff} it suffices to write each corner set as $C(R_1)\triangle
 D(i+1,1)=D(i,2)\,\triangle\,\kA_i,\qquad D(i+1,2)=D(i,1)\,\triangle\,\kE_i,
 \end{gathered}
 \end{equation}
-and each solves for any of its three rectangles. The first line covers $\kA_i$, $\kB_i$, $\kC_i$, and $\kE_i$, and the second, with $i=j-1$ or $i=j$, covers $D(j,1)$ and $D(j,2)$, since $j\ge2$ or $j\le m-3$ as $m\ge4$.
+Each identity can be solved for any of its three rectangles. The first line covers $\kA_i$, $\kB_i$, $\kC_i$, and $\kE_i$, and the second, with $i=j-1$ or $i=j$, covers $D(j,1)$ and $D(j,2)$, since $j\ge2$ or $j\le m-3$ as $m\ge4$.
 \end{proof}
 
 \begin{theorem}[forbidden-block bound]\label{thm:foursurvival}
@@ -70,9 +71,9 @@ their black rows. For a block from column $x$, the \emph{template words} $2413$,
 $3412$, $2143$, and $3142$ are the corner rows of $\kC_x$, $\kA_x$, $\kE_x$, and $\kB_x$. Let
 $T$ be one, with word $t_1t_2t_3t_4$.
 
-A \emph{swap word} swaps two letters $t_p$ and $t_q$. No block carries one, since $T$ and
-the axis-aligned rectangle on $(x+p-1,t_p)$ and $(x+q-1,t_q)$ would both show exactly these
-two points. Template words are the permutations with both end letters in $\{2,3\}$.
+A \emph{swap word} exchanges two letters $t_p$ and $t_q$. Such a block is impossible.
+The rectangle $T$ and the axis-aligned rectangle through $(x+p-1,t_p)$ and
+$(x+q-1,t_q)$ would show exactly these two points. Template words are the permutations with both end letters in $\{2,3\}$.
 Swapping two end or two middle letters gives one again, and swapping an end
 and a middle letter gives the sixteen with one end letter in $\{2,3\}$, so the $20$ swap words are these and the four template words.
 
@@ -146,11 +147,12 @@ Lemma~\ref{lem:rival}, applied with its pair set $F$, therefore finds no rival a
 step. None of the local tests rejects the word, and its final register is $F$.
 \end{proof}
 
-The script \nolinkurl{four_row_equivalence_check.py} builds $\mathcal A_F$ from the definition
-($60{,}975$, $138{,}095$, and $55{,}575$ states) and checks that it accepts the same words as a
-smaller machine from an earlier search, whose product with the register has $2{,}519$, $3{,}089$,
-and $2{,}119$ reachable states. Two transfer counters on that machine agree for $m\le1500$, and a
-direct test of the candidates agrees for $m\le10$ (Table~\ref{tab:fourvalues}).
+The script \nolinkurl{four_row_equivalence_check.py} builds $\mathcal A_F$
+($60{,}975$, $138{,}095$, and $55{,}575$ states) and checks equivalence with
+a smaller machine from an earlier search. Including the pair register,
+that machine has $2{,}519$, $3{,}089$, and $2{,}119$ reachable states.
+Two transfer counters agree for $m\le1500$, and direct candidate tests agree
+for $m\le10$ (Table~\ref{tab:fourvalues}).
 
 \begin{table}[!htb]
 \centering\scriptsize\setlength{\tabcolsep}{4pt}
@@ -177,7 +179,7 @@ where $g_d$ and $\tilde g_d$ are irreducible of degree $d$ with constant term $1
 \end{theorem}
 
 \begin{proof}
-By Proposition~\ref{prop:fourautomaton}, the counters count the optima. Berlekamp--Massey modulo eight primes on $a_4(m)$, $m\le1500$, gives $P_4$ and $Q_4$. The reachable states give a transfer matrix $T_F$ for each $F$, and its state vectors $v(n)=v(0)T_F^n$ satisfy $\sum_jq_jv(n_F-j)=0$ at $n_F=436$, $435$, and $445$, so powers of $T_F$ give the recurrence for $n\ge445$, and $\deg P_4=444$ forces its failure at $n=444$. SymPy factors $Q_4$.
+Proposition~\ref{prop:fourautomaton} identifies the counted words with the optima. Berlekamp--Massey modulo eight primes on $a_4(m)$, $m\le1500$, gives $P_4$ and $Q_4$. The reachable states give a transfer matrix $T_F$ for each $F$, and its state vectors $v(n)=v(0)T_F^n$ satisfy $\sum_jq_jv(n_F-j)=0$ at $n_F=436$, $435$, and $445$, so powers of $T_F$ give the recurrence for $n\ge445$, and $\deg P_4=444$ forces its failure at $n=444$. SymPy factors $Q_4$.
 \end{proof}
 
 \begin{corollary}[growth, computer-assisted]\label{cor:fourgrowth}

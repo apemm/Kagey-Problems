@@ -1,15 +1,14 @@
 \section{Computations and verification}\label{sec:verify}
 
-Each computed maximum and each exact count is checked by two separately written
-programs. The lower bound $a_7(8)\ge18$ comes from one enumeration. Code, data, and
-commands are in the repository~\cite{repo}, and the paths below are relative to its folder
-\nolinkurl{kagey-problems/problem001}. For each computer-assisted result,
-\nolinkurl{jis/scripts/README.md} gives the command, the evidence file with its SHA-256 hash, and
-the stored time, and Table~\ref{tab:evidence} summarizes them.
+Two separately written programs check each computed maximum and exact count.
+The lower bound $a_7(8)\ge18$ comes from one enumeration. Code and data are in the repository~\cite{repo}, with paths relative to
+\nolinkurl{kagey-problems/problem001}. Commands, evidence files, SHA-256 hashes,
+and running times are in \nolinkurl{jis/scripts/README.md}, summarized in
+Table~\ref{tab:evidence}.
 
-An ILP program with CBC~\cite{cbc} through PuLP~\cite{pulp} finds a smallest hitting set for the
-sets of Lemma~\ref{lem:diff}, and brute force checks it. The SAT solvers of the searches and counts come from
-PySAT~\cite{pysat2018}. Column searches add columns from left to right, using $f(6,6)\le12$ on the
+The ILP program uses CBC~\cite{cbc} through PuLP~\cite{pulp} to find a smallest
+hitting set for the sets of Lemma~\ref{lem:diff}. Brute force checks the result.
+SAT searches use PySAT~\cite{pysat2018}. Column searches add columns from left to right, using $f(6,6)\le12$ on the
 $6\times7$ and $6\times8$ grids and $f(6,7)\le13$ on the $6\times8$ and $7\times7$ grids. Every
 stored blackout and every model of a counting program is checked against the definition.
 
@@ -80,11 +79,10 @@ grids.
 SAT encoding A forbids each inclusion-minimal set $C(R_1)\triangle C(R_2)$, $R_1\ne R_2$, from being
 all black. Encoding B instead forbids $C(R_1)\triangle C(R_2)$ for every pair of distinct
 rectangles sharing a corner, and has a variable $y_R$
-for each rectangle $R$, forced true when its corners are black, with at most one $y_R$ true. The
-structured encodings for six rows fix a partition $A\mid B$ of the rows into triples. They give
-each column a type, a row or one of the nine pairs meeting both $A$ and $B$, which fixes its black
-rows, use each pair once, and keep the clauses of B that involve a tilted rectangle and can be all
-black. The size bound is the sequential counter of Sinz~\cite{sinz2005}, written out by our
+for each rectangle $R$, forced true when its corners are black, with at most one $y_R$ true. For six rows, the structured encoding fixes a partition $A\mid B$ into triples.
+Column types are rows or the nine pairs meeting both $A$ and $B$
+(their black rows). Each pair is used once. We keep encoding B's clauses
+involving a tilted rectangle that can be all black. The size bound is the sequential counter of Sinz~\cite{sinz2005}, written out by our
 generator for the certified instances, or the totalizer~\cite{bailleux2003}; each is satisfiable
 exactly when the bound holds.
 
@@ -119,9 +117,9 @@ black points satisfy encoding B. Omitting clauses preserves satisfaction, so the
 assignment extends to the structured instance for this partition.
 \end{proof}
 
-So the models of encodings A and B, read on the points, are the valid blackouts of the required
-size, and by (c) and Theorem~\ref{thm:rowbound}, if the ten structured instances of width $m$ are
-unsatisfiable, then $f(6,m)\le m+8$.
+Thus encodings A and B describe exactly the valid blackouts of the required
+size. By part (c) and Theorem~\ref{thm:rowbound}, if all ten structured instances
+of width $m$ are unsatisfiable, then $f(6,m)\le m+8$.
 
 CaDiCaL~\cite{biere2024} gives LRAT certificates for $f(5,6)<12$, $f(5,7)<13$, $f(6,6)<13$,
 $f(6,7)<14$, $f(7,7)<15$, $f(6,8)<16$, $f(7,8)<17$, and the $70$ six-row instances (widths $8$
@@ -165,7 +163,7 @@ Theorem~\ref{thm:sixrow}, and the $5\times13$ and $6\times23$ test boards are va
 $\{(1,2),\allowbreak(2,1),\allowbreak(3,2),\allowbreak(2,3)\}$ hides $D(1,1)$ on the $4\times3$
 grid, so Theorem~\ref{thm:hidden} needs $m\ge4$. Hence Lean proves $f(5,m)=m+6$ for $m\ge8$,
 $f(6,m)=m+9$ for $m\ge15$, $f(5,5)\ge10$, and $f(6,8)\ge15$, from the three standard Lean axioms
-alone. Not formalized are Lemma~\ref{lem:leftmost}, Theorem~\ref{thm:equality},
+alone. The parts not formalized are Lemma~\ref{lem:leftmost}, Theorem~\ref{thm:equality},
 $f(5,5)\le10$, Lemma~\ref{lem:enc}, the rest of Sections~\ref{sec:strip}
 to~\ref{sec:height}, and Appendix~\ref{app:square}.
 

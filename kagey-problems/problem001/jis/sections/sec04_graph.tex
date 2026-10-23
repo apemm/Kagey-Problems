@@ -1,7 +1,9 @@
 \section{The row-column graph and general bounds}\label{sec:graph}
 
-A blackout $S$ is \emph{axis-valid} if no two axis-aligned rectangles have the same
-presentation. A rectangle showing at most two corners is \emph{weak}. The \emph{row-column graph} $G_S$ has vertices $r_j$ for the rows and $c_i$ for the columns, and an edge $r_jc_i$ for each black point $(i,j)$.
+Call a blackout $S$ \emph{axis-valid} if it distinguishes the axis-aligned
+rectangles, and a rectangle \emph{weak} if it shows at most two corners.
+The \emph{row-column graph} $G_S$ joins row vertex $r_j$ to column vertex
+$c_i$ for each black point $(i,j)$.
 
 \begin{lemma}[axis-aligned rectangles and short cycles]\label{lem:girth}
 If $G_S$ has no four-cycle and no six-cycle, then $S$ is axis-valid. The converse holds for $m\ge3$.
@@ -24,7 +26,9 @@ Let $m\ge3$ and let $S$ be axis-valid. For any choice of the trees, $H$ is simpl
 \end{lemma}
 
 \begin{proof}
-By Lemma~\ref{lem:girth}, $G_S$ has no four-cycle, so $H$ has no repeated edge and $e(H)=\sum(|B_i|-1)=|S|-t$. A triangle $r_ar_br_c$ is not in one tree. Edges from two columns $i,i'$ put two of $a,b,c$ in $B_i\cap B_{i'}$, and edges from three columns give a six-cycle $r_a\,c_i\,r_b\,c_{i'}\,r_c\,c_{i''}$.
+By Lemma~\ref{lem:girth}, $G_S$ has no four-cycle, so $H$ has no repeated edge and $e(H)=\sum(|B_i|-1)=|S|-t$. A triangle $r_ar_br_c$ cannot lie in one tree. If its edges come from two columns
+$i,i'$, two of $a,b,c$ lie in $B_i\cap B_{i'}$, giving a four-cycle. If they come
+from three columns, they give a six-cycle $r_a\,c_i\,r_b\,c_{i'}\,r_c\,c_{i''}$.
 \end{proof}
 
 \begin{lemma}[Mantel \cite{mantel1907}]\label{lem:mantel}
@@ -35,7 +39,9 @@ e(H)=\sum_{b\in B}d(b)-e(B)\le(h-\Delta)\Delta-e(B)\le q_h.
 \end{lemma}
 
 \begin{proof}
-Every edge meets $B$, as $A$ is independent, and the degree sum over $B$ counts the edges inside $B$ twice. Also $d(b)\le\Delta$ and $(h-\Delta)\Delta\le q_h$.
+Since $A$ is independent, every edge meets $B$. Summing degrees over $B$
+counts its internal edges twice, which gives the equality. The bounds follow
+from $d(b)\le\Delta$ and $(h-\Delta)\Delta\le q_h$.
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{thm:rowbound}]
@@ -55,7 +61,8 @@ There are $p_h\,(m)_{q_h}\,h^{m-q_h}$ such blackouts, where $(m)_q$ is the falli
 \begin{proof}
 Let $S$ be axis-valid. Equality in Lemmas~\ref{lem:H} and~\ref{lem:mantel} forces $t=m$, $e(B)=0$, and $(h-\Delta)\Delta=q_h$ with $B$ joined to all of $A$, so $H$ is as in (c). If $|B_i|\ge3$, some $v$ has two neighbors $u,w$ in $T_i$, and as $h\ge4$ the part of $v$ has another vertex $z$. Replacing $vw$ by $uw$ in $T_i$ keeps $uz$ and $wz$ and makes the triangle $uwz$, against Lemma~\ref{lem:H}. This gives (a), and the edges of $H$, the row pairs of the doubles, give (b) and (c).
 
-Conversely, (a) and (b) rule out four-cycles, and a six-cycle $r_a\,c_x\,r_b\,c_y\,r_c\,c_z$ would need the doubles $\{a,b\}$, $\{b,c\}$, and $\{a,c\}$, a triangle in (c), so Lemma~\ref{lem:girth} applies. The blackout determines, and is determined by, a bipartition, an injective map from its edges to columns, and a row for each other column.
+Conversely, (a) and (b) rule out four-cycles, and a six-cycle $r_a\,c_x\,r_b\,c_y\,r_c\,c_z$ would need the doubles $\{a,b\}$, $\{b,c\}$, and $\{a,c\}$, a triangle in (c), so Lemma~\ref{lem:girth} applies. For the count, choose the bipartition, place its edges in distinct columns,
+and choose a black row for each remaining column.
 \end{proof}
 
 \begin{corollary}[small widths]\label{cor:small-m}
@@ -77,7 +84,10 @@ Its rows are $r-b$ to $r+d$, and its \emph{span} is $a+c$.
 \end{lemma}
 
 \begin{proof}
-No side is vertical, so two corners in column $x$ would be opposite, and the other two, with mean column $x$, would lie in column $x$ too. Rows are the same. So both sides from $\ell$ go right, one up and one down, and perpendicularity gives $ac=bd$.
+No side is vertical. Two corners in the leftmost column $x$ would therefore
+be opposite, forcing the other two into column $x$ as well (their mean column
+is $x$). The same argument applies to rows. Both sides from $\ell$ thus go
+right, one up and one down, and perpendicularity gives $ac=bd$.
 \end{proof}
 
 \begin{lemma}[span bound]\label{lem:span}
@@ -114,7 +124,7 @@ The first row and the first column of the $h\times m$ grid form a valid blackout
 \end{lemma}
 
 \begin{proof}
-By Lemma~\ref{lem:threecorners} only presentations of at most two points matter. An axis-aligned rectangle $\{x_1,x_2\}\times\{y_1,y_2\}$ shows $X\times Y$ with $X=\{x_1,x_2\}\setminus\{1\}$ and $Y=\{y_1,y_2\}\setminus\{1\}$, which determine it, since $|X|=1$ exactly when $1\in\{x_1,x_2\}$, and likewise for $Y$. By Lemma~\ref{lem:leftmost} a tilted rectangle has at most two black corners, $\ell$ and $(x+a,r-b)$. If both are black, then $\ell=(1,1+b)$ and it shows $p=(1+c,1+b+d)$ and $q=(1+a+c,1+d)$. These determine $a,b,c,d$ and differ in both coordinates, so no axis-aligned rectangle shows $\{p,q\}$.
+By Lemma~\ref{lem:threecorners}, we need only check presentations with at most two points. An axis-aligned rectangle $\{x_1,x_2\}\times\{y_1,y_2\}$ shows $X\times Y$ with $X=\{x_1,x_2\}\setminus\{1\}$ and $Y=\{y_1,y_2\}\setminus\{1\}$, which determine it, since $|X|=1$ exactly when $1\in\{x_1,x_2\}$, and likewise for $Y$. By Lemma~\ref{lem:leftmost} a tilted rectangle has at most two black corners, $\ell$ and $(x+a,r-b)$. If both are black, then $\ell=(1,1+b)$ and it shows $p=(1+c,1+b+d)$ and $q=(1+a+c,1+d)$. These determine $a,b,c,d$ and differ in both coordinates, so no axis-aligned rectangle shows $\{p,q\}$.
 \end{proof}
 
 \begin{lemma}[axis-aligned rivals]\label{lem:rival}
