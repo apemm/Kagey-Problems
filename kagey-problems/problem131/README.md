@@ -7,7 +7,9 @@ changes on a cylinder or a tetrahedron.
 
 Status. There are six papers by A. Pemmasani, which call each other Papers A to F. Paper A
 (arXiv:2610.06935) solves the binary problem at every N, and Paper B (arXiv:2610.09258) treats d
-directions on the complete graph. Papers C to F are in preparation. Paper C (slowly switching
+directions on the complete graph. Papers C to F are in preparation. In October 2026 Paper B was
+merged into Paper C, which keeps its title and folder. Paper B stays on arXiv as posted, and its
+folder `paperB` keeps it unchanged. Paper C (slowly switching
 chains, in `paperC`) and Paper E (the planar walk, in `paperE`) were one paper until October 13,
 2026, and so were Paper D (the elephant walk, in `paperD`) and Paper F (heavy-tailed runs and aging
 walks, in `paperF`). The titles of Papers C to F are working titles, and Paper A cites C and D under
@@ -51,7 +53,8 @@ Since a_2 > a_3 > ..., the mode changes exactly once, from the vertices straight
 centers. A start law or a weak Potts field shifts the constants, so a start can make an edge win
 on 3 states and a field can make every support size win in turn. The paper also gives a Bessel
 majorant for every count vector and the crossing near a vertex, uniformly over rare counts of
-total o(b).
+total o(b). Paper B is incorporated into Paper C (October 2026), which carries all of the above
+except the Bessel majorant and the crossover near the boundary of the simplex, which it cites.
 
 Files. The folder `paperB`, with `problem131_multistate.tex` and `problem131_multistate.pdf`, the
 sections `multistate_model.tex`, `simplex_thresholds.tex`, `general_start.tex`,
@@ -61,16 +64,25 @@ sections `multistate_model.tex`, `simplex_thresholds.tex`, `general_start.tex`,
 
 ## Paper C: Face selection for slowly switching Markov chains
 
-Paper C (in preparation) gives the general theory for a chain on d states with transition matrix
-P = I + (T/N)Q, run for N steps with T = tau L. The counts of the N visits play the role of the bin. To first order the
-mode sits on a face F that minimizes tau lambda_F + |F| - 1, where lambda_F is the principal
-Dirichlet eigenvalue of -Q on F, the rate at which the chain leaves F. At second order a strongly
-connected face with start mass has a constant K_F, and the crossings of 2 such faces satisfy a
-crossing equation. The constants of Papers A and B are corollaries. The paper also treats sticky
-priors for hidden Markov models.
+Paper C (in preparation, for the Electronic Journal of Probability) gives the general theory for a
+chain on d states with transition matrix P = I + (T/N)Q, run for N steps with T = tau L. The counts
+of the N visits play the role of the bin. To first order the mode sits on a face F that minimizes
+tau lambda_F + |F| - 1, where lambda_F is the principal Dirichlet eigenvalue of -Q on F, the rate
+at which the chain leaves F. At second order a strongly connected face with start mass has an
+explicit constant K_F, and the crossings of 2 such faces satisfy a crossing equation with the
+coefficient 1/2 of log log N, which fails without strong connectivity. A weak field tilts the line
+of every face by the field averaged over its quasi-ergodic law. Since October 2026 Paper C
+incorporates Paper B, and the complete graph, the Potts chain, is its main example: every face
+ties at first order, each balanced crossing is unique at every N, the face maxima are the balanced
+bins, the mode changes exactly once, a start law or a weak field can let an intermediate face win,
+and near a vertex the crossing is given by a product of Laguerre polynomials. The constant c_F =
+-(k-1)/8 of the next term on the complete graph is computed by hand from the general formula. The
+two-state walk of Paper A is the simplest case. The application to sticky priors for hidden Markov
+models moved to the note `S3_sticky_note`.
 
-Files. The folder `paperC`, with `problem131_switching.tex` and `problem131_switching.pdf`, its
-section and appendix files, the check scripts and `paperC/README.md`.
+Files. The folder `paperC`, with `problem131_switching.tex` and `problem131_switching.pdf` (class
+`ejpecp`), its section and appendix files, the supplement `supplement.tex` and `supplement.pdf`,
+the check scripts and `paperC/README.md`.
 
 ## Paper D: Endpoint crossings for the elephant random walk
 
@@ -128,6 +140,7 @@ below are shared.
   to F include `program_C` to `program_F`. The variants A and B are the ones posted with those
   papers and carry the labels of the series as it stood then.
 - `S1_endpoint_information_note/` is a working note on the Fisher information in the endpoint, which was Section 8 and Appendix E of an earlier version of Paper C.
+- `S3_sticky_note/` is a working note on sticky priors for hidden Markov models, which was Section 6 and Appendix D of Paper C until the merge with Paper B in October 2026.
 - `S2_counts_note/` is a working note on which rate matrices the visit counts of a slowly switching chain can tell apart, with its 4 check scripts.
 - `animations/` shows a Galton board with persistence at 4 values of p (`galton.gif`, `galton.mp4`),
   made by `animations/animate.py`.
@@ -142,4 +155,5 @@ below are shared.
 Run `python -B verify_all.py --paper a` (or `b` to `f`, or `all`). Add `--full` for the long runs
 and `--dry-run` to list the commands. Build each paper in its folder with pdflatex, 3 times, for
 example `pdflatex problem131.tex` in `paperA` and `pdflatex problem131_multistate.tex` in
-`paperB`.
+`paperB`. In `paperC` build `problem131_switching.tex` and `supplement.tex` alternately, 3 times
+each (the class `ejpecp` is in TeX Live).

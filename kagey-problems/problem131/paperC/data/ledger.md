@@ -35,5 +35,7 @@ can differ from first order, and the paper says so as a numerical remark.
 The output of the check scripts (`verify_all.py`) is in `verify_output.txt` (September 26, 2026)
 and `verify_output_2026-10-09.txt` (October 9, 2026). Both predate the split and use the statement
 numbers of their dates.
+The output of the merged version (October 23, 2026, after Paper B was merged into Paper C) is in
+`verify_output_2026-10-23.txt` and uses the numbers of the merged paper.
 
 Note of October 13, 2026. The ledger of the planar walk, `ledger_C3.md`, moved to `../../paperE/data` with Paper E.

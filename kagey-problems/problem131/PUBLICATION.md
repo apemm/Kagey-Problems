@@ -1,5 +1,17 @@
 # Problem 131: publication notes
 
+Papers B and C update, October 23, 2026.
+
+Paper B is merged into Paper C, which keeps its title, "Face selection for slowly switching
+Markov chains", its folder `paperC` and its file name, and targets the Electronic Journal of
+Probability (class `ejpecp`, with the supplement `paperC/supplement.tex`). The application to
+sticky priors moved to the note `S3_sticky_note`. Paper B stays on arXiv as posted, and
+`paperB` keeps it unchanged. Still to do by hand: post the merged paper; replace Paper B on
+arXiv by a v2 with the same text and a comments field saying that it is incorporated into the
+merged paper (do not withdraw it); in the cover letter to EJP say that the paper incorporates
+arXiv:2610.09258; update the reference to Paper C in Paper E when both post; complete the note
+on the use of AI (marked `TODO(author)` in the source); get an outside read.
+
 Paper A update, October 15, 2026.
 
 Paper A's current journal target is the Journal of Statistical Mechanics: Theory and

@@ -1,4 +1,4 @@
-"""Checks for Sections 2, 4 and 5 of Paper C (the second-order theory).
+"""Checks for Sections 2, 4, 5 and 7 of Paper C (the second-order theory).
 
 The model is the chain X_1..X_N with transition matrix I + hQ, h = T/N, and
 P_N(n) is the probability that the composition of the N visits is n. For a face
@@ -567,7 +567,7 @@ def check_engines():
 
 
 def check_constants():
-    print('\nProposition 4.2 and Corollaries 4.10, 4.11, 5.1: the constants', flush=True)
+    print('\nProposition 4.2 and Corollaries 5.2, 5.3, 7.1: the constants', flush=True)
     # Paper A
     Q2 = complete_Q(2)
     mu2 = np.array([0.5, 0.5])
@@ -741,7 +741,7 @@ def check_constants():
 
 
 def check_pair_identity():
-    print('\nProposition 4.9: the exact pair identity (exact rational arithmetic)', flush=True)
+    print('\nProposition 5.1: the exact pair identity (exact rational arithmetic)', flush=True)
     bad = 0
     total = 0
     # 4-cycle, pair {0,1}, and a random symmetric pair with equal exit rates inside a 4-state chain
@@ -830,7 +830,7 @@ def arc_max(N, h, method, rfarc=None):
 
 
 def check_crossing():
-    print('\nTheorem 4.7 and Section 5: the crossing of a vertex and the 3-arc on the 4-cycle', flush=True)
+    print('\nTheorem 4.7 and Section 7: the crossing of a vertex and the 3-arc on the 4-cycle', flush=True)
     rfarc = RunFace([[0, 1, 0], [1, 0, 1], [0, 1, 0]], [2, 2, 2], [.25] * 3, mmax=110)
     K = log((4 + 3 * sqrt(2)) / pi)
     vertex = lambda N, h: log(0.25) + (N - 1) * math.log1p(-2 * h)
@@ -859,7 +859,7 @@ def check_crossing():
 
 
 def check_threecycle(full):
-    print('\nProposition 4.13: the directed 3-cycle', flush=True)
+    print('\nProposition 4.14: the directed 3-cycle', flush=True)
 
     def gen(b):
         Q = np.array([[0, b, 0], [0, 0, 1.0], [1.0, 0, 0]], float)
@@ -957,7 +957,7 @@ def check_threecycle(full):
 
 
 def wick_c_euler(A, mu, alpha, rho):
-    """c(alpha*) of Proposition 4.14 (the next Laplace term) with z-derivatives (Euler operators), exact in sympy."""
+    """c(alpha*) of Proposition 4.15 (the next Laplace term) with z-derivatives (Euler operators), exact in sympy."""
     k = len(alpha)
     d = k - 1
     zs = sp.symbols(f'z1:{k}')
@@ -1051,7 +1051,7 @@ def gamma_term(adj, q, mu, astar):
 
 
 def check_third_order(full):
-    print('\nProposition 4.14 and Section 5: the next-order coefficients c_F (exact)', flush=True)
+    print('\nProposition 4.15 and Section 7: the next-order coefficients c_F (exact)', flush=True)
     R = sp.Rational
     s2 = sp.sqrt(2)
     q4 = R(1, 4)
@@ -1100,7 +1100,7 @@ def check_third_order(full):
 
 
 def check_K3_window():
-    print('\nCorollary 5.2: the edge window on K_3', flush=True)
+    print('\nExample 5.12: the edge window on K_3', flush=True)
     t_ve = 0.5 * log(pi / 8)
     Kfull = 3 ** 2.5 / (4 * pi)
     t_ef = 0.5 * log(2 / pi) - log(Kfull)

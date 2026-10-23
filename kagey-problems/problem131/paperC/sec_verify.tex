@@ -1,53 +1,84 @@
 \section{Verification and open questions}\label{sec:verify}
 
 The theorems, propositions, lemmas and corollaries of this paper are proved in
-the text or in the appendices, with two kinds of outside input. We quote
-results of~\cite{paperA,paperB} where we say so (for example the uniform Bessel
-bound~\eqref{eq:planar-bessel}, and the expansion behind the value for the
-complete graph in Proposition~\ref{prop:nextterm}(iv)). And the rows of
-Table~\ref{tab:outcomes} marked Lean are proved in Lean and not in the text.
-No proof rests on a floating-point computation. Exact computer algebra enters
-in two places. First,
-Proposition~\ref{prop:triangles}, which proves the row $\Theta_\varepsilon$ of
+the text, in the appendices or in the supplement, with two kinds of outside input. We quote
+results of~\cite{paperA} where we say so (the uniform Bessel bound~\eqref{eq:planar-bessel},
+the clipped products of~\cite[Lemma~3.2]{paperA}, the growth of the polynomials $S_{a,b}$ toward the
+middle and the expansion of $z_N$). And the rows of Table~\ref{tab:outcomes} marked ``Lean
+only'' are proved in Lean and not in the text. The results of~\cite{paperB} quoted in
+Remark~\ref{rem:B-boundary} are not used. No proof rests on a floating-point computation.
+Exact computer algebra enters in two places. First,
+Proposition~\sref{prop:triangles} of the supplement, which proves the row $\Theta_\varepsilon$ of
 Table~\ref{tab:outcomes}, rests on two exact resultants of characteristic
 polynomials, computed in sympy by \texttt{verify\_examples.py}
-(Section~\ref{app:examples-checks}). Second, the values of $c_F$ for the 3-arc
+(Section~\sref{app:examples-checks} of the supplement). Second, the values of $c_F$ for the 3-arc
 and for $C_4$ after Corollary~\ref{cor:C4} are exact evaluations, by
 \texttt{verify\_second\_order.py}, of the formula for $c_F$ in
 Proposition~\ref{prop:nextterm}(ii). The proposition is proved, and only these
-two values are computed. The script \texttt{verify\_forest.py} lists the
+two values are computed. The value $c_F=-(k-1)/8$ for the complete graph is computed by
+hand in Appendix~\ref{app:nextterm}, and \texttt{verify\_second\_order.py} also evaluates it
+exactly for $k=3$ and $4$. The script \texttt{verify\_forest.py} lists the
 spanning trees one by one. It checks Lemma~\ref{lem:forest} in exact rational
 arithmetic for $119$ generators with two to six states. It checks
 Proposition~\ref{prop:forest}(a) to~(c) in floating point against
-Definition~\ref{def:tilt}, and part~(d) for the directed $3$-cycle. Each check is
-an assertion in the script, and the floating-point checks use a tolerance. The script
-\texttt{verify\_rate\_flows.py} checks Proposition~\ref{prop:flows} in floating point on $480$
-random faces with two to five states and on random cycles, and it gives the numbers of
-Example~\ref{ex:drift}.
+Definition~\ref{def:tilt}, and part~(d) for the directed $3$-cycle. The script
+\texttt{verify\_rate\_flows.py} checks the statements of Remark~\ref{rem:flows} in floating point
+on $480$ random faces with two to five states. The script \texttt{verify\_weak\_field.py} checks
+Proposition~\ref{prop:weakfield}. It checks (a) by listing all words of a chain with three states,
+and (b) on four faces with the continuum density of Lemma~\ref{lem:continuum}, computed by the
+torus integral of Lemma~\ref{lem:torus}. There the tilted face maxima are compared with
+$\langle\xi,\alpha^*_F\rangle$, with the term
+$(\gamma_F\cdot\Sigma_F\hat\xi+\frac12\hat\xi^\top\Sigma_F\hat\xi)/T$ and with the shift
+$\Sigma_F(\gamma_F+\hat\xi)/T$ of the maximizer that completing the square suggests (the
+proposition states only their order $1/T$), and on a pair at $N=20000$ with an exact dynamic
+program of the chain. It checks (d) with the transfer matrix at $N=10^6$. Each check is an
+assertion in these scripts, and the floating-point checks use a tolerance.
+
+The statements of Sections~\ref{sec:complete} and~\ref{sec:vertex} that come from~\cite{paperB} are
+also checked by its scripts, which use only the Python standard library. The script
+\texttt{verify\_simplex\_threshold.py} checks the refresh form, the balancing transfers, the
+example at $N=4$ and the balanced crossings at high precision. The script
+\texttt{verify\_geometry.py} checks the exact law against a dynamic program and against all words,
+\texttt{verify\_frontier\_modes.py} checks the weak field, and
+\texttt{verify\_vertex\_completion.py} checks the identities near a vertex and the root brackets
+of Theorem~\ref{thm:vertex-uniform-root}. The script \texttt{verify\_general\_start.py} checks the
+law with a start against all words, and it computes the phases of Example~\ref{ex:K3-start} at
+$N=90$ and the ends of the window of Remark~\ref{rem:K3-finite} at $N\ge3000$, by bisection. The
+script \texttt{verify\_B\_tie\_repair.py} runs dynamic programs over all compositions at $N=300$ and
+$1002$. None of these checks is interval-certified.
 
 The other numbers in the paper are of three kinds. Some are closed forms. Some
 are computations of the law at a finite $N$, namely Figure~\ref{fig:simplex},
 the finite-$N$ row of $P_4$ in Table~\ref{tab:outcomes},
 Figure~\ref{fig:cycles}(b), the crossing
-of the 3-arc at $N=10^{14}$ in Section~\ref{sec:examples}
-and Table~\ref{tab:sticky}. These are done in two independent ways where
-possible (for example by the run expansion and by a torus integral, or by a
-dynamic program and an exact formula). They illustrate the theorems, and no
-statement is deduced from them. Finally, the value $0.115$ in
-Section~\ref{sec:sticky} is a Monte Carlo estimate.
+of the 3-arc at $N=10^{14}$ in Section~\ref{sec:examples}, the phases after
+Example~\ref{ex:K3-start} and the widths in Remark~\ref{rem:K3-finite}. These are done in two
+independent ways where possible (for example by the run expansion and by a torus integral, or
+by a dynamic program and an exact formula). They illustrate the theorems, and no
+statement is deduced from them.
 
 Many finite and algebraic steps, and the rows of
-Table~\ref{tab:outcomes} marked Lean, are proved in Lean~4 in the folder
-\nolinkurl{kagey-problems/problem131/lean/PaperC}, and its file
-\nolinkurl{MAP.md} matches each statement of
-the paper to its Lean theorems. The asymptotic results are not in Lean.
+Table~\ref{tab:outcomes} marked Lean, are proved in Lean~4 in the folders
+\nolinkurl{kagey-problems/problem131/lean/PaperC} and
+\nolinkurl{kagey-problems/problem131/lean/PaperB}. The file
+\nolinkurl{lean/PaperC/MAP.md} matches each statement of this paper to its Lean theorems,
+including the statements of Sections~\ref{sec:complete} and~\ref{sec:vertex} whose Lean files
+are in \nolinkurl{lean/PaperB}. The asymptotic results are not in Lean.
 
 The file \nolinkurl{SUPPLEMENT.md} in the folder
 \nolinkurl{kagey-problems/problem131} lists each check, the two methods
 behind it and the predictions that we wrote down before most of the
-computations. The data and code availability statement at the end of the
-paper says where
-the files are and how to rerun the checks.
+computations.
+
+\paragraph{Data and code availability.} All code, data and Lean files supporting this
+paper are in the folder \nolinkurl{kagey-problems/problem131} of
+\url{https://github.com/apemm/Kagey-Problems}, at the release
+\nolinkurl{paperC-arxiv-v1}. The scripts of this paper are in the subfolder
+\nolinkurl{paperC} and need numpy, scipy, sympy and mpmath, and those of~\cite{paperB} are in the
+subfolder \nolinkurl{paperB}. To rerun the checks, run
+\texttt{python -B verify\_all.py -{}-paper c} and \texttt{python -B verify\_all.py -{}-paper b}
+in the folder \nolinkurl{problem131}. The largest cases run only with the option
+\texttt{-{}-full}.
 
 \paragraph{Open questions.} We list them in the order of the paper.
 
@@ -57,7 +88,9 @@ same formula cannot hold there. Take a star with center $d$ and
 $\ell=d-1\ge3$ leaves, and a start of full support. Then $P_N(n)=0$ whenever
 $\supp n=[d]$ and $n_d<\ell-1$, since a path visits the center between any two
 runs at the leaves, although $n/N$ lies in the open face. This zero set is
-checked in Lean.
+checked in Lean. Near a vertex of the complete graph the leading crossing is known uniformly
+for rare counts of total $o(b)$ (Theorem~\ref{thm:vertex-uniform-root}), but neither the next term
+uniformly in that range nor the case of a nonuniform start is known.
 
 \emph{Reducible faces.} For a reducible face, Theorem~\ref{thm:first}(ii) places
 the power of $T$ in $M_F$ between $k_F-k^*$ and $k_F-1$, and heuristically it
@@ -65,19 +98,23 @@ is $(k^*-1)/2+k_F-k^*$. We do not prove this.
 
 \emph{Uniqueness and constants.} Theorem~\ref{thm:crossing} puts all crossings
 of two faces in an interval of length $O(1/L)$, but uniqueness is proved only in
-special cases, such as the two-state walk~\cite{paperA}, the complete
-graph~\cite{paperB}, the pairs of Proposition~\ref{prop:pair} and the planar
+special cases, such as the two-state walk~\cite{paperA}, the balanced compositions of the complete graph
+(Theorem~\ref{thm:simplex-crossing}), the pairs of Proposition~\ref{prop:pair} and the planar
 walk~\cite{paperE}. Proposition~\ref{prop:forest} gives a tree formula
-for $K_F$ on every irreducible face, but we have no closed form for $c_F$. At finite $N$ the order of the phases can
+for $K_F$ on every irreducible face, but we have a closed form for $c_F$ only for symmetric
+pairs and for the complete graph. At finite $N$ the order of the phases can
 differ from first order when a face lies close to the hull, as on the path
 $P_4$ (Table~\ref{tab:outcomes}).
+
+\emph{The complete graph at finite $N$.} Corollary~\ref{cor:simplex-modes} has no effective
+$N_0$, and by Remark~\ref{ex:simplex-edge-mode} it does not hold for every $N$. The discrete
+correction term $-\frac{(k-1)^2}2z^2/N$ and the second-order ends of the window in
+Remark~\ref{rem:K3-finite} are not proved, and neither is the failure of balancing at every large
+$N$ for a start that is not constant on the face. A number of states that grows with $N$ is also
+open.
 
 \emph{Linear functions of the composition.} For the planar walk the position after $N$ steps is
 a linear function of the composition, and the origin is a line of compositions. The heuristic of
 Section~\ref{sec:intro-faces} applies face selection to it. For the planar walk its
 conclusion is the subject of the companion paper~\cite{paperE}, in
 preparation, but we have no such rule in general.
-
-\emph{Sticky priors.} We do not
-treat the mixture over the exit probabilities under the prior of~\cite{fox2011}
-(Section~\ref{sec:sticky}), or the probability of a direct jump for $d\ge4$.

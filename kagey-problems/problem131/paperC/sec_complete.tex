@@ -1,0 +1,485 @@
+\section{The two-state walk and the complete graph}\label{sec:complete}
+
+This section applies the second-order theory to the two simplest chains, the two-state walk
+and the complete graph, which is the Potts chain. On the complete graph every face ties at
+first order, and the theory of Section~\ref{sec:secondorder} with a few exact facts resolves
+the tie, also with a start law and a weak field.
+
+\subsection{The two-state walk}\label{sec:papersAB}
+
+We use the polynomials $S_{a,b}$ and $S_N$, the root $u_N$, the crossing $p_N$,
+$z_N=N(1-p_N)$ and $c_0=\frac12\log(\pi/8)$ of Section~\ref{sec:notation}. The
+first result shows that, at every $N$, the comparison of a symmetric pair with
+one of its states is exactly the two-state walk.
+
+\begin{proposition}[an exact pair identity]\label{prop:pair}
+Let $i\ne j$ with $q_{ij}=q_{ji}=a$, $q_i=q_j=q$ and $\mu_i=\mu_j>0$, and let
+$F=\{i,j\}$. For every $N\ge2$, $1\le m\le N-1$ and $h>0$ such that $I+hQ$ is
+stochastic and $qh<1$,
+\[
+\frac{P_N(me_i+(N-m)e_j)}{P_N(Ne_i)}=S_{m,N-m}(u),\qquad u=\frac{ah}{1-qh}.
+\]
+So the balanced compositions, with $m=\lfloor N/2\rfloor$ or
+$m=\lceil N/2\rceil$, are the most likely ones with support $F$,
+$M_F=M_{\{i\}}S_N(u)$, and $M_F>M_{\{i\}}$ exactly when $u>u_N$.
+\end{proposition}
+
+\begin{proof}
+We group the paths by their number of switches.
+A path with this composition is a word in $i,j$ with $m$ letters $i$. Each stay has probability
+$1-qh$ and each switch $ah$, so a word with $s$ switches has probability
+$\mu_i(1-qh)^{N-1-s}(ah)^s=\mu_i(1-qh)^{N-1}u^s$, while $P_N(Ne_i)=\mu_i(1-qh)^{N-1}$. Sum over
+these words and divide. This gives $\sum_wu^{s(w)}=S_{m,N-m}(u)$, which is the identity.
+By~\cite[Proposition~4.1]{paperA} the polynomials $S_{m,N-m}$ grow coefficientwise as $m$ moves toward the
+middle, and $S_{m,N-m}=S_{N-m,m}$. So the balanced $m$ give the largest $S_{m,N-m}(u)$. Finally
+$S_N$ increases strictly and equals $1$ only at $u_N$ (Section~\ref{sec:notation}).
+\end{proof}
+
+Lean checks the identity for a chain with two states. For $d\ge3$ the paths with
+this composition never leave $F$, so the same computation applies, but this case
+is not in Lean.
+
+\begin{corollary}[the two-state walk]\label{cor:paperA}
+Let $d=2$, $q_{12}=q_{21}=1$ and $\mu=(\frac12,\frac12)$, the walk of~\cite{paperA} with
+$T=N(1-p)$. Then $K_{\{1\}}=K_{\{2\}}=\frac12$ and $K_{\{1,2\}}=\sqrt{2/\pi}$, so
+$b_{FG}=c_0$ for $F=\{1,2\}$ and $G=\{1\}$. For every $N\ge2$, $M_{\{1,2\}}=M_{\{1\}}$ holds
+exactly at $T=z_N$, and $z_N+\frac12\log z_N=L+c_0+\frac1{8z_N}+O(L^{-2})$.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:symface} with $k=2$, $\tree(q_F)=1$ and $\mu(F)=1$ gives $K_{\{1,2\}}$, and
+then $b_{FG}=-\log(K_{\{1,2\}}/K_{\{1\}})=c_0$. Proposition~\ref{prop:pair} with $a=q=1$ gives
+$M_{\{1,2\}}=M_{\{1\}}S_N(h/(1-h))$, and $h/(1-h)=u_N$ exactly when $p=p_N$. So for every $N$
+the only zero of $D_N$ is $z_N$, and by Theorem~\ref{thm:crossing}(i) it lies in
+$[L/2,2L]\subset[1,N^{1/3}]$ for large $N$. By Proposition~\ref{prop:nextterm}(iv),
+$c_{\{1,2\}}=-\frac18$, and a vertex has $c_{\{1\}}=0$. So~\eqref{eq:crossingnext} with
+$\Delta=\delta=1$ reads $z_N(L-\frac12\log z_N-z_N+c_0)=-\frac18+O(1/L)$, and dividing by
+$z_N$ gives the equation.
+\end{proof}
+
+This is the crossing equation of~\cite{paperA} up to its explicit remainder $R_N$, which
+\cite{paperA} bounds at every $N$.
+
+\subsection{The complete graph}\label{sec:completegraph}
+
+From now on in this section $Q=J-dI$. The chain switches to each other state with
+probability $h$ (the $r$ of~\cite{paperB}) and keeps its state with probability
+$p=1-(d-1)h$. The
+following symbols of~\cite{paperB} are local to this section and to
+Appendix~\ref{app:complete}. Put
+\[
+\sigma=p-h,\qquad u=\frac hp,\qquad v=\frac h\sigma=\frac u{1-u},\qquad
+V_N=\frac{p^{N-1}}d .
+\]
+So $u$ is the odds of a switch to one given state against no switch, and $V_N$ is the
+probability of a vertex $Ne_i$ for the uniform start, that is, $M_{\{i\}}$. For a composition
+$n$ we write $S_n(u)$ for the sum of $u^j$ over the words with the counts $n$, where $j$ is the
+number of switches of the word, and $W_n(j)$ for the number of these words with $j$ switches. For a
+composition with some zero coordinates, $S_n$ is the polynomial of its positive coordinates,
+which does not depend on $d$. By~\eqref{eq:runform}, the uniform start has
+\begin{equation}\label{eq:SnVN}
+P_N(n)=V_NS_n(u)\qquad(0<p\le1),
+\end{equation}
+and so does every start that is constant on $\supp n$, with $V_N$ replaced by
+$\mu_ap^{N-1}$ for $a\in\supp n$. A composition is \emph{balanced} if its positive coordinates
+differ by at most $1$. For the uniform start all faces of $k$ states have the same face maximum
+$M_F$, and all balanced compositions with $k$ positive coordinates have the same probability. For
+$p\ge1/d$ this probability is $M_F$, by Theorem~\ref{thm:simplex-balance} below. (The preprint~\cite{paperB}
+writes $C_{N,k}$ for it.) Put
+\[
+a_k=\frac12\log(4\pi)-\frac{k+\frac12}{k-1}\log k,\qquad
+D_k=e^{-(k-1)a_k}=\frac{k^{k+1/2}}{(4\pi)^{(k-1)/2}}\qquad(k\ge2),
+\]
+and $D_1=1$. Numerically $a_2=-0.4674$, $a_3=-0.6571$ and $a_4=-0.8139$.
+
+\begin{corollary}[the complete graph]\label{cor:paperB}
+A face $F$ of $k$ states has $\lambda_F=d-k$ and $\alpha^*_F$ uniform, and if $\mu(F)>0$ then
+$K_F=\frac{\mu(F)}kD_k$. So $\Phi_1(F)=d-1$ for every face, and all faces tie at $\tau=1$. With
+the uniform start, the crossing of a face of $k\ge2$ states with a vertex has
+$\Delta=\delta=k-1$ and $b_{FG}=a_k$. If $\mu$ is constant and positive on $F$, then
+$c_F=-(k-1)/8$.
+\end{corollary}
+
+\begin{proof}
+Each $Q_F$ is symmetric with row sums $-(d-k)$, and the complete graph on $F$ has $k^{k-2}$
+spanning trees by Lemma~\ref{lem:weighted-cayley}. So Corollary~\ref{cor:symface} gives
+$\lambda_F$, $\alpha^*_F$ and $K_F=\mu(F)k^{(k+1)/2}k^{(k-2)/2}(4\pi)^{-(k-1)/2}=\frac{\mu(F)}kD_k$.
+A vertex has $K=\frac1d$ and $\lambda=d-1$ for the uniform start, so
+$b_{FG}=-\frac1{k-1}\log(dK_F)=-\frac1{k-1}\log D_k=a_k$. The last claim is
+Proposition~\ref{prop:nextterm}(iv). The arithmetic that gives $b_{FG}$ from $K_F$ here and in
+Corollary~\ref{cor:paperA} is checked in Lean.
+\end{proof}
+
+By Example~\ref{ex:complete-face} at the center, $D_k=dK_F=k/\sqrt{\det(2\pi\Sigma_k)}$ with
+$\Sigma_k=\Sigma_{\ones/k}=(2/k^2)(I-J/k)$ in the coordinates $\alpha'$. So $D_k$ is the mass $k$
+of a face, in units of a vertex, over the Gaussian volume of the fluctuations of its
+fractions. The preprint~\cite[Proposition~3.7]{paperB} obtains it also by summing the exact law over
+the whole face. Its matrix $\Sigma_\alpha$ is the matrix $\Sigma_\alpha$ of
+Definition~\ref{def:tilt}, with the same normalization. Example~\ref{ex:complete-face},
+Theorem~\ref{thm:local} and Lemma~\ref{lem:discrete} give every composition whose fractions are
+bounded away from the boundary of its face. Let $\alpha=n/N$ have $k$ positive coordinates,
+all at least $\varepsilon$, and put $A=\sum_i\sqrt{\alpha_i}$. Uniformly for such compositions and for
+$1\le T\le N^{1/3}$,
+\begin{equation}\label{eq:interior}
+\frac{P_N(n)}{V_N}=D(\alpha)\,\frac{T^{(k-1)/2}e^{(A^2-1)T}}{N^{k-1}}
+\Bigl(1+O_\varepsilon\Bigl(\frac1T+\frac{T^2}N\Bigr)\Bigr),\qquad
+D(\alpha)=\frac{A^{k/2+1}}{(4\pi)^{(k-1)/2}(\prod_i\alpha_i)^{3/4}},
+\end{equation}
+for the uniform start. Indeed $D(\alpha)=dC_F(\alpha)$, $I_F(\alpha)=d-A^2$ and
+$V_N=\frac1de^{-(d-1)T}(1+O(T^2/N))$. This is~\cite[Theorem~3.3]{paperB}, and at the center
+$D(\ones/k)=D_k$. By the Cauchy--Schwarz inequality $A^2\le k$, with equality only at the
+center.
+
+The next theorem holds at every $N$ in its exact parts, and its asymptotic parts come from
+Section~\ref{sec:secondorder}.
+
+\begin{theorem}[balanced crossings]\label{thm:simplex-crossing}
+Let $\mu$ be uniform and let $F$ be a face of $2\le k\le d$ states.
+\begin{enumerate}[(i)]
+\item For every $N\ge k$ there is exactly one $p=p_{N,k}\in(0,1)$ with $M_F=V_N$. The face
+maximum $M_F$ is larger than $V_N$ below $p_{N,k}$ and smaller above it, and so is the
+probability of a balanced composition of $F$. The crossing $p_{N,k}$ is strictly increasing in $N$,
+$p_{k,k}=1/(1+(d-1)(k!)^{-1/(k-1)})$, and every crossing has $u\le(k!)^{-1/(k-1)}<1$, so
+$p_{N,k}>1/d$.
+\item For large $N$, uniformly for $1\le T\le N^{1/3}$,
+\[
+\log\frac{M_F}{V_N}=(k-1)\Bigl[T-L+\frac12\log T-a_k\Bigr]-\frac{k-1}{8T}
++O\Bigl(\frac1{T^2}+\frac{T^2}N\Bigr).
+\]
+With $T=L-\frac12\log L+t$, the ratio $M_F/V_N$ tends to $e^{(k-1)(t-a_k)}$, uniformly for
+$t$ in compact sets.
+\item The value $T_{N,k}=N(1-p_{N,k})/(d-1)$ of $T$ at the crossing satisfies
+\[
+T_{N,k}+\frac12\log T_{N,k}=L+a_k+\frac1{8T_{N,k}}+O(L^{-2}),
+\]
+and
+\begin{equation}\label{eq:simplex-root-expansion}
+T_{N,k}=L-\frac12\log L+a_k+\frac{\frac14\log L-\frac12a_k+\frac18}L
++O\Bigl(\frac{(\log L)^2}{L^2}\Bigr).
+\end{equation}
+\item $a_2>a_3>a_4>\cdots$.
+\end{enumerate}
+\end{theorem}
+
+For $d=2$, $T_{N,2}$ is the crossing $z_N$ of Corollary~\ref{cor:paperA}, and $a_2=c_0$.
+The proof is in Appendix~\ref{app:complete}. The exact part uses that $S_n$ has nonnegative
+coefficients and the first nonzero coefficient $W_n(k-1)=k!$, from the words that use each
+state in a single run. The next coefficient $W_n(k)=k!(k-1)(N-k)/2$ grows with $N$, which moves
+the root. The asymptotic part is Proposition~\ref{prop:nextterm} with the value
+$c_F=-(k-1)/8$ that we compute by hand in Appendix~\ref{app:nextterm}. So the term $1/(8T)$,
+which~\cite{paperB} found through a Bessel majorant, is the next term of the local law.
+
+For $p\ge1/d$ the face maxima are the balanced compositions, at every $N$. Once the number of runs of each state is
+fixed, splitting the visits evenly gives the most ways to choose the run lengths.
+
+\begin{theorem}[exact balancing]\label{thm:simplex-balance}
+Let $1/d\le p<1$, and let $\mu$ be constant and positive on a face $F$. Moving one unit from a
+coordinate $b$ of a composition with support $F$ to another coordinate $a$, where $n_b\ge n_a+2$ and
+$n_a\ge1$, strictly increases the probability of the composition. So the most likely compositions with support
+$F$ are exactly the balanced ones, and they all have the same probability.
+\end{theorem}
+
+The proof in Appendix~\ref{app:complete} rests on the log-concavity of the polynomials $B_n$
+of~\eqref{eq:simplex-balance-integral} in $n$. The condition $p\ge1/d$ holds at every crossing
+by Theorem~\ref{thm:simplex-crossing}(i), and for $T\le N/d$.
+
+\begin{corollary}[exactly one mode change]\label{cor:simplex-modes}
+Let $\mu$ be uniform, and fix $d\ge2$ and $C>1$. There is $N_0$ such that for $N\ge N_0$ and
+every $p$ with $0<T\le CL$ the following hold.
+\begin{enumerate}[(i)]
+\item If $p>p_{N,d}$, the global modes are exactly the $d$ vertices.
+\item If $p<p_{N,d}$, they are exactly the balanced compositions with $d$ positive
+coordinates.
+\item If $p=p_{N,d}$, they are these two classes and nothing else.
+\end{enumerate}
+Moreover $p_{N,2}<p_{N,3}<\cdots<p_{N,d}$ and
+$p_{N,d}-p_{N,k}=(d-1)(a_k-a_d+o(1))/N$. So all the crossings of balanced compositions with the
+vertices lie in a $p$-interval of length $(d-1)(a_2-a_d+o(1))/N$, and as $p$ decreases the
+balanced compositions with $d$ positive coordinates cross first.
+\end{corollary}
+
+So for large $N$ the mode jumps once, from the vertices straight to the center of the simplex,
+and no proper face holds it in between. On the triangle the middle composition
+$(\frac N3,\frac N3,\frac N3)$ overtakes the vertices while the middles of the edges are still
+below them by the factor $e^{-(a_2-a_3)}=0.827$. By Theorem~\ref{thm:simplex-balance} every
+global mode is a vertex or a balanced composition, and Theorem~\ref{thm:simplex-crossing}(ii) compares
+these. The proof is in Appendix~\ref{app:complete}. In the tie window at $\tau^*=1$ this is
+Theorem~\ref{thm:window}, whose envelope $E$ has a single kink, at $t=a_d$.
+
+\begin{remark}[an intermediate face can be a mode at finite $N$]\label{ex:simplex-edge-mode}
+Corollary~\ref{cor:simplex-modes} does not hold for every $N$. Take $d=3$, $N=4$
+and $p=10/17$, so $u=7/20$. For an edge center and a full center, counting the words gives
+\[
+\frac{P_4(2,2,0)}{V_4}=2u+2u^2+2u^3=\frac{4123}{4000}>1,
+\qquad
+\frac{P_4(2,1,1)}{V_4}=6u^2+6u^3=\frac{3969}{4000}<1.
+\]
+Here $p>1/3$, so by Theorem~\ref{thm:simplex-balance} every global mode is a vertex or a
+balanced composition, and the three edge centers are the only global modes. Also
+$0<T=14/17<\log4$, so this $p$ lies in the range of Corollary~\ref{cor:simplex-modes} for
+every $C>1$. Hence $N_0>4$ when $d=3$. These values are checked in Lean.
+\end{remark}
+
+\subsection{A start}\label{sec:start}
+
+By Corollary~\ref{cor:paperB} the start enters $K_F$ only through $\mu(F)$. It changes the
+constants by an amount of order $1$, the order at which the faces are separated, so a start can
+decide which face wins.
+
+\begin{corollary}[crossings with a start]\label{cor:start-crossings}
+Let $F$ be a face of $k\ge2$ states with $\mu(F)>0$, and let $i$ be a state with $\mu_i>0$. Put
+$a_k(\mu)=a_k+\frac1{k-1}\log\frac{k\mu_i}{\mu(F)}$. For large $N$ the equation
+$M_F=M_{\{i\}}$ has a root in $[1,N^{1/3}]$, and every such root satisfies
+$T+\frac12\log T=L+a_k(\mu)+O(1/L)$. With $T=L-\frac12\log L+t$,
+$\log(M_F/M_{\{i\}})=(k-1)(t-a_k(\mu))+o(1)$, uniformly for $t$ in compact sets.
+\end{corollary}
+
+\begin{proof}
+By Corollary~\ref{cor:paperB}, $\log(K_F/K_{\{i\}})=\log D_k+\log\frac{\mu(F)}{k\mu_i}=-(k-1)a_k(\mu)$,
+and $\Delta=\delta=k-1$. So Theorem~\ref{thm:crossing} gives the root and its equation. For the
+last claim, Theorem~\ref{thm:window}(i) at $\tau^*=1$ gives
+$\log(M_F/M_{\{i\}})=\ell_F(t)-\ell_{\{i\}}(t)+O(\log L/L)$, and
+$\ell_F(t)-\ell_{\{i\}}(t)=\log(K_F/\mu_i)+(k-1)t$.
+\end{proof}
+
+So a start changes only the constant of each crossing~\cite[Theorem~4.4]{paperB}. It lowers
+$a_k$ by the logarithm of the average start mass on the face against the start mass of the
+vertex, $\log(\mu(F)/(k\mu_i))$, shared among the $k-1$ new states.
+If $\mu$ is constant on $F$, then $P_N(n)=\mu_ap^{N-1}S_n(u)$ for every $n$ with support $F$
+and $a\in F$, so Theorems~\ref{thm:simplex-crossing} and~\ref{thm:simplex-balance} hold on $F$
+with $V_N$ replaced by $\mu_ap^{N-1}$. Otherwise balancing can fail.
+
+\begin{remark}[balancing can fail with a start]\label{ex:start-balance}
+Let $d=2$, $N=4$ and $\mu=(\frac12+\varepsilon,\frac12-\varepsilon)$ with
+$0<\varepsilon\le\frac12$. Counting the switches in the four words with counts
+$(3,1)$ and the six with counts $(2,2)$ gives $P_4(3,1)=p^3(u+2\mu_1u^2)$
+and $P_4(2,2)=p^3(u+u^2+u^3)$. So
+$P_4(3,1)-P_4(2,2)=p^3u^2(2\varepsilon-u)$, and the unbalanced composition is
+more likely when $u<2\varepsilon$.
+\end{remark}
+
+Each face now gets a line in the window coordinate $t$, and the highest line wins.
+
+\begin{corollary}[global modes with a start]\label{cor:start-modes}
+Order the start masses as $\mu_{(1)}\ge\cdots\ge\mu_{(d)}$, put
+$\bar\mu_k=\mu_{(1)}+\cdots+\mu_{(k)}$ and $T=L-\frac12\log L+t$, and define the lines
+\[
+ \ell^\mu_1(t)=\log\mu_{(1)},\qquad
+ \ell^\mu_k(t)=\log\frac{\bar\mu_k}k+(k-1)(t-a_k)\quad(2\le k\le d).
+\]
+Fix a compact set $\mathcal J$ of $t$ on which $\max_k\ell^\mu_k(t)$ is attained
+only at $k=k^*$. For large $N$ and all $t\in\mathcal J$, every global mode has exactly $k^*$
+positive coordinates, and its support $S$ has $\mu(S)=\bar\mu_{k^*}$. If $k^*=1$, the global
+modes are exactly the vertices $i$ with $\mu_i=\mu_{(1)}$. If $k^*\ge2$ and $\mu$ is constant on
+the support $S$ of a global mode, then the global modes with support $S$ are exactly the balanced
+compositions of $S$. Every global mode $n$ satisfies $n/N=\ones_S/k^*+O(1/L)$.
+\end{corollary}
+
+\begin{proof}
+By Lemma~\ref{lem:admissible}(b) and (c) the admissible faces are the faces with $\mu(F)>0$,
+and they satisfy (H). By Corollary~\ref{cor:paperB} they all tie at $\tau^*=1$, so
+Theorem~\ref{thm:window} applies with $m^*=d-1$. Its line for a face $F$ of $k$ states is
+$\ell_F(t)=\log K_F-(d-k)t$, and $\ell_F(t)+(d-1)t=\log(\mu(F)/k)+(k-1)(t-a_k)$ for $k\ge2$ and
+$\log\mu_i$ for $F=\{i\}$. Among the faces of size $k$ the largest of these lines belongs to the
+faces with $\mu(F)=\bar\mu_k$, and it is $\ell^\mu_k$. The faces of size $k^*$ with
+$\mu(F)=\bar\mu_{k^*}$ all have the same line. By the assumption and by compactness, every other
+face has a line below it by a fixed amount on a neighborhood of $\mathcal J$. So no kink of the
+envelope $E$ lies within some distance $\eta>0$ of $\mathcal J$, and the consequence in
+Theorem~\ref{thm:window} says that for large $N$ and all $t\in\mathcal J$ every global mode lies
+on a face of size $k^*$ with $\mu(F)=\bar\mu_{k^*}$. If $k^*=1$, such a mode is a vertex $Ne_i$
+with $\mu_i=\mu_{(1)}$, and all of these have the probability $\mu_{(1)}p^{N-1}$. If $k^*\ge2$ and
+$\mu$ is constant on $S$, then $p>1/d$ for large $N$, and Theorem~\ref{thm:simplex-balance} gives
+the claim on balanced compositions. Finally a global mode with support $S$ maximizes $P_N$ among the compositions
+with support $S$, so Theorem~\ref{thm:facemax} gives $n/N=\alpha^*_S+O(1/T)$ with
+$\alpha^*_S=\ones_S/k^*$.
+\end{proof}
+
+\begin{remark}[the order of the winners]\label{rem:start-lines}
+The winning size is nondecreasing in $t$. Indeed, if $k_1$ attains
+$\max_k\ell^\mu_k$ at $t_1$ and $k_2$ attains it at $t_2>t_1$, adding the two
+inequalities $\ell^\mu_{k_1}(t_1)\ge\ell^\mu_{k_2}(t_1)$ and
+$\ell^\mu_{k_2}(t_2)\ge\ell^\mu_{k_1}(t_2)$ gives $(k_2-k_1)(t_2-t_1)\ge0$. Put
+$t^*=a_d+\frac1{d-1}\log(d\mu_{(1)})$, where $\ell^\mu_1$ and $\ell^\mu_d$ cross.
+Since the slope $k-1$ of $\ell^\mu_k$ lies strictly between the slopes $0$ and
+$d-1$, a size $2\le k\le d-1$ can be the unique winner at some $t$ only if
+$\ell^\mu_k(t^*)>\ell^\mu_1(t^*)$. For the uniform start $t^*=a_d$ and
+$\ell^\mu_k(t^*)-\ell^\mu_1(t^*)=(k-1)(a_d-a_k)<0$, in line with
+Corollary~\ref{cor:simplex-modes}.
+\end{remark}
+
+\begin{example}[the start decides which face wins]\label{ex:K3-start}
+Let $d=3$ and $\mu=(\frac12,\frac12,0)$, and put
+$t_{\rm ef}=\log\frac32+2a_3-a_2=\frac12\log\frac{32\pi}{243}$. Fix $t$ and let
+$N$ be large. If $t<a_2$, the global modes are $(N,0,0)$ and $(0,N,0)$. If
+$a_2<t<t_{\rm ef}$, they are exactly the balanced compositions of the edge $\{1,2\}$. If
+$t>t_{\rm ef}$, every global mode has three positive coordinates. The window
+$(a_2,t_{\rm ef})=(-0.4673558,-0.4412978)$ has width
+$\log\frac{16}{9\sqrt3}=0.0260580$, while with the uniform start no proper face
+wins (Corollary~\ref{cor:simplex-modes}).
+\end{example}
+
+\begin{proof}
+Here $\bar\mu_1=\frac12$ and $\bar\mu_2=\bar\mu_3=1$, so the lines of
+Corollary~\ref{cor:start-modes} are $\ell^\mu_1=\log\frac12$,
+$\ell^\mu_2=\log\frac12+t-a_2$ and $\ell^\mu_3=\log\frac13+2(t-a_3)$. Hence
+$\ell^\mu_2>\ell^\mu_1$ exactly when $t>a_2$, $\ell^\mu_2>\ell^\mu_3$ exactly
+when $t<t_{\rm ef}$, and $\ell^\mu_3>\ell^\mu_1$ exactly when $t>t^*$, where
+$t^*=a_3+\frac12\log\frac32$ is the point $t^*$ of
+Remark~\ref{rem:start-lines}. By the definition of $a_k$,
+$t_{\rm ef}-a_2=\log\frac32+2(a_3-a_2)=4\log2-\frac52\log3
+=\log\frac{16}{9\sqrt3}$. This is positive, since
+$16^2=256>243=(9\sqrt3)^2$. Also $t^*-a_2=\frac12(t_{\rm ef}-a_2)$. So
+$a_2<t^*<t_{\rm ef}$, and the unique winning size is $1$ for $t<a_2$, $2$ for
+$a_2<t<t_{\rm ef}$ and $3$ for $t>t_{\rm ef}$. Now apply
+Corollary~\ref{cor:start-modes} with $\mathcal J=\{t\}$. The vertices with
+$\mu_i=\frac12$ are $1$ and $2$. The only edge with $\mu(S)=1$ is $\{1,2\}$, and
+$\mu$ is constant on it. So for $a_2<t<t_{\rm ef}$ every global mode is a
+balanced composition of $\{1,2\}$, and then all the balanced compositions of $\{1,2\}$ are global modes.
+\end{proof}
+
+The proof uses only Theorems~\ref{thm:facemax} and~\ref{thm:window} and exact balancing on the
+edge, through Corollary~\ref{cor:start-modes}. The comparison of the lines and the value of the
+width are checked in Lean. Dynamic programs over all compositions at $N=90$, $300$ and $1002$ show the
+three phases at finite $N$, with the window moved to larger $t$ (Section~\ref{sec:verify}). The
+next remark explains the shift.
+
+\begin{remark}[the window at finite $N$]\label{rem:K3-finite}
+Since $\mu$ is constant on $\{1,2\}$, Proposition~\ref{prop:pair} with $a=1$ and $q=2$ gives
+$P_N(n_1,n_2,0)/P_N(N,0,0)=S_{n_1,n_2}(u)$. So for every $N\ge2$ the balanced compositions of the edge
+cross the vertices exactly at $u=u_N$, the crossing odds of the two-state walk, that is, at
+$T=Nu_N/(1+2u_N)$. This differs from $z_N=Nu_N/(1+u_N)$ by $O(L^2/N)$. Near $t=a_2$ the lines
+of the full face and of the edges through $3$ stay below those of the vertices, so for large $N$
+this crossing is the lower end of the window. For the two ends at finite $N$ we use $z=Nu=T/p$.
+A heuristic calculation, which we do not prove, puts them at
+$z-L+\frac12\log z=a_2+\frac1{8z}+\frac{z^2}{2N}+\cdots$ and
+$t_{\rm ef}+\frac1{12z}+\frac{3z^2}{2N}+\cdots$. Only $a_2+\frac1{8z}$ is proved, by
+Theorem~\ref{thm:simplex-crossing}(iii) and $z-T=O(L^2/N)$. The terms $z^2/N$ come from a
+discrete term $-\frac{(k-1)^2}2\frac{z^2}N$ in the logarithm of $M_F/V_N$. Exact computations
+give the widths $0.0843$, $0.0324$, $0.0223$ and $0.0214$ at $N=300$, $3000$, $30000$ and
+$300000$, and the heuristic gives $0.0802$, $0.0321$, $0.0226$ and $0.0217$
+(Section~\ref{sec:verify}).
+\end{remark}
+
+\subsection{A weak field}\label{sec:complete-field}
+
+Proposition~\ref{prop:weakfield} applies to the complete graph with the uniform start. There
+$\alpha^*_F$ is uniform, so the field shifts the line of a face $S$ by the average
+$\bar\xi_S=\frac1{|S|}\sum_{i\in S}\xi_i$ of the field over $S$. In the Potts chain the
+field $\xi_i/N$ acts at each site in state $i$.
+
+\begin{corollary}[weak-field modal phase diagram]\label{cor:weakfield-phases}
+Let $\mu$ be uniform, put $T=L-\frac12\log L+t$ and define the face scores
+\[
+ \ell_S(t,\xi)=
+ \begin{cases}
+ \xi_i,& S=\{i\},\\
+ (|S|-1)(t-a_{|S|})+\bar\xi_S,& |S|\ge2.
+ \end{cases}
+\]
+Uniformly for $(t,\xi)$ in compact sets,
+\begin{equation}\label{eq:weakfield-maximum}
+ \log\max_n\frac{e^{\langle\xi,n\rangle/N}P_N(n)}{V_N}
+ \longrightarrow \max_{\varnothing\ne S\subseteq[d]}\ell_S(t,\xi).
+\end{equation}
+For fixed $(t,\xi)$ and all large $N$, every global mode of $\widetilde P_{N,\xi}$ has a support that
+maximizes the limiting score. If the maximizing support is unique, all global modes have exactly
+that support, and if it has $|S|\ge2$ states they satisfy $n/N=\ones_S/|S|+O(1/L)$. Equal
+limiting scores do not imply that both supports hold modes at finite $N$.
+
+If the fields are sorted as $\xi_1\ge\cdots\ge\xi_d$, the maximum of the scores is
+the upper envelope of the $d$ lines
+\begin{equation}\label{eq:weakfield-lines}
+ \ell_1(t)=\xi_1,\qquad
+ \ell_k(t)=(k-1)(t-a_k)+\frac1k\sum_{i=1}^k\xi_i,
+ \quad 2\le k\le d.
+\end{equation}
+Away from ties, the winning support size is nondecreasing in $t$. If the fields are strictly
+ordered, the winning supports are the nested sets $\{1,\ldots,k\}$. Every support size
+$k\in\{2,\ldots,d-1\}$ is the unique winning size on an open interval of $t$ for suitable fixed
+fields. So proper faces can hold the mode under a field of order $1/N$ per step.
+\end{corollary}
+
+\begin{proof}
+\emph{Step 1. The best composition on a support.} Let $S$ have $k\ge2$ states. By
+Theorem~\ref{thm:simplex-crossing}(ii), $\log(M_S/V_N)=(k-1)(t-a_k)+o(1)$, uniformly for $t$ in
+a compact set. Proposition~\ref{prop:weakfield}(b), with $\alpha^*_S$ uniform, gives
+$\log(M^\xi_S/V_N)=\ell_S(t,\xi)+o(1)$, uniformly for $(t,\xi)$ in compact sets. A vertex has
+$M^\xi_{\{i\}}=e^{\xi_i}V_N$ exactly. There are finitely many supports, which
+proves~\eqref{eq:weakfield-maximum}.
+
+\emph{Step 2. The modes.} A support whose score is below the maximum by a fixed amount has
+$M^\xi_S$ smaller than the largest face maximum for large $N$, so it holds no global mode. A
+global mode with support $S$ maximizes $w_\xi$ on $S$, and Proposition~\ref{prop:weakfield}(b)
+gives its location.
+
+\emph{Step 3. The lines.} Among the supports of size $k$ the largest $\bar\xi_S$ is
+the average of the $k$ largest fields, which gives~\eqref{eq:weakfield-lines}. If
+$k_1$ wins at $t_1$ and $k_2$ at $t_2>t_1$, adding the two comparisons gives
+$(k_1-k_2)(t_2-t_1)\le0$. So the winning size is nondecreasing away from ties. If the fields
+are strictly ordered, the unique best support of size $k$ is $\{1,\dots,k\}$.
+
+\emph{Step 4. Every intermediate size.} To realize a given $2\le k<d$, set
+$\xi_1=\cdots=\xi_k=0$ and $\xi_{k+1}=\cdots=\xi_d=-H$, and take $t>a_k$ so close to
+$a_k$ that $t<a_{k-1}$ if $k>2$. Then the score of $\{1,\dots,k\}$ is positive, the
+largest vertex score is $0$, and every face with $2\le j<k$ states scores at
+most $(j-1)(t-a_j)<0$, by Theorem~\ref{thm:simplex-crossing}(iv). A face with $j>k$ states
+scores at most $(j-1)(t-a_j)-H(j-k)/j$, and another face with $k$ states at most
+$(k-1)(t-a_k)-H/k$, so both lose once $H$ is large. The comparisons are strict,
+so they hold on an open interval of $t$, and small changes make the fields
+strictly ordered without removing the phase.
+\end{proof}
+
+The lines~\eqref{eq:weakfield-lines} are the lines $\ell^\xi_F$ of
+Proposition~\ref{prop:weakfield}(c) plus $(d-1)t$.
+
+\begin{example}[a persistent edge phase on the triangle]\label{ex:weakfield-triangle}
+Let $d=3$, let $\mu$ be uniform and let $\xi=(0,0,-H)$. If $H>6(a_2-a_3)$, then for every
+fixed $t$ with
+\[
+ a_2<t<\frac H3+2a_3-a_2
+\]
+and all large $N$, all global modes of $\widetilde P_{N,\xi}$ lie on the edge $\{1,2\}$. Without a
+field no proper face holds a mode in the window (Corollary~\ref{cor:simplex-modes}).
+\end{example}
+
+\begin{proof}
+The scores of Corollary~\ref{cor:weakfield-phases} are $0$ for the vertices $1$ and $2$, $-H$ for
+the vertex $3$, $t-a_2$ for the edge $\{1,2\}$, $t-a_2-H/2$ for the other two edges and
+$2(t-a_3)-H/3$ for the full face. For $t$ in the interval, $t-a_2>0$, and
+$t-a_2>2(t-a_3)-H/3$ exactly when $t<H/3+2a_3-a_2$. So the edge $\{1,2\}$ is the unique
+maximizer, and the interval is not empty exactly when $H>6(a_2-a_3)$.
+Corollary~\ref{cor:weakfield-phases} gives the claim.
+\end{proof}
+
+One field can make every support size win in turn, from one state to all $d$.
+
+\begin{corollary}[one field realizes the full face hierarchy]
+\label{cor:weakfield-full-hierarchy}
+Let $\mu$ be uniform, fix $d\ge2$ and $H>3/4$, and let $\xi_i=-H(i-1)^2$ for $1\le i\le d$. In
+particular $\xi_i=-(i-1)^2$ works in every fixed dimension. Put
+\[
+ t_k=\log D_k-\log D_{k+1}+\frac{H(4k-1)}6\quad(1\le k<d),
+\]
+and $t_0=-\infty$, $t_d=+\infty$. Then $t_1<\cdots<t_{d-1}$, and for every
+$k\in\{1,\ldots,d\}$ the support $\{1,\ldots,k\}$ is the unique winning support
+on the nonempty interval $t_{k-1}<t<t_k$. So for each fixed $t$ in this
+interval and all large $N$, every global mode of $\widetilde P_{N,\xi}$ has exactly
+those $k$ positive coordinates.
+\end{corollary}
+
+\begin{proof}
+Since $\frac1k\sum_{i=1}^k(i-1)^2=(k-1)(2k-1)/6$ and $-(k-1)a_k=\log D_k$, the lines
+\eqref{eq:weakfield-lines} are $\ell_k(t)=(k-1)t+\log D_k-H(k-1)(2k-1)/6$, also for
+$k=1$, and $\ell_{k+1}(t)-\ell_k(t)=t-t_k$. Extend $\log D_k$ to the smooth function
+$c(x)=(x+\frac12)\log x-\frac{x-1}2\log(4\pi)$ for $x\ge1$. Then
+$0<c''(x)=(x-\frac12)/x^2\le\frac12$, and integrating twice over unit intervals
+gives $\log D_{k+2}-2\log D_{k+1}+\log D_k\le\frac12$. Hence
+\[
+ t_{k+1}-t_k=\frac{2H}{3}-(\log D_{k+2}-2\log D_{k+1}+\log D_k)>0.
+\]
+For $t_{k-1}<t<t_k$, summing the differences $\ell_{j+1}(t)-\ell_j(t)=t-t_j$
+shows that line $k$ strictly exceeds every other line. The fields are strictly
+decreasing, so the unique best support of size $k$ is $\{1,\ldots,k\}$, and
+Corollary~\ref{cor:weakfield-phases} gives the conclusion for finite $N$. Most of this
+arithmetic is checked in Lean.
+\end{proof}
