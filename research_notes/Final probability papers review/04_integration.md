@@ -38,3 +38,5 @@ All 53 D, 19 F, 13 E and 47 C theorem/lemma/proposition/corollary/conjecture sta
 - The immutable implementation revision is recorded after the source commit, and the availability links and affected PDFs are rebuilt in the final pin commit. No release tag is invented, and nothing is submitted to a journal or arXiv here.
 
 The adjacent `validation` directory contains compact build and preservation records. External full-text PDFs and page images stay local; the public source register gives their original URLs and hashes. The unrelated working change in `kagey-problems/lean/README.md` is excluded from the commits.
+
+The final availability statements pin implementation commit [c98db25](https://github.com/apemm/Kagey-Problems/commit/c98db255026bf21ed3c041a8ed888ed99b734886). It contains the revised manuscripts, map documentation, shared routines, historical B archive and review records. The follow-up pin commit records the updated links and freshly rebuilt PDFs.
