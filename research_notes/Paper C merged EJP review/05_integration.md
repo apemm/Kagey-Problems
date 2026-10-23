@@ -27,6 +27,8 @@ The parent applied the reviewer feedback and the localized precision findings fr
 
 ## Scope boundaries
 
+The implementation is recorded in commit [4c18775](https://github.com/apemm/Kagey-Problems/commit/4c187751182d0fa33097dc7eddcac289173ba7db), which includes the final code layout, shared routines and historical B archive. The article's availability statement pins this revision. The compiled article and supplement are rebuilt after inserting that pin. The compact build, archive-preservation and focused-check records are saved in the adjacent `validation` folder.
+
 The user's request targets merged C. The attached plan is for D, E and F. Applied its C-related dependency, citation, archive and Lean-map recommendations. Did not retitle/revise D or F, invent disclosures for them, create future release tags, upload anything to arXiv, or submit to a journal. E's future release tag still needs creation at posting, as its own plan says. The original D/E/F posting calendar is a plan, not a verified journal or arXiv requirement.
 
 The paper has a coherent EJP case. The residual editorial risk is the length and the extent of the advance over sharp occupation-density/spectral methods, not a major mathematical defect established by this audit. Optional further cuts should remove an example or move a coherent independent proof block, rather than compress the boundary-control and maximization arguments that support the leading theorems.
