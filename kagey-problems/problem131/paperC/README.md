@@ -8,14 +8,16 @@ Problem 131 of Kagey's Open Problem Collection (the middle bin against an endpoi
 example is the complete graph, Q = J - dI, which is the one-dimensional d-state Potts chain.
 
 In October 2026 Paper B ("Vertex crossings in a symmetric Markov multinomial model",
-arXiv:2610.09258, folder `../paperB`) was merged into this paper, following the plan of
+arXiv:2610.09258, folder `../archive/paperB`) was merged into this paper, following the plan of
 October 20, 2026. The merged paper keeps the title, the folder and the file name of Paper C. It
 is written in the class of the Electronic Journal of Probability (`ejpecp`). Its results on the
-complete graph and near a vertex come from Paper B, and Paper B stays on arXiv as posted. At the
+complete graph and near a vertex come from Paper B. This merged version is intended to
+replace B under arXiv:2610.09258, while v1 remains available at its versioned URL. At the
 same time the application to sticky priors (the old Section 6 and Appendix D) moved to the note
 `../S3_sticky_note`, the section on the rate through flows (the old Section 4.8) became one remark,
 and the proofs for the table of outcomes (the old Appendix C) moved to the supplement
-`supplement.tex`.
+`supplement.tex`. The detailed higher-order Laplace and next-term proofs are in its
+Sections S3 and S4, with their statements and coefficient formulas retained in Appendix B.
 
 Companion papers in this repository. The paper cites them as references only, without letter
 labels, and only where it uses their mathematics.
@@ -23,7 +25,7 @@ labels, and only where it uses their mathematics.
 - `../paperA`, "Uniform Bessel bounds for magnetization crossings in finite Ising chains",
   arXiv:2610.06935 (arXiv v1 title: "Uniform Bessel bounds for endpoint crossings in the
   persistent random walk"). The two-state walk, at every N. Cited.
-- `../paperB`, "Vertex crossings in a symmetric Markov multinomial model", arXiv:2610.09258.
+- `../archive/paperB`, "Vertex crossings in a symmetric Markov multinomial model", arXiv:2610.09258.
   Incorporated here. Cited (v1) for the results that did not come over: its Bessel majorant and
   its crossover near the boundary of the simplex (Remark 6.3).
 - `../paperE`, "Endpoint crossings for the planar persistent walk" (in preparation). Until
@@ -41,7 +43,7 @@ best balanced bin C_{N,k} is the face maximum M_F, and its function Psi_N is wri
 
 ## What is proved
 
-The numbers are those of the build of October 23, 2026 (69 pages, and an 8-page supplement).
+The numbers are those of the build of October 23, 2026 (64 pages, and a 14-page supplement).
 
 - First order, for every start (Theorem 3.3). The mode lies on a face F that minimizes
   tau lambda_F + |F| - 1, and the winners are read off the lower-left boundary of the convex hull
@@ -63,10 +65,10 @@ The numbers are those of the build of October 23, 2026 (69 pages, and an 8-page 
 - The next term (Proposition 4.15). The local law and log M_F have a further term c_F/T, and every
   crossing satisfies T(Delta L - (Delta/2) log T - delta T - log(K_F/K_G)) = c_F - c_G + O(1/L).
   For a symmetric pair c_F = -1/(8 q_ij), and on the complete graph c_F = -(k-1)/8. The second
-  value is now computed by hand from the formula (c-alpha) of Appendix B, for every k, and no
-  longer quotes Paper B (Check 1 of the merge plan).
+  value is computed by hand for every k in Section S4 of the supplement, from the formula
+  (c-alpha) retained in Appendix B, and does not quote Paper B (Check 1 of the merge plan).
 - A weak field (Proposition 4.16, new in the merge). A field of size xi_i/N per visit to state i
-  shifts the line of every face in a tie window by <xi, alpha*_F>, for every chain, and the
+  shifts the line of every face in a tie window by <xi, alpha*_F>, for faces satisfying (H), provided all tied faces are irreducible, and the
   normalizing sum tends to exp(<xi, pi>) for irreducible Q. `verify_weak_field.py` checks it.
 - The two-state walk (Proposition 5.1 and Corollary 5.2). The exact pair identity, and the crossing
   equation of Paper A with its term 1/(8 z_N).
@@ -109,7 +111,7 @@ full account.
 - Every theorem, proposition, lemma and corollary is proved in the text, in Appendices A to D, or in
   the supplement. There are 2 kinds of outside input. The paper quotes results of `../paperA` where
   it says so, and the rows of Table 2 marked "Lean only" are proved in Lean and not in the text.
-  The results of `../paperB` that the paper quotes (Remark 6.3) are not used.
+  The results of `../archive/paperB` that the paper quotes (Remark 6.3) are not used.
 - No proof rests on a floating-point computation. Exact computer algebra enters in 2 places, the
   2 resultants behind Proposition S1.4 (`verify_examples.py`) and the 2 values of c_F after
   Corollary 7.1 (`verify_second_order.py`).
@@ -132,14 +134,18 @@ in general (`../paperE` proves it for the planar walk).
   `sec_secondorder.tex`, `sec_complete.tex`, `sec_vertex.tex`, `sec_examples.tex` and
   `sec_verify.tex` (Sections 1 to 8), and the appendices `app_torus.tex`, `app_laplace.tex`,
   `app_complete.tex` and `app_vertex.tex` (Appendices A to D).
-- `supplement.tex` is the supplement (Section S1, proofs for the table of outcomes, and Section S2,
-  the full proof for the directed 3-cycle). It builds on its own. The paper and the supplement read
+- `supplement.tex` is the supplement. Section S1 proves rows of the table of outcomes, S2
+  gives the full directed-three-cycle proof, and S3/S4 give the detailed higher-order
+  Laplace and next-term proofs. It builds on its own. The paper and the supplement read
   each other's statement numbers with the package `xr`.
 - `figures/` holds Figure 3 (`fig_cycles`), made by `figures/make_figures.py`,
   with the captions in `figures/captions.md`. The same script makes the figure `fig_planar` of
   `../paperE` and writes it to `../paperE/figures`. Figure 1 is the simplex figure from
   `figures/make_simplex_figure.py`. Figure 2 (the worked example on the 4-cycle) is drawn in the
-  source with TikZ. The files `fig_window` and `fig_sticky`, and the program figure
+  source with TikZ. Figure 4 (`fig_complete_envelope`) compares the limiting complete-graph
+  scores with and without a weak field. Its generator is `figures/make_complete_envelope.py`,
+  which uses only NumPy and Matplotlib and runs without simulation or a dynamic program.
+  The files `fig_window` and `fig_sticky`, and the program figure
   `../figures/program_C.pdf`, are not included in the paper.
 - `verify_first_order.py` checks the exact law, the rate on a face and first-order selection
   (Sections 2 and 3).
@@ -157,11 +163,10 @@ in general (`../paperE` proves it for the planar walk).
   that completing the square predicts) and on a pair at N = 20000 by an exact dynamic program, and
   part (d) by the transfer matrix. It takes about a minute.
 - `verify_sticky_fisher.py` checks the note `../S3_sticky_note` (sticky priors) and the note
-  `../S1_endpoint_information_note` (the Fisher information of the endpoint). It also holds the
-  polynomial S_N of the two-state walk, which `../paperE/verify_planar.py` imports. It stays here
-  for that reason.
+  `../S1_endpoint_information_note` (the Fisher information of the endpoint). The polynomial S_N and recurrence of the two-state walk are shared with Paper E through
+  `../common/two_state.py`. Paper E no longer imports the sticky-prior checker.
 - `verify_all.py` runs the 7 scripts. The statements that came from Paper B are also checked by the
-  scripts of `../paperB` (Section 8 of the paper says which), run by `../paperB/verify_all.py`.
+  scripts of `../archive/paperB` (Section 8 of the paper says which), run by `../archive/paperB/verify_all.py`.
 - `data/ledger.md` and `data/ledger_C1.md`, `ledger_C2.md`, `ledger_C4.md` and `ledger_C5.md` hold the
   predictions, written down before most of the computations, and what happened to them. They use
   the statement numbers of their dates. `data/verify_output.txt` (September 26, 2026) and

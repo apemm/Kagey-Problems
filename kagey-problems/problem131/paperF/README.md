@@ -16,7 +16,7 @@ number only, not as Papers A, B and D.
 
 - `../paperA`, "Uniform Bessel bounds for magnetization crossings in finite Ising chains",
   arXiv:2610.06935. The crossing for geometric runs (Section 1).
-- `../paperB`, "Vertex crossings in a symmetric Markov multinomial model", arXiv:2610.09258. The
+- `../archive/paperB`, "Vertex crossings in a symmetric Markov multinomial model", arXiv:2610.09258. The
   first-order scale of its vertex crossing (Remark 3.5).
 - `../paperD`, "The center and the ends of the elephant random walk with rare reversals" (in preparation). Its
   Proposition 2.3 uses the same argument as Proposition 3.3(b).

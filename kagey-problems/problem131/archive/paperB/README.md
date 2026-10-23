@@ -1,6 +1,9 @@
 # Problem 131, Paper B: vertex crossings in a symmetric Markov multinomial model
 
-Paper B is incorporated into the merged paper in `../paperC` ("Face selection for slowly switching Markov chains", October 2026). This folder keeps Paper B as posted on arXiv (2610.09258).
+Paper B is incorporated into the merged paper in `../../paperC` ("Face selection for slowly switching Markov chains", October 2026). This archive preserves the repository snapshot of Paper B before the merged revision.
+The original posted version is [arXiv:2610.09258v1](https://arxiv.org/abs/2610.09258v1).
+The merged Paper C is intended to replace it under the same identifier. Paths printed in
+the historical manuscript refer to the repository layout at its original release.
 
 Paper B treats the complete graph on d states, which is the 1D d-state Potts chain. Every face of
 the simplex ties with the vertices at first order when T is near log N, and Paper B resolves the
@@ -10,7 +13,7 @@ Gaussian volume, and Paper B writes them with square roots of weighted spanning-
 Since a_2 > a_3 > ..., the mode changes exactly once, from the vertices straight to the full
 centers. A start law or a weak Potts field shifts the constants. The paper also gives a Bessel
 majorant for every count vector and the crossing near a vertex, uniformly over rare counts of
-total o(b). It is the second paper on Problem 131, and `../README.md` describes the others.
+total o(b). It is the second paper on Problem 131, and `../../README.md` describes the others.
 
 ## Files
 
@@ -19,18 +22,18 @@ total o(b). It is the second paper on Problem 131, and `../README.md` describes 
   `frontier_modes.tex` and `frontier_boundary.tex`, and the appendices `app_thresholds.tex`,
   `app_start_field.tex`, `app_boundary.tex` and `vertex_completion.tex`.
 - `figures/` holds Figures 2 and 3 (`simplex` and `phases`), made by `figures/make_figures.py`.
-  Figure 1 is the program figure `../figures/program_B.pdf`, made by
-  `../figures/make_program_figure.py`.
+  Figure 1 is the program figure `../../figures/program_B.pdf`, made by
+  `../../figures/make_program_figure.py`.
 - `verify_geometry.py`, `verify_simplex_threshold.py`, `verify_frontier_boundary.py`,
   `verify_frontier_modes.py`, `verify_vertex_completion.py`, `verify_general_start.py`,
   `verify_crossover_factor.py` and `verify_B_tie_repair.py` are the checks. They use only the
-  standard library, and `../SUPPLEMENT.md` says what each one checks. `predict_general_start.py`
+  standard library, and `../../SUPPLEMENT.md` says what each one checks. `predict_general_start.py`
   only evaluates the formulas for the registered predictions and checks nothing.
 - `verify_all.py` runs the checks.
 - `data/` holds the recorded output of the checks and the ledgers `data/ledger_B_tie.md` and
-  `data/ledger_B_crossover.md`. The first predictions for Papers A and B are in `../ledger.md`.
+  `data/ledger_B_crossover.md`. The first predictions for Papers A and B are in `../../ledger.md`.
 - `removed_proofs/` keeps the proofs cut from the appendix while shortening the paper.
-- `../lean/PaperB/` holds the Lean 4 proofs, and `../lean/README.md` says what they cover.
+- `../../lean/PaperB/` holds the Lean 4 proofs, and `../../lean/README.md` says what they cover.
 
 ## How to run the checks and build
 
@@ -43,4 +46,4 @@ failures on purpose, since they belong to the 2 registered predictions that fail
 `data/ledger_B_tie.md`).
 
 Build the paper with `pdflatex problem131_multistate.tex` in this folder, 3 times. The build reads
-the program figure from `../figures/program_B.pdf`.
+the program figure from `../../figures/program_B.pdf`.

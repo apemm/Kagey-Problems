@@ -1,7 +1,7 @@
 # Paper B: map from the paper to the Lean theorems
 
 This file matches the statements of Paper B, "Vertex crossings in a symmetric Markov multinomial
-model" (`paperB/problem131_multistate.tex`), to the Lean theorems of
+model" (`archive/paperB/problem131_multistate.tex`), to the Lean theorems of
 the library `PaperB` (root `PaperB.lean`, 19 modules in `PaperB/`, namespace `Kagey131.PaperB`).
 The library uses Lean 4 v4.33.1 and Mathlib v4.33.1. Every theorem listed here is proved without
 `sorry`, `admit` or new axioms. `#print axioms` on each of the 307 theorems of the library reports
@@ -9,10 +9,10 @@ only `propext`, `Classical.choice` and `Quot.sound` (see `build-log.txt` and
 `verification-manifest.json` in the parent folder).
 
 The primary key of each row is the `\label` of the statement in the source. The column Number
-gives its number in the built PDF (`paperB/problem131_multistate.pdf`, the 39-page build of
+gives its number in the built PDF (`archive/paperB/problem131_multistate.pdf`, the 39-page build of
 2026-10-02), and it has to be refreshed when the paper is rebuilt. A row whose Number is
 "removed" is a statement that was cut from the paper on 2026-10-02. Its text is kept in
-`paperB/removed_proofs/B_removed_2026-10-02.tex`, and its Lean theorems are still in the library. A number with § is a section or subsection, a number in parentheses is
+`archive/paperB/removed_proofs/B_removed_2026-10-02.tex`, and its Lean theorems are still in the library. A number with § is a section or subsection, a number in parentheses is
 an equation, and any other number is a theorem, lemma, proposition, corollary, example or remark.
 "In part" means that the finite or exact core of the statement is in Lean and the rest is listed
 under "Not in Lean" below.

@@ -8,8 +8,8 @@ changes on a cylinder or a tetrahedron.
 Status. There are six papers by A. Pemmasani, which call each other Papers A to F. Paper A
 (arXiv:2610.06935) solves the binary problem at every N, and Paper B (arXiv:2610.09258) treats d
 directions on the complete graph. Papers C to F are in preparation. In October 2026 Paper B was
-merged into Paper C, which keeps its title and folder. Paper B stays on arXiv as posted, and its
-folder `paperB` keeps it unchanged. Paper C (slowly switching
+merged into Paper C, which keeps its title and folder. Paper B v1 remains available as the versioned arXiv record, and its
+folder `archive/paperB` keeps it unchanged. Paper C (slowly switching
 chains, in `paperC`) and Paper E (the planar walk, in `paperE`) were one paper until October 13,
 2026, and so were Paper D (the elephant walk, in `paperD`) and Paper F (heavy-tailed runs and aging
 walks, in `paperF`). The titles of Papers C to F are working titles, and Paper A cites C and D under
@@ -41,26 +41,14 @@ Files. The folder `paperA`, with `problem131.tex` and `problem131.pdf`, the sect
 appendix `app_every_n.tex`, the check scripts, `paperA/README.md`, and the notes `llt_note` and
 `tables_note`.
 
-## Paper B: Vertex crossings in a symmetric Markov multinomial model
+## Historical Paper B
 
-Paper B (arXiv:2610.09258) treats the complete graph on d states, which is the 1D d-state Potts
-chain. Every face of
-the simplex ties with the vertices at first order when T is near log N, and Paper B resolves the
-tie at second order. A balanced bin with k states crosses a vertex at T = z, where
-z + (1/2) log z = L + a_k + 1/(8z) + O(L^-2). The constants a_k come from the mass of a face over a
-Gaussian volume, and Paper B writes them with square roots of weighted spanning-tree sums on K_k.
-Since a_2 > a_3 > ..., the mode changes exactly once, from the vertices straight to the full
-centers. A start law or a weak Potts field shifts the constants, so a start can make an edge win
-on 3 states and a field can make every support size win in turn. The paper also gives a Bessel
-majorant for every count vector and the crossing near a vertex, uniformly over rare counts of
-total o(b). Paper B is incorporated into Paper C (October 2026), which carries all of the above
-except the Bessel majorant and the crossover near the boundary of the simplex, which it cites.
-
-Files. The folder `paperB`, with `problem131_multistate.tex` and `problem131_multistate.pdf`, the
-sections `multistate_model.tex`, `simplex_thresholds.tex`, `general_start.tex`,
-`frontier_modes.tex` and `frontier_boundary.tex`, the appendices `app_thresholds.tex`,
-`app_start_field.tex`, `app_boundary.tex` and `vertex_completion.tex`, the check scripts and
-`paperB/README.md`.
+Paper B, "Vertex crossings in a symmetric Markov multinomial model", is now incorporated
+into Paper C. Its original source, PDF, data and verification scripts are preserved in
+[`archive/paperB`](archive/paperB/README.md). The earlier preprint remains available as
+[arXiv:2610.09258v1](https://arxiv.org/abs/2610.09258v1). The merged Paper C is intended to
+replace it under the same arXiv identifier. The Bessel majorant and boundary crossover
+that were not carried into C remain in this historical version.
 
 ## Paper C: Face selection for slowly switching Markov chains
 
@@ -70,8 +58,8 @@ of the N visits play the role of the bin. To first order the mode sits on a face
 tau lambda_F + |F| - 1, where lambda_F is the principal Dirichlet eigenvalue of -Q on F, the rate
 at which the chain leaves F. At second order a strongly connected face with start mass has an
 explicit constant K_F, and the crossings of 2 such faces satisfy a crossing equation with the
-coefficient 1/2 of log log N, which fails without strong connectivity. A weak field tilts the line
-of every face by the field averaged over its quasi-ergodic law. Since October 2026 Paper C
+coefficient 1/2 of log log N, which fails without strong connectivity. On a face satisfying (H), a weak field shifts its line by the field averaged over its
+quasi-ergodic law. The tie-window conclusion assumes every tied face is irreducible. Since October 2026 Paper C
 incorporates Paper B, and the complete graph, the Potts chain, is its main example: every face
 ties at first order, each balanced crossing is unique at every N, the face maxima are the balanced
 bins, the mode changes exactly once, a start law or a weak field can let an intermediate face win,
@@ -155,5 +143,5 @@ below are shared.
 Run `python -B verify_all.py --paper a` (or `b` to `f`, or `all`). Add `--full` for the long runs
 and `--dry-run` to list the commands. Build each paper in its folder with pdflatex, 3 times, for
 example `pdflatex problem131.tex` in `paperA` and `pdflatex problem131_multistate.tex` in
-`paperB`. In `paperC` build `problem131_switching.tex` and `supplement.tex` alternately, 3 times
+`archive/paperB`. In `paperC` build `problem131_switching.tex` and `supplement.tex` alternately, 3 times
 each (the class `ejpecp` is in TeX Live).

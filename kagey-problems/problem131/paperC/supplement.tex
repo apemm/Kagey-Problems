@@ -7,6 +7,7 @@
 \usepackage{xr}
 \externaldocument[M-]{problem131_switching}
 \newcommand{\mref}[1]{\ref*{M-#1}}
+\newcommand{\meqref}[1]{(\mref{#1})}
 \renewcommand{\thesection}{S\arabic{section}}
 
 \newcommand{\Z}{\mathbb{Z}}
@@ -15,19 +16,22 @@
 \newcommand{\Prob}{\mathbb{P}}
 \newcommand{\supp}{\operatorname{supp}}
 \newcommand{\ones}{\mathbf{1}}
+\newcommand{\tree}{\operatorname{tree}}
 
 \TITLE{Supplement to ``Face selection for slowly switching Markov chains''}
 \SHORTTITLE{Supplement to ``Face selection for slowly switching Markov chains''}
 \AUTHORS{Arjun Pemmasani\footnote{Department of Mathematics, Harvey Mudd College,
-Claremont, CA 91711, USA. \EMAIL{apemmasani@hmc.edu}}}
+Claremont, CA 91711, USA.\\ \EMAIL{apemmasani@hmc.edu}}}
 \KEYWORDS{occupation times of Markov chains; mode; principal Dirichlet eigenvalue}
 \AMSSUBJ{60J10; 60J27; 05C50}
-\ABSTRACT{This supplement holds two sets of proofs for the paper ``Face selection for slowly
+\ABSTRACT{This supplement holds proofs for the paper ``Face selection for slowly
 switching Markov chains''. Section~\ref{supp:examples} proves the rows of the table of
 outcomes (Table~\mref{tab:outcomes} of the paper) that are proved by hand and not in the text,
 namely the path $P_d$ and two triangles joined by a link. Section~\ref{supp:threecycle} gives
 the full proof of Proposition~\mref{prop:threecycle} of the paper, the directed 3-cycle, whose
-proof the paper only sketches. Numbers with the prefix S refer to this supplement, and all other
+proof the paper only sketches. Sections~\ref{supp:laplace-next} and~\ref{supp:nextterm}
+give the higher-order Laplace proof and the detailed next-term expansion, including
+the complete-graph coefficient calculation. Numbers with the prefix S refer to this supplement, and all other
 numbers refer to the paper.}
 
 \begin{document}
@@ -597,5 +601,429 @@ maximum of $M_{\{1,2\}}$ is attained only at $(1,N-1,0)$, this proves (iv).
 \end{proof}
 
 
+
+
+\section{The higher-order Laplace estimate}\label{supp:laplace-next}
+
+This section proves Lemma~\mref{lem:laplace2} of the paper. Its hypotheses,
+coefficient formula and notation are stated in Appendix~\mref{app:laplace-next} there.
+
+In words, $c_1$ is the mean of an explicit polynomial of degree $6$ under the
+Gaussian law with covariance $\mathcal J^{-1}$. As a formal check of the
+coefficients in~\meqref{eq:laplace-c1}, take the integrand
+$e^{T(e^{\mathrm i\varphi}-1-\mathrm i\varphi)}$ with $m=1$, $a=1$ and integer
+$T$. Its integral over $[-\pi,\pi]$ is $2\pi e^{-T}T^T/T!$, and Stirling's
+formula gives $(2\pi/T)^{1/2}(1-\frac1{12T}+O(T^{-2}))$. Here $\mathcal J=1$,
+$\Psi_{111}=-\mathrm i$ and $\Psi_{1111}=1$, so \meqref{eq:laplace-c1} gives
+$c_1=\frac18-\frac1{12}-\frac18=-\frac1{12}$ as well. The check is only
+formal, because $\Psi=e^{\mathrm i\varphi}-1-\mathrm i\varphi$ is not
+$2\pi$-periodic. So it is not a function on the torus, and the lemma does not
+cover it as stated. Only $e^{T\Psi}$ is periodic, for integer $T$.
+
+\emph{Idea of the proof.} After the substitution $\varphi=x/\sqrt T$ the
+integrand is a Gaussian weight times a power series in $T^{-1/2}$ whose
+coefficients are polynomials in $x$. The coefficients of the odd powers of
+$T^{-1/2}$ are odd polynomials and integrate to $0$. The coefficient of
+$T^{-1}$ has the Gaussian mean $c_1$, by Wick's formula.
+
+\begin{proof}
+We follow the proof of Lemma~\mref{lem:laplace} with its notation, and expand
+further. Now $B_\Psi$ and $B_a$ are the maxima over $|\beta|\le6$ and
+$|\beta|\le4$. The localization and the scaling are as before. The integral
+over $\lVert\varphi\rVert\ge\varepsilon$ is at most
+$(2\pi)^mB_ae^{T(\Psi(\alpha,0)-\eta)}\le CT^{-2-m/2}e^{T\Psi(\alpha,0)}$.
+
+\emph{Taylor expansion.} Put $s=T^{-1/2}$, so $0<s\le1$. For $j=3,4,5$ let
+$\mathcal P_j(x)$ be the part of degree $j$ of the Taylor polynomial of
+$\Psi(\alpha,\cdot)$ at $0$. So $\mathcal P_3=P$ and
+$\mathcal P_4(x)=\frac1{24}\Psi_{ijkl}x^ix^jx^kx^l$. For $j=1,2,3$ let $A_j(x)$ be the
+part of degree $j$ of the Taylor polynomial of $a(\alpha,\cdot)$, so
+$A_1(x)=a_ix^i$ and $A_2(x)=\frac12a_{ij}x^ix^j$. Taylor's theorem to order
+$6$ for $\Psi$ and to order $4$ for $a$ gives, on the cube
+$\lVert x\rVert\le\varepsilon\sqrt T$,
+\[
+w=w_0+\omega_1,\qquad w_0=s\mathcal P_3+s^2\mathcal P_4+s^3\mathcal P_5,\qquad
+a(\alpha,sx)=a_0+sA_1+s^2A_2+s^3A_3+\omega_2,
+\]
+with $|\omega_1|\le Cs^4|x|^6$ and $|\omega_2|\le Cs^4|x|^4$. Let
+$\mathsf p(v)=1+v+\frac12v^2+\frac16v^3$. We compare $e^w$ with
+$\mathsf p(w)$, then with $\mathsf p(w_0)$, and then with
+\[
+Y=1+s\mathcal P_3+s^2\bigl(\mathcal P_4+\tfrac12\mathcal P_3^2\bigr)
++s^3\bigl(\mathcal P_5+\mathcal P_3\mathcal P_4+\tfrac16\mathcal P_3^3\bigr),
+\]
+which collects the terms of $\mathsf p(w_0)$ of degree at most $3$ in $s$.
+First, $|e^v-\mathsf p(v)|\le\frac1{24}|v|^4e^{|v|}$, and we know that
+$|w|\le Cs|x|^3$ and $|w|\le\frac14\sigma_{\min}|x|^2$. So
+$|e^w-\mathsf p(w)|\le Cs^4|x|^{12}e^{\sigma_{\min}|x|^2/4}$. Second,
+$\mathsf p(w)-\mathsf p(w_0)
+=\omega_1\bigl[1+\frac12(w+w_0)+\frac16(w^2+ww_0+w_0^2)\bigr]$, and $|w|$ and
+$|w_0|$ are at most $C(1+|x|)^5$, by $|w|\le Cs|x|^3$ and $s\le1$. So
+$|\mathsf p(w)-\mathsf p(w_0)|\le Cs^4(1+|x|)^{16}$. Third,
+$\mathsf p(w_0)-Y$ is a sum of terms $s^j$ with $4\le j\le9$ times
+polynomials in $x$ of degree at most $15$ with bounded coefficients, so
+$|\mathsf p(w_0)-Y|\le Cs^4(1+|x|)^{15}$. Together,
+\[
+|e^w-Y|\le Cs^4(1+|x|)^{16}e^{\sigma_{\min}|x|^2/4}.
+\]
+Now write $e^wa=Y(a_0+sA_1+s^2A_2+s^3A_3)+Y\omega_2+(e^w-Y)a$. Here
+$|Y|\le C(1+|x|)^9$ and $|a|\le B_a$. In the first product the terms of
+degree at least $4$ in $s$ are at most $Cs^4(1+|x|)^{12}$. Hence
+\[
+e^{w}a(\alpha,sx)=a_0+s\,\mathcal Q_1(x)+s^2\mathcal Q_2(x)+s^3\mathcal Q_3(x)
++\omega(x),\qquad
+|\omega(x)|\le CT^{-2}(1+|x|)^{16}e^{\sigma_{\min}|x|^2/4},
+\]
+where
+\begin{align*}
+\mathcal Q_1&=a_0\mathcal P_3+A_1,\qquad
+\mathcal Q_2=a_0\bigl(\mathcal P_4+\tfrac12\mathcal P_3^2\bigr)+A_1\mathcal P_3+A_2,\\
+\mathcal Q_3&=a_0\bigl(\mathcal P_5+\mathcal P_3\mathcal P_4+\tfrac16\mathcal P_3^3\bigr)
++A_1\bigl(\mathcal P_4+\tfrac12\mathcal P_3^2\bigr)+A_2\mathcal P_3+A_3 .
+\end{align*}
+Every term of $\mathcal Q_1$ and of $\mathcal Q_3$ has odd degree, so
+$\mathcal Q_1$ and $\mathcal Q_3$ are odd functions.
+
+\emph{Integration.} As before, $\omega$ contributes at most $CT^{-2}$ to the
+integral over the cube, since $(1+|x|)^{16}e^{-\sigma_{\min}|x|^2/4}$ is
+integrable. Extending the integrals of the four polynomial terms to $\R^m$
+changes them by at most $Ce^{-\sigma_{\min}\varepsilon^2T/4}\le CT^{-2}$. On $\R^m$
+the odd terms $\mathcal Q_1$ and $\mathcal Q_3$ integrate to $0$ against
+$e^{-\frac12x^\top\mathcal Jx}$. This is why the error is $O(T^{-2})$ and not
+$O(T^{-3/2})$. So the integral over the cube is
+\[
+e^{T\Psi(\alpha,0)}T^{-m/2}\Bigl[(2\pi)^{m/2}\det\mathcal J^{-1/2}
+\Bigl(a_0+\frac{\E\mathcal Q_2(x)}T\Bigr)+O(T^{-2})\Bigr],
+\]
+where $x$ is a centered Gaussian vector with $\E[x^ix^j]=\mathcal J^{ij}$. As
+in the proof of Lemma~\mref{lem:laplace}, the errors are $O(T^{-2})$ relative
+to the main factor, because $\det\mathcal J\le(mB_\Psi)^m$.
+
+It remains to show that $\E\mathcal Q_2=c_1$. By Wick's formula a Gaussian
+moment of order $4$ or $6$ is the sum, over the three or fifteen ways to pair the
+indices, of the products of the covariances of the pairs. The derivatives are
+symmetric in their indices. So $\E[A_2]=\frac12a_{ij}\mathcal J^{ij}$,
+$\E[A_1\mathcal P_3]=\frac16\cdot3\,a_i\Psi_{jkl}\mathcal J^{ij}\mathcal J^{kl}$ and
+$\E[\mathcal P_4]=\frac1{24}\cdot3\,\Psi_{ijkl}\mathcal J^{ij}\mathcal J^{kl}$. In
+$\E[\mathcal P_3^2]=\frac1{36}\Psi_{ijk}\Psi_{lrs}\E[x^ix^jx^kx^lx^rx^s]$, six pairings
+join each index of the first factor to an index of the second, and each gives
+$\Psi_{ijk}\Psi_{lrs}\mathcal J^{il}\mathcal J^{jr}\mathcal J^{ks}$. The other
+nine pair two indices inside each factor and join the remaining two, and each
+gives $\Psi_{ijk}\Psi_{lrs}\mathcal J^{ij}\mathcal J^{kl}\mathcal J^{rs}$. So
+$\frac12\E[\mathcal P_3^2]$ gives the last two terms of~\meqref{eq:laplace-c1}. Finally
+$c_1$ is a polynomial in $a_0$, in the derivatives at $\varphi=0$ and in the
+entries of $\mathcal J^{-1}$, which are continuous on $\mathcal K$.
+\end{proof}
+
+\section{Proof of the next-term expansion}\label{supp:nextterm}
+
+This section proves Proposition~\mref{prop:nextterm} of the paper. The coefficient
+$c(\alpha)$ is defined in \meqref{eq:c-alpha}, using \meqref{eq:laplace-c1}.
+All hypotheses and notation are those of the proposition and Appendix~\mref{app:nextterm}.
+
+Throughout, $F$ satisfies (H). If $F=\{i\}$, then
+\meqref{eq:vertexmax} gives $\log M_F=\log\mu_i-q_iT+O(T^2/N)$, which
+is~\meqref{eq:logmaxnext} with $c_F=0$. So let $k\ge2$ until the proof of
+(iii).
+
+\emph{Part \textup{(i)}.} We use the proof of Theorem~\mref{thm:local} in
+Appendix~\mref{app:torus}. It shows that $\Psi$ and $\chi$ in~\meqref{eq:A-fT}
+satisfy the hypotheses of Lemma~\mref{lem:laplace} with $m=k-1$, and that their
+$\varphi$-derivatives of every order are jointly continuous on
+$\mathcal K\times\mathbb T^{k-1}$. So Lemma~\mref{lem:laplace2} applies with
+$a=\chi$. Let $c_1(\alpha)$ be the function~\meqref{eq:laplace-c1} for this
+$\Psi$ and $a=\chi$, with
+$\mathcal J(\alpha)=-\nabla^2_\varphi\Psi(\alpha,0)$, and use the definition \meqref{eq:c-alpha} of the paper.
+Then the bracket $\chi(\alpha,0)+O(1/T)$ in the last step of that proof
+becomes $\chi(\alpha,0)+c_1(\alpha)/T+O(T^{-2})$. Since $\chi(\alpha,0)$ is
+bounded below on $\mathcal K$, this is
+$\chi(\alpha,0)(1+c(\alpha)/T+O(T^{-2}))$, and the rest of that proof gives
+the expansion in (i). By the regularity step of that proof, $\Psi$ and $\chi$
+are real-analytic in $(\alpha,\varphi)$ near
+$\{\alpha_0\}\times\mathbb T^{k-1}$ for every $\alpha_0\in\Delta_F^\circ$. So
+their $\varphi$-derivatives at $\varphi=0$ are real-analytic in $\alpha$, and
+so are the entries of $\mathcal J(\alpha)^{-1}$ and $c$. Finally (i) gives
+$c(\alpha)=\lim_{T\to\infty}T\bigl[f_T(\alpha)T^{-(k-1)/2}C_F(\alpha)^{-1}
+e^{TI_F(\alpha)}-1\bigr]$. So $c$ is real, and it does not depend on which
+state of $F$ we number $1$.
+
+\emph{Part \textup{(ii)}, the plan.} We write $\log P_N(n)$ as a fixed term plus a function
+$G_T$ of $\alpha=n/N$, and we maximize $G_T$. Far from $\alpha^*_F$, at distance more than a
+large multiple of $1/T$, the quadratic growth of $I_F$ makes $G_T$ smaller than $(c_F-1)/T$.
+At distance at most that multiple of $1/T$, the function $G_T$ is a constant plus a linear term
+minus a positive definite quadratic form, up to an error $O(T^{-2})$. Completing the square shows
+that this quadratic model has the maximum $c_F/T$, and that it takes it exactly at the point
+$\alpha'=\alpha^{*\prime}_F+\Sigma_F\gamma_F/T$. So $G_T\le c_F/T+O(T^{-2})$, which gives the upper
+bound. A lattice point next to that point gives the lower bound.
+
+\emph{Part \textup{(ii)}, the constants.} Write $\Sigma=\Sigma_F$,
+$\gamma=\gamma_F$ and $c^*=c(\alpha^*_F)$, and put
+\[
+X=N^{-(k-1)}T^{(k-1)/2}K_Fe^{-T\lambda_F},\qquad x=\alpha'-\alpha^{*\prime}_F .
+\] By Propositions~\mref{prop:rate}(a)
+and~\mref{prop:constant}(a) and by (i), the functions $I_F$, $\log C_F$ and
+$c$ are real-analytic near $\alpha^*_F$, and $I_F$ has its minimum
+$\lambda_F$ at $\alpha^*_F$ with Hessian $\Sigma^{-1}$. So there are a closed
+ball $U=\{|x|\le\rho_0\}\subset\Delta_F^\circ$ and constants $c_U>0$ and
+$L_1$ such that on $U$
+\begin{gather*}
+\Bigl|\log\frac{C_F(\alpha)}{K_F}-\gamma\cdot x\Bigr|\le L_1|x|^2,\qquad
+\Bigl|I_F(\alpha)-\lambda_F-\tfrac12x^\top\Sigma^{-1}x\Bigr|\le L_1|x|^3,\\
+|c(\alpha)-c^*|\le L_1|x|,\qquad|c(\alpha)|\le L_1,\qquad
+I_F(\alpha)-\lambda_F\ge c_U|x|^2 .
+\end{gather*}
+Put $L_2=|\gamma|+L_1\rho_0$, so that $|\log(C_F(\alpha)/K_F)|\le L_2|x|$ on
+$U$. Fix $\rho_1$ so large that
+\[
+\rho_1\ge\frac{L_2}{c_U},\qquad\rho_1\ge|\Sigma\gamma|+k,\qquad
+c_U\rho_1^2-L_2\rho_1-L_1\ge|c_F|+1 .
+\]
+For $\alpha\in U$ let
+\[
+G_T(\alpha)=\log\frac{C_F(\alpha)}{K_F}-T\bigl(I_F(\alpha)-\lambda_F\bigr)
++\frac{c(\alpha)}T .
+\]
+By (i) with $\mathcal K=U$ and Lemma~\mref{lem:discrete}, there are $T_0$ and
+$N_0$ such that for $N\ge N_0$, $T_0\le T\le N^{1/3}$ and $\supp n=F$ with
+$\alpha=n/N\in U$,
+\begin{equation}\label{eq:GT}
+\log\frac{P_N(n)}X=G_T(\alpha)+O\Bigl(\frac1{T^2}+\frac{T^2}N\Bigr).
+\end{equation}
+Here we used $\log(1+c/T+O(T^{-2}))=c/T+O(T^{-2})$, which holds because
+$|c|\le L_1$ on $U$. We take $T_0\ge\rho_1/\rho_0$, and we increase $T_0$ and
+$N_0$ finitely many times below.
+
+\emph{Part \textup{(ii)}, two bounds for $G_T$.} First let $\alpha\in U$ with
+$|x|\ge\rho_1/T$. Then
+$G_T(\alpha)\le L_2|x|-c_UT|x|^2+L_1/T$. The function
+$v\mapsto L_2v-c_UTv^2$ decreases for $v\ge L_2/(2c_UT)$, and
+$\rho_1/T$ lies in this range. So
+\begin{equation}\label{eq:GTfar}
+G_T(\alpha)\le\frac{L_2\rho_1-c_U\rho_1^2+L_1}T\le\frac{c_F-1}T
+\qquad(\alpha\in U,\ |x|\ge\rho_1/T).
+\end{equation}
+Next let $|x|\le\rho_1/T$, and put $y=x-\Sigma\gamma/T$. Then $\alpha\in U$,
+and the bounds on $U$ give
+$G_T(\alpha)=\gamma\cdot x-\frac T2x^\top\Sigma^{-1}x+c^*/T+\epsilon$ with
+$|\epsilon|\le L_1|x|^2+L_1T|x|^3+L_1|x|/T\le L_1(\rho_1^2+\rho_1^3+\rho_1)T^{-2}$.
+Completing the square gives
+$\gamma\cdot x-\frac T2x^\top\Sigma^{-1}x
+=\frac1{2T}\gamma^\top\Sigma\gamma-\frac T2y^\top\Sigma^{-1}y$. So
+\begin{equation}\label{eq:GTnear}
+G_T(\alpha)=\frac{c_F}T-\frac T2y^\top\Sigma^{-1}y+O\Bigl(\frac1{T^2}\Bigr)
+\qquad(|x|\le\rho_1/T),
+\end{equation}
+uniformly in $x$. Since $\Sigma^{-1}$ is positive definite,
+\eqref{eq:GTfar} and~\eqref{eq:GTnear} give
+$G_T\le c_F/T+O(T^{-2})$ on $U$.
+
+\emph{Part \textup{(ii)}, the upper bound.} The part of the proof of
+Theorem~\mref{thm:facemax} that treats compositions outside $U$ uses only that
+$U$ is a closed ball around $\alpha^*_F$ inside $\Delta_F^\circ$. So there is
+$\eta>0$ with $P_N(n)\le X\cdot O(T^{(k-1)/2}e^{-2\eta T})$ for $\supp n=F$ and
+$n/N\notin U$. After increasing $T_0$ this is at most
+$Xe^{-\eta T}\le Xe^{(c_F-1)/T}$. For $n/N\in U$ we use~\eqref{eq:GT} and the
+bound on $G_T$. Hence $\log(M_F/X)\le c_F/T+O(T^{-2}+T^2/N)$.
+
+\emph{Part \textup{(ii)}, the lower bound.} Let $\alpha^0$ be the point with
+$x=\Sigma\gamma/T$. Let $n^0_i$ be an integer nearest to $N\alpha^0_i$ for
+$i\ge2$, and $n^0_1=N-\sum_{i\ge2}n^0_i$. Then
+$|n^0_i-N\alpha^0_i|\le k$ for every $i$. Since $\alpha^0\to\alpha^*_F$ as
+$T\to\infty$ and every $\alpha^*_{F,i}$ is positive, $n^0$ has support $F$
+after increasing $T_0$ and $N_0$. For $\alpha=n^0/N$ we have $|y|\le k/N$ and
+$|x|\le|\Sigma\gamma|/T+k/N\le\rho_1/T$, because $T\le N$. So
+\eqref{eq:GTnear} gives $G_T(n^0/N)\ge c_F/T-O(T/N^2+T^{-2})$,
+and~\eqref{eq:GT} gives
+$\log(M_F/X)\ge\log(P_N(n^0)/X)\ge c_F/T-O(T^{-2}+T^2/N)$. This bound is sufficient for the claimed remainder.
+
+The two bounds give~\meqref{eq:logmaxnext} for $N\ge N_0$ and
+$T_0\le T\le N^{1/3}$. For $1\le T\le T_0$ it follows from~\meqref{eq:logmax},
+since $c_F/T$ and $1/T$ are $O(T^{-2})$ there, with a constant that depends
+on $T_0$. This proves (ii).
+
+\emph{Part \textup{(iii)}.} Now $F$ and $G$ are as in
+Theorem~\mref{thm:crossing}, and $k_G=1$ is allowed. Let $T_N\in[1,N^{1/3}]$ be
+a zero of $D_N$. The proof of Theorem~\mref{thm:crossing}(ii) shows that
+$\frac\Delta{2\delta}L<T_N\le\frac{2\Delta}\delta L$ for large $N$.
+Subtracting~\meqref{eq:logmaxnext} for $G$ from~\meqref{eq:logmaxnext} for $F$
+at $T=T_N$ gives
+\[
+0=-\Delta L+\frac\Delta2\log T_N+\delta T_N+\log\frac{K_F}{K_G}
++\frac{c_F-c_G}{T_N}+O\Bigl(\frac1{T_N^2}+\frac{T_N^2}N\Bigr).
+\]
+We multiply by $T_N$. The error becomes $O(1/T_N+T_N^3/N)=O(1/L)$, which
+is~\meqref{eq:crossingnext}.
+
+\emph{Part \textup{(iv)}, a symmetric pair.} Let $F=\{i,j\}$ with
+$q_{ij}=q_{ji}=a>0$, $q_i=q_j=q$ and $\mu_i=\mu_j>0$. Then $F$ satisfies (H).
+We first prove~\meqref{eq:pairnext}, without the Laplace lemma. Let
+$1\le T\le N^{1/3}$ and let $N$ be so large that $qh\le\frac12$ and $I+hQ$ is
+stochastic. By Proposition~\mref{prop:pair}, $M_F=\mu_i(1-qh)^{N-1}S_N(u)$ with
+$u=ah/(1-qh)$. Put $z=Nu=aT/(1-qh)$. Then $aT\le z\le2aT$ and
+$0\le z-aT\le2aqT^2/N$. By~\meqref{eq:planar-bessel},
+\[
+\log S_N(u)=\log\frac2N+\log\psi(z)+O\Bigl(\frac{T^2}N\Bigr),
+\]
+since $z(z+2)/(2N)=O(T^2/N)$ and this is at most $\frac12$ for large $N$. By
+\cite[Eq.~10.40.1]{dlmf}, as $z\to\infty$,
+$I_0(z)=e^z(2\pi z)^{-1/2}(1+\frac1{8z}+O(z^{-2}))$ and
+$I_1(z)=e^z(2\pi z)^{-1/2}(1-\frac3{8z}+O(z^{-2}))$. So
+$I_0(z)+I_1(z)=2e^z(2\pi z)^{-1/2}(1-\frac1{8z}+O(z^{-2}))$ and
+\[
+\log\psi(z)=z+\tfrac12\log z+\tfrac12\log\frac2\pi-\frac1{8z}+\rho(z),
+\qquad|\rho(z)|\le C_az^{-2}\quad\text{for }z\ge a .
+\]
+The bound on $\rho$ holds for all $z\ge a$, and not only for large $z$,
+because $\rho(z)=O(z^{-2})$ as $z\to\infty$ and $\rho$ is continuous on $[a,\infty)$. The function
+$z+\frac12\log z-\frac1{8z}$ has a bounded derivative on $[a,\infty)$. So
+replacing $z$ by $aT$ in it changes it by $O(T^2/N)$, and
+\[
+\log\psi(z)=aT+\tfrac12\log T+\tfrac12\log\frac{2a}\pi-\frac1{8aT}
++O\Bigl(\frac1{T^2}+\frac{T^2}N\Bigr).
+\]
+Also $(N-1)\log(1-qh)=-qT+O(T^2/N)$. Adding the three parts,
+\[
+\log M_F=-L+\tfrac12\log T+\log\Bigl(2\mu_i\sqrt{\frac{2a}\pi}\Bigr)-(q-a)T
+-\frac1{8aT}+O\Bigl(\frac1{T^2}+\frac{T^2}N\Bigr).
+\]
+By Corollary~\mref{cor:symface} with $k=2$, $\mu(F)=2\mu_i$ and
+$\tree(q_F)=a$, we have $\lambda_F=q-a$ and
+$K_F=2\mu_i\cdot2^{3/2}\sqrt a\,(4\pi)^{-1/2}=2\mu_i\sqrt{2a/\pi}$. This
+is~\meqref{eq:pairnext}. Now we compare it with~\meqref{eq:logmaxnext} at
+$T=L$. Both expand $\log M_F$, so their difference
+$(c_F+\frac1{8a})/L$ is $O(L^{-2}+L^2/N)=O(L^{-2})$. Letting
+$N\to\infty$ gives $c_F=-1/(8a)$.
+
+As a check we compute the same value from~\meqref{eq:c-alpha}. Number the
+states so that $i$ is state $1$. Then $A'=0$, so in the notation of
+Appendix~\mref{app:torus} we have $g(z_2)=a^2/z_2$ and
+$b(z_2)=\mu_i(1+a/z_2)^2$. At $\alpha=\alpha^*_F=(\frac12,\frac12)$ the radius
+is $\theta_2=a$, so $\Psi=a\cos\varphi$ and
+$\chi=\mu_ia(1+e^{-\mathrm i\varphi})^2e^{\mathrm i\varphi}
+=2\mu_ia(1+\cos\varphi)$. Hence $\mathcal J=a$, $\Psi_{111}=0$,
+$\Psi_{1111}=a$, $\chi(\alpha^*_F,0)=4\mu_ia$, $\chi_1=0$ and
+$\chi_{11}=-2\mu_ia$, and~\meqref{eq:laplace-c1} gives
+$c_1=-\mu_i+\frac12\mu_i=-\frac12\mu_i$ and $c(\alpha^*_F)=-1/(8a)$. Also
+$\gamma_F=0$, because $C_F$ is unchanged when the two states are swapped
+(Proposition~\mref{prop:constant}(b) with $\nu=\ones$). So the two values
+agree.
+
+\emph{Part \textup{(iv)}, the complete graph.} Let $Q=J-dI$, let $F$ have
+$k\ge2$ states and let $\mu_i=\mu_0>0$ for $i\in F$. Then $F$ satisfies (H),
+and Corollary~\mref{cor:symface} with $\mu(F)=k\mu_0$ and
+$\tree(q_F)=k^{k-2}$ gives $\lambda_F=d-k$, $\alpha^*_F$ uniform on $F$ and
+$K_F=\mu_0k^{k+1/2}(4\pi)^{-(k-1)/2}$.
+
+We first show that $\gamma_F=0$, so that $c_F=c(\alpha^*_F)$. By
+Example~\mref{ex:complete-face},
+\[
+C_F(\alpha)=\frac{\mu_0\bigl(\sum_{i\in F}\sqrt{\alpha_i}\bigr)^{k/2+1}}
+{(4\pi)^{(k-1)/2}\prod_{i\in F}\alpha_i^{3/4}},
+\]
+a symmetric function of $(\alpha_i)_{i\in F}$. Take $j\ge2$
+and swap the states $1$ and $j$. This maps the point
+$\alpha^*_F+v(e_j-e_1)$ to $\alpha^*_F-v(e_j-e_1)$, so
+$v\mapsto\log C_F(\alpha^*_F+v(e_j-e_1))$ is even and its derivative at $v=0$
+vanishes. In the coordinates $\alpha'$ this derivative is the $j$-th entry of
+$\gamma_F$.
+
+Now we evaluate~\meqref{eq:c-alpha} at $\alpha^*_F$ by hand. Put $m=k-1$, the dimension of the
+torus, and $\varpi=m/k$.
+
+\emph{The integrand.} At $\alpha^*_F$ we have $\theta(\alpha^*_F)=q-\lambda_F\ones$, so every
+radius is $\theta_i=(d-1)-(d-k)=m$. In the notation of Lemma~\mref{lem:torus}, $A'=J-I$ of
+size $m$, $a_1=b_1=\ones$ and $\mu'=\mu_0\ones$. With $\mathcal D=\operatorname{diag}(z')+I$ the
+Sherman--Morrison formula gives $X(z')=(\mathcal D-\ones\ones^\top)^{-1}=\mathcal D^{-1}+\mathcal
+D^{-1}\ones\ones^\top\mathcal D^{-1}/(1-s)$, where $s=\sum_{i\ge2}1/(1+z_i)$. So
+$g(z')=s/(1-s)$ and $b(z')=\mu_0(1+g)^2=\mu_0(1-s)^{-2}$. Put $z_i=me^{\mathrm i\varphi_i}$ and
+$\varepsilon_i=e^{\mathrm i\varphi_i}-1$, so that $1+z_i=k(1+\varpi\varepsilon_i)$, and put
+$y_i=\varpi\varepsilon_i/(1+\varpi\varepsilon_i)$ and $Y=\sum_{i\ge2}y_i$. Then
+$1/(1+z_i)=(1-y_i)/k$, so $1-s=(1+Y)/k$ and $g=k/(1+Y)-1$. Since $(m^2-1)/k=m-1$,
+the functions of~\meqref{eq:A-fT} are
+\[
+\Psi(\alpha^*_F,\varphi)=\frac1{1+Y}+m-1+\varpi\sum_{i\ge2}\varepsilon_i,\qquad
+\chi(\alpha^*_F,\varphi)=\mu_0k^2m^m\,(1+Y)^{-2}e^{\mathrm i\sum_{i\ge2}\varphi_i}.
+\]
+
+\emph{Taylor coefficients.} Write $\mathcal S_j=\sum_{i\ge2}\varphi_i^j$. Expanding
+$\varepsilon_i=\mathrm i\varphi_i-\frac12\varphi_i^2-\frac{\mathrm i}6\varphi_i^3+\frac1{24}\varphi_i^4+O(\varphi_i^5)$ in
+$y_i=\varpi\varepsilon_i-\varpi^2\varepsilon_i^2+\varpi^3\varepsilon_i^3-\varpi^4\varepsilon_i^4+O(\varepsilon_i^5)$
+gives
+\[
+y_i=\mathrm i\varpi\varphi_i+\varpi(\varpi-\tfrac12)\varphi_i^2
++\mathrm i\varpi(\varpi-\varpi^2-\tfrac16)\varphi_i^3
++\varpi(\tfrac1{24}-\tfrac7{12}\varpi+\tfrac32\varpi^2-\varpi^3)\varphi_i^4+O(\varphi_i^5).
+\]
+We put this into $1/(1+Y)=1-Y+Y^2-Y^3+Y^4-\cdots$ and into
+$\log(\chi/\chi(\alpha^*_F,0))=-2\log(1+Y)+\mathrm i\mathcal S_1$. The linear term of $\Psi$ cancels, and
+with $\mathcal P_j$ the part of degree $j$ of the Taylor polynomial of $\Psi(\alpha^*_F,\cdot)$ and $\mathcal L_j$
+that of $\log(\chi/\chi(\alpha^*_F,0))$,
+\begin{align*}
+\mathcal P_2&=-\varpi^2(\mathcal S_2+\mathcal S_1^2),\\
+\mathcal P_3&=\mathrm i\bigl[\varpi^2(\varpi-1)\mathcal S_3+\varpi^2(2\varpi-1)\mathcal S_1\mathcal S_2+\varpi^3\mathcal S_1^3\bigr],\\
+\mathcal P_4&=\varpi^2\bigl[(\tfrac7{12}-\tfrac32\varpi+\varpi^2)\mathcal S_4+(\varpi-\tfrac12)^2\mathcal S_2^2
++(\tfrac13-2\varpi+2\varpi^2)\mathcal S_1\mathcal S_3\\
+&\qquad+3\varpi(\varpi-\tfrac12)\mathcal S_1^2\mathcal S_2+\varpi^2\mathcal S_1^4\bigr],\\
+\mathcal L_1&=\mathrm i(1-2\varpi)\mathcal S_1,\qquad \mathcal L_2=\varpi(1-2\varpi)\mathcal S_2-\varpi^2\mathcal S_1^2 .
+\end{align*}
+
+\emph{The formula as a Gaussian mean.} By the proof of Lemma~\mref{lem:laplace2},
+$c_1=\E\mathcal Q_2$ with $\mathcal Q_2=a_0(\mathcal P_4+\frac12\mathcal P_3^2)+A_1\mathcal P_3+A_2$, where $a=\chi$,
+$A_j$ is the part of degree $j$ of its Taylor polynomial, and the variable is a centered Gaussian
+vector $x$ with covariance $\mathcal J^{-1}$. Since $A_1=a_0\mathcal L_1$ and $A_2=a_0(\mathcal L_2+\frac12\mathcal L_1^2)$,
+\[
+c(\alpha^*_F)=\frac{c_1}{a_0}=\E\Bigl[\mathcal P_4+\mathcal L_2+\tfrac12(\mathcal P_3+\mathcal L_1)^2\Bigr](x).
+\]
+Here $\mathcal P_2=-\frac12x^\top\mathcal Jx$ gives $\mathcal J=2\varpi^2(I+\ones\ones^\top)$, of size
+$m$, and $\mathcal J^{-1}=\sigma_0(I-\ones\ones^\top/k)$ with $\sigma_0=1/(2\varpi^2)$.
+
+\emph{An exchangeable Gaussian vector.} Let $G_1,\dots,G_k$ be independent standard Gaussian
+variables, $\bar G$ their mean and $w_i=G_i-\bar G$. Then $\sum_{i=1}^kw_i=0$ and
+$\E[w_iw_j]=\delta_{ij}-1/k$, so $(x_2,\dots,x_k)$ has the law of
+$\sqrt{\sigma_0}(w_2,\dots,w_k)$. Put $W_j=\sum_{i=1}^kw_i^j$. Then $\mathcal S_1=-\sqrt{\sigma_0}\,w_1$ and
+$\mathcal S_j=\sigma_0^{j/2}(W_j-w_1^j)$ for $j\ge2$. We put these into the Taylor coefficients and use
+$\sigma_0\varpi^2=\frac12$, $1-\varpi=1/k$ and $2\varpi-1=(k-2)/k$. The terms in $w_1^3$ cancel in
+$\mathcal P_3+\mathcal L_1$ and the terms in $w_1^4$ cancel in $\mathcal P_4$, and
+\begin{align*}
+\mathcal P_3+\mathcal L_1&=-\frac{\mathrm i\sqrt{\sigma_0}}{2k}\bigl[W_3+(k-2)w_1(W_2-2)\bigr],\\
+\mathcal P_4&=\frac1{4\varpi^2}\Bigl[(\tfrac7{12}-\tfrac32\varpi+\varpi^2)W_4+(\varpi-\tfrac12)^2W_2^2\\
+&\qquad+(\varpi+1)(\varpi-\tfrac12)w_1^2W_2-(\tfrac13-2\varpi+2\varpi^2)w_1W_3\Bigr],\\
+\mathcal L_2&=\frac{1-2\varpi}{2\varpi}(W_2-w_1^2)-\frac12w_1^2 .
+\end{align*}
+
+\emph{The moments.} By exchangeability and $\sum_iw_i=0$, every symmetric function $\Upsilon$ of
+$w$ has $\E[w_1\Upsilon(w)]=\frac1k\E[\Upsilon(w)\sum_iw_i]=0$. So $\E[w_1W_3]=0$ and
+$\E[w_1W_3W_2]=0$. The vector $w$ is a standard Gaussian vector in the hyperplane
+$\sum_iw_i=0$, so $W_2$ has the $\chi^2$ law with $m$ degrees of freedom and is independent of
+$w/\sqrt{W_2}$. Hence $\E[W_2^j]=m(m+2)\cdots(m+2j-2)$ and
+$\E[w_1^2W_2^j]=\E[W_2^{j+1}]/k$, since $\E[w_1^2\mid W_2]=W_2/k$ by symmetry. By Wick's
+formula, $\E[w_1^4]=3\varpi^2$, $\E[w_1^6]=15\varpi^3$ and
+$\E[w_1^3w_2^3]=9\varpi^2(-\frac1k)+6(-\frac1k)^3$, so $\E[W_4]=3k\varpi^2$ and
+$\E[W_3^2]=15k\varpi^3-k(k-1)(9\varpi^2/k+6/k^3)=6m(m-1)/k$. With these values,
+\begin{align*}
+\E[\mathcal P_4]&=\frac{3k}4\Bigl(\frac7{12}-\frac32\varpi+\varpi^2\Bigr)
++\frac{m(m+2)}{4\varpi^2}\Bigl(\varpi-\frac12\Bigr)\Bigl(\varpi-\frac12+\frac{\varpi+1}k\Bigr)\\
+&=\frac{m^4+6m^3-m^2-2}{16mk},\\
+\E[\mathcal L_2]&=\frac{1-2\varpi}{2\varpi}\,m\varpi-\frac\varpi2=-\frac{m^2}{2k},\\
+\tfrac12\E[(\mathcal P_3+\mathcal L_1)^2]&=-\frac{\sigma_0}{8k^2}\Bigl(\E[W_3^2]+(k-2)^2\E\bigl[w_1^2(W_2-2)^2\bigr]\Bigr)\\
+&=-\frac{\sigma_0}{8k^2}\cdot\frac{m(m-1)}k\bigl(m^3+m^2+2m+2\bigr)
+=-\frac{m^4+m^2-2}{16mk},
+\end{align*}
+where we used $\E[w_1^2(W_2-2)^2]=m(m^2+2m+4)/k$ and $\sigma_0=k^2/(2m^2)$. Adding the three,
+\[
+c_F=c(\alpha^*_F)=\frac{(m^4+6m^3-m^2-2)-8m^3-(m^4+m^2-2)}{16mk}=-\frac{2m^2(m+1)}{16mk}
+=-\frac{k-1}8 .
+\]
+For $k=2$ this is the value $-\frac18$ of the pair. \qed
+
+\begin{thebibliography}{9}
+
+\bibitem{dlmf}
+F.~W.~J.~Olver, A.~B.~Olde Daalhuis, D.~W.~Lozier, B.~I.~Schneider,
+R.~F.~Boisvert, C.~W.~Clark, B.~R.~Miller, B.~V.~Saunders, H.~S.~Cohl and
+M.~A.~McClain (eds.), \emph{NIST Digital Library of Mathematical Functions},
+\url{https://dlmf.nist.gov/}.
+
+\end{thebibliography}
 
 \end{document}

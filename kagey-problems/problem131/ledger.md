@@ -104,14 +104,14 @@ then the outcome, with nothing deleted).
 Two later computations for Paper B have their own ledgers, kept the same way (predictions first,
 then the outcome, with nothing deleted).
 
-- [paperB/data/ledger_B_tie.md](paperB/data/ledger_B_tie.md): the tie on the complete graph, the
+- [archive/paperB/data/ledger_B_tie.md](archive/paperB/data/ledger_B_tie.md): the tie on the complete graph, the
   law with a start, and the tree form of the constants a_k (`verify_general_start.py` and
   `verify_B_tie_repair.py`). Predictions T1 to T4, then T4', T1(e'), T4'' and T4''' after a repair
   pass. Outcome: T1(e) is refuted on its tolerance (a finite-difference check that was not precise
   enough, and the exact test T1(e') later covers the same identity), and T4 is refuted at N = 90
   and N = 1002 because its window equations left out the discrete z^2/N terms. The corrected T4'
   on new cells and all the other predictions are confirmed.
-- [paperB/data/ledger_B_crossover.md](paperB/data/ledger_B_crossover.md): the complete
+- [archive/paperB/data/ledger_B_crossover.md](archive/paperB/data/ledger_B_crossover.md): the complete
   first-order factor in the crossover theorem for coordinates of order N/(log N)^2
   (`verify_crossover_factor.py`). Predictions R1 to R8, the scan (a) to (c), L1 and L2, and the
   repair checks X1 to X3. Outcome: all confirmed (R7 after a correction to its diagnostic). A side
@@ -137,4 +137,4 @@ No new prediction is registered here. After `verify_all.py` and `SUPPLEMENT.md` 
 `--full`. Both finished with exit code 0. In the scripts that report their checks in their output,
 the guards G1 to G7 all held, the smallest distance from zeta_N to a certified interval was again
 1.6562e-5 at N = 218, and the only lines marked False belong to T4, the registered prediction in
-`paperB/data/ledger_B_tie.md` that failed.
+`archive/paperB/data/ledger_B_tie.md` that failed.

@@ -5,12 +5,16 @@ Papers B and C update, October 23, 2026.
 Paper B is merged into Paper C, which keeps its title, "Face selection for slowly switching
 Markov chains", its folder `paperC` and its file name, and targets the Electronic Journal of
 Probability (class `ejpecp`, with the supplement `paperC/supplement.tex`). The application to
-sticky priors moved to the note `S3_sticky_note`. Paper B stays on arXiv as posted, and
-`paperB` keeps it unchanged. Still to do by hand: post the merged paper; replace Paper B on
-arXiv by a v2 with the same text and a comments field saying that it is incorporated into the
-merged paper (do not withdraw it); in the cover letter to EJP say that the paper incorporates
-arXiv:2610.09258; update the reference to Paper C in Paper E when both post; complete the note
-on the use of AI (marked `TODO(author)` in the source); get an outside read.
+sticky priors is in the note `S3_sticky_note`. The historical B source, PDF, code and data
+are in `archive/paperB`. Its original arXiv version remains accessible at
+[arXiv:2610.09258v1](https://arxiv.org/abs/2610.09258v1).
+
+The posting plan is one replacement of arXiv:2610.09258 with the merged manuscript, with
+its new title and an explanation of the expanded scope in the comments. No separate C
+submission is planned. In the EJP cover letter, identify the earlier version and explain
+that the new manuscript incorporates and extends it. The accurate disclosure in the
+manuscript is complete. Proceed with the article and proof supplement together. An outside
+mathematical read is not a prerequisite for submission.
 
 Paper A update, October 15, 2026.
 
@@ -22,7 +26,7 @@ give the current scope.
 
 The notes below record the earlier plan from October 2, 2026.
 
-Paper A (`paperA/problem131.tex`, 27 pages) and Paper B (`paperB/problem131_multistate.tex`,
+Paper A (`paperA/problem131.tex`, 27 pages) and Paper B (`archive/paperB/problem131_multistate.tex`,
 39 pages) are ready for arXiv. Both were revised against the checklists `PaperA_arXiv_edits.md` and
 `PaperB_arXiv_edits.md` and refereed line by line.
 The repository is tagged `paperA-arxiv-v1` and `paperB-arxiv-v1` at the commit that matches the

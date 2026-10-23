@@ -113,7 +113,7 @@ numbered result of Paper A is formalized except the Mehler–Heine limit for rea
 Remark 4.7, which the paper cites. The items that are not formalized are listed below under
 "What is not in Lean".
 
-## Paper B (`paperB/problem131_multistate.tex`, now incorporated into Paper C)
+## Paper B (`archive/paperB/problem131_multistate.tex`, now incorporated into Paper C)
 
 `PaperB/` is about the walk with `d` states. It proves the following.
 

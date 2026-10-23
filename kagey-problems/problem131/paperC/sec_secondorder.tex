@@ -414,15 +414,15 @@ Consequently the following holds for every $\eta>0$ and large $N$. If $|t|\le\va
 $t$ is at distance at least $\eta$ from every kink of $E$, then every global mode lies on a face
 whose line equals $E$ near $t$. So for $|t|\le\varepsilon L$ the line of the face that carries
 the global mode changes only at $T=\tau^*(L-\frac12\log L+t_j)+o(1)$, where $t_j$ runs over the
-kinks of $E$, and it changes near each kink. Faces with identical lines (the same $k_F$,
-$\lambda_F$ and $K_F$) tie at this order and give no crossing.
+kinks of $E$, and it changes near each kink. Coincident lines do not distinguish
+their faces at this order.
 \end{theorem}
 
 In words, inside the window the logarithm of every tied face maximum is the
 same leading term plus the line $\ell_F(t)$, faces that do not tie are smaller by
 a power of $N$, and far out in the window the face with the least (for $t>0$) or
-largest (for $t<0$) exit rate wins. In between, the mode changes face only where the highest
-line changes, namely near the kinks of $E$.
+largest (for $t<0$) exit rate wins. In between, the maximizing line changes only near the kinks of $E$.
+Faces with the same line can require a finer comparison.
 
 \emph{Idea of the proof.} In the window $T/L$ is close to $\tau^*$. For a tied face the terms
 $-(k_F-1)L$ and $-T\lambda_F$ of~\eqref{eq:logmax} add up to
@@ -761,7 +761,7 @@ $M_{\{1,2\}}$ is compared with Theorem~\ref{thm:facemax} for the full face, wher
 gives the power $T^1$, the same power as in $M_{\{1,2\}}$, so $\log T$ cancels. (iv) The
 three face maxima are compared on the ranges $T<T^{(1)}_N$, $T^{(1)}_N<T\le L/2$,
 $[L/2,2L]$ and $[2L,N^{1/3}]$, with Lemma~\ref{lem:upper} for the full face on the second
-range. The full proof is in Section~\ref*{S-supp:threecycle} of the supplement. The exact
+range. The full proof is in Section~\sref{supp:threecycle} of the supplement. The exact
 parts of (i) and the uniqueness of the root in (ii) are checked in Lean.
 
 
@@ -808,15 +808,19 @@ $N\alpha^*_F$. It moves by about $N\Sigma_F\gamma_F/T$ toward larger $C_F$, and 
 $\frac12\gamma_F^\top\Sigma_F\gamma_F/T$ in the logarithm. The crossing equation~\eqref{eq:crossing}
 then gains the term $(c_G-c_F)/T_N$ on its right side, with an error $O(L^{-2})$.
 
-\emph{Idea of the proof.} The proof is in Appendix~\ref{app:laplace}. For (i) we carry the Laplace
+\emph{Idea of the proof.} The coefficient formulas are in Appendix~\ref{app:laplace},
+and the proof is in Section~\sref{supp:nextterm} of the supplement. For (i) we carry the Laplace
 lemma one step further (Lemma~\ref{lem:laplace2}). The terms of order $T^{-1/2}$ and $T^{-3/2}$
 are odd and integrate to $0$, so the error is $O(T^{-2})$. For (ii) the logarithm of the local law
 near $\alpha^*_F$ is a concave quadratic plus the linear term $\gamma_F\cdot x$, and we complete
-the square. The maximizer is within $O(1/T)$ of $\alpha^*_F$, and moving it to the nearest
-lattice point changes the logarithm only by $O(T/N^2)$. Part (iii)
+the square. The maximizer is within $O(1/T)$ of $\alpha^*_F$, and rounding the
+quadratic-model maximizer preserves the claimed remainder. Part (iii)
 subtracts~\eqref{eq:logmaxnext} for the two faces. In (iv) the value for a symmetric pair
 comes from a second expansion of the same probability, and the value for the complete
 graph from an evaluation of the formula~\eqref{eq:c-alpha} by hand.
+
+The term $c_F/T$ is asymptotically resolved when $T\to\infty$ and $T^3/N\to0$,
+in particular at the crossings $T\asymp\log N$.
 
 The two values in (iv) are proved in different ways. For a symmetric pair we compare
 with a second expansion of $M_F$, which uses only Proposition~\ref{prop:pair}, the Bessel
@@ -828,7 +832,7 @@ These give
 \end{equation}
 for large $N$ and uniformly for $1\le T\le N^{1/3}$, without the Laplace lemma. For the
 complete graph we evaluate~\eqref{eq:c-alpha} by hand at the center of the face, for every
-$k$ (Appendix~\ref{app:nextterm}). The center is a symmetric point, so $\gamma_F=0$ and
+$k$ (Section~\sref{supp:nextterm} of the supplement). The center is a symmetric point, so $\gamma_F=0$ and
 $c_F=c(\alpha^*_F)$. The torus integrand has a closed form there, and a Gaussian vector
 with exchangeable coordinates reduces the Wick sums of~\eqref{eq:laplace-c1} to a few
 moments. For the pair, \eqref{eq:c-alpha} gives the same value $-1/(8q_{ij})$, which checks
@@ -850,17 +854,18 @@ w_\xi(n)=e^{\langle\xi,n\rangle/N}P_N(n),\qquad Z_{N,\xi}=\sum_nw_\xi(n),\qquad
 \widetilde P_{N,\xi}(n)=\frac{w_\xi(n)}{Z_{N,\xi}},
 \]
 and for a face $F$ let $M^\xi_F=\max\{w_\xi(n):\supp n=F\}$. Write
-$\lVert\xi\rVert=\max_i|\xi_i|$. On the complete graph $\widetilde P_{N,\xi}$ is the law of
+$\lVert\xi\rVert=\max_i|\xi_i|$. On the complete graph with the uniform start,
+$\widetilde P_{N,\xi}$ is the law of
 the counts of the Potts chain in a field of size $\xi_i/N$ at each site in state
 $i$~\cite{paperB}.
 
 \begin{proposition}[a weak field]\label{prop:weakfield}
-Fix $Q$, $\mu$ and a compact set $\Xi\subset\R^d$.
+Fix $Q$, $\mu$ and a compact set $\mathcal X\subset\R^d$.
 \begin{enumerate}[(a)]
 \item $\widetilde P_{N,\xi}$ is the law of the composition when the law of the path
 $X_1,\dots,X_N$ is multiplied by $\exp(N^{-1}\sum_{s=1}^N\xi_{X_s})$ and normalized. For
 every face $F$, $e^{-\lVert\xi\rVert}M_F\le M^\xi_F\le e^{\lVert\xi\rVert}M_F$.
-\item Let $F$ satisfy \textup{(H)}. Uniformly for $\xi\in\Xi$ and $1\le T\le N^{1/3}$,
+\item Let $F$ satisfy \textup{(H)}. Uniformly for $\xi\in\mathcal X$ and $1\le T\le N^{1/3}$,
 \[
 M^\xi_F=e^{\langle\xi,\alpha^*_F\rangle}M_F\bigl(1+O(1/T+T^2/N)\bigr),
 \]
@@ -869,13 +874,15 @@ and every maximizer $\hat n$ of $w_\xi$ on $F$ satisfies $\hat n/N=\alpha^*_F+O(
 Theorem~\ref{thm:window}, with every face in $\mathcal F^*$ irreducible. Then
 Theorem~\ref{thm:window} holds for the modes of $\widetilde P_{N,\xi}$, with $M_F$
 replaced by $M^\xi_F$ and $\ell_F$ by $\ell^\xi_F=\ell_F+\langle\xi,\alpha^*_F\rangle$.
+Thus it is the constants $K_Fe^{\langle\xi,\alpha_F^*\rangle}$ that determine whether
+two field-shifted lines coincide.
 \item If $Q$ is irreducible with stationary law $\pi$, then
 $Z_{N,\xi}\to e^{\langle\xi,\pi\rangle}$ as $N\to\infty$ with $T\to\infty$ and $T\le N^{1/3}$.
 \end{enumerate}
 \end{proposition}
 
-In words, a weak field tilts the line of every face by the field averaged over the
-quasi-ergodic law of the face, since the best composition of $F$ sits within $O(N/T)$ of
+In words, on a face satisfying (H) a weak field shifts the line by the field
+averaged over its quasi-ergodic law, since the best composition of $F$ sits within $O(N/T)$ of
 $N\alpha^*_F$. On the complete graph $\alpha^*_F$ is uniform on $F$, and the tilt is the
 average of $\xi$ over $F$ (Corollary~\ref{cor:weakfield-phases}). By (a) the first-order
 rule of Theorem~\ref{thm:first}(iii) holds for $\widetilde P_{N,\xi}$ without change, and by
@@ -888,50 +895,30 @@ $n$. So the multiplied law, summed over the paths with composition $n$, is $w_\x
 normalizing gives $\widetilde P_{N,\xi}$. Since $n/N$ is a probability vector,
 $|\langle\xi,n\rangle|/N\le\lVert\xi\rVert$, which gives the bounds.
 
-(b) If $F=\{i\}$, the only composition is $Ne_i$, so $M^\xi_F=e^{\xi_i}M_F$ and
-$\alpha^*_F=e_i$. Let $k\ge2$. We follow the proof of Theorem~\ref{thm:facemax} and use
-its notation, namely $X$, the displacement $x=\alpha'-\alpha^{*\prime}_F$, the ball $U$,
-the constants $c_U$, $C_U$, $C_1$, $C_2$, $C_3$, $\eta$, and $\gamma=\nabla\log C_F(\alpha^*_F)$. Number the
-states of $F$ as $1,\dots,k$ and put $\hat\xi=(\xi_i-\xi_1)_{2\le i\le k}$. For
-$\alpha\in\Delta_F$ we have $\langle\xi,\alpha\rangle=\xi_1+\sum_{i\ge2}(\xi_i-\xi_1)\alpha_i$,
-so
+(b) For a singleton the assertion is exact. For $k\ge2$, use the proof of
+Theorem~\ref{thm:facemax} with the amplitude
+$C_F^\xi(\alpha)=e^{\langle\xi,\alpha\rangle}C_F(\alpha)$. Number the states of $F$ as
+$1,\dots,k$, put $x=\alpha'-\alpha_F^{*\prime}$ and let
+$\hat\xi=(\xi_i-\xi_1)_{2\le i\le k}$. Then
 \[
-w_\xi(n)=e^{\langle\xi,\alpha^*_F\rangle}e^{\hat\xi\cdot x}P_N(n),\qquad \alpha=n/N .
+\log\frac{C_F^\xi(\alpha)}{e^{\langle\xi,\alpha_F^*\rangle}K_F}
+=\log\frac{C_F(\alpha)}{K_F}+\hat\xi\cdot x .
 \]
-Let $B=\max_{\xi\in\Xi}|\hat\xi|$ and $B'=\max_{\xi\in\Xi}\lVert\xi\rVert$. Below, the constants
-in $O(\cdot)$ depend on $\Xi$ only through $B$ and $B'$.
-
-\emph{Outside $U$.} There $P_N(n)=X\cdot O(T^{(k-1)/2}e^{-2\eta T})$, so
+Thus the linear coefficient $\gamma_F$ in that proof is replaced by
+$\gamma_F+\hat\xi$, while its quadratic rate bound is unchanged. On the compact field
+set $\mathcal X$ the added coefficient is uniformly bounded. Outside the fixed ball $U$,
+the field weight changes the old upper bound by at most $e^{\lVert\xi\rVert}$, so the
+exponential gap still excludes those compositions. Inside $U$, the same quadratic upper
+bound and the same lattice lower bound give
 \[
-w_\xi(n)\le e^{2B'}e^{\langle\xi,\alpha^*_F\rangle}X\cdot O\bigl(T^{(k-1)/2}e^{-2\eta T}\bigr).
+M_F^\xi=e^{\langle\xi,\alpha_F^*\rangle}
+N^{-(k-1)}T^{(k-1)/2}K_Fe^{-T\lambda_F}
+\bigl(1+O(1/T+T^2/N)\bigr),
 \]
-
-\emph{Inside $U$.} By~\eqref{eq:insideU},
-\[
-w_\xi(n)=e^{\langle\xi,\alpha^*_F\rangle}X\,\frac{C_F(\alpha)}{K_F}\,e^{\hat\xi\cdot x}\,
-e^{-T(I_F(\alpha)-\lambda_F)}(1+E),\qquad|E|\le C_2(1/T+T^2/N).
-\]
-For $T\ge2C_1/c_U$ the logarithm of the three middle factors is at most
-$(\gamma+\hat\xi)\cdot x+C_1|x|^2-c_UT|x|^2\le(\gamma+\hat\xi)\cdot x-\frac{c_UT}2|x|^2
-\le(|\gamma|+B)^2/(2c_UT)$. With the bound outside $U$ this gives
-$M^\xi_F\le e^{\langle\xi,\alpha^*_F\rangle}X(1+O(1/T+T^2/N))$. For the lower bound we take
-the lattice point $n^0$ of that proof, with $|x|\le k/N$. There $C_F/K_F\ge e^{-kC_3/N}$,
-$e^{\hat\xi\cdot x}\ge e^{-kB/N}$ and $T(I_F-\lambda_F)\le C_Uk^2T/N^2$, so
-$w_\xi(n^0)\ge e^{\langle\xi,\alpha^*_F\rangle}X(1-O(1/T+T^2/N))$.
-
-\emph{Bounded $T$.} For $1\le T\le T_2$ the ratio $M^\xi_F/(e^{\langle\xi,\alpha^*_F\rangle}X)$ lies
-between $e^{-2B'}M_F/X$ and $e^{2B'}M_F/X$ by (a), and $M_F/X$ lies between two positive
-constants by Theorem~\ref{thm:facemax}. So
-$M^\xi_F=e^{\langle\xi,\alpha^*_F\rangle}X(1+O(1/T+T^2/N))$ for $1\le T\le N^{1/3}$, and
-dividing by $M_F=X(1+O(1/T+T^2/N))$ gives the first claim.
-
-\emph{The maximizer.} As in that proof, for $T\ge T_3$ every maximizer $\hat n$ lies in
-$U$, and~\eqref{eq:insideU} applies to it with $|E|\le\frac12$. Taking logarithms in
-$w_\xi(\hat n)\ge w_\xi(n^0)$ and using $\log(C_F/K_F)+\hat\xi\cdot\hat x\le(C_3+B)|\hat x|$ and
-$T(I_F-\lambda_F)\ge c_UT|\hat x|^2$, we get
-$c_UT|\hat x|^2\le(C_3+B)|\hat x|+C_4(1/T+T^2/N)\le(C_3+B)|\hat x|+2C_4/T$, where
-$\hat x$ is the displacement of $\hat n/N$. So $|\hat x|=O(1/T)$, and for $1\le T<T_3$ the
-claim holds since $|\hat x|$ is bounded.
+and the quadratic location argument gives $|x|=O(1/T)$ at every maximizer.
+For bounded $T$ the error estimate follows from (a), and the location estimate follows
+from boundedness of the simplex. Dividing by the unweighted face maximum proves (b),
+uniformly on $\mathcal X$.
 
 (c) The proof of Theorem~\ref{thm:window} uses~\eqref{eq:logmax} for the faces in
 $\mathcal F^*$ and the bounds of Theorem~\ref{thm:first}(ii) for the other faces. By (b),
