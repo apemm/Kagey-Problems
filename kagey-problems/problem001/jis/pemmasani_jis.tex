@@ -911,11 +911,28 @@ column, so at least $k$ are blocks. Other columns have at most $4$ values.
 \end{proof}
 
 \begin{lemma}[six columns of memory]\label{lem:fourmemory}
-For $m\ge6$ and a pair set $F$, a word over the four singleton letters and the pairs of $F$, each pair used once, is the word of an optimum exactly when (i) no tilted rectangle is hidden, (ii) none shares its presentation with an axis-aligned rectangle whose columns are among its own and the double columns, and (iii) no two tilted rectangles within seven consecutive columns share a presentation.
+Let $m\ge6$, and let $F$ be the edge set of a four-cycle on the rows. A word over the
+four singleton letters and the pairs of $F$, each pair used once, represents an optimum
+if and only if (i) no tilted rectangle is hidden, (ii) no tilted rectangle shares its
+presentation with an axis-aligned rectangle whose columns are among its own and the
+double columns, and (iii) no two distinct tilted rectangles in a block of at most seven
+consecutive columns share a presentation.
 \end{lemma}
 
 \begin{proof}
-Optima satisfy the conditions, (i) by Theorem~\ref{thm:hidden}. Conversely, the word is axis-valid by Theorem~\ref{thm:equality}, and a hidden axis-aligned rectangle would be a four-cycle of $G_S$. Given (i), two distinct rectangles with one presentation $P$ have $P\ne\emptyset$, and one is tilted. If the other is axis-aligned, each of its columns meets $P$, so it is a column of the tilted one or, with two black corners, a double column, against (ii). If both are tilted, they share a column $c$ meeting $P$. Each spans at most four consecutive columns, so both lie in columns $c-3$ to $c+3$, against (iii).
+An optimum satisfies all three conditions, with (i) following from
+Theorem~\ref{thm:hidden}. Conversely, a word of the stated form is axis-valid by
+Theorem~\ref{thm:equality}. It hides no axis-aligned rectangle, since that would give a
+four-cycle in $G_S$, and (i) excludes hidden tilted rectangles.
+
+Suppose two distinct rectangles have the same presentation $P$. Then $P\ne\emptyset$,
+and at least one rectangle is tilted. If the other is axis-aligned, each of its columns
+either meets $P$ or has two black corners. A column meeting $P$ belongs to the tilted
+rectangle, and a column with two black corners is a double column. Condition (ii)
+therefore excludes this pair. If both rectangles are tilted, they share a column $c$
+meeting $P$. Each occupies at most four consecutive columns, so together they lie in
+columns $c-3$ to $c+3$, contrary to (iii). The word is thus valid and, with $m+4$ black
+points, is an optimum.
 \end{proof}
 
 A tilted rectangle of a word over the four singleton letters and the pairs of $F$ \emph{fails
@@ -923,21 +940,32 @@ locally} if it is hidden, if it shows a set with a rival by Lemma~\ref{lem:rival
 set $F$, or if another tilted rectangle of the word shows the same set.
 
 \begin{proposition}[the automaton]\label{prop:fourautomaton}
-Fix $F$. Let $\mathcal A_F$ have states $(u,U)$, with $u$ the last six letters read and $U$ the
-pairs used. On a letter $y$ it rejects if $y\in U$ or a tilted rectangle of $uy$ with a corner in
-its last column fails locally, and otherwise moves to the last six letters of $uy$ and
-$U\cup(\{y\}\cap F)$. It accepts when $U=F$. For $m\ge6$ it accepts exactly the words of the
-optima of the $4\times m$ grid with pair set $F$.
+Let $F$ be the edge set of a four-cycle on the rows. The automaton $\mathcal A_F$ reads
+the four singleton letters and the pairs in $F$. It starts at $(\epsilon,\emptyset)$,
+where $\epsilon$ is the empty word. A state $(u,U)$ records the suffix of at most six
+letters read so far and the set $U\subseteq F$ of pairs already used.
+
+On reading $y$, it rejects if $y\in U$ or if a tilted rectangle in $uy$ ending in the
+new column fails locally. Otherwise it replaces $u$ by the suffix of $uy$ of length
+$\min(6,|uy|)$ and $U$ by $U\cup(\{y\}\cap F)$. A word is accepted if it is read to the end
+without rejection and the final register is $U=F$. For each $m\ge6$, the accepted words
+of length $m$ are exactly the optima of the $4\times m$ grid with pair set $F$.
 \end{proposition}
 
 \begin{proof}
-Tilted rectangles span four columns, so each lies in $uy$ when its last column is read. An
-accepted word is a candidate with pair set $F$, so it is axis-valid and hides no axis-aligned
-rectangle. Conditions (i) to (iii) of Lemma~\ref{lem:fourmemory} hold, since by
-Lemma~\ref{lem:threecorners} an axis-aligned rectangle with the presentation of a tilted one is a
-rival, and two tilted rectangles in seven consecutive columns lie in the seven columns ending at
-the later last column. Conversely an optimum is a valid candidate hiding nothing
-(Theorem~\ref{thm:hidden}).
+Fix $m\ge6$. Tilted rectangles occupy at most four consecutive columns, so every such
+rectangle is contained in $uy$ when its last column is read. An accepted word uses each
+pair of $F$ exactly once and is a candidate. Presentations with at least three points
+are unique by Lemma~\ref{lem:threecorners}. The local tests exclude hidden tilted
+rectangles and axis-aligned rivals, giving (i) and (ii) of Lemma~\ref{lem:fourmemory}.
+For (iii), any two tilted rectangles in at most seven consecutive columns are both in the
+window when the later of their last columns is read, so the test compares their
+presentations. The lemma makes the word an optimum.
+
+Conversely, an optimum of width $m$ with pair set $F$ uses each pair once. It hides no
+rectangle by Theorem~\ref{thm:hidden}, and no two rectangles have the same presentation.
+Lemma~\ref{lem:rival}, applied with its pair set $F$, therefore finds no rival at any
+step. None of the local tests rejects the word, and its final register is $F$.
 \end{proof}
 
 The script \nolinkurl{four_row_equivalence_check.py} builds $\mathcal A_F$ from the definition
@@ -1417,7 +1445,9 @@ Let $E(w)=|S(w)|-|w|$. By Theorem~\ref{thm:rowbound} and $|S(v)|\le h|v|$, every
 \end{proof}
 \section{Computations and verification}\label{sec:verify}
 
-Each computed value and count comes from two separately written programs. Code, data, and commands are in the repository~\cite{repo}, and the paths below are relative to its folder
+Each computed maximum and each exact count is checked by two separately written
+programs. The lower bound $a_7(8)\ge18$ comes from one enumeration. Code, data, and
+commands are in the repository~\cite{repo}, and the paths below are relative to its folder
 \nolinkurl{kagey-problems/problem001}. For each computer-assisted result,
 \nolinkurl{jis/scripts/README.md} gives the command, the evidence file with its SHA-256 hash, and
 the stored time, and Table~\ref{tab:evidence} summarizes them.
@@ -1483,7 +1513,8 @@ $7\times8$ & $16$ & $\ge18$ & S \\
 \end{tabular}
 \caption{Computed values for $h\le m$. H: hand, T: theorem, I: ILP (value only on
 $3\times10$, $4\times8$, $5\times6$, $5\times7$, and $6\times6$), B: brute force, D: equality
-candidates, C: column search, S: two SAT encodings, listing all optima where a count is given, M: transfer counter,
+candidates, C: column search, S: two SAT encodings, with complete enumeration for exact
+counts, M: transfer counter,
 --: not established. On $7\times8$ only a lower bound for the count is given.}
 \label{tab:values}
 \end{table}
@@ -1492,7 +1523,8 @@ Our rectangle lists agree with \seqnum{A085582} on squares and \seqnum{A289832} 
 grids.
 
 SAT encoding A forbids each inclusion-minimal set $C(R_1)\triangle C(R_2)$, $R_1\ne R_2$, from being
-all black. Encoding B forbids this for rectangles with a common corner, and has a variable $y_R$
+all black. Encoding B instead forbids $C(R_1)\triangle C(R_2)$ for every pair of distinct
+rectangles sharing a corner, and has a variable $y_R$
 for each rectangle $R$, forced true when its corners are black, with at most one $y_R$ true. The
 structured encodings for six rows fix a partition $A\mid B$ of the rows into triples. They give
 each column a type, a row or one of the nine pairs meeting both $A$ and $B$, which fixes its black
@@ -1502,19 +1534,34 @@ generator for the certified instances, or the totalizer~\cite{bailleux2003}; eac
 exactly when the bound holds.
 
 \begin{lemma}[faithful encodings]\label{lem:enc}
-Let $S$ be a blackout of the $h\times m$ grid.
-(a) $S$ is valid if and only if it contains no inclusion-minimal $C(R_1)\triangle C(R_2)$.
-(b) $S$ is valid if and only if it contains no $C(R_1)\triangle C(R_2)$ with $R_1\ne R_2$ sharing
-a corner, and hides at most one rectangle.
-(c) If $h=6$, $m\ge3$, and $S$ is valid with $m+9$ points, then $S$, with types $B_i$, satisfies
-the structured instance of some partition.
+Let $S$ be a blackout of the $h\times m$ grid, and let
+$\mathcal D=\{C(R_1)\triangle C(R_2)\mid R_1\ne R_2\}$, where $R_1$ and $R_2$ range over
+rectangles of this grid.
+\begin{enumerate}[(a)]
+\item $S$ is valid if and only if it contains no inclusion-minimal member of $\mathcal D$.
+\item $S$ is valid if and only if it hides at most one rectangle and contains no
+$C(R_1)\triangle C(R_2)$ for distinct rectangles $R_1,R_2$ sharing a corner.
+\item Suppose $h=6$, $m\ge3$, and $S$ is valid with $m+9$ points. For some partition of
+the rows into two triples, selecting the black-row set $B_i$ as the type of column $i$
+extends to a satisfying assignment of the structured instance.
+\end{enumerate}
 \end{lemma}
 
 \begin{proof}
-(a) Each $C(R_1)\triangle C(R_2)$ contains a minimal one; use Corollary~\ref{cor:hitting}. (b) If
-$R_1,R_2$ share no corner, $C(R_1)\triangle C(R_2)=C(R_1)\cup C(R_2)$ lies in $S$ exactly when both
-are hidden. (c) Theorem~\ref{thm:equality} gives the types, (b) with $y_R=[R\text{ hidden}]$ the
-other clauses, and dropped clauses only weaken the instance.
+(a) The grid is finite, so every member of $\mathcal D$ contains an inclusion-minimal
+member. Thus $S$ contains a member of $\mathcal D$ if and only if it contains a minimal
+one. Corollary~\ref{cor:hitting} gives the claim.
+
+(b) It remains to consider pairs with no common corner. Their symmetric difference is
+$C(R_1)\cup C(R_2)$, which lies in $S$ exactly when both rectangles are hidden. The
+condition that at most one rectangle is hidden therefore handles precisely these pairs.
+
+(c) By Theorem~\ref{thm:equality}, the rows have a partition into two triples such that
+every $B_i$ is a singleton or a pair crossing the partition, and each of the nine pairs
+occurs once. These choices satisfy the column-type constraints. Set each indicator
+$y_R$ to $1$ exactly when $R$ is hidden. Part (b) shows that these indicators and the
+black points satisfy encoding B. Omitting clauses preserves satisfaction, so the
+assignment extends to the structured instance for this partition.
 \end{proof}
 
 So the models of encodings A and B, read on the points, are the valid blackouts of the required

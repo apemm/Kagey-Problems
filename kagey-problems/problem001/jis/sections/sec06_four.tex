@@ -89,11 +89,28 @@ column, so at least $k$ are blocks. Other columns have at most $4$ values.
 \end{proof}
 
 \begin{lemma}[six columns of memory]\label{lem:fourmemory}
-For $m\ge6$ and a pair set $F$, a word over the four singleton letters and the pairs of $F$, each pair used once, is the word of an optimum exactly when (i) no tilted rectangle is hidden, (ii) none shares its presentation with an axis-aligned rectangle whose columns are among its own and the double columns, and (iii) no two tilted rectangles within seven consecutive columns share a presentation.
+Let $m\ge6$, and let $F$ be the edge set of a four-cycle on the rows. A word over the
+four singleton letters and the pairs of $F$, each pair used once, represents an optimum
+if and only if (i) no tilted rectangle is hidden, (ii) no tilted rectangle shares its
+presentation with an axis-aligned rectangle whose columns are among its own and the
+double columns, and (iii) no two distinct tilted rectangles in a block of at most seven
+consecutive columns share a presentation.
 \end{lemma}
 
 \begin{proof}
-Optima satisfy the conditions, (i) by Theorem~\ref{thm:hidden}. Conversely, the word is axis-valid by Theorem~\ref{thm:equality}, and a hidden axis-aligned rectangle would be a four-cycle of $G_S$. Given (i), two distinct rectangles with one presentation $P$ have $P\ne\emptyset$, and one is tilted. If the other is axis-aligned, each of its columns meets $P$, so it is a column of the tilted one or, with two black corners, a double column, against (ii). If both are tilted, they share a column $c$ meeting $P$. Each spans at most four consecutive columns, so both lie in columns $c-3$ to $c+3$, against (iii).
+An optimum satisfies all three conditions, with (i) following from
+Theorem~\ref{thm:hidden}. Conversely, a word of the stated form is axis-valid by
+Theorem~\ref{thm:equality}. It hides no axis-aligned rectangle, since that would give a
+four-cycle in $G_S$, and (i) excludes hidden tilted rectangles.
+
+Suppose two distinct rectangles have the same presentation $P$. Then $P\ne\emptyset$,
+and at least one rectangle is tilted. If the other is axis-aligned, each of its columns
+either meets $P$ or has two black corners. A column meeting $P$ belongs to the tilted
+rectangle, and a column with two black corners is a double column. Condition (ii)
+therefore excludes this pair. If both rectangles are tilted, they share a column $c$
+meeting $P$. Each occupies at most four consecutive columns, so together they lie in
+columns $c-3$ to $c+3$, contrary to (iii). The word is thus valid and, with $m+4$ black
+points, is an optimum.
 \end{proof}
 
 A tilted rectangle of a word over the four singleton letters and the pairs of $F$ \emph{fails
@@ -101,21 +118,32 @@ locally} if it is hidden, if it shows a set with a rival by Lemma~\ref{lem:rival
 set $F$, or if another tilted rectangle of the word shows the same set.
 
 \begin{proposition}[the automaton]\label{prop:fourautomaton}
-Fix $F$. Let $\mathcal A_F$ have states $(u,U)$, with $u$ the last six letters read and $U$ the
-pairs used. On a letter $y$ it rejects if $y\in U$ or a tilted rectangle of $uy$ with a corner in
-its last column fails locally, and otherwise moves to the last six letters of $uy$ and
-$U\cup(\{y\}\cap F)$. It accepts when $U=F$. For $m\ge6$ it accepts exactly the words of the
-optima of the $4\times m$ grid with pair set $F$.
+Let $F$ be the edge set of a four-cycle on the rows. The automaton $\mathcal A_F$ reads
+the four singleton letters and the pairs in $F$. It starts at $(\epsilon,\emptyset)$,
+where $\epsilon$ is the empty word. A state $(u,U)$ records the suffix of at most six
+letters read so far and the set $U\subseteq F$ of pairs already used.
+
+On reading $y$, it rejects if $y\in U$ or if a tilted rectangle in $uy$ ending in the
+new column fails locally. Otherwise it replaces $u$ by the suffix of $uy$ of length
+$\min(6,|uy|)$ and $U$ by $U\cup(\{y\}\cap F)$. A word is accepted if it is read to the end
+without rejection and the final register is $U=F$. For each $m\ge6$, the accepted words
+of length $m$ are exactly the optima of the $4\times m$ grid with pair set $F$.
 \end{proposition}
 
 \begin{proof}
-Tilted rectangles span four columns, so each lies in $uy$ when its last column is read. An
-accepted word is a candidate with pair set $F$, so it is axis-valid and hides no axis-aligned
-rectangle. Conditions (i) to (iii) of Lemma~\ref{lem:fourmemory} hold, since by
-Lemma~\ref{lem:threecorners} an axis-aligned rectangle with the presentation of a tilted one is a
-rival, and two tilted rectangles in seven consecutive columns lie in the seven columns ending at
-the later last column. Conversely an optimum is a valid candidate hiding nothing
-(Theorem~\ref{thm:hidden}).
+Fix $m\ge6$. Tilted rectangles occupy at most four consecutive columns, so every such
+rectangle is contained in $uy$ when its last column is read. An accepted word uses each
+pair of $F$ exactly once and is a candidate. Presentations with at least three points
+are unique by Lemma~\ref{lem:threecorners}. The local tests exclude hidden tilted
+rectangles and axis-aligned rivals, giving (i) and (ii) of Lemma~\ref{lem:fourmemory}.
+For (iii), any two tilted rectangles in at most seven consecutive columns are both in the
+window when the later of their last columns is read, so the test compares their
+presentations. The lemma makes the word an optimum.
+
+Conversely, an optimum of width $m$ with pair set $F$ uses each pair once. It hides no
+rectangle by Theorem~\ref{thm:hidden}, and no two rectangles have the same presentation.
+Lemma~\ref{lem:rival}, applied with its pair set $F$, therefore finds no rival at any
+step. None of the local tests rejects the word, and its final register is $F$.
 \end{proof}
 
 The script \nolinkurl{four_row_equivalence_check.py} builds $\mathcal A_F$ from the definition
