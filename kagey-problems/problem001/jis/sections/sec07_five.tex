@@ -13,30 +13,37 @@ $L,R\ge0$ vanishing on unpadded sides if and only if $S_{L^*,R^*}$ is valid.
 \end{theorem}
 
 \begin{proof}
-Write $S^*=S_{L^*,R^*}$. Necessity is immediate. Suppose $S^*$ is valid and let $U=S_{L,R}$. By
-Lemma~\ref{lem:leftmost} and \eqref{eq:tilt-param}, a tilted rectangle has at most one corner
-in row $1$ and at most one in row $h$. Hence a weak tilted rectangle of $U$ has a black corner in an original column $e$,
-and by Lemma~\ref{lem:span} its columns lie in
-$[e-W_h,e+W_h]\cap[1-L,m+R]\subseteq[1-L^*,m+R^*]$. As $U$ and $S^*$ agree on their common
-columns, it is a rectangle of $S^*$ with the same presentation. Suppose distinct
-rectangles $R_1$ and $R_2$ of $U$ have the same presentation $P$.
+Set $S^*=S_{L^*,R^*}$. Necessity follows by this choice. Suppose $S^*$ is valid
+and put $U=S_{L,R}$.
 
-\emph{Step 1. Both axis-aligned.} Added columns are vertices of degree one, so the cycles of
-$G_U$ lie in $G_{S^*}$. As $S^*$ is valid with at least three columns, $U$ is axis-valid by
-Lemma~\ref{lem:girth}.
+A tilted rectangle has at most one corner in row $1$ and at most one
+in row $h$ (Lemma~\ref{lem:leftmost} and~\eqref{eq:tilt-param}).
+A weak tilted rectangle of $U$ therefore has a black corner in an
+original column $e$. Its span is bounded by Lemma~\ref{lem:span}, so
+its columns lie in $[e-W_h,e+W_h]\cap[1-L,m+R]\subseteq[1-L^*,m+R^*]$.
+It lies in $S^*$ and has the same presentation there.
 
-\emph{Step 2. Both tilted.} By Lemma~\ref{lem:threecorners}, $|P|\le2$, so both are weak, hence
-rectangles of $S^*$ with the same presentation, a contradiction.
+Suppose distinct $R_1,R_2$ in $U$ show the same $P$.
 
-\emph{Step 3. One of each.} Let $R_1$ be tilted, hence a rectangle of $S^*$. A column of
-$R_2$ that meets $P$ is a column of $R_1$, and one that does not has two black corners and is
-an original column. So $R_2$ is a rectangle of $S^*$ too, a contradiction.
+\emph{Both axis-aligned.} Every added column has degree one in $G_U$,
+so any cycle already lies in $G_{S^*}$. Since $S^*$ is valid and has
+at least three columns, Lemma~\ref{lem:girth} makes $U$ axis-valid.
+
+\emph{Both tilted.} Lemma~\ref{lem:threecorners} gives $|P|\le2$.
+Both rectangles are weak, so both lie in $S^*$ with presentation $P$,
+contradicting its validity.
+
+\emph{One of each.} Take $R_1$ tilted, hence already in $S^*$.
+A column of $R_2$ meeting $P$ also belongs to $R_1$. A column not
+meeting $P$ has two black corners, so it must be original.
+Thus $R_2$ also lies in $S^*$ with the same presentation, again a
+contradiction.
 \end{proof}
 
 \subsection{Five rows}
 
-List each column by its black rows, from left to right. Let $S_8$ be the
-blackout $14,\allowbreak 45,\allowbreak 25,\allowbreak 5,\allowbreak 5,\allowbreak 34,\allowbreak 23,\allowbreak 12$ of the $5\times8$ grid, so that $B_1=\{1,4\}$ and $B_4=\{5\}$.
+For the constructions, list the black rows in each column from left
+to right. Start with the blackout $S_8$ given by $14,\allowbreak 45,\allowbreak 25,\allowbreak 5,\allowbreak 5,\allowbreak 34,\allowbreak 23,\allowbreak 12$ of the $5\times8$ grid, so that $B_1=\{1,4\}$ and $B_4=\{5\}$.
 
 \begin{figure}[!t]
 \centering
@@ -59,24 +66,28 @@ reflection and column reversal.
 \end{theorem}
 
 \begin{proof}
-(b) The upper bound is Theorem~\ref{thm:rowbound}. Since $W_5=5$, Theorem~\ref{thm:collar} with
-padding row $1$ on the right reduces $S_8$ to the test board of Figure~\ref{fig:boards}(a). Three enumerators and Lean check that its
-$954$ rectangles have distinct presentations.
-
-(a) For $m=5$ the bounds are Corollary~\ref{cor:small-m} and $S_0$ of
-Theorem~\ref{thm:fivefive}. For $m=6,7$ the blackouts $15,\allowbreak 12,\allowbreak 23,\allowbreak 3,\allowbreak 34,\allowbreak 45$ and
-$1,\allowbreak 12,\allowbreak 23,\allowbreak 3,\allowbreak 34,\allowbreak 45,\allowbreak 15$, stored in
-\nolinkurl{jis/data/small_cells_sat_5x6.json} and \nolinkurl{jis/data/small_cells_sat_5x7_b12.json},
-are valid and give the lower bound. Checked SAT certificates show that no blackout of $m+6$
-points is valid (Section~\ref{sec:verify}).
-
-(c) Two SAT enumerations and a column search over the $10\,(8)_6\,5^2=5{,}040{,}000$
-candidates of Theorem~\ref{thm:equality} find exactly the four images.
+(b) The upper bound is Theorem~\ref{thm:rowbound}.
+For the construction, $W_5=5$, so the collar theorem with right padding
+in row $1$ reduces the whole family from $S_8$ to Figure~\ref{fig:boards}(a).
+Three enumerators and Lean verify that the $954$ rectangles of this
+test board have different presentations.
+(a) At $m=5$, use Corollary~\ref{cor:small-m} and the construction $S_0$
+in Theorem~\ref{thm:fivefive}. At $m=6,7$, the constructions are
+$15,\allowbreak 12,\allowbreak 23,\allowbreak 3,\allowbreak 34,\allowbreak 45$ and
+$1,\allowbreak 12,\allowbreak 23,\allowbreak 3,\allowbreak 34,\allowbreak 45,\allowbreak 15$,
+recorded in \nolinkurl{jis/data/small_cells_sat_5x6.json} and
+\nolinkurl{jis/data/small_cells_sat_5x7_b12.json}. They give the lower
+bounds. Checked SAT certificates rule out $m+6$ points
+(Section~\ref{sec:verify}).
+(c) Two SAT enumerations find the four images. A separate column search
+checks all $10\,(8)_6\,5^2=5{,}040{,}000$ equality candidates from
+Theorem~\ref{thm:equality} and finds the same four.
 \end{proof}
 
-By Theorem~\ref{thm:A}, $f(h,m)\le h+m$ when a side is at most four, and also on the
-$5\times5$, $5\times6$, $5\times7$, and $6\times6$ grids. Together these cover the grids of area
-below $40$ (up to transposition), so the guess $f(h,m)=h+m$ first fails at $5\times8$.
+Theorem~\ref{thm:A} gives $f(h,m)\le h+m$ whenever a side is at most
+four, and on $5\times5$, $5\times6$, $5\times7$, and $6\times6$.
+Up to transposition, these exhaust the grids of area below $40$.
+Thus $5\times8$ is the first failure of the guess $f(h,m)=h+m$.
 
 \begin{remark}[five-row counts, computer-assisted]\label{rem:fivecounts}
 For $m=13,\dots,23$ the counts $a_5(m)$ are
@@ -85,7 +96,8 @@ For $m=13,\dots,23$ the counts $a_5(m)$ are
 299{,}349{,}210,\quad 1{,}653{,}637{,}492,\quad 8{,}828{,}301{,}226,\quad 45{,}743{,}165{,}894,\\
 230{,}934{,}909{,}328,\quad 1{,}139{,}486{,}126{,}866,\quad 5{,}510{,}071{,}794{,}736.
 \end{gather*}
-Two independent transfer counters based on Theorem~\ref{thm:equality} agree on every count.
+Each count agrees in two independent transfer calculations using the
+equality structure of Theorem~\ref{thm:equality}.
 % TODO(author): A-number once approved (the counts a_5(m) for m >= 8).
 \end{remark}
 
@@ -104,16 +116,18 @@ $\{2,4,6\}$.
 \end{theorem}
 
 \begin{proof}
-(a) For $m=8$ this is Corollary~\ref{cor:small-m}. For $9\le m\le14$, by
-Theorem~\ref{thm:equality} the doubles of a valid blackout of $m+9$ points carry the edges of
-$K_{3,3}$ for one of ten row partitions. Checked LRAT certificates for the structured encoding exclude
-every case (Lemma~\ref{lem:enc}).
-
-(b) The upper bound is Theorem~\ref{thm:rowbound}. For $m=15$ the blackout
-$56,\allowbreak 45,\allowbreak 34,\allowbreak 23,\allowbreak 1,\allowbreak 1,\allowbreak 14,\allowbreak 1,\allowbreak 1,\allowbreak 12,\allowbreak 36,\allowbreak 1,\allowbreak 25,\allowbreak 6,\allowbreak 16$, stored in \nolinkurl{jis/data/six_row_sat_w15_A.json},
-gives the lower bound with $24$ points. For $m\ge16$, since $W_6=7$, the test board of
-Theorem~\ref{thm:collar} adds $(17,1),\dots,(23,1)$ to $S_{16}$ of Figure~\ref{fig:boards}(b). Three enumerators and Lean check that its $4{,}627$
-rectangles have distinct presentations.
+(a) Corollary~\ref{cor:small-m} handles $m=8$.
+For $9\le m\le14$, an optimum with $m+9$ points would have double
+columns carrying $K_{3,3}$, by Theorem~\ref{thm:equality}.
+There are ten possible row partitions. The structured encoding has
+checked LRAT certificates excluding every one (Lemma~\ref{lem:enc}).
+(b) Again the row bound gives the upper bound. For $m=15$, take
+$56,\allowbreak 45,\allowbreak 34,\allowbreak 23,\allowbreak 1,\allowbreak 1,\allowbreak 14,\allowbreak 1,\allowbreak 1,\allowbreak 12,\allowbreak 36,\allowbreak 1,\allowbreak 25,\allowbreak 6,\allowbreak 16$
+from \nolinkurl{jis/data/six_row_sat_w15_A.json}, which is valid with
+$24$ points. For $m\ge16$, apply the collar theorem to $S_{16}$ in
+Figure~\ref{fig:boards}(b). Since $W_6=7$, it suffices to add
+$(17,1),\dots,(23,1)$. Three enumerators and Lean verify distinct
+presentations for all $4{,}627$ rectangles of that test board.
 \end{proof}
 
 \begin{theorem}[small grids, computer-assisted]\label{thm:refute}
@@ -122,11 +136,17 @@ $15,\allowbreak 1,\allowbreak 123,\allowbreak 34,\allowbreak 4,\allowbreak 4,\al
 \end{theorem}
 
 \begin{proof}
-The valid blackouts $14,\allowbreak 1,\allowbreak 12,\allowbreak 2,\allowbreak 23,\allowbreak 3456$ of the $6\times6$ grid, $16,\allowbreak 1,\allowbreak 1,\allowbreak 12,\allowbreak 2,\allowbreak 23,\allowbreak 3456$ of the
-$6\times7$ grid, and $17,\allowbreak 1,\allowbreak 12,\allowbreak 2,\allowbreak 23,\allowbreak 3456,\allowbreak 67$ of the $7\times7$ grid, stored in
-\nolinkurl{jis/data/small_cells_sat_6x6.json}, \nolinkurl{jis/data/small_cells_sat_6x7.json}, and
-\nolinkurl{jis/data/small_cells_sat_7x7.json}, give the other lower bounds. Checked SAT
-certificates exclude one more point in each case.
+The other constructions are $14,\allowbreak 1,\allowbreak 12,\allowbreak 2,\allowbreak 23,\allowbreak 3456$
+on the $6\times6$ grid,
+$16,\allowbreak 1,\allowbreak 1,\allowbreak 12,\allowbreak 2,\allowbreak 23,\allowbreak 3456$
+on $6\times7$, and
+$17,\allowbreak 1,\allowbreak 12,\allowbreak 2,\allowbreak 23,\allowbreak 3456,\allowbreak 67$
+on $7\times7$. Their records are
+\nolinkurl{jis/data/small_cells_sat_6x6.json},
+\nolinkurl{jis/data/small_cells_sat_6x7.json}, and
+\nolinkurl{jis/data/small_cells_sat_7x7.json}.
+All are valid. For each grid, a checked SAT certificate excludes
+one additional point.
 \end{proof}
 
 \begin{theorem}[the $5\times5$ grid]\label{thm:fivefive}
@@ -139,11 +159,14 @@ below under the square's symmetries.
 \end{theorem}
 
 \begin{proof}
-(a) The upper bound is Corollary~\ref{cor:small-m}. For the lower bound let $S_0$ be $45,\allowbreak 34,\allowbreak 123,\allowbreak 1,\allowbreak 15$. Its graph is an
-$8$-cycle with two pendant edges, so $S_0$ is axis-valid. By Lemma~\ref{lem:leftmost} its $30$
-tilted rectangles are nine unit diamonds, sixteen from Lemma~\ref{lem:tilted-narrow}, and five
-spanning the grid. The table lists the fifteen weak ones by their two shown corners. For an
-oblique pair, the point after the bar is a white corner of its axis-aligned rectangle.
+(a) Corollary~\ref{cor:small-m} gives the upper bound. To attain it,
+take $S_0$ to be $45,\allowbreak 34,\allowbreak 123,\allowbreak 1,\allowbreak 15$.
+Its row-column graph is an $8$-cycle with two pendant edges, hence it is
+axis-valid. Lemma~\ref{lem:leftmost} lists $30$ tilted rectangles, namely
+nine unit diamonds, sixteen others from Lemma~\ref{lem:tilted-narrow},
+and five spanning the grid. The fifteen weak rectangles show the pairs
+below. After an oblique pair, the point following the bar is a white
+corner of the axis-aligned rectangle through it.
 \begin{center}\footnotesize
 \begin{tabular}{@{}llll@{}}
 $(1,2),(2,1)\mid(1,1)$ & $(1,3),(2,2)\mid(1,2)$ & $(3,4),(4,3)\mid(4,4)$ & $(2,5),(3,4)\mid(3,5)$ \\
@@ -152,10 +175,11 @@ $(4,3),(5,2)\mid(4,2)$ & $(3,4),(5,2)\mid(5,4)$ & $(2,5),(5,2)\mid(2,2)$ & $(4,5
 $(1,3),(4,2)\mid(1,2)$ & $(2,5),(4,3)\mid(4,5)$ & & $(4,5),(5,4)\mid(4,4)$ \\
 \end{tabular}
 \end{center}
-The fifteen pairs are distinct, and Lemma~\ref{lem:threecorners} settles the other
-tilted rectangles. Each listed white corner lies on the only axis-aligned rectangle
-through its pair, and $(2,2),(4,2)$ has no rival since $B_2\cap B_4=\emptyset$. So $S_0$ is valid.
-
-(b) Of the $44{,}640$ sets of $10$ points whose graph $G_S$ has no four- or six-cycle, exactly the
-images of $S_0$ are valid, by three programs.
+These pairs are all different. The other tilted rectangles show at least
+three points, so Lemma~\ref{lem:threecorners} distinguishes them.
+The listed white corners rule out axis-aligned rivals for every oblique
+pair. The remaining pair $(2,2),(4,2)$ has no rival because
+$B_2\cap B_4=\emptyset$. This proves validity.
+(b) Three programs check all $44{,}640$ sets of $10$ points whose graph
+has no four- or six-cycle. Only the images of $S_0$ are valid.
 \end{proof}

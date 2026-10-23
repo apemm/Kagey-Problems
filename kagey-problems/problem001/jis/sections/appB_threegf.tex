@@ -1,9 +1,9 @@
 \subsection{\texorpdfstring{The classes $AB$ and $X$}{The classes AB and X}}\label{app:threegf}
 
-We now count classes $X$ and $AB$ and prove Theorem~\ref{thm:threegf}(b).
-Recall $D=LN=1-2z-4z^3-4z^4$. Call a singleton string \emph{restricted} if
-no two letters $b$ are at distance two. Reversal and reflection give the
-corresponding tests for $BA$, $BC$, and $CB$.
+It remains to count $X$ and $AB$ and rule out cancellation in
+Theorem~\ref{thm:threegf}(b). Keep $D=LN=1-2z-4z^3-4z^4$.
+A \emph{restricted} singleton string has no two $b$ letters at distance
+two. Reversal and reflection carry $AB$ to $BA$, $BC$, and $CB$.
 
 \begin{lemma}[forbidden windows in the classes containing $B$]\label{lem:threewindows}
 In classes $AB$ and $X$, the table lists exactly the failing windows.
@@ -23,25 +23,29 @@ $X$ & one triple & $bsX$, $Xsb$, $aXa$, $aXb$, $bXa$, $bXc$, $cXb$, $cXc$ \\
 \end{lemma}
 
 \begin{proof}
-Singleton windows follow from Lemma~\ref{lem:dichotomy}, and $sAt$ as in
-Lemma~\ref{lem:sixofnine}(a), except that $bAb$ now fails test (e) of Lemma~\ref{lem:diamond}
-as $B\in F$. In $sBt$ and $sXt$ both corners in column $i+1$ are black, so the
-diamond is empty for $s=t=b$, and for outer $s$ and $t$ test (c) fails it exactly when $s=t$.
-For $s=b\ne t$ it shows $(i+2,2)$ alone, and test (e) fails it exactly when $\{2,t\}\in F$. In
-$uAB$ test (d) fails $u=b$, as $(i+2,3)$ and $(i+1,2)$ are black, and otherwise three corners
-show. In $ABw$ the diamond is empty for $w=b$, and test (e) fails it exactly for $w=a$. In $Asb$
-and $Xsb$ tests (b) and (e) fail the vertical pair or the point of column $i+1$. Other windows
-with a double or $X$ at the left tip show three corners or an oblique pair needing the white
-point $(i+1,2)$. The rest is symmetric.
+Lemma~\ref{lem:dichotomy} handles singleton windows.
+For $sAt$, use Lemma~\ref{lem:sixofnine}(a), also rejecting $bAb$
+by test (e) since $B\in F$.
+In $sBt$ or $sXt$, the middle corners are black. For $s=t=b$ the
+diamond is empty. For outer letters, test (c) fails exactly for $s=t$.
+For $s=b\ne t$, only $(i+2,2)$ shows, and test (e) fails exactly
+when $\{2,t\}\in F$.
+In $uAB$, the black corners $(i+2,3),(i+1,2)$ make test (d) fail
+for $u=b$, while otherwise three corners show.
+In $ABw$, $w=b$ gives an empty diamond, and test (e) rejects $w=a$.
+Tests (b) and (e) exclude $Asb$ and $Xsb$.
+Other left-tip windows show three corners or need the white point
+$(i+1,2)$ for an oblique rival. Reflect for the other cases.
 \end{proof}
 
 Encode outer letters by bit $0$ with weight $2$, and $b$ by bit $1$.
-Let $h_{ij}$ count continuations after bits $i,j$, where $b$ cannot follow $1,j$.
-Read a nonempty run $w_1\cdots w_n$, $n\ge1$, outward from a double.
-Let $g_0$ and $g_1$ count runs starting with a prescribed outer letter and
-with $w_1=b$, respectively. Let $u$ and $v$ count the same runs with
-$w_2$ outer whenever it is present. A fictitious letter before $w_1$ is outer for $g$ and $b$ for $u$ and $v$. Then $(g_0,g_1,u,v)=z(h_{00},h_{01},
-h_{10},h_{11})$. The continuation equations for $h$ give
+Let $h_{ij}$ count continuations after $i,j$, forbidding $b$ after $1,j$.
+Read each run $w_1\cdots w_n$, $n\ge1$, away from its double.
+Let $g_0,g_1$ count a prescribed outer first letter and $w_1=b$,
+and $u,v$ the same with $w_2$ outer if present.
+A fictitious preceding letter, outer for $g$ and $b$ for $u,v$,
+gives $(g_0,g_1,u,v)=z(h_{00},h_{01},h_{10},h_{11})$.
+The recurrence solves to
 \begin{equation}\label{eq:runs}
 Dg_0=z(1+z+3z^2+2z^3),\ \ Dg_1=z(1+z),\ \ Du=z(1+2z^2+2z^3),\ \ Dv=z.
 \end{equation}
@@ -52,22 +56,23 @@ denominator divides $D^2$.
 \end{proposition}
 
 \begin{proof}
-In $UXW$, both runs are restricted. The forbidden windows $bsX$ and $Xsb$
-force the second letter from $X$ to be outer. A single nonempty run contributes
-$2u+v$ on either side. If both are nonempty, the letters next to $X$ must be
-$(a,c)$, $(b,b)$, or $(c,a)$, giving $2u^2+v^2$.
+In $UXW$, both runs are restricted. Forbidding $bsX$ and $Xsb$
+makes the second letter from $X$ outer. A single nonempty side gives
+$2u+v$, on either side. Two nonempty sides allow neighbor pairs
+$(a,c)$, $(b,b)$, and $(c,a)$, contributing $2u^2+v^2$.
 \end{proof}
 
-A word of $AB$ is $UAVBW$ with restricted runs $U$, $V$, and $W$. By
-Lemma~\ref{lem:threewindows}, a nonempty $U$ read from $A$ is counted by $u$ or $v$, and a
-nonempty $W$ read from $B$ by $g_0$ or $g_1$. Let $\ell_t$ and $r_t$ count the allowed $U$ and
-$W$, empty included, when $t$ follows $A$ or precedes $B$. The windows at the
-double give
+In $UAVBW$, all singleton runs are restricted. Reading outward,
+$U$ from $A$ uses $u$ or $v$, and $W$ from $B$ uses $g_0$ or $g_1$
+(Lemma~\ref{lem:threewindows}). Include empty runs in $\ell_t$ and $r_t$
+when $t$ follows $A$ or precedes $B$. The double-centered windows give
 \begin{equation}\label{eq:lr}
 (\ell_a,\ell_b,\ell_c)=(1+2u+v,1+u,1+2u),\ (r_a,r_b,r_c)=(1+g_0,1+g_0+g_1,1+g_0+g_1).
 \end{equation}
-For $s\in\{00,10\}$ let $J_{s\beta}$ count the continuations from $s$ ending in bit $\beta$, the
-empty one with $\beta=0$. Solving as for $h$ gives, with rows $s$ and columns $\beta$,
+We also need the final bit. For $s\in\{00,10\}$, let $J_{s\beta}$
+count continuations from $s$ ending in $\beta$, assigning the empty
+continuation to $\beta=0$. The same recurrence gives the matrix below,
+with rows indexed by $s$ and columns by $\beta$
 \begin{equation}\label{eq:J}
 J=\frac1D\begin{pmatrix}1+2z^2+2z^3&z+z^2\\1&2z^2+2z^3\end{pmatrix}.
 \end{equation}
@@ -87,52 +92,72 @@ P_B(z)=z^2(1+z)(1+z^2-3z^3+4z^6+4z^7).
 \end{proposition}
 
 \begin{proof}
-Split according to the length $k$ of the middle run $V$. For $k=0$ the windows $uAB$ and $ABw$ give the first term, as
-$u\ne b$ and $w\ne a$. For $k=1$ the window $AtB$ passes, and $uAt$ and $tBw$ give $\ell_tr_t$.
-For $k\ge2$ the window $Av_1v_2$ makes $v_2$ outer, $v_{k-1}v_kB$ passes, and $v_3\cdots v_k$
-is a continuation from bits $00$ or $10$, as $v_1$ is outer or $b$, with weight
-$\ell_{v_1}r_{v_k}$. Since $r_a+r_c$ counts both outer $v_k$, for $k\ge3$ the weight $2$ of an outer $v_k$
-in $J$, like the $2$ in $2r_b$, counts the choices of $v_2$, and $k=2$ is the constant term of
-$J$.
-Exact computer algebra gives~\eqref{eq:PB}.
+Let $k$ be the length of $V$. For $k=0$, the boundary windows
+$uAB$ and $ABw$ require $u\ne b$ and $w\ne a$, giving the first term.
+For $k=1$, $AtB$ always passes, while $uAt$ and $tBw$ contribute
+$\ell_tr_t$.
+
+For $k\ge2$, $Av_1v_2$ forces $v_2$ to be outer, and
+$v_{k-1}v_kB$ always passes. The remaining string $v_3\cdots v_k$
+continues from bits $00$ or $10$, according as $v_1$ is outer or $b$,
+with boundary weight $\ell_{v_1}r_{v_k}$. The vector entry $r_a+r_c$
+already counts the two outer choices for $v_k$. Thus for $k\ge3$,
+the outer-letter weight $2$ in $J$, and the factor $2$ in $2r_b$,
+account for the two choices of $v_2$. The constant term of $J$ handles
+$k=2$. This gives~\eqref{eq:GAB}, and exact algebra gives~\eqref{eq:PB}.
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{thm:threegf}(b)]
-By Theorem~\ref{thm:threegf}(a) the denominator divides $R^3D^3=Q$. No two of $R$, $L$, and $N$
-share a root, as $D(\frac13)\ne0$ and $L-N=-2z-4z^2$ vanishes only where $N\ne0$. At
-$z=\frac13$ only $G_{AC}$ has a pole, and the numerator in~\eqref{eq:GAC} is $\frac4{81}$. As $P_B\bmod L=\frac z2$ and $P_B\bmod N=\frac14-\frac z2$, at each root
-of $D$ the term $G_{AB}$ has a triple pole, $G_X$ at most a double pole, and $G_{AC}$ none.
+The denominator divides $R^3D^3=Q$ by part (a).
+Its factors share no roots, since $D(\frac13)\ne0$ and
+$L-N=-2z-4z^2$ vanishes only where $N\ne0$.
+At $z=\frac13$, $G_{AC}$ alone has a triple pole, its numerator
+being $\frac4{81}$. At roots of $D$, the remainders
+$P_B\bmod L=\frac z2$ and $P_B\bmod N=\frac14-\frac z2$
+are nonzero. Thus $G_{AB}$ has triple poles there, which neither
+the double poles of $G_X$ nor the regular $G_{AC}$ can cancel.
 \end{proof}
 
 \begin{remark}[optima up to symmetry]\label{rem:threeorbits}
-Let $o_3(m)$ count optima up to row reflection and column reversal.
-Its values are $15$, $58$, $227$, $864$, $3190$, and $11502$ at widths $3$ to $8$
-(\seqnum{A401226}). By Burnside's lemma,
-$4o_3(m)$ is $a_3(m)$ plus the optima fixed by the reflection, the reversal, and the half turn.
-An optimum fixed by the reflection uses only $b$, $B$, and $X$, so it is one $X$ among letters
-$b$, and for $m\ge4$ a window $Xbb$, $bbX$, or $bbb$ fails (Lemmas~\ref{lem:diamond}(b)
-and~\ref{lem:dichotomy}), so only $bXb$ is fixed.
+Counting up to row reflection and column reversal gives $o_3(m)$,
+with first values $15$, $58$, $227$, $864$, $3190$, and $11502$
+for widths $3$ to $8$ (\seqnum{A401226}). Burnside's lemma says that
+$4o_3(m)$ equals $a_3(m)$ plus the fixed counts of the three nonidentity
+symmetries. Row reflection allows only $b$, $B$, and $X$.
+An optimum must therefore have one $X$ and otherwise $b$.
+For $m\ge4$, one of $Xbb$, $bbX$, or $bbb$ occurs and fails
+(Lemmas~\ref{lem:diamond}(b) and~\ref{lem:dichotomy}).
+The only fixed optimum is $bXb$.
 
-Write $m=2k$ or $m=2k+1$. The half turn reverses the word and swaps $A$ with $C$ and $a$ with
-$c$. A fixed optimum with two doubles thus has $A$ and $C$ at mirror positions $j\le k$ and $m+1-j$,
-and center $b$ for odd $m$. Its first $k$ letters determine it, and only its windows centered
-at $A$ or $C$ can fail (proof of Proposition~\ref{prop:threeGAC}), those at $C$ mirroring
-those at $A$. By Lemma~\ref{lem:sixofnine}(a), this leaves $3^{k-1}$ words in $AC$ for $j=1$,
-$3^{k-2}$ for $j=k\ge2$, $2\cdot3^{k-2}$ for $1<j<k$, and as many in $CA$. So for $k\ge2$
-there are $4k3^{k-2}$ of them, and for $m=3$ there are $AbC$ and $CbA$, with series
+For the half turn, put $m=2k$ or $m=2k+1$.
+It reverses the word and exchanges $A$ with $C$ and $a$ with $c$.
+A fixed two-double word has $A$ and $C$ in mirror columns $j\le k$
+and $m+1-j$, with $b$ at the center for odd $m$.
+The first $k$ letters determine the rest. Only the windows centered
+on $A$ and $C$ can fail (the proof of Proposition~\ref{prop:threeGAC}),
+and these are mirror images. Lemma~\ref{lem:sixofnine}(a) leaves
+$3^{k-1}$ words in $AC$ when $j=1$, $3^{k-2}$ when $j=k\ge2$,
+and $2\cdot3^{k-2}$ when $1<j<k$. The count in $CA$ is equal.
+Summing gives $4k3^{k-2}$ for $k\ge2$.
+At $m=3$ there are just $AbC$ and $CbA$. Their combined series is
 $W=2z^3+\frac49(1+z)\bigl(3z^2(1-3z^2)^{-2}-3z^2\bigr)$.
 
-A palindrome repeats each letter off its center, so the reversal fixes only words $UXU^{\mathrm{rev}}$ of odd width. There $tXt$ passes only for $t=b$, and
-$bsX$ and $Xsb$ make the letter at distance two from $X$ outer
-(Lemma~\ref{lem:threewindows}), so $U$ read outward is counted by $v$ in~\eqref{eq:runs}. In
-the words $UX\iota(U^{\mathrm{rev}})$ fixed by the half turn, with $\iota$ the reflection, the
-central pairs $(a,c)$, $(b,b)$, and $(c,a)$ pass, so $U$ is counted by $2u+v$. Adding $z^3$ for
-$bXb$, $2z\bigl(u(z^2)+v(z^2)\bigr)$, and $W$ gives
+Column reversal forces a palindrome. Every noncentral letter is
+repeated, so a fixed optimum must have odd width and form
+$UXU^{\mathrm{rev}}$. The middle window $tXt$ requires $t=b$,
+and the forbidden windows $bsX$ and $Xsb$ force the next letter
+outward to be outer (Lemma~\ref{lem:threewindows}). Thus $U$ is
+counted by $v$ in~\eqref{eq:runs}.
+For a half-turn-fixed triple word $UX\iota(U^{\mathrm{rev}})$,
+where $\iota$ reflects rows, the allowed middle pairs are
+$(a,c)$, $(b,b)$, and $(c,a)$, giving $2u+v$ for $U$.
+Combine the contribution $z^3$ of $bXb$, the paired-run contribution
+$2z\bigl(u(z^2)+v(z^2)\bigr)$, and the two-double contribution $W$ to get
 \begin{align*}
 4\sum_{m\ge3}o_3(m)z^m={}&\sum_{m\ge3}a_3(m)z^m+z^3+\frac{4z^3(1+z^4+z^6)}{M(1+2z^4)}\\
 &+\frac{2z^3(1-z)(1+5z+3z^2-3z^3)}{(1-3z^2)^2},
 \end{align*}
-with $M=1-2z^2-2z^4$, since $D(z^2)=M(1+2z^4)$. A computer check
-(\nolinkurl{three_row_orbits.py}) confirms the fixed counts through width $24$ and $o_3(m)$ for
-$m\le10$.
+Here $M=1-2z^2-2z^4$, so $D(z^2)=M(1+2z^4)$.
+The independent check \nolinkurl{three_row_orbits.py} agrees with the
+fixed counts through width $24$ and the orbit counts $o_3(m)$ for $m\le10$.
 \end{remark}

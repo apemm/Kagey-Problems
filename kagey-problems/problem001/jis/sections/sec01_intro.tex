@@ -1,11 +1,12 @@
 \section{Introduction}\label{sec:intro}
 
-You black out some points of the $h\times m$ grid (the \emph{blackout}). A game
-master chooses a rectangle, tilted or not, and shows you its white corners.
-You must name all four. How many points can you black out and still tell every
-pair of rectangles apart? Kagey~\cite{kageyG4G14,kagey001} asks for the largest
-such \emph{valid} blackout (Definition~\ref{def:valid}).
-Figure~\ref{fig:game} plays one round.
+Start with an $h\times m$ grid and black out some of its points.
+The game master chooses a rectangle (tilted ones are allowed) and tells
+you which of its corners are white. Can you recover all four corners?
+Kagey~\cite{kageyG4G14,kagey001} asks how many points can be blacked out
+while keeping the answer unique for every rectangle.
+Such a set is a \emph{valid blackout} (Definition~\ref{def:valid}).
+One round is shown in Figure~\ref{fig:game}.
 
 \begin{figure}[t]
 \centering
@@ -17,18 +18,22 @@ Lemma~\ref{lem:threecorners}.}
 \label{fig:game}
 \end{figure}
 
-Let $f(h,m)$ be the largest size of a valid blackout, and
-$a_h(m)$ the number of valid blackouts of that size. Our OEIS entries \seqnum{A397315} and
-\seqnum{A399580}~\cite{oeis} first recorded the conjecture $f(3,m)=m+2$ and the guess $f(h,m)=h+m$ for $\min(h,m)\ge4$ apart from
-$f(4,4)=7$ and $f(4,5)=8$. The Omega Institute proved $f(3,m)=m+2$ in Lean, in a pull
-request merged on 15 September 2026~\cite{trureturing2026}. Theorem~\ref{thm:rowbound} with
-Lemma~\ref{lem:cross} gives an independent proof. The guess first fails at $5\times8$
-(Theorem~\ref{thm:fiverow}). Put $q_h=\lfloor h^2/4\rfloor$. Statements needing computation are marked computer-assisted
-(Table~\ref{tab:evidence}).
+Write $f(h,m)$ for the most points we can black out, and $a_h(m)$
+for the number of ways to attain it. The conjectures recorded in our
+OEIS entries \seqnum{A397315} and \seqnum{A399580}~\cite{oeis} were
+$f(3,m)=m+2$ and $f(h,m)=h+m$ for $\min(h,m)\ge4$, with exceptions
+$f(4,4)=7$ and $f(4,5)=8$. The first was proved in Lean by the Omega
+Institute, whose pull request was merged on 15 September
+2026~\cite{trureturing2026}. Our independent proof combines the row
+bound (Theorem~\ref{thm:rowbound}) and the boundary cross
+(Lemma~\ref{lem:cross}). The second guess breaks at $5\times8$
+(Theorem~\ref{thm:fiverow}). Throughout, put $q_h=\lfloor h^2/4\rfloor$.
+Computer-assisted claims are marked, with evidence in
+Table~\ref{tab:evidence}.
 % TODO(author): add the date of A397315 after its A-number (item S6).
 % TODO(author): A-numbers for rows 3, 4 of A399580.
 
-The results below point to their proofs.
+The main results follow, with proof locations in parentheses.
 
 \begin{introthm}[narrow grids]\label{thm:A}
 \leavevmode
@@ -50,9 +55,9 @@ $f(6,7)=13$, $f(7,7)=14$, and $f(6,8)=15$. \textup{(Theorem~\ref{thm:refute}.)}
 \end{enumerate}
 \end{introthm}
 
-For (c) and (d), the finite collar theorem (Theorem~\ref{thm:collar}) reduces all
-larger widths to one test board. Lemma~\ref{lem:enc} in Section~\ref{sec:verify}
-justifies the SAT encodings used for the certificates.
+For (c) and (d), the collar theorem reduces each infinite family to
+one validity check (Theorem~\ref{thm:collar}). Lemma~\ref{lem:enc}
+justifies the SAT bounds.
 
 \begin{introthm}[three-row optima]\label{thm:B}
 \leavevmode
@@ -89,21 +94,27 @@ eventually periodic in $m$, and $\sum_{m\ge0}a_h(m)z^m$ is rational.
 Corollary~\ref{cor:oeisconj} proves the conjecture in \seqnum{A338885} that its row $n$ has
 largest entry \seqnum{A033638}$(n)$.
 
-\paragraph{Prior work.} The game is a test-cover problem~\cite{bellitto2018,foucaud2015,katona1966,moretshapiro1985}
-(Corollary~\ref{cor:hitting}). Forbidding black axis-aligned rectangles is the
-Zarankiewicz problem~\cite{reiman1958}. Distinguishing them forbids four- and six-cycles
-in the row-column graph (Lemma~\ref{lem:girth}), and de Caen and
-Sz\'ekely~\cite{decaenszekely1992,decaenszekely1997} study such graphs with unbalanced parts.
-Neuwirth~\cite[Theorem~1(ii) and Proposition~17]{neuwirth2001} bounds their edges, so the row
-bound is known in graph form. Our proof uses Mantel's theorem~\cite{mantel1907} and also describes and counts
-the equality cases. None of these works treats tilted rectangles. At fixed height,
-we use column transfer~\cite{alanko2011,euler2005,mertens2024},
-\cite[Proposition~V.6]{flajolet2009}. Theorem~1(3) of Guilhot, Little, and
-Parkinson~\cite{glp2025}, together with Theorem~\ref{thm:regular}, gives another
-route to Theorem~\ref{thm:E}.
+\paragraph{Prior work.} Choosing white points to distinguish rectangles is
+a test-cover problem~\cite{bellitto2018,foucaud2015,katona1966,moretshapiro1985}
+(Corollary~\ref{cor:hitting}). If we only forbid fully black axis-aligned
+rectangles, we get the Zarankiewicz problem~\cite{reiman1958}.
+To distinguish all axis-aligned rectangles, the row-column graph must
+avoid both four- and six-cycles (Lemma~\ref{lem:girth}). Such graphs,
+including unbalanced parts, are studied by de Caen and
+Sz\'ekely~\cite{decaenszekely1992,decaenszekely1997}.
+Neuwirth's edge bounds~\cite[Theorem~1(ii) and Proposition~17]{neuwirth2001}
+already give our row bound in graph form. Our Mantel proof~\cite{mantel1907} also classifies and counts
+the equality cases.
+The tilted rectangles require additional arguments.
+For fixed height, our column method uses transfer
+matrices~\cite{alanko2011,euler2005,mertens2024},
+\cite[Proposition~V.6]{flajolet2009}.
+Theorem~1(3) of Guilhot, Little, and Parkinson~\cite{glp2025} also
+yields Theorem~\ref{thm:E} once regularity is proved.
 
-\paragraph{Outline.} Sections~\ref{sec:conv} to~\ref{sec:graph} give the conventions, the
-strips, and the row-column graph with the general bounds. Sections~\ref{sec:three}
-to~\ref{sec:height} treat three, four, five, and six rows, and every fixed height.
-Section~\ref{sec:verify} describes the computations and proves the SAT encodings faithful,
-Section~\ref{sec:open} lists open questions, and Appendix~\ref{app:square} treats square grids.
+\paragraph{Outline.} Sections~\ref{sec:conv} to~\ref{sec:graph} set up
+the problem and its graph bounds. Sections~\ref{sec:three}
+to~\ref{sec:height} handle narrow grids and fixed height.
+Section~\ref{sec:verify} gives computational evidence and encoding
+proofs, Section~\ref{sec:open} the open questions, and
+Appendix~\ref{app:square} the square-grid bound.
