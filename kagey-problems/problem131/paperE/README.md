@@ -6,12 +6,10 @@ is reached only by the path that never switches. The paper "Endpoint crossings f
 persistent walk" (in preparation) finds the switching rate at which this corner and the origin are
 equally likely. Until October 13, 2026 it was Section 6 and Appendix C of the paper in `../paperC`.
 
-The paper cites two other papers by A. Pemmasani, by title:
+The paper cites two public preprints by A. Pemmasani, by title:
 
 - "Uniform Bessel bounds for magnetization crossings in finite Ising chains", arXiv:2610.06935
   (`../paperA`). Its persistent random walk on the line is the line walk of this paper.
-- "Face selection for slowly switching Markov chains" (in preparation, `../paperC`). Its face
-  selection rule gives the same first-order exponents as the survival-and-return estimate used here.
 - "Vertex crossings in a symmetric Markov multinomial model", arXiv:2610.09258 (`../archive/paperB`), for the
   analogous crossing of the Potts chain.
 
@@ -75,3 +73,5 @@ this folder, `python -B verify_all.py` does the same (a few minutes), and `--ful
 for N from 1280 to 10240. The scripts need numpy and scipy. The shared helper `../common/two_state.py` must
 be included with the Paper E folder. Build the paper with
 pdflatex, 3 times.
+
+The abstract and disclosure were revised for submission. The availability statement pins an existing source revision instead of a release tag that has not been created. The optional comparison to unpublished C has been removed; the survival-and-return explanation and all proofs are self-contained apart from the listed A inputs.

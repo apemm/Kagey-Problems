@@ -718,3 +718,9 @@ October 18. Its modules import only Mathlib. Two new modules join it to the rest
 * Still not formalized from the analysis of `f_L`. The bound `‖f_L''‖_∞ ≤ 16/π⁴`, the limit
   `f_L → 0` at infinity and the integrability of `f_L` from the real integral. The Lean proofs of
   Corollary 3.11 and Theorem 3.21 do not use them. An improved `κ_L` is not proved either.
+
+## Detailed manuscript coverage tables
+
+The former Section 4 coverage tables are retained in [coverage_tables.tex](coverage_tables.tex). They record statement-specific qualifications and the six named classical hypotheses. The statement-by-label tables in this map remain the current lookup. No Lean source or proof was changed by this editorial move.
+
+The detailed Paper F coverage table is retained in [coverage_F.tex](coverage_F.tex). The current Paper F statement-by-label table above is the lookup for its Section 2, Section 3 and appendices. The manuscript retains the six classical hypotheses and the distinctions between printed, formalized and numerical results.
