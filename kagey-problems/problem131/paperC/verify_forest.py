@@ -1,4 +1,4 @@
-"""Checks for Proposition 4.15 and Lemma A.3 (the tree formula for K_F on every face).
+"""Checks for Proposition 4.9 and Lemma A.3 (the tree formula for K_F on every face).
 
 Tests of the forest formula
    det Sigma_alpha = (prod alpha)^2 tree(f + f^T) / arb(f)^2,   f_ij = l_i q_ij r_j,

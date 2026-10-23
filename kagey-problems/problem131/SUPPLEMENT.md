@@ -1,6 +1,6 @@
 # Verification supplement for the papers on Problem 131
 
-This supplement serves the 6 papers on Kagey's Problem 131 by A. Pemmasani. Papers A (arXiv:2610.06935) and B (arXiv:2610.09258) are posted, and Papers C to F are in preparation.
+This supplement serves the 6 papers on Kagey's Problem 131 by A. Pemmasani. Papers A (arXiv:2610.06935) and B (arXiv:2610.09258) are posted, and Papers C to F are in preparation. Since October 2026 Paper C incorporates Paper B.
 
 | Paper | Title | Source |
 | --- | --- | --- |
@@ -84,6 +84,11 @@ that output has to be read. It is also saved in `paperA/data/`. The predictions 
 scripts below are in `paperB/`. Add `--full` to include `verify_B_tie_repair.py` (about 3 minutes
 more).
 
+Paper B is incorporated into Paper C since October 2026. These scripts also check the statements
+of Sections 5 and 6 of Paper C that came from Paper B (Section 8 of Paper C says which), and the
+numbers of Remark 5.13 and of the phases after Example 5.12 of Paper C are the ones in the rows
+below for Remark 4.10 and Example 4.9 of Paper B.
+
 No proof in Paper B rests on computation. The statements that the paper marks as numerically
 verified are checked as follows.
 
@@ -116,36 +121,43 @@ registrations and check nothing, so `paperB/verify_all.py` does not run them. Th
 
 ## Paper C: slowly switching Markov chains
 
-The command `python -B verify_all.py --paper c` runs `paperC/verify_all.py`, which runs 6 scripts
-and takes several minutes (`verify_forest.py` alone takes about 5), or up to about half an hour
-with `--full`. A script that finds a failed check exits with an error (`verify_forest.py` and
-`verify_rate_flows.py` stop at the first failed assertion), and then the runner stops. The 2 stored
-outputs predate the split and use the old statement numbers. They are
+Since October 2026 Paper C incorporates Paper B (see `paperC/README.md`). The command
+`python -B verify_all.py --paper c` runs `paperC/verify_all.py`, which runs 7 scripts
+and takes about ten minutes (`verify_forest.py` alone takes about 5), or up to about half an hour
+with `--full`. The statements that came from Paper B are also checked by the scripts of Paper B
+(`--paper b`, above). A script that finds a failed check exits with an error (`verify_forest.py`,
+`verify_rate_flows.py` and `verify_weak_field.py` stop at the first failed assertion), and then the
+runner stops. The output of the merged version is `paperC/data/verify_output_2026-10-23.txt`. The 2
+older stored outputs predate the split and the merge and use the old statement numbers. They are
 `paperC/data/verify_output.txt`, a run of 5 scripts from September 26, 2026, and
 `paperC/data/verify_output_2026-10-09.txt`, a run of 6 scripts from October 9, 2026. Both include
-the planar checks that now belong to Paper E, and neither includes `verify_forest.py` or
-`verify_rate_flows.py`. The ledgers are `paperC/data/ledger_C1.md`, `ledger_C2.md`, `ledger_C4.md`
-and `ledger_C5.md`, indexed by `paperC/data/ledger.md`, and they also use the old numbers. The check labels of the scripts use
-the current numbers.
+the planar checks that now belong to Paper E, and neither includes `verify_forest.py`,
+`verify_rate_flows.py` or `verify_weak_field.py`. The ledgers are `paperC/data/ledger_C1.md`,
+`ledger_C2.md`, `ledger_C4.md` and `ledger_C5.md`, indexed by `paperC/data/ledger.md`, and they also
+use the old numbers. The check labels of the scripts use the numbers of the merged paper (build of
+October 23, 2026), and those of the sticky checks use the numbers of the note `S3_sticky_note`.
 
 No proof in Paper C rests on a floating-point computation. Exact computer algebra enters in the
 first 2 rows below. The third row belongs to the note `S1_endpoint_information_note/`, which was
-Section 8 and Appendix E of an earlier version of Paper C.
+Section 8 and Appendix E of an earlier version of Paper C. The value c_F = -(k-1)/8 of the next term
+on the complete graph (Proposition 4.15(iv)) is computed by hand in Appendix B, and
+`verify_second_order.py` also evaluates it exactly for k = 3 and 4.
 
 | Result that rests on computation | Script | The 2 methods |
 | --- | --- | --- |
-| Proposition C.4, which proves the row Theta_eps of Table 2 (2 triangles joined by a link) | `verify_examples.py` | Two exact resultants in sympy, from characteristic polynomials recomputed from the matrices. The script also computes a third resultant, which the proof does not use. The thresholds from their closed forms and from numerical roots, and the certificate at eps_0 in exact rational arithmetic. |
-| The values of c_F for the 3-arc and for C_4 after Corollary 5.1 | `verify_second_order.py` | The formula of Proposition 4.14(ii) evaluated exactly in sympy in 2 forms (an Euler form and an angle form), and a continuum check by Richardson extrapolation of the torus integral (for C_4 only with `--full`). |
+| Proposition S1.4 of the supplement, which proves the row Theta_eps of Table 2 (2 triangles joined by a link) | `verify_examples.py` | Two exact resultants in sympy, from characteristic polynomials recomputed from the matrices. The script also computes a third resultant, which the proof does not use. The thresholds from their closed forms and from numerical roots, and the certificate at eps_0 in exact rational arithmetic. |
+| The values of c_F for the 3-arc and for C_4 after Corollary 7.1 | `verify_second_order.py` | The formula of Proposition 4.15(ii) evaluated exactly in sympy in 2 forms (an Euler form and an angle form), and a continuum check by Richardson extrapolation of the torus integral (for C_4 only with `--full`). |
 | The moment lemma behind the Fisher theorem (Lemma A.1 of the note S1, no longer in Paper C) | `verify_sticky_fisher.py` | The 3 moments from the exact law with q as a symbol for N <= 12 against the closed forms, and exact rationals at N = 13, 15 and 17 for 3 values of q. The identity for Var X^2 is checked in sympy. |
 
 | Script | What it checks |
 | --- | --- |
 | `verify_first_order.py` | The exact law and first-order face selection (Sections 2 and 3). The run expansion in exact rationals against all words and a dynamic program, the rate on a face by direct maximization and by a Legendre transform of the Perron root, and the winners from the convex hull and from a direct minimization over all faces. |
-| `verify_second_order.py` | The local law, the constants K_F, the crossings and the directed 3-cycle (Section 4, Appendices A and B, and the 4-cycle numbers of Section 5). It computes P_N(n) by the run expansion and by a discrete torus integral, and K_F from Perron vectors in double precision and from the Hessian of the Perron root at 30 digits. |
-| `verify_examples.py` | The 4-cycle and Table 2, with Appendix C. Exit rates with numpy and with mpmath at 40 digits, the winners by the hull and on a grid, and the modes at finite N by a dynamic program of the whole chain and by the run expansion on each face. |
-| `verify_sticky_fisher.py` | Sticky priors (Section 6 and Appendix D) and the Fisher information of the note S1. The law of the counts by a dynamic program and by exact formulas, the direct-jump probability by Monte Carlo and 2 quadratures, and the information of the endpoint by the run formula and by a complex-step derivative of Paper A's recurrence. It also holds Paper A's polynomial S_N, which `paperE/verify_planar.py` imports. |
-| `verify_forest.py` | The tree formula for the constant on every irreducible face (Proposition 4.15 and Lemma A.3, about 5 minutes). Lemma A.3 in exact rational arithmetic for 119 generators with 2 to 6 states, with the trees and arborescences listed one by one, and in sympy for a general 3-state generator and the directed 3-cycle. In floating point, K_F and C_F(alpha) against the constants of `verify_second_order.py` on random non-reversible faces, the reversible case against Proposition 4.2(b), the directed 3-cycle against Proposition 4.13, and det Sigma at 50 digits against the Hessian of the Perron root. Every part is an assertion, and the floating-point parts use a tolerance. |
-| `verify_rate_flows.py` | The rate through flows (Proposition 4.16 and Example 4.18, a few seconds). In floating point on 480 random faces with 2 to 5 states, the balance of the flow at the maximizer, the form as a minimum over balanced flows, the bound by the reversible formula with its gap, and the comparison of the Perron root with that of the geometric symmetrization. On random cycles, the one equation for the net flow and the form with the geometric mean. Also the numbers of Example 4.18. Every check is an assertion. |
+| `verify_second_order.py` | The local law, the constants K_F, the crossings, the directed 3-cycle, the next term and the K_3 window (Sections 4, 5 and 7, Appendices A and B). It computes P_N(n) by the run expansion and by a discrete torus integral, and K_F from Perron vectors in double precision and from the Hessian of the Perron root at 30 digits. |
+| `verify_examples.py` | The 4-cycle and Table 2, with Section S1 of the supplement. Exit rates with numpy and with mpmath at 40 digits, the winners by the hull and on a grid, and the modes at finite N by a dynamic program of the whole chain and by the run expansion on each face. |
+| `verify_sticky_fisher.py` | Sticky priors (the note `S3_sticky_note`, which was Section 6 and Appendix D of Paper C) and the Fisher information of the note S1. The law of the counts by a dynamic program and by exact formulas, the direct-jump probability by Monte Carlo and 2 quadratures, and the information of the endpoint by the run formula and by a complex-step derivative of Paper A's recurrence. It also holds Paper A's polynomial S_N, which `paperE/verify_planar.py` imports. |
+| `verify_forest.py` | The tree formula for the constant on every irreducible face (Proposition 4.9 and Lemma A.3, about 5 minutes). Lemma A.3 in exact rational arithmetic for 119 generators with 2 to 6 states, with the trees and arborescences listed one by one, and in sympy for a general 3-state generator and the directed 3-cycle. In floating point, K_F and C_F(alpha) against the constants of `verify_second_order.py` on random non-reversible faces, the reversible case against Proposition 4.2(b), the directed 3-cycle against Proposition 4.14, and det Sigma at 50 digits against the Hessian of the Perron root. Every part is an assertion, and the floating-point parts use a tolerance. |
+| `verify_rate_flows.py` | The rate through flows (Remark 4.12, which was Proposition 4.16 with Example 4.18 before the merge; a few seconds). In floating point on 480 random faces with 2 to 5 states, the balance of the flow at the maximizer, the form as a minimum over balanced flows, the bound by the reversible formula with its gap, and the comparison of the Perron root with that of the geometric symmetrization. On random cycles, the one equation for the net flow and the form with the geometric mean. Also the numbers of the old Example 4.18. Every check is an assertion. |
+| `verify_weak_field.py` | A weak field (Proposition 4.16, new in the merge; about a minute). Part (a) by listing all 3^8 words of a 3-state chain. Part (b) on 4 faces (a pair of the path 1-2-3, the 3-arc of the 4-cycle, a non-reversible 3-state face and the full face of K_3): the tilted and untilted face maxima of the continuum density by the torus integral, with the limit of T times their log ratio minus <xi, alpha*> and the shift of the maximizer against the values that completing the square predicts (Richardson in T = 20 to 160); and on the pair at N = 20000 by an exact dynamic program of the chain, against the continuum. Part (d) by the transfer matrix at N = 10^6. Every check is an assertion. |
 
 ## Paper D: the elephant random walk
 
@@ -279,7 +291,7 @@ generated certificates for 101 <= N <= 2000 and 163 are for Paper F, and 4 for t
 
 The file `lean/README.md` summarizes coverage. The files `lean/PaperA/MAP.md` through
 `lean/PaperD/MAP.md` map covered statements to Lean declarations and list partial coverage and
-omissions. The C map uses the numbers from October 9, 2026. The D map uses the numbers of Paper D
+omissions. The C map uses the numbers of the merged Paper C from October 23, 2026, including the statements from Paper B, whose Lean files are in `lean/PaperB`. The D map uses the numbers of Paper D
 from October 17, 2026, and for Paper F those from before the split. Both explain where the
 statements of Papers E and F moved. For Paper D, Lean proves with no hypothesis Theorem 1.1 as
 stated, Theorem 2.8, Lemmas 3.1 to 3.4, Proposition 3.7 for every even N >= 8, the sign chain of

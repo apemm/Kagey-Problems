@@ -1,0 +1,194 @@
+\section{Proofs for the complete graph}\label{app:complete}
+
+This appendix proves Theorems~\ref{thm:simplex-crossing} and~\ref{thm:simplex-balance} and
+Corollary~\ref{cor:simplex-modes}. We use the notation of Section~\ref{sec:completegraph}, so
+$Q=J-dI$, $\sigma=p-h$, $u=h/p$ and $v=h/\sigma$. The first lemma writes the law in a second
+form, with blocks between refreshes in place of runs.
+
+\begin{lemma}[the refresh form]\label{lem:refresh}
+Let $N\ge1$ and let $n$ be a composition with support $F$. Sums over $m$ run over the integer vectors
+with $1\le m_i\le n_i$ for $i\in F$, and $M=\sum_im_i$.
+\begin{enumerate}[(a)]
+\item With $0^0=1$,
+\[
+P_N(n)=\sum_m\Bigl(\sum_{i\in F}\mu_im_i\Bigr)\frac{(M-1)!}{\prod_im_i!}\,
+h^{M-1}\sigma^{N-M}\prod_{i\in F}\binom{n_i-1}{m_i-1}.
+\]
+\item Let $1/d<p<1$, so that $0<u<1$ and $v>0$. Then
+\begin{equation}\label{eq:simplex-positive-sum}
+S_n(u)=(1-u)^{N-1}\sum_mM!\,v^{M-1}\prod_{i\in F}\frac1{m_i!}\binom{n_i-1}{m_i-1},
+\end{equation}
+which is a sum of positive terms, and
+\begin{equation}\label{eq:simplex-balance-integral}
+S_n(u)=\frac{(1-u)^{N-1}}{v}\int_0^\infty e^{-t}\prod_{i\in F}B_{n_i}(vt)\,dt,\qquad
+B_n(y)=\sum_{m=1}^n\binom{n-1}{m-1}\frac{y^m}{m!}.
+\end{equation}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) The transition matrix is $I+hQ=\sigma I+hJ$, so a word $x_1\cdots x_N$ has probability
+$\mu_{x_1}\prod_{s<N}(\sigma\mathbf 1\{x_s=x_{s+1}\}+h)$. We expand each factor into its two
+terms and call the steps where the term $h$ is chosen the refreshes. If there are $M-1$
+refreshes, they cut the word into $M$ blocks, and a term of the expansion is not zero only if the
+word is constant on each block. So $P_N(n)$ is the sum, over the sequences of $M$ block labels
+and over the block lengths, of $\mu_{\ell_1}h^{M-1}\sigma^{N-M}$, where $\ell_1$ is the label of
+the first block. If $m_i$ blocks carry the label $i$, there are $m_i(M-1)!/\prod_jm_j!$ sequences
+of labels that start with $i$. Consecutive labels may be equal. Given the labels, the lengths of
+the $m_i$ blocks of the label $i$ form an ordered sum of $n_i$ with $m_i$ positive parts, in
+$\binom{n_i-1}{m_i-1}$ ways. Multiplying and summing gives (a).
+
+(b) For the uniform start $\sum_i\mu_im_i=M/d$. By~\eqref{eq:SnVN} we divide (a) by
+$V_N=p^{N-1}/d$, and $h^{M-1}\sigma^{N-M}/p^{N-1}=u^{M-1}(1-u)^{N-M}=(1-u)^{N-1}v^{M-1}$, since
+$\sigma/p=1-u$. This gives~\eqref{eq:simplex-positive-sum}. We write
+$M!=\int_0^\infty e^{-t}t^M\,dt$ and sum over each $m_i$ separately. All terms are nonnegative, so
+the sum and the integral can be exchanged, and this gives~\eqref{eq:simplex-balance-integral}.
+\end{proof}
+
+When $\sigma\ge0$, part (a) has a direct reading. The chain keeps its state with probability
+$\sigma$ and otherwise draws a fresh state uniformly from all $d$ states, possibly the same one.
+The proof does not need $\sigma\ge0$. At $p=1/d$ we have $\sigma=0$ and only $M=N$ survives,
+which gives the multinomial law for the uniform start.
+
+\subsection{Proof of Theorem~\ref{thm:simplex-crossing}}
+
+Let $F$ be a face of $k$ states and $n$ a balanced composition of $F$, so that $P_N(n)/V_N=S_n(u)$
+by~\eqref{eq:SnVN}, with $u=(1-p)/((d-1)p)$.
+
+\emph{Part (i), one crossing.} To count $W_n(j)$, choose a sequence of $j+1$ run
+colors in which successive colors differ. If color $i$ appears $m_i$ times, its
+run lengths can be chosen in $\binom{n_i-1}{m_i-1}$ ways. So every coefficient
+of $S_n$ is nonnegative, and the first nonzero one is $W_n(k-1)=k!$, from the
+$k!$ orders of $k$ single runs. Hence $S_n$ increases strictly from $0$ to
+$\infty$ on $u>0$ and equals $1$ exactly once. As $p$ increases over $(0,1)$,
+$u$ decreases over $(0,\infty)$. So $P_N(n)=V_N$ at exactly one $p_{N,k}\in(0,1)$, and the composition is
+more likely than a vertex below $p_{N,k}$ and less likely above it.
+
+\emph{Part (i), monotonicity in $N$.} Choose the balanced compositions for increasing
+$N$ by adding $1$ to one of the smallest coordinates. Each coefficient $W_n(j)$
+is then nondecreasing. To see this, map a word to the word with an extra copy of
+the incremented color just before its first occurrence. This keeps the number
+of switches, and it is injective, since deleting the first letter of the first
+run of that color inverts it. The coefficient of $u^k$ is
+\[
+W_n(k)=\frac{k!(k-1)}2\sum_i(n_i-1)=\frac{k!(k-1)}2(N-k).
+\]
+To see this, note that exactly one run color appears twice. For each choice of it there are
+$(k+1)!/2-k!=k!(k-1)/2$ sequences of run colors in which successive colors
+differ (all orders, minus those with the two copies adjacent), and $n_i-1$ ways to
+split its $n_i$ visits into two runs. This coefficient increases strictly with
+$N$. So at every $u>0$ the value $S_n(u)$ increases strictly with $N$, the root
+of $S_n(u)=1$ decreases strictly with $N$, and $p=1/(1+(d-1)u)$ increases.
+
+\emph{Part (i), the first crossing.} If $N=k$, every coordinate is $1$ and
+$S_n(u)=k!u^{k-1}$, which gives $p_{k,k}$. Since the root decreases with $N$,
+every root has $u\le(k!)^{-1/(k-1)}<1$, and $u<1$ means $h<p$, that is,
+$p>1/d$.
+
+\emph{Part (i), the face maximum.} For $p\ge1/d$, Theorem~\ref{thm:simplex-balance} gives
+$M_F=P_N(n)$. For $p<1/d$ we have $u>1$, which exceeds the root of $S_n(u)=1$, so
+$M_F\ge P_N(n)>V_N$. Hence $M_F=V_N$ exactly at $p_{N,k}$, with the same two inequalities.
+
+\emph{Part (ii).} By Proposition~\ref{prop:nextterm}(ii) with $K_F=D_k/d$, $\lambda_F=d-k$ and
+$c_F=-(k-1)/8$ (Corollary~\ref{cor:paperB}), for large $N$ and uniformly for $1\le T\le N^{1/3}$,
+\[
+\log M_F=-(k-1)L+\tfrac{k-1}2\log T+\log(D_k/d)-(d-k)T-\frac{k-1}{8T}+O(T^{-2}+T^2/N).
+\]
+By
+\eqref{eq:vertexmax}, $\log V_N=-\log d-(d-1)T+O(T^2/N)$. Subtracting, and using
+$\log D_k=-(k-1)a_k$, gives the display. With $T=L-\frac12\log L+t$ and $t$ in a compact set,
+$T-L+\frac12\log T=t+\frac12\log(T/L)=t+O(\log L/L)$, and the terms $1/(8T)$ and the error tend
+to $0$.
+
+\emph{Part (iii).} Let $G$ be a vertex, so that $M_G=V_N$. By
+Theorem~\ref{thm:crossing}(i) the function $D_N=\log(M_F/M_G)$ has a zero in $[L/2,2L]$, since
+$\Delta=\delta=k-1$, and by (i) this zero is $T_{N,k}$. By Corollary~\ref{cor:paperB},
+$\log(K_F/K_G)=\log D_k=-(k-1)a_k$ and $c_F-c_G=-(k-1)/8$. So~\eqref{eq:crossingnext} reads
+$T(k-1)(L-\frac12\log T-T+a_k)=-\frac{k-1}8+O(1/L)$ at $T=T_{N,k}$, and dividing by
+$(k-1)T$ gives the implicit equation. For the explicit form put
+$z_*=L-\frac12\log L+a_k+e_L/L$ with $e_L=\frac14\log L-\frac12a_k+\frac18$.
+Since $\log z_*=\log L-\frac{\log L}{2L}+\frac{a_k}L+O(\frac{(\log L)^2}{L^2})$,
+we get $z_*+\frac12\log z_*-1/(8z_*)=L+a_k+O((\log L)^2/L^2)$. The derivative of
+$z+\frac12\log z-1/(8z)$ is at least $1$ for $z>0$, so
+$T_{N,k}-z_*=O((\log L)^2/L^2)$, which is~\eqref{eq:simplex-root-expansion}.
+
+\emph{Part (iv).} We have $a_k=\frac12\log(4\pi)-f(k)$ with
+$f(x)=(x+\frac12)\log x/(x-1)$. For $x\ge2$ the sign of $f'(x)$ is the sign of
+$\Delta(x)=2x^2-x-1-3x\log x$. Here $\Delta(2)=5-6\log2>0$, and
+$\Delta'(x)=4x-4-3\log x>0$ for $x\ge2$, since $\Delta'(2)>0$ and
+$\Delta''(x)=4-3/x>0$. So $f$ increases strictly and $a_k$ decreases strictly. This order is
+checked in Lean. \qed
+
+\subsection{Proof of Theorem~\ref{thm:simplex-balance}}
+
+Let $\mu_a=\mu_0$ for $a\in F$. By~\eqref{eq:runform}, $P_N(n)=\mu_0p^{N-1}S_n(u)$ for every composition
+with support $F$, so it is enough to show that the move strictly increases $S_n(u)$. The
+polynomial $S_n$ is symmetric in the coordinates of $n$, so all balanced compositions of $F$ have the same
+value, and repeated moves reach a balanced composition from any composition with support $F$. So the move gives
+the theorem. At $p=1/d$ we have $u=1$ and $S_n(1)=N!/\prod_in_i!$, the number of words with the
+counts $n$, and the move multiplies it by $n_b/(n_a+1)>1$. Let $1/d<p<1$, so that $\sigma>0$ and
+$v>0$.
+
+\emph{Log-concavity.} We show that for each $y>0$ the sequence $B_n(y)$,
+$n\ge1$, is strictly log-concave. Write
+\[
+\frac{B_n(y)}y=b_{n-1},\qquad
+b_j=\sum_{i=0}^j\binom ji a_i,\quad
+a_i=\frac{y^i}{(i+1)!},\qquad
+c_j=\sum_{i=0}^j\binom ji a_{i+1}.
+\]
+Pascal's identity gives $b_{j+1}=b_j+c_j$. The ratio $c_j/b_j$ is the mean of the
+strictly decreasing sequence $f_i=a_{i+1}/a_i=y/(i+2)$ under the weights
+$\lambda_i=\binom jia_i$, $0\le i\le j$, normalized. Let $\lambda'_i=\binom{j+1}ia_i$,
+$0\le i\le j+1$, be the weights for $j+1$, and put $\lambda_{j+1}=0$. On
+$0\le i\le j$ the ratio $\lambda'_i/\lambda_i=(j+1)/(j+1-i)$ increases in $i$. So for
+$i<l$ we have $\lambda'_i\lambda_l-\lambda'_l\lambda_i\le0$, with strict inequality when
+$l=j+1$. Hence
+\[
+\sum_i\lambda'_if_i\sum_l\lambda_l-\sum_i\lambda'_i\sum_l\lambda_lf_l
+=\sum_{i<l}(\lambda'_i\lambda_l-\lambda'_l\lambda_i)(f_i-f_l)<0,
+\]
+since $f_i>f_l$ for $i<l$. So the mean decreases strictly, $c_{j+1}/b_{j+1}<c_j/b_j$,
+and $b_{j+1}/b_j=1+c_j/b_j$ decreases strictly with $j$. This is the strict
+log-concavity. Since $B_n(y)=(y/n)L^{(1)}_{n-1}(-y)$, it is a Tur\'an-type
+inequality for the Laguerre polynomials $L^{(1)}_{n-1}(-y)$.
+
+\emph{The transfer.} Let $n_b\ge n_a+2$. By log-concavity,
+$B_{n_a+1}(y)/B_{n_a}(y)>B_{n_b}(y)/B_{n_b-1}(y)$, that is,
+$B_{n_a+1}(y)B_{n_b-1}(y)>B_{n_a}(y)B_{n_b}(y)$. We apply this
+for $y=vt>0$ in~\eqref{eq:simplex-balance-integral} and integrate. So the move
+strictly increases $S_n(u)$. \qed
+
+\subsection{Proof of Corollary~\ref{cor:simplex-modes}}
+
+For large $N$, $T\le CL$ forces $h\to0$ and so $p>1/d$. By
+Theorem~\ref{thm:simplex-balance} every global mode is a vertex or a balanced
+composition, and all balanced compositions with the same number of positive coordinates have the
+same probability. So we compare the ratios $M_F/V_N$, $2\le\lvert F\rvert\le d$, which equal $S_n(u)$ at
+the balanced compositions $n$, with $1$ and with each other. They depend on $F$ only through $k=\lvert F\rvert$.
+Fix $0<c<1$.
+
+\emph{Case $T\le cL$.} The ratio $S_n(u)$ increases with $u$, and $u$ increases
+with $T$. So it is at most its value at $T=cL$, which is
+$\exp(-(k-1)(1-c)L+O(\log L))\to0$ by Theorem~\ref{thm:simplex-crossing}(ii). So the
+vertices are the only modes, and $p>p_{N,d}$.
+
+\emph{Case $cL\le T\le CL$.} Theorem~\ref{thm:simplex-crossing}(ii) gives
+$\log(M_F/V_N)=(k-1)(y-a_k)+o(1)$ for $\lvert F\rvert=k$, with $y=T-L+\frac12\log T$, uniformly. The number $y$
+is the same for every $k$. Fix $\delta>0$, with
+$\delta<(a_{d-1}-a_d)/2$ when $d\ge3$. This is possible since $a_2>\cdots>a_d$.
+If $y\le a_d-\delta$, every face ratio is at most
+$e^{-(k-1)\delta+o(1)}<1$, so only the vertices are modes. If
+$y\ge a_d+\delta$, the full center beats the vertices, and it beats a
+balanced composition with $2\le k<d$ positive coordinates by
+\[
+(d-k)(y-a_d)+(k-1)(a_k-a_d)+o(1)>0 .
+\]
+If $|y-a_d|<\delta$, a proper face with $k\ge2$ states has
+$(k-1)(y-a_k)+o(1)\le-(k-1)\delta+o(1)<0$, since $a_k-a_d>2\delta$. So it
+loses to the vertices, and the comparison of the vertices with the full centers
+is decided by the unique crossing $p_{N,d}$ of Theorem~\ref{thm:simplex-crossing}(i).
+In each subcase the conclusion agrees with (i) to (iii).
+
+The last claim follows from~\eqref{eq:simplex-root-expansion} and
+$p_{N,k}=1-(d-1)T_{N,k}/N$, since $a_2>\cdots>a_d$. \qed

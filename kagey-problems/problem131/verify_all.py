@@ -5,7 +5,9 @@ in its own folder. This script calls those runners in turn with --quick, or with
 is given. The quick runs take about 2 minutes each for Papers A and B and a few minutes each for
 Papers C and D. With --full, Paper A takes about 21 minutes more, Paper B about 3 minutes more,
 Papers C and E up to about half an hour together, and Papers D and F about 45 minutes together.
-(Papers E and F were split off Papers C and D in October 2026.)
+(Papers E and F were split off Papers C and D in October 2026, and Paper B was merged into Paper C.
+With --paper b this script still runs the checks of Paper B, which also cover the statements of
+Paper C that came from Paper B.)
 
 If a paper folder is missing, this script says so in one line and goes on. A runner that stops
 with a nonzero exit code stops this script too. With --dry-run the commands are printed and
