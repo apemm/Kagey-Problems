@@ -1,16 +1,20 @@
 \section{Computations and verification}\label{sec:verify}
 
-Two separately written programs check each computed maximum and exact count.
-The lower bound $a_7(8)\ge18$ comes from one enumeration. Code and data are in the repository~\cite{repo}, with paths relative to
-\nolinkurl{kagey-problems/problem001}. Commands, evidence files, SHA-256 hashes,
-and running times are in \nolinkurl{jis/scripts/README.md}, summarized in
-Table~\ref{tab:evidence}.
+Every computed maximum and exact count has two separately written
+checks. The bound $a_7(8)\ge18$, obtained by
+one enumeration. The repository~\cite{repo} stores the code and
+evidence. All paths here start from \nolinkurl{kagey-problems/problem001}.
+For commands, SHA-256 hashes, and running times, see
+\nolinkurl{jis/scripts/README.md}. Table~\ref{tab:evidence} connects
+each computer-assisted claim to its checks.
 
-The ILP program uses CBC~\cite{cbc} through PuLP~\cite{pulp} to find a smallest
-hitting set for the sets of Lemma~\ref{lem:diff}. Brute force checks the result.
-SAT searches use PySAT~\cite{pysat2018}. Column searches add columns from left to right, using $f(6,6)\le12$ on the
-$6\times7$ and $6\times8$ grids and $f(6,7)\le13$ on the $6\times8$ and $7\times7$ grids. Every
-stored blackout and every model of a counting program is checked against the definition.
+We solve the hitting-set problem of Lemma~\ref{lem:diff} by ILP,
+using CBC~\cite{cbc} through PuLP~\cite{pulp}, and check it by brute
+force. SAT enumeration uses PySAT~\cite{pysat2018}.
+The column searches grow the board from left to right. They use
+$f(6,6)\le12$ to prune $6\times7$ and $6\times8$, and
+$f(6,7)\le13$ to prune $6\times8$ and $7\times7$.
+Every saved construction and counted model is tested for validity.
 
 \begin{table}[!htb]
 \centering\scriptsize\setlength{\tabcolsep}{3pt}
@@ -73,18 +77,24 @@ counts, M: transfer counter,
 \label{tab:values}
 \end{table}
 
-Our rectangle lists agree with \seqnum{A085582} on squares and \seqnum{A289832} on the other
-grids.
+As a check on rectangle generation, the totals match
+\seqnum{A085582} for squares and \seqnum{A289832} for rectangular grids.
 
-SAT encoding A forbids each inclusion-minimal set $C(R_1)\triangle C(R_2)$, $R_1\ne R_2$, from being
-all black. Encoding B instead forbids $C(R_1)\triangle C(R_2)$ for every pair of distinct
-rectangles sharing a corner, and has a variable $y_R$
-for each rectangle $R$, forced true when its corners are black, with at most one $y_R$ true. For six rows, the structured encoding fixes a partition $A\mid B$ into triples.
-Column types are rows or the nine pairs meeting both $A$ and $B$
-(their black rows). Each pair is used once. We keep encoding B's clauses
-involving a tilted rectangle that can be all black. The size bound is the sequential counter of Sinz~\cite{sinz2005}, written out by our
-generator for the certified instances, or the totalizer~\cite{bailleux2003}; each is satisfiable
-exactly when the bound holds.
+Encoding A prevents the inclusion-minimal differences
+$C(R_1)\triangle C(R_2)$, $R_1\ne R_2$, from being entirely black.
+Encoding B forbids $C(R_1)\triangle C(R_2)$ only for distinct
+rectangles with a common corner. Each rectangle $R$ also has an
+indicator $y_R$, forced true if it is hidden, and at most one $y_R$
+may be true.
+
+For the structured six-row instances, fix a partition $A\mid B$
+into triples. A column type is its black-row set, either a singleton
+or one of the nine pairs meeting $A$ and $B$. Use each pair once.
+Of encoding B's clauses, retain those involving a tilted rectangle
+whose forbidden set can be all black. Cardinality is enforced by
+Sinz's sequential counter~\cite{sinz2005}, expanded by our generator
+for certified instances, or by a totalizer~\cite{bailleux2003}.
+Both enforce exactly the specified size bound.
 
 \begin{lemma}[faithful encodings]\label{lem:enc}
 Let $S$ be a blackout of the $h\times m$ grid, and let
@@ -101,37 +111,46 @@ extends to a satisfying assignment of the structured instance.
 \end{lemma}
 
 \begin{proof}
-(a) The grid is finite, so every member of $\mathcal D$ contains an inclusion-minimal
-member. Thus $S$ contains a member of $\mathcal D$ if and only if it contains a minimal
-one. Corollary~\ref{cor:hitting} gives the claim.
+(a) Any member of the finite family $\mathcal D$ contains an
+inclusion-minimal member. Thus a blackout contains a forbidden
+difference exactly when it contains a minimal one. Apply
+Corollary~\ref{cor:hitting}.
 
-(b) It remains to consider pairs with no common corner. Their symmetric difference is
-$C(R_1)\cup C(R_2)$, which lies in $S$ exactly when both rectangles are hidden. The
-condition that at most one rectangle is hidden therefore handles precisely these pairs.
+(b) Part (a) leaves only pairs with no shared corner to check.
+For these, the difference is $C(R_1)\cup C(R_2)$, contained in $S$
+exactly when both rectangles are hidden. Allowing at most one hidden
+rectangle excludes precisely these remaining pairs.
 
-(c) By Theorem~\ref{thm:equality}, the rows have a partition into two triples such that
-every $B_i$ is a singleton or a pair crossing the partition, and each of the nine pairs
-occurs once. These choices satisfy the column-type constraints. Set each indicator
-$y_R$ to $1$ exactly when $R$ is hidden. Part (b) shows that these indicators and the
-black points satisfy encoding B. Omitting clauses preserves satisfaction, so the
-assignment extends to the structured instance for this partition.
+(c) Theorem~\ref{thm:equality} gives a partition into two row triples.
+Every $B_i$ is a singleton or a pair crossing it, and all nine pairs
+occur once. Use these as the column types. Set $y_R$ to $1$ exactly
+for hidden rectangles. By (b), these choices satisfy encoding B.
+Dropping clauses preserves satisfaction in the structured instance.
 \end{proof}
 
-Thus encodings A and B describe exactly the valid blackouts of the required
-size. By part (c) and Theorem~\ref{thm:rowbound}, if all ten structured instances
-of width $m$ are unsatisfiable, then $f(6,m)\le m+8$.
+Reading the point variables of A or B therefore gives precisely the
+valid blackouts of the chosen size. For six rows, part (c) and the
+row bound imply $f(6,m)\le m+8$ once the ten structured instances of
+width $m$ are all unsatisfiable.
 
-CaDiCaL~\cite{biere2024} gives LRAT certificates for $f(5,6)<12$, $f(5,7)<13$, $f(6,6)<13$,
-$f(6,7)<14$, $f(7,7)<15$, $f(6,8)<16$, $f(7,8)<17$, and the $70$ six-row instances (widths $8$
-to $14$, ten partitions each) behind Theorem~\ref{thm:sixrow}(a). The seven grids use encoding A
-over all blackouts, and the six-row instances use the structured encoding. Two separately written
-generators give the same clauses. We split the $6\times8$ instance into the $64$ cases of its
-first column, and the $7\times7$ and $7\times8$ instances into $128$, and the second generator
-checks that the cases cover every first column. All $394$ proofs pass \texttt{lrat-check} of
-drat-trim~\cite{cruzfilipe2017,wetzler2014} and the Lean LRAT checker. The models in
-\nolinkurl{jis/data/table_counts/sat_7x8_16.json} give $f(7,8)\ge16$, so $f(7,8)=16$. The enumeration in
-\nolinkurl{jis/data/table_counts/sat2split_7x8_16.json} finds $18$ valid blackouts of $16$ points,
-so $a_7(8)\ge18$.
+CaDiCaL~\cite{biere2024} produces LRAT certificates for
+$f(5,6)<12$, $f(5,7)<13$, $f(6,6)<13$, $f(6,7)<14$, $f(7,7)<15$,
+$f(6,8)<16$, and $f(7,8)<17$ using encoding A on all blackouts.
+It also certifies the $70$ structured six-row instances, for widths
+$8$ to $14$ and ten partitions per width, in Theorem~\ref{thm:sixrow}(a).
+The clauses agree between two independent generators.
+We split $6\times8$ by its first column into $64$ cases, and
+$7\times7$ and $7\times8$ into $128$ each. The second generator
+checks that these splits exhaust the first-column choices.
+Every one of the $394$ proofs passes both drat-trim's
+\texttt{lrat-check}~\cite{cruzfilipe2017,wetzler2014} and the Lean
+LRAT checker.
+
+The constructions in \nolinkurl{jis/data/table_counts/sat_7x8_16.json}
+give $f(7,8)\ge16$, completing $f(7,8)=16$.
+The separate enumeration
+\nolinkurl{jis/data/table_counts/sat2split_7x8_16.json} gives $18$
+valid constructions with $16$ points. This proves only $a_7(8)\ge18$.
 
 \begin{table}[!htb]
 \centering\scriptsize\setlength{\tabcolsep}{3pt}
@@ -154,17 +173,26 @@ files are in \nolinkurl{jis/data}, and \nolinkurl{verify_narrow.py} is in the pr
 \label{tab:evidence}
 \end{table}
 
-The Lean~4 files in \nolinkurl{../lean/KageyProblems/Problem001} of the repository
-prove Lemmas~\ref{lem:diff}, \ref{lem:threecorners}, and~\ref{lem:span},
-Corollary~\ref{cor:hitting}, Theorems~\ref{thm:strip}, \ref{thm:rowbound} (both orientations),
-and~\ref{thm:collar}, and that a valid blackout hides at most one rectangle. The kernel checks
-that $S_0$, $S_8$, the blackout of Theorem~\ref{thm:refute}, the $6\times15$ blackout of
-Theorem~\ref{thm:sixrow}, and the $5\times13$ and $6\times23$ test boards are valid, and that
-$\{(1,2),\allowbreak(2,1),\allowbreak(3,2),\allowbreak(2,3)\}$ hides $D(1,1)$ on the $4\times3$
-grid, so Theorem~\ref{thm:hidden} needs $m\ge4$. Hence Lean proves $f(5,m)=m+6$ for $m\ge8$,
-$f(6,m)=m+9$ for $m\ge15$, $f(5,5)\ge10$, and $f(6,8)\ge15$, from the three standard Lean axioms
-alone. The parts not formalized are Lemma~\ref{lem:leftmost}, Theorem~\ref{thm:equality},
-$f(5,5)\le10$, Lemma~\ref{lem:enc}, the rest of Sections~\ref{sec:strip}
-to~\ref{sec:height}, and Appendix~\ref{app:square}.
+The formal proofs are in \nolinkurl{../lean/KageyProblems/Problem001}.
+They cover Lemmas~\ref{lem:diff}, \ref{lem:threecorners}, and~\ref{lem:span},
+Corollary~\ref{cor:hitting}, the strip theorem, both orientations of
+the row bound, and the collar theorem. They also show that at most
+one rectangle can be hidden.
+
+Kernel-checked validity tests cover $S_0$, $S_8$, the construction
+in Theorem~\ref{thm:refute}, the $6\times15$ construction in
+Theorem~\ref{thm:sixrow}, and the $5\times13$ and $6\times23$ collar
+boards. The kernel also checks that
+$\{(1,2),\allowbreak(2,1),\allowbreak(3,2),\allowbreak(2,3)\}$ hides
+$D(1,1)$ on $4\times3$. Thus the restriction $m\ge4$ in
+Theorem~\ref{thm:hidden} is necessary.
+Together these prove $f(5,m)=m+6$ for $m\ge8$, $f(6,m)=m+9$ for
+$m\ge15$, $f(5,5)\ge10$, and $f(6,8)\ge15$ from only Lean's three
+standard axioms.
+
+The remaining unformalized parts are Lemma~\ref{lem:leftmost},
+Theorem~\ref{thm:equality}, $f(5,5)\le10$, Lemma~\ref{lem:enc}, the
+other results in Sections~\ref{sec:strip} to~\ref{sec:height}, and
+Appendix~\ref{app:square}.
 
 % TODO(author): A-number once approved (the square diagonal f(n,n) = 1, 4, 5, 7, 10, 12, 14).
