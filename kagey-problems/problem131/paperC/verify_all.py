@@ -8,8 +8,8 @@ N = 480, the telegraph comparison at N = 16000, and the cells at N = 160 of the
 first-order section. The planar cells are now in ../paperE.
 Needs numpy, scipy, sympy and mpmath.
 
-Since October 2026 this paper incorporates Paper B (../paperB). The checks of the statements that
-came from Paper B are the scripts of ../paperB, run by ../paperB/verify_all.py (or
+Since October 2026 this paper incorporates Paper B (../archive/paperB). The checks of the statements that
+came from Paper B are the scripts of ../archive/paperB, run by ../archive/paperB/verify_all.py (or
 `python -B verify_all.py --paper b` in the folder problem131). The sticky-prior checks in
 verify_sticky_fisher.py belong to the note ../S3_sticky_note, and its Fisher checks to the note
 ../S1_endpoint_information_note.

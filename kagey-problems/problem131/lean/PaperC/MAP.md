@@ -10,8 +10,8 @@ theorem listed here is proved without `sorry`, `admit` or new axioms, and `#prin
 only `propext`, `Classical.choice` and `Quot.sound` (see `build-log.txt` and
 `verification-manifest.json` in the parent folder).
 
-The numbers are those of the build of October 23, 2026 (`paperC/problem131_switching.pdf`, 69
-pages, and `paperC/supplement.pdf`, whose numbers start with S), and the key in parentheses is the
+The numbers are those of the build of October 23, 2026 (`paperC/problem131_switching.pdf`, 64
+pages, and the 14-page `paperC/supplement.pdf`, whose numbers start with S), and the key in parentheses is the
 `\label` in the source. The statements that came from Paper B keep their `\label` keys from Paper B,
 so `lean/PaperB/MAP.md`, which uses the numbers of Paper B, can be read alongside this file. A
 module name in the column Lean is from `PaperC` unless it is marked `PaperB.`. "In part" means that
@@ -137,7 +137,7 @@ statement of the library `PaperB` is for the uniform start (note 1 of `lean/Pape
 | Paper statement | Lean | Note label |
 | --- | --- | --- |
 | Lemma D.1 (`lem:vertex-elasticity`), `𝓑` is convex, `log 𝓑` is concave, `κ` is the sum of the elasticities of the factors and is nondecreasing | `PaperB.VertexH`, `PaperB.Elasticity`: `H_convexOn`, `H_coeff_nonneg`, `logH_concaveOn`, `logB_concaveOn`, `kapH_eq`, `kap_eq`, `kapH_monotoneOn`, `kap_monotoneOn` | B Lemma D.1 |
-| Lemma D.1, (D.1), `1/(\|a\|+1) ≤ y_a ≤ 1`, `κ(y) ≤ ℓ + √(ℓ\|a\|y)` and `κ(y) ≥ max{ℓ, ½√(\|a\|y)}` | `PaperB.VertexH`, `PaperB.Elasticity`: `H_root`, `H_small_lt`, `H_one_ge`, `Bpoly_le_exp`, `exp_half_lt_two`, `kapH_le`, `kap_le`, `kapH_ge`, `kapH_ge_half_sqrt`, `kap_ge_one`, `kap_ge_half_sqrt`, `kap_ge_sqrt_sub` | B Lemma D.1 |
+| Lemma D.1, (D.1), `1/(\|a\|+1) ≤ y_a ≤ 1`, `κ(y) ≤ ℓ + √(ℓ\|a\|y)` and `κ(y) ≥ max{ℓ, ½√(\|a\|y)}` (upper bound for `y > 0`, lower bound for `0 < y ≤ 1`) | `PaperB.VertexH`, `PaperB.Elasticity`: `H_root`, `H_small_lt`, `H_one_ge`, `Bpoly_le_exp`, `exp_half_lt_two`, `kapH_le`, `kap_le`, `kapH_ge`, `kapH_ge_half_sqrt`, `kap_ge_one`, `kap_ge_half_sqrt`, `kap_ge_sqrt_sub` | B Lemma D.1 |
 | Lemma D.1, Steps 1 and 3 of the proof | `PaperB.Elasticity`: `wt_shift`, `shift_sum`, `cov_JR`, `var_le`, `ode_moment`, `kap_sq_add`, `cs_moment` | B Lemma D.1 |
 | Lemma D.2 (`lem:vertex-randomization`), in part, the integral form of `S_(b,a)`, the mass `v(1+v)^(b-1)` of `e^(-t) B_b(vt)`, its first moment and exponential moments | `PaperB.Randomization`: `S_integral`, `L1_eq`, `Lt_eq`, `sum_choose_mul`, `Ls_eq`, `binom_inv_sum` | B Lemma D.2 |
 | Lemma D.2, (D.3) and (D.4) | `PaperB.Randomization`: `jensen_lower`, `tangent_upper` | B Lemma D.2 |
@@ -165,15 +165,17 @@ in this table are those of the note.
 ## Paper E, the planar persistent walk (not in the paper)
 
 This was Section 6 of Paper C until October 13, 2026, and it is now Paper E, where its statements
-are numbered 3.x. The numbers below are those of Paper C before the split.
+are numbered 3.x. The rows below use the current Paper E numbers. Only the exact or
+algebraic portions named here are formalized. The local limits and asymptotic crossing
+expansions, including Theorems 3.4, 3.5 and 3.9, are not formalized.
 
-| Statement (old number) | Lean | Note label |
+| Statement in Paper E | Lean | Note label |
 | --- | --- | --- |
-| Section 6, the walk and `c_N = p_0^{N-1}/4` | `planarA`, `planarQ`, `planarQ_eq`, `originMass`, `cornerMass`, `cornerMass_eq` | C3 Section 1.2 |
-| Section 6, the face exponents before Lemma 6.1 and the faces that can reach the origin | `planarI_EW`, `planarI_fiber`, `planarI_uniform`, `origin_faces` | C3 Cor 1.1 |
-| Theorem 6.3 (`thm:planar-first`), the first-order comparison of the exponents, `τ* = min(2/β, 1/s)` and the switch at `s = 2r` | `planar_first_order`, `planar_first_order_turns`, `planar_switch_rev`, `planar_switch_turn` | C3 Theorem 7 |
-| Proposition 6.2 (`prop:decomp`), `o_N/c_N = 2 S_N(u) + E_N` with `E_N ≥ 0`, and an origin path with a turn uses all 4 directions | `planar_origin_identity`, `mixed_nonneg`, `mixed_uses_all_four`, `SPoly_eq_pair_ratio` | C3 Prop 4, C5 Cor 15 |
-| Proposition 6.2, the unique crossing for `s > 0` | `planar_ratio_eq`, `originPoly_zero`, `originPoly_strictMono`, `originPoly_unique_root`, `planar_unique_crossing` | C3 Section 1.2 |
+| Section 3, the walk and `c_N = p_0^{N-1}/4` | `planarA`, `planarQ`, `planarQ_eq`, `originMass`, `cornerMass`, `cornerMass_eq` | C3 Section 1.2 |
+| Section 3, the face exponents before Lemma 3.1 and the faces that can reach the origin | `planarI_EW`, `planarI_fiber`, `planarI_uniform`, `origin_faces` | C3 Cor 1.1 |
+| Theorem 3.3 (`thm:planar-first`), the first-order comparison of the exponents, `τ* = min(2/β, 1/s)` and the switch at `s = 2r` | `planar_first_order`, `planar_first_order_turns`, `planar_switch_rev`, `planar_switch_turn` | C3 Theorem 7 |
+| Proposition 3.2 (`prop:decomp`), `o_N/c_N = 2 S_N(u) + E_N` with `E_N ≥ 0`, and an origin path with a turn uses all 4 directions | `planar_origin_identity`, `mixed_nonneg`, `mixed_uses_all_four`, `SPoly_eq_pair_ratio` | C3 Prop 4, C5 Cor 15 |
+| Proposition 3.2, the unique crossing for `s > 0` | `planar_ratio_eq`, `originPoly_zero`, `originPoly_strictMono`, `originPoly_unique_root`, `planar_unique_crossing` | C3 Section 1.2 |
 
 ## The information in the endpoint (not in the paper)
 
@@ -223,7 +225,7 @@ or expansions as `N → ∞`. In terms of the paper these are the following.
   `thm:crossing`, `thm:window`), Proposition 4.9 (`prop:forest`), Lemma 4.10 for `k ≠ 3`,
   Example 4.11, Remark 4.12, Remark 4.13, the expansion in Proposition 4.14(ii),
   Proposition 4.14(iii) and (iv), Proposition 4.15 (`prop:nextterm`, including the evaluation of
-  `c_F = -(k-1)/8` in Appendix B) and Proposition 4.16 (`prop:weakfield`).
+  `c_F = -(k-1)/8` in Section S4 of the supplement) and Proposition 4.16 (`prop:weakfield`).
 * Section 5. The asymptotic parts of Corollaries 5.2 and 5.3, Theorem 5.4(ii) and (iii), the display
   (5.2), Corollary 5.6 (`cor:simplex-modes`), Corollary 5.8, Remark 5.9, Corollary 5.10
   (`cor:start-modes`), Remark 5.11 beyond the comparison of two lines, the step from the lines to
@@ -236,7 +238,7 @@ or expansions as `N → ∞`. In terms of the paper these are the following.
   Remark 7.2 that a proper face of `C_d` that is not an arc is disconnected (by hand in the paper,
   so `cycle_cascade` is stated for the arcs and the whole cycle).
 * Appendices A and B, and Appendix C beyond the rows above. Section S2 of the supplement beyond the
-  rows of Proposition 4.14.
+  rows of Proposition 4.14, and Sections S3 and S4 (the higher-order Laplace and next-term proofs).
 * The note S3. Its Corollary 2.1, Proposition 2.4(b) apart from the logit identities, and the
   asymptotic parts of Corollary 2.5, Proposition 2.6 and Remark 2.7.
 

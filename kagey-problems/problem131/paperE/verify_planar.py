@@ -17,7 +17,7 @@ the past, so o_N is a 2-dimensional Fourier integral of a 4 x 4 matrix power.
 With K >= N + 1 points per circle the trapezoid rule is exact.
 For N <= 10 both are compared with a direct dynamic program and with all 4^N words.
 Paper A's crossing N(1 - p_N) is found from the run formula and from Paper A's
-recurrence (imported from verify_sticky_fisher.py).
+recurrence (imported from common/two_state.py).
 
 Run with python -B verify_planar.py, or add --full for N = 1280, ..., 10240
 (method A everywhere and method B up to N = 2560).
@@ -36,9 +36,9 @@ from scipy.stats import binom
 
 from pathlib import Path
 
-# Paper A's polynomial S_N and its root u_N come from a script of Paper C
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'paperC'))
-from verify_sticky_fisher import logS, uN_dp, uN_runs
+# Paper A's run polynomial and recurrence are shared across the papers.
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from common.two_state import logS, uN_dp, uN_runs
 
 FAILS = []
 STEPS = [(1, 0), (0, 1), (-1, 0), (0, -1)]
