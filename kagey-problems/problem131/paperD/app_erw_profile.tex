@@ -1,8 +1,8 @@
 \section{The families and the mode}\label{app:shape}
 
-This appendix proves the bound on the mode in Lemma~\ref{lem:B-mode}, which
-Corollary~\ref{cor:mode-location} uses. Online Resource~1 uses the same lemmas
-for the tail. We keep the conventions of
+This appendix states the family estimates used for the mode bound in
+Corollary~\ref{cor:mode-location}. Their proofs are in Online Resource~1,
+Section~\ref{or:families}, in the order stated here, and also support its tail theorem. We keep the conventions of
 Section~\ref{sec:shape}. All constants in this appendix are explicit. Online
 Resource~1 writes $C$ for an absolute constant whose value may change from line to
 line. Since $M$ is independent of $X_1$,
@@ -30,10 +30,6 @@ Let $0\le a\le b\le N$. If $m_h\le a$, then $(b-a+1)f_N(b)\le\Prob(a\le M_N\le
 b)$. If $b\le m_h$, then $(b-a+1)f_N(a)\le\Prob(a\le M_N\le b)$.
 \end{lemma}
 
-\begin{proof}
-By Lemma~\ref{lem:unimodal}, $f_N(\ell)\ge f_N(b)$ for $a\le\ell\le b$ in the
-first case, and $f_N(\ell)\ge f_N(a)$ in the second. Sum over $\ell$.
-\end{proof}
 
 \begin{lemma}[tail]\label{lem:B-tail}
 Let $0<\varepsilon<1$, $k_0\ge1$ and $t\ge k_0$. For every integer $z\ge1$,
@@ -45,28 +41,6 @@ In particular $\Prob(M_N\ge z)\le xH_z/z$, and $\Prob(Z^{(j)}_s\ge z)\le
 xH_z/z$ for $j-1\le s\le N$.
 \end{lemma}
 
-\begin{proof}
-We use the tree of Lemma~\ref{lem:tree} on $[t]$, with marks only on $v>k_0$.
-Every odd vertex lies in the family of a marked vertex, so
-$M^{[k_0]}_t\le\sum_{v\text{ marked}}\lvert\mathcal T_v\rvert$. We call a
-family large if its size is at least $z$, and small otherwise. If
-$M^{[k_0]}_t\ge z$, then some marked family is large, or the small marked
-families have total size at least $z$. We use the union bound for the first
-event and Markov's inequality for the second. Marks and tree are
-independent, so
-\[
- \Prob\bigl(M^{[k_0]}_t\ge z\bigr)\le\varepsilon\sum_v\Prob(\lvert\mathcal T_v\rvert\ge z)
- +\frac\varepsilon z\sum_v\E\bigl[\lvert\mathcal T_v\rvert;\lvert\mathcal T_v\rvert<z\bigr].
-\]
-By the first sum in Lemma~\ref{lem:urn}, with $t$ in place of $N$, on
-average $\frac t{d(d+1)}$ vertices have a family of size $d$. So the first
-sum over $v$ is $\sum_{d\ge z}\frac t{d(d+1)}\le\frac tz$, and the second is
-$\sum_{d=1}^{z-1}\frac t{d+1}=t(H_z-1)$. Together they give
-$\frac{\varepsilon tH_z}z$. For the mean, only the vertices $v>k_0$ can be
-marked and $\E\lvert\mathcal T_v\rvert=t/v$, so $\E
-M^{[k_0]}_t\le\varepsilon\sum_{v=k_0+1}^t\frac tv\le\varepsilon t\log\frac
-t{k_0}$.
-\end{proof}
 
 \begin{lemma}[the first flipped family]\label{lem:B-D}
 For $1\le d\le N-1$,
@@ -76,12 +50,6 @@ For $1\le d\le N-1$,
 \]
 \end{lemma}
 
-\begin{proof}
-By Lemma~\ref{lem:firstmark},
-$\Prob(\lvert\mathcal T_V\rvert=d)=\sum_j\varepsilon(1-\varepsilon)^{j-2}\beta_j(d)$, and
-$1-(j-2)\varepsilon\le(1-\varepsilon)^{j-2}\le1$. Apply the two sums of
-Lemma~\ref{lem:urn}, and sum the upper bound over $d'\ge d$.
-\end{proof}
 
 \begin{proposition}[local lower bound]\label{thm:B-local-lower}
 Let $N\ge64$, $0<\varepsilon<1$ and $2\le m\le N/4$. Then
@@ -108,126 +76,9 @@ $e_1$ collects the chance that $Y$ or $Z$ is large, the small
 slope of $\beta_j$, and the first flips that come too late to be treated
 this way.
 
-\begin{proof}
-We bound the inner sum of Lemma~\ref{lem:firstmark} from below for each
-early first flip, namely for $2\le j\le J:=\lfloor N/8\rfloor$. The terms
-with $j>J$ are nonnegative and we drop them.
-
-\emph{Step 1. One value of $j$.} Fix $2\le j\le J$ and put
-$\Gamma_d=d-Y_d+Z^{(j)}_{N-d}$ for $1\le d\le N-j+1$. The inner sum in
-Lemma~\ref{lem:firstmark} is $Q_j(m)=\E S_j$ with
-$S_j=\sum_d\beta_j(d)\mathbf 1\{\Gamma_d=m\}$. Let $\mathcal E$ be the event
-$\{Z^{(j)}_{N-1}\le m-1,\ Y_{2m}\le m\}$. We claim that
-\[
- S_j\ge\beta_j(m)\Bigl(\mathbf 1_{\mathcal E}-\frac{2(j-2)}N\,Y_{2m}\Bigr).
-\]
-Off $\mathcal E$ the right side is at most $0$ and $S_j\ge0$. So let
-$\mathcal E$ hold. As $d$ grows by one, $Y_d$ grows by $0$ or $1$ and
-$Z^{(j)}_{N-d}$ falls by $0$ or $1$. So every step of $\Gamma$ lies in
-$\{-1,0,1\}$, and $\Gamma$ cannot jump over $m$. It starts at
-$\Gamma_1=1+Z^{(j)}_{N-1}\le m$ (note that $Y_1=0$). At
-$d^\circ=m+Y_{2m}\le2m$ we have
-$\Gamma_{d^\circ}\ge d^\circ-Y_{d^\circ}\ge d^\circ-Y_{2m}=m$, since
-$Z^{(j)}\ge0$ and $Y$ is nondecreasing. (The index $d^\circ$ is allowed,
-because $2m+j\le N$.) So $\Gamma_d=m$ for some $d\le d^\circ$, and as
-$\beta_j$ is nonincreasing, $S_j\ge\beta_j(d^\circ)=\beta_j(m+Y_{2m})$. It
-remains to compare $\beta_j(m+y)$ with $\beta_j(m)$ for $0\le y\le m$. By
-\eqref{eq:B-ratio},
-\[
- \frac{\beta_j(m+y)}{\beta_j(m)}=\prod_{i=1}^y\Bigl(1-\frac{j-2}{N-m-i}\Bigr)
- \ge1-\frac{2y(j-2)}N .
-\]
-Here $N-m-i\ge N/2$, so each fraction is at most
-$\frac{2(j-2)}N\le\frac14$, and a product of factors $1-q_i$ with
-$0\le q_i\le1$ is at least $1-\sum_iq_i$. This proves the claim. Now
-$\mathbf 1_{\mathcal E}\ge1-\mathbf 1\{Y_{2m}>m\}-\mathbf 1\{Z^{(j)}_{N-1}\ge m\}$.
-Taking means in the claim gives
-\[
- Q_j(m)\ge\beta_j(m)\bigl[1-\Prob(Y_{2m}>m)-\Prob(Z^{(j)}_{N-1}\ge m)\bigr]
- -\frac{2(j-2)}N\,\E Y_{2m}\,\beta_j(m).
-\]
-
-\emph{Step 2. The chance that $Y$ or $Z$ is large.} Lemma~\ref{lem:B-tail}
-gives
-\[
- \Prob(Y_{2m}>m)\le2\varepsilon H_{m+1},\qquad
- \Prob(Z^{(j)}_{N-1}\ge m)\le\frac{xH_m}m,\qquad
- \E Y_{2m}\le2\varepsilon m\log N .
-\]
-None of these bounds depends on $j$. Put $p=2\varepsilon H_{m+1}+xH_m/m$.
-If $p>1$, then $e_1'(m)>1$ and there is nothing to prove. So let
-$p\le1$.
-
-\emph{Step 3. Sum over $j$.} By Lemma~\ref{lem:firstmark},
-$f_N(m)\ge\sum_{j=2}^J\Prob(V=j)\,Q_j(m)$. With Steps 1 and 2 this gives
-\[
- f_N(m)\ge(1-p)\sum_{j=2}^J\Prob(V=j)\,\beta_j(m)
- -\frac{4\varepsilon m\log N}N\sum_{j=2}^J\Prob(V=j)\,(j-2)\,\beta_j(m).
-\]
-In the second sum we use $\Prob(V=j)\le\varepsilon$ and the second sum in
-Lemma~\ref{lem:urn}. So the second term is at most
-\[
- \frac{4\varepsilon m\log N}N\cdot\frac{2x(N-m-1)}{m(m+1)(m+2)}
- \le\frac{x}{m(m+1)}\,8\varepsilon\log N .
-\]
-The first sum is $\Prob(\lvert\mathcal T_V\rvert=m)$ without the terms $j>J$. So by
-Lemma~\ref{lem:B-D} it is at least
-$\frac{x}{m(m+1)}(1-\frac{2x}{m+2})-\varepsilon\sum_{j>J}\beta_j(m)$.
-
-\emph{Step 4. The late first flips $j>J$.} A family that starts after time
-$N/8$ rarely reaches size $m$. By \eqref{eq:B-subtail},
-$\beta_j(m)\le\frac{j-1}{N-m}r^{j-1}$ with $r=e^{-a}$ and
-$a=\frac{m-1}{N-1}\le\frac14$. We sum this over $j-1\ge J$. With
-$\sum_{i\ge J}ir^i\le r^J\bigl(\frac J{1-r}+\frac1{(1-r)^2}\bigr)$, $1-e^{-a}\ge a/2$ and
-$N-m\ge\frac34N$ we get
-$\varepsilon\sum_{j>J}\beta_j(m)\le\frac{4\varepsilon}{3N}\bigl(\frac{2J}a+\frac4{a^2}\bigr)e^{-aJ}$.
-Since $\lfloor N/8\rfloor\ge\frac{N-1}9$ for $N\ge64$, we have $aJ\ge\frac{m-1}9$. Also
-$J\le N/8$ and $a\ge\frac{m-1}N$. So
-\[
- \varepsilon\sum_{j>J}\beta_j(m)\le x\Bigl(\frac1{3(m-1)}+\frac{16}{3(m-1)^2}\Bigr)e^{-(m-1)/9}
- \le\frac{x}{m(m+1)}\,20me^{-m/9}.
-\]
-The last step uses $m+1\le3(m-1)$ and $m+1\le3(m-1)^2$, which hold for $m\ge2$, and
-$e^{1/9}\le\frac98$, since $17\cdot\frac98\le20$.
-
-\emph{Step 5. Collect.} For $0\le p\le1$ and $q\ge0$ we have
-$(1-p)(1-q)\ge1-p-q$. So Steps 3 and 4 give
-\[
- f_N(m)\ge\frac{x}{m(m+1)}\Bigl(1-p-\frac{2x}{m+2}-20me^{-m/9}-8\varepsilon\log N\Bigr),
-\]
-which is the bound with $e_1'(m)$. For $e_1'\le e_1$ we use $\log(m+1)\ge\log3>1$ and
-$\log N\ge\log64>4$. So $H_m\le1+\log m\le2\log(m+1)$, $H_{m+1}\le1+\log N\le\frac54\log N$ and
-$\frac{2x}{m+2}\le\frac{2x\log(m+1)}m$. Hence
-$e_1'(m)\le\frac{4x\log(m+1)}m+\frac{21}2\varepsilon\log N+20me^{-m/9}\le e_1(m)$.
-\end{proof}
 
 \begin{lemma}[mode bound]\label{lem:B-mode}
 Let $N\ge64$ and $x\ge1$, and put $\bar c=\frac1{40}$ and $A_0=15400$. If $\varepsilon\log
 N\le\bar c$ and $804x\log(x+2)\le N$, then $m_h\le A_0x\log^2(x+1)$. In particular this holds if
 $\varepsilon\log N\le\bar c$ and $A_0x\log(x+2)\le N/4$.
 \end{lemma}
-
-\begin{proof}
-We pick a point $\ell$ of order $x\log x$ at which $f_N(\ell)$ is at least
-half of $\frac x{\ell(\ell+1)}$. Up to its mode $f_N$ is nondecreasing. So
-if the mode were far to the right of $\ell$, the bins from $\ell$ to the
-mode would carry more mass than the tail $\Prob(M_N\ge\ell)$ has.
-
-Put $L_2=\log(x+2)\ge\log3>1$ and $\ell=\lceil200xL_2\rceil$, so that $200\le\ell\le201xL_2$
-and $4\ell\le804xL_2\le N$. Since $\log N\ge4$, we have $\varepsilon\le\frac1{160}$. We bound
-the five terms of $e_1'(\ell)$ in Proposition~\ref{thm:B-local-lower}. As $(1+\log s)/s$
-decreases for $s\ge1$, and $\log200\le6$, $\log x\le L_2$ and $\log L_2\le L_2$, we get
-$\frac{xH_\ell}\ell\le\frac{x(1+\log(200xL_2))}{200xL_2}\le\frac{7+2L_2}{200L_2}\le\frac9{200}$.
-Next $\frac{2x}{\ell+2}\le\frac1{100}$,
-$2\varepsilon H_{\ell+1}\le2\varepsilon(1+\log N)\le\frac1{80}+\frac1{20}$ and
-$8\varepsilon\log N\le\frac15$. Finally $se^{-s/9}$ decreases for $s\ge9$, so
-$20\ell e^{-\ell/9}\le4000e^{-200/9}<10^{-5}$. The five terms add up to less than $\frac12$, so
-$f_N(\ell)\ge\frac x{2\ell(\ell+1)}$. If $m_h\ge\ell$,
-Lemmas~\ref{lem:B-sandwich} (with $a=\ell$, $b=m_h$) and~\ref{lem:B-tail} give
-$(m_h-\ell+1)f_N(\ell)\le\Prob(M_N\ge\ell)\le xH_\ell/\ell$. So
-$m_h\le(\ell+1)(1+2H_\ell)$ in every case. Here $\ell+1\le202xL_2$, because $xL_2\ge1$. Also
-$H_\ell\le1+\log(201xL_2)\le7+2L_2\le9L_2$, so $1+2H_\ell\le19L_2$. Hence
-$m_h\le3838\,xL_2^2$. Since $(x+1)^2\ge x+2$, we have $L_2\le2\log(x+1)$, and so
-$m_h\le15352\,x\log^2(x+1)\le A_0x\log^2(x+1)$. The last claim holds because
-$804x\log(x+2)\le4A_0x\log(x+2)$.
-\end{proof}

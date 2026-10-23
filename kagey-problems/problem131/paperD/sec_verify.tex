@@ -1,75 +1,50 @@
 \section{Verification}\label{sec:verify}
 
-{\sloppy
-The Python computations use two independent methods for the main checks
-(for example, forward and backward recursions for the elephant center
-agree to about $10^{-14}$ at $N=12800$). Apart from short exact computations
-that can be checked by hand, such as the ratios $C_N/E_N$ for $N=2$, $4$, $6$
-and $8$ in Proposition~\ref{prop:dip-hyp}, the proofs use computation in three
-places. First, some constants are values of
-explicit sums and integrals, such as the 60-term sum in the proof of
-Theorem~\ref{thm:erw-bounds}(b), which we enclosed in ball arithmetic. It lies
-in $[102.586396,102.586398]$, so the series is below the bound $102.59$ used
-in the proof even with the tail added. Any finite bound suffices for the
-asymptotic statements. The value $5200$ matters for the thresholds $1688$ and
-$1689$ in Proposition~\ref{prop:dip-hyp} and in Proposition~S3.1(b) of Online Resource~1, and for
-the second-order bound there. Second,
-Lemma~\ref{lem:landau-mode} rests on enclosures of $f_L'$ at four points and
-of $f_L''$ on an interval, computed in ball arithmetic with
-rigorous error bounds. These two computations are in
-\texttt{certify\_elephant.py}. Lean repeats the second one with enclosures of its own, as
-we describe below. Third, for every $10\le N\le2000$ the script
-\texttt{certify\_convex.py} encloses the crossing $\varepsilon_N$ in ball
-arithmetic and then encloses the whole law $P_N$ at the crossing.
-Proposition~\ref{prop:convex-certified} rests on this computation (with its output in
-\nolinkurl{data/certify_convex_output_2026-10-17.txt}). The script
-\texttt{certify\_center.py} repeats it for every even $N$ in the range and
-proves Proposition~\ref{prop:center-small}, and Proposition~\ref{prop:dip-hyp} for
-$10\le N<1688$ (with its
-output in \nolinkurl{data/certify_center_output_2026-10-17.txt}). For $5\le N\le9$,
-Propositions~\ref{prop:convex-certified} and~\ref{prop:center-small} rest instead on the
-checks in Lean described below. With the option
-\texttt{-{}-witness} the two scripts also write a record for each $N$, with the
-rational ends of the enclosure of $\varepsilon_N$, the indices that can be a
-mode and the certified margins, under a header with the SHA-256 hashes of the
-scripts and the versions of Python and python-flint. The records of these runs
-are in \nolinkurl{data/witnesses_convex_2026-10-17.jsonl} and
-\nolinkurl{data/witnesses_center_2026-10-17.jsonl}. Each of the three
-\texttt{certify} scripts exits with nonzero status if any required
-certification fails, and the two scripts that take a range of $N$ also refuse
-an empty range.
-Earlier outputs remain in \nolinkurl{data}, with their old statement
-numbers listed in \nolinkurl{paperD/README.md}. The tables, figures and
-numbers outside the proofs are numerical illustrations. So is the evidence
-for Conjecture~\ref{conj:convex} beyond the ranges proved in
-Section~\ref{sec:convex}. The script \texttt{verify\_elephant\_odd.py} also
-checks Proposition~\ref{prop:odd}(a) in exact rational arithmetic for six
-values of $N$ and computes the Landau-density values of
-Remark~\ref{rem:convex-open} in floating point.
+The proofs use three certified computations, apart from short exact
+ratios such as those in Proposition~\ref{prop:dip-hyp}.
+First, \texttt{certify\_elephant.py} encloses the 60-term sum in
+Theorem~\ref{thm:erw-bounds}(b) in $[102.586396,102.586398]$.
+With the analytic tail, it is below $102.59$, giving the constant $5200$.
+Any finite bound suffices asymptotically, but this value determines
+the explicit thresholds in Proposition~\ref{prop:dip-hyp} and the
+second-order results. Second, the same script certifies the
+Landau derivative and curvature enclosures of
+Lemma~\ref{lem:landau-mode}. Lean checks these independently.
+
+Third, \texttt{certify\_convex.py} brackets each crossing for
+$10\le N\le2000$ and encloses the law throughout that bracket,
+checking every possible mode and the required second differences
+(Proposition~\ref{prop:convex-certified}).
+The separate \texttt{certify\_center.py} proves
+Proposition~\ref{prop:center-small} and the finite part of
+Proposition~\ref{prop:dip-hyp}. For $5\le N\le9$, the stated
+convexity and center checks are kernel-checked in Lean.
+The outputs and rational witnesses are in
+\nolinkurl{data/certify_convex_output_2026-10-17.txt},
+\nolinkurl{data/certify_center_output_2026-10-17.txt},
+\nolinkurl{data/witnesses_convex_2026-10-17.jsonl}, and
+\nolinkurl{data/witnesses_center_2026-10-17.jsonl}.
+The witnesses record script hashes and software versions.
+Each certification script fails if a required check fails, and
+range-based scripts also reject empty ranges.
 
 The Lean~4.33.1 library in
 \nolinkurl{kagey-problems/problem131/lean/PaperD} proves the finite
-identities, crossing bounds, sign arguments and certificate checks, together
-with the bulk and eventual-shape results under named classical hypotheses.
-These are Fourier inversion, the characteristic function of a compound
-Poisson law, the Efron--Stein inequality, Scheff\'e's lemma, unimodality of
-class-$L$ laws and Hoeffding's hypergeometric bound. Their sources and the
-status of each statement are listed in \nolinkurl{MAP.md}, together with
-the detailed coverage tables in \nolinkurl{coverage_tables.tex}. Some Lean
-statements have a different form or a wider range than the printed ones,
-as the map specifies. The certificate checkers enclose the actual law and
-crossing in exact integer arithmetic with outward rounding. Generated
-intermediate rows are checked by the kernel, not trusted as output of the
-generating script, and no proof uses \texttt{native\_decide}. The recorded
-build checks the library with Mathlib at revision \texttt{0df444a360ea}
-and reports only \texttt{propext}, \texttt{Classical.choice} and
-\texttt{Quot.sound}. This does not formalize the six classical inputs,
-the illustrative numerics or Conjecture~\ref{conj:convex}.
+identities, crossing bounds, sign arguments and certificate checks.
+The bulk and eventual-shape proofs use six named classical inputs,
+namely Fourier inversion, the compound Poisson characteristic function,
+Efron--Stein, Scheff\'e, unimodality of class-$L$ laws, and Hoeffding's
+hypergeometric bound. Their sources and precise formal status are in
+\nolinkurl{MAP.md} and \nolinkurl{coverage_tables.tex}.
+The library uses Mathlib revision \texttt{0df444a360ea}; the recorded
+kernel build reports only \texttt{propext}, \texttt{Classical.choice}
+and \texttt{Quot.sound}. Generated certificate rows are checked with
+exact outward-rounded integer arithmetic, without \texttt{native\_decide}.
+This does not formalize the six classical inputs or
+Conjecture~\ref{conj:convex}.
 
-The separate Python checks used Python~3.14.3, python-flint~0.9.0
+The separate Python runs used Python~3.14.3, python-flint~0.9.0
 (FLINT~3.6.0, including Arb), mpmath~1.3.0, numpy~2.4.2 and scipy~1.17.1.
-
-The scripts and the Lean files are in the repository named under ``Code
-availability'' in the Statements and Declarations, which also says how to rerun the
-checks.
-\par}
+The figures, tables and other numerical illustrations are not proof
+inputs. Further checks and rerun commands are documented in the
+repository named under Code availability.
