@@ -58,6 +58,36 @@ D(i+1,1)=D(i,2)\,\triangle\,\kA_i,\qquad D(i+1,2)=D(i,1)\,\triangle\,\kE_i,
 and each solves for any of its three rectangles. The first line covers $\kA_i$, $\kB_i$, $\kC_i$, and $\kE_i$, and the second, with $i=j-1$ or $i=j$, covers $D(j,1)$ and $D(j,2)$, since $j\ge2$ or $j\le m-3$ as $m\ge4$.
 \end{proof}
 
+\begin{theorem}[forbidden-block bound]\label{thm:foursurvival}
+For every $m\ge6$ we have $a_4(m)\le3\,(m)_4\,4^{m-4}(53/64)^k$, where
+$k=\max(0,\lfloor m/4\rfloor-4)$. So $a_4(m)=O\bigl(m^4\,212^{m/4}\bigr)$.
+\end{theorem}
+
+\begin{proof}
+Optima are candidates, with $3\,(m)_4$ choices of $F$, the double columns, and their
+pairs. A \emph{block} is a run of four singleton columns, whose word lists
+their black rows. For a block from column $x$, the \emph{template words} $2413$,
+$3412$, $2143$, and $3142$ are the corner rows of $\kC_x$, $\kA_x$, $\kE_x$, and $\kB_x$. Let
+$T$ be one, with word $t_1t_2t_3t_4$.
+
+A \emph{swap word} swaps two letters $t_p$ and $t_q$. No block carries one, since $T$ and
+the axis-aligned rectangle on $(x+p-1,t_p)$ and $(x+q-1,t_q)$ would both show exactly these
+two points. Template words are the permutations with both end letters in $\{2,3\}$.
+Swapping two end or two middle letters gives one again, and swapping an end
+and a middle letter gives the sixteen with one end letter in $\{2,3\}$, so the $20$ swap words are these and the four template words.
+
+An \emph{edit word} replaces a letter $t_p=r$ by $s$ with $\{r,s\}\in F$. No block carries
+one, since $T$ and the rectangle on rows $r,s$ and columns $x+p-1$ and $d$, the double column
+of $\{r,s\}$, would both show only $(x+p-1,r)$. Each template word has $8$ edit words.
+Two template words share one only if they differ in two positions holding $r,s$ in opposite
+orders, and then share two if $\{r,s\}\in F$, which happens for two pairs with
+$\{r,s\}=\{2,3\}$ and two with $\{1,4\}$. So there are at least $32-8=24$ edit words. They repeat a letter, so none is a swap word, and at most
+$256-20-24=212=4^4\cdot53/64$ words are allowed in a block.
+
+At most four of the $\lfloor m/4\rfloor$ column groups $4j-3,\ldots,4j$ contain a double
+column, so at least $k$ are blocks. Other columns have at most $4$ values.
+\end{proof}
+
 \begin{lemma}[six columns of memory]\label{lem:fourmemory}
 For $m\ge6$ and a pair set $F$, a word over the four singleton letters and the pairs of $F$, each pair used once, is the word of an optimum exactly when (i) no tilted rectangle is hidden, (ii) none shares its presentation with an axis-aligned rectangle whose columns are among its own and the double columns, and (iii) no two tilted rectangles within seven consecutive columns share a presentation.
 \end{lemma}
