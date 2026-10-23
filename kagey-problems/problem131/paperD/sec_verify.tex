@@ -38,143 +38,36 @@ are in \nolinkurl{data/witnesses_convex_2026-10-17.jsonl} and
 \texttt{certify} scripts exits with nonzero status if any required
 certification fails, and the two scripts that take a range of $N$ also refuse
 an empty range.
-% AUTHOR REWRITE: earlier runs and what rests on computation alone
-The folder \nolinkurl{data} also keeps the outputs of earlier runs, and the file
-\nolinkurl{paperD/README.md} lists the statement numbers that they use. The tables, the
-figures, the numbers quoted outside the proofs and the evidence for
-Conjecture~\ref{conj:convex} beyond what Section~\ref{sec:convex} proves rest on computation
-alone.
-The script \texttt{verify\_elephant\_odd.py} checks the identity
-of Proposition~\ref{prop:odd}(a) in exact rational arithmetic for six values of $N$, and it
-computes the numbers of Remark~\ref{rem:convex-open} for the Landau density in floating point.
+Earlier outputs remain in \nolinkurl{data}, with their old statement
+numbers listed in \nolinkurl{paperD/README.md}. The tables, figures and
+numbers outside the proofs are numerical illustrations. So is the evidence
+for Conjecture~\ref{conj:convex} beyond the ranges proved in
+Section~\ref{sec:convex}. The script \texttt{verify\_elephant\_odd.py} also
+checks Proposition~\ref{prop:odd}(a) in exact rational arithmetic for six
+values of $N$ and computes the Landau-density values of
+Remark~\ref{rem:convex-open} in floating point.
 
-% AUTHOR REWRITE: Lean coverage (lead-in, the two tables, the certificate checker, what is not formalized)
-Most statements of the paper and of Online Resource~1 are also proved in Lean~4.33.1 with
-Mathlib at commit \texttt{0df444a360ea}, in the folder
-\nolinkurl{kagey-problems/problem131/lean/PaperD} (the file \nolinkurl{MAP.md} there gives the
-Lean names and the status of each statement and the source of each classical input, and the file
-\nolinkurl{lake-manifest.json} of the Lean project gives the full revision of Mathlib). The kernel checks every proof, and a
-recorded build of October~18, 2026, whose source hashes match the present files, checks every
-theorem and lemma of the library (which also holds the Lean files of a separate paper) and
-reports only the axioms \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}.
+The Lean~4.33.1 library in
+\nolinkurl{kagey-problems/problem131/lean/PaperD} proves the finite
+identities, crossing bounds, sign arguments and certificate checks, together
+with the bulk and eventual-shape results under named classical hypotheses.
+These are Fourier inversion, the characteristic function of a compound
+Poisson law, the Efron--Stein inequality, Scheff\'e's lemma, unimodality of
+class-$L$ laws and Hoeffding's hypergeometric bound. Their sources and the
+status of each statement are listed in \nolinkurl{MAP.md}, together with
+the detailed coverage tables in \nolinkurl{coverage_tables.tex}. Some Lean
+statements have a different form or a wider range than the printed ones,
+as the map specifies. The certificate checkers enclose the actual law and
+crossing in exact integer arithmetic with outward rounding. Generated
+intermediate rows are checked by the kernel, not trusted as output of the
+generating script, and no proof uses \texttt{native\_decide}. The recorded
+build checks the library with Mathlib at revision \texttt{0df444a360ea}
+and reports only \texttt{propext}, \texttt{Classical.choice} and
+\texttt{Quot.sound}. This does not formalize the six classical inputs,
+the illustrative numerics or Conjecture~\ref{conj:convex}.
 
-\begin{table}[htbp]
-\centering\footnotesize
-\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{0.9}
-\caption{The statements proved in Lean, with the abbreviations of
-Table~\ref{tab:lean-inputs}.}\label{tab:lean}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.28\linewidth}>{\raggedright\arraybackslash}p{0.2\linewidth}>{\raggedright\arraybackslash}p{\dimexpr0.52\linewidth-4\tabcolsep\relax}@{}}
-\toprule
-Results & Status in Lean & Notes\\
-\midrule
-\multicolumn{3}{@{}l}{\emph{Section~\ref{sec:erw}}}\\
-Lemmas~\ref{lem:erw-reduction} and~\ref{lem:urn}, Propositions~\ref{prop:mlr}
-and~\ref{prop:first-mutation}, Theorem~\ref{thm:main-center} & proved & \\
-Theorem~\ref{thm:erw-bounds} & proved & By the argument of Appendix~\ref{app:erw}, with (b) for every even
-$N\ge2$ and the 60-term sum bounded by exact partial sums. The last display for $N\ge64$ (for
-smaller $N$ it follows from (a) and (b) by taking logarithms)\\
-Theorem~\ref{thm:erw-crossing} & proved & With the explicit bound for $L\ge30$ in the proof\\
-\midrule
-\multicolumn{3}{@{}l}{\emph{Section~\ref{sec:shape}, finite shape and certificates}}\\
-Lemmas~\ref{lem:tree}, \ref{lem:split} and~\ref{lem:firstmark} & proved & For the random
-recursive tree with its marks, with the relabeling in Lemma~\ref{lem:split}\\
-Lemmas~\ref{lem:unimodal}, \ref{lem:D-rec}, \ref{lem:interleave}, \ref{lem:level-one}
-and~\ref{lem:center-convex}, Theorems~\ref{thm:dip}, \ref{thm:five-blocks}
-and~\ref{thm:no-holes}, Corollaries~\ref{cor:dip} and~\ref{cor:one-point},
-Theorem~\ref{thm:main-shape}(a), (b) and~(d) & proved & \\
-Propositions~\ref{prop:dip-hyp}, \ref{prop:convex-certified} and~\ref{prop:center-small} &
-proved & By certificates, for every $N$ in the range (see below)\\
-Proposition~\ref{prop:odd}, and Proposition~S3.1(a), (b) & proved & With the explicit bound
-in~S3.1(a). The last claim of S3.1(a) from LFI, CP, ES, UNI, as for
-Corollary~\ref{cor:mode-location}(b)\\
-\midrule
-\multicolumn{3}{@{}l}{\emph{Section~\ref{sec:shape}, bulk and mode}}\\
-Theorem~\ref{thm:cp} & proved from LFI, CP, ES & With the error $\delta_\Sigma$, and also for
-$\varepsilon=0$ and $\varepsilon=1$\\
-Theorem~\ref{thm:landau} & local bounds from LFI, CP, ES, the limit in law also from SCH & With
-the constants $889$, $165$ and $6.6$, and with $f_L$ a probability density of a law of
-class~$L$\\
-Lemma~\ref{lem:landau-mode} & proved from UNI & Equation~\eqref{eq:landau-real} by a rotation of the
-contour, and the integrals by an integration that the kernel checks, so Arb is not an input.
-Also $f_L(\lambda_{\mathrm L})\ge0.1806$, which we do not use\\
-Corollary~\ref{cor:mode-location} & (b) from LFI, CP, ES, UNI, and (a) in a different form & The
-form of~(a) does the same job in the proofs\\
-Theorem~\ref{thm:convex-large}, Corollary~\ref{cor:unique-min},
-Proposition~S3.1(c) & proved from LFI, CP, ES, UNI & For odd $N$
-Lean proves the conclusion of Corollary~\ref{cor:unique-min} only on
-$\{2m^*,\dots,N-2m^*\}$\\
-Theorems~\ref{thm:main-bulk} and~\ref{thm:main-shape}(c) & proved from LFI, CP, ES, UNI, and
-SCH for the limit in law & \\
-\midrule
-\multicolumn{3}{@{}l}{\emph{Appendices}}\\
-Lemmas~\ref{lem:A-polya}, \ref{lem:A-compare} and~\ref{lem:A-cderiv} & proved for the states
-that the argument uses & With Lemma~\ref{lem:A-polya}(a) read as a probability for every
-$c\ge0$\\
-Proposition~\ref{prop:A-super} & proved as stated & Parts (c) and (d) for
-$0<\varepsilon<\frac14$ and every even $N\ge2$, with the bound $U_N$\\
-Appendices~\ref{app:shape} and~\ref{app:signs} & proved & With the constants $20$, $\bar
-c=1/40$ and $A_0=15400$, and Lemma~\ref{lem:B-tail} and Proposition~\ref{thm:B-local-lower}
-also for $0\le\varepsilon\le1$\\
-\midrule
-\multicolumn{3}{@{}l}{\emph{Online Resource~1}}\\
-Proposition~S1.4, Lemmas~S1.5 and~S1.6(a), (b) & proved & Proposition~S1.4 for every real
-$\varepsilon$, and Lemma~S1.6 under conditions weaker than $N\ge16$\\
-Propositions~S1.1 and~S1.2, Lemma~S1.6(c), (d) & proved from HOEF & With the threshold
-$\log N\ge3500$ of Proposition~S1.2\\
-Theorem~S1.7 & proved, with the Lean files of~\cite{paperA} & Those files
-prove its one input~\cite[Prop.~3.8]{paperA}, and a small library joins the two proofs\\
-Section~S2 & proved & With the constants of Propositions~S2.3 and~S2.4. Theorem~S2.1 needs
-$\varepsilon>0$ and $x\ge1$ only for large $N$\\
-Section~S3 & proved & Part~(c) of Proposition~S3.1 as in the row above\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{table}[htbp]
-\centering\small
-\caption{The classical results that Lean states as hypotheses.}\label{tab:lean-inputs}
-\begin{tabular}{@{}lll@{}}
-\toprule
-Abbr. & Result & Source\\
-\midrule
-LFI & Fourier inversion for an absolutely summable sequence on $\Z$ &
-\cite[Chapter~I]{katznelson2004}\\
-CP & characteristic function of $\sum_dd\,\mathcal N_d$, the $\mathcal N_d$ independent Poisson &
-\cite[Section~3.3]{durrett2019}\\
-ES & inequality of Efron and Stein for independent coordinates &
-\cite{efronstein1981,steele1986}\\
-SCH & lemma of Scheff\'e & \cite{scheffe1947}\\
-UNI & unimodality of the laws of class~$L$, used for $f_L$ & \cite{yamazato1978}\\
-HOEF & inequality of Hoeffding for the hypergeometric law & \cite[Section~6]{hoeffding1963}\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Table~\ref{tab:lean} lists the results that Lean proves. Some of them rest on the six classical
-results of Table~\ref{tab:lean-inputs}, which Lean states as named hypotheses, and nothing else is
-assumed. Where the notes give a wider range than the paper, we keep $0<\varepsilon<1$ because it
-defines the model, and $N\ge16$ in Lemma~S1.6 because Proposition~S1.1 uses the lemma only for
-$N\ge64$.
-
-For Proposition~\ref{prop:dip-hyp} Lean checks $C_N<E_N$ at $\varepsilon=2/(N+2)$ by an exact
-integer recursion for $8\le N\le200$, and it uses Theorem~\ref{thm:erw-bounds}(b) for
-$N\ge1688$. For $200<N<1688$, and for Propositions~\ref{prop:convex-certified}
-and~\ref{prop:center-small} over their whole range, Lean uses checkers whose soundness it
-proves. They enclose the law $P_N$ in integer arithmetic with outward rounding, for every
-$\varepsilon$ in a short interval at once. Two runs at the ends of the interval show that it
-contains $\varepsilon_N$, and a third run on the whole interval gives the inequalities. The ends
-come from the witness files (for $N\le9$ from a bisection in exact rational arithmetic). For
-$N>100$ each row of the law is packed into one large integer, so that a step of the recursion
-takes a few operations on exact integers. The kernel evaluates every step of every run. For the
-longest runs the Lean files also give the rows at a few intermediate times, and the kernel
-recomputes each stretch between two of them and compares. A script chooses the precision of each
-run and writes these rows into the files, but nothing that it writes is trusted. So no proof
-rests on compiled code, and none uses \texttt{native\_decide}.
-
-Lean does not formalize the six classical results, the numerics (such as those of
-Remark~\ref{rem:bulk}) or Conjecture~\ref{conj:convex}. The scripts in Python and Arb are
-separate from Lean. They ran under Python~3.14.3 with python-flint~0.9.0 (which contains
-FLINT~3.6.0 and with it Arb), mpmath~1.3.0, numpy~2.4.2 and scipy~1.17.1.
+The separate Python checks used Python~3.14.3, python-flint~0.9.0
+(FLINT~3.6.0, including Arb), mpmath~1.3.0, numpy~2.4.2 and scipy~1.17.1.
 
 The scripts and the Lean files are in the repository named under ``Code
 availability'' in the Statements and Declarations, which also says how to rerun the

@@ -28,9 +28,7 @@ labels, and only where it uses their mathematics.
 - `../archive/paperB`, "Vertex crossings in a symmetric Markov multinomial model", arXiv:2610.09258.
   Incorporated here. Cited (v1) for the results that did not come over: its Bessel majorant and
   its crossover near the boundary of the simplex (Remark 6.3).
-- `../paperE`, "Endpoint crossings for the planar persistent walk" (in preparation). Until
-  October 13, 2026 this was Section 6 and Appendix C of this paper. Cited for the planar walk.
-- `../paperD` and `../paperF` (in preparation). Not cited.
+- The separate planar, elephant and heavy-tail/aging manuscripts are not cited.
 
 Conventions. L = log N, lambda_F is the principal Dirichlet eigenvalue of -Q on the face F (the rate
 at which the chain leaves F), M_F is the largest probability of a composition with support F, and
@@ -48,7 +46,7 @@ The numbers are those of the build of October 23, 2026 (64 pages, and a 14-page 
 - First order, for every start (Theorem 3.3). The mode lies on a face F that minimizes
   tau lambda_F + |F| - 1, and the winners are read off the lower-left boundary of the convex hull
   of the points (lambda_F, |F| - 1) (Theorem 3.4). A worked example on the 4-cycle opens
-  Section 3 (Table 1 and Figure 2).
+  Section 3 (Table 1 and the worked-cycle figure).
 - Second order, for faces with (H). A local law with an explicit constant (Theorem 4.4) gives
   M_F = N^-(k-1) T^((k-1)/2) K_F e^(-T lambda_F) (1 + O(1/T + T^2/N)) (Theorem 4.6). Every crossing
   of 2 such faces satisfies delta T + (Delta/2) log T = Delta L - log(K_F/K_G) + O(1/L)
@@ -191,3 +189,7 @@ lists it and exits with an error, and then `verify_all.py` stops.
 Build with `pdflatex -interaction=nonstopmode problem131_switching.tex` and
 `pdflatex -interaction=nonstopmode supplement.tex`, 3 times each, alternating, so that the
 cross-references between the two resolve.
+
+## Referee and opening revision
+
+Theorem A now leads the introduction, followed by the complete-graph envelope figure. The opening distinguishes global support selection from a local law on one face and states the boundary, reducibility and uniqueness limits. The rate-function probability interpretation is qualified by (H), and the next-order displacement is described as the quadratic-model prediction. The bibliography omits Iltis and unpublished E, and records Kim–Landim's 2025 publication with the arXiv-v2 lemma locator. `cover_letter.md` accompanies the complete proof supplement. The new independent review is in `../../../reports/Final probability papers review.md`.

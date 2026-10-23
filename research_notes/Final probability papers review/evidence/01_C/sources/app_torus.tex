@@ -1,0 +1,700 @@
+\section{Proofs of the local law and of the first-order bounds}\label{app:torus}
+
+This appendix proves Proposition~\ref{prop:constant}(a),
+Lemma~\ref{lem:upper}, Theorem~\ref{thm:local}, Lemma~\ref{lem:discrete} and
+Theorem~\ref{thm:first}(ii). Its last section proves
+Lemma~\ref{lem:forest}, which is used for Proposition~\ref{prop:forest}. Except in
+Section~\ref{app:first}, $F$ is a face with $k\ge2$ states, numbered
+$1,\dots,k$. For $x\in\mathbb C^F$ we write $x'=(x_2,\dots,x_k)$. We write
+$\mathrm i$ for the imaginary unit, since $i$ denotes a state, and
+$\mathbb T^m=(\R/2\pi\Z)^m$. We use two standard facts~\cite{bermanplemmons1994}.
+First, let $B\ge0$ be square and $S$ diagonal with positive diagonal. Then
+$\varrho(B-S)<0$ if and only if $\varrho(S^{-1}B)<1$, and also if and only if
+$(S-B)v>0$ for some $v>0$. In that case
+$(S-B)^{-1}=\sum_{j\ge0}(S^{-1}B)^jS^{-1}\ge0$. Second, if $M$ is an
+irreducible Metzler matrix, then $\varrho(M)$ is larger than the Perron root
+of each proper principal submatrix of $M$, and every nonnegative eigenvector
+of $M$ is positive and belongs to $\varrho(M)$.
+
+\subsection{The Perron root under a diagonal perturbation}
+
+An irreducible generator on $F$ is a Metzler matrix $G$ with $G\ones=0$ whose
+graph is strongly connected. It has a unique stationary law $\pi>0$. The
+argument after Definition~\ref{def:tilt}, with $(G,\pi)$ in place of
+$(\widehat Q_\alpha,\alpha)$, shows that
+$Z=(\ones\pi^\top-G)^{-1}-\ones\pi^\top$ exists and
+satisfies~\eqref{eq:Zprops}. Put $D=\operatorname{diag}\pi$ and
+$\Gamma=DZ+Z^\top D$.
+
+\begin{lemma}[the Perron root]\label{lem:perron}
+Let $G$, $\pi$, $Z$ and $\Gamma$ be as above. Then
+$\kappa(\eta)=\varrho(G+\operatorname{diag}\eta)$ is real-analytic near $0$,
+with $\kappa(0)=0$, $\nabla\kappa(0)=\pi$ and $\nabla^2\kappa(0)=\Gamma$. For
+$\eta\in\R^F$ and $u=Z\eta$,
+\begin{equation}\label{eq:A-dirichlet}
+\eta^\top\Gamma\eta=\sum_{i\ne j}\pi_iG_{ij}(u_i-u_j)^2 .
+\end{equation}
+So $\Gamma$ is positive semidefinite with kernel $\R\ones$, and $\Sigma$,
+which is $\Gamma$ without the row and column of state $1$, is positive
+definite.
+\end{lemma}
+
+\begin{proof}
+We differentiate the eigenvalue equation twice at $\eta=0$. Since
+$G+\operatorname{diag}\eta$ is irreducible, its Perron root is a simple
+eigenvalue. So by the implicit function theorem, $\kappa$ and the right
+eigenvector $v(\eta)$ with $\pi^\top v=1$ are real-analytic near $0$, with
+$\kappa(0)=0$ and $v(0)=\ones$. We write subscripts for derivatives at
+$\eta=0$. Differentiating $(G+\operatorname{diag}\eta)v=\kappa v$ in $\eta_j$
+gives $Gv_j+e_j=\kappa_j\ones$, and multiplying by $\pi^\top$ gives
+$\kappa_j=\pi_j$, since $\pi^\top G=0$. Then $v_j=Ze_j$, because
+by~\eqref{eq:Zprops} both vectors solve $Gx=\pi_j\ones-e_j$ with
+$\pi^\top x=0$, and the kernel of $G$ is $\R\ones$. Differentiating again, in
+$\eta_i$, gives
+$Gv_{ij}+\operatorname{diag}(e_i)v_j+\operatorname{diag}(e_j)v_i
+=\kappa_{ij}\ones+\kappa_iv_j+\kappa_jv_i$. We multiply by $\pi^\top$ again.
+The terms with $G$, $\kappa_i$ and $\kappa_j$ vanish, and we get
+$\kappa_{ij}=\pi_iZ_{ij}+\pi_jZ_{ji}=\Gamma_{ij}$.
+
+For~\eqref{eq:A-dirichlet} let $\bar\eta=\eta-(\pi\cdot\eta)\ones$.
+By~\eqref{eq:Zprops}, $-Gu=\bar\eta$ and $\pi\cdot u=0$, so
+$\eta^\top\Gamma\eta=2\sum_i\pi_i\eta_iu_i=2\sum_i\pi_i\bar\eta_iu_i
+=-2\sum_i\pi_iu_i(Gu)_i$. Now expand the squares in~\eqref{eq:A-dirichlet}.
+By $G\ones=0$ and $\pi^\top G=0$ the terms with $u_i^2$ and with $u_j^2$ each
+sum to $-\sum_i\pi_iG_{ii}u_i^2$, and the cross terms sum to
+$-2\sum_i\pi_iu_i(Gu)_i+2\sum_i\pi_iG_{ii}u_i^2$. So both sides
+of~\eqref{eq:A-dirichlet} agree. Also $\Gamma\ones=0$ by~\eqref{eq:Zprops}.
+If $\eta^\top\Gamma\eta=0$, then $u$ is constant along every edge of the
+strongly connected graph of $G$, so $u$ is constant. Then $u=0$ because
+$\pi\cdot u=0$, so $\bar\eta=0$ and $\eta\in\R\ones$. A nonzero vector that vanishes
+at state $1$ is not in $\R\ones$, which gives the claim about $\Sigma$.
+\end{proof}
+
+\emph{Idea of the proof of Proposition~\ref{prop:constant}(a).} The gradient
+of $\Lambda(\vartheta)=\varrho(Q_F+\operatorname{diag}\vartheta)$ is the
+stationary law of the chain tilted by $\vartheta$, and its Hessian is the
+matrix $\Gamma$ of that chain (Lemma~\ref{lem:perron}). So $\nabla\Lambda$
+maps the tilt to the fractions $\alpha$. We show that $\nabla I_F$ is the map
+back, so the two Hessians are inverse to each other.
+
+\begin{proof}[Proof of Proposition~\ref{prop:constant}(a)]
+\emph{Step 1: the derivatives of the Perron root.} For $\vartheta\in\R^F$ let
+$\Lambda(\vartheta)=\varrho(Q_F+\operatorname{diag}\vartheta)$, so that
+$\Lambda(\vartheta+c\ones)=\Lambda(\vartheta)+c$ (the shift property). It is
+a simple eigenvalue with positive right and left eigenvectors
+$\hat r,\hat l$, normalized by $\sum_i\hat r_i=1$ and $\hat l\cdot\hat r=1$,
+and by the implicit function theorem $\Lambda$, $\hat r$ and $\hat l$ are
+real-analytic in $\vartheta$. Put $\pi=\hat l\circ\hat r$ and
+$G=\hat R^{-1}(Q_F+\operatorname{diag}\vartheta-\Lambda(\vartheta)I)\hat R$
+with $\hat R=\operatorname{diag}\hat r$. Then $G\ones=0$ and $\pi^\top G=0$
+by the two eigenvector equations, so $G$ is an irreducible generator with
+stationary law $\pi$. Since $\hat R$ commutes with diagonal matrices,
+$\Lambda(\vartheta+\eta)=\Lambda(\vartheta)+\varrho(G+\operatorname{diag}\eta)$.
+So by Lemma~\ref{lem:perron}, $\nabla\Lambda(\vartheta)=\pi$ and
+$\nabla^2\Lambda(\vartheta)=\Gamma$, with $\Gamma$ built from $(G,\pi)$.
+
+\emph{Step 2: the gradient can be inverted.} Let
+$\Lambda_0(\beta)=\Lambda(0,\beta)$ for $\beta\in\R^{k-1}$. Its Hessian is
+$\Gamma$ without the row and column of state $1$, which is positive definite
+by Lemma~\ref{lem:perron}. So $\Lambda_0$ is strictly convex,
+$\nabla\Lambda_0$ is injective, and by the inverse function theorem it has a
+real-analytic inverse on its open image.
+
+\emph{Step 3: the tilt that belongs to $\alpha$.} Fix
+$\alpha\in\Delta_F^\circ$ and put $\vartheta(\alpha)=q-\theta(\alpha)$. Then
+$Q_F+\operatorname{diag}\vartheta(\alpha)=A_F-\operatorname{diag}\theta(\alpha)$
+has the positive right and left eigenvectors $r_\alpha$ and $l_\alpha$ for
+the eigenvalue $0$, by Definition~\ref{def:tilt} and~\eqref{eq:stationary}.
+So its Perron root is $0$, and at $\vartheta(\alpha)$ we have $\pi=\alpha$,
+$G=\widehat Q_\alpha$ and $\Gamma=\Gamma_\alpha$. Let $\beta(\alpha)$ be the
+last $k-1$ coordinates of $\vartheta(\alpha)-\vartheta_1(\alpha)\ones$. A
+shift along $\ones$ does not change the derivatives of $\Lambda$, so
+$\nabla\Lambda_0(\beta(\alpha))=\alpha'$ and
+$\nabla^2\Lambda_0(\beta(\alpha))=\Sigma_\alpha$. Hence $\Sigma_\alpha$ is
+positive definite, and $\beta(\alpha)=(\nabla\Lambda_0)^{-1}(\alpha')$ is
+real-analytic. The shift property and $\Lambda(\vartheta(\alpha))=0$ give
+$\vartheta_1(\alpha)=-\Lambda_0(\beta(\alpha))$. So $\theta(\alpha)$ is
+real-analytic, and then so are its Perron vectors and $\Sigma_\alpha$.
+
+\emph{Step 4: the Hessian of $I_F$.} Since
+$\vartheta(\alpha)=\vartheta_1(\alpha)\ones+(0,\beta(\alpha))$ and
+$\sum_i\alpha_i=1$, we have $I_F(\alpha)=\langle\vartheta(\alpha),\alpha\rangle
+=\langle\beta(\alpha),\alpha'\rangle-\Lambda_0(\beta(\alpha))$. We
+differentiate in $\alpha'$. The terms with the derivative of $\beta$ cancel
+because $\nabla\Lambda_0(\beta(\alpha))=\alpha'$, and $\nabla I_F=\beta$
+remains. So $\nabla^2I_F$ is the Jacobian of $(\nabla\Lambda_0)^{-1}$ at
+$\alpha'$, which is $\Sigma_\alpha^{-1}$. The formula for $C_F$ follows from
+Definition~\ref{def:tilt}.
+\end{proof}
+
+\subsection{The torus representation}
+
+We split
+\[
+A_F=\begin{pmatrix}0&a_1^\top\\ b_1&A'\end{pmatrix},\qquad
+\mu_F=(\mu_1,\mu'),
+\]
+so $a_1=(q_{1j})_{j\ge2}$, $b_1=(q_{i1})_{i\ge2}$ and
+$A'=(q_{ij})_{i,j\ge2}$. For $z'\in\mathbb C^{k-1}$ let
+$\mathcal Z'=\operatorname{diag}(z')$. Where $\mathcal Z'-A'$ is invertible
+we put $X(z')=(\mathcal Z'-A')^{-1}$, $g(z')=a_1^\top X(z')b_1$ and
+\[
+b(z')=\bigl(\mu_1+\mu'^\top X(z')b_1\bigr)\bigl(1+a_1^\top X(z')\ones\bigr).
+\]
+
+\begin{lemma}[torus representation]\label{lem:torus}
+Let $s'\in(0,\infty)^{k-1}$ satisfy
+$\varrho(A'-\operatorname{diag}s')<0$. On the set of $z'\in\mathbb C^{k-1}$
+with $|z_i|\ge s_i$ for every $i\ge2$, the matrix
+$\mathcal Z'-A'$ is invertible, and $X$, $g$ and $b$ are given by absolutely
+convergent power series in $1/z_2,\dots,1/z_k$ with nonnegative coefficients.
+Hence $|g(z')|\le g(s')$ and
+$|b(z')|\le b(s')$ there. For every $t\in(0,\infty)^F$,
+\[
+H(t)=\frac1{(2\pi)^{k-1}}\int_{\mathbb T^{k-1}}
+\exp\Bigl(t_1g(z')+\sum_{i\ge2}t_iz_i\Bigr)\,b(z')\prod_{i\ge2}z_i\,d\varphi,
+\qquad z_i=s_ie^{\mathrm i\varphi_i}.
+\]
+\end{lemma}
+
+In words, $H(t)$ is a Cauchy integral over $k-1$ circles, one for each state
+of $F$ except state $1$. The circle of state $1$ has already been integrated
+out, and it leaves the factor $e^{t_1g(z')}$.
+
+\emph{Idea of the proof.} By Cauchy's formula the factor
+$\prod_it_i^{m_i-1}/(m_i-1)!$ of a word in $H(t)$ is the integral of
+$e^{\langle t,z\rangle}\prod_iz_i^{1-m_i}$ over $k$ circles. The sum of
+$\prod_iz_i^{-m_i}$ over all words, with their weights, is a geometric
+series, namely $\mu_F^\top(\mathcal Z-A_F)^{-1}\ones$ with
+$\mathcal Z=\operatorname{diag}(z)$. The variable $z_1$ enters this resolvent
+only through the simple pole $1/(z_1-g(z'))$, so the integral over the first
+circle is a residue.
+
+\begin{proof}
+\emph{Step 1: the series.} By the first fact,
+$\varrho(\operatorname{diag}(s')^{-1}A')<1$. So the series
+$X(z')=\sum_{j\ge0}(\mathcal Z'^{-1}A')^j\mathcal Z'^{-1}$ converges
+absolutely for $|z_i|\ge s_i$, since its terms are bounded
+entrywise in modulus by those at $z'=s'$. As $a_1$, $b_1$ and $\mu$ are
+nonnegative, this gives the claims about $X$, $g$ and $b$.
+
+\emph{Step 2: a radius for state $1$.} Choose $s_1>g(s')$ and put
+$S=\operatorname{diag}(s_1,s')$. We show that $\varrho(S^{-1}A_F)<1$. For
+$\varepsilon>0$ let $v=(1,v')$ with
+$v'=X(s')(b_1+\varepsilon\ones)>0$. Then $((S-A_F)v)_i=\varepsilon$ for
+$i\ge2$, and $((S-A_F)v)_1=s_1-g(s')-\varepsilon a_1^\top X(s')\ones$. For
+small $\varepsilon$ both are positive, and the first fact gives the claim.
+
+\emph{Step 3: $k$ circles.} Let $\mathcal Z=\operatorname{diag}(z)$ with
+$|z_i|=s_i$ for every $i\in F$. Since $\varrho(A_FS^{-1})=\varrho(S^{-1}A_F)<1$ (the two matrices are similar), expanding
+$(\mathcal Z-A_F)^{-1}=\mathcal Z^{-1}(I-A_F\mathcal Z^{-1})^{-1}$ gives
+\[
+\mu_F^\top(\mathcal Z-A_F)^{-1}\ones=\sum_c\mu_{c_1}\prod_{j<M}q_{c_jc_{j+1}}
+\prod_{i\in F}z_i^{-m_i(c)},
+\]
+absolutely and uniformly on the torus. Here $c=c_1\cdots c_M$ runs over the
+words in $F$ with $M\ge1$ and $c_j\ne c_{j+1}$, and $m_i(c)$ is the number of
+letters $i$ in $c$. For an integer $m$ and $t_i>0$, Cauchy's formula gives
+$\frac1{2\pi}\int_0^{2\pi}e^{t_iz_i}z_i^{1-m}\,d\varphi_i=t_i^{m-1}/(m-1)!$ if
+$m\ge1$ and $0$ if $m\le0$. We multiply the series by
+$e^{\langle t,z\rangle}\prod_iz_i$ and integrate term by term. The words that
+miss a state of $F$ drop out, and grouping the others by $m(c)$ gives
+\begin{equation}\label{eq:A-full}
+H(t)=\frac1{(2\pi)^k}\int_{\mathbb T^k}e^{\langle t,z\rangle}\,
+\mu_F^\top(\mathcal Z-A_F)^{-1}\ones\prod_{i\in F}z_i\,d\varphi .
+\end{equation}
+
+\emph{Step 4: the first circle.} The Schur complement $z_1-g(z')$ of
+$\mathcal Z'-A'$ in $\mathcal Z-A_F$ is not $0$, since
+$|g(z')|\le g(s')<s_1$. Block inversion gives
+\[
+\mu_F^\top(\mathcal Z-A_F)^{-1}\ones=\frac{b(z')}{z_1-g(z')}
++\mu'^\top X(z')\ones .
+\]
+We integrate over $\varphi_1$ in~\eqref{eq:A-full} and divide by $2\pi$. The
+second term does not depend on $z_1$, so it contributes
+$\frac1{2\pi}\int_0^{2\pi}e^{t_1z_1}z_1\,d\varphi_1=0$. In the first term
+$g(z')$ lies inside the circle $|z_1|=s_1$, so Cauchy's formula gives
+$e^{t_1g(z')}b(z')$. The factors without $z_1$ are unchanged, and this proves
+the formula.
+\end{proof}
+
+All coefficients are nonnegative, so the integrand has its largest modulus
+at $\varphi=0$. This gives Lemma~\ref{lem:upper}, and a Laplace expansion
+around $\varphi=0$ gives Theorem~\ref{thm:local}.
+
+\subsection{Proof of \texorpdfstring{Lemma~\ref{lem:upper}}{the upper bound}}
+
+We bound the sum of Lemma~\ref{lem:runs} term by term by a continuum sum
+$H_\sigma$ with slightly larger rates, and $H_\sigma$ by the largest modulus
+of the integrand of Lemma~\ref{lem:torus}.
+
+\emph{Step 1: the radii.} Let $F$ be irreducible and $\theta\in V_F$. Then
+$A_F-\operatorname{diag}\theta$ is an irreducible Metzler matrix with Perron
+root $0$. So it has a right eigenvector $u>0$ for $0$, and
+$\theta_i=(A_Fu)_i/u_i$. Each row of $A_F$ has a positive entry, since $G_F$
+is strongly connected and $k\ge2$, so $\theta>0$. By the second fact,
+$\varrho(A'-\operatorname{diag}\theta')<0$. The rows $i\ge2$ of
+$(A_F-\operatorname{diag}\theta)u=0$ give $u'=u_1X(\theta')b_1$, and then row
+$1$, which reads $a_1^\top u'=\theta_1u_1$, gives $\theta_1=g(\theta')$. Hence
+\begin{equation}\label{eq:A-radii}
+\theta>0,\qquad \varrho(A'-\operatorname{diag}\theta')<0,\qquad
+g(\theta')=\theta_1\qquad\text{for every }\theta\in V_F .
+\end{equation}
+
+\emph{Step 2: a continuum sum.} Fix $n$ with support $F$ and $h$ with
+$hq_{\max}\le\frac12$, and put $|n|=\sum_in_i$, $t=hn$ and
+$\sigma=e^{hq_{\max}}$. Lemma~\ref{lem:runs} with $|n|$ in place of $N$ gives
+the probability $P_{|n|}(n)$ in the lemma. Only terms with $m_i\le n_i$ for
+every $i$ are nonzero, and in them
+$h^{m_i-1}\binom{n_i-1}{m_i-1}\le t_i^{m_i-1}/(m_i-1)!$ and
+$(1-hq_i)^{n_i-m_i}\le e^{-hq_i(n_i-m_i)}\le e^{-q_it_i}\sigma^{m_i}$. Note
+that $h^{M-1}=h^{k-1}\prod_ih^{m_i-1}$ and
+$\sigma^MW(m)=\sigma W_\sigma(m)$, where $W_\sigma$ is $W$ for $\sigma A_F$ in
+place of $A_F$ (a word with $M$ letters has $M-1$ switches). So
+\begin{equation}\label{eq:A-sigma}
+P_{|n|}(n)\le\sigma\,h^{k-1}e^{-\langle q,t\rangle}H_\sigma(t),
+\end{equation}
+where $H_\sigma$ is $H$ for $\sigma A_F$.
+
+\emph{Step 3: the bound for $H_\sigma$.} We use Lemma~\ref{lem:torus} for
+$\sigma A_F$ with the radii $\sigma\theta'$, which is allowed since
+$\varrho(\sigma A'-\operatorname{diag}\sigma\theta')
+=\sigma\varrho(A'-\operatorname{diag}\theta')<0$. The functions of
+Lemma~\ref{lem:torus} for $\sigma A_F$ satisfy
+$X_\sigma(\sigma z')=\sigma^{-1}X(z')$, so $g_\sigma(\sigma z')=\sigma g(z')$
+and $b_\sigma(\sigma z')=b(z')$. So on the torus with radii $\sigma\theta'$
+we have $|g_\sigma|\le\sigma g(\theta')=\sigma\theta_1$
+by~\eqref{eq:A-radii}, $|b_\sigma|\le b(\theta')$ and
+$|z_i|=\sigma\theta_i$. Hence the integrand has modulus at most
+$e^{\sigma\langle t,\theta\rangle}b(\theta')\sigma^{k-1}
+\prod_{i\ge2}\theta_i$, and for every $\sigma>0$
+\begin{equation}\label{eq:A-Hsigma}
+H_\sigma(t)\le\sigma^{k-1}b(\theta')\prod_{i\ge2}\theta_i\,
+e^{\sigma\langle t,\theta\rangle}.
+\end{equation}
+With~\eqref{eq:A-sigma} this gives
+$P_{|n|}(n)\le\sigma^kb(\theta')\prod_{i\ge2}\theta_i\,h^{k-1}
+\exp(-h\langle n,q-\theta\rangle+(\sigma-1)h\langle n,\theta\rangle)$.
+Finally $\sigma\le e^{1/2}$ and $\sigma-1\le2hq_{\max}$, so the lemma holds
+with
+\[
+C_\theta=\max\Bigl(e^{k/2}b(\theta')\prod_{i\ge2}\theta_i,\ 2q_{\max}\max_i\theta_i\Bigr).
+\]
+The bound after the lemma is the case
+$\theta=q-\lambda_F\ones$. \qed
+
+\subsection{Proof of \texorpdfstring{Theorem~\ref{thm:local}}{the local law}}
+
+For $k=1$ the formula is part of Lemma~\ref{lem:continuum}. Let $k\ge2$ and
+$\alpha\in\mathcal K$, and write $\theta=\theta(\alpha)$, $r=r_\alpha$,
+$l=l_\alpha$ and $\Theta'=\operatorname{diag}(\theta')$. By~\eqref{eq:A-radii}
+we may use Lemma~\ref{lem:torus} with the radii $\theta'$ and $t=T\alpha$.
+With Lemma~\ref{lem:continuum} this gives
+\begin{equation}\label{eq:A-fT}
+f_T(\alpha)=\frac{T^{k-1}e^{-T\langle q,\alpha\rangle}}{(2\pi)^{k-1}}
+\int_{\mathbb T^{k-1}}e^{T\Psi(\alpha,\varphi)}\chi(\alpha,\varphi)\,d\varphi,
+\end{equation}
+where $z_i=\theta_ie^{\mathrm i\varphi_i}$,
+$\Psi(\alpha,\varphi)=\alpha_1g(z')+\sum_{i\ge2}\alpha_iz_i$ and
+$\chi(\alpha,\varphi)=b(z')\prod_{i\ge2}z_i$. We check the hypotheses of
+Lemma~\ref{lem:laplace} with $m=k-1$.
+
+\emph{Hypothesis \textup{(iii)}.} By~\eqref{eq:A-radii},
+$\Psi(\alpha,0)=\langle\alpha,\theta\rangle$ is real. By
+Lemma~\ref{lem:torus}, $|g(z')|\le g(\theta')=\theta_1$ on the
+torus, so
+\[
+\operatorname{Re}\Psi(\alpha,\varphi)\le\Psi(\alpha,0)
+-\sum_{i\ge2}\alpha_i\theta_i(1-\cos\varphi_i).
+\]
+All $\alpha_i$ and $\theta_i$ are positive, so the sum is positive unless
+$\varphi=0$.
+
+\emph{Hypotheses \textup{(i)} and \textup{(ii)}.} We need the first two
+derivatives of $g$ at $\theta'$. We get them by differentiating a relation
+$\lambda(g(z'),z')=0$ for a Perron root $\lambda$, whose derivatives are
+known from Lemma~\ref{lem:perron}. For $z\in\R^F$ near $\theta$ let
+$\lambda(z)=\varrho(A_F-\operatorname{diag}z)$. With $R=\operatorname{diag}r$
+we have $A_F-\operatorname{diag}(\theta-\eta)=R(\widehat
+Q_\alpha+\operatorname{diag}\eta)R^{-1}$, and $\widehat Q_\alpha$ is an
+irreducible generator with stationary law $\alpha$. So
+$\lambda(\theta-\eta)=\varrho(\widehat Q_\alpha+\operatorname{diag}\eta)$, and
+Lemma~\ref{lem:perron} gives $\nabla\lambda(\theta)=-\alpha$ and
+$\nabla^2\lambda(\theta)=\Gamma_\alpha$. For real $z'$ near $\theta'$ we have
+$\varrho(A'-\operatorname{diag}z')<0$, so $(1,X(z')b_1)\ge0$ by the first
+fact. This vector lies in the kernel of $A_F-\operatorname{diag}(g(z'),z')$
+(rows $i\ge2$ by the definition of $X$, and row $1$ by the definition of
+$g$). By the second fact a nonnegative eigenvector belongs to the Perron
+root, so $\lambda(g(z'),z')=0$.
+
+Write $g_j$, $g_{ij}$ for the derivatives of $g$ at $\theta'$ and
+$\lambda_j$, $\lambda_{ij}$ for those of $\lambda$ at $\theta$.
+Differentiating $\lambda(g(z'),z')=0$ in $z_j$ gives
+$\lambda_1g_j+\lambda_j=0$, and differentiating again in $z_i$ gives
+$\lambda_1g_{ij}+\lambda_{11}g_ig_j+\lambda_{1j}g_i+\lambda_{i1}g_j
++\lambda_{ij}=0$. Put $w_j=e_j-(\alpha_j/\alpha_1)e_1\in\R^F$ for $j\ge2$.
+Then the first equation is $g_j=-\alpha_j/\alpha_1$, so $w_j=e_j+g_je_1$,
+and the last four terms of the second equation are
+$w_i^\top\Gamma_\alpha w_j$. So
+\[
+g_j=-\frac{\alpha_j}{\alpha_1},\qquad \alpha_1g_{ij}=w_i^\top\Gamma_\alpha w_j .
+\]
+Hence $\partial\Psi/\partial z_j=\alpha_1g_j+\alpha_j=0$ at $\theta'$, and the
+Hessian $\mathcal H$ of $\Psi$ in $z'$ at $\theta'$ is $V^\top\Gamma_\alpha V$,
+where $V$ has columns $w_2,\dots,w_k$. Since
+$\partial/\partial\varphi_j=\mathrm iz_j\,\partial/\partial z_j$ and the first
+derivatives vanish, $\nabla_\varphi\Psi(\alpha,0)=0$. We saw above that
+$\Psi(\alpha,0)$ is real, so this is hypothesis (i). Also
+$-\nabla^2_\varphi\Psi(\alpha,0)=\Theta'\mathcal H\Theta'$, which is real and
+symmetric, as (ii) requires.
+
+For the rest of (ii), namely that this matrix is positive definite, let $B=I+\ones\alpha'^\top/\alpha_1$. For $y\in\R^{k-1}$ the vector
+$Vy$ has the entry $-\alpha'^\top y/\alpha_1$ at state $1$ and the entries
+$y$ elsewhere, so $Vy+(\alpha'^\top y/\alpha_1)\ones=(0,By)$. Since
+$\Gamma_\alpha\ones=0$, we may replace $Vy$ by $(0,By)$ in
+$y^\top V^\top\Gamma_\alpha Vy$, which gives
+$\mathcal H=B^\top\Sigma_\alpha B$. The matrix determinant lemma gives
+$\det B=1+\alpha'^\top\ones/\alpha_1=1/\alpha_1$. By Lemma~\ref{lem:perron},
+$\Sigma_\alpha$ is positive definite, and hence so are $\mathcal H$ and
+$\Theta'\mathcal H\Theta'$. Also
+$\det\mathcal H=\det\Sigma_\alpha/\alpha_1^2$.
+
+\emph{Regularity.} By Proposition~\ref{prop:constant}(a), $\theta(\alpha)$ is
+real-analytic. Fix $\alpha_0\in\mathcal K$. By~\eqref{eq:A-radii} and
+continuity there is $\delta\in(0,\min_i\theta_i(\alpha_0))$ with
+$\varrho(A'-\operatorname{diag}(\theta'(\alpha_0)-\delta\ones))<0$. By
+Lemma~\ref{lem:torus}, $X$, $g$ and $b$ are holomorphic where
+$|z_i|>\theta_i(\alpha_0)-\delta$ for every $i\ge2$, and this holds
+on the torus of radii $\theta'(\alpha)$ for $\alpha$ near $\alpha_0$. So $\Psi$
+and $\chi$ are real-analytic near $\{\alpha_0\}\times\mathbb T^{k-1}$.
+Covering $\mathcal K$ by finitely many such sets shows that their
+$\varphi$-derivatives are jointly continuous on
+$\mathcal K\times\mathbb T^{k-1}$.
+
+\emph{The constant.} The matrix $\mathcal J=\Theta'\mathcal H\Theta'$ of
+Lemma~\ref{lem:laplace} has
+$\det\mathcal J=\prod_{i\ge2}\theta_i^2\,\det\Sigma_\alpha/\alpha_1^2$. So
+the lemma gives, uniformly for $\alpha\in\mathcal K$ and $T\ge1$,
+\[
+\int_{\mathbb T^{k-1}}e^{T\Psi}\chi\,d\varphi
+=e^{T\langle\alpha,\theta\rangle}\Bigl(\frac{2\pi}T\Bigr)^{\frac{k-1}2}
+\frac{\alpha_1}{\prod_{i\ge2}\theta_i\sqrt{\det\Sigma_\alpha}}
+\Bigl(\chi(\alpha,0)+O\Bigl(\frac1T\Bigr)\Bigr).
+\]
+Here $\chi(\alpha,0)=b(\theta')\prod_{i\ge2}\theta_i$. As in the derivation
+of~\eqref{eq:A-radii}, $r'=r_1X(\theta')b_1$. In the same way the columns
+$j\ge2$ of $l^\top(A_F-\operatorname{diag}\theta)=0$, which is
+\eqref{eq:stationary}, give $l'=l_1X(\theta')^\top a_1$. Hence
+$\mu\cdot r=r_1(\mu_1+\mu'^\top X(\theta')b_1)$ and
+$l\cdot\ones=l_1(1+a_1^\top X(\theta')\ones)$. Since $l_1r_1=\alpha_1$,
+\[
+b(\theta')=\frac{(\mu\cdot r_\alpha)(l_\alpha\cdot\ones)}{\alpha_1}.
+\]
+As $r_\alpha,l_\alpha>0$ and $\mu(F)>0$ by (H), $\chi(\alpha,0)$ is positive
+and continuous, hence bounded below on $\mathcal K$. So the last bracket is
+$\chi(\alpha,0)(1+O(1/T))$. Putting this into~\eqref{eq:A-fT} and using
+$I_F(\alpha)=\langle q-\theta,\alpha\rangle$ gives
+$f_T(\alpha)=T^{(k-1)/2}C_F(\alpha)e^{-TI_F(\alpha)}(1+O(1/T))$, uniformly on
+$\mathcal K$. \qed
+
+\subsection{Proof of \texorpdfstring{Lemma~\ref{lem:discrete}}{the discrete
+law}}
+
+\emph{Idea of the proof.} The discrete law of Lemma~\ref{lem:runs} and the
+continuum density of Lemma~\ref{lem:continuum} are sums over the same vectors
+$m$ of run counts, and we compare them term by term. The two terms for $m$
+differ by a factor $\kappa_m$ that is close to $1$ when the number of runs
+$M$ is small compared with $\sqrt N$, and under the continuum weights a path
+has of order $T$ runs.
+
+\emph{Step 1: the ratio of the terms.} Let $t=hn$ and
+$\alpha=n/N\in\mathcal K$. Lemma~\ref{lem:continuum} gives the identity
+$N^{-(k-1)}f_T(n/N)=h^{k-1}e^{-\langle q,t\rangle}H(t)=\sum_mv_m$ with
+\[
+v_m=W(m)\,h^{k-1}\prod_{i\in F}e^{-q_it_i}\frac{t_i^{m_i-1}}{(m_i-1)!},
+\qquad m\in\Z_{\ge1}^F .
+\]
+Since $h^{m_i-1}\binom{n_i-1}{m_i-1}=\frac{t_i^{m_i-1}}{(m_i-1)!}
+\prod_{1\le j<m_i}(1-j/n_i)$, the $m$-th term of Lemma~\ref{lem:runs} is
+$\kappa_mv_m$ with
+\[
+\kappa_m=\prod_{i\in F}\Bigl[\prod_{1\le j<m_i}\Bigl(1-\frac j{n_i}\Bigr)\Bigr]
+(1-hq_i)^{n_i-m_i}e^{hq_in_i}.
+\]
+Let $w_m=v_m/\sum_{m'}v_{m'}$, a probability on the vectors $m$ since
+$H(t)>0$ under (H). We write $\E_w$ and $\Prob_w$ for it and regard
+$M=\sum_im_i$ as a random variable. By Lemma~\ref{lem:runs} the ratio in the
+lemma is $\sum_m\kappa_mv_m/\sum_mv_m=\E_w\kappa_m$.
+
+\emph{Step 2: bounds for $\kappa_m$.} Let $n_{\min}=\min_in_i$. We claim that
+for every $m$
+\begin{equation}\label{eq:A-kappa}
+\Bigl(1-\frac{M^2}{2n_{\min}}\Bigr)e^{-q_{\max}^2T^2/N}\le\kappa_m\le
+e^{hq_{\max}M}.
+\end{equation}
+First let $m_i\le n_i$ for every $i$. The factors $1-j/n_i$ are at most $1$,
+and $(1-hq_i)^{n_i-m_i}\le e^{-hq_i(n_i-m_i)}$, so
+$\kappa_m\le e^{hq_{\max}M}$. For the lower bound,
+$\log(1-x)\ge-x-x^2$ for $0\le x\le\frac12$ gives
+$(1-hq_i)^{n_i-m_i}e^{hq_in_i}\ge e^{-n_ih^2q_i^2}$, and the product of these
+over $i$ is at least $e^{-q_{\max}^2T^2/N}$. The factors $1-j/n_i$ lie in
+$[0,1]$, so their product is at least $1$ minus the sum of the $j/n_i$, and
+hence at least $1-\sum_im_i^2/(2n_i)\ge1-M^2/(2n_{\min})$. Now let
+$m_i>n_i$ for some $i$. Then $\kappa_m=0$, while $M\ge n_{\min}+1$ gives
+$M^2/(2n_{\min})\ge2$, so the left side of~\eqref{eq:A-kappa} is negative.
+
+By~\eqref{eq:A-kappa} it remains to bound $\E_we^{hq_{\max}M}$ and
+$\E_wM^2$ from above.
+
+\emph{Step 3: the number of runs under $w$.} Since $W$ for $\sigma A_F$ is
+$\sigma^{M-1}W(m)$, we have $\E_w\sigma^{M-1}=H_\sigma(t)/H(t)$. So the
+function $\Upsilon(c)=\log\E_we^{c(M-1)}=\log H_{e^c}(t)-\log H(t)$ is finite. It
+is convex with $\Upsilon(0)=0$, as the logarithm of a moment generating function,
+and $\Upsilon(1)\ge0$ since $M\ge1$. So $\Upsilon(c)\le c\,\Upsilon(1)$ for $0\le c\le1$.
+We show that $\Upsilon(1)\le C_{\mathcal K}T$, with an upper bound for $H_e$ and
+a lower bound for $H$ at $t=T\alpha$. By~\eqref{eq:A-Hsigma} with $\sigma=e$
+and $\theta=\theta(\alpha)$,
+$H_e(T\alpha)\le e^{k-1}b(\theta')\prod_{i\ge2}\theta_i\,
+e^{eT\langle\alpha,\theta\rangle}$. For the lower bound note that
+$H(T\alpha)e^{-T\langle\alpha,\theta\rangle}=T^{-(k-1)}e^{TI_F(\alpha)}f_T(\alpha)$,
+by the definition of $f_T$ and $I_F(\alpha)=\langle q-\theta,\alpha\rangle$.
+By Theorem~\ref{thm:local} this is at least
+$\frac12T^{-(k-1)/2}C_F(\alpha)$ for $T\ge T_1$, and for $1\le T\le T_1$ it is
+continuous and positive on $[1,T_1]\times\mathcal K$. So in both cases
+$H(T\alpha)\ge c_{\mathcal K}T^{-(k-1)/2}e^{T\langle\alpha,\theta\rangle}$.
+Since $\theta(\alpha)$ and $b(\theta'(\alpha))$ are bounded on $\mathcal K$,
+dividing the two bounds gives $\Upsilon(1)\le C_{\mathcal K}T$.
+
+\emph{Step 4: the two averages.} Let $x=hq_{\max}\le\frac12$. Then
+$\E_we^{xM}=e^{x+\Upsilon(x)}\le e^{x(1+C_{\mathcal K}T)}=1+O(T^2/N)$, because
+$x\le q_{\max}T/N$ and $T^2/N\le1$. For the second moment we use the Chernoff
+bound $\Prob_w(M-1\ge y)\le e^{\Upsilon(1)-y}$ for $y\ge\Upsilon(1)$ and the bound $1$
+for $y<\Upsilon(1)$. This gives
+\[
+\E_w(M-1)^2=\int_0^\infty2y\,\Prob_w(M-1\ge y)\,dy
+\le\Upsilon(1)^2+\int_{\Upsilon(1)}^\infty2ye^{\Upsilon(1)-y}\,dy
+=\Upsilon(1)^2+2\Upsilon(1)+2,
+\]
+so $\E_wM^2=O(T^2)$. Finally $n_{\min}\ge\varepsilon_{\mathcal K}N$ with
+$\varepsilon_{\mathcal K}=\min_{\alpha\in\mathcal K}\min_i\alpha_i>0$. So
+by~\eqref{eq:A-kappa}, $\E_w\kappa_m$ lies between
+$e^{-q_{\max}^2T^2/N}(1-\E_wM^2/(2\varepsilon_{\mathcal K}N))$ and
+$\E_we^{hq_{\max}M}$, and both are $1+O(T^2/N)$, uniformly for
+$\alpha\in\mathcal K$ and $1\le T\le N^{1/2}$. \qed
+
+\subsection{Proof of \texorpdfstring{Theorem~\ref{thm:first}(ii)}{the
+first-order bounds}}\label{app:first}
+
+Let $F$ be admissible, with components $C_1,\dots,C_r$. If $F$ is irreducible,
+then $r=1$, and the argument below uses only Lemma~\ref{lem:upper} and an explicit
+family of paths, not the local law.
+
+\emph{Idea of the proof.} A path with support $F$ visits the components one
+after the other, in $r$ blocks, and each passage to the next block is one
+switch. For the upper bound we apply Lemma~\ref{lem:upper} to every block.
+For the lower bound we choose the block lengths ourselves. A component of
+least exit rate gets almost all the time, and every other component $C$ gets
+only about $N/T$ steps, the time scale of a single switch. Such a short block
+has probability bounded below, and it has only about $(N/T)^{|C|-1}$
+compositions instead of $N^{|C|-1}$.
+
+If $Q=0$, only singletons with positive start mass are admissible, and the bounds
+follow from $M_{\{i\}}=\mu_i$. Otherwise let $a$ be the least positive rate $q_{ij}$.
+Since $T\le N^{1/3}$, we have
+$h\le N^{-2/3}$ and $T^2/N\le1$, and we take $N_0$ so large that $h$ is as
+small as we need. As in the
+proof of Lemma~\ref{lem:admissible}, a path of positive probability with
+support $F$ visits each component in one block of consecutive times, and it
+passes from one block to the next by one switch. We call the order of the
+blocks, the first state and these switches the pattern of the path. There are
+finitely many patterns.
+
+\emph{Upper bound.} Fix a pattern whose $j$-th block lies in the component
+$D_j$ and starts at $y_j$, and whose switch out of block $j$ is
+$x_j\to y_{j+1}$ for $j<r$. So block $j$ ends at $x_j$ for $j<r$, and the
+pattern does not fix the end of the last block. Let $\supp n=F$. Block $j$ has
+length $N_j=\sum_{i\in D_j}n_i$. By the Markov property the paths with this
+pattern and composition $n$ have total probability
+$\mu_{y_1}\prod_{j<r}hq_{x_jy_{j+1}}\prod_{j\le r}\varpi_j$. Here $\varpi_j$ is the
+probability that the chain started at $y_j$ stays in $D_j$ for $N_j$ visits,
+with the composition that $n$ prescribes on $D_j$, and for $j<r$ also ends
+at $x_j$. We drop the condition on the end. Then $\varpi_j$ is at most the probability that
+$X_1,\dots,X_{N_j}$ have that composition for the chain started at $y_j$. If
+$|D_j|\ge2$, Lemma~\ref{lem:upper} with start $y_j$ and
+$\theta=q-\lambda_{D_j}\ones$ gives
+$\varpi_j\le\kappa_1h^{|D_j|-1}e^{-h\lambda_{D_j}N_j+\kappa_1h^2N_j}$, where
+$\kappa_1$ is the largest of these finitely many constants. If $D_j=\{i\}$,
+then $\lambda_{D_j}=q_i$ and
+$\varpi_j=(1-hq_i)^{N_j-1}\le e^{1/2-h\lambda_{D_j}N_j}$. Now we multiply over
+$j$. The powers of $h$ add up to $\sum_j(|D_j|-1)+r-1=k_F-1$. In the
+exponent, $\lambda_{D_j}\ge\lambda_F$ and $\sum_jN_j=N$ give
+$h\sum_j\lambda_{D_j}N_j\ge T\lambda_F$ and
+$\kappa_1h^2\sum_jN_j=\kappa_1T^2/N\le\kappa_1$. Summing over the patterns
+gives $P_N(n)\le\kappa_2(T/N)^{k_F-1}e^{-T\lambda_F}$.
+
+\emph{Lower bound.} We write down a family of paths with support $F$, bound
+its probability from below and count its compositions. By
+Lemma~\ref{lem:admissible}(a) we can number the components so that there are
+$y_1\in C_1$ with $\mu_{y_1}>0$ and $x_j\in C_j$, $y_{j+1}\in C_{j+1}$ with
+$q_{x_jy_{j+1}}>0$ for $j<r$. Take any $x_r\in C_r$, choose $j^*$ with
+$\lambda_{C_{j^*}}=\lambda_F$ and $|C_{j^*}|=k^*$, and put
+$m=\lceil N/T\rceil$, so that $1\le hm\le2$.
+
+\emph{Claim A.} There is $c_A>0$ such that for every component $C$ and all
+$y,x\in C$, the chain started at $y$ stays in $C$ for its first $m$ visits,
+visits every state of $C$ and has $X_m=x$ with probability at least $c_A$.
+Take a walk $y=v_0,\dots,v_J=x$ through every state of $C$ with
+$q_{v_sv_{s+1}}>0$ and $J\le|C|^2$. Consider the paths $X_1,\dots,X_m$ that
+make exactly these $J$ switches, in this order, at any $J$ of the $m-1$
+transition times. There are $\binom{m-1}J$ of them, and each has probability
+at least $(ha)^J(1-hq_{\max})^m$. For large $N$ we have $m>|C|^2\ge J$. Then
+$\binom{m-1}Jh^J\ge(hm-Jh)^J/J!\ge(1-Jh)^J/J!$ and
+$(1-hq_{\max})^m\ge e^{-2hq_{\max}m}\ge e^{-4q_{\max}}$, since
+$1\le hm\le2$. So their total probability is at least
+$(1-Jh)^Ja^Je^{-4q_{\max}}/J!$, and $(1-Jh)^J\ge2^{-J}$ for small $h$.
+
+\emph{Claim B.} There is $c_B>0$ such that for all $y,x\in C_{j^*}$ and
+$\ell\ge2m$, the event of Claim~A, with $C_{j^*}$ in place of $C$ and $\ell$
+visits in place of $m$, has probability at least $c_Be^{-h\lambda_F\ell-h^2\lambda_F^2\ell}$. Let $w>0$
+satisfy $Q_{C_{j^*}}w=-\lambda_Fw$ and let $B=I+hQ_{C_{j^*}}\ge0$. Then
+$(B^s)_{zz'}$ is the probability of going from $z$ to $z'$ in $s$ steps
+inside $C_{j^*}$. Since $B^sw=(1-h\lambda_F)^sw$, the probability of staying
+in $C_{j^*}$ for $s$ steps from $z$ is
+$\sum_{z'}(B^s)_{zz'}\ge(B^sw)_z/\max w\ge(1-h\lambda_F)^s\min w/\max w$. We
+use Claim A for the first $m$ visits, from $y$ back to $y$, then
+$s=\ell-2m+1$ steps inside $C_{j^*}$ to any state $z'$, then Claim A for the
+last $m$ visits, from $z'$ to $x$. By the Markov property this gives at least
+$c_A^2(\min w/\max w)(1-h\lambda_F)^\ell$. Also $\lambda_F\le q_{\max}$,
+because the Perron root of $Q_{C_{j^*}}$ is at least each diagonal entry. So
+$h\lambda_F\le\frac12$ and $\log(1-h\lambda_F)\ge-h\lambda_F-h^2\lambda_F^2$.
+
+\emph{The family of paths.} Give block $j\ne j^*$ the length $m$ and block
+$j^*$ the length $\ell=N-(r-1)m$, which is at least $2m$ for $T\ge T_0=r+2$
+and $N\ge N_0$. Consider the paths that go from $y_j$ to $x_j$ in block $j$
+as in the claims and pass from block $j$ to block $j+1$ by the switch
+$x_j\to y_{j+1}$. They all have support $F$. By the Markov property, and
+since $h\ell\le T$ and $h^2\ell\le T^2/N\le1$, their total probability is at
+least $\mu_{y_1}(ha)^{r-1}c_A^{r-1}c_Be^{-T\lambda_F-q_{\max}^2}$. The
+composition of such a path is fixed by its restrictions to the blocks. On
+the block in $C_j$ the restriction is a vector of $|C_j|$ positive integers
+whose sum is $m$ for $j\ne j^*$ and $\ell$ for $j=j^*$. A vector of
+positive integers with a given sum is fixed by all but one of its entries,
+and each entry is at most the sum. Also $\ell\le N$. So these paths
+have at most $(N+1)^{k^*-1}\prod_{j\ne j^*}(m+1)^{|C_j|-1}$ compositions,
+and $m+1\le3N/T$. Since $\sum_{j\ne j^*}(|C_j|-1)=k_F-k^*-(r-1)$ and $h=T/N$,
+dividing the total probability by the number of compositions gives
+$M_F\ge c\,N^{-(k_F-1)}T^{k_F-k^*}e^{-T\lambda_F}$. \qed
+
+\subsection{A forest formula for the covariance}\label{app:forest}
+
+This lemma is used for Proposition~\ref{prop:forest}. It writes $\det\Sigma$ through
+spanning trees, with no reversibility.
+
+For weights $f_{ij}\ge0$ on the ordered pairs $i\ne j$ of $F$ and a state $i\in F$ let
+\[
+\arb_i(f)=\sum_{\mathcal T}\ \prod_{a\ne i}f_{a\,p_{\mathcal T}(a)},
+\]
+the sum over the spanning trees $\mathcal T$ of the complete graph on $F$, where
+$p_{\mathcal T}(a)$ is the neighbor of $a$ on the path from $a$ to $i$ in $\mathcal T$. So
+$\arb_i(f)$ is the weighted count of the spanning trees oriented toward the root $i$. If $f$ is
+symmetric, then $\arb_i(f)=\tree(f)$ for every $i$.
+
+\begin{lemma}[a forest formula for the covariance]\label{lem:forest}
+Let $G$ be an irreducible generator on $F$ with stationary law $\pi$, where $k=|F|\ge2$, and let
+$D$, $Z$ and $\Gamma$ be as at the start of this appendix, and $\Sigma$ as in
+Lemma~\ref{lem:perron} (namely $\Gamma$ without the row and column of state $1$). Put $f_{ij}=\pi_iG_{ij}$ for
+$i\ne j$, the stationary flow from $i$ to $j$.
+\begin{enumerate}[(i)]
+\item The number $\arb_i(f)$ does not depend on $i$. We write $\arb(f)$ for it. Also
+$\det(-G)_{(i)}=\pi_i\arb(f)/\prod_j\pi_j$ for every $i$, where $(i)$ means that row and column
+$i$ are deleted, and
+\[
+\det(\ones\pi^\top-G)=\sum_{i\in F}\det(-G)_{(i)}=\frac{\arb(f)}{\prod_j\pi_j}.
+\]
+\item Let $S=-(DG+G^\top D)$. Then $S$ is the Laplacian of the conductances
+$f_{ij}+f_{ji}$, and $\Gamma=Z^\top SZ$.
+\item With $\tree(f+f^\top)$ the weighted count of spanning trees for the conductances
+$f_{ij}+f_{ji}$,
+\[
+\det\Sigma=\frac{\tree(f+f^\top)}{\det(\ones\pi^\top-G)^2}
+=\frac{(\prod_j\pi_j)^2\,\tree(f+f^\top)}{\arb(f)^2}.
+\]
+\end{enumerate}
+\end{lemma}
+
+In words, the determinant of the covariance of the occupation fractions is the square of the
+product of the stationary probabilities, times a count of undirected spanning trees for the
+symmetrized stationary flow, divided by the square of a count of directed spanning trees for the
+flow itself. No reversibility is needed. For two states with rates $a$ and $b$ the flow is
+$ab/(a+b)$ in each direction, the two counts are $2ab/(a+b)$ and $ab/(a+b)$, and
+$\det\Sigma=2ab/(a+b)^3$, which is $\frac14$ for $a=b=1$.
+
+\emph{Idea of the proof.} The matrix $\Gamma=DZ+Z^\top D$ factors as $Z^\top SZ$, where $S$ is
+twice the symmetric part of the Laplacian $-DG$ of the stationary flow. Each of the three
+factors has rank $k-1$, so the determinant of the product is $0$ and tells us nothing. The
+adjugate is still multiplicative, and the adjugate of a matrix of rank $k-1$ is a rank one
+matrix that we know up to one scalar from the two kernels. For $S$ the scalar is a count of
+spanning trees by the matrix-tree theorem. For $Z$ the scalar is $1/\det(\ones\pi^\top-G)$, and
+the directed matrix-tree theorem turns this determinant into a count of oriented spanning trees.
+
+\begin{proof}
+We use three facts about the adjugate $\operatorname{adj}M$ of a $k\times k$ matrix $M$. First,
+$\operatorname{adj}(AB)=\operatorname{adj}(B)\operatorname{adj}(A)$ for all square matrices $A$
+and $B$, by the Cauchy--Binet formula. Second,
+$\det(M+uv^\top)=\det M+v^\top\operatorname{adj}(M)\,u$ for all vectors $u$ and $v$. Third,
+suppose that $M$ has rank $k-1$ and that $Mu=0$ and $v^\top M=0$ with $u$ and $v$ nonzero. Then
+$\operatorname{adj}M=m\,uv^\top$ for some number $m$. Indeed
+$M\operatorname{adj}M=\operatorname{adj}(M)M=(\det M)I=0$, so every column of
+$\operatorname{adj}M$ lies in the kernel $\R u$ of $M$, and every row lies in the left kernel
+$\R v^\top$. A matrix with these two properties is a multiple of $uv^\top$.
+
+(i) Let $\mathcal L=-DG$. Its off-diagonal entries are $-f_{ij}$, its row sums vanish because
+$G\ones=0$, and its column sums vanish because $\pi^\top G=0$. The kernel of $G$ is $\R\ones$
+because $G$ is irreducible, so $\mathcal L$ has rank $k-1$. By the third fact with
+$u=v=\ones$, all entries of $\operatorname{adj}\mathcal L$ are equal. By the matrix-tree theorem
+for directed graphs~\cite{tutte1948,chaiken1982}, the diagonal entry
+$\det\mathcal L_{(i)}$ of $\operatorname{adj}\mathcal L$ is $\arb_i(f)$. So $\arb_i(f)$ does
+not depend on $i$. Deleting row and column $i$ from $-G=D^{-1}\mathcal L$ gives
+$\det(-G)_{(i)}=\arb(f)/\prod_{j\ne i}\pi_j=\pi_i\arb(f)/\prod_j\pi_j$, and the sum over $i$ is
+$\arb(f)/\prod_j\pi_j$ because $\sum_i\pi_i=1$. Next, $-G$ has rank $k-1$, right kernel
+$\R\ones$ and left kernel $\R\pi^\top$. So $\operatorname{adj}(-G)=g\,\ones\pi^\top$ for some
+number $g$ by the third fact. The trace of $\ones\pi^\top$ is $1$, so $g$ is the trace of
+$\operatorname{adj}(-G)$, which is $\sum_i\det(-G)_{(i)}$. Since $\det(-G)=0$, the second fact
+gives
+\[
+\det(\ones\pi^\top-G)=\pi^\top\operatorname{adj}(-G)\,\ones=g\,(\pi^\top\ones)(\pi^\top\ones)=g .
+\]
+
+(ii) The matrix $S$ is symmetric. For $i\ne j$ its entry is $-(\pi_iG_{ij}+\pi_jG_{ji})
+=-(f_{ij}+f_{ji})$, and $S\ones=-DG\ones-G^\top\pi=0$. So $S$ is the Laplacian of the
+conductances $f_{ij}+f_{ji}$. By~\eqref{eq:Zprops}, $-GZ=I-\ones\pi^\top$ and $\pi^\top Z=0$.
+Hence
+\[
+Z^\top(-DG)Z=Z^\top D(I-\ones\pi^\top)=Z^\top D-(\pi^\top Z)^\top\pi^\top=Z^\top D,
+\]
+where we used $D\ones=\pi$. The transpose of this identity is $Z^\top(-G^\top D)Z=DZ$. Adding
+the two gives $Z^\top SZ=Z^\top D+DZ=\Gamma$.
+
+(iii) Put $w=\det(\ones\pi^\top-G)$, which is not $0$ because $Z$ exists. By the matrix-tree
+theorem~\cite{bollobas1998} every diagonal entry of $\operatorname{adj}S$ is
+$\tree(f+f^\top)$. This number is positive because the graph of $G$ is strongly connected. So
+$S$ has rank $k-1$, and the third fact with $u=v=\ones$ gives
+$\operatorname{adj}S=\tree(f+f^\top)\,\ones\ones^\top$. Now we turn to $Z$.
+By~\eqref{eq:Zprops}, $Z\ones=0$ and $\pi^\top Z=0$. The matrix
+$Z+\ones\pi^\top=(\ones\pi^\top-G)^{-1}$ is invertible, so $Z$ has rank $k-1$, and
+$\operatorname{adj}Z=z\,\ones\pi^\top$ for some number $z$ by the third fact. Since $\det Z=0$,
+the second fact gives
+\[
+\frac1w=\det(Z+\ones\pi^\top)=\pi^\top\operatorname{adj}(Z)\,\ones=z .
+\]
+Also $\operatorname{adj}(Z^\top)=(\operatorname{adj}Z)^\top=z\,\pi\ones^\top$. By (ii) and the
+first fact,
+\[
+\operatorname{adj}\Gamma=\operatorname{adj}(Z)\operatorname{adj}(S)\operatorname{adj}(Z^\top)
+=z^2\,\tree(f+f^\top)\,\ones(\pi^\top\ones)(\ones^\top\pi)\ones^\top
+=\frac{\tree(f+f^\top)}{w^2}\,\ones\ones^\top .
+\]
+The entry of $\operatorname{adj}\Gamma$ at state $1$ is $\det\Sigma$. This is the first formula
+in (iii), and the second follows from (i).
+\end{proof}

@@ -748,19 +748,12 @@ convex between the humps.
 \end{proposition}
 
 \begin{proof}
-The script \texttt{certify\_convex.py} uses ball arithmetic with 160 bits
-(the library Arb). For each $N$ it encloses $\varepsilon_N$ in an interval of
-relative width at most $2\cdot10^{-8}$. It does so by evaluating the center
-and the end at the two ends of the interval, and Proposition~\ref{prop:mlr}
-then places the crossing between them. It then runs \eqref{eq:P-rec} with
-$\varepsilon$ equal to this interval. Each step only multiplies and adds
-enclosures of numbers in $[0,1]$, so the radii stay small. From the resulting enclosure of $P_N$ it lists every index that
-can be a mode, and for each of them it checks that the enclosure of $D_N(a)$
-is positive for every $2m^*+1\le a\le N-2m^*-1$. When this range is not
-empty, so that $2m^*+1\le N/2$, it also checks that $D_N(a_0)<0$ for some
-$1\le a_0\le2m^*$ and that $D_N(2m^*+1)>0$. By
-Theorem~\ref{thm:no-holes} these two inequalities already imply the claim, so the test of
-every $a$ is a second check. This covers $10\le N\le2000$.
+For $10\le N\le2000$, the certified computation described in
+Section~\ref{sec:verify} brackets $\varepsilon_N$ and encloses $P_N$ throughout
+that bracket. It lists every possible mode and checks $D_N(a)>0$ on each
+required range. When the range is nonempty, it also checks
+$D_N(a_0)<0$ at some $1\le a_0\le2m^*$ and $D_N(2m^*+1)>0$.
+Theorem~\ref{thm:no-holes} then gives a second check of the conclusion.
 
 For $5\le N\le9$ the script is not run, and the check is done in Lean
 (Section~\ref{sec:verify}) by a computation in exact integer arithmetic with
@@ -845,10 +838,8 @@ of Online Resource~1 for odd $N$) are open, and no
 computation can reach these constants as the proof stands. By Corollary~\ref{cor:one-point}
 (and Proposition~S3.1(b) of Online Resource~1 for odd $N$) the whole range would
 be closed by an effective proof of the single inequality $D_N(a_1)>0$ at one point
-$m^*<a_1\le2m^*+1$. Such a proof would need the second
-differences of $P_N$ near $2m^*$ with an error below their size. Near $2m^*$ the Landau density
-suggests the size $3/[x^3(\log x)^4]$, since $\lambda$ is close to $\log x$ there and
-$f_L''(\lambda)\sim6/\lambda^4$ as $\lambda\to\infty$. This is a heuristic, not a local limit theorem for second
-differences. The main error in Theorem~\ref{thm:landau} is $(889+165\log x)/x$ for each value
-of $xf_N$, and this is far too large for the $N$ in question.
+$m^*<a_1\le2m^*+1$. Near $2m^*$ the Landau heuristic suggests second differences of size
+$3/[x^3(\log x)^4]$, since $f_L''(\lambda)\sim6/\lambda^4$ and
+$\lambda\approx\log x$ there. The pointwise error in Theorem~\ref{thm:landau}
+is much larger, so it does not prove the needed sign.
 \end{remark}

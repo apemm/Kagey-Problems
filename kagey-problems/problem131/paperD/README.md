@@ -355,3 +355,7 @@ The sha256 values in the witness headers are of the files as they were on disk d
 `certify_center.py` and `certify_convex.py` had LF line endings and `verify_elephant_shape.py` had
 CRLF endings. Its LF form, as committed, has sha256
 49c78eea387b293d1dd24acc257a1d362bd7e6ce5fb6219e0eb06465223f811a.
+
+## Final editorial revision
+
+The article is 41 pages, with a 12-page Online Resource and a 53-page combined arXiv version. The bulk approximation leads the abstract and the Bokes comparison appears immediately after the model/regime. The detailed Lean coverage tables are preserved alongside `../lean/PaperD/MAP.md` in `coverage_tables.tex`. The mathematical statements and numbering are unchanged. `cover_letter.md` is a submission draft.

@@ -1,30 +1,33 @@
 \section{Introduction}\label{sec:intro}
 
-% AUTHOR REWRITE: opening paragraphs (the model, the regime, the parameters of other papers)
-The elephant random walk of Sch\"utz and Trimper~\cite{schutz2004} has steps
-$X_1,\dots,X_N\in\{\pm1\}$ and remembers its whole past. Each step after the first
-picks one of the earlier steps uniformly at random and repeats it, except that with
-probability $\varepsilon$ it reverses it. A reversal reverses the sign of the sampled step,
-which need not be the step just before. In~\cite{schutz2004} the first step is $+1$ with a
-probability that is a parameter of the model, and we take it to be $\frac12$. For
-$\varepsilon\le\frac12$ there is an equivalent description, in which a step copies the
-sampled step exactly with probability $1-2\varepsilon$ and is otherwise a fresh fair sign.
-The steps are also the colors of broadcasting on a random recursive
-tree~\cite{adlv2022,ahs2026}, in which each new vertex attaches to a uniform earlier vertex,
-copies its color and changes it with probability $\varepsilon$ (Lemma~\ref{lem:tree}).
+The elephant random walk of Sch\"utz and Trimper~\cite{schutz2004} remembers
+all its earlier steps. After a fair first step, it chooses an earlier step
+uniformly and copies its sign, reversing that sign with probability
+$\varepsilon$. (This reverses the sampled step, which need not be the most
+recent one.) For $N$ steps put $x=N\varepsilon$. We study $x$ of order $\log N$,
+so the reversal probability tends to zero even though the expected number of
+reversals, $x-\varepsilon$, grows. Most limit theorems instead keep
+$\varepsilon$ fixed~\cite{coletti2017,bercu2018,kubotatakei2019,glrs2025,tv2026}.
 
-Most limit theorems for the walk fix $\varepsilon$ as
-$N\to\infty$~\cite{coletti2017,bercu2018,kubotatakei2019,glrs2025,tv2026}. For a walk with
-$N$ steps we write $x=N\varepsilon$. The expected number of reversals is
-$(N-1)\varepsilon=x-\varepsilon$, so $x$ is this number up to an error below one. We study
-the regime in which $x$ is of order $\log N$, so that $\varepsilon\to0$ and the walk
-reverses only about $x$ times, and we describe the law of its endpoint site by site.
+The number of steps that disagree with the first step is already a known
+chain, namely the resistant-cell count in the reversible fluctuation assay of
+Bokes, Hlubinov\'a and Singh~\cite{bhs2023}, with equal switching probabilities.
+Their first-switch and P\'olya-urn calculation gives its law to first order in
+the switching probability~\cite[Eqs.~(6)--(10)]{bhs2023}, including the center
+coefficient $4/(N+2)$. They also approximate a random-start law by two Landau
+densities~\cite[Eqs.~(58)--(60)]{bhs2023}. Their matched asymptotic analysis does
+not give rigorous error bounds. This is the starting point for our
+quantitative comparison.
 
-The parameters of other papers translate as follows. The memory parameter
+For comparison with other conventions, the memory parameter
 of~\cite{schutz2004} is $1-\varepsilon$, the parameter $a$ of~\cite{glrs2025} is
-$1-2\varepsilon$, and the flip probability of broadcasting is $\varepsilon$. For
-$\varepsilon\le\frac12$ the retention probability of the percolation in
-Section~\ref{sec:prior} is also $1-2\varepsilon$.
+$1-2\varepsilon$, and the broadcasting flip probability is $\varepsilon$.
+The broadcasting picture puts the steps on a random recursive tree, where
+each new vertex chooses a uniform earlier parent and copies or reverses its
+color~\cite{adlv2022,ahs2026} (Lemma~\ref{lem:tree}). For
+$\varepsilon\le\frac12$ one can instead copy the parent with probability
+$1-2\varepsilon$ and otherwise choose a fresh fair sign. This is also the
+retention probability in the percolation of Section~\ref{sec:prior}.
 
 We ask when the walk is as likely to end in the middle as at each end. Let $N$
 be even, and let $A_N$ be the number of steps equal to $+1$. The walk ends at
@@ -56,19 +59,6 @@ the strongly supercritical regime of this
 percolation~\cite{baur2016}. The results there describe cluster
 sizes, not the probability of the middle (Section~\ref{sec:prior}).
 
-The number of steps that disagree with the first step is a known chain. With
-equal switching probabilities in both directions, it is the number of
-resistant cells in the reversible fluctuation assay of Bokes, Hlubinov\'a and
-Singh~\cite{bhs2023}. They find its law to first order in the switching
-probability by conditioning on the first switch and then running P\'olya's
-urn~\cite[Eqs.~(6)--(10)]{bhs2023}. At the center this gives our first-order
-coefficient $4/(N+2)$. For a first cell of random type they also approximate
-the law by a mixture of two Landau densities, one at each
-end~\cite[Eqs.~(58)--(60)]{bhs2023}. Their analysis uses matched asymptotics
-and gives no rigorous error estimates. What we add are rigorous estimates of
-the center with uniform relative errors while $x$ grows with $N$, the
-expansion of the crossing, and theorems on the discrete shape of the law.
-
 \subsection{Setting and notation}\label{sec:notation}
 
 The walk takes $N$ steps $X_1,\dots,X_N\in\{+1,-1\}$, where
@@ -92,8 +82,8 @@ they first appear.
 
 \subsection{Main results}\label{sec:results}
 
-Our first theorem gives the center to first order with explicit bounds, and
-with it the crossing.
+Theorem~\ref{thm:main-bulk} is the main approximation tool. We first state
+the center and crossing bounds, then the bulk and shape results.
 
 \begin{theorem}[the center and the crossing]\label{thm:main-center}
 Let $N\ge2$ be even.
@@ -200,58 +190,36 @@ Remark~\ref{rem:convex-open}). The second would follow from the first by
 Lemma~\ref{lem:center-convex} whenever each mode lies within $(N-2)/4$ of the
 nearer end.
 
-Three inputs to the proofs rest on computation, and Section~\ref{sec:verify}
-describes them. The first is an enclosure in ball arithmetic of a sum of 60
-positive terms, which gives the constant $5200$ in
-Theorem~\ref{thm:erw-bounds}(b). This constant gives the threshold in
-Proposition~\ref{prop:dip-hyp}, and in Online Resource~1 the threshold for odd $N$ and the
-explicit second-order bound. The asymptotic statements need only
-that the series converges. The second is the enclosure of the mode of the
-Landau density in Lemma~\ref{lem:landau-mode}. It is used in
-Corollary~\ref{cor:mode-location}, Theorem~\ref{thm:convex-large},
-Corollary~\ref{cor:unique-min} and Proposition~S3.1(c) of Online Resource~1. Lean proves this lemma as
-well, by an integration that its kernel checks, with the unimodality of $f_L$ as its only
-input. The third
-is a certified enclosure of $\varepsilon_N$ and of the law at the crossing
-for $10\le N\le2000$, and one of the same kind in Lean for $5\le N\le9$. It
-proves Propositions~\ref{prop:convex-certified}
-and~\ref{prop:center-small}. For even $N\ge10$ the enclosure of $\varepsilon_N$
-also gives Proposition~\ref{prop:dip-hyp} for $10\le N<1688$. Every other
-statement is proved by hand, apart from short exact computations in rational
-arithmetic, and no proof uses the tables or the figures.
+The three computational inputs are described in Section~\ref{sec:verify},
+with the result each one supports. The tables and figures illustrate the
+theorems and are not used in their proofs.
 
 \paragraph{Why the elephant needs twice as many reversals.}
-The following argument is heuristic, and Sections~\ref{sec:erw} and~\ref{sec:shape} make it precise.
-% AUTHOR REWRITE: heuristic for the factor two
-The ends are easy. The walk ends in the right end bin exactly when its first step goes right
-and it never changes direction. This has probability
-$\frac12(1-\varepsilon)^{N-1}\approx\frac12e^{-x}$ for the elephant walk, and the same with
-$q$ in place of $\varepsilon$ for the persistent walk. So only the middle differs. In the
-persistent walk the $T$ switches are spread over the whole walk, and each switch moves the
-final position by about one run length $N/T$. So the number of right steps spreads over about
-$N/\sqrt T$ bins, and the middle bin has probability of order $\sqrt T/N$. The ends lose when
-$e^{-T}$ falls to about $1/N$, that is, when $T\approx\log N$.
+This is a heuristic for the scales, made precise in
+Sections~\ref{sec:erw} and~\ref{sec:shape}. An end has probability about
+$\frac12e^{-x}$, since the first step must point there and no reversal can
+occur. The same holds for the persistent walk with its switch count $T$ in
+place of $x$. What changes is the probability of the middle.
 
-In the elephant walk a reversal spreads differently. A reversal at step $t+1$ is copied by
-later steps, those copies are copied, and so on. The steps that descend from it form a family.
-Its share of the walk behaves like the share of one ball in P\'olya's urn started with one
-ball against $t$, so a late reversal has a small family and hardly moves the walk. To end
-exactly in the middle, the walk usually needs a family that fills about half the walk. To
-first order in $\varepsilon$, a walk that ends in the middle reverses once, among the first
-few steps. (A walk at the crossing reverses about $x\approx2\log N$ times in all, but most of
-these reversals are late and have small families.) An early reversal has probability of order
-$\varepsilon$, and hitting the exact middle costs another factor of order $1/N$. So the middle
-bin has probability of order $\varepsilon/N=x/N^2$ (in fact about $4x/N^2$). The ends lose
-only when $e^{-x}$ falls to about $1/N^2$, that is, when $x\approx2\log N$. More precisely,
-the crossing of the persistent walk satisfies $\frac12e^{-T}\approx\sqrt{2T/\pi}/N$, and
-squaring this relation turns it into the elephant relation $\frac12e^{-x}\approx4x/N^2$ with
-$x\approx2T-\log(2\pi)$.
+In the persistent walk the switches split the trajectory into runs of
+typical length $N/T$. The number of right steps spreads over about
+$N/\sqrt T$ bins, so its central mass is of order $\sqrt T/N$. Balancing
+this with $e^{-T}$ gives $T\approx\log N$.
 
-The small families also give the shape of the law. About $x/m^2$ reversals
-have a family of $m$ steps, so the bin at distance $m$ from an end has
-probability about $x/(2m^2)$ over a wide range of $m$. So the law has a hump
-near each end, and the middle is where the two tails meet. Indeed, twice
-$x/(2m^2)$ at $m=N/2$ is the $4x/N^2$ above.
+An elephant reversal is copied by later steps, and those copies are copied
+again. Its descendants form a family whose share follows P\'olya's urn.
+A late reversal usually has a small family. Reaching the middle instead
+requires a family of about half the walk, hence an early reversal. Its
+probability is of order $\varepsilon$, and landing at the exact middle costs
+another factor $1/N$. Thus the central mass is of order
+$\varepsilon/N=x/N^2$, in fact about $4x/N^2$. (At the crossing there are
+about $2\log N$ reversals in all, but most are late.) Balancing with
+$e^{-x}$ now gives $x\approx2\log N$.
+
+Our contribution is a truncated compound-Poisson approximation with an
+explicit transfer error, a Landau local limit with a rate, the resulting
+mode and dip theorems for the walk itself, and the crossing expansion with
+uniform relative control of the center.
 
 \subsection{Prior work}\label{sec:prior}
 

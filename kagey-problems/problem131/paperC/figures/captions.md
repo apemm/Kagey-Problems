@@ -7,7 +7,7 @@ owner; this file records that included version. All four figures have white back
 
 ## The composition simplex (`fig:simplex`)
 
-Source: `../sec_intro.tex`. Asset: `fig_simplex.pdf`. Generator: `make_simplex_figure.py`.
+Source: `../sec_model.tex`. Asset: `fig_simplex.pdf`. Generator: `make_simplex_figure.py`.
 
 ```latex
 \caption{The exact law of the composition for the path $1-2-3$ (rate $1$ on
@@ -62,30 +62,26 @@ $1+\sqrt2$ and $2+\sqrt2$ (Table~\ref{tab:outcomes}).}
 
 ## Complete graph: no field versus a weak field (`fig:complete-envelope`)
 
-Source: `../sec_complete.tex`. Asset: `fig_complete_envelope.pdf`. Generator: `make_complete_envelope.py`.
+Source: `../sec_intro.tex`. Asset: `fig_complete_envelope.pdf`. Generator: `make_complete_envelope.py`.
 
-Included after Corollary `cor:weakfield-phases` and its proof, before the
-edge-phase example and full-hierarchy corollary. Exact current inclusion block:
+Included immediately after Theorem A in the introduction. Exact current inclusion block:
 
 ```latex
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{fig_complete_envelope}
-\caption{Second-order face selection on $K_4$, with the uniform start and
-$T=\log N-\frac12\log\log N+t$. The thin lines are the limiting scores
-in~\eqref{eq:weakfield-lines}, the bold curve is their upper envelope, and the strips
-show the winning support sizes between limiting ties.
-(a) With no field, the winner jumps from size one to size four at $t=a_4$
-(Corollary~\ref{cor:simplex-modes}).
-(b) With $\xi_i=-(i-1)^2$, the supports $\{1,\ldots,k\}$ win in order at the
-values $t_k$ of Corollary~\ref{cor:weakfield-full-hierarchy}.
-The ordinate is the limiting log face maximum relative to $V_N$, using unnormalized
-field weights. The panels have the same vertical scale and different horizontal ranges.
-The marked ties concern the limiting lines, and need not be ties of finite-$N$ modes.}
+\caption{Support selection on the complete graph with four states, unit rates
+and uniform start, in the window $T=\log N-\frac12\log\log N+t$.
+Thin lines are limiting log face maxima relative to an untilted vertex,
+and the bold curve is their upper envelope.
+(a) Without a field the winner jumps from one state to all four.
+(b) Weighting a composition by $e^{\langle\xi,n\rangle/N}$, with
+$\xi_i=-(i-1)^2$, lets every size win in turn. The scores and marked
+crossings are derived in Section~\ref{sec:complete}. Field weights are
+unnormalized, and marked ties concern the limit, not finite-$N$ equalities.}
 \label{fig:complete-envelope}
 \end{figure}
 ```
-
 
 ### Complete-graph source, reproduction, and interpretation
 
