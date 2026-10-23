@@ -1,0 +1,97 @@
+\subsection{Proof of Theorem~\ref{thm:cp}}\label{app:bulk-cp}
+
+Here we assume only $N\ge1$ and $0<\varepsilon<1$. Let
+$Z_+=\sum_{v=2}^N\mu_v\lvert\mathcal T_v\rvert$ be the total size of the
+flipped families.
+
+\emph{Step 1: $M_N=Z_+$ with high probability.} Two families are nested or
+disjoint. Suppose that no marked vertex has a marked strict descendant. Then
+the marked families are disjoint, each of their vertices has exactly one
+mark on its path to the root, and the other vertices have none. So
+$M_N=Z_+$ by Lemma~\ref{lem:tree}. The number of pairs of a marked vertex and
+a marked strict descendant has mean
+$\varepsilon^2\,\E\sum_v(\lvert\mathcal T_v\rvert-1)$, since marks and tree are
+independent. Hence
+\[
+ \Prob(M_N\ne Z_+)\le\varepsilon^2\sum_{v=2}^N\Bigl(\frac Nv-1\Bigr)
+ =\varepsilon^2(NH_N-2N+1).
+\]
+
+\emph{Step 2. Given the tree, a product.} Fix $\theta\in[-\pi,\pi]$. Given
+$\mathcal T$ the marks are independent, so
+$\E[e^{i\theta Z_+}\mid\mathcal T]=\prod_{v=2}^N(1+a_v)$ with
+$a_v=\varepsilon(e^{i\theta\lvert\mathcal T_v\rvert}-1)$. Here
+$\lvert a_v\rvert\le2\varepsilon$, $\operatorname{Re}a_v\le0$ and
+$\lvert1+a_v\rvert=\lvert1-\varepsilon+\varepsilon e^{i\theta\lvert\mathcal T_v\rvert}\rvert\le1$.
+Put $W=\sum_va_v$, so that $\operatorname{Re}W\le0$ and $e^W=\prod_ve^{a_v}$ with
+$\lvert e^{a_v}\rvert\le1$. For complex $a$ with $\operatorname{Re}a\le0$, Taylor's formula
+$e^a-1-a=a^2\int_0^1(1-s)e^{sa}\,ds$ gives $\lvert e^a-(1+a)\rvert\le\frac12\lvert a\rvert^2$. For
+complex numbers $u_v$ and $w_v$ of modulus at most $1$ we have
+$\lvert\prod_vu_v-\prod_vw_v\rvert\le\sum_v\lvert u_v-w_v\rvert$, by changing one factor at a
+time. So
+\[
+ \Bigl\lvert\prod_v(1+a_v)-e^W\Bigr\rvert\le\sum_{v=2}^N\tfrac12\lvert a_v\rvert^2
+ \le2\varepsilon^2(N-1).
+\]
+
+\emph{Step 3. Replace $W$ by its mean.} Write $W=\varepsilon F$ with
+$F=\sum_{v=2}^N(e^{i\theta\lvert\mathcal T_v\rvert}-1)$. Then
+$\E W=\varepsilon\sum_d(e^{i\theta d}-1)\sum_v\beta_v(d)=x\Psi_N(\theta)$,
+which is $\log\widehat{\CP}_N(\theta)$. Put $\delta=W-\E W$. Taylor's formula
+for $s\mapsto e^{\E W+s\delta}$ on $[0,1]$ gives
+\[
+ e^W-e^{\E W}-e^{\E W}\delta=\delta^2\int_0^1(1-s)\,e^{\E W+s\delta}\,ds .
+\]
+The exponent $\E W+s\delta=(1-s)\E W+sW$ has real part at most $0$, so the
+right side has modulus at most $\frac12\lvert\delta\rvert^2$. As $\E\delta=0$,
+we get $\lvert\E e^W-e^{\E W}\rvert\le\frac12\varepsilon^2\Var F$, where
+$\Var F=\E\lvert F-\E F\rvert^2$.
+
+\emph{Step 4. The variance of $F$.} The variable $F$ is a function of the
+independent parents $U_1,\dots,U_{N-1}$. Let $F^{(k)}$ be $F$ with $U_k$
+replaced by an independent copy $U_k'$. The Efron--Stein
+inequality~\cite{efronstein1981} says that
+$\Var F\le\frac12\sum_k\E\lvert F-F^{(k)}\rvert^2$. It holds for every square-integrable
+function of independent variables~\cite{steele1986}, and it holds for the complex $F$ because
+both sides are the sums of those for $\operatorname{Re}F$ and $\operatorname{Im}F$.
+
+Replacing $U_k$ by $U_k'$ moves the family of $k+1$ from $U_k$ to $U_k'$. So
+$\lvert\mathcal T_v\rvert$ changes only for vertices $v\ge2$ on the path from
+$U_k$ to the root or on the path from $U_k'$ to the root. These paths do not
+depend on the choice at step $k$, since $U_k,U_k'\le k$. Let $\mathrm{dp}(u)$
+be the depth of $u$, namely the number of edges between $u$ and the root.
+There are at most $\mathrm{dp}(U_k)+\mathrm{dp}(U_k')$ such vertices, and each
+term of $F$ moves by at most $2$. Hence
+$\E\lvert F-F^{(k)}\rvert^2\le8\,\E[\mathrm{dp}(U_k)^2+\mathrm{dp}(U_k')^2]
+=16\,\E\,\mathrm{dp}(U_k)^2$.
+
+Since $\mathrm{dp}(u+1)=1+\mathrm{dp}(U_u)$, the generating function
+$g_u(s)=\E s^{\mathrm{dp}(u)}$ satisfies $g_1=1$ and
+$u\,g_{u+1}(s)=s\sum_{j\le u}g_j(s)$. Subtracting the same identity for $u-1$
+gives $u\,g_{u+1}(s)=(u-1+s)\,g_u(s)$ for $u\ge2$, and $g_2(s)=s$. So
+$g_u(s)=\prod_{i=1}^{u-1}\frac{i-1+s}{i}$. So $\mathrm{dp}(u)$ is a sum of
+independent Bernoulli$(1/i)$ variables with $1\le i<u$, and
+$\E\,\mathrm{dp}(u)^2\le H_{u-1}^2+H_{u-1}$. The parent $U_k$ is uniform on
+$\{1,\dots,k\}$ and independent of the depths of $1,\dots,k$, so
+$\E\,\mathrm{dp}(U_k)^2\le H_{k-1}^2+H_{k-1}$. We get
+\[
+ \Var F\le\frac12\sum_{k=1}^{N-1}16\bigl(H_{k-1}^2+H_{k-1}\bigr)
+ =8\sum_{k=0}^{N-2}\bigl(H_k^2+H_k\bigr),
+\]
+and the bound of Step 3 is at most $4\varepsilon^2\sum_{k=0}^{N-2}(H_k^2+H_k)$.
+
+\emph{Step 5: Fourier inversion.} For every integer $m$,
+\[
+ \Prob(Z_+=m)-\CP_N(m)=\frac1{2\pi}\int_{-\pi}^{\pi}e^{-im\theta}
+ \bigl(\E e^{i\theta Z_+}-\widehat{\CP}_N(\theta)\bigr)\,d\theta,
+\]
+so the left side is at most
+$\sup_\theta\lvert\E e^{i\theta Z_+}-\widehat{\CP}_N(\theta)\rvert$ in absolute
+value. By Steps 2 to 4 this is at most
+$2\varepsilon^2(N-1)+4\varepsilon^2\sum_{k=0}^{N-2}(H_k^2+H_k)$. Finally
+$\lvert f_N(m)-\Prob(Z_+=m)\rvert\le\Prob(M_N\ne Z_+)$, and Step 1 bounds it.
+The three bounds add up to $\delta_\Sigma$. For $\delta_\Sigma\le\delta_B$ we compare term by
+term. Since $H_N\le1+\log N$, we have $\varepsilon^2(NH_N-2N+1)\le\varepsilon^2N\log N=x^2\log N/N$.
+Next $2\varepsilon^2(N-1)\le4\varepsilon^2N\le\frac{4x^2}Ne^{4x^2/N}$. Finally
+$H_k\le H_N$ for $k\le N-2$, so the sum is at most $4\varepsilon^2N(H_N^2+H_N)=4x^2(H_N^2+H_N)/N$.
+This proves Theorem~\ref{thm:cp}. \qed

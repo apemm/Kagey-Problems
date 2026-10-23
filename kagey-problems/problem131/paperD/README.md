@@ -8,7 +8,8 @@ at which the walk is as likely to end at the origin (the middle bin, N/2 right s
 end bin, N right steps). The crossing is unique, and x_N = N eps_N = 2 log N - log log N - log 16 +
 o(1), about twice the value for the persistent random walk, because a walk that ends in the middle
 usually has a reversal among its first few steps. At the crossing the law has a hump near each end,
-and for large even N, and for every even N from 8 to 2000, the middle is the lowest interior bin.
+and for every even N >= 8 the middle is the unique interior minimum. The law rises strictly
+from each end to an interval of maximizing bins and falls strictly from there to the middle.
 
 For the persistent (Markov) walk, which copies its last step instead, the question is part of
 Problem 131 of Kagey's Open Problem Collection (https://peterkagey.com/problems/131/), posed for a
@@ -26,7 +27,15 @@ the check scripts and Lean files, write n for N.)
 
 ## What is proved
 
-The statement numbers below are those of the build of October 17, 2026. Check them against the
+The October 23 revision adds three results, with full proofs in the paper.
+
+- `cor:unique-min` closes the minimum gap for every even N >= 8 and proves exactly two symmetric modal intervals. The argument uses `lem:center-no-holes`, the oriented sign pattern, and the existing endpoint-dip certificates. The stronger prescribed convexity window is still open outside the proved ranges.
+- `thm:cp` now bounds total variation, with the same displayed delta_Sigma. `thm:assay-mle` gives finite-sample concentration, mean-bias bounds and uniform absolute consistency for the constrained compound Poisson likelihood, using ceil((log N)^3) independent sensitive-founder cultures of size N. The comparison law truncates jump sizes, not the total count. The theorem does not cover the fair-founder mixture likelihood or continuous-time switching of existing cells.
+- `cor:fixed-memory-bridge` proves the weak Landau limit of the fixed-memory superdiffusive position limit as memory tends to one. It does not assert uniform local convergence or a sharp bimodality threshold.
+
+These new deductions are not yet in Lean. Existing sign, no-holes and endpoint-dip results are already available there. The old pointwise compound Poisson formalization remains valid. Superseded proofs are preserved in `removed_proofs/cuts_2026-10-23`.
+
+The statement numbers below are historical, from the build of October 17, 2026. Check them against the
 current PDF if the paper has changed since then. That build removed the rounding lemma (Lemma 3.7
 before) and the window theorem (Theorem 3.15 before), and `../lean/PaperD/MAP.md` lists the
 numbers that moved. A later build of the same day moved the second order, the tail and the proof
@@ -66,7 +75,7 @@ eps). Put x = N eps.
   exact computation. For N = 2, 4 and 6 the hypothesis fails.
 - Given the first step, let M_N be the number of steps that differ from it. For N >= 1 and
   0 < eps < 1 its law is within an explicit delta_Sigma <= delta_B of a compound Poisson law with
-  jumps d at rates x/(d(d+1)), bin by bin (Theorem 3.8). The bulk (M_N - x log x)/x tends to the
+  jumps d at rates x/(d(d+1)), now in total variation (`thm:cp`, formerly Theorem 3.8). The bulk (M_N - x log x)/x tends to the
   Landau law when x -> oo and x^3 (log N)^2/N -> 0, in particular at the crossing, with the bound
   (889 + 165 log x)/x + 6.6 x/N + x delta_Sigma for each bin when eps <= 1/4 and x >= 1
   (Theorem 3.9).
@@ -85,11 +94,10 @@ eps). Put x = N eps.
   stays strictly convex up to the mirror point (Theorem 3.19). So strict convexity between the
   humps (Definition 3.13) follows from one inequality (Corollary 3.20). It holds for every large
   N, even or odd, and every eps with log N <= x <= 2 log N, so at the crossing for every large N
-  (Theorem 3.21 and Proposition 3.25), and for large even N the center is then the unique interior
-  minimum (Lemma 3.22 and Corollary 3.23). It holds for
+  (Theorem 3.21 and Proposition 3.25). The October 23 argument proves the unique interior
+  minimum and two-hump shape for every even N >= 8 without this convexity window. The window holds for
   5 <= N <= 2000 by a certified computation (Proposition 3.24, for N <= 9 in Lean only). For odd N the two central bins equal the center of N+1 divided by
-  1 - (1 - 2 eps)/N. For every even N from 8 to 2000 the center is the unique interior minimum
-  (Proposition 3.26, from the certified convexity and Lemma 3.22).
+  1 - (1 - 2 eps)/N. The old finite-range minimum result (Proposition 3.26) is superseded by `cor:unique-min`.
 
 Heavy-tailed runs and aging walks, which earlier versions treated in Sections 4 and 5 and
 Appendices D and E, are now a separate paper in `../paperF`.
@@ -140,9 +148,11 @@ Online Resource 1, are of this kind.
 
 The elephant walk is due to Schütz and Trimper (2004). The cluster picture is Kürsten's coupling with
 random recursive trees, and Guérin, Laulin, Raschel and Simon (2025) prove unimodality with a fixed
-first step. We did not find in the
-literature an asymptotic formula for the center probability of the elephant walk when eps -> 0 as N
-grows.
+first step. Bokes, Hlubinová and Singh (2023) already give the first-order center coefficient
+and a two-Landau approximation in their reversible fluctuation-assay model. The additions here
+are the explicit error bounds, exact crossing and shape results, the constrained-likelihood
+guarantees and the weak bridge to the fixed-memory limit. The manuscript distinguishes these
+from the classical approximations.
 
 ## Files
 
@@ -255,7 +265,7 @@ heavy cells. The scripts need numpy, scipy, mpmath and python-flint. Build the
 paper with `pdflatex problem131_memory.tex`, run three times so that the references settle, and
 then `pdflatex online_resource.tex` twice and the paper once more. The Code availability statement
 of the paper pins the supporting code, certificate records and Lean files to commit
-`4825316506a2da03a5eb0fd93b52484a5942115b`. Later edits to the text of the paper do not change
+`c98db255026bf21ed3c041a8ed888ed99b734886`. Later edits to the text of the paper do not change
 that pin, but a change to a script, a record or a Lean file would need a new checked commit. The arXiv
 version is `problem131_arxiv.tex`. Build it with `pdflatex problem131_arxiv.tex` three times. It
 gives the paper followed by Online Resource 1 in one PDF, with one bibliography and no `xr`.
@@ -270,12 +280,12 @@ docstrings and comments of the scripts keep these older numbers on purpose. The 
 record the sha256 of the raw bytes of the scripts, so even an edit to a comment would break the
 link between a script and its archived witnesses. Use the table below to read them. Outputs of
 earlier runs are kept in `data/` exactly as they were printed, so some of them use older numbers.
-The table gives, for each label the scripts use and for each statement of Section 3, the number now,
+The table preserves the October 17 numbering. For each label the scripts use and each statement of Section 3, it gives that number,
 the number in the first build of October 17 (the numbers of the check scripts) and the number in the
 build just before October 17 (the numbers of `data/certify_elephant_output.txt`, with the same
 shift as in `../lean/PaperD/MAP.md`). Numbers with the prefix S are in Online Resource 1.
 
-| TeX label | number now | first build of October 17 | number before October 17 |
+| TeX label | later build of October 17 | first build of October 17 | number before October 17 |
 |---|---|---|---|
 | `prop:mlr` | Proposition 2.3 | Proposition 2.3 | Proposition 2.3 |
 | `prop:first-mutation` | Proposition 2.5 | Proposition 2.5 | Proposition 2.5 |

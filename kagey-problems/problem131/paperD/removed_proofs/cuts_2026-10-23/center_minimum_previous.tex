@@ -1,0 +1,73 @@
+% Superseded by the exact no-holes deduction. Existing certificates remain unchanged.
+
+\begin{lemma}[the center from convexity]\label{lem:center-convex}
+Let $N\ge8$ be even and $x=x_N$. Let $a^*\ge N/2$ be a mode of $P_N$ and $m^*=N-a^*$.
+Suppose that $2m^*+1\le N/2$ and that $D_N(a)>0$ for every $2m^*+1\le a\le N-2m^*-1$. Then
+$P_N(a)>C_N$ for every $1\le a\le N-1$ with $a\ne h$.
+\end{lemma}
+
+\paragraph{Idea of the proof.}
+Between the humps the law is strictly convex and symmetric, so the center is its only minimum
+there. Outside, a bin as low as the center would be a second valley. A valley needs a point of
+convexity with points of concavity on both sides, and with the mirror image this gives more
+changes of sign of the second difference than Theorem~\ref{thm:five-blocks} allows.
+
+\begin{proof}
+Write $b=2m^*$, so that $b+1\le h$, and put $\delta(a)=P_N(a+1)-P_N(a)$.
+
+\emph{Between the humps.} Since $D_N(a)=\delta(a)-\delta(a-1)>0$ for $b+1\le a\le N-b-1$, the
+differences $\delta(a)$ are strictly increasing for $b\le a\le N-b-1$. By symmetry
+$\delta(h-1)=-\delta(h)$, and $\delta(h-1)<\delta(h)$ because $b\le h-1$. So
+$\delta(h-1)<0<\delta(h)$. Hence $P_N$ is strictly decreasing on $\{b,\dots,h\}$ and strictly
+increasing on $\{h,\dots,N-b\}$, and $P_N(a)>C_N$ for every $b\le a\le N-b$ with $a\ne h$. In
+particular $P_N(b)>C_N$.
+
+\emph{Near the ends.} By symmetry it is enough to treat $1\le a\le b-1$. Suppose that
+$P_N(a)\le C_N$ for some such $a$, and let $k$ be the smallest index in $\{1,\dots,b\}$ at which
+$P_N$ takes its least value on this set. By Proposition~\ref{prop:dip-hyp},
+$P_N(1)>P_N(0)=E_N=C_N$, and $P_N(b)>C_N$. So $2\le k\le b-1$, and
+$P_N(k-1)>P_N(k)\le P_N(k+1)$, which gives $D_N(k)>0$.
+Next let $a'$ be the smallest index at which $P_N$ takes its largest value on $\{0,\dots,k\}$.
+This value is at least $P_N(1)$, which exceeds both $P_N(0)$ and $P_N(k)$. So $1\le a'\le k-1$
+and $P_N(a'-1)<P_N(a')\ge P_N(a'+1)$, which gives $D_N(a')<0$. In the same way let $a''$ be the
+largest index at which $P_N$ takes its largest value on $\{k,\dots,h\}$. This value is at least
+$P_N(b)$, which exceeds both $P_N(k)$ and $P_N(h)=C_N$. So $k+1\le a''\le h-1$ and
+$P_N(a''-1)\le P_N(a'')>P_N(a''+1)$, which gives $D_N(a'')<0$. Finally $D_N(h)>0$ by hypothesis.
+
+So $D_N$ has the signs $-,+,-,+$ at $a'<k<a''<h$. By the symmetry $D_N(a)=D_N(N-a)$ it has the
+signs $-,+,-$ at $N-a''<N-k<N-a'$. Hence the sign pattern of $(D_N(1),\dots,D_N(N-1))$ has a
+subsequence of seven alternating signs. This contradicts Theorem~\ref{thm:five-blocks}, which
+allows at most five.
+\end{proof}
+
+\begin{corollary}[the center is the unique interior minimum]\label{cor:unique-min}
+For every large even $N$, at the crossing, $P_N(a)>C_N$ for every
+$1\le a\le N-1$ with $a\ne h$. We do not compute the threshold for $N$.
+\end{corollary}
+
+\begin{proof}
+Let $N$ be large and even, and let $a^*\ge N/2$ be a mode of $P_N$ with $m^*=N-a^*$. By
+Corollary~\ref{cor:mode-location}(b), $m^*=O(\log N\log\log N)$, so $2m^*+1\le N/2$ for large
+$N$. By Theorem~\ref{thm:convex-large}, $D_N(a)>0$ for $2m^*+1\le a\le N-2m^*-1$. So
+Lemma~\ref{lem:center-convex} applies.
+\end{proof}
+
+\begin{proposition}[the center for $8\le N\le2000$, computer-assisted]\label{prop:center-small}
+For every even $8\le N\le2000$, at the crossing, $P_N(a)>C_N$ for every $1\le a\le N-1$
+with $a\ne h$.
+\end{proposition}
+
+\begin{proof}
+Let $8\le N\le2000$ be even. By Proposition~\ref{prop:convex-certified}, $D_N(a)>0$ for
+$2m^*+1\le a\le N-2m^*-1$ and every mode. For $N\ge10$ the script \texttt{certify\_center.py}
+encloses $\varepsilon_N$ and the law $P_N$ in the same way as \texttt{certify\_convex.py}, lists
+every index $a^*\ge N/2$ that can be a mode, and checks that $2(N-a^*)+1\le N/2$ for each of them.
+For $N=8$ Lean checks the same, with an enclosure as in the proof of
+Proposition~\ref{prop:convex-certified} for $N\le9$. This holds for every even $N$ in the range.
+So Lemma~\ref{lem:center-convex} applies.
+\end{proof}
+
+As a second check, for each even $N\ge10$
+in the range the script also tests directly that the enclosure of $P_N(a)-P_N(h)$ is positive for
+every $1\le a\le N-1$ with $a\ne h$, and this succeeds for all $996$ values of $N$. The smallest value of
+$N/2-(2m^*+1)$ is $1$, at $N=8$ and at $N=12$.

@@ -297,38 +297,30 @@ size $d$. If no flipped step has a flipped descendant, which is likely when
 $x^2\log N/N$ is small, then $M_N$ is the total size of the flipped families,
 and this is close to the compound Poisson sum.
 
-The law $\CP_N$ and its Landau limit are known (Section~\ref{sec:prior}). What
-the two theorems below add is the truncation at $d=N-1$, a
-rate with explicit constants in both theorems, and the transfer to the elephant walk in sup norm. Numerical values of $f_L$ and
-of its mode are standard (see K\"olbig and Schorr~\cite{ks1984}). What
-Lemma~\ref{lem:landau-mode} adds is a certified enclosure.
+The CP law and its Landau limit are known (Section~\ref{sec:prior}).
+We give an explicit total variation bound for the CP approximation to the
+elephant law, and an explicit local rate for the law with jump sizes
+truncated at $N-1$. Numerical values of $f_L$ and its mode are standard
+(see K\"olbig and Schorr~\cite{ks1984}).
+Lemma~\ref{lem:landau-mode} adds a certified enclosure.
 
 \begin{theorem}[compound Poisson bulk]\label{thm:cp}
 For $N\ge1$ and $0<\varepsilon<1$,
 \[
- \sup_{m\ge0}\bigl\lvert f_N(m)-\CP_N(m)\bigr\rvert\le\delta_\Sigma
+ \operatorname{TV}(f_N,\CP_N)\le\delta_\Sigma
  :=\varepsilon^2(NH_N-2N+1)+2\varepsilon^2(N-1)+4\varepsilon^2\sum_{k=0}^{N-2}(H_k^2+H_k).
 \]
 Also $\delta_\Sigma\le\delta_B
  :=\frac{x^2\log N}{N}+\frac{4x^2}{N}e^{4x^2/N}+\frac{4x^2(H_N^2+H_N)}{N}$.
 \end{theorem}
 
-Bin by bin, the law of the number of disagreeing steps is within
-$\delta_\Sigma$ of the compound Poisson law. Bounding each $H_k$ by $H_N$ gives
-$\delta_\Sigma\le\frac{x^2}N(\log N+2+4H_N^2+4H_N)$, so $\delta_\Sigma=O(x^2\log^2N/N)$.
-
-\paragraph{Idea of the proof.}
-The proof is in Appendix~\ref{app:bulk}. Let $Z_+$ be the total size of the
-flipped families. Then $M_N=Z_+$ unless some flipped step has a flipped
-descendant, and this has probability at most $x^2\log N/N$. Given the tree,
-$Z_+$ is a sum of independent terms, so its characteristic function is a
-product, and the product is close to $e^{\varepsilon F}$ with
-$F=\sum_v(e^{i\theta\lvert\mathcal T_v\rvert}-1)$. The mean of
-$\varepsilon F$ is exactly the logarithm of the characteristic function of
-$\CP_N$. So it remains to show that $F$ is close to its mean. For this we
-use the Efron--Stein inequality~\cite{efronstein1981}. Changing the parent
-of one vertex changes the family sizes only along two paths to the root, and
-these paths have length of order $\log N$.
+Here $\operatorname{TV}(P,Q)=\frac12\sum_k|P(k)-Q(k)|$. Thus the same
+bound holds for each mass and each event. Also
+$\delta_\Sigma=O(x^2\log^2N/N)$. Appendix~\ref{app:bulk-cp} proves the
+bound by coupling marks with Poisson variables and revealing the tree's
+parents one at a time. Changing one parent affects family sizes only
+along two paths to the root, whose depths have second moments of order
+$\log^2N$.
 
 The families of size up to about $x$ add up to nearly $x\log x$, and the few
 families of size of order $x$ give fluctuations of order $x$. So we center
@@ -362,17 +354,9 @@ $x\log x$, with fluctuations of order $x$ that follow the Landau law, bin by
 bin (Figure~\ref{fig:shape}(b)). Both conditions of (c) hold at the crossing, by
 Theorem~\ref{thm:erw-crossing}.
 
-\paragraph{Idea of the proof.}
-The proof is in Appendix~\ref{app:bulk}. If we allow every jump size
-$d\ge1$, the characteristic function of the compound Poisson law is
-$e^{x\chi(e^{i\theta})}$ with $\chi(s)=(1-s)\log(1-s)/s$, and the jumps
-$d\ge N$ change it little. For small $\theta$ we have
-$\chi(e^{i\theta})=-i\theta\log(-i\theta)+O(\theta^2\lvert\log\lvert\theta\rvert\rvert)$.
-With $\theta=t/x$ the exponent becomes $B(t)+it\log x$ plus an error of
-order $t^2\log x/x$. The term $it\log x$ is the centering at $x\log x$. Both
-characteristic functions decay like $e^{-c\lvert t\rvert}$, so Fourier
-inversion turns this into a bound for each bin, and keeping the constants gives
-$889$ and $165$. Part (b) then follows from Theorem~\ref{thm:cp}.
+Appendix~\ref{app:bulk} proves the local bound by expanding the compound
+Poisson exponent at zero and applying Fourier inversion. The expansion
+gives the centering $x\log x$, and its remainder gives the rate.
 
 To locate the modes we need to know that $f_L$ is curved at its maximum.
 
@@ -437,6 +421,130 @@ $\kappa_L=2.6\cdot10^{-10}$ is the constant of Lemma~\ref{lem:landau-mode}(c). W
 constant $889$ this needs $x>2\cdot10^{14}$, and numerically the best $\kappa_L$ is about $0.026$. These numbers are computed
 in double precision and are not used in any proof.
 \end{remark}
+
+\subsection{The fixed-memory limit}
+
+\begin{corollary}[the fixed-memory limit near one]\label{cor:fixed-memory-bridge}
+For the elephant walk with $X_1=1$ and fixed memory $p=(1+a)/2$,
+$a\in(\frac12,1)$, put $S_k=\sum_{j=1}^kX_j$ and let $\mathcal L_a=\lim_{k\to\infty}S_k/k^a$
+as in~\cite[Theorem~3.7]{bercu2018}. If $Z$ has characteristic function
+$\mathbb E e^{itZ}=\exp\{-it\log|t|-\pi|t|/2\}$, continuously extended at
+$t=0$, then
+\[
+ \frac{1-\mathcal L_{1-2\varepsilon}}{2\varepsilon}
+       +\log(1/\varepsilon)\ \Longrightarrow\ Z
+       \qquad(\varepsilon\downarrow0).
+\]
+\end{corollary}
+
+\begin{proof}
+Fix $0<\varepsilon<1/8$, put $a=1-2\varepsilon$, and use one infinite
+walk with $X_1=1$. By~\cite[(2.4), Appendix~A]{bercu2018},
+$\mathcal M_k=\Gamma(k)S_k/\Gamma(k+a)$ is a martingale with limit
+$\mathcal L_a$. It is Bercu's martingale divided by $\Gamma(1+a)$.
+Its increments are
+\[
+ \mathcal M_{k+1}-\mathcal M_k
+ =\frac{\Gamma(k+1)}{\Gamma(k+1+a)}
+       \left(X_{k+1}-\frac{aS_k}{k}\right).
+\]
+Log-convexity of gamma gives
+$1\le k^a\Gamma(k)/\Gamma(k+a)\le(1+a/k)^{1-a}\le1+1/k$.
+Since $S_k=k-2M_k$, Lemma~\ref{lem:B-tail} gives
+\[
+ \mathbb E\!\left[1-a^2(S_k/k)^2\right]
+ \le4\varepsilon+\frac{4\mathbb EM_k}{k}
+ \le4\varepsilon(1+\log k).
+\]
+Orthogonality of the increments therefore gives square-mean convergence and
+\[
+ \mathbb E|\mathcal L_a-\mathcal M_n|^2
+ \le C\varepsilon\sum_{k\ge n}k^{-2a}(1+\log k)
+ \le C\varepsilon n^{1-2a}(1+\log n),
+\]
+with $C$ independent of $a\in[3/4,1)$, since $2a-1\ge1/2$.
+
+Take $n=\lfloor\varepsilon^{-4/3}\rfloor$ and $x=n\varepsilon$.
+Then $x\to\infty$ and
+$x^3\log^2n/n=n^2\varepsilon^3\log^2n\to0$, so
+Theorem~\ref{thm:landau}(c) gives
+$Z_\varepsilon=(M_n-x\log x)/x\Rightarrow Z$.
+The tail bound gives
+$\mathbb E|(\mathcal L_a-\mathcal M_n)/\varepsilon|^2
+=O(\varepsilon^{1/3}(1+\log(1/\varepsilon)))=o(1)$,
+using $n^{4\varepsilon}\to1$.
+Also $|\mathcal M_n-n^{-a}S_n|\le n^{-a}=o(\varepsilon)$.
+Finally,
+\[
+ \begin{aligned}
+ n^{-a}S_n&=e^{2\varepsilon\log n}
+       [1-2\varepsilon(\log x+Z_\varepsilon)],
+ \\
+ \frac{1-n^{-a}S_n}{2\varepsilon}+\log(1/\varepsilon)
+       &=Z_\varepsilon+o_{\mathbb P}(1).
+ \end{aligned}
+\]
+The second equality uses $\log x=\log n+\log\varepsilon$,
+tightness of $Z_\varepsilon$, and $\varepsilon\log^2n\to0$.
+Replacing $n^{-a}S_n$ by $\mathcal L_a$ proves the claim.
+\end{proof}
+
+This is weak convergence. It gives neither a uniform local limit law
+nor a critical parameter for bimodality.
+
+\subsection{A likelihood for reversible fluctuation assays}
+
+With one sensitive founder, uniform parent choice, and independent
+daughter-type switching with probability $\varepsilon$ at each birth in
+either direction, the resistant count at population $t$ increases from
+$k$ with probability $\varepsilon+(1-2\varepsilon)k/t$. Its law at size
+$N$ is therefore $f_N$. Write $P_{N,x}$ for this law at
+$\varepsilon=x/N$, and $Q_{N,x}=\CP_N$ with masses $q_{N,x}(k)$.
+The CP law truncates jump sizes, not the total count. Its likelihood
+uses the full law on $\mathbb N_0$.
+
+\begin{theorem}[constrained compound Poisson likelihood]\label{thm:assay-mle}
+Let $N\ge2,m\ge1$ be integers, $a_N=1-1/N$, and fix in advance
+$\Theta=[\ell,u]$ with $0<\ell<u<N$ and $a_Nu>1$.
+Let $K_1,\ldots,K_m$ be independent observations with law $P_{N,x_0}$,
+where $x_0\in\Theta$. Define $\widehat x$ as the smallest maximizer of
+$L_x=\prod_{i=1}^m q_{N,x}(K_i)$ on $\Theta$, and put
+\[
+ \begin{gathered}
+ W=u-\ell,\qquad \omega=(ma_N)^{-1},\qquad
+ J=\lceil W/\omega\rceil+1,\\
+ v_x=\min\{1,\delta_\Sigma(x)\},\qquad
+ \eta_x=1-(1-v_x)^m\le\min\{1,mv_x\},
+ \end{gathered}
+\]
+where $\delta_\Sigma(x)$ is evaluated at $\varepsilon=x/N$.
+Probabilities and expectations below are under $P_{N,x_0}^{\otimes m}$.
+For every $r>\omega$,
+\begin{equation}\label{eq:assay-tail}
+ \Prob\{|\widehat x-x_0|\ge r\}
+ \le\min\left\{1,\eta_{x_0}+e^{1/2}J
+       \exp\left(-\frac{m(r-\omega)^2}{2e^2u^2}\right)\right\}.
+\end{equation}
+For $0<\alpha<1$, set
+$r_\alpha=\omega+eu\sqrt{2\log(e^{1/2}J/\alpha)/m}$. Then
+\begin{equation}\label{eq:assay-bias}
+ |\E\widehat x-x_0|\le\E|\widehat x-x_0|
+ \le\min\{W,r_\alpha+W(\alpha+\eta_{x_0})\}.
+\end{equation}
+In particular, for fixed $0<a<b$, $\Theta=[a\log N,b\log N]$ and
+$m=\lceil(\log N)^3\rceil$, uniformly in $x_0\in\Theta$ as $N\to\infty$,
+\[
+ \E|\widehat x-x_0|
+ =O_{a,b}\left(\sqrt{\frac{\log\log N}{\log N}}
+              +\frac1{\log N}+\frac{\log^8N}{N}\right)=o(1).
+\]
+Thus $\widehat x$ is absolutely consistent in probability and its mean
+bias tends to zero uniformly. For $\widehat\varepsilon=\widehat x/N$,
+divide \eqref{eq:assay-bias} by $N$.
+\end{theorem}
+
+The proof is in Appendix~\ref{app:bulk-likelihood}. The estimator is
+constrained and uses a sensitive founder. Its mean-bias bound is absolute, without a signed bias expansion.
 
 \subsection{The tail}
 
@@ -690,57 +798,62 @@ claim. Finally, Theorem~\ref{thm:erw-crossing}(b) gives $\log N\le x_N\le2\log N
 large even $N$, which is the last claim.
 \end{proof}
 
-\begin{lemma}[the center from convexity]\label{lem:center-convex}
-Let $N\ge8$ be even and $x=x_N$. Let $a^*\ge N/2$ be a mode of $P_N$ and $m^*=N-a^*$.
-Suppose that $2m^*+1\le N/2$ and that $D_N(a)>0$ for every $2m^*+1\le a\le N-2m^*-1$. Then
-$P_N(a)>C_N$ for every $1\le a\le N-1$ with $a\ne h$.
+\begin{lemma}[the center from no holes]\label{lem:center-no-holes}
+Let $N\ge6$ be even and $0<\varepsilon<\frac12$. If
+$P_N(1)>\max\{E_N,C_N\}$, then
+$P_N(a)>C_N$ for $1\le a\le N-1$, $a\ne h$, and $D_N(h)>0$.
 \end{lemma}
 
-\paragraph{Idea of the proof.}
-Between the humps the law is strictly convex and symmetric, so the center is its only minimum
-there. Outside, a bin as low as the center would be a second valley. A valley needs a point of
-convexity with points of concavity on both sides, and with the mirror image this gives more
-changes of sign of the second difference than Theorem~\ref{thm:five-blocks} allows.
-
 \begin{proof}
-Write $b=2m^*$, so that $b+1\le h$, and put $\delta(a)=P_N(a+1)-P_N(a)$.
+Suppose that $P_N(a)\le C_N$ for some $1\le a<h$, and let $k$ be the first
+minimizer of $P_N$ on $\{1,\dots,h\}$. Then $2\le k<h$ and
+$P_N(k-1)>P_N(k)\le P_N(k+1)$, so $D_N(k)>0$.
+The first maximizer $a_0$ on $\{0,\dots,k\}$ has value at least $P_N(1)$,
+which exceeds both endpoint values of this interval. Thus $1\le a_0<k$
+and $D_N(a_0)<0$. Theorem~\ref{thm:no-holes} gives $D_N(a)>0$ for
+$k\le a\le N-k$.
 
-\emph{Between the humps.} Since $D_N(a)=\delta(a)-\delta(a-1)>0$ for $b+1\le a\le N-b-1$, the
-differences $\delta(a)$ are strictly increasing for $b\le a\le N-b-1$. By symmetry
-$\delta(h-1)=-\delta(h)$, and $\delta(h-1)<\delta(h)$ because $b\le h-1$. So
-$\delta(h-1)<0<\delta(h)$. Hence $P_N$ is strictly decreasing on $\{b,\dots,h\}$ and strictly
-increasing on $\{h,\dots,N-b\}$, and $P_N(a)>C_N$ for every $b\le a\le N-b$ with $a\ne h$. In
-particular $P_N(b)>C_N$.
-
-\emph{Near the ends.} By symmetry it is enough to treat $1\le a\le b-1$. Suppose that
-$P_N(a)\le C_N$ for some such $a$, and let $k$ be the smallest index in $\{1,\dots,b\}$ at which
-$P_N$ takes its least value on this set. By Proposition~\ref{prop:dip-hyp},
-$P_N(1)>P_N(0)=E_N=C_N$, and $P_N(b)>C_N$. So $2\le k\le b-1$, and
-$P_N(k-1)>P_N(k)\le P_N(k+1)$, which gives $D_N(k)>0$.
-Next let $a'$ be the smallest index at which $P_N$ takes its largest value on $\{0,\dots,k\}$.
-This value is at least $P_N(1)$, which exceeds both $P_N(0)$ and $P_N(k)$. So $1\le a'\le k-1$
-and $P_N(a'-1)<P_N(a')\ge P_N(a'+1)$, which gives $D_N(a')<0$. In the same way let $a''$ be the
-largest index at which $P_N$ takes its largest value on $\{k,\dots,h\}$. This value is at least
-$P_N(b)$, which exceeds both $P_N(k)$ and $P_N(h)=C_N$. So $k+1\le a''\le h-1$ and
-$P_N(a''-1)\le P_N(a'')>P_N(a''+1)$, which gives $D_N(a'')<0$. Finally $D_N(h)>0$ by hypothesis.
-
-So $D_N$ has the signs $-,+,-,+$ at $a'<k<a''<h$. By the symmetry $D_N(a)=D_N(N-a)$ it has the
-signs $-,+,-$ at $N-a''<N-k<N-a'$. Hence the sign pattern of $(D_N(1),\dots,D_N(N-1))$ has a
-subsequence of seven alternating signs. This contradicts Theorem~\ref{thm:five-blocks}, which
-allows at most five.
+Put $\delta(a)=P_N(a+1)-P_N(a)$. These first differences are strictly
+increasing on $\{k-1,\dots,N-k\}$, and symmetry gives
+$\delta(h)=-\delta(h-1)$. Hence $\delta(h-1)<0$, and every difference
+from $k$ to $h-1$ is negative. This makes $P_N(k)>P_N(h)$, a contradiction.
+Reflection proves the other half, and
+$D_N(h)=2(P_N(h-1)-P_N(h))>0$.
 \end{proof}
 
-\begin{corollary}[the center is the unique interior minimum]\label{cor:unique-min}
-For every large even $N$, at the crossing, $P_N(a)>C_N$ for every
-$1\le a\le N-1$ with $a\ne h$. We do not compute the threshold for $N$.
+\begin{corollary}[the shape at every even crossing]\label{cor:unique-min}
+For every even $N\ge8$, at the crossing,
+\[
+ P_N(a)>C_N=E_N\quad(1\le a\le N-1,\ a\ne h),\qquad D_N(h)>0.
+\]
+There are integers $1\le l\le r<h$ such that $P_N$ strictly increases
+from $0$ to $l$, is constant from $l$ to $r$, and strictly decreases
+from $r$ to $h$. Its two intervals of global maximizers are
+$\{l,\dots,r\}$ and $\{N-r,\dots,N-l\}$.
 \end{corollary}
 
 \begin{proof}
-Let $N$ be large and even, and let $a^*\ge N/2$ be a mode of $P_N$ with $m^*=N-a^*$. By
-Corollary~\ref{cor:mode-location}(b), $m^*=O(\log N\log\log N)$, so $2m^*+1\le N/2$ for large
-$N$. By Theorem~\ref{thm:convex-large}, $D_N(a)>0$ for $2m^*+1\le a\le N-2m^*-1$. So
-Lemma~\ref{lem:center-convex} applies.
+At the crossing $P_N(1)>E_N=C_N$ by Proposition~\ref{prop:dip-hyp}, so
+Lemma~\ref{lem:center-no-holes} gives the minimum and central curvature.
+For the humps, let $p=\operatorname{sp}(D_N(1),\dots,D_N(h))$.
+It ends in $+$, and symmetry makes the full pattern $p$ followed by its
+reverse, with the central positive blocks merged. If $p$ has $j$ blocks,
+the full pattern has $2j-1\le5$ by Theorem~\ref{thm:five-blocks}.
+Thus $p$ is a subsequence of $(+,-,+)$.
+
+The first differences $\delta(a)=P_N(a+1)-P_N(a)$ on $0\le a<h$
+therefore have at most three successive monotonic stretches, namely
+nondecreasing, nonincreasing, nondecreasing. Their first value is positive,
+and their last is $-D_N(h)/2<0$. The first stretch stays positive and the
+last stays negative. The middle stretch passes through zero at most once,
+possibly with consecutive zeros. This gives the claimed rise, plateau
+and fall. Symmetry gives the other hump.
 \end{proof}
+
+The finite endpoint-dip certificates in Proposition~\ref{prop:dip-hyp}
+remain inputs. No mode-location or convex-window estimate is needed for
+this corollary. The stronger prescribed window of
+Definition~\ref{def:convex} is a separate question.
 
 \begin{proposition}[small $N$, computer-assisted]\label{prop:convex-certified}
 For every $5\le N\le N_{\rm c}=2000$, even or odd, the law at the crossing is
@@ -755,18 +868,15 @@ required range. When the range is nonempty, it also checks
 $D_N(a_0)<0$ at some $1\le a_0\le2m^*$ and $D_N(2m^*+1)>0$.
 Theorem~\ref{thm:no-holes} then gives a second check of the conclusion.
 
-For $5\le N\le9$ the script is not run, and the check is done in Lean
-(Section~\ref{sec:verify}) by a computation in exact integer arithmetic with
-outward rounding, whose soundness Lean proves. Two rationals found by bisection
-in exact rational arithmetic bracket $\varepsilon_N$. Lean proves this by Proposition~\ref{prop:mlr}
-from enclosures of $P_N(\lceil N/2\rceil)$ and $E_N$ at the two rationals. Then
-Lean encloses $P_N$ for every $\varepsilon$ between them at once. It checks that the
-upper rational is below $\frac12$, that $P_N(0)<P_N(1)$, and that every index
-$a^*\ge N/2$ that can be a mode either has an empty range
-$2m^*+1\le a\le N-2m^*-1$ or has $2m^*+1\le N/2$ and $D_N(2m^*+1)>0$. By
-Corollary~\ref{cor:one-point}, with $a_1=2m^*+1$, this gives the claim. At $N=5$
-the only index that can be a mode is $a^*=4$, so the range is empty and the claim
-holds trivially.
+For $5\le N\le9$, Lean brackets the crossing by exact rational
+arithmetic and Proposition~\ref{prop:mlr}. Over the whole bracket it checks
+$\varepsilon<\frac12$ and $P_N(0)<P_N(1)$. For each possible mode it
+checks either that the prescribed window is empty, or that
+$2m^*+1\le N/2$ and $D_N(2m^*+1)>0$.
+Corollary~\ref{cor:one-point} then gives the claim. These are
+outward-rounded integer computations with kernel-checked soundness
+(Section~\ref{sec:verify}). At $N=5$ the only possible right-hand mode is
+$a^*=4$, whose window is empty.
 \end{proof}
 
 \begin{proposition}[odd $N$]\label{prop:odd}
@@ -805,41 +915,16 @@ and $a=k$ gives
 \]
 \end{proof}
 
-\begin{proposition}[the center for $8\le N\le2000$, computer-assisted]\label{prop:center-small}
-For every even $8\le N\le2000$, at the crossing, $P_N(a)>C_N$ for every $1\le a\le N-1$
-with $a\ne h$.
-\end{proposition}
-
-\begin{proof}
-Let $8\le N\le2000$ be even. By Proposition~\ref{prop:convex-certified}, $D_N(a)>0$ for
-$2m^*+1\le a\le N-2m^*-1$ and every mode. For $N\ge10$ the script \texttt{certify\_center.py}
-encloses $\varepsilon_N$ and the law $P_N$ in the same way as \texttt{certify\_convex.py}, lists
-every index $a^*\ge N/2$ that can be a mode, and checks that $2(N-a^*)+1\le N/2$ for each of them.
-For $N=8$ Lean checks the same, with an enclosure as in the proof of
-Proposition~\ref{prop:convex-certified} for $N\le9$. This holds for every even $N$ in the range.
-So Lemma~\ref{lem:center-convex} applies.
-\end{proof}
-
-As a second check, for each even $N\ge10$
-in the range the script also tests directly that the enclosure of $P_N(a)-P_N(h)$ is positive for
-every $1\le a\le N-1$ with $a\ne h$, and this succeeds for all $996$ values of $N$. The smallest value of
-$N/2-(2m^*+1)$ is $1$, at $N=8$ and at $N=12$.
-
 \begin{remark}[what is still open]\label{rem:convex-open}
-We do not compute the constant $N_1$ of Theorem~\ref{thm:convex-large}. The constants of
-Theorem~\ref{thm:landau} are explicit, but the proof uses them only through a limit. Even if
-we followed them, Step~3 needs $f_L(\frac32\lambda_{\mathrm L}+\frac12\log x)<\frac12f_L(\lambda_{\mathrm L})$ up
-to the error $\Theta_N$. Numerically $f_L$ falls to half of its maximum at
-$\lambda=2.432$. So even without the error $\Theta_N$, Step~3 needs
-$\frac32\lambda_{\mathrm L}+\frac12\log x>2.432$, that is, $x>252.8$. Since
-$x_N+\log x_N$ is close to $2\log N-\log8$ (Theorem~\ref{thm:erw-crossing}), this means that $N$
-is above about $3.5\cdot10^{56}$. So the $N$ between $N_{\rm c}$ and $N_1$ (or the threshold $N_1'$ of Proposition~S3.1(c)
-of Online Resource~1 for odd $N$) are open, and no
-computation can reach these constants as the proof stands. By Corollary~\ref{cor:one-point}
-(and Proposition~S3.1(b) of Online Resource~1 for odd $N$) the whole range would
-be closed by an effective proof of the single inequality $D_N(a_1)>0$ at one point
-$m^*<a_1\le2m^*+1$. Near $2m^*$ the Landau heuristic suggests second differences of size
-$3/[x^3(\log x)^4]$, since $f_L''(\lambda)\sim6/\lambda^4$ and
-$\lambda\approx\log x$ there. The pointwise error in Theorem~\ref{thm:landau}
-is much larger, so it does not prove the needed sign.
+The remaining gap concerns the prescribed convexity window. The minimum
+and two-hump shape hold for every even $N\ge8$.
+The threshold $N_1$ in Theorem~\ref{thm:convex-large} is not computed.
+Even without its error, Step~3 needs
+$f_L(\frac32\lambda_{\mathrm L}+\frac12\log x)<f_L(\lambda_{\mathrm L})/2$.
+The numerical half-height point $2.432$ gives $x>252.8$, or a crossing
+length above about $3.5\cdot10^{56}$. Thus that argument cannot meet the
+finite checks. Corollary~\ref{cor:one-point} would close the gap from
+$D_N(a_1)>0$ at one point $m^*<a_1\le2m^*+1$ (and
+Proposition~S3.1(b) of Online Resource~1 gives the odd-$N$ version).
+The local mass error is too large to prove this second-difference sign.
 \end{remark}
