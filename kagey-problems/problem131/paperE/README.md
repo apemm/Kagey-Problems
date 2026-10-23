@@ -12,7 +12,7 @@ The paper cites two other papers by A. Pemmasani, by title:
   (`../paperA`). Its persistent random walk on the line is the line walk of this paper.
 - "Face selection for slowly switching Markov chains" (in preparation, `../paperC`). Its face
   selection rule gives the same first-order exponents as the survival-and-return estimate used here.
-- "Vertex crossings in a symmetric Markov multinomial model", arXiv:2610.09258 (`../paperB`), for the
+- "Vertex crossings in a symmetric Markov multinomial model", arXiv:2610.09258 (`../archive/paperB`), for the
   analogous crossing of the Potts chain.
 
 ## What is proved
@@ -57,7 +57,7 @@ more states, and the walk on Z^d for d >= 3.
   (the 3 kinds of paths) is drawn in the source with TikZ.
 - `verify_planar.py` checks the planar walk (Section 3 and Appendix A). It also tests the identity of
   Theorem 3.9(a) in exact rational arithmetic for even N up to 30. It imports the polynomial S_N of
-  the line walk from `../paperC/verify_sticky_fisher.py`.
+  the line walk from `../common/two_state.py`.
 - `verify_planar_product.py` checks the product formula of Proposition 3.7 in exact rational
   arithmetic for N = 4, 6, 8. In floating point, and only on grids, it checks the inequality
   F(y/2) <= 2 F(y) of Appendix A, the inequality x S_N'(x) <= (2z+2) S_N(x) of Lemma A.4 at
@@ -72,6 +72,6 @@ more states, and the walk on Z^d for d >= 3.
 
 From the Problem 131 folder, `python -B verify_all.py --paper e` runs the checks of this paper. In
 this folder, `python -B verify_all.py` does the same (a few minutes), and `--full` adds the crossings
-for N from 1280 to 10240. The scripts need numpy, scipy, sympy and mpmath. The last 2 are needed
-because `verify_planar.py` imports `../paperC/verify_sticky_fisher.py`. Build the paper with
+for N from 1280 to 10240. The scripts need numpy and scipy. The shared helper `../common/two_state.py` must
+be included with the Paper E folder. Build the paper with
 pdflatex, 3 times.

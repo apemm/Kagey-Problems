@@ -13,11 +13,11 @@ If a paper folder is missing, this script says so in one line and goes on. A run
 with a nonzero exit code stops this script too. With --dry-run the commands are printed and
 nothing is run.
 
-The scripts of Papers A and B use only the standard library. Those of Papers C to F need numpy,
-scipy and mpmath. Papers C and E also need sympy (Paper E imports a script of Paper C), and
+The scripts of Papers A and B use only the standard library. Those of Papers C, D and F need numpy,
+scipy and mpmath. Paper E needs numpy and scipy. Paper C also needs sympy, and
 Paper D also needs python-flint. Some scripts of Papers A and B report their checks
 in their output rather than through the exit code, and the docstrings of paperA/verify_all.py and
-paperB/verify_all.py say which ones.
+archive/paperB/verify_all.py say which ones.
 """
 from pathlib import Path
 import argparse
@@ -39,20 +39,20 @@ mode = '--full' if args.full else '--quick'
 papers = 'abcdef' if args.paper == 'all' else args.paper
 runs = []          # (paper, folder)
 for paper in papers:
-    folder = base / f'paper{paper.upper()}'
+    folder = base / 'archive/paperB' if paper == 'b' else base / f'paper{paper.upper()}'
     if (folder / 'verify_all.py').is_file():
         runs.append((paper.upper(), folder))
     else:
-        print(f'Skipping Paper {paper.upper()}: {folder.name}/verify_all.py is not in this copy '
+        print(f'Skipping Paper {paper.upper()}: {folder.relative_to(base)}/verify_all.py is not in this copy '
               'of the repository.', flush=True)
 
 if args.dry_run and runs:
     print(f'Commands, in order, each run in its paper folder under {base}:')
 for paper, folder in runs:
     if args.dry_run:
-        print(f'  python -B verify_all.py {mode} (in {folder.name})')
+        print(f'  python -B verify_all.py {mode} (in {folder.relative_to(base)})')
         continue
-    print(f'\n=== Paper {paper}: python -B verify_all.py {mode} (in {folder.name})', flush=True)
+    print(f'\n=== Paper {paper}: python -B verify_all.py {mode} (in {folder.relative_to(base)})', flush=True)
     result = subprocess.run([sys.executable, '-B', str(folder / 'verify_all.py'), mode],
                             cwd=folder)
     if result.returncode:
@@ -67,4 +67,4 @@ elif not args.dry_run:
     else:
         done = f'The runners of Papers {", ".join(names[:-1])} and {names[-1]}'
     print(f'\n{done} finished with exit code 0. Read the output of the scripts that report their '
-          'checks there (see paperA/verify_all.py and paperB/verify_all.py).', flush=True)
+          'checks there (see paperA/verify_all.py and archive/paperB/verify_all.py).', flush=True)

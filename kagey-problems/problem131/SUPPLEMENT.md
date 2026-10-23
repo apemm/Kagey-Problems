@@ -5,7 +5,7 @@ This supplement serves the 6 papers on Kagey's Problem 131 by A. Pemmasani. Pape
 | Paper | Title | Source |
 | --- | --- | --- |
 | A | Uniform Bessel bounds for magnetization crossings in finite Ising chains (arXiv v1: Uniform Bessel bounds for endpoint crossings in the persistent random walk) | `paperA/problem131.tex` |
-| B | Vertex crossings in a symmetric Markov multinomial model | `paperB/problem131_multistate.tex` |
+| B | Vertex crossings in a symmetric Markov multinomial model | `archive/paperB/problem131_multistate.tex` |
 | C | Face selection for slowly switching Markov chains | `paperC/problem131_switching.tex` |
 | D | The center and the ends of the elephant random walk with rare reversals (before October 17, 2026: Endpoint crossings for the elephant random walk) | `paperD/problem131_memory.tex` |
 | E | Endpoint crossings for the planar persistent walk | `paperE/problem131_planar.tex` |
@@ -22,11 +22,12 @@ the 2 methods, and then say what each script checks.
 
 Run `python -B verify_all.py --paper a` in this folder, or use `b`, `c`, `d`, `e`, `f` or `all`.
 Add `--full` for the long runs and `--dry-run` to print the commands without running them. For each
-paper the runner calls the paper's own runner, `paperA/verify_all.py` to `paperF/verify_all.py`,
+paper the runner calls the paper's own runner (with B in `archive/paperB/verify_all.py`),
 with `--quick`, or with `--full`, and it skips a paper whose folder is missing. The scripts for
-Papers A and B use only the standard library of Python 3. Those for Papers C to F need numpy, scipy
-and mpmath. Papers C and E also need sympy, and Paper D also needs python-flint. Paper E imports
-code from `paperC/verify_sticky_fisher.py`, so it also needs the folder `paperC`. Before most
+Papers A and B use only the standard library of Python 3. Those for Papers C, D and F need
+numpy, scipy and mpmath. Paper C also needs sympy, and Paper D also needs python-flint.
+Paper E needs numpy and scipy, and imports
+code from `common/two_state.py`, so it also needs the folder `common`. Before most
 computations we wrote a prediction and a condition that would refute it in a ledger, and we
 recorded the outcome below it. The file `ledger.md` indexes the ledgers of all 6 papers, and each
 ledger uses the statement numbers of its date.
@@ -80,8 +81,8 @@ that output has to be read. It is also saved in `paperA/data/`. The predictions 
 
 ## Paper B: the complete graph
 
-`python -B verify_all.py --paper b` runs `paperB/verify_all.py`, which takes about 2 minutes. The
-scripts below are in `paperB/`. Add `--full` to include `verify_B_tie_repair.py` (about 3 minutes
+`python -B verify_all.py --paper b` runs `archive/paperB/verify_all.py`, which takes about 2 minutes. The
+scripts below are in `archive/paperB/`. Add `--full` to include `verify_B_tie_repair.py` (about 3 minutes
 more).
 
 Paper B is incorporated into Paper C since October 2026. These scripts also check the statements
@@ -106,17 +107,17 @@ verified are checked as follows.
 | `verify_frontier_boundary.py` | The majorant for all count vectors, the mixed-face crossover, and the fixed rare-count formulas and crossings. |
 | `verify_frontier_modes.py` | Spatial profiles, lattice-volume limits, exact finite-N mode comparisons, and the weak-field support hierarchy. |
 | `verify_vertex_completion.py` | 462 exact identities for the near-vertex representation, 200 rational concavity checks, 16 uniform root brackets, and 4 examples with growing rare counts where the probabilities are not approximated although the roots are, each at 2 series cutoffs. |
-| `verify_general_start.py` | The tie, the law with a start and the tree form of the constants (about 20 seconds). The weighted Cayley formula by the matrix-tree theorem and by listing all trees for k <= 7, the law with a start against word enumeration for 357 bins, the crossings with a start by 3 methods, and the K_3 window at finite N. Writes `paperB/data/general_start_output.txt`. |
-| `verify_B_tie_repair.py` | The exact identity Hess I times Sigma_alpha = identity at rational points for k = 2 to 6, and dynamic programs over all bins at N = 300 and N = 1002 (about 3 minutes, only with `--full`). Writes `paperB/data/B_tie_repair_output.txt`. |
+| `verify_general_start.py` | The tie, the law with a start and the tree form of the constants (about 20 seconds). The weighted Cayley formula by the matrix-tree theorem and by listing all trees for k <= 7, the law with a start against word enumeration for 357 bins, the crossings with a start by 3 methods, and the K_3 window at finite N. Writes `archive/paperB/data/general_start_output.txt`. |
+| `verify_B_tie_repair.py` | The exact identity Hess I times Sigma_alpha = identity at rational points for k = 2 to 6, and dynamic programs over all bins at N = 300 and N = 1002 (about 3 minutes, only with `--full`). Writes `archive/paperB/data/B_tie_repair_output.txt`. |
 | `verify_crossover_factor.py` | The factor e^E of the crossover theorem (about 50 seconds). Exact S_n by the proper-run formula, a quadrature of the refresh integral and the positive refresh sum at 60 digits, checked against word enumeration for small N. With the argument `repair` (under 1 second) it computes psi by a series and by a continued fraction and checks 3 further examples. |
 
 `verify_general_start.py` and `verify_B_tie_repair.py` report their checks in their output rather
 than through the exit code. Some of their lines show failures on purpose, since they belong to the 2
 registered predictions that failed (T1(e) and T4), so the output cannot be judged by searching for
-"False". The predictions are in `paperB/data/ledger_B_tie.md` and
-`paperB/data/ledger_B_crossover.md`.
+"False". The predictions are in `archive/paperB/data/ledger_B_tie.md` and
+`archive/paperB/data/ledger_B_crossover.md`.
 `predict_general_start.py` and `verify_crossover_factor.py predict` only evaluate formulas for those
-registrations and check nothing, so `paperB/verify_all.py` does not run them. The dated logs in
+registrations and check nothing, so `archive/paperB/verify_all.py` does not run them. The dated logs in
 `early_runs/` are from earlier versions of the manuscripts, before they were split.
 
 ## Paper C: slowly switching Markov chains
@@ -154,7 +155,7 @@ on the complete graph (Proposition 4.15(iv)) is computed by hand in Appendix B, 
 | `verify_first_order.py` | The exact law and first-order face selection (Sections 2 and 3). The run expansion in exact rationals against all words and a dynamic program, the rate on a face by direct maximization and by a Legendre transform of the Perron root, and the winners from the convex hull and from a direct minimization over all faces. |
 | `verify_second_order.py` | The local law, the constants K_F, the crossings, the directed 3-cycle, the next term and the K_3 window (Sections 4, 5 and 7, Appendices A and B). It computes P_N(n) by the run expansion and by a discrete torus integral, and K_F from Perron vectors in double precision and from the Hessian of the Perron root at 30 digits. |
 | `verify_examples.py` | The 4-cycle and Table 2, with Section S1 of the supplement. Exit rates with numpy and with mpmath at 40 digits, the winners by the hull and on a grid, and the modes at finite N by a dynamic program of the whole chain and by the run expansion on each face. |
-| `verify_sticky_fisher.py` | Sticky priors (the note `S3_sticky_note`, which was Section 6 and Appendix D of Paper C) and the Fisher information of the note S1. The law of the counts by a dynamic program and by exact formulas, the direct-jump probability by Monte Carlo and 2 quadratures, and the information of the endpoint by the run formula and by a complex-step derivative of Paper A's recurrence. It also holds Paper A's polynomial S_N, which `paperE/verify_planar.py` imports. |
+| `verify_sticky_fisher.py` | Sticky priors (the note `S3_sticky_note`, which was Section 6 and Appendix D of Paper C) and the Fisher information of the note S1. The law of the counts by a dynamic program and by exact formulas, the direct-jump probability by Monte Carlo and 2 quadratures, and the information of the endpoint by the run formula and by a complex-step derivative of Paper A's recurrence. It imports Paper A's polynomial S_N and recurrence from `common/two_state.py`, as does `paperE/verify_planar.py`. |
 | `verify_forest.py` | The tree formula for the constant on every irreducible face (Proposition 4.9 and Lemma A.3, about 5 minutes). Lemma A.3 in exact rational arithmetic for 119 generators with 2 to 6 states, with the trees and arborescences listed one by one, and in sympy for a general 3-state generator and the directed 3-cycle. In floating point, K_F and C_F(alpha) against the constants of `verify_second_order.py` on random non-reversible faces, the reversible case against Proposition 4.2(b), the directed 3-cycle against Proposition 4.14, and det Sigma at 50 digits against the Hessian of the Perron root. Every part is an assertion, and the floating-point parts use a tolerance. |
 | `verify_rate_flows.py` | The rate through flows (Remark 4.12, which was Proposition 4.16 with Example 4.18 before the merge; a few seconds). In floating point on 480 random faces with 2 to 5 states, the balance of the flow at the maximizer, the form as a minimum over balanced flows, the bound by the reversible formula with its gap, and the comparison of the Perron root with that of the geometric symmetrization. On random cycles, the one equation for the net flow and the form with the geometric mean. Also the numbers of the old Example 4.18. Every check is an assertion. |
 | `verify_weak_field.py` | A weak field (Proposition 4.16, new in the merge; about a minute). Part (a) by listing all 3^8 words of a 3-state chain. Part (b) on 4 faces (a pair of the path 1-2-3, the 3-arc of the 4-cycle, a non-reversible 3-state face and the full face of K_3): the tilted and untilted face maxima of the continuum density by the torus integral, with the limit of T times their log ratio minus <xi, alpha*> and the shift of the maximizer against the values that completing the square predicts (Richardson in T = 20 to 160); and on the pair at N = 20000 by an exact dynamic program of the chain, against the continuum. Part (d) by the transfer matrix at N = 10^6. Every check is an assertion. |
