@@ -62,7 +62,7 @@ Replacing B under the same arXiv identifier is a sensible continuation of the re
 |---|---|
 | Submission framing | In the cover letter, explain the advance over sharp occupation-density methods through global support selection and complete-graph tie resolution. No external reader is a prerequisite. |
 | Complete submission package | Provide the 64-page article and 14-page proof supplement together; explain the B merger and supplement contents in the cover letter, and check any portal-specific requirements at upload. |
-| Final code pin when committed | Record an immutable revision containing the final merged layout and archive. The existing `5db17e4` reference identifies earlier verification code; it is not a commit of these revisions. No commit or push was performed in this revision. |
+| Code revision recorded | The article now pins [4c18775](https://github.com/apemm/Kagey-Problems/commit/4c187751182d0fa33097dc7eddcac289173ba7db), containing the revised manuscript, shared routines, figures and historical B archive. The final availability paragraph and PDFs are recorded in a follow-up commit. |
 
 ## Conclusion
 
