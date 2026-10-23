@@ -51,19 +51,21 @@ In the elephant random walk each step copies a uniformly chosen earlier step and
 reverses it with probability $\varepsilon$. We let $\varepsilon$ tend to zero as the
 number of steps $N$ grows, with $N\varepsilon$ of order $\log N$. The number of steps
 that disagree with the first step is approximated by a truncated Luria--Delbr\"uck
-law, with an explicit bound on each mass error. After centering and scaling, it
-satisfies a local limit theorem with the Landau density and an explicit rate.
-These bounds locate every mode of the walk near one of its two ends.
-For even $N$ we also ask when the origin is as likely as each end. This crossing
-is unique, and its expected reversal count is
-$2\log N-\log\log N-\log16+o(1)$, about twice that of the persistent random walk.
-We give explicit bounds on the relative error of the approximation
-$4\varepsilon/(N+2)$ for the origin probability. To first order, reaching the origin requires one reversal among the first
-few steps. For every $N$ and $\varepsilon<\frac12$, the second difference of the
-endpoint law changes sign at most four times. At the crossing, the origin is the
-unique interior minimum for every sufficiently large even $N$, and a
-computer-assisted proof gives the same conclusion for every even $N$ from eight
-to 2000. The interval between these two ranges remains open.
+law, with an explicit total variation bound. Its Landau local limit has an
+explicit rate and locates every mode near one of the two ends. The same Landau
+law arises from the fixed-memory superdiffusive limit as the memory tends to one.
+For even $N$, the origin and each end cross exactly once, at an expected reversal
+count of $2\log N-\log\log N-\log16+o(1)$. We bound the relative error of the
+origin probability $4\varepsilon/(N+2)$. An exact sign argument proves that, at the
+crossing, the origin is the unique interior minimum for every even $N\ge8$.
+The law has exactly two symmetric intervals of maximizing bins, with strict
+increase from the ends and strict decrease toward the center. This uses
+certified endpoint comparisons at finitely many lengths. For a reversible
+fluctuation assay with one sensitive founder and symmetric switching at birth,
+the total variation bound controls the error of the compound Poisson experiment.
+We also prove finite-sample concentration and mean-bias bounds for its
+constrained maximum-likelihood estimator, and uniform consistency when the
+number of independent cultures grows as the cube of the logarithm of their size.
 \end{abstract}
 
 \medskip
@@ -87,11 +89,14 @@ I wrote the original draft and its mathematics. I used Claude Opus 5.5
 (Anthropic) for revision and proof checking, and later used OpenAI Codex to
 revise the exposition and check references. This included the abstract,
 introduction and description of the verification, and moving auxiliary
-proofs to the Online Resource. AI tools also generated the
+proofs to the Online Resource. The later revision used these tools to develop
+the all-length shape argument, the total variation and likelihood bounds,
+and the weak limit connecting the fixed-memory law to the Landau law.
+AI tools also generated the
 Lean files and parts of the verification code, which I reviewed against the
 paper. Section~\ref{sec:verify} distinguishes the formal proofs, their named
-classical hypotheses and the separate numerical checks. I checked the revisions
-and take responsibility for all mathematical claims, proofs and computations.
+classical hypotheses and the separate numerical checks. I take responsibility
+for all mathematical claims, proofs and computations.
 
 \section*{Statements and Declarations}
 
@@ -120,7 +125,7 @@ certificate records and Lean files are those at commit
 of that repository. To rerun the checks, run
 \texttt{python -B verify\_all.py -{}-paper d} in that folder, which takes
 several minutes. The certified computations behind
-Propositions~\ref{prop:convex-certified} and~\ref{prop:center-small} take
+Propositions~\ref{prop:convex-certified} and~\ref{prop:dip-hyp} take
 about an hour and half an hour, and run separately in \nolinkurl{paperD} as
 \texttt{python -B certify\_convex.py 10 2000} and
 \texttt{python -B certify\_center.py 10 2000}. The scripts need
@@ -280,11 +285,6 @@ K.~S.~K\"olbig and B.~Schorr, \emph{A program package for the Landau
 distribution}, Comput.~Phys.~Commun. \textbf{31} (1984), 97--111.
 \href{https://doi.org/10.1016/0010-4655(84)90085-7}{doi:10.1016/0010-4655(84)90085-7}.
 
-\bibitem{efronstein1981}
-B.~Efron and C.~Stein, \emph{The jackknife estimate of variance}, Ann.\
-Stat.\ \textbf{9} (1981), 586--596.
-\href{https://doi.org/10.1214/aos/1176345462}{doi:10.1214/aos/1176345462}.
-
 \bibitem{yamazato1978}
 M.~Yamazato, \emph{Unimodality of infinitely divisible distribution
 functions of class $L$}, Ann.\ Probab.\ \textbf{6} (1978), 523--531.
@@ -305,11 +305,6 @@ University Press, Cambridge, 2004.
 R.~Durrett, \emph{Probability: Theory and Examples}, 5th ed., Cambridge University
 Press, Cambridge, 2019.
 \href{https://doi.org/10.1017/9781108591034}{doi:10.1017/9781108591034}.
-
-\bibitem{steele1986}
-J.~M.~Steele, \emph{An Efron--Stein inequality for nonsymmetric statistics}, Ann.\
-Stat.\ \textbf{14} (1986), 753--758.
-\href{https://doi.org/10.1214/aos/1176349952}{doi:10.1214/aos/1176349952}.
 
 \bibitem{scheffe1947}
 H.~Scheff\'e, \emph{A useful convergence theorem for probability distributions},
