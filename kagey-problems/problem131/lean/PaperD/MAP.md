@@ -1,5 +1,14 @@
 # Paper D: map from the paper and the research notes to the Lean proofs
 
+Current editorial layout: Appendix B keeps its five statements and their numbers,
+with their unchanged proofs in Online Resource 1, Section S4. The former
+Appendix D proof sections are now S5.A--S5.D, with the same statement labels
+and proof bodies. Appendix C remains C. The introduction's Theorems 1.2 and
+1.3 are shorter summaries; the detailed finite-length statements in Sections
+2 and 3 are unchanged. Historical appendix locators below describe the earlier
+layout. No formal proof, classical hypothesis or certificate was changed, and
+this editorial pass did not rerun the Lean build.
+
 Paper D is `paperD/problem131_memory.tex`, "The center and the ends of the elephant random walk
 with rare reversals". The first table below lists every numbered statement of the paper by its
 label, with its number in a fresh build of the paper of October 17, 2026 (Online Resource 1 has
@@ -167,7 +176,7 @@ indexes the count chain by the number of steps.
 | `thm:B-local-lower` | B.4 | local lower bound | `thm_B_local_lower` (`C = 20`), `lem_B4_explicit` (every error term explicit), `B4_pointwise`, `B4_one_j`, `B4_late_tail` | kernel; track U5; for `N ≥ 64`, `0 ≤ ε ≤ 1` (no `ε ≤ 1/4`, no `x ≥ 1`) |
 | `lem:B-mode` | B.5 | mode bound | `lem_B_mode_paper` (`c̄ = 1/40`, `A₀ = 15400`), `lem_B_mode` (under `804 x log(x+2) ≤ N`), `lem_B5_strong`, `B5_ell_lower` | kernel; track U5 |
 | Appendix C | | proofs of 3.8 to 3.11 | C.1 as `thm:cp` (U1); C.2 as `thm:landau` (U2); C.3 as `lem:landau-mode` (Steps 1 and 2 U6, Steps 3 and 4 U3); C.4 as `cor:mode-location` (U3) | kernel, modulo the named classical hypotheses of those rows. Steps 1 and 2 of C.3 are proved by track U6, so C.3 needs only UNI |
-| Appendix D | | proofs of 3.16 to 3.19 | as in the rows of 3.16 to 3.19, with `Y_step`, `Yf_step`, `holes_step`, `dU_neg`, `dU_pos`, `fZ_diag_pos` | kernel |
+| Online Resource 1, S5 (formerly Appendix D) | | proofs of 3.16 to 3.19 | as in the rows of 3.16 to 3.19, with `Y_step`, `Yf_step`, `holes_step`, `dU_neg`, `dU_pos`, `fZ_diag_pos` | kernel |
 | `prop:second-order` | S1.1 | second order of the center | `U4.center_second_order_lower`, `U4.prop_second_order` | kernel, hypothesis HOEF; track U4; the lower bound for `0 < ε < 1/2` and even `N ≥ 64` |
 | `prop:refined` | S1.2 | refined crossing | `U4.star_second_order`, `U4.prop_refined_explicit` (error `20822 log N/N` for `log N ≥ 30`), `U4.prop_refined` | kernel, hypothesis HOEF; track U4 |
 | `rem:refined` | S1.3 | `x_N < g_N` | `U4.crossing_lt_gRoot_3500` (every even `N` with `log N ≥ 3500`), `U4.crossing_lt_gRoot` (`log N ≥ 21000`) | kernel, hypothesis HOEF; track U4. Proposition S1.2 of the paper now states the same threshold `log N ≥ 3500`. The numbers of the remark are not theorems |

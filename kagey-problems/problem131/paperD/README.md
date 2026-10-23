@@ -147,23 +147,26 @@ grows.
 ## Files
 
 - `problem131_memory.tex` and the section files `sec_*.tex` and `app_*.tex` make up the paper, the
-  main text and Appendices A to D in one PDF, `problem131_memory.pdf`. The sections are
+  main text and Appendices A to C in one PDF, `problem131_memory.pdf`. The sections are
   `sec_intro`, `sec_erw_crossing`, `sec_erw_shape` and `sec_verify`, and the
-  appendices are `app_erw_bounds`, `app_erw_profile`, `app_erw_bulk` and `app_erw_signs`
-  (the proofs for the sign pattern of the second difference).
+  appendices are `app_erw_bounds`, `app_erw_profile` and `app_erw_bulk`.
+  The family-estimate statements stay in Appendix B; their proofs are in
+  `or_family_proofs.tex`. The second-difference proofs in `app_erw_signs.tex`
+  are now Section S5 of the Online Resource.
 - `online_resource.tex` is Online Resource 1, a separate PDF `online_resource.pdf` with the center
-  and the crossing to second order, the tail and the proof of parts (b) to (d) of Proposition 3.25.
+  and the crossing to second order, the tail and the proof of parts (b) to (d) of Proposition 3.25,
+  followed by the auxiliary family proofs (S4) and second-difference proofs (S5).
   It reads the labels of the paper through the package `xr-hyper`, so build the paper, then the
   Online Resource, then the paper again. Its text is in `online_resource_body.tex`. Its one
   bibliography item (Hoeffding 1963) is listed in `online_resource.tex` itself, because the paper
   cites it too, so `online_resource_bib.tex` holds no item at present. Its caption on the submission form is
-  "Online Resource 1. The center and the crossing to second order, the tail theorem, and the
-  proofs for odd N."
+  "Online Resource 1. Second-order crossings, tails, odd lengths, and auxiliary
+  family and second-difference proofs supporting the main theorems."
 - `problem131_arxiv.tex` is the arXiv version. It inputs `problem131_memory.tex` unchanged and
   appends `online_resource_body.tex` before the bibliography, so the S numbers and the references
   between the two parts resolve inside one PDF. Make it the top-level file of the arXiv
   submission. The upload holds `problem131_arxiv.tex`, `problem131_memory.tex`, the `sec_*` and
-  `app_*` files, `online_resource_body.tex`, `online_resource_bib.tex`, `figures/*.pdf` and a
+  `app_*` files, `or_family_proofs.tex`, `online_resource_body.tex`, `online_resource_bib.tex`, `figures/*.pdf` and a
   `00README.json` that names `problem131_arxiv.tex` as the top-level file. It does not hold
   `online_resource.tex`.
 - `figures/` holds the two figures of the paper, with the captions in `figures/captions.md`.
@@ -358,4 +361,4 @@ CRLF endings. Its LF form, as committed, has sha256
 
 ## Final editorial revision
 
-The article is 41 pages, with a 12-page Online Resource and a 53-page combined arXiv version. The bulk approximation leads the abstract and the Bokes comparison appears immediately after the model/regime. The detailed Lean coverage tables are preserved alongside `../lean/PaperD/MAP.md` in `coverage_tables.tex`. The mathematical statements and numbering are unchanged. `cover_letter.md` is a submission draft.
+The article is 35 pages, with a 17-page Online Resource and a 52-page combined arXiv version, compared with the preceding 41 + 12 = 53 pages. Six pages have left the main article, but the total reduction is one page: most of the change moves auxiliary proofs rather than deleting mathematics. The center and compound-Poisson/Landau proofs remain in the article. Appendix B retains its statements and numbering, with complete proofs in S4. The former Appendix D is now S5. The introduction gives shorter summaries of the explicit bounds and the verification section points to existing records instead of repeating their metadata. `cover_letter.md` requests refereeing of all the supplementary proofs. No Lean proof or numerical certificate was changed or rebuilt.
