@@ -1,7 +1,9 @@
 \section{Strips}\label{sec:strip}
 
-On two rows every rectangle is axis-aligned, since a tilted one meets three rows: the
-neighbors of a lowest corner lie strictly above it, as no side is horizontal, and the opposite corner lies above them.
+On two rows every rectangle is axis-aligned. To see this, take a lowest
+corner of a tilted rectangle. Its two neighbors lie strictly above it, and
+the opposite corner lies above both, so the rectangle meets at least three
+rows. The strip problem therefore comes down to pairs of columns.
 
 \begin{theorem}[strip theorem]\label{thm:strip}
 Let $m\ge3$.
@@ -16,13 +18,18 @@ For $m=2$ there is one rectangle, so $f(2,2)=4$ and $a_2(2)=1$.
 \end{theorem}
 
 \begin{proof}
-(a) Distinct rectangles share at most one column, so their difference set contains all
-four points of two columns $p$ and $q$. Every pair arises, since $m\ge3$ gives a third column $z$ and the rectangles on
-$\{z,p\}$ and $\{z,q\}$. By Corollary~\ref{cor:hitting}, $S$ is
-valid if and only if $K$ meets every two columns, that is, at most one column is full.
+(a) Two distinct rectangles share at most one column. Their difference
+set therefore contains both points of at least two columns. Conversely,
+every pair of columns $p,q$ occurs as a whole difference set. Choose a
+third column $z$ (this is where $m\ge3$ is used) and take the rectangles on
+$\{z,p\}$ and $\{z,q\}$. By Corollary~\ref{cor:hitting}, validity is thus
+equivalent to keeping a point in every pair of columns, or having at most
+one full column.
 
-(b, c) By (a), $|K|\ge m-1$, so $|S|\le m+1$, with equality exactly for the blackouts
-in (b). There are $m$ choices of full column and two in each other column.
+(b, c) We must keep at least one point in all but one column, so
+$|S|\le2m-(m-1)=m+1$. Equality requires one full column and exactly one
+black point in each other column. There are $m$ choices for the full
+column, then two choices in each of the remaining $m-1$ columns.
 \end{proof}
 
 \begin{proposition}[orbits and kings]\label{prop:kings}
@@ -33,9 +40,11 @@ board up to symmetry.
 \end{proposition}
 
 \begin{proof}
-By Burnside's lemma, $4o_m$ is $a_2(m)$ plus the optima fixed by the reflection (none)
-and by the reversal and the half turn (each fixes none for even $m$, and $2^{(m-1)/2}$
-with a central full column for odd $m$).
+Apply Burnside's lemma to the four symmetries. The identity fixes all
+$m2^{m-1}$ optima, and swapping the rows fixes none. A column reversal or
+half turn can fix an optimum only when $m$ is odd and the full column is
+central. Each then has $2^{(m-1)/2}$ fixed optima, since the singleton
+columns come in pairs. Dividing their sum by four gives the formula.
 
 Put $n=m-1$. Nonattacking kings on the $2\times2n$ board are columns $c_1<\cdots<c_n$ with
 $c_{j+1}\ge c_j+2$, and any rows $r_j$. The gaps $c_1-1$, $c_{j+1}-c_j-2$, and $2n-c_n$
@@ -43,6 +52,6 @@ are nonnegative and sum to $1$, so exactly one, say the $e$th, is $1$, and
 $c_j=2j-1+[j\ge e]$. Sending this to the optimum with full column $e$ and other black
 points in rows $r_1,\ldots,r_n$ from left to right is a bijection. It commutes with the
 reflection, which swaps the rows on both sides, and with the reversal, which sends $e$ to
-$n+2-e$ and $c$ to $2n+1-c$ and reverses the rows, since $2n+1-c_{n+1-j}=2j-1+[j\ge n+2-e]$.
+$n+2-e$ and $c$ to $2n+1-c$ and reverses the order of the row labels, since $2n+1-c_{n+1-j}=2j-1+[j\ge n+2-e]$.
 So the orbits correspond.
 \end{proof}
