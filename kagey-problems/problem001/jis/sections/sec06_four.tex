@@ -58,36 +58,6 @@ D(i+1,1)=D(i,2)\,\triangle\,\kA_i,\qquad D(i+1,2)=D(i,1)\,\triangle\,\kE_i,
 and each solves for any of its three rectangles. The first line covers $\kA_i$, $\kB_i$, $\kC_i$, and $\kE_i$, and the second, with $i=j-1$ or $i=j$, covers $D(j,1)$ and $D(j,2)$, since $j\ge2$ or $j\le m-3$ as $m\ge4$.
 \end{proof}
 
-\begin{theorem}[forbidden-block bound]\label{thm:foursurvival}
-For every $m\ge6$ we have $a_4(m)\le3\,(m)_4\,4^{m-4}(53/64)^k$, where
-$k=\max(0,\lfloor m/4\rfloor-4)$. So $a_4(m)=O\bigl(m^4\,212^{m/4}\bigr)$.
-\end{theorem}
-
-\begin{proof}
-Optima are candidates, with $3\,(m)_4$ choices of $F$, the double columns, and their
-pairs. A \emph{block} is a run of four singleton columns, whose word lists
-their black rows. For a block from column $x$, the \emph{template words} $2413$,
-$3412$, $2143$, and $3142$ are the corner rows of $\kC_x$, $\kA_x$, $\kE_x$, and $\kB_x$. Let
-$T$ be one, with word $t_1t_2t_3t_4$.
-
-A \emph{swap word} swaps two letters $t_p$ and $t_q$. No block carries one, since $T$ and
-the axis-aligned rectangle on $(x+p-1,t_p)$ and $(x+q-1,t_q)$ would both show exactly these
-two points. Template words are the permutations with both end letters in $\{2,3\}$.
-Swapping two end or two middle letters gives one again, and swapping an end
-and a middle letter gives the sixteen with one end letter in $\{2,3\}$, so the $20$ swap words are these and the four template words.
-
-An \emph{edit word} replaces a letter $t_p=r$ by $s$ with $\{r,s\}\in F$. No block carries
-one, since $T$ and the rectangle on rows $r,s$ and columns $x+p-1$ and $d$, the double column
-of $\{r,s\}$, would both show only $(x+p-1,r)$. Each template word has $8$ edit words.
-Two template words share one only if they differ in two positions holding $r,s$ in opposite
-orders, and then share two if $\{r,s\}\in F$, which happens for two pairs with
-$\{r,s\}=\{2,3\}$ and two with $\{1,4\}$. So there are at least $32-8=24$ edit words. They repeat a letter, so none is a swap word, and at most
-$256-20-24=212=4^4\cdot53/64$ words are allowed in a block.
-
-At most four of the $\lfloor m/4\rfloor$ column groups $4j-3,\ldots,4j$ contain a double
-column, so at least $k$ are blocks. Other columns have at most $4$ values.
-\end{proof}
-
 \begin{lemma}[six columns of memory]\label{lem:fourmemory}
 For $m\ge6$ and a pair set $F$, a word over the four singleton letters and the pairs of $F$, each pair used once, is the word of an optimum exactly when (i) no tilted rectangle is hidden, (ii) none shares its presentation with an axis-aligned rectangle whose columns are among its own and the double columns, and (iii) no two tilted rectangles within seven consecutive columns share a presentation.
 \end{lemma}
@@ -95,6 +65,50 @@ For $m\ge6$ and a pair set $F$, a word over the four singleton letters and the p
 \begin{proof}
 Optima satisfy the conditions, (i) by Theorem~\ref{thm:hidden}. Conversely, the word is axis-valid by Theorem~\ref{thm:equality}, and a hidden axis-aligned rectangle would be a four-cycle of $G_S$. Given (i), two distinct rectangles with one presentation $P$ have $P\ne\emptyset$, and one is tilted. If the other is axis-aligned, each of its columns meets $P$, so it is a column of the tilted one or, with two black corners, a double column, against (ii). If both are tilted, they share a column $c$ meeting $P$. Each spans at most four consecutive columns, so both lie in columns $c-3$ to $c+3$, against (iii).
 \end{proof}
+
+A tilted rectangle of a word over the four singleton letters and the pairs of $F$ \emph{fails
+locally} if it is hidden, if it shows a set with a rival by Lemma~\ref{lem:rival} read with pair
+set $F$, or if another tilted rectangle of the word shows the same set.
+
+\begin{proposition}[the automaton]\label{prop:fourautomaton}
+Fix $F$. Let $\mathcal A_F$ have states $(u,U)$, with $u$ the last six letters read and $U$ the
+pairs used. On a letter $y$ it rejects if $y\in U$ or a tilted rectangle of $uy$ with a corner in
+its last column fails locally, and otherwise moves to the last six letters of $uy$ and
+$U\cup(\{y\}\cap F)$. It accepts when $U=F$. For $m\ge6$ it accepts exactly the words of the
+optima of the $4\times m$ grid with pair set $F$.
+\end{proposition}
+
+\begin{proof}
+Tilted rectangles span four columns, so each lies in $uy$ when its last column is read. An
+accepted word is a candidate with pair set $F$, so it is axis-valid and hides no axis-aligned
+rectangle. Conditions (i) to (iii) of Lemma~\ref{lem:fourmemory} hold, since by
+Lemma~\ref{lem:threecorners} an axis-aligned rectangle with the presentation of a tilted one is a
+rival, and two tilted rectangles in seven consecutive columns lie in the seven columns ending at
+the later last column. Conversely an optimum is a valid candidate hiding nothing
+(Theorem~\ref{thm:hidden}).
+\end{proof}
+
+The script \nolinkurl{four_row_equivalence_check.py} builds $\mathcal A_F$ from the definition
+($60{,}975$, $138{,}095$, and $55{,}575$ states) and checks that it accepts the same words as a
+smaller machine from an earlier search, whose product with the register has $2{,}519$, $3{,}089$,
+and $2{,}119$ reachable states. Two transfer counters on that machine agree for $m\le1500$, and a
+direct test of the candidates agrees for $m\le10$ (Table~\ref{tab:fourvalues}).
+
+\begin{table}[!htb]
+\centering\scriptsize\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+$m$ & $6$ & $7$ & $8$ & $9$ & $10$ & $11$ & $12$\\
+\midrule
+$\{1,2\}\mid\{3,4\}$ & $0$ & $4$ & $128$ & $920$ & $4{,}852$ & $24{,}112$ & $114{,}424$\\
+$\{1,3\}\mid\{2,4\}$ & $20$ & $256$ & $1{,}780$ & $11{,}128$ & $63{,}540$ & $346{,}320$ & $1{,}785{,}768$\\
+$\{1,4\}\mid\{2,3\}$ & $6$ & $32$ & $210$ & $1{,}284$ & $7{,}006$ & $32{,}224$ & $137{,}656$\\
+$a_4(m)$ & $26$ & $292$ & $2{,}118$ & $13{,}332$ & $75{,}398$ & $402{,}656$ & $2{,}037{,}848$\\
+\bottomrule
+\end{tabular}
+\caption{Four-row optima by pair set (computer-assisted).}
+\label{tab:fourvalues}
+\end{table}
 
 \begin{theorem}[the four-row generating function, computer-assisted]\label{thm:fourgfexact}
 There are coprime integer polynomials $P_4=26z^6-826z^7+\cdots$ of degree $444$ and $Q_4=\sum_{j=0}^{420}q_jz^j$ of degree $420$ with $q_0=1$ and $\sum_{m\ge6}a_4(m)z^m=P_4/Q_4$. The recurrence $\sum_jq_j\,a_4(n-j)=0$ holds for every $n\ge445$ and fails at $n=444$. Over the integers
@@ -105,7 +119,7 @@ where $g_d$ and $\tilde g_d$ are irreducible of degree $d$ with constant term $1
 \end{theorem}
 
 \begin{proof}
-By Lemmas~\ref{lem:fourmemory} and~\ref{lem:rival}, an automaton remembering the last six columns and the used pairs of $F$ accepts exactly the optima with pair set $F$. Two transfer counters built from the definition~\cite{repo}, one checked against this automaton, agree on $a_4(m)$ for $m\le1500$ and with Table~\ref{tab:values}. Berlekamp--Massey modulo eight primes gives $P_4$ and $Q_4$. The counter checked against the automaton is a column machine with a register of used pairs. It has a transfer matrix $T_F$ for each of the three pair sets $F$, the four-cycles with parts $\{1,2\}$ and $\{3,4\}$, $\{1,3\}$ and $\{2,4\}$, or $\{1,4\}$ and $\{2,3\}$, with $2{,}519$, $3{,}089$, and $2{,}119$ reachable states. Its state vectors $v(n)=v(0)T_F^n$ satisfy $\sum_jq_jv(n_F-j)=0$ at $n_F=436$, $435$, and $445$, so powers of $T_F$ give the recurrence for $n\ge445$, and $\deg P_4=444$ forces its failure at $n=444$. SymPy factors $Q_4$.
+By Proposition~\ref{prop:fourautomaton}, the counters count the optima. Berlekamp--Massey modulo eight primes on $a_4(m)$, $m\le1500$, gives $P_4$ and $Q_4$. The reachable states give a transfer matrix $T_F$ for each $F$, and its state vectors $v(n)=v(0)T_F^n$ satisfy $\sum_jq_jv(n_F-j)=0$ at $n_F=436$, $435$, and $445$, so powers of $T_F$ give the recurrence for $n\ge445$, and $\deg P_4=444$ forces its failure at $n=444$. SymPy factors $Q_4$.
 \end{proof}
 
 \begin{corollary}[growth, computer-assisted]\label{cor:fourgrowth}
