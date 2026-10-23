@@ -1,25 +1,22 @@
 # Problem 131, Paper F: heavy-tailed runs and aging walks
 
-The paper is "Endpoint crossings for random walks with heavy-tailed runs and for aging walks". It
+The paper is "The golden-ratio threshold for a lattice Lévy walk and ties in coin-turning walks". It
 studies walks on Z that move in runs of alternating direction and asks when the ballistic ends of the
 law after N steps beat the center. With runs whose lengths have tail k^(-alpha), 1 < alpha < 2,
 started in equilibrium, the ends win for large N exactly when alpha is below the golden ratio. This
 is the lattice form, with its constant, of a heuristic of Wang, Li and Hänggi for heat conduction.
-An aging walk, which switches at step k with probability c/k, ties exactly at c = 1 for every N, and
+With a fixed first step, an aging walk that switches at step k with probability c/k ties exactly at c = 1 for every N, and
 so does its version with d states. For runs with geometric lengths the question is Problem 131 of
 Kagey's Open Problem Collection.
 
 Until October 13, 2026 this paper was Sections 4 and 5 and Appendices D and E of the elephant-walk
-paper in `../paperD`. It cites three other papers by A. Pemmasani, only where its mathematics uses
-them, and `../README.md` describes all the papers on Problem 131. Inside the paper they are cited by
-number only, not as Papers A, B and D.
+paper in `../paperD`. It cites two public preprints by A. Pemmasani, and `../README.md` describes all the papers on Problem 131. Inside the paper they are cited by
+number only, not by letter labels.
 
 - `../paperA`, "Uniform Bessel bounds for magnetization crossings in finite Ising chains",
   arXiv:2610.06935. The crossing for geometric runs (Section 1).
 - `../archive/paperB`, "Vertex crossings in a symmetric Markov multinomial model", arXiv:2610.09258. The
   first-order scale of its vertex crossing (Remark 3.5).
-- `../paperD`, "The center and the ends of the elephant random walk with rare reversals" (in preparation). Its
-  Proposition 2.3 uses the same argument as Proposition 3.3(b).
 
 Conventions. The walk has N steps, and P_N(k) is the probability of bin k. A_N is the number of
 right steps, C_N = P_N(N/2) is the probability of the center bin and E_N = P_N(N) that of the right
@@ -61,8 +58,7 @@ The aging walk (switch at step k >= 2 with probability c/k), in its own section,
   exactly the law of Pólya's urn with d colors, for every weight theta (Proposition 3.1). The
   count law alone follows from Dietz, Lippitt and Sethuraman (Sankhya A 2023, Theorem 2.18 of
   arXiv:1901.08135). For d = 2 and an integer theta the joint law with the last state is Theorem 7.2
-  of Engländer and Volkov's book (number from the draft of March 2024, to be checked against the
-  published book). The paper adds the joint law for d >= 3 or a theta that is not an integer.
+  of Engländer and Volkov's author draft dated March 18, 2024 (pp. 138–139). The paper adds the joint law for d >= 3 or a theta that is not an integer.
   Section 3 now starts with this proposition, and Proposition 3.3(a) and Theorem 3.4(a) follow from it.
 - With a fair first step each interior bin is twice as likely as an end at c = 1, and its crossing
   is unique and below 1 (Proposition 3.6). For the center,
@@ -79,9 +75,11 @@ row alpha = 1 of Table 2 is a heuristic.
 
 - For heavy tails, a rate in Theorem 2.4, monotonicity of E_N/C_N and uniqueness of the crossover
   size (Remark 2.7), the case alpha = 1 (Remark 2.10), and the full profile of the law.
-- The paper credits Engländer and Volkov's book (World Scientific 2025) with Claim 7.1, Theorem 7.2,
-  Definition 7.1, Lemma 7.1, Example 7.1 and Section 5.7, in the numbering of a draft of March 2024.
-  Check these against the published book. The comments `% AUTHOR CHECK` in the source mark each place.
+- The Engländer–Volkov locators were checked directly in the author-uploaded draft dated
+  March 18, 2024. The bibliography identifies that version explicitly. Published-edition
+  numbering was not verified and is not claimed. The draft's Section 5.7 has a normalization
+  discrepancy; the paper instead uses its own fair-start averaging proof.
+
 
 ## Prior work
 
@@ -114,3 +112,7 @@ From the Problem 131 folder, `python -B verify_all.py --paper f` runs the checks
 this folder, `python -B verify_all.py` does the same, and `--full` adds the heavy cells. The scripts
 need numpy, scipy and mpmath. Build the paper with pdflatex, 3 times. The build reads only files in
 this folder.
+
+## Final editorial revision
+
+The verification coverage table is preserved as `../lean/PaperD/coverage_F.tex` and indexed by `../lean/PaperD/MAP.md`. The urn consequences have shorter derivations from Proposition 3.1. The heavy-tail proofs, strict ordering arguments and fair-start local limit remain. The disclosure and immutable code revision are included. The dated author draft is identified in a text footnote, while the bibliography lists the published monograph.

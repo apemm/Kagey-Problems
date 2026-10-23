@@ -1,0 +1,298 @@
+\section{Setting, notation and the exact law}\label{sec:model}
+
+This section fixes the chain and its notation, says which faces can be the support of a path
+(Lemma~\ref{lem:admissible}), and writes the law of the composition as a sum over runs
+(Lemma~\ref{lem:runs}), which every later section uses.
+
+\subsection{Setting and notation}\label{sec:notation}
+
+\emph{The chain.} Fix $d\ge2$ and a generator $Q$ on $[d]=\{1,\dots,d\}$. Its
+rates are $q_{ij}\ge0$ for $i\ne j$, the exit rates are $q_i=\sum_{j\ne i}q_{ij}$,
+$Q_{ii}=-q_i$, and $q_{\max}=\max_iq_i$. We also write $q$ for the vector
+$(q_i)$. (The scalar $q=1-p$ of the two-state
+walk appears only where we recall~\cite{paperA}, and the scalar $q$ of
+Proposition~\ref{prop:pair} is a common exit rate.) The start
+$\mu$ is a probability law on $[d]$, and $\mu(F)=\sum_{i\in F}\mu_i$. For $N\ge2$
+and $T>0$ put
+\[
+ h=\frac TN,\qquad L=\log N,\qquad \tau=\frac TL .
+\]
+The chain $X_1,\dots,X_N$ has $X_1\sim\mu$ and transition matrix $I+hQ$. So at
+each step it jumps from $i$ to $j$ with probability $hq_{ij}$, and $N$ steps
+look like the continuous-time chain with generator $Q$ run for time $T$. We
+assume $hq_{\max}\le\frac12$ unless we say otherwise. The \emph{composition} is
+the vector of visit counts $n=(n_1,\dots,n_d)$, with
+$n_i=\#\{t\le N:X_t=i\}$, so that $n_1+\dots+n_d=N$. We write $P_N(n)$ for the
+probability that the chain has composition $n$, $\supp n=\{i:n_i>0\}$ for its
+support, and $\alpha=n/N$ for the visit fractions.
+
+\emph{Faces.} A face is a nonempty set $F\subseteq[d]$, of size
+$k=k_F=\lvert F\rvert$. Let $\Delta_F$ be the set of probability vectors on
+$[d]$ that vanish off $F$, and $\Delta_F^\circ$ the set of those that are
+positive on $F$. We number the states of $F$ as $1,\dots,k$ and use the
+coordinates $(\alpha_2,\dots,\alpha_k)$ on $\Delta_F$ and $(t_2,\dots,t_k)$ on
+$\{t\in\R^F:t_1+\dots+t_k=T\}$. We write $x\cdot y=\langle x,y\rangle
+=\sum_{i\in F}x_iy_i$ and $x\circ y=(x_iy_i)_{i\in F}$. Let
+$A_F=(q_{ij})_{i,j\in F}$ with zero diagonal, and $Q_F=A_F-\operatorname{diag}
+(q_i)_{i\in F}$. Since $q_i$ includes the rates of leaving $F$, $Q_F$ generates
+the chain killed when it leaves $F$. The switching graph $G_F$ has an edge
+$i\to j$ whenever $i,j\in F$, $i\ne j$ and $q_{ij}>0$.
+
+\emph{Perron roots.} A square matrix $B$ is Metzler if its off-diagonal entries
+are nonnegative, and then its Perron root $\varrho(B)$ is its largest real
+eigenvalue.
+If $B$ is irreducible, $\varrho(B)$ is simple and has positive left and right
+eigenvectors~\cite{bermanplemmons1994}.
+
+\begin{definition}[faces]\label{def:faces}
+Let $F$ be a face. We call $F$ \emph{irreducible} if $G_F$ is strongly connected.
+In particular every singleton is irreducible. We call $F$ \emph{admissible} if for some
+$N$ some path $x_1\cdots x_N$ of positive probability has support exactly $F$
+(for $0<hq_{\max}<1$ this does not depend on $h$).
+We say that $F$ satisfies \textup{(H)} if $F$ is irreducible and $\mu(F)>0$.
+The \emph{exit rate} of $F$ is $\lambda_F=-\varrho(Q_F)$, so
+$\lambda_{\{i\}}=q_i$. If $F$ is irreducible, $r_F$ and $l_F$ are right and left
+eigenvectors of $Q_F$ for $-\lambda_F$ with positive entries and
+$\langle l_F,r_F\rangle=1$, and $\alpha^*_F=l_F\circ r_F$ is the
+\emph{quasi-ergodic law} of $F$~\cite{darrochseneta1965,darrochseneta1967}. The
+\emph{face maximum} is $M_F=\max\{P_N(n):\supp n=F\}$, with $\max\emptyset=0$.
+\end{definition}
+
+We call $\lambda_F$ the exit rate for the following reason. If $F$ is
+irreducible, then $e^{TQ_F}r_F=e^{-T\lambda_F}r_F$ and $r_F$ is positive. So
+the chance that the continuous-time chain started at a state of $F$ stays in
+$F$ up to time $T$, which is a row sum of $e^{TQ_F}$, lies between
+$e^{-T\lambda_F}\min r_F/\max r_F$ and $e^{-T\lambda_F}\max r_F/\min r_F$. If
+$F$ is reducible, we order the strongly connected components $C_1,\dots,C_r$ of
+$G_F$ so that every edge between components goes forward. Then $Q_F$ is block
+triangular with diagonal blocks $Q_{C_j}$, and
+$\lambda_F=\min_j\lambda_{C_j}$. In all cases $0\le\lambda_F\le\min_{i\in
+F}q_i$, since the rows of $Q_F$ have sums at most $0$ and a Perron root is at
+least every diagonal entry. For a face $F$ satisfying (H), the quasi-ergodic law
+$\alpha^*_F$ is the long-run law of the visit fractions of the chain conditioned
+to stay in $F$, and the best composition on $F$ sits near $N\alpha^*_F$
+(Theorem~\ref{thm:facemax}).
+
+Later sections add their own symbols where they are needed, namely the rate
+$I_F$ (Section~\ref{sec:firstorder}) and the tilted chain and the constant $K_F$
+(Definition~\ref{def:tilt}).
+
+\emph{The two-state walk.} The persistent random walk on $\Z$ makes its first
+step left or right with probability $\frac12$, and each later step repeats the
+previous one with probability $p$ and switches with probability $q=1-p$. Its
+directions form the chain of Example~\ref{ex:models}(i). As on a Galton board,
+\cite{paperA} calls a composition a \emph{bin}. For two states we identify a composition
+with its number of right steps. For $a,b\ge1$ let
+$S_{a,b}(u)=\sum_wu^{s(w)}$, the sum
+over the words $w$ with $a$ right steps and $b$ left steps, where $s(w)$ is the
+number of switches of $w$. Each such word has probability
+$\frac12p^{N-1}(q/p)^{s(w)}$ for the walk with $N=a+b$ steps. So
+$S_{a,b}(q/p)$ is the probability of composition $a$ divided by the probability
+$\frac12p^{N-1}$ of an endpoint. For $N\ge2$ let
+$S_N=S_{\lfloor N/2\rfloor,\lceil N/2\rceil}$, which belongs to a middle composition.
+It is a nonzero polynomial with nonnegative coefficients
+and no constant term, so $S_N(u)=1$ has exactly one positive root $u_N$, and
+$p_N=1/(1+u_N)$ is the crossing of the middle and the endpoints. Put
+$z_N=N(1-p_N)$ and $c_0=\frac12\log(\pi/8)$. By~\cite{paperA}, $z_N$ satisfies
+the crossing equation $z_N+\frac12\log z_N=L+c_0+1/(8z_N)+R_N$ with an explicit
+remainder $R_N=O(1/L^2)$. We also use the uniform Bessel bound
+of~\cite[Theorem~3.3(i)]{paperA}. Put $\psi(z)=z(I_0(z)+I_1(z))$, with the modified Bessel
+functions $I_0$ and $I_1$. In our notation that bound says
+that for every $N\ge2$ and every $z>0$
+\begin{equation}\label{eq:planar-bessel}
+ \Bigl(1-\frac{z(z+2)}{2N}\Bigr)\psi(z)\le\frac N2\,S_N\Bigl(\frac zN\Bigr)\le\psi(z).
+\end{equation}
+
+\emph{Conventions.} Unless we say otherwise, $Q$, $\mu$ and the faces under
+discussion are fixed, and every constant, every implied constant in $O(\cdot)$
+and every threshold $N_0$ depends only on them and on the compact set
+$\mathcal K$ when one appears. A bound that holds ``uniformly for $1\le T\le
+N^{1/3}$'' holds for all $N\ge N_0$ and all $T$ in that range with one implied
+constant. Subscripts as in $O_{\mathcal K}$ stress a dependence.
+
+\subsection{Admissible faces}
+
+This subsection says which faces can be the support of a path. All later statements about face
+maxima are for these faces.
+
+\begin{lemma}[admissible faces]\label{lem:admissible}
+Let $F$ be a face and $C_1,\dots,C_r$ the strongly connected components of
+$G_F$. \textup{(a)} $F$ is admissible if and only if the components can be
+numbered so that $\mu(C_1)>0$ and, for each $j<r$, $q_{xy}>0$ for some $x\in
+C_j$ and $y\in C_{j+1}$. \textup{(b)} An irreducible face is admissible if and
+only if $\mu(F)>0$. So \textup{(H)} holds exactly for the irreducible admissible
+faces. \textup{(c)} If $Q$ has symmetric support, that is $q_{ij}>0$ exactly
+when $q_{ji}>0$, then every admissible face is irreducible.
+\end{lemma}
+
+\begin{proof}
+We translate paths into walks in $G_F$. Take a path of positive probability
+with support $F$ and list the states of its maximal runs. This list is a walk
+in $G_F$ that starts at a state of $\supp\mu$ and visits every state of $F$.
+Conversely, every such walk $v_1,\dots,v_J$ is the list of runs of a path of
+positive probability with support $F$, as soon as $N\ge J$. (The path follows the walk and then stays in its last state, and a stay
+has positive probability.) So $F$ is admissible exactly when $G_F$ has a walk
+that starts in $\supp\mu$ and visits every state of $F$.
+
+(a) Suppose that there is such a walk. Once it has left a component $C$ for a
+state $y\notin C$, it cannot come back to $C$. (If it did, $y$ could be reached
+from $C$ and $C$ from $y$, so $y$ would belong to $C$.) Hence the walk visits
+each component in one block of consecutive times, and it passes from one block
+to the next along a single edge. We number the components in the order of these
+blocks. The walk starts in $C_1$, so $\mu(C_1)>0$, and the edge from block $j$
+to block $j+1$ is an edge $x\to y$ with $x\in C_j$ and $y\in C_{j+1}$. This is
+the condition in (a).
+
+Conversely, suppose that the components are numbered as in (a), with edges
+$x_j\to y_{j+1}$ from $C_j$ to $C_{j+1}$ for $j<r$. Take $y_1\in C_1$ with
+$\mu_{y_1}>0$ and any $x_r\in C_r$. Since $C_j$ is strongly connected, there is
+a walk inside $C_j$ from $y_j$ to $x_j$ that visits every state of $C_j$. We
+join these $r$ walks by the edges $x_j\to y_{j+1}$. The result is a walk that
+starts in $\supp\mu$ and visits every state of $F$.
+
+(b) This is (a) with $r=1$.
+
+(c) If $Q$ has symmetric support, an edge from one component to another would
+come with an edge back, and the two components would be the same. So no edge
+joins two components, and the condition in (a) forces $r=1$.
+\end{proof}
+
+So $M_F>0$ for large $N$ if $F$ is admissible, and $M_F=0$ otherwise.
+
+\subsection{The exact law}
+
+This subsection writes the probability of a composition as a sum over the runs of a path, and
+gives its continuum form. The upper bound of Lemma~\ref{lem:upper} and the local law of
+Section~\ref{sec:secondorder} both start from these sums.
+
+For $m\in\Z_{\ge1}^F$ put $M=\sum_{i\in F}m_i$ and
+$W(m)=\sum_c\mu_{c_1}\prod_{j<M}q_{c_jc_{j+1}}$, the sum over the words
+$c=c_1\cdots c_M$ in $F$ with $c_j\ne c_{j+1}$ in which each $i\in F$ occurs
+$m_i$ times. Such a word lists the states of the runs of a path, and $m_i$ is
+the number of runs in state $i$.
+
+\begin{lemma}[run expansion]\label{lem:runs}
+Let $hq_{\max}\le1$ and let $n$ have support $F$. Then, with
+$\binom{n_i-1}{m_i-1}=0$ for $m_i>n_i$ and $0^0=1$,
+\[
+P_N(n)=\sum_{m\in\Z_{\ge1}^F}W(m)\,h^{M-1}\prod_{i\in F}\binom{n_i-1}{m_i-1}
+(1-hq_i)^{n_i-m_i}.
+\]
+\end{lemma}
+
+\begin{proof}
+We group the paths with composition $n$ by the word of their runs. The states
+$c_1\cdots c_M$ of the maximal runs of a path form a word as in $W(m)$, where
+$m_i$ is the number of runs in state $i$. The path starts at $c_1$, which has
+probability $\mu_{c_1}$. It has $M-1$ switches, of probabilities
+$hq_{c_jc_{j+1}}$, and $n_i-m_i$ stays in state $i$, of probability $1-hq_i$
+each. So every path with the word $c$ and composition $n$ has the same
+probability, namely
+$\mu_{c_1}\prod_{j<M}q_{c_jc_{j+1}}\,h^{M-1}\prod_i(1-hq_i)^{n_i-m_i}$. The
+number of these paths is $\prod_i\binom{n_i-1}{m_i-1}$, because the lengths of
+the $m_i$ runs in state $i$ can be any of the $\binom{n_i-1}{m_i-1}$ ways to
+write $n_i$ as an ordered sum of $m_i$ positive parts. Summing over the words
+$c$ with given $m$ gives $W(m)$, and summing over $m$ gives the claim.
+\end{proof}
+
+Lemma~\ref{lem:runs} is checked in Lean (Section~\ref{sec:verify}). For
+$F=\{i\}$ the only path is $i^N$, so uniformly for $1\le T\le N^{1/2}$
+\begin{equation}\label{eq:vertexmax}
+M_{\{i\}}=\mu_i(1-hq_i)^{N-1}=\mu_ie^{-q_iT}\bigl(1+O(T^2/N)\bigr).
+\end{equation}
+For $t\in(0,\infty)^F$ let $H(t)=\sum_mW(m)\prod_{i\in F}t_i^{m_i-1}/(m_i-1)!$,
+which is finite since $W(m)\le k^Mq_{\max}^{M-1}$. The next lemma says that
+$e^{-\langle q,t\rangle}H(t)$ is the density of the occupation times of the
+continuous-time chain on the event that it stays in $F$. It is the continuum
+form of Lemma~\ref{lem:runs}, in which the binomial coefficients become the
+powers $t_i^{m_i-1}/(m_i-1)!$. Lemma~\ref{lem:discrete} below shows that the
+discrete law is close to it.
+
+\begin{lemma}[the continuum density]\label{lem:continuum}
+Let $(Y_s)_{s\ge0}$ be the continuous-time chain with generator $Q$ and
+$Y_0\sim\mu$, let $\mathcal O_i=\int_0^T\mathbf 1\{Y_s=i\}\,ds$, and let $E_F$
+be the event that $Y$ stays in $F$ during $[0,T]$ and visits every state of $F$.
+Then $\Prob(E_F,\ \mathcal O\in\cdot\,)$ has the density
+$e^{-\langle q,t\rangle}H(t)$ in $(t_2,\dots,t_k)$ on
+$\{t\in(0,\infty)^F:\sum_it_i=T\}$, and $\Prob(E_F,\ \mathcal O/T\in\cdot\,)$
+has the density
+\[
+f_T(\alpha)=T^{k-1}e^{-T\langle q,\alpha\rangle}H(T\alpha)
+\]
+in $(\alpha_2,\dots,\alpha_k)$. For $n$ with support $F$ and $t=hn$,
+$N^{-(k-1)}f_T(n/N)=h^{k-1}e^{-\langle q,t\rangle}H(t)$. For $F=\{i\}$,
+$f_T=\Prob(E_F)=\mu_ie^{-q_iT}$.
+\end{lemma}
+
+\begin{proof}
+We split $E_F$ by the sequence of states that $Y$ visits, and for each
+sequence we integrate out the holding times. Up to a null set, $E_F$ is the
+disjoint union of the events $E_c$ that $Y$ visits exactly $c_1,\dots,c_M$ in
+this order during $[0,T]$, over the words $c$ in the sums $W(m)$.
+
+\emph{The density of the holding times.} Fix $c$, and let $s_j$ be the time
+that $Y$ spends in its $j$-th run during $[0,T]$, so that $s_1+\dots+s_M=T$.
+For $j<M$ the $j$-th run is complete. Its holding time has the density
+$q_{c_j}e^{-q_{c_j}s_j}$, and it ends with a jump to $c_{j+1}$, which has
+probability $q_{c_jc_{j+1}}/q_{c_j}$. The last run only has to last longer
+than $s_M=T-\sum_{j<M}s_j$, which has probability $e^{-q_{c_M}s_M}$. We
+multiply these factors. On the set where $s_j>0$ for every $j\le M$, the event
+$E_c$ has the density
+\[
+\mu_{c_1}\prod_{j<M}q_{c_jc_{j+1}}\;e^{-\langle q,\mathcal O\rangle}
+\]
+in $(s_1,\dots,s_{M-1})$, where $\mathcal O_i$ is the sum of the $s_j$ with
+$c_j=i$.
+
+\emph{From holding times to occupation times.} This density depends on the
+holding times only through $\mathcal O$, so we change variables. For each state
+$i\ne c_M$ we replace the last holding time in state $i$ by $\mathcal O_i$.
+This change of variables is triangular with unit diagonal, so it preserves
+Lebesgue measure. The new variables are the $k-1$ occupation times
+$\mathcal O_i$ with $i\ne c_M$, and for each state $i$ the other $m_i-1$
+holding times in state $i$ (for $i=c_M$, those before the last run). Now fix
+$\mathcal O=t$. The $m_i-1$ free holding times in state $i$ are positive and
+their sum is less than $t_i$, so they range over a simplex of volume
+$t_i^{m_i-1}/(m_i-1)!$. (For two states and the word $c=121$ the only free
+variable is the first holding time, which ranges over $(0,t_1)$, and the factor
+is $t_1$.) Integrating the free holding times out, we find that
+$\Prob(E_c,\ \mathcal O\in\cdot\,)$ has the density
+$\mu_{c_1}\prod_{j<M}q_{c_jc_{j+1}}\,e^{-\langle q,t\rangle}
+\prod_{i\in F}t_i^{m_i-1}/(m_i-1)!$ in the coordinates $t_i$ with $i\ne c_M$.
+
+\emph{Summing over the words.} On $\{\sum_it_i=T\}$ any $k-1$ of the
+coordinates $t_i$ give the same Lebesgue measure, so we may use
+$(t_2,\dots,t_k)$ for every $c$. Summing over the words $c$ with given $m$
+gives $W(m)$, and summing over $m$ gives $e^{-\langle q,t\rangle}H(t)$. The
+substitution $t=T\alpha$ has Jacobian $T^{k-1}$, which gives $f_T$, and
+$T/N=h$ gives the identity for $t=hn$. For $F=\{i\}$ the event $E_F$ says that
+$Y$ starts at $i$ and does not jump before time $T$.
+\end{proof}
+
+\begin{example}[the four models]\label{ex:models}
+(i) For $d=2$, $q_{12}=q_{21}=1$ and uniform $\mu$ the chain is the persistent
+walk of~\cite{paperA}, with $p=1-h$. So $T=N(1-p)$, the faces
+$\{1\}$ and $\{2\}$ are the endpoints, and Lemma~\ref{lem:runs} is the run count
+of~\cite{paperA}. (ii) For $Q=J-dI$, with $J$ the all-ones matrix, the chain
+switches to each other state with probability $h$ and keeps its state with
+probability $p=1-(d-1)h$. With uniform $\mu$ it is the model of~\cite{paperB},
+whose switch probability $r$ is our $h$. A word $x_1\cdots x_N$ then has
+probability $\frac1dh^{N-1}(p/h)^{\#\{s<N:\,x_s=x_{s+1}\}}$, so the path law is the
+one-dimensional $d$-state Potts chain with free boundaries. Here $q_i=d-1$ for
+every $i$, so Lemma~\ref{lem:runs} reads
+\begin{equation}\label{eq:runform}
+ P_N(n)=p^{N-1}\sum_{a\in F}\mu_aS^{(a)}_n(u),\qquad u=\frac hp,
+\end{equation}
+for $p>0$ and $\supp n=F$, where $S^{(a)}_n(u)$ is the sum of $u^j$ over the words with
+the counts $n$ that start with $a$ and have $j$ switches. Indeed such a word has
+probability $\mu_ap^{N-1-j}h^j=\mu_ap^{N-1}u^j$. (iii) For $Q=\Pi-I$, with $\Pi$
+stochastic with zero diagonal, $\lambda_F=1-\varrho(\Pi_F)$. This is the chain of a
+sticky hidden Markov model with switch kernel $\Pi$. (iv) Let $d=4$, number the directions east, north,
+west and south as $0,1,2,3$ modulo $4$, and put $q_{j,j\pm1}=r$, $q_{j,j+2}=s$
+and $\mu$ uniform. Then $X_t$ is the direction of step $t$ of a planar walk that
+turns left or right with probability $rh$ each and reverses with probability
+$sh$. This is the planar walk of~\cite{paperE}. For $s=0$ and $r=1$ this is the 4-cycle of
+Section~\ref{sec:worked}. In (i), (ii) and (iv), $Q$ has symmetric support and
+$\mu$ full support, so all admissible faces satisfy \textup{(H)} by
+Lemma~\ref{lem:admissible}.
+\end{example}

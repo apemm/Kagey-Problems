@@ -1,0 +1,66 @@
+# Sharper claims strengthen probability publication cases
+
+*Independent internal research synthesis, 22 October 2026; not external peer review.*
+
+**Merged C has a defensible EJP submission case, strengthened by the revisions, but this research does not certify the whole manuscript or predict acceptance.** Its strongest contribution is global support selection for individual occupation-count modes. The fresh core audit found no theorem-invalidating defect within its stated coverage and identified two localized wording problems, now corrected by the parent. D and F gain credibility by acknowledging substantial exact overlap with predecessors; E's direct factorization needs no additional Baxter citation. The main remaining priorities are accurate novelty comparisons, final dependency checks, and a few submission details. This judgment uses the independently redone research rather than adopting the earlier review's verdict.
+
+## C's contribution lies in comparing maxima across supports
+
+For fixed finite generator \(Q\), dimension and start law, C studies the within-row homogeneous family \(P_N=I+(T/N)Q\). Let \(M_F\) be the largest individual count probability with exact support \(F\), and \(\lambda_F\) its principal exit rate. At \(T=\tau\log N\), the first-order theorem gives, for every admissible support, including reducible ones,
+
+\[
+\log M_F=-[\tau\lambda_F+|F|-1]\log N+O(\log\log N).
+\]
+
+Consequently every sufficiently-large-\(N\) global mode has a minimizing support. **The theorem compares atoms across different lattice dimensions**, rather than support probabilities, survival probabilities or local peaks. A tied first-order minimizer need not contain a finite-\(N\) global mode. ([Fresh theorem assessment](<../research_notes/Final probability papers review/02_C_literature_and_EJP.md>))
+
+Under (H)—irreducibility within the face and positive initial mass there—with \(k=|F|\), uniformly for \(1\le T\le N^{1/3}\), the sharper maximum is
+
+\[
+M_F=N^{-(k-1)}T^{(k-1)/2}K_Fe^{-T\lambda_F}
+[1+O(T^{-1}+T^2/N)].
+\]
+
+The lattice factor competes with the occupation cost precisely on the logarithmic scale. Relative discretization and exclusion of near-boundary competitors make this a whole-face maximum theorem. Explicit constants then resolve crossings through the \(\log\log N\) and constant terms. The complete graph demonstrates the payoff: first-order degeneracy resolves into a direct vertex-to-full-support change, while a suitable weak field produces intermediate sizes. These conclusions retain their stated asymptotic ranges. ([Core proof audit](<../research_notes/Final probability papers review/01_C_mathematical_referee.md>))
+
+The comparison with prior work must remain exact. Hervé–Ledoux already provide quantitative local limits, including compact-family uniformity; their occupation application assumes irreducibility after deleting any one state. Brydges–van der Hofstad–König already give densities for a **specified exact range and final state**, and pointwise bounds beyond exponential order. Dekking–Kong conduct genuine two-state modal analysis. An occupation LDP alone does not provide the lattice-cell penalty or the sharp cross-dimensional comparison, but earlier density theory must not be reduced to neighborhood probabilities. C's incremental claim is the assembled global discrete-mode theorem and its consequences. ([Hervé–Ledoux](https://arxiv.org/pdf/1306.5353), [Brydges–van der Hofstad–König](https://arxiv.org/pdf/math/0611525), [Dekking–Kong](https://arxiv.org/pdf/1102.3613))
+
+The literature search found no exact predecessor within its inspected range; that is **bounded search evidence, not priority clearance**. External reading concentrated on selected statements and hypotheses rather than every Fourier or LDP proof. Detailed Stadje theorem attributions were not verified from full text. Rate functions, spectral tilting and tree formulas themselves are established foundations. The comparison also recognizes metastable rate-functional expansions, rather than describing all predecessors as fixed-rate theory. ([Literature coverage and reading limits](<../research_notes/Final probability papers review/02_C_literature_and_EJP.md>))
+
+## The core audit supports C without certifying every result
+
+The strongest mathematical evidence is the detailed source audit of the model, first-order and second-order sections, torus and Laplace appendices, and specified supplement arguments. It checked arbitrary-start admissibility, reducible component-path accounting, nonreversible saddle nondegeneracy, whole-face exclusion, relative \(O(T^2/N)\) discretization, crossings, next-order coefficients and weak-field normalization. Small exact covariance/tree and path calculations corroborated selected identities; they are sanity checks rather than proof replacements. ([Audit coverage and preserved evidence](<../research_notes/Final probability papers review/01_C_mathematical_referee.md>))
+
+**The highest-ranked concrete defect was P2: an unrestricted probability interpretation of \(I_F\).** A branching chain absorbed into either of two states cannot realize positive occupations of both, although the variational functional is finite. The formal selection theorem already respected admissibility and the local theorem's hypotheses. The parent has now restricted the probability interpretation to (H). The P3 wording has also changed to the *quadratic model's* displacement; the full-range theorem proves only \(O(1/T)\) localization, and a leading displacement equivalence needs a smaller-error regime. These are meaningful corrections without evidence that the formal core theorem fails. ([Corrected rate discussion](<../kagey-problems/problem131/paperC/sec_firstorder.tex>), [corrected displacement discussion](<../kagey-problems/problem131/paperC/sec_secondorder.tex>))
+
+The next priority is preserving scope: sharp constants need (H); the general tie envelope requires irreducible active faces; reducible faces have no universal Gaussian prefactor; general crossing uniqueness and coincident-line resolution remain unproved. Fixed \(Q,\mu,d\) excludes vanishing start masses, growing dimensions or fields, and rates approaching reducibility.
+
+Coverage is substantial but incomplete. Full finite-\(N\) complete-graph balancing/insertion proofs, vertex/Laguerre theory, all example classifications, verification scripts, Lean correspondence, builds and rendering were not independently audited. Companion-paper inputs were not all re-proved. Those exclusions limit the verdict. No additional specialist signoff is made a prerequisite here. ([Explicit exclusions](<../research_notes/Final probability papers review/01_C_mathematical_referee.md>))
+
+## Narrower attribution strengthens D and F's publication cases
+
+D correctly acknowledges that Bokes–Hlubinová–Singh study the same count chain: their Eq. (1) specializes with equal switching probabilities. Their Eqs. (6)–(10), published p. 6, yield the center's first-order coefficient \(4/(N+2)\), without another factor from fair-start averaging. Their random-founder Landau mixture is already in Eqs. (58)–(60), p. 16. D therefore needs to sell its rigorous error control and logarithmic crossing comparison, rather than the chain or Landau approximation as new. The inspected matched-asymptotic argument does not supply D's uniform error bounds; this targeted comparison is not an audit of the predecessor's entire paper. ([Published primary source](https://mdpi-res.com/d_attachment/axioms/axioms-12-00249/article_deploy/axioms-12-00249.pdf))
+
+For F, **all seven requested Engländer–Volkov locators were verified against the March 18, 2024 public author draft only**: Chapter 7; Definition 7.1 and Lemma 7.1, pp. 134–135; Claim 7.1, pp. 136–137; Example 7.1, p. 138; Theorem 7.2 with its parameters and Crane attribution, pp. 138–139; and §5.7, p. 76. The published book's internal numbering remains unchecked. F now explicitly identifies the dated draft, rather than attaching these numbers to the final monograph. The first §5.7 family sums to two as printed; F's corrected comparison identifies the normalization problem and uses its own symmetrization. This finding concerns the draft, not an asserted error in the published book. ([Author upload](https://www.researchgate.net/publication/379333206_Coin-Turning_Random_Walks_and_Inhomogeneous_Markov_Chains), [verification register](<../research_notes/Final probability papers review/evidence/03_DEF/source_manifest.md>))
+
+DLS's arXiv v1 Theorem 2.18, Eq. (2.15), p. 15, already implies F's finite-time Dirichlet-multinomial **count law** after the explicit kernel substitution. The count/last-state joint extension is a distinct claim; two-state positive-integer cases already occur in the Engländer–Volkov draft. F's contribution must therefore rest on its remaining parameter/dimension extensions, comparison results and heavy-tail analysis, not rediscovery of the count marginal. This research checked attribution, not all those remaining proofs. ([Version-pinned DLS theorem](https://arxiv.org/pdf/1901.08135v1#page=15), [citation audit](<../research_notes/Final probability papers review/03_DEF_citation_checks.md>))
+
+E's displayed free-end Ashkin–Teller weight and partition function factor directly at \(K_4=0\). No optional Baxter locator is necessary. Explaining that calculation improves readability but adds no new mathematical contribution. ([E's calculation](<../kagey-problems/problem131/paperE/sec_discussion.tex>))
+
+## Journal fit and implementation require separate evidence
+
+EJP publishes full-length probability research; scope compatibility does not establish editorial interest or justify every page. C's general theorem gives it a coherent fit, but the breadth still has to earn its length. EJP-specific supplement proof-placement and cross-reference rules were not fully verified; class support for supplements is narrower evidence. ([Official EJP scope](https://imstat.org/journals-and-publications/electronic-journal-of-probability/), [class documentation](https://ctan.math.washington.edu/tex-archive/macros/latex/contrib/ejpecp/ejpecp.pdf))
+
+Source inspection confirms the rewritten opening around Theorem A and the K4 envelope. **The parent's final QA places Theorem A 14% down page 2 and K4 on page 2**, satisfying the requested early placement; earlier page locations are superseded. Iltis and unpublished E have been removed, and Kim–Landim now has its SPA 189 (2025), 104733 metadata while explicitly preserving the arXiv-v2 Lemma 5.7 locator. These changes improve focus and traceability. ([Current opening](<../kagey-problems/problem131/paperC/sec_intro.tex>), [Kim–Landim publication](https://doi.org/10.1016/j.spa.2025.104733))
+
+The parent reports final lengths of C 64 pages plus a 14-page supplement; D 41 plus 12, or 53 combined; E 25; and **F 31**. F's proof/table cuts were offset by accurate citations and disclosure: the 29-page target was not achieved. These are parent-reported final QA results, not independent rebuilds by this synthesis. The final integration record should preserve them alongside reference and packaging checks.
+
+Official JTP instructions specify **150–250 abstract words**; IOP's normal maximum is **300**, so tighter drafting targets are editorial choices. JTP supports PDF Online Resources with sequential ESM naming and identification. Its reference-list rule restricts entries to published/accepted works: F now gives the dated draft URL and verified locators in the text and a footnote, while listing the published book separately in its bibliography. This is a packaging issue, not reason to claim verified final-book numbers. ([JTP instructions](https://link.springer.com/journal/10959/submission-guidelines), [IOP article structure](https://publishingsupport.iopscience.iop.org/questions/structure-and-format-of-your-journal-article/))
+
+IOP places substantive AI disclosure within Acknowledgments, with research uses additionally explained where relevant. E's disclosure is now in its Acknowledgments section. Essential arguments belong in the article. Data/code availability and an immutable submission snapshot need to match the final package. This synthesis performs no manuscript edits, builds, portal submissions, commits or pushes. No Lean rebuild is required for this task's unchanged proofs. ([IOP disclosure policy](https://publishingsupport.iopscience.iop.org/ethical-policy-journals/), [J. Phys. A instructions](https://publishingsupport.iopscience.iop.org/journals/journal-of-physics-a-mathematical-and-theoretical/))
+
+External-source links point to original web sources. Local links identify audit records or the author's manuscript sources; downloaded copyrighted full texts remain local research aids and are not public report dependencies.
+
+## Conclusion
+
+The revisions improve publication prospects principally by making the claims easier to assess and harder to misread. C's remaining editorial burden is to demonstrate why its global comparison is worth the technical apparatus; D/F/E need equally disciplined boundaries around inherited results. The evidence supports proceeding through final integration with these qualifications. It supports neither an acceptance guarantee nor an assertion that every proof has been audited.

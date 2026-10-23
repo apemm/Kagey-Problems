@@ -112,14 +112,10 @@ of a second chain. In the case of a Dirichlet limit that second chain is
 $Y$, with the uniform law in the role of their $\mu$ and $d\theta$ in the role
 of their $\theta$. The limit is then the Dirichlet law with every parameter
 $\theta$~\cite[Theorem~1.4]{ds2007}, and its moments give $Q_T$.
-% AUTHOR CHECK: Theorem 7.2 and Chapter 7 of [ev2024] are the numbers of the
-% draft of March 18, 2024. Check them, and that the theorem is stated for
-% d = 2, integer a and p_n = a/(2a+n-1) with the last state, against the
-% published Chapter 7.
 Engl\"ander and Volkov work it out in Chapter~7 of their
-book~\cite{ev2024}. For two states and an integer weight $\theta$
+\hyperref[fn:evdraft]{March 18, 2024 draft}. For two states and an integer weight $\theta$
 they prove~\eqref{eq:aging-urn}, with the last state, for every
-$T$~\cite[Theorem~7.2]{ev2024}, and they credit this result to E.~Crane.
+$T$~\draftloc{Theorem~7.2, pp.~138--139}, and they credit this result to E.~Crane.
 What the proposition adds is the joint law with the last state for $d\ge3$
 states, and for a weight $\theta$ that is not an integer. As $T\to\infty$,
 \eqref{eq:aging-urn} turns into the joint limit of the fractions of time and
@@ -138,11 +134,8 @@ $f_t$. The lengths of the runs are the spacings between the successes of
 independent trials with success probabilities $f_t$. It is a classical
 fact (the Feller coupling, see~\cite{abt2003}) that the multiset of these spacings has
 the same law as the multiset of the table sizes (the two ordered lists do not).
-% AUTHOR CHECK: confirm against the published Chapter 7 of [ev2024] that the
-% book relates the walk to the urn through the joint law with the last state
-% (mimicking), as in the draft of March 18, 2024, and not through this coupling.
-This route is different from the one of~\cite[Chapter~7]{ev2024}, which, like
-Proposition~\ref{prop:aging-urn}, goes through the last state. We
+The proof in~\draftloc{Section~7.4}, like
+Proposition~\ref{prop:aging-urn}, instead goes through the last state. We
 checked~\eqref{eq:aging-urn} in exact arithmetic for four values of $\theta$,
 with $T\le7$ for $d=2,3$ and $T\le5$ for $d=4$
 (\texttt{verify\_aging\_urn.py}).
@@ -171,15 +164,10 @@ bin, and for $c>1$ it is the least likely of the bins $1,\dots,N$ (bin $0$
 has probability $0$).
 
 \begin{proof}
-(a) Put $Y_t=X_{t+1}$. Given $X_1=+1$, step $2$ switches with probability
-$\frac12$, so $X_2$ is uniform, and step $t+1$ switches with probability
-$1/(t+1)$, which is $\theta/(d\theta+t-1)$ for $d=2$ and $\theta=1$. So $Y$ is
-the chain of Proposition~\ref{prop:aging-urn} with $d=2$ and $\theta=1$, and
-there $Q_T(m)=T!/(T+1)!=1/(T+1)$ for every $m$. If $A_N=s$, then the counts of
-$Y_1,\dots,Y_{N-1}$ are $(s-1,N-s)$. So~\eqref{eq:aging-urn} with $T=N-1$
-gives $\Prob_+(A_N=s,\,X_N=+1)=\frac{s-1}{(N-1)N}$ and
-$\Prob_+(A_N=s,\,X_N=-1)=\frac{N-s}{(N-1)N}$. Summing over $X_N$ gives
-$\Prob_+(A_N=s)=\frac1N$.
+(a) At $c=1$, the shifted chain $Y_t=X_{t+1}$ is the chain of
+Proposition~\ref{prop:aging-urn} with $d=2$, $\theta=1$ and uniform first
+state. Apply~\eqref{eq:aging-urn} at $T=N-1$ with counts $(s-1,N-s)$,
+where $Q_{N-1}=1/N$, then sum over the last state.
 
 (b) We write the ratio as a sum over paths. Only the path with every step
 $+1$ has $A_N=N$, and it never switches. So $\Prob_+(A_N=N)$ is the first
@@ -202,11 +190,8 @@ in~\cite[Section~3.1, footnote~1]{evw2020}. That footnote also says that the fac
 can be related to P\'olya urns (the authors credit M.~Bal\'azs) and that a
 more general connection of their model with P\'olya urns will appear in a
 later paper.
-% AUTHOR CHECK: Claim 7.1 of [ev2024] is the number in the draft of March 18,
-% 2024 (p_1 = 1/2, p_n = 1/(n+1), P(T_n = k, X_n = 1) = k/(n(n+1))). Check it
-% against the published Chapter 7.
-That connection is Chapter~7 of the book~\cite{ev2024}, and after the same
-shift part (a), with the last state, is~\cite[Claim~7.1]{ev2024}. So part (a)
+That connection is developed in Chapter~7 of the dated draft, and after the same
+shift part (a), with the last state, is~\draftloc{Claim~7.1}. So part (a)
 is not new. What we add for
 two states is part (b), and the count law also follows
 from~\cite[Theorem~2.18]{dls2023} (Section~\ref{sec:aging-urn}). Both parts of
@@ -258,17 +243,10 @@ Below $\theta=1$ the corner is the most likely bin, and above it the corner
 is the least likely.
 
 \begin{proof}
-(a) Put $Y_t=X_{t+1}$. At $\theta=1$ step $2$ moves to each other state with
-probability $\frac1d$ and stays with probability $1-\frac{d-1}d=\frac1d$, so
-$X_2$ is uniform, and step $t+1$ moves to each other state with probability
-$1/(t+d-1)$, which is $\theta/(d\theta+t-1)$ at $\theta=1$. So $Y$ is the chain
-of Proposition~\ref{prop:aging-urn} with $\theta=1$, and $M_{N-1}=L_N-e_1$. At
-$\theta=1$ we have
-$Q_T(m)=T!\,(d-1)!/(T+d-1)!=1/\binom{T+d-1}{d-1}$ for every composition $m$
-of $T$. Every bin $n$ has $n_1\ge1$, so $m=n-e_1$ is a composition of $N-1$,
-and~\eqref{eq:aging-urn} with $T=N-1$ gives~\eqref{eq:aging-d}, since
-$m_j=n_j-\mathbf 1\{j=1\}$. Summing over $j$ and using
-$\sum_j(n_j-\mathbf 1\{j=1\})=N-1$ gives $\Prob(L_N=n)=1/\binom{N+d-2}{d-1}$.
+(a) At $\theta=1$, $X_2$ is uniform and $Y_t=X_{t+1}$ is the chain
+of Proposition~\ref{prop:aging-urn}. Its count vector is $L_N-e_1$, and
+$Q_{N-1}=1/\binom{N+d-2}{d-1}$. Formula~\eqref{eq:aging-urn} gives
+\eqref{eq:aging-d}, and summing over $j$ gives the uniform law.
 
 (b) A path $x\in\{1,\dots,d\}^N$ with $x_1=1$ has probability
 $\prod_{k=2}^N\bigl(1-\frac{(d-1)\theta}{k+d-2}\bigr)$ times the product of
@@ -292,24 +270,15 @@ Theorem~\ref{thm:aging-d} with $\theta=c$ is
 Proposition~\ref{prop:aging-two}, and~\eqref{eq:aging-d} reads
 $(s-1)/(N(N-1))$ for $j=1$ and $n=(s,N-s)$.
 
-Take P\'olya's urn with $d$ colors, started with one ball of each color. At
-each draw we take a ball uniformly at random and return it with one more
-ball of its color. A sequence of $N-1$ draws with counts $m$ has probability
-$(d-1)!\prod_im_i!/(N+d-2)!$. So the counts are uniform on the compositions
-of $N-1$ into $d$ parts, and given the counts $m$ the last draw has color $j$
-with probability $m_j/(N-1)$. Hence~\eqref{eq:aging-d} says that, for each
-fixed $N$, the pair $(L_N-e_1,X_N)$ has the law of the counts and the last
-color after $N-1$ draws. The two processes are different, though. The
-chain is a Markov chain, and the draws are exchangeable. For $d=2$ and $N=4$
-the path $1,1,2,2$ has probability $\frac18$ for the chain, and the draws
-$1,2,2$ have probability $\frac1{12}$.
-% AUTHOR CHECK: Definition 7.1, Lemma 7.1 and Example 7.1 ("Triples") of
-% [ev2024] are the numbers of the draft of March 18, 2024. Check them against
-% the published Chapter 7.
+By Proposition~\ref{prop:aging-urn}, $(L_N-e_1,X_N)$ has the law of
+the counts and last color of $N-1$ draws from P\'olya's urn with one ball of
+each color. This is an identity at each fixed time, not an identity of path
+laws. For example, with $d=2$ and $N=4$ the chain path $1,1,2,2$ has
+probability $1/8$, while the urn draws $1,2,2$ have probability $1/12$.
 For two states Engl\"ander and Volkov call this relation
-mimicking~\cite[Definition~7.1 and Lemma~7.1]{ev2024}, and they show with an
+mimicking~\draftloc{Definition~7.1 and Lemma~7.1}, and they show with an
 example of three steps that the coin-turning walk and the urn have different
-path laws~\cite[Example~7.1]{ev2024}. Also, at $\theta=1$ the chain moves at
+path laws~\draftloc{Example~7.1}. Also, at $\theta=1$ the chain moves at
 step $k$ with probability $(d-1)/(k+d-2)$, independently over $k$. This is
 the probability that customer $k$ opens a new table in the Chinese restaurant
 process with parameter $d-1$. So the expected number of moves in $N$ steps at
@@ -349,13 +318,10 @@ For even $N$ we write $c_N$ for the crossing in (b) with $s=h=N/2$, so that
 $C_N=E_N$ exactly at $c=c_N$. In words, at $c=1$ every interior bin still has
 probability $\frac1N$, and the two ends share the probability $\frac1N$ that
 the fixed start gave to one end.
-% AUTHOR CHECK: Section 5.7 of [ev2024] is the number in the draft of March 18,
-% 2024. In that draft the formula for p_n = 1/(n+a) is off by a factor of two
-% (ends (1+a)/(n+a), interior 2/(n+a), which sum to 2). The correct values are
-% (1+a)/(2(n+a)) and 1/(n+a), as checked in exact arithmetic. Check the
-% published Section 5.7 before saying anything about this.
-Part (a) is the case $a=0$ of the exact laws that Engl\"ander and Volkov give
-for the switch probabilities $1/(n+a)$~\cite[Section~5.7]{ev2024}.
+Related fair-start formulas for switch probabilities $1/(n+a)$ appear
+in~\draftloc{Section~5.7, p.~76}. Its first displayed family is
+twice a normalized law. We do not use that formula, and derive (a) from
+the averaging identity~\eqref{eq:aging-fair}.
 
 \begin{proof}
 (a) This follows from~\eqref{eq:aging-fair} and

@@ -1,0 +1,370 @@
+\section{Introduction}\label{sec:intro}
+
+Let $X_1,X_2,\dots$ be a Markov chain that rarely switches between its $d$
+states. At each step it moves from state $i$ to state $j\ne i$ with
+probability $q_{ij}T/N$, so that it makes of order $T$ switches in $N$ steps.
+Its \emph{composition} is the vector $n=(n_1,\dots,n_d)$ of occupation counts,
+where $n_i$ is the number of times $t\le N$ with $X_t=i$. The support of $n$ is
+a set $F$ of states, which we call a \emph{face}, since it indexes a face of the
+simplex of visit fractions. We ask which face carries the most likely
+composition, and at which $T$ the mode moves to another face. With
+$T=\tau\log N$ and $N$ large, the mode sits on a face that minimizes
+$\tau\lambda_F+\lvert F\rvert-1$ among the possible supports, where $\lambda_F$
+is the rate at which the chain leaves $F$ (Theorem~\ref{thm:first}). When the
+chain can pass between any two states of a face without leaving it, a local
+limit theorem inside the face gives the constant in front, and with it the value
+of $T$ at which two such faces of different sizes are equally likely, up to an
+error that tends to zero (Theorems~\ref{thm:local} and~\ref{thm:crossing}).
+
+Our main example is the complete graph, where the chain switches to each other
+state with the same probability. With a uniform start its path law is the one-dimensional $d$-state
+Potts chain with free boundaries, and its composition records where a ball lands on a Galton
+board with $d$ directions~\cite{kagey131,paperB}. On the complete graph every
+face ties at first order, so the question of which face wins is decided at
+second order. Section~\ref{sec:complete} answers it exactly. For $d=2$ the
+chain is the Ising chain with free ends, that is, the sequence of directions of
+the persistent random walk of~\cite{paperA}.
+
+Occupation measures of finite Markov chains have a long history and remain an
+active subject. The exit rate
+$\lambda_F$ is the principal Dirichlet eigenvalue of $-Q$ on $F$, where $Q$ is
+the generator with the off-diagonal entries $q_{ij}$, and it has the variational
+formula of Donsker and Varadhan~\cite{dv1975}. A chain conditioned to stay in $F$
+has quasi-stationary and quasi-ergodic
+laws~\cite{darrochseneta1965,darrochseneta1967,cmsm2013}. Recent work treats
+large deviations of the occupation measure inside a set~\cite{gnw2024} and
+$\Gamma$-expansions of level-two rate functions~\cite{bgl2024,landim2023}, and
+the joint density of the local times of a continuous-time chain has explicit
+formulas~\cite{bhk2007,hkst2018}. We ask a different question, namely where the
+single most likely composition lies, in a regime where the chain makes only of
+order $\log N$ switches. Section~\ref{sec:related} compares our results with
+this work.
+
+The simplest case has two states, with $q_{12}=q_{21}=1$ and a uniform start.
+The chain is then the sequence of directions of the persistent random walk on
+$\Z$, which repeats its previous step with probability $p=1-T/N$, and the
+composition records its numbers of steps to the right and to the left. The two
+faces of one state are the endpoints $(N,0)$ and $(0,N)$, each reached only by
+the path that never switches, and the face of both states holds the interior
+compositions. The question is then when the middle composition is as likely as
+an endpoint. For the two-state chain this question is Problem~131 of Kagey's
+Open Problem Collection~\cite{kagey131}, posed for a Galton board. The two are
+equally likely when $T$ is close to $\log N$. More precisely, the crossing value
+$z_N$ of $T$ satisfies
+$z_N+\frac12\log z_N=\log N+\frac12\log\frac\pi8+o(1)$~\cite{paperA}.
+
+\subsection{Face selection}\label{sec:intro-faces}
+
+Put $T=\tau\log N$. How likely the best composition with support $F$ is depends
+on two effects.
+\begin{itemize}
+\item \emph{The cost of staying.} The chain must stay inside $F$ for all $N$
+steps. If the start gives $F$ positive mass and the chain can move between any
+two states of $F$ without leaving it, this has probability about
+$e^{-T\lambda_F}=N^{-\tau\lambda_F}$. A
+larger face is harder to leave, so the chain stays on it more easily.
+\item \emph{The cost of spreading.} The mass of $F$ is shared among the
+compositions with support $F$, and there are about $N^{\lvert F\rvert-1}$ of
+them, one factor $N$ for each free coordinate. Up to powers of $\log N$, the
+best single composition gets a share $N^{-(\lvert F\rvert-1)}$.
+\end{itemize}
+Call a face admissible if some path of positive probability has exactly this
+support, write $M_F$ for the largest probability of a composition with support
+$F$, and put
+\[
+ \Phi_\tau(F)=\tau\lambda_F+\lvert F\rvert-1 .
+\]
+
+\begin{introtheorem}[first-order face selection]\label{thm:A}
+Fix the rates $q_{ij}$ and the law of $X_1$, and let $T=\tau\log N$ with
+$\tau>0$ fixed. Every admissible face $F$ has $M_F=N^{-\Phi_\tau(F)+o(1)}$.
+For large $N$ the support of every most likely composition is an admissible
+face that minimizes $\Phi_\tau$ among the admissible faces. If the chain can
+pass between any two states of each such minimizing face without leaving it,
+then the visit fractions of every most likely composition are within
+$O(1/\log N)$ of the quasi-ergodic law of its support
+(Definition~\ref{def:faces}).
+\end{introtheorem}
+
+Theorem~\ref{thm:A} is Theorem~\ref{thm:first}(ii) to~(iv). In words, a sticky walk prefers a well-separated
+community, a set of states that is hard to leave for its size. As $\tau$ grows
+staying counts for more, and the mode moves to larger faces. For two states
+an endpoint has $\Phi_\tau=\tau$ and the interior has $\Phi_\tau=1$, so the
+middle takes over at $\tau=1$, which is the first-order form of the crossing
+$z_N$ above. On the complete graph a face of $k$ states has
+$\lambda_F=d-k$, so $\Phi_1(F)=d-1$ for every face, and all faces tie at
+$\tau=1$. Section~\ref{sec:worked} works out four states on a cycle by hand,
+and Theorem~\ref{thm:hull} reads the winners off the convex hull of the points
+$(\lambda_F,\lvert F\rvert-1)$.
+
+Figure~\ref{fig:simplex} shows the rule at work on three states in a row.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_simplex}
+\caption{The exact law of the composition for the path $1-2-3$ (rate $1$ on
+each edge, uniform start, $N=90$), on the simplex of visit fractions. The
+faces are drawn apart. The triangle holds the compositions that use all three
+states, each band holds the compositions that use two states, and each disk is
+the composition that spends all $N$ steps in one state. The color is the probability
+of a composition relative to the mode, the thin lines are spaced by a factor
+of ten, and the rings mark the modes. (a) For small $T$ the mode is at an end
+of the path. (b) Then it sits on a band, that is, on a pair of neighbors.
+(c) Then it is inside. The dashed band is the pair $\{1,3\}$, which the chain
+cannot use without visiting $2$, so it has probability zero. Here $\lambda_F$
+is $1$ for an end, $(3-\sqrt5)/2$ for a pair of neighbors and $0$ for all
+three states, so to first order the mode moves at $\tau=(1+\sqrt5)/2$ and at
+$\tau=(3+\sqrt5)/2$, that is, at $T=7.3$ and $T=11.8$. At $N=90$ it moves
+near $T=4.9$ and $T=8.5$. Corrections of this size are the subject of
+Section~\ref{sec:secondorder}.}
+\label{fig:simplex}
+\end{figure}
+
+The same competition suggests the crossing scale for the planar persistent walk
+of~\cite{paperE}. It starts in a uniform direction and, at each step, turns to each
+side with probability $rT/N$ or reverses with probability $sT/N$. Write $\beta=2r+s$.
+The corner costs $N^{-\beta\tau}$. Paths to the origin either stay on one axis,
+giving a single composition of order $N^{-(2r\tau+1)}$, or use all four directions.
+In the latter case about $N$ compositions contribute, each of order $N^{-3}$, giving
+$N^{-2}$ in total. Balancing the exponents suggests
+$T_N^*/\log N\to\min(2/\beta,1/s)$, with $1/s=\infty$ when $s=0$.
+This is a heuristic because the origin collects several compositions. The companion
+paper proves the limit, and the unique crossing for every even $N\ge4$, directly.
+
+\subsection{Second order and the complete graph}\label{sec:intro-second}
+
+First order fixes a crossing only up to a factor
+$1+o(1)$. To locate it up to $o(1)$ we need the constant in front. Say that a
+face $F$ satisfies (H) if the chain can move between any two states of $F$
+without leaving $F$, and the start gives $F$ positive mass. For such faces we
+prove a local limit theorem inside the face (Theorem~\ref{thm:local}), and it
+gives the following result.
+
+\begin{introtheorem}[face maxima and crossings]\label{thm:B}
+Fix the rates $q_{ij}$ and the law of $X_1$.
+\begin{enumerate}[(i)]
+\item Let $F$ satisfy \textup{(H)}, with $k=\lvert F\rvert$ states. Uniformly
+for $1\le T\le N^{1/3}$,
+\[
+ M_F=N^{-(k-1)}\,T^{(k-1)/2}K_F\,e^{-T\lambda_F}\bigl(1+O(1/T+T^2/N)\bigr),
+\]
+where $K_F>0$ is the explicit constant of Definition~\ref{def:tilt} (for
+$k=1$ it is the start mass of the state).
+\item Let $F$ and $G$ satisfy \textup{(H)}, and suppose that $F$ has
+$\Delta\ge1$ more states than $G$ and an exit rate smaller by $\delta>0$. For
+large $N$ the equation $M_F=M_G$ has a root $T$ in $[1,N^{1/3}]$, and every
+such root satisfies
+\[
+ \delta T+\frac\Delta2\log T=\Delta\log N-\log\frac{K_F}{K_G}
+ +O\Bigl(\frac1{\log N}\Bigr).
+\]
+\end{enumerate}
+\end{introtheorem}
+
+Part (i) is Theorem~\ref{thm:facemax} and part (ii) is
+Theorem~\ref{thm:crossing}. The factor
+$T^{(k-1)/2}$ appears because the visit fractions fluctuate on the scale
+$T^{-1/2}$ in each of the $k-1$ free directions. Solving the equation in (ii) gives
+$T=\frac\Delta\delta[\log N-\frac12\log\log N+O(1)]$. So the coefficient $\frac12$ of
+$\log\log N$ inside the bracket, which appears in the crossings of the two-state
+walk~\cite{paperA} and of the complete graph, holds for every such
+pair, whatever the graph, the rates, the sizes or the start, and without
+reversibility.
+
+On the complete graph with the uniform start, $Q=J-dI$ with $J$ the all-ones
+matrix, and the constants are explicit. A face of $k$ states has
+$K_F=\frac1dk^{k+1/2}(4\pi)^{-(k-1)/2}$, a mass over a Gaussian volume, and the
+$k^{k-2}$ spanning trees of the complete graph $K_k$ enter through it. Put
+$a_k=\frac12\log(4\pi)-\frac{k+1/2}{k-1}\log k$, and write $V_N$ for the probability of a
+vertex. A composition is balanced if its positive coordinates differ by at most $1$.
+
+\begin{introtheorem}[the complete graph]\label{thm:C}
+Let $Q=J-dI$ and let the start be uniform.
+\begin{enumerate}[(i)]
+\item Let $F$ be a face of $2\le k\le d$ states. For every $N\ge k$ the equation $M_F=V_N$ has
+exactly one root $T_{N,k}$ in $(0,N/(d-1))$, and the switch probability $T_{N,k}/N$ at the
+root decreases strictly as $N$ grows. As $N\to\infty$,
+\[
+ T_{N,k}+\tfrac12\log T_{N,k}=\log N+a_k+\frac1{8T_{N,k}}+O\Bigl(\frac1{(\log N)^2}\Bigr).
+\]
+\item For every $N$ and every $0<T\le N/d$, the most likely compositions with a given support
+are exactly the balanced ones.
+\item Since $a_2>a_3>\dots>a_d$, for large $N$ and $T$ up to any fixed multiple of $\log N$ the
+mode changes exactly once, from the $d$ vertices straight to the balanced compositions with
+$d$ positive coordinates.
+\end{enumerate}
+\end{introtheorem}
+
+Part (i) is Theorem~\ref{thm:simplex-crossing}, where the term $1/(8T)$ comes from the
+next term of the local law (Proposition~\ref{prop:nextterm}), which we evaluate by hand
+for every complete face. Part (ii) is Theorem~\ref{thm:simplex-balance} and part (iii) is
+Corollary~\ref{cor:simplex-modes}. On the triangle the middle composition
+$(\frac N3,\frac N3,\frac N3)$ overtakes the vertices while the middles of the edges are
+still below them by the factor $e^{-(a_2-a_3)}=0.83$. A start law changes the constant of
+a face through its start mass, and a weak field changes it through the field averaged
+over the face. Either can let a face of intermediate size win
+(Example~\ref{ex:K3-start} and Corollary~\ref{cor:weakfield-phases}). Near a vertex the
+scale changes. A composition with one large count $b$ and a few rare counts crosses the
+vertex at switch odds $\sqrt{y/b}\,(1+o(1))$, where $y$ is the root of a product of
+Laguerre polynomials (Theorem~\ref{thm:vertex-uniform-root}).
+
+The rest of Sections~\ref{sec:secondorder} to~\ref{sec:examples} add the
+following.
+\begin{itemize}
+\item \emph{Ties.} When several faces tie at first order,
+Theorem~\ref{thm:window} describes the window of $T$ in which they compete.
+\item \emph{The constant.} For reversible faces $K_F$ involves the square root
+of a weighted count of spanning trees (Proposition~\ref{prop:constant}). On a
+face that is not reversible the single count is replaced by two, a count of
+oriented spanning trees for the flow of the tilted chain and a count of
+spanning trees for the symmetrized flow (Proposition~\ref{prop:forest}).
+\item \emph{The next term and the role of} (H). Proposition~\ref{prop:nextterm}
+adds the next term, of relative order $1/T$, to the local law, to $M_F$ and to
+the crossing equation. Without (H) the coefficient of $\log\log N$ can change.
+On a directed 3-cycle it is $1$ at one crossing and $0$ at the next
+(Proposition~\ref{prop:threecycle}).
+\item \emph{A weak field.} On a face satisfying (H), a field of size $\xi_i/N$ per
+visit to state $i$ multiplies its leading constant by
+$e^{\langle\xi,\alpha_F^*\rangle}$. If every face tied at first order is irreducible,
+these factors shift the tie-window lines (Proposition~\ref{prop:weakfield}).
+\item \emph{Examples.} Section~\ref{sec:examples} computes all the constants on
+the 4-cycle and lists the winners on other graphs.
+\end{itemize}
+
+\subsection{Related work}\label{sec:related}
+
+This subsection places the results among earlier work on occupation measures
+and on exact laws of transition counts. Section~\ref{sec:firstorder} introduces a rate
+$I_F$ for the visit fractions inside a face. It is the Donsker--Varadhan
+rate of the occupation measure of the chain killed on leaving $F$. Dupuis
+and Liu give this rate explicitly for reversible jump
+processes~\cite[Section~3.1]{dupuisliu2015}, and on a finite chain their
+formula agrees with Proposition~\ref{prop:rate}(c). On the complete graph it is
+$d-(\sum_i\sqrt{\alpha_i})^2$~\cite[Eq.~(3.2)]{dupuisliu2015}. Chen and
+Deng~\cite{chendeng2013} study large deviations for absorbing Markov chains
+and use them to derive a variational representation of the principal
+Dirichlet eigenvalue. Guillin,
+Nectoux and
+Wu~\cite{gnw2024} prove a large deviation principle for the occupation
+measure of a process conditioned to stay in a set. For reversible processes
+they show that the exit rate of the set is the least value of the
+Donsker--Varadhan rate over laws on the set (their Cor.~2). In general they
+prove an inequality between their rate, the Donsker--Varadhan rate and the
+exit rate, and they conjecture equality (their (2.15)). For a finite chain
+with $Q_F$ irreducible, the fact that $\lambda_F$ is the least value of $I_F$
+is the variational formula of Donsker and Varadhan~\cite{dv1975}, which needs
+no reversibility. Proposition~\ref{prop:rate}(a) gives a short proof in our
+notation. This does not address the conjecture of Guillin, Nectoux and Wu,
+which concerns their conditional rate. The quasi-ergodic law goes back to
+Darroch and Seneta~\cite{darrochseneta1965,darrochseneta1967}, the book of
+Collet, Mart\'inez and San Mart\'in~\cite{cmsm2013} is the standard reference
+for quasi-stationary and quasi-ergodic laws, and Colonius and
+Rasmussen~\cite{coloniusrasmussen2021} treat the reducible case. Dietz and
+Sethuraman~\cite{dietz2007} study chains that switch from $i$ to $j$ at
+time $n$ with probability $G(i,j)/n$, where every $G(i,j)>0$. Their chains
+also make about $\log n$ switches, but spread log-uniformly in time, and their
+occupation fractions have a limit law with full support on the simplex.
+In~\cite{dietz2005} they prove large deviations for chains whose transition
+matrices converge to a reducible matrix. Bouguet and Cloez~\cite{bouguetcloez2018}
+study empirical-measure limits and fluctuations for freezing finite-state chains,
+including the regime with switch probabilities of order $1/n$. In these models the
+rate changes along the trajectory. Here it is fixed during each path of length $N$,
+and changes with $N$ instead.
+
+Exact laws of transition counts go back to Whittle~\cite{whittle1955},
+Dawson and Good~\cite{dawsongood1957} and Goodman~\cite{goodman1958}.
+Polettini~\cite{polettini2015} and Carugno, Vivo and Coghi~\cite{cvc2022}
+derive them from the BEST theorem and the matrix-tree theorem. The expression of
+Carugno, Vivo and Coghi for the moment generating function is exact at every
+time, and they use it for large deviations, where every count grows linearly.
+For two states the composition has the Markov binomial law, and Dekking and
+Kong~\cite{dekkingkong2011} find when it has one, two or three modes.
+Edwards~\cite{edwards1960} introduced the Markov binomial distribution, for a
+stationary chain on two outcomes that moves from $i$ to $j$ with probability
+$\theta\delta_{ij}+(1-\theta)\nu_j$, where $\nu$ is its law at each trial, and
+he wrote the generating function of the number of successes as a product of
+matrices. Wang and Yang extended this chain to finitely many states, and we
+follow the account of their work in Johnson, Kotz and
+Balakrishnan~\cite[Chapter~35, Section~13.2]{jkb1997}. Their chain starts from
+$\nu$ and moves from $i$ to $j$ with probability
+$\theta\delta_{ij}+(1-\theta)\nu_j$, and the generating function of its vector
+of category counts is a product of matrices. The complete graph with the
+uniform start and a stay probability $p\ge1/d$ is the case where $\nu$ is
+uniform and $\theta=p-T/N$. So its exact law is a special case of this theory,
+and we do not claim it as new. A start law that is not uniform keeps the uniform
+switching, so it gives a Wang--Yang chain only when it is uniform.
+Hsiau~\cite[Theorem~1]{hsiau1997} proves compound Poisson limits for sums over
+multistate chains with one nearly absorbing state, and Wang and
+Tang~\cite{wangtang2003} prove Poisson-type limits for additive processes on
+Markov chains. Kassan-Ogly and Filippov~\cite{kassanogly2003} solve the Potts
+chain in a field in the thermodynamic limit. Their paper was not accessible to
+us, but its abstract and introduction are free online, and we use nothing
+beyond these. Stadje~\cite[Theorems~1 and~2]{stadje1999} gives the generating functions of the
+joint numbers of visits of a finite chain, and limit laws when one state becomes
+nearly absorbing and the chain leaves it with probability of order
+$1/N$~\cite[Theorems~3 and~4]{stadje1999}. The other rows of his transition
+matrix stay fixed, so the counts of the other states stay bounded. We group the words by runs instead
+(Lemma~\ref{lem:runs}), which suits a regime with $O(\log N)$ switches.
+In continuous time, Brydges, van der Hofstad and K\"onig~\cite{bhk2007} give
+the joint density of the local times of a chain on the event that its range
+is a given set, and Huang, Kious, Sidoravicius and Tarr\`es~\cite{hkst2018}
+write it with Bessel functions and spanning trees for symmetric rates. Brydges, van der Hofstad
+and K\"onig use their formula for large deviation upper bounds.
+Theorem~\ref{thm:local} gives the leading term of the density, with its
+constant, in our regime. For a fixed geometrically ergodic chain and a bounded
+real functional, Kontoyiannis and Meyn~\cite[Theorem~6.3]{km2003} give exact
+large deviation asymptotics of Bahadur--Rao type. Theorem~\ref{thm:local} is a
+local form for the whole vector of counts, for a chain that is killed on
+leaving $F$ and whose switch probabilities shrink with $N$, uniformly in $T$ and
+with an explicit constant.
+Sharp multivariate Markov-additive asymptotics also have predecessors~\cite{iltis2000}.
+Herv\'e and Ledoux~\cite{herveledoux2013} prove a quantitative local limit theorem
+for densities of finite-state Markov additive processes. Their application to local
+times assumes irreducibility of the generator and of its one-state-deleted
+subgenerators. Our continuum estimates are related to this theory. We need relative
+estimates on killed faces, their discrete approximation, and a comparison of maxima
+across supports.
+Bertini, Gabrielli and Landim~\cite{bgl2024} and Landim~\cite{landim2023}
+expand the level-two rate functions of finite chains whose rates depend on a
+parameter. They describe the time scales of such chains but do not ask where
+the mode of the composition sits.
+Kim and Landim~\cite{kl2024} extend this to the joint rate function of
+the empirical measure and the flow~\cite{bfg2015}, and they give conditions under
+which the rate function of the occupation times determines the chain.
+Remark~\ref{rem:flows} says how the rate $I_F$ of a killed chain relates to their
+work and to that of Bertini, Faggionato and Gabrielli~\cite{bfg2014,bfg2015}.
+
+We did not find the face-selection question in the literature. The preprint~\cite{paperB}
+first resolved the tie of the complete graph, and this paper incorporates it.
+
+\subsection{Plan of the paper}\label{sec:plan}
+
+Section~\ref{sec:model} fixes the notation and gives the exact law of the
+composition as a sum over runs. Section~\ref{sec:firstorder} works out four
+states on a cycle and then proves first-order face selection
+(Theorems~\ref{thm:first} and~\ref{thm:hull}). Section~\ref{sec:secondorder}
+proves the local limit theorem inside a face, the face maxima, the crossing
+equation and the tie windows. It then gives a tree formula for the constant,
+shows on a directed 3-cycle what can change without (H), adds the next term and
+treats a weak field. Section~\ref{sec:complete} recovers the two-state walk and
+treats the complete graph, with a start law and a weak field.
+Section~\ref{sec:vertex} treats compositions near a vertex of the complete graph.
+Section~\ref{sec:examples} computes the 4-cycle with all its constants and lists
+the winners on other graphs, and Section~\ref{sec:verify} describes the computer
+checks and the open questions. Appendix~\ref{app:torus} proves the local law, the
+uniform upper bound of Lemma~\ref{lem:upper}, the first-order bounds for
+reducible faces and the forest formula of Lemma~\ref{lem:forest}.
+Appendix~\ref{app:laplace} proves the leading Laplace lemma and states its next term,
+with the coefficient formula. Appendices~\ref{app:complete}
+and~\ref{app:vertex} hold the proofs for the complete graph and near a vertex. The
+supplement~\cite{supplement} has the proofs for the table of outcomes and the full
+proof for the directed 3-cycle, followed by the higher-order Laplace proof and the
+detailed proof of Proposition~\ref{prop:nextterm}.
+
+We quote a few results of~\cite{paperA} and~\cite{paperB}. From~\cite{paperA}
+we use the run count, the fact that the polynomials $S_{a,b}$ of
+Section~\ref{sec:notation} grow toward the middle, the uniform Bessel bound
+(recalled in~\eqref{eq:planar-bessel}), the clipped products of its Lemma~3.2 and
+the expansion of $z_N$. From~\cite{paperB} we quote, without proof, only results that
+we do not use, namely its Bessel majorant and its crossover near the boundary of the
+simplex (Remark~\ref{rem:B-boundary}).
