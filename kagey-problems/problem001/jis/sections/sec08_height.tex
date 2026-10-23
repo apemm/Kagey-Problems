@@ -1,13 +1,43 @@
 \section{Every fixed height}\label{sec:height}
 
-Fix $h$. A blackout of the $h\times m$ grid is a \emph{column word} $w=B_1B_2\cdots B_m$ over the subsets of $\{1,\dots,h\}$, with length $|w|$ and blackout $S(w)$. Let $\mathcal L_h$ be the set of words with a valid blackout, the empty word included.
+Fix the height $h$ and read the grid from left to right. Its blackout is
+the \emph{column word} $w=B_1\cdots B_m$, whose letter $B_i$ records the
+black rows in column $i$. Write $|w|=m$ and $S(w)$ for its blackout, and
+let $\mathcal L_h$ be the valid words, including the empty word. We first
+show that validity needs only finite memory. A bounded counter will then
+pick out the words with the most black points.
 
 \begin{theorem}[regularity and rational series]\label{thm:regular}
 For every $h\ge1$ the language $\mathcal L_h$ is regular, and $G_h(z,u)=\sum_{w\in\mathcal L_h}z^{|w|}u^{|S(w)|}$ is rational in $z$ and $u$.
 \end{theorem}
 
 \begin{proof}
-The \emph{trace} of a rectangle $R$ is the word whose $i$th letter is the set of rows of its corners in column $i$, and it determines $C(R)$. By Lemma~\ref{lem:diff}, $w\notin\mathcal L_h$ exactly when two different traces $Y,Y'$ of length $|w|$ have $Y_i\triangle Y'_i\subseteq B_i$ for every $i$. The traces form a regular language, $\emptyset^*\{r,s\}\emptyset^*\{r,s\}\emptyset^*$ for axis-aligned rectangles and, by Lemmas~\ref{lem:leftmost} and~\ref{lem:span}, $\emptyset^*Y_0Y_1\cdots Y_n\emptyset^*$ for finitely many templates \eqref{eq:tilt-param} with $n\le W_h$. So an automaton that reads $w$ and two traces in parallel recognizes the complement of $\mathcal L_h$. Weighting a letter $B$ by $u^{|B|}$, the transfer matrix $M(u)$ of a deterministic automaton for $\mathcal L_h$ gives $G_h=\alpha(I-zM(u))^{-1}\beta$, rational by Cramer's rule \cite[Proposition~V.6]{flajolet2009}.
+The \emph{trace} of a rectangle records, in each column, the rows of its
+corners. It determines the corner set. By Lemma~\ref{lem:diff}, two distinct
+traces $Y,Y'$ give the same presentation exactly when
+$Y_i\triangle Y'_i\subseteq B_i$ in every column.
+
+The possible traces form a regular language. For an axis-aligned rectangle,
+choose $r<s$, read a column $\{r,s\}$, then another such column after any
+number of empty columns. There can also be empty columns before and after.
+For a tilted rectangle, Lemmas~\ref{lem:leftmost} and~\ref{lem:span} leave
+only finitely many templates~\eqref{eq:tilt-param}, each of span at most
+$W_h$, again with arbitrary empty columns on either side.
+
+An automaton can therefore read $w$ while guessing two rectangle traces.
+It checks the containment above and remembers whether the traces have
+differed anywhere. Accepting when they differ recognizes the invalid words.
+Regular languages are closed under complementation, so $\mathcal L_h$ is
+regular too.
+
+Choose a deterministic automaton for $\mathcal L_h$ and give a transition
+reading $B$ the weight $u^{|B|}$. If $M(u)$ is its weighted transition
+matrix, $\alpha$ its start vector and $\beta$ its accepting vector, then
+\[
+ G_h(z,u)=\alpha(I-zM(u))^{-1}\beta .
+\]
+Each word is counted once because the automaton is deterministic. Cramer's
+rule makes the expression rational~\cite[Proposition~V.6]{flajolet2009}.
 \end{proof}
 
 \begin{theorem}[fixed height]\label{thm:periodic}
@@ -15,5 +45,33 @@ Let $h\ge2$. (a) There are integers $m_0\ge3$, $p\ge1$, and $k_0,\dots,k_{p-1}$ 
 \end{theorem}
 
 \begin{proof}
-Let $E(w)=|S(w)|-|w|$. By Theorem~\ref{thm:rowbound} and $|S(v)|\le h|v|$, every factor $v=B_i\cdots B_j$ of a valid word has $E(v)\le C_h=\max(q_h,2h-2)$. So a valid $w=uv$ of excess $k$ has $k-C_h\le E(u)\le C_h$. An automaton for $\mathcal L_h$ with a counter for the excess of prefixes, kept in this range, accepts the set $\mathcal L_{h,k}$ of valid words of excess $k$, so the lengths of these words are eventually periodic. For $m\ge3$, Lemma~\ref{lem:cross} and Theorem~\ref{thm:rowbound} make $f(h,m)-m$ the largest $k$ from $h-1$ to $q_h$ with a word of length $m$ in $\mathcal L_{h,k}$, which gives (a). The optimum words are those of $\mathcal L_{h,k_r}$ of lengths $m\ge m_0$ with $m\equiv r\pmod p$, and finitely many shorter ones, so (b) follows as in Theorem~\ref{thm:regular}.
+Put $E(w)=|S(w)|-|w|$, the number of black points beyond one per column.
+Every consecutive block $v$ of a valid word is valid on its own grid.
+Theorem~\ref{thm:rowbound} bounds $E(v)$ by $q_h$ when $|v|\ge3$.
+For a shorter block, $|S(v)|\le h|v|$ gives the common bound
+\[
+ E(v)\le C_h:=\max(q_h,2h-2).
+\]
+If a valid word $w=uv$ has excess $k$, applying this to the prefix and
+suffix gives
+\[
+ k-C_h\le E(u)=k-E(v)\le C_h.
+\]
+Thus, for a fixed $k$, only finitely many prefix excesses need to be
+remembered. Add this counter to an automaton for $\mathcal L_h$, and
+accept when the final excess is $k$. It recognizes the regular language
+$\mathcal L_{h,k}$ of valid words with that excess.
+
+The set of lengths of a regular language is eventually periodic. For
+$m\ge3$, Lemma~\ref{lem:cross} and Theorem~\ref{thm:rowbound} put the
+optimal excess between $h-1$ and $q_h$. There are only finitely many such
+$k$, so choose one common period $p$ and threshold $m_0$ for their length
+sets. The largest available excess then depends only on $m\bmod p$.
+Calling it $k_r$ proves (a).
+
+For each residue $r$, keep the words of $\mathcal L_{h,k_r}$ whose lengths
+are at least $m_0$ and congruent to $r$ modulo $p$. This is still a regular
+language. Their union, together with the finitely many shorter optimum
+words, is exactly the language of optimum blackouts. Its counting series
+is rational by the same transfer-matrix argument as above, proving (b).
 \end{proof}

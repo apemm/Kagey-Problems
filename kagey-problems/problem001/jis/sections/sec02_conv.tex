@@ -1,14 +1,18 @@
 \section{Conventions}\label{sec:conv}
 
+We keep track of the black points column by column. The following notation
+will be used throughout.
+
 \begin{enumerate}[(1),leftmargin=*]
 \item An $h\times m$ grid has $h$ rows, $m$ columns, and point set $V$. A $2\times m$ grid
 is a \emph{strip}. The point $(i,j)$ lies in column $i$ and row $j$, with $(1,1)$ at the
 top left (Figure~\ref{fig:game}(a)).
-\item A \emph{rectangle} $R$ is its set $C(R)$ of four corners, grid points spanning a
-rectangle of positive area. It is \emph{axis-aligned} if its sides are parallel to the
-grid lines, and \emph{tilted} otherwise.
-\item A \emph{blackout} is a set $S\subseteq V$ with \emph{kept set} $K=V\setminus S$. The
-\emph{presentation} of $R$ is $\pres(R)=C(R)\setminus S$.
+\item A \emph{rectangle} has four grid points as corners and positive area.
+We write $C(R)$ for its corner set. It is \emph{axis-aligned} if its sides
+follow the grid lines, and \emph{tilted} otherwise.
+\item A \emph{blackout} is the set $S\subseteq V$ of black points. Its
+\emph{kept set} is $K=V\setminus S$, and the \emph{presentation}
+$\pres(R)=C(R)\setminus S$ is what the rectangle shows, namely its white corners.
 \item Column $i$ has \emph{black rows} $B_i=\{j:(i,j)\in S\}$, and is \emph{empty}, a
 \emph{singleton}, a \emph{double}, or a \emph{triple} when $|B_i|$ is $0$, $1$, $2$, or
 $3$, and \emph{full} when $|B_i|=h$. The \emph{pair set} $F$ is the set of row pairs
@@ -16,15 +20,17 @@ contained in some $B_i$, and $q_h=\lfloor h^2/4\rfloor$ is \seqnum{A002620}$(h)$
 \end{enumerate}
 
 \begin{definition}[valid blackout]\label{def:valid}
-A blackout $S$ is \emph{valid} if $\pres(R_1)\ne\pres(R_2)$ whenever $R_1\ne R_2$. The
-\emph{maximum blackout} $f(h,m)$ is the largest size of a valid blackout of the
-$h\times m$ grid, and $a_h(m)$ counts the valid blackouts of that size, with their
-coordinates.
+A blackout $S$ is \emph{valid} if distinct rectangles have distinct
+presentations. We write $f(h,m)$ for the largest size of a valid blackout
+of the $h\times m$ grid, and $a_h(m)$ for the number of valid blackouts of that
+size. We count them with their coordinates (reflections and rotations are
+not identified).
 \end{definition}
 
-By symmetry $f(h,m)=f(m,h)$ and $a_h(m)=a_m(h)$. Width $0$ and height $1$ have no
-rectangles, so $f(h,0)=0$, $a_h(0)=1$, $f(1,m)=m$, and $a_1(m)=1$. An empty presentation
-is allowed, so a valid blackout hides at most one rectangle.
+Transposing the grid gives $f(h,m)=f(m,h)$ and $a_h(m)=a_m(h)$.
+There are no rectangles at width zero or height one, so we set
+$f(h,0)=0$, $a_h(0)=1$, $f(1,m)=m$ and $a_1(m)=1$. A rectangle is allowed
+to show no corners, but at most one can do so in a valid blackout.
 
 \begin{lemma}[difference sets]\label{lem:diff}
 For sets $A$, $B$, and $S$, we have $A\setminus S=B\setminus S$ if and only if
@@ -32,16 +38,18 @@ $A\triangle B\subseteq S$.
 \end{lemma}
 
 \begin{proof}
-Both conditions say that no point outside $S$ lies in exactly one of $A$ and $B$.
+The two visible sets agree exactly when every point belonging to just one
+of $A$ and $B$ is black, that is, belongs to $S$.
 \end{proof}
 
 \begin{corollary}[hitting sets]\label{cor:hitting}
-By Lemma~\ref{lem:diff}, a blackout $S$ is valid if and only if $K$ meets $C(R_1)\triangle C(R_2)$ for all distinct
-rectangles $R_1$ and $R_2$.
+A blackout $S$ is valid if and only if its kept set $K$ meets
+$C(R_1)\triangle C(R_2)$ for every pair of distinct rectangles $R_1,R_2$.
 \end{corollary}
 
-So subsets of valid blackouts are valid, and showing that no blackout of $k$ points is
-valid proves $f(h,m)<k$.
+This is Lemma~\ref{lem:diff} applied to the corner sets. Keeping an extra
+point cannot create an ambiguity, so every subset of a valid blackout is
+valid. Hence ruling out blackouts of size $k$ also rules out every larger size.
 
 \begin{lemma}[three corners suffice]\label{lem:threecorners}
 Three corners of a rectangle determine it, so distinct rectangles with the same
