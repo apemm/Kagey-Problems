@@ -67,9 +67,9 @@ Theorem "three-row generating function" (b), (c), Theorem "three-row closed form
 
 ### R2. Four rows, small widths
 
-Corollary "widths four and five", and the counts on 4 x 6 to 4 x 8 of Table "computed values"
-(4 x 4 and 4 x 5 come from the brute-force check, R0; the
-per-pair-set counts are in the longer version, `jis/long_version_2026-10-18.pdf`).
+Corollary "widths four and five", Proposition "the counts by pair set" (the per-pair-set counts of
+Table "four-row optimum counts by pair set") and the counts on 4 x 6 to 4 x 8 of Table "computed
+values" (4 x 4 and 4 x 5 come from the brute-force check, R0).
 
 | Command | Inputs | Evidence | Stored time | Rerun |
 |---|---|---|---|---|
@@ -197,7 +197,8 @@ collects the counts.
 
 f(5,6) < 12, f(5,7) < 13, f(6,6) < 13, f(6,7) < 14, f(6,8) < 16, f(7,7) < 15, f(7,8) < 17, and the six-row instances of
 Theorem "six rows" (a) for widths 8 to 14. The sources, the commands and the faithfulness argument
-are in `jis/unsat/README.md`. The 394 proofs (28.6 GB as text LRAT) are not in the repository.
+are in `jis/unsat/README.md`. The paper proves the faithfulness of the encodings in Section 9
+(Lemma "faithful encodings"). The 394 proofs (28.6 GB as text LRAT) are not in the repository.
 Their SHA-256 are in the evidence file.
 
 | Command | Evidence | Stored time | Rerun |

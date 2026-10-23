@@ -30,7 +30,8 @@ Lean core library.
 - `collect.py`. Builds `jis/data/unsat_certificates.json` from the results, the exporter
   manifest and the cross-check, and copies the CNF files into `jis/data/unsat/`.
 - `faithfulness.txt`. The argument that the CNF files say what the paper needs. It is copied
-  into the JSON file and printed below.
+  into the JSON file and printed below. Section 9 of the paper proves it as Lemma
+  "faithful encodings".
 
 The CNF generator is `jis/scripts/unsat_export_cnf.py`. The second, separately written generator
 is `jis/scripts/unsat_cnf_crosscheck.py`.
