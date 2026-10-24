@@ -1,10 +1,12 @@
 # Paper D: map from the paper and the research notes to the Lean proofs
 
-Current layout, October 23, 2026. The main article has 35 pages and the
-Online Resource has 17. Section 3 ends with the shape results. Section 4
-contains the fixed-memory bridge and likelihood bounds, and Section 5 describes
-verification. Appendix B keeps its statements, with proofs in S4. The sign
-proofs are in S5. Historical locators below are identified as such.
+Current layout, October 24, 2026. The main article has 39 pages and the
+Online Resource has 14. Section 3 ends with the shape results. Section 4
+contains the fixed-memory bridge, and Section 5 describes verification.
+Appendix B keeps its statements, with proofs in Appendix D. The sign
+proofs are in Appendix E. The likelihood theorem is S4.1 of the Online
+Resource, which holds Sections S1 to S4 only. Historical locators below are
+identified as such.
 
 The new modules `CenterNoHoles`, `ModalIntervals`, and `ShapeAllEven` close the
 formal minimum gap and prove the full two-interval shape for every even length
@@ -199,7 +201,7 @@ indexes the count chain by the number of steps.
 | `thm:B-local-lower` | B.4 | local lower bound | `thm_B_local_lower` (`C = 20`), `lem_B4_explicit` (every error term explicit), `B4_pointwise`, `B4_one_j`, `B4_late_tail` | kernel; track U5; for `N ≥ 64`, `0 ≤ ε ≤ 1` (no `ε ≤ 1/4`, no `x ≥ 1`) |
 | `lem:B-mode` | B.5 | mode bound | `lem_B_mode_paper` (`c̄ = 1/40`, `A₀ = 15400`), `lem_B_mode` (under `804 x log(x+2) ≤ N`), `lem_B5_strong`, `B5_ell_lower` | kernel; track U5 |
 | Appendix C | | bulk and likelihood proofs | C.1 as `thm:cp` (U1); C.2 as `thm:landau` (U2); C.3 as `lem:landau-mode` (Steps 1 and 2 U6, Steps 3 and 4 U3); C.4 as `cor:mode-location` (U3) | earlier pointwise and Landau results kernel-checked modulo the named classical hypotheses. The total variation upgrade and likelihood proof are not formalized. Steps 1 and 2 of C.3 are proved by track U6, so C.3 needs only UNI |
-| Online Resource 1, S5 (formerly Appendix D) | | proofs of 3.16 to 3.19 | as in the rows of 3.16 to 3.19, with `Y_step`, `Yf_step`, `holes_step`, `dU_neg`, `dU_pos`, `fZ_diag_pos` | kernel |
+| Appendix E (S5 of Online Resource 1 from October 17, S6 from October 23 to October 24, 2026, Appendix D before October 17) | | proofs of 3.16 to 3.19 | as in the rows of 3.16 to 3.19, with `Y_step`, `Yf_step`, `holes_step`, `dU_neg`, `dU_pos`, `fZ_diag_pos` | kernel |
 | `prop:second-order` | S1.1 | second order of the center | `U4.center_second_order_lower`, `U4.prop_second_order` | kernel, hypothesis HOEF; track U4; the lower bound for `0 < ε < 1/2` and even `N ≥ 64` |
 | `prop:refined` | S1.2 | refined crossing | `U4.star_second_order`, `U4.prop_refined_explicit` (error `20822 log N/N` for `log N ≥ 30`), `U4.prop_refined` | kernel, hypothesis HOEF; track U4 |
 | `rem:refined` | S1.3 | `x_N < g_N` | `U4.crossing_lt_gRoot_3500` (every even `N` with `log N ≥ 3500`), `U4.crossing_lt_gRoot` (`log N ≥ 21000`) | kernel, hypothesis HOEF; track U4. Proposition S1.2 of the paper now states the same threshold `log N ≥ 3500`. The numbers of the remark are not theorems |
@@ -627,6 +629,12 @@ results has a Lean counterpart, so no Lean theorem lost its place in the paper.
 Later on October 17, 2026 the paper moved three parts to Online Resource 1
 (`paperD/online_resource.tex`), whose numbers carry the prefix S. None of the moved results has a
 Lean counterpart except through the rows above, so no Lean theorem lost its place.
+
+* Moved back on October 24, 2026. The proofs of the family estimates and the proofs for the
+  second difference, which the Online Resource had held as its last two sections, are again
+  appendices of the article, Appendix D (`or_family_proofs.tex`, label `app:families`) and
+  Appendix E (`app_erw_signs.tex`, label `app:signs`). The Online Resource now ends with
+  Section S4, the likelihood theorem.
 
 * Moved. Section 2.4 (the second order) with Propositions 2.9 and 2.10 and Remark 2.11 is now
   Section S1 with Propositions S1.1 and S1.2 and Remark S1.3. Section A.1 (the bridge) with
