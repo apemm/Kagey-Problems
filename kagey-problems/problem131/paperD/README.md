@@ -27,13 +27,13 @@ the check scripts and Lean files, write n for N.)
 
 ## What is proved
 
-The October 23 revision adds three results, with full proofs in the paper.
+The October 23 revision adds the following results, with full proofs in the paper.
 
-- `cor:unique-min` closes the minimum gap for every even N >= 8 and proves exactly two symmetric modal intervals. The argument uses `lem:center-no-holes`, the oriented sign pattern, and the existing endpoint-dip certificates. The stronger prescribed convexity window is still open outside the proved ranges.
+- `cor:unique-min` closes the minimum gap for every even N >= 8 and proves exactly two symmetric modal intervals. The argument uses `lem:center-no-holes`, the oriented sign pattern, and the existing endpoint-dip certificates. The stronger prescribed convexity window is still open outside the proved ranges. `cor:height-window` gives a nonempty central convexity window at every even crossing, with endpoint determined by the last left mode and the maximum mass. It can consist only of the center.
 - `thm:cp` now bounds total variation, with the same displayed delta_Sigma. `thm:assay-mle` gives finite-sample concentration, mean-bias bounds and uniform absolute consistency for the constrained compound Poisson likelihood, using ceil((log N)^3) independent sensitive-founder cultures of size N. The comparison law truncates jump sizes, not the total count. The theorem does not cover the fair-founder mixture likelihood or continuous-time switching of existing cells.
 - `cor:fixed-memory-bridge` proves the weak Landau limit of the fixed-memory superdiffusive position limit as memory tends to one. It does not assert uniform local convergence or a sharp bimodality threshold.
 
-These new deductions are not yet in Lean. Existing sign, no-holes and endpoint-dip results are already available there. The old pointwise compound Poisson formalization remains valid. Superseded proofs are preserved in `removed_proofs/cuts_2026-10-23`.
+The all-even minimum and complete modal-interval theorem are now composed in `../lean/PaperD/ShapeAllEven.lean`, using `CenterNoHoles.lean`, `ModalIntervals.lean` and the existing sign and endpoint-dip results. The height window, total variation strengthening, likelihood theorem and fixed-memory bridge are not formalized. The old pointwise compound Poisson formalization remains valid. Superseded proofs are preserved in `removed_proofs/cuts_2026-10-23`.
 
 The statement numbers below are historical, from the build of October 17, 2026. Check them against the
 current PDF if the paper has changed since then. That build removed the rounding lemma (Lemma 3.7
@@ -104,7 +104,7 @@ Appendices D and E, are now a separate paper in `../paperF`.
 
 ## What rests on computation
 
-No statement is left with its details omitted. Section 4 of the paper (`sec_verify.tex`) gives the
+No statement is left with its details omitted. Section 5 of the paper (`sec_verify.tex`) gives the
 full account. The proofs use computation in 3 places only.
 
 - Some constants are values of explicit sums and integrals, such as the 60-term sum in the proof of
@@ -137,9 +137,9 @@ Online Resource 1, are of this kind.
   (Remark S1.3 of Online Resource 1).
 - Conjecture 3.14 (strict convexity between the humps) for N between 2000 and the constants N_1 and
   N_1' of Theorem 3.21 (even N) and Proposition 3.25 (odd N). Section 3.5 proves it for all large N,
-  and `certify_convex.py` certifies it for 10 <= N <= 2000 (Lean also for 5 <= N <= 9). The thresholds are not computed, and the
-  proof as it stands cannot work below N of about 3.5 * 10^56, so no computation closes the gap
-  (Remark 3.27). For even N >= 8 and odd N >= 1689 the conjecture follows from one inequality
+  and `certify_convex.py` certifies it for 10 <= N <= 2000 (Lean also for 5 <= N <= 9). The thresholds are not computed. The shorter mass argument proves the eventual
+  window but does not connect it to the finite checks. The maximum-height window
+  in `cor:height-window` is available for every even N >= 8. For even N >= 8 and odd N >= 1689 the conjecture follows from one inequality
   (Corollary 3.20 and Proposition S3.1(b)).
 - The tail for m between x log x and x log^2 x, effective constants in Theorem S2.1, and
   an effective constant K in Corollary 3.11(b) (Remark 3.12).
@@ -158,7 +158,7 @@ from the classical approximations.
 
 - `problem131_memory.tex` and the section files `sec_*.tex` and `app_*.tex` make up the paper, the
   main text and Appendices A to C in one PDF, `problem131_memory.pdf`. The sections are
-  `sec_intro`, `sec_erw_crossing`, `sec_erw_shape` and `sec_verify`, and the
+  `sec_intro`, `sec_erw_crossing`, `sec_erw_shape`, `sec_bulk_applications` and `sec_verify`, and the
   appendices are `app_erw_bounds`, `app_erw_profile` and `app_erw_bulk`.
   The family-estimate statements stay in Appendix B; their proofs are in
   `or_family_proofs.tex`. The second-difference proofs in `app_erw_signs.tex`
@@ -225,32 +225,20 @@ from the classical approximations.
   includes `verify_aging_urn.py` and `certify_elephant.py` but not `verify_elephant_odd.py`.
 - `removed_proofs/` keeps the paper as first written in September 2026, before it was shortened. The
   October revision put several of those proofs back.
-- `../lean/PaperD/` holds the Lean 4 proofs. Every proof is checked by the Lean kernel, no module
-  uses `native_decide`, and every theorem depends only on `propext`, `Classical.choice` and
-  `Quot.sound`. With no hypothesis Lean proves Theorem 1.1 as stated (Lemmas 2.2 and 2.4,
-  Propositions 2.3 and 2.5, Theorems 2.6 and 2.7), Theorem S1.7 (its input from Paper A,
-  Proposition 3.8 there, is proved in the Paper A library, and the library `PaperAD` joins the
-  two), Lemmas 3.1 to 3.4 (with the relabeling in Lemma 3.2), Theorem 3.5, Corollary 3.6,
-  Proposition 3.7 for every even N >= 8, Lemmas 3.15 to 3.17, Theorems 3.18 and 3.19,
-  Corollary 3.20, Lemma 3.22, Propositions 3.24 and 3.26, the first paragraph and parts (a) to (c)
-  of Proposition 3.25, Appendices A, B and D, Section S2 and Section S3 apart from part (d) of
-  Proposition 3.25, and Proposition S1.4, Lemma S1.5 and Lemma S1.6(a), (b). So parts (a), (b)
-  and (d) of Theorem 1.3 are proved with no hypothesis. The finite ranges of Propositions 3.7,
-  3.24 and 3.26 rest on certificate runs in integer arithmetic whose soundness Lean proves, and the
-  kernel evaluates every step of every run. The rest is proved from six named classical results,
-  each stated in Lean as a hypothesis. They are Fourier inversion on Z (Katznelson), the characteristic
-  function of a compound Poisson sum (Durrett), the Efron-Stein inequality (Efron and Stein,
-  Steele), Scheffé's lemma, the unimodality of class L laws (Yamazato) and Hoeffding's inequality
-  for the hypergeometric law. Theorem 3.8 uses the first three, Theorem 3.9 the first three and,
-  for the limit in law, Scheffé's lemma. Lemma 3.10 uses unimodality alone, with the certified
-  numbers proved by kernel-checked integration and the real integral by a rotation of the contour.
-  Corollary 3.11(b), Theorem 3.21, Corollary 3.23, Proposition S3.1(c) and Theorem 1.3(c)
-  use the first three and unimodality, and Theorem 1.2 uses these and Scheffé's lemma. Propositions S1.1 and S1.2 (with the
-  threshold log N >= 3500) and Lemma S1.6(c), (d) use Hoeffding's inequality. The classical results
-  themselves are not formalized. The Python and Arb scripts are separate from Lean. `MAP.md` there gives
-  the Lean names and the status of each statement of the paper. The library also holds the Lean
-  proofs for Paper F, and most of its theorems are generated certificate steps, so the
-  declaration count is not a count of results (see `MAP.md`).
+- `../lean/PaperD/` holds the Lean 4 proofs, with the current statement map in
+  `MAP.md`. The finite identities, center and crossing bounds, sign chain,
+  endpoint-dip certificates and the complete all-even crossing shape are
+  kernel-checked. `shape_at_crossing_all_even` gives the strict interior minimum,
+  positive central curvature, strict rise and fall, and both complete intervals
+  of maximizing bins for every even N >= 8, with no convex-window premise.
+  The Landau, mode-location, eventual convexity and second-order proofs retain
+  the named classical inputs listed in the map. The earlier pointwise compound
+  Poisson bound is formalized, but its total variation strengthening is not.
+  The maximum-height window, likelihood theorem and fixed-memory bridge also
+  remain written proofs. No module uses `native_decide`, and the axiom audit
+  permits only `propext`, `Classical.choice` and `Quot.sound`. The Python and Arb
+  checks are separate. The library also contains the earlier Paper F modules,
+  and most declarations are generated certificate steps, not separate results.
 
 Each check script recomputes the numbers of its section and compares them with the printed values.
 Where two independent methods were used when the numbers were first found, the script runs both. The
@@ -265,7 +253,7 @@ heavy cells. The scripts need numpy, scipy, mpmath and python-flint. Build the
 paper with `pdflatex problem131_memory.tex`, run three times so that the references settle, and
 then `pdflatex online_resource.tex` twice and the paper once more. The Code availability statement
 of the paper pins the supporting code, certificate records and Lean files to commit
-`c98db255026bf21ed3c041a8ed888ed99b734886`. Later edits to the text of the paper do not change
+`6f7f9068fc0ebb19c16d6a53fd8df5400bbd91a2`. Later edits to the text of the paper do not change
 that pin, but a change to a script, a record or a Lean file would need a new checked commit. The arXiv
 version is `problem131_arxiv.tex`. Build it with `pdflatex problem131_arxiv.tex` three times. It
 gives the paper followed by Online Resource 1 in one PDF, with one bibliography and no `xr`.
@@ -371,4 +359,4 @@ CRLF endings. Its LF form, as committed, has sha256
 
 ## Final editorial revision
 
-The article is 35 pages, with a 17-page Online Resource and a 52-page combined arXiv version, compared with the preceding 41 + 12 = 53 pages. Six pages have left the main article, but the total reduction is one page: most of the change moves auxiliary proofs rather than deleting mathematics. The center and compound-Poisson/Landau proofs remain in the article. Appendix B retains its statements and numbering, with complete proofs in S4. The former Appendix D is now S5. The introduction gives shorter summaries of the explicit bounds and the verification section points to existing records instead of repeating their metadata. `cover_letter.md` requests refereeing of all the supplementary proofs. No Lean proof or numerical certificate was changed or rebuilt.
+The article is 35 pages, with a 17-page Online Resource and a 52-page combined arXiv version, compared with the preceding 41 + 12 = 53 pages. Six pages have left the main article, but the total reduction is one page: most of the change moves auxiliary proofs rather than deleting mathematics. The center and compound-Poisson/Landau proofs remain in the article. Appendix B retains its statements and numbering, with complete proofs in S4. The former Appendix D is now S5. The introduction gives shorter summaries of the explicit bounds and the verification section points to existing records instead of repeating their metadata. `cover_letter.md` requests refereeing of all the supplementary proofs. That earlier shortening did not change the Lean proofs or numerical certificates. The later October 23 revision adds the all-even shape formalization and the height window. The fixed-memory and likelihood results now form Section 4, after the shape section. No numerical certificate was recomputed.
