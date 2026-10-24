@@ -27,10 +27,12 @@ the check scripts and Lean files, write n for N.)
 
 ## What is proved
 
-The October 23 revision adds the following results, with full proofs in the paper.
+The October 23 revision adds the following results, with full proofs in the paper or in Online Resource 1.
+
+The October 23 editorial changes also retitle Section 3 "The shape of the law at the crossing", split its last subsection into "The shape at every even crossing" and "The prescribed window", retitle Section 4 "The fixed-memory limit", and move the likelihood theorem to Online Resource 1.
 
 - `cor:unique-min` closes the minimum gap for every even N >= 8 and proves exactly two symmetric modal intervals. The argument uses `lem:center-no-holes`, the oriented sign pattern, and the existing endpoint-dip certificates. The stronger prescribed convexity window is still open outside the proved ranges. `cor:height-window` gives a nonempty central convexity window at every even crossing, with endpoint determined by the last left mode and the maximum mass. It can consist only of the center.
-- `thm:cp` now bounds total variation, with the same displayed delta_Sigma. `thm:assay-mle` gives finite-sample concentration, mean-bias bounds and uniform absolute consistency for the constrained compound Poisson likelihood, using ceil((log N)^3) independent sensitive-founder cultures of size N. The comparison law truncates jump sizes, not the total count. The theorem does not cover the fair-founder mixture likelihood or continuous-time switching of existing cells.
+- `thm:cp` now bounds total variation, with the same displayed delta_Sigma. `thm:assay-mle` is now Theorem S4.1 of Online Resource 1 (section `or:likelihood`), with its proof there. It gives finite-sample concentration, mean-bias bounds and uniform absolute consistency for the constrained compound Poisson likelihood, using ceil((log N)^3) independent sensitive-founder cultures of size N. The comparison law truncates jump sizes, not the total count. The theorem does not cover the fair-founder mixture likelihood or continuous-time switching of existing cells.
 - `cor:fixed-memory-bridge` proves the weak Landau limit of the fixed-memory superdiffusive position limit as memory tends to one. It does not assert uniform local convergence or a sharp bimodality threshold.
 
 The all-even minimum and complete modal-interval theorem are now composed in `../lean/PaperD/ShapeAllEven.lean`, using `CenterNoHoles.lean`, `ModalIntervals.lean` and the existing sign and endpoint-dip results. The height window, total variation strengthening, likelihood theorem and fixed-memory bridge are not formalized. The old pointwise compound Poisson formalization remains valid. Superseded proofs are preserved in `removed_proofs/cuts_2026-10-23`.
@@ -162,16 +164,18 @@ from the classical approximations.
   appendices are `app_erw_bounds`, `app_erw_profile` and `app_erw_bulk`.
   The family-estimate statements stay in Appendix B; their proofs are in
   `or_family_proofs.tex`. The second-difference proofs in `app_erw_signs.tex`
-  are now Section S5 of the Online Resource.
+  are now Section S6 of the Online Resource.
 - `online_resource.tex` is Online Resource 1, a separate PDF `online_resource.pdf` with the center
-  and the crossing to second order, the tail and the proof of parts (b) to (d) of Proposition 3.25,
-  followed by the auxiliary family proofs (S4) and second-difference proofs (S5).
+  and the crossing to second order, the tail, the proof of parts (b) to (d) of Proposition 3.25 and
+  the likelihood theorem for the reversible fluctuation assay (S4), followed by the auxiliary
+  family proofs (S5) and second-difference proofs (S6).
   It reads the labels of the paper through the package `xr-hyper`, so build the paper, then the
   Online Resource, then the paper again. Its text is in `online_resource_body.tex`. Its one
   bibliography item (Hoeffding 1963) is listed in `online_resource.tex` itself, because the paper
   cites it too, so `online_resource_bib.tex` holds no item at present. Its caption on the submission form is
-  "Online Resource 1. Second-order crossings, tails, odd lengths, and auxiliary
-  family and second-difference proofs supporting the main theorems."
+  "Online Resource 1. Second-order crossings, tails, odd lengths, a likelihood for the
+  reversible fluctuation assay, and auxiliary family and second-difference proofs supporting
+  the main theorems."
 - `problem131_arxiv.tex` is the arXiv version. It inputs `problem131_memory.tex` unchanged and
   appends `online_resource_body.tex` before the bibliography, so the S numbers and the references
   between the two parts resolve inside one PDF. Make it the top-level file of the arXiv
@@ -359,4 +363,4 @@ CRLF endings. Its LF form, as committed, has sha256
 
 ## Final editorial revision
 
-The article is 35 pages, with a 17-page Online Resource and a 52-page combined arXiv version, compared with the preceding 41 + 12 = 53 pages. Six pages have left the main article, but the total reduction is one page: most of the change moves auxiliary proofs rather than deleting mathematics. The center and compound-Poisson/Landau proofs remain in the article. Appendix B retains its statements and numbering, with complete proofs in S4. The former Appendix D is now S5. The introduction gives shorter summaries of the explicit bounds and the verification section points to existing records instead of repeating their metadata. `cover_letter.md` requests refereeing of all the supplementary proofs. That earlier shortening did not change the Lean proofs or numerical certificates. The later October 23 revision adds the all-even shape formalization and the height window. The fixed-memory and likelihood results now form Section 4, after the shape section. No numerical certificate was recomputed.
+The article is 35 pages, with a 17-page Online Resource and a 52-page combined arXiv version, compared with the preceding 41 + 12 = 53 pages. Six pages have left the main article, but the total reduction is one page: most of the change moves auxiliary proofs rather than deleting mathematics. The center and compound-Poisson/Landau proofs remain in the article. Appendix B retains its statements and numbering, with complete proofs in S5 (S4 before the likelihood theorem moved). The former Appendix D is now S6. The introduction gives shorter summaries of the explicit bounds and the verification section points to existing records instead of repeating their metadata. `cover_letter.md` requests refereeing of all the supplementary proofs. That earlier shortening did not change the Lean proofs or numerical certificates. The later October 23 revision adds the all-even shape formalization and the height window. The fixed-memory result now forms Section 4, after the shape section, and the likelihood theorem is Section S4 of the Online Resource. After that move the article is 34 pages, the Online Resource 18 pages and the combined arXiv version 52 pages. No numerical certificate was recomputed.
