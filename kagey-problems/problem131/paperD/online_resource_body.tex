@@ -854,5 +854,109 @@ $\varepsilon$ with $\log N\le x\le2\log N$. By (a), $\log N\le x_N\le2\log N$ fo
 odd $N$. So Theorem~\ref{thm:convex-large} applies at the crossing.
 \end{proof}
 
+\section{A likelihood for reversible fluctuation assays}\label{or:likelihood}
+
+This section proves the likelihood bounds pointed to in
+Section~\ref{sec:bulk-applications} of the paper. It uses the notation of
+Section~\ref{sec:results} of the paper and the bound $\delta_\Sigma$ of
+Theorem~\ref{thm:cp}.
+
+With one sensitive founder, uniform parent choice, and independent
+daughter-type switching with probability $\varepsilon$ at each birth in
+either direction, the resistant count at population $t$ increases from
+$k$ with probability $\varepsilon+(1-2\varepsilon)k/t$. Its law at size
+$N$ is therefore $f_N$. Write $P_{N,x}$ for this law at
+$\varepsilon=x/N$, and $Q_{N,x}=\CP_N$ with masses $q_{N,x}(k)$.
+The CP law truncates jump sizes, not the total count. Its likelihood
+uses the full law on $\mathbb N_0$.
+
+\begin{theorem}[constrained compound Poisson likelihood]\label{thm:assay-mle}
+Let $N\ge2,m\ge1$ be integers, $a_N=1-1/N$, and fix in advance
+$\Theta=[\ell,u]$ with $0<\ell<u<N$ and $a_Nu>1$.
+Let $K_1,\ldots,K_m$ be independent observations with law $P_{N,x_0}$,
+where $x_0\in\Theta$. Define $\widehat x$ as the smallest maximizer of
+$L_x=\prod_{i=1}^m q_{N,x}(K_i)$ on $\Theta$, and put
+\[
+ \begin{gathered}
+ W=u-\ell,\qquad \omega=(ma_N)^{-1},\qquad
+ J=\lceil W/\omega\rceil+1,\\
+ v_x=\min\{1,\delta_\Sigma(x)\},\qquad
+ \eta_x=1-(1-v_x)^m\le\min\{1,mv_x\},
+ \end{gathered}
+\]
+where $\delta_\Sigma(x)$ is evaluated at $\varepsilon=x/N$.
+Probabilities and expectations below are under $P_{N,x_0}^{\otimes m}$.
+For every $r>\omega$,
+\begin{equation}\label{eq:assay-tail}
+ \Prob\{|\widehat x-x_0|\ge r\}
+ \le\min\left\{1,\eta_{x_0}+e^{1/2}J
+       \exp\left(-\frac{m(r-\omega)^2}{2e^2u^2}\right)\right\}.
+\end{equation}
+For $0<\alpha<1$, set
+$r_\alpha=\omega+eu\sqrt{2\log(e^{1/2}J/\alpha)/m}$. Then
+\begin{equation}\label{eq:assay-bias}
+ |\E\widehat x-x_0|\le\E|\widehat x-x_0|
+ \le\min\{W,r_\alpha+W(\alpha+\eta_{x_0})\}.
+\end{equation}
+In particular, for fixed $0<a<b$, $\Theta=[a\log N,b\log N]$ and
+$m=\lceil(\log N)^3\rceil$, uniformly in $x_0\in\Theta$ as $N\to\infty$,
+\[
+ \E|\widehat x-x_0|
+ =O_{a,b}\left(\sqrt{\frac{\log\log N}{\log N}}
+              +\frac1{\log N}+\frac{\log^8N}{N}\right)=o(1).
+\]
+Thus $\widehat x$ is absolutely consistent in probability and its mean
+bias tends to zero uniformly. For $\widehat\varepsilon=\widehat x/N$,
+divide \eqref{eq:assay-bias} by $N$.
+\end{theorem}
+
+The estimator is constrained and uses a sensitive founder. Its mean-bias
+bound is absolute, without a signed bias expansion.
+
+\begin{proof}
+For each integer $k\ge0$, $q_{N,x}(k)$ is $e^{-a_Nx}$ times a finite
+polynomial in $x$, and is positive, since the size-one jumps alone contribute
+$e^{-a_Nx}(x/2)^k/k!$. Thus the likelihood attains its maximum on
+$\Theta$. Its smallest maximizer is measurable on the countable sample
+space $\mathbb N_0^m$.
+
+Put $G_N(s)=\sum_{d=1}^{N-1}(1-s^d)/[d(d+1)]$.
+This function decreases continuously and strictly from $a_N$ to $0$ on
+$[0,1]$. Since $a_Nu>1$, choose $s\in(0,1)$ with $G_N(s)=1/u$.
+The statistic $s^K\in[0,1]$ has mean $e^{-x/u}$ under $Q_{N,x}$, hence
+$\operatorname{TV}(Q_{N,x},Q_{N,y})\ge e^{-1}|x-y|/u$ for $x,y\in\Theta$.
+For the affinity $\rho(x,y)=\sum_k\sqrt{q_{N,x}(k)q_{N,y}(k)}$,
+Cauchy--Schwarz gives $\operatorname{TV}^2\le1-\rho^2$, and therefore
+\[
+ \rho(x,y)\le\exp\{-|x-y|^2/(2e^2u^2)\}.
+\]
+The CP semigroup gives
+$q_{N,y}(k)\ge e^{-a_N(y-x)}q_{N,x}(k)$ for $y\ge x$.
+Choose $J$ equally spaced grid points including $\ell,u$, with spacing at
+most $\omega$. If $|\widehat x-x_0|\ge r$, the grid point $y$ at or
+immediately above $\widehat x$ has $|y-x_0|\ge r-\omega$ and
+$L_y\ge e^{-ma_N\omega}L_{\widehat x}\ge e^{-1}L_{x_0}$.
+For each fixed grid point $y$, under $Q_{N,x_0}^{\otimes m}$, Markov's inequality gives
+\[
+ \Prob\{L_y/L_{x_0}\ge e^{-1}\}
+ \le e^{1/2}\E\sqrt{L_y/L_{x_0}}
+ =e^{1/2}\rho(x_0,y)^m.
+\]
+The union bound over the grid proves \eqref{eq:assay-tail} without
+$\eta_{x_0}$ for CP observations. Independent couplings from
+Theorem~\ref{thm:cp} give
+$\operatorname{TV}(P_{N,x_0}^{\otimes m},Q_{N,x_0}^{\otimes m})
+\le1-(1-v_{x_0})^m=\eta_{x_0}$, proving the stated bound.
+Substitute $r=r_\alpha$ and use $|\widehat x-x_0|\le W$ to split its
+expectation at $r_\alpha$, which proves \eqref{eq:assay-bias}.
+
+Finally, with $L=\log N$, the stated interval and sample size give
+$\sup_{x\in\Theta}\delta_\Sigma(x)=O_{a,b}(L^4/N)$,
+$\omega=O(L^{-3})$, $J=O_{a,b}(L^4)$ and
+$\sup_{x\in\Theta}\eta_x=O_{a,b}(L^7/N)$.
+Taking $\alpha=L^{-2}$ in \eqref{eq:assay-bias} proves the uniform
+mean-error bound. Markov's inequality gives absolute consistency.
+\end{proof}
+
 \input{or_family_proofs.tex}
 \input{app_erw_signs.tex}
