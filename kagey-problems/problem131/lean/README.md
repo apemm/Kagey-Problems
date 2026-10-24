@@ -239,6 +239,33 @@ them a few at a time (`lake build PaperD.T7_Gen_0101_0300 …`) before `lake bui
 The library has 2 modules (including the root). Its workspace (`~/lean-work/paperAD`) has the
 three libraries `PaperA`, `PaperD` and `PaperAD` with `srcDir` set to this folder.
 
+## Paper F and the additions to Paper C (October 24, 2026)
+
+On October 24, 2026 Paper F was started again in `paperF` as "Bulk, big jumps and boundary layers
+in the occupation law of a lattice Lévy walk" (`paperF/problem131_levy.tex`), and its first draft
+moved to `archive/paperF_golden_aging`. Where the paragraphs above speak of Paper F, they mean that
+first draft. Its Lean proofs stay in `PaperD`, and its aging results are now those of the note
+`S4_aging_note`, whose README points to them.
+
+`PaperF/` is the library of the new paper, with the root `PaperF.lean` and 7 modules in the
+namespace `Kagey131.PaperF.Levy`, and `lakefile.toml` lists it. It formalizes the exact identities
+of Section 2 of the paper: the law as a sum over compositions into alternating runs, the
+decompositions by the first run and by the final run with the recursion behind the latter, the
+fresh-start identities with the renewal kernels and their sums, the Green function lemma with the
+tail-sum formula for the mean, the first part of the counting lemma, and the renewal inversion in
+part (a) of the inversion theorem. The asymptotic statements are not formalized. The paper is still
+a skeleton, so `PaperF/MAP.md` cites statement labels rather than numbers, and it lists the
+declarations, their hypotheses and axioms, and what is left out.
+
+`PaperC/` has 4 new modules for finite and algebraic results of the new main file of Paper C,
+`paperC/problem131_chains.tex`. `DVRestriction` proves the restriction identity `J_F = J_V` on a
+face, `PrincipalMinors` the expansion of `R_F` in principal minors and the equality of
+characteristic polynomials, `GeneratorFiber` the irreducibility criterion, the generator point,
+the sign lemma and the fiber `{Q, Q*}` on three states, and `CriticalWindow` the four-state
+example of the part on low temperature. The section "October 24, 2026 additions" of
+`PaperC/MAP.md` maps them to the statements, with the numbers of the build of that day, and lists
+what is not formalized.
+
 ## What is not in Lean
 
 The general large-argument asymptotics of the Bessel functions are not formalized. Lean has the
