@@ -1,118 +1,141 @@
-# Problem 131, Paper F: heavy-tailed runs and aging walks
+# Problem 131, Paper F: the occupation law of a lattice Lévy walk
 
-The paper is "The golden-ratio threshold for a lattice Lévy walk and ties in coin-turning walks". It
-studies walks on Z that move in runs of alternating direction and asks when the ballistic ends of the
-law after N steps beat the center. With runs whose lengths have tail k^(-alpha), 1 < alpha < 2,
-started in equilibrium, the ends win for large N exactly when alpha is below the golden ratio. This
-is the lattice form, with its constant, of a heuristic of Wang, Li and Hänggi for heat conduction.
-With a fixed first step, an aging walk that switches at step k with probability c/k ties exactly at c = 1 for every N, and
-so does its version with d states. For runs with geometric lengths the question is Problem 131 of
-Kagey's Open Problem Collection.
+Working title: "Bulk, big jumps and boundary layers in the occupation law of a lattice Lévy walk".
+Target journal: Electronic Journal of Probability (class `ejpecp`, no page limit, proofs in the article).
 
-Until October 13, 2026 this paper was Sections 4 and 5 and Appendices D and E of the elephant-walk
-paper in `../paperD`. It cites two public preprints by A. Pemmasani, and `../README.md` describes all the papers on Problem 131. Inside the paper they are cited by
-number only, not by letter labels.
+The walk takes N steps in runs of alternating sign whose lengths are independent with regularly varying
+tails of index between 1 and 2. A_N is the number of plus steps and P_N(k) its law. The paper
+describes P_N bin by bin over the whole row: a stable bulk at the scale B_N, a big-jump zone on
+each side where one run is macroscopic, a renewal boundary layer at each end, and an atom at each
+endpoint. The preparation (the law of the first run) enters each zone through a sharp criterion.
+The shape follows, including the golden-ratio threshold for the global mode and an interior
+minimum at the stable scale of the opposite runs, and the boundary layer identifies the law of the
+opposite run.
 
-- `../paperA`, "Uniform Bessel bounds for magnetization crossings in finite Ising chains",
-  arXiv:2610.06935. The crossing for geometric runs (Section 1).
-- `../archive/paperB`, "Vertex crossings in a symmetric Markov multinomial model", arXiv:2610.09258. The
-  first-order scale of its vertex crossing (Remark 3.5).
+Started October 24, 2026 from the plan of October 23. The earlier draft in this folder, "The
+golden-ratio threshold for a lattice Lévy walk and ties in coin-turning walks", is archived in
+`../archive/paperF_golden_aging`. Its heavy-tail half is absorbed here (its center theorem is the
+bulk theorem at the center bin, its golden-ratio corollary is part of the mode theorem). Its aging
+half (coin-turning ties at c = 1, the Pólya urn, the fair-start expansion) is to become a short
+separate note. The infinite-mean case (0 < alpha < 1, the local Lamperti law) is left to a second
+paper.
 
-Conventions. The walk has N steps, and P_N(k) is the probability of bin k. A_N is the number of
-right steps, C_N = P_N(N/2) is the probability of the center bin and E_N = P_N(N) that of the right
-end. The first step is fair unless we say otherwise.
+## Status
 
-## What is proved
+The draft is complete, with every statement proved in the article (October 24, 2026, 53 pages
+after the editing pass). The
+introduction states six theorems, lettered A to F in the order of the sections. Statements are
+numbered by section, and the scripts and the Lean map name them by their TeX labels, which do not
+change when statements move.
 
-The statement numbers are those of the build of October 18, 2026. Before the split the statements of
-Section 2 were numbered 4.x in Paper D and those of Section 3 were numbered 5.x, and the Lean files,
-the ledgers and the recorded outputs still use the old numbers.
+- Theorem A (`thm:bulk`, Section 3). For a fresh start, under (RV) and (SPAN),
+  `sup_k |B_N P_N(k) - h_N((k-pN)/B_N)| -> 0` over the whole row, `sup_k P_N(k) <= C/B_N`, and the
+  ratio form on `|k-pN| <= K B_N`, for every relation between the two scales.
+- Theorem B (`thm:bigjump`, Section 4). The boundary layer `P_N(N-j)/T_+(N) -> kappa(j)` under (RV),
+  and under (LR) for the plus sign the big-jump kernel `G_N` of `eq:G` on
+  `pN + K lambda_N B_N <= k <= N` in the double limit, with a uniform boundary layer. The proof
+  splits by the largest run (`lem:no-giant`, `lem:two-giant`, `lem:one-giant`). The infinite
+  density (`cor:infinite-density`), the lower bound without `lambda_N` (`cor:bigjump-lower`), the
+  need for the double limit (`rem:no-single-formula`) and for (LR) (`ex:rv-not-lr`).
+- Theorem C (`thm:preparation`, Section 5). Every preparation: the exact defect in the bulk, the
+  bulk criterion `B_n P(D=n) -> 0`, the big-jump zone with the term `Psi_N` and its removal exactly
+  when `nu_+(n) = o(T_+(n))`, the boundary layer with the prepared kernel. The stationary start in
+  closed form (`cor:stationary`), no universal trim (`cor:no-trim`), regularly varying
+  preparations (the paragraph after `cor:stationary`). The tightness of the count `lem:prep-tight`
+  and the uniform big-jump bound `eq:unif-bigjump` are the tools of Section 5.
+- Theorem D (`thm:mode`, Section 6). The global mode is an endpoint or a bulk bin according to
+  `B_N Q_sigma(N)/H_N`, with the golden-ratio threshold for the stationary start and the constant
+  `C(phi) = 0.7761317...` at `alpha = phi`.
+- Theorem 6.1 (`thm:second-order`) and Theorem E (`thm:antimode`, Section 6). The exact
+  second-order coefficient `C(j)` of the boundary layer, at fixed `j` in part (a) and uniformly on
+  `1 <= j <= N^(1-eta)` in part (b), and the interior minimum near the plus end
+  at `T_-(j*_N) ~ 2 alpha_+ s/N` when `u_- > 1/mu_-`, asymptotic to the minimizer of
+  `u_-(j) + C(j)/N`, and at bounded distance otherwise.
+- Theorem F (`thm:inverse`, Section 7). The boundary layers identify both run laws through the
+  renewal inversion, and the minus end needs the normalization by `T_-(N)` (`rem:thinning`).
+- The exact identities of Section 2 (`prop:fresh-identity`, `prop:first-run`, `lem:green`,
+  `prop:final-run` with its explicit form `eq:final-explicit`, `lem:counting`) hold for every `N`
+  with no hypothesis. The facts on regular variation are collected in `lem:rv`.
 
-Heavy-tailed runs (alternating runs, with run lengths xi such that P(xi >= k) = k^(-alpha)).
+Section 8 (`sec_verify.tex`) describes the computations and the Lean library. It states the run
+recursion `eq:run-recursion` and the run form `eq:run-sum` of the final-run identity, which the
+scripts and the Lean library use, and holds Table 1 (`tab:antimode`). No proof uses a computed
+number.
 
-- The end is E_N = P(D >= N)/2, where D is the first run, with an explicit expansion for the
-  stationary start (Proposition 2.1). The law of A_N is a sum over products of the masses of two
-  independent renewal processes (Proposition 2.2).
-- For 1 < alpha < 2 and every a.s. finite first run, C_N is asymptotic to an explicit constant
-  times N^(-1/alpha) (Theorem 2.4).
-- With a stationary start, E_N/C_N ~ C(alpha) N^(1 - alpha + 1/alpha), so for large N the ends win
-  exactly when alpha < phi. At alpha = phi the ratio tends to C(phi) = 0.7761317206, so the center
-  still wins by the factor 1.2884. With a fresh start, E_N/C_N ~ C_fr(alpha) N^(-alpha + 1/alpha),
-  so the center wins for every 1 < alpha < 2 (Corollary 2.5).
-- For alpha > 2, C_N ~ sqrt(2 mu/(pi v N)) for every a.s. finite first run, and for alpha = 2,
-  C_N ~ sqrt(2 mu/(pi N log N)). So the center wins for alpha >= 2 with either start (Theorem 2.8).
-- For 0 < alpha < 1 and a fresh start, N C_N tends to the Lamperti density at 1/2, which is
-  (2/pi) tan(pi alpha/2), so the ends win (Theorem 2.9). With a fresh start the threshold is
-  alpha = 1, where the paper has only a heuristic (Remark 2.10 and Table 2).
-
-The aging walk (switch at step k >= 2 with probability c/k), in its own section, `sec_aging.tex`.
-
-- With the first step fixed, A_N is uniform on {1, ..., N} at c = 1. The ratio of each interior
-  bin to the end increases strictly in c, so the crossing is exactly c = 1 for every N and every
-  interior bin (Proposition 3.3).
-- With d states (start in state 1, and at step k >= 2 move to each of the other d-1 states with
-  probability theta/(k+d-2)), the count vector at theta = 1 is exactly uniform over all
-  compositions with n_1 >= 1, and every bin ties with the corner exactly at theta = 1 for every N
-  (Theorem 3.4).
-- A chain that at each step draws a fresh uniform state or repeats its last state has counts with
-  exactly the law of Pólya's urn with d colors, for every weight theta (Proposition 3.1). The
-  count law alone follows from Dietz, Lippitt and Sethuraman (Sankhya A 2023, Theorem 2.18 of
-  arXiv:1901.08135). For d = 2 and an integer theta the joint law with the last state is Theorem 7.2
-  of Engländer and Volkov's author draft dated March 18, 2024 (pp. 138–139). The paper adds the joint law for d >= 3 or a theta that is not an integer.
-  Section 3 now starts with this proposition, and Proposition 3.3(a) and Theorem 3.4(a) follow from it.
-- With a fair first step each interior bin is twice as likely as an end at c = 1, and its crossing
-  is unique and below 1 (Proposition 3.6). For the center,
-  c_N = 1 - log 2/(log N + gamma + 2 - 2 log 2) + O((log N)^(-3)) (Proposition 3.7, proved in
-  Appendix B).
-
-## What rests on computation
-
-No proof in this paper rests on a computation. The tables, the figures and the numbers quoted outside
-the proofs rest on computation alone. The numbers in Remarks 2.7 and 2.10 are of this kind, and the
-row alpha = 1 of Table 2 is a heuristic.
-
-## Open
-
-- For heavy tails, a rate in Theorem 2.4, monotonicity of E_N/C_N and uniqueness of the crossover
-  size (Remark 2.7), the case alpha = 1 (Remark 2.10), and the full profile of the law.
-- The Engländer–Volkov locators were checked directly in the author-uploaded draft dated
-  March 18, 2024. The bibliography identifies that version explicitly. Published-edition
-  numbering was not verified and is not claimed. The draft's Section 5.7 has a normalization
-  discrepancy; the paper instead uses its own fair-start averaging proof.
-
-
-## Prior work
-
-For heavy tails, both scalings are in Godrèche and Luck (2001), who also give the constant of the
-center by a formal argument. Cénac, Le Ny, de Loynes and Offret (J. Theor. Probab. 2018 and 2019)
-prove the functional scaling limits of this walk, and Wang, Li and Hänggi (2016)
-already noted the golden ratio as a heuristic for Lévy walks. The Beta limit of the aging walk is due
-to Dietz and Sethuraman (2007) and to Engländer and Volkov (2018).
+The editing pass of October 24 removed the labels `lem:final-explicit` (now `prop:final-run`,
+display `eq:final-explicit`), `eq:AB-recursion` (now `eq:run-recursion` in Section 8),
+`prop:uniform-second` (now `thm:second-order`(b)), `lem:unif-bigjump` (now the display
+`eq:unif-bigjump`), `lem:end-crude`, `rem:inverse-scope` and `rem:rho-diagram`. Outputs in `data/`
+dated before the pass may still print the old names.
 
 ## Files
 
-- `problem131_heavy_aging.tex` is the paper. It includes `sec_intro.tex`, `sec_heavy.tex`,
-  `sec_aging.tex` and `sec_verify.tex` (Sections 1 to 4) and the appendices `app_heavy.tex` and
-  `app_aging.tex` (Appendices A and B).
-- `figures/` holds Figure 1 (`heavy.pdf`), made by `../paperD/figures/make_figures.py`, and Figure 2
-  (`aging.pdf`), made by `figures/make_aging_figure.py`. The paper no longer includes the program
-  figure `../figures/program_F.pdf`.
-- `verify_heavy_runs.py` checks Section 2, Tables 1 and 2, and Appendix A.
-- `verify_aging.py` checks Section 3 and Appendix B.
-- `verify_aging_urn.py` checks Proposition 3.1 in exact arithmetic for d = 2, 3, 4.
-- `verify_all.py` runs the three scripts.
-- `data/figdata_heavy.json` holds cached data for Figure 1, and `data/ledger_D3.md` and
-  `data/ledger_D4.md` are the prediction ledgers (they keep their names from Paper D).
-- `../lean/PaperD/` holds the Lean 4 proofs of the exact statements of Papers D and F, with the
-  statement numbers from before the split.
+- `problem131_levy.tex`, the main file (class `ejpecp`, in TeX Live), with the section files
+  `sec_intro`, `sec_setting` (2), `sec_bulk` (3), `sec_bigjump` (4), `sec_preparation` (5),
+  `sec_shape` (6), `sec_inverse` (7) and `sec_verify` (8). The PDF is `problem131_levy.pdf`.
+- `figures/atlas.pdf` (and `.png`), Figure 1, made by `figures/make_atlas_figure.py` from
+  `data/atlas_N5000.json` and `data/antimode.json` in the shared style `../figures/series_style.py`.
+  The caption source is `figures/captions.md`. The script also writes `data/atlas_pieces.json`, the
+  zones of panel (a) and the largest relative error of each piece in its zone.
+- `certify_atlas.py`, the exact law `P_N` by the recursion `eq:run-recursion` and the final-run
+  identity `prop:final-run` in double precision,
+  with the a priori relative error bound `eps_N = (1 + gamma_{N+2})^{N+2} - 1` and a comparison
+  with the same recursion in 128-bit ball arithmetic at N = 600. Output `data/atlas_N5000.json`.
+  The other scripts import its functions (law, recursion, renewal function, `C(j)`).
+- `certify_antimode.py`, the certified antimodes at N = 600, 1200, 2400, 4000, 8000 (every other
+  bin of `[pN, N]` above the minimum by more than `2 eps_N`) and the two predictions of
+  `thm:antimode` for the figure. Output `data/antimode.json`.
+- `verify_identities.py`, the identities of Section 2, `eq:kappa`, `prop:final-run` in both forms
+  (`eq:final-explicit`, and `eq:run-sum` with `eq:run-recursion`), the
+  renewal identities `eq:cover`, `eq:cover-v`, `eq:conv-v`, the two forms of `eq:Cj` and the inversion
+  of `thm:inverse`(a), by brute force in exact rational arithmetic for N <= 12, with two pairs of
+  run laws and a general preparation. Output `data/verify_identities_output.txt`.
+- `verify_coefficient.py`, `C(j)` of `thm:second-order` against the exact law at N = 1200, 2400,
+  4800 (the table of Section 8.2 of the plan review of October 23), the two forms of
+  `prop:final-run` at N = 1200, Table 1 (`tab:antimode`, Section 8) against the certificates, the ratios after `eq:second-renewal`, the constant of `thm:mode`(d) and the
+  certificate `data/atlas_N5000.json`. Output `data/verify_coefficient_output.txt`.
+- `verify_preparation.py`, `thm:preparation`(c), (d) and `cor:stationary` for the fresh, the
+  stationary and one regularly varying preparation at N = 1200 and 2400, and the stationary kernel
+  `(2/s)(1 + mu_+ u_-(j))`. Outputs `data/verify_preparation_output.txt` and
+  `data/preparation_ratios.json`.
+- `verify_bigjump.py`, the numbers of `rem:no-single-formula`. Output
+  `data/verify_bigjump_output.txt`.
+- `verify_all.py`, runs the four `verify` scripts, and with `--full` the two `certify` scripts
+  first. Outputs `data/verify_all_output.txt` and `data/verify_all_output_full.txt`.
+- Every output in `data/` starts with the sha256 of the script that wrote it and the date.
+- `../lean/PaperF/`, the Lean 4 proofs of the identities of Section 2, the first part of
+  `lem:counting` and the inversion of `thm:inverse`(a), with the map from labels to Lean names in
+  `../lean/PaperF/MAP.md`. Lean 4.33.1 and Mathlib v4.33.1 (commit `0df444a360ea`). No module uses
+  `sorry` or `native_decide`, and the axioms are `propext`, `Classical.choice` and `Quot.sound`.
+- The earlier draft is in `../archive/paperF_golden_aging`, with its ledgers `ledger_D3.md` and
+  `ledger_D4.md` in its `data` folder.
 
-## How to run the checks
+## How to build and run
 
-From the Problem 131 folder, `python -B verify_all.py --paper f` runs the checks of this paper. In
-this folder, `python -B verify_all.py` does the same, and `--full` adds the heavy cells. The scripts
-need numpy, scipy and mpmath. Build the paper with pdflatex, 3 times. The build reads only files in
-this folder.
+Build the paper with `pdflatex problem131_levy.tex`, run three times so that the references settle.
+Run the checks from this folder with `py -I verify_all.py` (about half a minute) or
+`py -I verify_all.py --full` (about two minutes, most of it the antimode at N = 8000). Each script
+can also be run alone with `py -I <script>`, and `py -I certify_atlas.py 1200` writes the law at any
+other N to `data/atlas_N1200.json`. Redraw the figure with `py -I figures/make_atlas_figure.py`. The
+scripts need numpy, scipy, mpmath and python-flint, and the figure also matplotlib. The recorded
+runs used Python 3.14.3, numpy 2.4.2, scipy 1.17.1, mpmath 1.3.0, python-flint 0.9.0 (FLINT
+3.6.0) and matplotlib 3.10.8. The Lean library builds with `lake exe cache get` and
+`lake build PaperF` in `../lean` (see `../lean/PaperF/MAP.md` for the workspace outside OneDrive).
 
-## Final editorial revision
+## Statement labels
 
-The verification coverage table is preserved as `../lean/PaperD/coverage_F.tex` and indexed by `../lean/PaperD/MAP.md`. The urn consequences have shorter derivations from Proposition 3.1. The heavy-tail proofs, strict ordering arguments and fair-start local limit remain. The disclosure and immutable code revision are included. The dated author draft is identified in a text footnote, while the bibliography lists the published monograph.
+The scripts, their outputs and the Lean map name statements by their TeX labels (`thm:bulk`,
+`prop:final-run`, ...), never by number. The theorems of the introduction are lettered A to F
+(`thm:bulk`, `thm:bigjump`, `thm:preparation`, `thm:mode`, `thm:antimode`, `thm:inverse`). All other
+statements are numbered within sections, so `prop:final-run` is Proposition 2.6,
+`thm:second-order` is Theorem 6.1, `cor:stationary` is Corollary 5.4 and `tab:antimode` is Table 1
+in the build of October 24, 2026. Hypotheses carry the names (RV), (LR) and (SPAN) in the paper and
+in the scripts.
+
+## Hypotheses and notation
+
+(RV) regularly varying tails of index -alpha_sigma with 1 < alpha_sigma < 2; (LR) local regular
+variation f_sigma(n) ~ alpha_sigma T_sigma(n)/n; (SPAN) span one. mu_sigma mean run length,
+s = mu_+ + mu_-, p = mu_+/s. Scales b_{sigma,N} = a_sigma(N/s), B_N the larger one, moving
+profile h_N. Renewal mass function u_sigma, v_sigma = sum_m m f_sigma^{*m}, boundary kernel
+kappa_+^{(sigma_0)}. Big-jump kernel G_N. Directional defect D_N^sigma (\mathcal D^\sigma_N), with supremum Delta_{sigma,N}.

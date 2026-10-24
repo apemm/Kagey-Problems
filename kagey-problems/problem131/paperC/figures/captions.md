@@ -56,7 +56,7 @@ $\tau_i$ of Theorem~\ref{thm:hull}. The winners (filled) are the arcs of one to 
 $C_6$, and the arc of five states (open) never wins. (b) The support size of the exact mode on
 $C_5$ with the uniform start, against $T$, at $N=40$ and $N=72$. The mode skips the arc of four
 states. The triangles mark the first-order switch points $\tau_i\log N$ with $\tau_i=1$,
-$1+\sqrt2$ and $2+\sqrt2$ (Table~\ref{tab:outcomes}).}
+$1+\sqrt2$ and $2+\sqrt2$.}
 ```
 
 

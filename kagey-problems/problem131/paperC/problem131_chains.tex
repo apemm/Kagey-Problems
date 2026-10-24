@@ -1,0 +1,158 @@
+\documentclass[11pt]{article}
+% Occupation counts of rarely switching Markov chains. Article version.
+% The Springer Nature version problem131_chains_sn.tex inputs the same section files.
+% Build: pdflatex problem131_chains.tex, twice.
+
+\usepackage[margin=1.05in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[shortlabels]{enumitem}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\hypersetup{hypertexnames=false,pdftitle={Occupation counts of rarely switching Markov chains},pdfauthor={Arjun Pemmasani}}
+
+% ---------- theorem environments ----------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{introtheorem}{Theorem}
+\renewcommand{\theintrotheorem}{\Alph{introtheorem}}
+\newtheorem{hypothesis}{Hypothesis}
+\renewcommand{\thehypothesis}{L}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{question}[theorem]{Open problem}
+
+% ---------- notation macros ----------
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\ones}{\mathbf{1}}
+\newcommand{\tree}{\operatorname{tree}}
+\newcommand{\arb}{\operatorname{arb}}
+
+\graphicspath{{figures/}}
+\emergencystretch=1em
+
+\title{Occupation counts of rarely switching Markov chains:\\ stratified local laws, modal supports and reconstruction}
+\author{Arjun Pemmasani\\[2pt]
+\small Department of Mathematics, Harvey Mudd College\\
+\small Claremont, CA 91711, USA\\
+\small \texttt{apemmasani@hmc.edu}\\
+\small ORCID \href{https://orcid.org/0009-0001-2776-6298}{0009-0001-2776-6298}}
+\date{}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+A Markov chain on finitely many states makes about $\tau\log N$ switches
+in $N$ steps. We ask which states its most likely vector of occupation
+counts uses. On each face of the simplex the law weighs a lattice entropy
+of one power of $N$ per dimension against the Donsker and Varadhan cost of
+the chain killed on leaving the face. A local limit theorem in each face
+gives an explicit constant, locates every crossing between irreducible
+faces up to $o(1)$, and describes the window of tied faces. Near a facet
+the law follows a Bessel kernel, which we prove for faces with at most
+three states and for larger faces under one stated hypothesis. The
+complete graph, where all faces tie at first order, is solved exactly. We
+then ask which coarse functionals of the law determine the generator. The
+Donsker and Varadhan functional determines exactly the principal minors
+of the negative generator, and so does the support of the most likely
+composition under killing at known rates. These minors fix a reversible
+generator, and in general a finite set of generators, which is the
+generator and its time reversal when there is no cut. At low temperature
+the winners are Freidlin and Wentzell cycles of least size away from
+finitely many heights. At a critical height explicit prefactors decide,
+and noncycles win on open windows of the rescaled time scale. Rewards of
+known size read off the cycle tree.
+\end{abstract}
+
+\medskip
+\noindent\textbf{Keywords:} occupation times of Markov chains; mode; principal
+Dirichlet eigenvalue; Donsker and Varadhan functional; principal minors;
+Freidlin and Wentzell cycles.
+
+\noindent\textbf{Mathematics Subject Classification (2020):} Primary 60J10;
+Secondary 60J27, 60F10, 60F05, 15A18, 15B48, 15A29.
+
+% ---------- introduction and setting ----------
+\input{sec_intro.tex}
+\input{sec_model.tex}
+\input{sec_dv.tex}
+
+% ---------- the law on a face ----------
+\input{sec_firstorder.tex}
+\input{sec_secondorder.tex}
+\input{sec_boundary.tex}
+
+% ---------- the complete graph and the near-vertex layer ----------
+\input{sec_complete.tex}
+\input{sec_vertex.tex}
+
+% ---------- reconstruction ----------
+\input{sec_reconstruction.tex}
+
+% ---------- low temperature ----------
+\input{sec_lowtemp.tex}
+
+\input{sec_verify.tex}
+
+\paragraph{Acknowledgments.} I thank Peter Kagey for posing the problem, and
+Chase Hameetman and Aidan Deshong for insightful conversations about some of
+the proofs of the preprint~\cite{paperB}, which this paper incorporates.
+
+\section*{Statements and Declarations}
+
+\paragraph{Funding.} No funding was received for this work.
+
+\paragraph{Competing interests.} The author has no competing interests to
+declare.
+
+\paragraph{Ethics approval and consent to participate.} Not applicable.
+
+\paragraph{Consent for publication.} Not applicable.
+
+\paragraph{Data availability.} The outputs of the computations described in
+Section~\ref{sec:verify} are in the folder
+\nolinkurl{kagey-problems/problem131/paperC/data} of the repository named under
+Code availability, each headed by the sha256 of the script that wrote it.
+
+\paragraph{Materials availability.} Not applicable.
+
+\paragraph{Code availability.} All code, data and Lean files supporting this
+paper are in the folder \nolinkurl{kagey-problems/problem131} of
+\url{https://github.com/apemm/Kagey-Problems}. The scripts of this paper are in
+the subfolder \nolinkurl{paperC}. To rerun the checks, run
+\texttt{py -I verify\_all.py} in that subfolder, which takes about fifteen minutes
+and writes the outputs to \nolinkurl{paperC/data}. The option \texttt{-{}-full}
+adds the largest cases of three of the older scripts and takes much longer. Each
+script also runs on its own, and its docstring says what it checks and how long
+it takes. The scripts need Python~3 with \texttt{numpy}, \texttt{scipy},
+\texttt{sympy} and \texttt{mpmath}. The Lean files are in the subfolder
+\nolinkurl{lean} and build with Lean~4 v4.33.1 and Mathlib, and the file
+\nolinkurl{lean/PaperC/MAP.md} matches the statements of this paper to their
+Lean theorems.
+
+\paragraph{Author contributions.} I am the sole author and am responsible for
+the whole paper.
+
+\appendix
+\input{app_torus.tex}
+\input{app_laplace.tex}
+\input{app_complete.tex}
+\input{app_vertex.tex}
+
+\input{bib_switching.tex}

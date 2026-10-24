@@ -1,0 +1,114 @@
+\section{Reading the run laws off the ends}\label{sec:inverse}
+
+The boundary layer is a renewal mass function, and a renewal mass function
+determines its interarrival law. So the ends of the row identify the run laws,
+provided the end where the start puts no atom is normalized with care.
+
+\begin{introtheorem}[identification from the boundary layer]\label{thm:inverse}
+Assume (RV) for both signs.
+\begin{enumerate}[(a)]
+\item Let the start be fresh with sign $\plus$. For every fixed $j\ge1$,
+\[
+ \frac{P_N(N-j)}{P_N(N)}\to u_\minus(j),\qquad
+ \frac{P_N(j)}{T_\minus(N)}\to u_\plus(j).
+\]
+The first limits determine $f_\minus$ through
+\begin{equation}\label{eq:renewal-inverse}
+ f_\minus(j)=u_\minus(j)-\sum_{i=1}^{j-1}f_\minus(i)\,u_\minus(j-i),\qquad j\ge1,
+\end{equation}
+hence $T_\minus$, and then the second limits determine $f_\plus$ by the
+same recursion with the signs exchanged. In particular the family
+$(P_N)_{N\ge1}$ determines both run laws.
+\item Let the preparation satisfy $Q_\plus(N)/T_\plus(N)\to q\in(0,\infty)$ and
+$\nu_\plus(n)=o(T_\plus(n))$, and put $\pi_\plus=\Prob(\Sigma=\plus)$. Then $\pi_\plus>0$,
+and for every $j\ge1$
+\[
+ \frac{P_N(N-j)}{T_\plus(N)}\to\kappa_\plus(j)
+ =\pi_\plus u_\minus(j)+\sum_{d=1}^{j}\nu_\minus(d)\,u_\minus(j-d).
+\]
+Hence $P_N(N-j)/P_N(N)\to\kappa_\plus(j)/q$, and when the preparation and
+$q$ are known these limits determine $u_\minus$, hence $f_\minus$.
+\end{enumerate}
+\end{introtheorem}
+
+The theorem uses only the boundary layer at fixed $j$, so (LR) is not needed. The
+minus end in (a) is normalized by $T_\minus(N)$, which is known only after the plus
+end has been read, and Remark~\ref{rem:thinning} shows that this normalization
+cannot be replaced by $\sum_nf_\plus(n)=1$.
+
+\begin{proof}[Proof of Theorem~\ref{thm:inverse}(a)]
+For a fresh plus start $P_N(N)=F^\plus_N(N)=T_\plus(N)$ by
+Proposition~\ref{prop:fresh-identity}, and $T_\plus(N)>0$. Theorem~\ref{thm:bigjump}(a)
+with $\sgn_0=\plus$ and~\eqref{eq:kappa} give $P_N(N-j)/T_\plus(N)\to
+\kappa^{(\plus)}_\plus(j)=u_\minus(j)$, which is the first limit. At the minus
+end, Theorem~\ref{thm:bigjump}(a) with the signs exchanged gives
+$P_N(j)/T_\minus(N)\to\kappa^{(\plus)}_\minus(j)$, and~\eqref{eq:kappa} with the
+signs exchanged gives $\kappa^{(\plus)}_\minus(j)=u_\plus(j)$ for $j\ge1$. This
+is the second limit.
+
+For the recursion, let $j\ge1$ and split the sum defining $u_\minus(j)$
+according to the length $i$ of the first run. The term $m=1$ is $f_\minus(j)$.
+For $m\ge2$ the first run has length $1\le i\le j-1$ and the other $m-1$ runs
+sum to $j-i\ge1$. Hence
+\[
+ u_\minus(j)=f_\minus(j)+\sum_{i=1}^{j-1}f_\minus(i)\sum_{m\ge1}f_\minus^{*m}(j-i)
+ =f_\minus(j)+\sum_{i=1}^{j-1}f_\minus(i)\,u_\minus(j-i),
+\]
+which is~\eqref{eq:renewal-inverse}. It gives $f_\minus(1)=u_\minus(1)$, and
+for $j\ge2$ it expresses $f_\minus(j)$ through $u_\minus(1),\dots,u_\minus(j)$ and
+$f_\minus(1),\dots,f_\minus(j-1)$. By induction on $j$ the sequence $u_\minus$
+determines $f_\minus$, and $T_\minus(n)=1-\sum_{i<n}f_\minus(i)$. So the first
+limits determine $T_\minus(N)$ for every $N$, and the second limits then
+determine $u_\plus(j)$ for every $j\ge1$. Since $u_\plus(0)=1$, the same
+recursion with the signs exchanged determines $f_\plus$.
+\end{proof}
+
+\begin{remark}[what the minus end alone determines]\label{rem:thinning}
+Let the start be fresh with sign $\plus$, and suppose only the ratios at the
+two ends are read. At the minus end the second limit of Theorem~\ref{thm:inverse}(a)
+gives $P_N(j)/P_N(i)\to u_\plus(j)/u_\plus(i)$, which determines
+$(u_\plus(j))_{j\ge1}$ only up to a positive factor. The normalization
+$\sum_nf_\plus(n)=1$ does not fix this factor. To see this, let $0<c\le1$, let $G$ be
+independent of the runs with $\Prob(G=n)=c(1-c)^{n-1}$ for $n\ge1$, and let
+$X^c_\plus$ be the sum of $G$ independent copies of $X_\plus$. With generating functions
+$F(z)=\sum_nf_\plus(n)z^n$ and $U=1/(1-F)$, the law of $X^c_\plus$ has generating
+function $F_c=cF/(1-(1-c)F)$, which equals one at $z=1$. Then
+\[
+ \frac1{1-F_c}=\frac{1-(1-c)F}{1-F}=1+c\,(U-1),
+\]
+so $u^c_\plus(j)=c\,u_\plus(j)$ for every $j\ge1$. In words, the renewals of
+$X^c_\plus$ are those of $X_\plus$ kept independently with probability $c$. The
+support of $X^c_\plus$ contains that of $X_\plus$, so (SPAN) is inherited, and
+$\Prob(X^c_\plus\ge n)\sim T_\plus(n)/c$ by the tail asymptotics of random sums of
+subexponential variables~\cite{ekm1997}, so (RV) holds with the same index.
+Replacing $X_\plus$ by $X^c_\plus$ leaves $u_\minus$ and every ratio
+$u_\plus(j)/u_\plus(i)$ unchanged. Hence the ratios at both ends do not
+distinguish $f_\plus$ from the one-parameter family $f^c_\plus$, each member of
+which sums to one. The normalization by $T_\minus(N)$ in
+Theorem~\ref{thm:inverse}(a) separates them, since $P_N(j)/T_\minus(N)$ changes by
+the factor $c$. The bulk also separates them, since the mean of $X^c_\plus$ is
+$\mu_\plus/c$ and $p$ changes.
+\end{remark}
+
+\begin{proof}[Proof of Theorem~\ref{thm:inverse}(b)]
+By Theorem~\ref{thm:preparation}(d), which needs only (RV) for the plus sign, and
+$\nu_\plus(n)=o(T_\plus(n))$, we have $P_N(N-j)/T_\plus(N)\to\kappa_\plus(j)$ for every
+$j\ge1$, with $\kappa_\plus$ as in~\eqref{eq:kappa-prep}. Since
+$Q_\plus(N)\le\pi_\plus$ and $Q_\plus(N)>0$ for large $N$, we have $\pi_\plus>0$.
+
+Proposition~\ref{prop:first-run} gives $P_N(N)=Q_\plus(N)$, so
+$P_N(N-j)/P_N(N)\to\kappa_\plus(j)/q$. Suppose the preparation and $q$ are
+known. Then $\kappa_\plus(j)$ is known for every $j\ge1$, and since
+$\nu_\minus(0)=0$ and $u_\minus(0)=1$,
+\[
+ \pi_\plus u_\minus(j)=\kappa_\plus(j)-\nu_\minus(j)-\sum_{d=1}^{j-1}\nu_\minus(d)\,u_\minus(j-d),
+\]
+which determines $u_\minus(j)$ by induction on $j$, because $\pi_\plus>0$.
+Then~\eqref{eq:renewal-inverse} determines $f_\minus$.
+\end{proof}
+
+The hypotheses of (b) hold, for example, when $\nu_\plus=\pi_\plus f_\plus$ with
+$\pi_\plus>0$ and $\nu_\minus$ arbitrary, since then $Q_\plus=\pi_\plus T_\plus$, so
+$q=\pi_\plus$, and $\nu_\plus=o(T_\plus)$ by~\eqref{eq:fstar-small}. The stationary
+preparation fails the first hypothesis, since its atom is of order $NT_\plus(N)$ by
+Corollary~\ref{cor:stationary}(a).

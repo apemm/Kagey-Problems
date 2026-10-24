@@ -1,0 +1,99 @@
+# script: verify_examples.py
+# sha256: 481d7a92e68c40d560b510404be11adc7e9f41afb173e3e0b630130f3509b0a7
+# checks: the winners on complete graphs, cycles and small graphs, finite-N modes
+# command: py -I verify_examples.py
+# date: 2026-10-24T07:01:08
+# software: Python 3.14.3, numpy 2.4.2, scipy 1.17.1, sympy 1.14.0, mpmath 1.3.0
+# run time: 14 s
+# result: PASS
+
+Table 2, rows K_d and symmetric Q: complete graphs, single jumps, and a census of small graphs
+  ok    (a) lambda_F = d - |F| on K_d, d = 2..6: max error 1.8e-15
+  ok    (b) lambda_{[d]-x} <= q_x/(d-1), with equality for a common rate: 0 violations in 300 random symmetric generators; equality cases hold
+  ok    (d) unit rates: single jump iff complete (all connected labelled graphs): d = 3: 4 graphs, 0 exceptions, d = 4: 38 graphs, 0 exceptions, d = 5: 728 graphs, 0 exceptions
+  (0 s)
+
+The dynamic program of the whole chain against all d^N words in exact arithmetic
+  ok    packed dynamic program = exact enumeration (paper: 1e-15): max relative difference 2.2e-15 on C_4, K_4 (N = 8), C_5 (N = 7), the paw (N = 8) and 2 triangles (N = 6)
+  (1 s)
+
+Table 2, row C_d: arcs and the cycle cascade
+  ok    lambda of an arc of k states = 2 - 2cos(pi/(k+1)) (all connected faces of C_d, d = 3..10): max error 1.4e-15
+  ok    D_2 = 3 and 3k/2 - 1/2 < D_k < 3k/2 for 3 <= k <= 2000: D_3 = 4.414214, D_10 = 14.801426
+  ok    sinc inequality at m = 4, left side: paper 0.6460; value 0.6460383192
+  ok    sinc inequality at m = 4, right side: paper 0.9543; value 0.954307387
+  ok    left side decreases and right side increases in m: m = 4..500
+  ok    Table 2, row C_d: winners and switch values on C_d, d = 3..12 (hull and direct scan): arcs of 1..floor(2d/3) states, then C_d
+  ok    tau_4 = 2/(1 - 2 sqrt2 + sqrt5): paper 4.906280; closed 4.9062796, eigen 4.9062796
+  ok    tau_5 = 1/(sqrt3 - (1+sqrt5)/2): paper 8.770636; closed 8.770635862, eigen 8.770635862
+  ok    tau_3 = 1 + sqrt2: paper 2.414214; closed 2.414213562, eigen 2.414213562
+  ok    least d with arc k winning (Table 2): 4, 5, 6, 8, 9, 11, 12: from the hulls: {2: 4, 3: 5, 4: 6, 5: 8, 6: 9, 7: 11, 8: 12}
+  ok    tau_full(C_4) = 2: hull 2.000000000, formula 2.000000000
+  ok    tau_full(C_5) = 2 + sqrt2: hull 3.414213562, formula 3.414213562
+  ok    tau_full(C_6) = 3 + sqrt5: hull 5.236067977, formula 5.236067977
+  ok    tau_full(C_8) = 6 + 3 sqrt3: hull 11.196152423, formula 11.196152423
+  ok    Figure 3(a): C_6 switch at 4.906: paper 4.906; hull 4.9062796
+  ok    (d) tau_k = k^3/(2 pi^2) + 3k^2/(4 pi^2) + O(k): (tau_k - two terms)/k = [0.0964 0.0962 0.0961 0.096 ]
+  ok    (d) tau_full(d) ~ 4d^3/(27 pi^2): ratios [1.01005 1.001   1.0001 ]
+  ok    height of the nearest non-winning point on C_6 (least of the graphs): paper 0.077; C_6 0.07696618681
+  ok    C_4, C_5, the house and the paw have larger heights (the paw has no non-winning size): C_4 0.0858, C_5 0.0891, C_6 0.0770, house 0.0891, paw inf
+  (2 s)
+
+Table 2, rows P_d and P_4: paths
+  ok    end-arc exit rate 2 - 2cos(pi/(2k+1)) and winners 1..floor(2d/3), then P_d (d = 3..9): max error 2.2e-16
+  ok    first switch at the golden ratio: paper 1.618034; closed 1.618033989, eigen 1.618033989
+  ok    D'_3 on P_4: paper 4.077; value 4.076988737
+  ok    3k/2 - 1/2 < D'_k < 3k/2 for 2 <= k <= 2000: least lower margin at k = 10, 100, 1000, 2000: 0.000114
+  ok    1 - pi^2/216 > 0.954: 0.954307
+  ok    left side of the path inequality at k = 2: paper 0.414; value 0.4144043856
+  ok    right side of the path inequality at k = 2: paper 1.113; value 1.113
+  ok    (2k-1)^2 (k+1) - (k-1)(2k+1)^2 = 2: k = 1..99
+  ok    height of the end-arc of 3 states above the hull on P_4: paper 0.0071; value 0.00707925857
+  ok    N = 40: the full dynamic program flips at both ends: supports at T -+ 1e-5: [(2, 3), (1, 2, 3), (1, 2, 3), (0, 1, 2, 3)]
+  ok    N = 40: order end edge -> end-arc 3 -> P_4 around the window: modes end edge, end-arc 3, P_4
+  ok    N = 40: window starts: paper 9.381; B 9.380562692
+  ok    N = 40: window ends: paper 12.502; B 12.50185981
+  ok    N = 72: the full dynamic program flips at both ends: supports at T -+ 1e-5: [(2, 3), (1, 2, 3), (0, 1, 2), (0, 1, 2, 3)]
+  ok    N = 72: order end edge -> end-arc 3 -> P_4 around the window: modes end edge, end-arc 3, P_4
+  ok    N = 72: window starts: paper 12.176; B 12.17597029
+  ok    N = 72: window ends: paper 15.142; B 15.1416362
+  ok    window ratio at N = 40: paper 1.333; B 1.332740926
+  (7 s)
+
+Figure 3(b): the exact mode on C_5
+  ok    N = 40: the full dynamic program flips 1 -> 2 -> 3 -> 5 states within 2e-7 of these T: support sizes at T -+ 2e-7: [1, 2, 2, 3, 3, 5]
+  ok    N = 40: vertex -> 2-arc: paper 2.538112; Paper A root 2.538112325, face maxima 2.538112325
+  ok    N = 40: 2-arc -> 3-arc: paper 5.122981; face maxima 5.122981451
+  ok    N = 40: 3-arc -> C_5: paper 6.883529; face maxima 6.88352918
+  ok    N = 40: tau_3 (L - (1/2) log L + b_3): paper 5.07; value 5.065735239
+  ok    N = 40: exact switch from 2 to 3 states: paper 5.12; face maxima 5.122981451
+  ok    N = 40: tau_3 log N: paper 8.91; value 8.905742808
+  (2 s)
+
+Table 2, row Theta_eps: two triangles joined by a weak link
+  ok    det(xI + Q_F) = (x-3) p_A, (x-3) p_4 and (x-3)^2 p_5: sympy, up to the sign (-1)^|F|
+  ok    Res(p_5(x), p_4(2x)) = -8 eps^3 (16 eps^2 + 12 eps + 9): -8*epsilon**3*(16*epsilon**2 + 12*epsilon + 9)
+  ok    Res(p_A(3x/2), p_4(x)) = -eps^2 (120 eps^2 - 256 eps + 135)/16: -epsilon**2*(120*epsilon**2 - 256*epsilon + 135)/16
+  ok    Res(p_A((1+x)/2), p_4(x)) = (eps^3 + 2 eps^2 - 19 eps - 45)/8: (epsilon**3 + 2*epsilon**2 - 19*epsilon - 45)/8
+  ok    eps_1 = (64 + sqrt46)/60: paper 1.17971; closed 1.1797055, root of 120e^2 - 256e + 135 1.1797055
+  ok    eps_0 = (64 - sqrt46)/60: paper 0.95363; closed 0.9536278336
+  ok    eps_2: paper 4.48108; numpy root 4.481078788, bisection 4.481078788
+  ok    p_4(7/40) = 57743/64000 - 809 eps/800 and p_A(21/80) = 59 eps/80 - 4599/6400: 
+  ok    both are negative on (0.8923, 0.9743), which contains eps_0: exact interval (0.892197, 0.974364)
+  ok    (b), (c): the least exit rates by size and the winner phases from all 63 faces (numpy and mpmath) match the closed forms: 0.3: sizes [1, 2, 3, 6]; 1.0: sizes [1, 2, 3, 6]; 1.1: sizes [1, 2, 3, 6]; 1.5: sizes [1, 2, 3, 4, 6]; 3.0: sizes [1, 2, 3, 4, 6]; 4.4: sizes [1, 2, 3, 4, 6]; 4.6: sizes [1, 2, 4, 6]; 8.0: sizes [1, 2, 4, 6]
+  ok    (a), (c): lambda_A = eps/3 - 2 eps^2/27 + O(eps^3) and tau* = 9/eps + 2 + 2eps/9 + O(eps^2): at eps = 0.001
+  ok    least exit rate of size 4 <= (3 - sqrt5)/2 for every eps: 200 values of eps from 1e-3 to 1e4
+  (0 s)
+
+Table 2, rows paw, house and K_4 plus a vertex
+  ok    paw: all 12 connected exit rates in closed form: max error 4.4e-16
+  ok    paw: 2 - 2cos(2pi/9): paper 0.468; closed 0.4679111138, root of x^3 - 6x^2 + 9x - 3 0.4679111138
+  ok    paw (paper states: leaf 4 = index 0, 1 = index 1): winners {4}, {1,4} from 1+sqrt2, {1,2,3} from sqrt2+sqrt3, all from 2+sqrt3: [(0.0, 1), (2.414214, 2), (3.146264, 3), (3.732051, 4)]
+  ok    house: 31 faces, all connected ones computed twice: 24 connected faces
+  ok    house: winners {3},{4},{5}, then {3,4} from 1, {1,2,5} from 1+sqrt2, all from 2+sqrt2: [(0.0, 1), (1.0, 2), (2.414214, 3), (3.414214, 5)]; best pair (2, 3), best triple (0, 1, 4)
+  ok    house: margin between the 2 best faces of 4 states: paper 0.022; numpy 0.02187931274
+  ok    house: lambda of V minus 3: paper 0.40385; numpy 0.403845324
+  ok    house: lambda of V minus 1: paper 0.644; numpy 0.644325706
+  (0 s)
+
+verify_examples: 0 failures, 13 s

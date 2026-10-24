@@ -1,0 +1,256 @@
+\section{The killed functional}\label{sec:dv}
+
+Every rate in this paper is the restriction of one functional, the Donsker and
+Varadhan occupation functional of the chain. This section defines it, proves the
+restriction identity and the variational formula with a field, and records the
+monotonicity of exit rates in the face.
+
+\subsection{The restriction identity}\label{sec:restriction}
+
+For a probability vector $\alpha$ on $[d]$ let
+\begin{equation}\label{eq:JV}
+ J_V(\alpha)=\sup_{u\in(0,\infty)^d}\sum_{i\in[d]}\alpha_i\Bigl(-\frac{(Qu)_i}{u_i}\Bigr)
+ =\sup_{u\in(0,\infty)^d}\sum_{i\in[d]}\alpha_i\Bigl(q_i-\sum_{j\ne i}q_{ij}\frac{u_j}{u_i}\Bigr),
+\end{equation}
+the Donsker and Varadhan rate of the empirical measure of the continuous-time
+chain with generator $Q$~\cite{dv1975}. For a face $F$ and $\alpha\in\Delta_F$ let
+\[
+ J_F(\alpha)=\sup_{u\in(0,\infty)^F}\sum_{i\in F}\alpha_i\Bigl(-\frac{(Q_Fu)_i}{u_i}\Bigr)
+ =\sup_{u\in(0,\infty)^F}\sum_{i\in F}\alpha_i\Bigl(q_i-\sum_{j\in F\setminus\{i\}}q_{ij}\frac{u_j}{u_i}\Bigr),
+\]
+the same functional for the chain killed on leaving $F$. Let $q_i^{\rm out}(F)=\sum_{j\notin F}q_{ij}$. Taking $u=\ones$
+gives $J_F(\alpha)\ge\sum_i\alpha_iq_i^{\rm out}(F)$, and dropping the terms
+with $q_{ij}$ gives $J_F(\alpha)\le\sum_i\alpha_iq_i$.
+
+\begin{proposition}[the restriction identity]\label{prop:restriction}
+For every face $F$ and every $\alpha\in\Delta_F$, $J_F(\alpha)=J_V(\alpha)$. Hence
+$J_F=J_{F'}$ on $\Delta_{F'}$ for every nonempty $F'\subseteq F$.
+\end{proposition}
+
+\begin{proof}
+Fix $\alpha\in\Delta_F$ and $u\in(0,\infty)^d$. The terms of~\eqref{eq:JV} with
+$i\notin F$ vanish, since $\alpha_i=0$ there. For $i\in F$ the terms with
+$j\notin F$ are nonnegative and are subtracted, so
+\[
+ \sum_{i\in F}\alpha_i\Bigl(q_i-\sum_{j\ne i}q_{ij}\frac{u_j}{u_i}\Bigr)
+ \le\sum_{i\in F}\alpha_i\Bigl(q_i-\sum_{j\in F\setminus\{i\}}q_{ij}\frac{u_j}{u_i}\Bigr)
+ \le J_F(\alpha).
+\]
+So $J_V(\alpha)\le J_F(\alpha)$. Conversely, let $w\in(0,\infty)^F$ and let $u$
+equal $w$ on $F$ and $\varepsilon$ off $F$. The terms with $j\notin F$ are then
+$-q_{ij}\varepsilon/w_i$, which tend to zero as $\varepsilon\downarrow0$, and
+the supremum over $w$ gives $J_V(\alpha)\ge J_F(\alpha)$. The second claim is the
+first for $F$ and for $F'$.
+\end{proof}
+
+So the cost of a point of $\Delta_F$ does not depend on the face in which we
+read it. The competition between faces is between the lattice entropy
+$(|F|-1)L$ of a face and the cost $TJ_V$ of its best point, as
+Theorem~\ref{thm:stratified} states in one display. The identity itself is
+elementary. What it gives is the reading of every face rate as one functional,
+which Section~\ref{sec:reconstruction} uses to compare $J_V$ with the modal
+supports.
+
+\subsection{The variational formula}\label{sec:spectral-geometry}
+
+For a face $F$ and a field $v\in\R^F$ let
+\begin{equation}\label{eq:lambdaFv}
+ \lambda_F(v)=-\varrho\bigl(Q_F+\operatorname{diag}v\bigr),
+\end{equation}
+so that $\lambda_F(0)=\lambda_F$. If $F$ is irreducible, let $r$ and $l$ be
+positive right and left Perron vectors of $Q_F+\operatorname{diag}v$ with
+$l\cdot r=1$, and put $\alpha^*_F(v)=l\circ r$, so that $\alpha^*_F(0)=\alpha^*_F$.
+Since $\sum_i\alpha_iv_i=v\cdot\alpha$,
+\begin{equation}\label{eq:Jfield}
+ J_F(\alpha)-v\cdot\alpha=\sup_{u\in(0,\infty)^F}\sum_{i\in F}\alpha_i
+ \Bigl(-\frac{((Q_F+\operatorname{diag}v)u)_i}{u_i}\Bigr).
+\end{equation}
+So a field replaces the diagonal $q_i$ by $q_i-v_i$ and changes nothing else.
+
+\begin{lemma}[monotonicity in the face]\label{lem:face-monotone}
+If $F\subsetneq G$ are faces and $Q_G$ is irreducible, then
+$\lambda_G(v_G)<\lambda_F(v_F)$ for every field $v\in\R^G$. In particular
+$\lambda_V(v)<\lambda_F(v_F)$ for every proper face $F$ when $Q$ is
+irreducible, and for every fixed $v\in\R^d$ there is $\gamma(v)>0$ with
+$\lambda_F(v_F)\ge\lambda_V(v)+\gamma(v)$ for all proper $F$. So the score
+$\Phi_{\tau,v}(F)=|F|-1+\tau\lambda_F(v_F)$ is least at $V$ for
+$\tau>(d-1)/\gamma(v)$.
+\end{lemma}
+
+\begin{proof}
+Choose $c$ with $B=Q_G+\operatorname{diag}v_G+cI\ge0$. Its principal submatrix on
+$F$ is $Q_F+\operatorname{diag}v_F+cI$, since the diagonal of a killed generator
+keeps the full exit rates. Let $\widetilde B$ be this submatrix padded with zeros
+to $G\times G$. Then $0\le\widetilde B\le B$, and $\widetilde B\ne B$ because the
+irreducible matrix $B$ has a positive entry in a row of $F$ and a column off $F$.
+So $\varrho(\widetilde B)<\varrho(B)$~\cite[Ch.~2]{bermanplemmons1994},
+and $\varrho(\widetilde B)$ is the Perron root of the submatrix on $F$, since the
+padding adds only the eigenvalue $0$. This holds whether or not $F$ is
+irreducible, and subtracting $c$ gives the first claim. For fixed $v$ there are
+finitely many proper faces, so $\gamma(v)$, the least of the numbers
+$\lambda_F(v_F)-\lambda_V(v)$, is positive. Finally
+$\Phi_{\tau,v}(F)-\Phi_{\tau,v}(V)=|F|-d+\tau(\lambda_F(v_F)-\lambda_V(v))\ge-(d-1)+\tau\gamma(v)$.
+\end{proof}
+
+\begin{proposition}[the rate on a face]\label{prop:rate}
+Let $F$ be irreducible with $k=\lvert F\rvert\ge2$, and let $v\in\R^F$.
+\begin{enumerate}[(a)]
+\item On $\Delta_F$, $J_F(\alpha)-v\cdot\alpha\ge\lambda_F(v)$, with equality exactly at
+$\alpha=\alpha^*_F(v)$. In particular $J_F\ge\lambda_F$, with equality exactly at
+$\alpha^*_F=l_F\circ r_F$.
+\item The rate $J_F$ is convex on $\Delta_F$ and strictly convex on $\Delta_F^\circ$. For
+$\alpha\in\Delta_F^\circ$ the supremum defining $J_F(\alpha)$ is attained at a
+vector $u=r_\alpha$, which is unique up to a positive factor, and $\alpha$ is
+the stationary law of the generator on $F$ with off-diagonal entries
+$q_{ij}r_{\alpha,j}/r_{\alpha,i}$.
+\item If there is $\nu\in(0,\infty)^F$ with $\nu_iq_{ij}=\nu_jq_{ji}$ for all
+$i,j\in F$, then for every $\alpha\in\Delta_F$
+\[
+ J_F(\alpha)=\sum_{\{i,j\}\subseteq F,\ i\ne j}\bigl(\sqrt{\alpha_iq_{ij}}-\sqrt{\alpha_jq_{ji}}\bigr)^2
+ +\sum_{i\in F}\alpha_iq_i^{\rm out}(F).
+\]
+\item For every nonempty face $F'\subsetneq F$ and every
+$\alpha\in\Delta_{F'}$, $J_F(\alpha)-v\cdot\alpha=J_{F'}(\alpha)-v\cdot\alpha\ge\lambda_{F'}(v_{F'})>\lambda_F(v)$.
+\end{enumerate}
+\end{proposition}
+
+So the most likely way to stay on $F$ is to spend the fractions $\alpha^*_F$ of
+the time in its states. Fractions that miss some states of $F$ have the rate of
+the smaller face that they use, which is larger. For symmetric $Q_F$,
+$l_F=r_F$ and $\alpha^*_F$ is the entrywise square of the Perron vector
+normalized in $\ell^2$. On a face that is not reversible the formula in (c) is
+only an upper bound, by its proof. The lower bound in (a) and the
+value at $\alpha^*_F$ for $v=0$, and the interior form of (c) for symmetric
+$Q_F$, are checked in Lean.
+
+\begin{proof}
+Put $B=Q_F+\operatorname{diag}v$, an irreducible Metzler matrix with the switching
+graph $G_F$ and $\lambda_F(v)=-\varrho(B)$.
+
+\emph{Setup.} With $u=e^\psi$, \eqref{eq:Jfield} reads
+$J_F(\alpha)-v\cdot\alpha=\sup_\psi\Psi_\alpha(\psi)$ with
+\[
+\Psi_\alpha(\psi)=\sum_i\alpha_i(q_i-v_i)-\sum_{i\ne j}\alpha_iq_{ij}e^{\psi_j-\psi_i},
+\]
+where $i,j$ run over $F$. It is concave in $\psi$, affine in $\alpha$, and
+unchanged when a constant is added to $\psi$. Let $G^\psi$ be the conservative
+generator on $F$ with off-diagonal entries $q_{ij}e^{\psi_j-\psi_i}$. It has the
+graph $G_F$, so it has exactly one stationary law, and it does not involve $v$.
+Since $\nabla_\psi\Psi_\alpha=-\alpha^\top G^\psi$ and a differentiable concave
+function attains its maximum exactly at its critical points, $\psi$ attains the
+supremum if and only if $\alpha$ is the stationary law of $G^\psi$. We call this
+the criterion.
+
+\emph{A lower bound on every face.} Let $F'$ be any face, irreducible or not, and
+$B'=Q_{F'}+\operatorname{diag}v_{F'}$. We show
+$J_{F'}(\alpha)-v\cdot\alpha\ge-\varrho(B')$ on $\Delta_{F'}$. Let
+$s>\varrho(B')$ and write $B'=B_0-cI$ with $B_0\ge0$. Then $s+c>\varrho(B_0)$, so
+$u=(sI-B')^{-1}\ones=\sum_{\ell\ge0}(s+c)^{-\ell-1}B_0^\ell\ones$ converges and is
+positive. Since $(sI-B')u=\ones$, we get $-(B'u)_i/u_i=-s+1/u_i>-s$ at every
+state, and letting $s\downarrow\varrho(B')$ gives the claim.
+
+\emph{The value at $\alpha^*_F(v)$.} Take $\psi=\log r$ and $R=\operatorname{diag}r$.
+Then $G^\psi=R^{-1}(B-\varrho(B)I)R$, since the off-diagonal entries agree and
+$Br=\varrho(B)r$. So $(l\circ r)^\top G^\psi=l^\top(B-\varrho(B)I)R=0$, and by the
+criterion $\psi$ attains the supremum at $\alpha^*_F(v)$. Every ratio
+$-(Br)_i/r_i$ equals $\lambda_F(v)$, so the value is $\lambda_F(v)$.
+
+(b) Convexity holds because $J_F$ is a supremum of affine functions. Let
+$\alpha\in\Delta_F^\circ$ and take $v=0$.
+
+\emph{The supremum is attained.} Normalize $\min_i\psi_i=0$ and put
+$\bar\psi=\max_i\psi_i$. Let $a$ be the least positive rate $q_{ij}$ in $F$. A
+shortest path in $G_F$ from a state where $\psi=0$ to a state where
+$\psi=\bar\psi$ has at most $k-1$ edges, so one of its edges $i\to j$ has
+$\psi_j-\psi_i\ge\bar\psi/(k-1)$. Keeping only this edge gives
+$\Psi_\alpha(\psi)\le\sum_i\alpha_iq_i-a(\min_i\alpha_i)e^{\bar\psi/(k-1)}$, which
+tends to $-\infty$ as $\bar\psi\to\infty$. So the continuous function
+$\Psi_\alpha$ attains its supremum on a bounded set. Write $r_\alpha=e^\psi$ for a
+maximizer. The last claim of (b) is the criterion.
+
+\emph{The maximizer is unique up to a factor.} If $\psi$ and $\psi+\delta$ both
+attain the supremum, $\Psi_\alpha$ is constant on the segment between them. There
+it is a constant minus a sum of the convex functions
+$\alpha_iq_{ij}e^{\psi_j-\psi_i+s(\delta_j-\delta_i)}$, so each of them is affine
+in $s$, and $\delta_j=\delta_i$ on every edge of $G_F$. As $G_F$ is strongly
+connected, $\delta$ is constant.
+
+\emph{Strict convexity.} Let $\alpha^0\ne\alpha^1$ lie in $\Delta_F^\circ$, put
+$\alpha^s=(1-s)\alpha^0+s\alpha^1$ with $0<s<1$, and let $\psi$ attain
+$J_F(\alpha^s)$. Since $\Psi_\alpha(\psi)$ is affine in $\alpha$,
+$J_F(\alpha^s)=(1-s)\Psi_{\alpha^0}(\psi)+s\Psi_{\alpha^1}(\psi)\le(1-s)J_F(\alpha^0)+sJ_F(\alpha^1)$.
+Equality would make $\alpha^0$ and $\alpha^1$ both stationary for $G^\psi$ by the
+criterion, which is impossible.
+
+(d) The equality is Proposition~\ref{prop:restriction}. The lower bound on $F'$
+gives $J_{F'}(\alpha)-v\cdot\alpha\ge\lambda_{F'}(v_{F'})$, and
+Lemma~\ref{lem:face-monotone} with $G=F$ gives $\lambda_{F'}(v_{F'})>\lambda_F(v)$.
+
+(a) The lower bound and the value at $\alpha^*_F(v)$ are proved above. Let
+$\alpha\ne\alpha^*_F(v)$. If $\alpha$ lies on the boundary of $\Delta_F$, then (d)
+with $F'=\supp\alpha$ gives $J_F(\alpha)-v\cdot\alpha>\lambda_F(v)$. If
+$\alpha\in\Delta_F^\circ$ and equality held, strict convexity would give a value
+below $\lambda_F(v)$ at $\frac12(\alpha+\alpha^*_F(v))$.
+
+(c) Since $q_i=\sum_{j\in F\setminus\{i\}}q_{ij}+q_i^{\rm out}(F)$, the function
+inside the supremum is $\sum_i\alpha_iq_i^{\rm out}(F)$ plus, for each pair
+$\{i,j\}$, the term $\alpha_iq_{ij}(1-u_j/u_i)+\alpha_jq_{ji}(1-u_i/u_j)$. By the
+AM--GM inequality this term is at most
+$(\sqrt{\alpha_iq_{ij}}-\sqrt{\alpha_jq_{ji}})^2$, which gives the upper bound. For
+$\alpha\in\Delta_F^\circ$ the vector $u_i=\sqrt{\alpha_i/\nu_i}$ gives
+$\alpha_iq_{ij}u_j/u_i=\alpha_jq_{ji}u_i/u_j$ by $\nu_iq_{ij}=\nu_jq_{ji}$, so there is
+equality for every pair at once. If some $\alpha_i$ vanish, take $u_i=\varepsilon$
+for these $i$ and let $\varepsilon\to0$. A pair with $\alpha_i=0<\alpha_j$ then has
+the term $\alpha_jq_{ji}(1-\varepsilon/u_j)\to\alpha_jq_{ji}$, which is its bound, and
+a pair with $\alpha_i=\alpha_j=0$ has the term $0$.
+\end{proof}
+
+\begin{proposition}[the variational formula]\label{prop:variational}
+Let $F$ be irreducible. For every $v\in\R^F$,
+\[
+ \lambda_F(v)=\min_{\alpha\in\Delta_F}\bigl(J_F(\alpha)-v\cdot\alpha\bigr),
+\]
+and the minimum is attained only at $\alpha^*_F(v)$. Equivalently, $-\lambda_F(v)$
+is the Legendre transform of $J_F$ at $v$, and $J_F$ is the Legendre transform of
+$v\mapsto-\lambda_F(v)$ on $\Delta_F^\circ$. The map $v\mapsto\lambda_F(v)$ is
+concave and real-analytic, and $\lambda_F(v+c\ones)=\lambda_F(v)-c$. If $Q_F$ is
+reversible with respect to $\nu$, let $S_F=D_{\sqrt\nu}(-Q_F)D_{\sqrt\nu}^{-1}$.
+Then with $\psi_i=\sqrt{\alpha_i}$,
+\[
+ J_F(\alpha)-v\cdot\alpha=\sum_{i\in F}(q_i-v_i)\alpha_i-\sum_{i\ne j\in F}\sqrt{q_{ij}q_{ji}}\,\psi_i\psi_j
+\]
+is the Rayleigh quotient of the symmetric matrix $S_F-\operatorname{diag}v$ at the
+unit vector $\psi$, and $\lambda_F(v)=\lambda_{\min}(S_F-\operatorname{diag}v)$.
+\end{proposition}
+
+The formula is the finite form of the Donsker and Varadhan formula for the
+principal eigenvalue~\cite{dv1975}, close to the characterization of Collatz and
+Wielandt~\cite[Ch.~2]{bermanplemmons1994}.
+
+\begin{proof}
+The formula and the unique minimizer are Proposition~\ref{prop:rate}(a). As a
+minimum of affine functions of $v$, $\lambda_F(v)$ is concave. It is
+real-analytic because the Perron root of an irreducible Metzler matrix is a simple
+eigenvalue, and the shift is clear.
+
+\emph{Legendre duality.} The formula says
+$-\lambda_F(v)=\max_\alpha(v\cdot\alpha-J_F(\alpha))$. Conversely
+$J_F(\alpha)\ge v\cdot\alpha+\lambda_F(v)$ for all $\alpha$ and $v$. Let
+$\alpha\in\Delta_F^\circ$, take $r_\alpha$ from Proposition~\ref{prop:rate}(b), and
+put $v=q-A_Fr_\alpha/r_\alpha$ (entrywise). Then $Q_F+\operatorname{diag}v$ has the
+off-diagonal entries of $Q_F$ and the diagonal $-A_Fr_\alpha/r_\alpha$, so
+$r_\alpha>0$ is a null vector of it. Only the Perron root has a positive
+eigenvector, so $\lambda_F(v)=0$. Also $J_F(\alpha)=\langle q-A_Fr_\alpha/r_\alpha,\alpha\rangle
+=v\cdot\alpha$, so equality holds at this $v$.
+
+\emph{The reversible form.} Reversibility gives
+$\sqrt{\nu_i}\,q_{ij}/\sqrt{\nu_j}=\sqrt{q_{ij}q_{ji}}$, so $S_F$ is symmetric with
+diagonal $q_i$ and off-diagonal entries $-\sqrt{q_{ij}q_{ji}}$. Expanding the
+squares in Proposition~\ref{prop:rate}(c) gives
+$J_F(\alpha)=\langle\psi,S_F\psi\rangle$, and subtracting
+$v\cdot\alpha=\langle\psi,\operatorname{diag}(v)\psi\rangle$ gives the display. Every
+unit vector $\psi\ge0$ arises from $\alpha=\psi\circ\psi$, and the off-diagonal
+entries of $S_F-\operatorname{diag}v$ are nonpositive, so passing to the entrywise
+modulus does not increase the quadratic form. Hence the minimum over $\Delta_F$ is
+$\lambda_{\min}(S_F-\operatorname{diag}v)$.
+\end{proof}

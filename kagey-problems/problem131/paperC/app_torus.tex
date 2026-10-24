@@ -12,9 +12,9 @@ First, let $B\ge0$ be square and $S$ diagonal with positive diagonal. Then
 $\varrho(B-S)<0$ if and only if $\varrho(S^{-1}B)<1$, and also if and only if
 $(S-B)v>0$ for some $v>0$. In that case
 $(S-B)^{-1}=\sum_{j\ge0}(S^{-1}B)^jS^{-1}\ge0$. Second, if $M$ is an
-irreducible Metzler matrix, then $\varrho(M)$ is larger than the Perron root
-of each proper principal submatrix of $M$, and every nonnegative eigenvector
-of $M$ is positive and belongs to $\varrho(M)$.
+irreducible Metzler matrix, then every nonnegative eigenvector of $M$ is positive
+and belongs to $\varrho(M)$, and $\varrho(M)$ is larger than the Perron root of each
+proper principal submatrix of $M$ (Lemma~\ref{lem:face-monotone}).
 
 \subsection{The Perron root under a diagonal perturbation}
 
@@ -70,13 +70,6 @@ $\pi\cdot u=0$, so $\bar\eta=0$ and $\eta\in\R\ones$. A nonzero vector that vani
 at state $1$ is not in $\R\ones$, which gives the claim about $\Sigma$.
 \end{proof}
 
-\emph{Idea of the proof of Proposition~\ref{prop:constant}(a).} The gradient
-of $\Lambda(\vartheta)=\varrho(Q_F+\operatorname{diag}\vartheta)$ is the
-stationary law of the chain tilted by $\vartheta$, and its Hessian is the
-matrix $\Gamma$ of that chain (Lemma~\ref{lem:perron}). So $\nabla\Lambda$
-maps the tilt to the fractions $\alpha$. We show that $\nabla I_F$ is the map
-back, so the two Hessians are inverse to each other.
-
 \begin{proof}[Proof of Proposition~\ref{prop:constant}(a)]
 \emph{Step 1: the derivatives of the Perron root.} For $\vartheta\in\R^F$ let
 $\Lambda(\vartheta)=\varrho(Q_F+\operatorname{diag}\vartheta)$, so that
@@ -116,20 +109,23 @@ real-analytic. The shift property and $\Lambda(\vartheta(\alpha))=0$ give
 $\vartheta_1(\alpha)=-\Lambda_0(\beta(\alpha))$. So $\theta(\alpha)$ is
 real-analytic, and then so are its Perron vectors and $\Sigma_\alpha$.
 
-\emph{Step 4: the Hessian of $I_F$.} Since
+\emph{Step 4: the Hessian of $J_F$.} Since
 $\vartheta(\alpha)=\vartheta_1(\alpha)\ones+(0,\beta(\alpha))$ and
-$\sum_i\alpha_i=1$, we have $I_F(\alpha)=\langle\vartheta(\alpha),\alpha\rangle
+$\sum_i\alpha_i=1$, we have $J_F(\alpha)=\langle\vartheta(\alpha),\alpha\rangle
 =\langle\beta(\alpha),\alpha'\rangle-\Lambda_0(\beta(\alpha))$. We
 differentiate in $\alpha'$. The terms with the derivative of $\beta$ cancel
-because $\nabla\Lambda_0(\beta(\alpha))=\alpha'$, and $\nabla I_F=\beta$
-remains. So $\nabla^2I_F$ is the Jacobian of $(\nabla\Lambda_0)^{-1}$ at
+because $\nabla\Lambda_0(\beta(\alpha))=\alpha'$, and $\nabla J_F=\beta$
+remains. So $\nabla^2J_F$ is the Jacobian of $(\nabla\Lambda_0)^{-1}$ at
 $\alpha'$, which is $\Sigma_\alpha^{-1}$. The formula for $C_F$ follows from
 Definition~\ref{def:tilt}.
 \end{proof}
 
 \subsection{The torus representation}
 
-We split
+The generating function of the words in $H$ is Good's resolvent
+formula~\cite[(2)]{good1961}, and the torus integral below is his constant-term
+formula, here for the killed matrix $A_F$ and with the circle of one state
+integrated out. We split
 \[
 A_F=\begin{pmatrix}0&a_1^\top\\ b_1&A'\end{pmatrix},\qquad
 \mu_F=(\mu_1,\mu'),
@@ -160,15 +156,6 @@ H(t)=\frac1{(2\pi)^{k-1}}\int_{\mathbb T^{k-1}}
 In words, $H(t)$ is a Cauchy integral over $k-1$ circles, one for each state
 of $F$ except state $1$. The circle of state $1$ has already been integrated
 out, and it leaves the factor $e^{t_1g(z')}$.
-
-\emph{Idea of the proof.} By Cauchy's formula the factor
-$\prod_it_i^{m_i-1}/(m_i-1)!$ of a word in $H(t)$ is the integral of
-$e^{\langle t,z\rangle}\prod_iz_i^{1-m_i}$ over $k$ circles. The sum of
-$\prod_iz_i^{-m_i}$ over all words, with their weights, is a geometric
-series, namely $\mu_F^\top(\mathcal Z-A_F)^{-1}\ones$ with
-$\mathcal Z=\operatorname{diag}(z)$. The variable $z_1$ enters this resolvent
-only through the simple pole $1/(z_1-g(z'))$, so the integral over the first
-circle is a residue.
 
 \begin{proof}
 \emph{Step 1: the series.} By the first fact,
@@ -218,10 +205,6 @@ $g(z')$ lies inside the circle $|z_1|=s_1$, so Cauchy's formula gives
 $e^{t_1g(z')}b(z')$. The factors without $z_1$ are unchanged, and this proves
 the formula.
 \end{proof}
-
-All coefficients are nonnegative, so the integrand has its largest modulus
-at $\varphi=0$. This gives Lemma~\ref{lem:upper}, and a Laplace expansion
-around $\varphi=0$ gives Theorem~\ref{thm:local}.
 
 \subsection{Proof of \texorpdfstring{Lemma~\ref{lem:upper}}{the upper bound}}
 
@@ -281,11 +264,13 @@ with
 \[
 C_\theta=\max\Bigl(e^{k/2}b(\theta')\prod_{i\ge2}\theta_i,\ 2q_{\max}\max_i\theta_i\Bigr).
 \]
-The bound after the lemma is the case
-$\theta=q-\lambda_F\ones$. \qed
+By Lemma~\ref{lem:torus}, $b$ is continuous on the open set of $s'$ with
+$\varrho(A'-\operatorname{diag}s')<0$, which contains $\theta'$ for every $\theta\in V_F$
+by~\eqref{eq:A-radii}. So $C_\theta$ is bounded on compact subsets of $V_F$. \qed
 
 \subsection{Proof of \texorpdfstring{Theorem~\ref{thm:local}}{the local law}}
 
+The field cancels from the two sides of Theorem~\ref{thm:local}, so we take $v=0$.
 For $k=1$ the formula is part of Lemma~\ref{lem:continuum}. Let $k\ge2$ and
 $\alpha\in\mathcal K$, and write $\theta=\theta(\alpha)$, $r=r_\alpha$,
 $l=l_\alpha$ and $\Theta'=\operatorname{diag}(\theta')$. By~\eqref{eq:A-radii}
@@ -394,8 +379,8 @@ b(\theta')=\frac{(\mu\cdot r_\alpha)(l_\alpha\cdot\ones)}{\alpha_1}.
 As $r_\alpha,l_\alpha>0$ and $\mu(F)>0$ by (H), $\chi(\alpha,0)$ is positive
 and continuous, hence bounded below on $\mathcal K$. So the last bracket is
 $\chi(\alpha,0)(1+O(1/T))$. Putting this into~\eqref{eq:A-fT} and using
-$I_F(\alpha)=\langle q-\theta,\alpha\rangle$ gives
-$f_T(\alpha)=T^{(k-1)/2}C_F(\alpha)e^{-TI_F(\alpha)}(1+O(1/T))$, uniformly on
+$J_F(\alpha)=\langle q-\theta,\alpha\rangle$ gives
+$f_T(\alpha)=T^{(k-1)/2}C_F(\alpha)e^{-TJ_F(\alpha)}(1+O(1/T))$, uniformly on
 $\mathcal K$. \qed
 
 \subsection{Proof of \texorpdfstring{Lemma~\ref{lem:discrete}}{the discrete
@@ -457,8 +442,8 @@ a lower bound for $H$ at $t=T\alpha$. By~\eqref{eq:A-Hsigma} with $\sigma=e$
 and $\theta=\theta(\alpha)$,
 $H_e(T\alpha)\le e^{k-1}b(\theta')\prod_{i\ge2}\theta_i\,
 e^{eT\langle\alpha,\theta\rangle}$. For the lower bound note that
-$H(T\alpha)e^{-T\langle\alpha,\theta\rangle}=T^{-(k-1)}e^{TI_F(\alpha)}f_T(\alpha)$,
-by the definition of $f_T$ and $I_F(\alpha)=\langle q-\theta,\alpha\rangle$.
+$H(T\alpha)e^{-T\langle\alpha,\theta\rangle}=T^{-(k-1)}e^{TJ_F(\alpha)}f_T(\alpha)$,
+by the definition of $f_T$ and $J_F(\alpha)=\langle q-\theta,\alpha\rangle$.
 By Theorem~\ref{thm:local} this is at least
 $\frac12T^{-(k-1)/2}C_F(\alpha)$ for $T\ge T_1$, and for $1\le T\le T_1$ it is
 continuous and positive on $[1,T_1]\times\mathcal K$. So in both cases
@@ -471,11 +456,11 @@ $\E_we^{xM}=e^{x+\Upsilon(x)}\le e^{x(1+C_{\mathcal K}T)}=1+O(T^2/N)$, because
 $x\le q_{\max}T/N$ and $T^2/N\le1$. For the second moment we use the Chernoff
 bound $\Prob_w(M-1\ge y)\le e^{\Upsilon(1)-y}$ for $y\ge\Upsilon(1)$ and the bound $1$
 for $y<\Upsilon(1)$. This gives
-\[
-\E_w(M-1)^2=\int_0^\infty2y\,\Prob_w(M-1\ge y)\,dy
-\le\Upsilon(1)^2+\int_{\Upsilon(1)}^\infty2ye^{\Upsilon(1)-y}\,dy
+\begin{align*}
+\E_w(M-1)^2&=\int_0^\infty2y\,\Prob_w(M-1\ge y)\,dy\\
+&\le\Upsilon(1)^2+\int_{\Upsilon(1)}^\infty2ye^{\Upsilon(1)-y}\,dy
 =\Upsilon(1)^2+2\Upsilon(1)+2,
-\]
+\end{align*}
 so $\E_wM^2=O(T^2)$. Finally $n_{\min}\ge\varepsilon_{\mathcal K}N$ with
 $\varepsilon_{\mathcal K}=\min_{\alpha\in\mathcal K}\min_i\alpha_i>0$. So
 by~\eqref{eq:A-kappa}, $\E_w\kappa_m$ lies between
@@ -588,9 +573,6 @@ $M_F\ge c\,N^{-(k_F-1)}T^{k_F-k^*}e^{-T\lambda_F}$. \qed
 
 \subsection{A forest formula for the covariance}\label{app:forest}
 
-This lemma is used for Proposition~\ref{prop:forest}. It writes $\det\Sigma$ through
-spanning trees, with no reversibility.
-
 For weights $f_{ij}\ge0$ on the ordered pairs $i\ne j$ of $F$ and a state $i\in F$ let
 \[
 \arb_i(f)=\sum_{\mathcal T}\ \prod_{a\ne i}f_{a\,p_{\mathcal T}(a)},
@@ -623,20 +605,7 @@ $f_{ij}+f_{ji}$,
 \end{enumerate}
 \end{lemma}
 
-In words, the determinant of the covariance of the occupation fractions is the square of the
-product of the stationary probabilities, times a count of undirected spanning trees for the
-symmetrized stationary flow, divided by the square of a count of directed spanning trees for the
-flow itself. No reversibility is needed. For two states with rates $a$ and $b$ the flow is
-$ab/(a+b)$ in each direction, the two counts are $2ab/(a+b)$ and $ab/(a+b)$, and
-$\det\Sigma=2ab/(a+b)^3$, which is $\frac14$ for $a=b=1$.
-
-\emph{Idea of the proof.} The matrix $\Gamma=DZ+Z^\top D$ factors as $Z^\top SZ$, where $S$ is
-twice the symmetric part of the Laplacian $-DG$ of the stationary flow. Each of the three
-factors has rank $k-1$, so the determinant of the product is $0$ and tells us nothing. The
-adjugate is still multiplicative, and the adjugate of a matrix of rank $k-1$ is a rank one
-matrix that we know up to one scalar from the two kernels. For $S$ the scalar is a count of
-spanning trees by the matrix-tree theorem. For $Z$ the scalar is $1/\det(\ones\pi^\top-G)$, and
-the directed matrix-tree theorem turns this determinant into a count of oriented spanning trees.
+For two states with rates $a$ and $b$ this gives $\det\Sigma=2ab/(a+b)^3$.
 
 \begin{proof}
 We use three facts about the adjugate $\operatorname{adj}M$ of a $k\times k$ matrix $M$. First,
