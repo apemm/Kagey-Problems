@@ -13,6 +13,10 @@ import PaperC.ChainApps
 import PaperC.Planar
 import PaperC.Constants
 import PaperC.Fisher
+import PaperC.DVRestriction
+import PaperC.PrincipalMinors
+import PaperC.GeneratorFiber
+import PaperC.CriticalWindow
 
 /-!
 # Paper C (Problem 131, topics C1 to C5), root module
