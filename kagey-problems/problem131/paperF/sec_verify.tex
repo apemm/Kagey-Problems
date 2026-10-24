@@ -1,55 +1,154 @@
 \section{Verification}\label{sec:verify}
 
-{\sloppy
-This section says how the numbers in this paper were computed and which
-results are also proved in Lean. All computations are in Python. The values of $R_N$ in Table~\ref{tab:heavy}
-were computed in two ways, both from Proposition~\ref{prop:tworenewal},
-namely by its formula and by a spectral method that reads each factor off as
-a Taylor coefficient of a generating function. For small $N$ they were also
-checked against a recursion on the first run and a sum over all run
-compositions, which do not use Proposition~\ref{prop:tworenewal}. The aging
-probabilities, and with them the crossing $c_{200}$, were computed in three
-ways, namely by a forward recursion, from transfer matrices at roots of unity,
-and from the sums over paths in~\eqref{eq:aging-ratio}. In exact rational
-arithmetic $C_{200}-E_{200}$ is negative at $c_{200}-10^{-6}$ and positive at
-$c_{200}+10^{-6}$.
+No proof uses a computed number. The computations check the exact
+identities, produce Figure~\ref{fig:atlas} and Table~\ref{tab:antimode}, and
+test the limit theorems at moderate $N$. Except for the identities, all of
+them use the zeta law $f_\sgn(n)=n^{-5/2}/\zeta(5/2)$ for both signs, so
+$\alpha_\pm=3/2$, $p=1/2$ and $s=3.894745$, with a fresh plus start unless we say otherwise.
 
-No proof in this paper rests on a computation. The tables,
-the figures and the numbers quoted outside the proofs rest on computation
-alone. The script \texttt{verify\_heavy\_runs.py} recomputes the numbers of
-Section~\ref{sec:heavy} and Appendix~\ref{app:heavy}, the script \texttt{verify\_aging.py}
-those of Section~\ref{sec:aging} and Appendix~\ref{app:aging}, and
-\texttt{verify\_aging\_urn.py} checks Proposition~\ref{prop:aging-urn} in exact arithmetic for
-two, three and four states. The numbers in the caption of
-Figure~\ref{fig:aging} come from \texttt{figures/make\_aging\_figure.py}.
+\emph{The exact law.} For a fresh plus start let $a_t(k)$ and $b_t(k)$ be the
+probabilities that a plus run, respectively a minus run, starts at slot $t+1$
+and the first $t$ slots contain exactly $k$ plus slots. So
+$a_t(k)=\rho^{(\plus)}_{t-k}(k)$, $a_0(0)=1$ and $b_0(0)=0$. Since the runs
+alternate, with $a_t(k)=b_t(k)=0$ for $k<0$,
+\begin{equation}\label{eq:run-recursion}
+ b_t(k)=\sum_{\ell=1}^{t}a_{t-\ell}(k-\ell)\,f_\plus(\ell),\qquad
+ a_t(k)=\sum_{\ell=1}^{t}b_{t-\ell}(k)\,f_\minus(\ell)\qquad(t\ge1).
+\end{equation}
+By~\eqref{eq:rho-rep} the identity~\eqref{eq:final-explicit} of
+Proposition~\ref{prop:final-run} then reads
+\begin{equation}\label{eq:run-sum}
+ P_N(N-j)=\sum_{t=j}^{N-1}a_t(t-j)\,T_\plus(N-t)+\sum_{m=1}^{j}b_{N-m}(N-j)\,T_\minus(m).
+\end{equation}
+The recursion gives the $O(N^2)$ numbers $a_t(k)$ and $b_t(k)$ with $t\le N-1$
+in $O(N^3)$ operations, and~\eqref{eq:run-sum} then gives the whole row in
+$O(N^2)$ more. The script \nolinkurl{certify_atlas.py} runs it in double
+precision. Every entry is one dot product of earlier entries with nonnegative
+terms. So every computed bin has relative error at most
+$\varepsilon_N=(1+\gamma_{N+2})^{N+2}-1$, with $\gamma_n=nu/(1-nu)$ and
+$u=2^{-53}$, whatever the order of summation. This bound is
+$4.0\cdot10^{-11}$ at $N=600$ and $2.8\cdot10^{-9}$ at $N=5000$. At $N=600$ we
+also run the recursion in $128$-bit ball arithmetic. The double-precision row
+lies in the balls widened by $\varepsilon_{600}$, with a largest relative
+deviation of $5.9\cdot10^{-15}$.
 
-Many statements of this paper are also proved in Lean~4.33.1 with Mathlib at commit
-\texttt{0df444a360ea}, in the folder \nolinkurl{kagey-problems/problem131/lean/PaperD}, which
-is shared with an earlier version of this work. The file \nolinkurl{MAP.md} there lists each
-statement of this paper by its label, with its Lean names, its status in Lean and the source of
-each classical input. The kernel checks every proof, and every theorem depends only on the
-axioms \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}.
-The statement-by-label table in \nolinkurl{MAP.md} and the detailed table
-\nolinkurl{coverage_F.tex} record the coverage and its qualifications. Some proofs use six classical
-results, which Lean states as named hypotheses, and nothing else is assumed. These are the local
-limit theorem of Gnedenko (GN)~\cite[Theorem~4.2.1]{ibragimovlinnik1971}, the expansion of
-$\mathrm{Li}_s(e^{-v})$ near $v=0$ (POLY)~\cite[25.12.12]{dlmf}, the continuity theorem of
-L\'evy (LEVY) and Fourier inversion for an integrable characteristic function
-(FI)~\cite[Section~XV.3]{feller1971}, the continuity theorem for Laplace transforms
-(LAP)~\cite[Section~XIII.1]{feller1971} and the uniqueness theorem of Lerch for Laplace
-transforms (LERCH)~\cite[Chapter~II]{widder1941}.
+\emph{The figure.} The script \nolinkurl{figures/make_atlas_figure.py} draws
+Figure~\ref{fig:atlas} from the law at $N=5000$, with $h_N$ obtained by
+inverting its characteristic function. The horizontal axis of panel (a) is
+linear on $[250,4750]$ and stretched on the last $250$ bins at each end, which
+makes the two kinks. The shaded bands have width $B_N=74$ and mark the
+junctions between the pieces. The largest relative error of the bulk on
+$|k-pN|\le3B_N$ is $0.071$. That of the big-jump kernel where
+$|k-pN|\ge4B_N$ and $\min(k,N-k)\ge2B_N$ is $0.38$, attained at the junction
+with the bulk, and that of the boundary kernel on $1\le\min(k,N-k)\le B_N$ is
+$0.094$. The atom is exact.
 
+\emph{The antimode.} Table~\ref{tab:antimode} compares the leading law and
+the refined prediction of Theorem~\ref{thm:antimode} with the exact law. The script
+\nolinkurl{certify_antimode.py} finds the minimizer of $P_N$ on $[pN,N]$. It is
+certified when every other bin there exceeds the minimum by a relative margin
+above $2\varepsilon_N/(1-\varepsilon_N)$, which is at most $1.5\cdot10^{-8}$.
+The smallest margins are $2.6\cdot10^{-4}$, $2.3\cdot10^{-4}$,
+$1.7\cdot10^{-5}$, $3.1\cdot10^{-5}$ and $1.1\cdot10^{-5}$ for the five rows.
 
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{@{}rrrrr@{}}
+\toprule
+$N$ & observed $j^*_N$ & refined $i_N$ & leading & $NT_\minus(j^*_N)/(2\alpha_\plus s)$\\
+\midrule
+600 & 7 & 7 & 10 & 1.534\\
+1200 & 11 & 12 & 15 & 1.498\\
+2400 & 19 & 20 & 23 & 1.282\\
+4000 & 27 & 28 & 32 & 1.247\\
+8000 & 44 & 45 & 50 & 1.186\\
+\bottomrule
+\end{tabular}
+\caption{The antimode for the zeta law with $\alpha_\plus=\alpha_\minus=3/2$ and a
+fresh plus start. The observed $j^*_N$ minimizes $P_N(N-j)$ over
+$0\le j\le N/2$, which is the range $0\le j\le(1-p)N$ of
+Theorem~\ref{thm:antimode}. The refined $i_N$ minimizes $u_\minus(j)+C(j)/N$,
+and the leading prediction is the smallest $j$ with $T_\minus(j)<2\alpha_\plus s/N$.}
+\label{tab:antimode}
+\end{table}
 
-One proof in Lean differs from ours. In Step~4 of the proof of Theorem~\ref{thm:lamperti},
-Lean finds $\int_0^\infty tg(t)^2\,dt$ from $\E G^{i\tau}$ by Parseval's identity for the
-density of $\log G$, so it does not identify the law of $G_1/(G_1+G_2)$. Lean does not
-formalize the six classical results, Theorem~\ref{thm:alpha2},
-Remarks~\ref{rem:humps}, \ref{rem:aging-feller} and~\ref{rem:other}, or
-the numbers that rest on computation.
-\par}
+\emph{The coefficient.} The script \nolinkurl{verify_coefficient.py} checks
+that the two forms of~\eqref{eq:Cj} agree for $j\le6000$ and every entry of
+Table~\ref{tab:antimode}. The limit $2\alpha_\plus s/\mu_\minus^2$ of $C(j)/j$
+in Theorem~\ref{thm:second-order} is $3.0811$, while $C(j)/j$ equals $4.968$,
+$4.430$, $4.041$, $3.762$, $3.563$, $3.422$ and $3.323$ at
+$j=5,10,20,40,80,160,320$. At $j=5$, $10$, $20$ and $40$ the script compares
+$C(j)/j$ with $[P_N(N-j)/T_\plus(N)-u_\minus(j)]N/j$ for $N=1200$, $2400$ and
+$4800$. The distance halves each time $N$ doubles, from $0.090$ to $0.022$ at
+$j=5$ and from $0.592$ to $0.135$ at $j=40$. The ratio of the two sides
+of~\eqref{eq:second-renewal} is $0.978$, $0.995$ and $0.999$ at $j=40$, $160$
+and $640$. The script also checks the constant $\mathcal C(\varphi)$ and the
+bound $0.9513\ldots$ of Theorem~\ref{thm:mode}(d).
 
-\paragraph{Open questions.}
-For the heavy-tailed walk, a rate in Theorem~\ref{thm:center} remains open.
-So does monotonicity of $E_N/C_N$ in $N$, which would give uniqueness of a
-crossover size when the two probabilities exchange order.
+\emph{The preparation and the big-jump zone.} The script
+\nolinkurl{verify_preparation.py} computes the law for a general preparation
+by the recursion with the first run inserted, and checks it against
+Proposition~\ref{prop:first-run}. It takes the fresh plus start, the stationary
+start and a start with $Q_\plus(n)=n^{-0.3}/2$, for which
+$\rho=0.3<\alpha_\plus-1$. For $j\in\{1,2,3,5,10,20\}$ the largest relative
+deviation of $P_N(N-j)$ from the exact defect form of
+Theorem~\ref{thm:preparation}(d) falls from $0.12$ at $N=1200$ to $0.059$ at
+$N=2400$ for the fresh start, from $0.057$ to $0.028$ for the stationary start
+and from $0.013$ to $0.006$ for the third start. For the stationary start
+the ratio of $P_N(N-j)/T_\plus(N)$ to $\kappa^{\mathrm{st}}_\plus(j)$ in
+Corollary~\ref{cor:stationary}(c) is $1.0007$, $1.0031$ and $1.0098$ at $j=1$,
+$2$ and $5$ for $N=2400$, and each deviation is about half of its value at
+$N=1200$. The ratios in the big-jump zone are printed without a test, since
+Theorem~\ref{thm:preparation}(c) is a double limit. The script
+\nolinkurl{verify_bigjump.py} checks Remark~\ref{rem:no-single-formula}. The
+limit of $P_N(k)/G_N(k)$ at $k=\lceil pN+KB_N\rceil$ is $0.31$, $1.68$ and
+$1.09$ at $K=1$, $4$ and $16$. The exact ratio is $0.354$, $1.482$ and $1.036$
+at $N=1200$, and $0.337$, $1.538$ and $1.059$ at $N=3000$. These move toward
+the limits, and at $N=3000$ they are still about $8$ percent off at $K=1$ and $K=4$.
+
+\emph{The identities.} The script \nolinkurl{verify_identities.py} checks
+Propositions~\ref{prop:fresh-identity}, \ref{prop:first-run}
+and~\ref{prop:final-run}, the latter in both
+forms~\eqref{eq:final-explicit} and~\eqref{eq:run-sum} with the
+recursion~\eqref{eq:run-recursion}, Lemmas~\ref{lem:green}
+and~\ref{lem:counting}, \eqref{eq:kernel-sums}, \eqref{eq:kappa},
+\eqref{eq:cover} to~\eqref{eq:conv-v} and the inversion of
+Theorem~\ref{thm:inverse} in exact rational arithmetic. It uses two pairs of
+run laws with finite support and a preparation with atoms of both signs,
+some beyond the horizon. The law is computed as a sum over all $2^N$ sign
+strings for $N\le12$, and independently by a chain that moves slot by slot
+with the hazard $f_\sgn(a)/T_\sgn(a)$ of the current run. At $N=1200$ and
+$j\le40$ the script \nolinkurl{verify_coefficient.py} matches the two forms of
+Proposition~\ref{prop:final-run} in double precision to $2.2\cdot10^{-15}$.
+
+\emph{The Lean library.} The library \nolinkurl{PaperF} in
+\nolinkurl{kagey-problems/problem131/lean} has $7$ modules, in which a walk
+of $N$ slots is a word of signs. The Lean kernel checks the fresh identities
+(\texttt{fresh\_plus}, \texttt{fresh\_minus}), the kernel sums
+(\texttt{kernel\_sum\_u}, \texttt{kernel\_sum\_q},
+\texttt{kernel\_sum\_q\_succ}), Proposition~\ref{prop:first-run}
+(\texttt{first\_run}), Proposition~\ref{prop:final-run} in the
+form~\eqref{eq:run-sum} with the recursion~\eqref{eq:run-recursion}
+(\texttt{final\_run}, \texttt{A\_succ}, \texttt{B\_succ}),
+Lemma~\ref{lem:green} as a convergent series (\texttt{green\_plus},
+\texttt{green\_minus}), the first part of Lemma~\ref{lem:counting}
+(\texttt{counting}) and the inversion of Theorem~\ref{thm:inverse}(a)
+(\texttt{renewal\_inverse}, \texttt{renewal\_injective}). No module uses
+\texttt{sorry} or \texttt{native\_decide}, and \texttt{\#print axioms}
+reports only \texttt{propext}, \texttt{Classical.choice} and
+\texttt{Quot.sound}. The bound of Lemma~\ref{lem:counting},
+\eqref{eq:kappa}, the limits in Theorem~\ref{thm:inverse} and every
+asymptotic statement are not formalized. The file
+\nolinkurl{lean/PaperF/MAP.md} maps the labels to the Lean names.
+
+\emph{Software.} The scripts, their outputs with the hash of each script
+and the date, and the Lean files are in the folder
+\nolinkurl{kagey-problems/problem131} of
+\url{https://github.com/apemm/Kagey-Problems}. In \nolinkurl{paperF},
+\texttt{python -I verify\_all.py} runs the four \texttt{verify} scripts in
+about half a minute, and the option \texttt{-{}-full} reruns the two
+\texttt{certify} scripts first, in about two minutes. In \nolinkurl{lean},
+\texttt{lake exe cache get} and \texttt{lake build PaperF} build the
+library. We used Python~3.14.3, numpy~2.4.2, scipy~1.17.1, mpmath~1.3.0,
+python-flint~0.9.0 (FLINT~3.6.0, with Arb), matplotlib~3.10.8, Lean~4.33.1
+and Mathlib~v4.33.1 (commit \texttt{0df444a360ea}).

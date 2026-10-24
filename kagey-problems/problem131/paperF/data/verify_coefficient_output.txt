@@ -1,0 +1,44 @@
+# script: verify_coefficient.py
+# sha256: dc76bf4476162711120996dccb582debcd812574e83c1026ad2302b326eb34ef
+# uses certify_atlas.py sha256: e2a903c5110d96abc5d3b0593e2c5838ee2f622daac92b018fe2485b83ce639d
+# input data/antimode.json sha256: 63487c5372b472b6df63d096ee2e5cd583a0638db61c7e6ed8c7881c3f75bdb2
+# date: 2026-10-24
+# python 3.14.3, numpy 2.4.2, mpmath 1.3.0
+
+verify_coefficient.py: zeta law, alpha_+ = alpha_- = 3/2, fresh plus start
+mu = 1.947372466317, s = 3.894744932634, 2 alpha s/mu^2 = 3.081075
+PASS  1. eq:Cj, the two forms agree for 1 <= j <= 6000  (max rel diff 9.45e-16)
+   C(j)/j: j=5: 4.9681  j=10: 4.4305  j=20: 4.0409  j=40: 3.7620  j=80: 3.5634  j=160: 3.4224  j=320: 3.3226
+PASS  2a. C(j)/j at j = 5,...,320 as printed (3 decimals)
+PASS  2b. limit 2 alpha_+ s/mu_-^2 = 3.0811 as printed  (3.081075)
+PASS  2c. C(j)/j decreases and stays above the limit, 1 <= j <= 6000  (C(6000)/6000 = 3.1369)
+   j | C(j)/j | excess N/j at N = 1200, 2400, 4800
+   N=1200: recursion 0.1 s, mass defect 1.0e-14, a priori bound 1.6e-10
+   N=2400: recursion 1.0 s, mass defect 2.1e-14, a priori bound 6.4e-10
+   N=4800: recursion 11.9 s, mass defect 4.1e-14, a priori bound 2.6e-09
+     5 | 4.968 | 5.058  5.013  4.990
+    10 | 4.430 | 4.596  4.512  4.471
+    20 | 4.041 | 4.347  4.189  4.114
+    40 | 3.762 | 4.354  4.040  3.897
+PASS  3a. C(j)/j column as in the plan review
+PASS  3b. finite-N excess as in the plan review (3 decimals)
+PASS  3c. |excess - C(j)/j| decreases from N = 1200 to 2400 to 4800 for each j  (distances 0.090,0.165,0.306,0.592; 0.045,0.081,0.149,0.278; 0.022,0.040,0.073,0.135)
+PASS  4. prop:final-run (eq:final-explicit) against the recursion, N = 1200, j <= 40  (max rel diff 2.2e-15)
+   antimode.json: script sha256 56ec77862bbad226..., date 2026-10-24
+   N | j* | refined | leading | N T(j*)/(2 alpha s) | min rel gap | 2 eps_N | certified
+   600 | 7 | 7 | 10 | 1.534 | 2.56e-04 | 8.0e-11 | True
+   1200 | 11 | 12 | 15 | 1.498 | 2.27e-04 | 3.2e-10 | True
+   2400 | 19 | 20 | 23 | 1.282 | 1.72e-05 | 1.3e-09 | True
+   4000 | 27 | 28 | 32 | 1.247 | 3.06e-05 | 3.6e-09 | True
+   8000 | 44 | 45 | 50 | 1.186 | 1.06e-05 | 1.4e-08 | True
+PASS  5a. certified antimodes: every other bin of [pN, N] exceeds the minimum by more than 2 eps_N
+PASS  5b. refined prediction argmin_j [u_-(j) + C(j)/N] is within 1 of j*_N and agrees with antimode.json
+PASS  5c. Table tab:antimode reproduced (all five rows, all columns)
+   (u(j) - 1/mu)/(j T(j)/(mu^2 (alpha-1))): j=40: 0.9782  j=160: 0.9945  j=640: 0.9986
+PASS  6. eq:second-renewal ratio 0.978, 0.995, 0.999 at j = 40, 160, 640, each within 0.001
+   C(phi) = 0.776131720552733, closed form 0.776131720552733, 1/C(phi) = 1.2884411, bound 0.95136148
+PASS  7. thm:mode(d): C(phi) = 0.7761317205..., 1/C(phi) = 1.2884..., elementary bound 0.9513 (rounded) < 1
+   atlas_N5000.json: N = 5000, mass defect 4.3e-14, a priori bound 2.78e-09; ball check N = 600: max rel dev 5.9e-15, max rel radius 1.2e-34
+PASS  8. data/atlas_N5000.json: a priori bound eps_5000 < 3e-9, mass defect below it, double precision inside the 128-bit balls (plus eps_600) at N = 600
+
+PASS  verify_coefficient (0 failures, 13.1 s)
