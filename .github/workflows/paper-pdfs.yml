@@ -1,0 +1,70 @@
+name: Update paper PDFs
+
+on:
+  push:
+    branches: ['**']
+  workflow_dispatch:
+    inputs:
+      rebuild_all:
+        description: Rebuild all active papers, even if their sources are unchanged
+        type: boolean
+        default: true
+
+# Queue builds. Source fingerprints also catch edits in superseded pending runs.
+concurrency:
+  group: paper-pdfs-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    if: github.event.deleted != true
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - name: Check out the latest branch contents
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+
+      - name: Test the build orchestration
+        run: python3 -m unittest discover -s scripts/tests -v
+
+      - name: Select papers with changed inputs
+        id: plan
+        env:
+          REBUILD_ALL: ${{ inputs.rebuild_all }}
+        run: python3 scripts/paper_pdfs.py plan
+
+      - name: Compile with the pinned TeX Live environment
+        if: steps.plan.outputs.needed == 'true'
+        uses: xu-cheng/texlive-action@22c04326a5d855880f9d39bb955138bf11c6df80 # v3
+        with:
+          docker_image: ghcr.io/xu-cheng/texlive-alpine@sha256:c06416ebbc69c8e90e07d1f1a6f7a3f9b334e773daa3543ce879ea533317c3a7
+          run: |
+            apk add --no-cache python3
+            pdflatex --version | head -n 1
+            python3 scripts/paper_pdfs.py build
+
+      - name: Save PDFs and compilation logs
+        if: always() && steps.plan.outputs.needed == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: paper-pdfs-${{ github.run_id }}
+          path: |
+            .pdf-build/logs/
+            .pdf-build/pdfs/
+            .pdf-build/plan.json
+          include-hidden-files: true
+          retention-days: 14
+
+      - name: Commit and push updated PDFs
+        if: success() && steps.plan.outputs.needed == 'true'
+        env:
+          PDF_BRANCH: ${{ github.ref_name }}
+        run: python3 scripts/paper_pdfs.py publish
