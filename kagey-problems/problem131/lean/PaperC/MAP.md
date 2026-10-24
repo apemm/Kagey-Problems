@@ -1,7 +1,8 @@
 # Paper C: map from the paper to the Lean theorems
 
-This file matches the statements of Paper C, "Face selection for slowly switching Markov chains"
-(`paperC/problem131_switching.tex`), to the Lean theorems of the libraries `PaperC` (root
+This file matches the statements of Paper C, "Occupation counts of rarely switching Markov
+chains: stratified local laws, modal supports and reconstruction" (`paperC/problem131_chains.tex`),
+to the Lean theorems of the libraries `PaperC` (root
 `PaperC.lean`) and `PaperB` (root `PaperB.lean`). In October 2026 Paper B ("Vertex crossings in a
 symmetric Markov multinomial model", arXiv:2610.09258) was merged into Paper C. The statements of
 Sections 5 and 6 and of Appendices C and D of the merged paper come mostly from Paper B, and their
@@ -9,6 +10,9 @@ Lean files are in `lean/PaperB`. Both libraries use Lean 4 v4.33.1 and Mathlib v
 theorem listed here is proved without `sorry`, `admit` or new axioms, and `#print axioms` reports
 only `propext`, `Classical.choice` and `Quot.sound` (see `build-log.txt` and
 `verification-manifest.json` in the parent folder).
+
+Note: the tables up to "October 24, 2026 additions" use the numbering of the earlier main file
+`paperC/problem131_switching.tex`. The `\label` keys are current.
 
 The numbers are those of the build of October 23, 2026 (`paperC/problem131_switching.pdf`, 64
 pages, and the 14-page `paperC/supplement.pdf`, whose numbers start with S), and the key in parentheses is the
@@ -54,7 +58,7 @@ statement of the library `PaperB` is for the uniform start (note 1 of `lean/Pape
 
 | Paper statement | Lean | Note label |
 | --- | --- | --- |
-| Proposition 3.1(a) (`prop:rate`), the lower bound `I_F ≥ λ_F` and the value `λ_F` at `α*_F`, without reversibility | `dvRate_ge`, `dvRate_isLeast`, `dvPhi_le_at_qe`, `dvPhi_at_qe_r`, `dvRate_at_qe` | C1 Prop 8(a),(b), C4 Lemma DV(a),(b) |
+| Proposition 3.1(a) (`prop:rate`), the lower bound `J_F ≥ λ_F` and the value `λ_F` at `α*_F`, without reversibility | `dvRate_ge`, `dvRate_isLeast`, `dvPhi_le_at_qe`, `dvPhi_at_qe_r`, `dvRate_at_qe` | C1 Prop 8(a),(b), C4 Lemma DV(a),(b) |
 | Proposition 3.1(c), the reversible form at interior points, with minimizer the squared Perron vector | `dvRate_symm`, `dvRate_symm_min` | C1 Prop 8(c) |
 | Theorem 3.4(a) (`thm:hull`), in finite form | `size_unique_min_iff`, `size_tie`, `face_winner_iff` | C2 Theorem C2.3 |
 | Theorem 3.4(b) | `winner_monotone`, `winner_strict` | C2 Theorem C2.2(ii) |
@@ -66,11 +70,11 @@ statement of the library `PaperB` is for the uniform start (note 1 of `lean/Pape
 
 | Paper statement | Lean | Note label |
 | --- | --- | --- |
-| Proposition 4.2(a) (`prop:constant`), `det Σ · det ∇²I = 1`, only for the directed 3-cycle | `dicyc_H_mul_Sigma`, `dicyc_det_H` | C5 Prop 4(a) |
+| Proposition 4.2(a) (`prop:constant`), `det Σ · det ∇²J_F = 1`, only for the directed 3-cycle | `dicyc_H_mul_Sigma`, `dicyc_det_H` | C5 Prop 4(a) |
 | Proposition 4.2(b), the tree formula for `det Σ`, for `k = 2, 3` (also Lemma 3.4 of Paper B) | `tree_formula_two`, `tree_formula_three` | C5 Prop 4(b) |
 | Lemma 4.10 (`lem:weighted-cayley`), the weighted Cayley formula, only for `k = 3`: `tree(√(α_i α_j)) = √(α_1 α_2 α_3)(√α_1 + √α_2 + √α_3)` | `cayley_three` | C5 Prop 4(b), B Lemma 3.5 |
-| Proposition 4.14(i) (`prop:threecycle`), the exact `M_{1}` and `M_{1,2}`, with `M_{1,2}` attained only at `(1, N-1, 0)` | `dicyc_vertex`, `dicyc_face`, `dicyc_face_max`, `dicyc_face_max_strict` | C5 Prop 19(i) |
-| Proposition 4.14(i), `α*`, `det ∇²I` and `K_{1,2,3}` for the full face | `dicyc_stationary`, `dicyc_inverse`, `dicyc_Sigma`, `dicyc_det_Sigma`, `dcH_eq_notes`, `dicyc_det_H`, `dicyc_K`, `dicyc_K_four` | C5 Prop 19(i) |
+| Proposition 4.14(i) (`ex:threecycle`), the exact `M_{1}` and `M_{1,2}`, with `M_{1,2}` attained only at `(1, N-1, 0)` | `dicyc_vertex`, `dicyc_face`, `dicyc_face_max`, `dicyc_face_max_strict` | C5 Prop 19(i) |
+| Proposition 4.14(i), `α*`, `det ∇²J_F` and `K_{1,2,3}` for the full face | `dicyc_stationary`, `dicyc_inverse`, `dicyc_Sigma`, `dicyc_det_Sigma`, `dcH_eq_notes`, `dicyc_det_H`, `dicyc_K`, `dicyc_K_four` | C5 Prop 19(i) |
 | Proposition 4.14(ii), exactly one root (the ratio `M_{1,2}/M_{1}` increases strictly in `h`) | `dicyc_ratio_strictMono`, `dicyc_crossing_unique` | C5 Prop 19(ii) |
 
 ## Section 5, the two-state walk and the complete graph
@@ -87,11 +91,11 @@ statement of the library `PaperB` is for the uniform start (note 1 of `lean/Pape
 | Theorem 5.4(iv), `a_2 > a_3 > ...` | `PaperB.Constants`: `aConst_strictAnti`, with `gfun_strictMonoOn`, `Hfun_pos` | B Thm 3.1(iv) |
 | Theorem 5.5 (`thm:simplex-balance`), the transfer of one unit for `1/d ≤ p < 1`, for the uniform start (the case of a start constant on the face follows by (2.3) and is not in Lean) | `PaperB.Balance`: `law_transfer`, and in part `law_max_balanced`, `law_perm` | B Thm 3.8 |
 | Theorem 5.5, proof in Appendix C, strict log-concavity of `B_n(y)` and the transfer inequality `B_{a+1} B_{b-1} > B_a B_b` | `PaperB.LogConcave`: `Bpoly_logconcave`, `bb_succ`, `cc_bb_strict`, `bb_logconcave`, `pair_identity`, `Bpoly_transfer`, `Bratio_strictAnti` | B Thm 3.8 |
-| Remark 5.7 (`ex:simplex-edge-mode`), `P_4(2,2,0)/V_4 = 2u + 2u^2 + 2u^3`, `P_4(2,1,1)/V_4 = 6u^2 + 6u^3`, the values at `u = 7/20`, and the edge centers as the only modes | `PaperB.EdgeExample`: `ratio_220`, `ratio_211`, `u_at`, `edge_ratio`, `center_ratio`, `edge_modes`, `classify4` | B Ex 3.10 |
-| Remark 5.11 (`rem:start-lines`), in part, the comparison of two lines | `PaperB.Modes`: `winning_size_monotone` | B Rem 4.8 |
+| Remark 5.7 (`rem:simplex-edge-mode`), `P_4(2,2,0)/V_4 = 2u + 2u^2 + 2u^3`, `P_4(2,1,1)/V_4 = 6u^2 + 6u^3`, the values at `u = 7/20`, and the edge centers as the only modes | `PaperB.EdgeExample`: `ratio_220`, `ratio_211`, `u_at`, `edge_ratio`, `center_ratio`, `edge_modes`, `classify4` | B Ex 3.10 |
+| Remark 5.11, in part, the comparison of two lines | `PaperB.Modes`: `winning_size_monotone` | B Rem 4.8 |
 | Example 5.12 (`ex:K3-start`), the comparison of the lines and the width `log(16/(9√3)) > 0` of the window | `three_lines`, `k3_edge_window`, `k3_window_width`, `k3_edge_criterion`, `k3_half_half_criterion` | C5 Prop 14, B Ex 4.9 |
 | Corollary 5.14 (`cor:weakfield-phases`), in part, Step 3 of the proof (a line of larger slope that wins at `t_1` wins at every `t_2 > t_1`) | `PaperB.Modes`: `winning_size_monotone` | B Thm 5.2 |
-| Example 5.15 (`ex:weakfield-triangle`), in part, the comparison of the three scores and the condition `H > 6(a_2 - a_3)` | `PaperB.Modes`: `triangle_edge_phase`, `triangle_interval_nonempty` | B Ex 5.3 |
+| Example 5.15, in part, the comparison of the three scores and the condition `H > 6(a_2 - a_3)` | `PaperB.Modes`: `triangle_edge_phase`, `triangle_interval_nonempty` | B Ex 5.3 |
 | Corollary 5.16 (`cor:weakfield-full-hierarchy`), the average `(k-1)(2k-1)/6` of `(i-1)^2`, `log D_k = -(k-1) a_k` with `D_1 = 1` (Lean writes `c_k` for `log D_k`), the second difference `≤ 1/2`, `ℓ_{k+1} - ℓ_k = t - t_k`, `t_1 < t_2 < ...` for `H > 3/4`, and in part the strict maximum of line `k` | `PaperB.Modes`, `PaperB.Constants`: `field_average`, `sum_sq_range`, `cConst_one`, `cConst_eq_aConst`, `cConst_second_diff`, `cConst_sub_concave`, `lam_succ_sub`, `lam_one`, `tau_lt_succ`, `tau_strictMono`, `tau_mono`, `line_unique_max` | B Cor 5.4 |
 
 ## Section 6, near a vertex
@@ -107,10 +111,10 @@ statement of the library `PaperB` is for the uniform start (note 1 of `lean/Pape
 
 | Paper statement | Lean | Note label |
 | --- | --- | --- |
-| Corollary 7.1(a) (`cor:C4`), the exit rates `2`, `1`, `2 - √2`, `0` and the winners (the arcs of 3 states never win) | `cycle_arc_isLeast`, `cycle_arc_dirEig`, `cycle_full_dirEig`, `lamArc_one`, `lamArc_two`, `lamArc_three`, `cycle_cascade` (with `d = 4`), `tau_full_table` | C2 Lemma C2.6a, Theorem C2.6(b),(c) |
+| Corollary 7.1(a), the exit rates `2`, `1`, `2 - √2`, `0` and the winners (the arcs of 3 states never win) | `cycle_arc_isLeast`, `cycle_arc_dirEig`, `cycle_full_dirEig`, `lamArc_one`, `lamArc_two`, `lamArc_three`, `cycle_cascade` (with `d = 4`), `tau_full_table` | C2 Lemma C2.6a, Theorem C2.6(b),(c) |
 | Corollary 7.1(b), `K_pair` and `K_arc3` from the closed form for all arcs | `Karc_pair`, `Karc_three` | C5 Cor 13 |
 | Corollary 7.1(c), the exact identity `M_pair = M_vertex S_N(u)` | `lawP_pair_ratio` | C5 Prop 12 |
-| Table 2 (`tab:outcomes`), row `K_d` (also proved in the text, Remark 7.2) | `completeQ_isLeast`, `completeQ_dirEig`, `completeQ_killed_perp`, `completeQ_row_sum`, `complete_costs`, `complete_vertex_wins`, `complete_full_wins`, `complete_tie` | C2 Theorem C2.4 |
+| Table 2, row `K_d` (also proved in the text, Remark 7.2) | `completeQ_isLeast`, `completeQ_dirEig`, `completeQ_killed_perp`, `completeQ_row_sum`, `complete_costs`, `complete_vertex_wins`, `complete_full_wins`, `complete_tie` | C2 Theorem C2.4 |
 | Table 2, row symmetric `Q` | `complement_bound`, `complement_isLeast`, `complement_eq_iff`, `eigvec_of_rayleigh_min`, `single_jump_equal_feeding`, `unit_equal_feeding_complete` | C2 Prop C2.5 |
 | Table 2, row `C_d`, marked "Lean only" (the growth like `k³/(2π²)` is by hand) | `cycle_arc_isLeast`, `cycle_arc_dirEig`, `pathM_isLeast`, `pathM_eig`, `cycle_full_dirEig`, `lamArc_strictAnti`, `lamArc_convex`, `tauArc_lt_succ`, `tauArc_lt`, `DArc_two`, `DArc_gt`, `DArc_lt`, `cycle_cascade`, `arcCost_unique_min`, `d_sub_two_thirds`, `lamArc_one` to `lamArc_five`, `tauArc_two` to `tauArc_five`, `tau_full_table` | C2 Lemmas C2.6a, C2.6b, Theorem C2.6 |
 | Table 2, row `P_d`, and Proposition S1.3 of the supplement (`prop:paths`), in part (the end-arc exit rates in S1.3(a) and the golden ratio `τ'_2` of Lemma S1.2(a)) | `path_endArc_isLeast`, `path_endArc_dirEig`, `endArcM_isLeast`, `endArc_eq_lamArc`, `path_first_threshold` | C2 Cor C2.6′ |
@@ -193,7 +197,7 @@ This was Section 8 of an earlier version. It is now the note
 | --- | --- | --- |
 | The switch product in terms of transition counts, and the balance of in- and out-counts | `switchProd_eq_prod_pow`, `sum_switchCount_out`, `sum_switchCount_in`, `switch_balance`, `switchProd_eq_pow` | C1 Prop 2, in part |
 | The Fisher efficiency of the occupancy vector of the sticky chain is a correlation ratio | `sticky_pathP`, `sticky_total`, `sticky_efficiency` | C4 Prop G1 |
-| The proof of `Λ_N(h) → h̄` in Paper B, Proposition 5.1(3): powers of the transition matrix, the mean and the covariance of the occupation counts of the Potts chain. The merged paper proves the limit of the normalizing sum, Proposition 4.16(d), for every irreducible chain in another way. | `PaperB.Covariance`, `PaperB.ChainCovariance`: `trans_pow`, `trans_eq_Tmat`, `mean_occ`, `twoPoint`, `twoPoint_abs`, `cov_kernel`, `cov_occ`, `cov_occ_closed`, `sum_sigma_abs`, `sum_sigma_abs_one`, `ratio_identity` | B Prop 5.1(3) |
+| The proof of `Λ_N(h) → h̄` in Paper B, Proposition 5.1(3): powers of the transition matrix, the mean and the covariance of the occupation counts of the Potts chain. The earlier main file proved the limit of the normalizing sum for every irreducible chain in another way, and the present paper does not state it. | `PaperB.Covariance`, `PaperB.ChainCovariance`: `trans_pow`, `trans_eq_Tmat`, `mean_occ`, `twoPoint`, `twoPoint_abs`, `cov_kernel`, `cov_occ`, `cov_occ_closed`, `sum_sigma_abs`, `sum_sigma_abs_one`, `ratio_identity` | B Prop 5.1(3) |
 | The step of Paper B's generating function that conditions on the last letter | `PaperB.Refresh`: `endLaw_succ`, `law_eq_sum_endLaw`, `endLaw_of_zero` | B Prop 2.1 |
 | Singleton insertion and `S_(b,1,...,1)`, and the Gram determinant of a removed remark of Paper B | `PaperB.Singleton`, `PaperB.Modes`: `singleton_insertion`, `SL_b1`, `SL_b11`, `SL_singletons`, `gram_det`, `latVec_gram` | B, removed |
 
@@ -224,11 +228,11 @@ or expansions as `N → ∞`. In terms of the paper these are the following.
   Theorem 4.4 (`thm:local`), Lemma 4.5 (`lem:discrete`), Theorems 4.6 to 4.8 (`thm:facemax`,
   `thm:crossing`, `thm:window`), Proposition 4.9 (`prop:forest`), Lemma 4.10 for `k ≠ 3`,
   Example 4.11, Remark 4.12, Remark 4.13, the expansion in Proposition 4.14(ii),
-  Proposition 4.14(iii) and (iv), Proposition 4.15 (`prop:nextterm`, including the evaluation of
-  `c_F = -(k-1)/8` in Section S4 of the supplement) and Proposition 4.16 (`prop:weakfield`).
+  Proposition 4.14(iii) and (iv), Proposition 4.15 (the next term, with the evaluation of
+  `c_F = -(k-1)/8` in Section S4 of the supplement, not in the present paper) and Proposition 4.16 (`prop:weakfield`).
 * Section 5. The asymptotic parts of Corollaries 5.2 and 5.3, Theorem 5.4(ii) and (iii), the display
   (5.2), Corollary 5.6 (`cor:simplex-modes`), Corollary 5.8, Remark 5.9, Corollary 5.10
-  (`cor:start-modes`), Remark 5.11 beyond the comparison of two lines, the step from the lines to
+  (not in the present paper), Remark 5.11 beyond the comparison of two lines, the step from the lines to
   the modes in Example 5.12, Remark 5.13, and Corollary 5.14, Example 5.15 and Corollary 5.16 beyond
   the rows above.
 * Section 6. The form (6.3) of Theorem 6.2, and Remark 6.3.
@@ -251,3 +255,77 @@ or expansions as `N → ∞`. In terms of the paper these are the following.
   The paw is proved the same way in `Paw`. So these rows of Table 2 are proved in Lean.
 * Proposition 4.14 assumes `b > 2`. The monotonicity of `M_{1,2}/M_{1}` in `h`, and hence the
   uniqueness of the first crossing in 4.14(ii), holds for every `b > 1` (`dicyc_ratio_strictMono`).
+
+## October 24, 2026 additions
+
+Four modules cover finite and algebraic results of the version of Paper C for the Journal of
+Theoretical Probability, `paperC/problem131_chains.tex`. The numbers below are those of its build of
+October 24, 2026 (`paperC/problem131_chains.pdf`, 95 pages, after the revision of that day). The sections `sec_dv.tex`,
+`sec_reconstruction.tex` and `sec_lowtemp.tex` are not in `problem131_switching.tex`, so the
+numbers of the rest of this file do not apply to them. The `\label` keys are in parentheses.
+
+| Module | Content |
+| --- | --- |
+| `DVRestriction` | the restriction identity `J_F = J_V` on a face (4 theorems) |
+| `PrincipalMinors` | the multiaffine expansion of `R_F`, and equal characteristic polynomials (7 theorems) |
+| `GeneratorFiber` | irreducibility, the generator point, the sign of a Metzler-preserving diagonal similarity and the fiber on three states (26 theorems) |
+| `CriticalWindow` | the four-state example of Section 10 (26 theorems) |
+
+Every theorem of the four modules was checked with `#print axioms`, and each one reports exactly
+`[propext, Classical.choice, Quot.sound]`. None uses `sorry` or `native_decide`.
+
+Irreducibility. `GeneratorFiber` defines `CutIrreducible C` for a real square matrix: every nonempty
+proper set of states `S` has an arc `C i j ≠ 0` with `i ∈ S` and `j ∉ S`. This is the "no nontrivial
+invariant coordinate subset" form. `cutIrreducible_iff_reach` proves that it is equivalent to the
+strong connectivity of the digraph of nonzero off-diagonal entries (`Relation.ReflTransGen` of the
+arcs `i → j`, `i ≠ j`, `C i j ≠ 0`), which is the definition of the paper. Mathlib's
+`Matrix.IsIrreducible` is not used, since it requires nonnegative entries. `IsMetzler`
+(nonnegative off-diagonal entries) and `IsGenerator` (Metzler with zero row sums) are also defined
+there.
+
+| Paper statement | Lean | Hypotheses in Lean | Note label |
+| --- | --- | --- | --- |
+| Equation (4) (`eq:JV`), the form `q_i - ∑_{j≠i} q_ij u_j/u_i` of the functional | `dvPhi_eq_exit_form` | `u > 0` on `F` | |
+| Proposition 3.1 (`prop:restriction`), the restriction identity `J_F(α) = J_V(α)` | `dvRate_restriction`, with `dvPhi_univ_le_face` (the upper bound for every positive `u`) and `dvPhi_univ_extend` (with `u = w` on `F` and `ε` off `F` the functional moves by `-εK`, `K ≥ 0`) | `Q` on `Fin d` Metzler; `α ≥ 0` and `α = 0` off `F` (the sum `1` is not needed); `J_V = dvRate Q univ` and `J_F = dvRate Q F` of `DVRate`, real suprema | |
+| Section 9.3, the display defining `R_F`: `det(-Q_F - diag w) = ∑_{S⊆F} det(-Q_S) ∏_{i∈F∖S}(-w_i)`, with `det(-Q_∅) = 1` | `det_sub_diagonal_eq_sum_minors`, `det_add_diagonal_eq_sum_minors`, `RF_eq_sum_minors`, `pminor_faceBlock`, `pminor_empty`, `pminor_univ` | any square matrix over a commutative ring (applied with `A = -Q`); the sum in `RF_eq_sum_minors` is over the subsets of the subtype `F`, and `pminor_faceBlock` identifies these minors with minors of `A` | plan review 2026-10-23, Section 5.3 |
+| Theorem 9.13 (`thm:nonreversible`)(b) and step (N) of its proof: equal principal minors give the same characteristic polynomial | `charpoly_eq_of_minors_eq` | any square matrices over a commutative ring | note 06, Lemma 3.1 |
+| Step (N) of the proof of Theorem 9.13, the generator point: `-D⁻¹CD` with `D = diag x` is a generator | `conj_apply`, `normalize_isGenerator` | `C` Metzler (in Lean `C` is minus the Z-matrix of the paper), `x > 0`, `C x = 0` | note 06, Proposition 3.3 |
+| Step (N), the null vector is unique up to a factor | `ker_eq_smul` | `C` Metzler and `CutIrreducible`, with a positive null vector `x`; its existence (Perron and Frobenius) is a hypothesis | note 06, Proposition 3.3 |
+| Step (N), every real invertible diagonal `D'` for which `D'⁻¹CD'` has zero row sums is a multiple of `D` and gives the same matrix | `normalization_unique`, `normalization_unique_matrix` | as for `ker_eq_smul`; the entries of `D'` are nonzero, of any signs | note 06, Proposition 3.3 |
+| The sign lemma: if `D C D⁻¹` is Metzler, the entries of `D` have one sign | `sign_constant` | `C` Metzler and `CutIrreducible`, `D` real diagonal with nonzero entries | note 06, Lemma 3.2 |
+| Theorem 9.13(e), `c + c' = q_1q_2q_3 - q_1w_23 - q_2w_13 - q_3w_12` and `cc' = w_12w_23w_13` | `det_neg_three` (`det(-Q) = σ₃ - c - c'` for every `3 × 3` matrix), `det_neg_three_eq_zero`, `cyc_add_cycRev`, `cyc_mul_cycRev`, `sigma3_congr` | zero row sums for the first identity, none for the second | note 06, Corollary 4.2 |
+| Theorem 9.13(e), the case of the same ordered pair `(c, c')`: `Q' = Q` | `eq_of_same_q_w_cyc` | two generators on `Fin 3` with all off-diagonal entries positive, the same diagonal, the same `w_ij` and the same `c` | note 06, Corollary 4.2 |
+| Theorem 9.13(e), the time reversal `Q* = D_π⁻¹QᵀD_π` is a generator with the exit rates and the products of `Q`, and its oriented product is `c'` | `timeRev_eq_conj`, `timeRev_diag`, `timeRev_wprod`, `cyc_timeRev`, `timeRev_rowsum`, `timeRev_isGenerator`, `fiber_three_converse` | `π > 0` with `πQ = 0` | note 06, Corollary 4.2 |
+| Theorem 9.13(e), the fiber on three states is `{Q, Q*}` | `fiber_three`, and `fiber_three_tree` with `π` from the tree formula (`piTree_pos`, `piTree_stationary`), so with no hypothesis on `π` | two generators on `Fin 3` with all off-diagonal entries positive, the same diagonal and the same `w_ij` (these are the minors of orders 1 and 2). The paper allows any irreducible `Q`, with zero entries; that case is not in Lean | note 06, Corollary 4.2 |
+| Example 10.5 (`ex:four-state`), the rates, `π ∝ (1, t, t, t)` and the exit rates `q_1, …, q_4` | `qOff`, `Q4`, `Q4_offdiag`, `Q4_rowsum`, `detailed_balance`, `exit_rates` | `t` real (the identities need no sign) | C modal hierarchy 01, (28) |
+| Example 10.5, the killed matrices `-Q_{12}`, `-Q_{123}` (the display) and `-Q_{124}` | `killed_12`, `killed_123`, `killed_124` | | |
+| Example 10.5, `det(-Q_{12}) = 2t⁴ + O(t⁵)` and `det(-Q_{123}) = det(-Q_{124}) = 2t⁶ + O(t⁷)`, as the exact polynomials `2t⁴ + t⁵ + 2t⁶ + 2t⁷ + t⁹` and `2t⁶ + t⁷ + 6t⁸ + 4t⁹ + 3t¹¹` | `det_A12`, `det_A123`, `det_A124` | | C modal hierarchy 01, (29) to (31) |
+| Example 10.5, the adjugates, with first columns `(t, t) + O(t²)`, `(3t³, 3t³, 2t³) + O(t⁴)` and `(t³, t³, 0) + O(t⁴)` and other entries `O(t²)`, resp. `O(t⁴)`, as exact polynomial matrices | `adj_A12`, `adj_A123`, `adj_A124` | | C modal hierarchy 01, (29) to (31) |
+| Example 10.5 with Proposition 10.3 (`prop:prefactor`): `t³(-Q_F)⁻¹ → B_F`, with first columns `(1/2, 1/2)`, `(3/2, 3/2, 1)`, `(1/2, 1/2, 0)` and zeros elsewhere | `B12_limit`, `B123_limit`, `B124_limit`, with `tendsto_scaled` and `inv_apply_eq` | entrywise, as `t → 0⁺` | |
+| Example 10.5, `ρ(B_12) = 1/2`, `ρ(B_123) = 3/2`, `ρ(B_124) = 1/2`, so `a_12 = 2`, `a_123 = 2/3`, `a_124 = 2` | `B12_eigen`, `B123_eigen`, `B124_eigen` | the first column is an eigenvector for the stated value. That the other eigenvalues are `0` (only the first column of `B_F` is nonzero) is not a Lean statement | |
+| Example 10.5, the limiting scores `1 + 2x`, `2 + 2x/3`, `2 + 2x`, `3`, the unique minimizer `{1,2}` on `(0, 3/4)`, `{1,2,3}` on `(3/4, 3/2)` and `V` on `(3/2, ∞)`, `{1,2,4}` always `1` above `{1,2}`, and the score `8/3 < 3` at `x = 1` | `s12`, `s123`, `s124`, `sV`, `window_low`, `window_mid`, `window_high`, `score_124`, `noncycle_at_one` | `x` real in the stated interval | C modal hierarchy 01, (32), (33) |
+
+The declarations of `CriticalWindow` are in the namespace `Kagey131.PaperC.FourState` and the others
+in `Kagey131.PaperC`. In Lean the states `1, 2, 3, 4` of the paper are `0, 1, 2, 3`.
+
+Not formalized from these sections:
+
+* Proposition 3.4 (`prop:variational`), Lemma 3.2 (`lem:face-monotone`) and Theorem 5.6
+  (`thm:stratified`). They need the Perron–Frobenius theorem for irreducible Metzler matrices and
+  the Donsker–Varadhan formula for the principal eigenvalue, which Mathlib does not have.
+* Lemma 9.9 (`lem:RF-irreducible`), the irreducibility of `R_F` over `ℂ`, and Lemma 9.10
+  (`lem:perron-branch`), which needs the Zariski density of a smooth real piece of a hypersurface.
+  Only the expansion of `R_F` is in Lean.
+* Theorem 9.13(a), (c), (d) and (f), the irreducibility of the fiber points and the finiteness of
+  the fiber in (b), and Corollary 9.3 (`cor:dv-fiber`). In the normalization (N) the existence of
+  the positive null vector, from Perron and Frobenius, is a hypothesis of the Lean statements.
+* Theorem 9.13(e) for an irreducible `Q` on three states with some off-diagonal entries `0`.
+  `fiber_three` assumes that all six off-diagonal entries of both generators are positive.
+* In Example 10.5, the cycles and the depths, the passage from the limits `B_F` to `a_F` through
+  the spectral radius beyond the eigenvectors above, and the step from the limiting scores to the
+  support of the mode (Theorem 10.4, `thm:critical-window`).
+
+Findings. No error was found in these statements. The exact computation gives
+`det(-Q_{123}) = det(-Q_{124})` as polynomials in `t`, which the paper does not need. The
+determinants and the adjugates of Example 10.5 agree with an exact recomputation in rational
+arithmetic, and their leading terms with the paper.
