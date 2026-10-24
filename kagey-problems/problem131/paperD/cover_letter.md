@@ -8,6 +8,8 @@ The paper builds on the reversible fluctuation-assay model of Bokes, Hlubinová 
 
 Online Resource 1 contains the second-order center and crossing results, the tail theorem and the additional odd-length results. It also supplies the family-estimate and second-difference proofs used by the main theorems. Please send the complete resource for refereeing with the article. The verification section and repository map distinguish the kernel-checked Lean results, their classical hypotheses and the separate certified computations.
 
+The manuscript is not under consideration elsewhere.
+
 Thank you for considering the paper.
 
 Arjun Pemmasani
