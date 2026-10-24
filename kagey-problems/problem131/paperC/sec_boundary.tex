@@ -1,0 +1,620 @@
+\section{The boundary layer at a facet}\label{sec:boundary-layer}
+
+The local law of Theorem~\ref{thm:local} holds on compact subsets of the open face. This
+section follows the law of the occupation times from the inside of a face $F$ to one of its
+facets $G=F\setminus\{i\}$, where the time spent in $i$ is small. We prove an exact formula
+for the law near the facet, which is the run expansion with the runs in $i$ pulled out
+(Lemmas~\ref{lem:layer-exact} and~\ref{lem:layer-exact-discrete}). It reduces the layer to
+one statement about a weighted chain on $G$, a local law with a small complex parameter
+(Hypothesis~\ref{hyp:L}). We prove it when $G$ has one or two states, so the layer theorem
+(Theorem~\ref{thm:layer}) is unconditional for faces with at most three states. For larger
+faces we deduce the theorem from Hypothesis~\ref{hyp:L}, which we state but have not proved. We
+compute the constants of the layer for every irreducible $Q$
+(Proposition~\ref{prop:layer-constants}) and check that they match the local law
+(Proposition~\ref{prop:layer-prefactor}). The near-vertex theorem of Section~\ref{sec:vertex}
+is the pair-face case of this picture on the lattice (Section~\ref{sec:layer-vertex}).
+
+\subsection{Setting}\label{sec:layer-setting}
+
+Let $F$ be an irreducible face with $k=|F|\ge2$, let $i\in F$, and put $G=F\setminus\{i\}$.
+We assume that $G$ satisfies (H), so $G$ is irreducible and $\mu(G)>0$. The start mass
+$\mu_i$ may be zero. For $j\in G$ put
+\[
+c^-_j=q_{ji},\qquad c^+_j=q_{ij},
+\]
+the rates into $i$ and out of $i$. Both vectors are nonnegative and nonzero, since $F$ is
+irreducible. For $z\in\mathbb C$ let
+\[
+Q_G(z)=Q_G+z\,c^-(c^+)^\top,\qquad \mu^{(z)}=\mu_G+z\mu_ic^+,\qquad e^{(z)}=\ones+zc^- ,
+\]
+and write $Q_G(z)=A(z)-\operatorname{diag}d(z)$ with $A(z)$ the off-diagonal part and
+$d(z)=q_G-z\,c^-\circ c^+$. A jump $j\to j'$ of $Q_G(z)$ of rate $zc^-_jc^+_{j'}$ stands for a
+visit to $i$ that is entered from $j$ and left to $j'$.
+
+\emph{Occupation coordinates.} Let $E_F$ be the event of Lemma~\ref{lem:continuum}. On $E_F$
+let $s\in(0,\infty)^G$ be the times spent in the states of $G$, $S=\sum_{j\in G}s_j$, and
+$x=T-S$ the time spent in $i$. We write
+\[
+f_F(s,x)=e^{-\langle q_G,s\rangle-q_ix}H_F(s,x),\qquad f_G(s)=e^{-\langle q_G,s\rangle}H_G(s),
+\]
+where $H_F$ and $H_G$ are the sums $H$ of Lemma~\ref{lem:continuum} for the faces $F$ and $G$.
+By that lemma $f_F$ is the density of the occupation times on $E_F$ in any $k-1$ of the
+coordinates, and $f_G(s)$ is the same density for $G$ at total time $S$. In this
+notation Theorem~\ref{thm:local} for the face $G$ reads
+\begin{equation}\label{eq:layer-local-G}
+f_G(S\beta)=S^{-(k-2)/2}C_G(\beta)e^{-SJ_G(\beta)}\bigl(1+O_{\mathcal K}(1/S)\bigr)
+\end{equation}
+uniformly for $\beta$ in a compact $\mathcal K\subset\Delta_G^\circ$ and $S\ge1$, with
+$C_G(\beta)=\mu_j$ and $J_G=q_j$ when $G=\{j\}$. The profile on the facet is
+$\beta=s/S\in\Delta_G^\circ$.
+
+\emph{The weighted chain.} For real $z\ge0$ the matrix $Q_G(z)$ is Metzler and irreducible.
+We let $J_G(\beta,z)$ be its rate, the supremum in Proposition~\ref{prop:rate} with $Q_G(z)$
+in place of $Q_F$, and $C_G(\beta,z)$ its local-law constant, which is
+Definition~\ref{def:tilt} for the off-diagonal part $A(z)$ with the start $\mu^{(z)}$ in place
+of $\mu$ and the end vector $e^{(z)}$ in place of $\ones$, namely
+\[
+C_G(\beta,z)=\frac{(\mu^{(z)}\cdot r_\beta(z))(l_\beta(z)\cdot e^{(z)})}{(2\pi)^{(k-2)/2}\sqrt{\det\Sigma_\beta(z)}} .
+\]
+So $J_G(\beta,0)=J_G(\beta)$ and $C_G(\beta,0)=C_G(\beta)$.
+
+\emph{The facet constants.} Let $r_\beta=r_\beta(0)$ and $l_\beta=\beta/r_\beta$ be the vectors
+of Definition~\ref{def:tilt} for the face $G$, so $l_\beta\cdot r_\beta=1$. Put
+\[
+a_\beta=c^-\cdot l_\beta,\qquad b_\beta=c^+\cdot r_\beta,\qquad \omega_\beta=a_\beta b_\beta,\qquad
+\pi^{\rm in}_{\beta,j}=\frac{c^-_jl_{\beta,j}}{a_\beta},\qquad \pi^{\rm out}_{\beta,j}=\frac{c^+_jr_{\beta,j}}{b_\beta}.
+\]
+Only $\omega_\beta$ is intrinsic, since $a_\beta$ and $b_\beta$ move in opposite ways when
+$r_\beta$ is scaled. The law $\pi^{\rm in}_\beta$ is the law of the state from which the
+tilted chain enters $i$, and $\pi^{\rm out}_\beta$ the law of the state into which it leaves
+$i$. Let $\mathcal L_\beta$ be the Laplacian on $G$ with the conductances
+$\kappa_{jj'}=l_{\beta,j}q_{jj'}r_{\beta,j'}+l_{\beta,j'}q_{j'j}r_{\beta,j}$ for $j\ne j'$,
+which are those of the additive reversibilization of the tilted generator
+$\widehat Q_\beta$. Its kernel is $\R\ones$, since $G$ is irreducible. Let
+$\mathcal L_\beta^+$ be its pseudo-inverse and
+\begin{equation}\label{eq:layer-gamma}
+\gamma_\beta=q_i+\frac{\omega_\beta}2\,(\pi^{\rm out}_\beta-\pi^{\rm in}_\beta)^\top\mathcal L_\beta^+(\pi^{\rm out}_\beta-\pi^{\rm in}_\beta).
+\end{equation}
+The quadratic form is the effective resistance of the network $\kappa$ between the laws
+$\pi^{\rm in}_\beta$ and $\pi^{\rm out}_\beta$. So $\gamma_\beta\ge q_i$, with equality exactly
+when the two laws agree. Finally put
+\[
+\zeta=2\sqrt{\omega_\beta Sx},\qquad z_*=\sqrt{\frac x{\omega_\beta S}},\qquad
+\mathbf B_\beta(x,S)=e^{-\gamma_\beta x}\sqrt{\frac{\omega_\beta S}x}\,I_1(\zeta),
+\]
+with the modified Bessel function $I_1$. We call $\mathbf B_\beta$ the Bessel kernel.
+
+\subsection{The exact representation}\label{sec:layer-exact}
+
+\begin{lemma}[the runs in $i$ pulled out]\label{lem:layer-exact}
+For $z\in\mathbb C$ and $s\in(0,\infty)^G$ let
+\begin{gather*}
+f^{(z)}_G(s)=e^{-\langle d(z),s\rangle}\sum_{m\in\Z_{\ge1}^G}W_z(m)\prod_{j\in G}\frac{s_j^{m_j-1}}{(m_j-1)!},\\
+W_z(m)=\sum_w\mu^{(z)}_{w_1}\prod_{l<|w|}A(z)_{w_lw_{l+1}}\,e^{(z)}_{w_{|w|}},
+\end{gather*}
+the inner sum over the words $w$ in $G$ with no two equal neighbours and $m_j$ letters $j$.
+Then $z\mapsto f^{(z)}_G(s)$ is entire, $f^{(0)}_G=f_G$, and for $x>0$ and every $\rho>0$
+\begin{align}
+f_F(s,x)&=e^{-q_ix}\sum_{K\ge1}\frac{x^{K-1}}{(K-1)!}\,[z^K]f^{(z)}_G(s)\label{eq:layer-series}\\
+&=e^{-q_ix}\,\frac1{2\pi\mathrm i}\oint_{|z|=\rho}e^{x/z}f^{(z)}_G(s)\,\frac{dz}{z^2}.\label{eq:layer-contour}
+\end{align}
+\end{lemma}
+
+So $f^{(z)}_G$ is the killed density on the facet of the chain in which each visit to $i$ is
+replaced by an instantaneous jump $j\to j'$ of rate $zc^-_jc^+_{j'}$, and $z$ counts the
+visits. The $K$ visits have total length $x$, with density $q_i^Kx^{K-1}e^{-q_ix}/(K-1)!$,
+and each return carries a factor $c^+_{j'}/q_i$. So the powers of $q_i$ cancel.
+
+\begin{proof}
+Fix a word $c$ in $F$ with no equal neighbours, every letter of $F$, and $K=m_i(c)\ge1$
+letters $i$. Its term in $H_F(s,x)$ is $\mu_{c_1}\prod q_{c_lc_{l+1}}$ times
+$x^{K-1}/(K-1)!$ times $\prod_{j\in G}s_j^{m_j-1}/(m_j-1)!$. The letters $i$ are isolated in
+$c$. We delete them and mark the places where they were. The result is a marked word $c'$ in
+$G$, in which two equal neighbours occur exactly where $c$ had $j\,i\,j$. A mark between
+letters $j$ and $j'$ carries $q_{ji}q_{ij'}=c^-_jc^+_{j'}$. A mark before the first letter $j'$
+carries $\mu_ic^+_{j'}$, and a mark after the last letter $j$ carries $c^-_j$. Two neighbours
+without a mark are different and carry $q_{jj'}$. So the weight of $c$ is the product of these
+weights. Between two different letters of $c'$ there is at most one mark, and between two
+equal letters exactly one.
+
+We group the marked words by their reduced word $w$, obtained by merging each block of equal
+letters of $c'$ into one letter, and by the numbers $n_1,n_2,\dots$ of marks inside the
+blocks. If $j$ forms $\varrho$ blocks with $n$ inner marks in all, it has $\varrho+n$ letters
+in $c'$, and there are $\binom{n+\varrho-1}{\varrho-1}$ ways to spread the marks. Since
+$\binom{n+\varrho-1}{\varrho-1}/(n+\varrho-1)!=1/(n!(\varrho-1)!)$,
+\[
+\sum_{n\ge0}\binom{n+\varrho-1}{\varrho-1}\frac{y^ns^{n+\varrho-1}}{(n+\varrho-1)!}=e^{ys}\frac{s^{\varrho-1}}{(\varrho-1)!}.
+\]
+With $y=zc^-_jc^+_j$, one power of $z$ for each mark, the inner marks give the factor
+$e^{zc^-_jc^+_js_j}$, which is the diagonal part of $d(z)$. The marks between different
+letters give $A(z)$, and the first and last marks give $\mu^{(z)}$ and $e^{(z)}$. Collecting
+the powers of $z$ gives~\eqref{eq:layer-series}. The entries of $A(z)$, $\mu^{(z)}$ and
+$e^{(z)}$ are at most $q_{\max}(1+|z|q_{\max})$, $1+|z|q_{\max}$ and $1+|z|q_{\max}$ in
+modulus. So the bound $W(m)\le k^Mq_{\max}^{M-1}$ of Section~\ref{sec:model} holds for $W_z$
+with $q_{\max}$ replaced by $q_{\max}(1+|z|q_{\max})$, up to a factor $(1+|z|q_{\max})^2$, and
+the series for $f^{(z)}_G(s)$ converges locally uniformly in $z$. Hence it is entire. For
+$z=0$ no word carries a mark, and $f^{(0)}_G$ is the sum of Lemma~\ref{lem:continuum} for $G$.
+Finally we expand $e^{x/z}=\sum_{n\ge0}x^nz^{-n}/n!$ and integrate term by term on the circle.
+This gives $\sum_{n\ge0}(x^n/n!)[z^{n+1}]f^{(z)}_G(s)$, which is~\eqref{eq:layer-series}.
+\end{proof}
+
+The discrete law has the same structure. The only change is that the visits to $i$ come in
+blocks of steps, whose lengths form a composition of $n_i$.
+
+\begin{lemma}[the discrete form]\label{lem:layer-exact-discrete}
+Let $hq_{\max}\le1$, $\supp n=F$, $N'=N-n_i$, and let $\hat n$ be $n$ restricted to $G$. For
+$z\in\mathbb C$ let
+\[
+P^{(z)}_{N'}(\hat n)=\sum_{x}\mu^{h,(z)}_{x_1}\prod_{t<N'}\bigl(I+hQ_G+zh^2c^-(c^+)^\top\bigr)_{x_tx_{t+1}}e^{h,(z)}_{x_{N'}},
+\]
+the sum over the words $x_1\cdots x_{N'}$ in $G$ with composition $\hat n$, where
+$\mu^{h,(z)}=\mu_G+zh\mu_ic^+$ and $e^{h,(z)}=\ones+zhc^-$. Then $P^{(0)}_{N'}(\hat n)$ is the
+probability of the composition $\hat n$ for the chain run for $N'$ steps, and
+\[
+P_N(n)=\sum_{K\ge1}\binom{n_i-1}{K-1}(1-hq_i)^{n_i-K}\,[z^K]P^{(z)}_{N'}(\hat n).
+\]
+\end{lemma}
+
+\begin{proof}
+We delete the maximal blocks of $i$ from a path with composition $n$. What is left is a path
+$x_1\cdots x_{N'}$ in $G$ with composition $\hat n$. A block of length $\ell$ between
+$x_t=j$ and $x_{t+1}=j'$ replaces the factor $(I+hQ)_{jj'}$ by
+$hq_{ji}(1-hq_i)^{\ell-1}hq_{ij'}$. A block at the start replaces $\mu_{x_1}$ by
+$\mu_i(1-hq_i)^{\ell-1}hq_{ix_1}$, and a block at the end adds the factor
+$hq_{x_{N'}i}(1-hq_i)^{\ell-1}$. We count the blocks by $z$. If there are $K$ blocks, the
+factors $(1-hq_i)^{\ell-1}$ give $(1-hq_i)^{n_i-K}$, and the block lengths form one of the
+$\binom{n_i-1}{K-1}$ compositions of $n_i$ into $K$ positive parts.
+\end{proof}
+
+\subsection{Pair faces}\label{sec:layer-pair}
+
+For $k=2$ the facet is one state and the weighted chain has no words to sum. The contour
+formula then gives the law in closed form.
+
+\begin{proposition}[pair faces]\label{prop:pair-face}
+Let $F=\{j,i\}$ with $q_{ji},q_{ij}>0$ and $\mu_j>0$, and put $\omega=q_{ji}q_{ij}$ and
+$\zeta=2\sqrt{\omega sx}$. For all $s,x>0$
+\[
+f_F(s,x)=\mu_je^{-q_js-q_ix}\Bigl[\sqrt{\frac{\omega s}x}\,I_1(\zeta)+\Bigl(q_{ji}+\frac{\mu_i}{\mu_j}q_{ij}\Bigr)I_0(\zeta)
++\frac{\mu_i}{\mu_j}\sqrt{\frac{\omega x}s}\,I_1(\zeta)\Bigr].
+\]
+Here $\omega_\beta=\omega$, $\gamma_\beta=q_i$ and $f_G(s)=\mu_je^{-q_js}$, and for all
+$s,x>0$
+\[
+0\le\frac{f_F(s,x)}{f_G(s)\mathbf B_\beta(x,s)}-1\le\Bigl(q_{ji}+\frac{\mu_i}{\mu_j}q_{ij}\Bigr)\Bigl(\frac1{\omega s}+\sqrt{\frac x{\omega s}}\Bigr)+\frac{\mu_i}{\mu_j}\,\frac xs .
+\]
+\end{proposition}
+
+This is the facet version of the formula of Pedler for the occupation times of a
+two-state chain~\cite{pedler1971}, and Kovchegov, Meredith and Nir give Bessel densities of
+the same kind~\cite{kmn2010}. What is new is the reading as a layer with an explicit
+two-sided bound. For $x\le T/2$ the bound is $O(1/T+\sqrt{x/T})$, and the term
+$\sqrt{x/T}$ is attained, since the middle term of the formula has exactly this size.
+
+\begin{proof}
+For $G=\{j\}$ the only word is $j$, so
+$f^{(z)}_G(s)=(\mu_j+z\mu_iq_{ij})(1+zq_{ji})e^{-(q_j-z\omega)s}$. With $z=z_*t$ and
+$z_*=\sqrt{x/(\omega s)}$ we have $x/z+\omega sz=\frac\zeta2(t+1/t)$, and the generating
+function $e^{(\zeta/2)(t+1/t)}=\sum_{n\in\Z}I_n(\zeta)t^n$~\cite[Eq.~10.35.1]{dlmf} gives
+\begin{equation}\label{eq:layer-bessel-moments}
+\frac1{2\pi\mathrm i}\oint e^{x/z+\omega sz}z^{n-2}\,dz=z_*^{n-1}I_{n-1}(\zeta)\qquad(n\in\Z).
+\end{equation}
+We put this into~\eqref{eq:layer-contour} for $n=0,1,2$ and use $I_{-1}=I_1$. This gives the
+formula. Each term is nonnegative, which gives the lower bound. For the upper bound we divide
+the last two terms by the first. This gives
+$(q_{ji}+\frac{\mu_i}{\mu_j}q_{ij})z_*I_0(\zeta)/I_1(\zeta)+\frac{\mu_i}{\mu_j}x/s$. The lower
+bound $I_1(\zeta)/I_0(\zeta)\ge\zeta/(1+\sqrt{1+\zeta^2})$ of Amos~\cite{amos1974} gives
+$I_0/I_1\le(1+\sqrt{1+\zeta^2})/\zeta\le1+2/\zeta$, and $z_*(1+2/\zeta)=\sqrt{x/(\omega s)}+1/(\omega s)$.
+For a pair $\beta=(1)$, the vectors of the facet are $r_\beta=l_\beta=1$, so
+$\omega_\beta=\omega$ and $\pi^{\rm in}_\beta=\pi^{\rm out}_\beta$, which gives
+$\gamma_\beta=q_i$.
+\end{proof}
+
+\subsection{The constants for every irreducible chain}\label{sec:layer-constants}
+
+The rate on $F$ is homogeneous of degree one in the occupation times, and we write
+$J_F(s,x)=TJ_F((s,x)/T)$. For $u\in(0,\infty)^G$ put
+\[
+\Psi_\beta(u)=\sum_{j\in G}\beta_j\Bigl(q_j-\sum_{j'\in G\setminus\{j\}}q_{jj'}\frac{u_{j'}}{u_j}\Bigr),\qquad
+P_\beta(u)=(c^+\cdot u)\sum_{j\in G}\frac{c^-_j\beta_j}{u_j}.
+\]
+Since $\sum_j\beta_j(-(Q_G(z)u)_j/u_j)=\Psi_\beta(u)-zP_\beta(u)$, the rate of the weighted
+chain is $J_G(\beta,z)=\sup_u[\Psi_\beta(u)-zP_\beta(u)]$ for real $z\ge0$.
+
+\begin{proposition}[the facet expansion of the rate]\label{prop:layer-constants}
+Let $F$ be irreducible, $i\in F$, and $G=F\setminus\{i\}$ irreducible.
+\begin{enumerate}[(i)]
+\item For $s=S\beta$ with $\beta\in\Delta_G^\circ$ and $x>0$,
+\[
+J_F(s,x)=q_ix+\sup_{z>0}\bigl[S\,J_G(\beta,z)-x/z\bigr].
+\]
+\item The map $z\mapsto J_G(\beta,z)$ is real-analytic near $z=0$, jointly with $\beta$, and
+\[
+J_G(\beta,0)=J_G(\beta),\qquad \partial_zJ_G(\beta,0)=-\omega_\beta,\qquad
+\partial_z^2J_G(\beta,0)=2\omega_\beta(\gamma_\beta-q_i).
+\]
+\item There are $\delta>0$ and $C$ such that, uniformly for $\beta$ in a compact subset of
+$\Delta_G^\circ$ and $0<x\le\delta S$,
+\[
+\Bigl|J_F(s,x)-\bigl(S\,J_G(\beta)+q_ix-2\sqrt{\omega_\beta Sx}+(\gamma_\beta-q_i)x\bigr)\Bigr|\le C\,x^{3/2}S^{-1/2}.
+\]
+\item If $\nu_jq_{jj'}=\nu_{j'}q_{j'j}$ on $F$ for some $\nu\in(0,\infty)^F$, then
+$\pi^{\rm in}_\beta=\pi^{\rm out}_\beta$, $\gamma_\beta=q_i$, $J_G(\beta,z)=J_G(\beta)-z\omega_\beta$
+for all real $z\ge0$, $\omega_\beta=\bigl(\sum_{j\in G}\sqrt{q_{ij}q_{ji}\beta_j}\bigr)^2$, and
+for all $s=S\beta$ and $x>0$
+\[
+J_F(s,x)=S\,J_G(\beta)+q_ix-2\sqrt{\omega_\beta Sx}.
+\]
+\end{enumerate}
+\end{proposition}
+
+So in the visit fraction $\alpha_i$ the rate has a square-root singularity
+$-2\sqrt{\omega_\beta\alpha_i}$ at the facet, and the time in $i$ is charged at the rate
+$\gamma_\beta$, not $q_i$.
+
+\begin{proof}
+(i) In the supremum that defines $J_F(s,x)$ we write $u=(u_G,\epsilon)$ with
+$\epsilon=u_i$. The terms with $\epsilon$ are
+$-\epsilon\sum_js_jc^-_j/u_j-(x/\epsilon)(c^+\cdot u_G)$, and both coefficients are positive.
+Their supremum over $\epsilon>0$ is $-2\sqrt{xS\,P_\beta(u_G)}$. So
+$J_F(s,x)=q_ix+\sup_u[S\Psi_\beta(u)-2\sqrt{xSP_\beta(u)}]$. Now
+$2\sqrt{xSP}=\inf_{z>0}[SzP+x/z]$, and we exchange the two suprema.
+
+(ii) Write $u=e^\psi$. For real $z\ge0$ the function $\psi\mapsto\Psi_\beta(e^\psi)-zP_\beta(e^\psi)$
+is concave, since $P_\beta(e^\psi)$ is a positive combination of the convex functions
+$e^{\psi_m-\psi_j}$, and it does not change when a constant is added to $\psi$. At $z=0$ its
+maximizer is $\psi_0=\log r_\beta$, unique up to a constant (Proposition~\ref{prop:rate}(b)).
+The Hessian of $\sum_{j\ne j'}\beta_jq_{jj'}e^{\psi_{j'}-\psi_j}$ at $\psi_0$ is the Laplacian
+with the conductances $\kappa_{jj'}$, because $\beta_jq_{jj'}r_{\beta,j'}/r_{\beta,j}=l_{\beta,j}q_{jj'}r_{\beta,j'}$.
+So the Hessian of $\Psi_\beta$ at $\psi_0$ is $-\mathcal L_\beta$, which is negative definite on
+the complement of the constants. By the implicit function theorem on that complement, the
+critical point $\psi(z)$ is real-analytic in $(\beta,z)$ near $(\beta,0)$, and for real $z\ge0$
+it is the maximizer by concavity. So $J_G(\beta,z)=\Psi_\beta(\psi(z))-zP_\beta(\psi(z))$ is
+real-analytic. The envelope theorem gives $\partial_zJ_G=-P_\beta(\psi(z))$, so
+$\partial_zJ_G(\beta,0)=-(c^+\cdot r_\beta)(c^-\cdot l_\beta)=-\omega_\beta$. Differentiating the
+critical equation gives $-\mathcal L_\beta\psi'(0)=\nabla P$, with $\nabla P$ the gradient of
+$P_\beta(e^\psi)$ at $\psi_0$. Its entries are
+\[
+\partial_{\psi_m}P=c^+_mr_{\beta,m}\,(c^-\cdot l_\beta)-(c^+\cdot r_\beta)\,c^-_ml_{\beta,m}=\omega_\beta(\pi^{\rm out}_{\beta,m}-\pi^{\rm in}_{\beta,m}),
+\]
+which sum to zero. So $\partial_z^2J_G(\beta,0)=-\nabla P\cdot\psi'(0)=\nabla P^\top\mathcal L_\beta^+\nabla P$,
+and this is $2\omega_\beta(\gamma_\beta-q_i)$ by~\eqref{eq:layer-gamma}.
+
+(iii) By the proof of (i), $J_F(s,x)-q_ix=S\sup_\psi[\Psi_\beta(\psi)-2\varepsilon P_\beta(\psi)^{1/2}]$
+with $\varepsilon=\sqrt{x/S}$. The maximizer lies in a bounded set of $\psi$ modulo constants,
+uniformly for $\beta$ in a compact set, as in the proof of Proposition~\ref{prop:rate}(b).
+Comparing its value with the value at $\psi_0$ gives
+$\Psi_\beta(\psi_0)-\Psi_\beta(\psi^*)\le2\varepsilon\sup P_\beta^{1/2}$ on that set, and the
+strict concavity near $\psi_0$ then gives $\psi^*-\psi_0=O(\varepsilon^{1/2})$. The critical
+equation $\nabla\Psi_\beta(\psi^*)=\varepsilon\nabla P_\beta(\psi^*)/\sqrt{P_\beta(\psi^*)}$ has a
+right side of size $O(\varepsilon)$, and $\nabla^2\Psi_\beta$ is invertible near $\psi_0$ on the
+complement of the constants, so $\psi^*-\psi_0=O(\varepsilon)$. Now we expand to
+second order around $\psi_0$. With $g=\nabla(P^{1/2})=\nabla P/(2\sqrt{\omega_\beta})$, the maximizer
+is $\psi^*=\psi_0-2\varepsilon\mathcal L_\beta^+g+O(\varepsilon^2)$, and the value is
+$J_G(\beta)-2\varepsilon\sqrt{\omega_\beta}+2\varepsilon^2g^\top\mathcal L_\beta^+g+O(\varepsilon^3)$.
+Here $2g^\top\mathcal L_\beta^+g=\nabla P^\top\mathcal L_\beta^+\nabla P/(2\omega_\beta)=\gamma_\beta-q_i$
+by (ii). Multiplying by $S$ gives (iii), since $S\varepsilon^3=x^{3/2}S^{-1/2}$.
+
+(iv) By Proposition~\ref{prop:constant}(b) for the face $G$ we may take
+$r_{\beta,j}=\sqrt{\beta_j/\nu_j}$ and $l_{\beta,j}=\sqrt{\beta_j\nu_j}$. Then
+$c^-_jl_{\beta,j}=q_{ji}\sqrt{\beta_j\nu_j}=\nu_iq_{ij}\sqrt{\beta_j/\nu_j}=\nu_ic^+_jr_{\beta,j}$, so
+$\pi^{\rm in}_\beta=\pi^{\rm out}_\beta$ and $\gamma_\beta=q_i$. More is true. For every real
+$z\ge0$ the matrix $Q_G(z)$ is reversible with respect to $\nu_G$, since
+$\nu_jc^-_jc^+_{j'}=\nu_iq_{ij}q_{ij'}$ is symmetric in $j,j'$. So by
+Proposition~\ref{prop:constant}(b) its optimal vector is $r_\beta$ for every $z$, and
+$J_G(\beta,z)=\Psi_\beta(r_\beta)-zP_\beta(r_\beta)=J_G(\beta)-z\omega_\beta$. Next
+$\omega_\beta=\nu_i\bigl(\sum_jq_{ij}\sqrt{\beta_j/\nu_j}\bigr)^2=\bigl(\sum_j\sqrt{q_{ij}q_{ji}\beta_j}\bigr)^2$,
+using $q_{ji}=q_{ij}\nu_i/\nu_j$. Finally (i) gives
+$\sup_{z>0}[-Sz\omega_\beta-x/z]=-2\sqrt{\omega_\beta Sx}$.
+\end{proof}
+
+For $1/T\ll x\ll T$ the Bessel kernel is
+$(4\pi)^{-1/2}(\omega_\beta S)^{1/4}x^{-3/4}\exp(2\sqrt{\omega_\beta Sx}-\gamma_\beta x)(1+O(1/\zeta))$,
+by $I_1(\zeta)=e^\zeta(2\pi\zeta)^{-1/2}(1+O(1/\zeta))$~\cite[Eq.~10.40.1]{dlmf}. So
+Proposition~\ref{prop:layer-constants}(iii) says that $f_G(s)\mathbf B_\beta(x,S)$ and the local
+law of $F$, which in occupation coordinates is $T^{-(k-1)/2}C_F(\alpha)e^{-TJ_F(\alpha)}$, have
+the same exponent up to $O(x^{3/2}S^{-1/2})$. For their powers of $x$ and their constants to
+agree as well we need $C_F((1-\epsilon)\beta,\epsilon)\sim(4\pi)^{-1/2}\omega_\beta^{1/4}\epsilon^{-3/4}C_G(\beta)$
+as $\epsilon\to0$. The next proposition proves this for reversible $Q$.
+
+\subsection{Prefactor matching}\label{sec:layer-prefactor}
+
+\begin{proposition}[prefactor matching]\label{prop:layer-prefactor}
+Let $Q$ be reversible on $F$ with respect to $\nu$, and let $G$ satisfy (H), with $|G|\ge1$.
+Uniformly for $\beta$ in a compact subset of $\Delta_G^\circ$, as $\epsilon\to0$,
+\[
+C_F((1-\epsilon)\beta,\epsilon)=(4\pi)^{-1/2}\,\omega_\beta^{1/4}\,\epsilon^{-3/4}\,C_G(\beta)\bigl(1+O(\sqrt\epsilon)\bigr),
+\]
+with $C_G(\beta)=\mu_j$ when $G=\{j\}$.
+\end{proposition}
+
+\begin{proof}
+We use Proposition~\ref{prop:constant}(b) at $\alpha=((1-\epsilon)\beta,\epsilon)$. On $G$ the
+vectors $r_\alpha=\sqrt{\alpha/\nu}$ and $l_\alpha=\sqrt{\alpha\nu}$ are $\sqrt{1-\epsilon}$ times
+$r_\beta$ and $l_\beta$, and at $i$ they are $O(\sqrt\epsilon)$. So
+$(\mu\cdot r_\alpha)(l_\alpha\cdot\ones)=(\mu_G\cdot r_\beta)(l_\beta\cdot\ones)(1+O(\sqrt\epsilon))$,
+where $\mu_G\cdot r_\beta>0$ by (H). Next $\prod_{j\in F}\alpha_j=\epsilon(1-\epsilon)^{k-1}\prod_{j\in G}\beta_j$.
+The conductances are $c_{jj'}(\alpha)=(1-\epsilon)c_{jj'}(\beta)$ on $G$, and at $i$ they are
+$c_{ij}(\alpha)=\sqrt{\epsilon(1-\epsilon)}\sqrt{q_{ij}q_{ji}\beta_j}$. A spanning tree of $F$
+with $m$ edges at $i$ has weight $O(\epsilon^{m/2})$. The trees with one edge at $i$ are a
+spanning tree of $G$ and one edge $\{i,j\}$. So
+$\tree(c(\alpha))=\sqrt\epsilon\,\sqrt{\omega_\beta}\,\tree(c_G(\beta))(1+O(\sqrt\epsilon))$, by
+$\sum_j\sqrt{q_{ij}q_{ji}\beta_j}=\sqrt{\omega_\beta}$ from
+Proposition~\ref{prop:layer-constants}(iv). We put these into the formula for $C_F$ and divide
+by the same formula for $C_G$, which has one factor $(4\pi)^{1/2}$ fewer. The powers of
+$\epsilon$ are $\epsilon^{1/4}$ from the tree and $\epsilon^{-1}$ from the product, which gives
+$\epsilon^{-3/4}$. For $G=\{j\}$ we use $C_{\{j\}}=\mu_j$ and $\tree=1$ on one vertex.
+\end{proof}
+
+\emph{The first amplitude correction.} Put $c_1(\beta)=\partial_z\log C_G(\beta,z)$ at $z=0$.
+For reversible $Q$, Proposition~\ref{prop:constant}(b) applied to $Q_G(z)$, whose vector
+$r_\beta(z)=r_\beta$ does not move with $z$, gives
+\begin{equation}\label{eq:layer-c1}
+c_1(\beta)=\frac{\mu_ib_\beta}{\mu_G\cdot r_\beta}+\frac{a_\beta}{l_\beta\cdot\ones}+\frac{\omega_\beta}2\sum_{\{j,j'\}\subseteq G}R_{jj'}\pi_{\beta,j}\pi_{\beta,j'},
+\end{equation}
+with $\pi_\beta=\pi^{\rm in}_\beta=\pi^{\rm out}_\beta$ and $R_{jj'}$ the effective resistance for
+the conductances $l_{\beta,j}q_{jj'}r_{\beta,j'}$. The three terms come from a start in $i$, an
+end in $i$, and the rule $\partial\log\tree(c)/\partial c_e=R_e$ of Kirchhoff, since the
+conductance of $\{j,j'\}$ grows by $z\omega_\beta\pi_{\beta,j}\pi_{\beta,j'}$.
+
+\subsection{The facet theorem}\label{sec:layer-theorem}
+
+For $|G|\ge2$ the layer needs the local law of the weighted chain $Q_G(z)$, uniformly for
+complex $z$ near $0$. We state it as a hypothesis. We prove it for $|G|=2$
+(Lemma~\ref{lem:L-two}) and not for $|G|\ge3$.
+
+\begin{hypothesis}[local law of the weighted facet chain]\label{hyp:L}
+Let $G$ satisfy \textup{(H)} with $|G|=k-1\ge2$, let $i\notin G$ with $F=G\cup\{i\}$
+irreducible, and let $\mathcal K\subset\Delta_G^\circ$ be compact. There are $z_0>0$, $C$, and
+functions $J_G(\beta,z)$ and $C_G(\beta,z)$ on $\mathcal K\times\{|z|<2z_0\}$, holomorphic in
+$z$, jointly continuous, real for real $z$, equal to the rate and the local-law constant of
+Section~\ref{sec:layer-setting} for real $0\le z<2z_0$, and with $C_G(\beta,0)=C_G(\beta)>0$,
+such that uniformly for $\beta\in\mathcal K$, $S\ge1$ and complex $|z|\le z_0$
+\[
+f^{(z)}_G(S\beta)=S^{-(k-2)/2}\,C_G(\beta,z)\,e^{-S\,J_G(\beta,z)}\,(1+\varepsilon),\qquad|\varepsilon|\le C/S .
+\]
+\end{hypothesis}
+
+At $z=0$ this is the local law~\eqref{eq:layer-local-G}, that is Theorem~\ref{thm:local} for
+the face $G$. For $G=\{j\}$ the same statement holds with $\varepsilon=0$, since
+$f^{(z)}_G(s)=(\mu_j+z\mu_iq_{ij})(1+zq_{ji})e^{-(q_j-z\omega)s}$ by the proof of
+Proposition~\ref{prop:pair-face}. For real $0\le z<2z_0$ the weights are
+nonnegative, and the proof of Theorem~\ref{thm:local} needs only one change, the end vector
+$e^{(z)}$ in place of $\ones$, which turns the factor $b(z')$ of Lemma~\ref{lem:torus} into
+$(\mu^{(z)}_1+\mu^{(z)\prime\top}X(z')b_1)(e^{(z)}_1+a_1^\top X(z')e^{(z)\prime})$. The open
+part is complex $z$. For two-state facets the word sum is a closed Bessel expression, and the
+complex case follows from the large-argument expansion of $I_0$ and $I_1$.
+
+\begin{lemma}[two-state facets]\label{lem:L-two}
+Hypothesis~\ref{hyp:L} holds when $|G|=2$.
+\end{lemma}
+
+\begin{proof}
+Let $G=\{1,2\}$, and write $a_{12}(z)=q_{12}+zc^-_1c^+_2$ and $a_{21}(z)=q_{21}+zc^-_2c^+_1$ for
+the entries of $A(z)$, $\tau(z)=a_{12}(z)a_{21}(z)$, $p=\mu^{(z)}$ and $e=e^{(z)}$. A word in $G$
+with no equal neighbours alternates. The words that start with $1$ are $1(21)^n$, with weight
+$p_1\tau^ne_1$ and $(n+1,n)$ letters, and $(12)^n$, with weight $p_1\tau^{n-1}a_{12}e_2$ and
+$(n,n)$ letters, for $n\ge1$. With $\xi=2\sqrt{\tau s_1s_2}$ the power series of $I_1$ and $I_0$
+give
+\[
+\sum_{n\ge1}\frac{\tau^ns_1^ns_2^{n-1}}{n!\,(n-1)!}=\sqrt{\frac{\tau s_1}{s_2}}\,I_1(\xi),\qquad
+\sum_{n\ge1}\frac{(\tau s_1s_2)^{n-1}}{(n-1)!^2}=I_0(\xi).
+\]
+We do the same for the words that start with $2$ and obtain
+\[
+f^{(z)}_G(s)=e^{-\langle d(z),s\rangle}\Bigl[\Bigl(p_1e_1\sqrt{\frac{\tau s_1}{s_2}}+p_2e_2\sqrt{\frac{\tau s_2}{s_1}}\Bigr)I_1(\xi)
++\bigl(p_1a_{12}e_2+p_2a_{21}e_1\bigr)I_0(\xi)\Bigr].
+\]
+Both sides are entire in $z$, so the branch of the square root does not matter. Since $G$ is
+irreducible, $\tau(0)=q_{12}q_{21}>0$. We choose $z_0$ so that $|\tau(z)-\tau(0)|\le\tau(0)/2$
+for $|z|\le2z_0$ and take the principal branch of $\sqrt\tau$. Then
+$\xi=2S\sqrt{\beta_1\beta_2\tau}$ at $s=S\beta$ satisfies $|\arg\xi|\le\pi/12$ and $|\xi|\ge cS$,
+uniformly on $\mathcal K$. The expansion $I_\nu(\xi)=e^\xi(2\pi\xi)^{-1/2}(1+O(1/|\xi|))$ holds
+for $\nu=0,1$, uniformly in the sector $|\arg\xi|\le\pi/4$ and $|\xi|\ge1$~\cite[Eq.~10.40.1]{dlmf}.
+Since $(2\pi\xi)^{-1/2}=S^{-1/2}(4\pi)^{-1/2}(\tau\beta_1\beta_2)^{-1/4}$, this gives
+Hypothesis~\ref{hyp:L} with
+\[
+J_G(\beta,z)=\langle d(z),\beta\rangle-2\sqrt{\beta_1\beta_2\tau},\qquad
+C_G(\beta,z)=\frac{U+V}{\sqrt{4\pi}\,(\tau\beta_1\beta_2)^{1/4}},
+\]
+where $U=p_1e_1\sqrt{\tau\beta_1/\beta_2}+p_2e_2\sqrt{\tau\beta_2/\beta_1}$ and
+$V=p_1a_{12}e_2+p_2a_{21}e_1$, and with $\varepsilon=(U\varepsilon_1+V\varepsilon_0)/(U+V)$, where
+$|\varepsilon_\nu|\le C/S$ are the errors of the two expansions. Both functions are holomorphic
+in $z$, jointly continuous and real for real $z$. At $z=0$ we have $p=\mu_G$ and $e=\ones$, so
+$U+V>0$ because $\mu(G)>0$. After shrinking $z_0$, $|U+V|$ is bounded below and $|U|+|V|$ above
+on $\mathcal K\times\{|z|\le2z_0\}$, which gives $|\varepsilon|\le C/S$ once $cS\ge1$. For
+$1\le S\le1/c$ the error $\varepsilon$ is continuous on a compact set, so it is bounded, and we
+enlarge $C$. For real $z\ge0$ the
+rate of the two-state matrix $Q_G(z)$ is
+$\sup_u[\beta_1(d_1-a_{12}u_2/u_1)+\beta_2(d_2-a_{21}u_1/u_2)]=\langle d,\beta\rangle-2\sqrt{\beta_1\beta_2\tau}$,
+by the inequality of the arithmetic and geometric means. The constant agrees with that of
+Section~\ref{sec:layer-setting}, because for real $z\ge0$ both are the limit of
+$S^{1/2}e^{SJ_G(\beta,z)}f^{(z)}_G(S\beta)$ by the paragraph above.
+\end{proof}
+
+When Hypothesis~\ref{hyp:L} holds, so always for $k\le3$, we define for $\beta\in\mathcal K$ and
+$x,S>0$ the generalized kernel
+\[
+\mathbf K_\beta(x,S)=e^{-q_ix}\,\frac1{2\pi\mathrm i}\oint_{|z|=z_*}e^{x/z}\,\frac{C_G(\beta,z)}{C_G(\beta,0)}\,e^{S(J_G(\beta)-J_G(\beta,z))}\,\frac{dz}{z^2},
+\]
+for $z_*<2z_0$. The integral does not depend on the radius below $2z_0$.
+
+\begin{theorem}[the facet layer]\label{thm:layer}
+Let $F$ be irreducible with $k=|F|\ge2$, let $i\in F$, let $G=F\setminus\{i\}$ satisfy
+\textup{(H)}, and let $\mathcal K\subset\Delta_G^\circ$ be compact. If $k\le3$ we assume nothing
+more. If $k\ge4$, assume that Hypothesis~\ref{hyp:L} holds for $G$, $i$ and $\mathcal K$. Then there
+are $\delta>0$, $T_0$ and
+$C$ such that the following hold uniformly for $\beta\in\mathcal K$, $T\ge T_0$ and
+$0<x\le\delta T$, with $S=T-x$ and $s=S\beta$.
+\begin{enumerate}[(a)]
+\item $f_F(s,x)=f_G(s)\,\mathbf K_\beta(x,S)\,(1+E)$ with $|E|\le C/T$.
+\item $f_F(s,x)=f_G(s)\,\mathbf B_\beta(x,S)\,e^{E}$ with $|E|\le C\bigl(1/T+\sqrt{x/T}\,(1+x)\bigr)$.
+\item If $Q$ is reversible on $F$, then $\gamma_\beta=q_i$, (b) holds with
+$|E|\le C(1/T+\sqrt{x/T})$, and
+\[
+f_F(s,x)=f_G(s)\,\mathbf B_\beta(x,S)\Bigl(1+c_1(\beta)\,z_*\frac{I_0(\zeta)}{I_1(\zeta)}+E'\Bigr),\qquad|E'|\le C\,\frac{1+x}T .
+\]
+\end{enumerate}
+For $k=2$, (a) holds with $E=0$, and Proposition~\ref{prop:pair-face} gives (b) for all
+$x>0$ with an explicit bound.
+\end{theorem}
+
+So the theorem is unconditional for every face with at most three states, and for $k\ge4$ it
+is conditional on Hypothesis~\ref{hyp:L}. In the reversible case the Bessel form has relative
+error $O(1/T+\sqrt{x/T})$ on the whole layer $x\le\delta T$. When $Q$ is not reversible our
+bound gives the relative form $f_F=f_G\mathbf B_\beta(1+O(1/T+\sqrt{x/T}(1+x)))$ only for
+$x\le CT^{1/3}$, and beyond that only the logarithmic form (b) and the kernel of (a). The
+cause is the cubic term $S\,\partial_z^3J_G(\beta,0)z^3/6$ at $z\approx z_*$, of size
+$x^{3/2}T^{-1/2}$, which the generalized kernel keeps and the Bessel kernel does not. For the
+non-reversible cycle $q_{12}=q_{23}=q_{31}=2$, $q_{21}=q_{32}=q_{13}=1$ with $G=\{1,2\}$,
+$\beta=(\frac12,\frac12)$ and $x=T/20$, the ratio $f_F/(f_G\mathbf B_\beta)$ is $19.6$, $265$ and
+$48268$ at $T=800$, $1600$ and $3200$, so the relative form does fail there.
+
+\begin{proof}[Proof of \textup{(a)}]
+Hypothesis~\ref{hyp:L} holds with $\varepsilon=0$ for $k=2$, by Lemma~\ref{lem:L-two} for $k=3$,
+and by assumption for $k\ge4$. Let $k\ge2$ and take
+$\delta\le\frac12$, so $S\ge T/2$. Write $\Lambda(z)=S^{-(k-2)/2}C_G(\beta,z)e^{-SJ_G(\beta,z)}$.
+By Hypothesis~\ref{hyp:L}, $f_G(s)=\Lambda(0)(1+O(1/S))$, and by~\eqref{eq:layer-contour}, for every
+$\rho\le z_0$,
+\[
+e^{q_ix}f_F(s,x)=\mathcal A+\mathcal D,\qquad \mathcal A=\frac1{2\pi\mathrm i}\oint_{|z|=\rho}e^{x/z}\Lambda(z)\frac{dz}{z^2},\qquad
+|\mathcal D|\le\frac CS\,\mathcal A^{\rm abs},
+\]
+where $\mathcal A^{\rm abs}$ is the integral of $|e^{x/z}\Lambda(z)||z|^{-2}$ against $|dz|/(2\pi)$. By
+definition $\mathbf K_\beta(x,S)=e^{-q_ix}\mathcal A/\Lambda(0)$. So it suffices to show that
+$\mathcal A>0$ and $\mathcal A^{\rm abs}\le C'\mathcal A$. Put
+\[
+\Xi(z)=\frac{C_G(\beta,z)}{C_G(\beta,0)}\,e^{S(J_G(\beta)-J_G(\beta,z)-\omega_\beta z)},
+\]
+so that $\Lambda(z)/\Lambda(0)=e^{S\omega_\beta z}\Xi(z)$. By
+Proposition~\ref{prop:layer-constants}(ii), the holomorphy of $C_G$, and Cauchy estimates on the
+compact set $\mathcal K\times\{|z|\le\frac32z_0\}$, the function $R=\log\Xi$ is
+holomorphic on $|z|\le z_0$ after shrinking $z_0$, and
+\[
+R(z)=c_1z-S\omega_\beta(\gamma_\beta-q_i)z^2+O(|z|^2+S|z|^3),\qquad |R''(z)|\le C(1+S).
+\]
+We take $\delta$ so small that $z_*\le\sqrt{2\delta/\omega_{\min}}\le z_0/2$, where
+$\omega_{\min}=\min_{\mathcal K}\omega_\beta>0$.
+
+\emph{Few visits, $\zeta\le Z_0$} for a fixed large $Z_0$. Take $\rho=\max(z_*,1/S)$, which is
+at most $C/S$. On the circle $|x/z|\le Z_0/2$, $|S\omega_\beta z|\le C$ and
+$|\Xi(z)-1|\le C/S$. Let $\mathcal A_0$ be $\mathcal A$ with $\Xi=1$. By
+\eqref{eq:layer-bessel-moments} it equals $\Lambda(0)\sqrt{\omega_\beta S/x}\,I_1(\zeta)$, which
+is at least $\Lambda(0)\omega_\beta S$, because
+$\sqrt{\omega S/x}\,I_1(\zeta)=\omega S\sum_{n\ge0}(\zeta/2)^{2n}/(n!(n+1)!)$. Also
+$|\mathcal A-\mathcal A_0|\le C\Lambda(0)\rho^{-1}/S\le C\Lambda(0)$ and
+$\mathcal A^{\rm abs}\le C\Lambda(0)\rho^{-1}\le C\Lambda(0)S$. So
+$\mathcal A\ge\Lambda(0)(\omega_\beta S-C)>0$ and $\mathcal A^{\rm abs}\le C'\mathcal A$ for $S$ large.
+
+\emph{Many visits, $\zeta\ge Z_0$.} Let $\lambda(z)=x/z+S\omega_\beta z+R(z)$, so that
+$e^{x/z}\Lambda(z)=\Lambda(0)e^{\lambda(z)}$. It is real on the real axis, and
+$\lambda'(z)=-x/z^2+S\omega_\beta+O(1+S|z|)$. By the implicit function theorem it has a real
+critical point $\rho_s=z_*(1+O(\sqrt{x/S}+1/\zeta))$, and we take $\rho=\rho_s$. For
+$z=\rho e^{\mathrm i\phi}$,
+\[
+\operatorname{Re}\lambda(z)-\lambda(\rho)=(x/\rho+S\omega_\beta\rho)(\cos\phi-1)+\operatorname{Re}[R(z)-R(\rho)] .
+\]
+Since $R$ is real on the real axis, $\operatorname{Re}[R'(\rho)(z-\rho)]=R'(\rho)\rho(\cos\phi-1)$,
+and $|R''|\le C(1+S)$ bounds the rest by $2C(1+S)\rho^2(1-\cos\phi)$. Also
+$|R'(\rho)|\rho\le C(\rho+S\rho^2)$. Now $S\rho^2\le Cx$, $x/\rho+S\omega_\beta\rho\ge\zeta$,
+and $x/\zeta\le C\sqrt\delta$. So for $\delta$ small
+$\operatorname{Re}\lambda(z)-\lambda(\rho)\le-\frac\zeta2(1-\cos\phi)$, and
+\[
+\mathcal A^{\rm abs}\le\Lambda(0)\rho^{-1}e^{\lambda(\rho)}\frac1{2\pi}\int_{-\pi}^\pi e^{-\frac\zeta2(1-\cos\phi)}d\phi
+\le C\Lambda(0)\rho^{-1}e^{\lambda(\rho)}\zeta^{-1/2}.
+\]
+For the lower bound we write
+$\mathcal A=\Lambda(0)\rho^{-1}\frac1{2\pi}\int e^{\zeta\ell(\phi)}e^{-\mathrm i\phi}d\phi$ with
+$\ell(\phi)=\lambda(\rho e^{\mathrm i\phi})/\zeta$. Here $\ell(0)$ is real, $\ell'(0)=0$,
+$-\ell''(0)=\rho^2\lambda''(\rho)/\zeta$ is real and lies in $[\frac12,2]$, the derivatives of
+$\ell$ up to order four are bounded uniformly in all parameters, and the gap above holds. The
+parameters $(\beta,x,S)$ do not range over a compact set, so we use the uniform form of
+Lemma~\ref{lem:laplace} in Remark~\ref{rem:laplace-uniform}, with $\sigma_{\min}=\frac12$ and the
+gap $\frac12(1-\cos\varepsilon)$. With $m=1$, $\Psi=\ell$, $a=e^{-\mathrm i\phi}$ and $\zeta$ in place
+of $T$ it gives
+$\mathcal A=\Lambda(0)\rho^{-1}e^{\lambda(\rho)}(2\pi\zeta(-\ell''(0)))^{-1/2}(1+O(1/\zeta))$,
+which is positive and at least $c\,\mathcal A^{\rm abs}$.
+\end{proof}
+
+\begin{proof}[Proof of \textup{(b)} and \textup{(c)}]
+We use two facts on Bessel functions besides~\eqref{eq:layer-bessel-moments}. For integers
+$n\ge1$, $I_n(\zeta)=\frac1\pi\int_0^\pi e^{\zeta\cos t}\cos(nt)\,dt$~\cite[Eq.~10.32.3]{dlmf}.
+So $I_n\le I_1$ for all $\zeta>0$, and $|1-\cos nt-(1-\cos t)|\le n^2t^2/2$ and a Laplace
+estimate give $|I_1(\zeta)-I_n(\zeta)|\le Cn^2I_1(\zeta)/\zeta$ for $\zeta\ge1$. Also
+$I_0/I_1\le1+2/\zeta$, as in the proof of Proposition~\ref{prop:pair-face}.
+
+\emph{The reversible case.} By Proposition~\ref{prop:layer-constants}(iv) and holomorphy,
+$J_G(\beta,z)=J_G(\beta)-z\omega_\beta$ on the disc, so
+$\Xi(z)=C_G(\beta,z)/C_G(\beta,0)=1+c_1z+\sum_{n\ge2}c_nz^n$ with $|c_n|\le Cz_0^{-n}$. By
+\eqref{eq:layer-bessel-moments} the term $c_nz^n$ contributes $c_nz_*^nI_{n-1}(\zeta)/I_1(\zeta)$
+relative to the main term $z_*^{-1}I_1(\zeta)$. For $n\ge2$ this is at most $|c_n|z_*^n$, and the
+sum over $n\ge2$ is $O(z_*^2)=O(x/T)$, since $z_*\le z_0/2$. The term $n=1$ is
+$c_1z_*I_0(\zeta)/I_1(\zeta)=O(z_*+1/(\omega_\beta S))=O(\sqrt{x/T}+1/T)$. With (a) this proves
+both claims of (c), for all $0<x\le\delta T$.
+
+\emph{The general case, $x\le1$.} Write $\Xi(z)=e^{-S\omega_\beta(\gamma_\beta-q_i)z^2}(1+c_1z+R_2(z))$
+with $|R_2(z)|\le C(|z|^2+S|z|^3)$. On $|z|=z_*$ the Gaussian factor has modulus at most
+$e^{(\gamma_\beta-q_i)x}\le C$. We expand it in powers of $z^2$ and use
+\eqref{eq:layer-bessel-moments}. With $y=(\gamma_\beta-q_i)x$ the term $1$ gives the relative
+factor $\sum_{m\ge0}(-y)^mI_{2m-1}(\zeta)/(m!\,I_1(\zeta))$. For $\zeta\ge1$ it differs from
+$e^{-y}$ by at most $C\sum_{m\ge1}y^mm^2/(m!\,\zeta)\le Cx/\zeta=O(\sqrt{x/S})$. For $\zeta<1$
+we have $x<1/(4\omega_\beta S)$, and $|I_{2m-1}/I_1-1|\le1$ bounds the difference by
+$e^y-1=O(1/S)$. In the same way the term $c_1z$ gives $O(z_*(1+1/\zeta))=O(\sqrt{x/S}+1/S)$.
+The term $R_2$ is bounded through the modulus of the integrand, and
+$\frac1{2\pi}\int e^{\zeta\cos\phi}d\phi=I_0(\zeta)$ gives
+$O\bigl((z_*^2+Sz_*^3)I_0(\zeta)/I_1(\zeta)\bigr)=O(1/S+\sqrt{x/S})$. So
+$\mathbf K_\beta=\mathbf B_\beta(1+O(1/T+\sqrt{x/T}))$ for $x\le1$.
+
+\emph{The general case, $1\le x\le\delta T$.} Here $\zeta\ge2\sqrt{\omega_{\min}S}\ge Z_0$. We
+use the evaluation of $\mathcal A$ in the proof of (a), and the same evaluation with
+$\Xi=1$, whose integral is exactly $\Lambda(0)z_*^{-1}I_1(\zeta)$. For $\Xi=1$ the
+critical point is $z_*$, the critical value is $\zeta$, and $-\ell''(0)=1$. The ratio of the two
+evaluations is $e^{\lambda(\rho_s)-\zeta}(1+O(\sqrt{x/S}+1/\zeta))$, since
+$\rho_s/z_*-1$ and the relative change of $-\ell''(0)$ are $O(\sqrt{x/S}+1/\zeta)$. Now
+$x/z+S\omega_\beta z$ takes the value $\zeta$ at its critical point $z_*$, and the shift from
+$z_*$ to $\rho_s$ changes $\lambda$ only by
+$O(\lambda''(\rho_s)(\rho_s-z_*)^2)=O(\zeta x/S+1/\zeta)$. So
+\[
+\lambda(\rho_s)-\zeta=R(z_*)+O(\zeta x/S+1/\zeta)=-(\gamma_\beta-q_i)x+O\bigl(\sqrt{x/S}\,(1+x)\bigr),
+\]
+because $c_1z_*=O(\sqrt{x/S})$, $S\omega_\beta z_*^2=x$, $Sz_*^3=O(x^{3/2}S^{-1/2})$,
+$\zeta x/S=O(x^{3/2}S^{-1/2})$ and $1/\zeta\le C\sqrt{x/S}$ for $x\ge1$. Hence
+$\mathbf K_\beta=\mathbf B_\beta\exp(O(\sqrt{x/T}(1+x)))$, and with (a) this proves (b).
+\end{proof}
+
+At $x=\alpha_iT$ with $\alpha_i$ small but fixed, the saddle point
+of $\mathbf K_\beta$ reproduces the exponent $-TJ_F(\alpha)$ exactly, by the Legendre identity of
+Proposition~\ref{prop:layer-constants}(i). So part (a) and Theorem~\ref{thm:local} overlap, and
+together they cover the face up to its facet, unconditionally for $k\le3$ and under
+Hypothesis~\ref{hyp:L} for $k\ge4$.
+
+\subsection{The lattice and the near-vertex case}\label{sec:layer-vertex}
+
+Take $Q=J-dI$, the uniform start and $\ell=1$ in Section~\ref{sec:vertex}, with $F=\{1,2\}$,
+$G=\{1\}$, $i=2$ and $n=(b,a)$. Then $q_{12}=q_{21}=1$, $p=1-hq_1$ and $u=h/p$, and
+Lemma~\ref{lem:layer-exact-discrete} gives exactly
+\[
+P_N(b,a)=\sum_{K\ge1}\binom{a-1}{K-1}(1-hq_2)^{a-K}\,[z^K]\,(\mu_1+zh\mu_2)(1+zh)(1-hq_1+zh^2)^{b-1}.
+\]
+Its main part is $\mu_1p^{N-1}\sum_K\binom{a-1}{K-1}\binom{b-1}Ku^{2K}$, which becomes
+$B_a(bu^2)$ of~\eqref{eq:refresh-polynomial} when $\binom{b-1}K$ is replaced by $b^K/K!$. So for
+$\ell=1$ the near-vertex law is the discrete pair-face case, with $\omega=1$, $S=hb$, $x=ha$ and
+$\gamma=q_2$. In Theorem~\ref{thm:vertex-uniform-root} the parameter $w=bu^2=\omega Sh$ is of
+order one, Lemma~\ref{lem:uniform-laguerre-bessel} pins $B_a(w)/(w\mathcal I(aw))$ between
+$1-w/2$ and $1$, and the continuum layer does not apply. When $T^2/N\to0$ the parameter $w$
+tends to $0$, and the same lemma shows that the lattice adds no separate regime.
+
+\emph{Open problems.} Hypothesis~\ref{hyp:L} for $|G|\ge3$ would follow from a complex-phase
+version of Lemma~\ref{lem:laplace}. The torus representation of Lemma~\ref{lem:torus} holds for
+the complex weights of $Q_G(z)$, since they are dominated in modulus by those of $Q_G(|z|)$, and
+the holomorphic implicit function theorem gives a complex critical point near the real one. What
+is missing is the Laplace lemma for a complex symmetric Hessian with positive definite real part,
+written with its constants. A discrete form of Theorem~\ref{thm:layer}, with the Laguerre
+polynomial $B_{n_i}$ in place of the Bessel kernel, would need a discrete
+Hypothesis~\ref{hyp:L} and the saddle bounds of the proof above on the lattice, and we do not
+state it.
+
+The scripts of Section~\ref{sec:verify} check the statements of this section on three chains
+with three states, including the cycle above, for which $\omega_\beta=5.1820$ and
+$\gamma_\beta=3.4179$ against $q_3=3$. The generalized kernel matches $f_F/f_G$ to $O(1/T)$ for
+$x$ from $0.01/T$ to $T/4$ on all three, and no statement is deduced from these numbers.

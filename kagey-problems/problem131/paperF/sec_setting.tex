@@ -1,0 +1,448 @@
+\section{Setting, hypotheses and exact identities}\label{sec:setting}
+
+\subsection{Runs, preparation and the occupation count}\label{sec:runs}
+
+The walk takes $N$ steps and each step has a sign, $\plus$ or $\minus$. We call
+the positions $1,\dots,N$ slots. The signs come in maximal runs of equal sign,
+and consecutive runs have opposite signs. All runs after the first are
+independent. A run of sign $\sgn\in\{\plus,\minus\}$ has a length distributed as
+$X_\sgn$, a random variable on $\{1,2,\dots\}$ with mass function
+$f_\sgn(n)=\Prob(X_\sgn=n)$ and survival function
+\[
+ T_\sgn(x)=\Prob(X_\sgn\ge x),\qquad x\in\R .
+\]
+We extend $f_\sgn$ by zero to nonpositive integers, and we write $\osgn$ for the
+sign opposite to $\sgn$.
+
+The first run is the preparation. It has a sign $\Sigma$ and a length $D$, and
+the pair $(\Sigma,D)$ is independent of all later runs. We put
+\[
+ \nu_\sgn(d)=\Prob(\Sigma=\sgn,\,D=d),\qquad
+ Q_\sgn(N)=\Prob(\Sigma=\sgn,\,D\ge N),
+\]
+and we assume that $D$ is finite almost surely. A fresh start of sign $\sgn_0$
+is the preparation $\nu_{\sgn_0}=f_{\sgn_0}$ and $\nu_{\osgn_0}=0$. The
+stationary preparation has $\nu_\sgn=T_\sgn/s$ with $s$ as in~\eqref{eq:means}
+below. It is the law of the current run seen from a typical time of a
+two-sided stationary sequence of runs, and it is the equilibrated start of the
+physics literature.
+
+Let $A_N$ be the number of plus slots among $1,\dots,N$, and
+\[
+ P_N(k)=\Prob(A_N=k),\qquad 0\le k\le N .
+\]
+The walk that moves right on a plus slot and left on a minus slot is at
+$2A_N-N$ after $N$ steps. For a fresh start of sign $\sgn$ we
+write $F^\sgn_N(k)$ for $P_N(k)$, with $F^\sgn_N(k)=0$ for $k\notin\{0,\dots,N\}$.
+We also need the law of the count of the starting sign,
+\[
+ \Pi^\plus_m(b)=F^\plus_m(b),\qquad \Pi^\minus_m(b)=F^\minus_m(m-b),
+\]
+so $\Pi^\sgn_m(b)$ is the probability that a fresh walk of sign $\sgn$ has
+exactly $b$ slots of its own sign among its first $m$ slots.
+
+\subsection{Hypotheses}\label{sec:hypotheses}
+
+The hypotheses carry fixed names, and every statement says which it uses.
+\begin{itemize}[leftmargin=4.5em,labelsep=0.8em]
+\item[(RV)] For each sign, $T_\sgn$ is regularly varying at infinity with index
+$-\alpha_\sgn$, where $1<\alpha_\sgn<2$. We write $\alpha_*=\min(\alpha_\plus,\alpha_\minus)$.
+\item[(LR)] For each sign there is $\alpha_\sgn\in(1,2)$ with
+$f_\sgn(n)\sim\alpha_\sgn T_\sgn(n)/n$ as $n\to\infty$.
+\item[(SPAN)] For each sign, the support of $X_\sgn$ is not contained in any
+arithmetic progression $b+h\Z$ with $h\ge2$.
+\end{itemize}
+A hypothesis assumed ``for the plus sign'' is assumed for that sign only. Under
+(LR) we have $T_\sgn(n+1)/T_\sgn(n)=1-(\alpha_\sgn+o(1))/n$, so the representation
+theorem~\cite[Theorem~1.3.1]{bgt1989} shows that (LR) implies (RV) with the same
+index. (LR) says that the mass function is regularly varying, not only the
+tail. (SPAN) is the aperiodicity needed for local limit theorems. Under (RV) the
+runs have finite means, and we put
+\begin{equation}\label{eq:means}
+ \mu_\sgn=\E X_\sgn,\qquad s=\mu_\plus+\mu_\minus,\qquad p=\mu_\plus/s ,
+\end{equation}
+so $p$ is the long-run fraction of plus slots and $A_N/N\to p$ in probability.
+
+\subsection{Scales and the moving profile}\label{sec:scales}
+
+Under (RV) choose for each sign an increasing function
+$a_\sgn:(0,\infty)\to(0,\infty)$ with $t\,T_\sgn(a_\sgn(t))\to1$ as
+$t\to\infty$. So $a_\sgn$ is regularly varying with index $1/\alpha_\sgn$, and
+$a_\sgn(m)$ is the scale of the stable fluctuation of a sum of $m$ runs of sign
+$\sgn$. Put
+\begin{equation}\label{eq:scales}
+ b_{\sgn,N}=a_\sgn(N/s),\qquad B_N=\max(b_{\plus,N},b_{\minus,N}),\qquad
+ \theta_{\sgn,N}=b_{\sgn,N}/B_N\in(0,1],
+\end{equation}
+and $x_{N,k}=(k-pN)/B_N$. The walk makes about $N/s$ runs of each sign in $N$
+slots, so $b_{\sgn,N}$ is the fluctuation scale of the total length of the runs
+of sign $\sgn$, and $B_N$ is the larger of the two. When
+$\alpha_\plus\ne\alpha_\minus$ one ratio $\theta_{\sgn,N}$ tends to zero, and when
+the indices are equal the ratios may oscillate, so we keep them in the
+statements. We collect the facts about regular variation that recur.
+
+\begin{lemma}[regular variation]\label{lem:rv}
+Let $f$ be regularly varying with index $\varrho$.
+\begin{enumerate}[(i)]
+\item (Uniform convergence.) The supremum of $|f(x)/f(y)-1|$ over $x,y\ge x_0$
+with $|x/y-1|\le r$ tends to zero as $x_0\to\infty$ and
+$r\to0$~\cite[Theorems~1.2.1 and~1.5.2]{bgt1989}.
+\item (Potter's bounds~\cite[Theorem~1.5.6]{bgt1989}.) For every $\delta>0$ there is
+$x_\delta$ with $f(y)/f(x)\le2\max\{(y/x)^{\varrho+\delta},(y/x)^{\varrho-\delta}\}$ for
+$x,y\ge x_\delta$. Under (RV), for every $c\ge1$ there is $C_c$ with
+$T_\sgn(x/c)\le C_cT_\sgn(x)$ for $x\ge c$.
+\item \cite[Theorem~1.5.3]{bgt1989} If $\varrho>0$ and $f$ is bounded above and away
+from zero on compact subsets of $[1,\infty)$, then $\sup_{1\le y\le x}f(y)\le C_ff(x)$
+for $x\ge1$.
+\item (Karamata~\cite[Propositions~1.5.8 and~1.5.10]{bgt1989}.) Under (RV) there is
+$C_{\mathrm K}$ such that, for both signs and all $w\ge1$,
+\begin{equation}\label{eq:karamata}
+ \sum_{n<w}n\,T_\sgn(n)\le C_{\mathrm K}\,w^2T_\sgn(w),\qquad
+ \sum_{n\ge w}T_\sgn(n)\le C_{\mathrm K}\,wT_\sgn(w),
+\end{equation}
+and $\sum_{n\ge w}T_\sgn(n)\sim wT_\sgn(w)/(\alpha_\sgn-1)$ as $w\to\infty$.
+\item Under (RV), $B_N$ is nondecreasing and regularly varying with index
+$1/\alpha_*$. Moreover $B_NT_\sgn(N)\to0$, $NT_\sgn(b_{\sgn,N})\to s$ and
+$B_N\log N=o(N)$.
+\item Under (RV), for both signs, all large $N$ and all $L\ge b_{\sgn,N}$,
+\begin{equation}\label{eq:NT-bounds}
+ \frac s4\Bigl(\frac L{b_{\sgn,N}}\Bigr)^{-\alpha_\sgn-1}\le NT_\sgn(L)\le4s\Bigl(\frac L{b_{\sgn,N}}\Bigr)^{-(\alpha_\sgn+1)/2}.
+\end{equation}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Parts (i) to (iii) are the cited theorems, and $T_\sgn(x/c)\le C_cT_\sgn(x)$ follows
+from (i) for large $x$ and from the positivity of the nonincreasing $T_\sgn$ for the
+others. For (iv), $nT_\sgn(n)$ has index $1-\alpha_\sgn>-1$ and $T_\sgn$ has index
+$-\alpha_\sgn<-1$, so the cited propositions give the asymptotics, and positivity gives
+the bounds for all $w\ge1$. For (v), each $a_\sgn$ is increasing, so $B_N$ is
+nondecreasing. If $\alpha_\plus\ne\alpha_\minus$, the ratio $b_{\plus,N}/b_{\minus,N}$
+is regularly varying with a nonzero index, so $B_N=b_{\sgn,N}$ for the sign with the
+smaller index and all large $N$. If the indices are equal, $B_{cN}/B_N$ lies between
+the two ratios $b_{\sgn,cN}/b_{\sgn,N}$, which tend to $c^{1/\alpha_*}$. Then
+$B_NT_\sgn(N)$ has index $1/\alpha_*-\alpha_\sgn<0$, and a regularly varying function
+with a negative index tends to zero~\cite[Proposition~1.5.1]{bgt1989}. The definition of
+$a_\sgn$ with $t=N/s$ gives $NT_\sgn(b_{\sgn,N})\to s$, and $B_N\log N=o(N)$ because
+$1/\alpha_*<1$. For (vi), take $\delta=(\alpha_\sgn-1)/2\le\frac12$ in (ii). For large
+$N$ we have $b_{\sgn,N}\ge x_\delta$ and $s/2\le NT_\sgn(b_{\sgn,N})\le2s$, and
+$(L/b_{\sgn,N})^{-\alpha_\sgn-\delta}\ge(L/b_{\sgn,N})^{-\alpha_\sgn-1}$ for $L\ge b_{\sgn,N}$.
+\end{proof}
+
+Let $K_\alpha=-\Gamma(1-\alpha)>0$ for $1<\alpha<2$, and let $Z_\plus$ and
+$Z_\minus$ be independent with
+\[
+ \E e^{itZ_\sgn}=\exp\bigl(K_{\alpha_\sgn}(-it)^{\alpha_\sgn}\bigr),
+\]
+with the principal branch. These are the totally skewed stable laws that arise
+as limits of centered sums of the runs, and we write $g_\sgn$ for the density
+of $Z_\sgn$. For $\theta=(\theta_\plus,\theta_\minus)\in[0,1]^2$ let $h_\theta$
+be the density of
+\begin{equation}\label{eq:profile}
+ W_\theta=(1-p)\,\theta_\plus Z_\plus-p\,\theta_\minus Z_\minus ,
+\end{equation}
+let $\Theta$ be the compact set of $\theta\in[0,1]^2$ with
+$\max(\theta_\plus,\theta_\minus)=1$, and put $\theta_N=(\theta_{\plus,N},\theta_{\minus,N})\in\Theta$.
+The moving profile is $h_N=h_{\theta_N}$. It is a stable density when
+$\alpha_\plus=\alpha_\minus$, and otherwise a convolution of two stable densities
+with different indices. We write $H_N=\sup_xh_N(x)$ for its height. For each
+$N$ let $\tau=\tau_N$ be a sign with $b_{\tau,N}=B_N$, taking $\tau=\plus$ if
+the two scales are equal. We call $\tau$ the dominant sign and $\bar\tau$ the
+other sign, and we put $\varsigma_\plus=1$ and $\varsigma_\minus=-1$.
+
+\begin{lemma}[the profile]\label{lem:profile}
+Assume (RV).
+\begin{enumerate}[(a)]
+\item There are $C_1,C_2$ with $\sup_NH_N\le C_1$ and $|h_N(x)-h_N(y)|\le C_2|x-y|$ for
+all $N$ and $x,y$.
+\item $\varepsilon_h(R)=\sup_N\sup_{|x|\ge R}h_N(x)$ and
+$\varepsilon'_h(R)=\sup_N\int_{|x|>R}h_N(x)\,dx$ tend to zero as $R\to\infty$.
+\item The map $\theta\mapsto h_\theta$ is continuous from $\Theta$ into the bounded
+continuous functions with the uniform norm. So $h_N\to h_\theta$ uniformly along every
+subsequence with $\theta_N\to\theta$, and $\lVert h_{N'}-h_N\rVert_\infty\to0$ whenever
+$N'/N\to1$.
+\item $\inf_NH_N>0$, and $\inf_N\min_{|x|\le K}h_N(x)>0$ for every $K\ge0$.
+\item For every $N$ and $x\in\R$,
+\begin{equation}\label{eq:bulk-profile}
+ h_N(x)=\frac{s}{\mu_{\bar\tau}}\int_\R g_{\bar\tau}(y)\,
+ g_\tau\Bigl(\varsigma_\tau\frac{sx}{\mu_{\bar\tau}}+\frac{\mu_\tau}{\mu_{\bar\tau}}\theta_{\bar\tau,N}\,y\Bigr)dy .
+\end{equation}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+\emph{Bounds and continuity.} Under (RV) the means are finite, so $0<p<1$. For
+$1<\alpha<2$ and the principal branch, $(\mp it)^\alpha=|t|^\alpha e^{\mp i\pi\alpha\,\mathrm{sgn}(t)/2}$, so
+the real parts of $(-it)^\alpha$ and $(it)^\alpha$ equal $|t|^\alpha\cos\frac{\pi\alpha}2<0$, and
+$(-ict)^\alpha=c^\alpha(-it)^\alpha$ for $c\ge0$. Hence $W_\theta$ has the
+characteristic function
+\[
+ \widehat h_\theta(t)=\exp\Bigl(K_{\alpha_\plus}\bigl((1-p)\theta_\plus\bigr)^{\alpha_\plus}(-it)^{\alpha_\plus}
+ +K_{\alpha_\minus}\bigl(p\,\theta_\minus\bigr)^{\alpha_\minus}(it)^{\alpha_\minus}\Bigr),
+\]
+which is continuous in $\theta$ for each $t$. With
+$c_\sgn=K_{\alpha_\sgn}\lvert\cos\frac{\pi\alpha_\sgn}2\rvert$ and
+$c=\min(c_\plus(1-p)^{\alpha_\plus},c_\minus p^{\alpha_\minus})>0$, one coordinate of
+$\theta\in\Theta$ equals $1$, so $|\widehat h_\theta(t)|\le\Phi(t)$, where $\Phi(t)=1$ for
+$|t|<1$ and $\Phi(t)=e^{-c|t|^{\alpha_*}}$ for $|t|\ge1$. Both $\Phi$ and $|t|\Phi(t)$
+are integrable. Fourier inversion gives the continuous density
+$h_\theta(x)=\frac1{2\pi}\int e^{-itx}\widehat h_\theta(t)\,dt$, with
+$\lVert h_\theta\rVert_\infty\le C_1=\frac1{2\pi}\int\Phi$ and Lipschitz constant
+$C_2=\frac1{2\pi}\int|t|\Phi(t)\,dt$, and $h_\theta$ vanishes at infinity by the
+Riemann--Lebesgue lemma. This gives (a). Also
+$\lVert h_\theta-h_{\theta'}\rVert_\infty\le\frac1{2\pi}\int|\widehat h_\theta-\widehat h_{\theta'}|$,
+and dominated convergence with the bound $2\Phi$ gives the continuity in (c). If
+$N'/N\to1$, then $a_\sgn(N'/s)/a_\sgn(N/s)\to1$ by Lemma~\ref{lem:rv}(i), so
+$\theta_{N'}-\theta_N\to0$, and the uniform continuity of $\theta\mapsto h_\theta$ on the
+compact $\Theta$ gives the last claim of (c).
+
+\emph{Tails.} The set $\{h_\theta:\theta\in\Theta\}$ is compact. Given $\varepsilon>0$
+take a finite $\varepsilon$-net $h_{\theta_1},\dots,h_{\theta_q}$ of it and $R$ with
+$h_{\theta_i}<\varepsilon$ on $|x|\ge R$ for all $i$. Then $h_N<2\varepsilon$ on $|x|\ge R$
+for every $N$, so $\varepsilon_h(R)\to0$. If $\varepsilon'_h(R)\not\to0$, there are
+$\varepsilon>0$, $R_i\to\infty$ and $N_i$ with $\int_{|x|>R_i}h_{N_i}\ge\varepsilon$, and by
+compactness we may assume $\theta_{N_i}\to\theta$. Then $h_{N_i}\to h_\theta$ uniformly,
+so in $L^1$ by Scheff\'e's lemma, and
+$\int_{|x|>R_i}h_{N_i}\le\lVert h_{N_i}-h_\theta\rVert_1+\int_{|x|>R_i}h_\theta\to0$, a
+contradiction. This proves (b).
+
+\emph{Positivity.} Fix a sign, write $Z=Z_\sgn$, $g=g_\sgn$ and $\alpha=\alpha_\sgn$, and let
+$Z_1,Z_2,\dots$ be independent copies of $Z$. The scaling of the characteristic
+function shows that $Z_1+\dots+Z_n$ has the law of $n^{1/\alpha}Z$. If $Z\ge0$ almost
+surely, then $\delta=\E\min(Z,1)>0$, and by the strong law of large numbers
+$n^{-1/\alpha}(Z_1+\dots+Z_n)\ge n^{1-1/\alpha}\cdot\frac1n\sum_{i\le n}\min(Z_i,1)\to\infty$
+almost surely, which contradicts the tightness of a sequence with the law of $Z$.
+The same holds for $-Z$. So the open set $U=\{g>0\}$ meets both half lines. The
+density $g^{*n}$ of $Z_1+\dots+Z_n$ is continuous and positive at $y_1+\dots+y_n$
+whenever $y_1,\dots,y_n\in U$, and it equals $n^{-1/\alpha}g(n^{-1/\alpha}\,\cdot)$. Hence
+$y_1,\dots,y_n\in U$ implies $n^{-1/\alpha}(y_1+\dots+y_n)\in U$. Take
+$I=(a-\varepsilon,a+\varepsilon)\subset U$ with $0<\varepsilon<a$ and put $c_n=n^{1-1/\alpha}$.
+Then $c_nI\subset U$ for every $n$. Since $c_n\to\infty$ and $c_{n+1}/c_n\to1$, the
+intervals $c_nI$ with $n\ge n_0$ overlap in turn, so $U$ contains a half line
+$(x_0,\infty)$. In the same way $U$ contains $(-\infty,-x_0)$. Every real number is the
+sum of a point of each half line, so the case $n=2$ gives $U=\R$. Now let $\theta\in\Theta$
+and $\theta_\sgn=1$. Then $W_\theta=aZ_\sgn+Y$ with $a\in\{1-p,-p\}$ and $Y$ independent
+of $Z_\sgn$, so $x\mapsto\E[|a|^{-1}g_\sgn((x-Y)/a)]$ is a continuous positive density of
+$W_\theta$, and it equals $h_\theta$. The maps $\theta\mapsto\sup_xh_\theta(x)$ and
+$\theta\mapsto\min_{|x|\le K}h_\theta(x)$ are continuous and positive on the compact
+$\Theta$, so their minima are positive. This proves (d).
+
+\emph{The formula.} Let $\tau=\plus$. Given $Z_\minus=y$, the variable
+$(1-p)Z_\plus-p\theta_{\minus,N}Z_\minus$ has the density
+$(1-p)^{-1}g_\plus((x+p\theta_{\minus,N}y)/(1-p))$ at $x$. Since $1-p=\mu_\minus/s$ and
+$p/(1-p)=\mu_\plus/\mu_\minus$, integrating against $g_\minus(y)\,dy$
+gives~\eqref{eq:bulk-profile}. For $\tau=\minus$ we condition on $Z_\plus$.
+\end{proof}
+
+\subsection{Renewal kernels}\label{sec:kernels}
+
+For each sign let $u_\sgn$ be the renewal mass function of the runs of sign $\sgn$,
+\[
+ u_\sgn(0)=1,\qquad u_\sgn(j)=\sum_{m\ge1}f_\sgn^{*m}(j)\quad(j\ge1),
+\]
+the probability that some partial sum of independent copies of $X_\sgn$ equals
+$j$. We also need
+\[
+ v_\sgn(j)=\sum_{m\ge1}m\,f_\sgn^{*m}(j),
+\]
+and the iterated kernels $u^\sgn_m=f_\sgn^{*m}$ and $q^\sgn_m=T_\sgn*u^\sgn_{m-1}$
+for $m\ge1$, with $u^\sgn_0=\delta_0$. Let $X^\sgn_1,X^\sgn_2,\dots$ be independent
+copies of $X_\sgn$ and $S^\sgn_m=X^\sgn_1+\dots+X^\sgn_m$, with $S^\sgn_0=0$. Then
+$S^\sgn_m$ has the law $u^\sgn_m$, and since $X^\sgn_m$ is independent of
+$S^\sgn_{m-1}$, for $m,k\ge1$
+\begin{equation}\label{eq:q-cover}
+ \Prob\bigl(S^\sgn_{m-1}<k\le S^\sgn_m\bigr)=\sum_{r<k}u^\sgn_{m-1}(r)\,T_\sgn(k-r)=q^\sgn_m(k).
+\end{equation}
+So $q^\sgn_m(k)$ is the probability that the $m$-th run covers level $k$ in the time
+of its sign. Every run has length at least $1$, so $S^\sgn_m$ is strictly increasing
+in $m$, and for each $k\ge1$ exactly one $m\ge1$ has $S^\sgn_{m-1}<k\le S^\sgn_m$.
+Hence, for $k\ge1$,
+\begin{equation}\label{eq:kernel-sums}
+ \sum_{m\ge1}u^\sgn_m(k)=u_\sgn(k),\qquad
+ \sum_{m\ge1}q^\sgn_m(k)=1,\qquad
+ \sum_{m\ge1}q^\sgn_{m+1}(k)=1-T_\sgn(k),
+\end{equation}
+where the third sum is the second minus its term $q^\sgn_1=T_\sgn$. Summing the
+middle expression of~\eqref{eq:q-cover} over $m$ gives the covering identity
+\begin{equation}\label{eq:cover}
+ \sum_{m=1}^{k}T_\sgn(m)\,u_\sgn(k-m)=1\qquad(k\ge1).
+\end{equation}
+Under (RV) and (SPAN) for the sign $\sgn$ the renewal theorem holds,
+\begin{equation}\label{eq:renewal-thm}
+ u_\sgn(j)\to1/\mu_\sgn\qquad(j\to\infty),
+\end{equation}
+and we prove it in local form in Lemma~\ref{lem:index} (see
+also~\cite[Section~XIII.3]{feller1968}).
+
+The boundary kernel at the plus end records where a plus run can begin. For a
+start of sign $\sgn_0$ let
+\[
+ \kappa^{(\sgn_0)}_\plus(j)=\Prob\bigl(\text{a plus run starts immediately after the
+ $j$-th minus slot}\bigr),
+\]
+where for $j=0$ the event is that a plus run starts at slot $1$. Count time in
+minus slots only. In both cases the ends of the minus runs form a renewal
+process with interarrival law $X_\minus$, started at $0$. A plus run starts right
+after the $j$-th minus slot exactly when $j$ is a renewal epoch, with one
+exception. For a minus start the epoch $j=0$ is followed by the first minus run.
+Hence
+\begin{equation}\label{eq:kappa}
+ \kappa^{(\plus)}_\plus(j)=u_\minus(j)\quad(j\ge0),\qquad
+ \kappa^{(\minus)}_\plus(j)=u_\minus(j)\ones_{\{j\ge1\}} .
+\end{equation}
+The kernel at the minus end is defined in the same way with the signs exchanged.
+Every statement below is made at the plus end and holds at the minus end with
+the signs exchanged.
+
+We refine $\kappa^{(\sgn_0)}_\plus(i)$ by the number of plus slots before the
+run. For $i\ge0$ and $x\ge0$ let $\rho^{(\sgn_0)}_i(x)$ be the probability that a
+plus run starts immediately after the $i$-th minus slot (at slot $1$ if $i=0$) and
+that exactly $x$ plus slots precede it. At most one $x$ is possible for each
+realization, so
+\begin{equation}\label{eq:rho-mass}
+ \sum_{x\ge0}\rho^{(\sgn_0)}_i(x)=\kappa^{(\sgn_0)}_\plus(i).
+\end{equation}
+A plus run that starts after the $i$-th minus slot is preceded by $m$ complete
+minus runs with $S^\minus_m=i$, and by $m$ plus runs for a plus start and $m-1$
+plus runs for a minus start. The two families of runs are independent, so
+\begin{equation}\label{eq:rho-rep}
+ \rho^{(\plus)}_i(x)=\sum_{m\ge0}u^\minus_m(i)\,u^\plus_m(x),\qquad
+ \rho^{(\minus)}_i(x)=\sum_{m\ge1}u^\minus_m(i)\,u^\plus_{m-1}(x).
+\end{equation}
+
+\subsection{Exact identities}\label{sec:identities}
+
+The following identities hold for every $N$ and need no hypothesis.
+
+\begin{proposition}[the fresh-plus identity]\label{prop:fresh-identity}
+For $k,j\ge1$ with $k+j=N$,
+\[
+ F^\plus_N(k)=\sum_{m\ge1}\bigl[u^\minus_m(j)\,q^\plus_{m+1}(k)+u^\plus_m(k)\,q^\minus_m(j)\bigr],
+\]
+and $F^\plus_N(N)=T_\plus(N)$, $F^\plus_N(0)=0$. Exchanging the signs gives the
+fresh-minus identity
+$F^\minus_N(k)=\sum_m[u^\plus_m(k)q^\minus_{m+1}(j)+u^\minus_m(j)q^\plus_m(k)]$ for
+$k,j\ge1$, with $F^\minus_N(0)=T_\minus(N)$ and $F^\minus_N(N)=0$.
+\end{proposition}
+
+\begin{proof}
+We split according to the run that contains slot $N$. For a fresh plus start the
+run lengths $X^\plus_1,X^\plus_2,\dots$ and $X^\minus_1,X^\minus_2,\dots$ are
+independent, and the runs alternate starting with a plus run. So the $i$-th plus run
+fills the slots in $(S^\plus_{i-1}+S^\minus_{i-1},\,S^\plus_i+S^\minus_{i-1}]$, the
+$i$-th minus run fills those in $(S^\plus_i+S^\minus_{i-1},\,S^\plus_i+S^\minus_i]$,
+and these intervals partition $\{1,2,\dots\}$. Let $k+j=N$ with $0\le k\le N$.
+
+If slot $N$ lies in the $i$-th plus run, the first $N$ slots contain exactly the
+$S^\minus_{i-1}$ minus slots of the first $i-1$ minus runs, so $A_N=k$ means
+$S^\minus_{i-1}=j$, and then slot $N=k+j$ lies in that run exactly when
+$S^\plus_{i-1}<k\le S^\plus_i$. The two events concern independent sequences, so
+by~\eqref{eq:q-cover} this case has probability $u^\minus_{i-1}(j)\,q^\plus_i(k)$. If
+slot $N$ lies in the $i$-th minus run, then $A_N=S^\plus_i$, so $A_N=k$ means
+$S^\plus_i=k$, and slot $N$ lies in that run exactly when $S^\minus_{i-1}<j\le
+S^\minus_i$. This case has probability $u^\plus_i(k)\,q^\minus_i(j)$.
+
+The cases are disjoint. For $k,j\ge1$ the plus case with $i=1$ vanishes because
+$u^\minus_0(j)=0$, and $m=i-1$ in the plus case and $m=i$ in the minus case give the
+formula. For $k=N$ only the plus case with $i=1$ survives, with probability
+$q^\plus_1(N)=T_\plus(N)$. For $k=0$ the plus case is impossible because slot $N$ is
+a plus slot, and the minus case is impossible because $S^\plus_i\ge1$. The fresh
+minus start is the same with the signs exchanged.
+\end{proof}
+
+\begin{proposition}[the first-run decomposition]\label{prop:first-run}
+For every preparation and every $0\le k\le N$,
+\[
+ P_N(k)=Q_\plus(N)\ones_{\{k=N\}}+Q_\minus(N)\ones_{\{k=0\}}
+ +\sum_{d<N}\nu_\plus(d)\,F^\minus_{N-d}(k-d)+\sum_{d<N}\nu_\minus(d)\,F^\plus_{N-d}(k).
+\]
+In particular $P_N(N)=Q_\plus(N)$ and $P_N(0)=Q_\minus(N)$.
+\end{proposition}
+
+\begin{proof}
+We condition on the first run. If $\Sigma=\plus$ and $D\ge N$, then $A_N=N$, and
+this has probability $Q_\plus(N)$. If $\Sigma=\plus$ and $D=d<N$, the first $d$
+slots are plus slots and slots $d+1,\dots,N$ are the first $N-d$ slots of a fresh
+walk of sign $\minus$, independent of $(\Sigma,D)$. So $A_N=d+A'$, where $A'$ has
+the law $F^\minus_{N-d}$. The case $\Sigma=\minus$ is the same with $A_N=0$ when
+$D\ge N$ and $A_N$ of law $F^\plus_{N-d}$ when $D=d<N$. This gives the formula. For
+$d<N$, Proposition~\ref{prop:fresh-identity} gives $F^\minus_{N-d}(N-d)=0$ and
+$F^\plus_{N-d}(0)=0$, and $F^\plus_{N-d}(N)=F^\minus_{N-d}(-d)=0$ trivially, so only
+the atoms survive at $k=N$ and $k=0$.
+\end{proof}
+
+\begin{lemma}[the Green identity]\label{lem:green}
+For each sign and every $b\ge1$,
+\[
+ \sum_{m\ge1}\Pi^\sgn_m(b)=1+\mu_{\osgn}\,u_\sgn(b).
+\]
+\end{lemma}
+
+\begin{proof}
+Take a fresh walk of sign $\sgn$ continued forever, with runs of sign $\sgn$ of lengths
+$X^\sgn_1,X^\sgn_2,\dots$ and runs of sign $\osgn$ of lengths $X^{\osgn}_1,X^{\osgn}_2,\dots$,
+all independent, the $i$-th run of sign $\osgn$ coming right after the $i$-th run of
+sign $\sgn$. Let $C_m$ be the number of slots of sign $\sgn$ among the first $m$. By
+Tonelli's theorem $\sum_m\Pi^\sgn_m(b)=\E\,\#\{m\ge1:C_m=b\}$. Let $t_b<t_{b+1}$ be the
+$b$-th and $(b+1)$-th slots of sign $\sgn$. Then $C_m=b$ exactly for $t_b\le m<t_{b+1}$.
+If slot $t_b$ is not the last slot of its run, then $t_{b+1}=t_b+1$. If it is, it ends
+the $i$-th run of sign $\sgn$ for the unique $i$ with $S^\sgn_i=b$, and then
+$t_{b+1}-t_b=1+X^{\osgn}_i$. Hence
+$\#\{m:C_m=b\}=1+\sum_{i\ge1}\ones_{\{S^\sgn_i=b\}}X^{\osgn}_i$. Since $X^{\osgn}_i$ is
+independent of $S^\sgn_i$, taking expectations and using~\eqref{eq:kernel-sums} gives
+$1+\mu_{\osgn}u_\sgn(b)$.
+\end{proof}
+
+The next identity isolates the final run, which is the run that contains slot $N$.
+
+\begin{proposition}[the final-run identity]\label{prop:final-run}
+For a fresh plus start, $N\ge1$ and $0\le j<N$,
+\begin{equation}\label{eq:final-explicit}
+\begin{split}
+ P_N(N-j)={}&\sum_{r\ge0}u^\minus_r(j)\,\E\bigl[T_\plus(N-j-S^\plus_r);\,S^\plus_r\le N-j-1\bigr]\\
+ &+\sum_{m=1}^{j}T_\minus(m)\sum_{r\ge0}u^\minus_r(j-m)\,u^\plus_{r+1}(N-j).
+\end{split}
+\end{equation}
+The first sum is the event that the final run is a plus run, and the second the
+event that it is a minus run of length at least $m$ that starts at slot $N-m+1$. Only
+$r\le j$ contributes, and for $j=0$ the identity reads $P_N(N)=T_\plus(N)$.
+\end{proposition}
+
+\begin{proof}
+We use the notation of the proof of Proposition~\ref{prop:fresh-identity}. The
+$(r+1)$-th plus run starts at slot $S^\plus_r+S^\minus_r+1$ with $S^\plus_r$ plus slots
+before it. It is the final run and $A_N=N-j$ exactly when the slots before it contain
+$j$ minus slots, that is $S^\minus_r=j$, and its length satisfies
+$X^\plus_{r+1}\ge N-j-S^\plus_r\ge1$. These conditions involve independent variables,
+which gives the term $r$ of the first sum. The $(r+1)$-th minus run starts at slot
+$S^\plus_{r+1}+S^\minus_r+1$ with $S^\plus_{r+1}$ plus slots before it. If it is the
+final run and starts at slot $N-m+1$, then $A_N=N-j$ means $S^\plus_{r+1}=N-j$, hence
+$S^\minus_r=N-m-(N-j)=j-m$, which needs $1\le m\le j$, and its length satisfies
+$X^\minus_{r+1}\ge m$. This gives the second sum. Exactly one run is final, so the
+cases are disjoint. Finally $u^\minus_r(i)=0$ for $r>i$ and $u^\minus_r(0)=\ones_{\{r=0\}}$.
+\end{proof}
+
+By~\eqref{eq:rho-rep} the first sum of~\eqref{eq:final-explicit} equals
+$\sum_{x\le N-j-1}\rho^{(\plus)}_j(x)T_\plus(N-j-x)$. Section~\ref{sec:verify} describes
+how these identities compute the exact law.
+
+\begin{lemma}[the counting lemma]\label{lem:counting}
+Fix $j\ge0$ and $N>j$. On the event $\{A_N=N-j\}$ at most $j+1$ plus runs meet the
+first $N$ slots (at most $j$ if the first run is a minus run), and at least one of
+them has at least $(N-j)/(j+1)$ slots among the first $N$. For a fresh start of
+either sign and every $L\ge1$, the probability that $A_N=N-j$ and two plus runs
+that meet the first $N$ slots have length at least $L$ is at most
+$(j+1)^2T_\plus(L)^2$.
+\end{lemma}
+
+\begin{proof}
+On $\{A_N=N-j\}$ the first $N$ slots contain $j$ minus slots. Let $r$ be the number of
+plus runs that meet them. Between two consecutive such runs lies a minus run inside
+the first $N$ slots, so $r-1\le j$, and if the first run is a minus run it adds one
+more minus slot, so $r\le j$. The $N-j$ plus slots are shared among $r\le j+1$ runs,
+so one of them has at least $(N-j)/(j+1)$ slots. For a fresh start the plus runs have
+independent lengths $X^\plus_1,X^\plus_2,\dots$, and on the event of the lemma there
+are $1\le a<b\le j+1$ with $X^\plus_a\ge L$ and $X^\plus_b\ge L$. The union bound gives
+at most $\binom{j+1}2T_\plus(L)^2\le(j+1)^2T_\plus(L)^2$, and counting only the slots
+among the first $N$ makes the event smaller.
+\end{proof}

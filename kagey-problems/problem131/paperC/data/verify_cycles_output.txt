@@ -1,0 +1,33 @@
+# script: verify_cycles.py
+# sha256: 20ff66ed2aed58f72d5c9d811ba3ff18a71493fd8027082e9a70f90ed020f731
+# checks: the two Arrhenius examples, in exact arithmetic
+# command: py -I verify_cycles.py
+# date: 2026-10-24T07:04:30
+# software: Python 3.14.3, numpy 2.4.2, scipy 1.17.1, sympy 1.14.0, mpmath 1.3.0
+# run time: 0 s
+# result: PASS
+Example ex:four-state: U = (0,1,1,1), H12 = 2, H13 = H23 = H34 = 3, H14 = H24 = 5
+  ok    the rates are t^V with V = (2,3,5; 1,2,4; 2,2,2; 4,4,2) as displayed
+  ok    exit rates q1 = t^2+t^3+t^5, q2 = t+t^2+t^4, q3 = 3t^2, q4 = t^2+2t^4
+  ok    D(F) is the largest depth of a cycle in F, for all 14 proper faces (Theorem thm:depth)
+  ok    the only proper cycle with more than one state is {1,2}, of depth 3
+  ok    singleton depths 2, 1, 2, 2
+  ok    the faces of depth 3 are {1,2}, {1,2,3}, {1,2,4}; every other proper face has depth <= 2
+  ok    det(-Q_12) = 2t^4 + t^5 + 2t^6 + 2t^7 + t^9
+  ok    det(-Q_123) = det(-Q_124) = 2t^6 + t^7 + 6t^8 + 4t^9 + 3t^11
+  ok    adjugate of -Q_123: first column (3t^3, 3t^3, 2t^3) + O(t^4), other entries O(t^4)
+  ok    adjugate of -Q_124: first column (t^3, t^3, 0) + O(t^4), other entries O(t^4)
+  ok    adjugate of -Q_12: first column (t, t) + O(t^2), second column O(t^2)
+  ok    B_12, B_123, B_124 have first columns (1/2,1/2), (3/2,3/2,1), (1/2,1/2,0), zeros elsewhere
+  ok    prefactors a_12 = 2, a_123 = 2/3, a_124 = 2 (Proposition prop:prefactor)
+  ok    tie at x = 3/4, one of the two window ends
+  ok    tie at x = 3/2, one of the two window ends
+  ok    unique minimizer {1,2} on (0,3/4), {1,2,3} on (3/4,3/2), V on (3/2,4) (grid of step 1/64)
+  ok    {1,2,4} is always 1 above {1,2}
+  ok    at x = 1 the noncycle {1,2,3} scores 8/3 < 3 = score of {1,2} and of V
+Example ex:branch-switch: U = (2,0,0), H12 = H13 = 5, H23 = 1
+  ok    q12 = q13 = t^3, q21 = q31 = t^5, q23 = q32 = t
+  ok    singleton depths 3, 1, 1
+  ok    {2,3} is the only proper cycle with two states, of depth 5; {1,2}, {1,3} are not cycles
+  ok    D(F) is the largest depth of a cycle in F, for all 6 proper faces
+verify_cycles: all 22 checks passed

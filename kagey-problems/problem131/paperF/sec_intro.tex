@@ -1,247 +1,252 @@
 \section{Introduction}\label{sec:intro}
 
-We study walks on $\Z$ that move in runs of alternating direction with random
-lengths. Let $A_N$ be the number of right steps among the first $N$. If the run
-lengths are independent, $A_N$ is the occupation time of an alternating
-renewal process~\cite{godrecheluck2001,lamperti1958}. If they are also
-heavy-tailed, the walk is a lattice analogue of a L\'evy walk. L\'evy walks
-are a standard model of superdiffusion~\cite{zdk2015}, and they also describe
-anomalous heat transport in one-dimensional lattices~\cite{dsd2013,wlh2016}.
-The profile of a L\'evy walk has a central peak and two ballistic side
-peaks~\cite{zdh2011,dzh2012,zdk2015}, and the part of the profile between
-them is described by an infinite density~\cite{rdhb2014,rdhb2014b}.
+A lattice L\'evy walk moves on $\Z$ in runs of alternating direction. The
+run lengths are independent, and their tails are regularly varying with an
+index $\alpha$ between $1$ and $2$, so a run has a finite mean and an
+infinite variance. Let $A_N$ be the number of right steps among the first
+$N$. The position of the walk after $N$ steps is $2A_N-N$, so the law
+$P_N(k)=\Prob(A_N=k)$ on $\{0,\dots,N\}$ is the law of the walk read on its
+natural lattice. L\'evy walks are a standard model of
+superdiffusion~\cite{zdk2015}, and the same walk describes heat transport in
+one-dimensional lattices~\cite{dsd2013,wlh2016} and the occupation time of an
+alternating renewal process~\cite{godrecheluck2001,lamperti1958}. Its
+profile has a central peak and two ballistic side
+peaks~\cite{zdh2011,dzh2012}, and the physics literature describes the part
+between them by an infinite density~\cite{rdhb2014,rdhb2014b}. We describe
+$P_N(k)$ for every $k$, with proofs, with one exception that we state below.
 
-On the lattice we compare the end bins $A_N=N$
-and $A_N=0$, which the walk reaches only if one run covers all $N$ steps, with
-the center $A_N=N/2$, which it reaches in many ways. In the picture of heat
-spreading, the end bins are the lattice form of the ballistic side peaks of
-the standard L\'evy walk (the walk without velocity fluctuations, see
-Remark~\ref{rem:humps}). The
-center bin is the top of the central peak, and the stationary start used below
-is the equilibrated initial ensemble~\cite{dzh2012}. We ask when the ballistic
-ends beat the center.
+\subsection{The picture}\label{sec:intro-picture}
 
-For runs with geometric lengths this question is
-Problem~131 of Kagey's Open Problem Collection~\cite{kagey131}, posed for a
-Galton board. The walk is then the persistent random
-walk~\cite{kac1974,renshawhenderson1981}, which remembers
-only its last step, and the center catches up with the ends when the expected
-number of switches is about $\log N$~\cite{paperA}.
-
-In this paper we ask what happens if the walk remembers more. We study two
-kinds of memory.
+Figure~\ref{fig:atlas} shows $P_N$ for $N=5000$ on a logarithmic scale.
+Four pieces make up the row. We call the right steps plus slots.
 \begin{itemize}[nosep]
-\item A walk with heavy-tailed runs remembers how long it has gone in its
-current direction. Its path is a sequence of runs of alternating direction,
-and the run lengths $\xi$ are independent with $\Prob(\xi\ge k)=k^{-\alpha}$
-for $k\ge1$.
-\item An aging walk remembers how old it is. It switches at step $k\ge2$ with
-probability $c/k$. This is the coin-turning walk of Engl\"ander and
-Volkov~\cite{ev2018,evw2020} with $p_k=c/k$. (In the literature on renewal processes and L\'evy
-walks, aging means instead that the process depends on the time since it was
-prepared~\cite[Sections~8 and~9]{godrecheluck2001}.) We also give the walk $d$ directions. Then at step $k\ge2$
-it turns to each of the other $d-1$ directions with probability
-$\theta/(k+d-2)$, which is $c/k$ with $c=\theta$ when $d=2$.
+\item The bulk. Near $pN$, where $p$ is the long-run fraction of plus
+slots, the law is a stable density at the scale $B_N$ of the larger of the
+two run-length fluctuations. Here $B_N$ grows like $N^{1/\alpha_*}$ up to a
+slowly varying factor, with $\alpha_*$ the smaller index.
+\item The big-jump zones. A count $k$ with $k-pN$ much larger than $B_N$
+needs one plus run of macroscopic length, a giant run, and the law of that run
+gives the bin its size, which is of order $T_\plus(N)$ on the ballistic range,
+with $T_\plus$ the tail of a plus run. The giant run is either complete and lies
+in the interior or the final run, censored at slot $N$, and the bin is the sum
+of the two contributions.
+\item The boundary layers. At $k=N-j$ with $j$ fixed, the giant run is the
+final one, and the only question is where it started. It starts right after the $j$-th minus slot exactly when a
+minus run ends there, so the layer is $T_\plus(N)$ times the renewal mass
+function $u_\minus(j)$ of the minus runs.
+\item The atoms. The bin $k=N$ is the event that the first run covers the
+row, and its mass is the tail of the first run.
 \end{itemize}
+The first run is the preparation of the walk. It may be a fresh run, a run
+seen from a typical time, or anything else, and it enters each of the four
+pieces through its own criterion.
 
-\subsection{Why the golden ratio}\label{sec:heuristic}
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{atlas}
+\caption{(a) The law $P_N(k)$ for $N=5000$, run lengths with
+$f(n)\propto n^{-5/2}$ for both signs and a fresh plus start, on a
+logarithmic scale, with the four pieces of Theorems~\ref{thm:bulk}
+and~\ref{thm:bigjump}. The two ends of the horizontal axis are stretched.
+(b) The position $j^*_N$ of the interior minimum near the plus end against
+$N$, on logarithmic axes, with the law of Theorem~\ref{thm:antimode} and the
+refined prediction with $C(j)$ from Theorem~\ref{thm:second-order}.
+Section~\ref{sec:verify} describes the computations.}
+\label{fig:atlas}
+\end{figure}
 
-Here is the heuristic. Theorem~\ref{thm:center} and Corollary~\ref{cor:golden} make it rigorous.
-For heavy-tailed runs take $1<\alpha<2$, so a run has a finite mean $\mu$ but
-an infinite variance. Start the walk in equilibrium, at a typical time of a
-long sequence of runs. Then the first run is already in progress, and long runs
-are more likely to be in progress. The chance that this run covers all $N$
-steps is of order $N^{1-\alpha}$, and this is the order of the end. For the center, the runs
-to the right and the runs to the left form two independent renewal processes,
-each making about $N/(2\mu)$ runs, and the walk ends in the center when they
-meet at level $N/2$. Each process fluctuates on the scale $N^{1/\alpha}$ of a
-stable law, so they meet at the same level with probability of order
-$N^{-1/\alpha}$. Hence the ratio of end to center is
-of order $N^{1-\alpha}/N^{-1/\alpha}=N^{1-\alpha+1/\alpha}$. The exponent
-vanishes when $\alpha^2-\alpha-1=0$, that is, at the golden ratio
-$\alpha=\varphi=(1+\sqrt5)/2$. Below
-$\varphi$ the ends win, and above $\varphi$ the center wins. If the first run
-is a fresh run instead, the end is of order $N^{-\alpha}$, a factor $N$
-smaller, and the center wins for every $1<\alpha<2$.
+\subsection{Results}\label{sec:intro-results}
 
-\subsection{Setting and notation}\label{sec:notation}
+We state the hypotheses in Section~\ref{sec:hypotheses}. They are regular
+variation of the two tails with indices in $(1,2)$, written (RV), the local
+form $f_\sgn(n)\sim\alpha_\sgn T_\sgn(n)/n$ of the mass functions, written
+(LR), and aperiodicity, written (SPAN). The run laws may differ between the
+two signs, so the two stable scales $b_{\plus,N}$ and $b_{\minus,N}$ may
+differ, and their ratio may oscillate. Every theorem below holds for every
+relation between the two scales, but one window is described only in part,
+as we say below. We write $s$ for the sum of the two mean run lengths and $p$
+for the fraction of the plus mean.
 
-Every walk in this paper takes $N$ steps $X_1,\dots,X_N\in\{+1,-1\}$, where
-$+1$ means right. Let $A_N=\#\{i\le N:X_i=+1\}$ be the number of right steps,
-and write $P_N(k)=\Prob(A_N=k)$ for the probability of bin $k$, that is, of
-$k$ right steps, for whichever walk we study. Unless we say otherwise the first
-step is fair, $\Prob(X_1=+1)=\frac12$, and the rules treat the two directions
-alike, so $P_N(k)=P_N(N-k)$. We write $\Prob_+$ and $\E_+$ for probability and
-expectation given $X_1=+1$. For even $N$ we put $h=N/2$ and call
-$C_N=P_N(h)$ the center and $E_N=P_N(N)=P_N(0)$ the end. Whenever $C_N$
-appears, $N$ is even. A crossing is a value of the parameter at which a bin
-ties with an end, and for the center this means $C_N=E_N$. For
-heavy-tailed runs we do not locate a crossing at fixed $N$. There we prove
-which of $C_N$ and $E_N$ is larger for all large $N$ at fixed $\alpha$, and
-the golden ratio is the threshold for this sign.
+\emph{The bulk.} Theorem~\ref{thm:bulk} says that for a fresh start, under
+(RV) and (SPAN),
+\[
+ \sup_{k\in\Z}\bigl|B_NP_N(k)-h_N\bigl((k-pN)/B_N\bigr)\bigr|\to0,
+ \qquad \sup_kP_N(k)\le\frac C{B_N},
+\]
+where $h_N$ is the density of $(1-p)\theta_{\plus,N}Z_\plus-p\,\theta_{\minus,N}Z_\minus$,
+with $Z_\pm$ independent totally skewed stable variables. The supremum runs
+over the whole row. Outside the bulk the statement says only that every bin
+is $o(1/B_N)$, and the next theorem says what the bins are.
 
-All logarithms are natural,
-$H_k=\sum_{j\le k}1/j$ is the $k$-th harmonic number, and $\gamma$ is Euler's
-constant. Limits, $O(\cdot)$ and $o(\cdot)$ refer to $N\to\infty$, over even
-$N$ when $C_N$ appears. The constants implied by $O(\cdot)$ are absolute
-unless we name what they depend on.
+\emph{Big jumps and the boundary layer.} Put $L_k=(k-pN)/(1-p)$, the length
+of the plus run that carries a typical configuration to the count $k$.
+Theorem~\ref{thm:bigjump} says that for a fresh plus start, under (RV) and
+(SPAN) for both signs and (LR) for the plus sign,
+\[
+ P_N(k)=\Bigl[\gamma(N-k)\,f_\plus(\lfloor L_k\rfloor)+T_\plus(\lfloor L_k\rfloor)\,u_\minus(N-k)\Bigr](1+o(1))
+\]
+uniformly on $pN+K\lambda_NB_N\le k\le N$, in the sense that the error
+tends to zero as $N\to\infty$ and then $K\to\infty$. Here $\gamma(j)$ is an
+explicit finite sum with $\gamma(j)\sim js/\mu_\minus^2$, and
+$\lambda_N=1+\log(B_N/b_{\plus,N})$, which equals $1$ when the plus scale is the
+larger one. The first term is a complete giant
+run and the second a censored final run. At $k=N-j$ with $j$ fixed the
+theorem reduces to $P_N(N-j)/T_\plus(N)\to u_\minus(j)$, which needs only (RV)
+for the plus sign. As $j$ grows, $u_\minus(j)\to1/\mu_\minus$ and the layer
+joins the big-jump zone continuously. The junction with the bulk holds only
+in the double limit. Remark~\ref{rem:no-single-formula} shows that neither
+the bulk profile nor the big-jump kernel nor their sum approximates $P_N$
+with relative error $o(1)$ over the plus side. When the plus scale is the
+smaller one, on the window $KB_N\le k-pN\le K\lambda_NB_N$ we prove only the
+bulk estimate and the lower bound $P_N(k)\ge(1-o(1))G_N(k)$, with $G_N$ the
+bracket above, and we conjecture that $P_N(k)$ is the sum of the bulk term and
+$G_N(k)$ there. (LR) suffices for the theorem, and
+Example~\ref{ex:rv-not-lr} shows that (RV) alone does not, since the kernel
+reads $f_\plus$ at a single point. The sharp condition is presumably a
+regularity of $f_\plus$ over windows of width $B_N$, and we leave it open. Read
+at $k=vN$ the theorem gives the infinite density
+\[
+ \frac{P_N(\lfloor vN\rfloor)}{T_\plus(N)}\to
+ \frac1{\mu_\minus}\Bigl[\alpha_\plus(1-\ell)\ell^{-\alpha_\plus-1}+\ell^{-\alpha_\plus}\Bigr],
+ \qquad \ell=\frac{v-p}{1-p},
+\]
+with its censored-run term (Corollary~\ref{cor:infinite-density}).
 
-Heavy-tailed runs (Section~\ref{sec:heavy}) have
-the exponent $\alpha$, the mean run length $\mu=\E\xi=\zeta(\alpha)$ for
-$\alpha>1$, and the length $D$ of the first run. A fresh start has $D$
-distributed as $\xi$, and the stationary start has
-$\Prob(D=\ell)=\Prob(\xi\ge \ell)/\mu$. We put $R_N=E_N/C_N$, so the ends win
-exactly when $R_N>1$. The aging walk (Section~\ref{sec:aging}) has the
-constant $c\in(0,2)$, and its version with $d$ states has the constant
-$\theta$ and the count vector $(n_1,\dots,n_d)$, where $n_i$ is the number of
-steps in state $i$. Symbols that only one section uses are defined in that
-section.
+\emph{Preparation.} Theorem~\ref{thm:preparation} describes every
+preparation through the first-run decomposition of
+Proposition~\ref{prop:first-run}. Write $\nu_\sgn(n)$ for the probability
+that the first run has sign $\sgn$ and length $n$, and $Q_\sgn(n)$ for the
+probability that it has sign $\sgn$ and length at least $n$. The preparation
+is invisible in the bulk exactly when $B_n(\nu_\plus(n)+\nu_\minus(n))\to0$, and
+in the boundary layer at the plus end exactly when $\nu_\plus(n)=o(T_\plus(n))$.
+On the big-jump zone up to the end the same condition is sharp, while on its
+interior only window averages of $\nu_\plus$ matter, and the window condition
+is sharp under (LR) for both signs. At the plus end the conditions are nested,
+since $Q_\plus(n)=o(T_\plus(n))$ implies $\nu_\plus(n)=o(T_\plus(n))$, which
+implies $B_n\nu_\plus(n)\to0$, the plus half of the bulk criterion. When a
+condition fails the theorem gives the exact correction, as a directional
+defect in the bulk, and as an additive term in the big-jump zone and at the
+end. The stationary preparation, which is
+the equilibrated start of the physics literature, satisfies the bulk
+criterion and fails the other two, and Corollary~\ref{cor:stationary} gives
+its corrections in closed form. Corollary~\ref{cor:no-trim} shows that no
+trimming of the row by $o(N)$ bins removes the dependence on the
+preparation for every preparation at once.
 
-\subsection{Results}\label{sec:results}
+\emph{The shape.} Theorem~\ref{thm:mode} compares the endpoint atoms with
+the bulk for a preparation that satisfies the bulk criterion. An endpoint is
+the global mode when its atom exceeds $H_N/B_N$ by a fixed factor, with $H_N$
+the height of the profile, and the bulk wins when both atoms are smaller by a
+fixed factor. For the stationary preparation
+with equal indices this is the golden ratio threshold. The endpoints win for
+$\alpha<\varphi=(1+\sqrt5)/2$, the bulk wins for $\alpha>\varphi$, and at
+$\alpha=\varphi$ with pure power tails the bulk wins by the explicit factor
+$1/\mathcal C(\varphi)=1.288\ldots$, with $\mathcal C$ as in~\eqref{eq:Calpha}.
 
-In both models the start matters. For heavy-tailed runs it decides whether
-the threshold is $\varphi$ or $1$, and for the aging walk it decides whether
-the crossing is exactly $c=1$. The main results are Theorem~\ref{thm:center}
-and Corollary~\ref{cor:golden} for heavy-tailed runs and
-Proposition~\ref{prop:aging-two} and Theorem~\ref{thm:aging-d} for aging
-walks. Theorems~\ref{thm:center}, \ref{thm:alpha2} and~\ref{thm:lamperti} are
-proved in Appendix~\ref{app:heavy}, and
-Proposition~\ref{prop:aging-expansion} in Appendix~\ref{app:aging}. The other
-results are proved where they are stated.
+Theorem~\ref{thm:antimode} locates the interior minimum between the bulk and
+the plus end for a fresh plus start. Suppose that $u_\minus(j)>1/\mu_\minus$
+for every $j\ge1$. This holds for every strictly log-convex law of the minus
+runs. Then the minimum sits at $N-j^*_N$ with
+\[
+ T_\minus(j^*_N)\sim\frac{2\alpha_\plus s}N .
+\]
+So $j^*_N$ grows like the stable scale of the minus runs. At finite $N$ the
+minimizer of $u_\minus(j)+C(j)/N$ predicts $j^*_N$ better, and $j^*_N$ is
+asymptotic to it. Here $C(j)$ is the exact second-order coefficient of
+Theorem~\ref{thm:second-order}. When $u_\minus$ dips below its limit the
+minimum stays at bounded distance from the end. These results compare bins in
+different zones. They do not say that the law is monotone between the
+extrema, and the number of local extrema inside the layers is not determined
+here.
 
-\paragraph{Heavy-tailed runs.}
-For $1<\alpha<2$ and every first run that is finite almost surely, $C_N$ is
-asymptotic to an explicit constant times $N^{-1/\alpha}$
-(Theorem~\ref{thm:center}). With the stationary start
-$R_N\sim C(\alpha)N^{1-\alpha+1/\alpha}$ for an explicit constant $C(\alpha)$. Here
-$C(\varphi)=0.7761\ldots$ (and $C(\varphi)<0.952$ by elementary bounds), so
-at $\alpha=\varphi$ the center still wins. With a fresh start $R_N\to0$
-(Corollary~\ref{cor:golden}).
+\emph{Identification.} Theorem~\ref{thm:inverse} reads the run laws off the
+ends. For a fresh plus start, $P_N(N-j)/P_N(N)\to u_\minus(j)$, and the
+renewal equation inverts $u_\minus$ to the law of the minus runs. The minus
+end then gives the law of the plus runs once it is normalized by the tail of
+the minus runs. The normalization matters, since the ratios at an end
+determine a renewal mass function only up to a geometric thinning of the
+run law (Remark~\ref{rem:thinning}).
 
-For $\alpha\ge2$ the center is of order
-$N^{-1/2}$, with an extra factor $(\log N)^{-1/2}$ at $\alpha=2$, and
-$R_N\to0$ with either start (Theorem~\ref{thm:alpha2}). For $0<\alpha<1$ the
-runs have infinite mean and only the fresh start makes sense. Then
-$NC_N\to\frac2\pi\tan\frac{\pi\alpha}2$ and $R_N\to\infty$
-(Theorem~\ref{thm:lamperti}). So with a fresh start the ends win for
-$\alpha<1$ and the center wins for $\alpha>1$. We do not prove what happens
-at $\alpha=1$ (Remark~\ref{rem:other}).
+\subsection{Related work}\label{sec:intro-related}
 
-\paragraph{Aging.}
-With a fixed first step and $c=1$ the number of right steps is exactly
-uniform on $\{1,\dots,N\}$. The ratio of each interior bin to the end
-increases strictly in $c$, so every interior bin ties with the end exactly at
-$c=1$, for every $N\ge2$ (Proposition~\ref{prop:aging-two}). With $d$ states,
-a start in state~$1$ and $\theta=1$, the count vector is exactly uniform over
-all compositions $(n_1,\dots,n_d)$ of $N$ with $n_1\ge1$, and every other
-such bin ties with the corner $(N,0,\dots,0)$ exactly at $\theta=1$, for
-every $N\ge2$ (Theorem~\ref{thm:aging-d}). A small change of the aging rate
-gives a chain that redraws or repeats its state, and its counts have exactly
-the law of P\'olya's urn for every weight
-(Proposition~\ref{prop:aging-urn}).
+\emph{Infinite densities and big jumps.} Rebenshtok, Denisov, H\"anggi and
+Barkai~\cite{rdhb2014,rdhb2014b} derived the infinite density of a L\'evy
+walk from the Montroll and Weiss equation, formally and in continuous time.
+For the two-state velocity model their density
+\cite[Eqs.~(8) and~(10)]{rdhb2014} has the shape
+$|v|^{-1-\alpha}[\alpha-(\alpha-1)|v|]$, and the term $-(\alpha-1)|v|$ is the
+contribution of the censored final run, so their formula already contains it.
+What is new in Corollary~\ref{cor:infinite-density} is a proof on the lattice
+at fixed time, uniform up to the end, together with the boundary layer and the
+preparation. In the physics model each flight chooses its direction
+independently, and consecutive flights in the same direction merge into one
+run. This gives the alternating walk with run laws thinned geometrically
+with parameter $\frac12$, as in Remark~\ref{rem:thinning}. Vezzani, Barkai and
+Burioni~\cite{vbb2019,vbb2020} derived the same tail from a single big jump.
+Wang, Schulz, Deng and Barkai~\cite{wsdb2018} treat the occupation time of an
+alternating renewal process with one law for both states and find a boundary
+layer and an atom at the ends. Theorem~\ref{thm:preparation} treats the effect
+of an arbitrary preparation. Wang, H\"oll and Barkai~\cite{whb2020} and
+Akimoto~\cite{akimoto2023} treat the infinite-mean case and the moments. The
+golden ratio appears in Wang, Li and H\"anggi~\cite{wlh2016} as the exponent
+at which the side peaks and the central peak decay at the same rate, with the
+edge exponent of Cipriani, Denisov and Politi~\cite{cdp2005}, and
+Lee-Dadswell, Nickel and Gray~\cite{ldng2005} found the conduction exponent
+$(3-\sqrt5)/2$ by a hydrodynamic argument. The threshold itself is the
+exponent identity $\alpha-1=1/\alpha$. What Theorem~\ref{thm:mode} adds is the
+comparison of single bins as a theorem and the constant $\mathcal C(\varphi)$.
 
-With a fair first step each
-interior bin is twice as likely as an end at $c=1$, and its crossing is
-unique and below $1$ (Proposition~\ref{prop:aging-fair}). For the center the
-crossing is
-$c_N=1-\log2/(\log N+\gamma+2-2\log2)+O((\log N)^{-3})$
-(Proposition~\ref{prop:aging-expansion}).
+\emph{Local limit theorems and renewal theory.} Doney~\cite{doney1991} proved
+a bivariate local limit theorem in the stable domain, and
+Berger~\cite{berger2019} proved multivariate local large deviations and strong
+renewal theorems. His Theorem~3.3 applied to the walk of run lengths, together
+with the fresh-plus identity of Proposition~\ref{prop:fresh-identity}, gives
+the window $|k-pN|\le KB_N$ of Theorem~\ref{thm:bulk}. What is new there is the
+uniform bound $C/B_N$ over the whole row and the control of the remote bins
+under (RV) alone, since Berger's bounds away from the mean direction need a local
+condition. Melbourne, P\`ene and Terhesiu~\cite{mpt2026} prove mixing local
+limit theorems with multivariate stable limits on Young towers, which give one
+bin at the stable scale with the first and the last run restricted to fixed
+lengths. In the i.i.d.\ renewal setting Theorem~\ref{thm:bulk} removes these
+restrictions. We use the local large deviation bound of Caravenna and
+Doney~\cite{caravennadoney2019} (see also~\cite{melbourneterhesiu2022}) for sums
+of a fixed number of variables. The local one-big-jump theorems for
+sums of independent variables are due to Denisov, Dieker and
+Shneer~\cite{dds2008} and Berger, Birkner and Yuan~\cite{bby2023}, and the one
+under exactly the local condition (LR) is~\cite[Theorem~2.4]{berger2019ptrf}.
+The proof of Theorem~\ref{thm:bigjump} does not use them. What is new there is
+the occupation count at a fixed time, where a complete giant run enters with
+the renewal density of its start and a censored run with the boundary kernel.
+The second-order coefficient rests on the second-order renewal theorem of
+Frenk~\cite{frenk1982}, see also Rogozin~\cite{rogozin1973} and
+Doney~\cite{doney2023}, and the monotonicity of $u_\minus$ on de Bruijn and
+Erd\H{o}s~\cite{debruijnerdos1953}.
 
-\paragraph{Methods.}
-For heavy-tailed runs the walk is made of two independent renewal processes,
-one for the runs of each sign (Proposition~\ref{prop:tworenewal}). At the
-center we need a local limit theorem for each of them, with a delay for the
-first run. We obtain it from Gnedenko's local limit theorem for the sums of the
-run lengths. Sums of few runs that lie far above their mean are controlled by
-local bounds in the big-jump domain. For $\alpha<1$ these bounds need one more
-step, in which we cut the runs into two halves. Then a Mellin transform
-identifies the limit with Lamperti's density.
+\emph{The walk.} The walk is the directionally reinforced random walk of
+Mauldin, Monticino and von Weizs\"acker~\cite{mmw1996}, with limit laws by
+Horv\'ath and Shao~\cite{horvathshao1998}, and the persistent random walk of
+C\'enac, Le Ny, de Loynes and Offret, who prove functional scaling limits,
+a stable L\'evy process for $1<\alpha<2$~\cite{clnlo2018,clnlo2019}. Magdziarz,
+Scheffler, Straka and \.Zebrowski~\cite{mssz2015} prove limit theorems for
+L\'evy walks in continuous space and time. Theorem~\ref{thm:bulk} is the local
+form of the marginal of these limits at one time, and the rest of the paper is
+about the bins that the scaling limits do not see. Godr\`eche and
+Luck~\cite{godrecheluck2001} give the transform of the occupation time, which is
+the generating function of the fresh-plus identity, and Lamperti~\cite{lamperti1958}
+proved the arcsine type law for infinite-mean runs.
 
-For the aging walk all the exact
-laws come from one chain that draws afresh or repeats its state. The ties come
-from writing each ratio of a bin to the end as a sum over paths of products of
-odds that increase in $c$. For the fair start we couple the walk with the
-chain that draws afresh or repeats, whose counts are a mixture of binomial
-laws, and summation by parts turns the coupling into a local limit theorem
-with a rate.
+\emph{This series.} For runs with geometric lengths the comparison of the
+ends with the center is Problem~131 of Kagey's Open Problem
+Collection~\cite{kagey131}, posed for a Galton board. The walk is then the
+persistent random walk, whose crossings are treated in~\cite{paperA}, and
+the elephant random walk with rare reversals, which has a Landau profile in
+place of a stable one, is treated in~\cite{paperD}. The present paper is
+the heavy-tailed member of the series.
 
-\subsection{Prior work}\label{sec:prior}
+\subsection{Method and organization}\label{sec:intro-organization}
 
-For heavy-tailed runs, Godr\`eche and Luck~\cite{godrecheluck2001} give the
-transform of the occupation time of an alternating renewal process started at
-a renewal. They give the decay of the end for both
-starts~\cite[Eqs.~(1.6) and~(8.7)]{godrecheluck2001}, and from the transform
-they derive, by a formal Laplace analysis in continuous time, the stable law
-of the occupation time for
-$1<\alpha<2$~\cite[Section~7(iii), Eqs.~(7.12) to~(7.15)]{godrecheluck2001}. Read at the center, that
-law gives the constant of Theorem~\ref{thm:center}.
-
-In probability theory the
-walk is the one-dimensional directionally reinforced random walk of Mauldin,
-Monticino and von Weizs\"acker~\cite{mmw1996}, whose limit laws were found by
-Horv\'ath and Shao~\cite{horvathshao1998}. C\'enac, Le~Ny, de~Loynes and Offret
-study it as a persistent random walk whose runs have general lengths. They give
-criteria for recurrence~\cite{clnlo2018} and prove functional scaling
-limits~\cite{clnlo2019}, namely a Brownian motion for $\alpha\ge2$, a stable L\'evy
-process for $1<\alpha<2$~\cite[Theorem~3.2]{clnlo2019} and an arcsine Lamperti
-process for $\alpha<1$~\cite[Theorem~3.3 and Eq.~(3.25)]{clnlo2019}. Theorems~\ref{thm:center},
-\ref{thm:alpha2} and~\ref{thm:lamperti} are local forms of the marginals of
-these limits at the center. The end $E_N$ is a persistence event, and it is
-not a local form of these limits. Magdziarz, Scheffler, Straka and
-\.Zebrowski~\cite{mssz2015} prove limit theorems for L\'evy walks in continuous
-space and time.
-
-The scalings of the central peak and of the side
-peaks were known before~\cite{cdp2005,zdh2011,dzh2012,zdk2015}, but we did
-not find the balance of the two stated there. The observation that equal
-decay of the two singles out the golden ratio is due, as far as we know, to
-Wang, Li and H\"anggi~\cite[Section~6.2.1.3, Eq.~(6.49)]{wlh2016}, who used it as a
-heuristic for the exponent of anomalous heat conduction. They also mention that
-Lee-Dadswell, Nickel and Gray~\cite{ldng2005} had found the same conduction
-exponent $(3-\sqrt5)/2$ by a hydrodynamic argument. The two decay rates of the end,
-$N^{1-\alpha}$ and $N^{-\alpha}$, are the scalings of the ballistic peaks of a
-L\'evy walk with and without an equilibrated start~\cite[Table~I]{dzh2012}.
-
-What we add for heavy-tailed runs is a lattice local limit theorem at the
-center for every first run that is finite almost surely, so for both starts.
-With it the comparison of the end with the center becomes a theorem with the
-explicit constant $C(\alpha)$, and at $\alpha=\varphi$ the center wins
-strictly. For $\alpha<1$ the limit law of $A_N/N$ is
-Lamperti's~\cite{lamperti1958}, and we prove its local form at the center. We
-found only the integral law in the literature.
-
-For aging walks, Dietz and Sethuraman~\cite{ds2007} proved the limit law of
-$A_N/N$, Engl\"ander and Volkov~\cite{ev2018} gave a second proof, and
-Engl\"ander, Volkov and Wang~\cite{evw2020} found the scaling limit of the
-walk. For $d$ states the limit is a Dirichlet
-law~\cite[Theorem~1.4]{ds2007}, and Bouguet and
-Cloez~\cite[Propositions~4.1 and~4.5]{bc2018} find the joint limit of the
-fractions of time and the current state. The exact uniform law for two states is an
-exercise in~\cite[Section~3.1, footnote~1]{evw2020}, which also announces a general
-connection with P\'olya urns. The law of the counts of the chain of
-Proposition~\ref{prop:aging-urn} also follows from a result of Dietz, Lippitt
-and Sethuraman~\cite[Theorem~2.18]{dls2023} (Section~\ref{sec:aging-urn}).
-
-Chapter~7 of the March 18, 2024 author draft of Engl\"ander and
-Volkov's monograph~\cite{ev2025} gives the two-state joint law with the last
-state, including the uniform case and positive integer urn weights.\footnote{\label{fn:evdraft}
-The dated author upload is at
-\url{https://www.researchgate.net/publication/379333206_Coin-Turning_Random_Walks_and_Inhomogeneous_Markov_Chains}.
-All draft locators below refer to this version. We have not checked the
-numbering of the published edition.}
-Section~\ref{sec:aging} gives the precise overlaps and the time shift,
-separating the count law from the joint law and from the path law.
-
-Pradhan, Roy and Ray~\cite{prr2026} study, with the methods of physics, a
-persistent walk whose probability of reversal decays like a power of the time.
-When the power is one it is close to our aging walk, and they find its second
-moment and the tail of its runs.
-
-What we add in
-Section~\ref{sec:aging} is the joint law of the counts and the last state for
-$d\ge3$ states or a weight $\theta$ that is not an integer,
-the strict ordering that turns the uniform laws into ties
-(Proposition~\ref{prop:aging-two}(b) and Theorem~\ref{thm:aging-d}(b)), and
-for the fair start the expansion of the crossing
-(Proposition~\ref{prop:aging-expansion}) with the local limit theorem with a
-rate behind it (Proposition~\ref{prop:D-llt}).
+Everything rests on the exact identities of Section~\ref{sec:setting}, which
+write $P_N(k)$ through products of renewal kernels of the two signs and reduce
+every preparation to the two fresh laws. Sections~\ref{sec:bulk}
+to~\ref{sec:inverse} prove Theorems~\ref{thm:bulk} to~\ref{thm:inverse} in
+order, and Section~\ref{sec:verify} describes the computations.

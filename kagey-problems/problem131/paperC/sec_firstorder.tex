@@ -1,90 +1,29 @@
 \section{First-order face selection}\label{sec:firstorder}
 
-This section proves the first-order rule of the introduction. The mode sits on a face that
-minimizes $\Phi_\tau$ (Theorem~\ref{thm:first}), and the winners can be read off a convex hull
-(Theorem~\ref{thm:hull}).
+The mode sits on a face that minimizes $\Phi_\tau$ (Theorem~\ref{thm:first}), and the
+winners can be read off a convex hull (Theorem~\ref{thm:hull}).
 
-\subsection{A worked example with four states on a cycle}\label{sec:worked}
+\subsection{An example with four states on a cycle}\label{sec:worked}
 
-Before the general theorem we work out one example by hand. Take $d=4$ states
-on a cycle, with rate $1$ between neighbors (indices modulo $4$), and the
-uniform start. So at each step the chain moves to each of its two neighbors with
-probability $h=T/N$ and stays with probability $1-2h$. This is the direction of
-the planar walk that turns but never reverses
-(Example~\ref{ex:models}(iv) with $r=1$, $s=0$). Up to rotation and reflection
-there are four kinds of faces, namely a vertex, an adjacent pair, an arc of
-three states and the whole cycle. (A face such as $\{1,3\}$ cannot be the
-support of a path, since the chain cannot pass from $1$ to $3$ without visiting
-$2$ or $4$.) Which kind carries the most likely composition?
-
-For each kind we ask two questions. With what probability does the chain stay
-in the face for all $N$ steps? Among how many compositions is this probability
-shared? The best composition of the face gets about the first answer divided by
-the second. In this subsection $T$ is large and $T^2/N$ is small, the sign
-$\approx$ means equality up to a bounded factor, and we do not give proofs.
-The proofs are in Theorems~\ref{thm:first} and~\ref{thm:facemax}, and
-Corollary~\ref{cor:C4} has the constants.
-
-\emph{A vertex}, say $\{1\}$. The chain stays at state $1$ only if it never
-switches, which has probability $(1-2h)^{N-1}\approx e^{-2T}$. So the exit rate
-is $\lambda_{\{1\}}=2$. The only composition is $(N,0,0,0)$, so nothing is
-shared, and $M_{\{1\}}=\frac14(1-2h)^{N-1}\approx e^{-2T}$.
-
-\emph{An adjacent pair}, say $\{1,2\}$. The chain leaves the pair by the
-switches $1\to4$ and $2\to3$, while the switches between $1$ and $2$ keep it
-inside. So at each step it leaves with probability $h$, whichever of the two
-states it is in, and it stays in the pair with probability
-$(1-h)^{N-1}\approx e^{-T}$. The exit rate is $\lambda_{\{1,2\}}=1$, half that
-of a vertex. Given that the chain stays, it switches between $1$ and $2$ about
-$T$ times, so it makes about $T$ runs of length about $N/T$ each. The number
-$a$ of visits to state $1$ is the total length of half of these runs. So $a$
-is close to $N/2$, with fluctuations of order $\sqrt T\cdot N/T=N/\sqrt T$.
-Hence the mass $e^{-T}$ is shared by about $N/\sqrt T$ compositions
-$(a,N-a,0,0)$, and the best one gets
-\[
- M_{\{1,2\}}\approx\frac{e^{-T}}{N/\sqrt T}=N^{-1}\,T^{1/2}e^{-T}.
-\]
-Corollary~\ref{cor:C4} confirms this with an exact identity and gives the
-constant $1/\sqrt{2\pi}$ in front.
-
-\emph{An arc of three states}, say $\{1,2,3\}$. Only the end states $1$ and $3$
-can leave (both to state $4$), each at rate $1$, and the middle state $2$
-cannot. So the chain stays longer if it prefers the middle state, and we need
-an eigenvalue to find the exit rate. The chain killed on leaving the arc has the
-matrix $I+hQ_F$ with $-Q_F=2I-A$, where $A$ is the adjacency matrix of the path
-$1-2-3$. Its largest eigenvalue is $1-(2-\sqrt2)h$, with eigenvector
-$(1,\sqrt2,1)$. So the chain stays in the arc with probability about
-$e^{-(2-\sqrt2)T}$, and $\lambda_{\{1,2,3\}}=2-\sqrt2=0.586$. The visit
-fractions now fluctuate in two directions, so the mass is shared by about
-$(N/\sqrt T)^2$ compositions, and $M_{\{1,2,3\}}\approx
-N^{-2}\,T\,e^{-(2-\sqrt2)T}$.
-
-\emph{The whole cycle.} The chain never has to leave, so $\lambda_{[4]}=0$ and
-the mass is $1$. It is shared by about $(N/\sqrt T)^3$ compositions near
-$(\frac N4,\frac N4,\frac N4,\frac N4)$. So $M_{[4]}\approx N^{-3}T^{3/2}$.
-
-\begin{table}[t]
-\centering\small
-\begin{tabular}{@{}lccccc@{}}
-\toprule
-face $F$ & $\lambda_F$ & it stays with & number of & best composition &
-exponent\\
- & & probability & compositions & $M_F$ & $\Phi_\tau(F)$\\
-\midrule
-vertex & $2$ & $e^{-2T}$ & $1$ & $e^{-2T}$ & $2\tau$\\
-adjacent pair & $1$ & $e^{-T}$ & $N/\sqrt T$ & $N^{-1}T^{1/2}e^{-T}$ &
-$\tau+1$\\
-arc of three & $2-\sqrt2$ & $e^{-(2-\sqrt2)T}$ & $(N/\sqrt T)^2$ &
-$N^{-2}\,T\,e^{-(2-\sqrt2)T}$ & $(2-\sqrt2)\tau+2$\\
-whole cycle & $0$ & $1$ & $(N/\sqrt T)^3$ & $N^{-3}T^{3/2}$ & $3$\\
-\bottomrule
-\end{tabular}
-\caption{The four kinds of faces of the 4-cycle with rate $1$ between
-neighbors and the uniform start, up to bounded factors, for $T$ large and
-$T^2/N$ small. The last column is the exponent of $N$ when $T=\tau\log N$, up
-to powers of $\log N$.}
-\label{tab:C4worked}
-\end{table}
+Take $d=4$ states on a cycle, with rate $1$ between neighbors and the uniform
+start. Up to symmetry the admissible faces are a vertex, an adjacent pair, an
+arc of three states and the whole cycle, with exit rates $2$, $1$, $2-\sqrt2$
+and $0$. (For the arc, $-Q_F=2I-A$ with $A$ the adjacency matrix of the path
+$1-2-3$, whose largest eigenvalue is $\sqrt2$.) The chain stays in a face $F$
+up to time $T$ with probability about $e^{-T\lambda_F}$. Given that it stays,
+its visit fractions fluctuate on the scale $T^{-1/2}$ in each of the
+$|F|-1$ free directions, so this mass is shared by about
+$(N/\sqrt T)^{|F|-1}$ compositions. Hence
+$M_F\approx N^{-(|F|-1)}T^{(|F|-1)/2}e^{-T\lambda_F}$, and with $T=\tau\log N$
+this is $N^{-\Phi_\tau(F)}$ up to powers of $\log N$.
+Figure~\ref{fig:C4worked}(a) plots the four exponents. The vertices win for
+$\tau<1$, the pairs for $1<\tau<2$ and the whole cycle for $\tau>2$. The arcs
+never win, since they beat the pairs only for $\tau>1+\sqrt2$, where the
+cycle beats them. The whole cycle carries almost all the mass for every
+$\tau>0$, and it carries the mode only for $\tau>2$, because it spreads its
+mass over about $N^3$ compositions. Theorems~\ref{thm:first}
+and~\ref{thm:facemax} make this rule exact, and for a pair
+Corollary~\ref{cor:symface} gives the constant $1/\sqrt{2\pi}$ in front.
 
 \begin{figure}[t]
 \centering
@@ -122,265 +61,47 @@ dashed line of the arc of three states is never lowest. (b) The same faces as po
 $(\lambda_F,\lvert F\rvert-1)$, with the lower-left boundary of their convex
 hull. The gray numbers are minus the slopes of its edges, the values of $\tau$
 where the winner changes (Theorem~\ref{thm:hull}). The arc (open) lies above
-the boundary.}
+the boundary}
 \label{fig:C4worked}
 \end{figure}
 
-\emph{Comparison.} Table~\ref{tab:C4worked} collects the four cases, up to
-bounded factors. Now put $T=\tau\log N$. Then $e^{-\lambda T}=N^{-\tau\lambda}$, while
-the powers of $T$ are only powers of $\log N$. So, up to such powers,
-$M_F\approx N^{-\Phi_\tau(F)}$ with the exponent
-$\Phi_\tau(F)=\tau\lambda_F+\lvert F\rvert-1$ in the last column. The mode sits
-on the face with the smallest exponent. Figure~\ref{fig:C4worked}(a) plots the
-four exponents against $\tau$. The vertices win for $\tau<1$, the adjacent
-pairs for $1<\tau<2$ and the whole cycle for $\tau>2$. The arcs of three
-states never win. They beat the pairs only for $\tau>1+\sqrt2$, and there the
-whole cycle beats them, since that needs only $(2-\sqrt2)\tau>1$. Note also
-that the whole cycle carries almost all the mass for every $\tau>0$. It
-carries the mode only for $\tau>2$, because it spreads its mass over about
-$N^3$ compositions.
-
-\emph{The general rule.} For any admissible face $F$ the same two effects give
-$M_F\approx N^{-(\lvert F\rvert-1)}e^{-T\lambda_F}=N^{-\Phi_\tau(F)}$ up to
-powers of $\log N$, as announced in Section~\ref{sec:intro-faces}. There is a
-second way to see the factor $N^{-(\lvert F\rvert-1)}$. A path with support $F$
-must enter each of the $\lvert F\rvert-1$ states of $F$ where it does not
-start, and each first entry is a switch of probability about $T/N$. Every later
-switch also has probability about $T/N$, but it multiplies the number of ways
-to place the runs by a factor of order $N$, so it loses no power of $N$. On an
-irreducible admissible face $F$, the best composition sits near the quasi-ergodic law
-$\alpha^*_F$. Here it
-is $(\frac12,\frac12)$ on a pair, $(\frac14,\frac12,\frac14)$ on an arc (the
-normalized squared Perron vector) and the uniform law on the cycle. Other
-visit fractions $\alpha$ lose an extra factor
-$e^{-T(I_F(\alpha)-\lambda_F)}$, with a rate $I_F$ that we now introduce.
-
-The rest of this section proves the rule. Proposition~\ref{prop:rate} studies
-the rate inside a face, Theorem~\ref{thm:first} proves the rule for every $Q$
-and every start, and Theorem~\ref{thm:hull} reads the winners off a convex hull
-as in Figure~\ref{fig:C4worked}(b). Section~\ref{sec:examples} returns to the
-4-cycle with all constants (Corollary~\ref{cor:C4}).
-
-\subsection{The rate inside a face}
-
-This subsection defines the variational functional $I_F$ and proves the
-properties that Theorems~\ref{thm:first} and~\ref{thm:facemax} use. For $\alpha\in\Delta_F$ let
-\[
- I_F(\alpha)=\sup_{u\in(0,\infty)^F}\sum_{i\in F}\alpha_i\Bigl(-\frac{(Q_Fu)_i}{u_i}\Bigr)
- =\sup_{u\in(0,\infty)^F}\sum_{i\in F}\alpha_i\Bigl(q_i-\sum_{j\in F\setminus\{i\}}q_{ij}\frac{u_j}{u_i}\Bigr),
-\]
-and let $q_i^{\rm out}(F)=\sum_{j\notin F}q_{ij}$, the rate of leaving $F$ from
-$i$. For a face satisfying (H), $I_F$ is the Donsker--Varadhan
-occupation-time rate~\cite{dv1975} of the chain killed on leaving $F$
-(Section~\ref{sec:related}). Theorem~\ref{thm:first}(i) gives its local form
-away from the boundary. On a general face we use the variational
-definition without this probability interpretation. Taking $u=\ones$ gives
-$I_F(\alpha)\ge\sum_i\alpha_iq_i^{\rm out}(F)$, and dropping the terms with
-$q_{ij}$ gives $I_F(\alpha)\le\sum_i\alpha_iq_i$. So $I_F$ lies between the
-rate of leaving $F$ and the rate of leaving the current state, both averaged
-over $\alpha$. On the pair $\{1,2\}$ of Section~\ref{sec:worked}, part (c)
-below gives $I_F(\alpha)=2-2\sqrt{\alpha_1\alpha_2}$, which is $2$ at a vertex
-and has its least value $1$ at $(\frac12,\frac12)$. We need the properties of
-$I_F$ without reversibility, and the proofs are short.
-
-\begin{proposition}[the rate on a face]\label{prop:rate}
-Let $F$ be irreducible with $k=\lvert F\rvert\ge2$.
-\begin{enumerate}[(a)]
-\item The rate satisfies $I_F\ge\lambda_F$ on $\Delta_F$, with equality exactly at
-$\alpha^*_F=l_F\circ r_F$.
-\item The rate $I_F$ is convex on $\Delta_F$ and strictly convex on $\Delta_F^\circ$. For
-$\alpha\in\Delta_F^\circ$ the supremum defining $I_F(\alpha)$ is attained at a
-vector $u=r_\alpha$, which is unique up to a positive factor, and $\alpha$ is
-the stationary law of the generator on $F$ with off-diagonal entries
-$q_{ij}r_{\alpha,j}/r_{\alpha,i}$.
-\item If there is $\nu\in(0,\infty)^F$ with $\nu_iq_{ij}=\nu_jq_{ji}$ for all
-$i,j\in F$, then for every $\alpha\in\Delta_F$
-\[
- I_F(\alpha)=\sum_{\{i,j\}\subseteq F,\ i\ne j}\bigl(\sqrt{\alpha_iq_{ij}}-\sqrt{\alpha_jq_{ji}}\bigr)^2
- +\sum_{i\in F}\alpha_iq_i^{\rm out}(F).
-\]
-\item For every nonempty face $F'\subsetneq F$ and every
-$\alpha\in\Delta_{F'}$, $I_F(\alpha)=I_{F'}(\alpha)\ge\lambda_{F'}>\lambda_F$.
-\end{enumerate}
-\end{proposition}
-
-\emph{Idea of the proof.} For $u=r_F$ the quantity $-(Q_Fu)_i/u_i$ equals
-$\lambda_F$ at every state $i$. So its average over any $\alpha$ is
-$\lambda_F$, and $I_F\ge\lambda_F$. For the other properties we write
-$u=e^\psi$. Then the function inside the supremum is concave in $\psi$ and
-affine in $\alpha$, and $\psi$ is a maximizer exactly when $\alpha$ is
-stationary for the chain on $F$ with rates $q_{ij}e^{\psi_j-\psi_i}$. For
-$u=r_F$ this stationary law is $\alpha^*_F$, so $r_F$ is optimal there and
-$I_F(\alpha^*_F)=\lambda_F$. Strict convexity then shows that $\alpha^*_F$ is
-the only minimizer in the open face, and (d) handles the boundary. Part (d)
-needs the lower bound on smaller faces, which may have no positive
-eigenvector. So in the proof a resolvent applied to $\ones$ replaces $r_F$.
-
-\begin{proof}
-We prove the lower bound in (a) and the value at $\alpha^*_F$ first, and
-then (b), (d), the rest of (a) and (c), in this order.
-
-\emph{Setup.} With $u=e^\psi$ we have $I_F(\alpha)=\sup_\psi\Psi_\alpha(\psi)$,
-where
-\[
-\Psi_\alpha(\psi)=\sum_i\alpha_iq_i-\sum_{i\ne j}\alpha_iq_{ij}e^{\psi_j-\psi_i}
-\]
-and $i,j$ run over $F$. Each exponential is convex in $\psi$, so $\Psi_\alpha$
-is concave in $\psi$. It is affine in $\alpha$, and it does not change when we
-add a constant to $\psi$. Let $G^\psi$ be the conservative generator on $F$ (its rows sum to $0$) with
-off-diagonal entries $q_{ij}e^{\psi_j-\psi_i}$. It has the graph $G_F$, so it
-is irreducible and has exactly one stationary law. Differentiating in each
-$\psi_i$ gives $\nabla_\psi\Psi_\alpha=-\alpha^\top G^\psi$. A differentiable
-concave function attains its maximum exactly at its critical points. So $\psi$ attains
-$I_F(\alpha)$ if and only if $\alpha$ is the stationary law of $G^\psi$. We
-call this the criterion.
-
-\emph{The lower bound in \textup{(a)}, for every face $F'$.} We show that
-$I_{F'}\ge\lambda_{F'}$ on $\Delta_{F'}$ for every face $F'$, irreducible or
-not. Let $s>\varrho(Q_{F'})=-\lambda_{F'}$. It is enough to find a positive
-vector $u$ with $-(Q_{F'}u)_i/u_i>-s$ at every state $i$. Then
-$I_{F'}(\alpha)>-s$ for every $\alpha$, and letting $s$ decrease to
-$-\lambda_{F'}$ gives the claim. Write $Q_{F'}=B-cI$ with a matrix $B\ge0$ and
-a number $c$. Then $s+c>\varrho(B)\ge0$, so the series
-\[
-u=(sI-Q_{F'})^{-1}\ones=\sum_{\ell\ge0}(s+c)^{-\ell-1}B^\ell\ones
-\]
-converges, and $u$ is positive because the term with $\ell=0$ is. Since
-$(sI-Q_{F'})u=\ones$, we get $-(Q_{F'}u)_i/u_i=-s+1/u_i>-s$.
-
-\emph{The value at $\alpha^*_F$.} Take $\psi=\log r_F$ and
-$R=\operatorname{diag}(r_F)$. Then $G^\psi=R^{-1}(Q_F+\lambda_FI)R$, since the
-off-diagonal entries agree and the rows of the right side sum to $0$ by
-$Q_Fr_F=-\lambda_Fr_F$. As $\alpha^*_F=l_F\circ r_F$, we get
-$(\alpha^*_F)^\top G^\psi=l_F^\top(Q_F+\lambda_FI)R=0$. By the criterion
-$\psi$ attains the supremum. Its value is $\lambda_F$, because
-$-(Q_Fr_F)_i/r_{F,i}=\lambda_F$ at every $i$. So $I_F(\alpha^*_F)=\lambda_F$.
-
-(b) The function $I_F$ is convex as a supremum of functions that are affine in $\alpha$.
-Now let $\alpha\in\Delta_F^\circ$.
-
-\emph{The supremum is attained.} We normalize $\min_i\psi_i=0$. Let
-$\bar\psi=\max_i\psi_i$, and let $a$ be the least positive rate $q_{ij}$ in
-$F$. Take a shortest path in $G_F$ from a state where $\psi=0$ to a state
-where $\psi=\bar\psi$. It has at most $k-1$ edges and $\psi$ increases by
-$\bar\psi$ along it, so one of its edges $i\to j$ has
-$\psi_j-\psi_i\ge\bar\psi/(k-1)$. Keeping only this edge in the second sum of
-$\Psi_\alpha$ gives
-\[
-\Psi_\alpha(\psi)\le\sum_i\alpha_iq_i-a\,(\min_i\alpha_i)\,e^{\bar\psi/(k-1)} .
-\]
-The right side tends to $-\infty$ as $\bar\psi\to\infty$. So the supremum is
-the supremum over a bounded set of normalized $\psi$, and the continuous
-function $\Psi_\alpha$ attains it. We write $r_\alpha=e^\psi$ for a maximizer.
-By the criterion $\alpha$ is the stationary law of $G^\psi$, which is the last
-claim of (b).
-
-\emph{The maximizer is unique up to a constant.} Suppose that $\psi$ and
-$\psi+\delta$ both attain the supremum. By concavity $\Psi_\alpha$ is constant
-on the segment $\psi+s\delta$, $0\le s\le1$. On this segment $\Psi_\alpha$ is
-a constant minus the sum of the functions
-$\alpha_iq_{ij}e^{\psi_j-\psi_i+s(\delta_j-\delta_i)}$, and each of these is
-convex in $s$. A sum of convex functions is constant only if each of them is
-affine, and an exponential $e^{x+sy}$ is affine in $s$ only if $y=0$. As every
-$\alpha_i$ is positive, this gives $\delta_j=\delta_i$ on every edge of $G_F$.
-Since $G_F$ is strongly connected, $\delta$ is constant.
-
-\emph{Strict convexity.} Let $\alpha^0\ne\alpha^1$ lie in $\Delta_F^\circ$, let
-$\alpha^s=(1-s)\alpha^0+s\alpha^1$ with $0<s<1$, and let $\psi$ attain
-$I_F(\alpha^s)$. Since $\Psi_\alpha(\psi)$ is affine in $\alpha$,
-\[
-I_F(\alpha^s)=(1-s)\Psi_{\alpha^0}(\psi)+s\Psi_{\alpha^1}(\psi)
-\le(1-s)I_F(\alpha^0)+sI_F(\alpha^1).
-\]
-Equality would mean that $\psi$ attains both $I_F(\alpha^0)$ and
-$I_F(\alpha^1)$. By the criterion $\alpha^0$ and $\alpha^1$ would both be the
-stationary law of $G^\psi$, which is impossible. So the inequality is strict.
-
-(d) Let $\alpha\in\Delta_{F'}$. Only the rows $i\in F'$ enter
-$\sum_i\alpha_i\bigl(q_i-\sum_{j\in F\setminus\{i\}}q_{ij}u_j/u_i\bigr)$, and
-the terms with $j\in F\setminus F'$ are subtracted. Dropping them leaves the
-function that defines $I_{F'}(\alpha)$, at the vector $(u_i)_{i\in F'}$. So
-$I_F(\alpha)\le I_{F'}(\alpha)$. If we put $u_j=\varepsilon$ for
-$j\in F\setminus F'$ and let $\varepsilon\to0$, the dropped terms tend to $0$,
-so $I_F(\alpha)=I_{F'}(\alpha)$. Then $I_{F'}(\alpha)\ge\lambda_{F'}$ by the
-lower bound above. Finally $\lambda_{F'}>\lambda_F$, because the Perron root
-of an irreducible nonnegative matrix, here $Q_F+cI$ for a large number $c$, is
-larger than that of each proper principal
-submatrix~\cite[Ch.~2]{bermanplemmons1994}.
-
-(a) The lower bound and the value at $\alpha^*_F$ are proved above, so let
-$\alpha\ne\alpha^*_F$. If $\alpha$ lies on the boundary of $\Delta_F$, then
-$\alpha\in\Delta_{F'}$ for the proper face $F'=\supp\alpha$, and (d) gives
-$I_F(\alpha)>\lambda_F$. If $\alpha\in\Delta_F^\circ$ and
-$I_F(\alpha)=\lambda_F$, then strict convexity gives
-$I_F(\frac12(\alpha+\alpha^*_F))<\lambda_F$, against the lower bound.
-
-(c) We bound the function inside the supremum pair by pair. Since
-$q_i=\sum_{j\in F\setminus\{i\}}q_{ij}+q_i^{\rm out}(F)$, this function is
-$\sum_i\alpha_iq_i^{\rm out}(F)$ plus, for each pair $\{i,j\}$, the term
-$\alpha_iq_{ij}(1-u_j/u_i)+\alpha_jq_{ji}(1-u_i/u_j)$. By the AM--GM
-inequality,
-$\alpha_iq_{ij}u_j/u_i+\alpha_jq_{ji}u_i/u_j\ge2\sqrt{\alpha_iq_{ij}\alpha_jq_{ji}}$,
-so the term is at most $(\sqrt{\alpha_iq_{ij}}-\sqrt{\alpha_jq_{ji}})^2$. This
-gives the upper bound for $I_F(\alpha)$. For the lower bound first let
-$\alpha\in\Delta_F^\circ$ and take $u_i=\sqrt{\alpha_i/\nu_i}$. Then
-$\nu_iq_{ij}=\nu_jq_{ji}$ gives
-$\alpha_iq_{ij}u_j/u_i=\alpha_jq_{ji}u_i/u_j$, so there is equality in the
-AM--GM inequality for every pair at once. If some $\alpha_i$ vanish, we take
-$u_i=\varepsilon$ for these $i$ and let $\varepsilon\to0$. A pair with
-$\alpha_i=0<\alpha_j$ then has the term $\alpha_jq_{ji}(1-\varepsilon/u_j)$,
-which tends to its bound $\alpha_jq_{ji}$. A pair with
-$\alpha_i=\alpha_j=0$ has the term $0$, and the other pairs are as before.
-\end{proof}
-
-In words, the most likely way to stay on $F$ is to spend the fractions
-$\alpha^*_F$ of the time in its states, and the rate at any other fractions is
-strictly larger. Part (d) says that fractions on the boundary of $\Delta_F$,
-which miss some states of $F$, have the rate of the smaller face that they
-use, and this rate is larger than $\lambda_F$. The lower
-bound in (a) and the value at $\alpha^*_F$ are checked in Lean, and so is the
-interior form of (c) when $Q_F$ is symmetric. For symmetric $Q_F$, $l_F=r_F$ and $\alpha^*_F$ is the entrywise square
-of the Perron vector normalized in $\ell^2$. On a face that is not reversible the formula in (c)
-is only an upper bound (Remark~\ref{rem:flows}).
-
 \subsection{Face selection}
 
-We also need an upper bound that holds on a whole face, including near its
-boundary, where the local law of Section~\ref{sec:secondorder} does not apply.
-For an irreducible face $F$ put
-$V_F=\{\theta\in\R^F:\varrho(A_F-\operatorname{diag}\theta)=0\}$. Note that
-$q-\lambda_F\ones\in V_F$, since $A_F-\operatorname{diag}(q-\lambda_F\ones)
-=Q_F+\lambda_FI$. Each $\theta\in V_F$ gives an exponential bound with the
-linear rate $\alpha\mapsto\langle q-\theta,\alpha\rangle$, and $I_F$ is the
-supremum of these linear rates. Indeed, for $u\in(0,\infty)^F$ the vector
-$\theta$ with $\theta_i=(A_Fu)_i/u_i$ lies in $V_F$, since $u$ is a positive
-null vector of the irreducible Metzler matrix $A_F-\operatorname{diag}\theta$
-and only its Perron root has a positive eigenvector, and
-$\langle q-\theta,\alpha\rangle$ is then the function of $u$ inside the
-supremum that defines $I_F(\alpha)$. Conversely every $\theta\in V_F$ arises
-in this way from a positive Perron vector $u$ of $A_F-\operatorname{diag}\theta$.
+We also need an upper bound on a whole face, including near its boundary, where
+the local law does not apply. For an irreducible face $F$ put
+$V_F=\{\theta\in\R^F:\varrho(A_F-\operatorname{diag}\theta)=0\}$. Each
+$\theta\in V_F$ gives an exponential bound with the linear rate
+$\alpha\mapsto\langle q-\theta,\alpha\rangle$, and $J_F$ is the supremum of these
+linear rates. Indeed, for $u\in(0,\infty)^F$ the vector $\theta=A_Fu/u$
+(entrywise) lies in $V_F$, since $u$ is a positive null vector of the irreducible
+Metzler matrix $A_F-\operatorname{diag}\theta$ and only its Perron root has a
+positive eigenvector. Then $\langle q-\theta,\alpha\rangle$ is the function of $u$
+inside the supremum that defines $J_F(\alpha)$. Conversely every $\theta\in V_F$
+arises in this way from a positive Perron vector of
+$A_F-\operatorname{diag}\theta$. For a field $v\in\R^F$ the vector
+$\theta=q-v-\lambda_F(v)\ones$ lies in $V_F$, since
+$A_F-\operatorname{diag}\theta=Q_F+\operatorname{diag}v+\lambda_F(v)I$.
 
 \begin{lemma}[a uniform upper bound]\label{lem:upper}
 Let $F$ be irreducible with $k=\lvert F\rvert\ge2$, and let $\theta\in V_F$.
-There is $C_\theta$, depending on $\theta$, $Q$ and $\mu$, such that for every
-$n\in\Z_{\ge0}^F$ with $\supp n=F$ and every $h$ with $hq_{\max}\le\frac12$,
-the probability that $X_1,\dots,X_{\lvert n\rvert}$ have composition $n$ is
-at most
+There is $C_\theta$, depending on $\theta$, $Q$ and $\mu$ and bounded for $\theta$
+in compact subsets of $V_F$, such that for every $n\in\Z_{\ge0}^F$ with
+$\supp n=F$ and every $h$ with $hq_{\max}\le\frac12$, the probability that
+$X_1,\dots,X_{\lvert n\rvert}$ have composition $n$ is at most
 $C_\theta h^{k-1}\exp\bigl(-h\langle n,q-\theta\rangle+C_\theta h^2\lvert
 n\rvert\bigr)$.
 \end{lemma}
 
-The proof is in Appendix~\ref{app:torus}. With $\theta=q-\lambda_F\ones$ it
-gives $P_N(n)\le Ch^{k-1}e^{-T\lambda_F+CT^2/N}$ for every $n$ with support
-$F$. As $h^{k-1}=T^{k-1}N^{-(k-1)}$, this is the upper half of the rule
-$M_F\approx N^{-(k-1)}e^{-T\lambda_F}$ of Section~\ref{sec:worked}, up to a
-power of $T$. The lemma is stated for a path of any length $\lvert n\rvert$,
-not only $N$, so it also applies to the blocks of a path.
-
-The next theorem uses the local law (Theorem~\ref{thm:local}) and the face
-maxima (Theorem~\ref{thm:facemax}) of Section~\ref{sec:secondorder}, which
-comes later. There is no circularity, since those two theorems are proved
-there without Theorem~\ref{thm:first}.
+The proof is in Appendix~\ref{app:torus}. The lemma holds for a path of any
+length $\lvert n\rvert$, so it also applies to the blocks of a path. With
+$\theta=q-v-\lambda_F(v)\ones$ and $\lvert n\rvert=N$ it gives
+\begin{equation}\label{eq:upper-field}
+ P_N(n)e^{Tv\cdot n/N}\le C_\theta h^{k-1}e^{-T\lambda_F(v)+C_\theta T^2/N}
+\end{equation}
+for every $n$ with support $F$. For $v=0$ this is the upper half of the rule
+$M_F\approx N^{-(k-1)}e^{-T\lambda_F}$ of Section~\ref{sec:worked}, up to a power
+of $T$. The next theorem uses the local law and the face maxima of
+Section~\ref{sec:secondorder}, which are proved there without it.
 
 \begin{theorem}[first-order face selection]\label{thm:first}
 Fix $Q$ and $\mu$.
@@ -390,7 +111,7 @@ $\mathcal K\subset\Delta_F^\circ$ be compact. There is $N_0$ such that,
 uniformly for $N\ge N_0$, $1\le T\le N^{1/3}$ and $\supp n=F$ with
 $n/N\in\mathcal K$,
 \[
- \log P_N(n)=-(k-1)L-T\,I_F(n/N)+O_{\mathcal K}(1+\log T).
+ \log P_N(n)=-(k-1)L-T\,J_F(n/N)+O_{\mathcal K}(1+\log T).
 \]
 \item Let $F$ be admissible with components $C_1,\dots,C_r$, and let $k^*$ be
 the least size of a component $C_j$ with $\lambda_{C_j}=\lambda_F$. There are
@@ -412,72 +133,70 @@ full support (Theorem~\ref{thm:hull}(c)).
 \end{enumerate}
 \end{theorem}
 
-In words, (i) says that a composition whose fractions $\alpha$ stay in a compact part of the
-open face has probability $N^{-(k-1)}e^{-TI_F(\alpha)}$ up to a bounded factor and a power of
-$T$. Part (ii) says
-that the best composition on an admissible face has probability
-$N^{-(k_F-1)}e^{-T\lambda_F}$ times a power of $T$ with exponent between $0$
-and $k_F-1$, up to a bounded factor. With $T=\tau L$ the exponent of $N$ is then
-$-\Phi_\tau(F)$, and part (iii) says that for large $N$ the mode lies on an admissible face that minimizes it among the admissible faces, whatever the start.
-By (iv), if every such face is irreducible, the mode sits near the quasi-ergodic law of its
-face.
-
-\emph{Idea of the proof.} Part (i) comes from the local law of
-Section~\ref{sec:secondorder}, which we prove independently of this theorem.
-Parts (ii) and (iii) are elementary. A face is visited in blocks, one for
-each strongly connected component (a single block if the face is irreducible). For the upper bound in (ii) we apply
-Lemma~\ref{lem:upper} to each block, and for the lower bound we write down
-explicit paths that spend almost all their time in a component of least exit
-rate. Part (iii) compares the faces, and (iv) follows from
-Theorem~\ref{thm:facemax}.
+In words, a composition whose fractions $\alpha$ stay in a compact part of the
+open face has probability $N^{-(k-1)}e^{-TJ_F(\alpha)}$ up to a bounded factor
+and a power of $T$. The best composition on an admissible face has probability
+$N^{-(k_F-1)}e^{-T\lambda_F}$ times a power of $T$ with exponent between $0$ and
+$k_F-1$. With $T=\tau L$ the exponent of $N$ is $-\Phi_\tau(F)$, and the mode lies
+on a face that minimizes it, whatever the start.
 
 \begin{proof}
-(i) For $k=1$ this is~\eqref{eq:vertexmax}, since $I_{\{i\}}=q_i$. For $k\ge2$,
-Lemma~\ref{lem:discrete} gives $P_N(n)=N^{-(k-1)}f_T(n/N)(1+O(T^2/N))$ with $T^2/N\le N^{-1/3}$.
-We claim that
-$\log f_T(\alpha)=\frac{k-1}2\log T+\log C_F(\alpha)-TI_F(\alpha)+O_{\mathcal K}(1)$
-(with $C_F(\alpha)$ as in Definition~\ref{def:tilt}) for
-$\alpha\in\mathcal K$ and $T\ge1$. For $T\ge T_1$, with $T_1$ large, this is Theorem~\ref{thm:local}.
-For $1\le T\le T_1$ it holds because $f_T(\alpha)$ is positive and continuous on the compact set
-$[1,T_1]\times\mathcal K$ (see the remarks after Theorem~\ref{thm:local}). Finally $C_F$ is positive
-and continuous on $\mathcal K$, so $\log C_F$ is bounded there. So $\log f_T(n/N)=-TI_F(n/N)
-+O_{\mathcal K}(1+\log T)$, and adding $\log N^{-(k-1)}=-(k-1)L$ gives (i).
+(i) For $k=1$ this is~\eqref{eq:vertexmax}, since $J_{\{i\}}=q_i$. For $k\ge2$,
+Lemma~\ref{lem:discrete} gives $P_N(n)=N^{-(k-1)}f_T(n/N)(1+O(T^2/N))$. For
+$T\ge T_1$ Theorem~\ref{thm:local} gives
+$\log f_T(\alpha)=\frac{k-1}2\log T+\log C_F(\alpha)-TJ_F(\alpha)+O_{\mathcal K}(1)$
+on $\mathcal K$, and for $1\le T\le T_1$ this holds because $f_T$ and $C_F$ are
+positive and continuous on $[1,T_1]\times\mathcal K$. As $\log C_F$ is bounded on
+$\mathcal K$, adding $\log N^{-(k-1)}=-(k-1)L$ gives (i).
 
-(ii) If $F$ is not admissible, $M_F=0$. Let $F$ be admissible. A path visits each component
-in one block of consecutive times (proof of Lemma~\ref{lem:admissible}), and an irreducible
-face is one component, with $k^*=k_F$. (For irreducible $F$, Theorem~\ref{thm:facemax} later
-gives the sharper factor $T^{(k_F-1)/2}K_F$, but we do not need it here.) For the upper bound, Lemma~\ref{lem:upper} (or a direct count if
-$\lvert C\rvert=1$) bounds a block of length $N_C$ in the component $C$ by
-$O(h^{\lvert C\rvert-1}e^{-h\lambda_CN_C})$, and each of the $r-1$
-switches between blocks gives a factor $h$. As $\lambda_C\ge\lambda_F$, this gives
-$M_F=O(h^{k_F-1}e^{-T\lambda_F})$. For the lower bound the path spends about $N/T$ visits in each
-component except one of least exit rate, which loses a bounded factor per component, and we divide
-by the number of compositions. The details are in Appendix~\ref{app:first}.
+(ii) Let $F$ be admissible. A path visits each component in one block of
+consecutive times (proof of Lemma~\ref{lem:admissible}), and an irreducible face
+is one component, with $k^*=k_F$. For the upper bound, Lemma~\ref{lem:upper} (or a
+direct count if $\lvert C\rvert=1$) bounds a block of length $N_C$ in the
+component $C$ by $O(h^{\lvert C\rvert-1}e^{-h\lambda_CN_C})$, and each of the
+$r-1$ switches between blocks gives a factor $h$. As $\lambda_C\ge\lambda_F$, this
+gives $M_F=O(h^{k_F-1}e^{-T\lambda_F})$. For the lower bound the path spends about
+$N/T$ visits in each component except one of least exit rate, which loses a
+bounded factor per component, and we divide by the number of compositions. The
+details are in Appendix~\ref{app:first}.
 
-(iii) We compare the faces by (ii). For large $N$ we have $T_0\le T=\tau L\le N^{1/3}$, so (ii)
-applies. There $T\lambda_F=\tau L\lambda_F$ and $\log T=O(\log L)$, so both bounds in (ii) read
-$\log M_F=-L\,\Phi_\tau(F)+O(\log L)$ for every admissible face, while $M_F=0$ for the others.
-Since $\max_nP_N(n)=\max_FM_F$ and there are finitely many faces, the first claim follows. For
-the second claim let $m_\tau=\min_F\Phi_\tau(F)$. An admissible $F\notin\mathcal F_\tau$ has
-$\Phi_\tau(F)\ge m_\tau+\varepsilon_0$ for a fixed $\varepsilon_0>0$, so
-$M_F\le N^{-m_\tau-\varepsilon_0+o(1)}$, which is smaller than $\max_nP_N(n)=N^{-m_\tau+o(1)}$
-for large $N$. So the support of a global mode is not such a face. A global mode has positive
+(iii) For large $N$ we have $T_0\le T=\tau L\le N^{1/3}$, and both bounds in (ii)
+read $\log M_F=-L\,\Phi_\tau(F)+O(\log L)$ for every admissible face, while
+$M_F=0$ for the others. Since $\max_nP_N(n)=\max_FM_F$ over finitely many faces,
+the first claim follows. Let $m_\tau=\min_F\Phi_\tau(F)$. An admissible
+$F\notin\mathcal F_\tau$ has $\Phi_\tau(F)\ge m_\tau+\varepsilon_0$ for a fixed
+$\varepsilon_0>0$, so $M_F\le N^{-m_\tau-\varepsilon_0+o(1)}$, which is smaller
+than $\max_nP_N(n)=N^{-m_\tau+o(1)}$ for large $N$. A global mode has positive
 probability, so its support is admissible, and hence it lies in $\mathcal F_\tau$.
 
 (iv) By (iii), for large $N$ a global mode $\hat n$ maximizes $P_N$ on its face
-$F\in\mathcal F_\tau$, which is irreducible and admissible and so satisfies (H) by
-Lemma~\ref{lem:admissible}(b). So Theorem~\ref{thm:facemax} with
-$T=\tau L\le N^{1/3}$ gives $\hat n/N=\alpha^*_F+O(1/L)$.
+$F\in\mathcal F_\tau$, which satisfies (H) by Lemma~\ref{lem:admissible}(b). So
+Theorem~\ref{thm:facemax} with $T=\tau L\le N^{1/3}$ gives
+$\hat n/N=\alpha^*_F+O(1/L)$.
 \end{proof}
 
-For a reducible face we only have the bounds in (ii), and
-Proposition~\ref{prop:threecycle} shows that the power of $T$ can differ from
-$(k_F-1)/2$.
+For a reducible face we only have the bounds in (ii), and in
+Example~\ref{ex:threecycle} the power of $T$ differs from $(k_F-1)/2$.
+
+\begin{remark}[a field]\label{rem:first-field}
+Let $v\in\R^d$, put $M_F(T,v)=\max\{P_N(n)e^{Tv\cdot n/N}:\supp n=F\}$ and
+$\Phi_{\tau,v}(F)=|F|-1+\tau\lambda_F(v_F)$. On an admissible face,
+$Q_F+\operatorname{diag}v_F$ is block triangular in the order of the
+components, so $\lambda_F(v_F)=\min_j\lambda_{C_j}(v_{C_j})$. The upper bound in
+(ii) holds for $M_F(T,v)$ with $\lambda_F(v_F)$ in place of $\lambda_F$. The proof
+in Appendix~\ref{app:first} applies with~\eqref{eq:upper-field} on each block and
+the exact weight $e^{hv_iN_j}$ on a block $\{i\}$. For $F$ satisfying (H),
+Theorem~\ref{thm:facemax} gives the matching lower bound. If $\mu$ has full
+support, a reducible admissible face $F$ has a component $C$ with
+$\lambda_C(v_C)=\lambda_F(v_F)$, which is admissible with fewer states, so
+$\Phi_{\tau,v}(C)\le\Phi_{\tau,v}(F)-1$. So if $\mu$ has full support, then for
+fixed $\tau$ and $v$, (iii)
+and (iv) hold for the weighted law with $\Phi_{\tau,v}$ and $\alpha^*_F(v)$, every
+face that minimizes $\Phi_{\tau,v}$ is irreducible, and a strict minimizer carries
+every maximizer of the weighted law for large $N$.
+\end{remark}
 
 \subsection{Reading the winners off a convex hull}
-
-This subsection turns Theorem~\ref{thm:first}(iii) into a picture. The winners are the points
-on the lower boundary of a convex hull.
 
 For an admissible face $F$ put $P_F=(\lambda_F,\lvert F\rvert-1)$, and let $S$
 be the set of these points. Then $\Phi_\tau(F)=\tau x+y$ at $(x,y)=P_F$. Picture
@@ -512,12 +231,6 @@ in $\mathcal F_\tau$ is irreducible, for every $\tau>0$.
 In words, as $\tau$ grows the winners walk up the lower-left boundary of the
 hull, from small faces with large exit rates to large faces with small exit
 rates, and they change at the values $\tau_i$, minus the slopes of its edges.
-
-\emph{Idea of the proof.} The least value $g(\tau)$ of $\Phi_\tau$ is a minimum
-of finitely many affine functions of $\tau$, so it is concave and piecewise
-affine. Its pieces are the vertices $v_i$ and its kinks are the values
-$\tau_i$. Part (b) adds two inequalities, and part (c) replaces a reducible
-face by one of its components.
 
 \begin{proof}
 (a) We study the least value $g(\tau)=\min_{(x,y)\in S}(\tau x+y)$ for $\tau>0$. Each point
@@ -577,11 +290,11 @@ vertices tie at $\tau_i$. The general path structure in (a) and the ties along
 a closed edge are proved only here. A face with small $\lambda_F$ for
 its size is a set of states that the chain rarely leaves, a well-separated community. As $\tau$
 grows the exit rate counts for more, and the mode moves to larger communities. It need not
-grow around its first vertex, and it can move to a disjoint community (Table~\ref{tab:outcomes}).
+grow around its first vertex, and it can move to a disjoint community.
 For symmetric $Q$, $\lambda_F$ is the least value of
 $\sum_{i<j}q_{ij}(f_i-f_j)^2$, the sum over all pairs in $[d]$, over unit
 vectors $f$ supported in $F$ (Rayleigh--Ritz), and it
-decreases strictly as a connected face grows, by Proposition~\ref{prop:rate}(d). Since faces of one size share the term
+decreases strictly as a connected face grows, by Lemma~\ref{lem:face-monotone}. Since faces of one size share the term
 $\lvert F\rvert-1$, only the faces with the least exit rate of each size can win. Figure~\ref{fig:cycles}(a) shows $S$ for the 6-cycle.
 
 \begin{figure}[t]
@@ -593,6 +306,6 @@ $\tau_i$ of Theorem~\ref{thm:hull}. The winners (filled) are the arcs of one to 
 $C_6$, and the arc of five states (open) never wins. (b) The support size of the exact mode on
 $C_5$ with the uniform start, against $T$, at $N=40$ and $N=72$. The mode skips the arc of four
 states. The triangles mark the first-order switch points $\tau_i\log N$ with $\tau_i=1$,
-$1+\sqrt2$ and $2+\sqrt2$ (Table~\ref{tab:outcomes}).}
+$1+\sqrt2$ and $2+\sqrt2$}
 \label{fig:cycles}
 \end{figure}

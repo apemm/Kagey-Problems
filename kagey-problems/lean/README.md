@@ -29,7 +29,7 @@ Mathlib `v4.33.1` (Lean `v4.33.1`).  All files compile with no `sorry`, no `axio
     diamond `D(1,1)` is hidden by a valid blackout of the `4 × 3` grid, `f(5,8) = 14` in full
     (`kfvalue_5_8`) and `f(5,5) ≥ 10`.
   - `Problem001/Boards.lean` (proof of a faster test, then kernel decision): the blackout of
-    Theorem "the guess fails" (a) and the stored `6 × 15` blackout are valid, so `f(6,8) ≥ 15`
+    Theorem "small grids" and the stored `6 × 15` blackout are valid, so `f(6,8) ≥ 15`
     and `f(6,15) = 24` in full; the `5 × 13` and `6 × 23` collar test boards are valid.
   - `Problem001/ThreeCorners.lean` (proof): Lemma "three corners suffice": two rectangles sharing
     three corners are equal (`eq_of_three_le_card_inter`), so distinct rectangles share at most

@@ -26,6 +26,7 @@ Run with python -B verify_first_order.py, or add --full for the same cells at N 
 import argparse
 import itertools
 import math
+import os
 import sys
 import time
 from fractions import Fraction
@@ -35,6 +36,7 @@ import numpy as np
 from scipy.linalg import expm
 from scipy.optimize import brentq, minimize
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # the folder of this script, also under py -I
 from verify_examples import full_law
 from verify_second_order import RunFace
 

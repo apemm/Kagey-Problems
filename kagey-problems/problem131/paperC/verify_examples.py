@@ -23,6 +23,7 @@ P_4 at N = 150 and 300, and the census of all connected graphs on 6 states.
 import argparse
 import itertools
 import math
+import os
 import sys
 import time
 from fractions import Fraction
@@ -33,6 +34,7 @@ import numpy as np
 import sympy as sp
 from scipy.optimize import brentq, minimize
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # the folder of this script, also under py -I
 from verify_second_order import RunFace, S_ab, torus_logP
 
 FAILS = []

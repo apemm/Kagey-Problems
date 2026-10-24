@@ -1,44 +1,96 @@
-"""Run the checks for Paper C with the current interpreter.
+"""Run the checks of Paper C (problem131_chains.tex) and save their outputs under data/.
 
-The default (--quick) reproduces the numbers of the paper that take a few
-minutes in all. Add --full for the heavy cells as well: the directed 3-cycle at
-N = 10^8, the whole 4-cycle in the continuum, C_5 at N = 72, the path P_4 at
-N = 150 and 300, the census of graphs on 6 states, the sticky switches at
-N = 480, the telegraph comparison at N = 16000, and the cells at N = 160 of the
-first-order section. The planar cells are now in ../paperE.
-Needs numpy, scipy, sympy and mpmath.
+Each script runs in its own process as `<python> -I <script>`, in this folder. Its output goes to
+data/<script>_output.txt, behind a header with the sha256 of the script, the date, the versions of
+Python and of the packages, the run time and the exit status. A script passes when every
+assertion in it holds, which is when it exits with status 0.
 
-Since October 2026 this paper incorporates Paper B (../archive/paperB). The checks of the statements that
-came from Paper B are the scripts of ../archive/paperB, run by ../archive/paperB/verify_all.py (or
-`python -B verify_all.py --paper b` in the folder problem131). The sticky-prior checks in
-verify_sticky_fisher.py belong to the note ../S3_sticky_note, and its Fisher checks to the note
-../S1_endpoint_information_note.
+The default runs in about fifteen minutes on a laptop. With --full
+the three older scripts that have heavy cells also run those (the directed 3-cycle at N = 10^8,
+the whole 4-cycle in the continuum, C_5 at N = 72, the path P_4 at N = 150 and 300, the census of
+graphs on 6 states, and the cells at N = 160 of the first-order section), which adds a few hours.
+Needs numpy, scipy, sympy and mpmath. Run:  py -I verify_all.py [--full] [--only NAME ...]
+
+The script verify_sticky_fisher.py in this folder checks the notes ../S3_sticky_note and
+../S1_endpoint_information_note, not this paper, and is not run here.
 """
-from pathlib import Path
 import argparse
+import datetime
+import hashlib
+import platform
 import subprocess
 import sys
 import time
+from pathlib import Path
 
-base = Path(__file__).resolve().parent
-parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-group = parser.add_mutually_exclusive_group()
-group.add_argument('--quick', action='store_true', help='the default')
-group.add_argument('--full', action='store_true', help='also run the heavy cells')
-args = parser.parse_args()
-# one script per topic, matching the ledgers ledger_C1.md to ledger_C5.md
-scripts = ('verify_first_order.py',      # C1: exact law, the rate on a face, first-order selection
-           'verify_examples.py',         # C2: complete graphs, cycles, paths, 2 triangles, the paw and the house
-           'verify_sticky_fisher.py',    # C4: sticky priors (now the note S3) and the endpoint information note S1
-           'verify_second_order.py',     # C5: the local law, the constants and the crossings
-           'verify_forest.py',           # Proposition 4.9 and Lemma A.3: the tree formula (about five minutes)
-           'verify_rate_flows.py',       # Remark 4.12: the rate through flows
-           'verify_weak_field.py')       # Proposition 4.16: a weak field (about a minute)
-t0 = time.time()
-for name in scripts:
-    print(f'\nRunning {name}' + (' --full' if args.full else ''), flush=True)
-    cmd = [sys.executable, '-B', str(base / name)] + (['--full'] if args.full else [])
-    result = subprocess.run(cmd, cwd=base)
-    if result.returncode:
-        sys.exit(result.returncode)
-print(f'\nAll {len(scripts)} verification scripts passed ({time.time() - t0:.0f} s).', flush=True)
+BASE = Path(__file__).resolve().parent
+SCRIPTS = (
+    # (script, takes --full, what it checks)
+    ('verify_first_order.py', True, 'the exact law, the continuum density, the rate and first-order selection'),
+    ('verify_second_order.py', True, 'the local law, the constants, the crossings and the tie windows'),
+    ('verify_forest.py', False, 'the tree formula for K_F on every face'),
+    ('verify_rate_flows.py', False, 'the rate through flows'),
+    ('verify_weak_field.py', False, 'a weak field'),
+    ('verify_examples.py', True, 'the winners on complete graphs, cycles and small graphs, finite-N modes'),
+    ('verify_layer.py', False, 'the boundary layer'),
+    ('verify_reconstruction.py', False, 'the reconstruction theorems'),
+    ('verify_finite_horizon.py', False, 'the finite-horizon entry times'),
+    ('verify_cycles.py', False, 'the two Arrhenius examples, in exact arithmetic'),
+    ('verify_attraction.py', False, 'the calibrated attraction design'),
+)
+
+
+def versions():
+    out = [f'Python {platform.python_version()}']
+    for mod in ('numpy', 'scipy', 'sympy', 'mpmath'):
+        try:
+            out.append(f'{mod} {__import__(mod).__version__}')
+        except ImportError:
+            out.append(f'{mod} missing')
+    return ', '.join(out)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument('--full', action='store_true', help='also run the heavy cells')
+    parser.add_argument('--only', nargs='*', help='run only these scripts')
+    args = parser.parse_args()
+    (BASE / 'data').mkdir(exist_ok=True)
+    vers = versions()
+    results = []
+    t_all = time.time()
+    for name, has_full, what in SCRIPTS:
+        if args.only and name not in args.only:
+            continue
+        path = BASE / name
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        cmd = [sys.executable, '-I', str(path)] + (['--full'] if args.full and has_full else [])
+        print(f'Running {name} ({what})', flush=True)
+        t0 = time.time()
+        proc = subprocess.run(cmd, cwd=BASE, capture_output=True, text=True, encoding='utf-8', errors='replace')
+        dt = time.time() - t0
+        status = 'PASS' if proc.returncode == 0 else f'FAIL (exit status {proc.returncode})'
+        header = [f'# script: {name}',
+                  f'# sha256: {digest}',
+                  f'# checks: {what}',
+                  f'# command: py -I {name}' + (' --full' if args.full and has_full else ''),
+                  f'# date: {datetime.datetime.now().isoformat(timespec="seconds")}',
+                  f'# software: {vers}',
+                  f'# run time: {dt:.0f} s',
+                  f'# result: {status}',
+                  '']
+        out = BASE / 'data' / (path.stem + '_output.txt')
+        out.write_text('\n'.join(header) + proc.stdout + ('\n# stderr:\n' + proc.stderr if proc.stderr else ''),
+                       encoding='utf-8')
+        print(f'  {status} in {dt:.0f} s, output in data/{out.name}', flush=True)
+        results.append((name, status, dt))
+    print()
+    for name, status, dt in results:
+        print(f'{name:28s} {status:6s} {dt:7.0f} s')
+    bad = [r for r in results if r[1] != 'PASS']
+    print(f'\n{len(results) - len(bad)} of {len(results)} scripts passed ({time.time() - t_all:.0f} s).')
+    sys.exit(1 if bad else 0)
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,42 @@
+# script: verify_reconstruction.py
+# sha256: 7f65b55fc52e2ce7536b2fd10ac73791e3331909b210dca4d88816b19033fe18
+# checks: the reconstruction theorems
+# command: py -I verify_reconstruction.py
+# date: 2026-10-24T07:03:52
+# software: Python 3.14.3, numpy 2.4.2, scipy 1.17.1, sympy 1.14.0, mpmath 1.3.0
+# run time: 47 s
+# result: PASS
+1. Symbolic identities
+  ok    lambda_ij(v) is the smaller eigenvalue of [[q_i - H, -sqrt w], [-sqrt w, q_j]]
+  ok    the pair and the singleton tie at tau = t_ij
+  ok    w_ij = (H - Delta_ij)/t_ij + 1/t_ij^2
+  ok    det(-Q) = 0 for a generator on three states
+  ok    c + c' = q1 q2 q3 - q1 w23 - q2 w13 - q3 w12
+  ok    c c' = w12 w23 w13
+  ok    the 2x2 principal minors are q_i q_j - w_ij
+  ok    Q* is a generator with the exit rates and products of Q and the oriented product c'
+  ok    Q_ell: zero row sums, detailed balance with (1, 4/ell^2, 1), w12 = w23 = 1, w13 = z^2
+2. The reversible design on random chains with 4 states
+  ok    Lemma lem:suppression: least gap 0.9508 >= 3/4 over all cells of the 40 chains
+  ok    singleton boundaries give q_i - q_1 (max error 7.1e-15)
+  ok    pair boundaries give t_ij (max error 3.8e-12)
+  ok    the reconstruction returns Q and pi (max errors 3.7e-13, 2.1e-14)
+3. Stability
+  ok    product error / eps <= 9.7778 <= 88/9 = 9.7778
+  ok    phi_min >= phi_* and lambda_2(S) >= g_* on 2000 chains (least ratios 1.454, 8.000)
+  ok    exact coordinates reconstruct Q/R
+  ok    perturbed reconstructions are reversible generators on G, with max ||Q_hat - Q||/(R eps) = 1.83, 1.98, 1.95, 1.96 for eps = 1e-2 .. 1e-5
+4. Cut-transposes
+  ok    64/64 cut-transposes have the minors of -Q, are irreducible, and normalize to a generator with the same minors; 49 of these are neither Q nor Q*
+  ok    the example Q is a generator with Q[X,Y] = (1,2)^T(1,3) and Q[Y,X] = (2,1)^T(1,1)
+  ok    the generator point Q' of the cut-transpose has the fifteen principal minors of -Q
+  ok    q'_13 = 50/21, q'_41 = 63/34, q'_43 = 5/17, zero row sums
+  ok    Q' agrees with the displayed matrix to four decimals
+  ok    Q'_X = Q_X, Q'_Y = Q*_Y, q*_12 = 351/530, and Q' != Q*
+5. The gradient of the Perron branch
+  ok    d lambda / d v_i = -(l o r)_i (max difference 7.4e-10)
+  ok    det(I - 1 beta'^T) = beta_1 = 0.708387
+6. Fibers on three states
+  ok    positive rates: every solution is Q or Q*, both occur, in all 200 cases {(2, True, True, True): 200}
+  ok    irreducible with zero rates: 23 generators, every irreducible solution found is Q or Q*; numbers of solutions Counter({2: 21, 1: 2})
+verify_reconstruction: all 27 checks passed

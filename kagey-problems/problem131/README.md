@@ -5,14 +5,17 @@ direction with probability p. Kagey asks for the distribution of the bins, the l
 his numerator tables, when the middle bin is as likely as the endpoints, the normal limit, and what
 changes on a cylinder or a tetrahedron.
 
-Status. There are six papers by A. Pemmasani, which call each other Papers A to F. Paper A
-(arXiv:2610.06935) solves the binary problem at every N, and Paper B (arXiv:2610.09258) treats d
-directions on the complete graph. Papers C to F are in preparation. In October 2026 Paper B was
-merged into Paper C, which keeps its title and folder. Paper B v1 remains available as the versioned arXiv record, and its
-folder `archive/paperB` keeps it unchanged. Paper C (slowly switching
-chains, in `paperC`) and Paper E (the planar walk, in `paperE`) were one paper until October 13,
-2026, and so were Paper D (the elephant walk, in `paperD`) and Paper F (heavy-tailed runs and aging
-walks, in `paperF`). The titles of Papers C to F are working titles, and Paper A cites C and D under
+Status. There are six papers by A. Pemmasani, which call each other Papers A to F, and four
+working notes, S1 to S4. Paper A (arXiv:2610.06935) solves the binary problem at every N, and
+Paper B (arXiv:2610.09258) treats d directions on the complete graph. Papers C to F are in
+preparation. In October 2026 Paper B was merged into Paper C, which keeps its folder. Paper B v1
+remains available as the versioned arXiv record, and its folder `archive/paperB` keeps it
+unchanged. Paper C (slowly switching chains, in `paperC`) and Paper E (the planar walk, in
+`paperE`) were one paper until October 13, 2026, and so were Paper D (the elephant walk, in
+`paperD`) and the first draft of Paper F (heavy-tailed runs and aging walks). On October 24, 2026
+that draft was archived in `archive/paperF_golden_aging`, its aging half became the note
+`S4_aging_note`, and Paper F was started again in `paperF` as a paper on the occupation law of a
+lattice Lévy walk. The titles of Papers C to F are working titles, and Paper A cites C and D under
 their old titles. The papers share the notation N, L = log N, T, z_N, lambda_F and K_F.
 `PUBLICATION.md` has notes on where to send them.
 
@@ -52,7 +55,7 @@ that were not carried into C remain in this historical version.
 
 ## Paper C: Face selection for slowly switching Markov chains
 
-Paper C (in preparation, for the Electronic Journal of Probability) gives the general theory for a
+Paper C (in preparation, for the Journal of Theoretical Probability) gives the general theory for a
 chain on d states with transition matrix P = I + (T/N)Q, run for N steps with T = tau L. The counts
 of the N visits play the role of the bin. To first order the mode sits on a face F that minimizes
 tau lambda_F + |F| - 1, where lambda_F is the principal Dirichlet eigenvalue of -Q on F, the rate
@@ -66,18 +69,29 @@ bins, the mode changes exactly once, a start law or a weak field can let an inte
 and near a vertex the crossing is given by a product of Laguerre polynomials. The constant c_F =
 -(k-1)/8 of the next term on the complete graph is computed by hand from the general formula. The
 two-state walk of Paper A is the simplest case. The application to sticky priors for hidden Markov
-models moved to the note `S3_sticky_note`.
+models moved to the note `S3_sticky_note`. On October 24, 2026 the paper got a new main file,
+with the title "Occupation counts of rarely switching Markov chains: stratified local large
+deviations, modal supports and spectral reconstruction". It adds a section on the killed
+functional (every rate is the restriction of the Donsker and Varadhan functional to a face), a
+section on the boundary layer at a facet, a part on what the occupation law determines (the
+reconstruction of Q up to its principal minors) and a part on low temperature and the cycle
+hierarchy.
 
-Files. The folder `paperC`, with `problem131_switching.tex` and `problem131_switching.pdf` (class
-`ejpecp`), its section and appendix files, the supplement `supplement.tex` and `supplement.pdf`,
-the check scripts and `paperC/README.md`.
+Files. The folder `paperC`, with the main file `problem131_chains.tex` and `problem131_chains.pdf`
+(article class, for the Journal of Theoretical Probability), the same paper in the Springer Nature
+template `problem131_chains_sn.tex` and `problem131_chains_sn.pdf` (`paperC/TEMPLATE.md` says how
+it was set up and built), their shared section and appendix files, the check scripts and `paperC/README.md`. The
+earlier main file `problem131_switching.tex` (class `ejpecp`), its PDF and its supplement are in
+`archive/paperC_switching_ejp/`.
 
 ## Paper D: Endpoint crossings for the elephant random walk
 
 Paper D (in preparation) asks what memory changes. In the elephant random walk each step copies a uniformly chosen
 earlier step and flips it with probability eps. The crossing x_N = N eps_N is unique and
 x_N = 2 z_N - log(2 pi) + o(1), about twice the Markov value. The law at the crossing has 2 humps,
-one near each end, and for large N it is strictly convex between them.
+one near each end, and for large N it is strictly convex between them. On October 24, 2026 the
+family proofs and the second-difference proofs came back from the Online Resource into the
+article as Appendices D and E, so every proof used by the main theorems is in the article.
 
 Files. The folder `paperD`, with `problem131_memory.tex` and `problem131_memory.pdf`, its section
 and appendix files, the check scripts and `paperD/README.md`.
@@ -93,16 +107,27 @@ Paper A's walk.
 Files. The folder `paperE`, with `problem131_planar.tex` and `problem131_planar.pdf`, its section and
 appendix files, the check scripts and `paperE/README.md`.
 
-## Paper F: Heavy-tailed runs and aging walks
+## Paper F: Bulk, big jumps and boundary layers in the occupation law of a lattice Lévy walk
 
-Paper F (in preparation) treats two more kinds of memory. For alternating runs with
-P(xi >= k) = k^(-alpha) and 1 < alpha < 2, the ends win
-for large N exactly when alpha is below the golden ratio. For aging walks the
-crossing with a fixed first step is exactly c = 1 for every N, and an aging chain on d states
-ties exactly at one value of its parameter.
+Paper F (in preparation, for the Electronic Journal of Probability) was started on October 24,
+2026. A lattice Lévy walk moves in runs of alternating direction whose lengths are independent with
+regularly varying tails of index between 1 and 2. The paper describes the law of the number of
+right steps after N steps bin by bin over the whole row. It has a stable bulk, a big-jump zone on
+each side where one run is macroscopic, a renewal boundary layer at each end and an atom at each
+endpoint. The law of the first run enters each piece through a sharp criterion. The global mode is
+an endpoint or a bulk bin, and for the equilibrated start the threshold is the golden ratio. The
+boundary layers identify both run laws. The paper is a skeleton with all its statements, and its
+proofs are being written.
 
-Files. The folder `paperF`, with `problem131_heavy_aging.tex` and `problem131_heavy_aging.pdf`, its
-section and appendix files, the check scripts and `paperF/README.md`.
+The first draft of Paper F, "The golden-ratio threshold for a lattice Lévy walk and ties in
+coin-turning walks", is archived in `archive/paperF_golden_aging`. Its heavy-tail half is part of
+the new paper: its center theorem is the bulk theorem at the center bin, and its golden-ratio
+corollary is part of the theorem on the mode. Its aging half is the note `S4_aging_note`. The
+infinite-mean case 0 < alpha < 1 is left to a later paper.
+
+Files. The folder `paperF`, with `problem131_levy.tex` and `problem131_levy.pdf` (class `ejpecp`),
+its section files, the figure and its script in `figures/`, the recorded output of the
+computations in `data/`, the check scripts and `paperF/README.md`.
 
 ## Earlier work
 
@@ -114,22 +139,26 @@ section on related work.
 
 ## Shared files
 
-Each paper has its own folder, `paperA` to `paperF`, with its source and PDF, its figures, its check
-scripts and runner, their recorded output and ledgers in `data/`, and a `README.md`. Papers B, C and
-D also keep the proofs cut while shortening them in `removed_proofs/`, for reference. The files
-below are shared.
+Each paper has its own folder, `paperA` to `paperF` (Paper B in `archive/paperB`), with its source
+and PDF, its figures, its check scripts and runner, their recorded output and ledgers in `data/`,
+and a `README.md`. Papers B, C and D also keep the proofs cut while shortening them in
+`removed_proofs/`, for reference. The files below are shared.
 
 - `SUPPLEMENT.md` is the one verification supplement for the papers. It lists each result that
   rests on computation with the script that checks it.
-- `verify_all.py` runs the checks with `--paper a`, `b`, `c`, `d`, `e`, `f` or `all` (the default).
-  It calls `paperA/verify_all.py` to `paperF/verify_all.py`, each in its own folder.
+- `verify_all.py` runs the checks with `--paper a`, `b`, `c`, `d`, `e`, `f`, `s4` or `all` (the
+  default). It calls `paperA/verify_all.py` to `paperF/verify_all.py`, each in its own folder, and
+  says so in one line when a runner is missing. With `s4` it runs the 2 check scripts of the note
+  `S4_aging_note`.
 - `figures/` holds the variants of the program figure (`program_A` to `program_F`), made by
-  `figures/make_program_figure.py`, with the captions in `figures/program_captions.md`. Papers C
-  to F include `program_C` to `program_F`. The variants A and B are the ones posted with those
-  papers and carry the labels of the series as it stood then.
+  `figures/make_program_figure.py`, with the captions in `figures/program_captions.md`. The current
+  drafts of Papers C to F do not include their variants. The variants A and B are the ones posted
+  with those papers and carry the labels of the series as it stood then.
 - `S1_endpoint_information_note/` is a working note on the Fisher information in the endpoint, which was Section 8 and Appendix E of an earlier version of Paper C.
 - `S3_sticky_note/` is a working note on sticky priors for hidden Markov models, which was Section 6 and Appendix D of Paper C until the merge with Paper B in October 2026.
 - `S2_counts_note/` is a working note on which rate matrices the visit counts of a slowly switching chain can tell apart, with its 4 check scripts.
+- `S4_aging_note/` is a short note, "Exact ties in coin-turning walks", on the walk that switches at step k with probability c/k and its version with d states. Every interior bin ties with the end exactly at c = 1 for every N, and the chain that redraws or repeats its state has the law of Pólya's urn. It was the aging half of the first draft of Paper F until October 24, 2026, and it has 2 check scripts.
+- `archive/` holds Paper B v1 (`archive/paperB`) and the first draft of Paper F (`archive/paperF_golden_aging`), each kept as it was and with its own `README.md`.
 - `animations/` shows a Galton board with persistence at 4 values of p (`galton.gif`, `galton.mp4`),
   made by `animations/animate.py`.
 - `lean/` holds the Lean 4 proofs, one library per paper (not the large-argument asymptotics).
@@ -140,8 +169,9 @@ below are shared.
   September 2026, before the papers were split.
 - `literature_review.md` says what each earlier source proves.
 
-Run `python -B verify_all.py --paper a` (or `b` to `f`, or `all`). Add `--full` for the long runs
-and `--dry-run` to list the commands. Build each paper in its folder with pdflatex, 3 times, for
-example `pdflatex problem131.tex` in `paperA` and `pdflatex problem131_multistate.tex` in
-`archive/paperB`. In `paperC` build `problem131_switching.tex` and `supplement.tex` alternately, 3 times
-each (the class `ejpecp` is in TeX Live).
+Run `python -B verify_all.py --paper a` (or `b` to `f`, `s4`, or `all`). Add `--full` for the long
+runs and `--dry-run` to list the commands. Build each paper in its folder with pdflatex, 3 times, for
+example `pdflatex problem131.tex` in `paperA`, `pdflatex problem131_multistate.tex` in
+`archive/paperB` and `pdflatex problem131_levy.tex` in `paperF` (the class `ejpecp` is in TeX Live).
+In `paperC` build `problem131_chains.tex` 3 times. The
+Springer Nature version needs the class in `common/sn-jnl`, as `paperC/TEMPLATE.md` explains.

@@ -1,195 +1,183 @@
-# Face selection for slowly switching Markov chains
+# Occupation counts of rarely switching Markov chains
 
-The paper studies a Markov chain on d states with transition matrix I + (T/N)Q, run for N steps
-with T = tau log N, so that it rarely switches. Its composition is the vector of occupation counts,
-the numbers of steps it spends in each state. The question is which face of the simplex holds the
-most likely composition, and at which T the mode moves to another face. For two states this is
-Problem 131 of Kagey's Open Problem Collection (the middle bin against an endpoint). The main
-example is the complete graph, Q = J - dI, which is the one-dimensional d-state Potts chain.
+Full title: "Occupation counts of rarely switching Markov chains: stratified local laws, modal
+supports and reconstruction". Target: Journal of Theoretical Probability. Until October 24, 2026
+the paper was "Face selection for slowly switching Markov chains", written for the Electronic
+Journal of Probability (now `../archive/paperC_switching_ejp/`, see History below).
 
-In October 2026 Paper B ("Vertex crossings in a symmetric Markov multinomial model",
-arXiv:2610.09258, folder `../archive/paperB`) was merged into this paper, following the plan of
-October 20, 2026. The merged paper keeps the title, the folder and the file name of Paper C. It
-is written in the class of the Electronic Journal of Probability (`ejpecp`). Its results on the
-complete graph and near a vertex come from Paper B. This merged version is intended to
-replace B under arXiv:2610.09258, while v1 remains available at its versioned URL. At the
-same time the application to sticky priors (the old Section 6 and Appendix D) moved to the note
-`../S3_sticky_note`, the section on the rate through flows (the old Section 4.8) became one remark,
-and the proofs for the table of outcomes (the old Appendix C) moved to the supplement
-`supplement.tex`. The detailed higher-order Laplace and next-term proofs are in its
-Sections S3 and S4, with their statements and coefficient formulas retained in Appendix B.
+A Markov chain on d states with transition matrix I + (T/N)Q runs for N steps, with T = tau log N,
+so it makes about tau log N switches. Its composition is the vector of occupation counts. The paper
+asks which face of the simplex carries the most likely composition. On each face the law weighs a
+lattice entropy of one power of N per dimension against the Donsker and Varadhan cost of the chain
+killed on leaving the face, which is the restriction of the cost of the whole chain. Sections 2 to
+6 prove the law on a face and at its boundary, Sections 7 and 8 treat the complete graph, Section 9
+asks which coarse functionals of the occupation law determine the generator, and Section 10 treats
+Arrhenius rates at low temperature. For two states the question is Problem 131 of Kagey's Open
+Problem Collection (https://peterkagey.com/problems/131/).
 
-Companion papers in this repository. The paper cites them as references only, without letter
-labels, and only where it uses their mathematics.
+Companion papers. `../paperA` ("Uniform Bessel bounds for magnetization crossings in finite Ising
+chains", arXiv:2610.06935) treats the two-state walk at every N and is cited where we use it.
+`../archive/paperB` ("Vertex crossings in a symmetric Markov multinomial model", arXiv:2610.09258)
+is incorporated here, and this paper will replace it. It is cited for its Bessel majorant and its
+results near the boundary that did not come over.
 
-- `../paperA`, "Uniform Bessel bounds for magnetization crossings in finite Ising chains",
-  arXiv:2610.06935 (arXiv v1 title: "Uniform Bessel bounds for endpoint crossings in the
-  persistent random walk"). The two-state walk, at every N. Cited.
-- `../archive/paperB`, "Vertex crossings in a symmetric Markov multinomial model", arXiv:2610.09258.
-  Incorporated here. Cited (v1) for the results that did not come over: its Bessel majorant and
-  its crossover near the boundary of the simplex (Remark 6.3).
-- The separate planar, elephant and heavy-tail/aging manuscripts are not cited.
-
-Conventions. L = log N, lambda_F is the principal Dirichlet eigenvalue of -Q on the face F (the rate
-at which the chain leaves F), M_F is the largest probability of a composition with support F, and
-z_N = N(1 - p_N) is the crossing of the two-state walk. A face satisfies (H) if its switching graph
-is strongly connected and it has start mass. On the complete graph (Section 5 and Appendix C) the
-paper uses the symbols of Paper B locally: the stay probability p = 1 - (d-1)h, the odds u = h/p,
-the vertex probability V_N = p^(N-1)/d, the run polynomial S_n(u) and the constants a_k and
-D_k = e^(-(k-1)a_k). Paper B's switch probability r is h here, its Potts field h_i is xi_i, its
-best balanced bin C_{N,k} is the face maximum M_F, and its function Psi_N is written out.
+Conventions. L = log N and h = T/N. V = [d] is the face of all states. For a face F, Q_F is the
+killed generator (the full exit rates stay on the diagonal), lambda_F = -(Perron root of Q_F) is the
+exit rate, J_F is the Donsker and Varadhan functional of the killed chain and J_V that of the whole
+chain, M_F is the largest probability of a composition with support F, and Phi_tau(F) = |F| - 1 +
+tau lambda_F is the score. A face satisfies (H) if it is irreducible and has start mass. With a
+field v the paper writes lambda_F(v), alpha*_F(v) and K_F(v). The rate is always J, never I. In
+Section 9, phi is the ground vector of the symmetrized generator, bar delta and bar v are the levels
+of the reversible design, and c, c' are the two oriented 3-cycle products. In Section 10 the
+threshold of a face is vartheta(G) and the window slopes are bar a_G. On the complete graph the
+paper uses the symbols of Paper B locally (p = 1 - (d-1)h, u = h/p, V_N, S_n, a_k, D_k).
 
 ## What is proved
 
-The numbers are those of the build of October 23, 2026 (64 pages, and a 14-page supplement).
+The numbers are those of the build of October 24, 2026, after the revision of that day
+(`problem131_chains.pdf`, 95 pages; the Springer version `problem131_chains_sn.pdf` has 104 pages).
+Theorems A, B and C in the introduction collect the headline results of Sections 4 to 7, and
+Theorem D the identification result of Section 9.
 
-- First order, for every start (Theorem 3.3). The mode lies on a face F that minimizes
-  tau lambda_F + |F| - 1, and the winners are read off the lower-left boundary of the convex hull
-  of the points (lambda_F, |F| - 1) (Theorem 3.4). A worked example on the 4-cycle opens
-  Section 3 (Table 1 and the worked-cycle figure).
-- Second order, for faces with (H). A local law with an explicit constant (Theorem 4.4) gives
-  M_F = N^-(k-1) T^((k-1)/2) K_F e^(-T lambda_F) (1 + O(1/T + T^2/N)) (Theorem 4.6). Every crossing
-  of 2 such faces satisfies delta T + (Delta/2) log T = Delta L - log(K_F/K_G) + O(1/L)
-  (Theorem 4.7), and in a first-order tie window the mode follows the upper envelope of explicit
-  lines (Theorem 4.8).
-- The constant. Proposition 4.2 and Corollary 4.3 (reversible faces, a weighted count of spanning
-  trees) and Proposition 4.9 with Lemma A.3 (every irreducible face, two counts of trees). The
-  weighted Cayley formula (Lemma 4.10) gives the constant of a complete face in closed form
-  (Example 4.11), which is the tree form of Paper B. Remark 4.12 writes the rate through flows and
-  cites Bertini, Faggionato and Gabrielli (2014, Theorem 1.6) and Kim and Landim (Lemma 5.7) for
-  the minimizing flow.
-- Without (H). On a directed 3-cycle the coefficient 1/2 of log log N is 1 and then 0
-  (Proposition 4.14, sketched in the paper and proved in full in Section S2 of the supplement).
-- The next term (Proposition 4.15). The local law and log M_F have a further term c_F/T, and every
-  crossing satisfies T(Delta L - (Delta/2) log T - delta T - log(K_F/K_G)) = c_F - c_G + O(1/L).
-  For a symmetric pair c_F = -1/(8 q_ij), and on the complete graph c_F = -(k-1)/8. The second
-  value is computed by hand for every k in Section S4 of the supplement, from the formula
-  (c-alpha) retained in Appendix B, and does not quote Paper B (Check 1 of the merge plan).
-- A weak field (Proposition 4.16, new in the merge). A field of size xi_i/N per visit to state i
-  shifts the line of every face in a tie window by <xi, alpha*_F>, for faces satisfying (H), provided all tied faces are irreducible, and the
-  normalizing sum tends to exp(<xi, pi>) for irreducible Q. `verify_weak_field.py` checks it.
-- The two-state walk (Proposition 5.1 and Corollary 5.2). The exact pair identity, and the crossing
-  equation of Paper A with its term 1/(8 z_N).
-- The complete graph (Section 5.2). All faces tie at tau = 1 and K_F = (mu(F)/k) D_k
-  (Corollary 5.3). The balanced bin with k states crosses the vertices exactly once for every N,
-  monotonically in N, and T + (1/2) log T = L + a_k + 1/(8T) + O(L^-2) (Theorem 5.4). Exact balancing
-  for p >= 1/d (Theorem 5.5), and exactly one mode change, from the vertices to the full centers
-  (Corollary 5.6). An intermediate face is a mode at N = 4 (Remark 5.7). The interior bins are the
-  display (5.2).
-- A start (Section 5.3). Crossings with a start (Corollary 5.8), balancing can fail (Remark 5.9), the
-  global modes with a start (Corollary 5.10) and the order of the winners (Remark 5.11). With the
-  start (1/2, 1/2, 0) on K_3 the edge {1, 2} holds the mode on a window of width
-  log(16/(9 sqrt 3)) = 0.026 (Example 5.12, which uses only Theorems 4.6 and 4.8 and exact
-  balancing: Check 2 of the merge plan). The window at finite N (Remark 5.13).
-- A weak field on the complete graph (Section 5.4). The phase diagram (Corollary 5.14), a
-  persistent edge phase on the triangle (Example 5.15) and one field that makes every support size
-  win in turn (Corollary 5.16).
-- Near a vertex (Section 6). The uniform Laguerre-Bessel inequality (Lemma 6.1) and the vertex law
-  u = sqrt(y_a/b)(1 + O(sqrt((|a|+1)/b))) (Theorem 6.2), proved in Appendix D (Lemmas D.1 and D.2).
-  Remark 6.3 cites Paper B for its majorant and crossover.
-- The 4-cycle cascade with all its constants (Corollary 7.1) and the table of outcomes (Table 2 and
-  Remark 7.2). The rows P_d and Theta_eps are proved in the supplement (Propositions S1.3 and S1.4),
-  the rows K_d and symmetric Q in the text, and the rows marked "Lean only" are proved in Lean.
+The law on a face.
+- The killed functional (Section 3). The restriction identity J_F = J_V on the face (Proposition
+  3.1), the monotonicity of the exit rate in the face (Lemma 3.2), and the variational formula
+  lambda_F(v) = min (J_F - v.alpha) with a unique interior minimizer (Proposition 3.4).
+- First-order face selection, for every start (Theorem 4.2, with a field in Remark 4.3). The mode
+  lies on a face that minimizes Phi_tau, and the winners are read off the lower-left boundary of a
+  convex hull (Theorem 4.4).
+- The stratified local law (Theorem 5.6). For a face with (H), uniformly on compact parts of the
+  open face and for 1 <= T <= N^(1/3), -log P_N(n) = (k-1)L + T J_V(n/N) - ((k-1)/2) log T -
+  log C_F(n/N) + O(1/T + T^2/N). It rests on the local law (Theorem 5.4), the discrete transfer
+  (Lemma 5.5) and the restriction identity.
+- Face maxima with a field (Theorem 5.7), uniform for v in a compact set. The crossing equation
+  (Theorem 5.8) locates every crossing of two such faces up to O(1/L), and the tie windows
+  (Theorem 5.9) follow the upper envelope of explicit lines. A tree formula for K_F on every face
+  (Proposition 5.11), a reducible face where the coefficient of log log N changes (Example 5.14),
+  and a weak field (Proposition 5.15).
+- The boundary layer at a facet (Section 6). Pair faces with an explicit error (Proposition 6.3),
+  the facet expansion of the rate (Proposition 6.4), prefactor matching (Proposition 6.5), and the
+  facet theorem (Theorem 6.7).
 
-The old statement numbers (build of October 15, 2026) map to the new ones as follows: Proposition
-4.9 and Corollaries 4.10, 4.11 are now Proposition 5.1 and Corollaries 5.2, 5.3; Remark 4.12 and
-Proposition 4.13 are Remark 4.13 and Proposition 4.14; Proposition 4.14 (the next term) is
-Proposition 4.15; Proposition 4.15 (the tree formula) is Proposition 4.9; Proposition 4.16,
-Remark 4.17 and Example 4.18 (flows) are Remark 4.12; Corollary 5.1 and Remark 5.3 are Corollary
-7.1 and Remark 7.2; Corollary 5.2 (the start on K_3) is replaced by Example 5.12; Section 6 and
-Appendix D are the note S3; Appendix C is Section S1 of the supplement; Section 7 is Section 8.
-The statements of Paper B that came over keep their `\label` keys, and `../lean/PaperC/MAP.md`
-lists the new number of each.
+The complete graph and near a vertex.
+- The complete graph (Section 7). All faces tie at tau = 1 with K_F = (mu(F)/k) D_k (Corollary 7.3),
+  the balanced bin crosses the vertices exactly once for every N (Theorem 7.5), exact balancing
+  (Theorem 7.6), exactly one mode change (Corollary 7.7), a start (Corollary 7.9, Example 7.10) and a
+  weak field (Corollaries 7.11 and 7.12). Remark 7.4 gives the first-order winners on other graphs
+  in the two cases with short proofs.
+- Near a vertex (Section 8), the uniform root of Theorem 8.2, the worked case of the boundary layer
+  in the lattice regime.
 
-## How the statements are proved
+What the occupation law determines (Section 9).
+- The controlled score law (Proposition 9.1) and the definition of the controlled boundaries
+  (Definition 9.2).
+- The Donsker and Varadhan functional and the modal supports carry the same information, the
+  principal minors of -Q (Corollary 9.3, stated in the introduction as Theorem D).
+- Reversible reconstruction from m + d - 1 boundaries of a design fixed in advance (Theorem 9.5),
+  minimal (Theorem 9.6) and stable (Theorem 9.8).
+- Non-reversible reconstruction (Theorem 9.13), with the irreducibility of R_F (Lemma 9.9), the
+  Perron branch (Lemma 9.10) and exposure by descent (Lemma 9.12). Without a cut the data give Q up
+  to time reversal, in general a finite generator fiber, and from the stationary start no statistic
+  of the counts separates Q from Q*.
+- Finite horizons, uniformly over a class (Proposition 9.15 and Theorem 9.16, with Remark 9.18 on
+  the size of the correction).
 
-No statement is left with its proof omitted. Section 8 of the paper (`sec_verify.tex`) gives the
-full account.
+Low temperature (Section 10).
+- The depth of a face (Theorem 10.1), noncritical heights (Theorem 10.2), the prefactors
+  (Proposition 10.3, classical in substance) and the critical windows (Theorem 10.4), with a
+  noncycle winner on an open window (Example 10.5) and a branch switch (Example 10.6).
+- The cycle tree read from a calibrated attraction (Theorems 10.11, 10.12 and 10.13).
 
-- Every theorem, proposition, lemma and corollary is proved in the text, in Appendices A to D, or in
-  the supplement. There are 2 kinds of outside input. The paper quotes results of `../paperA` where
-  it says so, and the rows of Table 2 marked "Lean only" are proved in Lean and not in the text.
-  The results of `../archive/paperB` that the paper quotes (Remark 6.3) are not used.
-- No proof rests on a floating-point computation. Exact computer algebra enters in 2 places, the
-  2 resultants behind Proposition S1.4 (`verify_examples.py`) and the 2 values of c_F after
-  Corollary 7.1 (`verify_second_order.py`).
-- The other computed numbers illustrate the theorems, and no statement is deduced from them.
+## What is conditional
 
-## Open
+The facet theorem (Theorem 6.7) is unconditional for faces with at most three states. For faces
+with four or more states it rests on Hypothesis L (`hyp:L`, the local law of the weighted facet
+chain with a complex parameter), which is stated, proved for two-state facets (Lemma 6.6) and not
+proved in general. Nothing else is conditional.
 
-A local law up to the boundary of a face, the power of T on reducible faces, uniqueness of every
-crossing at finite N, a closed form for c_F beyond symmetric pairs and complete graphs, the order of
-the phases at finite N near a nearly flat hull (the path P_4), the complete graph at finite N (an
-effective N_0, the ends of the K_3 window, balancing with a start that is not constant on the
-face), the next term near a vertex, and a first-order rule for linear functions of the composition
-in general (`../paperE` proves it for the planar walk).
+## What rests on computation
+
+No proof rests on a computation. Section 11 (`sec_verify.tex`) lists what the Lean files and the
+scripts check. The Lean files are in `../lean/PaperC` and `../lean/PaperB`, and
+`../lean/PaperC/MAP.md` matches the statements to their Lean theorems. What Lean does not cover:
+the Perron and Frobenius theorem (a hypothesis of the Lean statements), the asymptotic results,
+Lemmas 9.9 and 9.10, Theorem 9.13(a), (c), (d) and (f), and the step from limiting scores to the mode
+in Example 10.5.
 
 ## Files
 
-- `problem131_switching.tex` is the paper (class `ejpecp`, which is in TeX Live as part of the
-  Debian/Ubuntu package `texlive-publishers` and needs the fonts `bera` and `dsfont` of
-  `texlive-fonts-extra`). It includes `sec_intro.tex`, `sec_model.tex`, `sec_firstorder.tex`,
-  `sec_secondorder.tex`, `sec_complete.tex`, `sec_vertex.tex`, `sec_examples.tex` and
-  `sec_verify.tex` (Sections 1 to 8), and the appendices `app_torus.tex`, `app_laplace.tex`,
-  `app_complete.tex` and `app_vertex.tex` (Appendices A to D).
-- `supplement.tex` is the supplement. Section S1 proves rows of the table of outcomes, S2
-  gives the full directed-three-cycle proof, and S3/S4 give the detailed higher-order
-  Laplace and next-term proofs. It builds on its own. The paper and the supplement read
-  each other's statement numbers with the package `xr`.
-- `figures/` holds Figure 3 (`fig_cycles`), made by `figures/make_figures.py`,
-  with the captions in `figures/captions.md`. The same script makes the figure `fig_planar` of
-  `../paperE` and writes it to `../paperE/figures`. Figure 1 is the simplex figure from
-  `figures/make_simplex_figure.py`. Figure 2 (the worked example on the 4-cycle) is drawn in the
-  source with TikZ. Figure 4 (`fig_complete_envelope`) compares the limiting complete-graph
-  scores with and without a weak field. Its generator is `figures/make_complete_envelope.py`,
-  which uses only NumPy and Matplotlib and runs without simulation or a dynamic program.
-  The files `fig_window` and `fig_sticky`, and the program figure
-  `../figures/program_C.pdf`, are not included in the paper.
-- `verify_first_order.py` checks the exact law, the rate on a face and first-order selection
-  (Sections 2 and 3).
-- `verify_second_order.py` checks the local law, the constants, the crossings, the directed
-  3-cycle, the next term (including c_F = -(k-1)/8 for k = 3, 4 by exact computer algebra) and the
-  K_3 window (Sections 4, 5 and 7, Appendices A and B).
-- `verify_examples.py` checks the 4-cycle and the rows of Table 2 (Section 7 and Section S1 of the
-  supplement), with the 2 exact resultants of Proposition S1.4.
-- `verify_forest.py` checks the tree formula (Lemma A.3 in exact rational arithmetic for 119
-  generators, Proposition 4.9 in floating point). It takes about five minutes.
-- `verify_rate_flows.py` checks the statements of Remark 4.12 (the rate through flows) in floating
-  point. It takes a few seconds.
-- `verify_weak_field.py` checks Proposition 4.16 (a weak field): part (a) by listing all words,
-  part (b) on four faces in the continuum (with the 1/T coefficient and the shift of the maximizer
-  that completing the square predicts) and on a pair at N = 20000 by an exact dynamic program, and
-  part (d) by the transfer matrix. It takes about a minute.
-- `verify_sticky_fisher.py` checks the note `../S3_sticky_note` (sticky priors) and the note
-  `../S1_endpoint_information_note` (the Fisher information of the endpoint). The polynomial S_N and recurrence of the two-state walk are shared with Paper E through
-  `../common/two_state.py`. Paper E no longer imports the sticky-prior checker.
-- `verify_all.py` runs the 7 scripts. The statements that came from Paper B are also checked by the
-  scripts of `../archive/paperB` (Section 8 of the paper says which), run by `../archive/paperB/verify_all.py`.
-- `data/ledger.md` and `data/ledger_C1.md`, `ledger_C2.md`, `ledger_C4.md` and `ledger_C5.md` hold the
-  predictions, written down before most of the computations, and what happened to them. They use
-  the statement numbers of their dates. `data/verify_output.txt` (September 26, 2026) and
-  `data/verify_output_2026-10-09.txt` (October 9, 2026) are older outputs of `verify_all.py`, and
-  `data/verify_output_2026-10-23.txt` is the output of the merged version. `data/figdata_*.json`
-  holds the plotted data.
-- `removed_proofs/` keeps the paper as first written in September 2026, before it was shortened.
-- `../lean/PaperC/` and `../lean/PaperB/` hold Lean 4 proofs of many of the finite and algebraic
-  steps, and `../lean/PaperC/MAP.md` matches each statement of the merged paper (by number and
-  `\label` key) to its Lean theorems in both libraries. The asymptotic results are not in Lean.
+- `problem131_chains.tex`: the article version (plain `article` class). Build it here.
+- `problem131_chains_sn.tex`: the same paper in the Springer Nature template for JTP. The class
+  and its files are in `../common/sn-jnl`, and `TEMPLATE.md` records the template source, the
+  choices made and the zip for Snapp.
+- Sections, input by both main files: `sec_intro.tex`, `sec_model.tex`, `sec_dv.tex` (the killed
+  functional), `sec_firstorder.tex`, `sec_secondorder.tex`, `sec_boundary.tex`,
+  `sec_complete.tex`, `sec_vertex.tex`, `sec_reconstruction.tex`, `sec_lowtemp.tex`,
+  `sec_verify.tex`.
+- Appendices: `app_torus.tex` (proofs of the local law and first-order bounds, and the forest
+  formula), `app_laplace.tex` (the Laplace lemma with a parameter and its uniform form),
+  `app_complete.tex` (the complete graph), `app_vertex.tex` (near a vertex). Bibliography:
+  `bib_switching.tex`.
+- Scripts. `verify_all.py` runs the eleven checks below and writes `data/<script>_output.txt`.
+  - `verify_first_order.py`, `verify_second_order.py`, `verify_forest.py`,
+    `verify_rate_flows.py`, `verify_weak_field.py`, `verify_examples.py`: Sections 2 to 5 and 7
+    (from the earlier version). Some of their checks concern statements that the paper no longer
+    states (the flow form of the rate, the next term c_F/T, the limit of the normalizing sum,
+    first-order winners on further graphs). `--full` adds the heavy cells of the first, second
+    and sixth.
+  - `verify_layer.py`: the boundary layer (Section 6).
+  - `verify_reconstruction.py`: Section 9 (symbolic identities, the reversible design on random
+    chains, stability, cut-transposes, fibers on three states).
+  - `verify_finite_horizon.py`: Theorem 9.16 and Remark 9.18, by the exact run expansion.
+  - `verify_cycles.py`: Examples 10.5 and 10.6 in exact arithmetic (standard library only).
+  - `verify_attraction.py` with the module `attraction_core.py`: Theorem 10.11 on 138 faces.
+  - `verify_sticky_fisher.py` checks the notes `../S3_sticky_note` and
+    `../S1_endpoint_information_note`, not this paper, and `verify_all.py` does not run it.
+- `data/`: the outputs of the checks, each headed by the sha256 of its script, plus the older
+  ledgers and figure data of the earlier version.
+- `figures/`: the figures (`fig_complete_envelope`, `fig_simplex`, `fig_cycles`) with their
+  scripts, and `captions.md`. The 4-cycle figure is TikZ in `sec_firstorder.tex`.
+- Earlier version: `problem131_switching.tex` and its PDF of October 23, with the supplement
+  `supplement.tex` and `supplement.pdf` and the examples section `sec_examples.tex`, are in
+  `../archive/paperC_switching_ejp/`. The PDF is the record, since the shared section files have
+  changed. `removed_proofs/` keeps the first draft of September 26. The paper itself no longer
+  points to any of these.
+- `cover_letter.md`: the cover letter for JTP.
 
-## How to run the checks and build
+## Build and run
 
-The papers share one verification supplement, `../SUPPLEMENT.md`, and the runner
-`../verify_all.py`. From the Problem 131 folder, `python -B verify_all.py --paper c` runs the
-checks of this paper by calling `verify_all.py` in this folder, and `--paper b` runs those of
-Paper B. In this folder, run `python -B verify_all.py` (or `--quick`, the same thing) for the
-default checks, which take about ten minutes, or add `--full` for the larger cells (up to about
-half an hour). The scripts need numpy, scipy, sympy and mpmath. A script that finds a failed check
-lists it and exits with an error, and then `verify_all.py` stops.
+    pdflatex -interaction=nonstopmode problem131_chains.tex      (twice)
+    TEXINPUTS=".;../common/sn-jnl;" pdflatex -interaction=nonstopmode problem131_chains_sn.tex   (twice, from Git Bash)
+    py -I verify_all.py            (about fifteen minutes; --full adds the largest cases of three older scripts)
+    py -I verify_layer.py          (any script also runs on its own)
 
-Build with `pdflatex -interaction=nonstopmode problem131_switching.tex` and
-`pdflatex -interaction=nonstopmode supplement.tex`, 3 times each, alternating, so that the
-cross-references between the two resolve.
+The scripts need Python 3 with numpy, scipy, sympy and mpmath. The outputs in `data/` were made with
+Python 3.14.3, numpy 2.4.2, scipy 1.17.1, sympy 1.14.0 and mpmath 1.3.0, and TeX Live 2026 built the
+PDFs.
 
-## Referee and opening revision
+## Statement labels
 
-Theorem A now leads the introduction, followed by the complete-graph envelope figure. The opening distinguishes global support selection from a local law on one face and states the boundary, reducibility and uniqueness limits. The rate-function probability interpretation is qualified by (H), and the next-order displacement is described as the quadratic-model prediction. The bibliography omits Iltis and unpublished E, and records Kim–Landim's 2025 publication with the arXiv-v2 lemma locator. `cover_letter.md` accompanies the complete proof supplement. The new independent review is in `../../../reports/Final probability papers review.md`.
+Each statement has a `\label` that names its content (`thm:stratified`, `prop:controlled-score`,
+`hyp:L`, `ex:four-state`). Sections are `sec:...`, appendices `app:...`, equations `eq:...`. The
+introduction's theorems are `thm:A` to `thm:D`. The Lean map and the scripts refer to statements by
+these keys, so they stay valid when numbers move. Labels removed in the revision of October 24:
+`lem:L` (now `hyp:L`), `prop:threecycle` (the second key of `ex:threecycle`),
+`ex:simplex-edge-mode` (now `rem:simplex-edge-mode`), `tab:C4worked`, `rem:flows`,
+`rem:nextterm`, `rem:layer-discrete`, `sec:layer-heuristic`, `sec:layer-numerics`,
+`lem:mixed-rates` and `prop:suppression-lowtemp`.
+
+## History
+
+In October 2026 Paper B (arXiv:2610.09258) was merged into Paper C, which kept its folder. The
+results on the complete graph and near a vertex come from it. The sticky-prior application moved to
+the note `../S3_sticky_note`. On October 24, 2026 the paper was restructured for JTP: one
+development of the killed functional (Section 3), the stratified local law, the boundary layer as
+a new Section 6, Section 9 on reconstruction and Section 10 on low temperature, with the face
+maxima stated once with a field. Later that day it was revised after three reviews (in
+`research_notes/Paper C audits/`, items 06 to 08): Theorem D in the introduction, Hypothesis L,
+corrected claims in the abstract and introduction, added credit (Wentzell, Freidlin and Wentzell,
+Catoni, Trouve, Kim and Landim's Corollary 5.8, Al Ahmadieh's Corollary 5.6, Cohen, Friedland),
+and cuts of the worked 4-cycle, the flows and next-term remarks, the unfinished route to
+Hypothesis L and the layer heuristics, the suppression design at low temperature, part of the
+start subsection and most of the verification section. A proposal to split the paper in two is in
+`research_notes/Paper C audits/09_split_proposal.md`.
