@@ -166,6 +166,7 @@ import PaperD.FL5_Step4b
 import PaperD.FL5_Thm24
 import PaperD.FL5_Walk
 import PaperD.FLC_Cor25Walk
+import PaperD.ShapeAllEven
 
 /-!
 # Paper D (Problem 131 under memory), root module
@@ -179,6 +180,10 @@ The modules `T1_*` to `T8_*` are the tracks of October 2026 (sign chain, random 
 first flip and lower bound, upper bound, certificate checker, crossing analysis, kernel-checked
 certificates for `101 ≤ N ≤ 2000`, and the relabeling of Lemma 3.2). `EndToEnd` and
 `EndToEnd_Cert` compose them.
+
+`CenterNoHoles`, `ModalIntervals`, and `ShapeAllEven` give the October 23 all-even
+crossing shape theorem, including both complete modal intervals and the unique
+interior minimum, without an asymptotic or convex-window premise.
 
 The modules `U1_*` to `U5_*` are the tracks of October 18, 2026: the compound Poisson bulk
 (Theorem 3.8, U1), the Landau limit (Theorem 3.9, U2), the mode and convexity for large `N`
