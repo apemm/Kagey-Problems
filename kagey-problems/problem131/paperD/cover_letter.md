@@ -6,7 +6,7 @@ The paper studies a reversal probability that decreases with the number of steps
 
 The paper builds on the reversible fluctuation-assay model of Bokes, Hlubinová and Singh and the existing Luria–Delbrück and elephant-walk literature. The contribution is the quantitative transfer to this walk, the error bounds and the resulting discrete shape and crossing results. The related preprint arXiv:2610.06935 treats the persistent random walk; its crossing estimate is used for the comparison in the Online Resource, and the present walk has a different memory rule.
 
-Online Resource 1 contains the second-order center and crossing results, the tail theorem and the additional odd-length results. It also contains the likelihood bounds for the reversible fluctuation assay, and it supplies the family-estimate and second-difference proofs used by the main theorems. Please send the complete resource for refereeing with the article. The verification section and repository map distinguish the kernel-checked Lean results, their classical hypotheses and the separate certified computations.
+Every proof used by the main theorems is in the article and its appendices. Online Resource 1 contains the second-order center and crossing results, the tail theorem, the additional odd-length results and the likelihood bounds for the reversible fluctuation assay. Please send the resource for refereeing with the article. The verification section and repository map distinguish the kernel-checked Lean results, their classical hypotheses and the separate certified computations.
 
 The manuscript is not under consideration elsewhere.
 

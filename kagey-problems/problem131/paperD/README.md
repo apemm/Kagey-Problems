@@ -159,23 +159,22 @@ from the classical approximations.
 ## Files
 
 - `problem131_memory.tex` and the section files `sec_*.tex` and `app_*.tex` make up the paper, the
-  main text and Appendices A to C in one PDF, `problem131_memory.pdf`. The sections are
+  main text and Appendices A to E in one PDF, `problem131_memory.pdf`. The sections are
   `sec_intro`, `sec_erw_crossing`, `sec_erw_shape`, `sec_bulk_applications` and `sec_verify`, and the
-  appendices are `app_erw_bounds`, `app_erw_profile` and `app_erw_bulk`.
-  The family-estimate statements stay in Appendix B; their proofs are in
-  `or_family_proofs.tex`. The second-difference proofs in `app_erw_signs.tex`
-  are now Section S6 of the Online Resource.
+  appendices are `app_erw_bounds` (A), `app_erw_profile` (B, the family-estimate statements),
+  `app_erw_bulk` (C), `or_family_proofs` (D, the proofs of the family estimates) and
+  `app_erw_signs` (E, the second-difference proofs). Appendices D and E were Sections S5 and S6
+  of the Online Resource from October 17 to October 24, 2026, and returned to the article so that
+  every proof used by the main theorems is in the article.
 - `online_resource.tex` is Online Resource 1, a separate PDF `online_resource.pdf` with the center
-  and the crossing to second order, the tail, the proof of parts (b) to (d) of Proposition 3.25 and
-  the likelihood theorem for the reversible fluctuation assay (S4), followed by the auxiliary
-  family proofs (S5) and second-difference proofs (S6).
+  and the crossing to second order (S1), the tail (S2), the proof of parts (b) to (d) of
+  Proposition 3.25 (S3) and the likelihood theorem for the reversible fluctuation assay (S4).
   It reads the labels of the paper through the package `xr-hyper`, so build the paper, then the
   Online Resource, then the paper again. Its text is in `online_resource_body.tex`. Its one
   bibliography item (Hoeffding 1963) is listed in `online_resource.tex` itself, because the paper
   cites it too, so `online_resource_bib.tex` holds no item at present. Its caption on the submission form is
-  "Online Resource 1. Second-order crossings, tails, odd lengths, a likelihood for the
-  reversible fluctuation assay, and auxiliary family and second-difference proofs supporting
-  the main theorems."
+  "Online Resource 1. Second-order crossings, tails, odd lengths and a likelihood for the
+  reversible fluctuation assay."
 - `problem131_arxiv.tex` is the arXiv version. It inputs `problem131_memory.tex` unchanged and
   appends `online_resource_body.tex` before the bibliography, so the S numbers and the references
   between the two parts resolve inside one PDF. Make it the top-level file of the arXiv
@@ -364,3 +363,5 @@ CRLF endings. Its LF form, as committed, has sha256
 ## Final editorial revision
 
 The article is 35 pages, with a 17-page Online Resource and a 52-page combined arXiv version, compared with the preceding 41 + 12 = 53 pages. Six pages have left the main article, but the total reduction is one page: most of the change moves auxiliary proofs rather than deleting mathematics. The center and compound-Poisson/Landau proofs remain in the article. Appendix B retains its statements and numbering, with complete proofs in S5 (S4 before the likelihood theorem moved). The former Appendix D is now S6. The introduction gives shorter summaries of the explicit bounds and the verification section points to existing records instead of repeating their metadata. `cover_letter.md` requests refereeing of all the supplementary proofs. That earlier shortening did not change the Lean proofs or numerical certificates. The later October 23 revision adds the all-even shape formalization and the height window. The fixed-memory result now forms Section 4, after the shape section, and the likelihood theorem is Section S4 of the Online Resource. After that move the article is 34 pages, the Online Resource 18 pages and the combined arXiv version 52 pages. No numerical certificate was recomputed.
+
+On October 24, 2026 the family proofs (S5) and the second-difference proofs (S6) returned to the article as Appendices D and E, so that every proof used by the main theorems is in the article and the Online Resource holds only the additional results S1 to S4. The text of the proofs did not change. The article is now 39 pages, the Online Resource 14 pages and the combined arXiv version 53 pages.
