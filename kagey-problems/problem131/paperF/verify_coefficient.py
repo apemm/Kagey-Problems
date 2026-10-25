@@ -157,7 +157,7 @@ def main():
         ok_cert &= cert
         ok_ref &= (ref == row["refined_argmin"]) and abs(ref - js_) <= 1
         ok_tab &= (N in tab) and tab[N] == (js_, ref, lead, r3(rat))
-    check("5a. certified antimodes: every other bin of [pN, N] exceeds the minimum by more than 2 eps_N", ok_cert)
+    check("5a. certified antimodes: the value at every other point of [pN, N] exceeds the minimum by more than 2 eps_N", ok_cert)
     check("5b. refined prediction argmin_j [u_-(j) + C(j)/N] is within 1 of j*_N and agrees with antimode.json", ok_ref)
     check("5c. Table tab:antimode reproduced (all five rows, all columns)",
           ok_tab and sorted(r["N"] for r in am["rows"]) == sorted(tab))

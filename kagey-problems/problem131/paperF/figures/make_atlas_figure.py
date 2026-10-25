@@ -1,4 +1,4 @@
-"""The figure of Paper F: the four pieces of the row at N = 5000, and the antimode against N.
+"""The figure of Paper F: the four pieces of the law on {0,...,N} at N = 5000, and the antimode against N.
 
 Reads data/atlas_N5000.json (certify_atlas.py) and data/antimode.json (certify_antimode.py),
 writes figures/atlas.pdf and .png, and records the zones and the maximal relative error of each
@@ -113,7 +113,7 @@ def main():
     ax = fig.add_subplot(gs[0])
     bx = fig.add_subplot(gs[1])
 
-    # left panel: a piecewise linear horizontal scale that stretches the last W bins at each end
+    # left panel: a piecewise linear horizontal scale that stretches the last W points at each end
     W = 250
     frac = 0.17                                         # share of the axis for each end stretch
 
