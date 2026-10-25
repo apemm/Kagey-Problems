@@ -1,10 +1,8 @@
 \section{The bulk}\label{sec:bulk}
 
 The bulk is the window $|k-pN|=O(B_N)$, where the law of $A_N$ is stable. The
-theorem of this section is the whole-row statement for a fresh start. Outside
-the bulk it says only that every bin is $o(1/B_N)$, and
-Sections~\ref{sec:bigjump} and~\ref{sec:preparation} refine the outside and add
-the preparation.
+theorem of this section is a statement about every bin of the row for a fresh
+start, with one error term and one bound that are uniform in $k$.
 
 \begin{introtheorem}[the bulk, fresh start]\label{thm:bulk}
 Assume (RV) and (SPAN). For each starting sign $\sgn_0$,
@@ -17,181 +15,31 @@ The convergence covers every relation between the two scales $b_{\plus,N}$ and
 $b_{\minus,N}$, including ratios that oscillate.
 \end{introtheorem}
 
-We prove (a) in Section~\ref{sec:bulk-proof}, and (b) and (c) at its end.
+\emph{What is new.} Part (c) on a fixed window $|k-pN|\le KB_N$ also follows
+from Berger's strong renewal theorem~\cite[Theorem~3.3]{berger2019} for the walk
+of run lengths and the fresh-plus identity. The content is in (a) and (b). They
+control every bin, including the remote bins with $|k-pN|\gg B_N$, by one error
+term and one bound $C/B_N$, under (RV) and (SPAN) alone.
 
-\subsection{Classical inputs}\label{sec:bulk-inputs}
+This needs work for two reasons. The fresh identity writes a bin as a sum over
+the run index $m$ of products of a kernel of each sign, and away from the bulk
+most of the sum comes from indices at which one factor is a local large
+deviation. Local bounds for the walk of run lengths away from its mean
+direction~\cite[Theorems~4.1 to~4.3]{berger2019} assume a local condition on the
+run law, which (RV) does not give. We bound only the factor of the dominant sign,
+by $C/B_N$, through Gnedenko's theorem for many runs and the bound of Caravenna
+and Doney for few runs, and we only sum the other factor, whose total mass is at
+most one. Second, the two scales may differ and their ratio may oscillate, so
+there is no single bivariate normalization. Lemma~\ref{lem:index} resolves the
+index of the covering run on the scale of its own sign, and its part (a) uses no
+local condition.
 
-We use four facts about the sums $S^\sgn_m$, stated with the normalization of
-Section~\ref{sec:scales}. We write $\bar T_\sgn(x)=\Prob(X_\sgn>x)$, which is
-regularly varying with $\bar T_\sgn(x)\sim T_\sgn(x)$ under (RV).
+The classical facts on sums of runs (Lemma~\ref{lem:stable}) and the kernel
+bounds ((K1) to (K4), Lemmas~\ref{lem:kernels} and~\ref{lem:small}) are routine,
+and Appendix~\ref{app:classical} gives them with proofs. We prove (a) in
+Section~\ref{sec:bulk-proof}, and (b) and (c) at its end.
 
-\begin{lemma}[stable and local limits]\label{lem:stable}
-Assume (RV) and (SPAN) for the sign $\sgn$, and write $\alpha=\alpha_\sgn$,
-$\mu=\mu_\sgn$, $a=a_\sgn$, $g=g_\sgn$, $T=T_\sgn$ and $S_m=S^\sgn_m$. Parts
-(i), (iii) and (iv) need only (RV).
-\begin{enumerate}[(i)]
-\item $Z_m=(S_m-m\mu)/a(m)$ converges in law to $Z_\sgn$, whose density $g$ is
-bounded, uniformly continuous, and tends to zero at infinity. Moreover
-$m\bigl(\E e^{-(X_\sgn-\mu)/a(m)}-1\bigr)\to K_\alpha$.
-\item (Gnedenko's local limit theorem)
-$\sup_{k\in\Z}\bigl|a(m)\Prob(S_m=k)-g\bigl((k-m\mu)/a(m)\bigr)\bigr|\to0$ as $m\to\infty$,
-and $\bar u_\sgn=\sup_{m\ge1}\sup_ka(m)\Prob(S_m=k)<\infty$.
-\item (local large deviations) There is a constant $C_{\mathrm{LD}}=C_{\mathrm{LD}}(\sgn)$ such that
-$\Prob(S_m=j)\le C_{\mathrm{LD}}\,m\,T(j-m\mu)/a(m)$
-for all $m\ge1$ and all integers $j$ with $j-m\mu\ge1$.
-\item (left deviations) The constant $C_-=C_-(\sgn)=\sup_{m\ge1}m\log\E e^{-(X_\sgn-\mu)/a(m)}$
-is finite, and
-$\Prob(S_m\le m\mu-y)\le e^{C_-}\,e^{-y/a(m)}$ for all $m\ge1$ and $y\ge0$.
-\end{enumerate}
-\end{lemma}
-
-\begin{proof}
-(i) The domain of attraction is classical~\cite[Section~XVII.5]{feller1971}, and we
-check the normalization, since the constant $K_\alpha$ is ours. Let $X=X_\sgn$ and, for
-$\operatorname{Re}\xi\ge0$, $\Lambda(\xi)=\E[e^{-\xi X}-1+\xi X]$. Since
-$e^{-\xi x}-1+\xi x=\int_0^x\xi(1-e^{-\xi y})\,dy$ for $x\ge0$, Fubini's theorem gives,
-with $\xi=te^{i\vartheta}$, $t>0$ and $|\vartheta|\le\pi/2$,
-\[
- \Lambda(\xi)=\int_0^\infty \xi\bigl(1-e^{-\xi y}\bigr)\bar T(y)\,dy
- =\int_0^\infty e^{i\vartheta}\bigl(1-e^{-e^{i\vartheta}v}\bigr)\bar T(v/t)\,dv .
-\]
-The integrand is at most $\min(2,v)\bar T(v/t)$ in modulus. As $t\to0$,
-$\bar T(v/t)/\bar T(1/t)\to v^{-\alpha}$, and Lemma~\ref{lem:rv}(ii) dominates the ratio
-by $2\max(v^{-\alpha-\delta},v^{-\alpha+\delta})$ for $v\ge tx_\delta$, with
-$1<\alpha\pm\delta<2$. The part $v<tx_\delta$ contributes at most
-$t^2x_\delta^2/\bar T(1/t)\to0$ to $\Lambda(\xi)/\bar T(1/t)$, because $\alpha<2$. Hence,
-uniformly in $\vartheta$,
-\[
- \Lambda(te^{i\vartheta})=\bar T(1/t)\bigl(F(e^{i\vartheta})+o(1)\bigr),\qquad
- F(\xi)=\int_0^\infty \xi\bigl(1-e^{-\xi v}\bigr)v^{-\alpha}\,dv .
-\]
-The function $F$ is continuous on $\operatorname{Re}\xi\ge0$, analytic inside, and
-$F(t)=t^\alpha F(1)$ for $t>0$. An integration by parts gives
-$F(1)=\Gamma(2-\alpha)/(\alpha-1)=K_\alpha$, so $F(\xi)=K_\alpha\xi^\alpha$ with the principal
-branch. Next $\E e^{-\xi(X-\mu)}-1=\Lambda(\xi)+O(|\xi|^2)$ as $\xi\to0$. With
-$\xi=-i\theta/a(m)$, $m\bar T(a(m)/|\theta|)\to|\theta|^\alpha$ and $m/a(m)^2\to0$ give
-$m(\E e^{i\theta(X-\mu)/a(m)}-1)\to K_\alpha(-i\theta)^\alpha$, and L\'evy's continuity
-theorem gives $Z_m\to Z_\sgn$. The characteristic function of $Z_\sgn$ has modulus
-$\exp(K_\alpha\cos(\pi\alpha/2)|\theta|^\alpha)$, which is integrable, so Fourier inversion
-and the Riemann--Lebesgue lemma give the properties of $g$. With $\xi=1/a(m)$ the same
-expansion gives the last claim.
-
-(ii) The support of $X_\sgn-\mu$ lies in $\Z-\mu$, and by (SPAN) its maximal lattice
-span is $1$. Given (i), Gnedenko's local limit
-theorem~\cite[Theorem~4.2.1]{ibragimovlinnik1971} (see
-also~\cite[Theorem~8.4.1]{bgt1989}) gives the uniform limit. The norming sequence
-there may be any $a_m\sim a(m)$, since $g$ is bounded, uniformly continuous and tends
-to zero at infinity. For $\bar u_\sgn$, the limit gives an $m_0$ with
-$a(m)\Prob(S_m=k)\le\|g\|_\infty+1$ for $m\ge m_0$, and $a(m)\Prob(S_m=k)\le a(m_0)$ for
-$m<m_0$.
-
-(iii) Caravenna and Doney~\cite[Theorem~1.1]{caravennadoney2019} assume right and
-left tails $p/A(x)$ and $q/A(x)$ (or $o(1/A(x))$) with $A$ regularly varying of index
-in $(0,1)\cup(1,2)$, $p>0$, and mean zero when the index exceeds one. Their bound
-(1.6) then holds with no lattice assumption, for all $m\ge1$, $x\ge0$ and bounded
-intervals $\mathcal I$, and reads
-$\Prob(S_m-m\mu\in x+\mathcal I)\le C_0'(\mathcal I)\,m/(a_mA(x))$ with $a_m=A^{-1}(m)$.
-Under (RV) the variable $X_\sgn-\mu$ satisfies these hypotheses with $p=1$, $q=0$ and
-$A(x)\sim1/T(x)$. We take $\mathcal I=(-1,0]$ and $x=j-m\mu$, so that
-the event contains $\{S_m=j\}$. The asymptotic inverses $a_m$ and $a(m)$ satisfy
-$a_m/a(m)\to1$~\cite[Theorem~1.5.12]{bgt1989}, so $a(m)\le c\,a_m$ for all $m$, and
-$1/A(x)\le c\,T(x)$ for $x\ge1$. This gives (iii).
-
-(iv) By (i), $m(\E e^{-(X_\sgn-\mu)/a(m)}-1)$ is bounded, and $\log(1+z)\le z$ makes
-$C_-$ finite. Markov's inequality for $e^{-(S_m-m\mu)/a(m)}$ and independence give
-$\Prob(S_m-m\mu\le-y)\le e^{-y/a(m)}(\E e^{-(X_\sgn-\mu)/a(m)})^m\le e^{C_--y/a(m)}$.
-This is the exponential bound behind the Fuk--Nagaev inequalities~\cite{nagaev1979}.
-\end{proof}
-
-\subsection{Kernels of one sign}\label{sec:bulk-kernels}
-
-For each sign $\sgn$ the fresh identities use three kernels,
-\[
- \mathsf k^{\sgn,1}_m=u^\sgn_m,\qquad \mathsf k^{\sgn,2}_m=q^\sgn_m,\qquad
- \mathsf k^{\sgn,3}_m=q^\sgn_{m+1}\qquad(m\ge1),
-\]
-with weights $c_{\mathsf k^{\sgn,1}}=1$ and $c_{\mathsf k^{\sgn,2}}=c_{\mathsf k^{\sgn,3}}=\mu_\sgn$. A
-kernel of sign $\sgn$ is one of these three sequences, and we write $\mathsf k_m$ and
-$c_{\mathsf k}$ when the choice does not matter. We use four facts.
-\begin{enumerate}[(K1)]
-\item $\sum_{m\ge1}u^\sgn_m(j)\le1$, $\sum_{m\ge1}q^\sgn_m(j)=1$ and
-$\sum_{m\ge1}q^\sgn_{m+1}(j)\le1$ for $j\ge1$, by~\eqref{eq:kernel-sums}.
-\item $\mathsf k_m(j)=0$ for $m>j$, because $S^\sgn_m\ge m$.
-\item Let $J_\sgn(j)=\min\{m\ge1:S^\sgn_m\ge j\}$. Then $\Prob(J_\sgn(j)=m)=q^\sgn_m(j)$
-by~\eqref{eq:q-cover}, and $u^\sgn_m(j)\le q^\sgn_m(j)$, since $\{S^\sgn_m=j\}\subset\{J_\sgn(j)=m\}$.
-\item $\sum_jq^\sgn_m(j)=\mu_\sgn$ and $\sum_ju^\sgn_m(j)=1$.
-\end{enumerate}
-
-\begin{lemma}[kernel local limits]\label{lem:kernels}
-Assume (RV) and (SPAN). For each sign $\sgn$ and each kernel $\mathsf k$ of sign $\sgn$,
-\[
- \delta_{\mathsf k}(m)=\sup_{j\in\Z}\bigl|a_\sgn(m)\mathsf k_m(j)-c_{\mathsf k}\,g_\sgn\bigl((j-m\mu_\sgn)/a_\sgn(m)\bigr)\bigr|\to0
- \qquad(m\to\infty),
-\]
-and $\mathsf k_m(j)\le C_3/a_\sgn(m)$ for all $m\ge1$ and $j$, where
-$C_3=C_3(\sgn)=\max\bigl(a_\sgn(1),\,\mu_\sgn r_\sgn\bar u_\sgn\bigr)$ and
-$r_\sgn=\sup_{m\ge2}a_\sgn(m)/a_\sgn(m-1)<\infty$.
-\end{lemma}
-
-\begin{proof}
-For $u^\sgn_m$ this is Lemma~\ref{lem:stable}(ii). The kernel $q^\sgn_m$ is a sum of
-shifts of $u^\sgn_{m-1}$ with weights $T_\sgn(v)$ of total mass $\mu_\sgn$, and
-$q^\sgn_{m+1}$ is the same sum built on $u^\sgn_m$. This gives the bounds, with
-$q^\sgn_1=T_\sgn\le1$ at $m=1$. For the limit of $q^\sgn_m$ write $a=a_\sgn$, $g=g_\sgn$,
-$z=(j-m\mu)/a(m)$, and fix $v_0\ge1$ and $Z>0$. The shifts $v>v_0$ contribute at most
-$(\bar u_\sgn+\|g\|_\infty)\sum_{v>v_0}T(v)$ to $|a(m-1)q_m(j)-\mu g(z)|$. For $v\le v_0$
-the point $(j-v-(m-1)\mu)/a(m-1)=z\,a(m)/a(m-1)+(\mu-v)/a(m-1)$ lies within
-$\epsilon_m=Z|a(m)/a(m-1)-1|+(v_0+\mu)/a(m-1)$ of $z$ when $|z|\le Z$, and has modulus at
-least $Z/2$ for large $m$ when $|z|>Z$. So for large $m$
-\[
- \bigl|a(m-1)q_m(j)-\mu g(z)\bigr|\le\mu\bigl(\delta_{u}(m-1)+\omega_g(\epsilon_m)+\bar g(Z/2)\bigr)
- +(\bar u_\sgn+\|g\|_\infty)\sum_{v>v_0}T(v),
-\]
-where $\omega_g$ is the modulus of continuity of $g$ and $\bar g(r)=\sup_{|y|\ge r}g(y)$.
-Let $m\to\infty$, then $v_0,Z\to\infty$, and use $a(m)/a(m-1)\to1$. The kernel
-$q^\sgn_{m+1}$ is the same with the shift $-v/a(m)$ in place of $(\mu-v)/a(m-1)$.
-\end{proof}
-
-\begin{lemma}[small counts]\label{lem:small}
-Assume (RV). For each sign $\sgn$ there is $C_4=C_4(\sgn)$ such that every kernel
-of sign $\sgn$ satisfies
-\[
- \mathsf k_m(j)\le C_4\bigl(1+m/a_\sgn(m)\bigr)T_\sgn(j)\qquad\text{whenever }8m\mu_\sgn\le j .
-\]
-Consequently, for $0<\beta\le1$ there is $C_5=C_5(\sgn,\beta)$ with
-\begin{equation}\label{eq:bulk-small}
- \mathsf k_m(j)\le C_5\,e_{\sgn,N},\qquad e_{\sgn,N}=\bigl(1+N/a_\sgn(N)\bigr)T_\sgn(N),
-\end{equation}
-for all $N\ge1$, all $\beta N\le j\le N$ and all $m$ with $8m\mu_\sgn\le\beta N$.
-Moreover $B_Ne_{\sgn,N}\to0$.
-\end{lemma}
-
-\begin{proof}
-Write $T=T_\sgn$, $a=a_\sgn$, $\mu=\mu_\sgn$, and let $C_T$ be the constant of
-Lemma~\ref{lem:rv}(ii) with $T(x/2)\le C_TT(x)$. If $4m\mu\le i$, then
-$i-m\mu\ge i/2\ge1$, and Lemma~\ref{lem:stable}(iii) gives
-\begin{equation}\label{eq:bulk-u-small}
- u_m(i)\le C_{\mathrm{LD}}\,m\,T(i/2)/a(m)\le C_{\mathrm{LD}}C_T\,m\,T(i)/a(m).
-\end{equation}
-This is the claim for $u_m$. Let $8m\mu\le j$. For $q_1=T$ there is nothing to prove.
-For $q_m$ with $m\ge2$ we split $\sum_vT(v)u_{m-1}(j-v)$ at $v=j/2$. If $v\le j/2$, then
-$j-v\ge j/2\ge4(m-1)\mu$, so~\eqref{eq:bulk-u-small} bounds $u_{m-1}(j-v)$ by
-$C_{\mathrm{LD}}C_T^2r_\sgn\,m\,T(j)/a(m)$, and the weights $T(v)$ add up to at most
-$\mu$. If $v>j/2$, then $T(v)\le C_TT(j)$, and the values $u_{m-1}(j-v)$ add up to at
-most $1$ by (K4). So $q_m(j)\le(\mu C_{\mathrm{LD}}C_T^2r_\sgn\,m/a(m)+C_T)T(j)$. The
-kernel $q_{m+1}$ is the same with $u_m$ in place of $u_{m-1}$. This proves the first
-claim with $C_4=C_T+\mu C_{\mathrm{LD}}C_T^2r_\sgn$.
-
-For~\eqref{eq:bulk-small}, $m/a(m)$ has the positive index $1-1/\alpha_\sgn$, so
-Lemma~\ref{lem:rv}(iii) gives $m/a(m)\le C_PN/a(N)$ for $m\le N$, and
-$T(j)\le T(\beta N)\le C_{T,\beta}T(N)$ by Lemma~\ref{lem:rv}(ii). Finally
-$B_NNT_\sgn(N)/a_\sgn(N)$ has the index
-\[
- \frac1{\alpha_*}-\frac1{\alpha_\sgn}+1-\alpha_\sgn\le1-\alpha_*<0 ,
-\]
-because $1/\alpha_*-1/\alpha_\sgn=(\alpha_\sgn-\alpha_*)/(\alpha_*\alpha_\sgn)\le\alpha_\sgn-\alpha_*$,
-and $B_NT_\sgn(N)\to0$ by Lemma~\ref{lem:rv}(v).
-\end{proof}
+\subsection{The index of the covering run}\label{sec:bulk-index}
 
 The next lemma is the renewal theorem in local form, with the index of the run
 that covers a level resolved on its natural scale. For $j\ge1$ and $K>0$ let
@@ -363,37 +211,37 @@ $(sk-\mu_\plus N+\mu_\plus k_\minus)/\mu_\minus-m\mu_\plus=k-m\mu_\plus$, and $\
 same computation. Finally, by Lemma~\ref{lem:rv}(ii) there is $N_3\ge N_2(K)$ such that
 for $N\ge N_3$
 \begin{equation}\label{eq:bulk-ratios}
- a_\sgn(N/\mu_\sgn)\le c_0\,b_{\sgn,N},\qquad
- a_\sgn(2N/\mu_{\min})\le c_1b_{\sgn,N},\qquad
- B_N\le c_2\,a_\tau(\varepsilon N/(2\mu_{\max})),
+ a_\sgn(N/\mu_\sgn)\le c_1\,b_{\sgn,N},\qquad
+ a_\sgn(2N/\mu_{\min})\le c_2b_{\sgn,N},\qquad
+ B_N\le c_3\,a_\tau(\varepsilon N/(2\mu_{\max})),
 \end{equation}
-with $c_0=s/\mu_{\min}$, $c_1=2s/\mu_{\min}$ and $c_2=2/\varepsilon$, because the ratios
+with $c_1=s/\mu_{\min}$, $c_2=2s/\mu_{\min}$ and $c_3=2/\varepsilon$, because the ratios
 tend to $(s/\mu_\sgn)^{1/\alpha_\sgn}$, $(2s/\mu_{\min})^{1/\alpha_\sgn}$ and
 $(2\mu_{\max}/(\varepsilon s))^{1/\alpha_\tau}$.
 
 \paragraph{Step 4. Remote bins.}
-Let $R\ge4\mu_{\max}/\mu_{\min}$ and put $K=K(R)=sR/(2c_0\mu_{\max})=\mu_{\min}R/(2\mu_{\max})\ge2$.
+Let $R\ge4\mu_{\max}/\mu_{\min}$ and put $K=K(R)=sR/(2c_1\mu_{\max})=\mu_{\min}R/(2\mu_{\max})\ge2$.
 Let $N\ge N_3$ with $N_3$ taken for this $K$, and let $\varepsilon N\le k\le(1-\varepsilon)N$
 and $|k-pN|>RB_N$. For $m\in I$ we have
-$|k_{\bar\tau}-m\mu_{\bar\tau}|\le Ka_{\bar\tau}(N/\mu_{\bar\tau})\le c_0KB_N$
+$|k_{\bar\tau}-m\mu_{\bar\tau}|\le Ka_{\bar\tau}(N/\mu_{\bar\tau})\le c_1KB_N$
 by~\eqref{eq:bulk-ratios}, so~\eqref{eq:bulk-shift} gives
 \[
- |k_\tau-m\mu_\tau|\ge\frac{sRB_N}{\mu_{\bar\tau}}-\frac{\mu_\tau}{\mu_{\bar\tau}}c_0KB_N
+ |k_\tau-m\mu_\tau|\ge\frac{sRB_N}{\mu_{\bar\tau}}-\frac{\mu_\tau}{\mu_{\bar\tau}}c_1KB_N
  \ge\frac{sRB_N}{2\mu_{\bar\tau}} .
 \]
-By~\eqref{eq:bulk-window} and~\eqref{eq:bulk-ratios}, $a_\tau(m)\le c_1B_N$, so the scaled
+By~\eqref{eq:bulk-window} and~\eqref{eq:bulk-ratios}, $a_\tau(m)\le c_2B_N$, so the scaled
 argument $z=(k_\tau-m\mu_\tau)/a_\tau(m)$ of the dominant factor has modulus at least
-$c_8R$ with $c_8=s/(2c_1\mu_{\max})$. Lemma~\ref{lem:kernels} and~\eqref{eq:bulk-ratios}
+$c_4R$ with $c_4=s/(2c_2\mu_{\max})$. Lemma~\ref{lem:kernels} and~\eqref{eq:bulk-ratios}
 give
 \[
- B_N\mathsf k^{\tau,i}_m(k_\tau)\le\frac{B_N}{a_\tau(m)}\bigl(\mu_{\max}\bar g_\tau(c_8R)+\delta(m)\bigr)
- \le c_2\bigl(\mu_{\max}\bar g_\tau(c_8R)+\delta(\lceil\varepsilon N/(2\mu_{\max})\rceil)\bigr).
+ B_N\mathsf k^{\tau,i}_m(k_\tau)\le\frac{B_N}{a_\tau(m)}\bigl(\mu_{\max}\bar g_\tau(c_4R)+\delta(m)\bigr)
+ \le c_3\bigl(\mu_{\max}\bar g_\tau(c_4R)+\delta(\lceil\varepsilon N/(2\mu_{\max})\rceil)\bigr).
 \]
 The factors of sign $\bar\tau$ add up to at most $1$ for each $i$ by (K1). Together
 with~\eqref{eq:bulk-remote-counts} and Lemma~\ref{lem:profile}(b),
 \begin{equation}\label{eq:bulk-remote-bins}
  \limsup_{N\to\infty}\sup_{\substack{\varepsilon N\le k\le(1-\varepsilon)N\\|k-pN|>RB_N}}\mathcal E_N(k)
- \le e(R)=2c_2\mu_{\max}\max_\sgn\bar g_\sgn(c_8R)+2C_6\eta(K(R))+\varepsilon_h(R),
+ \le e(R)=2c_3\mu_{\max}\max_\sgn\bar g_\sgn(c_4R)+2C_6\eta(K(R))+\varepsilon_h(R),
 \end{equation}
 and $e(R)\to0$ as $R\to\infty$.
 

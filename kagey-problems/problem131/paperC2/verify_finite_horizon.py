@@ -2,13 +2,13 @@
 
 Part A. The reversible path 1-2-3 with q12 = 1, q21 = 2, q23 = q32 = 1 (stationary law
 (1/2, 1/4, 1/4)) and the start mu = (0.5, 0.3, 0.2), with the design of Theorem
-`thm:reversible-reconstruction`: R = 4 (the norm of S rounded up), b = 1, H = 2R, U = 8R/b^2 and
-the suppression level M = 4R + 4UR^2. For each ordered edge (i,j) the field is v_i = H, v_j = 0
-and v_k = -M.
+`thm:reversible-reconstruction`: R = 4 (the norm of S rounded up), b = 1, xi_bar = 2R, U = 8R/b^2 and
+the suppression level v_bar = 4R + 4UR^2. For each ordered edge (i,j) the field is v_i = xi_bar,
+v_j = 0 and v_k = -v_bar.
   * The constants lambda_ij(v) and K_ij(v) of the pair are computed in two ways (the symmetric
-    form and the general formula of Proposition `prop:constant`), and 1/t_ij = (q_i - H) - lambda_ij(v).
+    form and the general formula of Proposition `prop:constant`), and 1/t_ij = (q_i - xi_bar) - lambda_ij(v).
   * For N = 10^3, ..., 10^6 the exact face maxima M_{i}(v) and M_{ij}(v) of P_N(n) e^{T v.n/N}
-    come from the run expansion of the killed law on the pair (Lemma `lem:runs`), maximized over
+    come from the run expansion of the killed law on the pair (the run expansion of the companion paper C1), maximized over
     every composition (for N > 20000 over a window around the peak of a strided scan, and the
     window is compared with the full scan at N = 10^5). The entry time tau_N solves
     M_{ij} = M_{i}, and the difference of the two logarithms is checked to increase on a grid.
@@ -62,8 +62,8 @@ Mbig = 4 * R + 4 * U * R ** 2
 
 def t_limit(i, j):
     w = Q[i, j] * Q[j, i]
-    Delta = qv[i] - qv[j]          # d_i - d_j (d is q shifted by q_1)
-    return (math.sqrt((H - Delta) ** 2 + 4 * w) + H - Delta) / (2 * w)
+    s = H - (qv[i] - qv[j])        # s_ij = xi_bar - x_i + x_j, with x_i - x_j = q_i - q_j
+    return (math.sqrt(s ** 2 + 4 * w) + s) / (2 * w)
 
 
 def pair_constants(i, j):

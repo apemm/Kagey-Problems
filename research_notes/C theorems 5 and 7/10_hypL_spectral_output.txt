@@ -1,0 +1,368 @@
+Numerical check of the spectral route to Hypothesis L (note 10_hypL_spectral_route.md).
+
+Run with:  py -I 10_hypL_spectral_check.py  > 10_hypL_spectral_output.txt
+
+What it does, for four non-reversible faces (facet sizes g = 3 and g = 4):
+
+  Part 1. Checks the exact representation (Lemma R of the note) against the word series of
+          Lemma lem:layer-exact at small S, for real and complex z and for real and complex radii.
+  Part 2. Solves the complex tilt theta(beta, z), forms the Doob transform P_0, and prints its
+          spectrum (Perron eigenvalue 1, the other eigenvalues, the gap gamma_0) and w.
+  Part 3. Checks the determinant identity det H_Phi = prod theta^2 det Sigma / <theta,beta>^2,
+          i.e. that the constant of the spectral route equals the paper's constant C_G(beta, z).
+  Part 4. Computes the exact f^{(z)}_G(S beta) by the representation (trapezoid rule on the torus,
+          two grid sizes) and compares it with S^{-(g-1)/2} C_G(beta,z) e^{-S J_G(beta,z)} for
+          S = 25 ... 400 (g = 4) and up to 800 (g = 3). Prints |eps| and S |eps|.
+
+====================================================================================================
+F = 4-cycle (2 forward, 1 back), i = 3, facet = path of 3 states
+g = 3  beta = [0.3 0.3 0.4]
+A0 =
+ [[0. 2. 0.]
+ [1. 0. 2.]
+ [0. 1. 0.]]
+q_G = [3.3 3.3 3.3]  c^- = [1. 0. 2.]  c^+ = [2. 0. 1.]
+
+Part 1. Representation (Lemma R) against the word series, s = S0*beta.
+  z =          0.0  real radii      word series = 3.841629388060e-02+0.000000000000e+00j  representation = 3.841629388060e-02+1.644016580386e-18j  rel diff = 2.26e-16
+  z =          0.0  complex radii   word series = 3.841629388060e-02+0.000000000000e+00j  representation = 3.841629388060e-02-6.938893903907e-18j  rel diff = 1.79e-15
+  z =   (0.3-0.4j)  real radii      word series = -7.703078403991e-01-2.320744971891e-01j  representation = -7.703078403991e-01-2.320744971891e-01j  rel diff = 4.80e-15
+  z =   (0.3-0.4j)  complex radii   word series = -7.703078403991e-01-2.320744971891e-01j  representation = -7.703078403991e-01-2.320744971891e-01j  rel diff = 1.42e-15
+
+Part 2. Complex tilt and Doob transform P_0 = R^{-1} Theta^{-1} A(z) R.
+  z =                    0.0  tilt residual 1.8e-16  theta = [1.414214+0.j 3.047207+0.j 1.224745+0.j]
+      row sums of P_0 - 1: 2.2e-16   w = theta*beta/<theta,beta> = [0.23205+0.j 0.5    +0.j 0.26795+0.j]
+      eigenvalues of P_0: [ 1.+0.j  0.+0.j -1.+0.j]   gamma_0 = 1 - max Re(non-Perron) = 1.0000
+      max row sum of |P_0| = 1.00000,  sum |w_j| = 1.00000
+  z =                   0.08  tilt residual 2.2e-16  theta = [1.735871+0.j 3.084501+0.j 1.464004+0.j]
+      row sums of P_0 - 1: 6.7e-16   w = theta*beta/<theta,beta> = [0.25632+0.j 0.45545+0.j 0.28823+0.j]
+      eigenvalues of P_0: [ 1.     +0.j -0.22341+0.j -0.77659+0.j]   gamma_0 = 1 - max Re(non-Perron) = 1.2234
+      max row sum of |P_0| = 1.00000,  sum |w_j| = 1.00000
+  z =                  0.08j  tilt residual 6.0e-16  theta = [1.494044+0.343579j 3.008689+0.043039j 1.286685+0.255307j]
+      row sums of P_0 - 1: 1.1e-15   w = theta*beta/<theta,beta> = [0.2434 +0.0268j  0.47812-0.04898j 0.27849+0.02218j]
+      eigenvalues of P_0: [ 1.     +0.j      -0.04666-0.22467j -0.95334+0.22467j]   gamma_0 = 1 - max Re(non-Perron) = 1.0467
+      max row sum of |P_0| = 1.22709,  sum |w_j| = 1.00485
+  z =          (-0.06+0.05j)  tilt residual 5.4e-16  theta = [1.199675+0.369432j 2.951205-0.0685j   1.069087+0.281005j]
+      row sums of P_0 - 1: 6.3e-16   w = theta*beta/<theta,beta> = [0.21994+0.0396j 0.52012-0.0753j 0.25995+0.0357j]
+      eigenvalues of P_0: [ 1.    -0.j       0.1444-0.23682j -1.1444+0.23682j]   gamma_0 = 1 - max Re(non-Perron) = 0.8556
+      max row sum of |P_0| = 1.78045,  sum |w_j| = 1.01140
+  z = (-0.05885011172553459+0.08084964038195902j)  tilt residual 4.1e-16  theta = [1.29951 +0.467973j 2.914251+0.007339j 1.146202+0.350548j]
+      row sums of P_0 - 1: 3.6e-16   w = theta*beta/<theta,beta> = [0.2334 +0.04318j 0.49441-0.07989j 0.27218+0.03671j]
+      eigenvalues of P_0: [ 1.    +0.j       0.0802-0.30362j -1.0802+0.30362j]   gamma_0 = 1 - max Re(non-Perron) = 0.9198
+      max row sum of |P_0| = 1.58260,  sum |w_j| = 1.01284
+
+Part 3. Constant of the spectral route against the paper's C_G(beta,z).
+  z =                    0.0  nu(0) - 1 = 2.2e-16  |grad nu(0)| = 1.7e-10  det H / predicted = 1.00000060+0.00000000j
+      J = 1.4716759655+0.0000000000j   C_paper = 0.8156001417+0.0000000000j   C_spectral = 0.8155998978+0.0000000000j   min eig Re H = 0.2682
+  z =                   0.08  nu(0) - 1 = 4.4e-16  |grad nu(0)| = 1.8e-10  det H / predicted = 1.00000113+0.00000000j
+      J = 1.1562864774+0.0000000000j   C_paper = 1.1083373940+0.0000000000j   C_spectral = 1.1083367652+0.0000000000j   min eig Re H = 0.2926
+  z =                  0.08j  nu(0) - 1 = 5.6e-17  |grad nu(0)| = 1.9e-10  det H / predicted = 1.00000005+0.00000001j
+      J = 1.4345061018-0.3301081717j   C_paper = 0.8020362460+0.2812905689j   C_spectral = 0.8020362275+0.2812905578j   min eig Re H = 0.2738
+  z =          (-0.06+0.05j)  nu(0) - 1 = 2.5e-16  |grad nu(0)| = 2.1e-10  det H / predicted = 1.00000018+0.00000002j
+      J = 1.7111009537-0.2726814833j   C_paper = 0.5916164290+0.1660797854j   C_spectral = 0.5916163770+0.1660797635j   min eig Re H = 0.2558
+  z = (-0.05885011172553459+0.08084964038195902j)  nu(0) - 1 = 1.3e-16  |grad nu(0)| = 2.2e-10  det H / predicted = 0.99999995-0.00000002j
+      J = 1.6597810261-0.3960023636j   C_paper = 0.5988687094+0.2753653939j   C_spectral = 0.5988687209+0.2753654082j   min eig Re H = 0.2614
+
+Part 4. Exact f^{(z)}(S beta) against S^{-(g-1)/2} C e^{-S J}.  eps = ratio - 1.
+  z = 0.0
+    S =   25  ratio = +0.987989661+0.000000000i   |eps| = 1.201e-02   S|eps| = 0.3003   grid change = 1.8e-15
+    S =   50  ratio = +0.994009247+0.000000000i   |eps| = 5.991e-03   S|eps| = 0.2995   grid change = 3.8e-15
+    S =  100  ratio = +0.997008121+0.000000000i   |eps| = 2.992e-03   S|eps| = 0.2992   grid change = 3.0e-15
+    S =  200  ratio = +0.998504922+0.000000000i   |eps| = 1.495e-03   S|eps| = 0.2990   grid change = 4.3e-14
+    S =  400  ratio = +0.999252675+0.000000000i   |eps| = 7.473e-04   S|eps| = 0.2989   grid change = 4.7e-14
+    S =  800  ratio = +0.999626391+0.000000000i   |eps| = 3.736e-04   S|eps| = 0.2989   grid change = 2.0e-14
+    radius independence at S = 100: log f(real radii) - log f(complex tilt) = 0.00e+00+0.00e+00j
+  z = 0.08
+    S =   25  ratio = +0.990076594+0.000000000i   |eps| = 9.923e-03   S|eps| = 0.2481   grid change = 2.9e-15
+    S =   50  ratio = +0.995046171+0.000000000i   |eps| = 4.954e-03   S|eps| = 0.2477   grid change = 9.3e-15
+    S =  100  ratio = +0.997525010+0.000000000i   |eps| = 2.475e-03   S|eps| = 0.2475   grid change = 2.8e-14
+    S =  200  ratio = +0.998762981+0.000000000i   |eps| = 1.237e-03   S|eps| = 0.2474   grid change = 5.1e-14
+    S =  400  ratio = +0.999381609+0.000000000i   |eps| = 6.184e-04   S|eps| = 0.2474   grid change = 1.0e-13
+    S =  800  ratio = +0.999690834+0.000000000i   |eps| = 3.092e-04   S|eps| = 0.2473   grid change = 2.5e-13
+    radius independence at S = 100: log f(real radii) - log f(complex tilt) = -1.42e-13-5.33e-15j
+  z = 0.08j
+    S =   25  ratio = +0.988803043+0.002525540i   |eps| = 1.148e-02   S|eps| = 0.2870   grid change = 1.5e-16
+    S =   50  ratio = +0.994411669+0.001255583i   |eps| = 5.728e-03   S|eps| = 0.2864   grid change = 9.3e-16
+    S =  100  ratio = +0.997208320+0.000626057i   |eps| = 2.861e-03   S|eps| = 0.2861   grid change = 3.8e-15
+    S =  200  ratio = +0.998604775+0.000312603i   |eps| = 1.430e-03   S|eps| = 0.2860   grid change = 6.4e-14
+    S =  400  ratio = +0.999302541+0.000156196i   |eps| = 7.147e-04   S|eps| = 0.2859   grid change = 9.3e-14
+    S =  800  ratio = +0.999651309+0.000078072i   |eps| = 3.573e-04   S|eps| = 0.2859   grid change = 1.2e-13
+    radius independence at S = 100: log f(real radii) - log f(complex tilt) = -5.68e-14-2.49e-14j
+  z = (-0.06+0.05j)
+    S =   25  ratio = +0.984978919+0.002046190i   |eps| = 1.516e-02   S|eps| = 0.3790   grid change = 5.6e-16
+    S =   50  ratio = +0.992511994+0.001043895i   |eps| = 7.560e-03   S|eps| = 0.3780   grid change = 1.6e-15
+    S =  100  ratio = +0.996261747+0.000526233i   |eps| = 3.775e-03   S|eps| = 0.3775   grid change = 1.3e-14
+    S =  200  ratio = +0.998132312+0.000264098i   |eps| = 1.886e-03   S|eps| = 0.3773   grid change = 7.2e-15
+    S =  400  ratio = +0.999066515+0.000132284i   |eps| = 9.428e-04   S|eps| = 0.3771   grid change = 1.2e-14
+    S =  800  ratio = +0.999533348+0.000066200i   |eps| = 4.713e-04   S|eps| = 0.3771   grid change = 1.9e-13
+    radius independence at S = 100: log f(real radii) - log f(complex tilt) = -2.84e-14-3.55e-15j
+  z = (-0.05885011172553459+0.08084964038195902j)
+    S =   25  ratio = +0.986654965+0.004480538i   |eps| = 1.408e-02   S|eps| = 0.3519   grid change = 1.5e-15
+    S =   50  ratio = +0.993348791+0.002226028i   |eps| = 7.014e-03   S|eps| = 0.3507   grid change = 3.9e-15
+    S =  100  ratio = +0.996679505+0.001109572i   |eps| = 3.501e-03   S|eps| = 0.3501   grid change = 8.0e-15
+    S =  200  ratio = +0.998341005+0.000553939i   |eps| = 1.749e-03   S|eps| = 0.3498   grid change = 1.6e-14
+    S =  400  ratio = +0.999170813+0.000276760i   |eps| = 8.742e-04   S|eps| = 0.3497   grid change = 2.8e-14
+    S =  800  ratio = +0.999585484+0.000138328i   |eps| = 4.370e-04   S|eps| = 0.3496   grid change = 7.6e-14
+    radius independence at S = 100: log f(real radii) - log f(complex tilt) = -1.14e-13+1.07e-14j
+====================================================================================================
+F = K4 non-reversible, i = 3, facet = K3
+g = 3  beta = [0.25 0.35 0.4 ]
+A0 =
+ [[0.  1.  2.5]
+ [0.4 0.  1.2]
+ [1.6 0.3 0. ]]
+q_G = [4.4 3.5 3.2]  c^- = [0.7 1.9 0.8]  c^+ = [2.2 0.5 1.1]
+
+Part 1. Representation (Lemma R) against the word series, s = S0*beta.
+  z =          0.0  real radii      word series = 5.234749996475e-02+0.000000000000e+00j  representation = 5.234749996475e-02+1.617921631382e-18j  rel diff = 5.11e-15
+  z =          0.0  complex radii   word series = 5.234749996475e-02+0.000000000000e+00j  representation = 5.234749996475e-02+2.775557561563e-17j  rel diff = 6.46e-15
+  z =   (0.3-0.4j)  real radii      word series = -1.244524388191e+00+2.266312265823e-01j  representation = -1.244524388191e+00+2.266312265823e-01j  rel diff = 2.00e-15
+  z =   (0.3-0.4j)  complex radii   word series = -1.244524388191e+00+2.266312265823e-01j  representation = -1.244524388191e+00+2.266312265823e-01j  rel diff = 5.25e-16
+
+Part 2. Complex tilt and Doob transform P_0 = R^{-1} Theta^{-1} A(z) R.
+  z =                    0.0  tilt residual 2.8e-15  theta = [3.37125 +0.j 1.269694+0.j 2.193666+0.j]
+      row sums of P_0 - 1: 6.7e-16   w = theta*beta/<theta,beta> = [0.38935+0.j 0.20529+0.j 0.40536+0.j]
+      eigenvalues of P_0: [ 1.     -0.j -0.38349+0.j -0.61651-0.j]   gamma_0 = 1 - max Re(non-Perron) = 1.3835
+      max row sum of |P_0| = 1.00000,  sum |w_j| = 1.00000
+  z =                   0.08  tilt residual 1.1e-16  theta = [3.757045+0.j 1.514555+0.j 2.336307+0.j]
+      row sums of P_0 - 1: 2.2e-16   w = theta*beta/<theta,beta> = [0.39073+0.j 0.22052+0.j 0.38876+0.j]
+      eigenvalues of P_0: [ 1.     +0.j -0.36224+0.j -0.63776+0.j]   gamma_0 = 1 - max Re(non-Perron) = 1.3622
+      max row sum of |P_0| = 1.00000,  sum |w_j| = 1.00000
+  z =                  0.08j  tilt residual 1.1e-15  theta = [3.399386+0.403581j 1.285306+0.255015j 2.188406+0.14043j ]
+      row sums of P_0 - 1: 1.4e-15   w = theta*beta/<theta,beta> = [0.39096+0.00211j 0.20879+0.01739j 0.40024-0.0195j ]
+      eigenvalues of P_0: [ 1.     +0.j      -0.36483+0.02626j -0.63517-0.02626j]   gamma_0 = 1 - max Re(non-Perron) = 1.3648
+      max row sum of |P_0| = 1.02817,  sum |w_j| = 1.00120
+  z =          (-0.06+0.05j)  tilt residual 5.9e-16  theta = [3.064071+0.290534j 1.075816+0.180131j 2.08886 +0.078881j]
+      row sums of P_0 - 1: 1.4e-15   w = theta*beta/<theta,beta> = [0.38758+0.00395j 0.19168+0.01567j 0.42074-0.01962j]
+      eigenvalues of P_0: [ 1.     -0.j      -0.39597+0.05405j -0.60403-0.05405j]   gamma_0 = 1 - max Re(non-Perron) = 1.3960
+      max row sum of |P_0| = 1.05737,  sum |w_j| = 1.00112
+  z = (-0.05885011172553459+0.08084964038195902j)  tilt residual 5.1e-16  theta = [3.100325+0.458433j 1.09589 +0.285606j 2.08349 +0.131683j]
+      row sums of P_0 - 1: 1.6e-15   w = theta*beta/<theta,beta> = [0.38979+0.00524j 0.19576+0.02392j 0.41445-0.02916j]
+      eigenvalues of P_0: [ 1.     +0.j      -0.36983+0.05734j -0.63017-0.05734j]   gamma_0 = 1 - max Re(non-Perron) = 1.3698
+      max row sum of |P_0| = 1.09062,  sum |w_j| = 1.00252
+
+Part 3. Constant of the spectral route against the paper's C_G(beta,z).
+  z =                    0.0  nu(0) - 1 = 2.2e-16  |grad nu(0)| = 1.6e-10  det H / predicted = 1.00000021-0.00000001j
+      J = 1.4403280110+0.0000000000j   C_paper = 1.0219895067+0.0000000000j   C_spectral = 1.0219894018+0.0000000026j   min eig Re H = 0.3116
+  z =                   0.08  nu(0) - 1 = 4.4e-16  |grad nu(0)| = 1.7e-10  det H / predicted = 0.99999948+0.00000000j
+      J = 1.1155615802+0.0000000000j   C_paper = 1.3745517125+0.0000000000j   C_spectral = 1.3745520716+0.0000000000j   min eig Re H = 0.3470
+  z =                  0.08j  nu(0) - 1 = 9.7e-17  |grad nu(0)| = 1.7e-10  det H / predicted = 1.00000013-0.00000000j
+      J = 1.4299341677-0.3318825434j   C_paper = 0.9973092369+0.3264488458j   C_spectral = 0.9973091700+0.3264488260j   min eig Re H = 0.3131
+  z =          (-0.06+0.05j)  nu(0) - 1 = 1.3e-15  |grad nu(0)| = 1.6e-10  det H / predicted = 0.99999975+0.00000002j
+      J = 1.6910724399-0.2207066969j   C_paper = 0.7811456272+0.1819323360j   C_spectral = 0.7811457279+0.1819323520j   min eig Re H = 0.2839
+  z = (-0.05885011172553459+0.08084964038195902j)  nu(0) - 1 = 1.1e-15  |grad nu(0)| = 1.6e-10  det H / predicted = 0.99999949+0.00000002j
+      J = 1.6759014305-0.3537119381j   C_paper = 0.7708078896+0.2944574805j   C_spectral = 0.7708080909+0.2944575481j   min eig Re H = 0.2859
+
+Part 4. Exact f^{(z)}(S beta) against S^{-(g-1)/2} C e^{-S J}.  eps = ratio - 1.
+  z = 0.0
+    S =   25  ratio = +0.989682113-0.000000000i   |eps| = 1.032e-02   S|eps| = 0.2579   grid change = 5.1e-15
+    S =   50  ratio = +0.994853567+0.000000000i   |eps| = 5.146e-03   S|eps| = 0.2573   grid change = 1.3e-14
+    S =  100  ratio = +0.997429829+0.000000000i   |eps| = 2.570e-03   S|eps| = 0.2570   grid change = 3.2e-14
+    S =  200  ratio = +0.998715666-0.000000000i   |eps| = 1.284e-03   S|eps| = 0.2569   grid change = 4.4e-14
+    S =  400  ratio = +0.999358020+0.000000000i   |eps| = 6.420e-04   S|eps| = 0.2568   grid change = 1.9e-13
+    S =  800  ratio = +0.999679056-0.000000000i   |eps| = 3.209e-04   S|eps| = 0.2568   grid change = 3.1e-13
+    radius independence at S = 100: log f(real radii) - log f(complex tilt) = 0.00e+00+0.00e+00j
+  z = 0.08
+    S =   25  ratio = +0.990999852-0.000000000i   |eps| = 9.000e-03   S|eps| = 0.2250   grid change = 1.0e-14
+    S =   50  ratio = +0.995508822-0.000000000i   |eps| = 4.491e-03   S|eps| = 0.2246   grid change = 1.4e-14
+    S =  100  ratio = +0.997756586-0.000000000i   |eps| = 2.243e-03   S|eps| = 0.2243   grid change = 1.2e-14
+    S =  200  ratio = +0.998878831+0.000000000i   |eps| = 1.121e-03   S|eps| = 0.2242   grid change = 6.6e-14
+    S =  400  ratio = +0.999439549-0.000000000i   |eps| = 5.605e-04   S|eps| = 0.2242   grid change = 2.9e-13
+    S =  800  ratio = +0.999719808+0.000000000i   |eps| = 2.802e-04   S|eps| = 0.2242   grid change = 4.3e-13
+    radius independence at S = 100: log f(real radii) - log f(complex tilt) = 2.84e-13+2.22e-15j
+  z = 0.08j
+    S =   25  ratio = +0.990025158+0.001518375i   |eps| = 1.009e-02   S|eps| = 0.2522   grid change = 1.1e-15
+    S =   50  ratio = +0.995023483+0.000754814i   |eps| = 5.033e-03   S|eps| = 0.2517   grid change = 8.3e-15
+    S =  100  ratio = +0.997514405+0.000376354i   |eps| = 2.514e-03   S|eps| = 0.2514   grid change = 3.7e-14
+    S =  200  ratio = +0.998757861+0.000187918i   |eps| = 1.256e-03   S|eps| = 0.2513   grid change = 1.8e-14
+    S =  400  ratio = +0.999379094+0.000093895i   |eps| = 6.280e-04   S|eps| = 0.2512   grid change = 8.2e-14
+    S =  800  ratio = +0.999689588+0.000046932i   |eps| = 3.139e-04   S|eps| = 0.2512   grid change = 7.6e-14
+    radius independence at S = 100: log f(real radii) - log f(complex tilt) = 2.84e-14-3.55e-15j
+  z = (-0.06+0.05j)
+    S =   25  ratio = +0.988490975+0.001436635i   |eps| = 1.160e-02   S|eps| = 0.2900   grid change = 8.4e-16
+    S =   50  ratio = +0.994261477+0.000712996i   |eps| = 5.783e-03   S|eps| = 0.2891   grid change = 4.2e-15
+    S =  100  ratio = +0.997134622+0.000355226i   |eps| = 2.887e-03   S|eps| = 0.2887   grid change = 1.5e-14
+    S =  200  ratio = +0.998568268+0.000177302i   |eps| = 1.443e-03   S|eps| = 0.2885   grid change = 6.0e-16
+    S =  400  ratio = +0.999284372+0.000088574i   |eps| = 7.211e-04   S|eps| = 0.2884   grid change = 9.4e-14
+    S =  800  ratio = +0.999642245+0.000044268i   |eps| = 3.605e-04   S|eps| = 0.2884   grid change = 1.6e-13
+    radius independence at S = 100: log f(real radii) - log f(complex tilt) = 5.68e-14-7.11e-15j
+  z = (-0.05885011172553459+0.08084964038195902j)
+    S =   25  ratio = +0.988903899+0.002164067i   |eps| = 1.131e-02   S|eps| = 0.2826   grid change = 2.1e-15
+    S =   50  ratio = +0.994465720+0.001074529i   |eps| = 5.638e-03   S|eps| = 0.2819   grid change = 5.0e-15
+    S =  100  ratio = +0.997236217+0.000535467i   |eps| = 2.815e-03   S|eps| = 0.2815   grid change = 1.6e-14
+    S =  200  ratio = +0.998618938+0.000267293i   |eps| = 1.407e-03   S|eps| = 0.2813   grid change = 9.8e-15
+    S =  400  ratio = +0.999309675+0.000133538i   |eps| = 7.031e-04   S|eps| = 0.2812   grid change = 7.1e-14
+    S =  800  ratio = +0.999654889+0.000066742i   |eps| = 3.515e-04   S|eps| = 0.2812   grid change = 1.4e-13
+    radius independence at S = 100: log f(real radii) - log f(complex tilt) = 1.14e-13+0.00e+00j
+====================================================================================================
+G = 4-cycle (2 forward, 1 back), i = 4 entered from 0,2 and left to 1,3
+g = 4  beta = [0.2  0.3  0.25 0.25]
+A0 =
+ [[0. 2. 0. 1.]
+ [1. 0. 2. 0.]
+ [0. 1. 0. 2.]
+ [2. 0. 1. 0.]]
+q_G = [4.7 3.2 3.7 3.2]  c^- = [1.5 0.  0.5 0. ]  c^+ = [0. 2. 0. 1.]
+
+Part 1. Representation (Lemma R) against the word series, s = S0*beta.
+  z =          0.0  real radii      word series = 6.183832418614e-01+0.000000000000e+00j  representation = 6.183832418614e-01+0.000000000000e+00j  rel diff = 4.22e-15
+  z =          0.0  complex radii   word series = 6.183832418614e-01+0.000000000000e+00j  representation = 6.183832418614e-01-1.387778780781e-17j  rel diff = 2.44e-15
+  z =   (0.3-0.4j)  real radii      word series = 7.597331950053e-01-1.851672334204e+00j  representation = 7.597331950053e-01-1.851672334204e+00j  rel diff = 5.93e-15
+  z =   (0.3-0.4j)  complex radii   word series = 7.597331950053e-01-1.851672334204e+00j  representation = 7.597331950053e-01-1.851672334204e+00j  rel diff = 6.12e-15
+
+Part 2. Complex tilt and Doob transform P_0 = R^{-1} Theta^{-1} A(z) R.
+  z =                    0.0  tilt residual 1.6e-15  theta = [3.536085-0.j 2.580814-0.j 3.123923-0.j 2.855814+0.j]
+      row sums of P_0 - 1: 1.7e-15   w = theta*beta/<theta,beta> = [0.23761+0.j 0.26013-0.j 0.26239-0.j 0.23987+0.j]
+      eigenvalues of P_0: [ 1.-0.j       0.-0.33248j -0.+0.33248j -1.-0.j     ]   gamma_0 = 1 - max Re(non-Perron) = 1.0000
+      max row sum of |P_0| = 1.00000,  sum |w_j| = 1.00000
+  z =                   0.08  tilt residual 7.3e-16  theta = [3.725689-0.j 2.697676+0.j 3.201189+0.j 2.944529+0.j]
+      row sums of P_0 - 1: 7.5e-16   w = theta*beta/<theta,beta> = [0.24108-0.j 0.26184+0.j 0.25892+0.j 0.23816+0.j]
+      eigenvalues of P_0: [ 1.+0.j       0.+0.32619j -0.-0.32619j -1.+0.j     ]   gamma_0 = 1 - max Re(non-Perron) = 1.0000
+      max row sum of |P_0| = 1.00000,  sum |w_j| = 1.00000
+  z =                  0.08j  tilt residual 1.9e-15  theta = [3.541933+0.19478j  2.583982+0.119692j 3.125553+0.07874j  2.858322+0.090933j]
+      row sums of P_0 - 1: 1.4e-15   w = theta*beta/<theta,beta> = [0.2379 +0.00371j 0.26024+0.00181j 0.2621 -0.00371j 0.23976-0.00181j]
+      eigenvalues of P_0: [ 1.     -0.j       0.00645+0.33233j -0.00645-0.33233j -1.     -0.j     ]   gamma_0 = 1 - max Re(non-Perron) = 0.9936
+      max row sum of |P_0| = 1.00017,  sum |w_j| = 1.00007
+  z =          (-0.06+0.05j)  tilt residual 3.9e-16  theta = [3.388911+0.127777j 2.490458+0.078053j 3.064568+0.050868j 2.787147+0.059426j]
+      row sums of P_0 - 1: 1.2e-15   w = theta*beta/<theta,beta> = [0.23477+0.00263j 0.25875+0.00125j 0.26523-0.00263j 0.24125-0.00125j]
+      eigenvalues of P_0: [ 1.     -0.j       0.00417+0.33734j -0.00417-0.33734j -1.     +0.j     ]   gamma_0 = 1 - max Re(non-Perron) = 0.9958
+      max row sum of |P_0| = 1.00009,  sum |w_j| = 1.00003
+  z = (-0.05885011172553459+0.08084964038195902j)  tilt residual 1.1e-15  theta = [3.396087+0.206126j 2.494523+0.125963j 3.066891+0.082135j 2.790333+0.09588j ]
+      row sums of P_0 - 1: 1.5e-15   w = theta*beta/<theta,beta> = [0.23505+0.00422j 0.25886+0.00201j 0.26495-0.00422j 0.24114-0.00201j]
+      eigenvalues of P_0: [ 1.     -0.j       0.00674+0.33715j -0.00674-0.33715j -1.     +0.j     ]   gamma_0 = 1 - max Re(non-Perron) = 0.9933
+      max row sum of |P_0| = 1.00022,  sum |w_j| = 1.00009
+
+Part 3. Constant of the spectral route against the paper's C_G(beta,z).
+  z =                    0.0  nu(0) - 1 = 4.5e-16  |grad nu(0)| = 1.6e-10  det H / predicted = 0.99999974-0.00000030j
+      J = 0.6486046395+0.0000000000j   C_paper = 2.3974172859-0.0000000000j   C_spectral = 2.3974175978+0.0000003587j   min eig Re H = 0.2497
+  z =                   0.08  nu(0) - 1 = 1.3e-16  |grad nu(0)| = 1.6e-10  det H / predicted = 0.99999939-0.00000015j
+      J = 0.5341299953-0.0000000000j   C_paper = 2.7849214609+0.0000000000j   C_spectral = 2.7849223091+0.0000002114j   min eig Re H = 0.2617
+  z =                  0.08j  nu(0) - 1 = 4.8e-16  |grad nu(0)| = 1.6e-10  det H / predicted = 1.00000032+0.00000032j
+      J = 0.6454499696-0.1172819922j   C_paper = 2.3859308304+0.3760154865j   C_spectral = 2.3859305146+0.3760150403j   min eig Re H = 0.2501
+  z =          (-0.06+0.05j)  nu(0) - 1 = 1.0e-15  |grad nu(0)| = 1.6e-10  det H / predicted = 0.99999978+0.00000013j
+      J = 0.7371517868-0.0765450131j   C_paper = 2.1173795911+0.2242424196j   C_spectral = 2.1173798392+0.2242423089j   min eig Re H = 0.2404
+  z = (-0.05885011172553459+0.08084964038195902j)  nu(0) - 1 = 8.8e-17  |grad nu(0)| = 1.6e-10  det H / predicted = 0.99999983+0.00000004j
+      J = 0.7331196363-0.1235179089j   C_paper = 2.1152953738+0.3629314952j   C_spectral = 2.1152955660+0.3629314848j   min eig Re H = 0.2408
+
+Part 4. Exact f^{(z)}(S beta) against S^{-(g-1)/2} C e^{-S J}.  eps = ratio - 1.
+  z = 0.0
+    S =   25  ratio = +0.986754507+0.000000000i   |eps| = 1.325e-02   S|eps| = 0.3311   grid change = 6.0e-15
+    S =   50  ratio = +0.993369810+0.000000000i   |eps| = 6.630e-03   S|eps| = 0.3315   grid change = 2.6e-14
+    S =  100  ratio = +0.996683057+0.000000000i   |eps| = 3.317e-03   S|eps| = 0.3317   grid change = 3.9e-10
+    S =  200  ratio = +0.998341068+0.000000000i   |eps| = 1.659e-03   S|eps| = 0.3318   grid change = 3.6e-10
+    S =  400  ratio = +0.999170419+0.000000000i   |eps| = 8.296e-04   S|eps| = 0.3318   grid change = 2.9e-10
+    radius independence at S = 100: log f(real radii) - log f(complex tilt) = 0.00e+00+0.00e+00j
+  z = 0.08
+    S =   25  ratio = +0.987188500-0.000000000i   |eps| = 1.281e-02   S|eps| = 0.3203   grid change = 1.4e-14
+    S =   50  ratio = +0.993587395-0.000000000i   |eps| = 6.413e-03   S|eps| = 0.3206   grid change = 4.0e-14
+    S =  100  ratio = +0.996791994-0.000000000i   |eps| = 3.208e-03   S|eps| = 0.3208   grid change = 9.8e-10
+    S =  200  ratio = +0.998395573-0.000000000i   |eps| = 1.604e-03   S|eps| = 0.3209   grid change = 9.2e-10
+    S =  400  ratio = +0.999197680-0.000000000i   |eps| = 8.023e-04   S|eps| = 0.3209   grid change = 7.5e-10
+    radius independence at S = 100: log f(real radii) - log f(complex tilt) = -2.84e-13-4.44e-16j
+  z = 0.08j
+    S =   25  ratio = +0.986787485+0.000461332i   |eps| = 1.322e-02   S|eps| = 0.3305   grid change = 1.0e-15
+    S =   50  ratio = +0.993386361+0.000231303i   |eps| = 6.618e-03   S|eps| = 0.3309   grid change = 2.2e-15
+    S =  100  ratio = +0.996691347+0.000115808i   |eps| = 3.311e-03   S|eps| = 0.3311   grid change = 4.2e-10
+    S =  200  ratio = +0.998345217+0.000057943i   |eps| = 1.656e-03   S|eps| = 0.3312   grid change = 3.9e-10
+    S =  400  ratio = +0.999172494+0.000028981i   |eps| = 8.280e-04   S|eps| = 0.3312   grid change = 3.1e-10
+    radius independence at S = 100: log f(real radii) - log f(complex tilt) = 1.14e-13+1.78e-15j
+  z = (-0.06+0.05j)
+    S =   25  ratio = +0.986402200+0.000324147i   |eps| = 1.360e-02   S|eps| = 0.3400   grid change = 3.4e-15
+    S =   50  ratio = +0.993193167+0.000162541i   |eps| = 6.809e-03   S|eps| = 0.3404   grid change = 1.2e-14
+    S =  100  ratio = +0.996594615+0.000081386i   |eps| = 3.406e-03   S|eps| = 0.3406   grid change = 1.9e-10
+    S =  200  ratio = +0.998296817+0.000040721i   |eps| = 1.704e-03   S|eps| = 0.3407   grid change = 1.7e-10
+    S =  400  ratio = +0.999148286+0.000020368i   |eps| = 8.520e-04   S|eps| = 0.3408   grid change = 1.4e-10
+    radius independence at S = 100: log f(real radii) - log f(complex tilt) = 1.71e-13-8.88e-16j
+  z = (-0.05885011172553459+0.08084964038195902j)
+    S =   25  ratio = +0.986435326+0.000520224i   |eps| = 1.357e-02   S|eps| = 0.3394   grid change = 6.1e-16
+    S =   50  ratio = +0.993209792+0.000260859i   |eps| = 6.795e-03   S|eps| = 0.3398   grid change = 1.2e-15
+    S =  100  ratio = +0.996602942+0.000130613i   |eps| = 3.400e-03   S|eps| = 0.3400   grid change = 2.0e-10
+    S =  200  ratio = +0.998300984+0.000065352i   |eps| = 1.700e-03   S|eps| = 0.3401   grid change = 1.8e-10
+    S =  400  ratio = +0.999150371+0.000032688i   |eps| = 8.503e-04   S|eps| = 0.3401   grid change = 1.4e-10
+    radius independence at S = 100: log f(real radii) - log f(complex tilt) = -5.68e-14-3.55e-15j
+====================================================================================================
+G = K4 random non-reversible rates (seed 131), i = 4
+g = 4  beta = [0.2  0.3  0.15 0.35]
+A0 =
+ [[0.       1.622528 1.471135 0.627893]
+ [2.468204 0.       1.570621 1.696612]
+ [2.03004  1.835238 0.       0.585065]
+ [0.456953 2.368919 0.514212 0.      ]]
+q_G = [4.301491 8.073796 6.189877 4.526225]  c^- = [0.479935 2.238358 1.639534 1.086141]  c^+ = [0.868832 0.353332 1.700464 2.033277]
+
+Part 1. Representation (Lemma R) against the word series, s = S0*beta.
+  z =          0.0  real radii      word series = 3.488501195475e-01+0.000000000000e+00j  representation = 3.488501195475e-01+0.000000000000e+00j  rel diff = 7.93e-14
+  z =          0.0  complex radii   word series = 3.488501195475e-01+0.000000000000e+00j  representation = 3.488501195475e-01-1.110223024625e-16j  rel diff = 8.10e-14
+  z =   (0.3-0.4j)  real radii      word series = -8.582611091261e+00+1.258521871430e+01j  representation = -8.582611091870e+00+1.258521871431e+01j  rel diff = 4.00e-11
+  z =   (0.3-0.4j)  complex radii   word series = -8.582611091261e+00+1.258521871430e+01j  representation = -8.582611091870e+00+1.258521871431e+01j  rel diff = 4.00e-11
+
+Part 2. Complex tilt and Doob transform P_0 = R^{-1} Theta^{-1} A(z) R.
+  z =                    0.0  tilt residual 1.4e-15  theta = [4.712362+0.j 5.018216+0.j 5.236384+0.j 2.650993+0.j]
+      row sums of P_0 - 1: 6.7e-16   w = theta*beta/<theta,beta> = [0.22649+0.j 0.36178+0.j 0.18876+0.j 0.22297+0.j]
+      eigenvalues of P_0: [ 1.     +0.j -0.04053+0.j -0.3538 +0.j -0.60567+0.j]   gamma_0 = 1 - max Re(non-Perron) = 1.0405
+      max row sum of |P_0| = 1.00000,  sum |w_j| = 1.00000
+  z =                   0.08  tilt residual 6.1e-16  theta = [4.962745+0.j 5.438267+0.j 5.904724+0.j 3.040519+0.j]
+      row sums of P_0 - 1: 4.4e-16   w = theta*beta/<theta,beta> = [0.217  +0.j 0.35669+0.j 0.19364+0.j 0.23266+0.j]
+      eigenvalues of P_0: [ 1.     +0.j -0.06922+0.j -0.33223+0.j -0.59855+0.j]   gamma_0 = 1 - max Re(non-Perron) = 1.0692
+      max row sum of |P_0| = 1.00000,  sum |w_j| = 1.00000
+  z =                  0.08j  tilt residual 1.3e-15  theta = [4.710418+0.249206j 5.033032+0.432133j 5.246158+0.675988j 2.660284+0.396875j]
+      row sums of P_0 - 1: 6.8e-16   w = theta*beta/<theta,beta> = [0.22484-0.01068j 0.36155-0.00531j 0.18924+0.00527j 0.22436+0.01072j]
+      eigenvalues of P_0: [ 1.     -0.j      -0.04516-0.03214j -0.34703+0.02571j -0.60781+0.00643j]   gamma_0 = 1 - max Re(non-Perron) = 1.0452
+      max row sum of |P_0| = 1.00737,  sum |w_j| = 1.00062
+  z =          (-0.06+0.05j)  tilt residual 9.1e-16  theta = [4.525841+0.153163j 4.691288+0.286425j 4.727549+0.433689j 2.351571+0.258578j]
+      row sums of P_0 - 1: 2.1e-15   w = theta*beta/<theta,beta> = [0.23482-0.00865j 0.3658 -0.00354j 0.18471+0.00385j 0.21466+0.00835j]
+      eigenvalues of P_0: [ 1.     +0.j      -0.01553-0.02559j -0.37419+0.02539j -0.61027+0.0002j ]   gamma_0 = 1 - max Re(non-Perron) = 1.0155
+      max row sum of |P_0| = 1.00627,  sum |w_j| = 1.00038
+  z = (-0.05885011172553459+0.08084964038195902j)  tilt residual 7.1e-16  theta = [4.527362+0.248273j 4.709668+0.461169j 4.745727+0.699582j 2.365203+0.416628j]
+      row sums of P_0 - 1: 1.0e-15   w = theta*beta/<theta,beta> = [0.23314-0.01364j 0.36557-0.00571j 0.18521+0.00614j 0.21607+0.01322j]
+      eigenvalues of P_0: [ 1.     +0.j      -0.02021-0.04044j -0.36638+0.03829j -0.61341+0.00215j]   gamma_0 = 1 - max Re(non-Perron) = 1.0202
+      max row sum of |P_0| = 1.01440,  sum |w_j| = 1.00095
+
+Part 3. Constant of the spectral route against the paper's C_G(beta,z).
+  z =                    0.0  nu(0) - 1 = 4.4e-16  |grad nu(0)| = 1.6e-10  det H / predicted = 1.00000084+0.00000000j
+      J = 1.6338546556+0.0000000000j   C_paper = 4.3782009461+0.0000000000j   C_spectral = 4.3781991172+0.0000000000j   min eig Re H = 0.3649
+  z =                   0.08  nu(0) - 1 = 8.9e-16  |grad nu(0)| = 1.6e-10  det H / predicted = 0.99999948+0.00000000j
+      J = 1.1002333949+0.0000000000j   C_paper = 5.9840337945+0.0000000000j   C_spectral = 5.9840353594+0.0000000000j   min eig Re H = 0.3959
+  z =                  0.08j  nu(0) - 1 = 2.3e-16  |grad nu(0)| = 1.6e-10  det H / predicted = 1.00000061-0.00000003j
+      J = 1.6250808401-0.5407300472j   C_paper = 4.2307178562+1.4478600607j   C_spectral = 4.2307165401+1.4478596880j   min eig Re H = 0.3658
+  z =          (-0.06+0.05j)  nu(0) - 1 = 1.1e-15  |grad nu(0)| = 1.5e-10  det H / predicted = 0.99999876+0.00000000j
+      J = 2.0410688001-0.3477057696j   C_paper = 3.3161176785+0.7741353366j   C_spectral = 3.3161197283+0.7741358129j   min eig Re H = 0.3408
+  z = (-0.05885011172553459+0.08084964038195902j)  nu(0) - 1 = 1.1e-15  |grad nu(0)| = 1.5e-10  det H / predicted = 1.00000103-0.00000002j
+      J = 2.0260139776-0.5609912648j   C_paper = 3.2481204741+1.2524024203j   C_spectral = 3.2481187896+1.2524018137j   min eig Re H = 0.3420
+
+Part 4. Exact f^{(z)}(S beta) against S^{-(g-1)/2} C e^{-S J}.  eps = ratio - 1.
+  z = 0.0
+    S =   25  ratio = +0.988167420-0.000000000i   |eps| = 1.183e-02   S|eps| = 0.2958   grid change = 1.4e-14
+    S =   50  ratio = +0.994085282-0.000000000i   |eps| = 5.915e-03   S|eps| = 0.2957   grid change = 4.0e-14
+    S =  100  ratio = +0.997043008-0.000000000i   |eps| = 2.957e-03   S|eps| = 0.2957   grid change = 3.1e-08
+    S =  200  ratio = +0.998521592-0.000000000i   |eps| = 1.478e-03   S|eps| = 0.2957   grid change = 3.0e-08
+    S =  400  ratio = +0.999260818-0.000000000i   |eps| = 7.392e-04   S|eps| = 0.2957   grid change = 2.6e-08
+    radius independence at S = 100: log f(real radii) - log f(complex tilt) = 0.00e+00+0.00e+00j
+  z = 0.08
+    S =   25  ratio = +0.989322003-0.000000000i   |eps| = 1.068e-02   S|eps| = 0.2669   grid change = 1.9e-15
+    S =   50  ratio = +0.994662142-0.000000000i   |eps| = 5.338e-03   S|eps| = 0.2669   grid change = 1.9e-14
+    S =  100  ratio = +0.997331337-0.000000000i   |eps| = 2.669e-03   S|eps| = 0.2669   grid change = 1.6e-07
+    S =  200  ratio = +0.998665733-0.000000000i   |eps| = 1.334e-03   S|eps| = 0.2669   grid change = 1.6e-07
+    S =  400  ratio = +0.999332882-0.000000000i   |eps| = 6.671e-04   S|eps| = 0.2668   grid change = 1.4e-07
+    radius independence at S = 100: log f(real radii) - log f(complex tilt) = 1.28e-10+3.11e-15j
+  z = 0.08j
+    S =   25  ratio = +0.988366309+0.001295245i   |eps| = 1.171e-02   S|eps| = 0.2926   grid change = 1.7e-15
+    S =   50  ratio = +0.994184526+0.000647085i   |eps| = 5.851e-03   S|eps| = 0.2926   grid change = 4.3e-15
+    S =  100  ratio = +0.997092583+0.000323417i   |eps| = 2.925e-03   S|eps| = 0.2925   grid change = 3.6e-08
+    S =  200  ratio = +0.998546368+0.000161679i   |eps| = 1.463e-03   S|eps| = 0.2925   grid change = 3.5e-08
+    S =  400  ratio = +0.999273203+0.000080832i   |eps| = 7.313e-04   S|eps| = 0.2925   grid change = 3.0e-08
+    radius independence at S = 100: log f(real radii) - log f(complex tilt) = 2.84e-13-2.17e-13j
+  z = (-0.06+0.05j)
+    S =   25  ratio = +0.987157745+0.001053583i   |eps| = 1.289e-02   S|eps| = 0.3221   grid change = 3.3e-15
+    S =   50  ratio = +0.993580884+0.000526161i   |eps| = 6.441e-03   S|eps| = 0.3220   grid change = 3.3e-15
+    S =  100  ratio = +0.996790910+0.000262933i   |eps| = 3.220e-03   S|eps| = 0.3220   grid change = 7.8e-09
+    S =  200  ratio = +0.998395568+0.000131431i   |eps| = 1.610e-03   S|eps| = 0.3220   grid change = 7.5e-09
+    S =  400  ratio = +0.999197812+0.000065707i   |eps| = 8.049e-04   S|eps| = 0.3219   grid change = 6.3e-09
+    radius independence at S = 100: log f(real radii) - log f(complex tilt) = -1.14e-13-4.62e-14j
+  z = (-0.05885011172553459+0.08084964038195902j)
+    S =   25  ratio = +0.987365573+0.001657077i   |eps| = 1.274e-02   S|eps| = 0.3186   grid change = 8.7e-15
+    S =   50  ratio = +0.993684548+0.000827611i   |eps| = 6.369e-03   S|eps| = 0.3185   grid change = 2.3e-14
+    S =  100  ratio = +0.996842684+0.000413590i   |eps| = 3.184e-03   S|eps| = 0.3184   grid change = 9.0e-09
+    S =  200  ratio = +0.998421441+0.000206743i   |eps| = 1.592e-03   S|eps| = 0.3184   grid change = 8.7e-09
+    S =  400  ratio = +0.999210745+0.000103359i   |eps| = 7.960e-04   S|eps| = 0.3184   grid change = 7.3e-09
+    radius independence at S = 100: log f(real radii) - log f(complex tilt) = 1.14e-13+1.81e-13j

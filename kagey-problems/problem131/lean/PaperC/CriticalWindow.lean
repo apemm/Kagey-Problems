@@ -1,9 +1,10 @@
 import Mathlib
 
 /-!
-# Paper C: the four-state critical window
+# Paper C2: the four-state critical window
 
-Paper C, Section 10 (`sec_lowtemp.tex`, `ex:four-state`, a noncycle winner on an open window),
+Paper C2 (`paperC2/problem131_reconstruction.tex`), Section 6.1, Example 6.5
+(`paperC2/sec_lowtemp.tex`, `ex:four-state`, a noncycle winner on an open window),
 from `research_notes/C modal hierarchy and metastability/01_cycle_conjecture_math.md`,
 Section 2C, with the exact polynomials of its script `01_exact_cycle_checks.py`.
 

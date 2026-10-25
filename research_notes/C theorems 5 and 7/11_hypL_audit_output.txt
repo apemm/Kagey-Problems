@@ -1,0 +1,183 @@
+Audit checks for the note 10_hypL_spectral_route.md (Hypothesis L by the spectral route).
+
+Run with:  py -I 11_hypL_audit_check.py > 11_hypL_audit_output.txt
+
+Part A. Lemma CL in one dimension, from scratch. A complex phase Phi with Re(-Phi''(0)) > 0 is
+        integrated over a fixed interval and compared with e^{S Phi(0)} sqrt(2 pi/(S h)) a(0).
+        The 1/S coefficient is also computed in closed form from the Gaussian moments, so the
+        plateau of S*rho has a predicted limit.
+Part B. Two facets with g = 4 states that the note did not run: the 4-path and the 4-star, both
+        with a bipartite jump chain. For each: Lemma R against the word series, the complex tilt,
+        the spectrum of P_0 (eigenvalue -1 present), the twisted kernel at the bipartition
+        character (an eigenvalue of modulus one, and u = 0 there), a grid scan of |u(psi)| and of
+        the spectral abscissa of Y_psi away from the identity character, and the S|eps| table of
+        Hypothesis L with the paper's constant C_G(beta,z).
+Part C. Lemma H for two states against the closed forms H_Phi = sqrt(tau beta_1 beta_2)/2 and the
+        constant of Lemma lem:L-two.
+
+====================================================================================================
+Part A. Lemma CL in one dimension.
+  Phi(psi) = -(h/2) psi^2 + c3 psi^3 + c4 psi^4, h = (1+0.8j), c3 = (0.3-0.1j), c4 = 0.05j
+  a(psi) = 1.0 + 0.4 psi + 0.2j psi^2, interval [-0.5, 0.5]
+  predicted limit of S*rho: -0.154162-0.251150j  (|.| = 0.294690)
+    S =    25  rho = +1.506557e-02-1.246649e-02i   S*rho = 0.376639-0.311662j   |S*rho - rho1| = 5.34e-01
+    S =    50  rho = -4.838615e-03-5.235855e-03i   S*rho = -0.241931-0.261793j   |S*rho - rho1| = 8.84e-02
+    S =   100  rho = -1.562964e-03-2.489800e-03i   S*rho = -0.156296-0.248980j   |S*rho - rho1| = 3.04e-03
+    S =   200  rho = -7.741145e-04-1.246937e-03i   S*rho = -0.154823-0.249387j   |S*rho - rho1| = 1.88e-03
+    S =   400  rho = -3.862478e-04-6.256665e-04i   S*rho = -0.154499-0.250267j   |S*rho - rho1| = 9.45e-04
+    S =   800  rho = -1.929153e-04-3.133847e-04i   S*rho = -0.154332-0.250708j   |S*rho - rho1| = 4.74e-04
+    S =  1600  rho = -9.640471e-05-1.568304e-04i   S*rho = -0.154248-0.250929j   |S*rho - rho1| = 2.37e-04
+    S =  3200  rho = -4.818902e-05-7.844976e-05i   S*rho = -0.154205-0.251039j   |S*rho - rho1| = 1.19e-04
+  The error after removing the 1/S term should be O(1/S^2): the last column halves four times per doubling of S if quadratic.
+====================================================================================================
+Part C. Lemma H and the constant for two states.
+  a = 1.7, b = 0.6, beta = [0.35 0.65], theta = [1.376331 0.741101], <theta,beta> = 0.96343137 = 2 sqrt(tau b1 b2) = 0.96343137
+  nu(phi) finite differences: H_Phi = 0.24085779+0.0e+00i,  closed form sqrt(tau b1 b2)/2 = 0.24085784,  cos(phi/2) check: nu(0.7) = 0.93937271, cos(0.35) = 0.93937271
+  det Theta^2 det Sigma / <theta,beta>^2 = 0.24085784
+  C_spectral = 1.2217963309   C (Lemma lem:L-two) = 1.2217961916   rel diff = 1.1e-07
+====================================================================================================
+Cross-check of the independent tilt solver on the note's face (c), z = 0.08i.
+  theta = [3.541933+0.19478j  2.583982+0.119692j 3.125553+0.07874j  2.858322+0.090933j]  residual 1.2e-16
+  compare with the line "z = 0.08j ... theta =" under face (c) in 10_hypL_spectral_output.txt
+====================================================================================================
+G = 4-path 0-1-2-3 (unequal rates), i = 4 entered from 3,0 and left to 0,2
+g = 4  beta = [0.3  0.2  0.25 0.25]
+A0 =
+ [[0.  2.  0.  0. ]
+ [1.  0.  1.5 0. ]
+ [0.  0.7 0.  2.2]
+ [0.  0.  1.1 0. ]]
+q_G = [2.6 2.7 3.1 2.6]  c^- = [0.4 0.  0.  1.3]  c^+ = [1.  0.  0.6 0. ]  mu_G = [0.3  0.15 0.2  0.2 ]  mu_i = 0.15
+
+B1. Lemma R against the word series at s = 1.2*beta (word series truncated at 13 letters per state).
+  z =          0.0  real radii      word series = 2.028952218304e-01+0.000000000000e+00j  representation = 2.028952218304e-01+1.382099204891e-17j  rel diff = 6.70e-16
+  z =          0.0  complex radii   word series = 2.028952218304e-01+0.000000000000e+00j  representation = 2.028952218304e-01-1.387778780781e-17j  rel diff = 1.30e-16
+  z =   (0.3-0.4j)  real radii      word series = 3.675367821582e-01-5.201054889158e-01j  representation = 3.675367821582e-01-5.201054889158e-01j  rel diff = 3.62e-16
+  z =   (0.3-0.4j)  complex radii   word series = 3.675367821582e-01-5.201054889158e-01j  representation = 3.675367821582e-01-5.201054889158e-01j  rel diff = 2.33e-16
+
+B2. Complex tilt, Doob transform, spectrum of P_0, twisted kernel at the bipartition character.
+  z =            0.0  tilt residual 1.1e-16  theta = [1.154701+0.j 2.877695+0.j 2.47215 +0.j 1.555635+0.j]
+      row sums of P_0 - 1: 2.2e-16   w = [0.17959+0.j 0.29838+0.j 0.32041+0.j 0.20162+0.j]   sum w = 1.000000+0.000000j
+      eigenvalues of P_0: [ 1.     +0.j  0.61542+0.j -0.61542+0.j -1.     +0.j]   gamma_0 = 0.3846
+      bipartition character psi = [0.     3.1416 0.     3.1416]:
+        |eigenvalues of P_psi| = [1.       0.615424 1.       0.615424]  (modulus one occurs)
+        u(psi) = 1.110e-16+6.123e-17j   (mass of each part = 1/2, so u = 0 and exp(T Y_psi) = I)
+        max Re eig(Y_psi) = 6.123e-17
+      grid scan over |psi|_inf >= 0.3 (25^3 points): max |u(psi)| = 0.98804, max spectral abscissa of Y_psi = 0.98368  (both < 1)
+      (S2) bound 1 - w_min^2 (1 - cos 0.3) = 0.99856
+  z =           0.08  tilt residual 4.4e-16  theta = [1.265557+0.j 2.89281 +0.j 2.533842+0.j 1.725738+0.j]
+      row sums of P_0 - 1: 2.2e-16   w = [0.18766+0.j 0.28597+0.j 0.31311+0.j 0.21325+0.j]   sum w = 1.000000+0.000000j
+      eigenvalues of P_0: [ 1.     +0.j  0.5252 +0.j -0.52832+0.j -0.99688+0.j]   gamma_0 = 0.4748
+  z =          0.08j  tilt residual 4.4e-16  theta = [1.191522+0.122966j 2.861106+0.015662j 2.458378+0.061726j 1.601967+0.185899j]
+      row sums of P_0 - 1: 2.2e-16   w = [0.18429+0.00931j 0.29351-0.01377j 0.31557-0.0086j  0.20662+0.01307j]   sum w = 1.000000-0.000000j
+      eigenvalues of P_0: [ 1.     -0.j       0.58975-0.09987j -0.5892 +0.09706j -1.00055+0.00282j]   gamma_0 = 0.4102
+  z =  (-0.06+0.05j)  tilt residual 2.2e-16  theta = [1.077428+0.146738j 2.846074-0.031316j 2.41037 +0.005164j 1.434511+0.203239j]
+      row sums of P_0 - 1: 2.3e-16   w = [0.17511+0.01526j 0.30619-0.01822j 0.32435-0.01503j 0.19434+0.01799j]   sum w = 1.000000-0.000000j
+      eigenvalues of P_0: [ 1.     -0.j       0.68236-0.1091j  -0.68023+0.10819j -1.00213+0.00092j]   gamma_0 = 0.3176
+
+B3. Spectral constant against the paper constant (Lemma H), and Re H_Phi.
+  z =            0.0  nu(0) - 1 = 2.2e-16  |grad nu(0)| = 5.0e-10  det H / predicted = 1.00000071+0.00000000j
+      J = 0.8161046482+0.0000000000j   C_paper = 1.1384607490+0.0000000000j   C_spectral = 1.1384603421+0.0000000000j   min eig Re H = 0.1496
+  z =           0.08  nu(0) - 1 = 2.2e-16  |grad nu(0)| = 3.4e-10  det H / predicted = 1.00000014+0.00000000j
+      J = 0.7122756931+0.0000000000j   C_paper = 1.3150543365+0.0000000000j   C_spectral = 1.3150542423+0.0000000000j   min eig Re H = 0.1572
+  z =          0.08j  nu(0) - 1 = 1.1e-15  |grad nu(0)| = 3.9e-10  det H / predicted = 0.99999972+0.00000012j
+      J = 0.8002360588-0.1115285044j   C_paper = 1.1244051021+0.1782906099j   C_spectral = 1.1244052713+0.1782905697j   min eig Re H = 0.1529
+  z =  (-0.06+0.05j)  nu(0) - 1 = 3.6e-16  |grad nu(0)| = 6.4e-10  det H / predicted = 1.00000033+0.00000021j
+      J = 0.8985364270-0.0958591518j   C_paper = 0.9723515849+0.0804060069j   C_spectral = 0.9723514326+0.0804058915j   min eig Re H = 0.1466
+
+B4. Hypothesis L: eps = f^{(z)}(S beta) / (S^{-3/2} C_G(beta,z) e^{-S J_G(beta,z)}) - 1.
+  z = 0.0
+    S =   25  ratio = +0.978233673-0.000000000i   |eps| = 2.177e-02   S|eps| = 0.5442   grid change = 1.6e-15
+    S =   50  ratio = +0.989069959-0.000000000i   |eps| = 1.093e-02   S|eps| = 0.5465   grid change = 5.8e-15
+    S =  100  ratio = +0.994523735+0.000000000i   |eps| = 5.476e-03   S|eps| = 0.5476   grid change = 1.8e-09
+    S =  200  ratio = +0.997259108+0.000000000i   |eps| = 2.741e-03   S|eps| = 0.5482   grid change = 5.6e-09
+    S =  400  ratio = +0.998628870+0.000000000i   |eps| = 1.371e-03   S|eps| = 0.5485   grid change = 4.6e-09
+  z = 0.08
+    S =   25  ratio = +0.979310453+0.000000000i   |eps| = 2.069e-02   S|eps| = 0.5172   grid change = 4.8e-15
+    S =   50  ratio = +0.989615676+0.000000000i   |eps| = 1.038e-02   S|eps| = 0.5192   grid change = 1.6e-14
+    S =  100  ratio = +0.994798284+0.000000000i   |eps| = 5.202e-03   S|eps| = 0.5202   grid change = 4.4e-10
+    S =  200  ratio = +0.997396791-0.000000000i   |eps| = 2.603e-03   S|eps| = 0.5206   grid change = 8.2e-10
+    S =  400  ratio = +0.998697813+0.000000000i   |eps| = 1.302e-03   S|eps| = 0.5209   grid change = 4.7e-10
+  z = 0.08j
+    S =   25  ratio = +0.977930102+0.000871708i   |eps| = 2.209e-02   S|eps| = 0.5522   grid change = 1.4e-15
+    S =   50  ratio = +0.988914376+0.000455143i   |eps| = 1.109e-02   S|eps| = 0.5547   grid change = 6.8e-15
+    S =  100  ratio = +0.994445175+0.000232089i   |eps| = 5.560e-03   S|eps| = 0.5560   grid change = 4.7e-10
+    S =  200  ratio = +0.997219656+0.000117139i   |eps| = 2.783e-03   S|eps| = 0.5566   grid change = 1.5e-09
+    S =  400  ratio = +0.998609104+0.000058839i   |eps| = 1.392e-03   S|eps| = 0.5569   grid change = 1.1e-09
+  z = (-0.06+0.05j)
+    S =   25  ratio = +0.979223522-0.004324390i   |eps| = 2.122e-02   S|eps| = 0.5305   grid change = 3.4e-15
+    S =   50  ratio = +0.989205944-0.002141642i   |eps| = 1.100e-02   S|eps| = 0.5502   grid change = 1.2e-14
+    S =  100  ratio = +0.994519284-0.001044787i   |eps| = 5.579e-03   S|eps| = 0.5579   grid change = 8.9e-09
+    S =  200  ratio = +0.997241309-0.000514917i   |eps| = 2.806e-03   S|eps| = 0.5613   grid change = 3.3e-08
+    S =  400  ratio = +0.998616355-0.000255539i   |eps| = 1.407e-03   S|eps| = 0.5628   grid change = 3.2e-08
+====================================================================================================
+G = 4-star (centre 0, leaves 1,2,3), i = 4 entered from 1 and left to 3,0
+g = 4  beta = [0.35 0.2  0.25 0.2 ]
+A0 =
+ [[0.  1.  2.  0.5]
+ [1.5 0.  0.  0. ]
+ [0.8 0.  0.  0. ]
+ [2.5 0.  0.  0. ]]
+q_G = [3.6 2.6 0.9 2.6]  c^- = [0. 1. 0. 0.]  c^+ = [0.3 0.  0.  1.2]  mu_G = [0.2 0.2 0.2 0.2]  mu_i = 0.2
+
+B1. Lemma R against the word series at s = 1.2*beta (word series truncated at 13 letters per state).
+  z =          0.0  real radii      word series = 1.560574875353e-01+0.000000000000e+00j  representation = 1.560574875353e-01+0.000000000000e+00j  rel diff = 3.55e-15
+  z =          0.0  complex radii   word series = 1.560574875353e-01+0.000000000000e+00j  representation = 1.560574875353e-01+0.000000000000e+00j  rel diff = 4.44e-16
+  z =   (0.3-0.4j)  real radii      word series = 2.843025916217e-01-2.239004903274e-01j  representation = 2.843025916217e-01-2.239004903274e-01j  rel diff = 2.24e-15
+  z =   (0.3-0.4j)  complex radii   word series = 2.843025916217e-01-2.239004903274e-01j  representation = 2.843025916217e-01-2.239004903274e-01j  rel diff = 2.48e-15
+
+B2. Complex tilt, Doob transform, spectrum of P_0, twisted kernel at the bipartition character.
+  z =            0.0  tilt residual 5.6e-17  theta = [2.840019+0.j 1.620185+0.j 1.496663+0.j 1.47902 +0.j]
+      row sums of P_0 - 1: 1.1e-16   w = [0.5    +0.j 0.163  +0.j 0.18821+0.j 0.14879+0.j]   sum w = 1.000000+0.000000j
+      eigenvalues of P_0: [ 1.+0.j  0.+0.j  0.+0.j -1.+0.j]   gamma_0 = 1.0000
+      bipartition character psi = [0.     3.1416 3.1416 3.1416]:
+        |eigenvalues of P_psi| = [1. 1. 0. 0.]  (modulus one occurs)
+        u(psi) = 2.776e-17+6.123e-17j   (mass of each part = 1/2, so u = 0 and exp(T Y_psi) = I)
+        max Re eig(Y_psi) = 6.123e-17
+      grid scan over |psi|_inf >= 0.3 (25^3 points): max |u(psi)| = 0.98421, max spectral abscissa of Y_psi = 0.98026  (both < 1)
+      (S2) bound 1 - w_min^2 (1 - cos 0.3) = 0.99901
+  z =           0.08  tilt residual 6.1e-16  theta = [2.849668+0.j 1.713559+0.j 1.496663+0.j 1.559681+0.j]
+      row sums of P_0 - 1: 0.0e+00   w = [0.49224+0.j 0.16914+0.j 0.18466+0.j 0.15395+0.j]   sum w = 1.000000+0.000000j
+      eigenvalues of P_0: [ 1.     +0.j -0.     +0.j -0.03257+0.j -0.96743+0.j]   gamma_0 = 1.0000
+  z =          0.08j  tilt residual 1.8e-15  theta = [2.837367+0.008068j 1.628261+0.099348j 1.496663+0.j       1.486825+0.086421j]
+      row sums of P_0 - 1: 2.2e-16   w = [0.4988 -0.0086j  0.16376+0.00669j 0.18792-0.00377j 0.14952+0.00568j]   sum w = 1.000000+0.000000j
+      eigenvalues of P_0: [ 1.     +0.j       0.     +0.j      -0.00303-0.03477j -0.99697+0.03477j]   gamma_0 = 1.0000
+  z =  (-0.06+0.05j)  tilt residual 5.6e-15  theta = [2.83445 +0.001398j 1.544166+0.071776j 1.496663+0.j       1.412745+0.063384j]
+      row sums of P_0 - 1: 2.2e-16   w = [0.50667-0.00687j 0.15783+0.00511j 0.1911 -0.00269j 0.1444 +0.00445j]   sum w = 1.000000+0.000000j
+      eigenvalues of P_0: [ 1.     -0.j       0.02664-0.02541j -0.     -0.j      -1.02664+0.02541j]   gamma_0 = 0.9734
+
+B3. Spectral constant against the paper constant (Lemma H), and Re H_Phi.
+  z =            0.0  nu(0) - 1 = 2.2e-16  |grad nu(0)| = 1.1e-10  det H / predicted = 0.99999979+0.00000000j
+      J = 0.5369864745+0.0000000000j   C_paper = 1.1616287769+0.0000000000j   C_spectral = 1.1616289014+0.0000000000j   min eig Re H = 0.1652
+  z =           0.08  nu(0) - 1 = 8.9e-16  |grad nu(0)| = 1.0e-10  det H / predicted = 1.00000217+0.00000000j
+      J = 0.4988024828+0.0000000000j   C_paper = 1.2829095772+0.0000000000j   C_spectral = 1.2829081821+0.0000000000j   min eig Re H = 0.1712
+  z =          0.08j  nu(0) - 1 = 2.2e-15  |grad nu(0)| = 1.1e-10  det H / predicted = 1.00000234-0.00000006j
+      J = 0.5347387184-0.0399779055j   C_paper = 1.1620239656+0.1216511731j   C_spectral = 1.1620226029+0.1216510679j   min eig Re H = 0.1660
+  z =  (-0.06+0.05j)  nu(0) - 1 = 2.2e-16  |grad nu(0)| = 1.2e-10  det H / predicted = 1.00000006-0.00000003j
+      J = 0.5673943577-0.0275211127j   C_paper = 1.0702700479+0.0763273945j   C_spectral = 1.0702700154+0.0763274062j   min eig Re H = 0.1596
+
+B4. Hypothesis L: eps = f^{(z)}(S beta) / (S^{-3/2} C_G(beta,z) e^{-S J_G(beta,z)}) - 1.
+  z = 0.0
+    S =   25  ratio = +0.967226396+0.000000000i   |eps| = 3.277e-02   S|eps| = 0.8193   grid change = 3.1e-15
+    S =   50  ratio = +0.983672354+0.000000000i   |eps| = 1.633e-02   S|eps| = 0.8164   grid change = 8.9e-15
+    S =  100  ratio = +0.991849991+0.000000000i   |eps| = 8.150e-03   S|eps| = 0.8150   grid change = 2.2e-13
+    S =  200  ratio = +0.995928338+0.000000000i   |eps| = 4.072e-03   S|eps| = 0.8143   grid change = 1.5e-13
+    S =  400  ratio = +0.997964991+0.000000000i   |eps| = 2.035e-03   S|eps| = 0.8140   grid change = 1.7e-14
+  z = 0.08
+    S =   25  ratio = +0.969031417+0.000000000i   |eps| = 3.097e-02   S|eps| = 0.7742   grid change = 1.8e-15
+    S =   50  ratio = +0.984566252+0.000000000i   |eps| = 1.543e-02   S|eps| = 0.7717   grid change = 5.6e-15
+    S =  100  ratio = +0.992294956+0.000000000i   |eps| = 7.705e-03   S|eps| = 0.7705   grid change = 3.5e-13
+    S =  200  ratio = +0.996150343-0.000000000i   |eps| = 3.850e-03   S|eps| = 0.7699   grid change = 1.8e-13
+    S =  400  ratio = +0.998075877+0.000000000i   |eps| = 1.924e-03   S|eps| = 0.7696   grid change = 6.8e-14
+  z = 0.08j
+    S =   25  ratio = +0.967501279+0.002006731i   |eps| = 3.256e-02   S|eps| = 0.8140   grid change = 2.8e-15
+    S =   50  ratio = +0.983807792+0.000993310i   |eps| = 1.622e-02   S|eps| = 0.8111   grid change = 1.0e-14
+    S =  100  ratio = +0.991917251+0.000494339i   |eps| = 8.098e-03   S|eps| = 0.8098   grid change = 2.6e-13
+    S =  200  ratio = +0.995961858+0.000246613i   |eps| = 4.046e-03   S|eps| = 0.8091   grid change = 9.7e-14
+    S =  400  ratio = +0.997981724+0.000123170i   |eps| = 2.022e-03   S|eps| = 0.8088   grid change = 1.6e-13
+  z = (-0.06+0.05j)
+    S =   25  ratio = +0.965674543+0.001589311i   |eps| = 3.436e-02   S|eps| = 0.8591   grid change = 9.7e-16
+    S =   50  ratio = +0.982904579+0.000786102i   |eps| = 1.711e-02   S|eps| = 0.8557   grid change = 1.1e-15
+    S =  100  ratio = +0.991467986+0.000391088i   |eps| = 8.541e-03   S|eps| = 0.8541   grid change = 1.7e-13
+    S =  200  ratio = +0.995737789+0.000195073i   |eps| = 4.267e-03   S|eps| = 0.8533   grid change = 2.9e-14
+    S =  400  ratio = +0.997869828+0.000097421i   |eps| = 2.132e-03   S|eps| = 0.8530   grid change = 4.6e-14

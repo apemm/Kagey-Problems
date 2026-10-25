@@ -1,5 +1,5 @@
 \documentclass[11pt]{article}
-% Occupation counts of rarely switching Markov chains. Article version.
+% Occupation counts of rarely switching Markov chains (Paper C1, the forward theory). Article version.
 % The Springer Nature version problem131_chains_sn.tex inputs the same section files.
 % Build: pdflatex problem131_chains.tex, twice.
 
@@ -23,8 +23,6 @@
 \newtheorem{conjecture}[theorem]{Conjecture}
 \newtheorem{introtheorem}{Theorem}
 \renewcommand{\theintrotheorem}{\Alph{introtheorem}}
-\newtheorem{hypothesis}{Hypothesis}
-\renewcommand{\thehypothesis}{L}
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{example}[theorem]{Example}
@@ -47,7 +45,7 @@
 \graphicspath{{figures/}}
 \emergencystretch=1em
 
-\title{Occupation counts of rarely switching Markov chains:\\ stratified local laws, modal supports and reconstruction}
+\title{Occupation counts of rarely switching Markov chains:\\ stratified local laws, crossings and the boundary layer}
 \author{Arjun Pemmasani\\[2pt]
 \small Department of Mathematics, Harvey Mudd College\\
 \small Claremont, CA 91711, USA\\
@@ -62,31 +60,30 @@ A Markov chain on finitely many states makes about $\tau\log N$ switches
 in $N$ steps. We ask which states its most likely vector of occupation
 counts uses. On each face of the simplex the law weighs a lattice entropy
 of one power of $N$ per dimension against the Donsker and Varadhan cost of
-the chain killed on leaving the face. A local limit theorem in each face
-gives an explicit constant, locates every crossing between irreducible
-faces up to $o(1)$, and describes the window of tied faces. Near a facet
-the law follows a Bessel kernel, which we prove for faces with at most
-three states and for larger faces under one stated hypothesis. The
-complete graph, where all faces tie at first order, is solved exactly. We
-then ask which coarse functionals of the law determine the generator. The
-Donsker and Varadhan functional determines exactly the principal minors
-of the negative generator, and so does the support of the most likely
-composition under killing at known rates. These minors fix a reversible
-generator, and in general a finite set of generators, which is the
-generator and its time reversal when there is no cut. At low temperature
-the winners are Freidlin and Wentzell cycles of least size away from
-finitely many heights. At a critical height explicit prefactors decide,
-and noncycles win on open windows of the rescaled time scale. Rewards of
-known size read off the cycle tree.
+the chain killed on leaving the face, which is the restriction of the cost
+of the whole chain. A local limit theorem in each face gives an explicit
+constant. It locates every crossing between irreducible faces up to
+$o(1)$, with a coefficient $1/2$ of $\log\log N$ independent of the
+chain, and describes the window of tied faces. Near a facet of a face
+the law is the facet law times an explicit kernel, up
+to a relative error $O(1/T)$ for $T$ switches. For a reversible chain the
+kernel is a Bessel kernel up to a relative error that is small when the
+time $x$ in the rare state is $o(T)$. Without reversibility we prove the
+Bessel form in logarithmic form, and in relative form only for $x$ up to
+order $T^{1/3}$, and numerics on a cycle of three states show that this
+restriction is real. On the complete graph all faces tie at first order.
+There each face crosses a vertex exactly once at every $N$, the most likely
+compositions on each face are balanced whenever $T\le N/d$ on $d$ states,
+and for large $N$ the mode changes exactly once.
 \end{abstract}
 
 \medskip
-\noindent\textbf{Keywords:} occupation times of Markov chains; mode; principal
-Dirichlet eigenvalue; Donsker and Varadhan functional; principal minors;
-Freidlin and Wentzell cycles.
+\noindent\textbf{Keywords:} occupation times of Markov chains; mode; local
+limit theorem; principal Dirichlet eigenvalue; Donsker and Varadhan
+functional; Bessel kernel.
 
 \noindent\textbf{Mathematics Subject Classification (2020):} Primary 60J10;
-Secondary 60J27, 60F10, 60F05, 15A18, 15B48, 15A29.
+Secondary 60J27, 60F10, 60F05, 15B48.
 
 % ---------- introduction and setting ----------
 \input{sec_intro.tex}
@@ -102,17 +99,12 @@ Secondary 60J27, 60F10, 60F05, 15A18, 15B48, 15A29.
 \input{sec_complete.tex}
 \input{sec_vertex.tex}
 
-% ---------- reconstruction ----------
-\input{sec_reconstruction.tex}
-
-% ---------- low temperature ----------
-\input{sec_lowtemp.tex}
-
 \input{sec_verify.tex}
 
 \paragraph{Acknowledgments.} I thank Peter Kagey for posing the problem, and
 Chase Hameetman and Aidan Deshong for insightful conversations about some of
-the proofs of the preprint~\cite{paperB}, which this paper incorporates.
+the proofs of the preprint~\cite{paperB}, several of whose results are reproved
+here.
 
 \section*{Statements and Declarations}
 
@@ -136,9 +128,9 @@ Code availability, each headed by the sha256 of the script that wrote it.
 paper are in the folder \nolinkurl{kagey-problems/problem131} of
 \url{https://github.com/apemm/Kagey-Problems}. The scripts of this paper are in
 the subfolder \nolinkurl{paperC}. To rerun the checks, run
-\texttt{py -I verify\_all.py} in that subfolder, which takes about fifteen minutes
+\texttt{py -I verify\_all.py} in that subfolder, which takes about nine minutes
 and writes the outputs to \nolinkurl{paperC/data}. The option \texttt{-{}-full}
-adds the largest cases of three of the older scripts and takes much longer. Each
+adds the largest cases of four of the scripts and takes much longer. Each
 script also runs on its own, and its docstring says what it checks and how long
 it takes. The scripts need Python~3 with \texttt{numpy}, \texttt{scipy},
 \texttt{sympy} and \texttt{mpmath}. The Lean files are in the subfolder
@@ -146,7 +138,7 @@ it takes. The scripts need Python~3 with \texttt{numpy}, \texttt{scipy},
 \nolinkurl{lean/PaperC/MAP.md} matches the statements of this paper to their
 Lean theorems.
 
-\paragraph{Author contributions.} I am the sole author and am responsible for
+\paragraph{Author contribution.} I am the sole author and am responsible for
 the whole paper.
 
 \appendix

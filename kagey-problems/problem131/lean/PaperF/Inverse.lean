@@ -3,7 +3,7 @@ import PaperF.Kernels
 /-!
 # Paper F: renewal inversion
 
-The algebraic part of Theorem `thm:inverse`(a) of `paperF/problem131_levy.tex` (Section 7):
+The algebraic part of Proposition `thm:inverse`(a) of `paperF/problem131_levy.tex` (Section 7):
 a renewal mass function determines its interarrival law. The limit statement
 `P_N(N-j)/P_N(N) → u_-(j)` is not formalized.
 

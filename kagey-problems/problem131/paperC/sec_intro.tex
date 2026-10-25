@@ -11,9 +11,9 @@ is admissible if a path of positive probability has exactly that support.
 When $T=\tau\log N$ the cost $e^{-T\lambda_F}$ of staying in $F$ and the
 cost $N^{-(|F|-1)}$ of sharing the mass of $F$ among its count vectors are
 both powers of $N$, and they compete. The paper describes the law of the
-count vector on every face at this scale, reads off the face that carries
-the mode and the times at which it changes, and then turns the description
-around and asks which generators are consistent with it.
+count vector on every face at this scale, up to the boundary of the face,
+and reads off the face that carries the mode and the times at which it
+changes.
 
 \subsection{The law on a face}\label{sec:intro-faces}
 
@@ -83,6 +83,9 @@ faces $K_F$ involves the square root of a weighted count of spanning trees
 Theorem~\ref{thm:window} describes the window of $T$ in which they compete,
 and a weak field shifts the line of each face in that window by the field
 averaged against its quasi-ergodic law (Proposition~\ref{prop:weakfield}).
+The face maxima hold with a field $v$ that weights a composition by
+$e^{Tv\cdot n/N}$, uniformly for $v$ in a compact set, and over a compact
+class of reversible chains (Proposition~\ref{prop:uniform-facemax}).
 
 The local law stays away from the boundary of the face. At the boundary a
 new scale appears. Let $x=Tn_i/N$ be the time spent in a state $i$ whose
@@ -96,20 +99,23 @@ and we prove it with an explicit error for all $x$
 (Proposition~\ref{prop:pair-face}). The constants $a$, $b$ and $\gamma$ are
 explicit for every irreducible chain through the left and right tilt
 vectors at the facet profile, and $\gamma-q_i$ is $ab/2$ times an effective
-resistance (Proposition~\ref{prop:layer-constants}). For every face with at
-most three states the layer theorem holds without further hypothesis. Its
-Bessel form is exact up to a factor $e^{E}$ with $E$ of order
-$1/T+\sqrt{x/T}(1+x)$ up to $x\le\delta T$, so the relative form holds for
-$x\ll T^{1/3}$ when the chain is not reversible, and a generalized kernel
-holds with relative error $O(1/T)$ on the whole range. For faces with four
-or more states the same statements are conditional on one hypothesis, a
-local law with complex weights, which we state, prove for two-state facets,
-and leave open in general (Hypothesis~\ref{hyp:L} and
-Theorem~\ref{thm:layer}). The near-vertex law of Section~\ref{sec:vertex},
-where one count is large and a few counts are of order one and the crossing
-with the vertex moves to $T$ of order $\sqrt N$, is the discrete pair-face
-case of this layer, in the regime where the Laguerre kernel cannot yet be
-replaced by the Bessel kernel (Theorem~\ref{thm:vertex-uniform-root}).
+resistance (Proposition~\ref{prop:layer-constants}). For every face,
+Theorem~\ref{thm:layer} describes the layer for $x$ up to
+a small multiple of $T$. A generalized kernel holds there with relative
+error $O(1/T)$. The Bessel kernel holds up to a factor $e^{E}$ with $E$ of
+order $1/T+\sqrt{x/T}(1+x)$. For a reversible chain this improves to a
+relative error $O(1/T+\sqrt{x/T})$ on the whole range. Without
+reversibility we get the relative Bessel form only for $x$ up to a constant
+times $T^{1/3}$, and a non-reversible cycle on three states shows that the
+restriction is real. The proof rests on a local law of the facet chain
+with a small complex weight (Theorem~\ref{thm:L-facet}), which we prove on a
+torus through a complex critical point with a Laplace lemma for a complex
+Hessian. The near-vertex
+law of Section~\ref{sec:vertex}, where one count is large and a few counts
+are of order one and the crossing with the vertex moves to $T$ of order
+$\sqrt N$, is the discrete pair-face case of this layer, in the regime where
+the Laguerre kernel cannot yet be replaced by the Bessel kernel
+(Theorem~\ref{thm:vertex-uniform-root}).
 
 \subsection{The complete graph}\label{sec:intro-complete}
 
@@ -140,14 +146,17 @@ $d$ positive coordinates.
 
 Part (i) is Theorem~\ref{thm:simplex-crossing}, part (ii) is
 Theorem~\ref{thm:simplex-balance} and part (iii) is
-Corollary~\ref{cor:simplex-modes}. Figure~\ref{fig:complete-envelope} shows
-the window. A start law changes the constant of a face through its start
-mass, and a weak field changes it through the field averaged over the
-face. Either can let a face of intermediate size win
-(Example~\ref{ex:K3-start} and Corollary~\ref{cor:weakfield-phases}), and
-one field makes every size win in turn.
+Corollary~\ref{cor:simplex-modes}. Parts (i) and (ii) hold at every $N$, so on
+the complete graph we know the face maxima and their crossings with a vertex
+exactly, and part (iii) gives the mode for large $N$.
+Figure~\ref{fig:complete-envelope} shows the window. A start law changes the
+constant of a face through its start mass, and a weak field changes it
+through the field averaged over the face. Either can let a face of
+intermediate size win (Example~\ref{ex:K3-start} and
+Corollary~\ref{cor:weakfield-phases}), and one field makes every size win in
+turn.
 
-\begin{figure}[H]
+\begin{figure}[t]
 \centering
 \includegraphics[width=\textwidth]{fig_complete_envelope}
 \caption{Support selection on the complete graph with four states, unit rates
@@ -162,148 +171,36 @@ unnormalized, and marked ties concern the limit, not finite-$N$ equalities}
 \label{fig:complete-envelope}
 \end{figure}
 
-\subsection{What the occupation law determines}\label{sec:intro-reconstruction}
-
-Section~\ref{sec:reconstruction} turns the description around and asks
-which coarse functionals of the law of the counts determine the generator.
-The finest is the law itself. Its logarithmic scale on single compositions
-is, by Theorem~\ref{thm:stratified}, the Donsker and Varadhan functional
-$J_V$. Write $Q^*=D_\pi^{-1}Q^\top D_\pi$ for the time reversal of an
-irreducible generator with stationary law $\pi$, and call a partition
-$[d]=X\cup Y$ with $|X|,|Y|\ge2$ a cut of $Q$ if both blocks $Q[X,Y]$ and
-$Q[Y,X]$ have rank at most $1$.
-
-\begin{introtheorem}[what the Donsker and Varadhan functional determines]\label{thm:D}
-Let $Q$ and $Q'$ be irreducible generators on $[d]$.
-\begin{enumerate}[(i)]
-\item $J_V=J'_V$ on the simplex if and only if $-Q$ and $-Q'$ have the same
-principal minors.
-\item The generators with the principal minors of $-Q$ form a finite set. It
-contains $Q$ and $Q^*$. It is $\{Q,Q^*\}$ when $Q$ has no cut, in particular
-when $d\le3$, and it is $\{Q\}$ when $Q$ is reversible.
-\end{enumerate}
-\end{introtheorem}
-
-Part (i) is the equivalence of (i) and (iii) in Corollary~\ref{cor:dv-fiber},
-and part (ii) is Theorem~\ref{thm:nonreversible}(b)--(e). The proof of (i)
-needs three inputs. They are the variational formula
-$\lambda_V(v)=\min_\alpha(J_V(\alpha)-v\cdot\alpha)$ for
-$\lambda_V(v)=-\varrho(Q+\operatorname{diag}v)$
-(Proposition~\ref{prop:variational}), the irreducibility of the multiaffine
-polynomial $\det(-Q_F-\operatorname{diag}w)$ for every irreducible face
-(Lemma~\ref{lem:RF-irreducible}), and the Perron-branch lemma, by which the
-Perron root on an open set of fields determines that polynomial
-(Lemma~\ref{lem:perron-branch}). Part (ii) rests on the matrix theory of
-Loewy, Hartfiel and Loewy, Al Ahmadieh and Chatterjee, Ghosh, Gurjar and
-Raj, who describe the matrices with given principal minors up to diagonal
-similarity, through transposition and a cut-transpose move across each cut.
-Theorem~\ref{thm:D} answers the question left open by Example~5.4 of Kim
-and Landim~\cite{kl2024}, a three-cycle and its reversal with the same
-$J_V$. By their Corollary~5.8 the joint functional of the empirical measure
-and the empirical flow determines the generator, so adding the flow removes
-the whole fiber.
-
-The modal supports give a strengthening. Weight each composition by
-$e^{Tv\cdot n/N}$ for a field $v\le0$, which is the chance that the chain
-survives when it is killed at known rates, and observe only which face
-carries the mode of the surviving composition, as a function of $\tau$ and
-$v$. Throughout Section~\ref{sec:reconstruction} the field and the time
-scale are calibrated, that is, known in the units of $Q$. The data are the
-boundaries between the regions of $(\tau,v)$ where one face wins strictly.
-Corollary~\ref{cor:dv-fiber} shows that these boundaries determine the
-principal minors too, so a single label at each point loses nothing that
-$J_V$ keeps. The survival probability itself is a finer observation. It
-equals $e^{-T\lambda_V(v)}$ up to a bounded factor, so it gives $\lambda_V$
-on all fields and, through the Perron-branch lemma, every principal minor
-at once, with no descent through the faces. The coarser label does not
-require measuring a probability, only the support of the most likely
-composition, and it is the datum that the forward theory describes.
-Reading the minors from it needs a descent through the faces, which
-exposes the Perron root of every face on an open set of fields
-(Lemma~\ref{lem:exposure}). The fields used there depend on the generators
-being compared, so this part is a statement of identifiability, with no
-design fixed in advance.
-
-For a reversible chain on a known connected graph with $m$ edges a design
-is fixed in advance. Fields with constants built from a norm bound and an
-edge bound alone expose $d-1$ singleton switches and $m$ pair-entry times,
-and these $m+d-1$ numbers determine $Q$ by a Perron reconstruction
-(Theorem~\ref{thm:reversible-reconstruction}). No family of fewer than
-$m+d-1$ smooth observations can do this (Theorem~\ref{thm:minimality}),
-and the reconstruction is Lipschitz in the observed coordinates
-(Theorem~\ref{thm:stability}). At a finite horizon the pair-entry times
-carry a correction of relative size $\log\log N/(2\log N)$ with an explicit
-next term, uniformly over a compact class of chains and starts
-(Theorem~\ref{thm:finite-horizon}), and the start bound cannot be dropped
-(Remark~\ref{rem:finite-start}).
-
-\emph{What is borrowed and what is new.} The fiber of the principal-minor map of
-an irreducible matrix is known up to diagonal similarity and transposition.
-The paper adds three things. The first, and the shortest, is the
-translation to generators. A Perron and Frobenius normalization picks
-exactly one generator in each diagonal class, so the fiber is finite,
-every member is irreducible with the spectrum of $Q$, and a cut-transpose
-acts as $Q$ on one side of the cut and as $Q^*$ on the other
-(Theorem~\ref{thm:nonreversible}). The second is the data. The minors are
-not observed, and the exposure lemma with the Perron-branch lemma reads all
-of them off the modal-support map. The third is the amplitude obstruction.
-From the stationary start the law of the count vector is the same under
-$Q$ and $Q^*$ for every $N$ and $T$ with $Tq_{\max}\le N$, so from that
-start no count statistic separates them. For every start outside a finite
-union of proper subspaces the second-order amplitudes of the local law
-separate every member of the fiber from $Q$
-(Theorem~\ref{thm:nonreversible}(f)).
-
-\subsection{Low temperature}\label{sec:intro-lowtemp}
-
-When the rates are $q_{ij}=e^{-V_{ij}/\eta}$ and the time scale is
-$\tau=e^{h/\eta}$, the competition between dimension and exit rate takes
-place on the Freidlin and Wentzell cycles of the chain. The depth of a face
-is the largest depth of a cycle it contains (Theorem~\ref{thm:depth}). Away
-from the finite set of cycle depths the winner is a cycle of least size
-among those deeper than $h$ (Theorem~\ref{thm:noncritical}). At a critical
-depth a finite problem with explicit prefactors decides, and its winners
-need not be cycles. A four-state reversible example has a three-state
-noncycle winner on an open window of the rescaled time
-$x=Te^{-\gamma/\eta}/\log N$ at a critical height $\gamma$ (Theorem~\ref{thm:critical-window} and
-Example~\ref{ex:four-state}). The controls read the cycle tree. A field of
-Arrhenius size on a face rewards it. The largest field exponent at which a
-cycle still wins is its depth, and the depth of every face is the largest
-such threshold over its subfaces (Theorem~\ref{thm:attraction}). The
-depths determine the cycles, since a set is a cycle exactly when every
-proper subset is strictly shallower, for every Arrhenius family with all
-rates positive and with no nondegeneracy
-(Theorem~\ref{thm:cycles-from-depths}), and the window endpoints determine
-the prefactors of the faces on the envelope
-(Theorem~\ref{thm:window-prefactors}).
-
 \subsection{Related work}\label{sec:related}
 
 The exact law of the count vector goes back to Whittle~\cite{whittle1955},
 Dawson and Good~\cite{dawsongood1957}, Goodman~\cite{goodman1958} and
 Good~\cite{good1961}. Good's formula (3) is the run expansion of
 Lemma~\ref{lem:runs}, and his formula (10) is the continuum density of
-Lemma~\ref{lem:continuum}, up to the killing and the exponent $n_i-1$ that
-our setting needs. He suggested the saddle-point analysis of the density
-and did not carry it out, and Theorem~\ref{thm:local} is that analysis,
-uniform in $T$ and with its constant. Polettini~\cite{polettini2015} and
-Carugno, Vivo and Coghi~\cite{cvc2022} derive the exact law from the BEST
-theorem and the matrix-tree theorem. Stadje~\cite{stadje1999} gives the
-generating functions of the joint numbers of visits and limit laws when one
-state becomes nearly absorbing. In continuous time, Brydges, van der Hofstad
-and K\"onig~\cite{bhk2007} give the joint density of the local times on the
+Lemma~\ref{lem:continuum}. What our setting adds to (10) is the killing on
+leaving the face and the exponents $m_i-1$ of the times spent in the
+states, where $m_i$ is the number of runs in state $i$, and the proof of
+Lemma~\ref{lem:continuum} checks them. He suggested the saddle-point
+analysis of the density and did not carry it out, and
+Theorem~\ref{thm:local} is that analysis, uniform in $T$ and with its
+constant. Polettini~\cite{polettini2015} and Carugno, Vivo and
+Coghi~\cite{cvc2022} derive the exact law from the BEST theorem and the
+matrix-tree theorem. Stadje~\cite{stadje1999} gives the generating functions
+of the joint numbers of visits and limit laws when one state becomes nearly
+absorbing. In continuous time, Brydges, van der Hofstad and
+K\"onig~\cite{bhk2007} give the joint density of the local times on the
 event that the range is a given set, and Huang, Kious, Sidoravicius and
 Tarr\`es~\cite{hkst2018} write it with Bessel functions and spanning trees
 for symmetric rates. The Bessel kernel of the boundary layer is Pedler's
 occupation-time density for two-state chains~\cite{pedler1971}, continued
-by Kovchegov, Meredith and Nir~\cite{kmn2010}, and Section~\ref{sec:boundary-layer}
-is its facet version. Herv\'e and Ledoux~\cite{herveledoux2013} prove a
-quantitative local limit theorem for densities of finite-state Markov
-additive processes, and Kontoyiannis and Meyn~\cite[Theorem~6.3]{km2003}
-give exact large deviation asymptotics for a bounded functional of a fixed
-chain. Theorem~\ref{thm:local} is a local form for the whole vector of
-counts, for a chain killed on leaving $F$ whose switch probabilities shrink
-with $N$.
+by Kovchegov, Meredith and Nir~\cite{kmn2010}, and
+Section~\ref{sec:boundary-layer} is its facet version. Herv\'e and
+Ledoux~\cite{herveledoux2013} prove a quantitative local limit theorem for
+densities of finite-state Markov additive processes, and Kontoyiannis and
+Meyn~\cite[Theorem~6.3]{km2003} give exact large deviation asymptotics for a
+bounded functional of a fixed chain. Theorem~\ref{thm:local} is a local form
+for the whole vector of counts, for a chain killed on leaving $F$ whose
+switch probabilities shrink with $N$.
 
 The rate inside a face is the Donsker and Varadhan functional of the killed
 chain~\cite{dv1975}. Dupuis and Liu~\cite[Section~3.1]{dupuisliu2015} give
@@ -320,36 +217,17 @@ changes with $N$. Bertini, Gabrielli and Landim~\cite{bgl2024} and
 Landim~\cite{landim2023} expand the level-two rate functions of finite
 chains in a parameter, and Kim and Landim~\cite{kl2024} extend this to the
 joint rate of the empirical measure and the flow~\cite{bfg2014,bfg2015}.
-Their Section~5 shows that the Donsker and Varadhan functional determines
-the exit rates and the products $q_{ij}q_{ji}$, which with the stationary
-law determine a reversible generator, and gives a three-cycle and its
-reversal as an example of non-identifiability. The matrix theory behind
-Theorem~\ref{thm:D} is Hartfiel and Loewy~\cite{hartfielloewy1984} and
-Loewy~\cite{loewy1986} for the case without a cut, Engel and
-Schneider~\cite{engelschneider1980} for diagonal similarity to a symmetric
-matrix, and Al Ahmadieh~\cite{alahmadieh2023} and Chatterjee, Ghosh, Gurjar
-and Raj~\cite{cggr2024} for the general fiber. Delmas, Dronnier and
-Zitt~\cite{ddz2024} prove a multiplicative analogue of the Perron-branch
-lemma. The reversible coordinates and the dimension count of
-Theorem~\ref{thm:minimality} are those of Wolfer and
-Watanabe~\cite{wolferwatanabe2021}.
-
-The cycle framework of Section~\ref{sec:lowtemp} is that of Freidlin and
-Wentzell~\cite{freidlinwentzell2012}, Catoni~\cite{catoni1999}, Olivieri
-and Vares~\cite{olivierivares2005}, Trouv\'e~\cite{trouve1996} and Cirillo,
-Nardi and Sohier~\cite{cirillonardisohier2015}. The depth identity rests on
-Catoni's mean exit theorem. The logarithmic asymptotics of the principal
-eigenvalue of a killed generator with Arrhenius rates, and its graph and
-determinant expressions, go back to Wentzell~\cite{wentzell1972} and to
-Freidlin and Wentzell~\cite[Chapter~6]{freidlinwentzell2012}, so the
-prefactor proposition is classical in substance. What is new there is the
-score of dimension against exit rate, the finite competition of envelopes
-at a critical depth with its noncycle window, and the attraction design.
+These expansions concern the rate functional of a fixed chain. Here the
+functional enters through its restriction to each face, and the competition
+is between faces of different dimension.
 
 The question grew out of Problem~131 of Kagey's Open Problem
 Collection~\cite{kagey131}, a two-direction crossing problem, whose
-two-state case is treated in~\cite{paperA}. The present paper incorporates
-the symmetric-model preprint~\cite{paperB}.
+two-state case is treated in~\cite{paperA}. The symmetric-model
+preprint~\cite{paperB} treats the complete graph. Its results on the
+crossings with a vertex and near a vertex are reproved here as cases of the
+general theory, in Sections~\ref{sec:complete} and~\ref{sec:vertex}, and we
+cite it for the results that we do not reprove.
 
 \subsection{Plan of the paper}\label{sec:plan}
 
@@ -361,11 +239,20 @@ law with a field, the face maxima, the crossing equation and the tie
 windows, and Section~\ref{sec:boundary-layer} the boundary layer.
 Section~\ref{sec:complete} treats the two-state walk and the complete
 graph, and Section~\ref{sec:vertex} the compositions near a vertex.
-Section~\ref{sec:reconstruction} proves the reconstruction theorems and
-Section~\ref{sec:lowtemp} the low-temperature results.
 Section~\ref{sec:verify} describes the computer checks and the formal
 proofs. The appendices hold the torus and Laplace proofs of the local law,
-the proofs for the complete graph and the proofs near a vertex. We quote a
-few results of~\cite{paperA}, namely the run count, the growth of the
-polynomials $S_{a,b}$ toward the middle, the uniform Bessel bound
-recalled in~\eqref{eq:planar-bessel} and the expansion of $z_N$.
+the proofs for the complete graph and the proofs near a vertex. From the
+persistent-walk paper~\cite{paperA} we use two results, the coefficientwise
+growth of the polynomials $S_{a,b}$ toward the middle in
+Proposition~\ref{prop:pair} and its bound on clipped products in
+Appendix~\ref{app:vertex}. We also recall its expansion of the crossing
+$z_N$ and its fixed-edge expansion, for comparison only.
+
+A companion paper~\cite{paperC2} asks what the Donsker and Varadhan
+functional and the modal supports determine about the generator. It
+recovers a reversible generator on a known graph from modal supports, with
+a finite-horizon correction, and at low temperature it reads the Freidlin
+and Wentzell cycle tree off the modal supports. That paper rests on the killed functional and the first-order
+results of Sections~\ref{sec:dv} and~\ref{sec:firstorder}, on
+Definition~\ref{def:tilt} with the face maxima of Theorem~\ref{thm:facemax},
+and on Proposition~\ref{prop:uniform-facemax}. Nothing here depends on it.

@@ -1,0 +1,247 @@
+\section{Introduction}\label{sec:intro}
+
+Fix a generator $Q$ on $d$ states and a start law, and run the chain for $N$
+steps with transition matrix $I+(T/N)Q$. With $T=\tau\log N$ the chain makes
+about $\tau\log N$ switches. Its composition is the vector of occupation counts,
+and the support of a composition is a face of the simplex. The companion
+paper~\cite{paperC1} describes the law of the composition on every face at this
+scale. On a face $F$ the most likely composition has probability
+$N^{-\Phi_\tau(F)+o(1)}$ with the score $\Phi_\tau(F)=|F|-1+\tau\lambda_F$, where
+$\lambda_F$ is the principal exit rate of $F$. So one power of $N$ per dimension
+competes with the cost of staying in the face, and the mode moves to larger faces
+as $\tau$ grows. Inside a face the logarithm of the law is $T$ times the Donsker
+and Varadhan functional $J_V$ of the chain, read on that face.
+
+This paper turns the description around. We ask which coarse functionals of the
+law of the counts determine $Q$, and what each of them loses. We compare three,
+from fine to coarse. The first is the law itself, at every $N$ and $T$. The second
+is its logarithmic scale on single compositions, the functional $J_V$. The third
+is a finite label, the support of the most likely composition when the chain is
+killed at known rates. The answer is the same for the second and the third. Both
+determine exactly the principal minors of $-Q$. We then describe the generators
+with given minors, read a reversible generator from finitely many boundaries of
+a design fixed in advance, and read the Freidlin and Wentzell cycle tree of an
+Arrhenius family from the same labels.
+
+We continue the lettering of the main theorems of~\cite{paperC1}, which states
+Theorems~A to~C.
+\setcounter{introtheorem}{3}
+
+\subsection{The Donsker and Varadhan functional}\label{sec:intro-dv}
+
+Write $Q^*=D_\pi^{-1}Q^\top D_\pi$ for the time reversal of an irreducible
+generator with stationary law $\pi$. Call a partition $[d]=X\cup Y$ with
+$|X|,|Y|\ge2$ a cut of $Q$ if both blocks $Q[X,Y]$ and $Q[Y,X]$ have rank at most
+$1$. Across a cut a cut-transpose replaces the two rank-one blocks by the products
+of their factors taken crosswise and transposes the block on $Y$ (Section~\ref{sec:fiber}).
+
+\begin{introtheorem}[what the Donsker and Varadhan functional determines]\label{thm:D}
+Let $Q$ and $Q'$ be irreducible generators on $[d]$.
+\begin{enumerate}[(i)]
+\item $J_V=J'_V$ on the simplex if and only if $-Q$ and $-Q'$ have the same
+principal minors.
+\item The irreducible generators with the principal minors of $-Q$ form a finite
+set. It contains $Q$ and $Q^*$. It is $\{Q,Q^*\}$ when $Q$ has no cut, in
+particular when $d\le3$, and $\{Q\}$ when $Q$ is reversible. In general it is the
+set of generator points of the cut-transpose orbit of $-Q$, and it can contain
+generators other than $Q$ and $Q^*$.
+\item From the stationary start the law of the composition is the same under $Q$
+and under $Q^*$, for every $N$ and every $T$ with $Tq_{\max}\le N$.
+\end{enumerate}
+\end{introtheorem}
+
+Part (i) is Theorem~\ref{thm:dv}, part (ii) is Theorem~\ref{thm:nonreversible}
+with the example after it, and part (iii) is Proposition~\ref{prop:stationary}.
+Part (i) needs three inputs. The first is the variational formula
+$\lambda_V(v)=\min_\alpha(J_V(\alpha)-v\cdot\alpha)$ for
+$\lambda_V(v)=-\varrho(Q+\operatorname{diag}v)$. The second is the irreducibility
+of the multiaffine polynomial $\det(-Q_F-\operatorname{diag}w)$ for every
+irreducible face, which is Lemma~5.1 of Al Ahmadieh~\cite{alahmadieh2023}. The third
+is the Perron-branch lemma (Lemma~\ref{lem:perron-branch}). It says that the
+Perron root on an open set of fields determines that polynomial, hence every
+principal minor. Kim and Landim~\cite[Section~5]{kl2024} show that $J_V$
+determines the minors of orders one and two, which with the stationary law fix a
+reversible generator, and they note that the uniform three-cycle and its reversal
+share $J_V$. Theorem~\ref{thm:D} answers the question that their example leaves,
+which generators share $J_V$. By their Corollary~5.8 the joint functional of the
+empirical measure and the empirical flow determines the generator, so adding the
+flow removes the whole fiber. Part (iii) shows that the fiber is not an artefact
+of the logarithmic scale. From the stationary start even the exact law of the
+counts cannot separate $Q$ from $Q^*$. For a start outside a finite union of
+proper subspaces the second-order amplitudes of the local law do separate every
+member of the fiber (Proposition~\ref{prop:amplitudes}).
+
+\subsection{Modal supports}\label{sec:intro-modal}
+
+Weight each composition by $e^{Tv\cdot n/N}$ for a field $v\le0$. This is the
+chance that the chain survives when it is killed at state $i$ at the known rate
+$-v_i$. We record only which face carries the most likely surviving composition,
+as a function of $(\tau,v)$, and call this the modal-support map. The data are the
+boundaries between the open regions where one face wins strictly
+(Definition~\ref{def:controlled}).
+
+\begin{introtheorem}[what the modal supports determine]\label{thm:E}
+Let $Q$ and $Q'$ be irreducible generators and let the start have full support.
+They have the same modal-support map, outside a closed nowhere dense set of
+$(\tau,v)$, if and only if $-Q$ and $-Q'$ have the same principal minors. If the
+minors differ, there is a nonempty open set of $(\tau,v)$ on which both maps have
+a strict winner and the two winners differ.
+\end{introtheorem}
+
+This is Theorem~\ref{thm:modal}, with Proposition~\ref{prop:identifiability} for
+the last sentence. The proof is a descent through the faces. For every irreducible
+face $F$ and a generic field on $F$, the exposure lemma (Lemma~\ref{lem:exposure})
+finds a proper subface $G$ that shares a boundary of strict regions with $F$, and
+along that boundary $\lambda_F=\lambda_G-(|F|-|G|)/\tau$. Induction on $|F|$ then
+traces $\lambda_F$ on an open set of fields, and the Perron-branch lemma extends
+it to all fields.
+
+We should say plainly what Theorem~\ref{thm:E} is for. The survival probability
+under calibrated killing is a finer observation. It equals $e^{-T\lambda_V(v)}$ up
+to a bounded factor, so it gives every principal minor at once, with no descent
+(Remark~\ref{rem:survival}). The modal support is not easier to sample. The most
+likely composition carries probability $N^{-\Phi+o(1)}$, so estimating which face
+carries it from independent runs needs far more runs than estimating the survival
+probability. We know of no experiment in which the modal support is observed and
+the survival probability is not. We therefore read Theorem~\ref{thm:E} as a
+statement about retention. The forward theory of~\cite{paperC1} outputs the
+support of the most likely composition, and so does any exact optimizer that
+reports only a maximizer of the weighted law. Theorem~\ref{thm:E} says that this
+output loses nothing that $J_V$ keeps.
+
+\emph{What is borrowed and what is new.} The data come first. The principal
+minors are not observed. Theorem~\ref{thm:dv} reads all of them off $J_V$, and
+Theorem~\ref{thm:modal} reads all of them off the modal-support map through the
+exposure lemma and the Perron-branch lemma. This is the main contribution of the
+first half of the paper. The fiber of the principal-minor map of an irreducible
+matrix is known. Loewy~\cite{loewy1986}, and Hartfiel and
+Loewy~\cite{hartfielloewy1984} for order at most three, show that an irreducible
+matrix without a cut is determined by its principal minors up to diagonal
+similarity and transposition. Al Ahmadieh~\cite[Theorem~4.1 and Lemma~4.5]{alahmadieh2023} shows that for
+order at least four this happens exactly when there is no cut or the matrix is
+diagonally similar to a symmetric one, and Chatterjee, Ghosh, Gurjar and
+Raj~\cite[Theorem~1.1]{cggr2024} describe the whole fiber, up to diagonal
+similarity and transposition, by sequences of cut-transposes. The second
+contribution is the translation of this fiber to generators, which is the shortest
+step. A Perron and Frobenius normalization picks exactly one generator in each
+class of diagonal similarity, so the generator fiber is finite, every member is
+irreducible with the spectrum of $Q$, and a cut-transpose acts as $Q$ on one side
+of the cut and as $Q^*$ on the other (Theorem~\ref{thm:nonreversible} and
+Proposition~\ref{prop:amplitudes}). The third is the stationary obstruction of
+part (iii) of Theorem~\ref{thm:D}.
+
+\subsection{A reversible design and finite horizons}\label{sec:intro-reversible}
+
+For a reversible chain on a known connected graph with $m$ edges the fields can be
+fixed before anything is observed.
+
+\begin{introtheorem}[a reversible design]\label{thm:F}
+Let $Q$ be reversible and irreducible on a known connected graph with $m$ edges,
+and suppose that known constants $R$ and $b$ bound the norm of the symmetrized
+generator above and every edge product $\sqrt{q_{ij}q_{ji}}$ below.
+\begin{enumerate}[(i)]
+\item A design whose fields and time scales depend only on $R$, $b$ and the
+labels reads $d-1$ singleton switches and $m$ pair-entry times off the
+modal-support map, and these $m+d-1$ numbers determine $Q$.
+\item No family of fewer than $m+d-1$ scalar $C^1$ observations, with finitely many
+locally constant labels, identifies $Q$ on any open set of such generators.
+\item The reconstruction is Lipschitz in the observed coordinates, with constants
+that depend only on $d$ and $b/R$.
+\item At the finite horizon $N$, with $L=\log N$, the observed pair-entry times are
+$t_{ij}(1-\log L/(2L))+c_{ij}/L+O(\log L/L^2)$, uniformly over the generators of
+the class and the starts with $\min_i\mu_i\ge\mu_*$, and the start bound cannot be
+dropped.
+\end{enumerate}
+\end{introtheorem}
+
+Parts (i) to (iii) are Theorems~\ref{thm:reversible-reconstruction},
+\ref{thm:minimality} and~\ref{thm:stability}, and part (iv) is
+Theorem~\ref{thm:finite-horizon} with Remark~\ref{rem:finite-start}. The coordinates
+are those of Wolfer and Watanabe~\cite{wolferwatanabe2021}, and Kim and
+Landim~\cite[Lemma~5.1 and Corollary~5.3]{kl2024} recover the same quantities from
+$J_V$. What Theorem~\ref{thm:F} adds is a design fixed in advance, its minimality, its
+stability with constants from $R$ and $b$ alone, and its finite-horizon behaviour.
+
+\subsection{Low temperature and the cycle tree}\label{sec:intro-lowtemp}
+
+Let the rates be $q_{ij}=e^{-V_{ij}/\eta}$ with fixed costs $V_{ij}\ge0$ and a
+temperature $\eta\downarrow0$, and let the time scale be $\tau=e^{h/\eta}$ for a
+height $h$. Then the competition between dimension and exit rate takes place on the
+Freidlin and Wentzell cycles of the chain. The depth $D(F)$ of a face is the
+exponential order of its exit rate, and it is the largest depth of a cycle inside
+$F$ (Theorem~\ref{thm:depth}). Away from finitely many heights the winner is a cycle
+of least size among those deeper than $h$ (Theorem~\ref{thm:noncritical}). At a
+critical height explicit prefactors decide, and a noncycle can win on an open window
+of the rescaled time scale (Theorem~\ref{thm:critical-window} and
+Example~\ref{ex:four-state}).
+
+The noncycle window raises a question that we settle here. Modal winners need not be
+cycles, so do the modal supports determine the cycles at all? The two obvious
+experiments do not. The unperturbed modal path shows the depth of each face it
+selects and nothing about the cycles that are never the smallest eligible face.
+Killing the complement of a face at a large rate does not show its depth either,
+because the whole space then has an exit rate of the same order, and the winner leaves
+the face only at a larger height. The cure is to reward the face instead. For a
+proper face $G$, a constant $c>0$ and a real $\gamma$ we put the field
+$v^{G,\gamma}=c\,e^{-\gamma/\eta}\ones_G$, and we let the threshold $\vartheta(G)$ be the
+supremum of the $\gamma$ for which $G$ wins under $v^{G,\gamma}$ at some height above
+$\gamma$.
+
+\begin{introtheorem}[the cycle tree from calibrated rewards]\label{thm:G}
+Let $(Q_\eta)$ be an Arrhenius family with all rates positive, and let the start have
+full support.
+\begin{enumerate}[(i)]
+\item $\vartheta(G)\le D(G)$ for every proper face $G$, with equality when $G$ is a
+cycle.
+\item $D(F)=\max_{G\subseteq F}\vartheta(G)$ for every proper face $F$.
+\item A nonempty proper set $C$ is a cycle if and only if $D(C')<D(C)$ for every
+nonempty proper subset $C'$ of $C$.
+\end{enumerate}
+So the modal-support map, restricted to the fields $v^{G,\gamma}$, determines the
+depth of every face, the cycles, their depths and the cycle tree. No step uses
+reversibility, and no nondegeneracy of the depths is assumed.
+\end{introtheorem}
+
+Parts (i) and (ii) are Theorem~\ref{thm:attraction} and part (iii) is
+Theorem~\ref{thm:cycles-from-depths}. The design needs three calibrated quantities,
+the time unit, the amplitude of the reward and the labels of the states, and no rate
+of $Q$. The reward keeps a face whose rate is known, namely the whole space with
+$\lambda_V(v)\le0$, and this is what the killing design destroys. Criterion (iii)
+holds with ties between the depths of different faces, because Catoni's cycles are
+strict and depths increase strictly along nested cycles (Lemma~\ref{lem:nested}). Its
+weak form, with $D(C')\le D(C)$, fails already on three states. Finally the endpoints
+of the critical windows determine the prefactors of the faces on the lower envelope,
+and only bounds for the others (Theorem~\ref{thm:window-prefactors}).
+
+\subsection{Related work}\label{sec:related}
+
+The rate inside a face is the Donsker and Varadhan functional of the killed
+chain~\cite{dv1975}, and the exact law of the counts goes back to
+Good~\cite{good1961}. Bertini, Gabrielli and Landim~\cite{bgl2024} and
+Landim~\cite{landim2023} expand the level-two rate functions of finite chains in a
+parameter, and Kim and Landim~\cite{kl2024} treat the joint rate of the empirical
+measure and the flow~\cite{bfg2014,bfg2015}. Their Section~5 is the starting point of
+Theorem~\ref{thm:D}, and the matrix theory behind the fiber is credited above and in
+Section~\ref{sec:fiber}, together with Engel and Schneider~\cite{engelschneider1980}.
+Cohen~\cite{cohen1981} and Friedland~\cite{friedland1981} study the convexity of
+$v\mapsto\varrho(A+\operatorname{diag}v)$, and Delmas, Dronnier and Zitt~\cite{ddz2024}
+prove a multiplicative analogue of the Perron-branch lemma. The cycle framework is that of
+Freidlin and Wentzell~\cite{freidlinwentzell2012}, Catoni~\cite{catoni1999}, Olivieri and
+Vares~\cite{olivierivares2005}, Trouv\'e~\cite{trouve1996} and Cirillo, Nardi and
+Sohier~\cite{cirillonardisohier2015}, and the eigenvalue asymptotics behind the prefactors go
+back to Wentzell~\cite{wentzell1972}. What is new at low temperature is the score of dimension
+against exit rate, the competition of envelopes at a critical depth with its noncycle window,
+and the reading of the cycle tree from calibrated rewards. The question grew out of
+Problem~131 of Kagey's collection~\cite{kagey131}.
+
+\subsection{Plan of the paper}\label{sec:plan}
+
+Section~\ref{sec:prelim} fixes the notation and states the results of~\cite{paperC1}
+that we use. They are the first-order results, the face maxima with a field, their
+uniform version on a compact class and the constant of the local law, and nothing else of
+the forward theory enters.
+Section~\ref{sec:minors} proves Theorem~\ref{thm:D}. Section~\ref{sec:modal} sets up
+the modal-support map and proves Theorem~\ref{thm:E}. Section~\ref{sec:reversible}
+treats the reversible design and the finite horizon, and Section~\ref{sec:lowtemp} the
+low temperature. Section~\ref{sec:verify} lists the computations that check the paper
+and the open questions.

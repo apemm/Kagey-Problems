@@ -1,11 +1,9 @@
 \section{Verification and open questions}\label{sec:verify}
 
 Every theorem, proposition, lemma and corollary of this paper is proved in the
-text or in the appendices. The only statement we do not prove is
-Hypothesis~\ref{hyp:L} for facets with three or more states, and
-Theorem~\ref{thm:layer} uses it only for faces with four or more states. We quote
-results of~\cite{paperA} where we say so. No proof rests on a computation. The
-formal proofs and the computations below check parts of the paper independently.
+text or in the appendices. We quote results of~\cite{paperA} and~\cite{paperB}
+where we say so. No proof rests on a computation. The formal proofs and the
+computations below check parts of the paper independently.
 
 \subsection*{Formal proofs}
 
@@ -18,57 +16,44 @@ matches each statement of the paper to its Lean theorems. No proof there uses
 (Proposition~\ref{prop:rate}), the restriction identity
 (Proposition~\ref{prop:restriction}), the finite form of
 Theorem~\ref{thm:hull}, the tree formula of Proposition~\ref{prop:constant}(b)
-for two and three states, the exact parts of Example~\ref{ex:threecycle}, the
+for two and three states, the exact parts of Example~\ref{ex:threecycle}, and the
 exact statements on the complete graph and near a vertex in
-Sections~\ref{sec:complete} and~\ref{sec:vertex}, the multiaffine expansion of
-$R_F$, the normalization (N) and the fact that a diagonal similarity keeping a
-Metzler matrix Metzler has entries of one sign, part~(e) of
-Theorem~\ref{thm:nonreversible} for positive rates, and the determinants,
-adjugates and prefactors of Example~\ref{ex:four-state}. Mathlib has no Perron
-and Frobenius theorem for irreducible Metzler matrices, so the positive null
-vector in (N) is a hypothesis of the Lean statements, and the asymptotic results
-are not in Lean.
+Sections~\ref{sec:complete} and~\ref{sec:vertex}. Mathlib has no Perron and
+Frobenius theorem for irreducible Metzler matrices, so a positive Perron vector is
+a hypothesis of the Lean statements where one is needed, and the asymptotic
+results are not in Lean.
 
 \subsection*{Computations}
 
 The scripts are in the folder named under Code availability. Each check is an
 assertion, and the checks in floating point use a tolerance. None of them is
-interval-certified. The script \texttt{verify\_all.py} runs all eleven with
+interval-certified. The script \texttt{verify\_all.py} runs all eight with
 \texttt{py -I} and writes each output, headed by the sha256 of its script, to the
-folder \nolinkurl{data}, in about fifteen minutes on a laptop. The older scripts
+folder \nolinkurl{data}. The scripts
 \texttt{verify\_first\_order.py}, \texttt{verify\_second\_order.py},
 \texttt{verify\_forest.py}, \texttt{verify\_rate\_flows.py},
 \texttt{verify\_weak\_field.py} and \texttt{verify\_examples.py} compute the law
 in two independent ways and check Sections~\ref{sec:model}
-to~\ref{sec:secondorder} and~\ref{sec:complete}. The script
-\texttt{verify\_layer.py} checks the constants and kernels of
-Section~\ref{sec:boundary-layer}, including the inequality
-$I_0/I_1\le1+2/\zeta$. The script \texttt{verify\_reconstruction.py} checks
-Section~\ref{sec:reconstruction}. It recovers $Q$ from the strict winners on $40$
-random reversible chains, checks the constant $\frac{20}3+\frac{28}9<10$ in the
-proof of Theorem~\ref{thm:stability} and the bounds $\phi_*$ and $g_*$ on $2000$
-chains, checks on $64$ random generators with
-a rank-one cut that the generator point of the cut-transpose has the principal
-minors of $-Q$ (in $49$ of them it is neither $Q$ nor $Q^*$), and checks on $200$
-generators with three states that every generator with the same minors is $Q$ or
-$Q^*$. The script \texttt{verify\_finite\_horizon.py} computes the entry times of
-Theorem~\ref{thm:finite-horizon} on the path $1-2-3$ for $N=10^3$ to $10^6$ from
-the run expansion. The script \texttt{verify\_cycles.py} redoes
-Examples~\ref{ex:four-state} and~\ref{ex:branch-switch} in exact arithmetic, and
-\texttt{verify\_attraction.py} tests Theorem~\ref{thm:attraction} on $11$ cost
-matrices and $138$ proper faces at $t=10^{-32}$ and $10^{-48}$. Every cycle has
-the grid threshold $D(G)-\frac14$, no noncycle exceeds it, and
-$\max_{G\subseteq F}\vartheta(G)$ gives $D(F)$ on every face. The figures
-illustrate the theorems, and no statement is deduced from them.
+to~\ref{sec:secondorder} and~\ref{sec:complete}. They were written for an earlier
+version of the paper, and a few of their checks concern statements that this
+version no longer makes. The script \texttt{verify\_layer.py} checks the constants
+and kernels of Section~\ref{sec:boundary-layer}, including the inequality
+$I_0/I_1\le1+2/\zeta$ and the ratios for the non-reversible cycle after
+Theorem~\ref{thm:layer}. The script \texttt{verify\_layer\_general.py} checks
+Theorem~\ref{thm:L-facet} on two facets with four states, a facet of a
+non-reversible face with five states and a path with a periodic jump chain. It
+computes the word sum $f^{(z)}_G(S\beta)$ exactly by a recursion over the words,
+compares it with $S^{-3/2}C_G(\beta,z)e^{-SJ_G(\beta,z)}$ computed from the complex
+critical point of Lemma~\ref{lem:critical}, and prints $S$ times the relative
+error for $S$ doubling from $4$ to $32$ at real and complex $z$. The products
+settle to constants, as~\eqref{eq:L-facet} predicts. The figures illustrate the
+theorems, and no statement is deduced from them.
 
 \subsection*{Open questions}
 
-A local law up to the lower-dimensional corners of a face is open, and so is the
-facet layer for faces with four or more states without Hypothesis~\ref{hyp:L}.
-For a reducible face we expect the power of $T$ in $M_F$ to be
-$(k^*-1)/2+k_F-k^*$, between the bounds of Theorem~\ref{thm:first}(ii). The
-crossings of Theorem~\ref{thm:crossing} are known to be unique only in special
-cases. The crossing equation for the weighted law, which would read the
-amplitudes $K_F(v)$ of Theorem~\ref{thm:nonreversible}(f) off the boundaries, is
-not proved. At low temperature it is open whether some calibrated field separates
-$a_{124}$ from $a_{12}$ in Example~\ref{ex:four-state}.
+A local law up to the lower-dimensional corners of a face is open. For a reducible face we
+expect the power of $T$ in $M_F$ to be $(k^*-1)/2+k_F-k^*$, between the bounds of
+Theorem~\ref{thm:first}(ii). The crossings of Theorem~\ref{thm:crossing} are known
+to be unique only in special cases. A discrete form of Theorem~\ref{thm:layer},
+with the Laguerre polynomials of Section~\ref{sec:vertex} in place of the Bessel
+kernel, is not stated.

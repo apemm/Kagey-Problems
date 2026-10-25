@@ -1,0 +1,178 @@
+\section{Setting and results from the forward theory}\label{sec:prelim}
+
+This section fixes the notation and states, without proof, the results
+of~\cite{paperC1} that the paper uses. Each imported statement carries a pointer
+to its place there.
+
+\subsection{Setting}\label{sec:notation}
+
+\emph{The chain.} Fix $d\ge2$ and a generator $Q$ on $[d]=\{1,\dots,d\}$. Its rates
+are $q_{ij}\ge0$ for $i\ne j$, the exit rates are $q_i=\sum_{j\ne i}q_{ij}$,
+$Q_{ii}=-q_i$, and $q_{\max}=\max_iq_i$. We write $q$ for the vector $(q_i)$. The
+start $\mu$ is a probability law on $[d]$, and $V=[d]$ is the face of all states.
+For $N\ge2$ and $T>0$ put $L=\log N$ and $\tau=T/L$. The chain
+$X_1,\dots,X_N$ has $X_1\sim\mu$ and transition matrix $I+(T/N)Q$, which is
+stochastic when $Tq_{\max}\le N$. The composition is the vector $n$ of visit counts,
+$n_i=\#\{t\le N:X_t=i\}$, so $n_1+\dots+n_d=N$. We write $P_N(n)$ for its law,
+$\supp n=\{i:n_i>0\}$ and $\alpha=n/N$ for the visit fractions.
+
+\emph{Faces.} A face is a nonempty set $F\subseteq[d]$. Let $\Delta_F$ be the set of
+probability vectors on $[d]$ that vanish off $F$, and $\Delta_F^\circ$ the set of
+those that are positive on $F$. The killed generator of $F$ is
+$Q_F=(Q_{ij})_{i,j\in F}$. Its diagonal keeps the full exit rates $q_i$, so it
+generates the chain killed when it leaves $F$. For $A\subseteq F$ the principal
+submatrix of $-Q_F$ on $A$ is $-Q_A$. The switching graph $G_F$ has an edge $i\to j$
+whenever $i,j\in F$, $i\ne j$ and $q_{ij}>0$. We call $F$ irreducible if $G_F$ is
+strongly connected, so every singleton is irreducible. We call $F$ admissible if
+some path of positive probability has support exactly $F$, and we say that $F$
+satisfies (H) if it is irreducible and $\mu(F)>0$.
+
+\emph{Perron roots and fields.} A square matrix $B$ is Metzler if its off-diagonal
+entries are nonnegative, and its Perron root $\varrho(B)$ is then its largest real
+eigenvalue. If $B$ is irreducible, $\varrho(B)$ is simple and has positive left and
+right eigenvectors~\cite{bermanplemmons1994}. For a face $F$ and a field
+$v\in\R^d$ put
+\[
+ \lambda_F(v)=-\varrho\bigl(Q_F+\operatorname{diag}v_F\bigr),\qquad
+ \Phi_{\tau,v}(F)=|F|-1+\tau\lambda_F(v),
+\]
+and $\lambda_F=\lambda_F(0)$, $\Phi_\tau=\Phi_{\tau,0}$. The number $\lambda_F$ is the
+exit rate of $F$, and $\lambda_{\{i\}}(v)=q_i-v_i$. If $F$ is reducible, $Q_F$ is block
+triangular in an order of its strongly connected components, and $\lambda_F(v)$ is the
+least of the numbers $\lambda_C(v)$ over these components $C$. The shift rule
+$\lambda_F(v+c\ones)=\lambda_F(v)-c$ holds for every face. If $F$ is irreducible, let
+$r$ and $l$ be positive right and left Perron vectors of $Q_F+\operatorname{diag}v_F$
+with $l\cdot r=1$, and put $\alpha^*_F(v)=l\circ r$, the quasi-ergodic law of $F$ under
+the field. Here $x\circ y$ is the entrywise product. Finally
+\[
+ M_F(T,v)=\max\bigl\{P_N(n)\,e^{Tv\cdot n/N}:\supp n=F\bigr\},\qquad\max\emptyset=0 .
+\]
+
+\emph{The functional.} For $\alpha\in\Delta_F$ let
+\[
+ J_F(\alpha)=\sup_{u\in(0,\infty)^F}\sum_{i\in F}\alpha_i\Bigl(-\frac{(Q_Fu)_i}{u_i}\Bigr),
+\]
+the Donsker and Varadhan functional of the chain killed on leaving $F$~\cite{dv1975},
+and $J_V$ that of the whole chain.
+
+\subsection{Imported results}\label{sec:imported}
+
+\begin{lemma}[admissible faces, {\cite[Lemma~2.2(b),~(c) and Theorem~4.2(ii)]{paperC1}}]\label{lem:admissible}
+\textup{(a)} An irreducible face is admissible if and only if $\mu(F)>0$. So
+\textup{(H)} holds exactly for the irreducible admissible faces, and if $\mu$ has full
+support every irreducible face is admissible. \textup{(b)} If $Q$ has symmetric
+support, that is $q_{ij}>0$ exactly when $q_{ji}>0$, then every admissible face is
+irreducible. \textup{(c)} A face that is not admissible carries no composition of
+positive probability.
+\end{lemma}
+
+\begin{lemma}[monotonicity in the face, {\cite[Lemma~3.2]{paperC1}}]\label{lem:face-monotone}
+If $F\subsetneq G$ are faces and $G$ is irreducible, then
+$\lambda_G(v)<\lambda_F(v)$ for every field $v$. In particular every proper face of an
+irreducible chain has $\lambda_F>\lambda_V=0$.
+\end{lemma}
+
+\begin{proposition}[the variational formula, {\cite[Propositions~3.1 and~3.4]{paperC1}}]\label{prop:variational}
+Let $F$ be a face.
+\begin{enumerate}[(a)]
+\item $J_F=J_V$ on $\Delta_F$.
+\item If $F$ is irreducible, then for every $v\in\R^F$
+\[
+ \lambda_F(v)=\min_{\alpha\in\Delta_F}\bigl(J_F(\alpha)-v\cdot\alpha\bigr),
+\]
+with the minimum attained only at $\alpha^*_F(v)$. So $-\lambda_F$ is the Legendre
+transform of $J_F$, and $J_F$ is the Legendre transform of $v\mapsto-\lambda_F(v)$ on
+$\Delta_F^\circ$. The map $v\mapsto\lambda_F(v)$ is concave and real-analytic, with
+$\partial\lambda_F/\partial v_i=-\alpha^*_F(v)_i$.
+\item If $F$ is irreducible, $Q_F$ is reversible with respect to some $\nu\in(0,\infty)^F$ and
+$S_F=D_{\sqrt\nu}(-Q_F)D_{\sqrt\nu}^{-1}$, then
+$\lambda_F(v)=\lambda_{\min}(S_F-\operatorname{diag}v_F)$.
+\end{enumerate}
+\end{proposition}
+
+The derivative in (b) is the first-order perturbation $\partial\varrho/\partial v_i=l_ir_i$
+of a simple eigenvalue, with $l\cdot r=1$.
+
+\begin{lemma}[a uniform upper bound, {\cite[Lemma~4.1 and~(6)]{paperC1}}]\label{lem:upper}
+Let $F$ be irreducible with $k=|F|\ge2$ and let $\mathcal V\subset\R^d$ be compact. There
+is $C$, depending on $Q$, $\mu$ and $\mathcal V$, such that for all $v\in\mathcal V$, all
+$N\ge2$ and $T>0$ with $Tq_{\max}\le N/2$, and every $n$ with $\supp n=F$,
+\begin{equation}\label{eq:upper-field}
+ P_N(n)\,e^{Tv\cdot n/N}\le C\Bigl(\frac TN\Bigr)^{k-1}e^{-T\lambda_F(v)+CT^2/N}.
+\end{equation}
+The bound comes from the Perron tilt $\theta=q-v-\lambda_F(v)\ones$, and it holds for a path
+of any length in place of $N$, hence for each block of a path.
+\end{lemma}
+
+For a singleton the only composition is $Ne_i$, so by~\cite[(1)]{paperC1}
+\begin{equation}\label{eq:vertexmax}
+ M_{\{i\}}(T,v)=\mu_i\Bigl(1-\frac{Tq_i}N\Bigr)^{N-1}e^{Tv_i}
+ =\mu_ie^{-T(q_i-v_i)}\bigl(1+O(T^2/N)\bigr).
+\end{equation}
+
+\begin{theorem}[first-order selection with a field, {\cite[Theorem~4.2 and Remark~4.3]{paperC1}}]\label{thm:first}
+Fix $Q$, $\mu$ and a field $v$.
+\begin{enumerate}[(a)]
+\item Let $F$ be admissible with $k=|F|$. There are $\kappa$, $T_0$ and $N_0$ such that
+$\log M_F(T,v)\le-(k-1)L+(k-1)\log T-T\lambda_F(v)+\kappa$ for $N\ge N_0$ and
+$T_0\le T\le N^{1/3}$. If $F$ is not admissible, then $M_F(T,v)=0$.
+\item Let $T=\tau L$ with $\tau>0$ fixed, and let $v=0$ or let $\mu$ have full support. Then
+$\log\max_nP_N(n)e^{Tv\cdot n/N}=-L\min_F\Phi_{\tau,v}(F)+O(\log L)$ over the
+admissible faces, and for large $N$ the support of every maximizer minimizes
+$\Phi_{\tau,v}$ among them.
+\end{enumerate}
+\end{theorem}
+
+Part (a) is the upper bound of~\cite[Theorem~4.2(ii)]{paperC1} with a field, and (b)
+is~\cite[Theorem~4.2(iii)]{paperC1} and its field form. Every use of (b) is at a fixed $\tau$.
+
+\begin{definition}[tilt and constant, {\cite[Definition~5.1]{paperC1}}]\label{def:tilt}
+Let $F$ be irreducible with $k=|F|\ge2$. For $\alpha\in\Delta_F^\circ$ the supremum
+defining $J_F(\alpha)$ is attained at a vector $r_\alpha$, unique up to a factor. Put
+$l_\alpha=\alpha/r_\alpha$ entrywise, and let $\widehat Q_\alpha$ be the generator on $F$
+with off-diagonal entries $q_{ij}r_{\alpha,j}/r_{\alpha,i}$, whose stationary law is
+$\alpha$. With $D=\operatorname{diag}\alpha$ let
+$Z_\alpha=(\ones\alpha^\top-\widehat Q_\alpha)^{-1}-\ones\alpha^\top$ and
+$\Gamma_\alpha=DZ_\alpha+Z_\alpha^\top D$, and let $\Sigma_\alpha$ be $\Gamma_\alpha$ with
+the row and column of one state deleted. Then
+\[
+ C_F(\alpha)=\frac{(\mu\cdot r_\alpha)(l_\alpha\cdot\ones)}{(2\pi)^{(k-1)/2}\sqrt{\det\Sigma_\alpha}},
+ \qquad K_F(v)=C_F\bigl(\alpha^*_F(v)\bigr),
+\]
+and $K_{\{i\}}(v)=\mu_i$.
+\end{definition}
+
+\begin{proposition}[the constant, {\cite[Proposition~5.2 and the text after Definition~5.1]{paperC1}}]\label{prop:constant}
+Let $F$ be irreducible with $k\ge2$. The maps $\alpha\mapsto r_\alpha$ (normalized),
+$l_\alpha$, $\Sigma_\alpha$, $J_F(\alpha)$ and $C_F(\alpha)$ are real-analytic on
+$\Delta_F^\circ$, $\Sigma_\alpha$ is positive definite, and $\nabla^2J_F(\alpha)=\Sigma_\alpha^{-1}$ in the
+coordinates $(\alpha_2,\dots,\alpha_k)$. At $\alpha=\alpha^*_F(v)$ the vector $r_\alpha$ is
+a multiple of the right Perron vector of $Q_F+\operatorname{diag}v_F$, and $l_\alpha$ is
+the matching multiple of the left one.
+\end{proposition}
+
+\begin{theorem}[face maxima with a field, {\cite[Theorem~5.7]{paperC1}}]\label{thm:facemax}
+Let $F$ satisfy \textup{(H)} with $k=|F|$, and let $\mathcal V\subset\R^d$ be compact.
+Uniformly for $v\in\mathcal V$ and $1\le T\le N^{1/3}$,
+\begin{equation}\label{eq:logmax}
+ \log M_F(T,v)=-(k-1)L+\tfrac{k-1}2\log T+\log K_F(v)-T\lambda_F(v)
+ +O_{\mathcal V}\Bigl(\frac1T+\frac{T^2}N\Bigr),
+\end{equation}
+and for $k\ge2$ every maximizer $\hat n$ satisfies $\hat n/N=\alpha^*_F(v)+O_{\mathcal V}(1/T)$.
+\end{theorem}
+
+\begin{theorem}[the stratified local law, {\cite[Theorem~5.6]{paperC1}}]\label{thm:stratified}
+For every face $F$ satisfying \textup{(H)} with $k=|F|\ge2$ and every compact
+$\mathcal K\subset\Delta_F^\circ$, uniformly for $\supp n=F$, $n/N\in\mathcal K$ and
+$1\le T\le N^{1/3}$,
+\[
+ -\log P_N(n)=(k-1)L+T\,J_V(n/N)-\frac{k-1}2\log T-\log C_F(n/N)
+ +O_{\mathcal K}\Bigl(\frac1T+\frac{T^2}N\Bigr).
+\]
+\end{theorem}
+
+Theorem~\ref{thm:stratified} is why $J_V$ is the logarithmic scale of the law on single
+compositions. Section~\ref{sec:finite-horizon} also imports the uniform version of
+Theorem~\ref{thm:facemax} on a compact class of reversible chains,
+Proposition~\ref{prop:uniform-facemax}, which is stated there because it needs the design of
+Section~\ref{sec:reversible}. Nothing else from~\cite{paperC1} enters.

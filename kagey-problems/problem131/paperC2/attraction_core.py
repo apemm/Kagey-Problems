@@ -205,7 +205,7 @@ def analyze(V, rev=None):
     crit = {}
     for f in faces:
         crit[f] = all(D[f] > D[g] for k in range(1, len(f)) for g in combinations(f, k))
-    # Theorem D consistency: D(F) = max D(C) over cycles C subset F
+    # depth identity (thm:depth): D(F) = max D(C) over cycles C subset F
     thmD = all(D[f] == max(D[c] for c in faces if cyc[c] and set(c) <= set(f)) for f in faces)
     singles = all(D[(i,)] == min(V[i][j] for j in range(n) if j != i) for i in range(n))
     out = {"D": D, "cycle": cyc, "criterion": crit, "thmD": thmD, "singleton_formula": singles}

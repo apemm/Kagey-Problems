@@ -1,4 +1,4 @@
-"""Checks for Section 2 and Appendix A of the note "Exact ties in coin-turning walks".
+"""Checks for Section 2 and Appendix A of the note "When the end ties the center in a coin-turning walk".
 
 Model. X_1 is +1 or -1 with probability 1/2. For k >= 2 the walk switches
 direction with probability c/k (0 < c < 2) and keeps it otherwise. A_n is the
@@ -220,7 +220,7 @@ def main():
     ap.add_argument('--full', action='store_true', help='also run the heavy cells')
     args = ap.parse_args()
     T0 = time.time()
-    print('Exact ties in coin-turning walks, Section 2 and Appendix A' + (' (full run)' if args.full else ' (quick run)'))
+    print('When the end ties the center in a coin-turning walk, Section 2 and Appendix A' + (' (full run)' if args.full else ' (quick run)'))
 
     # ------------------------------------------------ exact laws at c = 1
     print('\nThe law at c = 1 (Propositions 2.3(a) and 2.6(a)), exact rationals', flush=True)

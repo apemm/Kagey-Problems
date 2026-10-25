@@ -1,6 +1,6 @@
 # S4: exact ties in coin-turning walks
 
-A short note, "Exact ties in coin-turning walks", meant for arXiv. The walk switches direction at
+A short note, "When the end ties the center in a coin-turning walk", meant for arXiv. The walk switches direction at
 step k >= 2 with probability c/k (the coin-turning walk of Engländer and Volkov with p_k = c/k),
 and its version with d states moves at step k >= 2 to each other state with probability
 theta/(k+d-2). The note asks when the end bin ties with the other bins of the number of right
@@ -82,11 +82,8 @@ Remark 2.5, the figure and the computed numbers are not formalized.
 
 ## Title
 
-The title stays "Exact ties in coin-turning walks" for now. The referee (October 24, 2026) noted
-that it fits the first half but not the fair-start crossing, which is not an exact tie and is the
-main analytic result, and that the d-state chain is not a walk. The two suggestions were these.
-
-- "Uniform laws, exact ties and a crossing expansion for coin-turning walks" (describes the whole
-  note)
-- "When the end ties the center in a coin-turning walk" (leads with the crossing and ties the note
-  to Problem 131)
+The title is "When the end ties the center in a coin-turning walk", chosen on October 24, 2026. The
+earlier title, "Exact ties in coin-turning walks", fit the first half but not the fair-start crossing,
+which is not an exact tie and is the main analytic result. The other suggestion, "Uniform laws, exact
+ties and a crossing expansion for coin-turning walks", led with the uniform law, which the note
+credits to earlier work, so it was not used.

@@ -1,32 +1,32 @@
-"""Checks of the reconstruction section, Section `sec:reconstruction`.
+"""Checks of Sections `sec:minors`, `sec:modal` and `sec:reversible` of Paper C2.
 
   1. Symbolic identities (sympy). The pair-entry time t_ij of Theorem
-     `thm:reversible-reconstruction` is the tie 1 + tau lambda_ij(v) = tau (q_i - H) of the pair with
-     its singleton, and w_ij = (H - Delta_ij)/t_ij + 1/t_ij^2 inverts it. On three states,
+     `thm:reversible-reconstruction` is the tie 1 + tau lambda_ij(v) = tau (q_i - xi_bar) of the pair with
+     its singleton, and w_ij = s_ij/t_ij + 1/t_ij^2 with s_ij = xi_bar - x_i + x_j inverts it. On three states,
      det(-Q) = q1 q2 q3 - q1 w23 - q2 w13 - q3 w12 - c - c', c + c' and c c' in terms of the minors,
      the 2x2 principal minors q_i q_j - w_ij, and the time reversal Q* has the exit rates and the
-     products of Q and the oriented product c' (Theorem `thm:nonreversible`(e)). The family Q_ell of
+     products of Q and the oriented product c' (Remark `rem:three-states`). The family Q_ell of
      Remark `rem:partial-data` has zero row sums, detailed balance with nu = (1, 4/ell^2, 1),
      w12 = w23 = 1 and w13 = (ell - 2/ell)^2.
   2. The reversible design on 40 random reversible chains with 4 states on random connected graphs,
      with the bounds R and b of the design taken up to 30 percent loose. Lemma `lem:suppression`:
-     on a grid of 13 x 13 points (delta, tau) for every ordered pair, every face that leaves {i,j}
+     on a grid of 13 x 13 points (xi, tau) for every ordered pair, every face that leaves {i,j}
      scores at least 3/4 above the best face inside {i,j}. The singleton boundaries, found by
      bisection on the strict winner, give q_i - q_1; the pair boundaries give t_ij; and the
      reconstruction of part (c) returns Q and pi.
   3. Theorem `thm:stability`. The product error |w_hat - w| <= (88/9) eps on 200000 random cells and
      at the extreme corner; phi_min >= phi_* and lambda_2(S) >= g_* on 2000 random reversible chains
      with 2 to 6 states; and on a fixed chain with 4 states the reconstruction from coordinates
-     perturbed by at most eps is a reversible generator on G with ||Q_hat - Q||/(R eps) bounded
+     perturbed by at most eps is a reversible generator on the graph E with ||Q_hat - Q||/(R eps) bounded
      as eps runs from 1e-2 to 1e-5.
-  4. Cut-transposes (Theorem `thm:nonreversible`(d)). On random irreducible generators with 4 to 6
+  4. Cut-transposes (Theorem `thm:nonreversible`(c)). On random irreducible generators with 4 to 6
      states and rank-one blocks across a cut, the cut-transpose of -Q has the principal minors of
      -Q, is irreducible, and its generator point (the normalization (N)) is a generator with the
      same minors; we count how often it is neither Q nor Q*. The example with 4 states printed
      after the proof is checked in exact rational arithmetic.
   5. The gradient of the Perron branch: d lambda_F / d v_i = -(l o r)_i and
      det(I - 1 beta'^T) = beta_1 (proof of Lemma `lem:perron-branch`), by central differences.
-  6. Fibers on three states (Theorem `thm:nonreversible`(e)): for 200 random generators with all
+  6. Fibers on three states (Theorem `thm:nonreversible`(d)): for 200 random generators with all
      rates positive, every generator with the same principal minors, found by a scan and root
      bracketing of the one remaining equation, is Q or Q*, and both occur; and for the irreducible
      generators among 30 random ones with some zero rates, every irreducible solution that a
@@ -61,10 +61,10 @@ def part1():
     lam_pair = ((a + c) - sp.sqrt((c - a) ** 2 + 4 * w)) / 2
     ok(sp.simplify((a - lam_pair) * (c - lam_pair) - w) == 0,
        "lambda_ij(v) is the smaller eigenvalue of [[q_i - H, -sqrt w], [-sqrt w, q_j]]")
-    Delta = qi - qj
-    t = (sp.sqrt((H - Delta) ** 2 + 4 * w) + H - Delta) / (2 * w)
+    s = H - (qi - qj)
+    t = (sp.sqrt(s ** 2 + 4 * w) + s) / (2 * w)
     ok(sp.simplify(1 + t * lam_pair - t * (qi - H)) == 0, "the pair and the singleton tie at tau = t_ij")
-    ok(sp.simplify((H - Delta) / t + 1 / t ** 2 - w) == 0, "w_ij = (H - Delta_ij)/t_ij + 1/t_ij^2")
+    ok(sp.simplify(s / t + 1 / t ** 2 - w) == 0, "w_ij = s_ij/t_ij + 1/t_ij^2 with s_ij = xi_bar - x_i + x_j")
     q12, q13, q21, q23, q31, q32 = sp.symbols('q12 q13 q21 q23 q31 q32', positive=True)
     Q = sp.Matrix([[-(q12 + q13), q12, q13], [q21, -(q21 + q23), q23], [q31, q32, -(q31 + q32)]])
     q1, q2, q3 = -Q[0, 0], -Q[1, 1], -Q[2, 2]
@@ -313,7 +313,7 @@ def part3():
             assert all((abs(Qh[i, j]) > 0) == ((i, j) in E or (j, i) in E) for i in range(d) for j in range(d) if i != j)
             m = max(m, np.linalg.norm(Qh - Qn, 2) / eps)
         ms.append(m)
-    ok(max(ms) < 2 * min(ms), "perturbed reconstructions are reversible generators on G, with "
+    ok(max(ms) < 2 * min(ms), "perturbed reconstructions are reversible generators on the graph E, with "
                               "max ||Q_hat - Q||/(R eps) = " + ", ".join(f"{m:.2f}" for m in ms)
        + " for eps = 1e-2 .. 1e-5")
 
