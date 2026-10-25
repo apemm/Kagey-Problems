@@ -7,10 +7,11 @@
     Guerin, Laulin and Raschel, Theorem 1.4) against M and V.
  2. Step 1 of the proof of Theorem 4.2 (label thm:two-modes), as an illustration: the Gaussian
     smoothing V_N of the second differences of P_N has at most the pattern (+,-,+,-,+) on a grid.
- 3. Remark 4.4 (label rem:modes-threshold), numerical and not a proof input: the value of a at
+ 3. Remark 4.5 (label rem:modes-threshold), numerical and not a proof input: the value of a at
     which the second difference of the exact finite law at the center changes sign, for
     N = 1000, 4000 and 8000 (the paper quotes 0.6563 and 0.6592 for N = 4000 and 8000).
- 4. Remark 4.4, numerical: the sign of g_a''(0) for the limit law on the grid a = 0.55..0.85,
+ 4. Theorem 4.4 (label thm:threshold), a numerical cross-check that is not part of its
+    proof: the sign of g_a''(0) for the limit law on the grid a = 0.55..0.85,
     computed from the moments by the cosine series in ball arithmetic (python-flint), and the
     change of sign a_c = 0.66881.
 The output is written to data/verify_modes_output.txt after a header line with the sha256 of this
@@ -171,7 +172,7 @@ def center_curv(N, a):
 
 
 def part3():
-    emit('3. Remark 4.4: the finite-N center threshold (numerical)')
+    emit('3. Remark 4.5: the finite-N center threshold (numerical)')
     vals = {}
     for N in (1000, 4000, 8000):
         t0 = time.time()
@@ -186,8 +187,8 @@ def part3():
         vals[N] = (lo + hi) / 2
         check(f'N = {N}: D_N(N/2) < 0 at a = 0.6 and > 0 at a = 0.7, sign change bracketed', ok,
               f'a = {vals[N]:.6f}  [{time.time() - t0:.1f}s]')
-    check('N = 4000 rounds to 0.6563 (Remark 4.4)', round(vals[4000], 4) == 0.6563, f'{vals[4000]:.6f}')
-    check('N = 8000 rounds to 0.6592 (Remark 4.4)', round(vals[8000], 4) == 0.6592, f'{vals[8000]:.6f}')
+    check('N = 4000 rounds to 0.6563 (Remark 4.5)', round(vals[4000], 4) == 0.6563, f'{vals[4000]:.6f}')
+    check('N = 8000 rounds to 0.6592 (Remark 4.5)', round(vals[8000], 4) == 0.6592, f'{vals[8000]:.6f}')
     check('the values increase with N', vals[1000] < vals[4000] < vals[8000])
     emit()
 
@@ -237,7 +238,7 @@ def params(a):
 
 
 def part4():
-    emit('4. Remark 4.4: the sign of g_a\'\'(0) for the limit law (numerical)')
+    emit('4. Theorem 4.4, cross-check: the sign of g_a\'\'(0) for the limit law (numerical)')
     signs = {}
     t0 = time.time()
     ok_all = True
@@ -266,7 +267,7 @@ def part4():
         else:
             hi = mid
     ac = (lo + hi) / 2
-    check('bisection: a_c = 0.66881 (Remark 4.4)', abs(ac - 0.66881) < 5e-6, f'a_c = {ac:.7f}')
+    check('bisection: a_c = 0.66881 (inside the bracket of Theorem 4.4)', abs(ac - 0.66881) < 5e-6, f'a_c = {ac:.7f}')
     emit()
 
 

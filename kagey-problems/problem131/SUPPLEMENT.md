@@ -162,10 +162,14 @@ on the complete graph (Proposition 4.15(iv)) is computed by hand in Appendix B, 
 
 ## Paper D: the elephant random walk
 
-The command `python -B verify_all.py --paper d` runs `paperD/verify_all.py`, which runs 5 scripts
+The command `python -B verify_all.py --paper d` runs `paperD/verify_all.py`, which runs 6 scripts
 (`verify_elephant_crossing.py`, `verify_elephant_shape.py`, `verify_elephant_odd.py`,
-`certify_elephant.py` and, since October 25, 2026, `verify_elephant_modes.py`) and takes about 4
-minutes. The quick run of October 25 is `paperD/data/verify_output_2026-10-25.txt`. With `--full` it runs larger cases in its first 2 scripts. A script that finds a failed
+`certify_elephant.py` and, since October 25, 2026, `verify_elephant_modes.py` and
+`certify_threshold.py` in its mode `quick`) and takes about 6
+minutes. The quick run of October 25 is `paperD/data/verify_output_2026-10-25.txt`, and the quick run
+with `certify_threshold.py` is `paperD/data/verify_output_2026-10-25_threshold.txt`. With `--full` it runs larger cases in its first 2 scripts and the whole threshold certificate
+(`certify_threshold.py full`, about 30 minutes in 9 parallel processes, which rewrites the records
+`paperD/data/threshold_*.txt`). A script that finds a failed
 check exits with an error, and the runner then names it and exits with an error too. The runner
 does not run `certify_convex.py` (about an hour for 10 <= N <= 2000) or `certify_center.py` (about
 half an hour), so run them by hand as `python -B certify_convex.py 10 2000` and
@@ -193,18 +197,22 @@ The statement numbers in this section are those of the build of October 17, 2026
 removed Lemma 3.7 (the rounding error of a double-precision computation) and Theorem 3.15 (the
 window around the center), and `lean/PaperD/MAP.md` lists the numbers that moved. A later build of
 the same day moved the second order, the tail and the proof of parts (b) to (d) of the proposition
-on odd N to the further results of the arXiv version (`paperD/problem131_arxiv.tex`, Sections S1 to S5, with numbers S1.1 and so on). The
+on odd N to the further results of the arXiv version (`paperD/problem131_arxiv.tex`, now Sections S1 to S6, with numbers S1.1 and so on). The
 numbers here are those of that later build, and `lean/PaperD/MAP.md` lists them too. On October 25,
 2026 the convexity window between the humps (the propositions called 3.24 and 3.26 below, the
 conjecture 3.14 and the remark 3.27) moved to Section S5 of the arXiv version, and Section 4.2
 gained Theorems 4.2 and 4.3 on the modes of the fixed-memory limit law. `lean/PaperD/MAP.md`
 gives the numbers of October 25. The journal proofs now use computation only for Theorem 2.6(b),
-Proposition 3.7 and Lemma 3.10. Theorems 4.2 and 4.3 use none.
+Proposition 3.7 and Lemma 3.10. Theorems 4.2 and 4.3 use none. A second revision of October 25
+added Theorem 4.4 (`thm:threshold`), which locates the change between the two cases of Theorem
+4.2 and rests on the certificate `paperD/certify_threshold.py`, with Appendix G and Section S6 of
+the arXiv version. Remark 4.4 became Remark 4.5.
 
-The proofs use computation in 3 places, which take the first 5 rows below. Some constants are values
+The proofs use computation in 4 places, which take the first 6 rows below. Some constants are values
 of explicit sums and integrals, Lemma 3.10 uses ball arithmetic, and the ball-arithmetic enclosure
 of the crossing and of the law for 10 <= N <= 2000 proves Propositions 3.24 and 3.26 and, for even
-10 <= N < 1688, Proposition 3.7. The other rows are numbers quoted outside the proofs.
+10 <= N < 1688, Proposition 3.7. Theorem 4.4 rests on the threshold certificate. The other rows
+are numbers quoted outside the proofs.
 
 | Result that rests on computation | Script | The 2 methods |
 | --- | --- | --- |
@@ -213,6 +221,7 @@ of the crossing and of the law for 10 <= N <= 2000 proves Propositions 3.24 and 
 | Lemma 3.10, the mode lambda_L of the Landau density and f_L'' near it | `certify_elephant.py` (needs python-flint), and without certification `verify_elephant_shape.py` | Ball arithmetic with rigorous error bounds, with enclosures of f_L' at 4 points and of f_L'' on 2 intervals. The uncertified check uses a real integral and Fourier inversion. Lean proves enclosures of the same quantities by an integration that its kernel checks (`lean/PaperD/U6_Cert.lean`), so the Arb run is an independent check. |
 | Proposition 3.24, convexity between the humps for every 10 <= N <= 2000 | `certify_convex.py` (needs python-flint), and without certification `verify_elephant_shape.py` for N <= 600 | Ball arithmetic. For each N the crossing is enclosed and the law is run with that enclosure. For every possible mode the second difference is certified positive between the humps directly, and the 2 inequalities that Theorem 3.19 needs are certified as well. The uncertified check is in double precision. |
 | Proposition 3.26, the center is the unique interior minimum for every even 10 <= N <= 2000 | `certify_center.py` (needs python-flint) | Ball arithmetic, with the enclosures of `certify_convex.py`. The hypothesis 2m*+1 <= N/2 of Lemma 3.22 holds for every possible mode, for all 996 even N, and with Proposition 3.24 the lemma applies. The direct test P_N(a) > C_N for every other interior a also succeeds for all of them. |
+| Theorem 4.4, the threshold between 1 mode and 2 modes of the fair-start limit law | `certify_threshold.py` (needs python-flint), with `threshold_taylor.py`, `threshold_hankel.py` and `threshold_pointwise.py` | Ball arithmetic throughout. On 48 intervals covering [1/2, 0.6712], Taylor models in a with Cauchy remainders and the self-improving tail bound of Lemma S6.4 enclose g_a''(0) uniformly, in the scaled variable on [1/2, 0.668]. On 115 boxes covering [0.6705, 1] a Hankel form of the even moments is negative (Lemma G.1). Mode `check` verifies that the 9 records join into this cover. The pointwise enclosure of `threshold_pointwise.py` and the float grid of `verify_elephant_modes.py` agree with it. |
 | Conjecture 3.14, checked for 10 <= N <= 600 and on the grid N = 50, 100, ..., 12800 (and 25600 with `--full`) | `verify_elephant_shape.py` | The law from the minority-count chain and from the law of A_N directly. |
 | The numbers in Remarks 3.12 and 3.27, and in Remark S1.3 of the arXiv version | `verify_elephant_crossing.py`, `verify_elephant_shape.py` and `verify_elephant_odd.py` | For Remark S1.3 the Taylor coefficients from 2 dynamic programs (the second at N = 51200 only with `--full`), and the limit from its closed form and from a series. For Remark 3.12 the minority-count chain and the full law of A_N where a law is computed. For Remark 3.27 one method only, the Landau density by quadrature in mpmath. |
 
@@ -223,8 +232,9 @@ of the crossing and of the law for 10 <= N <= 2000 proves Propositions 3.24 and 
 | `verify_elephant_odd.py` | Proposition 3.25, whose parts (b) to (d) are proved in Section S3 of the arXiv version, and Remark 3.27 (about 10 seconds). The identity of Proposition 3.25(a) in exact rational arithmetic for 6 odd N and in double precision for 4 more, the crossing for odd N against the root g_N, the constants of part (c) at eps = 2/N, and the half-maximum and inflection points of the Landau density quoted in Remark 3.27. |
 | `certify_elephant.py` | Proposition 3.7 for N = 2, 4, 6 and 8, Lemma 3.10 and the series in Theorem 2.6(b) (about a minute). The exact ratios C_N/E_N at eps = 2/(N+2) for N = 2, 4, 6 and 8, the ball-arithmetic enclosures for the Landau density, and the ball-arithmetic enclosure of the series. As a supplementary check it also keeps the double-precision recursion for 8 <= N < 1688 with checks that its integers are exact and that nothing underflows, the same bits from plain Python floats, and exact integer arithmetic for 20 values of N (this was the proof through the rounding lemma, which the paper removed on October 17, 2026). |
 | `certify_convex.py` | Proposition 3.24 in ball arithmetic for the range of N given on the command line (not run by `verify_all.py`). |
+| `certify_threshold.py` | Theorem 4.4 (new in the second revision of October 25, 2026). Mode `full` runs the 9 certificate runs in parallel (about 2.7 hours of CPU time) and writes `paperD/data/threshold_*.txt`, each with the sha256 of the 4 scripts and the software versions in its first line and the exit status in its last, and its own log `paperD/data/certify_threshold_output.txt`. Mode `check` verifies the hashes, the exit status and that the records join into the cover of (1/2, 1). Mode `quick` (about 3 minutes, run by `verify_all.py`) adds 3 short reruns compared with the records. |
 | `certify_center.py` | Proposition 3.26, and Proposition 3.7 for even 10 <= N < 1688, in ball arithmetic for the even N in the range given on the command line (not run by `verify_all.py`). It imports `certify_convex.py`. |
-| `verify_elephant_modes.py` | Section 4.2 (new on October 25, 2026; about a minute). The constants in the proof of Theorem 4.3 at a = 39/40 in 50-digit arithmetic, and the exact mean and variance of the limit against their bounds on a grid of a in [39/40, 1). As an illustration of Step 1 of the proof of Theorem 4.2, the sign pattern of the Gaussian smoothing of the second differences at N = 2000. The numbers of Remark 4.4, which are not proof inputs: the value of a at which the second difference at the center of the exact finite law changes sign for N = 1000, 4000 and 8000 (double precision, bisection), and the sign of g_a''(0) for the limit law on the grid a = 0.55 to 0.85 and its change of sign a_c = 0.66881, from the moment recursion and the cosine series in ball arithmetic. Output in `paperD/data/verify_modes_output.txt`, with the sha256 of the script and the software versions in its first line. |
+| `verify_elephant_modes.py` | Section 4.2 (new on October 25, 2026; about a minute). The constants in the proof of Theorem 4.3 at a = 39/40 in 50-digit arithmetic, and the exact mean and variance of the limit against their bounds on a grid of a in [39/40, 1). As an illustration of Step 1 of the proof of Theorem 4.2, the sign pattern of the Gaussian smoothing of the second differences at N = 2000. The numbers of Remark 4.5, which are not proof inputs: the value of a at which the second difference at the center of the exact finite law changes sign for N = 1000, 4000 and 8000 (double precision, bisection). As a cross-check of Theorem 4.4 that is not part of its proof, the sign of g_a''(0) for the limit law on the grid a = 0.55 to 0.85 and its change of sign a_c = 0.66881, from the moment recursion and the cosine series in ball arithmetic. Output in `paperD/data/verify_modes_output.txt`, with the sha256 of the script and the software versions in its first line. |
 
 ## Paper E: the planar persistent walk
 

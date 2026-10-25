@@ -251,25 +251,63 @@ $\frac52F(\frac25)\le0.433<0.492\le\frac47F(\frac74)$, a contradiction. So
 Theorem~\ref{thm:two-modes} proves the case $q=\frac12$ of the conjecture of
 Gu\'erin, Laulin, Raschel and Simon for every $a$, up to flat pieces. A mode
 may be an interval on which $g_a$ is constant, and we do not rule this out.
-Theorem~\ref{thm:two-modes-near-one} shows that the bimodal case occurs. So
-if the conjecture holds, then $q(a)>0$ for $a\ge\frac{39}{40}$. The threshold
-in $a$ for $q=\frac12$ remains open, as does the conjecture for $q\ne\frac12$.
-For $q\ne\frac12$ the finite law $qf_N(N-k)+(1-q)f_N(k)$ is not symmetric, and
-we have no analogue of Theorem~\ref{thm:five-blocks} for it.
+Theorem~\ref{thm:two-modes-near-one} shows that the bimodal case occurs, and
+its proof uses no computer. The next theorem locates the change from case (a)
+to case (b). Its proof is computer-assisted, and it covers the rest of
+$(\frac12,1)$.
 
-\begin{remark}[the threshold, numerically]\label{rem:modes-threshold}
-The numbers in this remark are computed and are not used in any proof. A
-strict local maximum at $0$ excludes case (b), and a strict local minimum
-excludes case (a). So $g_a''(0)<0$ gives case (a) and $g_a''(0)>0$ gives case
-(b). We computed $g_a''(0)=-\frac1\pi\int_0^\infty t^2\,\E\cos(t\mathcal L_a)\,dt$
-from the moment recursion of~\cite[Theorem~1.4]{glr2026}, summing the cosine
-series in ball arithmetic and cutting the integral at a finite $t$. On the grid
-$a=0.55,0.56,\dots,0.85$ the result is negative for $a\le0.66$ and positive
-for $a\ge0.67$, and bisection puts the change of sign at $a_c\approx0.66881$.
-So numerically $\mathcal L^\circ_a$ is unimodal for $a<a_c$ and has two modes
-for $a>a_c$. On the exact finite law, $D_N(N/2)$ changes sign from negative to
-positive at $a\approx0.6563$ for $N=4000$ and at $a\approx0.6592$ for
-$N=8000$. We do not prove that $g_a''(0)$ changes sign only once, and we do not
-claim the value of $a_c$ as a result. The script
-\texttt{verify\_elephant\_modes.py} reproduces these numbers.
+\begin{theorem}[the threshold, computer-assisted]\label{thm:threshold}
+Put
+\[
+ \begin{aligned}
+ z_-&=1838418790980431/2748779069440000=0.66881286001459775\ldots,\\
+ z_+&=45960469774511/68719476736000=0.66881286001460103\ldots,
+ \end{aligned}
+\]
+so that $z_+-z_-<3.3\cdot10^{-15}$.
+\begin{enumerate}[(a)]
+\item For every $a\in(\frac12,z_-]$ we have $g_a''(0)<0$, and case (a) of
+Theorem~\ref{thm:two-modes} holds. So $g_a$ is unimodal.
+\item For every $a\in[z_+,1)$ case (b) holds, so $g_a$ has exactly two modes.
+For $a\in[z_+,0.6712]$ also $g_a''(0)>0$.
+\item The function $a\mapsto g_a''(0)$ has a zero in $(z_-,z_+)$, and every
+zero in $(\frac12,0.6712]$ lies there.
+\end{enumerate}
+\end{theorem}
+
+So the supremum of the $a$ with case (a) and the infimum of the $a$ with
+case (b) both lie in $[z_-,z_+]$. This settles the case $q=\frac12$ of the conjecture, up to flat modal
+intervals, with the threshold located to within $3.3\cdot10^{-15}$. If the
+conjecture holds, then $q(a)=0$ for $a\le z_-$ and $q(a)>0$ for $a\ge z_+$. We
+do not prove that $g_a''(0)$ has only one zero in $(z_-,z_+)$, and we do not
+know which case holds there. Theorem~\ref{thm:two-modes-near-one} gives part
+(b) for $a\ge\frac{39}{40}$ without a computer, and the certificate covers the
+rest. The conjecture for $q\ne\frac12$ remains open. For $q\ne\frac12$ the
+finite law $qf_N(N-k)+(1-q)f_N(k)$ is not symmetric, and we have no analogue
+of Theorem~\ref{thm:five-blocks} for it.
+
+\begin{remark}[the method]\label{rem:modes-threshold}
+Appendix~\ref{app:threshold} gives the proof, and we sketch it here. The
+moments of $\mathcal L_a$ follow from the exact recursion
+of~\cite[Theorem~1.4]{glr2026}, and $\mathcal L_a$ has a finite moment
+generating function~\cite[Corollary~2.11]{glr2026}. So its characteristic
+function $\phi_a$ is the sum of its moment series, and
+$g_a''(0)=-\frac1\pi\int_0^\infty t^2\operatorname{Re}\phi_a(t)\,dt$. The
+fixed-point equation of~\cite[Theorem~1.1]{glr2026} gives an inequality for
+$\lvert\phi_a\rvert$ that improves itself. From bounds on a finite range of
+$t$ it yields $\lvert\phi_a(t)\rvert\le Ct^{-4}$ for all larger $t$, with an
+explicit $C$ that holds for a whole interval of $a$. The moment series cancels
+terms of size about $10^{60}$, so we cannot sum it with $a$ as an interval.
+Instead we expand in $a$ around the centre of each interval, in ball
+arithmetic at that exact point, and bound the remainder by Cauchy's estimate
+on a complex disc. This is a Taylor model in $a$. Near $a=\frac12$ we use the
+scaled variable $\mathcal L_a/(\E\mathcal L_a^2)^{1/2}$, whose moments are
+analytic at $a=\frac12$, so the cover reaches $\frac12$. For $a\ge0.6705$ we
+rule out case (a) by moments alone. In case (a), Khinchine's theorem would make
+$(2j+1)\E\mathcal L_a^{2j}$ a moment sequence of a positive variable, and a
+Hankel quadratic form of order at most $56$ is negative instead. The
+certificate takes about 2.7 hours of CPU time. On the exact finite law,
+$D_N(N/2)$ changes sign at $a\approx0.6563$ for $N=4000$ and at
+$a\approx0.6592$ for $N=8000$. These two numbers are computed and are not
+used in any proof.
 \end{remark}
