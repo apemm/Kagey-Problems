@@ -1,5 +1,42 @@
 # Statements of Paper C1 cited by the companion paper (paperC2)
 
+Change of October 25, 2026 (revision after the JTP referee report, audit 23): no exported number
+moved, and every label below is kept. This was checked against the `.aux` of both builds. Two
+statements are new and not exported, Corollary 5.10 (`cor:mode-changes`, every change of the mode
+when two sizes of face compete at each switch) and Proposition 6.10 (`prop:layer-cubic`, the cubic
+term of the facet layer). Proposition 5.12 (`prop:uniform-facemax`) now holds for an arbitrary
+compact set V of fields, so the design set of paperC2 (fields v^{ij}(delta) with abs(delta) <= 3R,
+U = 8R/b^2 and bar v = 4R + 4UR^2) is one admissible choice and is no longer named in C1. Its
+notation changed. The graph is now written \mathcal G, the edge bound b is now w_* (so
+sqrt(w_ij) >= w_* on every edge, and q_ij >= w_*^2/R), and the matrix S is now S_V. paperC2 should
+apply the proposition with its own design set as V and rename the edge bound when it quotes the
+constants. Theorem 4.2(i) is unchanged and its proof now cites Theorem 5.6.
+
+Change of October 24, 2026 (deep edit for JTP, audit 20): the title is now "Occupation counts
+of rarely switching Markov chains: stratified local laws, support selection and the boundary
+layer". Removed: the tree formula on a general face, Proposition 5.11 (`prop:forest`) with
+Section 5.4 (`sec:forest`), and its appendix lemma, Lemma A.5 (`lem:forest`) with Appendix A.7
+(`app:forest`). Example 5.14 now computes its constant directly and is Example 5.11
+(`ex:threecycle`), with its statement unchanged. The weighted Cayley formula and the complete
+face moved to Section 7 (now Lemma 7.1 and Example 7.2). Section 7.1 (Proposition 7.1
+`prop:pair`, Corollary 7.2 `cor:paperA`), Remark 7.4 (`rem:outcomes`), Section 6.7
+(`sec:layer-vertex`, its text now in Section 8) and Figure 4 (`fig:cycles`) were cut.
+Renumbered exports: `prop:uniform-facemax` is now Proposition 5.12 (was 5.15), `sec:uniform-class`
+is now Section 5.5 (was 5.6), and `eq:A-radii` is now (28) in the article build (was 29, still
+A3 in the Springer build). Every other number in the tables below is unchanged. All were
+checked against the `.aux` of both builds after this edit.
+
+Change of October 24, 2026 (cuts before arXiv): the weak field and the start were cut. Removed
+Proposition 5.15 (`prop:weakfield`) with Section 5.6 (`sec:weakfield`), Section 7.3 (`sec:start`)
+with Corollary 7.9 (`cor:start-crossings`) and Example 7.10 (`ex:K3-start`), and Section 7.4
+(`sec:complete-field`) with Corollaries 7.11 and 7.12 (`cor:weakfield-phases`,
+`cor:weakfield-full-hierarchy`) and equations (24) and (25). None of them was exported.
+Renumbered: `prop:uniform-facemax` is now Proposition 5.15 (was 5.16), `sec:uniform-class` is
+now Section 5.6 (was 5.7), and the equations after (23) moved down by 2, so `eq:A-radii` is now
+(29) in the article build (still A3 in the Springer build). Sections 6, 7.1, 7.2 and 8 and the
+appendices kept their statement numbers. Every number below was checked against the `.aux` of
+both builds after the cuts.
+
 Change of October 24, 2026 (second pass): the local law of the weighted facet chain is now proved
 for every facet (Theorem 6.6, `thm:L-facet`), so the facet theorem `thm:layer` (now Theorem 6.9)
 holds for every face with at least two states. New statements: Theorem 6.6, Lemma 6.8
@@ -10,7 +47,7 @@ against the `.aux` of both builds after this pass and is unchanged, including eq
 is still A3 in the Springer build.
 
 Paper C1 is `problem131_chains.tex` in this folder, "Occupation counts of rarely switching Markov
-chains: stratified local laws, crossings and the boundary layer". The numbers below are those of
+chains: stratified local laws, support selection and the boundary layer". The numbers below are those of
 the build of October 24, 2026. Statement numbers are the same in the article build and in the
 Springer build (`problem131_chains_sn.tex`). Equation numbers are the same too, except in the
 appendices, where the Springer build numbers equations by appendix (A1, A2, ...). The numbers
@@ -31,7 +68,7 @@ stated in the joint paper, with the same labels.
 |---|---|---|
 | `thm:first` | Theorem 4.2 | First-order face selection. (i) log P_N(n) = -(k-1)L - T J_F(n/N) + O(1 + log T) on compacts of a face with (H). (ii) Upper and lower bounds on log M_F for every admissible face, with k* the least size of a component of least exit rate. (iii) For T = tau L the mode lies on a face that minimizes Phi_tau, for every start. (iv) It sits at alpha*_F + O(1/L) when the minimizers are irreducible. |
 | `rem:first-field` | Remark 4.3 | The field form of Theorem 4.2. M_F(T,v), Phi_{tau,v}, the upper bound of (ii) with lambda_F(v_F), and (iii), (iv) for the weighted law when mu has full support. |
-| `prop:uniform-facemax` | Proposition 5.16 | Uniform face maxima on the class C of reversible generators on a fixed graph G with norm bound R and edge bound b, starts with min mu_i >= mu_*, and the compact set V of design fields v^{ij}(delta), abs(delta) <= 3R. (a) M_F(T,v) <= C (T/N)^{k-1} exp(-T lambda_F(v) + C T^2/N) for TR <= N/2. (b) M_F(T,v) = K_F(v) N^{-(k-1)} T^{(k-1)/2} exp(-T lambda_F(v)) (1+E), abs(E) <= C(1/T + T^2/N), with C^{-1} <= K_F(v) <= C, for N >= N_0 and 1 <= T <= N^{1/3}. Constants depend only on G, R, b, mu_*. Singletons exactly. The class, the starts and the fields are defined in the paragraph before it (Section 5.7, `sec:uniform-class`), with U = 8R/b^2 and bar v = 4R + 4UR^2 as in the design of paperC2. |
+| `prop:uniform-facemax` | Proposition 5.12 | Uniform face maxima on the class C of reversible generators on a fixed graph \mathcal G with norm bound ||S_V||_2 <= R and edge bound sqrt(w_ij) >= w_*, starts with min mu_i >= mu_*, and an arbitrary compact set V of fields (since October 25, 2026; before, the design fields of paperC2). (a) M_F(T,v) <= C (T/N)^{k-1} exp(-T lambda_F(v) + C T^2/N) for TR <= N/2. (b) M_F(T,v) = K_F(v) N^{-(k-1)} T^{(k-1)/2} exp(-T lambda_F(v)) (1+E), abs(E) <= C(1/T + T^2/N), with C^{-1} <= K_F(v) <= C, for N >= N_0 and 1 <= T <= N^{1/3}. Constants depend only on \mathcal G, R, w_*, mu_* and V. Singletons exactly. The class, the starts and the fields are defined in the paragraph before it (Section 5.5, `sec:uniform-class`). |
 | `def:tilt` | Definition 5.1 | The tilt r_alpha, theta(alpha), l_alpha, the tilted generator, Z_alpha, Gamma_alpha, Sigma_alpha, C_F(alpha) and K_F = C_F(alpha*_F). The text after it defines K_F(v) = C_F(alpha*_F(v)) and K_{i}(v) = mu_i. |
 
 ## Other statements of C1 that the joint paper's Sections 9 and 10 cite
@@ -62,7 +99,7 @@ Taken from the references in `sec_reconstruction.tex` and `sec_lowtemp.tex` of t
 | `thm:crossing` | Theorem 5.8 | The crossing equation and the explicit form of the crossing. |
 | `app:torus` | Appendix A | Proofs of the local law and the first-order bounds. |
 | `lem:torus` | Lemma A.2 | Torus representation. |
-| `eq:A-radii` | equation (31), Springer build (A3) | The radius condition. |
+| `eq:A-radii` | equation (28), Springer build (A3) | The radius condition. |
 | `lem:laplace` | Lemma B.1 | Laplace integrals with a parameter. |
 
 ## Not in C1
@@ -89,7 +126,8 @@ Not cited by paperC2 at present, listed so that a citation can be added without 
 | `lem:L-two` | Lemma 6.7 | Closed forms for facets with one or two states. |
 | `lem:critical` | Lemma 6.8 | The complex critical point of the torus phase. |
 | `thm:layer` | Theorem 6.9 | The facet layer, for every irreducible face with at least two states. |
+| `prop:layer-cubic` | Proposition 6.10 | The cubic term varkappa_beta x^(3/2)/S^(1/2) of log f_F/(f_G B_beta), zero for reversible Q, and -49/(64 sqrt(omega_beta)) for the non-reversible cycle on three states (added October 25, 2026). |
+| `cor:mode-changes` | Corollary 5.10 | Every change of the mode for T in [aL, bL] up to O(1/L), when no third point of the hull lies on an edge (added October 25, 2026). |
 | `lem:torus-complex` | Lemma A.3 | Torus representation with complex weights and a general end vector. |
 | `lem:local-general` | Lemma A.4 | Local law with general nonnegative start and end vectors. |
-| `lem:forest` | Lemma A.5 | Forest formula for the covariance. |
 | `lem:laplace-complex` | Lemma B.3 | Laplace lemma with a complex symmetric Hessian with positive definite real part. |

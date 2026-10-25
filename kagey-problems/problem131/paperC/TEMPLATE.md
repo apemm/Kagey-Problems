@@ -83,9 +83,11 @@ this works on TeX Live 2026 in Git Bash):
 
     TEXINPUTS=".;../common/sn-jnl;" pdflatex -interaction=nonstopmode problem131_chains_sn.tex
 
-Run it three times. After the general facet theorem of October 24, both builds have no errors, no
-undefined references, no multiply defined labels and no overfull boxes. The sn version has 77
-pages and the article version 70 (72 and 65 after the line edit, 74 and 67 right after the split, 104 and 95 for
+Run it three times. After the referee revision of October 25 (audit 24), both builds have no
+errors, no undefined references, no multiply defined labels and no overfull boxes. The sn version
+has 67 pages and the article version 60 (65 and 59 after the deep edit of October 24, 72 and 67
+after the cuts before arXiv, 77 and 70 after the
+general facet theorem, 72 and 65 after the line edit, 74 and 67 right after the split, 104 and 95 for
 the joint paper, and 109 and 100 before the revision of that day). `\graphicspath` is `{figures/}` only,
 since every figure is in `figures/`.
 
@@ -101,8 +103,8 @@ zip must be flat with respect to the class:
    `sec_verify.tex`, the four appendices
    `app_torus.tex`, `app_laplace.tex`, `app_complete.tex`, `app_vertex.tex`, and
    `bib_switching.tex`.
-3. The folder `figures/` with `fig_complete_envelope.pdf`, `fig_simplex.pdf` and
-   `fig_cycles.pdf` (the fourth figure is TikZ).
+3. The folder `figures/` with `fig_complete_envelope.pdf` and `fig_simplex.pdf` (the third
+   figure is TikZ).
 4. Test once without `TEXINPUTS`, in a scratch copy of the zip contents:
    `pdflatex -interaction=nonstopmode problem131_chains_sn.tex`, twice.
 

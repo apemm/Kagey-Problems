@@ -2,13 +2,16 @@
 
 The checks of the identifiability results (reconstruction, finite horizons, low temperature)
 moved with those results to the companion paper in ../paperC2 on October 24, 2026.
+The script verify_weak_field.py was removed the same day, with the weak field that it checked.
+On October 25, 2026 verify_forest.py was retired from this list. It checks the tree formula for
+K_F on a general face, which the paper no longer states, and it stays in the folder for the record.
 
 Each script runs in its own process as `<python> -I <script>`, in this folder. Its output goes to
 data/<script>_output.txt, behind a header with the sha256 of the script, the date, the versions of
 Python and of the packages, the run time and the exit status. A script passes when every
 assertion in it holds, which is when it exits with status 0.
 
-The default runs in about nine minutes on a laptop. With --full
+The default runs in about four minutes on a laptop. With --full
 the three older scripts that have heavy cells also run those (the directed 3-cycle at N = 10^8,
 the whole 4-cycle in the continuum, C_5 at N = 72, the path P_4 at N = 150 and 300, the census of
 graphs on 6 states, and the cells at N = 160 of the first-order section), which adds a few hours,
@@ -16,7 +19,7 @@ and verify_layer_general.py adds S = 64.
 Needs numpy, scipy, sympy and mpmath. Run:  py -I verify_all.py [--full] [--only NAME ...]
 
 The script verify_sticky_fisher.py in this folder checks the notes ../S3_sticky_note and
-../S1_endpoint_information_note, not this paper, and is not run here.
+../S1_endpoint_information_note, not this paper, and is not run here. Neither is verify_forest.py.
 """
 import argparse
 import datetime
@@ -32,9 +35,7 @@ SCRIPTS = (
     # (script, takes --full, what it checks)
     ('verify_first_order.py', True, 'the exact law, the continuum density, the rate and first-order selection'),
     ('verify_second_order.py', True, 'the local law, the constants, the crossings and the tie windows'),
-    ('verify_forest.py', False, 'the tree formula for K_F on every face'),
     ('verify_rate_flows.py', False, 'the rate through flows'),
-    ('verify_weak_field.py', False, 'a weak field'),
     ('verify_examples.py', True, 'the winners on complete graphs, cycles and small graphs, finite-N modes'),
     ('verify_layer.py', False, 'the boundary layer'),
     ('verify_layer_general.py', True, 'the weighted facet chain on two facets with four states'),

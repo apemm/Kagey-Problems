@@ -1,4 +1,4 @@
-"""Checks for Sections 2, 4, 5 and 7 of Paper C (the second-order theory).
+"""Checks for Sections 2, 5 and 7 of Paper C1 (the second-order theory).
 
 The model is the chain X_1..X_N with transition matrix I + hQ, h = T/N, and
 P_N(n) is the probability that the composition of the N visits is n. For a face
@@ -17,10 +17,13 @@ form of Lemma A.2, which we also code.
 For small N both are compared with a direct dynamic program of the chain and
 with an enumeration of all words.
 
-The constants K_F and C_F(alpha) of Definition 4.1 are also computed in 2 ways.
+The constants K_F and C_F(alpha) of Definition 5.1 are also computed in 2 ways.
 Method A uses the Perron vectors, the tilted generator and its fundamental
 matrix in double precision. Method B uses 30-digit arithmetic, the Perron root
 Lambda(theta) of Q_F + diag(theta) and its Hessian, which is Sigma.
+
+The check of the edge window on K_3 with the start (1/2, 1/2, 0) was removed on
+October 24, 2026, when that example was cut from the paper.
 
 Run with python -B verify_second_order.py, or add --full for the second crossing
 of the directed 3-cycle at N = 10^8 and the continuum value of c_F on the whole
@@ -567,7 +570,7 @@ def check_engines():
 
 
 def check_constants():
-    print('\nProposition 4.2 and Corollaries 5.2, 5.3, 7.1: the constants', flush=True)
+    print('\nProposition 5.2 and Corollaries 5.3 and 7.3: the constants', flush=True)
     # Paper A
     Q2 = complete_Q(2)
     mu2 = np.array([0.5, 0.5])
@@ -576,7 +579,7 @@ def check_constants():
     check('Paper A: K_{1,2} = sqrt(2/pi), det Sigma = 1/4', abs(cA['K'] - sqrt(2 / pi)) < 1e-13 and abs(float(cB['K']) - sqrt(2 / pi)) < 1e-13
           and abs(cA['detS'] - 0.25) < 1e-13 and abs(float(cB['detS']) - 0.25) < 1e-13,
           f"K: A {cA['K']:.15f}, B {float(cB['K']):.15f}; det: A {cA['detS']:.15f}, B {float(cB['detS']):.15f}")
-    agree('c_0 = (1/2) log(pi/8) = b_2 = left end of the K_3 window', '-0.4673558',
+    agree('c_0 = (1/2) log(pi/8) = b_2 = a_2', '-0.4673558',
           {'closed': 0.5 * log(pi / 8), 'A: -log(K12/K1)': -log(cA['K'] / 0.5), 'B': -float(mp.log(cB['K'] / mp.mpf('0.5')))})
     # Paper B: complete graphs
     worst = 0.0
@@ -683,7 +686,7 @@ def check_constants():
         agree(f'Table 2, row C_d, k = {k}: lambda_k', pl, {'closed': lam(k), 'eigen': lam_num})
         agree(f'Table 2, row C_d, k = {k}: tau_k', pt, {'closed': 1 / dk, 'eigen': 1 / (lam(k - 1) - lam_num) if k > 1 else 1})
         agree(f'arcs of C_d, k = {k}: b_k (notes)', pb, {'closed': b_closed, 'numeric K': b_num})
-    # Proposition 4.2(a): det Sigma det Hess I = 1, at random points of non-reversible faces
+    # Proposition 5.2(a): det Sigma det Hess I = 1, at random points of non-reversible faces
     worst = 0.0
     QR = random_gen(7)
     for F in ([0, 1, 2], [0, 1, 2, 3]):
@@ -711,9 +714,9 @@ def check_constants():
                 return H
             H = (4 * hess(1e-4) - hess(2e-4)) / 3          # Richardson removes the e^2 error
             worst = max(worst, abs(cA['detS'] * np.linalg.det(H) - 1), abs(float(cB['detS']) / cA['detS'] - 1), abs(float(cB['K']) / cA['K'] - 1))
-    check('Proposition 4.2(a): det Sigma det Hess I = 1; methods A and B agree on C_F(alpha)', worst < 1e-6,
+    check('Proposition 5.2(a): det Sigma det Hess I = 1; methods A and B agree on C_F(alpha)', worst < 1e-6,
           f'max deviation {worst:.1e} at 4 random points of the seed-7 faces (finite differences)')
-    # Proposition 4.2(b): the tree formula on random reversible faces
+    # Proposition 5.2(b): the tree formula on random reversible faces
     worst = 0.0
     for k in range(3, 7):
         nu = rng.uniform(0.5, 2, k)
@@ -737,11 +740,11 @@ def check_constants():
         dSt = 2 ** (k - 1) * np.prod(al) ** 2 / tau
         It = float(q @ al) - c.sum()
         worst = max(worst, abs(cA['K'] / Ct - 1), abs(cA['detS'] / dSt - 1), abs(cA['I'] - It))
-    check('Proposition 4.2(b): tree formula on random reversible faces, k = 3..6', worst < 1e-9, f'max error {worst:.1e}')
+    check('Proposition 5.2(b): tree formula on random reversible faces, k = 3..6', worst < 1e-9, f'max error {worst:.1e}')
 
 
 def check_pair_identity():
-    print('\nProposition 5.1: the exact pair identity (exact rational arithmetic)', flush=True)
+    print('\nThe exact pair identity (former Proposition 7.1, not stated in the paper; exact rational arithmetic)', flush=True)
     bad = 0
     total = 0
     # 4-cycle, pair {0,1}, and a random symmetric pair with equal exit rates inside a 4-state chain
@@ -781,7 +784,7 @@ def check_pair_identity():
 
 
 def check_local_law():
-    print('\nTheorem 4.4 and Lemma 4.5: the local law and the lattice', flush=True)
+    print('\nTheorem 5.4 and Lemma 5.5: the local law and the lattice', flush=True)
     QR = random_gen(7)
     mu = np.ones(4) / 4
     worst40 = 0.0
@@ -802,10 +805,10 @@ def check_local_law():
             lfA = rf.logf(alv, T2)
             lfB = torus_logf(A, q, m, alv, T2, K)
             worstAB = max(worstAB, abs(lfA - lfB))
-    check('Theorem 4.4: local law accurate to 1% at T = 40 (faces with 2, 3, 4 states)', worst40 < 0.01,
+    check('Theorem 5.4: local law accurate to 1% at T = 40 (faces with 2, 3, 4 states)', worst40 < 0.01,
           f'max |f_T / prediction - 1| = {worst40:.4f}')
     check('f_T by the run sum = f_T by the torus', worstAB < 1e-10, f'max |log difference| = {worstAB:.1e}')
-    # Lemma 4.5
+    # Lemma 5.5
     A, q, m = face(QR, [0, 1, 2], mu)
     c = consts_A(A, q, m)
     rf = RunFace(A, q, m, mmax=120)
@@ -814,7 +817,7 @@ def check_local_law():
     n[1] += N - n.sum()
     rA = math.exp(rf.logP(n, T / N) - (rf.logf(n / N, T) - 2 * log(N)))
     rB = math.exp(torus_logP_conv(A, q, m, n, T / N) - (torus_logf(A, q, m, n / N, T, 96) - 2 * log(N)))
-    check('Lemma 4.5: P_N(n) / (N^-2 f_T(n/N)) = 1 - 2.7e-5 at T = 10, N = 10^6', abs((1 - rA) - 2.7e-5) < 0.05e-5 and abs(rA - rB) < 1e-9,
+    check('Lemma 5.5: P_N(n) / (N^-2 f_T(n/N)) = 1 - 2.7e-5 at T = 10, N = 10^6', abs((1 - rA) - 2.7e-5) < 0.05e-5 and abs(rA - rB) < 1e-9,
           f'A {rA:.12f}, B {rB:.12f}')
 
 
@@ -830,7 +833,7 @@ def arc_max(N, h, method, rfarc=None):
 
 
 def check_crossing():
-    print('\nTheorem 4.7 and Section 7: the crossing of a vertex and the 3-arc on the 4-cycle', flush=True)
+    print('\nTheorem 5.8: crossings on the 4-cycle', flush=True)
     rfarc = RunFace([[0, 1, 0], [1, 0, 1], [0, 1, 0]], [2, 2, 2], [.25] * 3, mmax=110)
     K = log((4 + 3 * sqrt(2)) / pi)
     vertex = lambda N, h: log(0.25) + (N - 1) * math.log1p(-2 * h)
@@ -856,10 +859,20 @@ def check_crossing():
         agree('the explicit form gives', '42.2059', {'explicit': Texp})
         agree('T_N (Khat - log(K_F/K_G)) at N = 10^14', '-0.23335', {k: (TA if k == 'A' else TB) * (v - K) for k, v in Kh.items()})
         agree('c_arc3 - c_vertex = 5 sqrt2/4 - 2', '-0.2322', {'closed': 5 * sqrt(2) / 4 - 2})
+        # the two crossings that carry the mode (the text after Theorem 5.8): K = 1/4 for a vertex,
+        # 1/sqrt(2 pi) for a pair and 8/pi^(3/2) for the cycle (Corollary 5.3), and the gap between
+        # the explicit form of Theorem 5.8(iii) and the root of the crossing equation without error
+        Kv, Kp, Kc = 0.25, 1 / sqrt(2 * pi), 8 / pi ** 1.5
+        for what, D, dl, KF, KG, text in (('a vertex and a pair', 1, 1.0, Kp, Kv, '0.035'),
+                                          ('a pair and the cycle', 2, 1.0, Kc, Kp, '0.087')):
+            root = brentq(lambda T: dl * T + D / 2 * log(T) - (D * L - log(KF / KG)), 1, 10 * L)
+            expl = D / dl * (L - 0.5 * log(L) - 0.5 * log(D / dl) - log(KF / KG) / D)
+            check(f'{what} at N = 10^14: the explicit form is off by {text}', round(abs(expl - root), 3) == float(text),
+                  f'root {root:.5f}, explicit {expl:.5f}, |difference| {abs(expl - root):.5f}')
 
 
 def check_threecycle(full):
-    print('\nProposition 4.14: the directed 3-cycle', flush=True)
+    print('\nExample 5.11: the directed 3-cycle', flush=True)
 
     def gen(b):
         Q = np.array([[0, b, 0], [0, 0, 1.0], [1.0, 0, 0]], float)
@@ -957,7 +970,7 @@ def check_threecycle(full):
 
 
 def wick_c_euler(A, mu, alpha, rho):
-    """c(alpha*) of Proposition 4.15 (the next Laplace term) with z-derivatives (Euler operators), exact in sympy."""
+    """c(alpha*) of the former Proposition 4.15, not stated in the paper (the next Laplace term) with z-derivatives (Euler operators), exact in sympy."""
     k = len(alpha)
     d = k - 1
     zs = sp.symbols(f'z1:{k}')
@@ -1051,7 +1064,7 @@ def gamma_term(adj, q, mu, astar):
 
 
 def check_third_order(full):
-    print('\nProposition 4.15 and Section 7: the next-order coefficients c_F (exact)', flush=True)
+    print('\nThe next-order coefficients c_F (not stated in the paper; exact)', flush=True)
     R = sp.Rational
     s2 = sp.sqrt(2)
     q4 = R(1, 4)
@@ -1099,87 +1112,13 @@ def check_third_order(full):
         check(f'continuum c_F for the {name}', abs(r2[-1] - want) < 2e-5, f'Richardson values {np.round(r2, 6)}, exact {want:.6f}')
 
 
-def check_K3_window():
-    print('\nExample 5.12: the edge window on K_3', flush=True)
-    t_ve = 0.5 * log(pi / 8)
-    Kfull = 3 ** 2.5 / (4 * pi)
-    t_ef = 0.5 * log(2 / pi) - log(Kfull)
-    # numeric lines from the constants of the 3 face types with mu = (1/2, 1/2, 0)
-    Q = complete_Q(3)
-    mu = np.array([0.5, 0.5, 0.0])
-    Kv = mu[0]
-    Ke = consts_A(*face(Q, [0, 1], mu))['K']
-    Kf = consts_A(*face(Q, [0, 1, 2], mu))['K']
-    tve_n = log(Ke / Kv)                     # log Kv - 2t = log Ke - t
-    tef_n = log(Ke / Kf)                     # log Ke - t = log Kf
-    agree('window left end (1/2) log(pi/8)', '-0.4673558', {'closed': t_ve, 'numeric K': -tve_n})
-    agree('window right end', '-0.4412978', {'closed': t_ef, 'numeric K': tef_n})
-    agree('window width', '0.0260580', {'closed': t_ef - t_ve, 'numeric K': tef_n + tve_n})
-    agree('criterion ratio 3^(5/2)/16', '0.97428', {'closed': 3 ** 2.5 / 16})
-    agree('criterion ratio, shorter form', '0.9743', {'closed': 3 ** 2.5 / 16})
-    agree('uniform start: 3^(5/2)/8 * 1/3', '0.6495', {'closed': 3 ** 2.5 / 24})
-    check('uniform start: (2/3)^2 < 0.6495, so no edge window', 4 / 9 < 3 ** 2.5 / 24, f'{4 / 9:.4f} < {3 ** 2.5 / 24:.4f}')
-    check('mu = (1/2,1/2,0) satisfies the criterion', 1.0 > 3 ** 2.5 / 8 * 0.5, f'1 > {3 ** 2.5 / 16:.5f}')
-    # exact face maxima at N = 10^20 (and 10^16, 10^18 with --full)
-    e01 = RunFace([[0, 1], [1, 0]], [2, 2], [0.5, 0.5], mmax=300)
-    fullA = RunFace(np.ones((3, 3)) - np.eye(3), [2, 2, 2], [0.5, 0.5, 0.0], mmax=120)
-    A3 = np.ones((3, 3)) - np.eye(3)
-
-    def h_of(N, t):
-        L = log(N)
-        u = (L - 0.5 * log(L) + t) / N
-        return u / (1 + 2 * u)
-
-    def vertex(N, h):
-        return log(0.5) + (N - 1) * math.log1p(-2 * h)
-
-    def edge(N, h, method):
-        n = [N / 2, N / 2]
-        if method == 'A':
-            return e01.logP(n, h)
-        return torus_logP([[0, 1], [1, 0]], [2.0, 2.0], [0.5, 0.5], n, h, M=256)
-
-    def fullmax(N, h, method):
-        if method == 'A':
-            f = lambda a: -fullA.logP([a, a, N - 2 * a], h)
-        else:
-            f = lambda a: -torus_logP(A3, [2.0] * 3, [0.5, 0.5, 0.0], [a, a, N - 2 * a], h, M=160)
-        return -minimize_scalar(f, bounds=(0.25 * N, 0.45 * N), method='bounded', options=dict(xatol=1e-8 * N)).fun
-
-    def that_ve(N):
-        L = log(N)
-        f = lambda t: (L - 0.5 * log(L) + t) + 0.5 * log(L - 0.5 * log(L) + t) - (L + 0.5 * log(pi / 8) + 1 / (8 * (L - 0.5 * log(L) + t)))
-        return brentq(f, -3, 2, xtol=1e-14)
-    # the ends of the window at finite N (the data of fig_window, which Paper C no longer includes); every N is cheap, so all run by default
-    printed = {6: ('-0.390915', '-0.369274', None), 8: ('-0.406371', '-0.383638', None), 10: ('-0.416276', '-0.392833', None),
-               12: ('-0.423230', '-0.399323', None), 14: ('-0.428404', '-0.404171', None), 16: ('-0.432415', '-0.407943', '0.02447'),
-               18: ('-0.435624', '-0.410967', '0.02466'), 20: ('-0.43825', '-0.41345', '0.02480')}
-    for e, (pl, pr, pw) in printed.items():
-        N = 10 ** e
-        res = {}
-        for mth in ('A', 'B'):
-            tve = brentq(lambda t: edge(N, h_of(N, t), mth) - vertex(N, h_of(N, t)), -1, 0, xtol=1e-10)
-            tef = brentq(lambda t: fullmax(N, h_of(N, t), mth) - edge(N, h_of(N, t), mth), -1, 0, xtol=1e-9)
-            res[mth] = (tve, tef)
-        agree(f'N = 10^{e}: left end of the window', pl, {m: v[0] for m, v in res.items()})
-        agree(f'N = 10^{e}: right end of the window', pr, {m: v[1] for m, v in res.items()})
-        if pw is None:
-            continue
-        agree(f'N = 10^{e}: width', pw, {m: v[1] - v[0] for m, v in res.items()})
-        th = that_ve(N)
-        diff = res['A'][0] - th
-        bound = 2e-5 if e == 20 else 3e-5
-        check(f'N = 10^{e}: the second-order equation gives the left end to {bound:.0e}', abs(diff) < bound,
-              f'root {th:.6f}, difference {diff:+.2e}')
-
-
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--full', action='store_true', help='also run the larger cells')
     args = parser.parse_args()
     t0 = time.time()
     for step in (check_engines, check_constants, check_pair_identity, check_local_law, check_crossing,
-                 lambda: check_threecycle(args.full), lambda: check_third_order(args.full), check_K3_window):
+                 lambda: check_threecycle(args.full), lambda: check_third_order(args.full)):
         t1 = time.time()
         step()
         print(f'  ({time.time() - t1:.0f} s)', flush=True)

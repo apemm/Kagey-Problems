@@ -1,4 +1,4 @@
-"""Checks for Sections 2 and 3 of Paper C (the exact law and first-order face selection).
+"""Checks for Sections 2 to 4 of Paper C1 (the exact law, the rate and first-order face selection).
 
 Lemma 2.3 (the run expansion) is checked in exact rational arithmetic against 2
 other exact computations: a list of all d^N words, and a forward dynamic program
@@ -6,13 +6,13 @@ of the chain. Lemma 2.4 is checked by integrating the continuum density over the
 simplex and comparing with the probability, from matrix exponentials, that the
 continuous-time chain stays in the face and visits all of its states.
 
-The rate I_F of Proposition 3.1 is computed in 2 ways. Method A maximizes over u
+The rate I_F (J_F in the paper, Proposition 3.3) is computed in 2 ways. Method A maximizes over u
 as in its definition (Newton's method on a concave function). Method B is the
 Legendre transform of the Perron root Lambda(theta) of Q_F + diag(theta),
 maximized over theta. The minimizer of I_F is found by a direct numerical
 minimization and compared with l_F o r_F.
 
-For Theorem 3.4 the winners come from the lower convex hull of the points
+For Theorem 4.4 the winners come from the lower convex hull of the points
 (lambda_F, |F|-1) (method A) and from minimizing the cost over all admissible
 faces on a fine grid of tau (method B). Lemma 2.2 is checked by listing the
 supports of all words of positive probability.
@@ -363,7 +363,7 @@ def check_admissible():
 
 
 def check_rate():
-    print('\nProposition 3.1: the rate on a face', flush=True)
+    print('\nProposition 3.3: the rate on a face', flush=True)
     Q = nr3()
     Fc = (0, 1, 2)
     s, r, l = perron(Q[np.ix_(Fc, Fc)])
@@ -469,7 +469,7 @@ def check_rate():
 
 
 def check_star():
-    print('\nSection 8: the zero set of the star', flush=True)
+    print('\nThe zero set of the star (not stated in the paper)', flush=True)
     for leaves, N in ((3, 7), (4, 7)):
         d = leaves + 1
         W = [[Fraction(0)] * d for _ in range(d)]
@@ -513,7 +513,7 @@ def hull_winners(lams):
 
 
 def check_hull():
-    print('\nTheorem 3.4 and the remark after it: the geometry of the winners', flush=True)
+    print('\nTheorem 4.4, Proposition 3.4 and Lemma 3.2: the geometry of the winners', flush=True)
     rng = np.random.default_rng(12)
     bad = 0
     total = 0
@@ -549,7 +549,7 @@ def check_hull():
             if sym or mu.min() > 0:                   # (c)
                 bad += any(len(components(Q, F)) > 1 for F in winners)
     check('(a), (b), (c): winners = hull vertices, monotone in tau, irreducible under (a) or (b)', bad == 0, f'{total} (chain, tau) pairs, {bad} exceptions')
-    # the remark after Theorem 3.4 (symmetric Q)
+    # symmetric Q: Proposition 3.4 (Rayleigh form) and Lemma 3.2
     bad = 0
     for trial in range(60):
         d = int(rng.integers(3, 7))
@@ -573,7 +573,7 @@ def check_hull():
                     bad += x @ (-Q[np.ix_(F, F)]) @ x < lamF - 1e-12
         mu_s = [min(lam_face(Q, list(F)) for F in itertools.combinations(range(d), s)) for s in range(1, d + 1)]
         bad += not all(a > b for a, b in zip(mu_s, mu_s[1:])) or abs(mu_s[-1]) > 1e-10
-    check('after Theorem 3.4: lambda_F is the least Dirichlet form, and mu_1 > mu_2 > ... > mu_d = 0', bad == 0, f'{bad} exceptions in 60 random symmetric generators')
+    check('symmetric Q: lambda_F is the least Dirichlet form, and mu_1 > mu_2 > ... > mu_d = 0', bad == 0, f'{bad} exceptions in 60 random symmetric generators')
 
 
 def check_face_order(full):

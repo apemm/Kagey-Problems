@@ -1,4 +1,4 @@
-"""Numerical checks of the boundary layer, Section `sec:boundary-layer` (Section `sec:layer-numerics`).
+"""Checks of the boundary layer, Section `sec:boundary-layer` of Paper C1.
 
 Three chains with three states, the facet G = {1,2} of the face F = {1,2,3}, the state i = 3
 and the uniform start: the path 1-2-3 with unit rates, a reversible chain with stationary weights
@@ -15,15 +15,20 @@ nu = (1,2,4), and the non-reversible cycle q12 = q23 = q31 = 2, q21 = q32 = q13 
      B (1 + c_1 rho I_0/I_1) of Theorem `thm:layer`(c), for T = 10 to 320 and x from 0.01/T to T/4.
   G. The generalized kernel (the contour integral of the leading large-S form of f_G^(z)) against
      f_F/f_G, for the same cells.
-  H. On the lattice, the Laguerre kernel of Remark `rem:layer-discrete` with the two-term amplitude
-     against the exact law at n_3 = 2, N = 400 and 800, T = 6 and 10.
+  H. On the lattice, the Laguerre kernel (the discrete pair face of Section `sec:vertex`, not stated
+     for three states in the paper) with the two-term amplitude against the exact law at n_3 = 2,
+     N = 400 and 800, T = 6 and 10.
   I. Proposition `prop:layer-prefactor` for the reversible chain, as epsilon -> 0, and the
      inequality I_0(Z)/I_1(Z) <= 1 + 2/Z on a logarithmic grid of Z in [1e-6, 1e3].
   J. The non-reversible cycle at x = 0.05 T and T = 800, 1600, 3200, where the relative Bessel form
-     fails (the paragraph after Theorem `thm:layer`).
+     fails. The paper no longer quotes these ratios.
+  K. Proposition `prop:layer-cubic` for the non-reversible cycle, exactly in sympy: the derivatives
+     of J_G(beta,z) = 3 - 2z - sqrt((2+z)(1+4z)) at z = 0, omega_beta, gamma_beta - q_3, the
+     coefficient kappa_beta = -49/(64 sqrt(omega_beta)), and omega_beta and gamma_beta against the
+     tilt of part A. Then the logarithms of the ratios of part J against -kappa x^(3/2)/S^(1/2).
 
 Every check is an assertion. Nothing in the section is deduced from these numbers.
-Needs numpy and scipy. Run:  py -I verify_layer.py   (about two minutes)
+Needs numpy, scipy and sympy. Run:  py -I verify_layer.py   (about two minutes)
 """
 from math import exp, lgamma, log
 
@@ -391,6 +396,7 @@ def main():
     print("J. The non-reversible cycle at x = 0.05 T")
     Q = CHAINS["non-reversible cycle"]
     expected = {800.: 19.6, 1600.: 265., 3200.: 48268.}
+    logratio = {}
     for T, val in expected.items():
         x = 0.05 * T
         cst = layer_constants(Q, G, I, [0.5, 0.5])
@@ -407,10 +413,39 @@ def main():
         fG = fG_continuum(Q, mu, S / 2, S / 2, shift=S * cst["JG"])
         K = np.exp(-cst["gamma2"] * x) * np.sqrt(cst["ab"] * S / x) * ive(1, Zb)
         r = fF1 / (fG * K)
+        logratio[T] = float(np.log(r))
         bound = np.sqrt(x / T) * (1 + x)
         ok(abs(fF1 / fF2 - 1) < 1e-10 and cancel < 1e6 and abs(r / val - 1) < 0.01,
-           f"T = {T:.0f}: f_F/(f_G B) = {r:.4g} (text {val}), sqrt(x/T)(1+x) = {bound:.1f}, "
+           f"T = {T:.0f}: f_F/(f_G B) = {r:.4g} (recorded {val}), sqrt(x/T)(1+x) = {bound:.1f}, "
            f"log of the ratio {np.log(r):.1f}; 65536 and 131072 nodes agree, largest term / result = {cancel:.0f}")
+
+    print("K. The cubic term for the non-reversible cycle (Proposition prop:layer-cubic), exact")
+    import sympy as sp
+    z = sp.symbols('z')
+    JGz = 3 - 2 * z - sp.sqrt((2 + z) * (1 + 4 * z))
+    der = [sp.radsimp(sp.simplify(sp.diff(JGz, z, k).subs(z, 0))) for k in range(4)]
+    s2 = sp.sqrt(2)
+    want = [3 - s2, -2 - sp.Rational(9, 4) * s2, sp.Rational(49, 16) * s2, -sp.Rational(1323, 64) * s2]
+    ok(all(sp.simplify(a - b) == 0 for a, b in zip(der, want)),
+       f"derivatives of J_G(beta,z) at z = 0: {der[1]}, {der[2]}, {der[3]}")
+    om = -der[1]
+    gq = sp.radsimp(der[2] / (2 * om))
+    kap = der[3] / (6 * om ** sp.Rational(3, 2)) + gq ** 2 / sp.sqrt(om)
+    ok(sp.simplify(kap + sp.Rational(49, 64) / sp.sqrt(om)) == 0 and kap != 0,
+       f"kappa_beta = d^3J/(6 omega^(3/2)) + (gamma - q_3)^2/omega^(1/2) = -49/(64 sqrt(omega)) = {float(kap):.6f}, nonzero")
+    c = layer_constants(Q, G, I, [0.5, 0.5])
+    ok(abs(c["ab"] - float(om)) < 1e-10 and abs(c["gamma"] - 3.0 - float(gq)) < 1e-8,
+       f"omega = {float(om):.10f} and gamma - q_3 = {float(gq):.10f} agree with the tilt of part A")
+    worst = 0.0
+    for T, lr in logratio.items():
+        x = 0.05 * T
+        S = T - x
+        pred = -float(kap) * x ** 1.5 / S ** 0.5
+        scale = np.sqrt(x / T) + x * x / T
+        worst = max(worst, abs(lr - pred) / scale)
+        print(f"         T = {T:.0f}: log of the ratio {lr:.3f}, -kappa x^(3/2)/S^(1/2) = {pred:.3f}, "
+              f"difference / (sqrt(x/T) + x^2/T) = {abs(lr - pred) / scale:.3f}")
+    ok(worst < 0.25, f"the differences are at most {worst:.3f} (sqrt(x/T) + x^2/T), the form of the error in the proposition")
     print(f"verify_layer: all {CHECKS} checks passed")
 
 

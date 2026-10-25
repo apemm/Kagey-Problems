@@ -1,8 +1,8 @@
-"""Checks for the rate on a face written through flows (Remark `rem:flows` of the paper).
+"""Checks for the rate on a face (Proposition 3.3 of Paper C1) written through flows.
 
 Until the merge with Paper B in October 2026 this was Proposition 4.16 of the paper, with the
-worked Example 4.18 (a cycle with a drift). The merged paper keeps its content as Remark 4.12,
-with the minimizing flow cited from Bertini, Faggionato and Gabrielli and from Kim and Landim.
+worked Example 4.18 (a cycle with a drift). Paper C1 no longer states the flow form. It cites the flow rate of Bertini, Faggionato and
+Gabrielli and of Kim and Landim in its introduction.
 Part G checks the numbers of that example, which is no longer in the paper.
 
 For an irreducible face F and alpha in the open simplex, the rate is

@@ -1,16 +1,17 @@
-"""Analytic second-order envelopes for merged Paper C; no simulation or DP.
+"""Analytic second-order envelope on the complete graph for Paper C1; no simulation or DP.
 
 Run from anywhere: python -B make_complete_envelope.py
 Writes fig_complete_envelope.pdf, .png, and .json beside this script only.
 
 Sources in ../sec_complete.tex:
-  cor:paperB, thm:simplex-crossing(ii): log D_k and untilted limiting scores;
-  eq:weakfield-lines, cor:weakfield-full-hierarchy: field scores and crossings.
-All lines are limiting log *unnormalized* face maxima relative to V_N, at
-T = log N - (1/2) log log N + t, with d=4 and the uniform start. The right
-panel weights P_N(n) by exp(<xi,n>/N), xi_i=-(i-1)^2. A normalizing partition
-function subtracts one common term and does not affect which face wins.
+  cor:paperB, thm:simplex-crossing(ii): log D_k and the limiting scores;
+  cor:simplex-modes: the single jump from one state to all d.
+All lines are limiting log face maxima relative to V_N, at
+T = log N - (1/2) log log N + t, with d=4 and the uniform start.
 No finite-N probabilities or finite-N tie locations are plotted.
+
+Until October 24, 2026 the figure had a second panel with a weak field. That
+material was cut from the paper, and the panel with it.
 """
 
 from __future__ import annotations
@@ -32,9 +33,8 @@ import numpy as np
 HERE = Path(__file__).resolve().parent
 STEM = "fig_complete_envelope"
 D = 4
-H = 1.0
-# 400 PDF points: approximately the current EJP manuscript's text width.
-SIZE = (400 / 72, 3.08)
+# 280 PDF points wide, included at 0.62 of the text width.
+SIZE = (280 / 72, 3.3)
 COLORS = ("#222222", "#0072B2", "#D55E00", "#7A5195")
 STYLES = ("-", (0, (5, 2.5)), (0, (1, 1.8)), (0, (5, 2, 1, 2)))
 RC = {
@@ -80,7 +80,7 @@ def envelope_segments(intercepts, limits):
     return segments
 
 
-def verify(c, field_intercepts, segments):
+def verify(c, segments):
     """Check the plotted claims against independent forms of the formulas."""
     a = np.array([-c[k - 1] / (k - 1) for k in range(2, D + 1)])
     a_formula = np.array([
@@ -89,115 +89,83 @@ def verify(c, field_intercepts, segments):
     ])
     assert np.allclose(a, a_formula, rtol=0, atol=1e-14)
     assert np.all(np.diff(a) < 0)
-    xi = -H * np.arange(D, dtype=float) ** 2
-    assert np.allclose(field_intercepts, c + np.cumsum(xi) / np.arange(1, D + 1))
-    transitions = np.array([
-        c[k - 1] - c[k] + H * (4 * k - 1) / 6 for k in range(1, D)
-    ])
-    assert np.all(np.diff(transitions) > 0)
-    assert [s[2] for s in segments[0]] == [1, D]
-    assert [s[2] for s in segments[1]] == list(range(1, D + 1))
-    assert abs(segments[0][0][1] - a[-1]) < 1e-14
-    assert np.allclose([s[1] for s in segments[1][:-1]], transitions, atol=1e-14)
+    assert [s[2] for s in segments] == [1, D]
+    assert abs(segments[0][1] - a[-1]) < 1e-14
     probes = []
-    for intercepts, ss, fields in zip((c, field_intercepts), segments, (np.zeros(D), xi)):
-        for left, right, winner in ss:
-            t = (left + right) / 2
-            values = scores(t, intercepts)
-            gap = float(values[winner - 1] - np.max(np.delete(values, winner - 1)))
-            assert gap > 0
-            # Enumerate all 15 supports, independently of the top-k reduction.
-            all_support_scores = []
-            for k in range(1, D + 1):
-                for subset in combinations(range(D), k):
-                    value = (k - 1) * t + log_d(k) + np.mean(fields[list(subset)])
-                    all_support_scores.append((float(value), subset))
-            assert abs(max(s[0] for s in all_support_scores) - values[winner - 1]) < 1e-13
-            if np.any(fields):
-                winners = [s[1] for s in all_support_scores
-                           if abs(s[0] - values[winner - 1]) < 1e-12]
-                assert winners == [tuple(range(winner))]
-            probes.append({"xi": fields.tolist(), "t": t, "winning_k": winner,
-                           "score_gap_to_next_size": gap})
-    # Pairwise ties on the envelope are ties only in this limiting diagram.
-    for k, t in enumerate(transitions, start=1):
-        values = scores(t, field_intercepts)
-        assert abs(values[k] - values[k - 1]) < 1e-13
-        assert abs(values[k] - max(values)) < 1e-13
+    for left, right, winner in segments:
+        t = (left + right) / 2
+        values = scores(t, c)
+        gap = float(values[winner - 1] - np.max(np.delete(values, winner - 1)))
+        assert gap > 0
+        # Enumerate all 15 supports, independently of the reduction to sizes.
+        all_support_scores = []
+        for k in range(1, D + 1):
+            for subset in combinations(range(D), k):
+                all_support_scores.append(((k - 1) * t + log_d(k), subset))
+        assert abs(max(s[0] for s in all_support_scores) - values[winner - 1]) < 1e-13
+        probes.append({"t": t, "winning_k": winner, "score_gap_to_next_size": gap})
     return {
-        "dimension": D, "H": H, "field": xi.tolist(),
+        "dimension": D,
         "coordinate": "T = log N - (1/2) log log N + t",
-        "claim_scope": "limiting unnormalized log face maxima relative to V_N; not finite-N ties",
+        "claim_scope": "limiting log face maxima relative to V_N; not finite-N ties",
         "log_D_k": c.tolist(), "a_2_through_a_d": a.tolist(),
-        "untilted_transition": float(a[-1]),
-        "field_transitions": transitions.tolist(),
-        "untilted_intermediate_scores_at_a_d": scores(a[-1], c)[1:-1].tolist(),
+        "transition": float(a[-1]),
+        "intermediate_scores_at_a_d": scores(a[-1], c)[1:-1].tolist(),
         "visible_envelope_segments": segments, "interior_checks": probes,
-        "source_labels": ["cor:paperB", "thm:simplex-crossing", "cor:simplex-modes",
-                          "eq:weakfield-lines", "cor:weakfield-full-hierarchy"],
+        "source_labels": ["cor:paperB", "thm:simplex-crossing", "cor:simplex-modes"],
         "checks": "constants agree with a_k; all 15 supports checked at each phase probe; "
-                  "all limiting field crossings are on the upper envelope; expected size orders verified",
+                  "the envelope jumps from size 1 to size 4 at a_4",
         "output_size_inches": list(SIZE), "minimum_label_size_pt": 8.5,
     }
 
 
 def main():
     c = np.array([log_d(k) for k in range(1, D + 1)])
-    field_intercepts = c - H * np.arange(D) * (2 * np.arange(1, D + 1) - 1) / 6
-    limits = ((-1.15, -0.25), (-0.2, 1.05))
-    intercepts = (c, field_intercepts)
-    segments = [envelope_segments(b, lim) for b, lim in zip(intercepts, limits)]
-    evidence = verify(c, field_intercepts, segments)
+    lim = (-1.15, -0.25)
+    segments = envelope_segments(c, lim)
+    evidence = verify(c, segments)
 
     with plt.rc_context(RC):
-        fig, axes = plt.subplots(1, 2, figsize=SIZE)
-        fig.subplots_adjust(left=0.093, right=0.984, bottom=0.345, top=0.80, wspace=0.31)
-        titles = (r"(a) No field: $\xi=0$", r"(b) Weak field: $\xi_i=-(i-1)^2$")
-        for ax, b, lim, ss, title in zip(axes, intercepts, limits, segments, titles):
-            # The candidate scores are exactly straight lines.
-            for k, (color, style) in enumerate(zip(COLORS, STYLES), start=1):
-                ax.plot(lim, scores(lim, b)[:, k - 1], color=color, ls=style,
-                        lw=0.95, zorder=2)
-            for left, right, k in ss:
-                xx = np.array([left, right])
-                ax.plot(xx, scores(xx, b)[:, k - 1], color="black", lw=2.15,
-                        solid_capstyle="butt", zorder=3)
-            for j, (_, t, k) in enumerate(ss[:-1]):
-                value = float(scores(t, b)[k - 1])
-                ax.plot([t, t], [-1.8, value], color="0.5", lw=0.65,
-                        ls=(0, (2, 2.5)), zorder=0)
-                ax.plot(t, value, "o", mfc="white", mec="black", ms=3.4,
-                        mew=0.85, zorder=4)
-                label = r"$a_4$" if ax is axes[0] else rf"$t_{j + 1}$"
-                ax.annotate(label, (t, value), xytext=(-4, 7),
-                            textcoords="offset points", ha="right", va="bottom")
-            ax.set(xlim=lim, ylim=(-1.8, 2.25), yticks=[-1, 0, 1, 2], xlabel=r"$t$")
-            ax.set_title(title, loc="left", pad=9)
-            ax.tick_params(length=3, width=0.65, pad=3)
-            ax.axhline(0, color="0.88", lw=0.5, zorder=0)
-            # Separate strip makes the answer readable without distinguishing colors.
-            strip = ax.inset_axes([0, -0.43, 1, 0.12])
-            strip.set(xlim=lim, ylim=(0, 1))
-            strip.set_axis_off()
-            for left, right, k in ss:
-                strip.add_patch(Rectangle((left, 0), right - left, 1,
-                                          facecolor="0.96", edgecolor="0.25", lw=0.65))
-                strip.text((left + right) / 2, 0.5, str(k), ha="center", va="center")
-        axes[0].set_ylabel(r"Limiting log score $\ell_k(t)$", labelpad=6)
-        axes[0].set_xticks([-1.1, -0.9, -0.7, -0.5, -0.3])
-        axes[1].set_xticks([0, 0.4, 0.8, 1.0])
+        fig, ax = plt.subplots(figsize=SIZE)
+        fig.subplots_adjust(left=0.15, right=0.97, bottom=0.34, top=0.82)
+        # The candidate scores are exactly straight lines.
+        for k, (color, style) in enumerate(zip(COLORS, STYLES), start=1):
+            ax.plot(lim, scores(lim, c)[:, k - 1], color=color, ls=style, lw=0.95, zorder=2)
+        for left, right, k in segments:
+            xx = np.array([left, right])
+            ax.plot(xx, scores(xx, c)[:, k - 1], color="black", lw=2.15,
+                    solid_capstyle="butt", zorder=3)
+        for _, t, k in segments[:-1]:
+            value = float(scores(t, c)[k - 1])
+            ax.plot([t, t], [-1.2, value], color="0.5", lw=0.65, ls=(0, (2, 2.5)), zorder=0)
+            ax.plot(t, value, "o", mfc="white", mec="black", ms=3.4, mew=0.85, zorder=4)
+            ax.annotate(r"$a_4$", (t, value), xytext=(-4, 7),
+                        textcoords="offset points", ha="right", va="bottom")
+        ax.set(xlim=lim, ylim=(-1.2, 2.25), yticks=[-1, 0, 1, 2], xlabel=r"$t$")
+        ax.set_xticks([-1.1, -0.9, -0.7, -0.5, -0.3])
+        ax.tick_params(length=3, width=0.65, pad=3)
+        ax.axhline(0, color="0.88", lw=0.5, zorder=0)
+        ax.set_ylabel(r"Limiting log score $\ell_k(t)$", labelpad=6)
+        # Separate strip makes the answer readable without distinguishing colors.
+        strip = ax.inset_axes([0, -0.43, 1, 0.12])
+        strip.set(xlim=lim, ylim=(0, 1))
+        strip.set_axis_off()
+        for left, right, k in segments:
+            strip.add_patch(Rectangle((left, 0), right - left, 1,
+                                      facecolor="0.96", edgecolor="0.25", lw=0.65))
+            strip.text((left + right) / 2, 0.5, str(k), ha="center", va="center")
         handles = [Line2D([], [], color=co, ls=ls, lw=1, label=rf"$k={k}$")
                    for k, (co, ls) in enumerate(zip(COLORS, STYLES), start=1)]
-        handles.append(Line2D([], [], color="black", lw=2.15, label="upper envelope"))
-        fig.legend(handles=handles, loc="upper center", bbox_to_anchor=(0.52, 0.992),
-                   ncol=5, frameon=False, handlelength=2.1, columnspacing=0.95,
+        handles.append(Line2D([], [], color="black", lw=2.15, label="envelope"))
+        fig.legend(handles=handles, loc="upper center", bbox_to_anchor=(0.55, 0.992),
+                   ncol=3, frameon=False, handlelength=2.1, columnspacing=0.95,
                    handletextpad=0.5, fontsize=8.5)
-        fig.text(0.54, 0.105, r"Winning support size $k$ between limiting ties", ha="center")
-        fig.text(0.54, 0.037, r"$K_4$, uniform start;  $T=\log N-\frac{1}{2}\log\log N+t$,  $N\to\infty$",
+        fig.text(0.56, 0.078, r"Winning support size $k$", ha="center")
+        fig.text(0.56, 0.022, r"$K_4$, uniform start, $T=\log N-\frac{1}{2}\log\log N+t$",
                  ha="center")
         metadata = {
-            "Title": "Complete graph: no field versus a weak field",
-            "Subject": "Limiting second-order face scores, not finite-N ties; merged Paper C",
+            "Title": "Complete graph: support selection without a field",
+            "Subject": "Limiting second-order face scores, not finite-N ties; Paper C1",
             "Creator": "make_complete_envelope.py (Matplotlib)",
             "CreationDate": None, "ModDate": None,
         }
@@ -207,8 +175,7 @@ def main():
         plt.close(fig)
     (HERE / f"{STEM}.json").write_text(json.dumps(evidence, indent=2) + "\n", encoding="utf-8")
     print(f"Wrote {STEM}.pdf/.png/.json; analytic checks passed.")
-    print(f"No-field jump: a_4 = {evidence['untilted_transition']:.10f}")
-    print("Field crossings: " + ", ".join(f"{t:.10f}" for t in evidence["field_transitions"]))
+    print(f"Jump from one state to all four at a_4 = {evidence['transition']:.10f}")
 
 
 if __name__ == "__main__":
