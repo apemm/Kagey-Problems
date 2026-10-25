@@ -53,8 +53,9 @@ the ones that shape the manuscript.
 - `\journal{Stochastic Processes and their Applications}`, one `\author` with `\ead`, marked
   as corresponding author with `\corref` and `\cortext`, and a structured `\affiliation`
   (organization, street address, city, postcode, state, country).
-- Abstract of 250 words or fewer (242 by a whitespace count), with the one reference given in
-  full as "Kim and Landim (Stochastic Process. Appl. 189 (2025) 104733)".
+- Abstract of 250 words or fewer (235 by a whitespace count, in `abstract.tex`, shared with the
+  arXiv build), with the one reference given in full as "Kim and Landim (Stochastic Process.
+  Appl. 189 (2025) 104733)".
 - Seven keywords, separated by `\sep`, and `\MSC[2020] 60J27 \sep 60F10 \sep 60J10 \sep 15A15
   \sep 15A18 \sep 15A29 \sep 15B48`.
 - Unnumbered sections after the last numbered one, in the order Data and code availability,
@@ -68,19 +69,21 @@ the ones that shape the manuscript.
 
     pdflatex -interaction=nonstopmode problem131_reconstruction.tex   (three times)
 
-The build of 2026-10-24 has 40 pages, no undefined references, no multiply defined labels and no
+The build of 2026-10-25 has 33 pages, no undefined references, no multiply defined labels and no
 overfull boxes. That is within the guide's 30 to 40, so the cover letter needs no length
-justification.
+justification. The arXiv build `problem131_reconstruction_arxiv.tex` (article class, 37 pages)
+adds the reversible design as a final section. The switch `\ifarxivbuild` is set in each
+top-level file.
 
 ## For submission
 
-- Upload `problem131_reconstruction.tex`, the section files `sec_*.tex` and `bib_switching.tex`
-  (or a single flattened .tex), and the PDF.
+- Upload `problem131_reconstruction.tex`, `abstract.tex`, the section files `sec_*.tex` other
+  than `sec_reversible.tex`, and `bib_switching.tex` (or a single flattened .tex), and the PDF.
 - Highlights (optional), for a separate file `highlights.txt`.
   - The Donsker-Varadhan functional fixes exactly the principal minors of -Q
   - Generators with given minors form a finite set, Q and Q* when there is no cut
-  - The mode of the killed occupation law loses nothing the functional keeps
-  - A fixed design reads a reversible generator from m+d-1 boundaries
-  - Calibrated rewards read the Freidlin-Wentzell cycle tree from modal supports
+  - The first-order mode of the killed counts keeps exactly the same minors
+  - The functionals determine every depth and the Freidlin-Wentzell cycle tree
+  - A threshold design fixed in advance reads the cycle tree at low temperature
 - Competing interests and funding through the declarations tool, consistent with the sections at
   the end of the manuscript.
