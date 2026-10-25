@@ -3,7 +3,7 @@
 The law is the one of Proposition `prop:aging-urn`,
     P(M_T = m) = T!/(d theta)^(T) * prod_i theta^(m_i)/m_i!,
 where x^(m) is the rising factorial. Panel (a) is two states, and panels (b)
-and (c) are three states on the simplex, colored by the probability of a bin
+and (c) are three states on the simplex, colored by the probability of a count vector
 relative to the uniform law (which is the law at theta = 1). The interior of
 the simplex, its edges and its corners are drawn apart.
 
