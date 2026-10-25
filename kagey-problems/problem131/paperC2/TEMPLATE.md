@@ -49,12 +49,11 @@ the ones that shape the manuscript.
 ## Choices in the main file
 
 - `\documentclass[preprint,12pt]{elsarticle}` with `geometry` margins of 1in, `amsthm`
-  environments numbered within sections, and the introduction's theorems lettered D to G, which
-  continue the lettering A to C of the companion paper C1.
+  environments numbered within sections, and the introduction's theorems lettered A to D.
 - `\journal{Stochastic Processes and their Applications}`, one `\author` with `\ead`, marked
   as corresponding author with `\corref` and `\cortext`, and a structured `\affiliation`
   (organization, street address, city, postcode, state, country).
-- Abstract of 250 words or fewer (249 by a whitespace count), with the one reference given in
+- Abstract of 250 words or fewer (242 by a whitespace count), with the one reference given in
   full as "Kim and Landim (Stochastic Process. Appl. 189 (2025) 104733)".
 - Seven keywords, separated by `\sep`, and `\MSC[2020] 60J27 \sep 60F10 \sep 60J10 \sep 15A15
   \sep 15A18 \sep 15A29 \sep 15B48`.
@@ -62,7 +61,7 @@ the ones that shape the manuscript.
   Funding, Declaration of competing interest, Acknowledgments, then the references.
 - The bibliography is a hand-written `thebibliography` in `bib_switching.tex`, alphabetical and
   numbered, in the Elsevier numbered style (authors with initials, title, abbreviated journal,
-  volume (year) pages, DOI link). The companion paper is entry `paperC1`, "in preparation".
+  volume (year) pages, DOI link). Paper C1 is entry `paperC1`, cited as an arXiv preprint.
 - No figures and no appendices.
 
 ## Build

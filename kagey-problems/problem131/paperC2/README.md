@@ -3,7 +3,8 @@
 Paper C2. Full title "What the occupation law of a finite Markov chain determines: principal
 minors, modal supports and cycle trees". Target journal Stochastic Processes and their
 Applications (Elsevier). On October 24, 2026 the old Paper C was split in two. The forward theory
-stays in `../paperC` as Paper C1, "Occupation counts of rarely switching Markov chains", and this
+stays in `../paperC` as Paper C1, "Occupation counts of rarely switching Markov chains: stratified local laws, support selection
+and the boundary layer", and this
 folder holds the identifiability and reconstruction half. The split proposal is
 `research_notes/Paper C audits/09_split_proposal.md`, and the record of the split is
 `research_notes/Paper C audits/12_C2_split_report.md`.
@@ -16,12 +17,14 @@ the law determine about Q.
 ## What is proved
 
 The numbers are those of the build of October 24, 2026 (`problem131_reconstruction.pdf`, 40
-pages). The introduction states Theorems D to G, continuing the letters A to C of C1.
+pages). The introduction states Theorems A to D. The paper is written to stand alone. It cites
+C1 as a separate paper where its results are used, and does not continue C1's lettering. The
+introduction opens with Theorem A, and Problem 131 is mentioned only in the acknowledgments.
 
 - Section 2 states the results of C1 that are used (Lemmas 2.1, 2.2 and 2.4, Proposition 2.3,
   Theorem 2.5, Definition 2.6, Proposition 2.7, Theorems 2.8 and 2.9), each with its C1 number,
   and Proposition 5.6 imports the uniform face maxima.
-- The Donsker and Varadhan functional (Section 3, Theorem D). The polynomial of a face is
+- The Donsker and Varadhan functional (Section 3, Theorem A). The polynomial of a face is
   irreducible (Lemma 3.1, by Lemma 5.1 of Al Ahmadieh), the Perron branch on an open set of
   fields determines the principal minors (Lemma 3.2), and J_V determines exactly the principal
   minors of -Q (Theorem 3.3). The survival probability gives them at once (Remark 3.4). The
@@ -29,17 +32,17 @@ pages). The introduction states Theorems D to G, continuing the letters A to C o
   reversible Q, and in general the set of generator points of the cut-transpose orbit. From the
   stationary start the law of the composition is the same under Q and Q* (Proposition 3.7). The
   second-order amplitudes separate the fiber for a generic start (Proposition 3.8).
-- Modal supports (Section 4, Theorem E). The controlled score law (Proposition 4.1), the strict
+- Modal supports (Section 4, Theorem B). The controlled score law (Proposition 4.1), the strict
   regions (Lemma 4.2), the precise definition of equal controlled boundaries (Definition 4.3),
   suppression without reversibility (Lemma 4.4), exposure by descent (Lemma 4.5), the
   identifiability proposition (Proposition 4.6) and Theorem 4.7, which says that the controlled
   boundaries determine exactly the principal minors.
-- The reversible design and finite horizons (Section 5, Theorem F). Suppression (Lemma 5.1),
+- The reversible design and finite horizons (Section 5, Theorem C). Suppression (Lemma 5.1),
   reconstruction from m + d - 1 boundaries of a design fixed in advance (Theorem 5.2),
   minimality (Theorem 5.3), partial data (Remark 5.4), stability (Theorem 5.5), uniform face
   maxima on the class (Proposition 5.6, imported from C1), finite-horizon recovery uniformly over the class
   (Theorem 5.7) and the start that defeats every horizon (Remark 5.8).
-- Low temperature (Section 6, Theorem G). The depth of a face (Theorem 6.1), noncritical heights
+- Low temperature (Section 6, Theorem D). The depth of a face (Theorem 6.1), noncritical heights
   (Theorem 6.2), prefactors (Proposition 6.3, classical in substance), critical windows (Theorem
   6.4) with the noncycle window (Example 6.5) and a branch switch (Example 6.6). The cycle tree is
   read from calibrated rewards (Theorem 6.11), cycles are the sets whose proper subsets are
@@ -49,8 +52,10 @@ pages). The introduction states Theorems D to G, continuing the letters A to C o
 ## What is conditional
 
 Nothing. The paper uses the results of C1 listed in Section 2 and the uniform face maxima of
-Proposition 5.6, which is Proposition 5.16 of C1. The C1 numbers were taken from
-`../paperC/EXPORTS.md` on October 24, 2026, and must be updated if C1 renumbers.
+Proposition 5.6, which is Proposition 5.12 of C1. The C1 numbers were taken from
+`../paperC/EXPORTS.md` on October 24, 2026, checked against the C1 build of 59 pages, and must be
+updated if C1 renumbers. The cuts and the deep edit of C1 on October 24 moved only this one (it
+was Proposition 5.16, then 5.15). C1's Section 5.5 holds it.
 
 ## What rests on computation
 
@@ -91,7 +96,8 @@ PDF.
 Each statement has a `\label` that names its content, and the scripts refer to statements by these
 keys. Labels kept from the old Paper C include `thm:nonreversible`, `lem:perron-branch`,
 `lem:exposure`, `def:controlled`, `thm:reversible-reconstruction`, `thm:finite-horizon` and the
-low-temperature labels. New labels are `thm:dv` (the functional part of Theorem D, formerly
+low-temperature labels. The introduction's theorems have the labels `thm:A` to `thm:D` (formerly
+`thm:D` to `thm:G`). New labels are `thm:dv` (the functional part of Theorem A, formerly
 `cor:dv-fiber`), `prop:stationary` and `prop:amplitudes` (formerly part (f) of
 `thm:nonreversible`), `lem:strict`, `prop:identifiability` and `thm:modal` (formerly part (a) of
 `thm:nonreversible` and the modal half of `cor:dv-fiber`). The parts of `thm:nonreversible` are
