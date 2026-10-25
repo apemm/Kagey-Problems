@@ -8,8 +8,11 @@ of the libraries `PaperC` (root `PaperC.lean`) and `PaperB` (root `PaperB.lean`)
   pages) and `paperC/problem131_chains_sn.tex` (Springer build, 65 pages). Statement numbers agree in the two
   builds. Equation numbers agree too, except in the appendices, where the Springer build numbers
   equations by appendix. The numbers below are those of the article build.
-- Paper C2, "What the occupation law of a finite Markov chain determines: principal minors, modal
-  supports and cycle trees", main file `paperC2/problem131_reconstruction.tex` (40 pages).
+- Paper C2, "What the occupation functional of a finite Markov chain determines: principal
+  minors, modal supports and cycle trees", journal file `paperC2/problem131_reconstruction.tex`
+  (33 pages) and arXiv file `paperC2/problem131_reconstruction_arxiv.tex` (37 pages). The C2
+  numbers below are those of the revision of October 25, 2026, the same in both builds for
+  Sections 1 to 6.
 
 The numbers are those of the builds of October 24, 2026, checked against the PDFs and the `.aux`
 files. For C1 they are the numbers after the cuts of that day (the weak field and the start, item
@@ -61,8 +64,11 @@ neither C1 nor C2 states are collected in their own section below.
 | `PaperB.*` | C1 | the 19 modules of `lean/PaperB`, listed in `lean/PaperB/MAP.md`: the complete graph (words, the run polynomial `S_n`, the refresh and integral forms, the unique crossing, log-concavity and balancing, the constants `a_k`, the lines of the field) and the vertex law (the Laguerre–Bessel inequality, the polynomial of the rare counts, the compound-binomial representation and the bracket) |
 
 The modules `DVRestriction`, `PrincipalMinors`, `GeneratorFiber` and `CriticalWindow` were added
-on October 24, 2026. Every theorem in them was checked with `#print axioms`, and each one reports
-exactly `[propext, Classical.choice, Quot.sound]`. None uses `sorry` or `native_decide`.
+on October 24, 2026. On October 25, 2026 the library was rebuilt with `verify_lean.py PaperC`
+(`lake build PaperC`, exit 0, 20 modules, 409 theorem and lemma declarations, no build warnings).
+Every theorem, those of the four new modules included, depends only on `propext`,
+`Classical.choice` and `Quot.sound`, as recorded in `build-log.txt` and
+`verification-manifest.json`. None uses `sorry` or `native_decide`.
 
 # Paper C1
 
@@ -193,7 +199,7 @@ vector is a hypothesis where one is needed. In terms of the paper these are the 
 # Paper C2
 
 The modules `PrincipalMinors`, `GeneratorFiber` and `CriticalWindow` cover finite and algebraic
-results of Sections 3 and 6 of C2. The declarations of `CriticalWindow` are in the namespace
+results of Sections 3 and 5 of C2. The declarations of `CriticalWindow` are in the namespace
 `Kagey131.PaperC.FourState` and the others in `Kagey131.PaperC`. In Lean the states `1, 2, 3, 4` of
 the paper are `0, 1, 2, 3`.
 
@@ -211,49 +217,50 @@ also defined there.
 | Paper statement | Lean | Hypotheses in Lean | Note label |
 | --- | --- | --- | --- |
 | Section 3.1, the display defining `R_F`: `det(-Q_F - diag w) = ∑_{A⊆F} det(-Q_A) ∏_{i∈F∖A}(-w_i)`, with `det(-Q_∅) = 1` | `det_sub_diagonal_eq_sum_minors`, `det_add_diagonal_eq_sum_minors`, `RF_eq_sum_minors`, `pminor_faceBlock`, `pminor_empty`, `pminor_univ` | any square matrix over a commutative ring (applied with `A = -Q`). The sum in `RF_eq_sum_minors` is over the subsets of the subtype `F`, and `pminor_faceBlock` identifies these minors with minors of `A` | plan review 2026-10-23, Section 5.3 |
-| Theorem 3.5(a) (`thm:nonreversible`) and step (N) of its proof, equal principal minors give the same characteristic polynomial, hence the spectrum of `Q` | `charpoly_eq_of_minors_eq` | any square matrices over a commutative ring | note 06, Lemma 3.1 |
-| Step (N) of the proof of Theorem 3.5, the generator point `-D⁻¹CD` with `D = diag x` is a generator | `conj_apply`, `normalize_isGenerator` | `C` Metzler (in Lean `C` is minus the Z-matrix of the paper), `x > 0`, `C x = 0` | note 06, Proposition 3.3 |
+| Corollary 3.6(a) (`thm:nonreversible`) and step (N) of its proof, equal principal minors give the same characteristic polynomial, hence the spectrum of `Q` | `charpoly_eq_of_minors_eq` | any square matrices over a commutative ring | note 06, Lemma 3.1 |
+| Step (N) of the proof of Corollary 3.6, the generator point `-D⁻¹CD` with `D = diag x` is a generator | `conj_apply`, `normalize_isGenerator` | `C` Metzler (in Lean `C` is minus the Z-matrix of the paper), `x > 0`, `C x = 0` | note 06, Proposition 3.3 |
 | Step (N), the null vector is unique up to a factor | `ker_eq_smul` | `C` Metzler and `CutIrreducible`, with a positive null vector `x`. Its existence (Perron and Frobenius) is a hypothesis | note 06, Proposition 3.3 |
 | Step (N), every real invertible diagonal `D'` for which `D'⁻¹CD'` has zero row sums is a multiple of `D` and gives the same matrix | `normalization_unique`, `normalization_unique_matrix` | as for `ker_eq_smul`. The entries of `D'` are nonzero, of any signs | note 06, Proposition 3.3 |
-| The sign lemma, named in Section 7 among the Lean results (it is not a numbered statement of C2). If `D C D⁻¹` is Metzler, the entries of `D` have one sign | `sign_constant` | `C` Metzler and `CutIrreducible`, `D` real diagonal with nonzero entries | note 06, Lemma 3.2 |
-| Remark 3.6 (`rem:three-states`), with the products `ω = q_12 q_23 q_31` and `ω' = q_13 q_32 q_21` (Lean writes `c`, `c'`), `ω + ω' = q_1q_2q_3 - q_1w_23 - q_2w_13 - q_3w_12` and `ωω' = w_12w_23w_13` | `det_neg_three` (`det(-Q) = σ₃ - c - c'` for every `3 × 3` matrix), `det_neg_three_eq_zero`, `cyc_add_cycRev`, `cyc_mul_cycRev`, `sigma3_congr` | zero row sums for the first identity, none for the second | note 06, Corollary 4.2 |
-| Remark 3.6, the case of the same ordered pair `(ω, ω')` gives `Q' = Q` | `eq_of_same_q_w_cyc` | two generators on `Fin 3` with all off-diagonal entries positive, the same diagonal, the same `w_ij` and the same `ω` | note 06, Corollary 4.2 |
-| Theorem 3.5(a), the time reversal `Q* = D_π⁻¹QᵀD_π` is a generator with the exit rates and the products of `Q`, and its oriented product is `ω'` | `timeRev_eq_conj`, `timeRev_diag`, `timeRev_wprod`, `cyc_timeRev`, `timeRev_rowsum`, `timeRev_isGenerator`, `fiber_three_converse` | `π > 0` with `πQ = 0` | note 06, Corollary 4.2 |
-| Theorem 3.5(d), the fiber on three states is `{Q, Q*}` | `fiber_three`, and `fiber_three_tree` with `π` from the tree formula (`piTree_pos`, `piTree_stationary`), so with no hypothesis on `π` | two generators on `Fin 3` with all off-diagonal entries positive, the same diagonal and the same `w_ij` (these are the minors of orders 1 and 2). The paper allows any irreducible `Q`, with zero entries, and that case is not in Lean | note 06, Corollary 4.2 |
+| The sign lemma, named in Section 6 among the Lean results (it is not a numbered statement of C2). If `D C D⁻¹` is Metzler, the entries of `D` have one sign | `sign_constant` | `C` Metzler and `CutIrreducible`, `D` real diagonal with nonzero entries | note 06, Lemma 3.2 |
+| Remark 3.7 (`rem:three-states`), with the products `ω = q_12 q_23 q_31` and `ω' = q_13 q_32 q_21` (Lean writes `c`, `c'`), `ω + ω' = q_1q_2q_3 - q_1w_23 - q_2w_13 - q_3w_12` and `ωω' = w_12w_23w_13` | `det_neg_three` (`det(-Q) = σ₃ - c - c'` for every `3 × 3` matrix), `det_neg_three_eq_zero`, `cyc_add_cycRev`, `cyc_mul_cycRev`, `sigma3_congr` | zero row sums for the first identity, none for the second | note 06, Corollary 4.2 |
+| Remark 3.7, the case of the same ordered pair `(ω, ω')` gives `Q' = Q` | `eq_of_same_q_w_cyc` | two generators on `Fin 3` with all off-diagonal entries positive, the same diagonal, the same `w_ij` and the same `ω` | note 06, Corollary 4.2 |
+| Corollary 3.6(a), the time reversal `Q* = D_π⁻¹QᵀD_π` is a generator with the exit rates and the products of `Q`, and its oriented product is `ω'` | `timeRev_eq_conj`, `timeRev_diag`, `timeRev_wprod`, `cyc_timeRev`, `timeRev_rowsum`, `timeRev_isGenerator`, `fiber_three_converse` | `π > 0` with `πQ = 0` | note 06, Corollary 4.2 |
+| Corollary 3.6(d), the fiber on three states is `{Q, Q*}` | `fiber_three`, and `fiber_three_tree` with `π` from the tree formula (`piTree_pos`, `piTree_stationary`), so with no hypothesis on `π` | two generators on `Fin 3` with all off-diagonal entries positive, the same diagonal and the same `w_ij` (these are the minors of orders 1 and 2). The paper allows any irreducible `Q`, with zero entries, and that case is not in Lean | note 06, Corollary 4.2 |
 
-## Section 6, low temperature and the cycle hierarchy
+## Section 5, low temperature and the cycle hierarchy
 
 | Paper statement | Lean | Hypotheses in Lean | Note label |
 | --- | --- | --- | --- |
-| Example 6.5 (`ex:four-state`), the rates, `π ∝ (1, t, t, t)` and the exit rates `q_1, …, q_4` | `qOff`, `Q4`, `Q4_offdiag`, `Q4_rowsum`, `detailed_balance`, `exit_rates` | `t` real (the identities need no sign) | C modal hierarchy 01, (28) |
-| Example 6.5, the killed matrices `-Q_{12}`, `-Q_{123}` (the display) and `-Q_{124}` | `killed_12`, `killed_123`, `killed_124` | | |
-| Example 6.5, `det(-Q_{12}) = 2t⁴ + O(t⁵)` and `det(-Q_{123}) = det(-Q_{124}) = 2t⁶ + O(t⁷)`, as the exact polynomials `2t⁴ + t⁵ + 2t⁶ + 2t⁷ + t⁹` and `2t⁶ + t⁷ + 6t⁸ + 4t⁹ + 3t¹¹` | `det_A12`, `det_A123`, `det_A124` | | C modal hierarchy 01, (29) to (31) |
-| Example 6.5, the adjugates, with first columns `(t, t) + O(t²)`, `(3t³, 3t³, 2t³) + O(t⁴)` and `(t³, t³, 0) + O(t⁴)` and other entries `O(t²)`, resp. `O(t⁴)`, as exact polynomial matrices | `adj_A12`, `adj_A123`, `adj_A124` | | C modal hierarchy 01, (29) to (31) |
-| Example 6.5 with Proposition 6.3 (`prop:prefactor`), `t³(-Q_F)⁻¹ → B_F`, with first columns `(1/2, 1/2)`, `(3/2, 3/2, 1)`, `(1/2, 1/2, 0)` and zeros elsewhere | `B12_limit`, `B123_limit`, `B124_limit`, with `tendsto_scaled` and `inv_apply_eq` | entrywise, as `t → 0⁺` | |
-| Example 6.5, `ρ(B_12) = 1/2`, `ρ(B_123) = 3/2`, `ρ(B_124) = 1/2`, so `a_12 = 2`, `a_123 = 2/3`, `a_124 = 2` | `B12_eigen`, `B123_eigen`, `B124_eigen` | the first column is an eigenvector for the stated value. That the other eigenvalues are `0` (only the first column of `B_F` is nonzero) is not a Lean statement | |
-| Example 6.5, the limiting scores `1 + 2x`, `2 + 2x/3`, `2 + 2x`, `3`, the unique minimizer `{1,2}` on `(0, 3/4)`, `{1,2,3}` on `(3/4, 3/2)` and `V` on `(3/2, ∞)`, `{1,2,4}` always `1` above `{1,2}`, and the score `8/3 < 3` at `x = 1` | `s12`, `s123`, `s124`, `sV`, `window_low`, `window_mid`, `window_high`, `score_124`, `noncycle_at_one` | `x` real in the stated interval | C modal hierarchy 01, (32), (33) |
+| Example 5.5 (`ex:four-state`), the rates, `π ∝ (1, t, t, t)` and the exit rates `q_1, …, q_4` | `qOff`, `Q4`, `Q4_offdiag`, `Q4_rowsum`, `detailed_balance`, `exit_rates` | `t` real (the identities need no sign) | C modal hierarchy 01, (28) |
+| Example 5.5, the killed matrices `-Q_{12}`, `-Q_{123}` (the display) and `-Q_{124}` | `killed_12`, `killed_123`, `killed_124` | | |
+| Example 5.5, `det(-Q_{12}) = 2t⁴ + O(t⁵)` and `det(-Q_{123}) = det(-Q_{124}) = 2t⁶ + O(t⁷)`, as the exact polynomials `2t⁴ + t⁵ + 2t⁶ + 2t⁷ + t⁹` and `2t⁶ + t⁷ + 6t⁸ + 4t⁹ + 3t¹¹` | `det_A12`, `det_A123`, `det_A124` | | C modal hierarchy 01, (29) to (31) |
+| Example 5.5, the adjugates, with first columns `(t, t) + O(t²)`, `(3t³, 3t³, 2t³) + O(t⁴)` and `(t³, t³, 0) + O(t⁴)` and other entries `O(t²)`, resp. `O(t⁴)`, as exact polynomial matrices | `adj_A12`, `adj_A123`, `adj_A124` | | C modal hierarchy 01, (29) to (31) |
+| Example 5.5 with Proposition 5.3 (`prop:prefactor`), `t³(-Q_F)⁻¹ → B_F`, with first columns `(1/2, 1/2)`, `(3/2, 3/2, 1)`, `(1/2, 1/2, 0)` and zeros elsewhere | `B12_limit`, `B123_limit`, `B124_limit`, with `tendsto_scaled` and `inv_apply_eq` | entrywise, as `t → 0⁺` | |
+| Example 5.5, `ρ(B_12) = 1/2`, `ρ(B_123) = 3/2`, `ρ(B_124) = 1/2`, so `a_12 = 2`, `a_123 = 2/3`, `a_124 = 2` | `B12_eigen`, `B123_eigen`, `B124_eigen` | the first column is an eigenvector for the stated value. That the other eigenvalues are `0` (only the first column of `B_F` is nonzero) is not a Lean statement | |
+| Example 5.5, the limiting scores `1 + 2x`, `2 + 2x/3`, `2 + 2x`, `3`, the unique minimizer `{1,2}` on `(0, 3/4)`, `{1,2,3}` on `(3/4, 3/2)` and `V` on `(3/2, ∞)`, `{1,2,4}` always `1` above `{1,2}`, and the score `8/3 < 3` at `x = 1` | `s12`, `s123`, `s124`, `sV`, `window_low`, `window_mid`, `window_high`, `score_124`, `noncycle_at_one` | `x` real in the stated interval | C modal hierarchy 01, (32), (33) |
 
 ## Not in Lean, C2
 
 * Lemma 3.1 (`lem:RF-irreducible`), the irreducibility of `R_F` over `ℂ`, and Lemma 3.2
   (`lem:perron-branch`), which needs the Zariski density of a smooth real piece of a hypersurface.
   Only the expansion of `R_F` is in Lean. Theorem 3.3 (`thm:dv`) and Remark 3.4.
-* Theorem 3.5(a) beyond the rows above (the irreducibility of the fiber points and the finiteness),
+* Corollary 3.6(a) beyond the rows above (the irreducibility of the fiber points and the finiteness),
   (b) and (c), and (d) for an irreducible `Q` on three states with some off-diagonal entries `0`.
   `fiber_three` assumes that all six off-diagonal entries of both generators are positive. In the
   normalization (N) the existence of the positive null vector, from Perron and Frobenius, is a
   hypothesis of the Lean statements.
-* Propositions 3.7 and 3.8, and Sections 4 and 5 in full.
-* Section 6 beyond Example 6.5. In Example 6.5, the cycles and the depths, the passage from the
+* Remark 3.8 and Proposition 3.9, and Section 4 in full. The reversible design of the arXiv
+  version (its Section 7) is not in Lean.
+* Section 5 beyond Example 5.5. In Example 5.5, the cycles and the depths, the passage from the
   limits `B_F` to `a_F` through the spectral radius beyond the eigenvectors above, and the step
-  from the limiting scores to the support of the mode (Theorem 6.4, `thm:critical-window`).
+  from the limiting scores to the support of the mode (Theorem 5.4, `thm:critical-window`).
 
 ## Findings for C2
 
 No error was found in these statements. The exact computation gives `det(-Q_{123}) = det(-Q_{124})`
 as polynomials in `t`, which the paper does not need. The determinants and the adjugates of
-Example 6.5 agree with an exact recomputation in rational arithmetic, and their leading terms with
-the paper.
+Example 5.5 agree with an exact recomputation in rational arithmetic, and their leading terms with
+the paper. Since October 25, 2026 the proof of Example 5.5 gives these cofactors by hand.
 
 # Statements of the earlier version that neither paper states
 
