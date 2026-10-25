@@ -7,9 +7,10 @@ The walk takes N steps in runs of alternating sign whose lengths are independent
 tails of index between 1 and 2. A_N is the number of plus steps and P_N(k) its law. The paper
 describes P_N at every point of the range {0,...,N}: a stable bulk at the scale B_N, a big-jump zone on
 each side where one run is macroscopic, a renewal boundary layer at each end, and an atom at each
-endpoint. The initial run (the first run) enters each zone through a sharp criterion, which answers
-the question of Wang, Schulz, Deng and Barkai (2018) on the effect of the initial preparation on the
-rare fluctuations.
+endpoint. The initial run (the first run) enters each zone through a sharp criterion. For the
+occupation count of the lattice walk with 1 < alpha < 2 this answers the question of Wang, Schulz,
+Deng and Barkai (2018) on the effect of the initial preparation on the rare fluctuations. Their
+question also covers other observables and 0 < alpha < 1.
 The shape follows, including the golden-ratio threshold for the global mode and an interior
 minimum at the stable scale of the opposite runs, and the boundary layer identifies the law of the
 opposite run.
@@ -49,7 +50,10 @@ The label of Remark 5.6 stays `thm:inverse` for that reason (it was Proposition 
   `K <= x <= X_N`, with `I_N` the Cramer cost of a shortfall `xB_N/p` of the minus runs
   (`lem:laplace`, `lem:tilt`), and, when `theta_{+,N} -> 0`, the zone of Theorem B(b) starts at
   `(1+delta) xi_N B_N` and not at `(1-delta) xi_N B_N`, with `xi_N = o(lambda_N)`. The strip
-  `(1 +- delta) xi_N` is open, and the composite relative-error form is `rem:window-conj`.
+  `(1 +- delta) xi_N` is open, and the composite relative-error form is `rem:window-conj`. The
+  theorem assumes a fresh start. For sums the same crossover is due to Rozovskii (1997, Corollary 2A,
+  tail, with a representation uniform in x > 0) and Denisov, Dieker and Shneer (2008, Section 9.2,
+  local), and both are cited. What is new is the count at a fixed time with the run in progress.
 - Theorem C (`thm:preparation`, Section 5). Every law of the initial run: the exact defect in the bulk, the
   bulk criterion `B_n P(D=n) -> 0`, the big-jump zone with the term `Psi_N` and its removal exactly
   when `nu_+(n) = o(T_+(n))` (part (c)), the boundary layer with the prepared kernel (part (d)),
@@ -71,8 +75,9 @@ The label of Remark 5.6 stays `thm:inverse` for that reason (it was Proposition 
   end profile (`prop:copy`), at least `M_+ + M_- + 1` modes (`thm:modes-lower`), a prepared
   log-convex start with at least four modes (`cor:four-modes`), the first differences in the layer
   under (LD) (`lem:plus-diff`, `thm:first-diff`), the extrema up to distance `N^(1-eta)`
-  (`thm:ends`), and the three-mode criterion as `conj:three-modes`, whose "only if" half is
-  proved.
+  (`thm:ends`), and `conj:three-modes`, the upper bound of at most `M_+ + M_- + 1` modes for
+  large N. The lower bound is `thm:modes-lower`, which also gives the "only if" half of the
+  three-mode criterion.
 - Remark 5.6 (`thm:inverse`, also labelled `rem:thinning`, Section 5.7). For a fresh plus start the atoms give the plus law
   directly (`P_N(N) = T_+(N)`), the plus-end layer gives the minus law through the renewal
   inversion, and the ratios at the minus end determine the plus law only up to a geometric
