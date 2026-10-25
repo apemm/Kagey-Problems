@@ -60,24 +60,32 @@ C1 cites for them.
 
 ## Paper C1: Occupation counts of rarely switching Markov chains
 
-Full title "Occupation counts of rarely switching Markov chains: stratified local laws, crossings
-and the boundary layer". Paper C1 (in preparation, for the Journal of Theoretical Probability) is
-the forward theory for a chain on d states with transition matrix P = I + (T/N)Q, run for N steps
-with T = tau L. The counts of the N visits play the role of the bin. Every rate on a face is the
+Full title "Occupation counts of rarely switching Markov chains: stratified local laws, support
+selection and the boundary layer". Paper C1 (in preparation, for the Journal of Theoretical
+Probability) is the forward theory for a chain on d states with transition matrix P = I + (T/N)Q,
+run for N steps with T = tau L. Its object is the law of the vector of occupation counts, which
+has a face of the simplex as support. Every rate on a face is the
 restriction of the Donsker and Varadhan functional of the whole chain. To first order the mode
 sits on a face F that minimizes tau lambda_F + |F| - 1, where lambda_F is the exit rate of F, for
 every start. For a strongly connected face with start mass we prove a stratified local law with an
 explicit constant K_F, face maxima with a field, a crossing equation for 2 such faces and the tie
 windows. The boundary layer at a facet is proved for every face with at least 2 states. The
 complete graph, the Potts chain, is the main example, and there every face ties at first order,
-each balanced crossing is unique at every N, the mode changes exactly once, and a start law or a
-weak field can let an intermediate face win. Near a vertex the crossing is given by a product of
-Laguerre polynomials. The two-state walk of Paper A is the simplest case. The application to
-sticky priors for hidden Markov models moved to the note `S3_sticky_note`.
+each balanced crossing is unique at every N and the mode changes exactly once. Near a vertex the
+crossing is given by a product of Laguerre polynomials. The two-state walk of Paper A is the case
+d = 2 of the complete graph. The application to sticky priors for hidden Markov models moved to the
+note `S3_sticky_note`.
+
+On October 24, 2026 an editing pass for the journal cut C1 from 67 to 59 pages. It removed the tree
+formula on a general face, the pair identity and the two-state corollary, a remark on first-order
+winners on other graphs, the restated local law on the complete graph and the figure of the 6-cycle.
+No remaining statement changed. `paperC/EXPORTS.md` records the new numbers, and
+`lean/PaperC/MAP.md` keeps the Lean theorems of the removed statements in its section on cut
+statements.
 
 Files. The folder `paperC`, with the main file `problem131_chains.tex` and `problem131_chains.pdf`
-(article class, 70 pages), the same paper in the Springer Nature template
-`problem131_chains_sn.tex` and `problem131_chains_sn.pdf` (77 pages, `paperC/TEMPLATE.md` says how
+(article class, 59 pages), the same paper in the Springer Nature template
+`problem131_chains_sn.tex` and `problem131_chains_sn.pdf` (65 pages, `paperC/TEMPLATE.md` says how
 it was set up and built), their shared section and appendix files, the check scripts,
 `paperC/EXPORTS.md` (the statements that Paper C2 cites, with their numbers) and
 `paperC/README.md`. The earlier main file `problem131_switching.tex` (class `ejpecp`), its PDF and
@@ -93,24 +101,33 @@ same minors form a finite set, which is {Q, Q*} without a cut and for d <= 3. Fr
 start Q and its time reversal give the same law, while the second-order amplitudes separate them
 for a generic start. The controlled boundaries of the modal supports determine the same minors.
 A reversible design fixed in advance recovers Q, also at a finite horizon uniformly over a compact
-class. At low temperature the calibrated rewards read off the cycle tree. Section 2 states the
-results of C1 that the paper uses, each with its C1 number.
+class. At low temperature the calibrated rewards read off the cycle tree. The introduction states
+these results as Theorems A to D. Section 2 states the results of C1 that the paper uses, each with
+its C1 number.
 
 Files. The folder `paperC2`, with the main file `problem131_reconstruction.tex` and
 `problem131_reconstruction.pdf` (class `elsarticle`, 40 pages), its section files, the check
 scripts, the cover letter and `paperC2/README.md`.
 
-## Paper D: Endpoint crossings for the elephant random walk
+## Paper D: The elephant random walk with rare reversals
 
-Paper D (in preparation) asks what memory changes. In the elephant random walk each step copies a uniformly chosen
-earlier step and flips it with probability eps. The crossing x_N = N eps_N is unique and
-x_N = 2 z_N - log(2 pi) + o(1), about twice the Markov value. The law at the crossing has 2 humps,
-one near each end, and for large N it is strictly convex between them. On October 24, 2026 the
-family proofs and the second-difference proofs came back from the Online Resource into the
-article as Appendices D and E, so every proof used by the main theorems is in the article.
+Full title "The elephant random walk with rare reversals: a Luria-Delbrück approximation and the
+shape of the law". Paper D (in preparation, for the Journal of Theoretical Probability) asks what
+memory changes. In the elephant random walk each step copies a uniformly chosen earlier step and
+flips it with probability eps, with x = N eps of order log N. The main result bounds the total
+variation distance between the number of steps that disagree with the first one and a truncated
+Luria-Delbrück law, with a local limit theorem as a consequence. The crossing x_N = N eps_N is
+unique and x_N = 2 z_N - log(2 pi) + o(1), about twice the Markov value. The law at the crossing has
+2 humps, one near each end, and the middle is its unique interior minimum. On October 24, 2026 the
+family proofs and the second-difference proofs came back into the article as Appendices D and E,
+so every proof used by the main theorems is in the article. There is no Online Resource. The
+second order, the tail, odd N and the likelihood theorem are Sections S1 to S4 of the arXiv build,
+and the journal version cites that build where it needs them.
 
-Files. The folder `paperD`, with `problem131_memory.tex` and `problem131_memory.pdf`, its section
-and appendix files, the check scripts and `paperD/README.md`.
+Files. The folder `paperD`, with the journal version `problem131_memory.tex` and
+`problem131_memory.pdf` (40 pages), the arXiv build `problem131_arxiv.tex` and
+`problem131_arxiv.pdf` with Sections S1 to S4, its section and appendix files, the check scripts
+and `paperD/README.md`.
 
 ## Paper E: Endpoint crossings for the planar persistent walk
 
@@ -128,16 +145,16 @@ appendix files, the check scripts and `paperE/README.md`.
 Paper F (in preparation, for the Electronic Journal of Probability) was started on October 24,
 2026. A lattice Lévy walk moves in runs of alternating direction whose lengths are independent with
 regularly varying tails of index between 1 and 2. The paper describes the law of the number of
-right steps after N steps bin by bin over the whole row. It has a stable bulk, a big-jump zone on
-each side where one run is macroscopic, a renewal boundary layer at each end and an atom at each
-endpoint. The law of the first run enters each piece through a sharp criterion. The global mode is
-an endpoint or a bulk bin, and for the equilibrated start the threshold is the golden ratio. The
+right steps after N steps at every point of the range {0, ..., N}. It has a stable bulk, a big-jump
+zone on each side where one run is macroscopic, a renewal boundary layer at each end and an atom at
+each endpoint. The law of the first run enters each piece through a sharp criterion. The global mode
+is an endpoint or a point of the bulk, and for the equilibrated start the threshold is the golden ratio. The
 boundary layers identify both run laws. The draft is complete, with every statement proved in the
 article (55 pages after the revision of October 24, 2026).
 
 The first draft of Paper F, "The golden-ratio threshold for a lattice Lévy walk and ties in
 coin-turning walks", is archived in `archive/paperF_golden_aging`. Its heavy-tail half is part of
-the new paper: its center theorem is the bulk theorem at the center bin, and its golden-ratio
+the new paper: its center theorem is the bulk theorem at the center point, and its golden-ratio
 corollary is part of the theorem on the mode. Its aging half is the note `S4_aging_note`. The
 infinite-mean case 0 < alpha < 1 is left to a later paper.
 
@@ -173,7 +190,7 @@ and a `README.md`. Papers B, C and D also keep the proofs cut while shortening t
 - `S1_endpoint_information_note/` is a working note on the Fisher information in the endpoint, which was Section 8 and Appendix E of an earlier version of Paper C.
 - `S3_sticky_note/` is a working note on sticky priors for hidden Markov models, which was Section 6 and Appendix D of Paper C until the merge with Paper B in October 2026.
 - `S2_counts_note/` is a working note on which rate matrices the visit counts of a slowly switching chain can tell apart, with its 4 check scripts.
-- `S4_aging_note/` is a short note, "When the end ties the center in a coin-turning walk", on the walk that switches at step k with probability c/k and its version with d states. Every interior bin ties with the end exactly at c = 1 for every N, and the chain that redraws or repeats its state has the law of Pólya's urn. It was the aging half of the first draft of Paper F until October 24, 2026, and it has 2 check scripts.
+- `S4_aging_note/` is a short note, "The finite-size shape transition of coin-turning walks" (for Electronic Communications in Probability), on the walk that switches at step k with probability c/k and its version with d states. Every interior point ties with the end exactly at c = 1 for every N, and the chain that redraws or repeats its state has the law of Pólya's urn. It was the aging half of the first draft of Paper F until October 24, 2026, and it has 2 check scripts.
 - `archive/` holds Paper B v1 (`archive/paperB`), the earlier EJP version of Paper C, "Face selection for slowly switching Markov chains", with its supplement (`archive/paperC_switching_ejp`), and the first draft of Paper F, "The golden-ratio threshold for a lattice Lévy walk and ties in coin-turning walks" (`archive/paperF_golden_aging`), each kept as it was and with its own `README.md`.
 - `animations/` shows a Galton board with persistence at 4 values of p (`galton.gif`, `galton.mp4`),
   made by `animations/animate.py`.

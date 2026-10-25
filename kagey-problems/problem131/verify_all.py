@@ -6,9 +6,9 @@ in its own folder. With --paper c this script runs the runner of Paper C1 in pap
 when --full is given. The runner of Paper C2 takes neither flag, so it is called with none. The
 note S4 (S4_aging_note) has no runner of its own, so this script runs its 2 check scripts,
 verify_aging.py (with --full when --full is given) and verify_aging_urn.py, in that folder.
-The quick runs take about 2 minutes each for Papers A and B, about nine and a half minutes for
-Paper C1 (8 scripts in 567 s on October 24, 2026), under 3 minutes for Paper C2 (5 scripts in
-157 s that day), a few minutes for Paper D, under a minute for Paper F and under a minute for the
+The quick runs take about 2 minutes each for Papers A and B, about three and a half
+minutes for Paper C1 (6 scripts in 208 s on October 25, 2026), under 3 minutes for Paper C2 (5
+scripts in 165 s that day), a few minutes for Paper D, under a minute for Paper F and under a minute for the
 note. With --full, Paper A takes about 21 minutes more, Paper B about 3 minutes more, Paper C1 a
 few minutes more (the largest cases of four scripts, about 4 minutes of them for S = 64 in
 verify_layer_general.py), Paper E up to about half an hour, Paper D up to about 45 minutes and
