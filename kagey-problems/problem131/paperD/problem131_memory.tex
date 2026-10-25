@@ -9,9 +9,8 @@
 \usepackage{microtype}
 \usepackage{xcolor}
 \usepackage[shortlabels]{enumitem}
-\usepackage{xr-hyper}
 \usepackage[colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
-\hypersetup{hypertexnames=false,pdftitle={The center and the ends of the elephant random walk with rare reversals},pdfauthor={Arjun Pemmasani}}
+\hypersetup{hypertexnames=false,pdftitle={The elephant random walk with rare reversals: a Luria-Delbrueck approximation and the shape of the law},pdfauthor={Arjun Pemmasani}}
 
 % ---------- theorem environments ----------
 \newtheorem{theorem}{Theorem}[section]
@@ -32,11 +31,21 @@
 \newcommand{\Var}{\operatorname{Var}}
 \newcommand{\CP}{\mathrm{CP}}
 
-\ifdefined\PaperDCombined\else
-\externaldocument[][nocite]{online_resource}[online_resource.pdf]
+% The journal version is this file alone. The arXiv version
+% (problem131_arxiv.tex) defines \PaperDCombined and appends Sections S1 to S4.
+% \arxivonly{Theorem}{label} points to a result that only the arXiv version
+% contains. In the journal build it cites the arXiv version, and in the arXiv
+% build it gives the number of the statement there.
+\newif\ifPaperDcombined
+\ifdefined\PaperDCombined\PaperDcombinedtrue\fi
+\ifPaperDcombined
+\newcommand{\arxivonly}[2]{#1~\ref{#2}}
+\else
+\newcommand{\arxivonly}[2]{the arXiv version of this paper~\cite{arxivD}}
 \fi
 
-\title{The center and the ends of the elephant random walk with rare reversals}
+\title{The elephant random walk with rare reversals: a Luria--Delbr\"uck
+approximation and the shape of the law}
 \author{Arjun Pemmasani\\[2pt]
 \small Department of Mathematics, Harvey Mudd College\\
 \small Claremont, CA 91711, USA\\
@@ -48,21 +57,23 @@
 
 \begin{abstract}
 In the elephant random walk each step copies a uniformly chosen earlier step and
-reverses it with probability $\varepsilon$. We let $\varepsilon$ tend to zero as the
-number of steps $N$ grows, with $N\varepsilon$ of order $\log N$. The number of steps
-that disagree with the first step is approximated by a truncated Luria--Delbr\"uck
-law, with an explicit total variation bound. Its Landau local limit has an
-explicit rate and locates every mode near one of the two ends. The same Landau
-law arises from the fixed-memory superdiffusive limit as the memory tends to one.
-For even $N$, the origin and each end cross exactly once, at an expected reversal
-count of $2\log N-\log\log N-\log16+o(1)$. We bound the relative error of the
-origin probability $4\varepsilon/(N+2)$. An exact sign argument proves that, at the
-crossing, the origin is the unique interior minimum for every even $N\ge8$.
-The law has exactly two symmetric intervals of maximizing bins, with strict
-increase from the ends and strict decrease toward the center. This uses
-certified endpoint comparisons at finitely many lengths. For a reversible
-fluctuation assay with one sensitive founder and symmetric switching at birth,
-the total variation bound controls the error of the compound Poisson experiment.
+reverses it with probability $\varepsilon$. We study the regime in which
+$\varepsilon$ tends to $0$ as the number of steps $N$ grows, with $N\varepsilon$ of
+order $\log N$. Let $M_N$ be the number of steps that disagree with the first
+step. We prove an explicit total variation bound between the law of $M_N$ and a
+truncated Luria--Delbr\"uck law, the compound Poisson law with jumps $d$ at rates
+$N\varepsilon/(d(d+1))$. A local limit theorem with an explicit rate follows, with
+the Landau density as the limit. The same Landau law arises from the fixed-memory
+superdiffusive limit as the memory tends to 1. We then derive the shape of the
+law of the position. Every mode lies near one of the two ends, at a distance
+$x\log x+\lambda_{\mathrm L}x+O(\sqrt{x\log x})$, where $x=N\varepsilon$ and
+$\lambda_{\mathrm L}\approx-0.2228$ is the mode of the Landau density. The second
+difference of the law changes sign at most 4 times. For even $N$ the
+probabilities of the origin and of each end cross exactly once, at
+$N\varepsilon=2\log N-\log\log N-\log16+o(1)$. At the crossing, for every even
+$N\ge8$, the origin is the unique interior minimum and the law has exactly 2
+symmetric intervals of modes. This last result uses certified computations at
+finitely many lengths.
 \end{abstract}
 
 \medskip
@@ -79,15 +90,17 @@ Secondary 60E07, 60C05, 60F05, 60J10, 05C05, 05C80, 65G30.
 \input{sec_bulk_applications.tex}
 \input{sec_verify.tex}
 
-\paragraph{Acknowledgments.} I thank Peter Kagey for posing the problem and
-Aidan Deshong for insightful conversations.
+\paragraph{Acknowledgments.} I thank Peter Kagey, whose Problem~131 of the Open
+Problem Collection~\cite{kagey131} asks when the center and the ends of the
+persistent walk are equally likely, and Aidan Deshong for insightful
+conversations.
 
 \section*{A note on the use of AI}
 I wrote the original draft and its mathematics. I used Claude Opus 5.5
 (Anthropic) for revision and proof checking, and later used OpenAI Codex to
 revise the exposition and check references. This included the abstract,
 introduction, description of the verification and the arrangement of
-the appendices and the Online Resource.
+the appendices and of the further results in the arXiv version.
 Both models were used to expand literature search beyond what I had included, and all sources were read by me before citation if appropriate.
 AI tools also generated the
 Lean files and parts of the verification code, which I reviewed against the
@@ -109,10 +122,15 @@ declare.
 \paragraph{Data availability.} The outputs of the computations described in
 Section~\ref{sec:verify} are in the folder
 \nolinkurl{kagey-problems/problem131/paperD/data} of the repository named
-under Code availability. Online Resource~1 is the file
-\nolinkurl{online_resource.pdf} in the folder
-\nolinkurl{kagey-problems/problem131/paperD}, built from
-\nolinkurl{online_resource.tex}.
+under Code availability.
+\ifPaperDcombined
+Sections~S1 to~S4 of this version hold results that the journal version
+omits.
+\else
+The arXiv version of this paper~\cite{arxivD} contains further results,
+among them the center and the crossing to second order and the tail. This
+article does not use them. There is no supplementary material.
+\fi
 
 \paragraph{Code availability.} All code, data and Lean files supporting this
 paper are in the folder \nolinkurl{kagey-problems/problem131} of
@@ -195,6 +213,16 @@ P.~Kagey, \emph{Problem 131}, Open Problem Collection,
 A.~Pemmasani, \emph{Uniform Bessel bounds for magnetization crossings in
 finite Ising chains}, preprint, 2026.
 \href{https://arxiv.org/abs/2610.06935}{arXiv:2610.06935}.
+
+\bibitem{fanqi2026}
+X.~Fan and Y.~Qi, \emph{A generalized elephant random walk with time-dependent
+memory}, preprint, 2026.
+\href{https://arxiv.org/abs/2610.16065}{arXiv:2610.16065}.
+
+\bibitem{rtt2025}
+R.~Roy, M.~Takei and H.~Tanemura, \emph{The elephant random walk in the
+triangular array setting}, J.\ Appl.\ Probab.\ \textbf{62} (2025), 997--1009.
+\href{https://doi.org/10.1017/jpr.2024.106}{doi:10.1017/jpr.2024.106}.
 
 \bibitem{kursten2016}
 R.~K\"ursten, \emph{Random recursive trees and the elephant random walk},
@@ -309,14 +337,17 @@ H.~Scheff\'e, \emph{A useful convergence theorem for probability distributions},
 Ann.\ Math.\ Stat.\ \textbf{18} (1947), 434--438.
 \href{https://doi.org/10.1214/aoms/1177730390}{doi:10.1214/aoms/1177730390}.
 
-\bibitem{hoeffding1963}
-W.~Hoeffding, \emph{Probability inequalities for sums of bounded random
-variables}, J.\ Am.\ Stat.\ Assoc.\ \textbf{58} (1963), 13--30.
-\href{https://doi.org/10.1080/01621459.1963.10500830}{doi:10.1080/01621459.1963.10500830}.
-
 \bibitem{dlmf}
 F.~W.~J.~Olver et al.\ (eds.), \emph{NIST Digital Library of Mathematical
 Functions}, Release 1.2.8 of 2026-09-15, \url{https://dlmf.nist.gov}.
+
+\ifPaperDcombined\else
+\bibitem{arxivD}
+A.~Pemmasani, \emph{The elephant random walk with rare reversals: a
+Luria--Delbr\"uck approximation and the shape of the law}, arXiv version with
+further results, 2026. arXiv number to be added.
+% arXiv id in November
+\fi
 
 \end{thebibliography}
 

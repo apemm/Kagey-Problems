@@ -1,12 +1,11 @@
 # Paper D: map from the paper and the research notes to the Lean proofs
 
-Current layout, October 24, 2026. The main article has 39 pages and the
-Online Resource has 14. Section 3 ends with the shape results. Section 4
-contains the fixed-memory bridge, and Section 5 describes verification.
-Appendix B keeps its statements, with proofs in Appendix D. The sign
-proofs are in Appendix E. The likelihood theorem is S4.1 of the Online
-Resource, which holds Sections S1 to S4 only. Historical locators below are
-identified as such.
+Current layout, October 24, 2026. The journal article has 40 pages and no
+Online Resource. Sections S1 to S4 (second order, tail, odd N and the likelihood
+theorem) are printed only in the arXiv version, which has 53 pages. Section 3 ends
+with the shape results. Section 4 contains the fixed-memory bridge, and Section 5
+describes verification. Appendix B keeps its statements, with proofs in Appendix D.
+The sign proofs are in Appendix E. Historical locators below are identified as such.
 
 The new modules `CenterNoHoles`, `ModalIntervals`, and `ShapeAllEven` close the
 formal minimum gap and prove the full two-interval shape for every even length
@@ -15,10 +14,12 @@ at least eight. The final theorem `shape_at_crossing_all_even` requires only
 The new maximum-height window, total variation strengthening, constrained
 likelihood theorem, and fixed-memory bridge are not formalized.
 
-Paper D is `paperD/problem131_memory.tex`, "The center and the ends of the elephant random walk
-with rare reversals". The first table below lists every numbered statement of the paper by its
+Paper D is `paperD/problem131_memory.tex`, "The elephant random walk with rare reversals: a
+Luria–Delbrück approximation and the shape of the law" (titled "The center and the ends of the
+elephant random walk with rare reversals" until October 24). The first table below lists every numbered statement of the paper by its
 label, with its number in a fresh build of the paper of October 23, 2026 (Online Resource 1 has
-the numbers S1.1 and so on). The later tables cite the statement labels of the
+the numbers S1.1 and so on, now in the arXiv version only). The main statements 1.1 to 1.5 carry
+their numbers of October 24. The later tables cite the statement labels of the
 4 research notes D1 to D4, as before. For D3 and D4, which are now Paper F, the column Paper gives
 the number in Paper D before the split of October 13, 2026, and the note at the end says how these
 numbers moved.
@@ -149,9 +150,11 @@ indexes the count chain by the number of steps.
 
 | Label | No. | Statement | Lean | Status |
 |---|---|---|---|---|
-| `thm:main-center` | 1.1 | (a) crossing; (b) the two bounds on `C_N`; (c) `x_N` asymptotics | (a) as `prop:mlr`; (b) `thm_erw_bounds_a`, `thm_erw_bounds_b`; (c) `thm_erw_crossing_a_G`, `thm_erw_crossing_b` | kernel |
-| `thm:main-bulk` | 1.2 | uniform Landau local limit, weak convergence, unique limiting mode and location of finite modes | `U2.landau_local_fN_final_deltaB`, `U2.thm_landau_c_final`, `lem_landau_mode_final`, `cor_mode_location_b_final` | kernel, with LFI, CP, ES for the local theorem, also SCH for weak convergence, and UNI for the mode and its location. This summary uses the earlier pointwise approximation. The stronger total variation statement of `thm:cp` is not formalized. |
-| `thm:main-shape` | 1.3 | oriented five blocks, complete all-even crossing shape, eventual prescribed convexity, finite prescribed convexity | `five_blocks_signPattern`; `shape_at_crossing_all_even`; `thm_convex_large_final`; `convex_certified` | kernel for the sign pattern, all even crossings `N ≥ 8`, and the finite certificates. The eventual prescribed window uses LFI, CP, ES, UNI. No gap remains in the all-even minimum or two-modal-interval conclusion. |
+| `thm:main-center` | 1.3 (1.1 before October 24) | (a) crossing; (b) the two bounds on `C_N`; (c) `x_N` asymptotics | (a) as `prop:mlr`; (b) `thm_erw_bounds_a`, `thm_erw_bounds_b`; (c) `thm_erw_crossing_a_G`, `thm_erw_crossing_b` | kernel |
+| `thm:main-bulk` | 1.1 (1.2 before October 24) | total variation bound, uniform Landau local limit, weak convergence (the modes are in `thm:main-modes` since October 24) | `U2.landau_local_fN_final_deltaB`, `U2.thm_landau_c_final`, `lem_landau_mode_final`, `cor_mode_location_b_final` | kernel, with LFI, CP, ES for the local theorem, also SCH for weak convergence, and UNI for the mode and its location. This summary uses the earlier pointwise approximation. The stronger total variation statement of `thm:cp` is not formalized. |
+| `thm:main-shape` | 1.4 (1.3 before October 24) | oriented five blocks, complete all-even crossing shape (the convexity window moved to `prop:main-window` on October 24) | `five_blocks_signPattern`; `shape_at_crossing_all_even`; `thm_convex_large_final`; `convex_certified` | kernel for the sign pattern, all even crossings `N ≥ 8`, and the finite certificates. The eventual prescribed window uses LFI, CP, ES, UNI. No gap remains in the all-even minimum or two-modal-interval conclusion. |
+| `thm:main-modes` | 1.2 (new on October 24, split from `thm:main-bulk`) | unique limiting mode and location of finite modes | `lem_landau_mode_final`, `cor_mode_location_b_final` | kernel, with UNI for the mode and LFI, CP, ES, UNI for its location |
+| `prop:main-window` | 1.5 (new on October 24, formerly part of `thm:main-shape`) | eventual prescribed convexity, finite prescribed convexity for `5 ≤ N ≤ 2000` | `thm_convex_large_final`; `convex_certified` | eventual window with LFI, CP, ES, UNI, threshold not computed; finite certificates in the kernel |
 | `def:erw` | 2.1 | the walk | `stepProb`, `ewProb`, `ewBin`, `sum_ewProb` | kernel (definition) |
 | `lem:erw-reduction` | 2.2 | `M` is a Markov chain, `P_N(k) = ½[f_N(N-k)+f_N(k)]`, `E_N` | `sum_plus_ewProb`, `sum_minus_ewProb`, `ewBin_eq`, `ewBin_center`, `ewBin_top`; the process statement `RRT.rrt_path_law` | kernel |
 | `prop:mlr` | 2.3 | monotone likelihood ratio, unique crossing `ε_N < ½`, `C_N ≥ 2E_N` for `ε ≥ ½` | `law_ratio_strictMonoOn`, `ewBin_ratio_strictMonoOn`, `crossing_exists_unique`, `center_crossing_exists_unique`, `ewBin_ge_two_top`; the crossing as a function `crossingEps`, `crossingEps_spec` | kernel |
@@ -186,7 +189,7 @@ indexes the count chain by the number of steps.
 | `lem:center-no-holes` | 3.22 | strict minimum and positive central curvature from `P_N(1) > max(E_N,C_N)` | `center_min_and_curvature_of_no_holes`, `ewBin_center_min_and_curvature_of_no_holes` | kernel, for every even `N ≥ 6` and `0 < ε < 1/2`. Symmetry and strict no holes are discharged for the actual walk. |
 | `cor:height-window` | 3.24 | nonempty central convexity window from maximum height, at every even crossing `N ≥ 8` | none | written chord-sum proof checked, not formalized. |
 | `cor:fixed-memory-bridge` | 4.1 | weak Landau limit as fixed memory tends to one | none | written proof, not formalized. |
-| `thm:assay-mle` | S4.1 of Online Resource 1 (4.2 before October 23) | constrained likelihood concentration and absolute mean-bias bound | none | written proof, not formalized. |
+| `thm:assay-mle` | S4.1 of the arXiv version only (Online Resource 1 from October 23 to 24, 4.2 before October 23) | constrained likelihood concentration and absolute mean-bias bound | none | written proof, not formalized. |
 | `prop:convex-certified` | 3.25 | `5 ≤ N ≤ 2000`, even or odd | `convex_certified`, `T7.convexBetweenHumps_5_2000`, `T7.kernel_convexBetweenHumps_10_2000`; soundness `T5.convexBetweenHumps_of_check`, `T7.convex_of_runs` | kernel (T5 runs for `5 ≤ N ≤ 100`, T7 runs for `101 ≤ N ≤ 2000`; empty range at `N = 5`) |
 | `prop:odd` | 3.26 | crossing for odd `N`; (a) `C̃_N = (1-c/N)^{-1}C_{N+1}`; (b) asymptotics; (c) `x_N > 2` and the dip for odd `N ≥ 1689`; (d) convexity for large odd `N` | first paragraph `odd_crossing_exists_unique`; (a) `odd_center_succ`, `odd_central_eq`; (c) `odd_hx_large`, `odd_dip_large`, `odd_one_point_large`, `odd_hB_large`, `odd_center_le`; (d) `odd_convex_of_halfway` | first paragraph, (a) and (c) kernel ((a) multiplied out); (b) kernel, no hypotheses: `prop_odd_b_G`, `prop_odd_b_g`, `prop_odd_b_expansion`, explicit `odd_crossing_explicit` for `log N ≥ 30` with `ρ̃_N = (24L²+20812L)/N` (`U3_OddCrossing`), and the crude window `odd_crossing_window`; (d) kernel, hypotheses LFI, CP, ES, UNI: `prop_odd_d_final`, `convex_large_all_final`; track U3: `prop_odd_d`, `prop_odd_d_cert`, `convex_large_all_cert`; track U5 proves (b) again as `U5.odd_crossing_*` |
 | `prop:center-small` (superseded) | former 3.26 | finite-range minimum, now covered for all even `N ≥ 8` by `cor:unique-min` | `center_small_at_crossing`, `T7.centerUniqueMin_8_2000`, `T7.kernel_center_min_at_crossing_8_2000` | historical certificates retained as independent checks. They are not the proof of the new all-even minimum theorem. The finite endpoint-dip certificates remain inputs to that theorem. |

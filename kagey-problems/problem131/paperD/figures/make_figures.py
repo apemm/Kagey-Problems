@@ -688,7 +688,7 @@ def fig_shape(s):
     a.set_xlim(-60, n + 60)
     a.set_ylim(0.1, 1e4)
     a.set_xticks([0, 1600, 3200])
-    a.set_xlabel(r"bin $a$ ($N=3200$)")
+    a.set_xlabel(r"right steps $a$ ($N=3200$)")
     a.set_ylabel(r"$P_N(a)/E_N$")
     panel(a, "a", x=0.09)
     ins = a.inset_axes([0.36, 0.47, 0.38, 0.35])
