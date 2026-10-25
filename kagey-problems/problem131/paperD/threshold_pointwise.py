@@ -13,10 +13,18 @@ It works at one exact rational a, in python-flint arb ball arithmetic.
   * The enclosure f''(0) = -(1/pi) [ int_0^T3 t^2 Re phi(t) dt + E ] of Lemma lem:thr-fpp,
     |E| <= C T3^(3-beta)/(beta-3), with the integral done term by term.
 No certified quantity uses floating point. Floats are printed only.
+Every check the certificate relies on goes through require(), which raises
+ValueError, so that it also runs under python -O.
 certify_threshold.py uses this module only to choose the truncation order (a float
 estimate of B) and for the pointwise checks of its quick mode.
 """
 from flint import arb, arb_poly, ctx, fmpq
+
+
+def require(cond, msg):
+    """Raise ValueError unless cond holds. Used instead of assert."""
+    if not cond:
+        raise ValueError(msg)
 
 
 def ball(x):
@@ -43,7 +51,7 @@ class ERW:
         self.a_str = a_str
         a = ball(a_str)
         self.a = a
-        assert (a > arb("0.5")) and (a < 1)
+        require((a > arb("0.5")) and (a < 1), "a must lie in (1/2, 1)")
         self.N, self.K = N, K
         # moments m_n, n = 0..N
         m = [arb(1), arb(1)]
@@ -64,7 +72,7 @@ class ERW:
         B = (B * (1 + arb(2) ** -30)).upper()
         # B is a rigorous upper value: m_j <= A B^j for j <= N (checked in balls)
         for j in range(1, N + 1):
-            assert m[j] <= A * B ** j
+            require(m[j] <= A * B ** j, "moment bound m_j <= A B^j fails at j = %d" % j)
         self.A, self.B = A, B
         # real / imaginary polynomials of the truncated series
         re = [arb(0)] * (N + 1)
@@ -140,7 +148,7 @@ class ERW:
         T3 = arb(2) ** a * T2
         # number of cells so that 2h*ncells >= T3 and T2 is a cell boundary
         n2 = int((T2 / (2 * h)).mid().floor().unique_fmpz())
-        assert (2 * h * n2 - T2).is_zero(), "T2 must be a multiple of 2h"
+        require((2 * h * n2 - T2).is_zero(), "T2 must be a multiple of 2h")
         ncells = int((T3 / (2 * h)).upper().ceil().unique_fmpz()) + 1
         cells = self.cell_bounds(h, ncells)
         beta = arb(beta)

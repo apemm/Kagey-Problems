@@ -15,6 +15,11 @@ the script splits into pieces where it has one sign. An interval is accepted
 when every piece has a sign, and otherwise it is halved. In mode 'zero' one
 undecided piece is allowed in the whole cover. Mode 'scaled' works with
 X = L/sigma (Lemma lem:thr-scaled), which reaches a = 1/2.
+Each accepted interval is printed with its sign and its exact end points. Mode
+'zero' fails unless every interval left of the undecided piece has sign - and
+every interval right of it has sign +, and mode 'check' requires the same of the
+stored records (sign - on all of (1/2, z-], sign + on [z+, 839/1250]).
+Every soundness check raises an exception (no assert), so python -O changes nothing.
 
 Usage (from any folder; every run uses exact rationals for LO and HI):
   python -I -B certify_threshold.py scaled LO HI         certifies f'' < 0 on [LO, HI]
@@ -96,6 +101,7 @@ def params(a0, w, q, T2):
 
 
 SCALED = [False]
+SIGN_CHAR = {-1: '-', 0: '0', 1: '+'}
 RHO_CAP = [Fraction(1, 25)]
 
 
@@ -147,14 +153,16 @@ def run(lo, hi, mode, want, log, allow_zero, start_t2=None):
         T2 = T2_LADDER[i]
         try:
             cover, d, N, prec = try_interval(a0, w, q, T2)
-        except (ValueError, AssertionError) as exc:
+        except ValueError as exc:
             print("  skip a0=%.10f T2=%s: %s" % (a0, T2, exc), flush=True)
             continue
         if cover is None:
             continue
         signs = [s for (_, _, s) in cover]
-        line = ("[%.14f, %.14f] T2=%s N=%d prec=%d K=%d q=%s eta=%s G0=%s"
-                % (lo, hi, T2, N, prec, d["K"], q, d["eta"].str(3), d["G"][0].str(6)))
+        pattern = ''.join(SIGN_CHAR[s] for s in signs)
+        line = ("[%.14f, %.14f] T2=%s N=%d prec=%d K=%d q=%s eta=%s G0=%s sign=%s exact=[%s, %s]"
+                % (lo, hi, T2, N, prec, d["K"], q, d["eta"].str(3), d["G"][0].str(6),
+                   pattern, lo, hi))
         if mode == "cover" and all(s == want for s in signs):
             log.append((lo, hi, want, line))
             print("ok  " + line, flush=True)
@@ -205,11 +213,24 @@ def interval_main(argv):
     covered = all(log[i][1] == log[i + 1][0] for i in range(len(log) - 1))
     covered = bool(covered and log and log[0][0] == lo and log[-1][1] == hi)
     print("intervals: %d  contiguous cover of [%s, %s]: %s" % (len(log), lo, hi, covered))
+    arranged = True
+    if mode == "cover":
+        arranged = all(x[2] == want for x in log)
     if mode == "zero":
         zl = [x for x in log if x[2] == 0]
         print("zero piece:", zl[0][3].split("zero piece")[-1] if zl else "none")
+        arranged = len(zl) == 1
+        if arranged:
+            left = [x for x in log if x[1] <= zl[0][0]]
+            right = [x for x in log if x[0] >= zl[0][1]]
+            arranged = (len(left) + len(right) + 1 == len(log)
+                        and all(x[2] == -1 for x in left) and all(x[2] == 1 for x in right))
+            print("signs: %d intervals with f'' < 0 left of the zero piece, %d with f'' > 0 "
+                  "right of it: %s" % (len(left), len(right), arranged))
+        if not arranged:
+            print("FAIL the signs of the zero run are not - then +")
     print("elapsed %.1f s" % (time.time() - t0))
-    return 0 if (ok and covered) else 1
+    return 0 if (ok and covered and arranged) else 1
 
 
 def hankel_main(argv):
@@ -257,8 +278,28 @@ def read_record(name):
     return lines, path.name
 
 
+RE_OK = re.compile(r'^ok\*? .* sign=([-0+]+) exact=\[(\S+), (\S+)\]')
+
+
+def ok_lines(lines):
+    """The accepted intervals of a record, as sorted (lo, hi, sign pattern)."""
+    out = []
+    for s in lines:
+        if s.startswith('ok'):
+            m = RE_OK.match(s)
+            if not m:
+                raise ValueError('unreadable line: %s' % s)
+            out.append((Fraction(m.group(2)), Fraction(m.group(3)), m.group(1)))
+    return sorted(out)
+
+
+def chains(iv, lo, hi):
+    return bool(iv and iv[0][0] == lo and iv[-1][1] == hi
+                and all(iv[i][1] == iv[i + 1][0] for i in range(len(iv) - 1)))
+
+
 def check():
-    """Check the stored records: hashes, exit status and the cover of (1/2, 1)."""
+    """Check the stored records: hashes, exit status, signs and the cover of (1/2, 1)."""
     want = header().split(' python=')[0]
     fails = []
     recs = {}
@@ -289,16 +330,43 @@ def check():
                 and all(chain[i][1] == chain[i + 1][0] for i in range(len(chain) - 1)))
     top = chain[-1][1] if chain else None
     print('f\'\' < 0 runs (scaled) and the zero run chain from 1/2 to %s: %s' % (top, ok_chain))
+    # every accepted interval of a scaled run has sign -
+    ok_scaled = ok_chain
+    for (name, argv), (lo, hi) in zip(RUNS[:len(SCALED_RANGES)], chain):
+        iv = ok_lines(recs[name])
+        good = chains(iv, lo, hi) and all(p == '-' for (_, _, p) in iv)
+        ok_scaled = ok_scaled and good
+        if not good:
+            fails.append('%s: the intervals do not all have sign -' % name)
+    print('every interval of the scaled runs has f\'\' < 0: %s' % ok_scaled)
     zl = [s for s in recs['zero_0.668_0.6712'] if s.startswith('zero piece:')]
     zm = re.search(r'\[(\S+), (\S+)\]', zl[0]) if zl else None
     ok_zero = bool(zm) and Fraction(zm.group(1)) == Z_LO and Fraction(zm.group(2)) == Z_HI
     print('undecided piece of the zero run is [z-, z+] = [%s, %s]: %s' % (Z_LO, Z_HI, ok_zero))
+    # the zero run: sign - left of the interval holding [z-, z+], sign + right of it
+    iv = ok_lines(recs['zero_0.668_0.6712'])
+    zi = [x for x in iv if '0' in x[2]]
+    ok_signs = bool(ok_zero and ok_chain and len(chain) == len(SCALED_RANGES) + 1
+                    and chains(iv, chain[-1][0], chain[-1][1]) and len(zi) == 1
+                    and re.fullmatch(r'-?0\+?', zi[0][2])
+                    and zi[0][0] <= Z_LO and Z_HI <= zi[0][1])
+    if ok_signs:
+        left = [x for x in iv if x[1] <= zi[0][0]]
+        right = [x for x in iv if x[0] >= zi[0][1]]
+        ok_signs = (len(left) + len(right) + 1 == len(iv)
+                    and all(p == '-' for (_, _, p) in left)
+                    and all(p == '+' for (_, _, p) in right))
+        print('zero run: f\'\' < 0 on the %d intervals left of [%s, %s], f\'\' > 0 on the %d '
+              'intervals right of it, signs %s inside it: %s'
+              % (len(left), zi[0][0], zi[0][1], len(right), zi[0][2], ok_signs))
+    if not ok_signs:
+        fails.append('zero run: the signs are not - left of [z-, z+] and + right of it')
     hk = [s for s in recs['hankel_0.6705_1'] if s.startswith('boxes:')]
     hm = re.search(r'covered \[(\S+), (\S+)\]: yes', hk[0]) if hk else None
     ok_hankel = bool(hm) and Fraction(hm.group(2)) == 1 and Fraction(hm.group(1)) <= top
     print('Hankel test fails on [%s, 1], which overlaps [z+, %s]: %s'
           % (hm.group(1) if hm else '?', top, ok_hankel))
-    ok = ok_chain and ok_zero and ok_hankel and not fails
+    ok = ok_chain and ok_scaled and ok_zero and ok_signs and ok_hankel and not fails
     if ok:
         print('certified: case (a) for a in (1/2, z-], case (b) for a in [z+, 1), '
               'z+ - z- = %.2e' % float(Z_HI - Z_LO))

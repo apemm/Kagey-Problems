@@ -37,14 +37,14 @@ the check scripts and Lean files, write n for N.)
 
 A second revision of October 25 adds Theorem 4.4 (`thm:threshold`), a computer-assisted theorem
 that locates the change between the two cases of Theorem 4.2. Put
-z- = 1838418790980431/2748779069440000 = 0.66881286001459775... and
-z+ = 45960469774511/68719476736000 = 0.66881286001460103..., so that z+ - z- < 3.3e-15. Case (a)
+z- = 1838418790980431/2748779069440000 = 0.668812860014597754... and
+z+ = 45960469774511/68719476736000 = 0.668812860014601028..., so that z+ - z- < 3.3e-15. Case (a)
 (unimodal) holds for every a in (1/2, z-], case (b) (exactly two modes) holds for every a in
 [z+, 1), and a -> g_a''(0) has a zero in (z-, z+), with every zero in (1/2, 0.6712] there. Whether
 that zero is unique, and which case holds inside (z-, z+), stay open. So the fair-start case of the
 conjecture of Guerin, Laulin, Raschel and Simon is settled with the threshold located to within
-3.3e-15, up to flat modal intervals. Theorem 4.3 stays as the computer-free result for a >= 39/40,
-and the certificate covers the rest. The former Remark 4.4 is now Remark 4.5
+3.3e-15, unless g_a is constant on some interval. The certificate covers [z+, 1) by itself, and
+Theorem 4.3 gives a second, computer-free proof of case (b) for a >= 39/40. The former Remark 4.4 is now Remark 4.5
 (`rem:modes-threshold`). It sketches the method and keeps the finite-N values 0.6563 and 0.6592.
 The new Appendix G (`app_threshold.tex`) states the steps, proves the Hankel test (Lemma G.1,
 from Khinchine's theorem) and derives the theorem from the runs. The new Section S6 of the arXiv
@@ -65,7 +65,7 @@ and F.3, new Appendix F, `app_modes.tex`). It uses the positive bounded smooth d
 Guerin, Laulin and Raschel (Ann. Inst. Henri Poincare Probab. Stat. 62 (2026), 973-1005,
 Theorem 1.3). Theorem 4.3 (`thm:two-modes-near-one`) proves exactly two modes for
 39/40 <= a < 1, from the exact first two moments and the convexity of log Gamma. Together they
-settle, up to flat modal intervals, the case q = 1/2 of the conjecture of Guerin, Laulin, Raschel and Simon (EJP 30 (2025),
+settle, unless g_a is constant on some interval, the case q = 1/2 of the conjecture of Guerin, Laulin, Raschel and Simon (EJP 30 (2025),
 Remark 2.1(b)). Remark 4.4 (Remark 4.5 since the second revision of that day) gave the numerical threshold
 a_c = 0.66881 and the finite-N values 0.6563 (N = 4000) and 0.6592 (N = 8000), which
 `verify_elephant_modes.py` reproduces. They are
@@ -470,18 +470,33 @@ starts 9 processes in parallel, one per record in `data/threshold_*.txt`: 7 runs
 `scaled` covering [1/2, 0.668] by 40 intervals, the run `zero 0.668 0.6712 1/100` with 8
 intervals, and the run `hankel 0.6705` with 115 boxes. Each record has a header line with the
 sha256 of the 4 scripts and the software versions, the command line, the printed output and the
-exit status as its last line. All 9 exited with status 0. The whole run took 1711 s of wall time.
-The processes took 826, 538, 853, 1524, 1711, 1058 and 1072 s (scaled), 741 s (zero) and 1493 s
-(Hankel), about 2.7 hours in all. The mode `check`, which `full` runs at the end and `quick`
-runs first, confirmed that the records join into the cover of (1/2, 1) and that the undecided
-piece is exactly (z-, z+). The sha256 values of the run were
-f2d01d726387dfbc0c78537d9d26de3ffa2d35d35cbd19e422ed85a2309e4f6e (`certify_threshold.py`),
-24c237a5ef60bf618fee1271d8771b05f5f2246c65b9bf946e09e2450628b752 (`threshold_taylor.py`),
-875a8490bb54e540b5ba92a1ba0b993f3041238e14f8e636bc3c4c77277d6d73 (`threshold_pointwise.py`) and
-6a0f14fcf97e114becec241008b51f3f5345a3bf35de609aca4c3b842353f031 (`threshold_hankel.py`), all
+exit status as its last line. Each accepted interval is printed with its sign (`sign=-`,
+`sign=+`, or `sign=-0+` for the interval that holds the undecided piece) and its exact end
+points.
+
+The records now in `data/` come from a second full run, made later on October 25 after a review.
+That review asked for 2 changes to the code. First, the proof needs the 2 intervals of the zero
+run left of [0.6688, 0.6692] to be negative and the 5 to its right positive. The mode `zero` now
+fails unless the signs are - before the undecided piece and + after it, and the mode `check`
+requires this of the stored records, together with sign - on every interval of the scaled runs.
+Second, every soundness check that was an `assert` (which `python -O` removes) now raises
+ValueError through `require` in `threshold_pointwise.py`. No computation changed. The second run
+reproduced every interval of the first, with the same parameters, eta and G0 (for example
+eta = 1.04e-15 on [0.6688, 0.6692]). All 9 processes exited with status 0, and the whole run took
+1687 s of wall time. The processes took 857, 549, 889, 1514, 1687, 1094 and 1113 s (scaled),
+767 s (zero) and 1480 s (Hankel), about 2.8 hours in all. The mode `check`, which `full` runs at
+the end and `quick` runs first, confirmed the cover of (1/2, 1), the signs, and that the
+undecided piece is exactly (z-, z+). The sha256 values of the run are
+2824c6fe018e201cf2b21f6e067a3785bae4e85ff36f0296f6db5521f8762e73 (`certify_threshold.py`),
+d7489969a2e124cd0184b1491f5993d2b7aa3dfb1f86eec31cc321376b5c6d2c (`threshold_taylor.py`),
+0c581ba9ed8f7bff0fe204edecd1e76cd6696d931a6edfdbd9f2be98059b87bd (`threshold_pointwise.py`) and
+26cada2559cc7dc36d869d5b55d1dcaa10961cb3f1c6b8cdec617e8f6ae4731c (`threshold_hankel.py`), all
 with LF line endings. Any edit to these files, even to a comment, makes `check` fail until the
-certificate is rerun. The quick run of `verify_all.py` with the sixth script, which took 5.9
-minutes, is in `data/verify_output_2026-10-25_threshold.txt`.
+certificate is rerun. The first run (1711 s of wall time) had the hashes
+f2d01d72... , 24c237a5... , 875a8490... and 6a0f14fc... in the same order. The quick run of
+`verify_all.py` after the first run, which took 5.9 minutes, is in
+`data/verify_output_2026-10-25_threshold.txt`, and the quick run after the second, which took 5.7
+minutes, is in `data/verify_output_2026-10-25_review.txt`.
 
 ## Final editorial revision
 

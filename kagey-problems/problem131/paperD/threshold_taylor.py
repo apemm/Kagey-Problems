@@ -22,6 +22,8 @@ from fractions import Fraction
 
 from flint import acb, arb, arb_poly, arb_series, ctx, fmpq
 
+from threshold_pointwise import require
+
 
 def fq(x):
     x = Fraction(x)
@@ -40,10 +42,11 @@ class TaylorModel:
         self.a0b = a0b
         self.alpha = fq(self.a0 - rho)            # Re z >= alpha on the square
         if scaled:
-            assert self.alpha > arb("0.3")
+            require(self.alpha > arb("0.3"), "square reaches Re z <= 0.3")
         else:
-            assert self.alpha > arb("0.5")
-            assert (self.a0 + rho) ** 2 + rho ** 2 <= 1   # |z| <= 1 on the square
+            require(self.alpha > arb("0.5"), "square reaches Re z <= 1/2")
+            # |z| <= 1 on the square
+            require((self.a0 + rho) ** 2 + rho ** 2 <= 1, "square leaves |z| <= 1")
         self.N = N
         # enclosures of m_n(z) on the square S = a0 + [-rho, rho] + i[-rho, rho]
         S = acb(a0b + arb(0, fq(rho)), arb(0, fq(rho)))
@@ -86,14 +89,15 @@ class TaylorModel:
         # complex moment bound on S (Lemma lem:thr-moments(b))
         al = self.alpha
         A = ((N + 1) * al - 1) / (N * kappa)
-        assert A > 0
+        require(A > 0, "A must be positive")
         B = arb(0)
         for j in range(1, N + 1):
             bj = (mS[j].abs_upper() / A) ** (arb(1) / j)
             B = bj.upper() if bj.upper() > B else B
         B = (B * (1 + arb(2) ** -30)).upper()
         for j in range(1, N + 1):
-            assert mS[j].abs_upper() <= A * B ** j
+            require(mS[j].abs_upper() <= A * B ** j,
+                    "complex moment bound fails at j = %d" % j)
         r2 = fq(rho) ** 2
         self.At = (A * (r2 / (2 * al * al)).exp()).upper()
         self.Bt = (B * Gm.sqrt() * (r2 / (2 * al)).exp()).upper()
@@ -199,7 +203,7 @@ class TaylorModel:
         truncF = (T3 ** 3 / 3 * self.tailS(T3, 0)).upper()
         # cells: sup over a in I of |phi_a(t)|
         n2 = int((T2 / (2 * h)).mid().floor().unique_fmpz())
-        assert (2 * h * n2 - T2).is_zero()
+        require((2 * h * n2 - T2).is_zero(), "T2 must be a multiple of 2h")
         ncells = int((T3 / (2 * h)).upper().ceil().unique_fmpz()) + 1
         centers = [(2 * j + 1) * h for j in range(ncells)]
         vals = [[arb(0)] * ncells for _ in range(Kt)]
