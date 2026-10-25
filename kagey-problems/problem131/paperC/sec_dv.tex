@@ -62,13 +62,16 @@ So a field replaces the diagonal $q_i$ by $q_i-v_i$ and changes nothing else.
 
 \begin{lemma}[monotonicity in the face]\label{lem:face-monotone}
 If $F\subsetneq G$ are faces and $Q_G$ is irreducible, then
-$\lambda_G(v_G)<\lambda_F(v_F)$ for every field $v\in\R^G$. In particular
-$\lambda_V(v)<\lambda_F(v_F)$ for every proper face $F$ when $Q$ is
-irreducible, and for every fixed $v\in\R^d$ there is $\gamma(v)>0$ with
+$\lambda_G(v_G)<\lambda_F(v_F)$ for every field $v\in\R^G$. Now let $Q$ be
+irreducible. Then $\lambda_V(v)<\lambda_F(v_F)$ for every proper face $F$, and
+for every fixed $v\in\R^d$ there is $\gamma(v)>0$ with
 $\lambda_F(v_F)\ge\lambda_V(v)+\gamma(v)$ for all proper $F$. So the score
 $\Phi_{\tau,v}(F)=|F|-1+\tau\lambda_F(v_F)$ is least at $V$ for
 $\tau>(d-1)/\gamma(v)$.
 \end{lemma}
+
+The last two claims need $Q$ irreducible. For $d=2$, $q_{12}=1$ and $q_{21}=0$
+we have $\lambda_V=0=\lambda_{\{2\}}$.
 
 \begin{proof}
 Choose $c$ with $B=Q_G+\operatorname{diag}v_G+cI\ge0$. Its principal submatrix on
@@ -79,7 +82,8 @@ irreducible matrix $B$ has a positive entry in a row of $F$ and a column off $F$
 So $\varrho(\widetilde B)<\varrho(B)$~\cite[Ch.~2]{bermanplemmons1994},
 and $\varrho(\widetilde B)$ is the Perron root of the submatrix on $F$, since the
 padding adds only the eigenvalue $0$. This holds whether or not $F$ is
-irreducible, and subtracting $c$ gives the first claim. For fixed $v$ there are
+irreducible, and subtracting $c$ gives the first claim. If $Q$ is irreducible,
+the first claim with $G=V$ gives the second. For fixed $v$ there are
 finitely many proper faces, so $\gamma(v)$, the least of the numbers
 $\lambda_F(v_F)-\lambda_V(v)$, is positive. Finally
 $\Phi_{\tau,v}(F)-\Phi_{\tau,v}(V)=|F|-d+\tau(\lambda_F(v_F)-\lambda_V(v))\ge-(d-1)+\tau\gamma(v)$.
@@ -241,4 +245,183 @@ unit vector $\psi\ge0$ arises from $\alpha=\psi\circ\psi$, and the off-diagonal
 entries of $S_F-\operatorname{diag}v$ are nonpositive, so passing to the entrywise
 modulus does not increase the quadratic form. Hence the minimum over $\Delta_F$ is
 $\lambda_{\min}(S_F-\operatorname{diag}v)$.
+\end{proof}
+
+\subsection{The functional of the discrete chain}\label{sec:discrete-rate}
+
+When $T$ is a fixed fraction of $N$ the counts follow the functional of the
+discrete chain itself. Let $0<h<1/q_{\max}$ and $p_i=1-hq_i$, so that $I+hQ$ is
+a stochastic matrix with positive diagonal. For a face $F$ and
+$\alpha\in\Delta_F$ let
+\[
+ J^{(h)}_F(\alpha)=\frac1h\sup_{u\in(0,\infty)^F}\sum_{i\in F}\alpha_i
+ \log\frac{u_i}{((I+hQ_F)u)_i},
+\]
+and put $J^{(0)}_F=J_F$. For $F=V$, $hJ^{(h)}_V$ is the Donsker and Varadhan rate
+of the empirical measure of the chain with transition matrix
+$I+hQ$~\cite{dv1975}. For $\psi\in\R^F$ put
+$\theta_i(\psi)=\sum_{j\in F\setminus\{i\}}q_{ij}e^{\psi_j-\psi_i}$, and let
+$L_h(y)=\int_0^1y\,ds/(1-shy)$, which is $-\log(1-hy)/h$ for $h>0$ and $y$ for
+$h=0$. With $u=e^\psi$ we have $((I+hQ_F)u)_i/u_i=p_i+h\theta_i(\psi)$, so
+\[
+ J^{(h)}_F(\alpha)=\sup_{\psi\in\R^F}G_h(\alpha,\psi),\qquad
+ G_h(\alpha,\psi)=\sum_{i\in F}\alpha_iL_h\bigl(q_i-\theta_i(\psi)\bigr),
+\]
+and at $h=0$ this is the supremum that defines $J_F$. Since $L_h(y)\ge y$, we
+have $J^{(h)}_F\ge J_F$. We say that a function on $[0,h_*]\times U$ is
+real-analytic up to $h=0$ if near each point it is the restriction of a
+real-analytic function on an open set.
+
+\begin{proposition}[the discrete functional]\label{prop:discrete-rate}
+Fix $h_*$ with $h_*q_{\max}<1$.
+\begin{enumerate}[(a)]
+\item For every face $F$, every $0<h<1/q_{\max}$ and every $\alpha\in\Delta_F$,
+$J^{(h)}_F(\alpha)=J^{(h)}_V(\alpha)$. Hence $J^{(h)}_F=J^{(h)}_{F'}$ on
+$\Delta_{F'}$ for every nonempty $F'\subseteq F$.
+\item Let $F$ be irreducible with $k\ge2$, and let
+$(h,\alpha)\in[0,h_*]\times\Delta_F^\circ$. The supremum defining
+$J^{(h)}_F(\alpha)$ is attained at exactly one $\psi=\psi^{(h)}(\alpha)$ with
+$\psi_1=0$, and there the Hessian of $G_h(\alpha,\cdot)$ in
+$(\psi_2,\dots,\psi_k)$ is negative definite. The maps $\psi^{(h)}(\alpha)$,
+$\theta^{(h)}(\alpha)=\theta(\psi^{(h)}(\alpha))$ and $J^{(h)}_F(\alpha)$ are
+real-analytic on $[0,h_*]\times\Delta_F^\circ$ up to $h=0$, and
+$\theta^{(0)}(\alpha)=A_Fr_\alpha/r_\alpha$ with $r_\alpha$ from
+Proposition~\ref{prop:rate}(b). The function $J^{(h)}_F$ is convex on $\Delta_F$
+and strictly convex on $\Delta_F^\circ$.
+\item Let $F$ be irreducible with $k\ge2$, $0\le h\le h_*$,
+$\alpha\in\Delta_F^\circ$ and $\psi\in\R^F$, and put $\theta=\theta(\psi)$. Then
+$\psi$ attains the supremum if and only if the vector
+$(\alpha_i/(p_i+h\theta_i))_{i\in F}$ is proportional to $l\circ e^\psi$, where
+$l$ is a positive left null vector of $A_F-\operatorname{diag}\theta$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(a) As in the proof of Proposition~\ref{prop:restriction}, the terms
+$hq_{ij}u_j$ with $j\notin F$ only increase $((I+hQ)u)_i$, which gives
+$J^{(h)}_V\le J^{(h)}_F$ on $\Delta_F$, and $u=\varepsilon$ off $F$ with
+$\varepsilon\downarrow0$ gives the converse, since the diagonal of $I+hQ_F$ keeps
+the full exit rates. The second claim is the first for $F$ and for $F'$.
+
+(c) We have $\partial\theta_i/\partial\psi_m=q_{im}e^{\psi_m-\psi_i}$ for
+$m\ne i$ and $\partial\theta_i/\partial\psi_i=-\theta_i$, and
+$L_h'(y)=1/(1-hy)$. So with $w_i=\alpha_i/(p_i+h\theta_i)$ the gradient of
+$G_h(\alpha,\cdot)$ is $-w^\top G^\psi$, where $G^\psi$ is the conservative
+generator of the proof of Proposition~\ref{prop:rate}, with off-diagonal entries
+$q_{ij}e^{\psi_j-\psi_i}$. The function $G_h(\alpha,\cdot)$ is concave by the
+proof of (b) below. So $\psi$ attains the supremum if and only if $w$ is
+proportional to the stationary law of $G^\psi$. With
+$U=\operatorname{diag}(e^\psi)$ we have
+$G^\psi=U^{-1}(A_F-\operatorname{diag}\theta)U$, whose stationary law is
+proportional to $l\circ e^\psi$.
+
+(b) \emph{Concavity.} At $h=0$ the Hessian of $-G_0$ in a direction $\delta$ is
+$\sum_i\alpha_i\sum_{j\ne i}q_{ij}e^{\psi_j-\psi_i}(\delta_j-\delta_i)^2$. For
+$h>0$,
+\[
+ -hG_h(\alpha,\psi)=\sum_{i\in F}\alpha_i
+ \log\Bigl(p_i+\sum_{j\in F\setminus\{i\}}hq_{ij}e^{\psi_j-\psi_i}\Bigr).
+\]
+The $i$-th term is $\alpha_i$ times the logarithm of a sum of exponentials of
+the affine functions $0$ and $\psi_j-\psi_i$, with the positive weights $p_i$ and
+$hq_{ij}$. Its second derivative in a direction $\delta$ is $\alpha_i$ times the
+variance of the values $0$ and $\delta_j-\delta_i$ under the weights
+proportional to $p_i$ and $hq_{ij}e^{\psi_j-\psi_i}$. As $p_i>0$, it vanishes
+only if $\alpha_i=0$ or $\delta_j=\delta_i$ on every edge $i\to j$ of $G_F$. So
+for every $h\in[0,h_*]$ the function $G_h(\alpha,\cdot)$ is concave, and for
+$\alpha\in\Delta_F^\circ$ its Hessian is negative definite on $\{\delta_1=0\}$,
+since $G_F$ is strongly connected. This is where $h_*q_{\max}<1$ is used.
+
+\emph{The supremum is attained.} Let $\psi_1=0$ and let $\bar\psi$ be the
+largest difference of two entries of $\psi$. As in the proof of
+Proposition~\ref{prop:rate}(b), some edge $i\to j$ has
+$\psi_j-\psi_i\ge\bar\psi/(k-1)$, so $\theta_i(\psi)\ge ae^{\bar\psi/(k-1)}$ with
+$a$ the least positive rate in $F$. Since $L_h$ is increasing and tends to
+$-\infty$ at $-\infty$, the term of $i$ tends to $-\infty$ as $\bar\psi\to\infty$,
+while every term is at most $\alpha_iL_h(q_i)\le q_{\max}/p_{\min}$, with
+$p_{\min}=1-h_*q_{\max}$. So the supremum is attained, and by strict concavity at
+exactly one $\psi$ with $\psi_1=0$.
+
+\emph{Analyticity.} The function $L_h(y)$ is real-analytic in $(h,y)$ where
+$1-hy>0$, including $h=0$ and small negative $h$, and $1-h(q_i-\theta_i)\ge p_i>0$
+for $h\in[0,h_*]$. So $G$ is real-analytic near every point $(h,\alpha,\psi)$ with
+$h\in[0,h_*]$. At the maximizer the gradient in $(\psi_2,\dots,\psi_k)$ vanishes
+and the Hessian is invertible. The implicit function theorem gives a real-analytic
+solution near $(h,\alpha)$, which is $\psi^{(h)}(\alpha)$ for $h\ge0$ by
+uniqueness. Hence $\theta^{(h)}(\alpha)$ and
+$J^{(h)}_F(\alpha)=G_h(\alpha,\psi^{(h)}(\alpha))$ are real-analytic up to
+$h=0$. At $h=0$ the maximizer is $\log r_\alpha$, normalized.
+
+\emph{Convexity.} As a supremum of affine functions, $J^{(h)}_F$ is convex. Let
+$\alpha^0\ne\alpha^1$ lie in $\Delta_F^\circ$, let $0<s<1$, and let $\psi$ attain
+$J^{(h)}_F(\alpha^s)$ at $\alpha^s=(1-s)\alpha^0+s\alpha^1$. Equality in
+$J^{(h)}_F(\alpha^s)\le(1-s)J^{(h)}_F(\alpha^0)+sJ^{(h)}_F(\alpha^1)$ would make
+$\psi$ attain the supremum at $\alpha^0$ and at $\alpha^1$. By (c) both would then
+be proportional to $((p_i+h\theta_i)l_ie^{\psi_i})_{i\in F}$, and as probability
+vectors they would be equal.
+\end{proof}
+
+For a field $v\in\R^F$, $J^{(h)}_F(\alpha)-v\cdot\alpha$ is $1/h$ times the
+supremum of $\sum_i\alpha_i\log(u_i/(Mu)_i)$ with
+$M=e^{h\operatorname{diag}v}(I+hQ_F)$, since $-hv_i\alpha_i=\alpha_i\log e^{-hv_i}$.
+For any face $F'$ and $v\in\R^{F'}$ we put
+$\lambda^{(h)}_{F'}(v)=-\frac1h\log\varrho\bigl(e^{h\operatorname{diag}v}(I+hQ_{F'})\bigr)$,
+which is defined since the matrix is nonnegative with a positive diagonal.
+
+\begin{proposition}[the discrete exit rate]\label{prop:discrete-variational}
+Let $F$ be irreducible with $k\ge2$, let $0<h<1/q_{\max}$ and $v\in\R^F$, and
+put $M=e^{h\operatorname{diag}v}(I+hQ_F)$. Let $r$ and $l$ be positive right and
+left Perron vectors of $M$ with $l\cdot r=1$, and put
+$\alpha^{*(h)}_F(v)=l\circ r$.
+\begin{enumerate}[(a)]
+\item On $\Delta_F$, $J^{(h)}_F(\alpha)-v\cdot\alpha\ge\lambda^{(h)}_F(v)$, with
+equality only at $\alpha^{*(h)}_F(v)$, which lies in $\Delta_F^\circ$. For every
+nonempty face $F'\subsetneq F$ and every $\alpha\in\Delta_{F'}$,
+$J^{(h)}_F(\alpha)-v\cdot\alpha\ge\lambda^{(h)}_{F'}(v_{F'})>\lambda^{(h)}_F(v)$.
+\item At $v=0$, $\varrho(M)=1-h\lambda_F$ and $\alpha^{*(h)}_F(0)=\alpha^*_F$, so
+$\lambda^{(h)}_F(0)=-\frac1h\log(1-h\lambda_F)$ for every $h$.
+\item Fix $h_*$ with $h_*q_{\max}<1$, and put $\lambda^{(0)}_F(v)=\lambda_F(v)$ and
+$\alpha^{*(0)}_F(v)=\alpha^*_F(v)$. Then $\lambda^{(h)}_F(v)$ and
+$\alpha^{*(h)}_F(v)$ are real-analytic on $[0,h_*]\times\R^F$ up to $h=0$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Put $B=(M-I)/h$. Its off-diagonal entries $e^{hv_i}q_{ij}$ are nonnegative and
+positive exactly on the edges of $G_F$, so $B$ is an irreducible Metzler matrix.
+Its entries are real-analytic in $(h,v)$ up to $h=0$, and $B=Q_F+\operatorname{diag}v$
+at $h=0$. Let $\kappa=\varrho(B)$. Then $\varrho(M)=1+h\kappa$, and $M$ and $B$
+have the same Perron vectors. As $\kappa$ is a simple eigenvalue of $B$, it and the
+normalized Perron vectors are real-analytic in $(h,v)$ up to $h=0$, and so is
+$\lambda^{(h)}_F(v)=-\kappa\int_0^1ds/(1+sh\kappa)$. This gives (c). At $v=0$ we
+have $B=Q_F$ for every $h$, which gives (b).
+
+(a) \emph{A lower bound on every face.} Let $F'\subseteq F$ be nonempty,
+irreducible or not, and let $M'$ be the principal submatrix of $M$ on $F'$, which
+is $e^{h\operatorname{diag}v_{F'}}(I+hQ_{F'})$ since the diagonal keeps the full
+exit rates. For $\alpha\in\Delta_{F'}$, part (a) of
+Proposition~\ref{prop:discrete-rate} gives
+$J^{(h)}_F(\alpha)=J^{(h)}_{F'}(\alpha)$, so $J^{(h)}_F(\alpha)-v\cdot\alpha$ is
+$1/h$ times the supremum of $\sum_{i\in F'}\alpha_i\log(u_i/(M'u)_i)$ over
+$u\in(0,\infty)^{F'}$. Let $s>\varrho(M')$. As $M'\ge0$, the vector
+$u=(sI-M')^{-1}\ones=\sum_{j\ge0}s^{-j-1}M'^j\ones$ is positive, and $M'u=su-\ones$.
+Also $M'u>0$, since $M'$ has a positive diagonal. So $u_i/(M'u)_i>1/s$ for every
+$i$, and letting $s\downarrow\varrho(M')$ gives
+$J^{(h)}_F(\alpha)-v\cdot\alpha\ge\lambda^{(h)}_{F'}(v_{F'})$. If $F'\ne F$, then
+$M'$ padded with zeros is at most $M$ and differs from it, since the irreducible
+$M$ has a positive entry in a row of $F'$ and a column off $F'$. So
+$\varrho(M')<\varrho(M)$~\cite[Ch.~2]{bermanplemmons1994}, which gives the second
+claim. The case $F'=F$ is the lower bound.
+
+\emph{Equality.} With $u=r$ every ratio $r_i/(Mr)_i$ is $1/\varrho(M)$. The
+function $\psi\mapsto\sum_i\alpha_i(\psi_i-\log(Me^\psi)_i)$ is concave, and at
+$\psi=\log r$ its derivative in $\psi_m$ is
+$\alpha_m-\sum_i\alpha_iM_{im}r_m/(\varrho(M)r_i)$. For $\alpha=l\circ r$ this is
+$\alpha_m-(l^\top M)_mr_m/\varrho(M)=0$. So $u=r$ attains the supremum at
+$\alpha^{*(h)}_F(v)$, and equality holds there. This point lies in $\Delta_F^\circ$
+since $r,l>0$.
+
+\emph{Uniqueness.} On the boundary of $\Delta_F$ the inequality is strict by the
+second claim. In $\Delta_F^\circ$, $J^{(h)}_F(\alpha)-v\cdot\alpha$ is strictly
+convex by Proposition~\ref{prop:discrete-rate}(b), so it has only one minimizer.
 \end{proof}

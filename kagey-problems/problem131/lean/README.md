@@ -139,10 +139,10 @@ Remark 4.7, which the paper cites. The items that are not formalized are listed 
 ## Papers C1 (`paperC/problem131_chains.tex`) and C2 (`paperC2/problem131_reconstruction.tex`)
 
 `PaperC/` is about the chain `P = I + (T/N)Q` and the planar walk. Paper C1 is "Occupation counts
-of rarely switching Markov chains: stratified local laws, crossings and the boundary layer", for
-the Journal of Theoretical Probability. Paper C2 is "What the occupation law of a finite Markov
-chain determines: principal minors, modal supports and cycle trees", for Stochastic Processes and
-their Applications. The earlier EJP version, `archive/paperC_switching_ejp/problem131_switching.tex`,
+of rarely switching Markov chains: stratified local laws, support selection and the boundary
+layer", for the Journal of Theoretical Probability. Paper C2 is "What the occupation law of a
+finite Markov chain determines: time reversal, principal minors and cycle trees", for Stochastic
+Processes and their Applications. The earlier EJP version, `archive/paperC_switching_ejp/problem131_switching.tex`,
 states some results that neither paper keeps, and `PaperC/MAP.md` lists their Lean theorems in a
 section of their own. The library proves the following.
 
@@ -269,11 +269,12 @@ lists the declarations, their hypotheses and axioms, and what is left out.
 `PaperC/` has 4 new modules for finite and algebraic results. `DVRestriction` proves the
 restriction identity `J_F = J_V` on a face (Proposition 3.1 of C1). `PrincipalMinors` proves the
 expansion of `R_F` in principal minors and the equality of characteristic polynomials (Section 3.1
-and Theorem 3.5 of C2). `GeneratorFiber` proves the irreducibility criterion, the generator point,
-the sign lemma and the fiber `{Q, Q*}` on three states (Theorem 3.5 and Remark 3.6 of C2).
-`CriticalWindow` proves the exact parts of the four-state example of low temperature (Example 6.5
-of C2). `PaperC/MAP.md` maps them to the statements, with the numbers of the builds of that day,
-and lists what is not formalized. After the docstrings were updated to the split papers,
+and Corollary 3.6(a) of C2, in the numbering of the builds of October 25, 2026). `GeneratorFiber`
+proves the irreducibility criterion, the generator point, the sign lemma and the fiber `{Q, Q*}` on
+three states (Corollary 3.6(d) and Remark 3.7 of C2). `CriticalWindow` proves the exact parts of
+the four-state example of low temperature (Example 6.5 of C2). `PaperC/MAP.md` maps them to the
+statements, with the numbers of the current builds (C1 with 81 pages, C2 with 43 pages in the
+journal build and 46 in the arXiv build), and lists what is not formalized. After the docstrings were updated to the split papers,
 `lake build PaperC` completed with no errors.
 
 ## What is not in Lean

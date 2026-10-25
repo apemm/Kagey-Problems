@@ -18,36 +18,64 @@ matrices, and the asymptotic results are not in Lean.
 \subsection*{Computations}
 
 The command \texttt{py -I verify\_all.py} in the folder \nolinkurl{paperC} runs the
-6 scripts that check this paper, in about four minutes, and writes each output,
+9 scripts that check this paper, in about four minutes, and writes each output,
 headed by the sha256 of its script, to \nolinkurl{paperC/data}. Each check is an
 assertion, and the checks in floating point use a tolerance without interval
-certification. The scripts \texttt{verify\_first\_order.py},
-\texttt{verify\_second\_order.py}, \texttt{verify\_rate\_flows.py} and
-\texttt{verify\_examples.py} compute the law in two independent ways and check
-Sections~\ref{sec:model} to~\ref{sec:secondorder} and~\ref{sec:complete},
-including the gaps quoted after Theorem~\ref{thm:crossing}. The script
-\texttt{verify\_layer.py} checks the constants and kernels of
+certification. The scripts \texttt{verify\_first\_order.py} and
+\texttt{verify\_second\_order.py} compute the law in two independent ways, by the run
+expansion and by a dynamic program or a discrete torus integral, and check
+Sections~\ref{sec:model} to~\ref{sec:secondorder}, including the gaps quoted after
+Theorem~\ref{thm:crossing}. The script \texttt{verify\_full\_range.py} checks
+Lemma~\ref{lem:torus}, Lemma~\ref{lem:discrete-hessian} and Theorems~\ref{thm:local}(b)
+and~\ref{thm:facemax}(a). For $q_{12}=1$, $q_{21}=2$ and $N=4000$ the ratio $R$ of the exact
+law to Theorem~\ref{thm:local}(b) has $T|R-1|\le0.2$ for $16\le T\le N/4$, while the continuum
+form has $T|R-1|$ of order $T$ from $T=200$ on. The script \texttt{verify\_examples.py} finds the
+first-order winners on complete graphs, cycles and small graphs in two ways, and the
+finite-$N$ modes from two exact codes. The script \texttt{verify\_rate\_flows.py}
+computes no law. It checks the rate of Proposition~\ref{prop:rate} against a form
+through flows. The script \texttt{verify\_complete.py} checks
+Theorem~\ref{thm:simplex-balance}, Theorem~\ref{thm:simplex-crossing}(i) and
+Remark~\ref{rem:simplex-edge-mode} in exact arithmetic for small $N$, and the failure of
+balancing for a start in one state quoted after Theorem~\ref{thm:C}. No script checks
+Theorem~\ref{thm:simplex-crossing}(ii) and (iii) or Corollary~\ref{cor:simplex-modes}
+at large $N$. The script \texttt{verify\_layer.py} checks the constants and kernels of
 Section~\ref{sec:boundary-layer} on three chains with three states. One of them
-is the cycle of Proposition~\ref{prop:layer-cubic}, with $\omega_\beta=5.1820$
+is the cycle of Proposition~\ref{prop:layer-cubic}(e), with $\omega_\beta=5.1820$
 and $\gamma_\beta=3.4179$ against $q_3=3$, and the script recomputes the
 derivatives of $J_G(\beta,z)$ and $\varkappa_\beta$ for it exactly. The
-generalized kernel matches $f_F/f_G$ to $O(1/T)$ for $x$ from $0.01/T$ to $T/4$.
+generalized kernel matches $f_F/f_G$ to $O(1/T)$ for $x$ from $0.01/T$ to $T/4$. The
+script also checks the example after Proposition~\ref{prop:layer-cubic}, where
+$J_G(\beta,\cdot)$ is affine at the uniform $\beta$ to $10^{-15}$.
 The script \texttt{verify\_layer\_general.py} checks Theorem~\ref{thm:L-facet}
 on two facets with four states, a facet of a non-reversible face with five
 states and a path whose jump chain is periodic. It computes the word sum exactly
 and prints $S$ times the relative error for $S$ from $4$ to $32$. These products
-settle near $0.438$ and $0.545$ at $z=0$, as~\eqref{eq:L-facet} predicts. The
+settle near $0.438$ and $0.545$ at $z=0$, as~\eqref{eq:L-facet} predicts. The script
+\texttt{verify\_counts.py} checks Section~\ref{sec:reducible-max} and
+Section~\ref{sec:layer-counts}. It checks Theorem~\ref{thm:pair-counts}(a) against an
+enumeration of all paths in exact arithmetic, for every $N\le12$ and two values of $h$, and
+the bounds of Theorem~\ref{thm:pair-counts}(c) on a grid up to $N'=10^4$. For the cycle of
+Proposition~\ref{prop:layer-cubic}(e) with $i=3$ and $\beta=(\frac12,\frac12)$ it computes
+the exact law by a dynamic program and the lattice kernel by a contour integral, and the error
+$E$ of Theorem~\ref{thm:layer-counts}(a) satisfies $0<E\le0.62\,T^2/N$ and falls by a factor
+of about $2.5$ each time $N'$ doubles, at $T=8$, $n_3=10$ and $200\le N'\le1600$. On the face $\{1\}\to\{2,3\}$ with
+$q_{12}=q_{23}=q_{32}=1$ and the start in state $1$, where $p_F=\frac32$ and
+$K^{\rm red}_F=\sqrt{2/\pi}$, it computes $M_F$ exactly at $N=40000$, and the slope of
+$\log M_F$ in $\log T$ is within $10^{-3}$ of $\frac32$ for $8\le T\le20$, far from the powers $1$
+and $2$ of Theorem~\ref{thm:first}(ii), while $M_F$ divided by $N^{-2}T^{3/2}$ is within
+$0.05\%$ of $\sqrt{2/\pi}$. The
 figures illustrate the theorems, and no statement is deduced from them or from
 these numbers.
 
 \subsection*{Open questions}
 
-A local law up to the lower-dimensional corners of a face is open. For a reducible face we
-expect the power of $T$ in $M_F$ to be $(k^*-1)/2+k_F-k^*$, between the bounds of
-Theorem~\ref{thm:first}(ii). Example~\ref{ex:threecycle} agrees, since there
-$M_{\{1,2\}}$ has the power $T^1$ with $k_F=2$ and $k^*=1$. We do not know whether a zero of
-$D_N$ in Theorem~\ref{thm:crossing} can fail to be unique. We know no example where it
-fails, and we prove uniqueness only in special cases, such as the crossings with a vertex
-on the complete graph (Theorem~\ref{thm:simplex-crossing}). A discrete form of
-Theorem~\ref{thm:layer}, with the Laguerre polynomials of Section~\ref{sec:vertex} in
-place of the Bessel kernel, would need a discrete form of Theorem~\ref{thm:L-facet}.
+A local law up to the lower-dimensional corners of a face is open. The results on reducible
+faces, Theorems~\ref{thm:first}(ii) and~\ref{thm:reducible} and
+Corollary~\ref{cor:reducible-crossing}, and Theorem~\ref{thm:simplex-crossing}(ii) are proved
+for $T\le N^{1/3}$, and we have not extended them to $T\le h_*N$. We do not know whether the
+zero in Corollary~\ref{cor:reducible-crossing} is unique, or where the most likely counts of a
+reducible face lie. For a facet of three or more states, the law of the counts near the facet
+when $T^2/N$ is of order one is open. Theorem~\ref{thm:layer-counts} has an error of order one
+there, and a statement would need a discrete form of Theorem~\ref{thm:L-facet}. We do not know
+whether $r_\beta=0$ forces $\pi^{\rm in}_\beta=\pi^{\rm out}_\beta$ in
+Proposition~\ref{prop:layer-cubic}.

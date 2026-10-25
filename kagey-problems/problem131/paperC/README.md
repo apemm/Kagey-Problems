@@ -5,8 +5,9 @@ selection and the boundary layer". Target: Journal of Theoretical Probability. T
 theory. The identifiability half of the former Paper C is the companion paper in `../paperC2` (see
 History below).
 
-A Markov chain on d states with transition matrix I + (T/N)Q runs for N steps, so it makes about
-T switches. Its composition is the vector of occupation counts. The paper describes the law of the
+A Markov chain on d states with transition matrix I + (T/N)Q runs for N steps, so its path
+follows the continuous-time chain with generator Q up to time T while the transition matrix tends
+to the identity. Its composition is the vector of occupation counts. The paper describes the law of the
 composition on every face of the simplex when switches are rare, and reads off which face carries
 the most likely composition. On each face the law is a local limit law whose exponent is a lattice
 entropy of one power of N per dimension plus T times the Donsker and Varadhan cost of the chain
@@ -22,10 +23,9 @@ chains", arXiv:2610.06935) treats the two-state walk at every N. This paper uses
 Theorem 8.2).
 `../archive/paperB` ("Vertex crossings in a symmetric Markov multinomial model",
 arXiv:2610.09258v1) treats the complete graph, and this paper replaces it as version 2 of the same
-entry. Its results on the crossings with a vertex and near a vertex are reproved here as cases of
-the general theory, and it is cited for the results that are not reproved (the next term of the
-crossing equation, the Bessel majorant, the boundary of the simplex). The introduction lists both
-in one paragraph, and nowhere else does the paper repeat the overlap. `../paperC2` ("What the
+entry. Table 1 of the introduction lists each result of it that is reproved here, where, which
+part, and whether the proof is a case of the general theory or the exact argument of the preprint.
+The results that are not reproved are listed in the paragraph before the table. `../paperC2` ("What the
 occupation law of a finite Markov chain determines: principal minors, modal supports and cycle
 trees", in preparation) asks what the Donsker and Varadhan functional and the modal supports
 determine about the generator. `EXPORTS.md` lists the statements of this paper that it cites, with
@@ -45,44 +45,73 @@ locally (p = 1 - (d-1)h, u = h/p, V_N, S_n, a_k, D_k).
 ## What is proved
 
 The numbers are those of the build of October 25, 2026, after the revision for the JTP referee
-report of audit 23 (`problem131_chains.pdf` has 60 pages and the Springer version
-`problem131_chains_sn.pdf` 67).
+report of audit 23, the second review of audit 25, the local law over the whole switching
+range of audit 28 and the reducible faces and the counts near a facet of audit 30
+(`problem131_chains.pdf` has 81 pages and the Springer version `problem131_chains_sn.pdf` 89).
 Theorems A, B and C in the introduction collect the headline results. Theorem A is the law on a
-face (Theorems 5.6 and 5.7), Theorem B the support of the mode and the crossing equation (Theorems
-4.2 and 5.8), and Theorem C the complete graph (Section 7).
+face (Theorems 5.6 and 5.7, and Theorem 4.5 for the face maxima of every admissible face),
+Theorem B the support of the mode and the crossing equation (Theorems 4.2 and 5.8, and Corollary
+4.6), and Theorem C the complete graph (Section 7).
 
 The law on a face.
 - The killed functional (Section 3). The restriction identity J_F = J_V on the face (Proposition
   3.1), the monotonicity of the exit rate in the face (Lemma 3.2), and the variational formula
-  lambda_F(v) = min (J_F - v.alpha) with a unique minimizer (Proposition 3.4).
+  lambda_F(v) = min (J_F - v.alpha) with a unique minimizer (Proposition 3.4). The same for the
+  discrete chain I + hQ (Section 3.3): J^(h)_F is 1/h times its Donsker and Varadhan rate, it is
+  real-analytic in (h, alpha) up to h = 0 (Proposition 3.5), and its least value on a face is
+  -(1/h) log(1 - h lambda_F), at alpha*_F for every h (Proposition 3.6).
 - First-order face selection, for every start (Theorem 4.2, with a field in Remark 4.3). The mode
   lies on a face that minimizes Phi_tau, and the winners are read off the lower-left boundary of a
   convex hull (Theorem 4.4).
+- Reducible faces (Section 4.4, added October 25, 2026, audit 30). For every admissible face,
+  M_F = N^-(k_F-1) T^(p_F) K^red_F e^(-T lambda_F) (1 + O(1/T + T^2/N)) for T_1 <= T <= N^(1/3)
+  (Theorem 4.5), with p_F = (k*-1)/2 + k_F - k*, where k* is the least size of a component of
+  least exit rate, and an explicit K^red_F that equals K_F on irreducible faces. Corollary 4.6
+  locates every crossing of two admissible faces in [T_1, N^(1/3)] up to O(1/L), with the
+  coefficient (p_F - p_G)/Delta of log log N. Proofs in Appendix E.1 and E.2.
 - The stratified local law (Theorem 5.6). For a face with (H), uniformly on compact parts of the
-  open face and for 1 <= T <= N^(1/3), -log P_N(n) = (k-1)L + T J_V(n/N) - ((k-1)/2) log T -
-  log C_F(n/N) + O(1/T + T^2/N). It rests on the local law (Theorem 5.4), the discrete transfer
-  (Lemma 5.5) and the restriction identity.
-- Face maxima with a field (Theorem 5.7), uniform for v in a compact set. The crossing equation
-  (Theorem 5.8) locates every crossing of two such faces up to O(1/L), and the tie windows
+  open face and for 1 <= T <= h_* N with h_* q_max < 1, -log P_N(n) = (k-1)L + T J^(h)_V(n/N) -
+  ((k-1)/2) log T - log C^(h)_F(n/N) + O(1/T). For T <= N^(1/3) this gives the continuum form
+  with J_V, C_F and error O(1/T + T^2/N), and the T^2/N is a real second-order term of the
+  continuum exponent (the paragraph after Theorem 5.7). It rests on the local law (Theorem 5.4,
+  part (a) in continuous time and part (b) for the counts), which puts Good's discrete formula
+  on the torus of the continuum (Lemma A.2), and on the restriction identities.
+- Face maxima with a field (Theorem 5.7), uniform for v in a compact set: for 1 <= T <= h_* N
+  with K^(h)_F (1 - h lambda_F)^N at v = 0, and the continuum form for T <= N^(1/3). The
+  crossing equation (Theorem 5.8) locates every crossing of two such faces up to O(1/L), and for
+  large N there is exactly one crossing in [1, h_* N] (Theorem 5.8(iv), from the derivative of
+  the local law in T, Lemma A.5). Lemma 4.1 holds without the factor exp(C h^2 abs(n)), by the
+  exact discrete Chernoff bound, equation (30).
+  The tie windows
   (Theorem 5.9) follow the upper envelope of explicit lines. When no third point of the hull lies
 on an edge, Corollary 5.10 locates every change of the mode for T of order L up to O(1/L). A
 reducible face where the
-  coefficient of log log N changes (Example 5.11), and face maxima uniform over a compact class of
-  reversible chains (Proposition 5.12).
-- The boundary layer at a facet (Section 6). Pair faces with an explicit error (Proposition 6.3),
-  the facet expansion of the rate (Proposition 6.4), prefactor matching for reversible chains
-  (Proposition 6.5), the local law of the weighted facet chain with a small complex parameter for
-  every facet (Theorem 6.6, with the closed forms for one and two states in Lemma 6.7 and the
-  complex critical point in Lemma 6.8), and the facet theorem for every face with at least two
-  states (Theorem 6.9). The generalized kernel has relative error O(1/T). The Bessel kernel has
-  relative error O(1/T + sqrt(x/T)) for reversible chains and, in general, holds in logarithmic
-  form, and in relative form for x = o(T^(1/3)). Proposition 6.10 computes the cubic term in the
-  exponent, and for the non-reversible cycle on three states its coefficient is
-  -49/(64 sqrt(omega)), so there the relative form holds if and only if x = o(T^(1/3)) (for x up
-  to a small multiple of T). Theorem 6.6 rests on three appendix
+  coefficient of log log N changes (Example 5.11, explained by Corollary 4.6), and face maxima
+  uniform over a compact class of reversible chains (Proposition 5.12).
+- The boundary layer at a facet (Section 6), for the occupation density of the continuous-time
+  chain. The main results come first: the facet theorem for every face with at least two states
+  (Theorem 6.1) and the exact range of the Bessel form (Proposition 6.2). The generalized kernel
+  has relative error O(T^-2 + x^(1/2) T^(-3/2)), which is O(1/T). If the entrance and exit laws agree (for instance for reversible
+  chains, but also for a non-reversible face, after Proposition 6.2), the Bessel kernel has
+  relative error O(1/T + sqrt(x/T)). In general the relative Bessel form holds if and only if
+  x = o(T^(1-2/m)), where m >= 3 is the order of the first nonzero coefficient of the remainder
+  r_beta of the rate, and for the non-reversible cycle on three states m = 3 with coefficient
+  -49/(64 sqrt(omega)). Then the exact formulas (Lemmas 6.3 and 6.4), pair faces with an
+  explicit error (Proposition 6.5), the facet expansion of the rate (Proposition 6.6, whose part
+  (v) says that J_G(beta,.) is affine exactly when the entrance and exit laws agree), prefactor
+  matching for reversible chains (Proposition 6.7), and the local law of the weighted facet chain
+  with a small complex parameter for every facet (Theorem 6.8, with the closed forms for one and
+  two states in Lemma 6.9 and the complex critical point in Lemma 6.10). Theorem 6.8 rests on three appendix
   lemmas, the torus representation with complex weights and a general end vector (Lemma A.3), the
   local law with general start and end vectors (Lemma A.4) and the Laplace lemma with a complex
   Hessian (Lemma B.3).
+- The counts near a facet (Section 6.9, added October 25, 2026, audit 30). Theorem 6.12: for
+  T_0 <= T <= epsilon_1 N^(1/2), P_N(n) = P_N'(n-hat) K^h_beta(n_i, S) (1 + E) with
+  abs(E) <= C(T^-2 + x^(1/2) T^(-3/2) + T^2/N), where the lattice kernel K^h_beta is the generalized
+  kernel with (1 - h q_i + h/z)^(n_i - 1) in place of e^(x/z - q_i x). It is h times the generalized
+  kernel up to O(T^2/N), so the Bessel forms of Theorem 6.1 hold for the counts with the extra
+  error T^2/N. Theorem 6.11: for a pair face the discrete Pedler formula is exact, with explicit
+  two-sided bounds against a Laguerre kernel at every T. Proofs in Appendix E.3 and E.4.
 
 The complete graph and near a vertex.
 - The complete graph (Section 7). The weighted Cayley formula (Lemma 7.1) and the complete face
@@ -95,8 +124,14 @@ The complete graph and near a vertex.
 ## What is open
 
 Nothing in the paper is conditional. Section 9 lists the open questions (a local law up to the
-corners of a face, the power of T on a reducible face, uniqueness of the crossings, and a discrete
-form of the facet theorem). The radius z_0 of Theorem 6.6 is not explicit.
+corners of a face, the reducible faces beyond T <= N^(1/3), the counts near a facet when T^2/N is
+of order one, and
+whether r_beta = 0 forces equal entrance and exit laws). The radius z_0 of Theorem 6.8 is not
+explicit. Theorems 4.2(ii) and 4.5 and Corollary 4.6 on reducible faces and Theorem 7.4(ii) on the
+complete graph stay at T <= N^(1/3), and the tie windows at T of order L. The uniqueness of the
+crossing in Corollary 4.6 and the location of the maximizers of a reducible face are open. For a
+facet with two or more states the counts near the facet when T^2/N is of order one are open. The local law over the whole range does not
+cover them.
 
 ## What rests on computation
 
@@ -117,26 +152,42 @@ the Perron and Frobenius theorem (a hypothesis of the Lean statements) and the a
   `sec_complete.tex`, `sec_vertex.tex`, `sec_verify.tex`.
 - Appendices: `app_torus.tex` (proofs of the local law and first-order bounds),
   `app_laplace.tex` (the Laplace lemma with a parameter and its uniform and complex forms),
-  `app_complete.tex` (the complete graph), `app_vertex.tex` (near a vertex). Bibliography:
-  `bib_switching.tex`.
+  `app_complete.tex` (the complete graph), `app_vertex.tex` (near a vertex), `app_counts.tex`
+  (Appendix E, the reducible faces and the counts near a facet, added October 25, 2026).
+  Bibliography: `bib_switching.tex`.
 - `EXPORTS.md`: the statements cited by `../paperC2`, with their labels and numbers.
-- Scripts. `verify_all.py` runs the 6 checks below and writes `data/<script>_output.txt`.
+- Scripts. `verify_all.py` runs the 9 checks below and writes `data/<script>_output.txt`.
+  - `verify_counts.py` (added October 25, 2026, audit 30): Theorem 6.11(a) against all paths in
+    exact arithmetic for N <= 12, the bounds of Theorem 6.11(c) on a grid up to N' = 10^4,
+    Theorem 6.12 for the non-reversible cycle (E <= 0.62 T^2/N, falling by about 2.5 as N'
+    doubles), and Theorem 4.5 on the face {1} -> {2,3}, where the slope of log M_F in log T is
+    1.5 to 10^-3 and the constant sqrt(2/pi) to 0.05% at N = 40000.
+  - `verify_full_range.py` (added October 25, 2026, audit 28): the discrete formula of Lemma A.2
+    against the exact law (two states with h q_max up to 0.9, and a non-reversible chain on three
+    states), the two forms of C^(h)_F (Lemma A.6), C^(0)_F = C_F, the least value of J^(h)_F with
+    and without a field (Proposition 3.6), Theorem 5.4(b) for q12 = 1, q21 = 2 at N = 4000 with
+    T |R - 1| <= 0.2 for 16 <= T <= N/4 (0.26 at T = 1600), Theorem 5.7(a) on a face with exit
+    rates to 10^-3, the law on a non-reversible face with k = 3, and the second-order term T^2/N.
+  - `verify_complete.py` (added October 25, 2026): Theorem 7.5, Theorem 7.4(i) and Remark 7.7 in
+    exact arithmetic for small N, and the failure of balancing for a start in one state. No script
+    checks Theorem 7.4(ii), (iii) or Corollary 7.6 at large N.
   - `verify_first_order.py`, `verify_second_order.py`, `verify_rate_flows.py`,
-    `verify_examples.py`: Sections 2 to 5 and 7, including the crossing gaps 0.035 and 0.087 on
+    `verify_examples.py`: Sections 2 to 5, including the crossing gaps 0.035 and 0.087 on
     the 4-cycle quoted after Theorem 5.8. Some of their checks concern statements that the paper
     no longer states (the flow form of the rate, the next term c_F/T, the limit of the normalizing
     sum, first-order winners on further graphs, the pair identity of the former Proposition 7.1),
     and they say so where they print. `--full` adds the heavy cells of the first, second and
     fourth.
   - `verify_layer.py`: the boundary layer (Section 6), including the exact cubic coefficient of
-    Proposition 6.10 for the non-reversible cycle (part K) and the ratios 19.6, 265 and 48268 at
-    x = 0.05 T, which the paper no longer quotes.
+    Proposition 6.2(e) for the non-reversible cycle (part K), the ratios 19.6, 265 and 48268 at
+    x = 0.05 T, which the paper no longer quotes, and the non-reversible face with equal entrance
+    and exit laws after Proposition 6.2 (part L). `verify_rate_flows.py` computes no law.
   - `verify_forest.py` checks the tree formula on a general face of the former Proposition 5.11.
     The paper no longer states it, so on October 25, 2026 the script was retired from
     `verify_all.py` and its output was deleted. It stays in the folder for the record.
-  - `verify_layer_general.py`: Theorem 6.6 on two facets with four states (a facet of a
+  - `verify_layer_general.py`: Theorem 6.8 on two facets with four states (a facet of a
     non-reversible face with five states, and a path with a periodic jump chain). It computes the
-    word sum exactly by a recursion over the words, checks Lemma 6.8(e) against Section 6.1 for
+    word sum exactly by a recursion over the words, checks Lemma 6.10(e) against Section 6.1 for
     real z, and prints S |eps| for S = 4 to 32 (64 with `--full`) at three values of z, real and
     complex. At z = 0 the products settle at 0.438 and 0.545.
   - `verify_sticky_fisher.py` checks the notes `../S3_sticky_note` and
@@ -172,7 +223,13 @@ these keys, so they stay valid when numbers move. Labels removed in the deep edi
 `prop:forest`, `sec:forest`, `lem:forest`, `app:forest`, `prop:pair`, `cor:paperA`,
 `sec:papersAB`, `rem:outcomes`, `sec:layer-vertex`, `sec:plan`, `eq:interior` and `fig:cycles`.
 Added then: `sec:intro-layer`. Added in the revision of October 25, 2026: `cor:mode-changes` and
-`prop:layer-cubic`, with no label removed. `lem:weighted-cayley` and `ex:complete-face` moved from Section 5
+`prop:layer-cubic`, with no label removed. Added with the whole switching range (audit 28):
+`sec:discrete-rate`, `prop:discrete-rate`, `prop:discrete-variational`, `lem:discrete-hessian`,
+`app:full-range` and `eq:A-chernoff`. Removed then: `eq:A-sigma`. Added with the reducible faces
+and the counts near a facet (audit 30): `sec:reducible-max`, `thm:reducible`,
+`cor:reducible-crossing`, `sec:layer-counts`, `thm:pair-counts`, `thm:layer-counts`, `app:counts`,
+`app:reducible-blocks`, `lem:block-bound`, `lem:block-short`, `lem:block-local`, `lem:block-max`,
+`lem:counts-contour` and `lem:counts-half`, with no label removed. `lem:weighted-cayley` and `ex:complete-face` moved from Section 5
 to Section 7. Labels removed in the cuts of October 24 before arXiv: `sec:weakfield`,
 `prop:weakfield`, `sec:start`, `cor:start-crossings`, `ex:K3-start`, `sec:complete-field`,
 `cor:weakfield-phases`, `cor:weakfield-full-hierarchy`, `eq:weakfield-maximum` and
@@ -213,6 +270,39 @@ that the relative Bessel form fails for the non-reversible cycle when x is much 
 T^(1/3). The abstract states exactly these, the related work cites Dobrushin, Gabriel,
 Cekanavicius and Vellaisamy, Ney and Nummelin and Miller, Proposition 5.12 holds for any compact
 set of fields, and `verify_forest.py` was retired. No exported number moved.
+
+Later on October 25, 2026 the paper was revised against a second referee report (audit 25). The
+boundary layer is now stated for the continuous-time density throughout, the dropped hypotheses
+are back in the abstract and introduction, the overlap with Paper B is a table, the introduction
+opens with the local law and positions it against the fixed-chain large deviations and the local
+time densities, Section 6 states its main results first with a strategy paragraph, Proposition
+6.2 gives the exact range of the Bessel form (the dividing line is equal entrance and exit laws,
+not reversibility), Theorem 5.8(iv) proves the crossing unique for large N, and several local
+proofs were repaired. The interface numbers are unchanged, and the numbers of Section 6 moved
+(see `EXPORTS.md`).
+
+Last on October 25, 2026 the local law was extended to the whole switching range (audit 28). Good's
+discrete formula sits on the same torus as the continuum one, and in the torus variable it is
+analytic in h up to h = 0. So one Laplace argument with h as a parameter proves the law of the
+counts for 1 <= T <= h_* N with the discrete Donsker and Varadhan functional, with error O(1/T).
+Theorems 5.4, 5.6 and 5.7 have new parts with the old statements kept as special cases, Theorem
+5.8 covers every zero in [1, h_* N], and Lemma 4.1 lost its factor exp(C h^2 abs(n)). New: Section
+3.3, Propositions 3.5 and 3.6, Lemma A.6, Appendix A.8 and `verify_full_range.py`. No exported
+number moved (see `EXPORTS.md`).
+
+Then two open questions of Section 9 were closed (audit 30). Theorem 4.5 gives the face maxima of
+every admissible face, with the power p_F that Section 9 had conjectured and an explicit constant,
+and Corollary 4.6 the crossings of admissible faces. Theorems 6.11 and 6.12 give the law of the
+counts near a facet, and Theorem 6.1(a) has the sharper error O(T^-2 + x^(1/2) T^(-3/2)). The
+proofs are in the new Appendix E, and `verify_counts.py` checks the numerics. The paper went from
+72 to 80 pages (78 to 88 in the Springer class). No exported number moved (see `EXPORTS.md`).
+
+Then audit 32 checked that integration. The proof of Theorem 5.7 again contains the continuum
+route to part (b), which the uniformity proof of Proposition 5.12(b) needs. Theorem 6.11(c) has the
+range 1 <= T <= N^(1/2) back in its second sentence. The proof of Theorem 4.5 says why the
+supremum is attained when k* = 1, and the abstract and the introduction now speak of admissible
+faces, give the range of the crossings of reducible faces, and count the cost T/N of each switch.
+The paper is now 81 pages (89 in the Springer class). No exported number moved.
 
 The arXiv plan. The article version `problem131_chains.tex` goes to arXiv as version 2 of
 arXiv:2610.09258 and replaces Paper B there. The Springer version does not go to arXiv. The

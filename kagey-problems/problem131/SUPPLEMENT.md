@@ -1,15 +1,17 @@
 # Verification supplement for the papers on Problem 131
 
-This supplement serves the 6 papers on Kagey's Problem 131 by A. Pemmasani. Papers A (arXiv:2610.06935) and B (arXiv:2610.09258) are posted, and Papers C to F are in preparation. Since October 2026 Paper C incorporates Paper B.
+This supplement serves the 7 papers on Kagey's Problem 131 by A. Pemmasani and the note S4. Papers A (arXiv:2610.06935) and B (arXiv:2610.09258) are posted, and Papers C1, C2, D, E and F are in preparation. Since October 2026 Paper C incorporates Paper B, and on October 24, 2026 it was split into Papers C1 and C2.
 
 | Paper | Title | Source |
 | --- | --- | --- |
 | A | Uniform Bessel bounds for magnetization crossings in finite Ising chains (arXiv v1: Uniform Bessel bounds for endpoint crossings in the persistent random walk) | `paperA/problem131.tex` |
 | B | Vertex crossings in a symmetric Markov multinomial model | `archive/paperB/problem131_multistate.tex` |
-| C | Face selection for slowly switching Markov chains | `paperC/problem131_switching.tex` |
-| D | The center and the ends of the elephant random walk with rare reversals (before October 17, 2026: Endpoint crossings for the elephant random walk) | `paperD/problem131_memory.tex` |
+| C1 | Occupation counts of rarely switching Markov chains: stratified local laws, support selection and the boundary layer (the earlier EJP version was Face selection for slowly switching Markov chains) | `paperC/problem131_chains.tex` (81 pages), Springer build `paperC/problem131_chains_sn.tex` (89 pages) |
+| C2 | What the occupation law of a finite Markov chain determines: time reversal, principal minors and cycle trees | `paperC2/problem131_reconstruction.tex` (43 pages), arXiv build `paperC2/problem131_reconstruction_arxiv.tex` (46 pages) |
+| D | The elephant random walk with rare reversals: a Luria-Delbrück approximation and the shape of the law (earlier The center and the ends of the elephant random walk with rare reversals, and before October 17, 2026 Endpoint crossings for the elephant random walk) | `paperD/problem131_memory.tex` (45 pages), arXiv build `paperD/problem131_arxiv.tex` (64 pages) |
 | E | Endpoint crossings for the planar persistent walk | `paperE/problem131_planar.tex` |
-| F | Endpoint crossings for random walks with heavy-tailed runs and for aging walks | `paperF/problem131_heavy_aging.tex` |
+| F | Bulk, big jumps and boundary layers in the occupation law of a lattice Lévy walk (the first draft, earlier Endpoint crossings for random walks with heavy-tailed runs and for aging walks, is in `archive/paperF_golden_aging`) | `paperF/problem131_levy.tex` (62 pages) |
+| S4 | The finite-size shape transition of coin-turning walks (a note) | `S4_aging_note/s4_note.tex` (12 pages) |
 
 The Lean files and the older recorded outputs and ledgers use the statement numbers from before
 Papers E and F were split off Papers C and D on October 13, 2026. The exception is

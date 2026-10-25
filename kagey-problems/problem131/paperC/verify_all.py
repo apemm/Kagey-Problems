@@ -5,6 +5,11 @@ moved with those results to the companion paper in ../paperC2 on October 24, 202
 The script verify_weak_field.py was removed the same day, with the weak field that it checked.
 On October 25, 2026 verify_forest.py was retired from this list. It checks the tree formula for
 K_F on a general face, which the paper no longer states, and it stays in the folder for the record.
+Also on October 25, 2026, after the second referee report, verify_complete.py was added (exact
+checks of the complete graph for small N), and verify_layer.py gained part L (a face that is not
+reversible but has equal entrance and exit laws). Later the same day verify_full_range.py was added,
+for the local law and the face maxima over the whole range 1 <= T <= h_* N. Also on October 25,
+2026, verify_counts.py was added, for the face maxima on reducible faces and the counts near a facet.
 
 Each script runs in its own process as `<python> -I <script>`, in this folder. Its output goes to
 data/<script>_output.txt, behind a header with the sha256 of the script, the date, the versions of
@@ -39,6 +44,9 @@ SCRIPTS = (
     ('verify_examples.py', True, 'the winners on complete graphs, cycles and small graphs, finite-N modes'),
     ('verify_layer.py', False, 'the boundary layer'),
     ('verify_layer_general.py', True, 'the weighted facet chain on two facets with four states'),
+    ('verify_complete.py', False, 'exact balancing and the vertex crossings on the complete graph for small N'),
+    ('verify_full_range.py', False, 'the discrete torus formula, the discrete functional and the local law up to T = N/4'),
+    ('verify_counts.py', False, 'the face maxima on a reducible face and the counts near a facet'),
 )
 
 
