@@ -157,9 +157,12 @@ zone on each side where one run is macroscopic, a renewal boundary layer at each
 each endpoint. The law of the first run enters each piece through a sharp criterion. The global mode
 is an endpoint or a point of the bulk, and for the equilibrated start the threshold is the golden ratio. The
 boundary layers identify both run laws. When the run scales differ by an unbounded factor the start
-of the big-jump zone is located up to a factor 1 ± delta, and near each end the local extrema of the
-law are described up to distance N^(1-eta). The draft is complete, with every statement proved in
-the article or stated as a conjecture (62 pages after the revisions of October 25, 2026).
+of the big-jump zone is located up to a factor 1 ± delta. For fresh and fair starts with comparable
+scales, a second-order smoothness condition and no ties in the end profiles the law has exactly M_+ + M_- + 1 modes for all large
+N, where M_± counts the local maxima of the end profiles, so it has three modes exactly when each
+profile has one local maximum. The difference form of the local big jump behind this is stated as a
+result of its own. The draft is complete, with every statement proved in the article or stated as a
+conjecture (80 pages after the integration of the mode count on October 25, 2026).
 
 The first draft of Paper F, "The golden-ratio threshold for a lattice Lévy walk and ties in
 coin-turning walks", is archived in `archive/paperF_golden_aging`. Its heavy-tail half is part of
@@ -168,7 +171,7 @@ corollary is part of the theorem on the mode. Its aging half is the note `S4_agi
 infinite-mean case 0 < alpha < 1 is left to a later paper.
 
 Files. The folder `paperF`, with `problem131_levy.tex` and `problem131_levy.pdf` (class `ejpecp`,
-62 pages), its section files, the figure and its script in `figures/`, the recorded output of the
+80 pages), its section files, the figure and its script in `figures/`, the recorded output of the
 computations in `data/`, the check scripts and `paperF/README.md`.
 
 ## Earlier work
