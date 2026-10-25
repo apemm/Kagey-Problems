@@ -69,9 +69,10 @@ the ones that shape the manuscript.
 
     pdflatex -interaction=nonstopmode problem131_reconstruction.tex   (three times)
 
-The build of 2026-10-25, after the exact-law section was added, has 43 pages, no undefined
-references, no multiply defined labels and no overfull boxes. That is 3 pages over the guide's 30
-to 40, so the cover letter carries a short length justification. The arXiv build
+The build of 2026-10-25, after the exact-law section was added and the review fixes of the same
+day, has 40 pages, no undefined references, no multiply defined labels and no overfull boxes. It
+is within the guide's 30 to 40 because some routine proofs are sketched in the journal build and
+written out in the arXiv build (see the README). The arXiv build
 `problem131_reconstruction_arxiv.tex` (article class, 46 pages)
 adds the reversible design as a final section. The switch `\ifarxivbuild` is set in each
 top-level file.

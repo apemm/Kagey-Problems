@@ -10,7 +10,7 @@ pi, F_Q(lam) = pi (diag(lam) - Q)^(-1) 1 is the stationary Laplace transform of 
       stationary law pi, different from Q and from Q*. Both have the same 31 principal minors,
       F_Q - F_{Q^[B]} = 0 as a rational function, the same Sigma_1, Sigma_2 and Sigma_3, and the
       same law of the counts of I + hQ from pi for N = 1..6 at h = 1/20. The start e_1 separates
-      them. Q^[B] is the time reversal of the generator point of the cut-transpose across B
+      them, with the values 4913/25716 and 48841/257160 at x = (4,5,6,8,10). Q^[B] is the time reversal of the generator point of the cut-transpose across B
       (Remark `rem:memoryless-cut`). The eigenvalues of K^2 are -7/8 and -3/4, each twice, and
       the symmetric part does not couple the two eigenplanes.
   (2) The four-state cut example after Corollary `thm:nonreversible`. The generator point Q' of
@@ -24,6 +24,11 @@ pi, F_Q(lam) = pi (diag(lam) - Q)^(-1) 1 is the stationary Laplace transform of 
   (4) The discrete second moments of Remark `rem:one-N`, E_pi[n n^T] = N^2 D +
       sum_{k=1}^{N-1} h^k C(N+1, k+2) Sigma_k, by exact enumeration for N = 2, 3, 4, and the fact
       that the law of the counts at N = 2 does not see a circulation while the law at N = 3 does.
+  (5) Second moments without a cut (Remark `rem:nocut-moments`). Q = S + 5 J1 + J2 and
+      Q' = S + 5 J1 - J2 on 5 states, with S = 10 (1 1^T - 5 I) and J1, J2 antisymmetric of rank 2
+      on orthogonal planes of 1-perp. Both have rates in [3, 17] and the uniform stationary law,
+      Q has no cut, Q' is neither Q nor Q^T, Sigma_m agrees for m = 1..8, and
+      pi (Q - W)^5 1 - pi (Q' - W)^5 1 = 8 (w1 - w2)(w3 - w4)(w1 + w2 + w3 + w4 - 4 w5).
 
 Run:  py -I verify_exactlaw.py   (about 15 seconds)
 """
@@ -130,6 +135,9 @@ lam5 = sp.symbols("l1:6")
 ok(sp.cancel(F(Q5, pi5, lam5) - F(Q5B, pi5, lam5)) == 0, "F_Q - F_{Q^[B]} = 0 as a rational function")
 e1 = sp.Matrix([[1, 0, 0, 0, 0]])
 ok(sp.cancel(F(Q5, e1, lam5) - F(Q5B, e1, lam5)) != 0, "from the start e_1 the transforms differ")
+x5 = [4, 5, 6, 8, 10]
+ok(F(Q5, e1, x5) == R(4913, 25716) and F(Q5B, e1, x5) == R(48841, 257160),
+   "from e_1 at x = (4,5,6,8,10) the transforms are 4913/25716 and 48841/257160")
 for m in (1, 2, 3):
     ok(sigma(Q5, pi5, m) == sigma(Q5B, pi5, m), f"Sigma_{m} agrees")
 z5 = sp.symbols("z1:6")
@@ -305,5 +313,57 @@ z3 = sp.symbols("z1:4")
 laws = count_laws(sp.eye(3) + hh * Qk, sp.Matrix([[R(1, 3)] * 3]), z3, 3)
 ok(sp.diff(laws[1], k) == 0, "the law of the counts at N = 2 does not depend on k, for every h")
 ok(sp.expand(sp.diff(laws[2], k)) != 0, "the law of the counts at N = 3 depends on k")
+
+# ------------------------------------------------------------------------------------------- (5)
+print("(5) second moments without a cut")
+o5 = sp.ones(5, 1)
+
+
+def asym(f, g):
+    f, g = sp.Matrix(f), sp.Matrix(g)
+    return f * g.T - g * f.T
+
+
+fa, fb, ga, gb = (1, -1, 0, 0, 0), (0, 0, 1, -1, 0), (1, 1, -1, -1, 0), (1, 1, 1, 1, -4)
+vs = [sp.Matrix(v) for v in (fa, fb, ga, gb)] + [o5]
+ok(all((vs[i].T * vs[j])[0] == 0 for i in range(5) for j in range(i)),
+   "f, f', g, g' are orthogonal to each other and to 1")
+J1, J2 = asym(fa, fb), asym(ga, gb)
+ok(J1 * J2 == sp.zeros(5, 5) and J2 * J1 == sp.zeros(5, 5), "J1 J2 = J2 J1 = 0")
+S5 = 10 * (o5 * o5.T - 5 * sp.eye(5))
+Qa, Qb = S5 + 5 * J1 + J2, S5 + 5 * J1 - J2
+offd = [M[i, j] for M in (Qa, Qb) for i in range(5) for j in range(5) if i != j]
+ok(min(offd) == 3 and max(offd) == 17, "the off-diagonal entries of Q and Q' lie in [3, 17]")
+ok(all(M * o5 == sp.zeros(5, 1) and o5.T * M == sp.zeros(1, 5) for M in (Qa, Qb)),
+   "rows and columns sum to 0, so both have the uniform stationary law")
+
+
+def has_cut(M):
+    for Xc in itertools.combinations(range(5), 2):
+        Yc = [i for i in range(5) if i not in Xc]
+        if M.extract(list(Xc), Yc).rank() <= 1 and M.extract(Yc, list(Xc)).rank() <= 1:
+            return True
+    return False
+
+
+ok(not has_cut(Qa), "Q has no cut (all 10 partitions 2 | 3)")
+ok(Qb != Qa and Qb != Qa.T, "Q' is neither Q nor Q* = Q^T")
+piu = [R(1, 5)] * 5
+ok(all(sigma(Qa, piu, m) == sigma(Qb, piu, m) for m in range(1, 9)), "Sigma_m agrees for m = 1..8")
+w5 = sp.symbols("w1:6")
+W5 = sp.diag(*w5)
+pu = sp.Matrix([piu])
+dif = sp.expand((pu * ((Qa - W5) ** 5 - (Qb - W5) ** 5) * o5)[0])
+ok(sp.expand(dif - 8 * (w5[0] - w5[1]) * (w5[2] - w5[3]) * (w5[0] + w5[1] + w5[2] + w5[3] - 4 * w5[4])) == 0,
+   "pi (Q - W)^5 1 - pi (Q' - W)^5 1 = 8 (w1 - w2)(w3 - w4)(w1 + w2 + w3 + w4 - 4 w5)")
+t5 = sp.symbols("t")
+Kq = 5 * J1 + J2
+K2 = Kq ** 2
+ok(sp.expand(K2.charpoly(t5).as_expr() - t5 * (t5 + 100) ** 2 * (t5 + 80) ** 2) == 0
+   and K2 * vs[0] == -100 * vs[0] and K2 * vs[2] == -80 * vs[2],
+   "K^2 is -100 on the plane of f, f' and -80 on the plane of g, g'")
+P1 = K2 * (K2 + 80 * sp.eye(5)) / 2000       # projection on the eigenplane of -100
+P2 = -K2 * (K2 + 100 * sp.eye(5)) / 1600     # projection on the eigenplane of -80
+ok(P1 * P1 == P1 and P2 * P2 == P2 and P1 * S5 * P2 == sp.zeros(5, 5), "S does not couple the 2 eigenplanes")
 
 print(f"\nall {CHECKS} checks passed")

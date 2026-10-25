@@ -1,9 +1,12 @@
 \section{Computations and open questions}\label{sec:verify}
 
-Every statement is proved in the text, with one kind of exception. The explicit numbers in the
+Every statement is proved\ifarxivbuild\ in the text\else, in the text or, for the few proofs
+sketched here, in the arXiv version\fi, with one kind of exception. The explicit numbers in the
 example after Corollary~\ref{thm:nonreversible}, the moment $29(w_1-w_2)(w_3-w_4)/9673$ after
-Theorem~\ref{thm:stationary-law}, the last 2 sentences of Example~\ref{ex:five-state}\ifarxivbuild\
-and the numbers in Remark~\ref{rem:finite-size}\fi\ were computed, in rational arithmetic for the
+Theorem~\ref{thm:stationary-law}, the absence of a cut and the fifth-order difference in
+Remark~\ref{rem:nocut-moments}, the values from the start $e_1$ and the last 2 sentences of
+Example~\ref{ex:five-state}\ifarxivbuild\ and the numbers in Remark~\ref{rem:finite-size}\fi\ were
+computed, in rational arithmetic for the
 examples, and the scripts below check them. The scripts also check other parts of the paper by assertions, with a
 tolerance in floating point.
 
@@ -15,17 +18,23 @@ it checks the four-state example after Corollary~\ref{thm:nonreversible} in rati
 It checks the derivative used in the proof of Lemma~\ref{lem:perron-branch}, the three-state
 identities of Remark~\ref{rem:three-states} symbolically, and on $200$ generators with 3 states
 that every generator with the same minors is $Q$ or $Q^*$. The script
-\texttt{verify\_exactlaw.py} checks Section~\ref{sec:exactlaw} in rational arithmetic. For
+\texttt{verify\_exactlaw.py} checks Section~\ref{sec:exactlaw} in rational arithmetic. \ifarxivbuild For
 Example~\ref{ex:five-state} it checks the memoryless block, the 31 principal minors, the identity
 $F_Q=F_{Q^{[B]}}$, the equality of $\Sigma_1$, $\Sigma_2$ and $\Sigma_3$, the laws of the counts for
 $N\le6$ at $h=1/20$, the relation with the cut-transpose of Remark~\ref{rem:memoryless-cut}, the
-start $e_1$ and the spectrum of $K^2$. For the four-state example it checks the stationary law of
+2 values from the start $e_1$ and the spectrum of $K^2$. For Remark~\ref{rem:nocut-moments} it
+checks the rates, the absence of a cut, $\Sigma'_m=\Sigma_m$ for $m\le8$, the difference at
+order 5 and the spectrum of $K^2$. For the four-state example it checks the stationary law of
 $Q'$, both identities of Proposition~\ref{prop:gluing} and the first separating moment. It solves
 $K'D^{-1}K'=KD^{-1}K$ for antisymmetric $K'$ with $K'\ones=0$ on 5 generators with 3 and 4 states,
 where $K$ is the antisymmetric part of $DQ$, and finds only $\pm K$, as
 Theorem~\ref{thm:second-moments}(i) asserts, since $\Sigma_2=2\operatorname{sym}(DQ)D^{-1}\operatorname{sym}(DQ)+2KD^{-1}K$
 when $\pi Q=0$. It also checks the moment formula and the case $N=2$ of
-Remark~\ref{rem:one-N}.\ifarxivbuild\ It verifies the inversion
+Remark~\ref{rem:one-N}.\else It checks
+every computed claim of Example~\ref{ex:five-state}, Remark~\ref{rem:nocut-moments} and the
+four-state example, both identities of Proposition~\ref{prop:gluing}, the uniqueness of $\pm K$
+behind Theorem~\ref{thm:second-moments}(i) on 5 generators with 3 and 4 states, and the moment
+formula and the case $N=2$ of Remark~\ref{rem:one-N}.\fi\ifarxivbuild\ It verifies the inversion
 formula of Theorem~\ref{thm:reversible-reconstruction}(b) and the family of
 Remark~\ref{rem:partial-data}, recovers $Q$ from the strict winners on $40$ random reversible
 chains with 4 states, with Lemma~\ref{lem:suppression} checked on a grid of every design, and
@@ -42,6 +51,7 @@ $10^{-48}$, with the exact finite-$\eta$ scores. Every cycle has the grid thresh
 noncycle exceeds it, and $\max_{G\subseteq F}\vartheta(G)$ gives $D(F)$ on every face.\ifarxivbuild\else\
 The repository also holds the scripts for the reversible design of the arXiv version.\fi
 
+\ifarxivbuild
 Some finite and algebraic steps are also proved in Lean~4 with Mathlib, in
 \nolinkurl{lean/PaperC} of the same repository. The module \texttt{PrincipalMinors} proves the
 multiaffine expansion of $R_F$. The module \texttt{GeneratorFiber} proves the normalization (N),
@@ -54,10 +64,16 @@ Metzler matrices, so the positive null vector in (N) is a hypothesis there. The 
 with \texttt{lake build PaperC}, and every theorem in it depends only on the axioms
 \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}. The build log is
 \nolinkurl{lean/build-log.txt}.
+\else
+Some finite and algebraic steps, among them the multiaffine expansion of $R_F$, the
+normalization (N) and the determinants of Example~\ref{ex:four-state}, are also proved in Lean~4
+with Mathlib, in \nolinkurl{lean/PaperC} of the same repository. The arXiv version lists the
+modules and their hypotheses.
+\fi
 
 \emph{Open questions.} For the exact law, Conjectures~\ref{conj:fiber} and~\ref{conj:balanced}
-are open. So is whether the stationary second moments of all orders always have the same fiber
-as the stationary law, and what the law of the counts at one pair $(N,T)$ determines. The finite-horizon label $\mathcal W_N$ of Section~\ref{sec:observation}
+are open. So is what the law of the counts at one pair $(N,T)$ determines, and which fibers the
+stationary second moments have when $Q$ has no cut. The finite-horizon label $\mathcal W_N$ of Section~\ref{sec:observation}
 may determine more than $W_Q$. The crossing equation of~\cite[Theorem~5.8]{paperC1} for the
 weighted law would read the amplitudes of Proposition~\ref{prop:amplitudes} off the positions of
 the changes of $\mathcal W_N$, and so separate the fiber of Corollary~\ref{thm:nonreversible} by
