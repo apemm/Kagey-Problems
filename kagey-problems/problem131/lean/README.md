@@ -287,7 +287,8 @@ the prepared boundary kernels, parts (b) and (c) of the inversion theorem, the r
 `ρ`, the giant-run identities, the second part of the counting lemma (for run lengths counted
 inside the window), the log-convex lemma, and the finite cores of several shape and big-jump
 statements. The library has 20 modules (the root and the sub-root included) and 252 theorem and
-lemma declarations. The asymptotic statements are not formalized. `PaperF/MAP.md`
+lemma declarations, which `verify_lean.py PaperF` builds and axiom-checks like the other libraries
+(recorded in `build-log.txt` and `verification-manifest.json`). The asymptotic statements are not formalized. `PaperF/MAP.md`
 cites statement labels rather than numbers, since the numbers change when statements move, and it
 lists the declarations, their hypotheses and axioms, and what is left out.
 
