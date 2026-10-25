@@ -7,10 +7,10 @@ changes on a cylinder or a tetrahedron.
 
 Status. There are seven papers by A. Pemmasani, which call each other Papers A, B, C1, C2, D, E
 and F, and four working notes, S1 to S4. Paper A (arXiv:2610.06935) solves the binary problem at
-every N, and Paper B (arXiv:2610.09258) treats d directions on the complete graph. Papers C1, C2,
-D, E and F are in preparation. In October 2026 Paper B was merged into Paper C. Paper B v1
-remains available as the versioned arXiv record, and its folder `archive/paperB` keeps it
-unchanged. On October 24, 2026 Paper C was split in two. Paper C1 (the forward theory of slowly
+every N, and Paper B (arXiv:2610.09258v1) treats d directions on the complete graph. Papers C1, C2,
+D, E and F are in preparation. In October 2026 Paper B was merged into Paper C. Paper C1 will
+replace it as version 2 of arXiv:2610.09258. Version 1 stays available on arXiv, and the folder
+`archive/paperB` keeps it unchanged. On October 24, 2026 Paper C was split in two. Paper C1 (the forward theory of slowly
 switching chains, in `paperC`) keeps the folder and the results of Paper B, and Paper C2 (what the
 occupation law determines about the generator, in `paperC2`) holds the identifiability half. The
 earlier EJP version of Paper C is in `archive/paperC_switching_ejp`. Paper C and Paper E (the
@@ -51,11 +51,12 @@ appendix `app_every_n.tex`, the check scripts, `paperA/README.md`, and the notes
 
 Paper B, "Vertex crossings in a symmetric Markov multinomial model", is now incorporated
 into Paper C1. Its original source, PDF, data and verification scripts are preserved in
-[`archive/paperB`](archive/paperB/README.md). The earlier preprint remains available as
-[arXiv:2610.09258v1](https://arxiv.org/abs/2610.09258v1). Paper C1 reproves its results on the
-crossings with a vertex and near a vertex as cases of the general theory, and C1 is intended to
-replace it under the same arXiv identifier. The Bessel majorant and boundary crossover that were
-not carried into C1 remain in this historical version.
+[`archive/paperB`](archive/paperB/README.md). It was posted as
+[arXiv:2610.09258v1](https://arxiv.org/abs/2610.09258v1), and Paper C1 will replace it as version 2
+of the same entry, arXiv:2610.09258. Paper C1 reproves its results on the crossings with a vertex
+and near a vertex as cases of the general theory. The next term of the crossing equation, the
+Bessel majorant and the boundary crossover were not carried into C1 and remain in version 1, which
+C1 cites for them.
 
 ## Paper C1: Occupation counts of rarely switching Markov chains
 

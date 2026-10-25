@@ -1,9 +1,13 @@
 # Problem 131, Paper B: vertex crossings in a symmetric Markov multinomial model
 
-Paper B is incorporated into the merged paper in `../../paperC` ("Face selection for slowly switching Markov chains", October 2026). This archive preserves the repository snapshot of Paper B before the merged revision.
-The original posted version is [arXiv:2610.09258v1](https://arxiv.org/abs/2610.09258v1).
-The merged Paper C is intended to replace it under the same identifier. Paths printed in
-the historical manuscript refer to the repository layout at its original release.
+Paper B was posted as [arXiv:2610.09258v1](https://arxiv.org/abs/2610.09258v1). Paper C1,
+"Occupation counts of rarely switching Markov chains: stratified local laws, crossings and the
+boundary layer" (in `../../paperC`), replaces it as version 2 of the same entry,
+arXiv:2610.09258. C1 proves the results on the crossings with a vertex and near a vertex again as
+cases of a general theory (its Sections 7 and 8). The next term 1/(8z) of the crossing equation,
+the Bessel majorant and the boundary crossover are only here, and C1 cites v1 for them. This
+archive keeps the repository snapshot of Paper B as it was posted. Paths printed in the manuscript
+refer to the repository layout at that time.
 
 Paper B treats the complete graph on d states, which is the 1D d-state Potts chain. Every face of
 the simplex ties with the vertices at first order when T is near log N, and Paper B resolves the

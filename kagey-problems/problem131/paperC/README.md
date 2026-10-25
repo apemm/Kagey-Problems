@@ -18,7 +18,8 @@ Companion papers. `../paperA` ("Uniform Bessel bounds for magnetization crossing
 chains", arXiv:2610.06935) treats the two-state walk at every N. This paper uses two of its results
 (Proposition 4.1 in Proposition 7.1, Lemma 3.2(b) in Appendix D) and recalls two more for
 comparison. `../archive/paperB` ("Vertex crossings in a symmetric Markov multinomial model",
-arXiv:2610.09258) treats the complete graph. Its results on the crossings with a vertex and near a
+arXiv:2610.09258v1) treats the complete graph, and this paper replaces it as version 2 of the same
+entry. Its results on the crossings with a vertex and near a
 vertex are reproved here as cases of the general theory, and it is cited for the results that are
 not reproved (the next term of the crossing equation, the Bessel majorant, the boundary of the
 simplex). `../paperC2` ("What the occupation law of a finite Markov chain determines: principal
@@ -170,7 +171,7 @@ the closed forms for one and two states. Labels removed in the split of October 
 
 ## History
 
-In October 2026 Paper B (arXiv:2610.09258) was merged into Paper C, which kept its folder. The
+In October 2026 Paper B (arXiv:2610.09258v1) was merged into Paper C, which kept its folder. The
 results on the complete graph and near a vertex come from it. The sticky-prior application moved to
 the note `../S3_sticky_note`. On October 24, 2026 the paper was restructured for JTP as
 "Occupation counts of rarely switching Markov chains: stratified local laws, modal supports and
@@ -194,3 +195,14 @@ The proof added Theorem 6.6, Lemma 6.8 and Lemmas A.3, A.4 and B.3, closed the t
 editor's check left open (the identification of the constant in Lemma 6.7 and a derivation of
 equation (18)), and added `verify_layer_general.py`. Item 16 of the audits is the report. The
 paper went from 65 to 70 pages (72 to 77 in the Springer class).
+
+The arXiv plan. The article version `problem131_chains.tex` goes to arXiv as version 2 of
+arXiv:2610.09258 and replaces Paper B there. The Springer version does not go to arXiv. The
+introduction says once that this paper replaces the first version, and the bibliography entry
+`paperB` now reads as the first version of this entry (arXiv:2610.09258v1). The paper cites it
+for the next term of the crossing equation, the Bessel majorant and the boundary of the simplex,
+and points to it for comparison in a few other places. Paper C2 cites this paper as
+arXiv:2610.09258 without a version. A switch at the top of each main file, true in the article
+file and false in the Springer file, makes the journal build say "the preprint" where the arXiv
+build says "the first version", so the journal version never calls itself a preprint.
+Item 18 of the audits records the preparation and the form for the submission.
