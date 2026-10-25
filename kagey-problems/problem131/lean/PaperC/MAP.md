@@ -59,6 +59,8 @@ neither C1 nor C2 states are collected in their own section below.
 | `PrincipalMinors` | C2 | the multiaffine expansion of `R_F`, and equal characteristic polynomials (7 theorems) |
 | `GeneratorFiber` | C2 | irreducibility, the generator point, the sign of a Metzler-preserving diagonal similarity and the fiber on three states (26 theorems) |
 | `CriticalWindow` | C2 | the four-state example of Section 6 (26 theorems) |
+| `C1.*` | C1 | 14 modules (October 25, 2026): the weighted Cayley determinant, the algebra of `prop:constant`(b) and `cor:symface`, `lem:admissible`, the discrete functional, the exact lemmas and identities of the boundary layer, and the arithmetic of `cor:reducible-crossing` on `ex:threecycle` (section "Modules in `PaperC/C1/`") |
+| `C2.*` | C2 | 20 modules (October 25, 2026): path reversal, cut-transposes and their minors, the amplitudes, the reversal of a memoryless block, gluing, `lem:graph`, second moments for `d ≤ 4`, and the examples `ex:branch-switch`, `ex:five-state` and the `d = 4` cut-transpose (section "Modules in `PaperC/C2/`") |
 | `Planar` | Paper E | the planar walk |
 | `Sticky` | note S3 | the thresholds and the direct jump for sticky priors |
 | `Fisher` | note S1 | the Fisher efficiency identity |
@@ -70,6 +72,12 @@ on October 24, 2026. On October 25, 2026 the library was rebuilt with `verify_le
 Every theorem, those of the four new modules included, depends only on `propext`,
 `Classical.choice` and `Quot.sound`, as recorded in `build-log.txt` and
 `verification-manifest.json`. None uses `sorry` or `native_decide`.
+
+Later on October 25, 2026 the 14 modules of `PaperC/C1/` and the 20 of `PaperC/C2/` were added
+with the sub-roots `PaperC/C1.lean` and `PaperC/C2.lean`, and `verify_lean.py PaperC PaperD`
+passed: `lake build PaperC` exit 0, 56 modules, 715 theorem and lemma declarations (150 in
+`C1/` with its sub-root, 156 in `C2/`), every one depending only on `propext`,
+`Classical.choice` and `Quot.sound`.
 
 # Paper C1
 
@@ -118,7 +126,7 @@ Every theorem, those of the four new modules included, depends only on `propext`
 
 | Paper statement | Lean | Note label |
 | --- | --- | --- |
-| Lemma 7.1 (`lem:weighted-cayley`), the weighted Cayley formula, only for `k = 3`: `tree(√(α_i α_j)) = √(α_1 α_2 α_3)(√α_1 + √α_2 + √α_3)` | `cayley_three` | C5 Prop 4(b), B Lemma 3.5 |
+| Lemma 7.1 (`lem:weighted-cayley`), the weighted Cayley formula for `k = 3`: `tree(√(α_i α_j)) = √(α_1 α_2 α_3)(√α_1 + √α_2 + √α_3)` (every `k`, in determinant form: `C1.WeightedCayley`, below) | `cayley_three` | C5 Prop 4(b), B Lemma 3.5 |
 | Corollary 7.3 (`cor:paperB`), `λ_F = d - k`, the tie at `τ = 1` and `b_FG = a_k`, with `a_k = -(1/(k-1)) log D_k` | `completeQ_isLeast`, `completeQ_dirEig`, `complete_costs`, `complete_tie`, `paperB_constant` | C5 Cor 11, C2 Theorem C2.4, B (1) |
 | Theorem 7.4(i) (`thm:simplex-crossing`), exactly one crossing in `(0,1)`, with the face maximum above the vertex below it and below the vertex above it | `PaperB.Crossing`: `face_crossing`, with `SL_strictMonoOn`, `SL_zero`, `SL_root`, `SL_at_crossing`, `uOf_strictAnti` | B Thm 3.2 |
 | Theorem 7.4(i), `p_{N,k}` strictly increasing in `N` (one step from `N` to `N + 1`) | `PaperB.Crossing`, `PaperB.Words`: `face_crossing_strictMono`, with `faceBal_root_lt`, `SL_lt_SL_succ`, `dupFirst_injective`, `lch_dupFirst`, `faceBal_succ` | B Thm 3.2 |
@@ -156,6 +164,32 @@ Every theorem, those of the four new modules included, depends only on `propext`
 | Lemma D.2 (`lem:vertex-randomization`), in part, the integral form (36) of `S_(b,a)`, the mass `v(1+v)^(b-1)` of `e^(-t) B_b(vt)`, its first moment and exponential moments | `PaperB.Randomization`: `S_integral`, `L1_eq`, `Lt_eq`, `sum_choose_mul`, `Ls_eq`, `binom_inv_sum` | B Lemma D.2 |
 | Lemma D.2, (37) and (38) | `PaperB.Randomization`: `jensen_lower`, `tangent_upper` | B Lemma D.2 |
 
+## Modules in `PaperC/C1/` (October 25, 2026)
+
+The 14 modules in `PaperC/C1/` (sub-root `PaperC/C1.lean`, namespace `Kagey131.PaperC.C1`) prove
+exact and algebraic parts of C1. The rows cite labels only, since the numbering of C1 is still
+moving. The column "Hypotheses and differences" lists every hypothesis of the Lean statement
+beyond those of the paper, and every place where the Lean statement is weaker or has another form.
+In Lean the states are `Fin (k+1)` where the paper has `k` states numbered from 1, so the paper's
+`k` is Lean's `k + 1` in `WeightedCayley` and `SymFace`.
+
+| Paper statement | Lean | Hypotheses and differences | Module |
+| --- | --- | --- | --- |
+| `lem:weighted-cayley`, for every `k` | `redLap`, `det_diagonal_sub_vecMulVec`, `redLap_products`, `weighted_cayley_det`, `cayley_count` | Mathlib has no matrix-tree theorem, so the tree sum is the determinant of the reduced Laplacian `redLap c`, which is the quantity the proof computes. `weighted_cayley_det` needs Lean's `k ≥ 1` (the paper's `k ≥ 2`; for one state the empty determinant is `1`). `x > 0` as in the paper. `cayley_count` holds for every `k` | `C1.WeightedCayley` |
+| `prop:constant`(b), the determinant step `det Σ_α = 2^k (∏α)² / det(redLap c)` for `Σ_α = 2 M L⁻¹ M` | `det_diag_sub_rankOne`, `det_sigma_of_factor`, `det_sigma_formula` | `det_sigma_of_factor` assumes `det L` a unit. The tree sum is again the reduced-Laplacian determinant | `C1.WeightedCayley` |
+| `prop:constant`(b), the critical point and the conductances | `uRev`, `lRev`, `cRev`, `critical_point`, `cRev_symm`, `alpha_theta` | none; `cRev_symm` does not use `α > 0` | `C1.CriticalPoint` |
+| `cor:symface`, `ex:complete-face`, `cor:paperB`, the algebra | `tree_scale`, `symface_constant`, `sum_offdiag_sqrt`, `Jcomplete`, `tree_complete_face`, `constant_forms_agree`, `paperB_K` | `μ(F)` enters as the scalar `m = (μ·r)(l·1)`. `tree_complete_face` and `paperB_K` need Lean's `k ≥ 1`. `constant_forms_agree` (the two forms of `C_F(α)` in `ex:complete-face` and that of `prop:constant`(b) agree) assumes `∏α > 0`, `A > 0`, `n ≥ 2`. Only the algebra of the constants, not the local laws they enter | `C1.SymFace` |
+| `lem:layer-exact`, the two series identities of the proof | `choose_div_factorial`, `hasSum_layer` | `r = ρ - 1` is a natural number | `C1.LayerSeries` |
+| `lem:layer-exact-discrete` | `PZ`, `chainZ`, `wordZ`, `layer_exact_discrete`, `layer_coeff_zero` | `P^{(z)}_{N'}(n̂)` is a polynomial `PZ` in `z`, with `c⁻_j = a_{ji}` and `c⁺_j = a_{ij}`. Hypotheses `n_i ≥ 1` and `N' ≥ 1`; the condition `supp n = F` is not needed. The proof is by the first-step recursion of the chain, not by a bijection of words. `layer_coeff_zero`: `[z^0] P^{(z)}_{N'}(n̂) = P_{N'}(n̂)` | `C1.LayerDiscrete` |
+| `prop:discrete-rate`(a), both sentences | `dvPhiH`, `dvSetH`, `dvRateH`, `dvPhiH_le`, `dvPhiH_univ_le_face`, `dvPhiH_univ_extend`, `dvRateH_restriction`, `dvRateH_restriction_subset` | `Q` Metzler, `h > 0` and `1 + hQ_ii > 0` for every `i` (for a generator this is `hq_i < 1`, weaker than `h q_max < 1`); `α ≥ 0` with `α = 0` off `F` (the sum `1` is not needed); real suprema. The converse inequality uses `log(1+x) ≤ x` with an explicit constant, so no limit `ε ↓ 0` is taken | `C1.DiscreteRate` |
+| `prop:discrete-rate` and `prop:discrete-variational`, finite parts | `dvPhiH_term_eq`, `dvRateH_convexOn`, `dvPhiM_cw_lower`, `dvPhiM_eigen`, `dvPhiM_le_eigen`, `eigen_step`; `Lh`, `Lh_ge`, `integral_exit_rate`, `lambdaH_zero_field` | the term identity `log(u_i/((I+hQ)u)_i) = h L_h(q_i - θ_i)`, convexity of `J^{(h)}_F` in `α` (not strict convexity), the Collatz–Wielandt lower bound with equality at `α* = l∘r/⟨l,r⟩`, and `(I + hQ_F) r = (1 - hλ) r`. The Perron data enter as hypotheses (`ϱ > 0`, positive `r` and `l`). The integral identity needs `h > 0` and `1 + hκ > 0` | `C1.DiscreteFacts`, `C1.DiscreteExit` |
+| `lem:admissible`(b), (c) and the walk criterion of the proof | `Admissible`, `IsWalk`, `IsWalkIn`, `IrreducibleFace`, `admissible_iff_walk`, `admissible_iff_of_irreducible`, `irreducible_of_admissible_symm` | added hypotheses `μ ≥ 0`, `a ≥ 0`, `h > 0`, `hq_i < 1` (the standing assumptions of the chain, stated explicitly). Admissible means that some word has positive weight and support `F`. Walk edges require `x ≠ y` | `C1.Admissible` |
+| `lem:admissible`(a) | `SCC`, `LinkedChain`, `ComponentOrder`, `components_of_walk`, `cover_chain`, `admissible_iff_components` | as in the row above. The numbering of the components is a list of pairwise disjoint strongly connected components covering `F`, the first meeting `supp μ`, consecutive ones linked by a positive rate | `C1.AdmissibleComponents` |
+| `thm:pair-counts`(a), the exact identity on a pair face | `pair_facet_law`, `pair_discrete_pedler`, `pairR`, `coeff_lin_pow`, `coeff_wordZ_pair` | the identity `P_N(n) = P_{N'}(n̂) R` on the face `{j, i}` with `N' = M + 1` and `n_i = m ≥ 1`; hypotheses `μ_j > 0`, `p_j > 0`, `j ≠ i`. Uses `layer_exact_discrete`. Parts (b) to (d) are not in Lean | `C1.PairCounts` |
+| `prop:layer-cubic`(e), the directed 3-cycle | `cycleJ_d1`, `cycleJ_d2`, `cycleJ_d3`, `cycle_cubic_identity`, `cycle_kappa`, `cycle_kappa_neg` | starts from the rate `J_G(β, z) = 3 - 2z - √((2+z)(1+4z))` of the proof, which comes from `lem:L-two`; that lemma is not in Lean. The derivatives are `-ω`, `49√2/16`, `-1323√2/64` with `ω = 2 + 9√2/4`, and `ϰ_β` is stated without real powers | `C1.CubicCycle` |
+| `prop:layer-constants`(v), the direction `π_in = π_out` implies affine | `Psi_sub_zP`, `gradP_balance`, `facet_rate_le`, `facet_rate_affine` | hypotheses: `r > 0` critical at `z = 0`, and `π_in = π_out` in cross-multiplied form. The conclusion `J_G(β, z) = J_G(β) - zω_β` for all `z ≥ 0` uses `e^x ≥ 1 + x`. The converse direction is not in Lean | `C1.FacetAffine` |
+| `cor:reducible-crossing` applied to `ex:threecycle`, the arithmetic | `crossing_const_pair1`, `crossing_T_pair1`, `crossing_const_pair2`, `crossing_T_pair2`, `log_coefficients`, `sup_A2`, `stationary_cycle`, `hessian_det`, `K123_value`, `log_ratio_deriv_pos` | the corollary enters only through its formula `T = (Δ/δ)[L - (π/Δ) log L + b₀]`, evaluated with the values of the example. `cor:reducible-crossing` and `thm:reducible` themselves are not in Lean | `C1.ThreeCycleCrossing` |
+
 ## Differences between the Lean statements and C1
 
 For the statements from Paper B, `lean/PaperB/MAP.md` lists the differences in its notes 1 to 29,
@@ -174,23 +208,29 @@ or expansions as `N → ∞`. Mathlib has no Perron and Frobenius theorem for ir
 matrices and no Donsker and Varadhan formula for the principal eigenvalue, so a positive Perron
 vector is a hypothesis where one is needed. In terms of the paper these are the following.
 
-* Section 2. Lemma 2.2 (`lem:admissible`), Lemma 2.4 (`lem:continuum`) and the asymptotic form in
-  equation (1).
+* Section 2. Lemma 2.4 (`lem:continuum`) and the asymptotic form in equation (1). (`lem:admissible`
+  is in `C1.Admissible` and `C1.AdmissibleComponents` since October 25, 2026.)
 * Section 3. Proposition 3.3(b) and (d), the uniqueness of the minimizer in (a), and (c) on the
   boundary of the face. Proposition 3.4 (`prop:variational`) and Lemma 3.2 (`lem:face-monotone`)
   in general, including the strict monotonicity of `λ_F` in the face. Section 3.3, the functional
-  of the discrete chain, with Propositions 3.5 and 3.6 (`prop:discrete-rate`,
-  `prop:discrete-variational`).
+  of the discrete chain, beyond the rows of the modules `C1/` above: in `prop:discrete-rate`(b)
+  the strict convexity, the uniqueness of the maximizer, the Hessian and real analyticity, part (c),
+  and the real-analytic parts of `prop:discrete-variational`.
 * Section 4. Lemma 4.1 (`lem:upper`), Theorem 4.2 (`thm:first`), Remark 4.3 (`rem:first-field`),
   Theorem 4.4(a) beyond the finite form, Theorem 4.5 (`thm:reducible`) and Corollary 4.6
-  (`cor:reducible-crossing`).
-* Section 5. Proposition 5.2(a) in general, Corollary 5.3 (`cor:symface`) for general `k`,
+  (`cor:reducible-crossing`); only the arithmetic of the corollary's formula on `ex:threecycle` is
+  in Lean.
+* Section 5. Proposition 5.2(a) in general, Corollary 5.3 (`cor:symface`) beyond its algebra (in
+  `C1.SymFace` the tree sum is the reduced-Laplacian determinant),
   Theorem 5.4 (`thm:local`), Lemma 5.5 (`lem:discrete`), Theorems 5.6 to 5.9 (`thm:stratified`,
   `thm:facemax`, `thm:crossing`, `thm:window`), Corollary 5.10 (`cor:mode-changes`), the expansion
   in Example 5.11(ii), Example 5.11(iii), and Proposition 5.12 (`prop:uniform-facemax`).
-* Section 6, the boundary layer, in full, including Theorems 6.11 and 6.12 on the counts near a
-  facet.
-* Section 7. Lemma 7.1 for `k ≠ 3`, Example 7.2, the asymptotic parts of Corollary 7.3, Theorem
+* Section 6, the boundary layer, beyond the exact parts in the modules `C1/` (the series of
+  `lem:layer-exact`, `lem:layer-exact-discrete`, `thm:pair-counts`(a), `prop:layer-cubic`(e) and
+  one direction of `prop:layer-constants`(v)). In particular `thm:pair-counts`(b) to (d), Theorem
+  6.12, `lem:L-two` and the converse in `prop:layer-constants`(v) are not in Lean.
+* Section 7. Lemma 7.1 as a count of spanning trees (Lean proves the determinant form for every
+  `k`), Example 7.2 beyond its algebra, the asymptotic parts of Corollary 7.3, Theorem
   7.4(ii) and (iii), the display (21) and Corollary 7.6 (`cor:simplex-modes`).
 * Section 8. The form (25) of Theorem 8.2.
 * Appendices A and B, Appendices C and D beyond the rows above, and Appendix E.
@@ -200,6 +240,8 @@ vector is a hypothesis where one is needed. In terms of the paper these are the 
 * No mathematical error was found in the statements above.
 * Example 5.11 assumes `b > 2`. The monotonicity of `M_{1,2}/M_{1}` in `h`, and hence the
   uniqueness of the first crossing in 5.11(ii), holds for every `b > 1` (`dicyc_ratio_strictMono`).
+* The identity of `lem:layer-exact-discrete` needs only `n_i ≥ 1`. The condition `supp n = F` is
+  not used (`layer_exact_discrete`).
 
 # Paper C2
 
@@ -244,20 +286,52 @@ also defined there.
 | Example 6.5, `ρ(B_12) = 1/2`, `ρ(B_123) = 3/2`, `ρ(B_124) = 1/2`, so `a_12 = 2`, `a_123 = 2/3`, `a_124 = 2` | `B12_eigen`, `B123_eigen`, `B124_eigen` | the first column is an eigenvector for the stated value. That the other eigenvalues are `0` (only the first column of `B_F` is nonzero) is not a Lean statement | |
 | Example 6.5, the limiting scores `1 + 2x`, `2 + 2x/3`, `2 + 2x`, `3`, the unique minimizer `{1,2}` on `(0, 3/4)`, `{1,2,3}` on `(3/4, 3/2)` and `V` on `(3/2, ∞)`, `{1,2,4}` always `1` above `{1,2}`, and the score `8/3 < 3` at `x = 1` | `s12`, `s123`, `s124`, `sV`, `window_low`, `window_mid`, `window_high`, `score_124`, `noncycle_at_one` | `x` real in the stated interval | C modal hierarchy 01, (32), (33) |
 
+## Modules in `PaperC/C2/` (October 25, 2026)
+
+The 20 modules in `PaperC/C2/` (sub-root `PaperC/C2.lean`, namespace `Kagey131.PaperC.C2`) prove
+exact and algebraic results of Sections 3, 4 and 6 of C2. The rows cite labels only. `starMat π Q`
+(`TimeReversal`) is the time reversal `π_j q_ji / π_i` on a general index type, and
+`MinorTools` holds the principal-minor helpers. The docstrings of `BlockSegment`,
+`BlockReversal`, `BlockReversalLaw` and `MemorylessExample5` cite the research note
+`Paper C2 identifiability O1` (its Theorem 6 and Corollary 7), whose results are now
+`thm:memoryless` and `ex:five-state`.
+
+| Paper statement | Lean | Hypotheses and differences | Module |
+| --- | --- | --- | --- |
+| `ex:branch-switch` and the examples after `thm:cycles-from-depths`, the exit rates and block eigenvalues | `branch_exit_one`, `branch_block_two`, `branch_block_23_eigen`, `branch_gap`, `branch_lt`, `weak_exit_one`, `weak_block_12_eigen`, `two_state_killing` | each eigenvalue is certified by a positive eigenvector, as in `CriticalWindow`; that it is the Perron root is not a Lean statement | `C2.BranchSwitch` |
+| `thm:nonreversible`, the worked `d = 4` cut-transpose example after the corollary (unlabeled) | `cutQ_isGenerator`, `cutQ'_isGenerator`, `cutQ_factors`, `cutPi_pos`, `cutPi_sum`, `cutQ_stationary`, `cutQ'_stationary`, `cutC'_null`, `cutQ'_eq_conj`, `cutQ'_X`, `cutQ'_Y`, `cutStar_01`, `cutQ'_ne_star`, `cutQ'_ne_Q`, `cut_example_minors` | the minors are compared for all 16 subsets (the empty one included) | `C2.CutExample4`, `C2.MinorTools`, `C2.TimeReversal` |
+| `ex:five-state` | `memQ_isGenerator`, `memQB_isGenerator`, `memQ_exit`, `memQ_enter`, `memQ_stationary`, `memQB_stationary`, `memQB_ne_Q`, `memQB_ne_star`, `memory_example_minors`; `memOffQB_eq`, `memory_example_law` | all 32 principal minors agree; the count laws from `π` agree for every `N`, `h` and composition (through `lawP_aBlock`) | `C2.MemorylessExample5`, `C2.MemorylessLaw` |
+| `rem:stationary`, path reversal from the stationary start | `aRev`, `aRev_eq_starMat`, `aRev_exit`, `wordWt_reverse`, `lawP_aRev`, `lawP_aRev_weighted` | the path identity holds for any positive `π`; stationarity enters only in `aRev_exit` (the reversed chain keeps the exit rates). The weighted law is `P_N(n) g(n)` for any `g` | `C2.PathReversal` |
+| `prop:amplitudes`(c), the null vector of the cut-transpose and its killed blocks | `cut_rows`, `cut_cols`, `cut_total`, `cutTranspose_null`, `cutPoint`, `cutTranspose_blocks`, `cutTranspose_isGenerator`, `exists_nonneg_factors`, `cutTranspose_isGenerator_of_blocks` | `Q` and `π` are given by `∑_j q_ij = 0` and `∑_i π_i q_ij = 0`; needs `∑ b ≠ 0` and `c·π_Y ≠ 0`. `cutTranspose_isGenerator` assumes `a, b, c, u ≥ 0`, the normalization of the factors in `eq:cut-transpose`; `cutTranspose_isGenerator_of_blocks` derives it from nonzero nonnegative rank-one blocks | `C2.CutTranspose` |
+| `prop:amplitudes`(b), the time-reversal part | `starTilt_eq`, `starTilt_right`, `starTilt_left`, `starTilt_pairing`, `starTilt_amplitude` | none | `C2.TimeReversalEigen` |
+| `thm:nonreversible`(c), a cut-transpose has the principal minors of the matrix it comes from | `det_cut_unit`, `dense_det_ne_zero`, `det_cutTranspose`, `sumEquivS`, `pminor_cut`, `pminor_cutTranspose` | over `ℝ`, for any blocks (no Z-matrix or irreducibility hypothesis). The singular case is by continuity in `A + s·1`. That the fiber is the set of generator points of the orbit, and the bound `2d` on the number of cut-transposes, are not in Lean | `C2.CutTransposeMinors` |
+| `def:memoryless`, `thm:memoryless` | `Memoryless`, `flux_balance`, `colB`, `rowB`, `memoryless_isGenerator`, `memoryless_stationary`, `memoryless_eq_iff`, `memoryless_two`, `memoryless_eq_star`, `memoryless_irreducible`; `seg_reverse`, `segSum_eq_sub`, `maskB_vecMul`, `maskC_vecMul`, `maskB_pow`, `insideMass`, `outside_eq`, `pathSum_eq`, `memoryless_block_reversal`; `stepMat_aBlock`, `genPoly`, `coeff_genPoly`, `eval_genPoly`, `lawP_aBlock` | `Memoryless` asks `B` nonempty instead of `2 ≤ \|B\| ≤ d - 1`, and no sign on `κ` or `c`. `lawP_aBlock` (equal count laws of `I + hQ` and `I + hQ^[B]` for every `N`, `h`, composition) assumes only exit rates from `B` that do not depend on the state of `B`, entry rates and start proportional to a weight `w` on `B`; no stochasticity or stationarity. `F_{Q^[B]} = F_Q` for the continuous-time transform is not stated in that form | `C2.MemorylessBlock`, `C2.BlockSegment`, `C2.BlockReversal`, `C2.BlockReversalLaw` |
+| `prop:gluing`, both formulas; `cor:balance`, the algebraic direction; `rem:memoryless-cut`, `p_1 = p_2` | `glue_solution`, `starBlock_mul`, `starBlock_eq`, `star_q1`, `star_q2`, `star_beta`, `star_EY`, `glue_difference`, `glue_eq_iff`, `glue_eq_of_balanced`, `p1_eq_p2_memoryless` | stated at one point `x` for a solution `z` of `(diag x - Q) z = 1` (so `F_Q = π z`), over any field, with `R_X`, `R_Y` inverses of the blocks and `1 - αβ ≠ 0`. The passage from points to rational functions, and the use of `thm:one-horizon` in `cor:balance`, are not in Lean | `C2.GluingCut` |
+| `lem:graph` | `evalAt`, `mvPolynomial_eq_zero_of_open`, `dvd_of_not_coprime`, `graph_dvd` | `P` is a polynomial in `s` over `MvPolynomial σ ℂ`, `U` open in `ℝ^σ`, evaluation at `(θ(w), w)` | `C2.ResultantGraph` |
+| `thm:second-moments`(i), `d ≤ 4` | `second_moments_two`, `second_moments_three`, `second_moments_four`, `antisym_reduction`, `quad_antisym`, `second_moments_conclude`, `antisym_four`, `antisym_four_eq` | uses only `Q1 = 0`, `πQ = 0`, `π > 0` (no Metzler hypothesis); the data are `Σ_m = DQ^m + (DQ^m)ᵀ` for `m = 1, 2`. The case `d = 4` is proved in coordinates rather than by eigenplanes | `C2.SecondMoments`, `C2.SecondMomentsFour` |
+| `rem:one-N` | `sum_choose_weighted`, `lawP_two_symm`, `circQ_isGenerator`, `circQ_law_two`, `circQ_star`, `circQ_ne`, `circQ_ne_star` | none | `C2.OneN` |
+| `thm:stationary-law`, the converse | `diag_sub_star`, `inv_star`, `F_star` | `F_{Q*}(x) = F_Q(x)` wherever `diag x - Q` is invertible | `C2.StationaryConverse` |
+
 ## Not in Lean, C2
 
 * Lemma 3.1 (`lem:RF-irreducible`), the irreducibility of `R_F` over `ℂ`, and Lemma 3.2
   (`lem:perron-branch`), which needs the Zariski density of a smooth real piece of a hypersurface.
   Only the expansion of `R_F` is in Lean. Theorem 3.3 (`thm:dv`) and Remark 3.4.
 * Corollary 3.6(a) beyond the rows above (the irreducibility of the fiber points and the finiteness),
-  (b) and (c), and (d) for an irreducible `Q` on three states with some off-diagonal entries `0`.
+  (b), (c) beyond the invariance of the principal minors under one cut-transpose
+  (`C2.CutTransposeMinors`), and (d) for an irreducible `Q` on three states with some off-diagonal
+  entries `0`.
   `fiber_three` assumes that all six off-diagonal entries of both generators are positive. In the
   normalization (N) the existence of the positive null vector, from Perron and Frobenius, is a
   hypothesis of the Lean statements.
-* Remark 3.8 and Proposition 3.9, Section 4 (the exact occupation law) in full and Section 5
-  (modal supports) in full. The reversible design of the arXiv version (its Section 8) is not in
-  Lean.
-* Section 6 beyond Example 6.5. In Example 6.5, the cycles and the depths, the passage from the
+* Proposition 3.9 (`prop:amplitudes`)(a), and (b), (c) beyond the rows of the modules `C2/`. In
+  Section 4 (the exact occupation law): `lem:reductions`, `thm:one-horizon`, `thm:generic-start`,
+  `thm:second-moments`(ii) and (iii), cases (i) to (iii) of `thm:stationary-law`,
+  `rem:balance-necessary`, the passage from points to rational functions in `prop:gluing` and
+  `cor:balance`, `rem:memoryless-cut` beyond `p_1 = p_2`, and `F_{Q^[B]} = F_Q` in
+  `thm:memoryless` as a statement about transforms. Section 5 (modal supports) in full. The
+  reversible design of the arXiv version (its Section 8) is not in Lean.
+* Section 6 beyond Example 6.5 and the exit rates and eigenvalues of `ex:branch-switch`. In Example 6.5, the cycles and the depths, the passage from the
   limits `B_F` to `a_F` through the spectral radius beyond the eigenvectors above, and the step
   from the limiting scores to the support of the mode (Theorem 6.4, `thm:critical-window`).
 
