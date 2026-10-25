@@ -1,4 +1,7 @@
-"""Checks for Proposition 4.9 and Lemma A.3 (the tree formula for K_F on every face).
+"""Checks for the tree formula for K_F on every face (former Proposition 4.9 and Lemma A.3).
+
+Retired on October 25, 2026. Paper C1 no longer states this formula (it was cut in audit 20), so
+verify_all.py does not run this script. It stays here for the record.
 
 Tests of the forest formula
    det Sigma_alpha = (prod alpha)^2 tree(f + f^T) / arb(f)^2,   f_ij = l_i q_ij r_j,

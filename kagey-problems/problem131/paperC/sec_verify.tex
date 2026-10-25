@@ -1,59 +1,53 @@
 \section{Verification and open questions}\label{sec:verify}
 
 Every theorem, proposition, lemma and corollary of this paper is proved in the
-text or in the appendices. We quote results of~\cite{paperA} and~\cite{paperB}
-where we say so. No proof rests on a computation. The formal proofs and the
-computations below check parts of the paper independently.
+text or in the appendices, apart from the results of~\cite{paperA}
+and~\cite{paperB} that we quote where we say so. No proof rests on a
+computation. The formal proofs and the scripts below check parts of the paper
+independently. All of them are in the repository named under Code availability.
 
 \subsection*{Formal proofs}
 
-Many finite and algebraic steps are proved in Lean~4 (v4.33.1, with Mathlib) in
-the folders \nolinkurl{lean/PaperC} and \nolinkurl{lean/PaperB} of the repository
-named under Code availability, and the file \nolinkurl{lean/PaperC/MAP.md}
-matches each statement of the paper to its Lean theorems. No proof there uses
-\texttt{sorry} or \texttt{admit}. The files cover the run expansion
-(Lemma~\ref{lem:runs}), the lower bound and the reversible form of the rate
-(Proposition~\ref{prop:rate}), the restriction identity
-(Proposition~\ref{prop:restriction}), the finite form of
-Theorem~\ref{thm:hull}, the tree formula of Proposition~\ref{prop:constant}(b)
-for two and three states, the exact parts of Example~\ref{ex:threecycle}, and the
-exact statements on the complete graph and near a vertex in
-Sections~\ref{sec:complete} and~\ref{sec:vertex}. Mathlib has no Perron and
-Frobenius theorem for irreducible Metzler matrices, so a positive Perron vector is
-a hypothesis of the Lean statements where one is needed, and the asymptotic
-results are not in Lean.
+The folders \nolinkurl{lean/PaperC} and \nolinkurl{lean/PaperB} prove many finite
+and algebraic steps in Lean~4 (v4.33.1, with Mathlib), with no \texttt{sorry} or
+\texttt{admit}. The file \nolinkurl{lean/PaperC/MAP.md} matches each statement
+to its Lean theorems. A positive Perron vector is a hypothesis where one is
+needed, since Mathlib has no Perron and Frobenius theorem for irreducible Metzler
+matrices, and the asymptotic results are not in Lean.
 
 \subsection*{Computations}
 
-The scripts are in the folder named under Code availability. Each check is an
-assertion, and the checks in floating point use a tolerance. None of them is
-interval-certified. The script \texttt{verify\_all.py} runs all eight with
-\texttt{py -I} and writes each output, headed by the sha256 of its script, to the
-folder \nolinkurl{data}. The scripts
-\texttt{verify\_first\_order.py}, \texttt{verify\_second\_order.py},
-\texttt{verify\_forest.py}, \texttt{verify\_rate\_flows.py},
-\texttt{verify\_weak\_field.py} and \texttt{verify\_examples.py} compute the law
-in two independent ways and check Sections~\ref{sec:model}
-to~\ref{sec:secondorder} and~\ref{sec:complete}. They were written for an earlier
-version of the paper, and a few of their checks concern statements that this
-version no longer makes. The script \texttt{verify\_layer.py} checks the constants
-and kernels of Section~\ref{sec:boundary-layer}, including the inequality
-$I_0/I_1\le1+2/\zeta$ and the ratios for the non-reversible cycle after
-Theorem~\ref{thm:layer}. The script \texttt{verify\_layer\_general.py} checks
-Theorem~\ref{thm:L-facet} on two facets with four states, a facet of a
-non-reversible face with five states and a path with a periodic jump chain. It
-computes the word sum $f^{(z)}_G(S\beta)$ exactly by a recursion over the words,
-compares it with $S^{-3/2}C_G(\beta,z)e^{-SJ_G(\beta,z)}$ computed from the complex
-critical point of Lemma~\ref{lem:critical}, and prints $S$ times the relative
-error for $S$ doubling from $4$ to $32$ at real and complex $z$. The products
-settle to constants, as~\eqref{eq:L-facet} predicts. The figures illustrate the
-theorems, and no statement is deduced from them.
+The command \texttt{py -I verify\_all.py} in the folder \nolinkurl{paperC} runs the
+6 scripts that check this paper, in about four minutes, and writes each output,
+headed by the sha256 of its script, to \nolinkurl{paperC/data}. Each check is an
+assertion, and the checks in floating point use a tolerance without interval
+certification. The scripts \texttt{verify\_first\_order.py},
+\texttt{verify\_second\_order.py}, \texttt{verify\_rate\_flows.py} and
+\texttt{verify\_examples.py} compute the law in two independent ways and check
+Sections~\ref{sec:model} to~\ref{sec:secondorder} and~\ref{sec:complete},
+including the gaps quoted after Theorem~\ref{thm:crossing}. The script
+\texttt{verify\_layer.py} checks the constants and kernels of
+Section~\ref{sec:boundary-layer} on three chains with three states. One of them
+is the cycle of Proposition~\ref{prop:layer-cubic}, with $\omega_\beta=5.1820$
+and $\gamma_\beta=3.4179$ against $q_3=3$, and the script recomputes the
+derivatives of $J_G(\beta,z)$ and $\varkappa_\beta$ for it exactly. The
+generalized kernel matches $f_F/f_G$ to $O(1/T)$ for $x$ from $0.01/T$ to $T/4$.
+The script \texttt{verify\_layer\_general.py} checks Theorem~\ref{thm:L-facet}
+on two facets with four states, a facet of a non-reversible face with five
+states and a path whose jump chain is periodic. It computes the word sum exactly
+and prints $S$ times the relative error for $S$ from $4$ to $32$. These products
+settle near $0.438$ and $0.545$ at $z=0$, as~\eqref{eq:L-facet} predicts. The
+figures illustrate the theorems, and no statement is deduced from them or from
+these numbers.
 
 \subsection*{Open questions}
 
 A local law up to the lower-dimensional corners of a face is open. For a reducible face we
 expect the power of $T$ in $M_F$ to be $(k^*-1)/2+k_F-k^*$, between the bounds of
-Theorem~\ref{thm:first}(ii). The crossings of Theorem~\ref{thm:crossing} are known
-to be unique only in special cases. A discrete form of Theorem~\ref{thm:layer},
-with the Laguerre polynomials of Section~\ref{sec:vertex} in place of the Bessel
-kernel, is not stated.
+Theorem~\ref{thm:first}(ii). Example~\ref{ex:threecycle} agrees, since there
+$M_{\{1,2\}}$ has the power $T^1$ with $k_F=2$ and $k^*=1$. We do not know whether a zero of
+$D_N$ in Theorem~\ref{thm:crossing} can fail to be unique. We know no example where it
+fails, and we prove uniqueness only in special cases, such as the crossings with a vertex
+on the complete graph (Theorem~\ref{thm:simplex-crossing}). A discrete form of
+Theorem~\ref{thm:layer}, with the Laguerre polynomials of Section~\ref{sec:vertex} in
+place of the Bessel kernel, would need a discrete form of Theorem~\ref{thm:L-facet}.

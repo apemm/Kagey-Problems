@@ -1,4 +1,6 @@
-"""Checks for Sections 3 and 7 of Paper C (the geometry of the winners and the examples).
+"""Checks for Sections 4 and 7 of Paper C1 (the geometry of the winners and the examples).
+
+The rows of the former Table 2 (first-order winners on further graphs) are no longer in the paper.
 
 First order. The exit rate of a face F is lambda_F = -(Perron root of Q_F), and
 the winners for a given tau minimize tau lambda_F + |F| - 1 over the admissible
@@ -320,7 +322,7 @@ def global_mode(facemaxes, N, T, method='A'):
 # ======================================================================== checks
 
 def check_complete_and_census(full):
-    print('\nTable 2, rows K_d and symmetric Q: complete graphs, single jumps, and a census of small graphs', flush=True)
+    print('\nformer Table 2, rows K_d and symmetric Q: complete graphs, single jumps, and a census of small graphs', flush=True)
     worst = 0.0
     for d in range(2, 7):
         l = exit_rates(W_complete(d))
@@ -375,9 +377,9 @@ def check_complete_and_census(full):
 
 
 def check_cycles():
-    print('\nTable 2, row C_d: arcs and the cycle cascade', flush=True)
+    print('\nformer Table 2, row C_d: arcs and the cycle cascade', flush=True)
     lam = lambda k: 4 * sin(pi / (2 * (k + 1))) ** 2        # = 2 - 2cos(pi/(k+1)), without cancellation
-    # arcs, and non-arc faces (Remark 7.2)
+    # arcs, and non-arc faces
     worst = 0.0
     for d in range(3, 11):
         lA = exit_rates(W_cycle(d))
@@ -396,7 +398,7 @@ def check_cycles():
     mono = all(pi ** 2 / 12 * (2 * a - 1) / (a - 1) ** 2 + pi ** 4 / (960 * a * a) > pi ** 2 / 12 * (2 * a + 1) / a ** 2 + pi ** 4 / (960 * (a + 1) ** 2)
                for a in range(4, 500))
     check('left side decreases and right side increases in m', mono, 'm = 4..500')
-    # Table 2, row C_d: winners on C_d from the hull (A) and from a direct scan (B)
+    # former Table 2, row C_d: winners on C_d from the hull (A) and from a direct scan (B)
     taus = np.linspace(0.01, 80, 40000)
     least = {}
     all_ok = True
@@ -414,12 +416,12 @@ def check_cycles():
         for _, s in wA:
             if s < d:
                 least.setdefault(s, d)
-    check('Table 2, row C_d: winners and switch values on C_d, d = 3..12 (hull and direct scan)', all_ok, 'arcs of 1..floor(2d/3) states, then C_d')
+    check('former Table 2, row C_d: winners and switch values on C_d, d = 3..12 (hull and direct scan)', all_ok, 'arcs of 1..floor(2d/3) states, then C_d')
     agree('tau_4 = 2/(1 - 2 sqrt2 + sqrt5)', '4.906280', {'closed': 2 / (1 - 2 * sqrt(2) + sqrt(5)), 'eigen': 1 / (lam(3) - lam(4))})
     agree('tau_5 = 1/(sqrt3 - (1+sqrt5)/2)', '8.770636', {'closed': 1 / (sqrt(3) - (1 + sqrt(5)) / 2), 'eigen': 1 / (lam(4) - lam(5))})
     agree('tau_3 = 1 + sqrt2', '2.414214', {'closed': 1 + sqrt(2), 'eigen': 1 / (lam(2) - lam(3))})
     want = {2: 4, 3: 5, 4: 6, 5: 8, 6: 9, 7: 11, 8: 12}
-    check('least d with arc k winning (Table 2): 4, 5, 6, 8, 9, 11, 12', all(least.get(k) == v for k, v in want.items()) and
+    check('least d with arc k winning (former Table 2): 4, 5, 6, 8, 9, 11, 12', all(least.get(k) == v for k, v in want.items()) and
           all(ceil(3 * k / 2) == v for k, v in want.items() if k >= 3), f'from the hulls: {dict((k, least.get(k)) for k in want)}')
     for d, closed, label in [(4, 2.0, '2'), (5, 2 + sqrt(2), '2 + sqrt2'), (6, 3 + sqrt(5), '3 + sqrt5'), (8, 6 + 3 * sqrt(3), '6 + 3 sqrt3')]:
         K = floor(2 * d / 3)
@@ -457,7 +459,7 @@ def check_cycles():
 
 
 def check_paths(full):
-    print('\nTable 2, rows P_d and P_4: paths', flush=True)
+    print('\nformer Table 2, rows P_d and P_4: paths', flush=True)
     lp = lambda k: 4 * sin(pi / (2 * (2 * k + 1))) ** 2     # = 2 - 2cos(pi/(2k+1))
     worst = 0.0
     for d in range(3, 10):
@@ -563,7 +565,7 @@ def check_C5(full):
     printed = {40: ('2.538112', '5.122981', '6.883529'), 72: ('3.077562', '6.389395', '8.601750')}
     for N in ((40, 72) if full else (40,)):
         fm = {n: FaceMax(W, F, mu, mmax=N if len(F) < 5 else N // 5 + 3) for n, F in faces.items()}
-        # the balanced pair is exact by Proposition 5.1 and Paper A
+        # the balanced pair is exact by the pair identity (not stated in the paper) and Paper A
         u_of = lambda T: (T / N) / (1 - 2 * T / N)
         t1 = brentq(lambda T: S_ab(N // 2, N // 2, u_of(T)) - 1, 0.5, 6, xtol=1e-12)
         t1b = brentq(lambda T: fm['arc2'].value(N, T)[0] - fm['arc1'].value(N, T)[0], 0.5, 6, xtol=1e-10)
@@ -589,7 +591,7 @@ def check_C5(full):
 
 
 def check_triangles():
-    print('\nTable 2, row Theta_eps: two triangles joined by a weak link', flush=True)
+    print('\nformer Table 2, row Theta_eps: two triangles joined by a weak link', flush=True)
     e = sp.symbols('epsilon', positive=True)
     x = sp.symbols('x')
     pA = x ** 2 - (3 + e) * x + e
@@ -663,7 +665,7 @@ def check_triangles():
 
 
 def check_paw_house():
-    print('\nTable 2, rows paw, house and K_4 plus a vertex', flush=True)
+    print('\nformer Table 2, rows paw, house and K_4 plus a vertex', flush=True)
     lA = exit_rates(W_paw())
     lB = exit_rates(W_paw(), 'B')
     closed = {(0,): 1, (2,): 2, (3,): 2, (1,): 3, (0, 1): 2 - sqrt(2), (2, 3): 1, (1, 2): (5 - sqrt(5)) / 2, (1, 3): (5 - sqrt(5)) / 2,

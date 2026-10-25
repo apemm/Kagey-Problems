@@ -1,64 +1,74 @@
 \section{Introduction}\label{sec:intro}
 
-Which states does the most likely occupation-count vector of a slowly
-switching Markov chain use? Fix a generator $Q$ on $d$ states and a start
-law, and take $N$ steps with transition matrix $I+(T/N)Q$, so that the
-chain makes about $T$ switches. The occupation counts
-$n_i=\#\{t\le N:X_t=i\}$ have support $F=\{i:n_i>0\}$, which we call a
-face. Write $M_F$ for the largest probability on that exact support and
-$\lambda_F$ for its principal exit rate (Definition~\ref{def:faces}). A face
-is admissible if a path of positive probability has exactly that support.
-When $T=\tau\log N$ the cost $e^{-T\lambda_F}$ of staying in $F$ and the
-cost $N^{-(|F|-1)}$ of sharing the mass of $F$ among its count vectors are
-both powers of $N$, and they compete. The paper describes the law of the
-count vector on every face at this scale, up to the boundary of the face,
-and reads off the face that carries the mode and the times at which it
-changes.
+Let $Q$ be a generator on $d$ states, and run the chain for $N$ steps with
+transition matrix $I+(T/N)Q$. It then makes about $T$ switches, and we let $T$
+range from $1$ to $N^{1/3}$. The occupation counts $n_i=\#\{t\le N:X_t=i\}$
+have support $F=\{i:n_i>0\}$, which is a face of the simplex. We describe the
+law of the count vector on every face. Inside a face it is a local limit law
+with an explicit constant. Its exponent is the lattice entropy $(|F|-1)\log N$
+of the face plus $T$ times the Donsker and Varadhan cost of the point, and this
+cost is one functional of the whole chain. Near a facet the law on the face is
+the law on the facet times an explicit kernel. The most likely count vector,
+the mode, lies on the face where this law is largest. A crossing of two faces is
+a value of $T$ at which their largest probabilities are equal. When
+$T=\tau\log N$ the law locates every crossing of two irreducible faces up to
+$O(1/\log N)$, and so every change of the mode when only two sizes of face
+compete.
 
-\subsection{The law on a face}\label{sec:intro-faces}
-
-Put $\Phi_\tau(F)=\tau\lambda_F+|F|-1$.
-
-\begin{introtheorem}[first-order face selection]\label{thm:A}
-Fix the rates $q_{ij}$ and the law of $X_1$, and let $T=\tau\log N$ with
-$\tau>0$ fixed. Every admissible face $F$ has $M_F=N^{-\Phi_\tau(F)+o(1)}$.
-For large $N$ the support of every most likely composition is an admissible
-face that minimizes $\Phi_\tau$ among the admissible faces. If the chain can
-pass between any two states of each such minimizing face without leaving it,
-then the visit fractions of every most likely composition are within
-$O(1/\log N)$ of the quasi-ergodic law of its support
+To state the law, let $J_V$ be the Donsker and Varadhan rate function of the
+empirical measure of the continuous-time chain with generator $Q$, given
+in~\eqref{eq:JV}. Say that a face $F$ satisfies (H) if the chain can move
+between any two states of $F$ without leaving $F$ and the start gives $F$
+positive mass. Write $\lambda_F$ for the exit rate of $F$ and $M_F$ for the
+largest probability of a count vector with support $F$
 (Definition~\ref{def:faces}).
-\end{introtheorem}
 
-Theorem~\ref{thm:A} is Theorem~\ref{thm:first}(ii)--(iv).
-Theorem~\ref{thm:hull} reads the winners off the lower-left boundary of the
-convex hull of the points $(\lambda_F,|F|-1)$, so as $\tau$ grows the
-winning size can only grow. The exponent is one functional. The rate
-$J_F$ inside a face is the Donsker and Varadhan functional of the chain
-killed on leaving $F$, and Proposition~\ref{prop:restriction} shows that
-$J_F$ is the restriction to the face of the functional $J_V$ of the whole
-chain, where $V=[d]$ is the face of all states. So
-Theorem~\ref{thm:stratified} states the law of the count vector on every
-face in one display, as the lattice entropy $(|F|-1)\log N$ of the face
-plus $T$ times the Donsker and Varadhan cost of the point.
-
-First order fixes a crossing only up to a factor $1+o(1)$. To locate it up
-to $o(1)$ we need the constant in front. Say that a face $F$ satisfies (H)
-if the chain can move between any two states of $F$ without leaving $F$, and
-the start gives $F$ positive mass. For such faces we prove a local limit
-theorem inside the face (Theorem~\ref{thm:local}), and it gives the
-following result.
-
-\begin{introtheorem}[face maxima and crossings]\label{thm:B}
-Fix the rates $q_{ij}$ and the law of $X_1$.
-\begin{enumerate}[(i)]
-\item Let $F$ satisfy \textup{(H)}, with $k=\lvert F\rvert$ states. Uniformly
+\begin{introtheorem}[the law on a face]\label{thm:A}
+Fix the rates $q_{ij}$ and the law of $X_1$. Let $F$ satisfy \textup{(H)}, with
+$k=\lvert F\rvert\ge2$ states, and let $\mathcal K$ be a compact subset of the
+open face. Uniformly for $\supp n=F$, $n/N\in\mathcal K$ and $1\le T\le N^{1/3}$,
+\[
+ -\log P_N(n)=(k-1)\log N+T\,J_V(n/N)-\frac{k-1}2\log T-\log C_F(n/N)
+ +O\Bigl(\frac1T+\frac{T^2}N\Bigr),
+\]
+where $C_F>0$ is the explicit function of Definition~\ref{def:tilt}. Uniformly
 for $1\le T\le N^{1/3}$,
 \[
  M_F=N^{-(k-1)}\,T^{(k-1)/2}K_F\,e^{-T\lambda_F}\bigl(1+O(1/T+T^2/N)\bigr),
 \]
-where $K_F>0$ is the explicit constant of Definition~\ref{def:tilt} (for
-$k=1$ it is the start mass of the state).
+where $K_F=C_F(\alpha^*_F)$ and $\alpha^*_F$ is the quasi-ergodic law of $F$.
+For $k=1$ the second display holds with $K_F$ the start mass of the state.
+\end{introtheorem}
+
+Theorem~\ref{thm:A} is Theorems~\ref{thm:stratified} and~\ref{thm:facemax}.
+It rests on a local limit theorem for the occupation fractions of the chain
+killed on leaving $F$ (Theorem~\ref{thm:local}). The rate of that chain is the
+restriction of $J_V$ to the face (Proposition~\ref{prop:restriction}). Its least
+value is $\lambda_F$, attained only at $\alpha^*_F$
+(Proposition~\ref{prop:variational}). The factor $T^{(k-1)/2}$ appears because
+the visit fractions fluctuate on the scale $T^{-1/2}$ in each of the $k-1$ free
+directions. For reversible faces $K_F$ involves the square root of a weighted
+count of spanning trees (Proposition~\ref{prop:constant}). The face maxima hold
+with a field $v$ that weights a composition by $e^{Tv\cdot n/N}$, uniformly for
+$v$ in a compact set, and uniformly over a compact class of reversible chains
+(Proposition~\ref{prop:uniform-facemax}).
+
+\subsection{The mode and its crossings}\label{sec:intro-faces}
+
+When $T=\tau\log N$ the cost $e^{-T\lambda_F}$ of staying in $F$ and the cost
+$N^{-(|F|-1)}$ of spreading over the count vectors of $F$ are both powers of $N$.
+Put $\Phi_\tau(F)=\tau\lambda_F+|F|-1$. A face is admissible if a path of
+positive probability has exactly that support.
+
+\begin{introtheorem}[the support of the mode]\label{thm:B}
+Fix the rates $q_{ij}$ and the law of $X_1$.
+\begin{enumerate}[(i)]
+\item Let $T=\tau\log N$ with $\tau>0$ fixed. Every admissible face $F$ has
+$M_F=N^{-\Phi_\tau(F)+o(1)}$. For large $N$ the support of every most likely
+composition is an admissible face that minimizes $\Phi_\tau$ among the
+admissible faces. If each such minimizing face satisfies \textup{(H)}, then the
+visit fractions of every most likely composition are within $O(1/\log N)$ of
+the quasi-ergodic law of its support.
 \item Let $F$ and $G$ satisfy \textup{(H)}, and suppose that $F$ has
 $\Delta\ge1$ more states than $G$ and an exit rate smaller by $\delta>0$. For
 large $N$ the equation $M_F=M_G$ has a root $T$ in $[1,N^{1/3}]$, and every
@@ -70,59 +80,51 @@ such root satisfies
 \end{enumerate}
 \end{introtheorem}
 
-Part (i) is Theorem~\ref{thm:facemax} and part (ii) is
-Theorem~\ref{thm:crossing}. The factor $T^{(k-1)/2}$ appears because the
-visit fractions fluctuate on the scale $T^{-1/2}$ in each of the $k-1$ free
-directions. Solving the equation in (ii) gives
-$T=\frac\Delta\delta[\log N-\frac12\log\log N+O(1)]$, so the coefficient
+Part (i) is Theorem~\ref{thm:first}(ii)--(iv) and part (ii) is
+Theorem~\ref{thm:crossing}. Theorem~\ref{thm:hull} reads the winners in (i) off
+the lower-left boundary of the convex hull of the points $(\lambda_F,|F|-1)$. So
+as $\tau$ grows the winning size can only grow. Solving the equation in (ii)
+gives $T=\frac\Delta\delta[\log N-\frac12\log\log N+O(1)]$. The coefficient
 $\frac12$ of $\log\log N$ holds for every such pair, whatever the graph, the
-rates, the sizes or the start, and without reversibility. For reversible
-faces $K_F$ involves the square root of a weighted count of spanning trees
-(Proposition~\ref{prop:constant}), and on a general face two counts of trees
-(Proposition~\ref{prop:forest}). When several faces tie at first order,
-Theorem~\ref{thm:window} describes the window of $T$ in which they compete,
-and a weak field shifts the line of each face in that window by the field
-averaged against its quasi-ergodic law (Proposition~\ref{prop:weakfield}).
-The face maxima hold with a field $v$ that weights a composition by
-$e^{Tv\cdot n/N}$, uniformly for $v$ in a compact set, and over a compact
-class of reversible chains (Proposition~\ref{prop:uniform-facemax}).
+rates, the sizes or the start, and without reversibility. On a reducible face
+it can be $1$ or $0$ (Example~\ref{ex:threecycle}). If $Q$ has symmetric support
+or $\mu$ full support, and at each switch of (i) only two values of
+$(\lambda_F,|F|)$ compete, Corollary~\ref{cor:mode-changes}
+locates every change of the mode for $T$ of order $\log N$ up to $O(1/\log N)$.
+When more compete, Theorem~\ref{thm:window} describes the window of $T$ in which
+they do.
 
-The local law stays away from the boundary of the face. At the boundary a
-new scale appears. Let $x=Tn_i/N$ be the time spent in a state $i$ whose
-count is small, and $S=T-x$. Section~\ref{sec:boundary-layer} pulls the
-visits to $i$ out of the exact run expansion and writes the density on $F$
-as a contour integral against the density on the facet $F\setminus\{i\}$
-with a complex weight. For a pair face the integral is a Bessel kernel,
-$e^{-\gamma x}\sqrt{abS/x}\,I_1(2\sqrt{abSx})$ times the density on the
-facet, which is the facet form of Pedler's formula for two-state chains,
-and we prove it with an explicit error for all $x$
-(Proposition~\ref{prop:pair-face}). The constants $a$, $b$ and $\gamma$ are
-explicit for every irreducible chain through the left and right tilt
-vectors at the facet profile, and $\gamma-q_i$ is $ab/2$ times an effective
-resistance (Proposition~\ref{prop:layer-constants}). For every face,
-Theorem~\ref{thm:layer} describes the layer for $x$ up to
-a small multiple of $T$. A generalized kernel holds there with relative
-error $O(1/T)$. The Bessel kernel holds up to a factor $e^{E}$ with $E$ of
-order $1/T+\sqrt{x/T}(1+x)$. For a reversible chain this improves to a
-relative error $O(1/T+\sqrt{x/T})$ on the whole range. Without
-reversibility we get the relative Bessel form only for $x$ up to a constant
-times $T^{1/3}$, and a non-reversible cycle on three states shows that the
-restriction is real. The proof rests on a local law of the facet chain
-with a small complex weight (Theorem~\ref{thm:L-facet}), which we prove on a
-torus through a complex critical point with a Laplace lemma for a complex
-Hessian. The near-vertex
-law of Section~\ref{sec:vertex}, where one count is large and a few counts
-are of order one and the crossing with the vertex moves to $T$ of order
-$\sqrt N$, is the discrete pair-face case of this layer, in the regime where
-the Laguerre kernel cannot yet be replaced by the Bessel kernel
-(Theorem~\ref{thm:vertex-uniform-root}).
+\subsection{The boundary layer}\label{sec:intro-layer}
+
+Section~\ref{sec:boundary-layer} follows the law up to a facet
+$G=F\setminus\{i\}$. Let $x$ be the time spent in $i$ and $S=T-x$. We pull the
+visits to $i$ out of the run expansion. This writes the density on $F$ as a
+contour integral of the density of a weighted chain on $G$ with a complex
+parameter. For a pair face the integral is the Bessel kernel
+$e^{-\gamma x}\sqrt{abS/x}\,I_1(2\sqrt{abSx})$ times the density on the facet.
+This is the facet form of Pedler's formula for two-state chains, and we prove it
+with an explicit error for all $x$ (Proposition~\ref{prop:pair-face}). The
+constants $a$, $b$ and $\gamma$ are explicit for every irreducible chain, and
+$\gamma-q_i$ is $ab/2$ times an effective resistance
+(Proposition~\ref{prop:layer-constants}). For every irreducible face whose facet
+satisfies (H), Theorem~\ref{thm:layer} gives the law for $x$ up to a small
+multiple of $T$. A generalized kernel holds there with relative error $O(1/T)$.
+For a reversible chain the Bessel kernel holds with relative error
+$O(1/T+\sqrt{x/T})$. Without reversibility it holds up to a factor $e^E$ with
+$E=O(1/T+\sqrt{x/T}(1+x))$. Proposition~\ref{prop:layer-cubic} finds the term
+of order $x^{3/2}T^{-1/2}$ in $E$, and for a cycle on three states this term is
+$\frac{49}{64\sqrt{ab}}\,x^{3/2}S^{-1/2}$. So there, for $x$ up to a small
+multiple of $T$, the relative form holds if and only if $x=o(T^{1/3})$. The
+proof rests on a local law for
+the weighted facet chain (Theorem~\ref{thm:L-facet}). We prove it on a torus
+through a complex critical point, with a Laplace lemma for a complex Hessian.
 
 \subsection{The complete graph}\label{sec:intro-complete}
 
 On the complete graph with the uniform start, $Q=J-dI$ with $J$ the all-ones
-matrix, every face ties at first order and the constants decide. A face of
-$k$ states has $K_F=\frac1dk^{k+1/2}(4\pi)^{-(k-1)/2}$, and the $k^{k-2}$
-spanning trees of $K_k$ enter through it. Put
+matrix, every face ties at first order and the constants decide. A face of $k$
+states has $K_F=\frac1dk^{k+1/2}(4\pi)^{-(k-1)/2}$, and the $k^{k-2}$ spanning
+trees of $K_k$ enter through it. Put
 $a_k=\frac12\log(4\pi)-\frac{k+1/2}{k-1}\log k$, write $V_N$ for the
 probability of a vertex, and call a composition balanced if its positive
 coordinates differ by at most $1$.
@@ -146,28 +148,18 @@ $d$ positive coordinates.
 
 Part (i) is Theorem~\ref{thm:simplex-crossing}, part (ii) is
 Theorem~\ref{thm:simplex-balance} and part (iii) is
-Corollary~\ref{cor:simplex-modes}. Parts (i) and (ii) hold at every $N$, so on
-the complete graph we know the face maxima and their crossings with a vertex
-exactly, and part (iii) gives the mode for large $N$.
-Figure~\ref{fig:complete-envelope} shows the window. A start law changes the
-constant of a face through its start mass, and a weak field changes it
-through the field averaged over the face. Either can let a face of
-intermediate size win (Example~\ref{ex:K3-start} and
-Corollary~\ref{cor:weakfield-phases}), and one field makes every size win in
-turn.
+Corollary~\ref{cor:simplex-modes}. Parts (i) and (ii) hold at every $N$.
+Figure~\ref{fig:complete-envelope} shows the window.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\textwidth]{fig_complete_envelope}
+\includegraphics[width=0.52\textwidth]{fig_complete_envelope}
 \caption{Support selection on the complete graph with four states, unit rates
 and uniform start, in the window $T=\log N-\frac12\log\log N+t$.
-Thin lines are limiting log face maxima relative to an untilted vertex,
-and the bold curve is their upper envelope.
-(a) Without a field the winner jumps from one state to all four.
-(b) Weighting a composition by $e^{\langle\xi,n\rangle/N}$, with
-$\xi_i=-(i-1)^2$, lets every size win in turn. The scores and marked
-crossings are derived in Section~\ref{sec:complete}. Field weights are
-unnormalized, and marked ties concern the limit, not finite-$N$ equalities}
+Thin lines are limiting log face maxima relative to a vertex,
+and the bold curve is their upper envelope. The winner jumps from one state
+to all four at $t=a_4$. The scores are derived in Section~\ref{sec:complete},
+and the marked tie concerns the limit, not a finite-$N$ equality}
 \label{fig:complete-envelope}
 \end{figure}
 
@@ -175,82 +167,63 @@ unnormalized, and marked ties concern the limit, not finite-$N$ equalities}
 
 The exact law of the count vector goes back to Whittle~\cite{whittle1955},
 Dawson and Good~\cite{dawsongood1957}, Goodman~\cite{goodman1958} and
-Good~\cite{good1961}. Good's formula (3) is the run expansion of
-Lemma~\ref{lem:runs}, and his formula (10) is the continuum density of
-Lemma~\ref{lem:continuum}. What our setting adds to (10) is the killing on
-leaving the face and the exponents $m_i-1$ of the times spent in the
-states, where $m_i$ is the number of runs in state $i$, and the proof of
-Lemma~\ref{lem:continuum} checks them. He suggested the saddle-point
-analysis of the density and did not carry it out, and
-Theorem~\ref{thm:local} is that analysis, uniform in $T$ and with its
-constant. Polettini~\cite{polettini2015} and Carugno, Vivo and
-Coghi~\cite{cvc2022} derive the exact law from the BEST theorem and the
-matrix-tree theorem. Stadje~\cite{stadje1999} gives the generating functions
-of the joint numbers of visits and limit laws when one state becomes nearly
+Good~\cite{good1961}. For two states it is the Markov binomial law of
+Gabriel~\cite{gabriel1959}. Dobrushin~\cite{dobrushin1953} classified the limit
+laws of the number of visits of a two-state chain whose switch probabilities
+scale with the length, and for switch probabilities of order $1/N$ the limit is
+not Gaussian. This is the case $d=2$ of our regime. \v{C}ekanavi\v{c}ius and
+Vellaisamy~\cite{cv2010} give compound Poisson approximations to the Markov
+binomial law and survey the work since Dobrushin. What is new here is the count
+vector of $d$ states, the uniformity in $T$, the explicit constants and the
+competition of faces. Good proposed a saddle-point analysis of his formula (10)
+and did not carry it out~\cite[pp.~42--43]{good1961}, and
+Theorem~\ref{thm:local} is that analysis, uniform in $T$ and with its constant.
+Polettini~\cite{polettini2015} and Carugno, Vivo and Coghi~\cite{cvc2022} derive
+the exact law from the BEST and matrix-tree theorems, and
+Stadje~\cite{stadje1999} gives limit laws when one state becomes nearly
 absorbing. In continuous time, Brydges, van der Hofstad and
-K\"onig~\cite{bhk2007} give the joint density of the local times on the
-event that the range is a given set, and Huang, Kious, Sidoravicius and
-Tarr\`es~\cite{hkst2018} write it with Bessel functions and spanning trees
-for symmetric rates. The Bessel kernel of the boundary layer is Pedler's
-occupation-time density for two-state chains~\cite{pedler1971}, continued
-by Kovchegov, Meredith and Nir~\cite{kmn2010}, and
-Section~\ref{sec:boundary-layer} is its facet version. Herv\'e and
-Ledoux~\cite{herveledoux2013} prove a quantitative local limit theorem for
-densities of finite-state Markov additive processes, and Kontoyiannis and
-Meyn~\cite[Theorem~6.3]{km2003} give exact large deviation asymptotics for a
-bounded functional of a fixed chain. Theorem~\ref{thm:local} is a local form
-for the whole vector of counts, for a chain killed on leaving $F$ whose
-switch probabilities shrink with $N$.
+K\"onig~\cite{bhk2007} give the joint density of the local times on the event
+that the range is a given set, and Huang, Kious, Sidoravicius and
+Tarr\`es~\cite{hkst2018} write it with Bessel functions and spanning trees.
+Pedler's occupation-time density for two-state chains~\cite{pedler1971},
+continued by Kovchegov, Meredith and Nir~\cite{kmn2010}, is the Bessel kernel
+of the boundary layer. The large deviations of Markov additive processes of Ney
+and Nummelin~\cite{nn1987a,nn1987b}, the eigenvalue method of
+Miller~\cite{miller1961} for sums on a finite chain, the local limit theorem of
+Herv\'e and Ledoux~\cite{herveledoux2013} and the exact large deviation
+asymptotics of Kontoyiannis and Meyn~\cite[Theorem~6.3]{km2003} concern a fixed
+chain. Our
+local law is for the whole count vector of a killed chain whose switch
+probabilities shrink with $N$.
 
 The rate inside a face is the Donsker and Varadhan functional of the killed
-chain~\cite{dv1975}. Dupuis and Liu~\cite[Section~3.1]{dupuisliu2015} give
-it for reversible jump processes, Chen and Deng~\cite{chendeng2013} use it
-for the principal Dirichlet eigenvalue, and Guillin, Nectoux and
-Wu~\cite{gnw2024} prove a large deviation principle for the occupation
-measure of a process conditioned to stay in a set. The quasi-ergodic law
-goes back to Darroch and Seneta~\cite{darrochseneta1965,darrochseneta1967},
-with the book of Collet, Mart\'inez and San Mart\'in~\cite{cmsm2013} as the
-standard reference. Dietz and Sethuraman~\cite{dietz2007,dietz2005} and
-Bouguet and Cloez~\cite{bouguetcloez2018} study chains whose switching
-decays along the trajectory. Here the rate is fixed during each path and
-changes with $N$. Bertini, Gabrielli and Landim~\cite{bgl2024} and
-Landim~\cite{landim2023} expand the level-two rate functions of finite
-chains in a parameter, and Kim and Landim~\cite{kl2024} extend this to the
-joint rate of the empirical measure and the flow~\cite{bfg2014,bfg2015}.
-These expansions concern the rate functional of a fixed chain. Here the
-functional enters through its restriction to each face, and the competition
-is between faces of different dimension.
+chain~\cite{dv1975,dupuisliu2015,chendeng2013}. Guillin, Nectoux and
+Wu~\cite{gnw2024} prove a large deviation principle for the occupation measure
+of a process conditioned to stay in a set. The quasi-ergodic law goes back to
+Darroch and Seneta~\cite{darrochseneta1965,darrochseneta1967}, and Collet,
+Mart\'inez and San Mart\'in~\cite{cmsm2013} is the standard reference. Dietz and
+Sethuraman~\cite{dietz2007,dietz2005}, Bouguet and
+Cloez~\cite{bouguetcloez2018} and Bena\"im, Bravo and Faure~\cite{bbf2026}
+study chains whose switching decays along the trajectory, while here the rate is fixed during each path and changes with $N$.
+Bertini, Gabrielli and Landim~\cite{bgl2024}, Landim~\cite{landim2023} and Kim
+and Landim~\cite{kl2024} expand the rate functions of a fixed chain in a
+parameter, the last for the joint rate of the empirical measure and the
+flow~\cite{bfg2014,bfg2015}. Here the functional enters through its
+restriction to each face, and faces of different dimension compete.
 
-The question grew out of Problem~131 of Kagey's Open Problem
-Collection~\cite{kagey131}, a two-direction crossing problem, whose
-two-state case is treated in~\cite{paperA}. This paper \ifarxivbuild replaces our preprint~\cite{paperB} on the complete graph, which is the first version of the same arXiv entry\else supersedes our preprint~\cite{paperB} on the complete graph\fi. Its results on the crossings with a vertex and near a
-vertex appear here as cases of the general theory, in
-Sections~\ref{sec:complete} and~\ref{sec:vertex}. We cite \Bversion{} for the results that we do not reprove.
+The two-state walk is treated at every $N$ in~\cite{paperA}. This paper
+\ifarxivbuild replaces our preprint~\cite{paperB} on the complete graph, which
+is the first version of the same arXiv entry\else supersedes our
+preprint~\cite{paperB} on the complete graph\fi. We reprove
+\cite[Theorems~3.1 to 3.3, 3.8 and 6.4, Proposition~3.6, Corollary~3.9,
+Example~3.10 and Lemma~6.1]{paperB} as cases of the general theory, namely as
+Corollary~\ref{cor:paperB}, the paragraph after it, Theorems~\ref{thm:simplex-crossing},
+\ref{thm:simplex-balance} and~\ref{thm:vertex-uniform-root},
+Example~\ref{ex:complete-face}, Corollary~\ref{cor:simplex-modes},
+Remark~\ref{rem:simplex-edge-mode} and Lemma~\ref{lem:uniform-laguerre-bessel}. We do not reprove the next term of the
+crossing equation in~\cite[Theorem~3.2]{paperB}, the Bessel majorant and the
+crossover of~\cite[Theorems~6.2 and C.1]{paperB}, or the results
+of~\cite[Sections~4 and 5]{paperB} on a start and a field. A companion paper~\cite{paperC2} asks what
+the Donsker and Varadhan functional and the modal supports determine about the
+generator.
 
-\subsection{Plan of the paper}\label{sec:plan}
-
-Section~\ref{sec:model} fixes the notation and gives the exact law of the
-composition as a sum over runs. Section~\ref{sec:dv} introduces the killed
-functional and the restriction identity. Section~\ref{sec:firstorder}
-proves first-order face selection, Section~\ref{sec:secondorder} the local
-law with a field, the face maxima, the crossing equation and the tie
-windows, and Section~\ref{sec:boundary-layer} the boundary layer.
-Section~\ref{sec:complete} treats the two-state walk and the complete
-graph, and Section~\ref{sec:vertex} the compositions near a vertex.
-Section~\ref{sec:verify} describes the computer checks and the formal
-proofs. The appendices hold the torus and Laplace proofs of the local law,
-the proofs for the complete graph and the proofs near a vertex. From the
-persistent-walk paper~\cite{paperA} we use two results, the coefficientwise
-growth of the polynomials $S_{a,b}$ toward the middle in
-Proposition~\ref{prop:pair} and its bound on clipped products in
-Appendix~\ref{app:vertex}. We also recall its expansion of the crossing
-$z_N$ and its fixed-edge expansion, for comparison only.
-
-A companion paper~\cite{paperC2} asks what the Donsker and Varadhan
-functional and the modal supports determine about the generator. It
-recovers a reversible generator on a known graph from modal supports, with
-a finite-horizon correction, and at low temperature it reads the Freidlin
-and Wentzell cycle tree off the modal supports. That paper rests on the killed functional and the first-order
-results of Sections~\ref{sec:dv} and~\ref{sec:firstorder}, on
-Definition~\ref{def:tilt} with the face maxima of Theorem~\ref{thm:facemax},
-and on Proposition~\ref{prop:uniform-facemax}. Nothing here depends on it.
