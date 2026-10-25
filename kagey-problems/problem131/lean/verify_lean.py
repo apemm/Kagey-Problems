@@ -43,7 +43,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
-LIBS = ['PaperA', 'PaperB', 'PaperC', 'PaperD', 'PaperAD']
+LIBS = ['PaperA', 'PaperB', 'PaperC', 'PaperD', 'PaperAD', 'PaperF']
 # Libraries whose modules import other libraries of this folder. PaperAD is the bridge between
 # Paper A and Paper D (Theorem 2.8 of Paper D with Paper A's Proposition 3.8).
 DEPENDS = {'PaperAD': ['PaperA', 'PaperD']}
