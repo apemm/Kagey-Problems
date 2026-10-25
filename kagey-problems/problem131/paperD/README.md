@@ -389,9 +389,8 @@ On October 24, 2026 two printed labels of `verify_elephant_shape.py` changed fro
 computation changed. So the current `verify_elephant_shape.py` no longer matches the hash in the
 witness header of `data/witnesses_convex_2026-10-17.jsonl`. Check the witnesses against the file at
 the pinned commit `6f7f9068`, which the Code availability statement of the paper names. The
-current files have sha256 9bd9ba3ebb0a2a4d5c98a6ba27684f8ca290434ee8ada9cf4816f55512906145
-(`verify_elephant_shape.py`, CRLF on disk, LF form
-0f3ab9a3ae64d0aef9cad82e3c1d86b66be884e3f82fb9824dc1ee666276193d) and
+current files have sha256 0f3ab9a3ae64d0aef9cad82e3c1d86b66be884e3f82fb9824dc1ee666276193d
+(`verify_elephant_shape.py`) and
 b40d38c8371ff03bd2c1cddb1e1baaebaf14ab7e8b600fa68ae495a5214fab3e (`verify_elephant_odd.py`).
 `certify_center.py` and `certify_convex.py` did not change. The quick run of October 24 is in
 `data/verify_output_2026-10-24.txt`.
