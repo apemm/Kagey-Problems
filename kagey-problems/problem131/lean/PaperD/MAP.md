@@ -1,13 +1,15 @@
 # Paper D: map from the paper and the research notes to the Lean proofs
 
-Current layout, October 25, 2026. The journal article has 42 pages and no
-Online Resource. Sections S1 to S5 (second order, tail, odd N, the likelihood
-theorem and the convexity window between the humps) are printed only in the arXiv
-version, which has 57 pages. Section 3 ends with the shape results and odd N. Section 4
+Current layout, October 25, 2026 (second revision). The journal article has 45 pages and no
+Online Resource. Sections S1 to S6 (second order, tail, odd N, the likelihood
+theorem, the convexity window between the humps and the proofs for the threshold
+certificate) are printed only in the arXiv version, which has 64 pages. Section 3 ends with the shape results and odd N. Section 4
 contains the fixed-memory bridge and the two-mode theorems for the fixed-memory limit law,
 and Section 5 describes verification. Appendix B keeps its statements, with proofs in
-Appendix D. The sign proofs are in Appendix E, and Appendix F proves the lemmas on sign
-patterns of functions used in Section 4. On October 25 the former Section 3.6 (the
+Appendix D. The sign proofs are in Appendix E, Appendix F proves the lemmas on sign
+patterns of functions used in Section 4, and Appendix G gives the certificate for Theorem 4.4.
+The second revision of October 25 added Theorem 4.4, Appendix G and Section S6, and Remark 4.4
+became Remark 4.5. On October 25 the former Section 3.6 (the
 prescribed window) and Proposition 1.5 (`prop:main-window`) moved to Section S5 of the
 arXiv version, so their numbers changed. The column No. gives the numbers of the build of
 October 25 and, for these moved statements, the number of October 24. No Lean source
@@ -194,11 +196,14 @@ indexes the count chain by the number of steps.
 | `lem:center-no-holes` | 3.18 | strict minimum and positive central curvature from `P_N(1) > max(E_N,C_N)` | `center_min_and_curvature_of_no_holes`, `ewBin_center_min_and_curvature_of_no_holes` | kernel, for every even `N ≥ 6` and `0 < ε < 1/2`. Symmetry and strict no holes are discharged for the actual walk. |
 | `cor:height-window` | 3.20 | nonempty central convexity window from maximum height, at every even crossing `N ≥ 8` | none | written chord-sum proof checked, not formalized. |
 | `cor:fixed-memory-bridge` | 4.1 | weak Landau limit as fixed memory tends to one | none | written proof, not formalized. |
-| `thm:main-limit` | 1.5 (new on October 25, when `prop:main-window` left 1.5) | the fixed-memory limit law with a fair first step has at most two modes, and exactly two for `ε ≤ 1/80` | none | written proof (Theorems 4.2 and 4.3), not formalized. |
+| `thm:main-limit` | 1.5 (new on October 25, when `prop:main-window` left 1.5) | the fixed-memory limit law with a fair first step has at most two modes, and exactly two for `ε ≤ 1/80` | none | written proof (Theorems 4.2, 4.3 and 4.4), not formalized. |
 | `thm:two-modes` | 4.2 (new on October 25) | the density of the fair-start superdiffusive limit is unimodal at 0 or has exactly two symmetric modes | none | written proof from `thm:five-blocks` (kernel) and Guérin, Laulin and Raschel, AIHP 62 (2026), Theorem 1.3, not formalized. |
 | `thm:two-modes-near-one` | 4.3 (new on October 25) | two modes for `39/40 ≤ a < 1` | none | written proof from the exact first two moments, not formalized. |
-| `rem:modes-threshold` | 4.4 (new on October 25) | numerical threshold `a_c ≈ 0.66881` and finite-`N` values | none | numerics (`paperD/verify_elephant_modes.py`), not a theorem. |
+| `thm:threshold` | 4.4 (new in the second revision of October 25) | computer-assisted threshold, case (a) of 4.2 for `a ≤ z₋`, case (b) for `a ≥ z₊`, `z₊ - z₋ < 3.3·10⁻¹⁵` | none | written proof (Appendix G, Section S6) with the certificate `paperD/certify_threshold.py`, not formalized. |
+| `rem:modes-threshold` | 4.5 (4.4 before the second revision of October 25) | numerical threshold `a_c ≈ 0.66881` and finite-`N` values | none | numerics (`paperD/verify_elephant_modes.py`), not a theorem. |
 | `lem:descartes`, `lem:sp-limit`, `lem:sp-derivative` | F.1 to F.3 (new on October 25) | Descartes rule for exponential sums, limits of sign patterns, one derivative fewer | none | written proofs, not formalized. |
+| `lem:thr-hankel` | G.1 (new in the second revision of October 25) | Hankel test that rules out case (a) of 4.2 | none | written proof, not formalized. |
+| `lem:thr-moments`, `lem:thr-trunc`, `lem:thr-cells`, `lem:thr-tail`, `lem:thr-fpp`, `lem:thr-taylor`, `prop:thr-interval`, `lem:thr-scaled` | S6.1 to S6.8 of the arXiv version only (new in the second revision of October 25) | lemmas of the threshold certificate | none | written proofs, not formalized. |
 | `thm:assay-mle` | S4.1 of the arXiv version only (Online Resource 1 from October 23 to 24, 4.2 before October 23) | constrained likelihood concentration and absolute mean-bias bound | none | written proof, not formalized. |
 | `prop:convex-certified` | S5.5 (3.24 on October 24) | `5 ≤ N ≤ 2000`, even or odd | `convex_certified`, `T7.convexBetweenHumps_5_2000`, `T7.kernel_convexBetweenHumps_10_2000`; soundness `T5.convexBetweenHumps_of_check`, `T7.convex_of_runs` | kernel (T5 runs for `5 ≤ N ≤ 100`, T7 runs for `101 ≤ N ≤ 2000`; empty range at `N = 5`) |
 | `prop:odd` | 3.21 (3.25 on October 24) | crossing for odd `N`; (a) `C̃_N = (1-c/N)^{-1}C_{N+1}`; (b) asymptotics; (c) `x_N > 2` and the dip for odd `N ≥ 1689`; (d) convexity for large odd `N` | first paragraph `odd_crossing_exists_unique`; (a) `odd_center_succ`, `odd_central_eq`; (c) `odd_hx_large`, `odd_dip_large`, `odd_one_point_large`, `odd_hB_large`, `odd_center_le`; (d) `odd_convex_of_halfway` | first paragraph, (a) and (c) kernel ((a) multiplied out); (b) kernel, no hypotheses: `prop_odd_b_G`, `prop_odd_b_g`, `prop_odd_b_expansion`, explicit `odd_crossing_explicit` for `log N ≥ 30` with `ρ̃_N = (24L²+20812L)/N` (`U3_OddCrossing`), and the crude window `odd_crossing_window`; (d) kernel, hypotheses LFI, CP, ES, UNI: `prop_odd_d_final`, `convex_large_all_final`; track U3: `prop_odd_d`, `prop_odd_d_cert`, `convex_large_all_cert`; track U5 proves (b) again as `U5.odd_crossing_*` |
