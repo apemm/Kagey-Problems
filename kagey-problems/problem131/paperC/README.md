@@ -9,9 +9,11 @@ A Markov chain on d states with transition matrix I + (T/N)Q runs for N steps, s
 follows the continuous-time chain with generator Q up to time T while the transition matrix tends
 to the identity. Its composition is the vector of occupation counts. The paper describes the law of the
 composition on every face of the simplex when switches are rare, and reads off which face carries
-the most likely composition. On each face the law is a local limit law whose exponent is a lattice
-entropy of one power of N per dimension plus T times the Donsker and Varadhan cost of the chain
-killed on leaving the face, which is the restriction of the cost of the whole chain. A crossing is
+the most likely composition. On each face the law is a local limit law. Up to O(1), -log P_N(n)
+is (|F|-1) log(N/sqrt(T)) plus N times the Donsker and Varadhan functional of the discrete chain
+I + (T/N)Q at n/N, and on the face this functional is that of the chain killed on leaving the face.
+So a dimension costs a factor N up to a power of log N when T is of order log N, and a factor of
+order sqrt(N) when T is of order N. A crossing is
 a value of T at which the mode changes face. Sections 2 to 5 prove the law on a face, Section 6 the
 law at a facet, and Sections 7 and 8 treat the complete graph and the compositions near a vertex.
 For two states the question is Problem 131 of Kagey's Open Problem Collection
@@ -46,8 +48,10 @@ locally (p = 1 - (d-1)h, u = h/p, V_N, S_n, a_k, D_k).
 
 The numbers are those of the build of October 25, 2026, after the revision for the JTP referee
 report of audit 23, the second review of audit 25, the local law over the whole switching
-range of audit 28 and the reducible faces and the counts near a facet of audit 30
-(`problem131_chains.pdf` has 81 pages and the Springer version `problem131_chains_sn.pdf` 89).
+range of audit 28, the reducible faces and the counts near a facet of audit 30, and the review
+fixes and the trim of the journal version of audit 33 (`problem131_chains.pdf`, the arXiv version
+with every proof, has 81 pages, and the Springer version `problem131_chains_sn.pdf`, the journal
+version, 72). Statement and section numbers are the same in both.
 Theorems A, B and C in the introduction collect the headline results. Theorem A is the law on a
 face (Theorems 5.6 and 5.7, and Theorem 4.5 for the face maxima of every admissible face),
 Theorem B the support of the mode and the crossing equation (Theorems 4.2 and 5.8, and Corollary
@@ -66,7 +70,8 @@ The law on a face.
 - Reducible faces (Section 4.4, added October 25, 2026, audit 30). For every admissible face,
   M_F = N^-(k_F-1) T^(p_F) K^red_F e^(-T lambda_F) (1 + O(1/T + T^2/N)) for T_1 <= T <= N^(1/3)
   (Theorem 4.5), with p_F = (k*-1)/2 + k_F - k*, where k* is the least size of a component of
-  least exit rate, and an explicit K^red_F that equals K_F on irreducible faces. Corollary 4.6
+  least exit rate, and a constant K^red_F given by a finite-dimensional variational formula, which
+equals K_F on irreducible faces. Corollary 4.6
   locates every crossing of two admissible faces in [T_1, N^(1/3)] up to O(1/L), with the
   coefficient (p_F - p_G)/Delta of log log N. Proofs in Appendix E.1 and E.2.
 - The stratified local law (Theorem 5.6). For a face with (H), uniformly on compact parts of the
@@ -91,12 +96,13 @@ reducible face where the
 - The boundary layer at a facet (Section 6), for the occupation density of the continuous-time
   chain. The main results come first: the facet theorem for every face with at least two states
   (Theorem 6.1) and the exact range of the Bessel form (Proposition 6.2). The generalized kernel
-  has relative error O(T^-2 + x^(1/2) T^(-3/2)), which is O(1/T). If the entrance and exit laws agree (for instance for reversible
-  chains, but also for a non-reversible face, after Proposition 6.2), the Bessel kernel has
-  relative error O(1/T + sqrt(x/T)). In general the relative Bessel form holds if and only if
-  x = o(T^(1-2/m)), where m >= 3 is the order of the first nonzero coefficient of the remainder
-  r_beta of the rate, and for the non-reversible cycle on three states m = 3 with coefficient
-  -49/(64 sqrt(omega)). Then the exact formulas (Lemmas 6.3 and 6.4), pair faces with an
+  has relative error O(T^-2 + x^(1/2) T^(-3/2)), which is O(1/T). At a facet profile beta where
+  the entrance and exit laws agree (every beta for reversible chains, and the uniform beta for a
+  non-reversible face after Proposition 6.2), the Bessel kernel has relative error
+  O(1/T + sqrt(x/T)). At a beta where the remainder r_beta of the rate has a first nonzero
+  coefficient, of order m >= 3, the relative Bessel form holds if and only if x = o(T^(1-2/m)), and
+  for the non-reversible cycle on three states at the uniform beta m = 3 with coefficient
+  -49/(64 sqrt(omega)). Whether r_beta can vanish when the two laws differ is open. Then the exact formulas (Lemmas 6.3 and 6.4), pair faces with an
   explicit error (Proposition 6.5), the facet expansion of the rate (Proposition 6.6, whose part
   (v) says that J_G(beta,.) is affine exactly when the entrance and exit laws agree), prefactor
   matching for reversible chains (Proposition 6.7), and the local law of the weighted facet chain
@@ -144,9 +150,20 @@ the Perron and Frobenius theorem (a hypothesis of the Lean statements) and the a
 ## Files
 
 - `problem131_chains.tex`: the article version (plain `article` class). Build it here.
-- `problem131_chains_sn.tex`: the same paper in the Springer Nature template for JTP. The class
-  and its files are in `../common/sn-jnl`, and `TEMPLATE.md` records the template source, the
-  choices made and the zip for Snapp.
+- `problem131_chains_sn.tex`: the journal version, in the Springer Nature template for JTP. The
+  class and its files are in `../common/sn-jnl`, and `TEMPLATE.md` records the template source, the
+  choices made and the zip for Snapp. The switch `\arxivbuildfalse` at its top leaves out the
+  proofs listed below and puts in their place one sentence that points to the arXiv version
+  (arXiv:2610.09258v2, the bibliography entry `arxivC1`, which only this build has). Every
+  statement and every label stays. The macro `\arxivpointer` adds "of the arXiv version of this
+  paper" after a reference to a proof that only the arXiv version has.
+- Proofs only in the arXiv version (audit 33, `research_notes/Paper C audits/33_review_fixes_and_trim.md`):
+  Appendices C and D apart from their lemma statements, Lemma 7.1 and Corollary 7.3, the detail
+  of the computations in Section 9, Theorem 4.4(a) and (b), Proposition 5.2(b) for the determinant,
+  the continuum route to Theorem 5.7(b), Theorem 5.9, Corollary 5.10, Example 5.11,
+  Proposition 5.12, Proposition 6.7 and equation (18), Lemmas 6.9 and 6.10, Proposition 6.2,
+  Lemma A.1, Appendix A.7 (in the journal version Theorem 4.2(ii) follows from Theorem 4.5),
+  Lemmas B.1 and B.3, and Appendices E.3 and E.4.
 - Sections, input by both main files: `sec_intro.tex`, `sec_model.tex`, `sec_dv.tex` (the killed
   functional), `sec_firstorder.tex`, `sec_secondorder.tex`, `sec_boundary.tex`,
   `sec_complete.tex`, `sec_vertex.tex`, `sec_verify.tex`.
@@ -304,6 +321,20 @@ supremum is attained when k* = 1, and the abstract and the introduction now spea
 faces, give the range of the crossings of reducible faces, and count the cost T/N of each switch.
 The paper is now 81 pages (89 in the Springer class). No exported number moved.
 
+Then a review of the October 25 updates (audit 33) found no false theorem and six wording points,
+all fixed. The abstract and the introduction give the exponent as (|F|-1) log(N/sqrt(T)) plus N
+times the functional of the discrete chain, which is half a power of N per dimension when T is of
+order N. They state the order-m criterion of Proposition 6.2(d) at each facet profile where r_beta
+has a first nonzero coefficient, and say that equal entrance and exit laws depend on the profile.
+"The time goes to one class" became "to the classes of least exit rate and least size, and to one
+of them when k* >= 2", since flat singletons can tie. K^red_F is "given by a finite-dimensional
+variational formula", not "explicit". The proof sketch of Theorem 5.4(b) says that the bounded-T
+step compares with the continuum, and the motivation before Theorem 6.11 cites Theorems 6.1(a) and
+6.12(b) for the counts near the facet, where Lemma 5.5 does not apply. The Springer build is now the
+journal version, at 72 pages, with the long proofs that a referee does not need only in the arXiv
+version (81 pages). Theorem 4.2(ii) now also follows from Theorem 4.5 in both versions. No
+statement, label or exported number changed.
+
 The arXiv plan. The article version `problem131_chains.tex` goes to arXiv as version 2 of
 arXiv:2610.09258 and replaces Paper B there. The Springer version does not go to arXiv. The
 introduction says once that this paper replaces the first version, and the bibliography entry
@@ -312,5 +343,7 @@ the next term of the crossing equation, the Bessel majorant and the boundary of 
 points to it for comparison in a few other places. Paper C2 cites this paper as arXiv:2610.09258
 without a version. A switch at the top of each main file, true in the article file and false in
 the Springer file, makes the journal build say "the preprint" where the arXiv build says "the
-first version", so the journal version never calls itself a preprint. Item 18 of the audits
-records the preparation and the form for the submission.
+first version", so the journal version never calls itself a preprint. The same switch makes the
+journal version leave out the proofs listed under Files and cite the arXiv version
+(arXiv:2610.09258v2) for them. Item 18 of the audits records the preparation and the form for the
+submission.
