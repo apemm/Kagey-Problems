@@ -1,10 +1,10 @@
 import Mathlib
 
 /-!
-# Paper C: the multiaffine polynomial `R_F` and principal minors
+# Paper C2: the multiaffine polynomial `R_F` and principal minors
 
-Paper C, Section 9.3 (`sec_reconstruction.tex`, the display defining `R_F` before
-`lem:RF-irreducible`), and note 06 of `research_notes/C theorems 5 and 7`, Lemma 3.1.
+Paper C2 (`paperC2/problem131_reconstruction.tex`), Section 3.1 (`paperC2/sec_minors.tex`, the
+display defining `R_F` before Lemma 3.1, `lem:RF-irreducible`), and note 06 of `research_notes/C theorems 5 and 7`, Lemma 3.1.
 
 Proved here, for a square matrix `A` over a commutative ring:
 
@@ -15,7 +15,8 @@ Proved here, for a square matrix `A` over a commutative ring:
 * `RF_eq_sum_minors`: the face version, `R_F(w) = det(A_F - diag w)` as the sum over the
   subsets of the face, for `A_F` the principal submatrix on a `Finset` `F`;
 * `charpoly_eq_of_minors_eq`: two matrices with the same principal minors have the same
-  characteristic polynomial (note 06, Lemma 3.1, used in `thm:nonreversible`(b)).
+  characteristic polynomial (note 06, Lemma 3.1, used in step (N) of the proof of Theorem 3.5
+  of Paper C2, `thm:nonreversible`, for the spectrum in part (a)).
 -/
 
 namespace Kagey131.PaperC
@@ -56,7 +57,7 @@ theorem det_add_diagonal_eq_sum_minors (A : Matrix n n R) (w : n → R) :
   congr 1
   exact det_piecewise_one_eq_submatrix_det A S
 
-/-- The multiaffine expansion of `sec_reconstruction`:
+/-- The multiaffine expansion of Section 3.1 of Paper C2:
 `det(A - diag w) = ∑_{S ⊆ V} det A_S ∏_{i ∉ S} (-w_i)`. -/
 theorem det_sub_diagonal_eq_sum_minors (A : Matrix n n R) (w : n → R) :
     (A - diagonal w).det = ∑ S : Finset n, pminor A S * ∏ i ∈ Sᶜ, (-w i) := by
@@ -78,7 +79,7 @@ theorem pminor_univ (A : Matrix n n R) : pminor A univ = A.det := by
 def faceBlock (A : Matrix n n R) (F : Finset n) : Matrix F F R :=
   A.submatrix ((↑) : F → n) ((↑) : F → n)
 
-/-- The polynomial `R_F(w) = det(A_F - diag w)` of `sec_reconstruction`. -/
+/-- The polynomial `R_F(w) = det(A_F - diag w)` of Section 3.1 of Paper C2. -/
 def RF (A : Matrix n n R) (F : Finset n) (w : F → R) : R :=
   (faceBlock A F - diagonal w).det
 

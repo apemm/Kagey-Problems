@@ -1,0 +1,380 @@
+\section{The Donsker and Varadhan functional and the principal minors}\label{sec:minors}
+
+This section proves Theorem~\ref{thm:D}. Section~\ref{sec:perron-branch} shows that the
+Perron root of a face on an open set of fields determines the principal minors of the
+face. Section~\ref{sec:dv-minors} deduces that $J_V$ determines exactly the principal
+minors of $-Q$. Section~\ref{sec:fiber} describes the generators with given minors, and
+Section~\ref{sec:stationary} what the exact law adds.
+
+\subsection{The polynomial of a face and the Perron branch}\label{sec:perron-branch}
+
+The principal minors of $-Q_F$ are the numbers $\det(-Q_A)$ for $A\subseteq F$, with
+$\det(-Q_\emptyset)=1$. They are the coefficients of the multiaffine polynomial
+\[
+ R_F(w)=\det\bigl(-Q_F-\operatorname{diag}w\bigr)
+ =\sum_{A\subseteq F}\det(-Q_A)\prod_{i\in F\setminus A}(-w_i),\qquad w\in\R^F .
+\]
+For every field $v$, $\lambda_F(v)$ is a real root of $t\mapsto R_F(v+t\ones)$, and if
+$F$ is irreducible it is the smallest real root, since the other real eigenvalues of
+$-Q_F-\operatorname{diag}v_F$ exceed the Perron eigenvalue.
+
+\begin{lemma}[irreducibility]\label{lem:RF-irreducible}
+If $F$ is irreducible, then $R_F$ is irreducible over $\mathbb C$. If $F$ is reducible,
+$R_F$ is the product of the polynomials of the strongly connected components of $G_F$.
+\end{lemma}
+
+\begin{proof}
+Al Ahmadieh~\cite[Lemma~5.1]{alahmadieh2023} proves, over any field and for every
+order, that a square matrix $A$ is irreducible exactly when
+$\det(\operatorname{diag}x+A)$ is an irreducible polynomial in $x$. Take the field
+$\mathbb C$ and $A=-Q_F$. Then $R_F(w)=\det(\operatorname{diag}(-w)+A)$, and the linear
+change of variables $x=-w$ preserves irreducibility. For a reducible face, $-Q_F$ is
+block triangular with the blocks of the components on the diagonal, and the determinant
+factors accordingly.
+\end{proof}
+
+The proof of Al Ahmadieh rests on a theorem of Hartfiel and
+Loewy~\cite[Theorem~1]{hartfielloewy1984}, that every entry of the adjugate of
+$\operatorname{diag}x+A$ is a nonzero polynomial when $A$ is irreducible.
+
+\begin{lemma}[the Perron branch]\label{lem:perron-branch}
+Let $F$ be irreducible, let $Q'$ be another generator whose face $F$ is irreducible,
+and let $c\in\R$. Suppose that $\lambda'_F(v)=\lambda_F(v)+c$ for all $v$ in a nonempty
+open set $\mathcal U\subseteq\R^F$. Then $-Q'_F$ and $-Q_F+cI$ have the same principal
+minors, and $\lambda'_F=\lambda_F+c$ on all of $\R^F$. In particular, for $c=0$,
+$-Q'_F$ and $-Q_F$ have the same principal minors.
+\end{lemma}
+
+\begin{proof}
+Let $k=|F|$ and number the states of $F$ as $1,\dots,k$. Put
+$\widetilde R(w)=\det(-Q_F+cI-\operatorname{diag}w)=R_F(w-c\ones)$, which is
+irreducible over $\mathbb C$ by Lemma~\ref{lem:RF-irreducible}. For $k=1$ the hypothesis
+says $q'_1=q_1+c$, which is the claim. Let $k\ge2$, and put
+$\psi(v)=v+\lambda'_F(v)\ones$. For $v\in\mathcal U$ the number
+$\lambda'_F(v)=\lambda_F(v)+c$ is an eigenvalue of $-Q'_F-\operatorname{diag}v$ and of
+$-Q_F+cI-\operatorname{diag}v$, so $R'_F(\psi(v))=0=\widetilde R(\psi(v))$.
+
+Both polynomials are affine in $w_1$. Write $\widetilde R=p_1w_1+p_0$ and
+$R'_F=p'_1w_1+p'_0$ with $p_1,p_0,p'_1,p'_0$ polynomials in $w'=(w_2,\dots,w_k)$. The
+coefficient of $\prod_{i\ge2}(-w_i)$ in $p_1$ is $-1$, so $p_1\ne0$. The polynomial
+$\mathcal D=p_1R'_F-p'_1\widetilde R=p_1p'_0-p'_1p_0$ does not involve $w_1$ and vanishes
+on $\psi(\mathcal U)$. We claim that the projection of $\psi(\mathcal U)$ to $w'$
+contains a nonempty open set. Fix $v^0\in\mathcal U$ and consider
+$y\mapsto(\psi(v^0+(0,y)))_{i\ge2}$ for small $y\in\R^{k-1}$. By
+Proposition~\ref{prop:variational}(b), $\lambda'_F$ is real-analytic with
+$\partial\lambda'_F/\partial v_i=-\beta_i$, where $\beta=\alpha^{\prime*}_F(v)>0$ and
+$\sum_i\beta_i=1$. The derivative of the map at $y=0$ is $I-\ones\beta'^\top$ with
+$\beta'=(\beta_i)_{i\ge2}$, of determinant $\beta_1>0$, and the inverse function theorem
+proves the claim. So $\mathcal D=0$ and $p_1R'_F=p'_1\widetilde R$. The irreducible
+$\widetilde R$ divides $p_1R'_F$, and it involves $w_1$, so it does not divide $p_1\ne0$,
+which is free of $w_1$. Hence it divides $R'_F$. Both have total degree $k$ and the
+coefficient $1$ at $\prod_i(-w_i)$, so $R'_F=\widetilde R$. Finally $\lambda'_F(v)$ is the
+smallest real root of $t\mapsto R'_F(v+t\ones)=\widetilde R(v+t\ones)$, which is
+$\lambda_F(v)+c$.
+\end{proof}
+
+Delmas, Dronnier and Zitt~\cite[Theorem~2.1]{ddz2024} prove a multiplicative analogue
+for $\eta\mapsto\varrho(K\operatorname{diag}\eta)$ on $\{0,1\}^n$, by an induction over the
+cube. Cohen~\cite{cohen1981} proved that $v\mapsto\varrho(A+\operatorname{diag}v)$ is convex
+for a Metzler matrix $A$, and Friedland~\cite[Theorem~4.1]{friedland1981} showed that for
+irreducible $A$ it is affine only along $\ones$. Lemma~\ref{lem:perron-branch} is the inverse
+statement, that the map on an open set determines the principal minors of $A$, and we did not
+find it there.
+
+\subsection{The functional determines exactly the principal minors}\label{sec:dv-minors}
+
+\begin{theorem}[the functional and the minors]\label{thm:dv}
+For two irreducible generators $Q$ and $Q'$ on $[d]$ the following are equivalent.
+\begin{enumerate}[(i)]
+\item $J_V=J'_V$ on $\Delta_V$.
+\item $\lambda_V=\lambda'_V$ on a nonempty open set of fields.
+\item $-Q$ and $-Q'$ have the same principal minors.
+\end{enumerate}
+If they hold, then $\lambda_F=\lambda'_F$ on $\R^F$ and $J_F=J'_F$ on $\Delta_F$ for every
+face $F$, and $F$ is irreducible for $Q$ exactly when it is irreducible for $Q'$.
+\end{theorem}
+
+\begin{proof}
+(i) implies (ii). By Proposition~\ref{prop:variational}(b),
+$\lambda_V(v)=\min_{\Delta_V}(J_V-v\cdot\alpha)=\lambda'_V(v)$ for every $v$.
+
+(ii) implies (iii). This is Lemma~\ref{lem:perron-branch} with $F=V$ and $c=0$.
+
+(iii) implies (i). Equal principal minors give $R'_F=R_F$ for every face $F$, since the
+minors of $-Q_F$ are among those of $-Q$. By Lemma~\ref{lem:RF-irreducible}, $F$ is
+irreducible for $Q$ exactly when $R_F$ is irreducible, which is the last claim. On an
+irreducible face $\lambda'_F(v)$ and $\lambda_F(v)$ are the smallest real roots of the same
+polynomial $t\mapsto R_F(v+t\ones)$, so they agree. For a reducible face, the factors of
+$R_F=R'_F$ given by Lemma~\ref{lem:RF-irreducible} are irreducible, so by unique
+factorization the components of $G_F$ have the same vertex sets for both generators, and
+$\lambda_F(v)$, the least $\lambda_C(v)$ over the components, agrees too. By Proposition~\ref{prop:variational}(b), $J_F$ is the Legendre transform of
+$v\mapsto-\lambda_F(v)$ on $\Delta_F^\circ$, so $J'_F=J_F$ there for irreducible $F$. On the
+boundary we use that $J_F$ is convex and lower semicontinuous, as a supremum of affine
+functions of $\alpha$. For $\alpha\in\Delta_F$ and $\beta\in\Delta_F^\circ$ the points
+$\alpha_t=(1-t)\alpha+t\beta$ with $t\in(0,1]$ are interior. Convexity gives
+$\limsup_{t\downarrow0}J_F(\alpha_t)\le J_F(\alpha)$, and lower semicontinuity the reverse
+inequality. So $J_F(\alpha)=\lim_{t\downarrow0}J_F(\alpha_t)$, likewise for $J'_F$, and
+$J'_F=J_F$ on $\Delta_F$. With $F=V$ this is (i). For a reducible face,
+Proposition~\ref{prop:variational}(a) gives $J_F=J_V=J'_V=J'_F$ on $\Delta_F$.
+\end{proof}
+
+\begin{remark}[the survival probability]\label{rem:survival}
+A finer observation than $J_V$ gives the same minors more directly. Let $v$ be a field
+and let the start have full support. The weighted mass
+$\sum_nP_N(n)e^{Tv\cdot n/N}$ is the probability that the chain survives when it is
+killed at each visit to $i$ with probability $1-e^{Tv_i/N}$, for $v\le0$. As $N\to\infty$ at
+fixed $T$ it tends to $\mu^\top e^{T(Q+\operatorname{diag}v)}\ones$. For any generator $Q'$
+the limit $-T^{-1}\log\mu^\top e^{T(Q'+\operatorname{diag}v)}\ones$ as $T\to\infty$ is
+$\lambda'_V(v)=-\varrho(Q'+\operatorname{diag}v)$, the least exit rate of the components of
+$Q'$, because the start and the vector $\ones$ are positive. So the survival probabilities
+on all fields give $\lambda'_V$ on $\R^d$. Suppose that they agree with those of the
+irreducible $Q$. Then $Q'$ is irreducible. Otherwise $\lambda'_V=\lambda'_C$ for some
+component $C\ne V$ on an open set of fields, and there $\lambda'_V$ does not depend on
+$v_j$ for $j\notin C$, while $\partial\lambda_V/\partial v_j=-\alpha^*_V(v)_j<0$ by
+Proposition~\ref{prop:variational}(b). Now Lemma~\ref{lem:perron-branch} applies to $Q$
+and the irreducible $Q'$ and gives every principal minor at once, with no descent through
+the faces.
+\end{remark}
+
+\subsection{The generators with given minors}\label{sec:fiber}
+
+Without reversibility the exit rates and the edge products $q_{ij}q_{ji}$ do not determine
+$Q$, since $Q^*$ has the same exit rates, the same products and the same stationary law.
+The next theorem describes all generators with the principal minors of $-Q$.
+
+Let $C$ be a Z-matrix, that is $-C$ is Metzler, and let $X$ be a cut of $C$ with
+$Y=V\setminus X$. If $C$ is irreducible, the blocks $C[X,Y]$ and $C[Y,X]$ are nonzero with
+nonpositive entries and rank one, so $C[X,Y]=-ab^\top$ and $C[Y,X]=-cu^\top$ with
+$a,b,c,u\ge0$. The cut-transpose of $C$ across $X$ is
+\begin{equation}\label{eq:cut-transpose}
+ C=\begin{pmatrix}C_{XX}&-ab^\top\\-cu^\top&C_{YY}\end{pmatrix}\mapsto
+ C'=\begin{pmatrix}C_{XX}&-ac^\top\\-bu^\top&C_{YY}^\top\end{pmatrix}.
+\end{equation}
+Another choice of the factors changes $C'$ by a positive diagonal similarity
+$\operatorname{diag}(\alpha I_X,I_Y)$.
+
+\begin{theorem}[the generator fiber]\label{thm:nonreversible}
+Let $Q$ be an irreducible generator.
+\begin{enumerate}[(a)]
+\item Every generator $Q'$ with the principal minors of $-Q$ is irreducible and has the
+spectrum of $Q$. The set of such generators is finite, and it contains $Q$ and its time
+reversal $Q^*$.
+\item If $Q$ has no cut, that is, for every partition $V=X\cup Y$ with $|X|,|Y|\ge2$ one of
+the blocks $Q[X,Y]$, $Q[Y,X]$ has rank at least $2$, then the set in \textup{(a)} is
+$\{Q,Q^*\}$. It is a single point exactly when $Q$ is reversible.
+\item In general the set in \textup{(a)} is the set of generator points of the
+cut-transpose orbit of $-Q$, in the following sense. Let $C$ be an irreducible Z-matrix
+with the principal minors of $-Q$ and let $X$ be a cut of $C$. Then the cut-transpose
+$C'$ is again an irreducible Z-matrix with the principal minors of $-Q$, and exactly one
+positive diagonal similarity, up to a scalar, turns $-C'$ into a generator. Fewer than
+$2d$ cut-transposes, each across a cut of the current matrix, and one optional
+transposition reach every point of the set. If $Q$ is reversible, the set is $\{Q\}$.
+\item If $d\le3$, the set in \textup{(a)} is $\{Q,Q^*\}$ with no condition.
+\end{enumerate}
+\end{theorem}
+
+Clause (c) concerns matrices with the principal minors of $-Q$, and this restriction is
+needed. For a general irreducible Z-matrix no diagonal similarity need produce a generator.
+The matrix $3I-P$ with $P$ irreducible and stochastic is nonsingular, while the negative of
+every generator has the eigenvalue $0$, and similarity preserves the spectrum.
+
+\emph{What is borrowed.} The matrix theorems used are Loewy~\cite[Theorem~1]{loewy1986}
+for order $n\ge4$ without a cut, Hartfiel and Loewy~\cite[Theorem~3]{hartfielloewy1984} for
+$n\le3$, combined in~\cite[Lemma~2.8]{cggr2024}, Al Ahmadieh~\cite[Theorem~4.1 and
+Lemma~4.5]{alahmadieh2023} for the converse, and Chatterjee, Ghosh, Gurjar and
+Raj~\cite[Theorem~1.1]{cggr2024} for the whole fiber. So (b), (d) and the reversible case of
+(c) follow from them together with the normalization (N) below. What we add is (N) and its
+consequences, the finiteness, the irreducibility of every member, and the blockwise
+description of Proposition~\ref{prop:amplitudes}.
+
+\begin{proof}
+We first record two facts, which (a) to (d) use.
+
+\emph{(N) The generator point.} Let $C$ be an irreducible Z-matrix with the principal
+minors of $-Q$. The characteristic polynomial
+$\det(tI-C)=\sum_{s=0}^d(-1)^st^{d-s}E_s(C)$, with $E_s$ the sum of the principal minors of
+order $s$, is that of $-Q$. So $-C$ has the spectrum of $Q$, whose eigenvalue of largest real
+part is the simple eigenvalue $0$. The theorem of Perron and Frobenius for the irreducible
+Metzler matrix $-C$ gives a vector $x>0$, unique up to a factor, with $Cx=0$. With
+$D=\operatorname{diag}x$ the matrix $-D^{-1}CD$ has off-diagonal entries $-c_{ij}x_j/x_i\ge0$
+and zero row sums, so it is an irreducible generator. If $D'$ is real, diagonal and
+invertible and $-D'^{-1}CD'$ has zero row sums, then $C(D'\ones)=0$, so $D'$ is a multiple of
+$D$ and gives the same matrix. We call $-D^{-1}CD$ the generator point of $C$. For $C=-Q$ it
+is $Q$, and for $C=-Q^\top$, whose null vector is $\pi$, it is $Q^*$.
+
+\emph{(R) Real similarities.} If $-Q'=E(-Q)E^{-1}$ or $-Q'=E(-Q)^\top E^{-1}$ for a complex
+invertible diagonal $E$, then $E$ may be taken real. In the first case
+$q'_{ij}=e_iq_{ij}/e_j$, so $e_i/e_j=q'_{ij}/q_{ij}$ is real on every edge of the graph of
+$Q$. That graph is strongly connected, so every ratio $e_i/e_1$ is a product of such ratios
+and is real, and $E/e_1$ is a real diagonal similarity. The second case is the same with
+$q_{ji}$ in place of $q_{ij}$.
+
+(a) Let $Q'$ be a generator with the principal minors of $-Q$, and suppose that $-Q'$ is
+reducible. Then there is a proper nonempty $A\subset V$ with $Q'[V\setminus A,A]=0$, and
+$\det(-Q')=\det(-Q'_A)\det(-Q'_{V\setminus A})$. Both factors are proper principal minors,
+so they equal $\det(-Q_A)$ and $\det(-Q_{V\setminus A})$. By Lemma~\ref{lem:face-monotone}
+every irreducible component of a proper face has a positive exit rate, so every eigenvalue
+of $-Q_A$ has positive real part and $\det(-Q_A)>0$, and likewise
+$\det(-Q_{V\setminus A})>0$. This contradicts $\det(-Q')=\det(-Q)=0$. So $Q'$ is irreducible,
+and the same argument applies to every real matrix with the principal minors of $-Q$. This also
+follows from Lemma~\ref{lem:RF-irreducible}, since such a matrix has the polynomial $R_V$ of
+$-Q$. The spectra agree by (N). The time reversal $Q^*$ is a generator, since
+$Q^*\ones=D_\pi^{-1}Q^\top\pi=0$ and its off-diagonal entries are $\pi_jq_{ji}/\pi_i\ge0$,
+and $-Q^*=D_\pi^{-1}(-Q)^\top D_\pi$ has the principal minors of $-Q$, since transposition
+and diagonal similarity preserve them. Finiteness follows from (c).
+
+(b) For $d\le3$ the claim is (d). Let $d\ge4$. Loewy's theorem~\cite[Theorem~1]{loewy1986}
+applies to the irreducible matrix $-Q$ without a cut, with no condition on $-Q'$. It gives
+an invertible diagonal $E$ with $-Q'=E(-Q)E^{-1}$ or $-Q'^\top=E(-Q)E^{-1}$, and by (R) we may
+take $E$ real. In the first case (N) with $C=-Q$ gives $Q'=Q$, and in the second case
+$Q'=E^{-1}Q^\top E$ and (N) with $C=-Q^\top$ gives $Q'=Q^*$. Finally $Q^*=Q$ exactly when
+$\pi_iq_{ij}=\pi_jq_{ji}$ for all $i,j$, that is when $Q$ is reversible.
+
+(c) Let $C$ and $X$ be as in (c). The cut-transpose $C'$ is a Z-matrix. It has the same
+principal minors as $C$. Indeed, for $U\subseteq V$ write $U_X=U\cap X$ and $U_Y=U\cap Y$. If
+$U_X$ or $U_Y$ is empty, both minors agree since a determinant is invariant under
+transposition. Otherwise replace $C_{XX}$ by $C_{XX}+sI$ with $s$ large, so that the block
+of $U_X$ is invertible. The Schur complement gives
+\[
+ \det C_U=\det C_{U_X}\det\bigl(C_{U_Y}-\kappa\,c_{U_Y}b_{U_Y}^\top\bigr),\qquad
+ \det C'_U=\det C_{U_X}\det\bigl(C_{U_Y}^\top-\kappa\,b_{U_Y}c_{U_Y}^\top\bigr),
+\]
+with the same scalar $\kappa=u_{U_X}^\top C_{U_X}^{-1}a_{U_X}$. The two right sides are
+equal by transposition. Both sides are polynomials in $s$ that agree for large $s$, so they
+agree at $s=0$. By the argument of (a), $C'$ is irreducible, and by (N) it has exactly one
+generator point.
+
+Now let $Q'$ be a generator in the fiber, irreducible by (a). The theorem of Chatterjee,
+Ghosh, Gurjar and Raj~\cite[Theorem~1.1]{cggr2024} gives a sequence
+$-Q=C_0,C_1,\dots,C_k$ with $k<2d$, each $C_{s+1}$ a cut-transpose of $C_s$ across a cut of
+$C_s$~\cite[Definition~2.10]{cggr2024}, such that $-Q'$ is diagonally similar to $C_k$ or to
+$C_k^\top$. Their cut-transpose uses a particular rank-one factorization, and another choice
+changes it by a real diagonal similarity $\operatorname{diag}(\alpha I_X,I_Y)$~\cite[Remark~2.11]{cggr2024}.
+A real invertible diagonal similarity of $C$ by $\operatorname{diag}(E_X,E_Y)$ changes the
+cut-transpose by $\operatorname{diag}(E_X,E_Y^{-1})$, as a short computation with the blocks
+shows, and does not change the cuts. So, up to real invertible diagonal similarity, which
+(N) accepts, every $C_s$ is obtained by our cut-transposes, and $Q'$ is the generator point
+of $C_k$ or of $C_k^\top$. Conversely every such generator point lies in the fiber. There are
+fewer than $2^d$ cuts at each step and fewer than $2d$ steps, so the fiber is finite, which
+completes (a).
+
+If $Q$ is reversible, $S=D_{\sqrt\pi}(-Q)D_{\sqrt\pi}^{-1}$ is an irreducible symmetric
+Z-matrix, and a symmetric matrix is its own cut-transpose. Indeed, if $S[X,Y]=-ab^\top$, then
+$S[Y,X]=-ba^\top$, so we may take $c=b$ and $u=a$. By the rule for diagonal similarities
+above, the cut-transpose of a matrix diagonally similar to $S$ is again diagonally similar
+to $S$, and so is the transpose $E^{-1}SE$ of $ESE^{-1}$. Since $C_0=-Q$ is diagonally similar
+to $S$, so is every $C_s$. Hence $-Q'$ is diagonally similar to $-Q$, and (N) with $C=-Q$
+gives $Q'=Q$. See also Engel and Schneider~\cite[Theorem~3.5]{engelschneider1980} and Al
+Ahmadieh~\cite[Lemma~6.1 and Theorem~6.2]{alahmadieh2023}.
+
+(d) For $d=2$ a generator is fixed by $q_1$ and $q_2$, which are principal minors. Let
+$d=3$ and let $Q'$ be in the fiber, so $Q'$ is irreducible by (a). The theorem of Hartfiel
+and Loewy~\cite[Theorem~3]{hartfielloewy1984}, as restated in~\cite[Lemma~2.8]{cggr2024},
+says that for an irreducible matrix $A$ of order $2$ or $3$ over a field, every matrix with
+the principal minors of $A$ is diagonally similar to $A$ or to $A^\top$ over that field. So
+$-Q'=E(-Q)E^{-1}$ or $-Q'=E(-Q)^\top E^{-1}$ with $E$ diagonal and invertible, real by (R),
+and (N) gives $Q'=Q$ or $Q'=Q^*$, as in (b).
+\end{proof}
+
+A cut-transpose need not be $Q$ or $Q^*$. Take $d=4$, $X=\{1,2\}$ and
+\[
+ Q=\begin{pmatrix}-4.7&0.7&1&3\\1.3&-9.3&2&6\\2&2&-4.4&0.4\\1&1&2&-4\end{pmatrix},
+\]
+whose blocks $Q[X,Y]=(1,2)^\top(1,3)$ and $Q[Y,X]=(2,1)^\top(1,1)$ have rank one. To four
+decimals, the generator point of the cut-transpose of $-Q$ across $X$ is
+\[
+ Q'=\begin{pmatrix}-4.7&0.7&2.3810&1.6190\\1.3&-9.3&4.7619&3.2381\\
+ 0.84&0.84&-4.4&2.72\\1.8529&1.8529&0.2941&-4\end{pmatrix}.
+\]
+Its entries are rational, for instance $q'_{13}=50/21$, $q'_{41}=63/34$ and
+$q'_{43}=5/17$. It has the fifteen principal minors of $-Q$, with $Q'_X=Q_X$ and
+$Q'_Y=Q^*_Y$, but $Q'\ne Q^*$, since $q^*_{12}=351/530\approx0.6623$.
+
+\begin{remark}[three states by hand]\label{rem:three-states}
+For $d=3$ the minors give the exit rates, the products $q_{ij}q_{ji}$, and the sum and
+product of the two oriented $3$-cycle products $\omega=q_{12}q_{23}q_{31}$ and
+$\omega'=q_{13}q_{32}q_{21}$. So $Q'$ has the cycle products of $Q$ or of $Q^*$, hence differs
+from it by a potential, and (N) gives (d). Example~5.4 of Kim and Landim~\cite{kl2024} is the
+case $\omega=1$, $\omega'=0$.
+\end{remark}
+
+\subsection{What the exact law adds}\label{sec:stationary}
+
+The law of the counts is finer than $J_V$, and for a generic start it separates the fiber.
+From the stationary start it cannot separate $Q$ from $Q^*$ at all.
+
+\begin{proposition}[the stationary start]\label{prop:stationary}
+Let $Q$ be irreducible with stationary law $\pi$. With the start $\pi$, the law of the
+composition is the same under $Q$ and under $Q^*$, for every $N$ and every $T$ with
+$Tq_{\max}\le N$, and so is the weighted law $P_N(n)e^{Tv\cdot n/N}$ for every field $v$.
+\end{proposition}
+
+\begin{proof}
+The matrix $P=I+(T/N)Q$ has stationary law $\pi$, and $P^*=D_\pi^{-1}P^\top D_\pi=I+(T/N)Q^*$
+is stochastic, since $Q^*$ has the exit rates of $Q$. For a path $x_1\cdots x_N$ we have
+$\pi_{x_1}\prod_tP(x_t,x_{t+1})=\pi_{x_N}\prod_tP^*(x_{t+1},x_t)$. Reversal is a bijection of
+the paths that keeps the composition. Summing over the paths with composition $n$ gives the
+claim, since the factor $e^{Tv\cdot n/N}$ depends only on $n$.
+\end{proof}
+
+For a face $F$ that is irreducible for $Q$ and a field $v$, the face maximum has the constant
+$K_F(v)$ of Definition~\ref{def:tilt}. Let $r$ and $l$ be the right and left Perron vectors of
+$Q_F+\operatorname{diag}v_F$ with $l\cdot r=1$. By Proposition~\ref{prop:constant},
+\begin{equation}\label{eq:amplitude}
+ K_F(v)=\frac{a_F(v)}{(2\pi)^{(k-1)/2}\sqrt{\det\Sigma_{\alpha^*_F(v)}}},\qquad
+ a_F(v)=(\mu_F\cdot r)(l\cdot\ones),
+\end{equation}
+and we call $a_F(v)$ the amplitude.
+
+\begin{proposition}[the amplitudes]\label{prop:amplitudes}
+Let $Q$ be irreducible, let $Q'\ne Q$ be a generator in the fiber of
+Theorem~\ref{thm:nonreversible}, and let $F$ be a face that is irreducible for $Q$.
+\begin{enumerate}[(a)]
+\item $F$ is irreducible for $Q'$, the two generators have the same $\lambda_F$,
+$\alpha^*_F$, $J_F$ and $\det\Sigma_{\alpha^*_F(v)}$, and $K'_F(v)/K_F(v)=a'_F(v)/a_F(v)$.
+\item There is a finite union $\mathcal Z$ of proper linear subspaces of $\R^V$ with the
+following property. For every start $\mu$ of full support outside $\mathcal Z$ and every
+$Q'\ne Q$ in the fiber, $K'_V(v)\ne K_V(v)$ for all $v$ outside a closed nowhere dense set
+of fields. That set always contains $v=0$, where every generator has $r=\ones$, $l=\pi$ and
+$a_V(0)=1$. If $Q$ is not reversible, then $\pi\in\mathcal Z$.
+\item If $Q'$ is the generator point of one cut-transpose of $-Q$ across $X$, then for every
+start $K'_F=K_F$ on every face $F\subseteq X$ and $K'_F=K^*_F$ on every face $F\subseteq Y$,
+where $K^*$ belongs to $Q^*$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(a) The first claims are Theorem~\ref{thm:dv}. So $\alpha^*_F(v)$ and, by
+Proposition~\ref{prop:constant}, $\det\Sigma$ at that point agree for $Q$ and $Q'$, and
+\eqref{eq:amplitude} gives the ratio.
+
+(b) Take $F=V$ and put $g(v)=r(v)\,(l(v)\cdot\ones)$, which does not depend on the scale of
+$r$, so that $a_V(v)=\mu\cdot g(v)$. The map $g$ is real-analytic on $\R^V$. Let $W$ be the
+span of the vectors $g'(v)-g(v)$ over $v\in\R^V$. If $\mu\notin W^\perp$, the analytic
+function $a'_V-a_V=\mu\cdot(g'-g)$ is not identically zero, so its zero set is closed and
+nowhere dense. We show that $W\ne0$. Suppose $g'=g$. Then $r'(v)$ is a multiple of $r(v)$,
+and both matrices have the eigenvalue $\lambda_V(v)$, so $(Q'-Q)r(v)=0$ for every $v$. Take
+$v=te_j$ with $t\to\infty$. Then $\lambda_V\le q_j-t\to-\infty$, and row $i\ne j$ of the
+eigenvalue equation gives $(q_i-\lambda_V)r_i\le q_{\max}\max r$, so $r(te_j)/\max r\to e_j$.
+Hence $(Q'-Q)e_j=0$ for every $j$ and $Q'=Q$. So for $Q'\ne Q$ the space $W^\perp$ is proper,
+and $\mathcal Z$ is the union of these spaces over the finitely many $Q'\ne Q$ in the fiber.
+At $v=0$ every generator has $r=\ones$ and $l=\pi$, so $a_V(0)=\mu(V)=1$. For the time
+reversal, $-Q^*-\operatorname{diag}v=D_\pi^{-1}(-Q-\operatorname{diag}v)^\top D_\pi$, so
+$r^*=D_\pi^{-1}l$ and $l^*=D_\pi r$, with $l^*\cdot r^*=1$. At $\mu=\pi$ this gives
+$a^*_V(v)=(\ones\cdot l)(\pi\cdot r)=a_V(v)$ for all $v$, so $\pi\in\mathcal Z$ when
+$Q^*\ne Q$, in line with Proposition~\ref{prop:stationary}.
+
+(c) Let $C=-Q$ and let $C'$ be its cut-transpose across $X$, with the factors of
+\eqref{eq:cut-transpose}, and put $s_0=(b\cdot\ones)/(c\cdot\pi_Y)$. The rows $X$ of
+$Q\ones=0$ give $-Q_X\ones=(b\cdot\ones)a$, the columns $Y$ of $\pi^\top Q=0$ give
+$-Q_Y^\top\pi_Y=(\pi_X\cdot a)b$, and summing the columns $X$ of $\pi^\top Q=0$ gives
+$(\pi_X\cdot a)(b\cdot\ones)=(\pi_Y\cdot c)(u\cdot\ones)$. With these identities,
+$x=(\ones_X,s_0\pi_Y)$ satisfies $C'x=0$. So $Q'=-D_x^{-1}C'D_x$, and its killed blocks are
+$Q'_X=Q_X$ and $Q'_Y=D_{\pi_Y}^{-1}Q_Y^\top D_{\pi_Y}=Q^*_Y$. The constant $K_F(v)$ of a face
+depends only on $Q_F$ and $\mu_F$, which gives the claim.
+\end{proof}
+
+To read $K_F(v)$ off the modal-support map one would need the crossing equation
+of~\cite[Theorem~5.8]{paperC1} for the weighted law, which we do not prove. So
+Proposition~\ref{prop:amplitudes} is a statement about the law, not about the labels of
+Section~\ref{sec:modal}.

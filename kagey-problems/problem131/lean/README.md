@@ -14,10 +14,13 @@ Paper D. `PaperC` also holds the Lean proofs for Paper E, and `PaperD` those for
 which moved some results to Online Resource 1 (`paperD/online_resource.tex`), and lists the
 numbers that changed that day.
 
-In October 2026 Paper B was merged into Paper C, which keeps its title and folder, and the
-application to sticky priors moved out of Paper C to the note `S3_sticky_note`. `PaperC/MAP.md`
-now maps the merged paper, including its statements from Paper B, whose Lean files stay in
-`PaperB/`. `PaperB/MAP.md` keeps the numbers of Paper B as posted on arXiv.
+In October 2026 Paper B was merged into Paper C, and the application to sticky priors moved out
+of Paper C to the note `S3_sticky_note`. On October 24, 2026 Paper C was split in two. Paper C1
+(`paperC/problem131_chains.tex`) is the forward theory and contains the results of Paper B.
+Paper C2 (`paperC2/problem131_reconstruction.tex`) is about what the occupation law determines.
+The library `PaperC` serves both, and `PaperC/MAP.md` maps C1 and C2 in separate sections,
+including the statements of C1 from Paper B, whose Lean files stay in `PaperB/`. `PaperB/MAP.md`
+keeps the numbers of Paper B as posted on arXiv.
 
 ## Paper A (`paperA/problem131.tex`)
 
@@ -113,7 +116,7 @@ numbered result of Paper A is formalized except the Mehler–Heine limit for rea
 Remark 4.7, which the paper cites. The items that are not formalized are listed below under
 "What is not in Lean".
 
-## Paper B (`archive/paperB/problem131_multistate.tex`, now incorporated into Paper C)
+## Paper B (`archive/paperB/problem131_multistate.tex`, now incorporated into Paper C1)
 
 `PaperB/` is about the walk with `d` states. It proves the following.
 
@@ -133,9 +136,15 @@ Remark 4.7, which the paper cites. The items that are not formalized are listed 
 - The ordering of the window constants `a_k`, the exact parts of the weak-field phase diagram and
   the covolume `√k` behind the superlevel volumes (`Constants`, `Modes`).
 
-## Paper C (`paperC/problem131_switching.tex`)
+## Papers C1 (`paperC/problem131_chains.tex`) and C2 (`paperC2/problem131_reconstruction.tex`)
 
-`PaperC/` is about the chain `P = I + (T/N)Q` and the planar walk. It proves the following.
+`PaperC/` is about the chain `P = I + (T/N)Q` and the planar walk. Paper C1 is "Occupation counts
+of rarely switching Markov chains: stratified local laws, crossings and the boundary layer", for
+the Journal of Theoretical Probability. Paper C2 is "What the occupation law of a finite Markov
+chain determines: principal minors, modal supports and cycle trees", for Stochastic Processes and
+their Applications. The earlier EJP version, `archive/paperC_switching_ejp/problem131_switching.tex`,
+states some results that neither paper keeps, and `PaperC/MAP.md` lists their Lean theorems in a
+section of their own. The library proves the following.
 
 - The exact composition law through runs, and the switch-count relations (`ChainLaw`).
 - The principal Dirichlet eigenvalue `λ_F` of a face, Barta's bound, and `λ_F` for complete
@@ -239,7 +248,7 @@ them a few at a time (`lake build PaperD.T7_Gen_0101_0300 …`) before `lake bui
 The library has 2 modules (including the root). Its workspace (`~/lean-work/paperAD`) has the
 three libraries `PaperA`, `PaperD` and `PaperAD` with `srcDir` set to this folder.
 
-## Paper F and the additions to Paper C (October 24, 2026)
+## Paper F and the additions for Papers C1 and C2 (October 24, 2026)
 
 On October 24, 2026 Paper F was started again in `paperF` as "Bulk, big jumps and boundary layers
 in the occupation law of a lattice Lévy walk" (`paperF/problem131_levy.tex`), and its first draft
@@ -253,18 +262,19 @@ of Section 2 of the paper: the law as a sum over compositions into alternating r
 decompositions by the first run and by the final run with the recursion behind the latter, the
 fresh-start identities with the renewal kernels and their sums, the Green function lemma with the
 tail-sum formula for the mean, the first part of the counting lemma, and the renewal inversion in
-part (a) of the inversion theorem. The asymptotic statements are not formalized. The paper is still
-a skeleton, so `PaperF/MAP.md` cites statement labels rather than numbers, and it lists the
-declarations, their hypotheses and axioms, and what is left out.
+part (a) of the inversion theorem. The asymptotic statements are not formalized. `PaperF/MAP.md`
+cites statement labels rather than numbers, since the numbers change when statements move, and it
+lists the declarations, their hypotheses and axioms, and what is left out.
 
-`PaperC/` has 4 new modules for finite and algebraic results of the new main file of Paper C,
-`paperC/problem131_chains.tex`. `DVRestriction` proves the restriction identity `J_F = J_V` on a
-face, `PrincipalMinors` the expansion of `R_F` in principal minors and the equality of
-characteristic polynomials, `GeneratorFiber` the irreducibility criterion, the generator point,
-the sign lemma and the fiber `{Q, Q*}` on three states, and `CriticalWindow` the four-state
-example of the part on low temperature. The section "October 24, 2026 additions" of
-`PaperC/MAP.md` maps them to the statements, with the numbers of the build of that day, and lists
-what is not formalized.
+`PaperC/` has 4 new modules for finite and algebraic results. `DVRestriction` proves the
+restriction identity `J_F = J_V` on a face (Proposition 3.1 of C1). `PrincipalMinors` proves the
+expansion of `R_F` in principal minors and the equality of characteristic polynomials (Section 3.1
+and Theorem 3.5 of C2). `GeneratorFiber` proves the irreducibility criterion, the generator point,
+the sign lemma and the fiber `{Q, Q*}` on three states (Theorem 3.5 and Remark 3.6 of C2).
+`CriticalWindow` proves the exact parts of the four-state example of low temperature (Example 6.5
+of C2). `PaperC/MAP.md` maps them to the statements, with the numbers of the builds of that day,
+and lists what is not formalized. After the docstrings were updated to the split papers,
+`lake build PaperC` completed with no errors.
 
 ## What is not in Lean
 
@@ -284,7 +294,7 @@ Sections 5.4 and 4.5. The uniform local law moved to a separate note and is not 
 In Paper B the window, the Gaussian volumes and the frontier limits are left out. `PaperB`
 proves the exact law for the uniform start only, so the law with a general start and the tree
 form of the constants are not in it, but the arithmetic of the `K_3` window with a start and the
-tree formula for 3 states are checked in `PaperC`. For Papers C and D every statement about large
+tree formula for 3 states are checked in `PaperC`. For Papers C1, C2 and D every statement about large
 `N` or large `n` is left out, and `MAP.md` lists the reason for each, except that in Paper D the
 center bounds and the crossing asymptotics of Section 2 are formalized. In Paper D the bulk
 and the large-`N` shape are now formalized modulo named classical hypotheses, as listed above.

@@ -1,14 +1,18 @@
-"""Run the checks of Paper C (problem131_chains.tex) and save their outputs under data/.
+"""Run the checks of Paper C1 (problem131_chains.tex) and save their outputs under data/.
+
+The checks of the identifiability results (reconstruction, finite horizons, low temperature)
+moved with those results to the companion paper in ../paperC2 on October 24, 2026.
 
 Each script runs in its own process as `<python> -I <script>`, in this folder. Its output goes to
 data/<script>_output.txt, behind a header with the sha256 of the script, the date, the versions of
 Python and of the packages, the run time and the exit status. A script passes when every
 assertion in it holds, which is when it exits with status 0.
 
-The default runs in about fifteen minutes on a laptop. With --full
+The default runs in about nine minutes on a laptop. With --full
 the three older scripts that have heavy cells also run those (the directed 3-cycle at N = 10^8,
 the whole 4-cycle in the continuum, C_5 at N = 72, the path P_4 at N = 150 and 300, the census of
-graphs on 6 states, and the cells at N = 160 of the first-order section), which adds a few hours.
+graphs on 6 states, and the cells at N = 160 of the first-order section), which adds a few hours,
+and verify_layer_general.py adds S = 64.
 Needs numpy, scipy, sympy and mpmath. Run:  py -I verify_all.py [--full] [--only NAME ...]
 
 The script verify_sticky_fisher.py in this folder checks the notes ../S3_sticky_note and
@@ -33,10 +37,7 @@ SCRIPTS = (
     ('verify_weak_field.py', False, 'a weak field'),
     ('verify_examples.py', True, 'the winners on complete graphs, cycles and small graphs, finite-N modes'),
     ('verify_layer.py', False, 'the boundary layer'),
-    ('verify_reconstruction.py', False, 'the reconstruction theorems'),
-    ('verify_finite_horizon.py', False, 'the finite-horizon entry times'),
-    ('verify_cycles.py', False, 'the two Arrhenius examples, in exact arithmetic'),
-    ('verify_attraction.py', False, 'the calibrated attraction design'),
+    ('verify_layer_general.py', True, 'the weighted facet chain on two facets with four states'),
 )
 
 
@@ -53,6 +54,8 @@ def versions():
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--full', action='store_true', help='also run the heavy cells')
+    parser.add_argument('--quick', action='store_true',
+                        help='the default run; accepted so that ../verify_all.py can pass it')
     parser.add_argument('--only', nargs='*', help='run only these scripts')
     args = parser.parse_args()
     (BASE / 'data').mkdir(exist_ok=True)

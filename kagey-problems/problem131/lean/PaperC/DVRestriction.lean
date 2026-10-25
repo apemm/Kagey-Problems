@@ -1,9 +1,10 @@
 import PaperC.DVRate
 
 /-!
-# Paper C: the restriction identity `J_F = J_V` on a face
+# Paper C1: the restriction identity `J_F = J_V` on a face
 
-Paper C, Section 3.1 (`sec_dv.tex`, `prop:restriction`). For a generator `Q` on `Fin d`
+Paper C1 (`paperC/problem131_chains.tex`), Section 3.1, Proposition 3.1 (`paperC/sec_dv.tex`,
+`prop:restriction`). For a generator `Q` on `Fin d`
 (nonnegative off-diagonal entries), a face `F` and a nonnegative vector `α` that vanishes off
 `F`, the Donsker–Varadhan functional of the whole chain,
 `J_V(α) = sup_{u > 0} ∑_i α_i (q_i - ∑_{j ≠ i} q_ij u_j / u_i)`, equals the functional of the
@@ -13,7 +14,7 @@ positive on `F`. Both are `dvRate` of `PaperC.DVRate`, with the faces `univ` and
 Proved here:
 
 * `dvPhi_eq_exit_form`: `Φ_F(α, u) = ∑_{i∈F} α_i (q_i - ∑_{j∈F, j≠i} q_ij u_j / u_i)` for `u`
-  positive on `F`, the form of equation `eq:JV`;
+  positive on `F`, the form of equation (3) of Paper C1 (`eq:JV`);
 * `dvPhi_univ_le_face`: the upper bound, `Φ_V(α, u) ≤ Φ_F(α, u)` for every positive `u`;
 * `dvPhi_univ_extend`: the approximation, with `u = w` on `F` and `u = ε` off `F`,
   `Φ_V(α, u) = Φ_F(α, w) - ε K` with `K ≥ 0` independent of `ε`;

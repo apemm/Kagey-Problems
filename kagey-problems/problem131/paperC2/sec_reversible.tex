@@ -1,0 +1,418 @@
+\section{A reversible design and finite horizons}\label{sec:reversible}
+
+\subsection{The design}\label{sec:reversible-reconstruction}
+
+For a reversible chain the information is all of $Q$, and an explicit finite experiment
+reads it. Let $Q$ be reversible and irreducible with stationary law $\pi$, on a known
+connected graph $(V,E)$ with $m=|E|$ edges, where $\{i,j\}\in E$ exactly when $q_{ij}>0$. We
+call it the graph $E$.
+Put $w_{ij}=q_{ij}q_{ji}$ for the edge products and
+\[
+ S=D_{\sqrt\pi}(-Q)D_{\sqrt\pi}^{-1},\qquad S_{ii}=q_i,\qquad S_{ij}=-\sqrt{w_{ij}}\ \ (\{i,j\}\in E),
+\]
+the symmetrized matrix. We assume known constants $R,b>0$ with $\|S\|_2\le R$ and
+$\sqrt{w_{ij}}\ge b$ on every edge. The field and the time are calibrated.
+
+Two facts are used throughout. First, $S$ is symmetric and similar to $-Q$, whose eigenvalues
+have nonnegative real parts, so $S$ is positive semidefinite. Hence $0\le q_k\le R$ for every
+$k$, $\sqrt{w_{kl}}\le R$ on every edge, and $|q_k-q_l|\le R$. Second, for a face $F$ on which
+$E$ induces a connected graph, Proposition~\ref{prop:variational}(c) gives
+\begin{equation}\label{eq:lambda-sym}
+ \lambda_F(v)=\lambda_{\min}\bigl(S_F-\operatorname{diag}v_F\bigr).
+\end{equation}
+Since $Q$ has symmetric support, the admissible faces are exactly these connected faces
+(Lemma~\ref{lem:admissible}).
+
+The design uses, for a retained pair $(i,j)$, the field
+\[
+ v_i=\xi,\qquad v_j=0,\qquad v_k=-\bar v\ \ (k\ne i,j),
+\]
+which suppresses every other state, with the constants
+\[
+ \bar\xi=2R,\qquad \tau_0=\frac1{2R},\qquad U=\frac{8R}{b^2},\qquad \bar v=4R+4UR^2,
+\]
+and the ranges $|\xi|\le3R$ and $\frac1{4R}\le\tau\le U$. Every constant is fixed by $R$ and $b$.
+
+\begin{lemma}[suppression in the reversible design]\label{lem:suppression}
+Under the design for the pair $(i,j)$, every irreducible face that contains a suppressed state
+has score at least $\frac34$ larger than the best face inside $\{i,j\}$, uniformly on the ranges
+of $\xi$ and $\tau$. Hence the strict winner is one of $\{i\}$, $\{j\}$ and $\{i,j\}$, and the last
+only if $\{i,j\}$ is an edge.
+\end{lemma}
+
+\begin{proof}
+Let $F$ be connected and let $A=F\setminus\{i,j\}$ be nonempty.
+
+\emph{Wholly suppressed faces.} If $F\cap\{i,j\}=\emptyset$, then
+$S_F-\operatorname{diag}v_F=S_F+\bar vI\ge\bar vI$, so $\lambda_F(v)\ge\bar v$
+by~\eqref{eq:lambda-sym}. The singleton $\{j\}$ has score $\tau q_j\le\tau R$. Hence
+$\Phi_{\tau,v}(F)-\Phi_{\tau,v}(\{j\})\ge\tau(\bar v-R)\ge(3R+4UR^2)/(4R)\ge\frac34$.
+
+\emph{Mixed faces.} Let $G_0=F\cap\{i,j\}$ be nonempty. In the order $G_0$, $A$,
+\[
+ S_F-\operatorname{diag}v_F=\begin{pmatrix}B&Z\\Z^\top&S_A+\bar vI\end{pmatrix},\qquad
+ B=S_{G_0}-\operatorname{diag}v_{G_0},\quad Z=S[G_0,A].
+\]
+Here $\|Z\|_2\le R$ and $S_A\ge0$. Let $e=\lambda_{\min}(B)$, so
+$|e|\le\|S_{G_0}\|_2+|\xi|\le4R$. The test vector $(x,0)$, with $x$ a unit eigenvector of $B$
+for $e$, gives $\lambda_F(v)\le e$. For a unit vector $(x,y)$,
+\[
+ \Bigl\langle\binom xy,(S_F-\operatorname{diag}v_F)\binom xy\Bigr\rangle
+ \ge e|x|^2-2R|x||y|+\bar v|y|^2\ge\lambda_{\min}\begin{pmatrix}e&-R\\-R&\bar v\end{pmatrix}
+ \ge e-\frac{R^2}{\bar v-e},
+\]
+by $\sqrt{u^2+R^2}\le u+R^2/(2u)$ with $u=(\bar v-e)/2>0$. Since $\bar v-e\ge\bar v-4R=4UR^2$,
+we get $e-1/(4U)\le\lambda_F(v)\le e$. Now $e=\lambda_{G_*}(v)$ for an irreducible face
+$G_*\subseteq\{i,j\}$. If $G_0$ is connected, take $G_*=G_0$ and use~\eqref{eq:lambda-sym}. If
+$G_0=\{i,j\}$ is not an edge, $B$ is diagonal and $G_*$ is the singleton with the smaller
+diagonal entry. In both cases $|G_*|\le|F|-1$, so
+$\Phi_{\tau,v}(F)-\Phi_{\tau,v}(G_*)\ge1-\tau/(4U)\ge\frac34$ as $\tau\le U$.
+
+So the unique minimizer of $\Phi_{\tau,v}$, if there is one, is an irreducible face inside
+$\{i,j\}$, and Proposition~\ref{prop:controlled-score} identifies it with the strict winner.
+\end{proof}
+
+\begin{theorem}[reversible reconstruction]\label{thm:reversible-reconstruction}
+Let $Q$ be reversible and irreducible on the known connected graph $E$ with $\|S\|_2\le R$ and
+$\sqrt{w_{ij}}\ge b$ on edges, and let the start have full support.
+\begin{enumerate}[(a)]
+\item (Exit differences.) For each $i\ne1$, under the design for the pair $(i,1)$ at
+$\tau=\tau_0$, the strict winner changes from $\{1\}$ to $\{i\}$ at $\xi=x_i=q_i-q_1$, and
+$|x_i|\le R$. Put $x_1=0$.
+\item (Products.) For each edge $\{i,j\}$, under the design for $(i,j)$ at $\xi=\bar\xi$, the
+strict winner changes from a singleton to the pair at
+\[
+ \tau=t_{ij}=\frac{\sqrt{s_{ij}^2+4w_{ij}}+s_{ij}}{2w_{ij}},\qquad
+ s_{ij}=\bar\xi-x_i+x_j,
+\]
+with $1/R\le t_{ij}<U/2$, and $w_{ij}=s_{ij}/t_{ij}+t_{ij}^{-2}$.
+\item (Reconstruction.) Let $B$ be the symmetric matrix with diagonal $x_i$, entries
+$-\sqrt{w_{ij}}$ on the edges and zero elsewhere, let $\lambda=\lambda_{\min}(B)$ and let $\phi$ be
+its positive unit eigenvector. Then
+\[
+ S=B-\lambda I,\qquad Q=-D_\phi^{-1}SD_\phi,\qquad \pi_i=\phi_i^2 .
+\]
+So the $m+d-1$ limiting boundary coordinates $(x_i)_{i\ne1}$ and $(t_{ij})_{\{i,j\}\in E}$
+determine $Q$, and the design is fixed by $R$, $b$ and the labels before any boundary is
+observed.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+By Lemma~\ref{lem:suppression} and Proposition~\ref{prop:controlled-score}, at each point of the
+ranges the strict winner is the unique minimizer of $\Phi_{\tau,v}$ among the irreducible faces
+inside the retained pair, when it is unique. Note that $\tau_0\in[\frac1{4R},U]$, since $b\le R$.
+
+(a) The candidates are $\{i\}$, $\{1\}$ and, if $\{i,1\}$ is an edge, the pair. By Weyl's
+inequality $\lambda_{\{i,1\}}(v)\ge\min(q_i-\xi,q_1)-\sqrt{w_{i1}}$, so at $\tau_0$ the score of
+the pair exceeds the better singleton score by at least $1-\tau_0R=\frac12$, and the pair never
+wins. The singleton $\{i\}$ has the smaller score exactly when $q_i-\xi<q_1$, that is when
+$\xi>x_i$. Since $|x_i|\le R$, both sides of $x_i$ lie in $[-3R,3R]$. Hence $\{1\}$ wins strictly
+on $[-3R,x_i)$, $\{i\}$ wins strictly on $(x_i,3R]$, and the boundary is $\xi=x_i$.
+
+(b) Put $p=q_i-\bar\xi$ and $s=s_{ij}$. Since $x_i-x_j=q_i-q_j$ by (a), $s=q_j-p$. Then
+$R\le s\le3R$, and $\{i\}$ beats $\{j\}$ by $\tau s>0$. By~\eqref{eq:lambda-sym} the
+pair has $\lambda_{\{i,j\}}(v)=p-g$, the smaller eigenvalue of
+$\bigl(\begin{smallmatrix}p&-\sqrt w\\-\sqrt w&q_j\end{smallmatrix}\bigr)$ with $w=w_{ij}$,
+where
+\[
+ g=\frac{\sqrt{s^2+4w}-s}2=\frac{2w}{\sqrt{s^2+4w}+s}\in(0,\sqrt w\,] .
+\]
+So $\Phi(\{i,j\})-\Phi(\{i\})=1-\tau g$. Hence $\{i\}$ wins strictly below $t_{ij}=1/g$, the pair
+wins strictly above it, and $1/g$ is the displayed formula. Also $g\le\sqrt w\le R$ gives
+$t_{ij}\ge1/R>\frac1{4R}$. The formula increases in $s$ and decreases in $w$, and $s\le3R$,
+$w\ge b^2$, $b\le R$, so $t_{ij}\le(\sqrt{13}+3)R/(2b^2)<U/2$. At $\tau=t_{ij}$ the pair
+eigenvalue $p-1/t_{ij}$ is a root of $(p-y)(q_j-y)=w$, which gives $t_{ij}^{-1}(s+t_{ij}^{-1})=w$,
+the inversion formula.
+
+(c) $B=S-q_1I$, since $S$ has diagonal $q_k$, entries $-\sqrt{w_{kl}}$ on edges and zero off the
+graph. The positive unit vector $\sqrt\pi$ satisfies $S\sqrt\pi=D_{\sqrt\pi}(-Q)\ones=0$. As
+$S\ge0$, the eigenvalue $0$ is $\lambda_{\min}(S)$, and it is simple with eigenvector $\sqrt\pi$
+by the theorem of Perron and Frobenius for the irreducible nonnegative matrix $RI-S$. So
+$\lambda=-q_1$, $S=B-\lambda I$, $\phi=\sqrt\pi$ and $\pi_i=\phi_i^2$, and
+$Q=-D_\phi^{-1}SD_\phi$ is the definition of $S$. The coordinates used are $d-1$ values $x_i$
+and $m$ values $t_{ij}$, and the fields and time scales of the design depend only on $R$, $b$
+and the labels.
+\end{proof}
+
+The reconstruction of a reversible generator from its exit rates and edge products is
+classical. Kim and Landim~\cite[Lemma~5.1 and Corollary~5.3]{kl2024} recover the same
+quantities from the values of $J_V$, and with the stationary law from $J_V^{-1}(0)$ (their
+Lemma~5.2) deduce that $J_V$ determines a reversible generator. Here the coordinates are read
+off the boundaries of strict regions of the weighted composition law, with a design fixed in
+advance.
+
+\begin{theorem}[minimality]\label{thm:minimality}
+The reversible generators on the fixed connected graph $E$ form a real-analytic manifold of
+dimension $m+d-1$, with global coordinates the edge products $(w_{ij})$ and the exit differences
+$(q_i-q_1)$. Let $W$ be a nonempty open subset of it, for example the set where $\|S\|_2<R$ and
+$\sqrt{w_{ij}}>b$ when that set is nonempty. Let $k<m+d-1$, let $f\colon W\to\R^k$ be $C^1$ and
+let $\ell\colon W\to\Lambda$ be locally constant with $\Lambda$ finite. Then the observation
+$(f,\ell)$ is not injective on any nonempty open subset of $W$. So no family of fewer than
+$m+d-1$ locally $C^1$ scalar observations with locally constant finite labels is locally
+identifying.
+\end{theorem}
+
+\begin{proof}
+Let $\mathcal Q_E$ be the set of reversible generators with $q_{ij}>0$ exactly on the edges in
+$E$, and $\kappa(Q)=((w_{ij})_E,(q_i-q_1)_{i\ne1})$. Given $w\in(0,\infty)^m$ and
+$x\in\R^{d-1}$ (with $x_1=0$), form $B$ as in Theorem~\ref{thm:reversible-reconstruction}(c),
+let $\lambda$ and $\phi$ be its least eigenvalue and positive unit eigenvector, which is simple
+since $-B$ plus a large multiple of $I$ is irreducible and nonnegative, and put
+$\Psi(w,x)=-D_\phi^{-1}(B-\lambda I)D_\phi$. This is a reversible generator on $E$, with respect
+to $\phi^2$, with products $w_{ij}$ and exit rates $x_i-\lambda$, so $\kappa\circ\Psi=\mathrm{id}$,
+and Theorem~\ref{thm:reversible-reconstruction}(c), whose proof uses only reversibility and
+irreducibility, gives $\Psi\circ\kappa=\mathrm{id}$. The map $\Psi$ is real-analytic by the
+implicit function theorem at a simple eigenvalue, and $\kappa$ is polynomial. So $\kappa$ is a
+global real-analytic chart of $\mathcal Q_E$, of dimension $m+d-1$.
+
+For the lower bound let $W'\subseteq W$ be nonempty and open. Shrinking it, we may assume that
+$\ell$ is constant on $W'$ and that $W'$ is a ball in the chart $\kappa$, so $f$ is a $C^1$ map on
+a ball of $\R^p$, $p=m+d-1$. Let $\varrho_f$ be the largest rank of $df$ on $W'$, attained at
+$y_0$. The rank is lower semicontinuous, so it equals $\varrho_f$ near $y_0$, and by the constant
+rank theorem $f$ is constant on a $C^1$ submanifold through $y_0$ of dimension
+$p-\varrho_f\ge p-k\ge1$. So $(f,\ell)$ is not injective on $W'$.
+\end{proof}
+
+The chart is the continuous-time version of that of Wolfer and
+Watanabe~\cite[Theorems~3, 5 and~6]{wolferwatanabe2021} for reversible kernels, and the lower
+bound is the classical rank argument. Regularity is needed, since interleaving the digits of
+the $m+d-1$ coordinates gives one injective scalar.
+
+\begin{remark}[partial data]\label{rem:partial-data}
+Suppose that the products are known on $J\subseteq E$ and the exit differences along the edges
+of a comparison graph $(V,E')$. In the chart $\kappa$ the generators with these data are those
+with the given $w_e$ on $J$, any $w_e>0$ on $E\setminus J$, and $x$ equal to the given one plus a
+vector that is constant on each component of $(V,E')$ and zero on that of the state $1$. So they
+are parametrized by $(0,\infty)^{m-|J|}\times\R^{\operatorname{comp}(E')-1}$, with
+$\operatorname{comp}(E')$ the number of components of $(V,E')$, and the data identify $Q$ exactly
+when $J=E$ and $(V,E')$ is connected. For instance, for
+$\ell>\sqrt2$ and $z=\ell-2/\ell$ the generators
+\[
+ Q_\ell=\begin{pmatrix}-\ell&2/\ell&z\\ \ell/2&-\ell&\ell/2\\ z&2/\ell&-\ell\end{pmatrix}
+\]
+satisfy detailed balance with $\nu=(1,4/\ell^2,1)$, have all exit rates equal to $\ell$ and
+$w_{12}=w_{23}=1$, and have $w_{13}=z^2$. So the data of a spanning tree miss a parameter.
+\end{remark}
+
+\begin{theorem}[stability]\label{thm:stability}
+In the setting of Theorem~\ref{thm:reversible-reconstruction}, let the observed dimensionless
+coordinates $x_i/R$ and $Rt_{ij}$ have sup-norm errors at most $\varepsilon$, and let
+$\widehat Q$ be the reconstruction from the observed values. There are $\varepsilon_0$ and $C$
+depending only on $d$ and $b/R$ such that for $\varepsilon\le\varepsilon_0$ the reconstruction
+$\widehat Q$ is a reversible generator on $E$ and
+\[
+ \|\widehat Q-Q\|_2\le C\,R\,\varepsilon .
+\]
+Among the constants are the bound $\phi_{\min}\ge \phi_*=(b/R)^{d-1}/\sqrt d$ for the ground
+vector $\phi=\sqrt\pi$ and the bound $\lambda_2(S)\ge g_*=2b\phi_*^2/(d-1)$ for the gap of $S$.
+\end{theorem}
+
+\begin{proof}
+The reconstruction commutes with the scaling $Q\mapsto Q/R$, so we take $R=1$, $\bar\xi=2$ and
+$b\le1$. Then $\sigma_{ij}=t_{ij}\ge1$ and $s_{ij}=2-x_i+x_j\in[1,3]$, by
+Theorem~\ref{thm:reversible-reconstruction}. Hats denote reconstructed values, and
+$\widehat x_1=x_1=0$.
+
+\emph{Products.} Let $\varepsilon\le b^2/20$. Then $\widehat\sigma\ge\frac34$ and
+$|\widehat\sigma^{-1}-\sigma^{-1}|\le\frac43\varepsilon$, and $w=s/\sigma+\sigma^{-2}$ gives
+$|\widehat w-w|\le(\frac{20}3+\frac{28}9)\varepsilon<10\varepsilon$. So $\widehat w\ge b^2/2$ and
+$|\sqrt{\widehat w}-\sqrt w|\le10\varepsilon/b$, and the largest absolute row sum gives
+$\|\widehat B-B\|_2\le\beta:=10d\varepsilon/b$. By Weyl's inequality
+$|\widehat\lambda-\lambda|\le\beta$, so $\|\widehat S-S\|_2\le2\beta$. The matrix $\widehat B$
+has negative entries exactly on the edges in $E$, so the chart $\Psi$ of the proof of
+Theorem~\ref{thm:minimality} makes $\widehat Q$ a reversible generator with the graph $E$.
+
+\emph{The constants.} Row $l$ of $S\phi=0$ reads $q_l\phi_l=\sum_{k\sim l}\sqrt{w_{lk}}\phi_k$, so
+$\phi_l\ge b\phi_k$ on every edge. Some $\phi_{k_0}$ is at least $1/\sqrt d$, and every state is
+joined to $k_0$ by at most $d-1$ edges, so $\phi_{\min}\ge\phi_*$. For $y\perp\phi$ write
+$y=\phi\circ f$. Then $\langle y,Sy\rangle=\sum_{\{k,l\}\in E}\chi_{kl}(f_k-f_l)^2$ with
+$\chi_{kl}=\sqrt{w_{kl}}\phi_k\phi_l\ge b\phi_*^2$, while $\|y\|^2=\sum_k\pi_kf_k^2$ and
+$\sum_k\pi_kf_k=0$. In a spanning tree $\mathcal T$ of $E$ the path from $k$ to $l$ has at most
+$d-1$ edges, so the inequality of Cauchy and Schwarz gives
+\[
+ \|y\|^2=\tfrac12\sum_{k,l}\pi_k\pi_l(f_k-f_l)^2\le\tfrac{d-1}2\sum_{e\in\mathcal T}(\nabla_ef)^2
+ \le\frac{d-1}{2b\phi_*^2}\langle y,Sy\rangle,
+\]
+and $\lambda_2(S)\ge g_*$.
+
+\emph{The generator.} Write $\widehat\phi=a\phi+z$ with $z\perp\phi$ and $a>0$. Since
+$Sz=(S-\widehat S)\widehat\phi$, we get $\|z\|\le2\beta/g_*$, and since $1-a\le1-a^2=\|z\|^2$,
+also $\gamma=\|\widehat\phi-\phi\|\le\sqrt2\|z\|\le2\sqrt2\beta/g_*$. This is the bound of Davis
+and Kahan in its simplest form. Let $\varepsilon$ be so small that $\gamma\le\phi_*/2$. Then
+$\widehat\phi_{\min}\ge\phi_*/2$,
+$|\widehat\phi_l/\widehat\phi_k-\phi_l/\phi_k|\le4\gamma/\phi_*^2$ and
+$\widehat\phi_l/\widehat\phi_k\le2/\phi_*$, so on an edge
+\[
+ |\widehat q_{kl}-q_{kl}|
+ =\bigl|\sqrt{\widehat w_{kl}}\,\widehat\phi_l/\widehat\phi_k-\sqrt{w_{kl}}\,\phi_l/\phi_k\bigr|
+ \le\frac{20\varepsilon}{b\phi_*}+\frac{4\gamma}{\phi_*^2}.
+\]
+The diagonal satisfies $|\widehat q_k-q_k|=|\widehat S_{kk}-S_{kk}|\le2\beta$, and off the graph
+both matrices vanish. So every entry of $\widehat Q-Q$ is at most $C_1(d,b)\varepsilon$, and
+$\|\widehat Q-Q\|_2\le dC_1\varepsilon$. The conditions on $\varepsilon$ depend only on $d$ and
+$b$.
+\end{proof}
+
+The perturbation bounds are standard. The point is that the constants come from $R$ and $b$
+alone, with no separate assumption on the spectral gap.
+
+\subsection{Finite horizons}\label{sec:finite-horizon}
+
+Theorem~\ref{thm:reversible-reconstruction} reads the coordinates off the limiting boundaries.
+At a finite horizon the observed boundaries are shifted, and the shift has an explicit form,
+uniformly over a class of chains and starts. Throughout, the connected graph $E$ on $[d]$ and
+the numbers $0<b\le R$ and $0<\mu_*\le1/d$ are fixed. Let $\mathcal C$ be the set of reversible
+irreducible generators on $E$ with $\|S\|_2\le R$ and $\sqrt{w_{ij}}\ge b$ on every edge, and let
+$\mathcal M$ be the set of starts with $\min_i\mu_i\ge\mu_*$. For a pair $(i,j)$ and $\xi\in\R$
+let $v^{ij}(\xi)$ be the design field of Section~\ref{sec:reversible-reconstruction}, and let
+$\mathcal V$ be the compact set of these fields with $|\xi|\le3R$.
+
+The fixed-chain face maxima are Theorem~\ref{thm:facemax}. What the finite horizon needs in
+addition is that their constants do not depend on the chain and the start in the class. This is
+the last result we import from~\cite{paperC1}.
+
+\begin{proposition}[uniform face maxima on the class, {\cite[Proposition~5.16]{paperC1}}]\label{prop:uniform-facemax}
+Let $E$ induce a connected graph on the face $F$, with $k=|F|\ge2$. There are $N_0$ and $C$,
+depending only on $E$, $R$, $b$ and $\mu_*$, such that for all $Q\in\mathcal C$, $\mu\in\mathcal M$
+and $v\in\mathcal V$ the following hold.
+\begin{enumerate}[(a)]
+\item For all $N\ge2$ and $T>0$ with $TR\le N/2$,
+$M_F(T,v)\le C(T/N)^{k-1}e^{-T\lambda_F(v)+CT^2/N}$.
+\item For $N\ge N_0$ and $1\le T\le N^{1/3}$, we have $C^{-1}\le K_F(v)\le C$ and
+\[
+ \biggl|\frac{M_F(T,v)}{K_F(v)\,N^{-(k-1)}T^{(k-1)/2}e^{-T\lambda_F(v)}}-1\biggr|
+ \le C\Bigl(\frac1T+\frac{T^2}N\Bigr).
+\]
+\end{enumerate}
+For a singleton, $M_{\{i\}}(T,v)$ is given exactly by~\eqref{eq:vertexmax}.
+\end{proposition}
+
+The proof in~\cite{paperC1} is a compactness argument. On an edge $q_{ij}\ge b^2/R$, so the
+class, the starts and the fields form a compact set on which every connected face stays
+irreducible, and every constant in the fixed-chain proofs of Lemma~\ref{lem:upper} and
+Theorem~\ref{thm:facemax} is continuous there.
+
+\begin{theorem}[finite-horizon recovery on the class]\label{thm:finite-horizon}
+Run the design of Theorem~\ref{thm:reversible-reconstruction} at horizon $N$, with $L=\log N$ and
+$T=\tau L$, and let $\mathcal W_N(\tau,v)$ be the set of supports of the maximizers of
+$n\mapsto P_N(n)e^{Tv\cdot n/N}$. For an ordered pair $(i,j)$ with $\{i,j\}\in E$ put
+$v=v^{ij}(\bar\xi)$,
+\[
+ \tau^-_N=\sup\Bigl\{\tau\in[\tfrac1{4R},U]:\mathcal W_N(\tau',v)=\{\{i\}\}\text{ for all }\tau'\in[\tfrac1{4R},\tau]\Bigr\},
+\]
+\[
+ \tau^+_N=\inf\Bigl\{\tau\in[\tfrac1{4R},U]:\mathcal W_N(\tau',v)=\{\{i,j\}\}\text{ for all }\tau'\in[\tau,U]\Bigr\},
+\]
+let $t_{ij,N}$ be any number in $[\tau^-_N,\tau^+_N]$, and let $K_{ij}=K_{\{i,j\}}(v)$. Put
+$\varepsilon_N=\log L/(2L)$. There are $N_0$ and $C$, depending only on $E$, $R$, $b$ and
+$\mu_*$, such that for all $Q\in\mathcal C$, $\mu\in\mathcal M$ and $N\ge N_0$ the following
+hold.
+\begin{enumerate}[(a)]
+\item (Singleton switches.) Let $i\ne1$. For every $\xi\in[-3R,3R]$ other than
+\[
+ x_{i,N}=\frac1{\tau_0L}\Bigl[\log\frac{\mu_1}{\mu_i}+(N-1)\log\frac{N-\tau_0Lq_1}{N-\tau_0Lq_i}\Bigr],
+\]
+$\mathcal W_N(\tau_0,v^{i1}(\xi))$ is $\{\{1\}\}$ for $\xi<x_{i,N}$ and $\{\{i\}\}$ for
+$\xi>x_{i,N}$. Moreover $|x_{i,N}-x_i-2R\log(\mu_1/\mu_i)/L|\le CL/N$, so
+$|x_{i,N}-x_i|\le2R\log(1/\mu_*)/L+CL/N$.
+\item (Pair entries.) We have $\tau^+_N-\tau^-_N\le C/L^2$ and
+\[
+ \Bigl|t_{ij,N}-t_{ij}(1-\varepsilon_N)-\frac{c_{ij}}L\Bigr|\le C\,\frac{\log L}{L^2},\qquad
+ c_{ij}=-t_{ij}\Bigl(\frac12\log t_{ij}+\log\frac{K_{ij}}{\mu_i}\Bigr),\qquad|c_{ij}|\le C .
+\]
+\item (Reconstruction.) Let $\widehat Q_N$ be the reconstruction of
+Theorem~\ref{thm:reversible-reconstruction}(c) from the values $x_{i,N}$ and $t_{ij,N}$, and
+$\widetilde Q_N$ the one from $x_{i,N}$ and $t_{ij,N}/(1-\varepsilon_N)$. Both are reversible
+generators on $E$, and
+\[
+ \|\widehat Q_N-Q\|_2\le C\,\frac{\log L}L,\qquad\|\widetilde Q_N-Q\|_2\le\frac CL .
+\]
+\end{enumerate}
+\end{theorem}
+
+The threshold $N_0$ is genuinely large. The design runs up to $\tau=U=8R/b^2$, and $I+(T/N)Q$
+is stochastic on the whole range exactly when $N\ge Uq_{\max}\log N$. So the least such $N$ has
+$Nb^2/\log N=8Rq_{\max}$ up to rounding, and it grows like $b^{-2}\log(1/b)$ when $q_{\max}$ stays
+of order $R$. Section~\ref{sec:verify} computes it for 2 families. The proof compares the exact
+singleton atoms with the uniform face maximum of the pair and solves the resulting crossing
+equation for $T$.
+
+\begin{proof}
+All constants below depend only on $E$, $R$, $b$ and $\mu_*$. On the ranges of the design
+$T\in[L/(4R),UL]$, so for $N\ge N_1$ we have $TR\le N/2$, $T\le N^{1/3}$ and
+$1/T+T^2/N\le5R/L$, and Proposition~\ref{prop:uniform-facemax} applies.
+
+\emph{Suppression.} Fix a pair and a point of the ranges, and let $m^*$ be the least score among
+the irreducible faces inside the pair. The proof of Lemma~\ref{lem:suppression} uses only $R$,
+$b$ and $\bar v$, so each connected face $G'$ outside the pair has
+$\Phi_{\tau,v}(G')\ge m^*+\frac34$, and Proposition~\ref{prop:uniform-facemax}(a) or the singleton
+atom gives $M_{G'}\le CT^{|G'|-1}N^{-\Phi_{\tau,v}(G')}$. The best face inside the pair has face
+maximum at least $C^{-1}N^{-m^*}$, by the singleton atom with $\mu_i\ge\mu_*$ or by
+Proposition~\ref{prop:uniform-facemax}(b). Faces that are not connected carry no mass. So for
+$N\ge N_0$ every maximizer has its support inside the pair.
+
+\emph{(a)} At $\tau_0$ the pair $\{i,1\}$, if it is an edge, has score at least the better
+singleton score plus $\frac12$, by the proof of Theorem~\ref{thm:reversible-reconstruction}(a), so
+as above its face maximum is smaller than $\max(M_{\{1\}},M_{\{i\}})$ by a factor $CLN^{-1/2}$.
+The two singleton atoms are exact, and
+\[
+ \log M_{\{i\}}-\log M_{\{1\}}=\log\frac{\mu_i}{\mu_1}+(N-1)\log\frac{N-\tau_0Lq_i}{N-\tau_0Lq_1}+\tau_0L\,\xi ,
+\]
+which is affine and increasing in $\xi$ with zero $x_{i,N}$. This gives the claim on
+$\mathcal W_N$. Since $|\log(1-y)+y|\le y^2$ for $0\le y\le\frac12$, the middle term is
+$-\tau_0L(q_i-q_1)+O(L/N)+O(R^2L^2/N)$, and dividing by $\tau_0L=L/(2R)$ gives the expansion. For
+large $N$ it gives $x_{i,N}\in(-3R,3R)$, since $|x_i|\le R$.
+
+\emph{(b)} Let $\{i,j\}$ be an edge and $v=v^{ij}(\bar\xi)$. The exact atoms give
+$\log M_{\{j\}}-\log M_{\{i\}}\le\log(1/\mu_*)-TR+1$ with $TR\ge L/4$, so $\{j\}$ loses to
+$\{i\}$. By the proof of Theorem~\ref{thm:reversible-reconstruction}(b),
+$\lambda_{\{i\}}(v)-\lambda_{\{i,j\}}(v)=1/t_{ij}$, and the exact atom gives
+$\log M_{\{i\}}=\log\mu_i-T(q_i-\bar\xi)+O(1/L)$. So Proposition~\ref{prop:uniform-facemax}(b)
+with $k=2$ gives, on the whole range,
+\[
+ \Lambda_N(T)=\log M_{\{i,j\}}-\log M_{\{i\}},\qquad\bigl|\Lambda_N(T)+L-\Xi(T)-\kappa\bigr|\le\frac{C_5}L,
+\]
+with $\Xi(T)=T/t_{ij}+\frac12\log T$ and $\kappa=\log(K_{ij}/\mu_i)$. Here $|\kappa|\le C$, since
+$K_{ij}$ is bounded above and below and $\mu_i\ge\mu_*$. The function $\Xi$ increases with
+$\Xi'\ge1/t_{ij}\ge2/U$. Let $T^\circ$ solve $\Xi(T^\circ)=L-\kappa$. Then $\Lambda_N(T)<0$ for
+$T\le T^\circ-C_5U/L$ and $\Lambda_N(T)>0$ for $T\ge T^\circ+C_5U/L$. As $t_{ij}\in[1/R,U/2)$, the
+window $|T-T^\circ|<C_5U/L$ lies inside the range for large $N$. With the suppression step, every
+maximizer has support $\{i\}$ below the window and $\{i,j\}$ above it. Hence
+$T^\circ/L-C_5U/L^2\le\tau^-_N\le\tau^+_N\le T^\circ/L+C_5U/L^2$, which is the first claim, and
+$t_{ij,N}=T^\circ/L+O(1/L^2)$. To solve for $T^\circ$ put $\tau^\circ=T^\circ/L$. Then
+$\tau^\circ=t_{ij}\bigl(1-(\frac12\log T^\circ+\kappa)/L\bigr)$, so
+$\tau^\circ/t_{ij}=1+O(\log L/L)$ and $\log T^\circ=\log L+\log t_{ij}+O(\log L/L)$. Putting this
+back gives $\tau^\circ=t_{ij}(1-\varepsilon_N)+c_{ij}/L+O(\log L/L^2)$, uniformly, since
+$t_{ij}\le U/2$ and $|\kappa|\le C$.
+
+\emph{(c)} By (a) and (b) the dimensionless coordinates $x_{i,N}/R$ and $Rt_{ij,N}$ differ from
+$x_i/R$ and $Rt_{ij}$ by at most $C\log L/L$, and after the correction by at most $C/L$, since
+$t_{ij,N}/(1-\varepsilon_N)-t_{ij}=(c_{ij}/L+O(\log L/L^2))/(1-\varepsilon_N)$.
+Theorem~\ref{thm:stability} gives its admissible error size $\varepsilon_0$ and its constant as
+functions of $d$ and $b/R$ alone. So for $N\ge N_0$ these errors are below $\varepsilon_0$, and
+that theorem gives both bounds and the generator property.
+\end{proof}
+
+\begin{remark}[a start that defeats every horizon]\label{rem:finite-start}
+The bound $\min_i\mu_i\ge\mu_*$ cannot be dropped, since the start enters through the singleton
+switches as $2R\log(\mu_1/\mu_i)/L$. Let $d=2$, $q_{12}=q_{21}=1$, $\tau=\frac14$ and $v=(0,1)$.
+The scores are $\Phi(\{2\})=0$, $\Phi(\{1\})=\frac14$ and
+$\Phi(\{1,2\})=1+\frac14\cdot\frac{1-\sqrt5}2>\frac34$, so for a fixed start $\{2\}$ wins for large
+$N$. Both singleton atoms carry the factor $(1-T/N)^{N-1}$, so
+$M_{\{1\}}/M_{\{2\}}=(\mu_1/\mu_2)e^{-T}=(\mu_1/\mu_2)N^{-1/4}$ exactly. For the start
+$\mu_2=1/(1+2N^{1/4})$ this ratio is $2$ at every $N$. The law is linear in the start, so
+Lemma~\ref{lem:upper} for the two starts at a single state gives
+$M_{\{1,2\}}\le CLN^{-1/2}M_{\{1\}}$ with $C$ free of $\mu$. So $\{1\}$
+wins at every large $N$, against the limiting prediction. The switch between $\{1\}$ and $\{2\}$ in
+the variable $v_2$ sits at $\log(\mu_1/\mu_2)/(\tau L)=1+4\log2/L$ instead of at $q_2-q_1=0$. On
+$\mathcal M$ the same shift is at most $\log(1/\mu_*)/(\tau L)$, uniformly.
+\end{remark}
+
+\begin{remark}[the size of the correction]\label{rem:finite-size}
+On the two-state class with $R=3$ and $b=1$, the chain $q_1=q_2=1$ with the uniform start has
+$t_{12}=6.16$ and $c_{12}=-16.5$, and at $N=10^7$ the exact law gives $t_{12,N}=4.65$, against
+$5.63$ for $t_{12}(1-\varepsilon_N)$ and $4.60$ for the prediction of (b). So the term
+$c_{ij}/L$, which no correction fixed in advance removes, dominates $t_{ij}\varepsilon_N$ at
+accessible $N$.
+\end{remark}
