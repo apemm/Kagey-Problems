@@ -1,4 +1,4 @@
-"""Checks for Section 2 and Appendix A of the note "When the end ties the center in a coin-turning walk".
+"""Checks for Section 2 and Appendix A of the note "The finite-size shape transition of coin-turning walks".
 
 Model. X_1 is +1 or -1 with probability 1/2. For k >= 2 the walk switches
 direction with probability c/k (0 < c < 2) and keeps it otherwise. A_n is the
@@ -220,7 +220,7 @@ def main():
     ap.add_argument('--full', action='store_true', help='also run the heavy cells')
     args = ap.parse_args()
     T0 = time.time()
-    print('When the end ties the center in a coin-turning walk, Section 2 and Appendix A' + (' (full run)' if args.full else ' (quick run)'))
+    print('The finite-size shape transition of coin-turning walks, Section 2 and Appendix A' + (' (full run)' if args.full else ' (quick run)'))
 
     # ------------------------------------------------ exact laws at c = 1
     print('\nThe law at c = 1 (Propositions 2.3(a) and 2.6(a)), exact rationals', flush=True)
@@ -275,8 +275,8 @@ def main():
                     ok &= law.get((n, j), Fraction(0)) == Fraction(n[j] - (1 if j == 0 else 0), den)
                 ok &= sum(law.get((n, j), Fraction(0)) for j in range(d)) == Fraction(1, comb(N + d - 2, d - 1))
             ok &= all(n[0] >= 1 for n, _ in law)
-    check('theta = 1: P(counts = n, X_N = j) = (n_j - 1{j=1})/((N-1) binom(N+d-2, d-1)), counts uniform on the bins',
-          ok, f'd = 2, 3, 4 and 2 <= N <= 8 ({nbins} bins)')
+    check('theta = 1: P(counts = n, X_N = j) = (n_j - 1{j=1})/((N-1) binom(N+d-2, d-1)), counts uniform on the count vectors',
+          ok, f'd = 2, 3, 4 and 2 <= N <= 8 ({nbins} count vectors)')
     ok = True
     for d in (2, 3, 4):
         for N in range(2, 6 if d == 4 else 7):
@@ -305,7 +305,7 @@ def main():
                     ok &= all(ratios[n] > prev[n] for n in ratios)
                 prev = ratios
     check('P(n)/P(N e_1) < 1 at theta = 0.9, = 1 at theta = 1, > 1 at theta = 1.1, and strictly increasing '
-          'along theta = 1/2, 9/10, 1, 11/10, 5/4, for every bin n other than the corner', ok,
+          'along theta = 1/2, 9/10, 1, 11/10, 5/4, for every count vector n other than the corner', ok,
           'exact, d = 2, 3, 4 and 2 <= N <= 8')
     ok = True
     for N in range(2, 9):
@@ -417,7 +417,7 @@ def main():
             cB = crossing(n, 'B', lo, hi)
             if abs(cB - c) > 1e-11 or not shape_ok(law_B(n, cB), n):
                 badB.append(n)
-    check('every even 4 <= n <= 1000: center the unique interior minimum, bins 1 and n-1 the largest (not printed in the note)',
+    check('every even 4 <= n <= 1000: center the unique interior minimum, points 1 and n-1 the largest (not printed in the note)',
           not bad and not badB, f'A failures {bad}; B checked on {nB} values of n, failures {badB}  [{time.time() - t0:.0f}s]')
     for n in (1600, 3200, 6400):
         t0 = time.time()
