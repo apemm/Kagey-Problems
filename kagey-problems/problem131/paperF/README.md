@@ -11,9 +11,9 @@ endpoint. The initial run (the first run) enters each zone through a sharp crite
 occupation count of the lattice walk with 1 < alpha < 2 this answers the question of Wang, Schulz,
 Deng and Barkai (2018) on the effect of the initial preparation on the rare fluctuations. Their
 question also covers other observables and 0 < alpha < 1.
-The shape follows, including the golden-ratio threshold for the global mode and an interior
-minimum at the stable scale of the opposite runs, and the boundary layer identifies the law of the
-opposite run.
+The shape follows, including the golden-ratio threshold for the global mode, an interior
+minimum at the stable scale of the opposite runs, and the exact number of modes for all large N
+(Theorem F), and the boundary layer identifies the law of the opposite run.
 
 Started October 24, 2026 from the plan of October 23. The earlier draft in this folder, "The
 golden-ratio threshold for a lattice Lévy walk and ties in coin-turning walks", is archived in
@@ -25,10 +25,11 @@ paper.
 
 ## Status
 
-The draft is complete, with every statement proved in the article or stated as a conjecture (61
-pages after the integration of the window and modes results on October 25, 2026, see
-`research_notes/Paper F audits/16_novelty_repositioning.md` and `17_O1_O2_integration.md`).
-The main results are five theorems, lettered A to E in the order of the sections, and the
+The draft is complete, with every statement proved in the article or stated as a conjecture (80
+pages after the integration of the exact mode count on October 25, 2026, see
+`research_notes/Paper F audits/20_mode_count_integration.md`. The earlier integrations are in
+`16_novelty_repositioning.md` and `17_O1_O2_integration.md`).
+The main results are six theorems, lettered A to F in the order of the sections, and the
 identification from the ends is Remark 5.6. Statements are numbered by section, and the
 scripts and the Lean map name them by their TeX labels, which do not change when statements move.
 The label of Remark 5.6 stays `thm:inverse` for that reason (it was Proposition 7.1).
@@ -74,10 +75,26 @@ The label of Remark 5.6 stays `thm:inverse` for that reason (it was Proposition 
   (`lem:diff-renewal`, by Wiener's lemma), the prepared profile (`lem:prep-diff`), the copies of the
   end profile (`prop:copy`), at least `M_+ + M_- + 1` modes (`thm:modes-lower`), a prepared
   log-convex start with at least four modes (`cor:four-modes`), the first differences in the layer
-  under (LD) (`lem:plus-diff`, `thm:first-diff`), the extrema up to distance `N^(1-eta)`
-  (`thm:ends`), and `conj:three-modes`, the upper bound of at most `M_+ + M_- + 1` modes for
-  large N. The lower bound is `thm:modes-lower`, which also gives the "only if" half of the
-  three-mode criterion.
+  under (LD) (`lem:plus-diff`, `thm:first-diff`), and the extrema up to distance `N^(1-eta)`
+  (`thm:ends`).
+- Theorem F (`thm:mode-count`, Section 6.5). Under (SPAN), (LR), (LD2) for both signs and (EQ),
+  for a fresh or fair start with no ties, the full sign pattern of the first differences is fixed
+  for all large N and P_N has exactly `M_+ + M_- + 1` modes. Three modes for all large N if and
+  only if each end profile has one local maximum (`cor:three-modes`). When a profile has one
+  local maximum is said in terms of `u_-` in `lem:one-max`. Monotonicity of `u_-` is sufficient,
+  and it is necessary only at an end whose profile starts above `u_-(1)`. Log-convex run laws give
+  three modes (`cor:logconvex-three`). (EQ) may be replaced by `min theta_N >= theta_0` along a
+  sequence (`cor:sequences`). Laws with `f(1) = 0` give at least five modes for the fair start, and
+  the law `f(n) ∝ n^{-5/2}` on n >= 2 with the fair start gives at least 15 (`ex:runs2`). The 15 is
+  specific to that law and start. The index 7/5 law on n >= 2 gives 13 modes (N = 3000, 4000), and a
+  fresh start with the index 3/2 law has the lower bound 14. The difference form of the local
+  big jump, uniform in the number of runs (`lem:diff-bigjump`), is stated in Section 6.5 as a
+  result of its own. Open: unequal scales and a bound for every N (`rem:mode-open`).
+- Appendix B (`app:modes`). The proofs for Theorem F: `lem:ld2`, `lem:second-renewal`,
+  `lem:plus-second`, `thm:layer-second` and `cor:convex` (one antimode), `lem:trunc-local`,
+  `lem:fourier-diff` and the proof of `lem:diff-bigjump`, `thm:zone-diff` (the big-jump zone),
+  `lem:pointwise`, `lem:second-bigjump`, `lem:tails`, `lem:bell` (Kwasnicki's bell shape and
+  analyticity), `thm:bulk-diff` and `cor:bulk-sign` (the bulk), and the junctions.
 - Remark 5.6 (`thm:inverse`, also labelled `rem:thinning`, Section 5.7). For a fresh plus start the atoms give the plus law
   directly (`P_N(N) = T_+(N)`), the plus-end layer gives the minus law through the renewal
   inversion, and the ratios at the minus end determine the plus law only up to a geometric
@@ -136,7 +153,13 @@ dated before the pass may still print the old names.
   `lem:diff-renewal`, the error of `thm:first-diff` at N = 1000 and 3000, the certified modes of
   the fair start (N = 400, 1000) and of the start of `cor:four-modes` (N = 1000). Output
   `data/verify_modes_output.txt`.
-- `verify_all.py`, runs the five `verify` scripts, and with `--full` the two `certify` scripts
+- `verify_mode_count.py`, the numbers of Section 6.5 quoted there and in Section 7: three modes for
+  the zeta law at N = 2500, ..., 4000 (fresh plus and fair), the renewal mass function and the 15
+  modes of the fair start for the law `f(n) ∝ n^{-5/2}` on n >= 2 at every N = 2500, 2600, ..., 4000 (and 17,
+  19, 17 at N = 1000, 1500, 2000), and the law with f(1) = 0.6, f(2) = 0.3 (three modes for the fair
+  start, four for the fresh plus start). Every sign is certified against the rounding bound.
+  Output `data/verify_mode_count_output.txt`.
+- `verify_all.py`, runs the six `verify` scripts, and with `--full` the two `certify` scripts
   first. Outputs `data/verify_all_output.txt` and `data/verify_all_output_full.txt`.
 - Every output in `data/` starts with the sha256 of the script that wrote it and the date.
 - `../lean/PaperF/`, the Lean 4 proofs of the identities of Section 2, the first part of
@@ -149,8 +172,9 @@ dated before the pass may still print the old names.
 ## How to build and run
 
 Build the paper with `pdflatex problem131_levy.tex`, run three times so that the references settle.
-Run the checks from this folder with `py -I verify_all.py` (about half a minute) or
-`py -I verify_all.py --full` (about two minutes, most of it the antimode at N = 8000). Each script
+Run the checks from this folder with `py -I verify_all.py` (about a minute and a half) or
+`py -I verify_all.py --full` (about three minutes, most of it the antimode at N = 8000 and the mode
+counts). Each script
 can also be run alone with `py -I <script>`, and `py -I certify_atlas.py 1200` writes the law at any
 other N to `data/atlas_N1200.json`. Redraw the figure with `py -I figures/make_atlas_figure.py`. The
 scripts need numpy, scipy, mpmath and python-flint, and the figure also matplotlib. The recorded
@@ -161,19 +185,21 @@ runs used Python 3.14.3, numpy 2.4.2, scipy 1.17.1, mpmath 1.3.0, python-flint 0
 ## Statement labels
 
 The scripts, their outputs and the Lean map name statements by their TeX labels (`thm:bulk`,
-`prop:final-run`, ...), never by number. The five main theorems are lettered A to E
+`prop:final-run`, ...), never by number. The six main theorems are lettered A to F
 (`thm:bulk`, `thm:bigjump`, `thm:preparation`, `thm:mode`, `thm:antimode`). All other
 statements are numbered within sections, so `prop:final-run` is Proposition 2.6,
 `thm:second-order` is Theorem 6.1, `thm:inverse` is Remark 5.6, `lem:stable` is Lemma A.1
 and `tab:antimode` is Table 1 in the build of October 25, 2026. Numbered constants (`C_3`, `c_2`,
-...) are fixed once and never reused, as Section 2.2 states. Hypotheses carry the names (RV), (LR), (SPAN) and (LD) in the paper and
+...) are fixed once and never reused, as Section 2.2 states. Hypotheses carry the names (RV), (LR), (SPAN), (LD), (LD2) and (EQ) in the paper and
 in the scripts.
 
 ## Hypotheses and notation
 
 (RV) regularly varying tails of index -alpha_sigma with 1 < alpha_sigma < 2; (LR) local regular
 variation f_sigma(n) ~ alpha_sigma T_sigma(n)/n; (SPAN) span one; (LD) |f_sigma(n) - f_sigma(n+1)|
-= O(f_sigma(n)/n), used only in Section 6.4. mu_sigma mean run length,
+= O(f_sigma(n)/n), used only in Sections 6.4 and 6.5; (LD2) |f_sigma(n+1) - 2 f_sigma(n) + f_sigma(n-1)|
+= O(f_sigma(n)/n^2) and (EQ) T_+(n)/T_-(n) bounded above and below, used only in Section 6.5 and
+Appendix B. mu_sigma mean run length,
 s = mu_+ + mu_-, p = mu_+/s. Scales b_{sigma,N} = a_sigma(N/s), B_N the larger one, moving
 profile h_N. Renewal mass function u_sigma, v_sigma = sum_m m f_sigma^{*m}, boundary kernel
 kappa_+^{(sigma_0)}. Big-jump kernel G_N. Directional defect D_N^sigma (\mathcal D^\sigma_N), with supremum Delta_{sigma,N}.

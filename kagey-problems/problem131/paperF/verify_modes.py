@@ -9,7 +9,7 @@ Proposition prop:first-run.
      Printed: -0.963, -0.996, -0.9996.
   2. Theorem thm:first-diff, fresh plus start: the error N Delta R_N(j) - N Delta u(j) - Delta C(j) at
      j = 20 is 0.73 at N = 1000 and 0.23 at N = 3000, so it decays like 1/N (ratio between 2.5 and 3.5).
-  3. The fair start (Conjecture conj:three-modes and the paragraph after it): exactly three modes, at
+  3. The fair start (the paragraph after Lemma lem:one-max): exactly three modes, at
      k = 1, N/2, N-1, for N = 400 and 1000.
   4. Corollary cor:four-modes with d_0 = 5 at N = 1000: exactly four modes, at k = 1, 499, 995, 1000.
 In 3 and 4 every relative difference |P(k+1) - P(k)|/max(P(k), P(k+1)) exceeds twice the a priori
