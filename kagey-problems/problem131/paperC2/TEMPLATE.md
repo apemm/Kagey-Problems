@@ -53,7 +53,7 @@ the ones that shape the manuscript.
 - `\journal{Stochastic Processes and their Applications}`, one `\author` with `\ead`, marked
   as corresponding author with `\corref` and `\cortext`, and a structured `\affiliation`
   (organization, street address, city, postcode, state, country).
-- Abstract of 250 words or fewer (235 by a whitespace count, in `abstract.tex`, shared with the
+- Abstract of 250 words or fewer (234 by a whitespace count in the journal build, in `abstract.tex`, shared with the
   arXiv build), with the one reference given in full as "Kim and Landim (Stochastic Process.
   Appl. 189 (2025) 104733)".
 - Seven keywords, separated by `\sep`, and `\MSC[2020] 60J27 \sep 60F10 \sep 60J10 \sep 15A15
@@ -69,9 +69,10 @@ the ones that shape the manuscript.
 
     pdflatex -interaction=nonstopmode problem131_reconstruction.tex   (three times)
 
-The build of 2026-10-25 has 33 pages, no undefined references, no multiply defined labels and no
-overfull boxes. That is within the guide's 30 to 40, so the cover letter needs no length
-justification. The arXiv build `problem131_reconstruction_arxiv.tex` (article class, 37 pages)
+The build of 2026-10-25, after the exact-law section was added, has 43 pages, no undefined
+references, no multiply defined labels and no overfull boxes. That is 3 pages over the guide's 30
+to 40, so the cover letter carries a short length justification. The arXiv build
+`problem131_reconstruction_arxiv.tex` (article class, 46 pages)
 adds the reversible design as a final section. The switch `\ifarxivbuild` is set in each
 top-level file.
 
@@ -81,9 +82,9 @@ top-level file.
   than `sec_reversible.tex`, and `bib_switching.tex` (or a single flattened .tex), and the PDF.
 - Highlights (optional), for a separate file `highlights.txt`.
   - The Donsker-Varadhan functional fixes exactly the principal minors of -Q
-  - Generators with given minors form a finite set, Q and Q* when there is no cut
-  - The first-order mode of the killed counts keeps exactly the same minors
+  - The exact occupation law at one time fixes the law at every time
+  - From the stationary start it fixes Q up to reversal for d <= 4 and generically
+  - Reversing a memoryless block keeps the stationary occupation law
   - The functionals determine every depth and the Freidlin-Wentzell cycle tree
-  - A threshold design fixed in advance reads the cycle tree at low temperature
 - Competing interests and funding through the declarations tool, consistent with the sections at
   the end of the manuscript.

@@ -1,0 +1,509 @@
+\section{The exact occupation law}\label{sec:exactlaw}
+
+This section answers the question of Section~\ref{sec:intro} at its first resolution, the exact
+law, and proves Theorem~\ref{thm:law}. We work in continuous time and transfer the results to the
+counts of $I+hQ$ at the end of Section~\ref{sec:law-reductions}. The law at one time contains the
+principal minors (Theorem~\ref{thm:one-horizon}), so it determines everything that $J_V$
+determines. It determines $Q$ from a generic start (Theorem~\ref{thm:generic-start}). From the
+stationary start it determines $Q$ up to time reversal in the cases of
+Theorem~\ref{thm:stationary-law}, and Section~\ref{sec:law-cuts} shows that it does not do so in
+general.
+
+\subsection{Reductions}\label{sec:law-reductions}
+
+Let $(\xi_t)_{t\ge0}$ be the chain with generator $Q$ and start $\mu$, and let
+$O(T)\in[0,T]^d$ be its vector of occupation times,
+$O_i(T)=\int_0^T\ones\{\xi_t=i\}\,dt$. For $x\in\mathbb C^d$ put
+\[
+ F^\mu_Q(x)=\mu\bigl(\operatorname{diag}x-Q\bigr)^{-1}\ones ,\qquad F_Q=F^\pi_Q
+ \quad\text{when $Q$ is irreducible,}
+\]
+a rational function of $x$. We write $W=\operatorname{diag}w$ for $w\in\R^d$, $D=D_\pi$ for the
+diagonal matrix of $\pi$, and $\Sigma_m=DQ^m+(DQ^m)^\top$ for $m\ge0$.
+
+\begin{lemma}[reductions]\label{lem:reductions}
+Let $Q$ be a generator and $\mu$ a start.
+\begin{enumerate}[(a)]
+\item $\E_\mu e^{-w\cdot O(T)}=\mu e^{T(Q-W)}\ones$ for $w\in\R^d$. The laws of $O(T)$ for all
+$T\ge0$ determine $F^\mu_Q$, and $F^\mu_Q$ determines them.
+\item Let $h>0$ with $hq_{\max}\le1$, and let $n(N)$ be the composition of $X_1,\dots,X_N$, where
+$X_1\sim\mu$ and the transition matrix is $I+hQ$. For small $|y|$ and nonzero $z\in\mathbb C^d$,
+\[
+ \sum_{N\ge1}y^N\,\E_\mu\prod_iz_i^{n_i(N)}=h^{-1}F^\mu_Q(x),\qquad x_i=\frac{1/(yz_i)-1}h .
+\]
+So at a fixed $h$ the laws of $n(N)$ for all $N\ge1$ determine $F^\mu_Q$, and $F^\mu_Q$
+determines them.
+\item If $Q$ is irreducible, then
+\[
+ \E_\pi\bigl[O(T)O(T)^\top\bigr]=\sum_{m\ge0}\frac{T^{m+2}}{(m+2)!}\,\Sigma_m .
+\]
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) The function $u(T)=\E_\cdot\,e^{-w\cdot O(T)}$ solves $u'=(Q-W)u$ with $u(0)=\ones$, by the
+Feynman and Kac formula, which for a finite chain is the backward equation. For real $s$ larger
+than the real parts of the spectrum of $Q-W$,
+$\int_0^\infty e^{-sT}\mu e^{T(Q-W)}\ones\,dT=\mu(sI-Q+W)^{-1}\ones=F^\mu_Q(s\ones+w)$. The law of
+$O(T)$ lives on $[0,T]^d$, so it is determined by its Laplace transform on $\R^d$. Hence the laws
+for all $T$ give the continuous functions $T\mapsto\mu e^{T(Q-W)}\ones$, these give $F^\mu_Q$ on
+a nonempty open subset of $\R^d$, and a rational function is determined there. Conversely, for each
+$w$ the function $s\mapsto F^\mu_Q(s\ones+w)$ for large $s$ is the Laplace transform of
+$T\mapsto\mu e^{T(Q-W)}\ones$, which it determines.
+
+(b) With $Z=\operatorname{diag}z$ and $P=I+hQ$ we have $\E_\mu\prod_iz_i^{n_i(N)}=\mu Z(PZ)^{N-1}\ones$.
+Summing the geometric series gives $\mu\,yZ(I-yPZ)^{-1}\ones=\mu\bigl((yZ)^{-1}-P\bigr)^{-1}\ones$,
+and $(yZ)^{-1}-I-hQ=h(\operatorname{diag}x-Q)$. The laws for all $N$ give the power series, hence
+$F^\mu_Q$ on an open set of $x$, since $z\mapsto x$ is open for fixed $y$. Conversely $F^\mu_Q$ gives
+the power series.
+
+(c) By stationarity, with $P(r)=e^{rQ}=\sum_mr^mQ^m/m!$,
+\[
+ \E_\pi[O_i(T)O_j(T)]=\int_0^T(T-r)\bigl(\pi_iP_{ij}(r)+\pi_jP_{ji}(r)\bigr)\,dr,\qquad
+ \int_0^T(T-r)\frac{r^m}{m!}\,dr=\frac{T^{m+2}}{(m+2)!}. \qedhere
+\]
+\end{proof}
+
+By (a) and (b), each result of this section that assumes equal laws of $O(T)$ for all $T$, or at
+one $T$ (which is the same by Theorem~\ref{thm:one-horizon}), holds verbatim for equal laws of
+the counts of $I+hQ$ for all $N$ at one fixed $h$. Since $\Sigma_0=2D$, the second moments of
+$O(T)$ to order $T^k$ are $\pi$ together with $\Sigma_1,\dots,\Sigma_{k-2}$.
+
+\subsection{One time determines every time}\label{sec:law-one-time}
+
+Put $\mathcal P(s,w)=\det(sI-Q+W)$. In the variables $(s,s\ones+w)$ it is the polynomial
+$R_V(-(s\ones+w))$ of Section~\ref{sec:perron-branch}, which does not involve $s$. So if $Q$ is
+irreducible, $\mathcal P$ is irreducible over $\mathbb C$ by Lemma~\ref{lem:RF-irreducible}, and it
+is monic of degree $d$ in $s$.
+
+\begin{lemma}[vanishing on a graph]\label{lem:graph}
+Let $\mathcal P\in\mathbb C[s,w]$ be irreducible and monic in $s$ of degree $d\ge1$. Let
+$U\subseteq\R^d$ be nonempty and open, and let $\theta$ be a function on $U$ with
+$\mathcal P(\theta(w),w)=0$. If $\mathcal R\in\mathbb C[s,w]$ and $\mathcal R(\theta(w),w)=0$ for
+all $w\in U$, then $\mathcal P$ divides $\mathcal R$.
+\end{lemma}
+
+\begin{proof}
+Divide by the monic $\mathcal P$ in $s$, so $\mathcal R=\mathcal A\mathcal P+\mathcal B$ with
+$\deg_s\mathcal B<d$ and $\mathcal B(\theta(w),w)=0$ on $U$. Suppose $\mathcal B\ne0$. Then
+$\mathcal P$ does not divide $\mathcal B$, so by Gauss's lemma they have no common factor over
+$\mathbb C(w)$, and the resultant $\rho=\operatorname{Res}_s(\mathcal P,\mathcal B)\in\mathbb C[w]$
+is not zero. Since $\mathcal P$ is monic, $\rho(w)$ is the product of $\mathcal B(\sigma,w)$ over
+the roots $\sigma$ of $\mathcal P(\cdot,w)$, and one of them is $\theta(w)$. So $\rho$ vanishes on
+$U$, which is impossible for a nonzero polynomial.
+\end{proof}
+
+\begin{theorem}[one time]\label{thm:one-horizon}
+Let $Q$ be an irreducible generator and $Q'$ any generator on $[d]$, with starts $\mu$ and $\mu'$.
+If $O(T_0)$ has the same law under $(Q,\mu)$ and under $(Q',\mu')$ for one $T_0>0$, then $-Q'$
+has the principal minors of $-Q$, so $Q'$ is irreducible, and $F^{\mu'}_{Q'}=F^\mu_Q$. So the laws
+agree at every $T$.
+\end{theorem}
+
+The idea is to read the exponential of the leading eigenvalue of $Q-W$ off the Laplace
+transform at one time, as $w$ grows along a ray. Its exponent is algebraic in $w$, and the
+exponential of a nonconstant algebraic function is not algebraic. So the leading eigenvalues of
+the 2 generators agree up to a constant, and the constant is $0$.
+
+\begin{proof}
+\emph{Step 1, the data.} By Lemma~\ref{lem:reductions}(a) the hypothesis says
+$\mu e^{T_0(Q-W)}\ones=\mu'e^{T_0(Q'-W)}\ones$ for all $w\in\R^d$.
+
+\emph{Step 2, one exponential.} Let $q=\max(q_{\max},q'_{\max})>0$, and for $v\in\R^d$ with
+distinct entries let $\delta(v)$ be the least distance between 2 of them. By the theorem of
+Gershgorin the eigenvalues of $V-\epsilon Q$, $V=\operatorname{diag}v$, lie within $2|\epsilon|q$
+of the entries of $v$. So for $|\epsilon|<\epsilon_0(v)=\delta(v)/(4q)$ they are simple, given by
+analytic functions $\kappa_i(\epsilon)$ with $\kappa_i(0)=v_i$, and so are their spectral
+projectors $E_i(\epsilon)$. The same holds for $Q'$. Fix $v^0$ with distinct entries and $v^0_1$
+the smallest, and a ball $\mathcal B$ around $v^0$ whose closure consists of such vectors. Then
+$\epsilon_*=\min\epsilon_0>0$ on $\mathcal B$, because $\delta$ is continuous and positive on the
+closure. This is what makes the set $U$ below open.
+
+For $v\in\mathcal B$ and $t>1/\epsilon_*$ the eigenvalues of $Q-tV$ are $-t\kappa_i(1/t)$ and
+\[
+ e^{T_0tv_1}\mu e^{T_0(Q-tV)}\ones=\phi_v(1/t)+O(e^{-T_0t\delta(v)/2}),\qquad
+ \phi_v(\epsilon)=\mu E_1(\epsilon)\ones\,\exp\Bigl(-T_0\,\frac{\kappa_1(\epsilon)-v_1}{\epsilon}\Bigr),
+\]
+where $\phi_v$ is analytic for $|\epsilon|<\epsilon_*$. With $\phi'_v$ formed from $Q'$ and
+$\mu'$, Step 1 gives $\phi_v(\epsilon)-\phi'_v(\epsilon)=O(e^{-c/\epsilon})$ as $\epsilon\downarrow0$.
+Every Taylor coefficient of $\phi_v-\phi'_v$ at $0$ is therefore $0$, and $\phi_v=\phi'_v$. On the
+open cone $U=\{tv\mid v\in\mathcal B,\ t>1/\epsilon_*\}$ let $\theta(w)$ be the eigenvalue of $Q-W$
+within $2q$ of $-w_1$, which is simple and real since its conjugate is also an eigenvalue there,
+and let $\chi(w)=\mu E(w)\ones$ with $E(w)$ its spectral projector. Define $\theta'$ and $\chi'$
+from $Q'$ and $\mu'$. We have shown that
+\begin{equation}\label{eq:one-exponential}
+ \chi(w)\,e^{T_0\theta(w)}=\chi'(w)\,e^{T_0\theta'(w)},\qquad w\in U .
+\end{equation}
+
+\emph{Step 3, the residue.} Write $\mu(sI-Q+W)^{-1}\ones=\mathcal N_\mu/\mathcal P$ with
+$\mathcal N_\mu=\mu\operatorname{adj}(sI-Q+W)\ones$. Then
+$\chi=\mathcal N_\mu(\theta,w)/\partial_s\mathcal P(\theta,w)$, the residue at the simple pole
+$s=\theta(w)$. The polynomial $\mathcal N_\mu$ has degree $d-1$ in $s$ and leading coefficient
+$\mu\cdot\ones=1$, so $\mathcal P$ does not divide it, and by Lemma~\ref{lem:graph}
+$\mathcal N_\mu(\theta(w),w)$ does not vanish identically on any open subset of $U$. So there is a
+ball $U_1\subseteq U$ on which $\chi\ne0$, and then $\chi'\ne0$ by~\eqref{eq:one-exponential}.
+
+\emph{Step 4, transcendence.} Fix $w^0\in U_1$ and $\zeta\in\R^d$, and put
+$f(r)=T_0(\theta'-\theta)(w^0+r\zeta)$ and $g(r)=(\chi/\chi')(w^0+r\zeta)$ for real $r$ near $0$.
+Both are real-analytic, and both are algebraic over $\mathbb C(r)$, since $\theta$ and $\theta'$
+are roots of polynomials in $s$ with coefficients in $\mathbb C[r]$, and $\chi$, $\chi'$ are
+rational in them and $r$. By~\eqref{eq:one-exponential}, $e^f=g$. We claim that $f$ is constant.
+The field $\mathbb C(r,f,g)$ is the field of meromorphic functions of a compact Riemann surface,
+on which $f$ and $g$ are meromorphic, and $e^f=g$ continues to the surface minus the poles of $f$
+and $g$. If $f$ were not constant it would have a pole $p$, with $f=a\tau^{-k}(1+O(\tau))$, $a\ne0$,
+$k\ge1$, in a local coordinate $\tau$ at $p$. Along the directions where $a\tau^{-k}>0$ the
+function $|e^f|$ grows faster than every power of $1/|\tau|$, while $g$ is meromorphic at $p$.
+So $f$ is constant. As $\zeta$ is arbitrary, the gradient of $\theta'-\theta$ vanishes on $U_1$,
+and $\theta'=\theta+c$ there for a real constant $c$.
+
+\emph{Step 5, the minors.} Put $\mathcal P'(s,w)=\det(sI-Q'+W)$. The polynomial
+$\mathcal P'(s+c,w)$ vanishes at $s=\theta(w)$ for every $w\in U_1$. This holds only for real $w$,
+and Lemma~\ref{lem:graph} turns it into an identity of polynomials. It gives that $\mathcal P$
+divides $\mathcal P'(s+c,w)$, and both are monic of degree $d$ in $s$, so they are equal. At $s=0$
+this says that $-Q'+cI$ and $-Q$ have the same principal minors, and at $w=0$ that the spectrum
+of $Q'$ is that of $Q$ shifted by $c$. Every eigenvalue of a generator has real part at most $0$.
+Since $0$ is an eigenvalue of $Q'$, $-c$ is one of $Q$, so $c\ge0$, and since $0$ is an eigenvalue
+of $Q$, $c$ is one of $Q'$, so $c\le0$. Hence $c=0$, $-Q'$ has the principal minors of $-Q$, and
+$Q'$ is irreducible by Corollary~\ref{thm:nonreversible}(a).
+
+\emph{Step 6, the transforms.} Now $\mathcal P'=\mathcal P$, $\theta'=\theta$, and $\chi=\chi'$ on
+$U_1$ by~\eqref{eq:one-exponential}. So $\mathcal N_\mu-\mathcal N'_{\mu'}$ vanishes at
+$s=\theta(w)$ on $U_1$, and by Lemma~\ref{lem:graph} it is divisible by $\mathcal P$. Its degree
+in $s$ is less than $d$, so it is $0$. Hence $F^\mu_Q(s\ones+w)=F^{\mu'}_{Q'}(s\ones+w)$, and
+Lemma~\ref{lem:reductions}(a) gives the laws at every $T$.
+\end{proof}
+
+\subsection{A generic start}\label{sec:law-generic}
+
+For a generator $Q$ put $v_Q(x)=(\operatorname{diag}x-Q)^{-1}\ones$, a vector of rational
+functions, so that $F^\mu_Q=\mu\cdot v_Q$. Let $\mathrm{Fib}(Q)$ be the finite set of generators with
+the principal minors of $-Q$ (Corollary~\ref{thm:nonreversible}).
+
+\begin{theorem}[a generic start]\label{thm:generic-start}
+Let $Q$ be irreducible. For $Q'\in\mathrm{Fib}(Q)\setminus\{Q\}$ the set
+$Z_{Q'}=\{\mu\in\R^d\mid\mu\cdot(v_{Q'}-v_Q)=0\}$ is a proper linear subspace. Let $Z$ be their
+union. If $\mu$ is a start outside $Z$ and $Q'$ is a generator such that $O(T_0)$ has the same law
+under $(Q,\mu)$ and $(Q',\mu)$ for one $T_0>0$, then $Q'=Q$. The set $Z$ meets the simplex in a
+closed nowhere dense set of measure zero, and $\mu$ need not have full support.
+\end{theorem}
+
+\begin{proof}
+With $m_i=1/x_i$, the expansion $(\operatorname{diag}x-Q)^{-1}=\sum_{k\ge0}(\operatorname{diag}m\,Q)^k\operatorname{diag}m$
+for large $x$ gives $v_Q=m+\operatorname{diag}m\,Qm+O(|m|^3)$. The coefficient of $m_im_j$ in the
+component $i$ is $q_{ij}$, also for $j=i$. So $v_Q$ determines $Q$, $v_{Q'}\ne v_Q$, and $Z_{Q'}$ is
+proper. Under the hypothesis, Theorem~\ref{thm:one-horizon} puts $Q'$ in $\mathrm{Fib}(Q)$ and
+gives $\mu\cdot v_{Q'}=\mu\cdot v_Q$, so $Q'=Q$ or $\mu\in Z_{Q'}$. A proper subspace cannot
+contain the hyperplane $\{\mu\cdot\ones=1\}$, which spans $\R^d$. So each $Z_{Q'}$ meets it in a
+proper affine subspace or not at all, and there are finitely many.
+\end{proof}
+
+The stationary law lies in $Z_{Q^*}$ when $Q^*\ne Q$, by Theorem~\ref{thm:stationary-law} below.
+Proposition~\ref{prop:amplitudes}(b) separates the fiber by the constants of the local law, and
+Theorem~\ref{thm:generic-start} by the exact law at one time.
+
+\subsection{Second moments}\label{sec:law-moments}
+
+Let $Q$ be irreducible, let $e$ have the entries $e_i=\pi_i^{1/2}$, and put $G=D^{1/2}QD^{-1/2}$, so that $Ge=0=e^\top G$ and
+the time reversal $Q^*$ corresponds to $G^\top$. Write $S=(G+G^\top)/2$ and $K=(G-G^\top)/2$,
+so $Ke=0$. Then $\Sigma_m=2D^{1/2}\operatorname{sym}(G^m)D^{1/2}$, where
+$\operatorname{sym}A=(A+A^\top)/2$. A word in $S$ and $K$ is symmetric or antisymmetric according
+to the parity of the number of letters $K$. So
+\begin{equation}\label{eq:sym-powers}
+ \operatorname{sym}G=S,\qquad\operatorname{sym}G^2=S^2+K^2,\qquad
+ \operatorname{sym}G^3=S^3+SK^2+K^2S+KSK .
+\end{equation}
+The matrix $K^2$ is symmetric and negative semidefinite. If a nonzero eigenvalue $-\sigma^2$ of
+$K^2$ has multiplicity $2$, its eigenplane $E$ is invariant under $K$, which acts on it as $\pm\sigma$
+times a rotation by a right angle. Let $P_E$ be the orthogonal projection on $E$.
+
+\begin{theorem}[second moments]\label{thm:second-moments}
+Let $Q$ be irreducible with stationary law $\pi$, and let $Q'$ be a generator with $\pi Q'=0$.
+\begin{enumerate}[(i)]
+\item If $d\le4$ and $\Sigma'_m=\Sigma_m$ for $m=1,2$, then $Q'$ is $Q$ or $Q^*$.
+\item Suppose that every nonzero eigenvalue of $K^2$ has multiplicity exactly $2$, and that the
+graph on the eigenplanes, with an edge between $E$ and $E'$ when $P_ESP_{E'}\ne0$, is connected.
+If $\Sigma'_m=\Sigma_m$ for $m=1,2,3$, then $Q'$ is $Q$ or $Q^*$.
+\item The hypothesis of \textup{(ii)} holds for all generators with positive rates outside a
+relatively closed nowhere dense set of measure zero. For each $\pi$ the same holds inside the
+generators with positive rates and stationary law $\pi$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Define $G'$, $S'$ and $K'$ from $Q'$ with the same $D$, so $G'e=0=e^\top G'$ and $K'e=0$. By
+\eqref{eq:sym-powers} the data give $S'=S$ and $K'^2=K^2$, and in (ii) also $K'SK'=KSK$. For real
+antisymmetric $K'$ and every $y$ we have $|K'y|^2=-y^\top K'^2y=-y^\top K^2y$, so $K'$ vanishes on
+the kernel of $K^2$. It commutes with $K'^2=K^2$, so it maps each eigenspace of $K^2$ to itself.
+
+(i) Both $K$ and $K'$ act on $e^\perp$, of dimension $d-1\le3$, so they have rank at most $2$. If
+$K=0$, then $K'=0$. Otherwise $K^2$ has one nonzero eigenvalue $-\sigma^2$ with an eigenplane $E$,
+and on $E$ both $K$ and $K'$ are $\pm\sigma$ times the same rotation, since an
+antisymmetric map of a plane with square $-\sigma^2I$ is $\pm\sigma$ times the rotation by a right
+angle. So $K'=\pm K$.
+
+(ii) By the same argument $K'=\epsilon_EK$ on each eigenplane $E$, with $\epsilon_E=\pm1$. Then
+$P_EK'SK'P_{E'}=\epsilon_E\epsilon_{E'}\,KP_ESP_{E'}K$ and $P_EKSKP_{E'}=KP_ESP_{E'}K$. Since $K$ is
+invertible on $E$ and on $E'$, $P_ESP_{E'}\ne0$ forces $\epsilon_E=\epsilon_{E'}$. By connectedness
+$K'=\pm K$.
+
+In both cases $G'=S\pm K\in\{G,G^\top\}$, and $Q'=D^{-1/2}G'D^{1/2}$ is $Q$ or
+$D^{-1}Q^\top D=Q^*$.
+
+(iii) Let $r=\lfloor(d-1)/2\rfloor$. Since $K$ is antisymmetric with $Ke=0$,
+$\det(tI-K)=t^{d-2r}\psi(t^2)$ with $\psi$ monic of degree $r$, whose coefficients are polynomials
+in $G$. If the discriminant of $\psi$ and $\psi(0)$ do not vanish, the roots $u_1,\dots,u_r$ of
+$\psi$ are distinct and negative, and they are the nonzero eigenvalues of $K^2$, each with an
+eigenplane $E_k$ and the projection
+$P_k=(K^2/u_k)\prod_{j\ne k}(K^2-u_j)/(u_k-u_j)$. The product
+$\prod_{k<l}\operatorname{tr}(P_kSP_lS)$, multiplied by $\bigl(\prod_ku_k\psi'(u_k)\bigr)^{r-1}$, is
+a symmetric polynomial in $u_1,\dots,u_r$ with coefficients polynomial in $G$, hence a polynomial
+in $G$. Where it and the first 2 do not vanish, every 2 eigenplanes are coupled, since
+$\operatorname{tr}(P_kSP_lS)=\|P_kSP_l\|^2$. So the hypothesis of (ii) fails only on the zero set
+of a polynomial $\Phi$ in $G$. On irreducible generators $\pi$ is a positive rational function
+of $Q$, so $Q\mapsto\Phi(G)$ is real-analytic on the convex open set of generators with positive
+rates. The zero set of a real-analytic function on a connected open set that is not identically
+zero is closed, nowhere dense and of measure zero, and inside the slice of a fixed $\pi$ the map
+$Q\mapsto G$ is linear. So it suffices to give, for each $\pi$, one generator with positive rates
+and stationary law $\pi$ with $\Phi\ne0$.
+
+Let $f_1,\dots,f_{d-1}$ be an orthonormal basis of $e^\perp$, put $u=\sum_if_i$, and take
+\[
+ G=-(I-ee^\top)+\epsilon\,uu^\top+\delta\sum_{k=1}^r\sigma_k\bigl(f_{2k}f_{2k-1}^\top-f_{2k-1}f_{2k}^\top\bigr)
+\]
+with distinct $\sigma_k>0$ and small $\epsilon,\delta>0$. Then $Ge=0=e^\top G$, the off-diagonal
+entries are close to $e_ie_j>0$, and $Q=D^{-1/2}GD^{1/2}$ is a generator with positive rates and
+stationary law $\pi$. The eigenplanes of $K^2$ are spanned by $f_{2k-1},f_{2k}$, with the distinct
+eigenvalues $-\delta^2\sigma_k^2$. The first term is $-I$ on $e^\perp$, so for $k\ne l$
+$P_kSP_l=\epsilon(f_{2k-1}+f_{2k})(f_{2l-1}+f_{2l})^\top\ne0$.
+\end{proof}
+
+\subsection{The stationary start}\label{sec:law-stationary}
+
+\begin{theorem}[the stationary start]\label{thm:stationary-law}
+Let $Q$ and $Q'$ be irreducible, and let $O(T_0)$ have the same law under $Q$ and $Q'$, each
+started from its stationary law, for one $T_0>0$. Then $Q'$ is $Q$ or $Q^*$ in each of the
+following cases.
+\begin{enumerate}[(i)]
+\item $d\le4$.
+\item $Q$ has no cut.
+\item $Q$ satisfies the hypothesis of Theorem~\ref{thm:second-moments}(ii).
+\end{enumerate}
+In cases (i) and (iii) the first and second moments of $O(T)$ to order $T^4$, respectively $T^5$,
+suffice. Conversely, $O(T)$ has the same stationary law under $Q^*$ as under $Q$ for every $T$.
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:one-horizon} the laws agree at every $T$. The first moments $T\pi$ and $T\pi'$
+give $\pi'=\pi$, and Lemma~\ref{lem:reductions}(c) gives $\Sigma'_m=\Sigma_m$ for every $m$. Cases
+(i) and (iii) are Theorem~\ref{thm:second-moments}, which uses only the moments named. In case
+(ii) Theorem~\ref{thm:one-horizon} gives the principal minors, and
+Corollary~\ref{thm:nonreversible}(b) gives $Q'\in\{Q,Q^*\}$. For the converse,
+$F_{Q^*}(x)=\pi D^{-1}(\operatorname{diag}x-Q^\top)^{-1}D\ones=\ones^\top(\operatorname{diag}x-Q^\top)^{-1}\pi^\top=F_Q(x)$.
+\end{proof}
+
+The four-state cut-transpose $Q'$ after Corollary~\ref{thm:nonreversible} has the principal minors
+and the stationary law of $Q$, and it is neither $Q$ nor $Q^*$. So by
+Theorem~\ref{thm:stationary-law}(i) the stationary laws of $O(T)$ differ. In fact
+$\pi(Q-W)^n\ones$ agrees for $n=1,2$, and
+\[
+ \pi(Q-W)^3\ones-\pi(Q'-W)^3\ones=\frac{29(w_1-w_2)(w_3-w_4)}{9673}
+ =\frac12\,w^\top(\Sigma_1-\Sigma'_1)w ,
+\]
+so the symmetrized fluxes already differ.
+
+\begin{remark}[one fixed $N$]\label{rem:one-N}
+For the counts of $I+hQ$ from $\pi$ at one fixed $N$, the same computation as in
+Lemma~\ref{lem:reductions}(c), with
+\[
+ P^r=\sum_k\binom rkh^kQ^k\qquad\text{and}\qquad\sum_{r}(N-r)\binom rk=\binom{N+1}{k+2},
+\]
+gives
+\[
+ \E_\pi[nn^\top]=N^2D+\sum_{k=1}^{N-1}h^k\binom{N+1}{k+2}\Sigma_k .
+\]
+The term $N^2D$ collects the diagonal $ND$ and the $k=0$ terms $N(N-1)D$. With $\E_\pi n=N\pi$,
+the laws at one $N$ for $N-1$ distinct values of $h$ give $\pi$ and $\Sigma_1,\dots,\Sigma_{N-1}$.
+So for $N\ge3$ they determine $Q$ up to time reversal when $d\le4$, and for $N\ge4$ under the
+hypothesis of Theorem~\ref{thm:second-moments}(ii). One $N$ is not enough in general. At $N=2$
+the law is $\pi_i(1-hq_i)$ on $2e_i$ and $h(\pi_iq_{ij}+\pi_jq_{ji})$ on $e_i+e_j$. On 3 states
+with the uniform stationary law, $Q_k=S+kC$ with $S$ symmetric with off-diagonal entries at least
+$1$ and $C$ the unit circulation on the 3-cycle is a generator for $|k|<1$, and its law at $N=2$
+does not depend on $k$ for any $h$. Since $Q_k^*=Q_{-k}$, 2 of them with different $|k|$ are
+neither equal nor time reversals of each other. We do not know what one pair $(N,T)$
+determines.
+\end{remark}
+
+\subsection{Cuts, balanced sides and memoryless blocks}\label{sec:law-cuts}
+
+Let $Q$ be irreducible with a cut $[d]=X\cup Y$, and write $Q[X,Y]=ab^\top$ and $Q[Y,X]=cu^\top$
+with $a,b,c,u\ge0$, as in~\eqref{eq:cut-transpose} with $C=-Q$. Replacing $(a,b)$ by $(ta,b/t)$
+we may assume $\pi_X\cdot a=u\cdot\ones$. Let $D_Y$ be the diagonal matrix of $\pi_Y$, let
+$R_X=(\operatorname{diag}x_X-Q_X)^{-1}$ and $R_Y=(\operatorname{diag}x_Y-Q_Y)^{-1}$, and put
+\[
+\begin{aligned}
+ p_1&=\pi_XR_Xa, & p_2&=u^\top R_X\ones, & \alpha&=u^\top R_Xa, & E_X&=\pi_XR_X\ones,\\
+ q_1&=b^\top R_Y\ones, & q_2&=\pi_YR_Yc, & \beta&=b^\top R_Yc, & E_Y&=\pi_YR_Y\ones .
+\end{aligned}
+\]
+
+\begin{proposition}[gluing across a cut]\label{prop:gluing}
+In this setting $b\cdot\ones=\pi_Y\cdot c$. The generator point $Q'$ of the cut-transpose of $-Q$
+across $X$ is given by $Q'_X=Q_X$, $Q'[X,Y]=a(D_Yc)^\top$, $Q'[Y,X]=D_Y^{-1}bu^\top$ and
+$Q'_Y=Q^*_Y$, and it has the stationary law $\pi$. Moreover
+\[
+ F_Q=E_X+E_Y+\frac{p_1q_1+p_2q_2+\alpha q_1q_2+\beta p_1p_2}{1-\alpha\beta},\qquad
+ F_Q-F_{Q'}=\frac{(p_1-p_2)(q_1-q_2)}{1-\alpha\beta}.
+\]
+\end{proposition}
+
+\begin{proof}
+The rows $X$ and $Y$ of $Q\ones=0$ give $Q_X\ones=-(b\cdot\ones)a$ and $Q_Y\ones=-(u\cdot\ones)c$.
+The columns $X$ and $Y$ of $\pi Q=0$ give $\pi_XQ_X=-(\pi_Y\cdot c)u^\top$ and
+$\pi_YQ_Y=-(\pi_X\cdot a)b^\top$. Applying the first and third to $\pi_X$ and $\ones$ gives
+$(b\cdot\ones)(\pi_X\cdot a)=(\pi_Y\cdot c)(u\cdot\ones)$, hence $b\cdot\ones=\pi_Y\cdot c$. With
+these 4 identities the rows of $Q'$ sum to $0$ and $\pi Q'=0$. For instance the rows $Y$ give
+$D_Y^{-1}\bigl((u\cdot\ones)b+Q_Y^\top\pi_Y^\top\bigr)=0$. The off-diagonal entries of $Q'$ are
+nonnegative, and $-Q'=E^{-1}C'E$ for the cut-transpose $C'$ of~\eqref{eq:cut-transpose} and
+$E=\operatorname{diag}(I_X,D_Y)$. So $Q'$ is the generator point of $C'$.
+
+For $x$ with large entries, $\operatorname{diag}x-Q=K_0-UV^\top$ with
+$K_0=\operatorname{diag}(R_X^{-1},R_Y^{-1})$ and the $d\times2$ matrices
+\[
+ U=\begin{pmatrix}a&0\\0&c\end{pmatrix},\qquad V=\begin{pmatrix}0&u\\b&0\end{pmatrix},\qquad
+ \text{so that}\qquad V^\top K_0^{-1}U=\begin{pmatrix}0&\beta\\\alpha&0\end{pmatrix}.
+\]
+Also $\pi K_0^{-1}U=(p_1,q_2)$ and $V^\top K_0^{-1}\ones=(q_1,p_2)^\top$, and the formula of Sherman,
+Morrison and Woodbury gives the first identity. For $Q'$ the factors are $(a,D_Yc,D_Y^{-1}b,u)$,
+which satisfy the same normalization, and $(\operatorname{diag}x_Y-Q^*_Y)^{-1}=D_Y^{-1}R_Y^\top D_Y$.
+So $Q'$ has the same $p_1,p_2,\alpha,E_X$, the same $\beta$ and $E_Y$, and $q_1$ and $q_2$
+exchanged. Subtracting gives the second identity.
+\end{proof}
+
+We call the side $X$ \emph{balanced} if $p_1=p_2$ as rational functions. This does not depend on
+the choice of the factors, since the normalization ties the scale of $a$ to that of $u$.
+
+\begin{corollary}[the balance criterion]\label{cor:balance}
+The generator point of the cut-transpose of $-Q$ across $X$ gives the same stationary law of
+$O(T)$ as $Q$, for one $T>0$ or equivalently for all $T$, if and only if $X$ or $Y$ is balanced.
+\end{corollary}
+
+\begin{proof}
+Rational functions form an integral domain, and $1-\alpha\beta\to1$ as $x\to\infty$. Apply
+Theorem~\ref{thm:one-horizon} and Lemma~\ref{lem:reductions}(a).
+\end{proof}
+
+\begin{remark}[necessary conditions]\label{rem:balance-necessary}
+Let $X$ be balanced. Expanding $p_1-p_2$ in $m_i=1/x_i$ as in the proof of
+Theorem~\ref{thm:generic-start}, the first order gives $u_i=\pi_ia_i$ for $i\in X$, so the jumps
+into $X$ land in proportion to $\pi_ia_i$. The second order then gives
+$(a_j-a_i)(\pi_iq_{ij}-\pi_jq_{ji})=0$ for $i\ne j$ in $X$. So an edge of $X$ that is not in
+detailed balance joins 2 states with the same rate of leaving $X$. If $|X|=2$, either $a_1\ne a_2$
+and the edge is in detailed balance, or $a_1=a_2$, and then $Q_X+(b\cdot\ones)a_1I$ is a
+generator on 2 states with stationary law proportional to $\pi_X$, hence reversible. In both cases
+$Q^*_X=Q_X$.
+\end{remark}
+
+\begin{definition}[memoryless block]\label{def:memoryless}
+A set $B$ of states with $2\le|B|\le d-1$ is a \emph{memoryless block} of the irreducible $Q$ if
+there are $\kappa>0$, a law $\nu$ on $B^c$ and $c\in[0,\infty)^{B^c}$ such that
+$q_{iy}=\kappa\nu_y$ and $q_{yi}=c_y\pi_i/\pi(B)$ for all $i\in B$ and $y\notin B$. That is, every
+state of $B$ leaves $B$ at the same rate and with the same landing law, and every jump into $B$
+lands with the law $\pi_B/\pi(B)$. We write $Q^{[B]}$ for $Q$ with the block $Q_B$ replaced by
+$Q^*_B=D_B^{-1}Q_B^\top D_B$, where $D_B$ is the diagonal matrix of $\pi_B$, and the other entries
+kept.
+\end{definition}
+
+\begin{theorem}[reversal of a memoryless block]\label{thm:memoryless}
+Let $B$ be a memoryless block of the irreducible $Q$. Then $Q^{[B]}$ is an irreducible generator
+with stationary law $\pi$, and $F_{Q^{[B]}}=F_Q$. So $O(T)$ has the same stationary law under $Q$
+and $Q^{[B]}$ for every $T$, and so do the counts of $I+hQ$ and $I+hQ^{[B]}$ for every $N$ and every
+admissible $h$. Moreover $Q^{[B]}=Q$ exactly when $Q^*_B=Q_B$, which holds when $|B|=2$, and
+$Q^{[B]}=Q^*$ when $|B^c|=1$.
+\end{theorem}
+
+\begin{proof}
+Put $\rho=\pi_B/\pi(B)$, so $Q[B,B^c]=\kappa\ones\nu^\top$ and $Q[B^c,B]=c\rho$. The flux out of
+$B$ equals the flux in, so $\kappa\pi(B)=\sum_y\pi_yc_y$. The columns $B$ of $\pi Q=0$ then give
+$\pi_BQ_B=-\kappa\pi_B$, and the rows give $Q_B\ones=-\kappa\ones$. Hence
+$Q^*_B\ones=D_B^{-1}Q_B^\top\pi_B^\top=-\kappa\ones$, so the rows of $Q^{[B]}$ sum to $0$, and
+$\pi_BQ^*_B=\ones^\top Q_B^\top D_B=-\kappa\pi_B$, which the inflow $\kappa\pi_B$ cancels in the
+columns $B$ of $\pi Q^{[B]}$. The other columns do not change. The off-diagonal entries
+$\pi_jq_{ji}/\pi_i$ of $Q^*_B$ are nonnegative. The generator $Q^{[B]}$ is irreducible. It has the
+same jumps as $Q$ out of $B$, into $B$ and inside $B^c$, and $\kappa>0$ and $c\ne0$ since $Q$ is
+irreducible. Take states $s$ and $t$. If $s\in B$, jump out of $B$ first, which is possible from
+every state of $B$. A path of $Q$ between two states of $B^c$ stays a path of $Q^{[B]}$ when each of
+its sojourns in $B$ is cut to its entry state, since the jumps out of $B$ have the same rates from
+every state of $B$. So we reach every state of $B^c$. If $t\in B$, go to a state $y$ with $c_y>0$
+and jump to $t$, which is possible since $\rho_t>0$.
+
+Solve $(\operatorname{diag}x-Q)z=\ones$ for $x$ with large entries, and put
+$g=\rho(\operatorname{diag}x_B-Q_B)^{-1}\ones$. The rows $B$ give
+$z_B=(1+\kappa\,\nu\cdot z_{B^c})(\operatorname{diag}x_B-Q_B)^{-1}\ones$, so
+$\rho z_B=(1+\kappa\,\nu\cdot z_{B^c})g$. The rows $B^c$ give
+$(\operatorname{diag}x_{B^c}-Q_{B^c}-\kappa g\,c\nu^\top)z_{B^c}=\ones+gc$, and
+$F_Q=\pi(B)(1+\kappa\,\nu\cdot z_{B^c})g+\pi_{B^c}z_{B^c}$. So $F_Q$ depends on $Q_B$ only through
+$g$, and on the other data $\pi$, $\kappa$, $\nu$, $c$ and $Q_{B^c}$, which $Q^{[B]}$ shares. For
+$Q^{[B]}$ the function is
+$\rho D_B^{-1}(\operatorname{diag}x_B-Q_B^\top)^{-1}D_B\ones=\pi_B(\operatorname{diag}x_B-Q_B)^{-1}\ones/\pi(B)=g$.
+Hence $F_{Q^{[B]}}=F_Q$. The statement on the counts is Lemma~\ref{lem:reductions}(b).
+
+If $|B|=2$, then $Q_B+\kappa I$ is a generator on 2 states with stationary law $\rho$, hence
+reversible. If $B^c=\{y\}$, then $q^*_{iy}=\pi_yc_y/\pi(B)=\kappa=q_{iy}$ and
+$q^*_{yi}=\pi_i\kappa/\pi_y=c_y\pi_i/\pi(B)=q_{yi}$, so $Q^{[B]}=Q^*$.
+\end{proof}
+
+The proof is algebraic, and the probability behind it is simple. The sojourns in $B$ have
+exponential lengths of rate $\kappa$ and exit laws that do not depend on what happens inside
+them, and each starts in the law $\rho$, which is stationary for the chain $Q_B+\kappa I$ inside.
+Reversing a stationary path keeps its occupation times, and the moves into and out of $B$ do not
+see the state. The path law does change.
+
+\begin{remark}[memoryless blocks are balanced sides]\label{rem:memoryless-cut}
+If $|B^c|\ge2$, then $B\cup B^c$ is a cut. With $X=B$ the factors of
+Proposition~\ref{prop:gluing} are $a=\ones$, $b=\kappa\nu$, the vector $c/\pi(B)$ in the role of
+$c$, and $u=\pi_B^\top$. They satisfy $\pi_B\cdot a=u\cdot\ones$, and then
+$p_1=p_2=\pi_BR_B\ones$. So $B$ is a balanced side. By Proposition~\ref{prop:gluing}, the
+generator point $Q''$ of the cut-transpose across $B$ has $Q''_B=Q_B$ and $Q''_{B^c}=Q^*_{B^c}$,
+and a direct computation from its blocks gives $(Q'')^*=Q^{[B]}$. So
+Theorem~\ref{thm:memoryless} is a case of Corollary~\ref{cor:balance}, and $Q^{[B]}$ is a generator
+point of the cut-transpose orbit of $-Q$.
+\end{remark}
+
+\begin{example}[five states]\label{ex:five-state}
+Let $d=5$ and $B=\{1,2,3\}$. Inside $B$ put $q_{12}=q_{23}=q_{31}=2$ and $q_{21}=q_{32}=q_{13}=1$.
+Each state of $B$ jumps to $4$ at rate $1$ and to $5$ at rate $2$. State $4$ jumps to each state
+of $B$ at rate $1$ and to $5$ at rate $1$, and state $5$ jumps to each state of $B$ at rate $2$
+and to $4$ at rate $4$. The balance equations give $\pi=(4,4,4,6,3)/21$. So $B$ is a memoryless
+block with $\kappa=3$, $\nu=(1/3,2/3)$ and $c=(3,6)$, and since $\pi_B$ is uniform, $Q^{[B]}$ is $Q$
+with the block $Q_B$ transposed. It differs from $Q$, since $Q_B$ is not reversible, and from
+$Q^*$, since $q^{[B]}_{14}=1$ while $q^*_{14}=\pi_4q_{41}/\pi_1=3/2$. By
+Theorem~\ref{thm:memoryless} the stationary laws of $O(T)$ agree for every $T$, and so do the laws
+of the counts of $I+hQ$ and $I+hQ^{[B]}$ from $\pi$ for every $N$ and every $h\le1/10$. From the
+start $e_1$ the transforms differ. The hypothesis of Theorem~\ref{thm:second-moments}(ii) fails,
+as it must, since the 2 generators have the same $\Sigma_m$ for every $m$. Here $K^2$ has the
+eigenvalues $-7/8$ and $-3/4$, each twice, and $S$ does not couple the 2 eigenplanes.
+\end{example}
+
+By Theorem~\ref{thm:stationary-law}(i) there is no such example with $d\le4$. The stationary law
+of the occupation times therefore determines $Q$ up to time reversal in the cases of
+Theorem~\ref{thm:stationary-law}, and not in general. We expect the reversals of memoryless blocks
+to be the only obstruction.
+
+\begin{conjecture}[the stationary fiber]\label{conj:fiber}
+Let $Q$ be irreducible. An irreducible generator $Q'$ gives the same stationary law of $O(T)$ as
+$Q$ if and only if it is reached from $Q$ or from $Q^*$ by finitely many reversals of memoryless
+blocks, each a memoryless block of the current generator.
+\end{conjecture}
+
+The \emph{if} part holds by Theorems~\ref{thm:memoryless} and~\ref{thm:stationary-law}. The
+\emph{only if} part holds in the cases of Theorem~\ref{thm:stationary-law}, where the fiber is
+$\{Q,Q^*\}$.
+
+\begin{conjecture}[balanced sides]\label{conj:balanced}
+A side $X$ of a cut, with the factors normalized as above, is balanced if and only if $u=D_Xa$, with
+$D_X$ the diagonal matrix of $\pi_X$, and the matrix $(\pi_iq_{ij}-\pi_jq_{ji})_{i,j\in X}$ is a sum
+of matrices each supported on $B\times B$ for a memoryless block $B\subseteq X$ of $Q$.
+\end{conjecture}
+
+Remark~\ref{rem:balance-necessary} proves that $u=D_Xa$ is necessary, and
+Remark~\ref{rem:memoryless-cut} gives the case where $X$ is itself a memoryless block.
