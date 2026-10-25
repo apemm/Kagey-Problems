@@ -2,7 +2,7 @@
 
 Paper F is `paperF/problem131_levy.tex`, the lattice Lévy walk with two run laws. This
 library formalizes the exact identities of Section 2 (`paperF/sec_setting.tex`, Sections 2.4
-and 2.5). It also formalizes the algebraic part of Theorem `thm:inverse`(a)
+and 2.5). It also formalizes the algebraic part of Proposition `thm:inverse`(a)
 (Section 7, `paperF/sec_inverse.tex`). The table cites statement labels, not numbers, since
 the numbers change when statements move. Layout as of October 24, 2026.
 

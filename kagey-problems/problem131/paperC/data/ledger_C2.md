@@ -1,6 +1,6 @@
 # Problem 131 Paper C, topic C2 ledger: complete-graph degeneracy, cycle cascades, two triangles, geometry of winners
 
-Conventions. P_N = I + (T/N)Q, uniform start, n = visit counts of the N-step word, T = tau log N. "Mode type" = the support of the global maximiser of P(n), up to graph symmetry. tau_N := T/log N at a finite-N transition. First-order law assumed: cost_F(tau) = tau*lambda_F + |F| - 1. Code: scratchpad/research131/code/C2_*.py (engine C2_dp.py, checked against an exact-rational brute-force oracle and against cascade.py's cube DP, max relative difference below 1e-15).
+Conventions. P_N = I + (T/N)Q, uniform start, n = visit counts of the N-step word, T = tau log N. "Mode type" = the support of the global maximiser of P(n), up to graph symmetry. tau_N := T/log N at a finite-N transition. First-order law assumed: cost_F(tau) = tau*lambda_F + |F| - 1. Code: research131/code/C2_*.py, a working folder not kept in the repository (engine C2_dp.py, checked against an exact-rational brute-force oracle and against cascade.py's cube DP, max relative difference below 1e-15).
 
 ## 2026-09-25, entry 0: disclosure of computations run before this ledger existed (not pre-registered)
 
@@ -250,7 +250,7 @@ Not tested: A9.1 at N=3000 (too slow).
 
 ## 2026-09-26, erratum and external cells (appended in the C2 repair; the entries above are left as written)
 
-Nothing was run for this entry. It corrects cross-references and records results from the independent verifier's pre-registered ledger (`scratchpad/research131/code/C2_rigor_ledger.md`).
+Nothing was run for this entry. It corrects cross-references and records results from the independent verifier's pre-registered ledger (`research131/code/C2_rigor_ledger.md`, in the same working folder).
 
 - **Cross-reference errata.** Entry 0 item 3 and entry 8 (H2) cite locality as "Prop. C2.7"; in C2.md it is **Prop. C2.8**. The S1 outcome cites the complement mechanism as "Prop. C2.10"; it is **Prop. C2.9** (the bound itself is C2.5(a)). Entry 3 cites the paw's first-order sequence as "Prop. C2.12"; it is **Prop. C2.10**.
 - **Definition behind the "non-nested" counts in entry 7.** The pre-registered wording of S5 says "some winner not contained in a later one". The count reported (d=4: 1, d=5: 7, d=6: 55) comes from `C2_unit_graphs.py`, which uses a stronger notion: phases i < j exist such that no minimiser of phase i is contained in any minimiser of phase j. The verifier's counts under two weaker notions are consistent with this: 8/58 for "no inclusion chain" and 9/68 for "some winner not contained in any next-phase winner". At d=4 the paw is the only example under all three notions, so S5 stands. The 7/55 counts are not independently reproduced.

@@ -4,7 +4,7 @@ Walk on d states. At step t = 1, 2, ..., T: with probability d*th/(d*th + t - 1)
 draw a fresh uniform state, otherwise repeat the previous state. Claim:
 P(counts = m, last state = j) = DM(m; th,...,th) * m_j / T, where DM is the
 Dirichlet-multinomial law (Polya urn with mass th on each colour).
-This is Proposition 2.1 of the note "Exact ties in coin-turning walks". At th = 1
+This is Proposition 2.1 of the note "When the end ties the center in a coin-turning walk". At th = 1
 it is the d-state chain of Theorem 2.4 after its first step.
 """
 from fractions import Fraction as Fr

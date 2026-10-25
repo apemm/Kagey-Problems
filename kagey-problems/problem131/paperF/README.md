@@ -22,15 +22,20 @@ paper.
 
 ## Status
 
-The draft is complete, with every statement proved in the article (October 24, 2026, 53 pages
-after the editing pass). The
-introduction states six theorems, lettered A to F in the order of the sections. Statements are
-numbered by section, and the scripts and the Lean map name them by their TeX labels, which do not
-change when statements move.
+The draft is complete, with every statement proved in the article (October 24, 2026, 55 pages
+after the revision that answers the referee report of October 24, see
+`research_notes/Paper F audits/13_revision_after_referee.md`). The
+main results are five theorems, lettered A to E in the order of the sections, and the
+identification from the ends is Proposition 7.1. Statements are numbered by section, and the
+scripts and the Lean map name them by their TeX labels, which do not change when statements move.
+The label of Proposition 7.1 stays `thm:inverse` for that reason.
 
 - Theorem A (`thm:bulk`, Section 3). For a fresh start, under (RV) and (SPAN),
   `sup_k |B_N P_N(k) - h_N((k-pN)/B_N)| -> 0` over the whole row, `sup_k P_N(k) <= C/B_N`, and the
-  ratio form on `|k-pN| <= K B_N`, for every relation between the two scales.
+  ratio form on `|k-pN| <= K B_N`, for every relation between the two scales. Section 3 opens
+  with what is new (the uniform error and bound over the whole row under (RV) alone) and why it
+  needs work. The classical inputs (`lem:stable`, `lem:kernels`, `lem:small`, the proofs of
+  `lem:rv` and `lem:profile`) are in Appendix A (`sec_appendix.tex`).
 - Theorem B (`thm:bigjump`, Section 4). The boundary layer `P_N(N-j)/T_+(N) -> kappa(j)` under (RV),
   and under (LR) for the plus sign the big-jump kernel `G_N` of `eq:G` on
   `pN + K lambda_N B_N <= k <= N` in the double limit, with a uniform boundary layer. The proof
@@ -39,7 +44,9 @@ change when statements move.
   need for the double limit (`rem:no-single-formula`) and for (LR) (`ex:rv-not-lr`).
 - Theorem C (`thm:preparation`, Section 5). Every preparation: the exact defect in the bulk, the
   bulk criterion `B_n P(D=n) -> 0`, the big-jump zone with the term `Psi_N` and its removal exactly
-  when `nu_+(n) = o(T_+(n))`, the boundary layer with the prepared kernel. The stationary start in
+  when `nu_+(n) = o(T_+(n))` (part (c)), the boundary layer with the prepared kernel (part (d)),
+  and the interior of the big-jump zone with the window condition `W_n` and the explicit target
+  `eq:interior-target` (part (e)). The stationary start in
   closed form (`cor:stationary`), no universal trim (`cor:no-trim`), regularly varying
   preparations (the paragraph after `cor:stationary`). The tightness of the count `lem:prep-tight`
   and the uniform big-jump bound `eq:unif-bigjump` are the tools of Section 5.
@@ -51,8 +58,10 @@ change when statements move.
   `1 <= j <= N^(1-eta)` in part (b), and the interior minimum near the plus end
   at `T_-(j*_N) ~ 2 alpha_+ s/N` when `u_- > 1/mu_-`, asymptotic to the minimizer of
   `u_-(j) + C(j)/N`, and at bounded distance otherwise.
-- Theorem F (`thm:inverse`, Section 7). The boundary layers identify both run laws through the
-  renewal inversion, and the minus end needs the normalization by `T_-(N)` (`rem:thinning`).
+- Proposition 7.1 (`thm:inverse`, Section 7). For a fresh plus start the atoms give the plus law
+  directly (`P_N(N) = T_+(N)`), the plus-end layer gives the minus law through the renewal
+  inversion, and the ratios at the minus end determine the plus law only up to a geometric
+  thinning (`rem:thinning`). Part (b) assumes only `Q_+(N)/T_+(N) -> q`.
 - The exact identities of Section 2 (`prop:fresh-identity`, `prop:first-run`, `lem:green`,
   `prop:final-run` with its explicit form `eq:final-explicit`, `lem:counting`) hold for every `N`
   with no hypothesis. The facts on regular variation are collected in `lem:rv`.
@@ -72,7 +81,8 @@ dated before the pass may still print the old names.
 
 - `problem131_levy.tex`, the main file (class `ejpecp`, in TeX Live), with the section files
   `sec_intro`, `sec_setting` (2), `sec_bulk` (3), `sec_bigjump` (4), `sec_preparation` (5),
-  `sec_shape` (6), `sec_inverse` (7) and `sec_verify` (8). The PDF is `problem131_levy.pdf`.
+  `sec_shape` (6), `sec_inverse` (7), `sec_verify` (8) and `sec_appendix` (Appendix A). The PDF
+  is `problem131_levy.pdf`.
 - `figures/atlas.pdf` (and `.png`), Figure 1, made by `figures/make_atlas_figure.py` from
   `data/atlas_N5000.json` and `data/antimode.json` in the shared style `../figures/series_style.py`.
   The caption source is `figures/captions.md`. The script also writes `data/atlas_pieces.json`, the
@@ -125,11 +135,12 @@ runs used Python 3.14.3, numpy 2.4.2, scipy 1.17.1, mpmath 1.3.0, python-flint 0
 ## Statement labels
 
 The scripts, their outputs and the Lean map name statements by their TeX labels (`thm:bulk`,
-`prop:final-run`, ...), never by number. The theorems of the introduction are lettered A to F
-(`thm:bulk`, `thm:bigjump`, `thm:preparation`, `thm:mode`, `thm:antimode`, `thm:inverse`). All other
+`prop:final-run`, ...), never by number. The five main theorems are lettered A to E
+(`thm:bulk`, `thm:bigjump`, `thm:preparation`, `thm:mode`, `thm:antimode`). All other
 statements are numbered within sections, so `prop:final-run` is Proposition 2.6,
-`thm:second-order` is Theorem 6.1, `cor:stationary` is Corollary 5.4 and `tab:antimode` is Table 1
-in the build of October 24, 2026. Hypotheses carry the names (RV), (LR) and (SPAN) in the paper and
+`thm:second-order` is Theorem 6.1, `thm:inverse` is Proposition 7.1, `lem:stable` is Lemma A.1
+and `tab:antimode` is Table 1 in the build of October 24, 2026. Numbered constants (`C_3`, `c_2`,
+...) are fixed once and never reused, as Section 2.2 states. Hypotheses carry the names (RV), (LR) and (SPAN) in the paper and
 in the scripts.
 
 ## Hypotheses and notation

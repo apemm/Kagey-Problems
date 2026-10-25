@@ -1,9 +1,11 @@
 import Mathlib
 
 /-!
-# Paper C: the generator normalization, the sign lemma and the case `d = 3`
+# Paper C2: the generator normalization, the sign lemma and the case `d = 3`
 
-Paper C, Section 9.3 (`sec_reconstruction.tex`, `thm:nonreversible`(b) and (e)), and note 06 of
+Paper C2 (`paperC2/problem131_reconstruction.tex`), Section 3.3 (`paperC2/sec_minors.tex`,
+Theorem 3.5, `thm:nonreversible`, step (N) of its proof and parts (a) and (d), and Remark 3.6,
+`rem:three-states`), and note 06 of
 `research_notes/C theorems 5 and 7` (Lemma 3.2, Proposition 3.3, Corollary 4.2).
 
 Irreducibility. A real square matrix `C` is `CutIrreducible` if every nonempty proper set `S`
@@ -26,9 +28,9 @@ Proved here:
   entries for which `D⁻¹ C D` has zero row sums is a nonzero multiple of `diag(x)`, and gives
   the same generator (note 06, Proposition 3.3; the positive normalization is unique up to a
   scalar, and no mixed-sign similarity gives a generator);
-* for `d = 3` (note 06, Corollary 4.2, and `thm:nonreversible`(e)), with `q_i = -Q_ii`,
-  `w_ij = q_ij q_ji` and the oriented 3-cycle products `c = q_12 q_23 q_31`,
-  `c' = q_13 q_32 q_21`:
+* for `d = 3` (note 06, Corollary 4.2, Theorem 3.5(d) and Remark 3.6 of Paper C2), with
+  `q_i = -Q_ii`, `w_ij = q_ij q_ji` and the oriented 3-cycle products `c = q_12 q_23 q_31`,
+  `c' = q_13 q_32 q_21` (written `ω`, `ω'` in Paper C2):
   - `det_neg_three`: `det(-Q) = σ₃ - c - c'` with
     `σ₃ = q_1 q_2 q_3 - q_1 w_23 - q_2 w_13 - q_3 w_12`, for every `3 × 3` matrix;
   - `cyc_add_cycRev`: `c + c' = σ₃` for a generator (from `det(-Q) = 0`);
@@ -39,7 +41,7 @@ Proved here:
     `Q* = D_π⁻¹ Qᵀ D_π` is a generator with the same `q_i` and `w_ij` and with `c(Q*) = c'(Q)`;
   - `piTree_stationary`, `piTree_pos`: the tree formula gives a positive stationary vector;
   - `fiber_three`: two generators on three states with positive off-diagonal entries and the
-    same `q_i` and `w_ij` are equal or time reversals of each other (`thm:nonreversible`(e));
+    same `q_i` and `w_ij` are equal or time reversals of each other (Theorem 3.5(d) of Paper C2, for positive rates);
   - `fiber_three_converse`: the time reversal has the same `q_i` and `w_ij`.
 -/
 
@@ -287,14 +289,15 @@ theorem det_neg_three_eq_zero {Q : Matrix (Fin 3) (Fin 3) ℝ} (h : ∀ i, ∑ j
   simp only [sigma3, cyc, cycRev, wprod, h0, h1, h2]
   ring
 
-/-- `thm:nonreversible`(e): `c + c' = σ₃` for a matrix with zero row sums. -/
+/-- Remark 3.6 of Paper C2 (`rem:three-states`): `c + c' = σ₃` for a matrix with zero row
+sums. -/
 theorem cyc_add_cycRev {Q : Matrix (Fin 3) (Fin 3) ℝ} (h : ∀ i, ∑ j, Q i j = 0) :
     cyc Q + cycRev Q = sigma3 Q := by
   have := det_neg_three_eq_zero h
   rw [det_neg_three] at this
   linarith
 
-/-- `thm:nonreversible`(e): `c c' = w_12 w_23 w_13`. -/
+/-- Remark 3.6 of Paper C2 (`rem:three-states`): `c c' = w_12 w_23 w_13`. -/
 theorem cyc_mul_cycRev : cyc Q * cycRev Q = wprod Q 0 1 * wprod Q 1 2 * wprod Q 0 2 := by
   simp only [cyc, cycRev, wprod]
   ring
@@ -434,8 +437,8 @@ theorem piTree_stationary {Q : Matrix (Fin 3) (Fin 3) ℝ} (hrow : ∀ i, ∑ j,
   obtain ⟨d0, d1, d2⟩ := diag_of_rowsum hrow
   fin_cases i <;> simp [Fin.sum_univ_three, piTree, d0, d1, d2] <;> ring
 
-/-- `thm:nonreversible`(e) and note 06, Corollary 4.2: two generators on three states with
-positive off-diagonal entries, the same exit rates `q_i` and the same edge products `w_ij` are
+/-- Theorem 3.5(d) of Paper C2 (`thm:nonreversible`) and note 06, Corollary 4.2: two
+generators on three states with positive off-diagonal entries, the same exit rates `q_i` and the same edge products `w_ij` are
 equal or time reversals of each other, `Q* = D_π⁻¹ Qᵀ D_π` for any positive stationary `π`. -/
 theorem fiber_three {Q Q' : Matrix (Fin 3) (Fin 3) ℝ}
     (hpos : ∀ i j, i ≠ j → 0 < Q i j) (hpos' : ∀ i j, i ≠ j → 0 < Q' i j)
