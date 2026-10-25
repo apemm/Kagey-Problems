@@ -7,24 +7,34 @@ principal minors and cycle trees". Target journal Stochastic Processes and their
 laws, support selection and the boundary layer", and this folder holds the identifiability half.
 The split proposal is `research_notes/Paper C audits/09_split_proposal.md`, the record of the
 split is `12_C2_split_report.md`, the revision of October 25 after the second referee report is
-`26_C2_second_review_fixes.md`, and the integration of the exact-law theorem is
-`29_C2_O1_integration.md`, all in the same folder.
+`26_C2_second_review_fixes.md`, the integration of the exact-law theorem is
+`29_C2_O1_integration.md`, and the fixes after the review of October 25 are
+`34_C2_review_fixes.md`, all in the same folder.
 
 The question is the inverse problem: what does the occupation measure of a chain determine about
-its generator Q? It is answered at three resolutions, the exact law of the occupation times, the
+its generator Q? It is studied at three resolutions, the exact law of the occupation times, the
 Donsker and Varadhan functional J_V, and the first-order modal supports of a discretized chain
-killed at known rates, and at low temperature.
+killed at known rates, and at low temperature. The second and third are answered exactly. The
+first is answered from a generic start, and from the stationary start in the cases of Theorem
+4.6. That reversals of memoryless blocks are the only further obstruction is Conjecture 4.16.
 
 ## Two builds
 
-- `problem131_reconstruction.tex`, the journal version (`elsarticle`, `preprint,12pt`), 43 pages.
+- `problem131_reconstruction.tex`, the journal version (`elsarticle`, `preprint,12pt`), 40 pages.
 - `problem131_reconstruction_arxiv.tex`, the arXiv version (`article`, 11pt), 46 pages. It inputs
   the same section files and keeps the reversible design (`sec_reversible.tex`) as its final
   Section 8.
 
 The switch is `\newif\ifarxivbuild`, set in each top-level file. Sections 1 to 7 and all their
 statement numbers are the same in both builds. The journal version points to the arXiv version
-for the reversible design in one sentence at the end of Section 1.4.
+for the reversible design in one sentence at the end of Section 1.4. To keep the journal build at
+40 pages, some proofs are full in the arXiv build and sketched in the journal build, each sketch
+saying that the details are in the arXiv version. They are the proofs of Proposition 3.9
+(amplitudes), Proposition 4.9 (gluing), Proposition 6.3 (prefactors), Theorem 6.4 (critical
+windows), Examples 6.5 and 6.6, Theorem 6.14 (prefactors from window endpoints), the two standard
+cycle lemmas 6.8 and 6.10 (only a pointer in the journal), the written path reversal in Remark
+3.8, the discussion of Example 6.5 after Theorem 6.14, and the list of Lean modules and the
+description of `verify_exactlaw.py` in Section 7. No main theorem moved.
 
 ## What is proved
 
@@ -45,13 +55,16 @@ and Corollary 1.1.
   every time, from any start, and gives the principal minors (Lemma 4.2, Theorem 4.3). A generic
   start determines Q (Theorem 4.4). Second moments give Q up to time reversal for d <= 4 (to order
   T^4) and generically (to order T^5) (Theorem 4.5). The stationary start gives Q up to time
-  reversal for d <= 4, without a cut, and generically (Theorem 4.6). One fixed N, with
-  E_pi[n n^T] = N^2 D + sum_k h^k C(N+1, k+2) Sigma_k (Remark 4.7). The gluing formula across a cut
-  (Proposition 4.8), the balance criterion (Corollary 4.9) and its necessary conditions (Remark
-  4.10). Memoryless blocks (Definition 4.11), whose reversal keeps the stationary law (Theorem
-  4.12) and which are balanced sides (Remark 4.13). The five-state example where the stationary law
-  does not determine Q up to time reversal (Example 4.14). Conjectures 4.15 (the stationary fiber)
-  and 4.16 (balanced sides) are stated as conjectures.
+  reversal for d <= 4, without a cut, and generically, and the second moments suffice in the
+  first and last cases (Theorem 4.6). Without a cut they need not suffice, by an explicit chain
+  on 5 states with positive rates (Remark 4.7). One fixed N, with
+  E_pi[n n^T] = N^2 D + sum_k h^k C(N+1, k+2) Sigma_k (Remark 4.8). The gluing formula across a cut
+  (Proposition 4.9), the balance criterion (Corollary 4.10) and its necessary conditions (Remark
+  4.11). Memoryless blocks (Definition 4.12, a common exit rate, a common landing law and entry
+  in proportion to pi), whose reversal keeps the stationary law (Theorem 4.13) and which are
+  balanced sides (Remark 4.14). The five-state example where the stationary law does not
+  determine Q up to time reversal (Example 4.15). Conjectures 4.16 (the stationary fiber) and
+  4.17 (balanced sides) are stated as conjectures.
 - Section 5, Theorem C. The controlled score law (Proposition 5.1), the two labels and the strict
   regions (Lemma 5.2), controlled boundaries (Definition 5.3), suppression (Lemma 5.4), exposure by
   descent (Lemma 5.5) and Theorem 5.6. "Exactly" is said only for the first-order map W_Q.
@@ -66,15 +79,16 @@ and Corollary 1.1.
 ## What is conditional
 
 Nothing. The C1 numbers are those of `../paperC/EXPORTS.md` of October 25, 2026, and C1 is cited
-as arXiv:2610.09258v2. Conjectures 4.15 and 4.16 are labelled as conjectures, and their proved
+as arXiv:2610.09258v2. Conjectures 4.16 and 4.17 are labelled as conjectures, and their proved
 parts are said separately.
 
 ## What rests on computation
 
 Every statement is proved in the text. The explicit numbers of the four-state cut-transpose
 example after Corollary 3.6, its first separating moment 29(w1 - w2)(w3 - w4)/9673 after Theorem
-4.6, the spectrum of K^2 and the start e_1 in Example 4.14 (and, in the arXiv version, the numbers
-of Remark 8.9) were computed, and the scripts check them. The leading cofactors of Example 6.5 are
+4.6, the absence of a cut and the fifth-order difference in Remark 4.7, the two values from the
+start e_1 and the spectrum of K^2 in Example 4.15 (and, in the arXiv version, the numbers of
+Remark 8.9) were computed, and the scripts check them. The leading cofactors of Example 6.5 are
 given by hand.
 
 ## Files
@@ -103,7 +117,8 @@ Each statement has a `\label` that names its content. The introduction's theorem
 `thm:law` (printed as Theorem B, the exact law), `thm:B` (printed as Theorem C, the modal
 supports) and `thm:D` (Theorem D, the low-temperature theorem), and the fiber corollary is
 `cor:A-fiber`. The new section uses `lem:reductions`, `lem:graph`, `thm:one-horizon`,
-`thm:generic-start`, `thm:second-moments`, `thm:stationary-law`, `rem:one-N`, `prop:gluing`,
+`thm:generic-start`, `thm:second-moments`, `thm:stationary-law`, `rem:nocut-moments`,
+`rem:one-N`, `prop:gluing`,
 `cor:balance`, `rem:balance-necessary`, `def:memoryless`, `thm:memoryless`,
 `rem:memoryless-cut`, `ex:five-state`, `conj:fiber` and `conj:balanced`. In the body
 `thm:nonreversible` is a corollary, `prop:stationary` became `rem:stationary`,
@@ -116,4 +131,8 @@ Until October 24, 2026 this material was Sections 9 and 10 of Paper C (`../paper
 revision of October 25 cut the reversible design from the journal version and reframed the paper
 around the inverse problem. Later that day the exact occupation law became Section 4 and Theorem
 B, the title changed from "occupation functional" to "occupation law", and the later sections and
-introductory theorems moved up by one.
+introductory theorems moved up by one. After the review of the same day the abstract, the
+introduction and the cover letter state exactly which cases the second moments cover, the
+memoryless block carries its common landing law everywhere, "answered" is qualified, Remark 4.7
+was added (which renumbered Section 4 from 4.7 on), and the journal build was brought to 40
+pages.

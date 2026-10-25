@@ -185,6 +185,7 @@ of a finite sum of exponentials $f$, and the determinant of the empty matrix
 is $1$.
 \end{proposition}
 
+\ifarxivbuild
 \begin{proof}
 Every minor of $-Q_F$ is a finite real combination of exponentials
 $e^{-b/\eta}$. After equal exponents are collected, a combination that is not
@@ -208,6 +209,16 @@ positive diagonal entry, so $\rho(B_F)>0$. The spectral radius is continuous
 in the entries, and $\rho(e^{-D(F)/\eta}\mathcal G_F)=e^{-D(F)/\eta}/\lambda_F$.
 Hence $e^{D(F)/\eta}\lambda_F\to1/\rho(B_F)$.
 \end{proof}
+\else
+\begin{proof}[Sketch]
+Every minor of $-Q_F$ is a finite sum of exponentials $c\,e^{-b/\eta}$, so by Cramer's rule each
+entry of $\mathcal G_F$ is $\beta_{ij}e^{e_{ij}/\eta}(1+o(1))$ with $\beta_{ij}>0$, and the diagonal
+exponents are the differences of $\nu$ in the statement. The exit-time bounds give
+$D(F)=\max_je_{jj}$, the entries satisfy $e_{ij}\le D(F)$, and the continuity of the spectral
+radius gives $e^{D(F)/\eta}\lambda_F\to1/\rho(B_F)$. The arXiv version of this paper has the
+details.
+\end{proof}
+\fi
 
 The asymptotics of principal eigenvalues of matrices with entries of order
 $e^{-V_{ij}/\eta}$, and their expressions through graphs and determinants, are due to
@@ -233,6 +244,7 @@ $x\mapsto\min_F\mathcal J_{\gamma,x}(F)$ is concave and piecewise linear, and it
 minimizers need not be cycles.
 \end{theorem}
 
+\ifarxivbuild
 \begin{proof}
 Let $S_\eta(F)=|F|-1+xe^{\gamma/\eta}\lambda^\eta_F$, which is
 $\Phi_\tau(F)$ for $Q_\eta$ at $\tau=xe^{\gamma/\eta}$. By
@@ -256,6 +268,15 @@ $D(F)\ge\gamma$, and $\mathcal J_{\gamma,x}(V)=d-1$ is finite. So the envelope i
 minimum of finitely many affine functions, which is concave and piecewise
 linear. Example~\ref{ex:four-state} shows a minimizer that is not a cycle.
 \end{proof}
+\else
+\begin{proof}[Sketch]
+By Proposition~\ref{prop:prefactor} the score $|F|-1+xe^{\gamma/\eta}\lambda^\eta_F$ tends to
+$\mathcal J_{\gamma,x}(F)$, uniformly for $x$ in compact subsets of $(0,\infty)$. A gap between
+the least limiting score and the others therefore persists for small $\eta$, and
+Theorem~\ref{thm:first}(b) at $\tau=xe^{\gamma/\eta}$ gives the support of the global mode. The
+envelope is a minimum of finitely many affine functions. The arXiv version has the details.
+\end{proof}
+\fi
 
 At a tie of the limiting lines, Theorem~\ref{thm:critical-window} identifies
 the candidates only, and the exact scores at each $\eta$ decide. Along the
@@ -283,6 +304,7 @@ $(h-3)/\eta$ and collapses onto the single height $h=3$, which is why it does
 not contradict Theorem~\ref{thm:noncritical}.
 \end{example}
 
+\ifarxivbuild
 \begin{proof}
 Here $q_{ij}=t^{H_{ij}-U_i}$ and $\pi\propto(1,t,t,t)$. The exit rates are
 \[
@@ -342,6 +364,17 @@ So the noncycle beats every cycle. In the rescaled height $s=(h-3)/\eta=\log x$ 
 $\log\frac34<s<\log\frac32$, of width $\log2$. Its heights $h=3+\eta s$ tend to
 $3$, so at every fixed $h\ne3$ the window is eventually left.
 \end{proof}
+\else
+\begin{proof}[Sketch]
+The energy criterion shows that $\{1,2\}$ is the only proper cycle with more than one state, so
+by Theorem~\ref{thm:depth} the faces of depth $3$ are the 3 named. The prefactors come from
+Proposition~\ref{prop:prefactor} and the leading cofactors of $-Q_F$. Comparing the 4 lines gives
+the winners, and Theorem~\ref{thm:critical-window} turns each into the eventual support of the
+global mode, uniformly on compact subintervals. The computation is written out in the arXiv version
+of this paper, and the Lean module \texttt{CriticalWindow} and the script \texttt{verify\_cycles.py}
+check it (Section~\ref{sec:verify}).
+\end{proof}
+\fi
 
 The mechanism is that state $3$ costs one dimension but returns the chain to
 $\{1,2\}$ before it is killed at state $4$, which lowers the leading exit rate
@@ -359,6 +392,7 @@ are disjoint nodes of the same cycle tree, so the selector jumps between
 branches and never selects the nodes $\{2\}$ and $\{3\}$.
 \end{example}
 
+\ifarxivbuild
 \begin{proof}
 With $t=e^{-1/\eta}$ the rates are $q_{12}=q_{13}=t^3$, $q_{21}=q_{31}=t^5$ and
 $q_{23}=q_{32}=t$. So $\lambda_{\{1\}}=2t^3$, $\lambda_{\{2\}}=\lambda_{\{3\}}=t+t^5$
@@ -371,6 +405,14 @@ $\Phi_{\eta,1}(\{1\})=2t^2\to0$ while every other face has a score that tends
 to at least $1$, so Theorem~\ref{thm:first}(b) applies directly. We claim
 nothing at $h=3$ and $h=5$.
 \end{proof}
+\else
+\begin{proof}[Sketch]
+Here $\lambda_{\{1\}}=2t^3$, $\lambda_{\{2\}}=\lambda_{\{3\}}=t+t^5$ and
+$\lambda_{\{2,3\}}=t^5$ with $t=e^{-1/\eta}$, and $\{2,3\}$ is the only cycle with 2 states.
+Theorem~\ref{thm:noncritical} gives the winners away from $h=1,3,5$, and at $h=1$
+Theorem~\ref{thm:first}(b) applies directly. The arXiv version has the details.
+\end{proof}
+\fi
 
 \subsection{Reading the cycle tree}\label{sec:cycle-tree}
 
@@ -475,13 +517,20 @@ Proposition~4.4~\cite{catoni1999} and the tree of cycles of
 Trouv\'e~\cite{trouve1996} and of Olivieri and Vares~\cite[Chapter~6]{olivierivares2005}.
 The strict growth of depths along nested cycles can be deduced from Catoni's
 Propositions~4.5 and~4.10, which express the depth of a cycle through those of its maximal
+\ifarxivbuild
 subcycles. We include the short proofs for completeness, in the convention of
 cycles through hitting probabilities used here.
+\else
+subcycles. Short proofs in the convention of cycles through hitting probabilities used
+here are in the arXiv version of this paper. The second uses rounds of excursions from $C'$ and
+Wald's identity.
+\fi
 
 \begin{lemma}[laminarity]\label{lem:laminar}
 Two cycles are disjoint or nested.
 \end{lemma}
 
+\ifarxivbuild
 \begin{proof}
 Let $C_1,C_2$ be cycles with a common state $z$, and suppose that neither
 contains the other. Take $x\in C_1\setminus C_2$ and $y\in C_2\setminus C_1$. Since
@@ -490,6 +539,9 @@ tends to $1$ because $C_1$ is a cycle. Since $x\notin C_2$,
 $\Prob_z(\tau_{C_2^c}<\tau_y)\ge\Prob_z(\tau_x<\tau_y)$, which tends to $1$ and
 contradicts that $C_2$ is a cycle.
 \end{proof}
+\else
+
+\fi
 
 \begin{lemma}[depth with a calibrated killing]\label{lem:killed-depth}
 Let $K\subseteq[d]$, $\gamma\in\R$ and $s=c\,e^{-\gamma/\eta}$. For every proper
@@ -543,6 +595,7 @@ If $C'\subsetneq C$ are cycles, then $D(C')<D(C)$. Hence $D(S)<D(C)$ for every
 nonempty proper subset $S$ of a cycle $C$.
 \end{lemma}
 
+\ifarxivbuild
 \begin{proof}
 Fix $z\in C\setminus C'$. Since $C$ is a cycle there is $\alpha>0$ with
 $\Prob_w(\tau_{C^c}<\tau_y)\le e^{-\alpha/\eta}$ for all distinct $w,y\in C$ and
@@ -566,6 +619,9 @@ and $D(C)\ge D(C')+\alpha$ by the last statement of Theorem~\ref{thm:depth}.
 For the second claim, Theorem~\ref{thm:depth} gives a cycle $C''\subseteq S$
 with $D(C'')=D(S)$, and $C''\subsetneq C$.
 \end{proof}
+\else
+
+\fi
 
 \begin{theorem}[depths from a calibrated attraction]\label{thm:attraction}
 Fix $c>0$.
@@ -729,6 +785,7 @@ has depth $\gamma$, then $a_G\le a_{G'}$.
 \end{enumerate}
 \end{theorem}
 
+\ifarxivbuild
 \begin{proof}
 By Theorem~\ref{thm:critical-window}, $G_k$ is the eventual winner, uniformly on
 compact subintervals of $(x_k,x_{k+1})$, so the faces $G_k$ and the points $x_k$
@@ -746,7 +803,17 @@ minimizers do not change. Finally $\lambda_G\le\lambda_{G'}$ for $G'\subseteq G$
 and at equal depths Proposition~\ref{prop:prefactor} turns this into
 $a_G\le a_{G'}$.
 \end{proof}
+\else
+\begin{proof}[Sketch]
+By Theorem~\ref{thm:critical-window} the faces $G_k$ and the points $x_k$ are observed. The
+envelope is continuous, so the lines of $G_{k-1}$ and $G_k$ meet at $x_k$, which is the
+recursion, and the last piece has slope $0$ since $\mathcal J_{\gamma,x}(V)=d-1$. For (c),
+$|G|-1+xa_G\ge e(x)$ for all $x>0$, and $\lambda_G\le\lambda_{G'}$ with
+Proposition~\ref{prop:prefactor} gives $a_G\le a_{G'}$. The arXiv version has the details.
+\end{proof}
+\fi
 
+\ifarxivbuild
 The reference is absolute because the last piece has slope exactly $0$, and
 $V$, with $\lambda_V(0)=0$, guarantees a face with a flat line. In
 Example~\ref{ex:four-state} at $\gamma=3$ the pieces are $G_0=\{1,2\}$,
@@ -765,6 +832,12 @@ $V$ to a value that depends on $Q$. In this example the limiting quasi-stationar
 laws of the 3 faces of depth $3$ and the limit of $\pi$ all sit at state $1$. So a
 field $c\,e^{-3/\eta}$ at state $1$ moves every line of the window by $-cx$ to first
 order, and a field of this order at another state moves no line.
+\else
+The reference is absolute because the last piece has slope exactly $0$. In
+Example~\ref{ex:four-state} at $\gamma=3$, with $x_1=3/4$, $x_2=3/2$ and sizes $2,3,4$, the
+recursion gives $a_{123}=2/3$ and $a_{12}=2$, while (c) gives only $2/3\le a_{124}\le2$. The
+arXiv version discusses this example further.
+\fi
 
 \begin{remark}[what the design needs]\label{rem:design}
 The design of Theorem~\ref{thm:attraction} needs the temperature $\eta$, the time
