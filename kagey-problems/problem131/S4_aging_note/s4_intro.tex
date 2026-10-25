@@ -1,61 +1,63 @@
 \section{Introduction}\label{sec:intro}
 
-A walk on $\Z$ that moves in runs of one direction reaches an end bin only if
-one run covers all $N$ steps. When do the ends beat the other bins? For runs
-with geometric lengths this is Problem~131 of Kagey's Open Problem
-Collection~\cite{kagey131}. The center then catches up with the ends when the
-expected number of switches is about $\log N$~\cite{paperA}. This note is part
-of a series on Problem~131, and the case of $d$ directions is
-in~\cite{paperB}. Here the walk ages. After its first step it switches
-direction at step $k\ge2$ with probability $c/k$, independently of the past,
-where $0<c<2$. This is the coin-turning walk of Engl\"ander and
-Volkov~\cite{ev2018,evw2020} with $p_k=c/k$. (For renewal processes, aging
-means instead a dependence on the time since
-preparation~\cite[Sections~8 and~9]{godrecheluck2001}.) The walk with $d$
-states starts in state~1, and at step $k\ge2$ it moves to each of the other
-$d-1$ states with probability $\theta/(k+d-2)$. For $d=2$ this is $c/k$ with
-$c=\theta$. The first step is either fixed or fair.
+A coin-turning walk on $\Z$ switches direction at step $k\ge2$ with
+probability $c/k$, independently of the past, where $0<c<2$. This is the walk
+of Engl\"ander and Volkov~\cite{ev2018,evw2020} with $p_k=c/k$. Let $A_N$ be
+the number of right steps among the first $N$. With a fair first step
+$A_N/N$ converges in law to $\mathrm{Beta}(c,c)$~\cite{ds2007,ev2018}. The
+limit has a shape transition at $c=1$. Its density is U-shaped for $c<1$,
+uniform at $c=1$ and peaked at $\frac12$ for $c>1$. We ask where this
+transition happens at finite $N$, that is, at which $c$ an interior point of
+$\{0,\dots,N\}$ becomes as likely as an end. With a fixed first step the
+answer is exactly $c=1$, for every $N$ and every interior point
+(Proposition~\ref{prop:aging-two}). With a fair first step the center ties
+with the end at some $c_N<1$, and $1-c_N\sim\log2/\log N$
+(Proposition~\ref{prop:aging-expansion}). The walk with $d$ states starts in
+state~1, and at step $k\ge2$ it moves to each of the other $d-1$ states with
+probability $\theta/(k+d-2)$. For $d=2$ this is $c/k$ with $c=\theta$. Its
+count vector shows the same exact transition at $\theta=1$
+(Theorem~\ref{thm:aging-d}).
 
 \subsection{Setting and notation}\label{sec:notation}
 
 The walk takes $N$ steps $X_1,\dots,X_N\in\{+1,-1\}$, and $X_N$ is the last
 step. Let $A_N=\#\{i\le N:X_i=+1\}$ be the number of right steps, and write
-$P_N(k)=\Prob(A_N=k)$ for the probability of bin $k$. We write $\Prob_+$ for
+$P_N(k)=\Prob(A_N=k)$ for the mass of the point $k$. We write $\Prob_+$ for
 probability given $X_1=+1$. With a fair first step, $\Prob(X_1=+1)=\frac12$,
 and $P_N(k)=P_N(N-k)$. In that case, for even $N$, we put $h=N/2$ and call $C_N=P_N(h)$
-the center and $E_N=P_N(N)=P_N(0)$ the end. The bins $1,\dots,N-1$ are interior. A crossing is a value of $c$ at
-which a bin ties with an end. Logarithms are natural, $H_k=\sum_{j\le k}1/j$,
+the center and $E_N=P_N(N)=P_N(0)$ the end. The points $1,\dots,N-1$ are interior. A crossing is a value of $c$ at
+which an interior point ties with an end. Logarithms are natural, $H_k=\sum_{j\le k}1/j$,
 and $\gamma$ is Euler's constant. Limits and $O(\cdot)$ refer to
 $N\to\infty$, over even $N$ when $C_N$ appears.
 
 \subsection{Results and method}\label{sec:results}
 
 With a fixed first step and $c=1$, $A_N$ is exactly uniform on
-$\{1,\dots,N\}$. The ratio of each interior bin to the end increases strictly
-in $c$. Hence every interior bin ties with the end exactly at $c=1$, for every
+$\{1,\dots,N\}$. The ratio of the mass of each interior point to that of the end increases
+strictly in $c$. Hence every interior point ties with the end exactly at $c=1$, for every
 $N\ge2$ (Proposition~\ref{prop:aging-two}). With $d$ states and $\theta=1$ the
 count vector is exactly uniform over the compositions $(n_1,\dots,n_d)$ of $N$
-with $n_1\ge1$, and every other bin ties with the corner $(N,0,\dots,0)$
+with $n_1\ge1$, and every other count vector ties with the corner $(N,0,\dots,0)$
 exactly at $\theta=1$ (Theorem~\ref{thm:aging-d}). Both laws come from a chain
 that draws its state afresh or repeats it. Its counts and last state have an
 explicit joint law for every weight (Proposition~\ref{prop:aging-urn}). With a
-fair first step each interior bin is twice as likely as an end at $c=1$, and
+fair first step each interior point is twice as likely as an end at $c=1$, and
 its crossing is unique and below~1 (Proposition~\ref{prop:aging-fair}). For
 the center
 $c_N=1-\log2/(\log N+\gamma+2-2\log2)+O((\log N)^{-3})$
 (Proposition~\ref{prop:aging-expansion}, proved in Appendix~\ref{app:aging}).
 
 The exact laws come from an induction that carries the last state along with
-the counts. The ties come from writing each ratio of a bin to the end as a sum
+the counts. The ties come from writing each ratio of an interior point to the end as a sum
 over paths of products of odds that increase in $c$. For the fair start we
 couple the walk with the chain that draws afresh or repeats, whose counts are
 a mixture of binomial laws. Summation by parts turns the coupling into a local
 limit theorem with a rate at the center (Proposition~\ref{prop:D-llt}).
 
-{\sloppy\paragraph{Verification.}\label{sec:verify}
-No proof rests on a computation. The scripts \texttt{verify\_aging.py} and
-\texttt{verify\_aging\_urn.py} recompute the numbers of this note, and
-\texttt{figures/make\_aging\_figure.py} those of Figure~\ref{fig:aging}. In exact
+\paragraph{Verification.}\label{sec:verify}
+No proof rests on a computation. Two scripts, \nolinkurl{verify_aging.py}
+and \nolinkurl{verify_aging_urn.py}, recompute the numbers of this note,
+and \nolinkurl{figures/make_aging_figure.py} draws Figure~\ref{fig:aging}. In exact
 arithmetic $C_{200}-E_{200}$ changes sign between $c_{200}-10^{-6}$ and $c_{200}+10^{-6}$. Every
 proposition, the lemma and the theorem are also proved in Lean~4 (version 4.33.1) with
 Mathlib at commit \texttt{0df444a360ea}, in
@@ -64,7 +66,7 @@ Mathlib at commit \texttt{0df444a360ea}, in
 \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}. The file
 \nolinkurl{MAP.md} there lists them under the numbers of an earlier draft.
 Its numbers 3.1 to 3.7 are 2.1 to 2.7 here, and its numbers B.1 to B.3 are
-A.1 to A.3 here.\par}
+A.1 to A.3 here.
 
 \subsection{Prior work}\label{sec:prior}
 
@@ -87,4 +89,6 @@ at $\alpha=1$. What we add is the joint law for $d\ge3$ or a
 weight that is not an integer, the strict ordering that turns the uniform laws
 into ties (Proposition~\ref{prop:aging-two}(b) and
 Theorem~\ref{thm:aging-d}(b)), and the expansion of $c_N$ with the local limit
-theorem behind it.
+theorem behind it. For runs of geometric length the center overtakes the
+ends when the expected number of switches is about $\log N$, for 2
+directions~\cite{paperA} and for $d$ directions~\cite{paperB}.
