@@ -5,8 +5,8 @@
  2. The crossing x_N for odd N against the root g_N of g + log g = 2 log N - log 8.
     The scaled difference (x_N - g_N) N / (log N)^2 has the size that it has for even N.
  3. The constants in the proof of part (c): at eps = 2/N and odd N >= 1689 the bound for the
-    two central bins is below 1.4e-3 and the end is above 0.06.
- 4. In double precision, the two central bins are below the end at eps = 2/N for odd
+    two central values is below 1.4e-3 and the end is above 0.06.
+ 4. In double precision, the two central values are below the end at eps = 2/N for odd
     1689 <= N <= 1699, and x_N > 2 for a sample of odd N.
  5. The Landau density (numerical, not certified): its right half-maximum point 2.432 and its
     right inflection point 1.104, with the thresholds 252.8 and 4.8 for x quoted in the remark.
@@ -74,7 +74,7 @@ def crossing(N):
 
 
 def main():
-    print('1. the identity for the two central bins')
+    print('1. the identity for the two central values')
     worst = Fraction(0)
     for N in (3, 5, 7, 9, 15, 21):
         for eps in (Fraction(1, 50), Fraction(1, 7), Fraction(2, 5), Fraction(3, 4)):
@@ -108,17 +108,17 @@ def main():
         return 8 / (N * (N + 3)) * (N + 1) ** (4 / N) * math.exp(10400 / N) * N / (N - 1)
     check('eps (1 + log(N+1)) <= 1/100 at eps = 2/N, N = 1689', 2 / 1689 * (1 + math.log(1690)) <= 0.01,
           '%.6f' % (2 / 1689 * (1 + math.log(1690))))
-    check('the bound for the two central bins is below 1.4e-3 at N = 1689', bound(1689) < 1.4e-3, '%.4e' % bound(1689))
+    check('the bound for the two central values is below 1.4e-3 at N = 1689', bound(1689) < 1.4e-3, '%.4e' % bound(1689))
     check('the bound decreases in N (odd N from 1689 to 10^5)',
           all(bound(N + 2) < bound(N) for N in range(1689, 100001, 2)))
     check('the end is above 0.06', 0.5 * math.exp(-2 - 2 / 1689) > 0.06, '%.4f' % (0.5 * math.exp(-2 - 2 / 1689)))
 
-    print('4. the two central bins against the end at eps = 2/N')
+    print('4. the two central values against the end at eps = 2/N')
     ratios = []
     for N in range(1689, 1700, 2):
         P = law(N, 2.0 / N)
         ratios.append(center(P, N) / P[N])
-    check('central bins below the end for odd 1689 <= N <= 1699', max(ratios) < 1, 'largest ratio %.2e' % max(ratios))
+    check('central values below the end for odd 1689 <= N <= 1699', max(ratios) < 1, 'largest ratio %.2e' % max(ratios))
 
     print('5. the Landau density (numerical)')
     mp.mp.dps = 20

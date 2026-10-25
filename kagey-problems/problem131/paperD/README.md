@@ -1,25 +1,33 @@
-# The center and the ends of the elephant random walk with rare reversals
+# The elephant random walk with rare reversals: a Luria–Delbrück approximation and the shape of the law
 
-Before October 17, 2026 the paper was titled "Endpoint crossings for the elephant random walk".
+The paper was titled "The center and the ends of the elephant random walk with rare reversals" from
+October 17 to October 24, 2026, and "Endpoint crossings for the elephant random walk" before that.
+It is prepared for the Journal of Theoretical Probability.
 
 In the elephant random walk each step copies a uniformly chosen earlier step and reverses (flips) it
-with probability eps. For an even number N of steps the paper studies the crossing, the value of eps
-at which the walk is as likely to end at the origin (the middle bin, N/2 right steps) as at N (the
-end bin, N right steps). The crossing is unique, and x_N = N eps_N = 2 log N - log log N - log 16 +
-o(1), about twice the value for the persistent random walk, because a walk that ends in the middle
-usually has a reversal among its first few steps. At the crossing the law has a hump near each end,
-and for every even N >= 8 the middle is the unique interior minimum. The law rises strictly
-from each end to an interval of maximizing bins and falls strictly from there to the middle.
+with probability eps. The paper studies the regime in which eps tends to 0 as the number of steps N
+grows, with x = N eps of order log N. The main result is an explicit total variation bound between
+the number M_N of steps that disagree with the first step and a truncated Luria–Delbrück (compound
+Poisson) law, and a Landau local limit theorem with an explicit rate that follows from it. The modes,
+the shape and the crossing are consequences. Every mode is at distance about x log x - 0.2228 x from
+an end. For an even N the crossing is the value of eps at which the walk is as likely to end at the
+origin (N/2 right steps) as at an end (N right steps). It is unique, and x_N = N eps_N =
+2 log N - log log N - log 16 + o(1), about twice the value for the persistent random walk, because
+a walk that ends in the middle usually has a reversal among its first few steps. At the crossing the
+law has a hump near each end, and for every even N >= 8 the middle is the unique interior minimum.
+The law rises strictly from each end to an interval of maximizing points and falls strictly from
+there to the middle.
 
-For the persistent (Markov) walk, which copies its last step instead, the question is part of
-Problem 131 of Kagey's Open Problem Collection (https://peterkagey.com/problems/131/), posed for a
-Galton board, which is why the values of the number of right steps are called bins. The paper uses
-one result on the persistent walk, the crossing equation of A. Pemmasani, "Uniform Bessel bounds
-for magnetization crossings in finite Ising chains", arXiv:2610.06935 (Proposition 3.8 there, with
-its source in `../paperA`), and only to compare the two crossings (Theorem S1.7 of Online Resource 1).
+The question for the persistent (Markov) walk, which copies its last step instead, is Problem 131 of
+Kagey's Open Problem Collection (https://peterkagey.com/problems/131/). The paper names it once, in
+the acknowledgments. The arXiv version uses one result on the persistent walk, the crossing equation
+of A. Pemmasani, "Uniform Bessel bounds for magnetization crossings in finite Ising chains",
+arXiv:2610.06935 (Proposition 3.8 there, with its source in `../paperA`), and only to compare the two
+crossings (Theorem S1.7 of the arXiv version). The journal version cites that preprint only for the
+heuristic comparison in its introduction.
 
 Conventions. The walk has N steps, L = log N, A_N is the number of right steps, and P_N(k) is the
-probability of bin k. C_N = P_N(N/2) is the probability of the center bin and E_N = P_N(N) that of
+probability of the value k. C_N = P_N(N/2) is the probability of the center and E_N = P_N(N) that of
 the right end. For the persistent walk T = Nq is the expected number of switches and z_N is its
 value at the crossing. For the elephant walk x = N eps plays the role of T and its crossing x_N plays
 the role of z_N. The first step is fair unless we say otherwise. (Earlier versions of the paper, and
@@ -27,7 +35,21 @@ the check scripts and Lean files, write n for N.)
 
 ## What is proved
 
-The October 23 revision adds the following results, with full proofs in the paper or in Online Resource 1.
+The October 24 reframing for the Journal of Theoretical Probability changes the presentation, not
+the mathematics. The title, abstract and introduction now open with the regime and put the total
+variation approximation and the Landau local limit first (Theorem 1.1), then the modes (Theorem 1.2),
+the center and the crossing (Theorem 1.3) and the shape (Theorem 1.4). The convexity window is no
+longer part of the main shape theorem. It is Proposition 1.5 (`prop:main-window`), stated as an
+eventual result with an uncomputed threshold, certified for 5 <= N <= 2000 at the crossing and
+conjectured beyond, and `thm:convex-large` is now Proposition 3.23 (it was Theorem 3.23). The journal
+version has no Online Resource. Sections S1 to S4 (second order, tail, odd N, likelihood) are in the
+arXiv version only, and the journal text points to that version where it needs them. The likelihood
+theorem no longer appears in the journal version. The paper now speaks of points or values k of A_N
+where it used to say bins. Fan and Qi (arXiv:2610.16065) and Roy, Takei and Tanemura (J. Appl.
+Probab. 62 (2025), 997–1009, doi:10.1017/jpr.2024.106) are cited in the prior-work paragraph.
+
+The October 23 revision adds the following results, with full proofs in the paper or in what is now
+the arXiv-only part (then Online Resource 1).
 
 The October 23 editorial changes also retitle Section 3 "The shape of the law at the crossing", split its last subsection into "The shape at every even crossing" and "The prescribed window", retitle Section 4 "The fixed-memory limit", and move the likelihood theorem to Online Resource 1.
 
@@ -63,7 +85,7 @@ eps). Put x = N eps.
   c_* = (1/2) log(2 pi) - 1/4 (Theorem S1.7).
 - The center to second order. For even N >= 64 and eps(1 + log N) <= 1/100,
   log C_N = log(4 eps/(N+2)) + 2 eps log N + O(eps), with explicit constants, and the lower bound
-  holds for every 0 < eps < 1/2 (Proposition S1.1 of Online Resource 1). So
+  holds for every 0 < eps < 1/2 (Proposition S1.1 of the arXiv version). So
   x_N = g_N - (2 g_N log N + g_N^2/2)/(N(1 + 1/g_N)) + O(log N/N), where g_N is the root of
   g + log g = 2 log N - log 8, with the error at most 20822 log N/N for log N >= 30, and
   x_N < g_N for every even N with log N >= 3500 (Proposition S1.2).
@@ -79,14 +101,14 @@ eps). Put x = N eps.
   0 < eps < 1 its law is within an explicit delta_Sigma <= delta_B of a compound Poisson law with
   jumps d at rates x/(d(d+1)), now in total variation (`thm:cp`, formerly Theorem 3.8). The bulk (M_N - x log x)/x tends to the
   Landau law when x -> oo and x^3 (log N)^2/N -> 0, in particular at the crossing, with the bound
-  (889 + 165 log x)/x + 6.6 x/N + x delta_Sigma for each bin when eps <= 1/4 and x >= 1
+  (889 + 165 log x)/x + 6.6 x/N + x delta_Sigma for each value when eps <= 1/4 and x >= 1
   (Theorem 3.9).
 - The Landau density f_L has exactly one mode lambda_L, with -0.22278299 < lambda_L < -0.22278297,
   and -0.0792 <= f_L'' <= -0.0786 near it (Lemma 3.10, by ball arithmetic, and also in Lean by
   kernel-checked integration given the unimodality of f_L). So for every large N, even or odd, and
   every eps with log N <= x <= 2 log N, in particular at the crossing, every mode is at distance
   x log x + lambda_L x + O(sqrt(x log x)) from the nearer end (Corollary 3.11).
-- For even N with x >= 1 and x (log N)^2/N -> 0, bin N-m has probability (x/(2m^2))(1 + o(1)),
+- For even N with x >= 1 and x (log N)^2/N -> 0, the value N-m has probability (x/(2m^2))(1 + o(1)),
   uniformly for omega_N x log^2(x+1) <= m <= delta_N N, for any omega_N -> oo and any
   delta_N -> 0. So the tail is x/(2m^2) for x log^2 x << m << N (Theorem S2.1 of Online
   Resource 1).
@@ -98,7 +120,7 @@ eps). Put x = N eps.
   N, even or odd, and every eps with log N <= x <= 2 log N, so at the crossing for every large N
   (Theorem 3.21 and Proposition 3.25). The October 23 argument proves the unique interior
   minimum and two-hump shape for every even N >= 8 without this convexity window. The window holds for
-  5 <= N <= 2000 by a certified computation (Proposition 3.24, for N <= 9 in Lean only). For odd N the two central bins equal the center of N+1 divided by
+  5 <= N <= 2000 by a certified computation (Proposition 3.24, for N <= 9 in Lean only). For odd N the two central values equal the center of N+1 divided by
   1 - (1 - 2 eps)/N. The old finite-range minimum result (Proposition 3.26) is superseded by `cor:unique-min`.
 
 Heavy-tailed runs and aging walks, which earlier versions treated in Sections 4 and 5 and
@@ -129,14 +151,14 @@ supplementary check.
 The tables, the figures and the numbers quoted outside the proofs rest on computation alone, and so
 does the evidence for Conjecture 3.14 beyond what Section 3.5 proves (double precision at
 N = 3200, 6400, 12800 and 25600). The numbers in Remarks 3.12 and 3.27, and in Remark S1.3 of
-Online Resource 1, are of this kind.
+the arXiv version, are of this kind.
 
 ## Open
 
 - An upper bound log C_N <= log(eps c_1) + eps c_2/c_1 + O(eps^2 (log N)^k), where
   C_N = c_1 eps + c_2 eps^2 + ... at fixed N, and the smallest N beyond which the root g_N exceeds
   x_N. Proposition S1.2 proves g_N > x_N for log N >= 3500, while Table 1 has it already at N = 50
-  (Remark S1.3 of Online Resource 1).
+  (Remark S1.3 of the arXiv version).
 - Conjecture 3.14 (strict convexity between the humps) for N between 2000 and the constants N_1 and
   N_1' of Theorem 3.21 (even N) and Proposition 3.25 (odd N). Section 3.5 proves it for all large N,
   and `certify_convex.py` certifies it for 10 <= N <= 2000 (Lean also for 5 <= N <= 9). The thresholds are not computed. The shorter mass argument proves the eventual
@@ -166,22 +188,25 @@ from the classical approximations.
   `app_erw_signs` (E, the second-difference proofs). Appendices D and E were Sections S5 and S6
   of the Online Resource from October 17 to October 24, 2026, and returned to the article so that
   every proof used by the main theorems is in the article.
-- `online_resource.tex` is Online Resource 1, a separate PDF `online_resource.pdf` with the center
-  and the crossing to second order (S1), the tail (S2), the proof of parts (b) to (d) of
-  Proposition 3.25 (S3) and the likelihood theorem for the reversible fluctuation assay (S4).
-  It reads the labels of the paper through the package `xr-hyper`, so build the paper, then the
-  Online Resource, then the paper again. Its text is in `online_resource_body.tex`. Its one
-  bibliography item (Hoeffding 1963) is listed in `online_resource.tex` itself, because the paper
-  cites it too, so `online_resource_bib.tex` holds no item at present. Its caption on the submission form is
-  "Online Resource 1. Second-order crossings, tails, odd lengths and a likelihood for the
-  reversible fluctuation assay."
-- `problem131_arxiv.tex` is the arXiv version. It inputs `problem131_memory.tex` unchanged and
-  appends `online_resource_body.tex` before the bibliography, so the S numbers and the references
-  between the two parts resolve inside one PDF. Make it the top-level file of the arXiv
+- The journal version is `problem131_memory.tex` alone. It has no Online Resource and no
+  supplementary material. Where it needs a result of Sections S1 to S4 it cites the arXiv version
+  of the paper (bibliography item `arxivD`, "arXiv number to be added", with the comment
+  `% arXiv id in November`) through the macro `\arxivonly`. Add the arXiv number to that item once
+  the arXiv version has one.
+- `online_resource_body.tex` holds Sections S1 to S4: the center and the crossing to second order
+  (S1), the tail (S2), the proof of parts (b) to (d) of Proposition 3.25 (S3) and the likelihood
+  theorem for the reversible fluctuation assay (S4). Only the arXiv version prints them. Its one
+  bibliography item that the journal version does not cite (Hoeffding 1963) is in
+  `online_resource_bib.tex`. The separate Online Resource file `online_resource.tex` and its PDF
+  were removed on October 24, 2026 (they are in the git history).
+- `problem131_arxiv.tex` is the arXiv version. It defines `\PaperDCombined`, inputs
+  `problem131_memory.tex` unchanged and appends `online_resource_body.tex` before the bibliography
+  under the heading "Further results", so the S numbers and the references between the two parts
+  resolve inside one PDF. In this build `\arxivonly{Theorem}{label}` prints the S number instead of
+  a citation, and the item `arxivD` is left out. Make it the top-level file of the arXiv
   submission. The upload holds `problem131_arxiv.tex`, `problem131_memory.tex`, the `sec_*` and
   `app_*` files, `or_family_proofs.tex`, `online_resource_body.tex`, `online_resource_bib.tex`, `figures/*.pdf` and a
-  `00README.json` that names `problem131_arxiv.tex` as the top-level file. It does not hold
-  `online_resource.tex`.
+  `00README.json` that names `problem131_arxiv.tex` as the top-level file.
 - `figures/` holds the two figures of the paper, with the captions in `figures/captions.md`.
   Figure 1 (`family.pdf`) is made by `figures/make_family_figure.py` and Figure 2 (`shape.pdf`) by
   `figures/make_figures.py`, both in the shared style `../figures/series_style.py`. The second script makes the
@@ -233,7 +258,7 @@ from the classical approximations.
   endpoint-dip certificates and the complete all-even crossing shape are
   kernel-checked. `shape_at_crossing_all_even` gives the strict interior minimum,
   positive central curvature, strict rise and fall, and both complete intervals
-  of maximizing bins for every even N >= 8, with no convex-window premise.
+  of maximizing points for every even N >= 8, with no convex-window premise.
   The Landau, mode-location, eventual convexity and second-order proofs retain
   the named classical inputs listed in the map. The earlier pointwise compound
   Poisson bound is formalized, but its total variation strengthening is not.
@@ -253,13 +278,12 @@ The one verification supplement for the Problem 131 folder is `../SUPPLEMENT.md`
 calling `verify_all.py` here. Run `python -B verify_all.py` here (or `python -B verify_all.py
 --quick`, the same thing) for the quick run, which takes a few minutes, or add `--full` for the
 heavy cells. The scripts need numpy, scipy, mpmath and python-flint. Build the
-paper with `pdflatex problem131_memory.tex`, run three times so that the references settle, and
-then `pdflatex online_resource.tex` twice and the paper once more. The Code availability statement
+paper with `pdflatex problem131_memory.tex`, run three times so that the references settle. The Code availability statement
 of the paper pins the supporting code, certificate records and Lean files to commit
 `6f7f9068fc0ebb19c16d6a53fd8df5400bbd91a2`. Later edits to the text of the paper do not change
 that pin, but a change to a script, a record or a Lean file would need a new checked commit. The arXiv
 version is `problem131_arxiv.tex`. Build it with `pdflatex problem131_arxiv.tex` three times. It
-gives the paper followed by Online Resource 1 in one PDF, with one bibliography and no `xr`.
+gives the paper followed by Sections S1 to S4 in one PDF, with one bibliography.
 
 ## Statement labels and old numbers
 
@@ -274,7 +298,7 @@ earlier runs are kept in `data/` exactly as they were printed, so some of them u
 The table preserves the October 17 numbering. For each label the scripts use and each statement of Section 3, it gives that number,
 the number in the first build of October 17 (the numbers of the check scripts) and the number in the
 build just before October 17 (the numbers of `data/certify_elephant_output.txt`, with the same
-shift as in `../lean/PaperD/MAP.md`). Numbers with the prefix S are in Online Resource 1.
+shift as in `../lean/PaperD/MAP.md`). Numbers with the prefix S are in Sections S1 to S4, which are now in the arXiv version only.
 
 | TeX label | later build of October 17 | first build of October 17 | number before October 17 |
 |---|---|---|---|
@@ -357,11 +381,31 @@ and `data/certify_convex_output_2026-10-17.txt`. The center run took 2072 s and 
 (Python 3.14.3, python-flint 0.9.0, FLINT 3.6.0). Both exited with status 0, with no failures.
 The sha256 values in the witness headers are of the files as they were on disk during the run.
 `certify_center.py` and `certify_convex.py` had LF line endings and `verify_elephant_shape.py` had
-CRLF endings. Its LF form, as committed, has sha256
+CRLF endings. Its LF form, as committed at the pinned commit `6f7f9068`, has sha256
 49c78eea387b293d1dd24acc257a1d362bd7e6ce5fb6219e0eb06465223f811a.
+
+On October 24, 2026 two printed labels of `verify_elephant_shape.py` changed from "bin" to
+"value", and four printed labels and two docstring lines of `verify_elephant_odd.py` likewise. No
+computation changed. So the current `verify_elephant_shape.py` no longer matches the hash in the
+witness header of `data/witnesses_convex_2026-10-17.jsonl`. Check the witnesses against the file at
+the pinned commit `6f7f9068`, which the Code availability statement of the paper names. The
+current files have sha256 9bd9ba3ebb0a2a4d5c98a6ba27684f8ca290434ee8ada9cf4816f55512906145
+(`verify_elephant_shape.py`, CRLF on disk, LF form
+0f3ab9a3ae64d0aef9cad82e3c1d86b66be884e3f82fb9824dc1ee666276193d) and
+b40d38c8371ff03bd2c1cddb1e1baaebaf14ab7e8b600fa68ae495a5214fab3e (`verify_elephant_odd.py`).
+`certify_center.py` and `certify_convex.py` did not change. The quick run of October 24 is in
+`data/verify_output_2026-10-24.txt`.
 
 ## Final editorial revision
 
 The article is 35 pages, with a 17-page Online Resource and a 52-page combined arXiv version, compared with the preceding 41 + 12 = 53 pages. Six pages have left the main article, but the total reduction is one page: most of the change moves auxiliary proofs rather than deleting mathematics. The center and compound-Poisson/Landau proofs remain in the article. Appendix B retains its statements and numbering, with complete proofs in S5 (S4 before the likelihood theorem moved). The former Appendix D is now S6. The introduction gives shorter summaries of the explicit bounds and the verification section points to existing records instead of repeating their metadata. `cover_letter.md` requests refereeing of all the supplementary proofs. That earlier shortening did not change the Lean proofs or numerical certificates. The later October 23 revision adds the all-even shape formalization and the height window. The fixed-memory result now forms Section 4, after the shape section, and the likelihood theorem is Section S4 of the Online Resource. After that move the article is 34 pages, the Online Resource 18 pages and the combined arXiv version 52 pages. No numerical certificate was recomputed.
 
 On October 24, 2026 the family proofs (S5) and the second-difference proofs (S6) returned to the article as Appendices D and E, so that every proof used by the main theorems is in the article and the Online Resource holds only the additional results S1 to S4. The text of the proofs did not change. The article is now 39 pages, the Online Resource 14 pages and the combined arXiv version 53 pages.
+
+Later on October 24, 2026 the paper was reframed for the Journal of Theoretical Probability (see the
+first paragraph of "What is proved"). The journal version is now the article alone, 40 pages, with no
+Online Resource. The arXiv version, with Sections S1 to S4 appended, is 53 pages. The figure
+`shape.pdf` was redrawn from the cached data with the axis label "right steps a" in place of
+"bin a". No numerical certificate was recomputed, and the Lean proofs did not change.
+`../SUPPLEMENT.md` still describes the Online Resource and should be brought up to date with this
+folder.

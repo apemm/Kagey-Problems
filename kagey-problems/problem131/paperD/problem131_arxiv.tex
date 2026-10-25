@@ -1,17 +1,18 @@
-% arXiv version of Paper D: the paper followed by the mathematics of Online
-% Resource 1, in one PDF with one bibliography and internal references.
+% arXiv version of Paper D: the paper followed by Sections S1 to S4, which hold
+% further results that the journal version omits, in one PDF with one
+% bibliography and internal references.
 % Make this file the top-level file of the arXiv submission. It inputs
 % problem131_memory.tex (the journal version, unchanged), skips the
-% \documentclass line there, and appends online_resource_body.tex (the text
-% that online_resource.tex also uses) just before the bibliography. The
-% xr-hyper link to the separate Online Resource file is skipped in this build.
+% \documentclass line there, and appends online_resource_body.tex just before
+% the bibliography. Defining \PaperDCombined switches the pointers of the
+% journal version to the arXiv version into references to Sections S1 to S4.
 % Build: pdflatex problem131_arxiv.tex, three times.
 \documentclass[11pt]{article}
 
 % problem131_memory.tex begins with the same \documentclass line, which we skip.
 \renewcommand{\documentclass}[2][]{}
 
-\newcommand{\appendonlineresource}{%
+\newcommand{\appendsupplement}{%
   \clearpage
   \setcounter{section}{0}%
   \setcounter{subsection}{0}%
@@ -21,21 +22,21 @@
   \renewcommand{\thesubsection}{\thesection.\Alph{subsection}}%
   \renewcommand{\theequation}{S\arabic{equation}}%
   \renewcommand{\thetable}{S\arabic{table}}%
-  \phantomsection\pdfbookmark[1]{Online Resource 1}{online-resource-1}%
-  \begin{center}\Large\bfseries Online Resource 1\end{center}
+  \phantomsection\pdfbookmark[1]{Further results}{further-results}%
+  \begin{center}\Large\bfseries Further results\end{center}
   \par\medskip
-  This part contains the Online Resource printed separately by the journal
-  version. It includes the second-order crossing, tail and odd-$N$ results
-  and the likelihood bounds for the reversible fluctuation assay.
-  Numbers prefixed S refer to this part.
+  This part is not in the journal version. It gives the center and the
+  crossing to second order, the tail, further results for odd $N$ and a
+  likelihood bound for the reversible fluctuation assay. The main text does
+  not use them. Numbers prefixed S refer to this part.
   \par
   \input{online_resource_body.tex}%
   \par
 }
 
-% The Online Resource goes just before the bibliography. Any item cited only
-% there goes at the end of the bibliography (at present there is none).
-\AddToHook{env/thebibliography/before}{\appendonlineresource}
+% Sections S1 to S4 go just before the bibliography. Items cited only there
+% go at the end of the bibliography (online_resource_bib.tex).
+\AddToHook{env/thebibliography/before}{\appendsupplement}
 \AddToHook{env/thebibliography/end}{\input{online_resource_bib.tex}}
 
 \newcommand{\PaperDCombined}{}

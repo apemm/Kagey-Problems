@@ -341,7 +341,7 @@ def main():
     for n in range(2, 601):
         PA = law_A(n, XA[n] / n)[0]
         if n in (2, 3):
-            check(f'n = {n}: bin n-1 is a central bin, so P(A_n = n-1) = E_n at the crossing',
+            check(f'n = {n}: the value n-1 is a central value, so P(A_n = n-1) = E_n at the crossing',
                   abs(PA[n - 1] / PA[n] - 1) < 1e-9, f'ratio {PA[n - 1] / PA[n]:.12f}')
             continue
         S = shape(PA, n)
@@ -358,7 +358,7 @@ def main():
                 minfail.append(n)
     check('dip P(A_n = n-1) > E_n at the crossing for every 4 <= n <= 600 (research notes, not printed)', not dipfail, f'failures {dipfail}')
     check('exactly 3 sign changes of the first difference, 10 <= n <= 600 (research notes, not printed)', not shapefail, f'failures {shapefail}')
-    check('center bin(s) the unique interior minimum, 10 <= n <= 600 (research notes, not printed)', not minfail, f'failures {minfail}')
+    check('center value(s) the unique interior minimum, 10 <= n <= 600 (research notes, not printed)', not minfail, f'failures {minfail}')
     check('convexity between the humps (Conjecture 3.16, Proposition 3.25) holds for every 10 <= n <= 600', not openfail, f'failures {openfail}')
     expect = [10, 11] + list(range(17, 23)) + list(range(30, 36)) + list(range(48, 52))
     check('closed-range version fails exactly at n = 10, 11, 17-22, 30-35, 48-51 (endpoints only; the paper says only for some n <= 51)',
