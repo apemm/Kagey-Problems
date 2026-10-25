@@ -1,0 +1,411 @@
+\section{Proofs for reducible faces and for the counts near a facet}\label{app:counts}
+
+\subsection{Blocks of a reducible face}\label{app:reducible-blocks}
+
+In this subsection and the next, $F$ is admissible, the notation is that of
+Section~\ref{sec:reducible-max}, and $hq_{\max}\le\frac12$. For an irreducible $C$, states
+$y,x\in C$ and $m\in\Z_{\ge1}^C$ with $|m|=l$, let $G_C(m)_{yx}$ be the probability that the chain
+with $X_1=y$ has composition $m$ in $X_1,\dots,X_l$ and $X_l=x$. So $G_{\{i\}}(m)=(1-hq_i)^{m-1}$.
+For $n$ with support $F$ let $n^{(j)}$ be $n$ restricted to $C_j$, $N_j=|n^{(j)}|$, $s_j=hN_j$ and
+$G_j=G_{C_j}(n^{(j)})$. The blocks of a path with composition $n$ occupy fixed times, a path that
+starts outside $C_1$ never visits $C_1$, and the Markov property at the $r-1$ switches gives
+\[
+P_N(n)=\mu_{C_1}^\top G_1\,(hR_1)\,G_2\,(hR_2)\cdots(hR_{r-1})\,G_r\,\ones .
+\]
+
+\emph{The bridge run expansion.} Let $|C|=k\ge2$ and write $W_{yx}=W_{A_C,e_y,e_x}$. The proof of
+Lemma~\ref{lem:runs}, with the first and the last letter of the words fixed, gives
+$G_C(m)_{yx}=\sum_{m'}W_{yx}(m')h^{M'-1}\prod_i\binom{m_i-1}{m'_i-1}(1-hq_i)^{m_i-m'_i}$. As in
+Step~1 of the proof of Lemma~\ref{lem:discrete}, with $t=hm$ the $m'$-th term is $\kappa_{m'}v_{m'}$,
+where $v_{m'}=W_{yx}(m')h^{k-1}\prod_ie^{-q_it_i}t_i^{m'_i-1}/(m'_i-1)!$, so that
+$\sum_{m'}v_{m'}=h^{k-1}\Phi_C(t)_{yx}$, and $\kappa_{m'}$ is the factor of that proof. Its
+argument for~\eqref{eq:A-kappa} gives
+\[
+1-\sum_i\frac{m'_i(m'_i-1)}{2m_i}-q_{\max}^2h|t|\le\kappa_{m'}\le e^{hq_{\max}M'} .
+\]
+Since $W_{yx}(m')\le k^{M'}q_{\max}^{M'-1}$, the series of $\Phi_C$ converges for every
+$t\in\R^C$, and so do the series with the extra factors $M'e^{M'/2}$ or $m'_i(m'_i-1)t_i^{-1}$ in their
+terms. So $\Phi_C$ is real-analytic on $\R^C$, and these series are bounded on bounded sets.
+Also $\Phi_C(t)_{yx}>0$ for $t\in(0,\infty)^C$, since some word from $y$ to $x$ uses every state.
+
+\begin{lemma}[one bound for every block]\label{lem:block-bound}
+There is $C_0$ such that for $N\ge N_0$, $T\le N^{1/3}$, every $j$, all $y,x\in C_j$ and every
+$m$ with $\supp m=C_j$ and $s=h|m|\le T$, we have $G_{C_j}(m)_{yx}\le C_0h^{k_j-1}w_j(s)$, where
+$w_j(s)=(1\vee s)^{-(k_j-1)/2}e^{-\lambda_Fs}$ if $\lambda_j=\lambda_F$ and $k_j\ge2$, and
+$w_j(s)=e^{-\lambda_js}$ otherwise.
+\end{lemma}
+
+\begin{proof}
+For $k_j=1$, $(1-hq_i)^{|m|-1}\le e^{hq_i}e^{-q_is}$. Let $k_j\ge2$. The bridge is at most the
+probability that the chain started at $y$ has composition $m$ in its first $|m|$ visits.
+Lemma~\ref{lem:upper} with the start $e_y$ and $\theta=q-\lambda_j\ones\in V_{C_j}$ bounds it by
+$Ch^{k_j-1}e^{-\lambda_js}$. If $\lambda_j=\lambda_F$ and $s\ge1$, we apply
+Theorem~\ref{thm:facemax}(b) with $v=0$ to the chain started at $y$ on the face $C_j$, which
+satisfies (H), with $l=|m|$ steps and time $s$ in place of $N$ and $T$, and the same $h$. Its
+range holds, since $l=sN/T\ge N^{2/3}$ and $s^3\le l$ is $s^2T\le N$. It gives
+$G_{C_j}(m)_{yx}\le C'l^{-(k_j-1)}s^{(k_j-1)/2}e^{-\lambda_Fs}=C'h^{k_j-1}s^{-(k_j-1)/2}e^{-\lambda_Fs}$
+with a constant $C'$ for the start $e_y$. There are finitely many starts $y$.
+\end{proof}
+
+\begin{lemma}[blocks of bounded time]\label{lem:block-short}
+For every $R$ there is $C_R$ such that $|G_C(m)_{yx}/h^{|C|-1}-\Phi_C(hm)_{yx}|\le C_Rh$ for all
+$y,x\in C$ and $\supp m=C$ with $h|m|\le R$. Hence, if $D=\nu^\top\Psi_1R'_1\Psi_2\cdots R'_{p-1}\Psi_pw$
+with fixed nonnegative $\nu$, $R'_c$ and $w$ and $\Psi_c=G_{C_c}(m^{(c)})/h^{|C_c|-1}$, and $D^{\rm c}$
+is the same product with $\Phi_{C_c}(hm^{(c)})$, then $|D-D^{\rm c}|\le C'_Rh$ when
+$\sum_ch|m^{(c)}|\le R$.
+\end{lemma}
+
+\begin{proof}
+For a singleton, $e^{hq}e^{-qt}\ge(1-hq)^{m-1}\ge e^{-qt-q^2ht}$ with $t=hm$. Let $|C|=k\ge2$.
+By the bound on $\kappa_{m'}$, $\kappa_{m'}-1\le hq_{\max}M'e^{M'/2}$, which gives
+$G/h^{k-1}-\Phi_C\le C_Rh$. Also $1-\kappa_{m'}\le\sum_im'_i(m'_i-1)/(2m_i)+q_{\max}^2hR$, and
+since $1/m_i=h/t_i$, the sum of $v_{m'}m'_i(m'_i-1)/(2m_i)$ over $m'$ is $h^k$ times a series with
+the extra factor $m'_i(m'_i-1)/(2t_i)$, which is bounded on $|t|\le R$. This gives
+$\Phi_C-G/h^{k-1}\le C_Rh$. For the product we telescope, since every factor is bounded
+on $|t|\le R$.
+\end{proof}
+
+\begin{lemma}[the bridge law]\label{lem:block-local}
+Let $|C|=k\ge2$ and let $\mathcal K\subset\Delta_C^\circ$ be compact. Uniformly for $y,x\in C$,
+$m$ with $m/l\in\mathcal K$ and $1\le s=hl\le l^{1/2}$,
+$G_C(m)_{yx}=h^{k-1}\Phi_C(hm)_{yx}(1+O(s^2/l))$.
+\end{lemma}
+
+\begin{proof}
+This is the proof of Lemma~\ref{lem:discrete} in Appendix~\ref{app:torus}, with the bridge run
+expansion in place of Lemma~\ref{lem:runs}, and $l$ and $s$ in place of $N$ and $T$. Its Step~3
+uses the weights only through an upper bound on $H$ for $eA_C$ and a lower bound on $H$ at
+$t=s\alpha$. Step~2 of the proof of Lemma~\ref{lem:upper}, with Lemma~\ref{lem:torus-complex}
+for $(A_C,e_y,e_x)$ in place of Lemma~\ref{lem:torus}, gives~\eqref{eq:A-Hsigma} for $H_{A_C,e_y,e_x}$
+with $b_{yx}$ in place of $b$, and $b_{yx}(\theta'(\alpha))$ is bounded on $\mathcal K$.
+Lemma~\ref{lem:local-general} with $(\nu,e)=(e_y,e_x)$ gives
+$H_{A_C,e_y,e_x}(s\alpha)e^{-s\langle\alpha,\theta(\alpha)\rangle}\ge cs^{-(k-1)/2}$ for $s\ge s_1$,
+and for $1\le s\le s_1$ the left side is continuous and positive on $[1,s_1]\times\mathcal K$.
+\end{proof}
+
+\begin{lemma}[bridge maxima]\label{lem:block-max}
+Let $|C|=k\ge2$, $\lambda=\lambda_C$ and $\Sigma=\Sigma_C$, and put
+$Y_{yx}=h^{k-1}s^{-(k-1)/2}r_{C,y}l_{C,x}e^{-\lambda s}/((2\pi)^{(k-1)/2}\sqrt{\det\Sigma})$. There
+are $s_2$, $l_2$ and $C_3$ such that the following hold for $y,x\in C$, $l\ge l_2$ and
+$s=hl\in[s_2,l^{1/3}]$. \textup{(i)} $G_C(m)_{yx}\le Y_{yx}(1+C_3(1/s+s^2/l))$ for every $m$ with
+$|m|=l$ and $\supp m=C$. \textup{(ii)} $G_C(m^0)_{yx}\ge Y_{yx}(1-C_3(1/s+s^2/l))$ if
+$|m^0_i-l\alpha^*_{C,i}|<1$ for all $i$.
+\end{lemma}
+
+\begin{proof}
+Put $c_{yx}(\alpha)=r_{\alpha,y}l_{\alpha,x}/((2\pi)^{(k-1)/2}\sqrt{\det\Sigma_\alpha})$, which is
+real-analytic and positive on $\Delta_C^\circ$ by Proposition~\ref{prop:constant}(a), with
+$c_{yx}(\alpha^*_C)=r_{C,y}l_{C,x}/((2\pi)^{(k-1)/2}\sqrt{\det\Sigma})$. Let $J^0=J_C-\lambda$, which is
+nonnegative and vanishes only at $\alpha^*_C$ (Proposition~\ref{prop:rate}(a)), and let $\xi$ be
+the displacement $\alpha'-\alpha^{*\prime}_C$. Since $\nabla^2J_C=\Sigma_\alpha^{-1}$, Taylor's
+theorem gives $\rho_0,c_U,C_U,C_1>0$ such that $U=\{|\xi|\le\rho_0\}\subset\Delta_C^\circ$ and on
+$U$, for all $y,x$, $c_U|\xi|^2\le J^0\le C_U|\xi|^2$,
+$|\log(c_{yx}(\alpha)/c_{yx}(\alpha^*_C))-g_{yx}\cdot\xi|\le C_1|\xi|^2$ with $|g_{yx}|\le C_1$,
+and $\log c_{yx}$ is $C_1$-Lipschitz.
+
+\emph{Outside $U$.} The function $J^0$ is lower semicontinuous and positive on the compact set
+$E=\Delta_C\setminus\{|\xi|<\rho_0\}$, so $J^0\ge3\eta$ there for some $\eta>0$. Since
+$J_C=\sup_{\theta\in V_C}\langle q-\theta,\cdot\rangle$ (Section~\ref{sec:firstorder}), each
+point of $E$ has a neighborhood on which one $\theta\in V_C$ gives
+$\langle q-\theta,\cdot\rangle>\lambda+2\eta$, and finitely many $\theta_1,\dots,\theta_p$ cover
+$E$. For $m/l\in E$, the bridge is at most the probability that the chain started at $y$ has
+composition $m$ in its first $l$ visits, and Lemma~\ref{lem:upper} bounds it by
+$Ch^{k-1}e^{-s(\lambda+2\eta)}=Y_{yx}\,O(s^{(k-1)/2}e^{-2\eta s})=Y_{yx}\,O(1/s)$.
+
+\emph{Inside $U$.} Lemma~\ref{lem:block-local} and Lemma~\ref{lem:local-general} with
+$(\nu,e)=(e_y,e_x)$ at $t=s\alpha$ give
+$G_C(m)_{yx}=Y_{yx}(c_{yx}(\alpha)/c_{yx}(\alpha^*_C))e^{-sJ^0(\alpha)}(1+E)$ with
+$|E|\le C_2(1/s+s^2/l)$, where $\alpha=m/l$. For $s\ge2C_1/c_U$ the logarithm of the two middle
+factors is at most $g_{yx}\cdot\xi-\frac12c_Us|\xi|^2\le|g_{yx}|^2/(2c_Us)$. With the bound outside
+$U$ this proves (i). For (ii), $|\xi|\le k/l$ at $m^0$, so $c_{yx}(m^0/l)\ge c_{yx}(\alpha^*_C)e^{-kC_1/l}$
+and $sJ^0(m^0/l)\le C_Uk^2s/l^2$.
+\end{proof}
+
+\subsection{Proofs of Theorem~\ref{thm:reducible} and Corollary~\ref{cor:reducible-crossing}}
+
+\begin{proof}[Proof of Theorem~\ref{thm:reducible}]
+Write $a=a_F$, $K=K^{\rm red}_F$ and $X=N^{-(k_F-1)}T^{p_F}e^{-T\lambda_F}=h^{k_F-1}T^{-a}e^{-T\lambda_F}$.
+For $j\in S^*$ let $F^<_j(t^<)$ and $F^>_j(t^>)$ be the functions inside the suprema that define
+$A_j$ and $B_j$. Call a block flat if it is a singleton $\{i\}$ with $q_i=\lambda_F$. Flat
+blocks exist only if $k^*=1$, and then they are the blocks in $S^*$. Put
+$\tilde w_m(u)=e^{\lambda_Fu}w_m(u)\le1$, with $w_m$ from Lemma~\ref{lem:block-bound}, let
+$\delta_0>0$ be the least positive $\lambda_m-\lambda_F$ ($\delta_0=1$ if there is none), and
+$\eta(u)=\max(e^{-\delta_0u},u^{-1/2})$ for $u\ge1$. A block that is not flat and has time
+$u\ge1$ has $\tilde w_m(u)\le\eta(u)$.
+
+\emph{The constant.} Since $\Phi_C$ is real-analytic on $\R^C$, $F^<_j$ and $F^>_j$ are Lipschitz
+on bounded parts of the closed orthants, and the suprema over the open and the closed orthants
+agree. Fix $t\in(0,\infty)^C$, let $h\to0$ and $m=\lceil t/h\rceil$. By
+Lemma~\ref{lem:block-short}, $G_C(m)/h^{|C|-1}\to\Phi_C(t)$, and Lemma~\ref{lem:block-bound} with
+$T=|t|+1$ and $N=T/h$ gives $e^{\lambda_F|t|}\Phi_{C_m}(t)\le C_0\tilde w_m(|t|)$ entrywise. So
+every factor in $F^<_j$ and $F^>_j$ is bounded, and $A_j,B_j<\infty$. They are positive, since
+$\mu_{C_1}\ge0$ and every $R_m\ge0$ are nonzero, $r,l>0$ and every $\Phi_{C_m}>0$ on the open
+orthant. If $k^*\ge2$, no factor is flat, so $F^<_j$ and $F^>_j$ tend to $0$ at infinity, and the
+suprema are attained at points $t^<_*$ and $t^>_*$ of the closed orthants.
+
+\emph{Upper bound.} Let $\supp n=F$, so $\sum_ms_m=T$. By the factorization and
+Lemma~\ref{lem:block-bound}, summed over the finitely many switch states, and since
+$\sum_m(k_m-1)+r-1=k_F-1$,
+\[
+P_N(n)\le C_1h^{k_F-1}e^{-\lambda_FT}\prod_m\tilde w_m(s_m).
+\]
+Let $k^*\ge2$ and take $m_0$ with $s_{m_0}\ge T/r$. (A) If $m_0\notin S^*$, then
+$\lambda_{m_0}>\lambda_F$, or $\lambda_{m_0}=\lambda_F$ and $k_{m_0}\ge k^*+1$, so
+$P_N(n)\le C_1XT^a\max(e^{-\delta_0T/r},(T/r)^{-a-1/2})\le KX$ for $T\ge T_1$. (B1) If $m_0=j\in S^*$
+and $T-s_j\ge R_0$, another block has time at least $R_0/r$, and $\tilde w_j(s_j)\le(T/r)^{-a}$, so
+$P_N(n)\le C_1r^a\eta(R_0/r)X\le KX$ once $R_0$ is fixed large. (B2) If $m_0=j\in S^*$ and
+$T-s_j<R_0$, write $P_N(n)=\mathbf a^\top G_j\mathbf b$ with
+$\mathbf a^\top=\mu_{C_1}^\top G_1hR_1\cdots G_{j-1}hR_{j-1}$ and $\mathbf b=hR_jG_{j+1}\cdots G_r\ones$,
+both nonnegative. Lemma~\ref{lem:block-max}(i) applies with $l=N_j\ge N/2$ and $s=s_j\ge T-R_0$,
+since $s_j^3\le N_j$ means $s_j^2T\le N$, and $s_j^2/N_j=s_jT/N$. It gives
+\[
+P_N(n)\le h^{k^*-1}s_j^{-a}e^{-\lambda_Fs_j}\,\frac{(\mathbf a\cdot r)(l'\cdot\mathbf b)}{(2\pi)^a\sqrt{\det\Sigma_{C_j}}}\,
+\Bigl(1+C\Bigl(\frac1T+\frac{T^2}N\Bigr)\Bigr),
+\]
+where $r=r_{C_j}$ and $l'=l_{C_j}$. Let $\varkappa_<=\sum_{m<j}(k_m-1)+j-1$ be the number of factors $h$ in $\mathbf a$. Then
+$\mathbf a\cdot r/h^{\varkappa_<}$ is a product as in Lemma~\ref{lem:block-short} with total time
+$\rho_<<R_0$, whose continuum version is at most $e^{-\lambda_F\rho_<}A_j$. So
+$e^{\lambda_F\rho_<}\mathbf a\cdot r\le h^{\varkappa_<}(A_j+Ch)$, and likewise
+$e^{\lambda_F\rho_>}l'\cdot\mathbf b\le h^{\varkappa_>}(B_j+Ch)$. Since
+$\varkappa_<+\varkappa_>+k^*-1=k_F-1$, $\rho_<+\rho_>+s_j=T$, $s_j^{-a}\le T^{-a}(1+CR_0/T)$ and
+$h\le T^2/N$, we get $P_N(n)\le X(K+C(1/T+T^2/N))$.
+
+Let $k^*=1$, and let $\rho$ be the total time of the blocks that are not flat. If $\rho\ge R_0$,
+one of them has time at least $R_0/r$, and $P_N(n)\le C_1\eta(R_0/r)X\le KX$. If $\rho<R_0$, each
+flat block has $(1-h\lambda_F)^{N_m-1}\le e^{h\lambda_F}e^{-\lambda_Fs_m}$, and the other blocks
+form products as in Lemma~\ref{lem:block-short} with total time below $R_0$. So
+$P_N(n)\le h^{k_F-1}e^{-\lambda_FT}e^{rhq_{\max}}(\Psi^*+Ch)$, where $\Psi^*$ is the supremum of
+$e^{\lambda_F|t|}\mu_{C_1}^\top\Phi_{C_1}R_1\cdots\Phi_{C_r}\ones$, in which every flat factor
+equals $1$. At a flat $j\in S^*$ this product splits into the products of $A_j$ and $B_j$, in
+disjoint variables, so $\Psi^*=A_jB_j=K$.
+
+\emph{Lower bound.} Let $k^*\ge2$, and take $j\in S^*$ that attains the maximum in $K$ and the
+points $t^<_*$ and $t^>_*$, with total time $\tau_*$. For $m\ne j$ put
+$n^{(m)}=\max(1,\lceil t^{(m)}_*/h\rceil)$ entrywise. Every entry of $hn^{(m)}$ is within $h$ of
+that of $t^{(m)}_*$, so $F^<_j(hn^<)\ge A_j-Ch$ and $F^>_j(hn^>)\ge B_j-Ch$. Give block $j$ the
+length $l=N-\sum_{m\ne j}N_m$ and a composition $m^0$ with $|m^0_y-l\alpha^*_{C_j,y}|<1$, which has
+full support for large $N$, so that $s=hl\in[T-\tau_*-Ch,T]$. By Lemma~\ref{lem:block-short},
+$\mathbf a\ge h^{\varkappa_<}(\mathbf a^{\rm c}-Ch)$ entrywise, with
+$e^{\lambda_F|hn^<|}\mathbf a^{\rm c}\cdot r=F^<_j(hn^<)$, and likewise for $\mathbf b$.
+Lemma~\ref{lem:block-max}(ii) and nonnegativity give
+$P_N(n)\ge h^{k_F-1}s^{-a}e^{-\lambda_FT}(A_j-Ch)(B_j-Ch)((2\pi)^a\sqrt{\det\Sigma_{C_j}})^{-1}(1-C(1/T+T^2/N))$,
+and $s^{-a}\ge T^{-a}$. So $M_F\ge X(K-C(1/T+T^2/N))$. Let $k^*=1$. The supremum $\Psi^*$ is
+attained at a point of the closed orthants. Indeed, with the flat factors equal to $1$, every
+other factor is at most $C_0\tilde w_m\le C_0$, and a factor whose time grows tends to $0$, since
+it is not flat. So the function tends to $0$ at infinity. We take a flat $j\in S^*$, treat the
+blocks that are not flat in the same way at such a point, give every other flat block the length $1$,
+and use $(1-h\lambda_F)^{l-1}\ge e^{-\lambda_Fs}(1-CT^2/N)$ for block $j$.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:reducible-crossing}]
+Theorem~\ref{thm:reducible} for $F$ and $G$ gives, uniformly on $[T_1,N^{1/3}]$,
+\[
+D_N(T)=-\Delta L+\Xi(T)+\kappa+O\Bigl(\frac1T+\frac{T^2}N\Bigr),\qquad\Xi(T)=\delta T+\pi\log T .
+\]
+(i) For fixed $N$, $M_F$ and $M_G$ are positive maxima of finitely many polynomials in $h$, so
+$D_N$ is continuous. At $T=\frac\Delta{2\delta}L$ the display gives $D_N=-\frac\Delta2L+O(\log L)<0$,
+and at $T=\frac{2\Delta}\delta L$ it gives $D_N=\Delta L+O(\log L)>0$.
+
+(ii) A zero has $\delta T_N+\pi\log T_N=\Delta L+O(1)$. If $\pi\ge0$, then $\delta T_N\le\Delta L+O(1)$.
+If $\pi<0$, then $\pi\log T_N\ge\pi L/3$, since $T_N\le N^{1/3}$, and
+$\delta T_N\le(\Delta+|\pi|/3)L+O(1)$. So $T_N=O(L)$, then $T_N=\frac\Delta\delta L+O(\log L)$, and
+the error term is $O(1/L)$.
+
+(iii) Let $\Xi(T^\circ)=\Delta L-\kappa$. As in (ii), $T^\circ=\frac\Delta\delta L+O(\log L)$, and
+$\Xi'=\delta+\pi/T\ge\delta/2$ on $[\frac\Delta{2\delta}L,\frac{2\Delta}\delta L]$ for large $N$.
+So every zero is within $O(1/L)$ of $T^\circ$. Putting
+$\log T^\circ=\log L+\log\frac\Delta\delta+O(\log L/L)$ into $\delta T^\circ=\Delta L-\pi\log T^\circ-\kappa$
+gives the formula.
+\end{proof}
+
+\subsection{Proof of Theorem~\ref{thm:pair-counts}}
+
+(a) For $G=\{j\}$ the only word in Lemma~\ref{lem:layer-exact-discrete} is $j^{N'}$, so
+$P^{(z)}_{N'}(\hat n)=(\mu_j+zh\mu_iq_{ij})(1+zhq_{ji})(p_j+zh^2\omega)^{N'-1}$ and
+$P^{(0)}_{N'}(\hat n)=\mu_jp_j^{N'-1}$. We divide by it, expand
+$(1+zh\frac{\mu_i}{\mu_j}q_{ij})(1+zhq_{ji})=\sum_ec_eh^ez^e$ and $(1+zh^2\omega/p_j)^{N'-1}$ by the
+binomial theorem, and use the lemma.
+
+(b) By Lemma~\ref{lem:L-two}, $\widetilde\Lambda(z)=(1+c_1z+c_2z^2)e^{S\omega z}$. So
+$\xi_e=c_e$ in the Laguerre form of Section~\ref{sec:layer-counts}, which follows from
+$\sum_K\binom{n-1}{K-1}p^{n-K}h^K(S\omega)^{K-e}/(K-e)!=p^n(h/p)^eB^{(e)}_n(u)$.
+
+(c) Write $n=n_i$, $p=p_i$ and $m=K-e$. The $(K,e)$ term of $R$ is $\rho_m$ times the $(K,e)$ term
+$t_{K,e}=\binom{n-1}{K-1}p^{n-K}h^Kc_e(S\omega)^m/m!$ of $\mathbf K^h$, where
+$\rho_m=\prod_{l=1}^m(1-l/N')\,p_j^{-m}$, which is $0$ for $m\ge N'$. All $t_{K,e}\ge0$, so
+$R/\mathbf K^h=\E_\nu\rho_m$ for the probability $\nu$ proportional to $t_{K,e}$. Since
+$-\log(1-y)\le2y$ for $y\le\frac12$, $1-m(m+1)/(2N')\le\rho_m\le e^{2hq_jm}$. Fix $e$. Then
+$t_{K,e}$ is proportional to $\beta_K=\binom{n-1}{K-1}u^m/m!$, and
+$\beta_{K+1}/\beta_K=\frac{n-K}K\cdot\frac u{K+1-e}\le\frac U{K(K+1-e)}$. Multiplying out and
+summing over $K$ gives $\E[(K-1)(K-e)]\le U$ under the law proportional to $\beta_K$, that is
+$\E[(m-1)m]\le U$ for $e=0$, $\E[m^2]\le U$ for $e=1$ and $\E[m(m+1)]\le U$ for $e=2$. So
+$\E m\le1+\sqrt U$ and $\E m(m+1)\le U+2\sqrt U+2$, which gives the lower bound. Since
+$\beta_K\propto u^m$, the logarithmic derivative of $\mathcal S_e(u)=\sum_K\beta_K$ is
+$\E^{(u)}[m]/u$. So with $c=2hq_j\le1$ and $\sigma=e^c$,
+$\log\E e^{cm}=\int_u^{\sigma u}\E^{(v)}[m]\,v^{-1}dv\le c(1+\sqrt{\sigma U})\le c(1+2\sqrt U)$,
+which gives the upper bound. Mixing over $e$ keeps both bounds. For the last claim,
+$U/N'\le2\omega h^2n$, $\sqrt U/N'\le h\sqrt{2\omega}$, $1/N'\le2h$ since $hN'\ge T/2$, and
+$hq_j\sqrt U=O(h^2\sqrt{N'n})$. For $T\le N^{1/2}$ we have $h^2\sqrt{N'n}\le h^2N=T^2/N\le1$, so
+the exponent $2hq_j(1+2\sqrt U)$ is bounded and the upper bound is $1+O(h+h^2\sqrt{N'n})$.
+
+(d) Let $a_K=[z^K]\widetilde\Lambda=\sum_ec_e(S\omega)^{K-e}/(K-e)!$. By~\eqref{eq:layer-series},
+$\mathbf K(x,S)=e^{-q_ix}\sum_{K\ge1}x^{K-1}a_K/(K-1)!$, and the $(K,e)$ terms of $\mathbf K^h/h$ and
+$\mathbf K$ have the ratio $\prod_{l<K}(1-l/n)\,p^{n-K}e^{hq_in}$, which lies between
+$(1-K(K-1)/(2n))e^{-hq_i^2x}$ and $e^{hq_iK}$, and is $0$ for $K>n$. So
+$\mathbf K^h/(h\mathbf K)$ is the mean of this ratio under the probability $\nu'$ proportional to
+the terms $t'_{K,e}=c_ex^{K-1}(S\omega)^{K-e}/((K-1)!(K-e)!)$ of $\mathbf K$. For fixed $e$,
+$t'_{K+1,e}/t'_{K,e}=U'/(K(K+1-e))$ with $U'=\omega Sx$, and as in (c) this gives
+$\E_e[(K-1)(K-e)]=U'$. Since $m=K-e\ge0$ is an integer, this gives $\E_e[K(K-1)]\le3U'$ for $e\le1$ and
+$\E_2[K(K-1)]\le3U'+2$. The total weights of $e=0,1,2$ are $S\omega\mathcal I(U')$, at least $c_1\mathcal I(U')$
+and $c_2x\,\mathcal I(U')$, with $\mathcal I$ of Section~\ref{sec:vertex}, so $\nu'(e=2)\le c_2x/(c_1+S\omega)$.
+Hence $\E_{\nu'}[K(K-1)]/(2n)\le\frac32\omega hS+c_2h/c_1$. As in (c),
+$\E_{\nu'}e^{hq_iK}\le e^{hq_i(3+2\sqrt{U'})}=1+O(h+hS)$, since $\sqrt{U'}\le\sqrt\omega\,S$ for
+$n\le N'$. Also $e^{-hq_i^2x}\ge1-q_i^2hS$. This proves (d). \qed
+
+\subsection{Proof of Theorem~\ref{thm:layer-counts}}
+
+Constants depend only on $Q$, $\mu$, $i$ and $\mathcal K$. Write $n=n_i$, $p=p_i$, $s=h\hat n=S\beta$,
+$\tilde x=(n-1)h$ and
+\[
+w_d(z)=\Bigl(p+\frac hz\Bigr)^{n-1}=\sum_{K=1}^nb_Kz^{-(K-1)},\qquad b_K=\binom{n-1}{K-1}p^{n-K}h^{K-1},
+\]
+so that $\mathbf K^h_\beta(n,S)=h\sum_Kb_K[z^K]\widetilde\Lambda_\beta$. Let $\Lambda$,
+$\varepsilon$, $\Xi$ and $R=\log\Xi$ be as in the proof of Theorem~\ref{thm:layer}(a). So
+$|\varepsilon(z)-\varepsilon(0)|\le C|z|/S$ for $|z|\le z_0$, and $R$ is real on the real axis with
+$|R(z)|\le C(|z|+S|z|^2)$, $|R'(z)|\le C(1+S|z|)$ and $|R''|\le C(1+S)$ on $|z|\le z_0$. Throughout,
+$hS\le T^2/N\le1$, $\tilde x\le x\le\delta T$ and $S\ge(1-\delta)T$.
+
+\emph{The coefficient identity.} The proof of Lemma~\ref{lem:layer-exact} uses the rates only as
+weights of words. So for every matrix $q'$ of nonnegative rates on $F$ in place of $Q$, with the
+same $q_G$ in the exponent, the coefficient of $x^{K-1}/(K-1)!$ in~\eqref{eq:layer-series} gives
+\[
+e^{-\langle q_G,s\rangle}\sum_{m:\,m_i=K}W'(m)\prod_{j\in G}\frac{s_j^{m_j-1}}{(m_j-1)!}=[z^K]f'^{(z)}_G(s),
+\]
+where $W'$ and $f'^{(z)}_G$ are $W$ and $f^{(z)}_G$ built from $q'$, with
+$d'(z)=q_G-zc'^-\circ c'^+$.
+
+\emph{The radius.} Put $\tilde z_*=\sqrt{\tilde x/(\omega_\beta S)}$ and
+$\tilde\zeta=2\sqrt{\omega_\beta S\tilde x}$. If $\tilde\zeta\le Z_0$, let $\rho=\max(\tilde z_*,1/S)$.
+If $\tilde\zeta>Z_0$, let $\rho$ be the critical point on $I=[\tilde z_*/2,2\tilde z_*]$ of
+$\lambda_d(z)=(n-1)\log(p+h/z)+S\omega_\beta z+R(z)$. Let
+$\mathcal A_d=\frac1{2\pi\mathrm i}\oint_{|z|=\rho}w_d\Lambda\,dz/z^2$, let $\mathcal A_d^{\rm abs}$ be
+the integral of $|w_d\Lambda||z|^{-2}$ against $|dz|/(2\pi)$, and $\zeta_d=\max(1,S\omega_\beta\rho)$.
+
+\begin{lemma}[the discrete contour]\label{lem:counts-contour}
+For $Z_0$ large, then $\delta$ small and $T_0$ large, $\rho$ is well defined, $\rho\le z_0/2$,
+$\mathcal A_d>0$, $\mathcal A_d^{\rm abs}\le C\mathcal A_d$ and
+$\mathcal A_d\ge c\rho^{-1}w_d(\rho)\Lambda(\rho)\zeta_d^{-1/2}$. With
+$\mathbf D=\sum_Kb_K[z^K]f^{(z)}_G(s)=\frac1{2\pi\mathrm i}\oint_{|z|=\rho}w_df^{(z)}_G(s)\,dz/z^2$,
+\[
+\mathbf D=(1+\varepsilon(0))\mathcal A_d(1+O(\rho/S)),\qquad\rho/S\le C(T^{-2}+x^{1/2}T^{-3/2}).
+\]
+\end{lemma}
+
+\begin{proof}
+\emph{Few visits.} Here $\rho\le C/S$. On the circle $|w_d|\le e^{\tilde x/\rho}\le e^{\tilde\zeta/2}\le e^{Z_0/2}$,
+$|e^{S\omega_\beta z}|\le C$ and $|\Xi-1|\le C/S$. With $\Xi=1$ the integral is
+$\Lambda(0)\sum_Kb_K(S\omega_\beta)^K/K!\ge\Lambda(0)p^{n-1}S\omega_\beta\ge cS\Lambda(0)$, since
+$p^{n-1}\ge e^{-2q_i\tilde x}$ and $\tilde x\le Z_0^2/(4\omega_{\min}S)$. The change from $\Xi=1$ is at
+most $C\Lambda(0)\rho^{-1}/S\le C\Lambda(0)$, and $\mathcal A_d^{\rm abs}\le C\Lambda(0)S$ and
+$\rho^{-1}w_d(\rho)\Lambda(\rho)\le CS\Lambda(0)$. This gives the claims.
+
+\emph{Many visits.} Put $a=h/\tilde z_*=2h\omega_\beta S/\tilde\zeta\le2\omega_{\max}/Z_0\le\frac18$.
+Here the lattice enters, and $hS\le1$ makes it harmless. On $I$,
+$\lambda_d'(z)=-\tilde x/(z^2(p+h/z))+S\omega_\beta+R'(z)$. The first term is at most
+$-4\omega_\beta S/(1+2a)$ at $\tilde z_*/2$ and at least $-\omega_\beta S/2$ at $2\tilde z_*$,
+since $p\ge\frac12$, and $|R'|\le C(1+S\tilde z_*)$ with $\tilde z_*\le\sqrt{2\delta/\omega_{\min}}$.
+So $\lambda_d'$ changes sign on $I$. Also
+$\lambda_d''(z)=\tilde x(2p+h/z)z^{-3}(p+h/z)^{-2}+R''(z)\ge\omega_\beta S/(18\tilde z_*)-C(1+S)>0$
+on $I$, since $(2p+y)/(p+y)^2\ge\frac49$ for $p\in[\frac12,1]$ and $0\le y\le\frac14$. So $\rho$ is
+unique, and $\rho\le2\tilde z_*\le z_0/2$ for $\delta$ small. On the circle $h/\rho\le\frac14$, so
+$\operatorname{Re}(p+h/z)\ge\frac14$, $\lambda_d$ is holomorphic near the circle, real on
+$(0,z_0]$, and $e^{\lambda_d}=w_d\Lambda/\Lambda(0)$. Since
+$|p+(h/\rho)e^{-\mathrm i\phi}|$ is largest at $\phi=0$, and
+$\operatorname{Re}[R(z)-R(\rho)]\le C(\rho+S\rho^2)(1-\cos\phi)$ as in the proof of
+Theorem~\ref{thm:layer}(a), we get
+$\operatorname{Re}\lambda_d(\rho e^{\mathrm i\phi})-\lambda_d(\rho)\le-\frac{\zeta_d}2(1-\cos\phi)$,
+with $\zeta_d\ge\tilde\zeta/4\ge Z_0/4$. Let $\ell(\phi)=\lambda_d(\rho e^{\mathrm i\phi})/\zeta_d$. The
+critical equation reads $\tilde x/(\rho(p\rho+h))=S\omega_\beta(1+\eta)$ with $|\eta|\le\frac1{10}$,
+so $(n-1)h/(p\rho)\le3\zeta_d$, and the $\phi$-derivatives of $\ell$ up to order four are bounded.
+Also $-\ell''(0)=\rho^2\lambda_d''(\rho)/\zeta_d=(1+\eta)(2p\rho+h)/(p\rho+h)+O(\rho+1/S)\in[0.4,3]$.
+Remark~\ref{rem:laplace-uniform} with $m=1$, the amplitude $e^{-\mathrm i\phi}$ and $\zeta_d$ in place of
+$T$ gives
+$\mathcal A_d=\Lambda(0)\rho^{-1}e^{\lambda_d(\rho)}(2\pi\zeta_d(-\ell''(0)))^{-1/2}(1+O(1/\zeta_d))$,
+which proves the claims, since $\Lambda(0)e^{\lambda_d(\rho)}=w_d(\rho)\Lambda(\rho)$.
+
+\emph{Consequence.} $\mathbf D-(1+\varepsilon(0))\mathcal A_d$ is the integral of
+$w_d\Lambda(\varepsilon(z)-\varepsilon(0))$, which is at most $C(\rho/S)\mathcal A_d^{\rm abs}$ in
+modulus. Finally $\rho\le C/S$ with few visits and $\rho\le2\sqrt{\tilde x/(\omega_\beta S)}$ with
+many.
+\end{proof}
+
+\begin{lemma}[the facet states discretized]\label{lem:counts-half}
+Uniformly as in Theorem~\ref{thm:layer-counts}, $P_N(n)=h^{k-1}\mathbf D(1+O(T^2/N))$.
+\end{lemma}
+
+\begin{proof}
+\emph{Step 1.} By Lemma~\ref{lem:runs}, $P_N(n)=\sum_mu_m$ with
+$u_m=W(m)h^{M-1}\prod_{l\in F}\binom{n_l-1}{m_l-1}(1-hq_l)^{n_l-m_l}$. Since
+$M-1=m_i+(k-2)+\sum_{j\in G}(m_j-1)$, as in Step~1 of the proof of Lemma~\ref{lem:discrete} we get
+$u_m=\kappa_mv_m$ with
+\[
+v_m=W(m)h^{k-2}h^{m_i}\binom{n-1}{m_i-1}p^{n-m_i}\prod_{j\in G}e^{-q_js_j}\frac{s_j^{m_j-1}}{(m_j-1)!}\ge0,
+\]
+and with $\kappa_m$ the factor of that proof with the product over $G$ only. The state $i$ is kept
+exact. By the coefficient identity with $q'=Q$, $\sum_mv_m=h^{k-1}\mathbf D$, which is positive by
+Lemma~\ref{lem:counts-contour}. So $P_N(n)/(h^{k-1}\mathbf D)=\E_w\kappa_m$ for the probability $w$
+proportional to $v_m$. With $M_G=\sum_{j\in G}m_j$ and $n^G_{\min}=\min_{j\in G}n_j\ge\varepsilon_{\mathcal K}N/2$,
+the argument for~\eqref{eq:A-kappa} gives
+$(1-M_G^2/(2n^G_{\min}))e^{-q_{\max}^2T^2/N}\le\kappa_m\le e^{hq_{\max}M_G}$.
+
+\emph{Step 2.} Let $\sigma=e$, and let $q'$ be $Q$ with the rates out of the states of $G$
+multiplied by $\sigma$. Every letter of $G$ in a word, except possibly the last, is followed by
+a jump out of it, so $W'(m)\ge\sigma^{M_G-1}W(m)$, and $\E_w\sigma^{M_G-1}\le\mathbf D'/\mathbf D$
+with $\mathbf D'=\sum_Kb_K[z^K]f'^{(z)}_G(s)$ by the coefficient identity. Here $f'^{(z)}_G$ is built
+from $\sigma A(z)$, $\mu^{(z)}$, $\ones+z\sigma c^-$ and $q_G-z\sigma c^-\circ c^+$. All its coefficients
+in $z$ are nonnegative, so $\mathbf D'\le\rho^{-1}w_d(\rho)f'^{(\rho)}_G(s)$. We claim that
+$f'^{(r)}_G(S\beta)\le CS^{(k-2)/2}e^{CS}\Lambda(r)$ for real $0\le r\le z_0$. For $|G|=1$ this is
+$f'^{(r)}_G\le\sigma e^{(\sigma-1)r\omega S}\Lambda(r)$, from the closed forms. For $|G|\ge2$ we use
+Lemma~\ref{lem:torus-complex} for the weights $(\sigma A(r),\mu^{(r)},\ones+r\sigma c^-)$ at the
+radii $\sigma\theta'(\beta,r)$, which are admissible by Lemma~\ref{lem:critical}(a), (e). As in
+Step~2 of the proof of Lemma~\ref{lem:upper}, $g$ scales by $\sigma$, so $\bar g=\sigma\theta_1(\beta,r)$
+by~\eqref{eq:A-radii} for $A(r)$, and $\bar b\le\sigma b_r(\theta'(\beta,r))\le\sigma B_0$ by
+Lemma~\ref{lem:critical}(b), since $\ones+r\sigma c^-\le\sigma e^{(r)}$ and $X_{A(r)}(\theta'(\beta,r))\ge0$.
+So $f'^{(r)}_G(S\beta)\le C\exp(S[\sigma\langle\beta,\theta(\beta,r)\rangle-\langle\beta,d(r)\rangle+(\sigma-1)r\langle\beta,c^-\circ c^+\rangle])$,
+while $\Lambda(r)=S^{-(k-2)/2}C_G(\beta,r)e^{-S\langle\beta,d(r)-\theta(\beta,r)\rangle}$ by Step~4 of the
+proof of Theorem~\ref{thm:L-facet}, with $C_G\ge c>0$ on $\mathcal K\times[0,z_0]$. This proves the
+claim. With Lemma~\ref{lem:counts-contour} and $\mathbf D\ge\frac12\mathcal A_d$,
+$\mathbf D'/\mathbf D\le C\zeta_d^{1/2}S^{(k-2)/2}e^{CS}\le e^{C'T}$. So the convex function
+$\Upsilon(c)=\log\E_we^{c(M_G-1)}$ has $\Upsilon(0)=0$ and $\Upsilon(1)\le C'T$.
+
+\emph{Step 3.} As in Step~4 of the proof of Lemma~\ref{lem:discrete},
+$\E_we^{hq_{\max}M_G}=1+O(T^2/N)$ and $\E_wM_G^2=O(T^2)$, so $\E_w\kappa_m=1+O(T^2/N)$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:layer-counts}]
+(a) By Lemmas~\ref{lem:counts-half} and~\ref{lem:counts-contour},
+$P_N(n)=h^{k-1}(1+\varepsilon(0))\mathcal A_d(1+O(\rho/S+T^2/N))$. Lemma~\ref{lem:discrete} for the
+face $G$, with $N'$ steps, the same $h$ and the time $S$, applies since $S^2/N'\le T^2/N$, and
+gives $P_{N'}(\hat n)=h^{k-2}f_G(s)(1+O(T^2/N))$. For $|G|=1$ this is the formula for the path
+$j^{N'}$. Also $f_G(s)=\Lambda(0)(1+\varepsilon(0))$ and $\mathbf K^h_\beta(n,S)=h\mathcal A_d/\Lambda(0)$.
+Dividing, $1+\varepsilon(0)$ cancels, and $E=O(\rho/S+T^2/N)$. Taking $T_0$ large and
+$\varepsilon_1$ small makes $|E|\le\frac12$.
+
+(b) Fix $x'\in\{hn,h(n-1)\}$ and let $\rho$ and $\mathcal A$ be the radius and the integral of the
+proof of Theorem~\ref{thm:layer}(a) for $x'$, so that $\mathcal A^{\rm abs}\le C\mathcal A$ and
+$\mathbf K_\beta(x',S)=e^{-q_ix'}\mathcal A/\Lambda(0)$. For $n=1$ and $x'=0$ both sides are
+$h[z]\widetilde\Lambda_\beta$. On the circle put $y=h/z-hq_i$. Since $h/\rho\le\max(hS,4h\omega_\beta S/Z_0)$,
+we have $|y|\le CT^2/N\le\frac12$, and
+$w_d=e^{(n-1)y}e^{(n-1)(\log(1+y)-y)}$ with $(n-1)|y|^2\le2h\tilde x/\rho^2+2hq_i^2\tilde x\le CT^2/N$,
+since $\tilde x/\rho^2\le4\omega_\beta S$. Also $e^{(n-1)y}=e^{x'/z-q_ix'}$ if $x'=\tilde x$, with one
+more factor $e^{-y}=1+O(T^2/N)$ if $x'=hn$. So $w_d=e^{x'/z-q_ix'}(1+\eta)$ with
+$|\eta|\le CT^2/N$, and $|\mathcal A_d-e^{-q_ix'}\mathcal A|\le C(T^2/N)e^{-q_ix'}\mathcal A$. This is (b),
+and with (a) it gives the last display.
+
+(c) The proofs of Theorem~\ref{thm:layer}(b) and (c) compare $\mathbf K_\beta$ with $\mathbf B_\beta$
+at the same $(x,S)$. They show $\mathbf K_\beta=\mathbf B_\beta(1+O(1/T+\sqrt{x/T}))$ for $x\le1$,
+$\mathbf K_\beta=\mathbf B_\beta e^{O(\sqrt{x/T}(1+x))}$ for $1\le x\le\delta T$, and
+$\mathbf K_\beta=\mathbf B_\beta(1+c_1(\beta)z_*I_0(\zeta)/I_1(\zeta)+O(x/T))$ when
+$\pi^{\rm in}_\beta=\pi^{\rm out}_\beta$, where $c_1(\beta)z_*I_0/I_1$ is bounded. We combine these
+with (b).
+\end{proof}

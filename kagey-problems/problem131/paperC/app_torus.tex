@@ -1,8 +1,9 @@
 \section{Proofs of the local law and of the first-order bounds}\label{app:torus}
 
 This appendix proves Proposition~\ref{prop:constant}(a),
-Lemma~\ref{lem:upper}, Theorem~\ref{thm:local}, Lemma~\ref{lem:discrete} and
-Theorem~\ref{thm:first}(ii). Except in
+Lemma~\ref{lem:upper}, Theorem~\ref{thm:local}, Lemma~\ref{lem:discrete},
+Lemma~\ref{lem:derivative}, Theorem~\ref{thm:first}(ii) and
+Lemma~\ref{lem:discrete-hessian}. Except in
 Section~\ref{app:first}, $F$ is a face with $k\ge2$ states, numbered
 $1,\dots,k$. For $x\in\mathbb C^F$ we write $x'=(x_2,\dots,x_k)$. We write
 $\mathrm i$ for the imaginary unit, since $i$ denotes a state, and
@@ -150,6 +151,12 @@ H(t)=\frac1{(2\pi)^{k-1}}\int_{\mathbb T^{k-1}}
 \exp\Bigl(t_1g(z')+\sum_{i\ge2}t_iz_i\Bigr)\,b(z')\prod_{i\ge2}z_i\,d\varphi,
 \qquad z_i=s_ie^{\mathrm i\varphi_i}.
 \]
+Let moreover $hq_{\max}\le1$, put $p_i=1-hq_i$, and let $n\in\Z_{\ge1}^F$. Then the
+probability that $X_1,\dots,X_{|n|}$ have composition $n$ is
+\[
+P_{|n|}(n)=\frac{h^{k-1}}{(2\pi)^{k-1}}\int_{\mathbb T^{k-1}}
+\bigl(p_1+hg(z')\bigr)^{n_1-1}\prod_{i\ge2}(p_i+hz_i)^{n_i-1}\,b(z')\prod_{i\ge2}z_i\,d\varphi .
+\]
 \end{lemma}
 
 \begin{proof}
@@ -199,7 +206,23 @@ second term does not depend on $z_1$, so it contributes
 $\frac1{2\pi}\int_0^{2\pi}e^{t_1z_1}z_1\,d\varphi_1=0$. In the first term
 $g(z')$ lies inside the circle $|z_1|=s_1$, so Cauchy's formula gives
 $e^{t_1g(z')}b(z')$. The factors without $z_1$ are unchanged, and this proves
-the formula.
+the formula for $H$.
+
+\emph{The discrete formula.} We repeat Steps~3 and~4 with $(p_i+hz_i)^{n_i-1}$ in
+place of $e^{t_iz_i}$. The coefficient of $z^{m-1}$ in the polynomial
+$(p+hz)^{n-1}$ is $h^{m-1}\binom{n-1}{m-1}p^{n-m}$, which is $0$ for $m>n$. So
+$\frac1{2\pi}\int_0^{2\pi}(p_i+hz_i)^{n_i-1}z_i^{1-m}\,d\varphi_i$ is this
+coefficient if $m\ge1$ and $0$ if $m\le0$. The polynomial is bounded on the
+circle, so the term-by-term integration of Step~3 applies, and it gives
+\[
+\frac1{(2\pi)^k}\int_{\mathbb T^k}\mu_F^\top(\mathcal Z-A_F)^{-1}\ones
+\prod_{i\in F}(p_i+hz_i)^{n_i-1}z_i\,d\varphi
+=\sum_mW(m)\prod_{i\in F}h^{m_i-1}\binom{n_i-1}{m_i-1}p_i^{n_i-m_i}.
+\]
+Since $h^{M-1}=h^{k-1}\prod_ih^{m_i-1}$, this is $h^{-(k-1)}P_{|n|}(n)$ by
+Lemma~\ref{lem:runs} with $|n|$ in place of $N$. In Step~4 the second term gives
+$\frac1{2\pi}\int_0^{2\pi}(p_1+hz_1)^{n_1-1}z_1\,d\varphi_1=0$, and Cauchy's formula
+evaluates the polynomial $(p_1+hz_1)^{n_1-1}$ at $z_1=g(z')$.
 \end{proof}
 
 Section~\ref{sec:boundary-layer} needs the same formula for complex weights and an end vector
@@ -217,7 +240,8 @@ Let $\bar A\ge0$ be a matrix on $F$ with zero diagonal and $\bar\nu,\bar e\in[0,
 $|A_{ij}|\le\bar A_{ij}$, $|\nu_i|\le\bar\nu_i$ and $|e_i|\le\bar e_i$ for all $i,j$, and let
 $\bar X$, $\bar g$ and $\bar b$ be the functions above for $(\bar A,\bar\nu,\bar e)$. Let
 $s'\in(0,\infty)^{k-1}$ satisfy $\varrho(\bar A'-\operatorname{diag}s')<0$. Then
-Lemma~\ref{lem:torus} holds for $H_{A,\nu,e}$ with these $X$, $g$ and $b$, except that their
+the formula for $H$ in Lemma~\ref{lem:torus} holds for $H_{A,\nu,e}$ with these $X$, $g$
+and $b$, except that their
 series are dominated term by term in modulus by those of $\bar X$, $\bar g$ and $\bar b$ at $s'$.
 In particular $|g(z')|\le\bar g(s')$ and $|b(z')|\le\bar b(s')$ when $|z_i|\ge s_i$ for every
 $i\ge2$. Where $\mathcal Z'-A'$ is invertible, $X$, $g$ and $b$ are rational functions of $z'$ and
@@ -243,9 +267,9 @@ unchanged. The last claim is Cramer's rule.
 
 \subsection{Proof of \texorpdfstring{Lemma~\ref{lem:upper}}{the upper bound}}
 
-We bound the sum of Lemma~\ref{lem:runs} term by term by a continuum sum
-$H_\sigma$ with slightly larger rates, and $H_\sigma$ by the largest modulus
-of the integrand of Lemma~\ref{lem:torus}.
+We bound the integrand of the discrete formula of Lemma~\ref{lem:torus} by its
+modulus at the real point. Step~2 bounds the continuum sums in the same way, for
+later use.
 
 \emph{Step 1. The radii.} Let $F$ be irreducible and $\theta\in V_F$. Then
 $A_F-\operatorname{diag}\theta$ is an irreducible Metzler matrix with Perron
@@ -260,22 +284,8 @@ $1$, which reads $a_1^\top u'=\theta_1u_1$, gives $\theta_1=g(\theta')$. Hence
 g(\theta')=\theta_1\qquad\text{for every }\theta\in V_F .
 \end{equation}
 
-\emph{Step 2. A continuum sum.} Fix $n$ with support $F$ and $h$ with
-$hq_{\max}\le\frac12$, and put $|n|=\sum_in_i$, $t=hn$ and
-$\sigma=e^{hq_{\max}}$. Lemma~\ref{lem:runs} with $|n|$ in place of $N$ gives
-the probability $P_{|n|}(n)$ in the lemma. Only terms with $m_i\le n_i$ for
-every $i$ are nonzero, and in them
-$h^{m_i-1}\binom{n_i-1}{m_i-1}\le t_i^{m_i-1}/(m_i-1)!$ and
-$(1-hq_i)^{n_i-m_i}\le e^{-hq_i(n_i-m_i)}\le e^{-q_it_i}\sigma^{m_i}$. Also
-$h^{M-1}=h^{k-1}\prod_ih^{m_i-1}$, and $\sigma^MW(m)=\sigma W_\sigma(m)$, where
-$W_\sigma$ is $W$ for $\sigma A_F$ in place of $A_F$, since a word with $M$
-letters has $M-1$ switches. So
-\begin{equation}\label{eq:A-sigma}
-P_{|n|}(n)\le\sigma\,h^{k-1}e^{-\langle q,t\rangle}H_\sigma(t),
-\end{equation}
-where $H_\sigma$ is $H$ for $\sigma A_F$.
-
-\emph{Step 3. The bound for $H_\sigma$.} We use Lemma~\ref{lem:torus} for
+\emph{Step 2. Continuum sums.} For $\sigma>0$ let $H_\sigma$ be $H$ for $\sigma A_F$
+in place of $A_F$. We use Lemma~\ref{lem:torus} for
 $\sigma A_F$ with the radii $\sigma\theta'$, which is allowed since
 $\varrho(\sigma A'-\operatorname{diag}\sigma\theta')
 =\sigma\varrho(A'-\operatorname{diag}\theta')<0$. The functions of
@@ -286,24 +296,31 @@ we have $|g_\sigma|\le\sigma g(\theta')=\sigma\theta_1$
 by~\eqref{eq:A-radii}, $|b_\sigma|\le b(\theta')$ and
 $|z_i|=\sigma\theta_i$. Hence the integrand has modulus at most
 $e^{\sigma\langle t,\theta\rangle}b(\theta')\sigma^{k-1}
-\prod_{i\ge2}\theta_i$, and for every $\sigma>0$
+\prod_{i\ge2}\theta_i$, and for every $\sigma>0$ and $t\in(0,\infty)^F$
 \begin{equation}\label{eq:A-Hsigma}
 H_\sigma(t)\le\sigma^{k-1}b(\theta')\prod_{i\ge2}\theta_i\,
 e^{\sigma\langle t,\theta\rangle}.
 \end{equation}
-With~\eqref{eq:A-sigma} this gives
-$P_{|n|}(n)\le\sigma^kb(\theta')\prod_{i\ge2}\theta_i\,h^{k-1}
-\exp(-h\langle n,q-\theta\rangle+(\sigma-1)h\langle n,\theta\rangle)$.
-Finally $\sigma\le e^{1/2}$ and $\sigma-1\le2hq_{\max}$, so the lemma holds
-with
-\[
-C_\theta=\max\Bigl(e^{k/2}b(\theta')\prod_{i\ge2}\theta_i,\ 2q_{\max}\max_i\theta_i\Bigr).
-\]
-By Lemma~\ref{lem:torus}, $b$ is continuous on the open set of $s'$ with
-$\varrho(A'-\operatorname{diag}s')<0$, which contains $\theta'$ for every $\theta\in V_F$
-by~\eqref{eq:A-radii}. So $C_\theta$ is bounded on compact subsets of $V_F$. \qed
 
-\subsection{Proof of \texorpdfstring{Theorem~\ref{thm:local}}{the local law}}
+\emph{Step 3. The bound.} Let $n$ have support $F$, let $hq_{\max}\le1$ and
+$p_i=1-hq_i$. We use the discrete formula of Lemma~\ref{lem:torus} with the radii
+$\theta'$. On that torus $|p_i+hz_i|\le p_i+h\theta_i$ for $i\ge2$,
+$|p_1+hg(z')|\le p_1+h\theta_1$ since $|g(z')|\le g(\theta')=\theta_1$, and
+$|b(z')|\le b(\theta')$. So
+\begin{equation}\label{eq:A-chernoff}
+P_{|n|}(n)\le h^{k-1}b(\theta')\prod_{i\ge2}\theta_i
+\prod_{i\in F}(p_i+h\theta_i)^{n_i-1}
+\qquad(\theta\in V_F,\ hq_{\max}\le1).
+\end{equation}
+Now let $hq_{\max}\le\frac12$. Since $\log(1+x)\le x$, we have
+$(p_i+h\theta_i)^{n_i}=(1-h(q_i-\theta_i))^{n_i}\le e^{-hn_i(q_i-\theta_i)}$, and
+$p_i+h\theta_i\ge p_i\ge\frac12$. So the lemma holds with
+$C_\theta=2^kb(\theta')\prod_{i\ge2}\theta_i$. By Lemma~\ref{lem:torus}, $b$ is
+continuous on the open set of $s'$ with $\varrho(A'-\operatorname{diag}s')<0$, which
+contains $\theta'$ for every $\theta\in V_F$ by~\eqref{eq:A-radii}. So $C_\theta$ is
+bounded on compact subsets of $V_F$. \qed
+
+\subsection{Proof of \texorpdfstring{Theorem~\ref{thm:local}(a)}{the local law}}
 
 The field cancels from the two sides of Theorem~\ref{thm:local}, so we take $v=0$.
 For $k=1$ the formula is part of Lemma~\ref{lem:continuum}. Let $k\ge2$ and
@@ -507,7 +524,7 @@ $H_e(T\alpha)\le e^{k-1}b(\theta')\prod_{i\ge2}\theta_i\,
 e^{eT\langle\alpha,\theta\rangle}$. For the lower bound,
 $H(T\alpha)e^{-T\langle\alpha,\theta\rangle}=T^{-(k-1)}e^{TJ_F(\alpha)}f_T(\alpha)$,
 by the definition of $f_T$ and $J_F(\alpha)=\langle q-\theta,\alpha\rangle$.
-By Theorem~\ref{thm:local} this is at least
+By Theorem~\ref{thm:local}(a) this is at least
 $\frac12T^{-(k-1)/2}C_F(\alpha)$ for $T\ge T_1$, and for $1\le T\le T_1$ it is
 continuous and positive on $[1,T_1]\times\mathcal K$. So in both cases
 $H(T\alpha)\ge c_{\mathcal K}T^{-(k-1)/2}e^{T\langle\alpha,\theta\rangle}$.
@@ -530,6 +547,65 @@ by~\eqref{eq:A-kappa}, $\E_w\kappa_m$ lies between
 $e^{-q_{\max}^2T^2/N}(1-\E_wM^2/(2\varepsilon_{\mathcal K}N))$ and
 $\E_we^{hq_{\max}M}$, and both are $1+O(T^2/N)$, uniformly for
 $\alpha\in\mathcal K$ and $1\le T\le N^{1/2}$. \qed
+
+\subsection{The derivative in \texorpdfstring{$T$}{T}}
+
+Theorem~\ref{thm:crossing}(iv) needs the derivative of the local law in $T$. For fixed $N$ and
+$n$, $P_N(n)$ is a polynomial in $T$, and we differentiate it at fixed $N$ and $n$.
+
+\begin{lemma}[the derivative in $T$]\label{lem:derivative}
+Let $F$ satisfy \textup{(H)} with $k\ge2$, and let $\mathcal K\subset\Delta_F^\circ$ be compact.
+There are $T_1$, $N_0$ and $C$ such that for $N\ge N_0$, $\supp n=F$, $n/N\in\mathcal K$ and
+$T_1\le T\le N^{1/3}$,
+\[
+\Bigl|\partial_T\log P_N(n)+J_F(n/N)\Bigr|\le\frac CT .
+\]
+\end{lemma}
+
+\begin{proof}
+Put $\alpha=n/N$ and $t=hn$. Let $\tilde w$ be the probability on the vectors $m$ proportional to
+the terms of Lemma~\ref{lem:runs}. Since $T\partial_T=h\partial_h$ and the $m$-th term has
+the logarithmic derivative $(M-1)-\sum_i(n_i-m_i)hq_i/(1-hq_i)$ in $\log h$,
+\[
+T\partial_T\log P_N(n)=\E_{\tilde w}(M-1)-\sum_{i\in F}\frac{hq_i}{1-hq_i}\,\E_{\tilde w}(n_i-m_i).
+\]
+For $c\in\R$ let $P^{(c)}$ be the sum of Lemma~\ref{lem:runs} with $e^cA_F$ in place of $A_F$,
+that is with $e^{c(M-1)}W(m)$ in place of $W(m)$ and the same factors $(1-hq_i)^{n_i-m_i}$. Then
+$\Upsilon(c)=\log P^{(c)}-\log P^{(0)}=\log\E_{\tilde w}e^{c(M-1)}$ is convex, and
+$\Upsilon'(0)=\E_{\tilde w}(M-1)$.
+
+\emph{Step 1. The asymptotics of $\Upsilon$.} The proof of Lemma~\ref{lem:discrete} uses $A_F$
+only through the nonnegative weights $W(m)$ and through bounds on its continuum sum $H$. For
+$e^cA_F$ this sum is $H_{e^c}(t)=e^{c(k-1)}H(e^ct)$, since a word with $M$ letters has $M-1$
+switches and $M-k$ is the total degree of $\prod_it_i^{m_i-1}$. Let $|c|\le1$ and $T\ge e$. Step~3
+of that proof needs the ratio $H_{e^{c+1}}(t)/H_{e^c}(t)=e^{k-1}H(e^{c+1}t)/H(e^ct)$ to be at most
+$e^{C_{\mathcal K}T}$. This follows from~\eqref{eq:A-Hsigma} and from the lower bound for $H$ at
+time $e^cT\ge1$ in that step. So Lemma~\ref{lem:discrete} holds for the weights $e^cA_F$,
+uniformly for $|c|\le1$, and gives
+$P^{(c)}=h^{k-1}e^{-\langle q,t\rangle}e^{c(k-1)}H(e^ct)(1+O(T^2/N))$. By
+Lemma~\ref{lem:continuum} and $J_F(\alpha)=\langle q-\theta(\alpha),\alpha\rangle$,
+Theorem~\ref{thm:local}(a) at time $e^cT$ reads
+$H(e^cT\alpha)=(e^cT)^{-(k-1)/2}C_F(\alpha)e^{e^cT\langle\theta(\alpha),\alpha\rangle}(1+O(1/T))$.
+Hence, uniformly for $|c|\le1$, $\alpha\in\mathcal K$ and $e\le T\le N^{1/3}$,
+\[
+\Upsilon(c)=a(c)+\varepsilon(c),\qquad a(c)=\frac{k-1}2\,c+(e^c-1)\,T\langle\theta(\alpha),\alpha\rangle,
+\qquad|\varepsilon(c)|\le\frac{C_1}T,
+\]
+where we used $T^2/N\le1/T$.
+
+\emph{Step 2. Convexity.} We have $a'(0)=\frac{k-1}2+T\langle\theta(\alpha),\alpha\rangle$ and
+$0\le a''\le C_2T$ on $[-1,1]$, since $\theta$ is bounded on $\mathcal K$. Let $\eta=1/T$. By
+convexity, $(\Upsilon(0)-\Upsilon(-\eta))/\eta\le\Upsilon'(0)\le(\Upsilon(\eta)-\Upsilon(0))/\eta$.
+By Taylor's theorem both quotients differ from $a'(0)$ by at most $C_2T\eta/2+2C_1/(T\eta)$,
+which is $C_2/2+2C_1$. So $\E_{\tilde w}(M-1)=T\langle\theta(\alpha),\alpha\rangle+O(1)$, and in
+particular $\E_{\tilde w}M=O(T)$.
+
+\emph{Step 3. The other term.} Since $hn_i=T\alpha_i$ and $hq_{\max}\le\frac12$,
+$\sum_ihq_in_i/(1-hq_i)=T\langle q,\alpha\rangle+O(Th)$ and
+$0\le\sum_ihq_i\E_{\tilde w}m_i/(1-hq_i)\le2hq_{\max}\E_{\tilde w}M=O(T^2/N)$. Altogether
+$T\partial_T\log P_N(n)=T\langle\theta(\alpha),\alpha\rangle-T\langle q,\alpha\rangle+O(1)
+=-TJ_F(\alpha)+O(1)$, and we divide by $T$.
+\end{proof}
 
 \subsection{Proof of \texorpdfstring{Theorem~\ref{thm:first}(ii)}{the
 first-order bounds}}\label{app:first}
@@ -568,14 +644,13 @@ at $x_j$. We drop the condition on the end. Then $\varpi_j$ is at most the proba
 $X_1,\dots,X_{N_j}$ have that composition for the chain started at $y_j$. If
 $|D_j|\ge2$, Lemma~\ref{lem:upper} with start $y_j$ and
 $\theta=q-\lambda_{D_j}\ones$ gives
-$\varpi_j\le\kappa_1h^{|D_j|-1}e^{-h\lambda_{D_j}N_j+\kappa_1h^2N_j}$, where
+$\varpi_j\le\kappa_1h^{|D_j|-1}e^{-h\lambda_{D_j}N_j}$, where
 $\kappa_1$ is the largest of these finitely many constants. If $D_j=\{i\}$,
 then $\lambda_{D_j}=q_i$ and
 $\varpi_j=(1-hq_i)^{N_j-1}\le e^{1/2-h\lambda_{D_j}N_j}$. We multiply over
 $j$. The powers of $h$ add up to $\sum_j(|D_j|-1)+r-1=k_F-1$. In the
 exponent, $\lambda_{D_j}\ge\lambda_F$ and $\sum_jN_j=N$ give
-$h\sum_j\lambda_{D_j}N_j\ge T\lambda_F$ and
-$\kappa_1h^2\sum_jN_j=\kappa_1T^2/N\le\kappa_1$. Summing over the patterns
+$h\sum_j\lambda_{D_j}N_j\ge T\lambda_F$. Summing over the patterns
 gives $P_N(n)\le\kappa_2(T/N)^{k_F-1}e^{-T\lambda_F}$.
 
 \emph{Lower bound.} We write down a family of paths with support $F$, bound
@@ -630,3 +705,170 @@ have at most $(N+1)^{k^*-1}\prod_{j\ne j^*}(m+1)^{|C_j|-1}$ compositions,
 and $m+1\le3N/T$. Since $\sum_{j\ne j^*}(|C_j|-1)=k_F-k^*-(r-1)$ and $h=T/N$,
 dividing the total probability by the number of compositions gives
 $M_F\ge c\,N^{-(k_F-1)}T^{k_F-k^*}e^{-T\lambda_F}$. \qed
+
+\subsection{The local law over the whole switching range}\label{app:full-range}
+
+Here $F$ is irreducible with $k\ge2$ states, $h_*$ is fixed with $h_*q_{\max}<1$,
+$p_i=1-hq_i$ and $p_{\min}=1-h_*q_{\max}>0$. Let $\Omega$ be the open set of
+$s'\in(0,\infty)^{k-1}$ with $\varrho(A'-\operatorname{diag}s')<0$, and for
+$s'\in\Omega$ put $s_1=g(s')$ and
+\[
+\Psi_h(\alpha;s')=-\sum_{i\in F}\alpha_iL_h(q_i-s_i),
+\]
+with $L_h$ from Section~\ref{sec:discrete-rate}. For $h>0$ this is
+$\frac1h\sum_i\alpha_i\log(p_i+hs_i)$.
+
+\begin{lemma}[the discrete Hessian]\label{lem:discrete-hessian}
+Let $(h,\alpha)\in[0,h_*]\times\Delta_F^\circ$, and let $\theta=\theta^{(h)}(\alpha)$,
+$r$, $l$ and $c_h=c_h(\alpha)$ be as in the definition of $C^{(h)}_F$ in
+Section~\ref{sec:locallaw}. Put $\pi=l\circ r$.
+\begin{enumerate}[(a)]
+\item The point $\theta'$ is the only minimizer of $\Psi_h(\alpha;\cdot)$ on $\Omega$,
+$\Psi_h(\alpha;\theta')=-J^{(h)}_F(\alpha)$, and the Hessian $H_h$ of
+$\Psi_h(\alpha;\cdot)$ at $\theta'$ is positive definite.
+\item There is a $(k-1)\times(k-1)$ matrix $K$ with
+$\det K=1/(c_h\pi_1\prod_{i\in F}(p_i+h\theta_i))$ and
+$\nabla^2J^{(h)}_F(\alpha)=K^\top H_h^{-1}K$. So $\nabla^2J^{(h)}_F(\alpha)$ is positive
+definite.
+\item $C^{(h)}_F(\alpha)=b(\theta')/\bigl((2\pi)^{(k-1)/2}\prod_{i\in F}(p_i+h\theta_i)\sqrt{\det H_h}\bigr)$,
+and $C^{(h)}_F$ is positive and real-analytic on $[0,h_*]\times\Delta_F^\circ$ up to
+$h=0$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) The map $\psi\mapsto\theta(\psi)'$ is a real-analytic diffeomorphism from
+$\{\psi\in\R^F:\psi_1=0\}$ onto $\Omega$. Indeed $\theta(\psi)=A_Fe^\psi/e^\psi$ lies
+in $V_F$, so $\theta(\psi)'\in\Omega$ and $\theta_1(\psi)=g(\theta(\psi)')$
+by~\eqref{eq:A-radii}. Conversely, for $s'\in\Omega$ the vector $u=(1,X(s')b_1)$ is
+nonnegative by the first fact, and it is a null vector of
+$A_F-\operatorname{diag}(g(s'),s')$, as in the proof of Theorem~\ref{thm:local}(a).
+By the second fact it is positive, and $\psi=\log u$ has $\psi_1=0$ and
+$\theta(\psi)=(g(s'),s')$. Both maps are real-analytic. Since
+$\Psi_h(\alpha;\theta(\psi)')=-G_h(\alpha,\psi)$, part (a) follows from
+Proposition~\ref{prop:discrete-rate}(b). The first derivatives vanish at the critical
+point, so there the two Hessians are congruent through the Jacobian of the
+diffeomorphism, which is invertible.
+
+(b) Write $y_i(s')=L_h(q_i-s_i)$ with $s_1=g(s')$, so that, in the coordinates
+$\alpha'$, $-\Psi_h=y_1+\sum_{j\ge2}\alpha_j(y_j-y_1)$. By (a),
+$J^{(h)}_F(\alpha)=-\Psi_h(\alpha;\theta^{(h)}(\alpha)')$, and $\theta^{(h)}(\alpha)'$ is
+real-analytic in $\alpha$. So the envelope theorem gives
+$\partial J^{(h)}_F/\partial\alpha_j=y_j(\theta')-y_1(\theta')$ for $j\ge2$. Let
+$K_{ij}=-\partial(y_j-y_1)/\partial s_i$ at $\theta'$, for $i,j\ge2$. Differentiating
+$\nabla_{s'}\Psi_h(\alpha;\theta^{(h)}(\alpha)')=0$ in $\alpha'$ gives
+$H_h\,\partial\theta'/\partial\alpha'=-K$, and hence
+$\nabla^2J^{(h)}_F=-K^\top\partial\theta'/\partial\alpha'=K^\top H_h^{-1}K$.
+
+To compute $K$ put $e_i=L_h'(q_i-\theta_i)=1/(p_i+h\theta_i)$, and let $g_i$ be the
+derivatives of $g$ at $\theta'$. The vector $\psi=\log r$ attains the supremum
+defining $J_F(\pi)$ by the criterion in the proof of Proposition~\ref{prop:rate},
+since $\pi$ is the stationary law of $R^{-1}(A_F-\operatorname{diag}\theta)R$ with
+$R=\operatorname{diag}r$. So $\theta=\theta(\pi)$, and the proof of
+Theorem~\ref{thm:local}(a) at the point $\pi$ gives $g_i=-\pi_i/\pi_1$. Hence
+$K_{ij}=\delta_{ij}e_j+e_1\pi_i/\pi_1$, that is
+$K=\operatorname{diag}(e')+(e_1/\pi_1)\pi'\ones^\top$, and the matrix determinant lemma
+gives $\det K=\prod_{i\in F}e_i\cdot\sum_{i\in F}\pi_i(p_i+h\theta_i)/\pi_1$. By
+Proposition~\ref{prop:discrete-rate}(c) with $\psi=\log r$, $\alpha_i=c\,\pi_i(p_i+h\theta_i)$
+for a constant $c$. Summing $\alpha_i/(p_i+h\theta_i)$ over $i$ gives $c=c_h$, and
+summing $\alpha_i$ gives $\sum_i\pi_i(p_i+h\theta_i)=1/c_h$. This is the value of
+$\det K$, which is not $0$, so $\nabla^2J^{(h)}_F(\alpha)$ is positive definite by (a).
+
+(c) The identity $\alpha_1b(\theta')=(\mu\cdot r_\alpha)(l_\alpha\cdot\ones)$ of the
+proof of Theorem~\ref{thm:local}(a), at the point $\pi$, gives
+$b(\theta')=(\mu\cdot r)(l\cdot\ones)/\pi_1$, since $l\cdot r=1$. By (b),
+$\sqrt{\det\nabla^2J^{(h)}_F}=|\det K|/\sqrt{\det H_h}$. Putting both into the
+definition of $C^{(h)}_F$ gives the formula, which is positive. By
+Proposition~\ref{prop:discrete-rate}(b), $\theta^{(h)}(\alpha)$ and $J^{(h)}_F$ are
+real-analytic up to $h=0$, and so are $c_h$ and the normalized null vectors $r$ and $l$,
+since $0$ is a simple eigenvalue of $A_F-\operatorname{diag}\theta$. As
+$\det\nabla^2J^{(h)}_F>0$, $C^{(h)}_F$ is real-analytic up to $h=0$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:local}(b)]
+The field cancels from the two sides, so we take $v=0$. Let $\mathcal K$ be as in the
+theorem and put $\mathcal P=[0,h_*]\times\mathcal K$. For $(h,\alpha)\in\mathcal P$ let
+$\theta=\theta^{(h)}(\alpha)$ and $\Theta'=\operatorname{diag}(\theta')$.
+
+\emph{The integral.} Let $1\le T\le h_*N$, $\supp n=F$ and $\alpha=n/N\in\mathcal K$, so
+that $h=T/N\in(0,h_*]$ and $n_i=T\alpha_i/h$. By~\eqref{eq:A-radii} we may use the
+discrete formula of Lemma~\ref{lem:torus} with the radii $\theta'$. It gives
+$P_N(n)=h^{k-1}(2\pi)^{-(k-1)}\int_{\mathbb T^{k-1}}F_n\,d\varphi$, where $F_n$ is the
+integrand. With $z_i=\theta_ie^{\mathrm i\varphi_i}$ and $z_1=g(z')$ put
+\[
+\Psi_h(\alpha,\varphi)=-\sum_{i\in F}\alpha_iL_h(q_i-z_i),\qquad
+a_h(\alpha,\varphi)=\frac{b(z')\prod_{i\ge2}z_i}{\prod_{i\in F}(p_i+hz_i)}
+\]
+where $\operatorname{Re}(p_i+hz_i)>0$ for every $i$. There $F_n=e^{T\Psi_h}a_h$, since
+$(p_i+hz_i)^{n_i}=\exp(n_i\log(p_i+hz_i))$ with the principal logarithm and
+$n_i\log(p_i+hz_i)=-T\alpha_iL_h(q_i-z_i)$. The logarithm has no branch on the whole
+torus when $h\theta_i>p_i$, so we use these formulas only near $\varphi=0$.
+
+\emph{Regularity on a cube.} The map $(h,\alpha)\mapsto\theta^{(h)}(\alpha)$ is
+continuous on the compact set $\mathcal P$, so $\theta_i\in[\theta_{\min},\theta_{\max}]$
+with $\theta_{\min}>0$, and $\varrho(A'-\operatorname{diag}\theta')$ is bounded above by
+a negative constant. As in the regularity paragraph of the proof of (a), $X$, $g$ and
+$b$ are holomorphic near the tori of radii $\theta'$, uniformly on $\mathcal P$, and
+$g(z')$ is uniformly continuous in $(h,\alpha,\varphi)$. So there is
+$\varepsilon_1\in(0,1)$ such that $|g(z')-\theta_1|\le\theta_{\min}$ when
+$\lVert\varphi\rVert\le\varepsilon_1$. Then $\operatorname{Re}g(z')\ge0$ and
+$\operatorname{Re}z_i>0$ for $i\ge2$, so $\operatorname{Re}(p_i+hz_i)\ge p_{\min}$ for
+every $i$. Since $1-shy=(1-s)+s(1-hy)$, the function $L_h(y)=\int_0^1y\,ds/(1-shy)$ is
+holomorphic in $y$ and real-analytic in $h$ where $\operatorname{Re}(1-hy)>0$, including
+$h=0$. So $\Psi_h$ and $a_h$ are defined and real-analytic on
+$\mathcal P\times\{\lVert\varphi\rVert\le\varepsilon_1\}$, and their
+$\varphi$-derivatives up to orders $4$ and $2$ are bounded there by constants $B_\Psi$
+and $B_a$. At $h=0$ they are $\Psi-\langle q,\alpha\rangle$ and $\chi$
+of~\eqref{eq:A-fT}.
+
+\emph{Hypotheses \textup{(i)} and \textup{(ii)}.} At $\varphi=0$,
+$\Psi_h(\alpha,0)=\Psi_h(\alpha;\theta')=-J^{(h)}_F(\alpha)$ by
+Lemma~\ref{lem:discrete-hessian}(a), which is real. Since
+$\partial/\partial\varphi_j=\mathrm iz_j\,\partial/\partial z_j$ and $\Psi_h$ is
+holomorphic in $z'$ with the derivatives of the real function $\Psi_h(\alpha;\cdot)$ at
+$\theta'$, Lemma~\ref{lem:discrete-hessian}(a) gives $\nabla_\varphi\Psi_h(\alpha,0)=0$
+and $-\nabla^2_\varphi\Psi_h(\alpha,0)=\Theta'H_h\Theta'$. This matrix is real,
+symmetric and positive definite, and it is continuous on $\mathcal P$, so its least
+eigenvalue is at least some $\sigma_{\min}>0$ on $\mathcal P$.
+
+\emph{The gap.} Choose $\varepsilon\in(0,\varepsilon_1]$ with
+$(k-1)^3B_\Psi\varepsilon\le\frac32\sigma_{\min}$. For $i\ge2$,
+\[
+|p_i+h\theta_ie^{\mathrm i\varphi_i}|^2=(p_i+h\theta_i)^2-2p_ih\theta_i(1-\cos\varphi_i).
+\]
+With $\log(1-x)\le-x$, and with $n_i-1\ge n_i/2=T\alpha_i/(2h)$, which holds for
+$N\ge N_0$ since then $n_i\ge2$, this gives
+$|p_i+hz_i|^{n_i-1}\le(p_i+h\theta_i)^{n_i-1}e^{-c_*T(1-\cos\varphi_i)}$ with
+$c_*=\min_{\mathcal K}\min_i\alpha_i\,p_{\min}\theta_{\min}/(2(1+h_*\theta_{\max})^2)>0$.
+The $h$ in $n_i$ cancels the $h$ in $p_ih\theta_i$, so $c_*$ does not depend on $h$.
+Also $|p_1+hg(z')|\le p_1+h\theta_1$ and $|b(z')|\le b(\theta')$ by
+Lemma~\ref{lem:torus}. If $\lVert\varphi\rVert\ge\varepsilon$, then
+$1-\cos\varphi_i\ge1-\cos\varepsilon$ for some $i\ge2$, so
+\[
+|F_n(\varphi)|\le e^{-\eta T}F_n(0)=e^{-\eta T}e^{T\Psi_h(\alpha,0)}a_h(\alpha,0),
+\qquad\eta=c_*(1-\cos\varepsilon),
+\]
+and $a_h(\alpha,0)$ is bounded on $\mathcal P$.
+
+\emph{The expansion.} By Remark~\ref{rem:laplace-uniform} in its localized form, with
+$m=k-1$, uniformly in $(h,\alpha)$ and $T\ge1$,
+\[
+\int_{\mathbb T^{k-1}}F_n\,d\varphi=e^{-TJ^{(h)}_F(\alpha)}\Bigl(\frac{2\pi}T\Bigr)^{\frac{k-1}2}
+\det(\Theta'H_h\Theta')^{-1/2}\Bigl(a_h(\alpha,0)+O\Bigl(\frac1T\Bigr)\Bigr).
+\]
+Here $a_h(\alpha,0)=b(\theta')\prod_{i\ge2}\theta_i/\prod_i(p_i+h\theta_i)$ is positive
+and continuous on $\mathcal P$, so the bracket is $a_h(\alpha,0)(1+O(1/T))$. Since
+$\det(\Theta'H_h\Theta')=\prod_{i\ge2}\theta_i^2\det H_h$ and
+$h^{k-1}T^{-(k-1)/2}=N^{-(k-1)}T^{(k-1)/2}$, Lemma~\ref{lem:discrete-hessian}(c) gives
+the display of (b) with a factor $1+E$, $|E|\le C/T$.
+
+\emph{Bounded $T$.} It remains to bound $1+E$ below for $1\le T\le T_1=2C$. Let
+$N\ge T_1^2$. Then $T\le N^{1/2}$, and Lemma~\ref{lem:discrete} and part (a) give
+$P_N(n)=N^{-(k-1)}f_T(\alpha)(1+O(T_1^2/N))$. The ratio of $f_T(\alpha)$ to
+$T^{(k-1)/2}C_F(\alpha)e^{-TJ_F(\alpha)}$ is continuous and positive on
+$[1,T_1]\times\mathcal K$, and the ratio of
+$C^{(h)}_F(\alpha)e^{-TJ^{(h)}_F(\alpha)}$ to $C_F(\alpha)e^{-TJ_F(\alpha)}$ is
+$1+O(T_1h)$ by Proposition~\ref{prop:discrete-rate}(b) and
+Lemma~\ref{lem:discrete-hessian}(c). So for large $N$, $1+E$ lies between two positive
+constants for $1\le T\le T_1$, and for $T\ge T_1$ it lies in $[\frac12,\frac32]$.
+\end{proof}

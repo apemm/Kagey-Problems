@@ -4,20 +4,21 @@ This file matches the statements of the two papers that came out of Paper C to t
 of the libraries `PaperC` (root `PaperC.lean`) and `PaperB` (root `PaperB.lean`).
 
 - Paper C1, "Occupation counts of rarely switching Markov chains: stratified local laws, support
-  selection and the boundary layer", main files `paperC/problem131_chains.tex` (article build, 59
-  pages) and `paperC/problem131_chains_sn.tex` (Springer build, 65 pages). Statement numbers agree in the two
+  selection and the boundary layer", main files `paperC/problem131_chains.tex` (article build, 81
+  pages) and `paperC/problem131_chains_sn.tex` (Springer build, 89 pages). Statement numbers agree in the two
   builds. Equation numbers agree too, except in the appendices, where the Springer build numbers
   equations by appendix. The numbers below are those of the article build.
-- Paper C2, "What the occupation functional of a finite Markov chain determines: principal
-  minors, modal supports and cycle trees", journal file `paperC2/problem131_reconstruction.tex`
-  (33 pages) and arXiv file `paperC2/problem131_reconstruction_arxiv.tex` (37 pages). The C2
-  numbers below are those of the revision of October 25, 2026, the same in both builds for
-  Sections 1 to 6.
+- Paper C2, "What the occupation law of a finite Markov chain determines: time reversal,
+  principal minors and cycle trees", journal file `paperC2/problem131_reconstruction.tex`
+  (43 pages) and arXiv file `paperC2/problem131_reconstruction_arxiv.tex` (46 pages). The
+  statement numbers are the same in both builds for Sections 1 to 7. Section 4 (the exact
+  occupation law) is new, so modal supports are now Section 5 and low temperature Section 6. The
+  theorems of the introduction are Theorem A (the functional), Theorem B (the exact law), Theorem C
+  (the modal supports) and Theorem D (the cycle tree), with Corollary 1.1.
 
-The numbers are those of the builds of October 24, 2026, checked against the PDFs and the `.aux`
-files. For C1 they are the numbers after the cuts of that day (the weak field and the start, item
-19 of the C audits) and after the deep edit that followed (item 20, which renumbered Sections 5
-and 7). The key in parentheses is the `\label` in the source. In October 2026 Paper B
+The numbers are those of the builds of October 25, 2026, checked against the `.aux` files of both
+papers. For C1 they are the numbers after the reducible faces and the counts near a facet (audit 30
+of the C audits) and the fixes of audit 32. The key in parentheses is the `\label` in the source. In October 2026 Paper B
 ("Vertex crossings in a symmetric Markov multinomial model", arXiv:2610.09258) was merged into
 Paper C, and after the split its results are in C1. The statements of Sections 7 and 8 and of
 Appendices C and D of C1 come mostly from Paper B, and their Lean files are in `lean/PaperB`. They keep their
@@ -177,18 +178,22 @@ vector is a hypothesis where one is needed. In terms of the paper these are the 
   equation (1).
 * Section 3. Proposition 3.3(b) and (d), the uniqueness of the minimizer in (a), and (c) on the
   boundary of the face. Proposition 3.4 (`prop:variational`) and Lemma 3.2 (`lem:face-monotone`)
-  in general, including the strict monotonicity of `λ_F` in the face.
+  in general, including the strict monotonicity of `λ_F` in the face. Section 3.3, the functional
+  of the discrete chain, with Propositions 3.5 and 3.6 (`prop:discrete-rate`,
+  `prop:discrete-variational`).
 * Section 4. Lemma 4.1 (`lem:upper`), Theorem 4.2 (`thm:first`), Remark 4.3 (`rem:first-field`),
-  and Theorem 4.4(a) beyond the finite form.
+  Theorem 4.4(a) beyond the finite form, Theorem 4.5 (`thm:reducible`) and Corollary 4.6
+  (`cor:reducible-crossing`).
 * Section 5. Proposition 5.2(a) in general, Corollary 5.3 (`cor:symface`) for general `k`,
   Theorem 5.4 (`thm:local`), Lemma 5.5 (`lem:discrete`), Theorems 5.6 to 5.9 (`thm:stratified`,
-  `thm:facemax`, `thm:crossing`, `thm:window`), Remark 5.10, the expansion in Example 5.11(ii),
-  Example 5.11(iii), and Proposition 5.12 (`prop:uniform-facemax`).
-* Section 6, the boundary layer, in full.
+  `thm:facemax`, `thm:crossing`, `thm:window`), Corollary 5.10 (`cor:mode-changes`), the expansion
+  in Example 5.11(ii), Example 5.11(iii), and Proposition 5.12 (`prop:uniform-facemax`).
+* Section 6, the boundary layer, in full, including Theorems 6.11 and 6.12 on the counts near a
+  facet.
 * Section 7. Lemma 7.1 for `k ≠ 3`, Example 7.2, the asymptotic parts of Corollary 7.3, Theorem
   7.4(ii) and (iii), the display (21) and Corollary 7.6 (`cor:simplex-modes`).
-* Section 8. The form (25) of Theorem 8.2, and Remark 8.3.
-* Appendices A and B, and Appendices C and D beyond the rows above.
+* Section 8. The form (25) of Theorem 8.2.
+* Appendices A and B, Appendices C and D beyond the rows above, and Appendix E.
 
 ## Findings for C1
 
@@ -199,7 +204,7 @@ vector is a hypothesis where one is needed. In terms of the paper these are the 
 # Paper C2
 
 The modules `PrincipalMinors`, `GeneratorFiber` and `CriticalWindow` cover finite and algebraic
-results of Sections 3 and 5 of C2. The declarations of `CriticalWindow` are in the namespace
+results of Sections 3 and 6 of C2. The declarations of `CriticalWindow` are in the namespace
 `Kagey131.PaperC.FourState` and the others in `Kagey131.PaperC`. In Lean the states `1, 2, 3, 4` of
 the paper are `0, 1, 2, 3`.
 
@@ -221,23 +226,23 @@ also defined there.
 | Step (N) of the proof of Corollary 3.6, the generator point `-D⁻¹CD` with `D = diag x` is a generator | `conj_apply`, `normalize_isGenerator` | `C` Metzler (in Lean `C` is minus the Z-matrix of the paper), `x > 0`, `C x = 0` | note 06, Proposition 3.3 |
 | Step (N), the null vector is unique up to a factor | `ker_eq_smul` | `C` Metzler and `CutIrreducible`, with a positive null vector `x`. Its existence (Perron and Frobenius) is a hypothesis | note 06, Proposition 3.3 |
 | Step (N), every real invertible diagonal `D'` for which `D'⁻¹CD'` has zero row sums is a multiple of `D` and gives the same matrix | `normalization_unique`, `normalization_unique_matrix` | as for `ker_eq_smul`. The entries of `D'` are nonzero, of any signs | note 06, Proposition 3.3 |
-| The sign lemma, named in Section 6 among the Lean results (it is not a numbered statement of C2). If `D C D⁻¹` is Metzler, the entries of `D` have one sign | `sign_constant` | `C` Metzler and `CutIrreducible`, `D` real diagonal with nonzero entries | note 06, Lemma 3.2 |
+| The sign lemma, named in Section 7 among the Lean results (it is not a numbered statement of C2). If `D C D⁻¹` is Metzler, the entries of `D` have one sign | `sign_constant` | `C` Metzler and `CutIrreducible`, `D` real diagonal with nonzero entries | note 06, Lemma 3.2 |
 | Remark 3.7 (`rem:three-states`), with the products `ω = q_12 q_23 q_31` and `ω' = q_13 q_32 q_21` (Lean writes `c`, `c'`), `ω + ω' = q_1q_2q_3 - q_1w_23 - q_2w_13 - q_3w_12` and `ωω' = w_12w_23w_13` | `det_neg_three` (`det(-Q) = σ₃ - c - c'` for every `3 × 3` matrix), `det_neg_three_eq_zero`, `cyc_add_cycRev`, `cyc_mul_cycRev`, `sigma3_congr` | zero row sums for the first identity, none for the second | note 06, Corollary 4.2 |
 | Remark 3.7, the case of the same ordered pair `(ω, ω')` gives `Q' = Q` | `eq_of_same_q_w_cyc` | two generators on `Fin 3` with all off-diagonal entries positive, the same diagonal, the same `w_ij` and the same `ω` | note 06, Corollary 4.2 |
 | Corollary 3.6(a), the time reversal `Q* = D_π⁻¹QᵀD_π` is a generator with the exit rates and the products of `Q`, and its oriented product is `ω'` | `timeRev_eq_conj`, `timeRev_diag`, `timeRev_wprod`, `cyc_timeRev`, `timeRev_rowsum`, `timeRev_isGenerator`, `fiber_three_converse` | `π > 0` with `πQ = 0` | note 06, Corollary 4.2 |
 | Corollary 3.6(d), the fiber on three states is `{Q, Q*}` | `fiber_three`, and `fiber_three_tree` with `π` from the tree formula (`piTree_pos`, `piTree_stationary`), so with no hypothesis on `π` | two generators on `Fin 3` with all off-diagonal entries positive, the same diagonal and the same `w_ij` (these are the minors of orders 1 and 2). The paper allows any irreducible `Q`, with zero entries, and that case is not in Lean | note 06, Corollary 4.2 |
 
-## Section 5, low temperature and the cycle hierarchy
+## Section 6, low temperature and the cycle hierarchy
 
 | Paper statement | Lean | Hypotheses in Lean | Note label |
 | --- | --- | --- | --- |
-| Example 5.5 (`ex:four-state`), the rates, `π ∝ (1, t, t, t)` and the exit rates `q_1, …, q_4` | `qOff`, `Q4`, `Q4_offdiag`, `Q4_rowsum`, `detailed_balance`, `exit_rates` | `t` real (the identities need no sign) | C modal hierarchy 01, (28) |
-| Example 5.5, the killed matrices `-Q_{12}`, `-Q_{123}` (the display) and `-Q_{124}` | `killed_12`, `killed_123`, `killed_124` | | |
-| Example 5.5, `det(-Q_{12}) = 2t⁴ + O(t⁵)` and `det(-Q_{123}) = det(-Q_{124}) = 2t⁶ + O(t⁷)`, as the exact polynomials `2t⁴ + t⁵ + 2t⁶ + 2t⁷ + t⁹` and `2t⁶ + t⁷ + 6t⁸ + 4t⁹ + 3t¹¹` | `det_A12`, `det_A123`, `det_A124` | | C modal hierarchy 01, (29) to (31) |
-| Example 5.5, the adjugates, with first columns `(t, t) + O(t²)`, `(3t³, 3t³, 2t³) + O(t⁴)` and `(t³, t³, 0) + O(t⁴)` and other entries `O(t²)`, resp. `O(t⁴)`, as exact polynomial matrices | `adj_A12`, `adj_A123`, `adj_A124` | | C modal hierarchy 01, (29) to (31) |
-| Example 5.5 with Proposition 5.3 (`prop:prefactor`), `t³(-Q_F)⁻¹ → B_F`, with first columns `(1/2, 1/2)`, `(3/2, 3/2, 1)`, `(1/2, 1/2, 0)` and zeros elsewhere | `B12_limit`, `B123_limit`, `B124_limit`, with `tendsto_scaled` and `inv_apply_eq` | entrywise, as `t → 0⁺` | |
-| Example 5.5, `ρ(B_12) = 1/2`, `ρ(B_123) = 3/2`, `ρ(B_124) = 1/2`, so `a_12 = 2`, `a_123 = 2/3`, `a_124 = 2` | `B12_eigen`, `B123_eigen`, `B124_eigen` | the first column is an eigenvector for the stated value. That the other eigenvalues are `0` (only the first column of `B_F` is nonzero) is not a Lean statement | |
-| Example 5.5, the limiting scores `1 + 2x`, `2 + 2x/3`, `2 + 2x`, `3`, the unique minimizer `{1,2}` on `(0, 3/4)`, `{1,2,3}` on `(3/4, 3/2)` and `V` on `(3/2, ∞)`, `{1,2,4}` always `1` above `{1,2}`, and the score `8/3 < 3` at `x = 1` | `s12`, `s123`, `s124`, `sV`, `window_low`, `window_mid`, `window_high`, `score_124`, `noncycle_at_one` | `x` real in the stated interval | C modal hierarchy 01, (32), (33) |
+| Example 6.5 (`ex:four-state`), the rates, `π ∝ (1, t, t, t)` and the exit rates `q_1, …, q_4` | `qOff`, `Q4`, `Q4_offdiag`, `Q4_rowsum`, `detailed_balance`, `exit_rates` | `t` real (the identities need no sign) | C modal hierarchy 01, (28) |
+| Example 6.5, the killed matrices `-Q_{12}`, `-Q_{123}` (the display) and `-Q_{124}` | `killed_12`, `killed_123`, `killed_124` | | |
+| Example 6.5, `det(-Q_{12}) = 2t⁴ + O(t⁵)` and `det(-Q_{123}) = det(-Q_{124}) = 2t⁶ + O(t⁷)`, as the exact polynomials `2t⁴ + t⁵ + 2t⁶ + 2t⁷ + t⁹` and `2t⁶ + t⁷ + 6t⁸ + 4t⁹ + 3t¹¹` | `det_A12`, `det_A123`, `det_A124` | | C modal hierarchy 01, (29) to (31) |
+| Example 6.5, the adjugates, with first columns `(t, t) + O(t²)`, `(3t³, 3t³, 2t³) + O(t⁴)` and `(t³, t³, 0) + O(t⁴)` and other entries `O(t²)`, resp. `O(t⁴)`, as exact polynomial matrices | `adj_A12`, `adj_A123`, `adj_A124` | | C modal hierarchy 01, (29) to (31) |
+| Example 6.5 with Proposition 6.3 (`prop:prefactor`), `t³(-Q_F)⁻¹ → B_F`, with first columns `(1/2, 1/2)`, `(3/2, 3/2, 1)`, `(1/2, 1/2, 0)` and zeros elsewhere | `B12_limit`, `B123_limit`, `B124_limit`, with `tendsto_scaled` and `inv_apply_eq` | entrywise, as `t → 0⁺` | |
+| Example 6.5, `ρ(B_12) = 1/2`, `ρ(B_123) = 3/2`, `ρ(B_124) = 1/2`, so `a_12 = 2`, `a_123 = 2/3`, `a_124 = 2` | `B12_eigen`, `B123_eigen`, `B124_eigen` | the first column is an eigenvector for the stated value. That the other eigenvalues are `0` (only the first column of `B_F` is nonzero) is not a Lean statement | |
+| Example 6.5, the limiting scores `1 + 2x`, `2 + 2x/3`, `2 + 2x`, `3`, the unique minimizer `{1,2}` on `(0, 3/4)`, `{1,2,3}` on `(3/4, 3/2)` and `V` on `(3/2, ∞)`, `{1,2,4}` always `1` above `{1,2}`, and the score `8/3 < 3` at `x = 1` | `s12`, `s123`, `s124`, `sV`, `window_low`, `window_mid`, `window_high`, `score_124`, `noncycle_at_one` | `x` real in the stated interval | C modal hierarchy 01, (32), (33) |
 
 ## Not in Lean, C2
 
@@ -249,18 +254,19 @@ also defined there.
   `fiber_three` assumes that all six off-diagonal entries of both generators are positive. In the
   normalization (N) the existence of the positive null vector, from Perron and Frobenius, is a
   hypothesis of the Lean statements.
-* Remark 3.8 and Proposition 3.9, and Section 4 in full. The reversible design of the arXiv
-  version (its Section 7) is not in Lean.
-* Section 5 beyond Example 5.5. In Example 5.5, the cycles and the depths, the passage from the
+* Remark 3.8 and Proposition 3.9, Section 4 (the exact occupation law) in full and Section 5
+  (modal supports) in full. The reversible design of the arXiv version (its Section 8) is not in
+  Lean.
+* Section 6 beyond Example 6.5. In Example 6.5, the cycles and the depths, the passage from the
   limits `B_F` to `a_F` through the spectral radius beyond the eigenvectors above, and the step
-  from the limiting scores to the support of the mode (Theorem 5.4, `thm:critical-window`).
+  from the limiting scores to the support of the mode (Theorem 6.4, `thm:critical-window`).
 
 ## Findings for C2
 
 No error was found in these statements. The exact computation gives `det(-Q_{123}) = det(-Q_{124})`
 as polynomials in `t`, which the paper does not need. The determinants and the adjugates of
-Example 5.5 agree with an exact recomputation in rational arithmetic, and their leading terms with
-the paper. Since October 25, 2026 the proof of Example 5.5 gives these cofactors by hand.
+Example 6.5 agree with an exact recomputation in rational arithmetic, and their leading terms with
+the paper. Since October 25, 2026 the proof of Example 6.5 gives these cofactors by hand.
 
 # Statements of the earlier version that neither paper states
 

@@ -26,6 +26,10 @@ nu = (1,2,4), and the non-reversible cycle q12 = q23 = q31 = 2, q21 = q32 = q13 
      of J_G(beta,z) = 3 - 2z - sqrt((2+z)(1+4z)) at z = 0, omega_beta, gamma_beta - q_3, the
      coefficient kappa_beta = -49/(64 sqrt(omega_beta)), and omega_beta and gamma_beta against the
      tilt of part A. Then the logarithms of the ratios of part J against -kappa x^(3/2)/S^(1/2).
+  L. Proposition `prop:layer-cubic`(c) on a face that is not reversible: the cycle above as the
+     facet, with a fourth state joined to each of its states by rate 1.5 both ways. At the uniform
+     beta the entrance and exit laws agree, gamma_beta = q_4 and z -> J_G(beta,z) is affine with
+     slope -omega_beta. At beta = (0.2, 0.3, 0.5) the laws differ and J_G(beta,.) is not affine.
 
 Every check is an assertion. Nothing in the section is deduced from these numbers.
 Needs numpy, scipy and sympy. Run:  py -I verify_layer.py   (about two minutes)
@@ -446,6 +450,33 @@ def main():
         print(f"         T = {T:.0f}: log of the ratio {lr:.3f}, -kappa x^(3/2)/S^(1/2) = {pred:.3f}, "
               f"difference / (sqrt(x/T) + x^2/T) = {abs(lr - pred) / scale:.3f}")
     ok(worst < 0.25, f"the differences are at most {worst:.3f} (sqrt(x/T) + x^2/T), the form of the error in the proposition")
+
+    print("L. A face that is not reversible but has equal entrance and exit laws (Proposition prop:layer-cubic(c))")
+    cc = 1.5
+    Q4 = np.zeros((4, 4))
+    for a_, b_, rate in ((0, 1, 2.0), (1, 2, 2.0), (2, 0, 2.0), (1, 0, 1.0), (2, 1, 1.0), (0, 2, 1.0)):
+        Q4[a_, b_] = rate
+    for a_ in range(3):
+        Q4[a_, 3] = Q4[3, a_] = cc
+    np.fill_diagonal(Q4, -Q4.sum(axis=1))
+    ok(abs(Q4[0, 1] * Q4[1, 2] * Q4[2, 0] - 8.0) < 1e-12 and abs(Q4[1, 0] * Q4[2, 1] * Q4[0, 2] - 1.0) < 1e-12,
+       "the cycle products of the rates are 8 and 1, so Q is not reversible on F = {1,2,3,4}")
+    zs = np.linspace(0.0, 0.5, 6)
+    for beta4, equal in (([1 / 3, 1 / 3, 1 / 3], True), ([0.2, 0.3, 0.5], False)):
+        cst = layer_constants(Q4, [0, 1, 2], 3, beta4)
+        gap = float(np.max(np.abs(cst["entry"] - cst["exit"])))
+        Js = np.array([J_real(Q4, [0, 1, 2], 3, beta4, z) for z in zs])
+        d2 = float(np.max(np.abs(np.diff(Js, 2))))
+        slope = (Js[1] - Js[0]) / (zs[1] - zs[0])
+        if equal:
+            ok(gap < 1e-12 and abs(cst["gamma"] + Q4[3, 3]) < 1e-9 and d2 < 1e-10
+               and abs(slope + cst["ab"]) < 1e-9,
+               f"beta uniform: entrance and exit laws agree to {gap:.1e}, gamma = q_4 = {cst['gamma']:.10f}, "
+               f"J_G(beta,z) affine in z on [0, 0.5] (second differences {d2:.1e}) with slope -omega = {-cst['ab']:.10f}")
+        else:
+            ok(gap > 1e-3 and d2 > 1e-6,
+               f"beta = (0.2, 0.3, 0.5): the laws differ by {gap:.3f} and J_G(beta,z) is not affine "
+               f"(second differences up to {d2:.2e})")
     print(f"verify_layer: all {CHECKS} checks passed")
 
 
