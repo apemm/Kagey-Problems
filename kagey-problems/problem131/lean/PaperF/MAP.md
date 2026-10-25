@@ -2,9 +2,9 @@
 
 Paper F is `paperF/problem131_levy.tex`, the lattice Lévy walk with two run laws. This
 library formalizes the exact identities of Section 2 (`paperF/sec_setting.tex`, Sections 2.4
-and 2.5). It also formalizes the algebraic part of Proposition `thm:inverse`(a)
-(Section 7, `paperF/sec_inverse.tex`). The table cites statement labels, not numbers, since
-the numbers change when statements move. Layout as of October 24, 2026.
+and 2.5). It also formalizes the algebraic part of Remark `thm:inverse`(a)
+(Section 5.7, `paperF/sec_preparation.tex`). The table cites statement labels, not numbers, since
+the numbers change when statements move. Layout as of October 25, 2026 (61 pages).
 
 The library is `PaperF`. It has the root `PaperF.lean` and 7 modules in `PaperF/`, all in
 namespace `Kagey131.PaperF.Levy`. That namespace is separate from the older
@@ -125,8 +125,8 @@ Notes on the forms chosen:
   at the minus end, and `thm:inverse`(b). Only the renewal inversion is formalized.
 - The boundary kernels `eq:kappa`, the kernel `v_σ`, the stationary preparation, and the claim
   that the recursion computes `P_N` in `O(N^3)` operations.
-- Every asymptotic statement of the paper (`lem:profile` and Sections 3 to 7), which needs the
-  hypotheses (RV), (LR) and (SPAN).
+- Every asymptotic statement of the paper (`lem:profile`, Sections 3 to 6 and Appendix A), which
+  needs the hypotheses (RV), (LR), (SPAN) or (LD).
 
 ## Building
 

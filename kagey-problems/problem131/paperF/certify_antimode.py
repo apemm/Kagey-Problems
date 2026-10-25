@@ -1,8 +1,8 @@
 """Certify the antimode j*_N of P_N on [pN, N] for the zeta law, alpha_+ = alpha_- = 1.5, fresh plus start.
 
 For each N the exact law is computed by the run recursion of certify_atlas.py, with the a priori
-relative error bound eps_N of that script. The antimode is certified when every other bin of
-[pN, N] exceeds the minimum by more than the numerical error, that is when
+relative error bound eps_N of that script. The antimode is certified when the value at every
+other point of [pN, N] exceeds the minimum by more than the numerical error, that is when
     min_{k != k*} (P~(k) - P~(k*)) / P~(k*)  >  2 eps_N / (1 - eps_N),
 so that the exact minimizer is the computed one. The script also records the two predictions of
 Theorem thm:antimode, the law j = T_-^{-1}(2 alpha_+ s / N) (with the real extension
