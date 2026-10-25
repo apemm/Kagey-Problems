@@ -339,11 +339,11 @@ calling `verify_all.py` here. Run `python -B verify_all.py` here (or `python -B 
 heavy cells. The scripts need numpy, scipy, mpmath and python-flint. Build the
 paper with `pdflatex problem131_memory.tex`, run three times so that the references settle. The Code availability statement
 of the paper pins the supporting code, certificate records and Lean files to commit
-`6f7f9068fc0ebb19c16d6a53fd8df5400bbd91a2`. Later edits to the text of the paper do not change
-that pin, but a change to a script, a record or a Lean file would need a new checked commit. The
-certificate for Theorem 4.4 (`certify_threshold.py`, its 3 helper modules, `data/threshold_*.txt`
-and `data/certify_threshold_output.txt`) is newer than the pinned commit, and the Code
-availability statement says so. Replace the pin by a checked commit that contains it. The arXiv
+`aa88996f79dcfb08fe266a12879087ae0ab52fbd` (before October 25, 2026 the pin was `6f7f9068`).
+That commit contains the certificate for Theorem 4.4 (`certify_threshold.py`, its 3 helper
+modules, `data/threshold_*.txt` and `data/certify_threshold_output.txt`). Later edits to the text
+of the paper do not change the pin, but a change to a script, a record or a Lean file would need a
+new checked commit. The arXiv
 version is `problem131_arxiv.tex`. Build it with `pdflatex problem131_arxiv.tex` three times. It
 gives the paper followed by Sections S1 to S6 in one PDF, with one bibliography.
 
@@ -443,14 +443,14 @@ and `data/certify_convex_output_2026-10-17.txt`. The center run took 2072 s and 
 (Python 3.14.3, python-flint 0.9.0, FLINT 3.6.0). Both exited with status 0, with no failures.
 The sha256 values in the witness headers are of the files as they were on disk during the run.
 `certify_center.py` and `certify_convex.py` had LF line endings and `verify_elephant_shape.py` had
-CRLF endings. Its LF form, as committed at the pinned commit `6f7f9068`, has sha256
+CRLF endings. Its LF form, as committed at commit `6f7f9068`, has sha256
 49c78eea387b293d1dd24acc257a1d362bd7e6ce5fb6219e0eb06465223f811a.
 
 On October 24, 2026 two printed labels of `verify_elephant_shape.py` changed from "bin" to
 "value", and four printed labels and two docstring lines of `verify_elephant_odd.py` likewise. No
 computation changed. So the current `verify_elephant_shape.py` no longer matches the hash in the
 witness header of `data/witnesses_convex_2026-10-17.jsonl`. Check the witnesses against the file at
-the pinned commit `6f7f9068`, which the Code availability statement of the paper names. The
+commit `6f7f9068`, which the Code availability statement named before October 25, 2026. The
 current files have sha256 0f3ab9a3ae64d0aef9cad82e3c1d86b66be884e3f82fb9824dc1ee666276193d
 (`verify_elephant_shape.py`) and
 b40d38c8371ff03bd2c1cddb1e1baaebaf14ab7e8b600fa68ae495a5214fab3e (`verify_elephant_odd.py`).

@@ -83,19 +83,19 @@ There is $C_\theta$, depending on $\theta$, $Q$ and $\mu$ and bounded for $\thet
 in compact subsets of $V_F$, such that for every $n\in\Z_{\ge0}^F$ with
 $\supp n=F$ and every $h$ with $hq_{\max}\le\frac12$, the probability that
 $X_1,\dots,X_{\lvert n\rvert}$ have composition $n$ is at most
-$C_\theta h^{k-1}\exp\bigl(-h\langle n,q-\theta\rangle+C_\theta h^2\lvert
-n\rvert\bigr)$.
+$C_\theta h^{k-1}\exp\bigl(-h\langle n,q-\theta\rangle\bigr)$.
 \end{lemma}
 
-The proof is in Appendix~\ref{app:torus}. The lemma holds for a path of any
-length $\lvert n\rvert$, so it also applies to the blocks of a path. With
-$\theta=q-v-\lambda_F(v)\ones$ and $\lvert n\rvert=N$ it gives
+The proof is in Appendix~\ref{app:torus}. It writes the probability as an integral
+over a torus and bounds the integrand by its value at the real point. The lemma
+holds for a path of any length $\lvert n\rvert$, so it also applies to the blocks of
+a path. With $\theta=q-v-\lambda_F(v)\ones$ and $\lvert n\rvert=N$ it gives
 \begin{equation}\label{eq:upper-field}
- P_N(n)e^{Tv\cdot n/N}\le C_\theta h^{k-1}e^{-T\lambda_F(v)+C_\theta T^2/N}
+ P_N(n)e^{Tv\cdot n/N}\le C_\theta h^{k-1}e^{-T\lambda_F(v)}
 \end{equation}
 for every $n$ with support $F$. The next theorem uses the local law and the
 face maxima of Section~\ref{sec:secondorder}, which are proved there without
-it. Its part (i) is a weak form of Theorem~\ref{thm:stratified}, and its part
+it. Its part (i) is a weak form of Theorem~\ref{thm:stratified}(b), and its part
 (ii) is the only part that covers reducible faces.
 
 \begin{theorem}[first-order face selection]\label{thm:first}
@@ -129,7 +129,7 @@ full support (Theorem~\ref{thm:hull}(c)).
 \end{theorem}
 
 \begin{proof}
-(i) This is Theorem~\ref{thm:stratified}, since $J_V=J_F$ on $\Delta_F$, $\log C_F$
+(i) This is Theorem~\ref{thm:stratified}(b), since $J_V=J_F$ on $\Delta_F$, $\log C_F$
 is bounded on $\mathcal K$ and $J_{\{i\}}=q_i$.
 
 (ii) This is proved in Appendix~\ref{app:first}.
@@ -145,12 +145,13 @@ probability, so its support is admissible, and hence it lies in $\mathcal F_\tau
 
 (iv) By (iii), for large $N$ a global mode $\hat n$ maximizes $P_N$ on its face
 $F\in\mathcal F_\tau$, which satisfies (H) by Lemma~\ref{lem:admissible}(b). So
-Theorem~\ref{thm:facemax} with $T=\tau L\le N^{1/3}$ gives
+Theorem~\ref{thm:facemax}(b) with $T=\tau L\le N^{1/3}$ gives
 $\hat n/N=\alpha^*_F+O(1/L)$.
 \end{proof}
 
-For a reducible face we only have the bounds in (ii), and in
-Example~\ref{ex:threecycle} the power of $T$ differs from $(k_F-1)/2$.
+On a reducible face the power of $T$ can differ from $(k_F-1)/2$, as in
+Example~\ref{ex:threecycle}. Theorem~\ref{thm:reducible} below gives the power and the constant
+for every admissible face.
 
 \begin{remark}[a field]\label{rem:first-field}
 Let $v\in\R^d$, put $M_F(T,v)=\max\{P_N(n)e^{Tv\cdot n/N}:\supp n=F\}$ and
@@ -257,3 +258,76 @@ rarely leaves. As $\tau$ grows the exit rate counts for more, and the mode moves
 to larger such sets. It need not grow around its first vertex, and it can move
 to a disjoint set. Faces of one size share the term $\lvert F\rvert-1$, so only
 the faces with the least exit rate of each size can win.
+
+\subsection{Reducible faces}\label{sec:reducible-max}
+
+Let $F$ be admissible, with components $C_1,\dots,C_r$ numbered as in
+Lemma~\ref{lem:admissible}(a). A path of positive probability with support $F$ visits them in
+this order, each in one block of consecutive times. The order is unique, since consecutive
+blocks are joined by an edge and the components form an acyclic graph, in which at most one path
+passes through every vertex. Put $k_j=|C_j|$ and $\lambda_j=\lambda_{C_j}$, so
+$\lambda_F=\min_j\lambda_j$. Let $k^*$ be the least $k_j$ with $\lambda_j=\lambda_F$, let
+$S^*$ be the set of these $j$ with $k_j=k^*$, and put
+\[
+a_F=\frac{k^*-1}2,\qquad p_F=a_F+k_F-k^*,\qquad R_j=(q_{xy})_{x\in C_j,\,y\in C_{j+1}} .
+\]
+For an irreducible $C$ with $|C|\ge2$, states $y,x\in C$ and $t\in(0,\infty)^C$ let
+$\Phi_C(t)_{yx}=e^{-\langle q,t\rangle}H_{A_C,e_y,e_x}(t)$, in the notation before
+Lemma~\ref{lem:torus-complex}. As in Lemma~\ref{lem:continuum}, this is the density of the
+occupation times of the chain started at $y$ on the event that it stays in $C$ up to time
+$|t|$, visits every state of $C$ and ends at $x$. For $C=\{i\}$ put $\Phi_C(t)=e^{-q_it}$. For
+$j\in S^*$ let $r$ and $l$ be the vectors $r_{C_j}$ and $l_{C_j}$ of Definition~\ref{def:faces},
+with $l\cdot r=1$, and let
+\begin{align*}
+A_j&=\sup\,e^{\lambda_F|t^<|}\,\mu_{C_1}^\top\Phi_{C_1}(t^{(1)})R_1\cdots\Phi_{C_{j-1}}(t^{(j-1)})R_{j-1}\,r,\\
+B_j&=\sup\,e^{\lambda_F|t^>|}\,l^\top R_j\Phi_{C_{j+1}}(t^{(j+1)})R_{j+1}\cdots\Phi_{C_r}(t^{(r)})\,\ones,
+\end{align*}
+over all $t^{(m)}\in(0,\infty)^{C_m}$ for $m<j$, respectively $m>j$, where $|t^<|$ and $|t^>|$
+are their total times, $A_1=\mu_{C_1}\cdot r$ and $B_r=l\cdot\ones$. Finally let
+\[
+K^{\rm red}_F=\max_{j\in S^*}\frac{A_jB_j}{(2\pi)^{a_F}\sqrt{\det\Sigma_{C_j}}},
+\]
+where $\Sigma_{C_j}$ is $\Sigma_\alpha$ of Definition~\ref{def:tilt} for the face $C_j$ at
+$\alpha=\alpha^*_{C_j}$, and the denominator is $1$ if $k^*=1$. If $F$ is irreducible, then
+$p_F=(k_F-1)/2$ and $K^{\rm red}_F=K_F$.
+
+\begin{theorem}[face maxima on reducible faces]\label{thm:reducible}
+Let $F$ be admissible. Then $0<K^{\rm red}_F<\infty$, and there are $T_1$, $N_1$ and $C$ such that
+for $N\ge N_1$ and $T_1\le T\le N^{1/3}$
+\[
+\Bigl|\frac{M_F}{N^{-(k_F-1)}T^{p_F}e^{-T\lambda_F}}-K^{\rm red}_F\Bigr|\le C\Bigl(\frac1T+\frac{T^2}N\Bigr).
+\]
+In particular the ratio lies between $\frac12K^{\rm red}_F$ and $2K^{\rm red}_F$ after $T_1$ and
+$N_1$ are enlarged.
+\end{theorem}
+
+So the power of $T$ is $p_F$, between the two powers of Theorem~\ref{thm:first}(ii). The time
+goes to one component of least exit rate and least size, which contributes
+$T^{-(k^*-1)/2}$ through its local law, and each other component $C$ gets time of order one
+and contributes $h^{|C|-1}$. Each switch from one component to the next contributes
+one more factor $h$. The constants $A_j$ and $B_j$ are maxima over these short blocks.
+For irreducible $F$ the theorem is Theorem~\ref{thm:facemax}(b) at $v=0$. The proof is in
+Appendix~\ref{app:counts}.
+
+\begin{corollary}[crossings of admissible faces]\label{cor:reducible-crossing}
+Let $F$ and $G$ be admissible, with $\Delta=k_F-k_G\ge1$ and $\delta=\lambda_G-\lambda_F>0$. Put
+$\pi=p_F-p_G$, $\kappa=\log(K^{\rm red}_F/K^{\rm red}_G)$ and $D_N=\log M_F-\log M_G$, and let
+$T_1$ serve for both faces in Theorem~\ref{thm:reducible}.
+\begin{enumerate}[(i)]
+\item For large $N$, $D_N$ has a zero in $[\frac\Delta{2\delta}L,\frac{2\Delta}\delta L]$.
+\item For large $N$, every zero $T_N\in[T_1,N^{1/3}]$ of $D_N$ satisfies
+$\delta T_N+\pi\log T_N=\Delta L-\kappa+O(1/L)$.
+\item All such zeros lie in one interval of length $O(1/L)$, and
+\[
+T_N=\frac\Delta\delta\Bigl[L-\frac\pi\Delta\log L+b\Bigr]+O\Bigl(\frac{\log L}L\Bigr),\qquad
+b=-\frac\pi\Delta\log\frac\Delta\delta-\frac\kappa\Delta .
+\]
+\end{enumerate}
+\end{corollary}
+
+The coefficient of $\log\log N$ is $\pi/\Delta$. It is $\frac12$ when $F$ and $G$ are
+irreducible, which gives Theorem~\ref{thm:crossing}(i) to (iii) for zeros in $[T_1,N^{1/3}]$. In
+Example~\ref{ex:threecycle}, $p_{\{1\}}=0$, $p_{\{1,2\}}=1$ and $p_{\{1,2,3\}}=1$, and
+$K^{\rm red}_{\{1,2\}}=b$ from $A_2=\sup_tbe^{(1-b)t}=b$ and $B_2=1$. So the corollary gives the
+coefficients $1$ and $0$ of parts (ii) and (iii) there, with their constants. We do not claim
+that the zero is unique.

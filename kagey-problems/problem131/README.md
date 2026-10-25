@@ -83,9 +83,12 @@ No remaining statement changed. `paperC/EXPORTS.md` records the new numbers, and
 `lean/PaperC/MAP.md` keeps the Lean theorems of the removed statements in its section on cut
 statements.
 
+On October 25, 2026 the paper gained the local law over the whole switching range, the face maxima
+and crossings of every admissible face and the counts near a facet, and it now has 81 pages.
+
 Files. The folder `paperC`, with the main file `problem131_chains.tex` and `problem131_chains.pdf`
-(article class, 59 pages), the same paper in the Springer Nature template
-`problem131_chains_sn.tex` and `problem131_chains_sn.pdf` (65 pages, `paperC/TEMPLATE.md` says how
+(article class, 81 pages), the same paper in the Springer Nature template
+`problem131_chains_sn.tex` and `problem131_chains_sn.pdf` (89 pages, `paperC/TEMPLATE.md` says how
 it was set up and built), their shared section and appendix files, the check scripts,
 `paperC/EXPORTS.md` (the statements that Paper C2 cites, with their numbers) and
 `paperC/README.md`. The earlier main file `problem131_switching.tex` (class `ejpecp`), its PDF and
@@ -93,21 +96,24 @@ its supplement are in `archive/paperC_switching_ejp/`.
 
 ## Paper C2: What the occupation law of a finite Markov chain determines
 
-Full title "What the occupation law of a finite Markov chain determines: principal minors, modal
-supports and cycle trees". Paper C2 (in preparation, for Stochastic Processes and their
-Applications) asks what coarse functionals of the law of C1 determine about Q. The Donsker and
+Full title "What the occupation law of a finite Markov chain determines: time reversal, principal
+minors and cycle trees". Paper C2 (in preparation, for Stochastic Processes and their
+Applications) asks what the law of C1 and its coarse functionals determine about Q. The Donsker and
 Varadhan functional determines exactly the principal minors of -Q, and the generators with the
-same minors form a finite set, which is {Q, Q*} without a cut and for d <= 3. From the stationary
-start Q and its time reversal give the same law, while the second-order amplitudes separate them
-for a generic start. The controlled boundaries of the modal supports determine the same minors.
+same minors form a finite set, which is {Q, Q*} without a cut and for d <= 3. The exact law of the
+occupation times at one time determines it at every time, and it determines Q for a generic start
+(Section 4). From the stationary start Q and its time reversal give the same law, and they are the
+only generators that do when d <= 4, without a cut, and for almost all rates, while reversal inside
+a memoryless block gives a third one for d = 5. The controlled boundaries of the modal supports determine the same minors.
 A reversible design fixed in advance recovers Q, also at a finite horizon uniformly over a compact
 class. At low temperature the calibrated rewards read off the cycle tree. The introduction states
 these results as Theorems A to D. Section 2 states the results of C1 that the paper uses, each with
 its C1 number.
 
 Files. The folder `paperC2`, with the main file `problem131_reconstruction.tex` and
-`problem131_reconstruction.pdf` (class `elsarticle`, 40 pages), its section files, the check
-scripts, the cover letter and `paperC2/README.md`.
+`problem131_reconstruction.pdf` (class `elsarticle`, 43 pages), the arXiv build
+`problem131_reconstruction_arxiv.tex` and its PDF (46 pages, with the reversible design as Section
+8), its section files, the check scripts, the cover letter and `paperC2/README.md`.
 
 ## Paper D: The elephant random walk with rare reversals
 
@@ -122,11 +128,12 @@ unique and x_N = 2 z_N - log(2 pi) + o(1), about twice the Markov value. The law
 family proofs and the second-difference proofs came back into the article as Appendices D and E,
 so every proof used by the main theorems is in the article. There is no Online Resource. The
 second order, the tail, odd N and the likelihood theorem are Sections S1 to S4 of the arXiv build,
-and the journal version cites that build where it needs them.
+and the convexity window and the proofs for the threshold certificate are Sections S5 and S6.
+The journal version cites that build where it needs them.
 
 Files. The folder `paperD`, with the journal version `problem131_memory.tex` and
-`problem131_memory.pdf` (40 pages), the arXiv build `problem131_arxiv.tex` and
-`problem131_arxiv.pdf` with Sections S1 to S4, its section and appendix files, the check scripts
+`problem131_memory.pdf` (45 pages), the arXiv build `problem131_arxiv.tex` and
+`problem131_arxiv.pdf` (64 pages) with Sections S1 to S6, its section and appendix files, the check scripts
 and `paperD/README.md`.
 
 ## Paper E: Endpoint crossings for the planar persistent walk
@@ -152,7 +159,7 @@ is an endpoint or a point of the bulk, and for the equilibrated start the thresh
 boundary layers identify both run laws. When the run scales differ by an unbounded factor the start
 of the big-jump zone is located up to a factor 1 ± delta, and near each end the local extrema of the
 law are described up to distance N^(1-eta). The draft is complete, with every statement proved in
-the article or stated as a conjecture (61 pages after the revision of October 25, 2026).
+the article or stated as a conjecture (62 pages after the revisions of October 25, 2026).
 
 The first draft of Paper F, "The golden-ratio threshold for a lattice Lévy walk and ties in
 coin-turning walks", is archived in `archive/paperF_golden_aging`. Its heavy-tail half is part of
@@ -161,7 +168,7 @@ corollary is part of the theorem on the mode. Its aging half is the note `S4_agi
 infinite-mean case 0 < alpha < 1 is left to a later paper.
 
 Files. The folder `paperF`, with `problem131_levy.tex` and `problem131_levy.pdf` (class `ejpecp`,
-61 pages), its section files, the figure and its script in `figures/`, the recorded output of the
+62 pages), its section files, the figure and its script in `figures/`, the recorded output of the
 computations in `data/`, the check scripts and `paperF/README.md`.
 
 ## Earlier work
@@ -192,7 +199,7 @@ and a `README.md`. Papers B, C and D also keep the proofs cut while shortening t
 - `S1_endpoint_information_note/` is a working note on the Fisher information in the endpoint, which was Section 8 and Appendix E of an earlier version of Paper C.
 - `S3_sticky_note/` is a working note on sticky priors for hidden Markov models, which was Section 6 and Appendix D of Paper C until the merge with Paper B in October 2026.
 - `S2_counts_note/` is a working note on which rate matrices the visit counts of a slowly switching chain can tell apart, with its 4 check scripts.
-- `S4_aging_note/` is a short note, "The finite-size shape transition of coin-turning walks" (for Electronic Communications in Probability), on the walk that switches at step k with probability c/k and its version with d states. Every interior point ties with the end exactly at c = 1 for every N, and the chain that redraws or repeats its state has the law of Pólya's urn. It was the aging half of the first draft of Paper F until October 24, 2026, and it has 2 check scripts.
+- `S4_aging_note/` is a short note of 12 pages, "The finite-size shape transition of coin-turning walks" (for Electronic Communications in Probability), on the walk that switches at step k with probability c/k and its version with d states. Every interior point ties with the end exactly at c = 1 for every N, and the chain that redraws or repeats its state has the law of Pólya's urn. It was the aging half of the first draft of Paper F until October 24, 2026, and it has 2 check scripts.
 - `archive/` holds Paper B v1 (`archive/paperB`), the earlier EJP version of Paper C, "Face selection for slowly switching Markov chains", with its supplement (`archive/paperC_switching_ejp`), and the first draft of Paper F, "The golden-ratio threshold for a lattice Lévy walk and ties in coin-turning walks" (`archive/paperF_golden_aging`), each kept as it was and with its own `README.md`.
 - `animations/` shows a Galton board with persistence at 4 values of p (`galton.gif`, `galton.mp4`),
   made by `animations/animate.py`.
