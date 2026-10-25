@@ -5,13 +5,14 @@ inversion used in Sections 5 and 6) by brute force in exact arithmetic. verify_c
 the coefficient C(j) of Theorem thm:second-order, Table tab:antimode and the constant of Theorem
 thm:mode(d). verify_preparation.py checks Theorem thm:preparation(c), (d) and Corollary
 cor:stationary on three initial runs. verify_bigjump.py checks the numbers of Remark
-rem:no-single-formula. verify_modes.py checks the numbers of Section sec:extrema. certify_atlas.py computes the exact law at N = 5000 behind Figure 1(a), with
+rem:no-single-formula. verify_modes.py checks the numbers of Section sec:extrema, and verify_mode_count.py
+those of Section sec:mode-count. certify_atlas.py computes the exact law at N = 5000 behind Figure 1(a), with
 the a priori error bound and the ball-arithmetic comparison at N = 600, and certify_antimode.py
 certifies the antimodes of Figure 1(b) and Table tab:antimode.
 
-The default is the quick run, which takes about half a minute. It runs the five verify scripts
+The default is the quick run, which takes about a minute and a half. It runs the six verify scripts
 and reads the certificates in data/ (the outputs of the certify scripts) through
-verify_coefficient.py. Add --full to rerun the two certify scripts first, which takes about two
+verify_coefficient.py. Add --full to rerun the two certify scripts first, which takes about three
 minutes in all, most of it the antimode at N = 8000. The figure script figures/make_atlas_figure.py is
 not run. Needs numpy, scipy, mpmath and python-flint. Each script writes its output with its sha256
 and the date to data/, and this runner writes its summary to data/verify_all_output.txt (or
@@ -36,7 +37,8 @@ scripts = ['verify_identities.py',    # Section 2, eq:cover etc., thm:inverse(a)
            'verify_coefficient.py',   # thm:second-order, tab:antimode, eq:second-renewal, thm:mode(d)
            'verify_preparation.py',   # thm:preparation(c), (d), cor:stationary
            'verify_bigjump.py',       # rem:no-single-formula
-           'verify_modes.py']         # sec:extrema
+           'verify_modes.py',         # sec:extrema
+           'verify_mode_count.py']    # sec:mode-count, thm:mode-count, ex:runs2
 if args.full:
     # the certificates first, so that verify_coefficient.py reads the fresh data/antimode.json
     scripts = ['certify_atlas.py',    # Figure 1(a), eq:run-recursion, ball check at N = 600
