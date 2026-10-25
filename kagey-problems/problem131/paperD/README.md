@@ -35,6 +35,26 @@ the check scripts and Lean files, write n for N.)
 
 ## What is proved
 
+A second revision of October 25 adds Theorem 4.4 (`thm:threshold`), a computer-assisted theorem
+that locates the change between the two cases of Theorem 4.2. Put
+z- = 1838418790980431/2748779069440000 = 0.66881286001459775... and
+z+ = 45960469774511/68719476736000 = 0.66881286001460103..., so that z+ - z- < 3.3e-15. Case (a)
+(unimodal) holds for every a in (1/2, z-], case (b) (exactly two modes) holds for every a in
+[z+, 1), and a -> g_a''(0) has a zero in (z-, z+), with every zero in (1/2, 0.6712] there. Whether
+that zero is unique, and which case holds inside (z-, z+), stay open. So the fair-start case of the
+conjecture of Guerin, Laulin, Raschel and Simon is settled with the threshold located to within
+3.3e-15, up to flat modal intervals. Theorem 4.3 stays as the computer-free result for a >= 39/40,
+and the certificate covers the rest. The former Remark 4.4 is now Remark 4.5
+(`rem:modes-threshold`). It sketches the method and keeps the finite-N values 0.6563 and 0.6592.
+The new Appendix G (`app_threshold.tex`) states the steps, proves the Hankel test (Lemma G.1,
+from Khinchine's theorem) and derives the theorem from the runs. The new Section S6 of the arXiv
+version (at the end of `online_resource_body.tex`) gives the full proofs of the other lemmas, namely the
+moment bound (S6.1), the truncation bound (S6.2), Taylor cells in t (S6.3), the self-improving
+tail bound from the fixed-point equation of Guerin, Laulin and Raschel (S6.4), the formula for
+g_a''(0) (S6.5), the Cauchy remainder (S6.6), the enclosure on an interval of a (S6.7) and the
+scaled variable near a = 1/2 (S6.8). They do not fit the 45-page limit of the journal version.
+The journal version is 45 pages and the arXiv version 64 pages.
+
 The October 25 revision adds two theorems on the fixed-memory superdiffusive limit law with a
 fair first step (Section 4.2), stated in the introduction as Theorem 1.5 (`thm:main-limit`).
 Theorem 4.2 (`thm:two-modes`) proves that its density is unimodal at 0 or has exactly two
@@ -46,8 +66,9 @@ Guerin, Laulin and Raschel (Ann. Inst. Henri Poincare Probab. Stat. 62 (2026), 9
 Theorem 1.3). Theorem 4.3 (`thm:two-modes-near-one`) proves exactly two modes for
 39/40 <= a < 1, from the exact first two moments and the convexity of log Gamma. Together they
 settle, up to flat modal intervals, the case q = 1/2 of the conjecture of Guerin, Laulin, Raschel and Simon (EJP 30 (2025),
-Remark 2.1(b)). Remark 4.4 gives the numerical threshold a_c = 0.66881 and the finite-N values
-0.6563 (N = 4000) and 0.6592 (N = 8000), which `verify_elephant_modes.py` reproduces. They are
+Remark 2.1(b)). Remark 4.4 (Remark 4.5 since the second revision of that day) gave the numerical threshold
+a_c = 0.66881 and the finite-N values 0.6563 (N = 4000) and 0.6592 (N = 8000), which
+`verify_elephant_modes.py` reproduces. They are
 not proof inputs. To make room, the former Section 3.6 (the prescribed window: `def:convex`,
 `cor:one-point`, `thm:convex-large`, `prop:convex-certified`, `conj:convex`, `rem:convex-open`)
 and Proposition 1.5 (`prop:main-window`) moved to the new Section S5 of the arXiv version, and
@@ -152,7 +173,7 @@ Appendices D and E, are now a separate paper in `../paperF`.
 ## What rests on computation
 
 No statement is left with its details omitted. Section 5 of the paper (`sec_verify.tex`) gives the
-full account. The proofs use computation in 3 places only.
+full account. The proofs use computation in 4 places only.
 
 - Some constants are values of explicit sums and integrals, such as the 60-term sum in the proof of
   Theorem 2.6(b), enclosed in ball arithmetic (`certify_elephant.py`, and without certification
@@ -165,6 +186,10 @@ full account. The proofs use computation in 3 places only.
   10 <= N < 1688 the same enclosure of eps_N gives Proposition 3.7 (`certify_center.py`). For
   5 <= N <= 9 (only N = 8 for Proposition 3.26) the two propositions rest on the certificate runs
   in Lean alone, with brackets of eps_N found by bisection in exact rational arithmetic.
+- Theorem 4.4 rests on the certificate `certify_threshold.py`, with its helper modules
+  `threshold_taylor.py` (Taylor models in a), `threshold_hankel.py` (the Hankel test) and
+  `threshold_pointwise.py` (the enclosure at one value of a). Appendix G and Section S6 of the
+  arXiv version describe it. Its 9 runs are recorded in `data/threshold_*.txt`.
 
 Short exact computations, such as C_N/E_N for N = 2, 4, 6 and 8 in Proposition 3.7, are done in
 rational arithmetic (`certify_elephant.py`). The double-precision computation with a rounding bound
@@ -204,12 +229,13 @@ from the classical approximations.
 ## Files
 
 - `problem131_memory.tex` and the section files `sec_*.tex` and `app_*.tex` make up the paper, the
-  main text and Appendices A to F in one PDF, `problem131_memory.pdf`. The sections are
+  main text and Appendices A to G in one PDF, `problem131_memory.pdf`. The sections are
   `sec_intro`, `sec_erw_crossing`, `sec_erw_shape`, `sec_bulk_applications` and `sec_verify`, and the
   appendices are `app_erw_bounds` (A), `app_erw_profile` (B, the family-estimate statements),
   `app_erw_bulk` (C), `or_family_proofs` (D, the proofs of the family estimates) and
-  `app_erw_signs` (E, the second-difference proofs) and `app_modes` (F, sign patterns of
-  functions, new on October 25). Appendices D and E were Sections S5 and S6
+  `app_erw_signs` (E, the second-difference proofs), `app_modes` (F, sign patterns of
+  functions, new on October 25) and `app_threshold` (G, the certificate for the threshold, new
+  in the second revision of October 25). Appendices D and E were Sections S5 and S6
   of the Online Resource from October 17 to October 24, 2026, and returned to the article so that
   every proof used by the main theorems is in the article.
 - The journal version is `problem131_memory.tex` alone. It has no Online Resource and no
@@ -217,10 +243,12 @@ from the classical approximations.
   of the paper (bibliography item `arxivD`, "arXiv number to be added", with the comment
   `% arXiv id in November`) through the macro `\arxivonly`. Add the arXiv number to that item once
   the arXiv version has one.
-- `online_resource_body.tex` holds Sections S1 to S5: the center and the crossing to second order
+- `online_resource_body.tex` holds Sections S1 to S6: the center and the crossing to second order
   (S1), the tail (S2), the further results for odd N of Proposition S3.1 (S3), the likelihood
-  theorem for the reversible fluctuation assay (S4) and the convexity window between the humps
-  (S5, the former Section 3.6 and Proposition 1.5, moved on October 25). Only the arXiv version prints them. Its one
+  theorem for the reversible fluctuation assay (S4), the convexity window between the humps
+  (S5, the former Section 3.6 and Proposition 1.5, moved on October 25) and the proofs for the
+  threshold certificate of Appendix G (S6, new in the second revision of October 25). The journal
+  version cites S6 for those proofs. Only the arXiv version prints them. Its one
   bibliography item that the journal version does not cite (Hoeffding 1963) is in
   `online_resource_bib.tex`. The separate Online Resource file `online_resource.tex` and its PDF
   were removed on October 24, 2026 (they are in the git history).
@@ -265,7 +293,13 @@ from the classical approximations.
   (October 9) is kept as it was.
 - `verify_elephant_odd.py` checks Proposition 3.25 (odd N, with the identity of part (a) in exact
   arithmetic) and the numbers of Remark 3.27. It takes about 10 seconds.
-- `verify_all.py` runs the four scripts.
+- `certify_threshold.py` proves Theorem 4.4 (Appendix G). It needs python-flint, which is
+  required (version 0.9.0 was used), and mpmath. Its modes are `scaled`, `zero`, `cover` and
+  `hankel` for single runs, `full` for all 9 runs in parallel, `check` for the stored records
+  and `quick` for a run of a few minutes. See the section on certificate runs below.
+- `verify_all.py` runs the six scripts `verify_elephant_crossing.py`, `verify_elephant_shape.py`,
+  `verify_elephant_odd.py`, `certify_elephant.py`, `verify_elephant_modes.py` and
+  `certify_threshold.py` (its mode `quick`, or `full` with `--full`).
 - `data/ledger.md` is the index of the prediction ledgers. `data/ledger_D1.md` and `ledger_D2.md` are
   here, and `ledger_D3.md` and `ledger_D4.md` (heavy tails and aging) are in `../paperF/data`.
 - `data/figdata_*.json` holds cached data for the figures.
@@ -306,9 +340,12 @@ heavy cells. The scripts need numpy, scipy, mpmath and python-flint. Build the
 paper with `pdflatex problem131_memory.tex`, run three times so that the references settle. The Code availability statement
 of the paper pins the supporting code, certificate records and Lean files to commit
 `6f7f9068fc0ebb19c16d6a53fd8df5400bbd91a2`. Later edits to the text of the paper do not change
-that pin, but a change to a script, a record or a Lean file would need a new checked commit. The arXiv
+that pin, but a change to a script, a record or a Lean file would need a new checked commit. The
+certificate for Theorem 4.4 (`certify_threshold.py`, its 3 helper modules, `data/threshold_*.txt`
+and `data/certify_threshold_output.txt`) is newer than the pinned commit, and the Code
+availability statement says so. Replace the pin by a checked commit that contains it. The arXiv
 version is `problem131_arxiv.tex`. Build it with `pdflatex problem131_arxiv.tex` three times. It
-gives the paper followed by Sections S1 to S5 in one PDF, with one bibliography.
+gives the paper followed by Sections S1 to S6 in one PDF, with one bibliography.
 
 ## Statement labels and old numbers
 
@@ -424,6 +461,28 @@ Remark 4.4. It writes `data/verify_modes_output.txt`, whose first line records t
 script and the software versions. The quick run of October 25, with all 5 scripts passing, is in
 `data/verify_output_2026-10-25.txt`.
 
+The threshold certificate of Theorem 4.4 was run on October 25, 2026 as
+
+    python -I -B certify_threshold.py full --out data/certify_threshold_output.txt
+
+from this folder (Python 3.14.3, python-flint 0.9.0, mpmath 1.3.0, on a 24-core machine). It
+starts 9 processes in parallel, one per record in `data/threshold_*.txt`: 7 runs of mode
+`scaled` covering [1/2, 0.668] by 40 intervals, the run `zero 0.668 0.6712 1/100` with 8
+intervals, and the run `hankel 0.6705` with 115 boxes. Each record has a header line with the
+sha256 of the 4 scripts and the software versions, the command line, the printed output and the
+exit status as its last line. All 9 exited with status 0. The whole run took 1711 s of wall time.
+The processes took 826, 538, 853, 1524, 1711, 1058 and 1072 s (scaled), 741 s (zero) and 1493 s
+(Hankel), about 2.7 hours in all. The mode `check`, which `full` runs at the end and `quick`
+runs first, confirmed that the records join into the cover of (1/2, 1) and that the undecided
+piece is exactly (z-, z+). The sha256 values of the run were
+f2d01d726387dfbc0c78537d9d26de3ffa2d35d35cbd19e422ed85a2309e4f6e (`certify_threshold.py`),
+24c237a5ef60bf618fee1271d8771b05f5f2246c65b9bf946e09e2450628b752 (`threshold_taylor.py`),
+875a8490bb54e540b5ba92a1ba0b993f3041238e14f8e636bc3c4c77277d6d73 (`threshold_pointwise.py`) and
+6a0f14fcf97e114becec241008b51f3f5345a3bf35de609aca4c3b842353f031 (`threshold_hankel.py`), all
+with LF line endings. Any edit to these files, even to a comment, makes `check` fail until the
+certificate is rerun. The quick run of `verify_all.py` with the sixth script, which took 5.9
+minutes, is in `data/verify_output_2026-10-25_threshold.txt`.
+
 ## Final editorial revision
 
 The article is 35 pages, with a 17-page Online Resource and a 52-page combined arXiv version, compared with the preceding 41 + 12 = 53 pages. Six pages have left the main article, but the total reduction is one page: most of the change moves auxiliary proofs rather than deleting mathematics. The center and compound-Poisson/Landau proofs remain in the article. Appendix B retains its statements and numbering, with complete proofs in S5 (S4 before the likelihood theorem moved). The former Appendix D is now S6. The introduction gives shorter summaries of the explicit bounds and the verification section points to existing records instead of repeating their metadata. `cover_letter.md` requests refereeing of all the supplementary proofs. That earlier shortening did not change the Lean proofs or numerical certificates. The later October 23 revision adds the all-even shape formalization and the height window. The fixed-memory result now forms Section 4, after the shape section, and the likelihood theorem is Section S4 of the Online Resource. After that move the article is 34 pages, the Online Resource 18 pages and the combined arXiv version 52 pages. No numerical certificate was recomputed.
@@ -443,3 +502,11 @@ and Appendix F, and the prescribed convexity window (the former Section 3.6 and 
 moved to Section S5 of the arXiv version. The journal version is 42 pages and the arXiv version 57
 pages. No numerical certificate was recomputed, and no Lean source changed. The map
 `../lean/PaperD/MAP.md` gives the new numbers.
+
+In the second revision of October 25, 2026 Theorem 4.4, Appendix G and Section S6 were added
+(see "What is proved"), and the code `certify_threshold.py` with 3 helper modules. The full
+certificate was run once (see the section on certificate runs). With the full proofs in Appendix G
+the journal version came to 48 pages, so the journal keeps a summary of the steps and the arXiv
+version has the proofs in Section S6. The journal version is 45 pages and the arXiv version 64
+pages. No Lean source changed. `verify_all.py` now runs 6 scripts, and `verify_elephant_modes.py`
+changed only in its labels (Remark 4.4 is now Remark 4.5).

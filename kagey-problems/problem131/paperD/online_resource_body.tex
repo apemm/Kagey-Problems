@@ -1,4 +1,4 @@
-% Sections S1 to S5 of the arXiv version. They are input by
+% Sections S1 to S6 of the arXiv version. They are input by
 % problem131_arxiv.tex, which appends them to the paper. The journal version
 % does not contain them (they formed Online Resource 1 until October 24, 2026).
 % Edit the text here only.
@@ -1122,3 +1122,285 @@ can reach this. In double precision the product $P_N(m^*)(m^*+3)$ is
 about $0.235$, $0.239$ and $0.24$ at $N=1000$, $2000$ and $4000$, so it
 grows very slowly. These numbers are heuristic and are not used in any proof.
 \end{remark}
+
+\section{Proofs for the threshold certificate}\label{or:threshold}
+
+This section proves the lemmas that Appendix~\ref{app:threshold} summarizes,
+and so completes the proof of Theorem~\ref{thm:threshold}. We use the notation
+of that appendix, and in particular the inequality~\eqref{eq:thr-fixed}. We
+write $\Phi_N(t)=\sum_{n\le N}c_n(it)^n$ for the partial sums of the moment
+series.
+
+\subsection{One value of the memory}
+
+\begin{lemma}[moment bounds]\label{lem:thr-moments}
+Let $N\ge3$.
+\begin{enumerate}[(a)]
+\item Put $A=((N+1)a-1)/N$. If $m_j\le AB^j$ for $1\le j\le N$, then
+$m_n\le AB^n$ for all $n\ge1$.
+\item Let $S\subset\mathbb C$ be compact, with $\frac12<\alpha\le\operatorname{Re}z$,
+$\lvert\operatorname{Im}z\rvert\le\rho$ and $\lvert z\rvert\le1$ for $z\in S$.
+Define $m_n(z)$ by the recursion with $z$ in place of $a$, and
+$c_n(z)=m_n(z)/\Gamma(1+nz)$. Then every $m_n$ is analytic near $S$. Put
+$A=((N+1)\alpha-1)/N$. If $\lvert m_j\rvert\le AB^j$ on $S$ for $1\le j\le N$,
+then for all $n\ge1$ and $z\in S$
+\[
+ \lvert m_n(z)\rvert\le AB^n,\qquad
+ \lvert c_n(z)\rvert\le\frac{\tilde A\tilde B^n}{\Gamma(1+n\alpha)},\qquad
+ \tilde A=Ae^{\rho^2/(2\alpha^2)},\quad \tilde B=Be^{\rho^2/(2\alpha)} .
+\]
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+For (a) we use induction on $n>N$. As $\theta_j\le1$ and
+$na-\theta_n\ge na-1>0$, the bound for smaller indices gives
+$m_n\le(n-1)A^2B^n/(na-1)$. The ratio $(na-1)/(n-1)$ increases in $n$, since
+its derivative is $(1-a)/(n-1)^2$, and it equals $A$ at $n=N+1$. So
+$m_n\le AB^n$.
+
+For (b), $\operatorname{Re}(nz-\theta_n)\ge n\alpha-1>0$ on $S$, because
+$\alpha\le1$. So $m_n$ is analytic near $S$, and the induction of (a) goes
+through with $\lvert\theta_j\rvert\le1$. For $x>0$ and real $y$,
+\[
+ \Bigl\lvert\frac{\Gamma(x)}{\Gamma(x+iy)}\Bigr\rvert^2
+ =\prod_{k\ge0}\Bigl(1+\frac{y^2}{(x+k)^2}\Bigr)
+ \le\exp\Bigl(\frac{y^2}{x^2}+\frac{y^2}x\Bigr)
+\]
+by~\cite[5.8.3]{dlmf}. We take $x=1+n\operatorname{Re}z\ge1+n\alpha$ and
+$\lvert y\rvert\le n\rho$. Then $y^2/x^2\le\rho^2/\alpha^2$ and
+$y^2/x\le n\rho^2/\alpha$. Finally
+$\Gamma(1+n\operatorname{Re}z)\ge\Gamma(1+n\alpha)$, as $\Gamma$ increases on
+$[1.47,\infty)$.
+\end{proof}
+
+\begin{lemma}[truncation]\label{lem:thr-trunc}
+Let $0<\alpha\le1$, and suppose that
+$\lvert c_n\rvert\le\tilde A\tilde B^n/\Gamma(1+n\alpha)$ for $n>N$. Let $t>0$,
+$0\le k\le N$ and $n_0=N+1$, and put
+\[
+ u=\frac{\tilde A\tilde B^{n_0}n_0^kt^{n_0-k}}{\Gamma(1+\alpha n_0)},\qquad
+ r=\tilde Bt\Bigl(1+\frac1{n_0}\Bigr)^k
+ \frac{\Gamma(1+\alpha n_0)}{\Gamma(1+\alpha n_0+\alpha)} .
+\]
+If $r<1$, then
+$\bigl\lvert\frac{d^k}{dt^k}\sum_{n>N}c_n(it)^n\bigr\rvert\le\tau_k(t):=u/(1-r)$,
+and $\tau_k$ increases on $(0,t]$.
+\end{lemma}
+
+\begin{proof}
+The $k$th derivative of $(it)^n$ has modulus at most $n^kt^{n-k}$. The ratio
+of consecutive terms of the majorant
+$\tilde A\tilde B^nn^kt^{n-k}/\Gamma(1+\alpha n)$ is
+$\tilde Bt(1+1/n)^k\Gamma(1+\alpha n)/\Gamma(1+\alpha n+\alpha)$. It decreases
+in $n$, because $\log\Gamma$ is convex. So the majorant is at most a
+geometric series with first term $u$ and ratio $r$. Both $u$ and $r$ increase
+in $t$.
+\end{proof}
+
+\begin{lemma}[cells]\label{lem:thr-cells}
+Let $\nu$ be even, $t_c>0$ and $\lvert\delta\rvert\le h$. Then
+$\lvert\phi(t_c+\delta)\rvert\le\sum_{k<\nu}\lvert\phi^{(k)}(t_c)\rvert
+h^k/k!+c_\nu h^\nu$.
+\end{lemma}
+
+\begin{proof}
+This is Taylor's formula, with
+$\lvert\phi^{(\nu)}\rvert\le\E\lvert L\rvert^\nu=\E L^\nu=\nu!\,c_\nu$.
+\end{proof}
+
+\begin{lemma}[the tail]\label{lem:thr-tail}
+Let $0<T_2<T_3$ with $T_3\ge2^aT_2$, and let $\beta>3$ with $a\beta>1$.
+Cover $[0,T_3]$ by cells $[l_j,r_j]$ with $l_0=0$ and with $T_2$ among the
+end points, and let $s_j\ge\sup_{[l_j,r_j]}\lvert\phi\rvert$. Let $C$ be the
+largest $s_jr_j^\beta$ over the cells that meet $[T_2,T_3]$, and put
+\[
+ R=T_2^{-1/a}\sum_{r_j\le T_2}s_j
+ \Bigl(1-\frac12\Bigl(\frac{r_j}{T_2}\Bigr)^{1/a}\Bigr)^{-a\beta}
+ \bigl(r_j^{1/a}-l_j^{1/a}\bigr)+\frac{2^{a\beta}CT_2^{-\beta}}{a\beta-1} .
+\]
+If $R<1$, then $\lvert\phi(t)\rvert\le Ct^{-\beta}$ for every $t\ge T_3$.
+\end{lemma}
+
+\begin{proof}
+Let $b=s_j$ on the cells in $[0,T_3)$ and $b(t)=Ct^{-\beta}$ for $t\ge T_3$.
+On a cell that meets $[T_2,T_3]$ we have $s_j\le Cr_j^{-\beta}\le Ct^{-\beta}$.
+So $b(t)\le Ct^{-\beta}$ for $t\ge T_2$, and $\lvert\phi\rvert\le b$ on
+$[0,T_3]$. Let $J(t)=\int_0^1b(tv^a)\,b(t(1-v)^a)\,dv$.
+
+We show that $J(t)\le Rb(t)$ for $t\ge T_3$. By symmetry $J(t)$ is twice the
+integral over $v\le\frac12$. There $t(1-v)^a\ge2^{-a}T_3\ge T_2$, so
+$b(t(1-v)^a)\le b(t)(1-v)^{-a\beta}$. Hence $J(t)/b(t)$ is at most
+$2\int_0^{1/2}b(tv^a)(1-v)^{-a\beta}\,dv$. Put $v_0=(T_2/t)^{1/a}\le\frac12$.
+On $v<v_0$ we substitute $u=tv^a$, and this part becomes
+\[
+ \frac2at^{-1/a}\int_0^{T_2}s(u)\bigl(1-(u/t)^{1/a}\bigr)^{-a\beta}
+ u^{1/a-1}\,du .
+\]
+Here $t^{-1/a}\le\frac12T_2^{-1/a}$ and $(u/t)^{1/a}\le\frac12(u/T_2)^{1/a}$.
+The weight increases in $u$, so on each cell we take it at $r_j$. As
+$\int_l^ru^{1/a-1}du=a(r^{1/a}-l^{1/a})$, this part is at most the first term
+of $R$. On $v\ge v_0$ we use $b(tv^a)\le Ct^{-\beta}v^{-a\beta}$ and
+$(1-v)^{-a\beta}\le2^{a\beta}$. This part is at most
+$2^{1+a\beta}T_2^{-\beta}(T_2/t)^{1/a}C/(a\beta-1)$, which is at most the
+second term of $R$.
+
+Let $\varsigma$ be the supremum of the $\tau\ge T_3$ with
+$\lvert\phi\rvert\le b$ on $[0,\tau]$, and suppose that $\varsigma<\infty$. By
+continuity $\lvert\phi\rvert\le b$ on $[0,\varsigma]$. The arguments in
+\eqref{eq:thr-fixed} at $t=\varsigma$ lie in $[0,\varsigma]$, so
+$\lvert\phi(\varsigma)\rvert\le J(\varsigma)\le Rb(\varsigma)<b(\varsigma)$.
+As $\lvert\phi\rvert$ and $b$ are continuous on $[T_3,\infty)$, we get
+$\lvert\phi\rvert<b$ near $\varsigma$, against the choice of $\varsigma$.
+\end{proof}
+
+This is an explicit form of Step~4 in the proof of~\cite[Theorem~2.5]{glr2026},
+with computed constants.
+
+\begin{lemma}[the second derivative]\label{lem:thr-fpp}
+If $\lvert\phi(t)\rvert\le Ct^{-\beta}$ for $t\ge T_3$, with $\beta>3$, then
+$g_a$ has two continuous derivatives and
+\[
+ g_a''(0)=-\frac1\pi\Bigl(\sum_{\substack{n\le N\\ n\text{ even}}}
+ (-1)^{n/2}c_n\frac{T_3^{n+3}}{n+3}+E\Bigr),\qquad
+ \lvert E\rvert\le\frac{T_3^3}3\tau_0(T_3)+\frac{CT_3^{3-\beta}}{\beta-3} .
+\]
+\end{lemma}
+
+\begin{proof}
+As $t^2\operatorname{Re}\phi(t)$ is integrable, Fourier inversion gives
+$g_a(x)=\frac1{2\pi}\int e^{-itx}\operatorname{Re}\phi(t)\,dt$, and dominated
+convergence allows two derivatives under the
+integral~\cite[Section~3.3]{durrett2019}. So
+$g_a''(0)=-\frac1\pi\int_0^\infty t^2\operatorname{Re}\phi(t)\,dt$. On
+$[0,T_3]$ we replace $\phi$ by $\Phi_N$, whose real part is
+$\sum_{n\text{ even}}(-1)^{n/2}c_nt^n$, and integrate term by term. By
+Lemma~\ref{lem:thr-trunc} the error is at most
+$\int_0^{T_3}t^2\tau_0(t)\,dt\le\frac13T_3^3\tau_0(T_3)$. The integral over
+$t>T_3$ is at most $CT_3^{3-\beta}/(\beta-3)$.
+\end{proof}
+
+\subsection{Intervals of the memory}
+
+Ball arithmetic with $a$ as an interval fails here. Near the threshold the
+series for $\phi$ cancels terms of size about $10^{60}$, so the boxes in $a$
+would have to be narrower than about $10^{-65}$. We expand in $a$ around one
+exact point instead.
+
+\begin{lemma}[Cauchy remainder]\label{lem:thr-taylor}
+Let $h$ be analytic near the closed disc $\lvert z-a_0\rvert\le\rho$, with
+$\lvert h\rvert\le M$ there and Taylor coefficients $h_i$ at $a_0$. If $0<q<1$
+and $\lvert a-a_0\rvert\le q\rho$, then
+$\lvert h(a)-\sum_{i\le K}h_i(a-a_0)^i\rvert\le Mq^{K+1}/(1-q)$.
+\end{lemma}
+
+\begin{proof}
+Cauchy's estimate gives $\lvert h_i\rvert\le M\rho^{-i}$. Sum the geometric
+tail.
+\end{proof}
+
+Let $I=[a_0-w,a_0+w]$, $0<q<1$ and $\rho=w/q$, and let $S$ be the square
+$a_0+[-\rho,\rho]+i[-\rho,\rho]$, which contains the disc of
+Lemma~\ref{lem:thr-taylor}. Suppose that $\alpha=a_0-\rho>\frac12$, that
+$\lvert z\rvert\le1$ on $S$, and that $\tilde A,\tilde B$ are as in
+Lemma~\ref{lem:thr-moments}(b). Let $\tau_k$ be the bound of
+Lemma~\ref{lem:thr-trunc} with these constants. It holds for every real
+$a\in I$. For a cell with centre $t_c$ write
+$\partial_t^k\Phi_N(z,t_c)=E_k(z)+iO_k(z)$, where $E_k$ is the sum over even
+$n$ and $iO_k$ the sum over odd $n$. Both $E_k$ and $O_k$ are real for real
+$z$. Let $E_{k,i}$ and $O_{k,i}$ be their Taylor coefficients at $a_0$, and
+put $M_k=\sum_{n\le N}\sup_S\lvert c_n\rvert\,n(n-1)\cdots(n-k+1)\,t_c^{n-k}$.
+
+\begin{proposition}[enclosure on an interval]\label{prop:thr-interval}
+\begin{enumerate}[(a)]
+\item For every $a\in I$ and every $t$ in the cell with centre $t_c$ and
+half-width $h$,
+\[
+ \lvert\phi_a(t)\rvert\le\sum_{k<12}\Bigl(\sum_{i\le K}w^i
+ \sqrt{E_{k,i}^2+O_{k,i}^2}+\frac{M_kq^{K+1}}{1-q}+\tau_k(t_c)\Bigr)
+ \frac{h^k}{k!}+h^{12}\sup_S\lvert c_{12}\rvert .
+\]
+\item Let $T_2$, $T_3\ge2^{a_0+w}T_2$, $\beta$ and the cells be as in
+Lemma~\ref{lem:thr-tail}, with $s_j$ the bound of (a), and suppose that $R<1$
+for every $a\in I$. Let $F(z)=\sum_{n\le N,\,n\text{ even}}(-1)^{n/2}c_n(z)
+T_3^{n+3}/(n+3)$, with Taylor coefficients $F_i$ at $a_0$, and let $M_F$ be
+the same sum with $\sup_S\lvert c_n\rvert$ in place of $(-1)^{n/2}c_n(z)$. Then
+for every $a\in I$
+\[
+ \Bigl\lvert g_a''(0)+\frac1\pi\sum_{i\le K}F_i(a-a_0)^i\Bigr\rvert\le\eta
+ =\frac1\pi\Bigl(\frac{M_Fq^{K+1}}{1-q}+\frac{T_3^3}3\tau_0(T_3)
+ +\frac{CT_3^{3-\beta}}{\beta-3}\Bigr),
+\]
+and $a\mapsto g_a''(0)$ is continuous on $I$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+For (a) we apply Lemma~\ref{lem:thr-cells} with $\nu=12$, and
+Lemma~\ref{lem:thr-trunc} to replace $\phi_a^{(k)}$ by $\partial_t^k\Phi_N$.
+For real $a$ we have
+$\lvert\partial_t^k\Phi_N(a,t_c)\rvert=\lvert(E_k(a),O_k(a))\rvert$.
+Lemma~\ref{lem:thr-taylor} for $E_k$ and $O_k$, with
+$\sup\lvert E_k\rvert+\sup\lvert O_k\rvert\le M_k$ on $S$, and the triangle
+inequality in $\mathbb R^2$ give the bracket. Also
+$c_{12}(a)\le\sup_S\lvert c_{12}\rvert$.
+
+For (b), $T_3\ge2^aT_2$ for every $a\in I$, so Lemma~\ref{lem:thr-tail} applies
+at each $a$. Then Lemma~\ref{lem:thr-fpp} and Lemma~\ref{lem:thr-taylor} for
+$F$ give the enclosure. By Lemma~\ref{lem:thr-moments}(b) the series for
+$\phi_a(t)$ converges uniformly for $a\in I$ and $t$ in compact sets. So
+$\phi_a(t)$ is continuous in $a$. Moreover $t^2\lvert\phi_a(t)\rvert$ is at
+most $t^2$ on $[0,T_3]$ and $Ct^{2-\beta}$ beyond, uniformly in $a\in I$.
+Dominated convergence gives the continuity.
+\end{proof}
+
+Near $a=\frac12$ the bounds of Lemma~\ref{lem:thr-moments} degenerate, since
+$m_2=a/(2a-1)$. We rescale.
+
+\begin{lemma}[the scaled variable]\label{lem:thr-scaled}
+Put $y=2a-1$ and $\mu_n=m_ny^{\lfloor n/2\rfloor}$.
+\begin{enumerate}[(a)]
+\item We have $\mu_0=\mu_1=1$, $\mu_2=a$, and for $n\ge3$
+\[
+ (na-\theta_n)\mu_n=\sum_{j=1}^{n-1}\theta_jy^{e_{nj}}\mu_j\mu_{n-j},
+\]
+where $e_{nj}=1$ if $n$ is even and $j$ is odd, and $e_{nj}=0$ otherwise.
+Here $na-\theta_n$ is $(n-1)a$ for odd $n$ and $na-1$ for even $n$. So every
+$\mu_n$ is a rational function of $a$ with no pole in
+$\operatorname{Re}a>\frac14$.
+\item Let $\sigma^2=\E L^2$, $X=L/\sigma$ and
+$\hat c_n=\mu_n\Gamma(2a)^{\lfloor n/2\rfloor}/\Gamma(1+an)$. Then
+$\sigma^2=1/(y\Gamma(2a))$,
+\[
+ \E e^{iuX}=\sum_{n\text{ even}}\hat c_n(iu)^n
+ +\sqrt{y\Gamma(2a)}\sum_{n\text{ odd}}\hat c_n(iu)^n,
+ \qquad
+ g_a''(0)=-\frac1{\pi\sigma^3}\int_0^\infty u^2\operatorname{Re}\E e^{iuX}\,du .
+\]
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Multiply the recursion for $m_n$ by $y^{\lfloor n/2\rfloor}$. The exponent
+$\lfloor n/2\rfloor-\lfloor j/2\rfloor-\lfloor(n-j)/2\rfloor$ is $1$ when $n$ is
+even and $j$ is odd, and $0$ otherwise. Also $m_2=a/y$. This proves (a), as
+the zeros of the factors are $a=0$ and $a=1/n\le\frac14$. For (b),
+$\sigma^2=2m_2/\Gamma(1+2a)=1/(y\Gamma(2a))$ and
+$\E X^n/n!=c_n\sigma^{-n}=\mu_n\Gamma(2a)^{\lfloor n/2\rfloor}
+(y\Gamma(2a))^{(n\bmod2)/2}/\Gamma(1+an)$. The formula for $g_a''(0)$ follows
+from the substitution $t=u/\sigma$ in Lemma~\ref{lem:thr-fpp}.
+\end{proof}
+
+The fixed-point equation is linear, so $X$ satisfies it too, and
+\eqref{eq:thr-fixed} and Lemmas~\ref{lem:thr-cells} to~\ref{lem:thr-fpp} hold
+for $X$. The proof of Lemma~\ref{lem:thr-moments}(b) carries over to $\mu_n$
+for $n\ge3$ and $\alpha>\frac14$, with two changes. The constant $A$ becomes
+$((N+1)\alpha-1)/(N\kappa)$, where $\kappa$ is the largest value of
+$\max(1,\lvert z\rvert)\max(1,\lvert2z-1\rvert)$ on $S$. And $\tilde B$ gains
+the factor $\max(1,\sup_S\lvert\Gamma(2z)\rvert)^{1/2}$. For real $a$ the odd
+part carries the factor $\sqrt{y\Gamma(2a)}$. In the cell bounds we treat the
+even and odd parts as separate analytic functions. We multiply the odd part
+by $f=\sup_I\sqrt{y\Gamma(2a)}$ only for real $a$, and the remainders by
+$\max(1,f)$. The real part of $\E e^{iuX}$ involves only the even part. So
+the disc may cross $a=\frac12$, and the cover reaches $a=\frac12$. The sign
+of $g_a''(0)$ is the sign of the integral, since $\sigma^3>0$.

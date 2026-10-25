@@ -32,7 +32,7 @@
 \newcommand{\CP}{\mathrm{CP}}
 
 % The journal version is this file alone. The arXiv version
-% (problem131_arxiv.tex) defines \PaperDCombined and appends Sections S1 to S5.
+% (problem131_arxiv.tex) defines \PaperDCombined and appends Sections S1 to S6.
 % \arxivonly{Theorem}{label} points to a result that only the arXiv version
 % contains. In the journal build it cites the arXiv version, and in the arXiv
 % build it gives the number of the statement there.
@@ -73,8 +73,11 @@ every even $N\ge8$, the origin is the unique interior minimum and the law has
 exactly 2 symmetric intervals of modes, by certified computations at finitely
 many lengths. The sign theorem passes to the superdiffusive limit law at fixed
 memory $a=1-2\varepsilon\in(\frac12,1)$. With a fair first step this law has at
-most 2 modes for every $a$, and exactly 2 for $a\ge\frac{39}{40}$. Up to flat
-modal intervals, this settles the fair-start case of a conjecture of Gu\'erin, Laulin, Raschel and Simon.
+most 2 modes for every $a$, and exactly 2 for $a\ge\frac{39}{40}$. By a
+computer-assisted proof it is unimodal for $a\le0.668812860014597$ and
+bimodal for $a\ge0.668812860014602$.
+Up to flat modal intervals, this settles the fair-start case of a conjecture of
+Gu\'erin, Laulin, Raschel and Simon.
 \end{abstract}
 
 \medskip
@@ -104,8 +107,8 @@ introduction, description of the verification and the arrangement of
 the appendices and of the further results in the arXiv version.
 Both models were used to expand literature search beyond what I had included, and all sources were read by me before citation if appropriate.
 AI tools also generated the
-Lean files and parts of the verification code, which I reviewed against the
-paper. Section~\ref{sec:verify} distinguishes the formal proofs, their named
+Lean files and parts of the verification and certificate code, which I
+reviewed against the paper. Section~\ref{sec:verify} distinguishes the formal proofs, their named
 classical hypotheses and the separate numerical checks. I take responsibility
 for all mathematical claims, proofs and computations.
 
@@ -125,13 +128,14 @@ Section~\ref{sec:verify} are in the folder
 \nolinkurl{kagey-problems/problem131/paperD/data} of the repository named
 under Code availability.
 \ifPaperDcombined
-Sections~S1 to~S5 of this version hold results that the journal version
-omits.
+Sections~S1 to~S6 of this version hold results and proofs that the journal
+version omits.
 \else
 The arXiv version of this paper~\cite{arxivD} contains further results,
 among them the center and the crossing to second order, the tail and a
-convexity window between the humps. This article does not use them. There is
-no supplementary material.
+convexity window between the humps. This article does not use them. That
+version also gives the full proofs of the steps in
+Appendix~\ref{app:threshold}. There is no supplementary material.
 \fi
 
 \paragraph{Code availability.} All code, data and Lean files supporting this
@@ -139,13 +143,17 @@ paper are in the folder \nolinkurl{kagey-problems/problem131} of
 \url{https://github.com/apemm/Kagey-Problems}. The supporting code,
 certificate records and Lean files are those at commit
 \href{https://github.com/apemm/Kagey-Problems/tree/6f7f9068fc0ebb19c16d6a53fd8df5400bbd91a2/kagey-problems/problem131}{\texttt{6f7f9068fc0e}}
-of that repository. To rerun the checks, run
+of that repository, except the certificate for Theorem~\ref{thm:threshold},
+which is newer. To rerun the checks, run
 \texttt{python -B verify\_all.py -{}-paper d} in that folder, which takes
 several minutes. The certified computation behind
 Proposition~\ref{prop:dip-hyp} takes about half an hour and runs separately
 in \nolinkurl{paperD} as \texttt{python -B certify\_center.py 10 2000}. The
 certified computation behind the finite convexity window of the arXiv version
 takes about an hour and runs as \texttt{python -B certify\_convex.py 10 2000}.
+The certificate behind Theorem~\ref{thm:threshold} takes about 2.7 hours
+of CPU time, or 29 minutes in 9 parallel processes, and runs as
+\texttt{python -B certify\_threshold.py full}.
 The scripts need
 \texttt{numpy}, \texttt{scipy}, \texttt{mpmath} and \texttt{python-flint}, and
 the file \nolinkurl{SUPPLEMENT.md} says what each script checks.
@@ -163,6 +171,7 @@ the whole paper.
 \input{or_family_proofs.tex}
 \input{app_erw_signs.tex}
 \input{app_modes.tex}
+\input{app_threshold.tex}
 
 \begin{thebibliography}{99}\small\setlength{\baselineskip}{11pt}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}
 
@@ -347,6 +356,15 @@ F.~Johansson, \emph{Numerical integration in arbitrary-precision ball
 arithmetic}, in: Mathematical Software -- ICMS 2018, Lect.\ Notes
 Comput.\ Sci.\ \textbf{10931}, Springer, 2018, 255--263.
 \href{https://doi.org/10.1007/978-3-319-96418-8_30}{doi:10.1007/978-3-319-96418-8\_30}.
+
+\bibitem{johansson2017}
+F.~Johansson, \emph{Arb: efficient arbitrary-precision midpoint-radius
+interval arithmetic}, IEEE Trans.\ Comput.\ \textbf{66} (2017), 1281--1292.
+\href{https://doi.org/10.1109/TC.2017.2690633}{doi:10.1109/TC.2017.2690633}.
+
+\bibitem{dj1988}
+S.~Dharmadhikari and K.~Joag-dev, \emph{Unimodality, Convexity, and
+Applications}, Academic Press, Boston, 1988.
 
 \bibitem{katznelson2004}
 Y.~Katznelson, \emph{An Introduction to Harmonic Analysis}, 3rd ed., Cambridge
