@@ -5,7 +5,7 @@ data/<script>_output.txt, behind a header with the sha256 of the script, the dat
 Python and of the packages, the run time and the exit status. A script passes when every
 assertion in it holds, which is when it exits with status 0.
 
-The five scripts run in a few minutes on a laptop. Needs numpy, scipy, sympy and mpmath.
+The six scripts run in a few minutes on a laptop. Needs numpy, scipy, sympy and mpmath.
 Run:  py -I verify_all.py [--only NAME ...]
 """
 import argparse
@@ -25,6 +25,7 @@ SCRIPTS = (
     ('verify_threshold.py', 'the least admissible horizon of the design'),
     ('verify_cycles.py', 'the two Arrhenius examples, in exact arithmetic'),
     ('verify_attraction.py', 'the calibrated attraction design'),
+    ('verify_exactlaw.py', 'the exact occupation law, in exact arithmetic'),
 )
 
 
