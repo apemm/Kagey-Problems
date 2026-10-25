@@ -21,6 +21,7 @@ from fractions import Fraction
 import mpmath
 from flint import acb, arb, arb_series, ctx, fmpq
 
+from threshold_pointwise import require
 from threshold_taylor import sign_cover
 
 ORDERS = [1, 2, 3, 4, 6, 8, 12, 16, 24, 32, 40, 48, 56, 64]
@@ -73,7 +74,7 @@ def check_box_tm(lo, hi, k, sh, x, q=Fraction(1, 8)):
     rho = min(w / q, (a0 - Fraction(1, 2)) * Fraction(9, 10))
     qq = w / rho
     # the Cauchy remainder M qq^(K+1)/(1-qq) is valid only for qq < 1
-    assert qq < 1, "box too wide for its distance to 1/2"
+    require(qq < 1, "box too wide for its distance to 1/2")
     nmax = 4 * k + 2
     a0b = arb(fmpq(a0.numerator, a0.denominator))
     rb = arb(fmpq(rho.numerator, rho.denominator))
