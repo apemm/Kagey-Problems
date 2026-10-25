@@ -1,5 +1,5 @@
-"""The preparation in the boundary layer and the big-jump zone (Theorem thm:preparation(c), (d),
-Corollary cor:stationary) for three preparations, against the exact law.
+"""The initial run in the boundary layer and the big-jump zone (Theorem thm:preparation(c), (d),
+Corollary cor:stationary) for three initial runs, against the exact law.
 
 Model: the zeta law f(n) = n^(-5/2)/zeta(5/2) for both signs (alpha_+ = alpha_- = 3/2, p = 1/2).
 Preparations:
@@ -28,7 +28,7 @@ Checks:
   1. the recursion for a general preparation (fresh start, first-run decomposition);
   2. mass one and the atoms P_N(N) = Q_+(N), P_N(0) = Q_-(N) for every preparation;
   3. the stationary kernels: kappa_+ of eq:kappa-prep equals p u_-(j) + 1/s, and kappa^st_+(j) -> 2/mu_-;
-  4. the ratios of Corollary cor:stationary printed in Section 8 (1.0007, 1.0031, 1.0098 at j = 1, 2,
+  4. the ratios of Corollary cor:stationary printed in Section 7 (1.0007, 1.0031, 1.0098 at j = 1, 2,
      5 and N = 2400) and the halving of each deviation from N = 1200 to N = 2400;
   5. for each preparation the largest deviation from 1 of the exact-defect ratio of (d) over the six
      values of j decreases from N = 1200 to N = 2400 and is below 0.15 (single values of j need not
@@ -147,7 +147,7 @@ def main():
     p = 0.5
     f, T = ca.law_arrays(NMAX + 2)
     u, v = ca.renewal(f, NMAX)
-    log("verify_preparation.py: zeta law, alpha_+ = alpha_- = 3/2, three preparations")
+    log("verify_preparation.py: zeta law, alpha_+ = alpha_- = 3/2, three initial runs")
 
     # preparations
     n = np.arange(NMAX + 1, dtype=float)
@@ -247,7 +247,7 @@ def main():
             for b in r["bigjump"]:
                 log(f"  {b['ell']:.1f} {b['k']:5d} {b['ratio_G_Psi']:10.4f} {b['err_over_Ghat']:12.4f} "
                     f"{b['ratio_G_regular']:14.4f} {b['Psi_over_Ghat']:16.4f}")
-    check("2. mass one, P_N(N) = Q_+(N) and P_N(0) = Q_-(N) for the three preparations, N = 1200, 2400", ok_mass)
+    check("2. mass one, P_N(N) = Q_+(N) and P_N(0) = Q_-(N) for the three initial runs, N = 1200, 2400", ok_mass)
 
     # 3. the stationary kernels
     nst_ = preps["stationary"]["num"]
@@ -282,7 +282,7 @@ def main():
             e1, e2 = abs(b1["ratio_exact_defect"] - 1), abs(b2["ratio_exact_defect"] - 1)
             if e2 >= e1:
                 log(f"   note: {name}, j = {b1['j']}: deviation {e1:.4f} at N = 1200 and {e2:.4f} at N = 2400")
-    check("5. thm:preparation(d): for each preparation the largest deviation of the exact-defect ratio from 1 "
+    check("5. thm:preparation(d): for each initial run the largest deviation of the exact-defect ratio from 1 "
           "over j in {1,2,3,5,10,20} decreases from N = 1200 to 2400 and is below 0.15", ok5,
           "; ".join(f"{k}: {v[1200]:.4f} -> {v[2400]:.4f}" for k, v in worst.items()))
 

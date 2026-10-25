@@ -149,8 +149,10 @@ right steps after N steps at every point of the range {0, ..., N}. It has a stab
 zone on each side where one run is macroscopic, a renewal boundary layer at each end and an atom at
 each endpoint. The law of the first run enters each piece through a sharp criterion. The global mode
 is an endpoint or a point of the bulk, and for the equilibrated start the threshold is the golden ratio. The
-boundary layers identify both run laws. The draft is complete, with every statement proved in the
-article (55 pages after the revision of October 24, 2026).
+boundary layers identify both run laws. When the run scales differ by an unbounded factor the start
+of the big-jump zone is located up to a factor 1 ± delta, and near each end the local extrema of the
+law are described up to distance N^(1-eta). The draft is complete, with every statement proved in
+the article or stated as a conjecture (61 pages after the revision of October 25, 2026).
 
 The first draft of Paper F, "The golden-ratio threshold for a lattice Lévy walk and ties in
 coin-turning walks", is archived in `archive/paperF_golden_aging`. Its heavy-tail half is part of
@@ -159,7 +161,7 @@ corollary is part of the theorem on the mode. Its aging half is the note `S4_agi
 infinite-mean case 0 < alpha < 1 is left to a later paper.
 
 Files. The folder `paperF`, with `problem131_levy.tex` and `problem131_levy.pdf` (class `ejpecp`,
-55 pages), its section files, the figure and its script in `figures/`, the recorded output of the
+61 pages), its section files, the figure and its script in `figures/`, the recorded output of the
 computations in `data/`, the check scripts and `paperF/README.md`.
 
 ## Earlier work
