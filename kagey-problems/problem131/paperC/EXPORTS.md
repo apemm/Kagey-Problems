@@ -1,5 +1,22 @@
 # Statements of Paper C1 cited by the companion paper (paperC2)
 
+Change of October 25, 2026, review fixes and the journal trim (audit 33): no statement, label or
+exported number changed. The Springer build (`problem131_chains_sn.tex`) is now the journal
+version, and it leaves out some proofs, which only the arXiv version (`problem131_chains.tex`,
+arXiv:2610.09258v2) has. Every label below is defined in both builds, and statement, section and
+main-text equation numbers agree between them. This was checked against the `.aux` of both
+builds. The one label that only the arXiv build defines is `eq:windowline`, inside the proof of
+Theorem 5.9, and the journal build steps the equation counter there so that the later equations
+keep their numbers. For paperC2 this means the following.
+- Proposition 5.12 (`prop:uniform-facemax`) is stated in the journal version, and its proof, with
+  the continuum route to Theorem 5.7(b), is only in the arXiv version. Cite the arXiv version for
+  the proof if needed.
+- Theorem 4.2(ii) (`thm:first`) now follows from Theorem 4.5 in both versions. The direct proof by
+  explicit paths (Appendix A.7, `app:first`) is only in the arXiv version, and so is the proof
+  that Remark 4.3 (`rem:first-field`) cites for the upper bound with a field.
+- Lemma A.1, Lemma B.1 and Lemma B.3 are stated in both versions and proved only in the arXiv
+  version. The other exported statements keep their proofs in both.
+
 Change of October 25, 2026, fixes of audit 32: no exported statement or number changed. No label
 was added or removed, and the numbers of Theorems 4.5, 5.7, 6.11 and Proposition 5.12 were checked
 against the `.aux` of the article build. The proof of Theorem 5.7 again contains the continuum
