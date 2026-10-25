@@ -11,23 +11,28 @@ second-order results. Second, the same script certifies the
 Landau derivative and curvature enclosures of
 Lemma~\ref{lem:landau-mode}. Lean checks these independently.
 
-Third, \texttt{certify\_convex.py} brackets each crossing for
-$10\le N\le2000$ and encloses the law throughout that bracket,
-checking every possible mode and the required second differences
-(Proposition~\ref{prop:convex-certified}).
-The separate \texttt{certify\_center.py} supplies the finite endpoint-dip
-input of Proposition~\ref{prop:dip-hyp} and independently checks the center
-minimum. The latter checks are no longer needed for
-Corollary~\ref{cor:unique-min}. For $5\le N\le9$, the stated
-convexity and center checks are kernel-checked in Lean.
+Third, \texttt{certify\_center.py} supplies the finite endpoint-dip
+input of Proposition~\ref{prop:dip-hyp} for $10\le N\le2000$. It brackets
+each crossing and checks by an exact rational comparison that the lower end
+of the bracket exceeds $2/(N+2)$. It also checks the center minimum
+independently, which Corollary~\ref{cor:unique-min} no longer needs. The
+script \texttt{certify\_convex.py} supports only the finite convexity window
+of the arXiv version (\arxivonly{Proposition}{prop:convex-certified}).
 The outputs and rational witnesses are in
-\nolinkurl{data/certify_convex_output_2026-10-17.txt},
 \nolinkurl{data/certify_center_output_2026-10-17.txt},
-\nolinkurl{data/witnesses_convex_2026-10-17.jsonl}, and
-\nolinkurl{data/witnesses_center_2026-10-17.jsonl}.
+\nolinkurl{data/certify_convex_output_2026-10-17.txt},
+\nolinkurl{data/witnesses_center_2026-10-17.jsonl} and
+\nolinkurl{data/witnesses_convex_2026-10-17.jsonl}.
 The witnesses record script hashes and software versions.
 Each certification script fails if a required check fails, and
 range-based scripts also reject empty ranges.
+
+Theorems~\ref{thm:two-modes} and~\ref{thm:two-modes-near-one} use no
+computation. The script \texttt{verify\_elephant\_modes.py} checks the
+constants in the proof of Theorem~\ref{thm:two-modes-near-one} and computes
+the numbers of Remark~\ref{rem:modes-threshold}, which are not proof inputs.
+Its output, with a header that records the hash of the script and the
+software versions, is in \nolinkurl{data/verify_modes_output.txt}.
 
 The Lean~4.33.1 library in
 \nolinkurl{kagey-problems/problem131/lean/PaperD} proves the finite
@@ -37,18 +42,17 @@ namely Fourier inversion, the compound Poisson characteristic function,
 Efron--Stein, Scheff\'e, unimodality of class-$L$ laws, and Hoeffding's
 hypergeometric bound. Their sources and precise formal status are in
 \nolinkurl{MAP.md} and \nolinkurl{coverage_tables.tex}.
-The library uses Mathlib revision \texttt{0df444a360ea}; the recorded
+The library uses Mathlib revision \texttt{0df444a360ea}. The recorded
 kernel build reports only \texttt{propext}, \texttt{Classical.choice}
 and \texttt{Quot.sound}. Generated certificate entries are checked with
 exact outward-rounded integer arithmetic, without \texttt{native\_decide}.
-This does not formalize the six classical inputs or
-Conjecture~\ref{conj:convex}. Lemma~\ref{lem:center-no-holes} and the full
+This does not formalize the six classical inputs. Lemma~\ref{lem:center-no-holes} and the full
 all-even shape in Corollary~\ref{cor:unique-min} are kernel-checked,
 including both complete intervals of maximizers. The composed theorem
 \texttt{shape\_at\_crossing\_all\_even} needs only $N=2h$ with $h\ge4$.
 The maximum-height window in Corollary~\ref{cor:height-window}, the total variation strengthening of
-Theorem~\ref{thm:cp} and the fixed-memory bridge
-are also not yet formalized. The library's earlier pointwise compound
+Theorem~\ref{thm:cp}, the fixed-memory bridge and the results of
+Section~\ref{sec:modes} are also not yet formalized. The library's earlier pointwise compound
 Poisson bound remains valid.
 
 The separate Python runs used Python~3.14.3, python-flint~0.9.0

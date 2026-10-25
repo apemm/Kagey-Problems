@@ -1,0 +1,69 @@
+# verify_elephant_modes.py sha256=e55d1ae34c93a05f3878ba5eb40cf113d6362ec8453b880723958269f81f9224 python=3.14.3 numpy=2.4.2 mpmath=1.3.0 python-flint=0.9.0 date=2026-10-25
+Paper D, Section 4.2: the number of modes of the fixed-memory limit law
+
+1. Constants in the proof of Theorem 4.3 (a >= 39/40)
+  ok    M = exp((1-gamma)/40) <= 1.0107: 1.010625664
+  ok    V = exp(2(1-gamma)/40)/(1-2/40) - 1 <= 0.0752: 0.075120245
+  ok    F(2/5) <= V/(V+9/25) <= 0.173: 0.1727941176
+  ok    F(7/4) >= 1 - V/(7/4-M)^2 >= 0.862: 0.8624133083
+  ok    (5/2) 0.173 <= 0.433 < 0.492 <= (4/7) 0.862: 0.4325 and 0.492571
+  ok    moment recursion (k = 1, 2) gives 1/Gamma(1+a) and 1/((2a-1)Gamma(2a)): 1000 values of a in [39/40, 1)
+  ok    1 <= E L_a <= exp((1-gamma)(1-a)) on the grid: largest E L_a 1.0104209
+  ok    Var L_a <= V(1-a) on the grid: largest Var L_a 0.053294227 (paper bound 0.0752)
+
+2. Step 1 of the proof of Theorem 4.2 (illustration)
+  ok    double-precision law against exact rationals, N = 12, 40: largest relative error 2.4e-15
+  ok    a = 0.6, sigma = 0.05: sp(D_N) <= Pi5 and sp(V_N on a grid) <= Pi5: sp(V_N) = [1, -1, 1]
+  ok    a = 0.6, sigma = 0.2: sp(D_N) <= Pi5 and sp(V_N on a grid) <= Pi5: sp(V_N) = [1, -1, 1]
+  ok    a = 0.7, sigma = 0.05: sp(D_N) <= Pi5 and sp(V_N on a grid) <= Pi5: sp(V_N) = [1, -1, 1, -1, 1]
+  ok    a = 0.7, sigma = 0.2: sp(D_N) <= Pi5 and sp(V_N on a grid) <= Pi5: sp(V_N) = [1, -1, 1, -1, 1]
+  ok    a = 0.8, sigma = 0.05: sp(D_N) <= Pi5 and sp(V_N on a grid) <= Pi5: sp(V_N) = [1, -1, 1, -1, 1]
+  ok    a = 0.8, sigma = 0.2: sp(D_N) <= Pi5 and sp(V_N on a grid) <= Pi5: sp(V_N) = [1, -1, 1, -1, 1]
+  ok    a = 0.9, sigma = 0.05: sp(D_N) <= Pi5 and sp(V_N on a grid) <= Pi5: sp(V_N) = [1, -1, 1, -1, 1]
+  ok    a = 0.9, sigma = 0.2: sp(D_N) <= Pi5 and sp(V_N on a grid) <= Pi5: sp(V_N) = [1, -1, 1, -1, 1]
+
+3. Remark 4.4: the finite-N center threshold (numerical)
+  ok    N = 1000: D_N(N/2) < 0 at a = 0.6 and > 0 at a = 0.7, sign change bracketed: a = 0.647124  [0.1s]
+  ok    N = 4000: D_N(N/2) < 0 at a = 0.6 and > 0 at a = 0.7, sign change bracketed: a = 0.656287  [0.8s]
+  ok    N = 8000: D_N(N/2) < 0 at a = 0.6 and > 0 at a = 0.7, sign change bracketed: a = 0.659207  [3.7s]
+  ok    N = 4000 rounds to 0.6563 (Remark 4.4): 0.656287
+  ok    N = 8000 rounds to 0.6592 (Remark 4.4): 0.659207
+  ok    the values increase with N
+
+4. Remark 4.4: the sign of g_a''(0) for the limit law (numerical)
+        a = 0.55: int_0^8 t^2 E cos(t L_a) dt = 0.0334063, T^2 |E cos(T L_a)| = 3.7e-95
+        a = 0.56: int_0^8 t^2 E cos(t L_a) dt = 0.0414177, T^2 |E cos(T L_a)| = 2.5e-73
+        a = 0.57: int_0^8 t^2 E cos(t L_a) dt = 0.0487069, T^2 |E cos(T L_a)| = 1.6e-58
+        a = 0.58: int_0^8 t^2 E cos(t L_a) dt = 0.0548512, T^2 |E cos(T L_a)| = 4.8e-48
+        a = 0.59: int_0^8 t^2 E cos(t L_a) dt = 0.0594409, T^2 |E cos(T L_a)| = 2.9e-39
+        a = 0.60: int_0^8 t^2 E cos(t L_a) dt = 0.0620804, T^2 |E cos(T L_a)| = 9.0e-33
+        a = 0.61: int_0^8 t^2 E cos(t L_a) dt = 0.0623910, T^2 |E cos(T L_a)| = 8.1e-28
+        a = 0.62: int_0^16 t^2 E cos(t L_a) dt = 0.0600149, T^2 |E cos(T L_a)| = 2.2e-73
+        a = 0.63: int_0^16 t^2 E cos(t L_a) dt = 0.0546199, T^2 |E cos(T L_a)| = 5.8e-62
+        a = 0.64: int_0^16 t^2 E cos(t L_a) dt = 0.0459048, T^2 |E cos(T L_a)| = 6.2e-53
+        a = 0.65: int_0^16 t^2 E cos(t L_a) dt = 0.0336043, T^2 |E cos(T L_a)| = 7.7e-45
+        a = 0.66: int_0^16 t^2 E cos(t L_a) dt = 0.0174952, T^2 |E cos(T L_a)| = 2.4e-38
+        a = 0.67: int_0^16 t^2 E cos(t L_a) dt = -0.00259837, T^2 |E cos(T L_a)| = 5.2e-33
+        a = 0.68: int_0^16 t^2 E cos(t L_a) dt = -0.0267994, T^2 |E cos(T L_a)| = 1.0e-28
+        a = 0.69: int_0^16 t^2 E cos(t L_a) dt = -0.0551723, T^2 |E cos(T L_a)| = 7.1e-25
+        a = 0.70: int_0^16 t^2 E cos(t L_a) dt = -0.0877179, T^2 |E cos(T L_a)| = 1.8e-21
+        a = 0.71: int_0^16 t^2 E cos(t L_a) dt = -0.124369, T^2 |E cos(T L_a)| = 1.5e-18
+        a = 0.72: int_0^16 t^2 E cos(t L_a) dt = -0.164984, T^2 |E cos(T L_a)| = 2.2e-16
+        a = 0.73: int_0^16 t^2 E cos(t L_a) dt = -0.209345, T^2 |E cos(T L_a)| = 9.2e-15
+        a = 0.74: int_0^16 t^2 E cos(t L_a) dt = -0.257155, T^2 |E cos(T L_a)| = 3.2e-13
+        a = 0.75: int_0^16 t^2 E cos(t L_a) dt = -0.308032, T^2 |E cos(T L_a)| = 4.0e-11
+        a = 0.76: int_0^16 t^2 E cos(t L_a) dt = -0.361508, T^2 |E cos(T L_a)| = 2.5e-09
+        a = 0.77: int_0^16 t^2 E cos(t L_a) dt = -0.417031, T^2 |E cos(T L_a)| = 6.6e-08
+        a = 0.78: int_0^16 t^2 E cos(t L_a) dt = -0.473959, T^2 |E cos(T L_a)| = 7.3e-07
+        a = 0.79: int_0^16 t^2 E cos(t L_a) dt = -0.531563, T^2 |E cos(T L_a)| = 3.2e-07
+        a = 0.80: int_0^34 t^2 E cos(t L_a) dt = -0.589037, T^2 |E cos(T L_a)| = 2.4e-15
+        a = 0.81: int_0^34 t^2 E cos(t L_a) dt = -0.645482, T^2 |E cos(T L_a)| = 2.2e-13
+        a = 0.82: int_0^34 t^2 E cos(t L_a) dt = -0.699927, T^2 |E cos(T L_a)| = 7.9e-11
+        a = 0.83: int_0^34 t^2 E cos(t L_a) dt = -0.751327, T^2 |E cos(T L_a)| = 2.3e-09
+        a = 0.84: int_0^34 t^2 E cos(t L_a) dt = -0.798571, T^2 |E cos(T L_a)| = 1.0e-07
+        a = 0.85: int_0^34 t^2 E cos(t L_a) dt = -0.840489, T^2 |E cos(T L_a)| = 2.2e-07
+  ok    each value is enclosed away from 0 and the cut at T is below 1e-3 of it: [49s]
+  ok    g_a''(0) < 0 exactly for a <= 0.66 on the grid: g''(0) < 0 for a in [0.55, 0.66], > 0 for a in [0.67, 0.85]
+  ok    bisection: a_c = 0.66881 (Remark 4.4): a_c = 0.6688128
+
+All checks passed (57s).
