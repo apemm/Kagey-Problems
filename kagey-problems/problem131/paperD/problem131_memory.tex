@@ -32,7 +32,7 @@
 \newcommand{\CP}{\mathrm{CP}}
 
 % The journal version is this file alone. The arXiv version
-% (problem131_arxiv.tex) defines \PaperDCombined and appends Sections S1 to S4.
+% (problem131_arxiv.tex) defines \PaperDCombined and appends Sections S1 to S5.
 % \arxivonly{Theorem}{label} points to a result that only the arXiv version
 % contains. In the journal build it cites the arXiv version, and in the arXiv
 % build it gives the number of the statement there.
@@ -57,29 +57,30 @@ approximation and the shape of the law}
 
 \begin{abstract}
 In the elephant random walk each step copies a uniformly chosen earlier step and
-reverses it with probability $\varepsilon$. We study the regime in which
-$\varepsilon$ tends to $0$ as the number of steps $N$ grows, with $N\varepsilon$ of
-order $\log N$. Let $M_N$ be the number of steps that disagree with the first
-step. We prove an explicit total variation bound between the law of $M_N$ and a
-truncated Luria--Delbr\"uck law, the compound Poisson law with jumps $d$ at rates
-$N\varepsilon/(d(d+1))$. A local limit theorem with an explicit rate follows, with
-the Landau density as the limit. The same Landau law arises from the fixed-memory
-superdiffusive limit as the memory tends to 1. We then derive the shape of the
-law of the position. Every mode lies near one of the two ends, at a distance
-$x\log x+\lambda_{\mathrm L}x+O(\sqrt{x\log x})$, where $x=N\varepsilon$ and
-$\lambda_{\mathrm L}\approx-0.2228$ is the mode of the Landau density. The second
-difference of the law changes sign at most 4 times. For even $N$ the
-probabilities of the origin and of each end cross exactly once, at
-$N\varepsilon=2\log N-\log\log N-\log16+o(1)$. At the crossing, for every even
-$N\ge8$, the origin is the unique interior minimum and the law has exactly 2
-symmetric intervals of modes. This last result uses certified computations at
-finitely many lengths.
+reverses it with probability $\varepsilon$. We let $\varepsilon\to0$ as the
+number of steps $N$ grows, with $N\varepsilon$ of order $\log N$. Let $M_N$ be the
+number of steps that disagree with the first step. We prove an explicit total
+variation bound between the law of $M_N$ and a truncated Luria--Delbr\"uck law,
+the compound Poisson law with jumps $d$ at rates $N\varepsilon/(d(d+1))$. A
+Landau local limit theorem with an explicit rate follows. We then derive the
+shape of the law of the position. Every mode lies at distance
+$x\log x+\lambda_{\mathrm L}x+O(\sqrt{x\log x})$ from an end, where
+$x=N\varepsilon$ and $\lambda_{\mathrm L}\approx-0.2228$ is the Landau mode. For
+every $N$ and $\varepsilon<\frac12$ the second difference of the law changes sign
+at most 4 times. For even $N$ the probabilities of the origin and of each end
+cross exactly once, at $N\varepsilon=2\log N-\log\log N-\log16+o(1)$. There, for
+every even $N\ge8$, the origin is the unique interior minimum and the law has
+exactly 2 symmetric intervals of modes, by certified computations at finitely
+many lengths. The sign theorem passes to the superdiffusive limit law at fixed
+memory $a=1-2\varepsilon\in(\frac12,1)$. With a fair first step this law has at
+most 2 modes for every $a$, and exactly 2 for $a\ge\frac{39}{40}$. Up to flat
+modal intervals, this settles the fair-start case of a conjecture of Gu\'erin, Laulin, Raschel and Simon.
 \end{abstract}
 
 \medskip
 \noindent\textbf{Keywords:} elephant random walk; random recursive tree;
 broadcasting on trees; compound Poisson approximation; Landau distribution;
-computer-assisted proof.
+bimodality; computer-assisted proof.
 
 \noindent\textbf{Mathematics Subject Classification (2020):} Primary 60G50;
 Secondary 60E07, 60C05, 60F05, 60J10, 05C05, 05C80, 65G30.
@@ -124,12 +125,13 @@ Section~\ref{sec:verify} are in the folder
 \nolinkurl{kagey-problems/problem131/paperD/data} of the repository named
 under Code availability.
 \ifPaperDcombined
-Sections~S1 to~S4 of this version hold results that the journal version
+Sections~S1 to~S5 of this version hold results that the journal version
 omits.
 \else
 The arXiv version of this paper~\cite{arxivD} contains further results,
-among them the center and the crossing to second order and the tail. This
-article does not use them. There is no supplementary material.
+among them the center and the crossing to second order, the tail and a
+convexity window between the humps. This article does not use them. There is
+no supplementary material.
 \fi
 
 \paragraph{Code availability.} All code, data and Lean files supporting this
@@ -139,11 +141,12 @@ certificate records and Lean files are those at commit
 \href{https://github.com/apemm/Kagey-Problems/tree/6f7f9068fc0ebb19c16d6a53fd8df5400bbd91a2/kagey-problems/problem131}{\texttt{6f7f9068fc0e}}
 of that repository. To rerun the checks, run
 \texttt{python -B verify\_all.py -{}-paper d} in that folder, which takes
-several minutes. The certified computations behind
-Propositions~\ref{prop:convex-certified} and~\ref{prop:dip-hyp} take
-about an hour and half an hour, and run separately in \nolinkurl{paperD} as
-\texttt{python -B certify\_convex.py 10 2000} and
-\texttt{python -B certify\_center.py 10 2000}. The scripts need
+several minutes. The certified computation behind
+Proposition~\ref{prop:dip-hyp} takes about half an hour and runs separately
+in \nolinkurl{paperD} as \texttt{python -B certify\_center.py 10 2000}. The
+certified computation behind the finite convexity window of the arXiv version
+takes about an hour and runs as \texttt{python -B certify\_convex.py 10 2000}.
+The scripts need
 \texttt{numpy}, \texttt{scipy}, \texttt{mpmath} and \texttt{python-flint}, and
 the file \nolinkurl{SUPPLEMENT.md} says what each script checks.
 
@@ -159,6 +162,7 @@ the whole paper.
 \input{app_erw_bulk.tex}
 \input{or_family_proofs.tex}
 \input{app_erw_signs.tex}
+\input{app_modes.tex}
 
 \begin{thebibliography}{99}\small\setlength{\baselineskip}{11pt}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}
 
@@ -199,6 +203,12 @@ elephant random walks}, J.~Stat.~Phys. \textbf{177} (2019), 1157--1171.
 H.~Gu\'erin, L.~Laulin, K.~Raschel and T.~Simon, \emph{On the limit law of
 the superdiffusive elephant random walk}, Electron.\ J.\ Probab.\
 \textbf{30} (2025), paper no.~102, 1--25. \href{https://doi.org/10.1214/25-EJP1362}{doi:10.1214/25-EJP1362}.
+
+\bibitem{glr2026}
+H.~Gu\'erin, L.~Laulin and K.~Raschel, \emph{A fixed-point equation approach
+for the superdiffusive elephant random walk}, Ann.\ Inst.\ Henri Poincar\'e
+Probab.\ Stat.\ \textbf{62} (2026), 973--1005.
+\href{https://doi.org/10.1214/24-AIHP1534}{doi:10.1214/24-AIHP1534}.
 
 \bibitem{tv2026}
 H.~Trinas and G.~Valle, \emph{A superdiffusive local limit theorem for the
@@ -273,6 +283,11 @@ fluctuation assay modify the tail of Luria--Delbr\"uck distribution}, Axioms
 \textbf{12} (2023), 249.
 \href{https://doi.org/10.3390/axioms12030249}{doi:10.3390/axioms12030249}.
 
+\bibitem{pakes1993}
+A.~G.~Pakes, \emph{Remarks on the Luria--Delbr\"uck distribution},
+J.~Appl.~Probab. \textbf{30} (1993), 991--994.
+\href{https://doi.org/10.2307/3214530}{doi:10.2307/3214530}.
+
 \bibitem{mohle2005}
 M.~M\"ohle, \emph{Convergence results for compound Poisson distributions
 and applications to the standard Luria--Delbr\"uck distribution},
@@ -289,6 +304,17 @@ J.~Bertoin, \emph{On the non-Gaussian fluctuations of the giant cluster for
 percolation on random recursive trees}, Electron.\ J.\ Probab.\ \textbf{19}
 (2014), paper no.~24, 1--15.
 \href{https://doi.org/10.1214/EJP.v19-2822}{doi:10.1214/EJP.v19-2822}.
+
+\bibitem{iksanovmohle2007}
+A.~Iksanov and M.~M\"ohle, \emph{A probabilistic proof of a weak limit law for
+the number of cuts needed to isolate the root of a random recursive tree},
+Electron.\ Commun.\ Probab.\ \textbf{12} (2007), 28--35.
+\href{https://doi.org/10.1214/ECP.v12-1253}{doi:10.1214/ECP.v12-1253}.
+
+\bibitem{meirmoon1974}
+A.~Meir and J.~W.~Moon, \emph{Cutting down recursive trees}, Math.\ Biosci.\
+\textbf{21} (1974), 173--181.
+\href{https://doi.org/10.1016/0025-5564(74)90013-3}{doi:10.1016/0025-5564(74)90013-3}.
 
 \bibitem{dhw2023}
 C.~Desmarais, C.~Holmgren and S.~Wagner, \emph{Broadcasting-induced colorings

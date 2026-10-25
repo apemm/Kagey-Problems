@@ -35,6 +35,29 @@ the check scripts and Lean files, write n for N.)
 
 ## What is proved
 
+The October 25 revision adds two theorems on the fixed-memory superdiffusive limit law with a
+fair first step (Section 4.2), stated in the introduction as Theorem 1.5 (`thm:main-limit`).
+Theorem 4.2 (`thm:two-modes`) proves that its density is unimodal at 0 or has exactly two
+symmetric modes, for every memory a in (1/2, 1). The proof smooths the second differences of P_N
+with a Gaussian kernel, uses Descartes' rule of signs for exponential sums (Lemma F.1) and the
+sign theorem 3.16, and passes to the limit in N and then in the width of the kernel (Lemmas F.2
+and F.3, new Appendix F, `app_modes.tex`). It uses the positive bounded smooth density of
+Guerin, Laulin and Raschel (Ann. Inst. Henri Poincare Probab. Stat. 62 (2026), 973-1005,
+Theorem 1.3). Theorem 4.3 (`thm:two-modes-near-one`) proves exactly two modes for
+39/40 <= a < 1, from the exact first two moments and the convexity of log Gamma. Together they
+settle, up to flat modal intervals, the case q = 1/2 of the conjecture of Guerin, Laulin, Raschel and Simon (EJP 30 (2025),
+Remark 2.1(b)). Remark 4.4 gives the numerical threshold a_c = 0.66881 and the finite-N values
+0.6563 (N = 4000) and 0.6592 (N = 8000), which `verify_elephant_modes.py` reproduces. They are
+not proof inputs. To make room, the former Section 3.6 (the prescribed window: `def:convex`,
+`cor:one-point`, `thm:convex-large`, `prop:convex-certified`, `conj:convex`, `rem:convex-open`)
+and Proposition 1.5 (`prop:main-window`) moved to the new Section S5 of the arXiv version, and
+Proposition 3.21 (`prop:odd`) now forms Section 3.6. The prior-work paragraphs now credit the
+weak Landau limit of the Luria-Delbrueck law to Pakes (J. Appl. Probab. 30 (1993), p. 993), cite
+Bertoin (EJP 19 (2014), Proposition 1) for the tree analogue and the coupling of Iksanov and
+Moehle (ECP 12 (2007)) with the cutting procedure of Meir and Moon, give the Bokes, Hlubinova and
+Singh equations (50)-(52) for the formal Landau shape, and position Trinas and Valle
+(arXiv:2609.14753). The journal version is 42 pages and the arXiv version 57 pages.
+
 The October 24 reframing for the Journal of Theoretical Probability changes the presentation, not
 the mathematics. The title, abstract and introduction now open with the regime and put the total
 variation approximation and the Landau local limit first (Theorem 1.1), then the modes (Theorem 1.2),
@@ -181,21 +204,23 @@ from the classical approximations.
 ## Files
 
 - `problem131_memory.tex` and the section files `sec_*.tex` and `app_*.tex` make up the paper, the
-  main text and Appendices A to E in one PDF, `problem131_memory.pdf`. The sections are
+  main text and Appendices A to F in one PDF, `problem131_memory.pdf`. The sections are
   `sec_intro`, `sec_erw_crossing`, `sec_erw_shape`, `sec_bulk_applications` and `sec_verify`, and the
   appendices are `app_erw_bounds` (A), `app_erw_profile` (B, the family-estimate statements),
   `app_erw_bulk` (C), `or_family_proofs` (D, the proofs of the family estimates) and
-  `app_erw_signs` (E, the second-difference proofs). Appendices D and E were Sections S5 and S6
+  `app_erw_signs` (E, the second-difference proofs) and `app_modes` (F, sign patterns of
+  functions, new on October 25). Appendices D and E were Sections S5 and S6
   of the Online Resource from October 17 to October 24, 2026, and returned to the article so that
   every proof used by the main theorems is in the article.
 - The journal version is `problem131_memory.tex` alone. It has no Online Resource and no
-  supplementary material. Where it needs a result of Sections S1 to S4 it cites the arXiv version
+  supplementary material. Where it needs a result of Sections S1 to S5 it cites the arXiv version
   of the paper (bibliography item `arxivD`, "arXiv number to be added", with the comment
   `% arXiv id in November`) through the macro `\arxivonly`. Add the arXiv number to that item once
   the arXiv version has one.
-- `online_resource_body.tex` holds Sections S1 to S4: the center and the crossing to second order
-  (S1), the tail (S2), the proof of parts (b) to (d) of Proposition 3.25 (S3) and the likelihood
-  theorem for the reversible fluctuation assay (S4). Only the arXiv version prints them. Its one
+- `online_resource_body.tex` holds Sections S1 to S5: the center and the crossing to second order
+  (S1), the tail (S2), the further results for odd N of Proposition S3.1 (S3), the likelihood
+  theorem for the reversible fluctuation assay (S4) and the convexity window between the humps
+  (S5, the former Section 3.6 and Proposition 1.5, moved on October 25). Only the arXiv version prints them. Its one
   bibliography item that the journal version does not cite (Hoeffding 1963) is in
   `online_resource_bib.tex`. The separate Online Resource file `online_resource.tex` and its PDF
   were removed on October 24, 2026 (they are in the git history).
@@ -283,7 +308,7 @@ of the paper pins the supporting code, certificate records and Lean files to com
 `6f7f9068fc0ebb19c16d6a53fd8df5400bbd91a2`. Later edits to the text of the paper do not change
 that pin, but a change to a script, a record or a Lean file would need a new checked commit. The arXiv
 version is `problem131_arxiv.tex`. Build it with `pdflatex problem131_arxiv.tex` three times. It
-gives the paper followed by Sections S1 to S4 in one PDF, with one bibliography.
+gives the paper followed by Sections S1 to S5 in one PDF, with one bibliography.
 
 ## Statement labels and old numbers
 
@@ -393,7 +418,11 @@ current files have sha256 0f3ab9a3ae64d0aef9cad82e3c1d86b66be884e3f82fb9824dc1ee
 (`verify_elephant_shape.py`) and
 b40d38c8371ff03bd2c1cddb1e1baaebaf14ab7e8b600fa68ae495a5214fab3e (`verify_elephant_odd.py`).
 `certify_center.py` and `certify_convex.py` did not change. The quick run of October 24 is in
-`data/verify_output_2026-10-24.txt`.
+`data/verify_output_2026-10-24.txt`. On October 25 `verify_all.py` gained a fifth script,
+`verify_elephant_modes.py`, which checks the constants of Theorem 4.3 and computes the numbers of
+Remark 4.4. It writes `data/verify_modes_output.txt`, whose first line records the sha256 of the
+script and the software versions. The quick run of October 25, with all 5 scripts passing, is in
+`data/verify_output_2026-10-25.txt`.
 
 ## Final editorial revision
 
@@ -408,3 +437,9 @@ Online Resource. The arXiv version, with Sections S1 to S4 appended, is 53 pages
 "bin a". No numerical certificate was recomputed, and the Lean proofs did not change.
 `../SUPPLEMENT.md` still describes the Online Resource and should be brought up to date with this
 folder.
+
+On October 25, 2026 the two-mode theorems for the fixed-memory limit law were added as Section 4.2
+and Appendix F, and the prescribed convexity window (the former Section 3.6 and Proposition 1.5)
+moved to Section S5 of the arXiv version. The journal version is 42 pages and the arXiv version 57
+pages. No numerical certificate was recomputed, and no Lean source changed. The map
+`../lean/PaperD/MAP.md` gives the new numbers.

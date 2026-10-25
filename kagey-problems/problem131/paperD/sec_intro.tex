@@ -18,19 +18,18 @@ we derive a Landau local limit theorem with an explicit rate
 crossing below are consequences. Every mode lies at distance about
 $x\log x-0.2228\,x$ from one of the two ends
 (Theorem~\ref{thm:main-modes}). The second difference of the law changes
-sign at most 4 times (Theorem~\ref{thm:main-shape}). A weak limit connects
-our Landau law to the classical superdiffusive law as the memory tends
-to 1 (Corollary~\ref{cor:fixed-memory-bridge}).
+sign at most 4 times (Theorem~\ref{thm:main-shape}).
 
 The count $M_N$ is the resistant-cell count in Bokes, Hlubinov\'a and
 Singh's reversible fluctuation assay~\cite{bhs2023}, with one sensitive
 founder, uniform parent choice and equal switching probabilities at
 birth. Their first-switch and P\'olya-urn calculation already gives the
-first-order center coefficient $4/(N+2)$~\cite[Eqs.~(6)--(10)]{bhs2023},
-and their random-start approximation uses two Landau
-densities~\cite[Eqs.~(58)--(60)]{bhs2023}. Our contribution is
-quantitative. We give explicit error bounds, and from them exact crossing
-and shape results.
+first-order center coefficient $4/(N+2)$~\cite[Eqs.~(6)--(10)]{bhs2023}.
+Their matched asymptotics give the Landau shape for one sensitive
+founder~\cite[Eqs.~(50)--(52)]{bhs2023}, and two Landau densities for a
+random start~\cite[Eqs.~(58)--(60)]{bhs2023}. These results are formal. Our
+contribution is quantitative. We give explicit error bounds, and from them
+exact crossing and shape results.
 
 For even $N$ we compare the probability of the origin with that of each
 end $\pm N$. Near $\varepsilon=0$ the ends are more likely, while at
@@ -42,6 +41,15 @@ the origin is the unique interior minimum and the law has exactly 2
 symmetric intervals of modes (Theorem~\ref{thm:main-shape}). The persistent
 walk, which copies the last step rather than a uniform earlier step,
 crosses at about $\log N$ switches~\cite{paperA}.
+
+The sign theorem holds for every $N$ and every $\varepsilon<\frac12$, so it
+also applies at fixed memory $a=1-2\varepsilon\in(\frac12,1)$, where
+$(2A_N-N)/N^a$ has a superdiffusive limit law. With a fair first step this law
+has at most 2 modes for every $a$, and exactly 2 for $a\ge\frac{39}{40}$
+(Theorem~\ref{thm:main-limit}). Up to flat modal intervals, this settles the fair-start case of a
+conjecture of Gu\'erin, Laulin, Raschel and Simon~\cite[Remark~2.1(b)]{glrs2025}.
+A weak limit connects our Landau law to this limit law as the memory tends
+to 1 (Corollary~\ref{cor:fixed-memory-bridge}).
 
 For comparison of conventions, the original memory parameter
 is $1-\varepsilon$, the parameter $a$ of~\cite{glrs2025} is
@@ -160,24 +168,27 @@ certificates included, is kernel-checked in Lean (Section~\ref{sec:verify}).
 \end{theorem}
 
 Between the humps we expect more, namely strict convexity on
-$[2m^*,N-2m^*]$. We prove this window only eventually.
-
-\begin{proposition}[an eventual convexity window]\label{prop:main-window}
-There is $N_1$ such that the following holds for every $N\ge N_1$, even
-or odd, and every $\varepsilon$ with $\log N\le x\le2\log N$. For every
-mode $a^*\ge N/2$ of $P_N$ we have $D_N(a)>0$ for
-$2m^*+1\le a\le N-2m^*-1$ (Proposition~\ref{thm:convex-large}). In
-particular the window holds at the crossing for every large even $N$.
-We do not compute $N_1$. At the crossing, a certified computation gives
-the window for every $5\le N\le2000$
-(Proposition~\ref{prop:convex-certified}). For $N>2000$ it is a conjecture
-(Conjecture~\ref{conj:convex}).
-\end{proposition}
+$[2m^*,N-2m^*]$. The arXiv version proves this window for every large $N$,
+and at the crossing for $5\le N\le2000$ by a certified computation
+(\arxivonly{Section}{or:window}).
 
 The shape of Theorem~\ref{thm:main-shape}(b) needs no such window. It holds
-for every even $N\ge8$. The three computational inputs are described in
+for every even $N\ge8$. The computational inputs are described in
 Section~\ref{sec:verify}, with the result each one supports. The tables and
 figures illustrate the theorems and are not used in their proofs.
+
+\begin{theorem}[the fixed-memory limit law]\label{thm:main-limit}
+Fix $0<\varepsilon<\frac14$ and put $a=1-2\varepsilon$. With a fair first step,
+$(2A_N-N)/N^a$ converges almost surely to a limit with an even density $g_a$.
+Either $g_a$ is nonincreasing on $[0,\infty)$, or there is $c>0$ such that
+$g_a$ is nondecreasing on $[0,c]$ and nonincreasing on $[c,\infty)$ with
+$g_a(0)<g_a(c)$. So $g_a$ has at most two modes
+(Theorem~\ref{thm:two-modes}). The second case holds for
+$0<\varepsilon\le\frac1{80}$ (Theorem~\ref{thm:two-modes-near-one}).
+\end{theorem}
+
+Numerically the second case starts at $a\approx0.66881$
+(Remark~\ref{rem:modes-threshold}).
 
 \paragraph{Why twice as many reversals?}
 An endpoint has mass about $\frac12e^{-x}$. In the persistent walk,
@@ -197,11 +208,15 @@ occur too late to produce a large family.
 
 Fixed-parameter limits for the elephant walk are well
 developed~\cite{coletti2017,bercu2018,kubotatakei2019}.
-Gu\'erin, Laulin, Raschel and Simon prove conditional
-unimodality~\cite[Section~2, proof of Theorem~1.1]{glrs2025}.
-Trinas and Valle's superdiffusive local limit and study of
-log-concavity~\cite[Theorem~3.1 and Eq.~(4.10)]{tv2026} also fix the
-parameter. Engl\"ander and Volkov's coin-turning walk instead switches
+In the superdiffusive regime the limit law has a smooth positive density
+with known moments~\cite[Theorems~1.3 and~1.4]{glr2026}, and it is unimodal
+given the first step~\cite[Theorem~1.1]{glrs2025}. Trinas and Valle prove a
+uniform local limit theorem~\cite[Theorem~3.1]{tv2026}, and disprove a
+log-concavity conjecture of~\cite[Remark~2.3]{glrs2025} with exact moments and
+a certified study of the recursion~\cite[Theorem~4.4]{tv2026}. They note that
+unimodality need not pass to the mixture given by a random first step. Our
+Theorem~\ref{thm:two-modes} treats this mixture for a fair first step, through
+the sign pattern at finite $N$. Engl\"ander and Volkov's coin-turning walk instead switches
 at time $n$ with probability $p_n$. For $p_n=a/n$ eventually, its
 occupation fraction tends to Beta$(a,a)$~\cite[Section~4, Theorem~1]{ev2018}.
 Fan and Qi~\cite{fanqi2026} let the memory parameter of the elephant walk
@@ -222,18 +237,27 @@ the minimal elephant walk~\cite[Theorems~2.3, 2.4 and Section~2.3]{miyazakitakei
 They do not estimate the exact central mass in our regime.
 
 Without truncation, our compound Poisson law is the Lea--Coulson
-Luria--Delbr\"uck law. Kessler and Levine describe its small-parameter
-profile and Landau limit~\cite[Eqs.~(14), (18), (19)]{kesslerlevine2015},
+Luria--Delbr\"uck law. Its weak Landau limit as the mean grows is due to
+Pakes~\cite[p.~993]{pakes1993}. M\"ohle proves it again with density
+formulas~\cite[Theorem~4.1 and Corollary~4.1]{mohle2005}, and credits it to
+Pakes. His Corollary~4.2 gives a uniform lattice local limit for integer
+parameters, without a rate. Kessler and Levine describe the small-parameter
+profile and the Landau limit~\cite[Eqs.~(14), (18), (19)]{kesslerlevine2015},
 as well as the dip threshold and mode near
-$\mu N(\log\mu N-0.22)$~\cite[Section~2]{kesslerlevine2015}.
-M\"ohle proves the stable limit and density formulas
-\cite[Theorem~4.1 and Corollary~4.1]{mohle2005}. His Corollary~4.2 gives
-a uniform lattice local limit for integer parameters, without a rate.
-Schweinsberg~\cite{schweinsberg2012} and
-Bertoin~\cite{bertoin2014ejp} obtain the same stable law for root-cluster
-fluctuations at retention $1-c/\log n$.
-We add truncation at $N-1$, an explicit local rate and transfer to
-the elephant law, from which its dip and mode estimates follow.
+$\mu N(\log\mu N-0.22)$~\cite[Section~2]{kesslerlevine2015}. On random
+recursive trees, Bertoin proves a weak limit of the same form for the number
+of vertices cut off from the root by rare cuts, when the cut probability is
+of order $k^{-1/4}$ on a tree of size $k$~\cite[Proposition~1]{bertoin2014ejp}.
+His proof uses the coupling of Iksanov and M\"ohle~\cite[Section~2 and
+Proposition~1]{iksanovmohle2007}. In it the subtrees removed by the cutting
+procedure of Meir and Moon~\cite{meirmoon1974} have the sizes of independent
+steps with law $1/(j(j+1))$, up to a first passage time. The same weights give
+the mean number $N/(d(d+1))$ of families of size $d$ in
+Section~\ref{sec:shape}. Schweinsberg~\cite{schweinsberg2012}
+and Bertoin~\cite{bertoin2014ejp} obtain the same stable law for root-cluster
+fluctuations at retention $1-c/\log n$. What is new here is the total
+variation bound, the explicit local rate with truncation at $N-1$, the
+transfer to the elephant walk, and the shape theorems that follow.
 
 Broadcasting papers study reconstruction of the root color from the
 terminal tree~\cite{adlv2022,ahs2026}. Color-count limits and
@@ -258,15 +282,18 @@ are in Appendix~\ref{app:bulk}. Appendix~\ref{app:shape} states
 the auxiliary family estimates, Appendix~\ref{app:families} proves
 them, and Appendix~\ref{app:signs} proves the second-difference
 lemmas. Section~\ref{sec:bulk-applications}
-gives the fixed-memory limit. Section~\ref{sec:verify} describes
-the numerical and formal checks.
+treats the fixed-memory limit law, with the number of its modes, and
+Appendix~\ref{app:modes} proves the lemmas on sign patterns of functions
+used there. Section~\ref{sec:verify} describes the numerical and formal
+checks.
 \ifPaperDcombined
-Sections~S1 to~S4 at the end give the center and the crossing to second
-order, the tail, further results for odd $N$ and a likelihood bound for
-the reversible fluctuation assay. The main text does not use them.
+Sections~S1 to~S5 at the end give the center and the crossing to second
+order, the tail, further results for odd $N$, a likelihood bound for
+the reversible fluctuation assay and the convexity window between the
+humps. The main text does not use them.
 \else
 The arXiv version of this paper~\cite{arxivD} adds the center and the
-crossing to second order, the tail and further results for odd $N$. This
-article does not use them.
+crossing to second order, the tail, further results for odd $N$ and a
+convexity window between the humps. This article does not use them.
 \fi
 Every proof used by the main theorems is in the article.
