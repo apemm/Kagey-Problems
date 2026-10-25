@@ -183,10 +183,9 @@ As for the other libraries, we build in a Lake workspace outside OneDrive. The w
 folder and shares the Mathlib packages of `~/lean-work/kagey131`. `lake build PaperF` builds the
 20 modules in a few minutes once Mathlib is cached, with no errors. The modules of `PaperF/Exact/`
 give linter warnings only (unused variables and simp arguments). On October 25, 2026 the library
-was rebuilt after the import of `PaperF.Exact` was added (exit 0). `verify_lean.py` does not
-cover `PaperF`, so the axioms were checked in a scratch file of `~/lean-work/paperF` that
-imports `PaperF` and runs `collectAxioms` on every theorem of the 18 modules that declare
-anything: 344 theorems (708 with the auxiliary ones Lean generates), none of them depending on an
-axiom other than propext, Classical.choice and Quot.sound, and none on `sorryAx`. The source has 252 `theorem` and
+was rebuilt after the import of `PaperF.Exact` was added (exit 0). `verify_lean.py` covers `PaperF`: its run on October 25, 2026 checked the axioms of all 252 `theorem` and
+`lemma` declarations, none depending on an axiom other than propext, Classical.choice and
+Quot.sound (see `build-log.txt` and `verification-manifest.json`). A separate `collectAxioms` scan found 344 theorems
+(708 with the auxiliary ones Lean generates), none on `sorryAx`. The source has 252 `theorem` and
 `lemma` declarations (the count of `verify_lean.py`'s parser), 145 of them in `PaperF/Exact/`. In a
 normal clone, `lake exe cache get` and `lake build PaperF` in the `lean` folder do the same.
