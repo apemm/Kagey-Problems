@@ -19,8 +19,10 @@ The new modules `CenterNoHoles`, `ModalIntervals`, and `ShapeAllEven` close the
 formal minimum gap and prove the full two-interval shape for every even length
 at least eight. The final theorem `shape_at_crossing_all_even` requires only
 `4 ≤ h`, with `N = 2h`. It has no convex-window or asymptotic hypothesis.
-The new maximum-height window, total variation strengthening, constrained
-likelihood theorem, and fixed-memory bridge are not formalized.
+The maximum-height window and the two-mode theorems of Section 4 (apart from the
+computer-assisted threshold) are formalized in `PaperD/Modes/` since October 25, 2026. The total
+variation strengthening, the constrained likelihood theorem, and the fixed-memory bridge are not
+formalized.
 
 Paper D is `paperD/problem131_memory.tex`, "The elephant random walk with rare reversals: a
 Luria–Delbrück approximation and the shape of the law" (titled "The center and the ends of the
@@ -31,8 +33,9 @@ are in the arXiv version only). The later tables cite the statement labels of th
 the number in Paper D before the split of October 13, 2026, and the note at the end says how these
 numbers moved.
 
-The Lean library is `PaperD`: the root `PaperD.lean` and 278 modules in `PaperD/`, so 279 modules
-in all, in namespace `Kagey131.PaperD` (tracks T2 and T8 in `Kagey131.PaperD.RRT`, track T5 in
+The Lean library is `PaperD`: the root `PaperD.lean` and 307 modules in `PaperD/` (since October 25,
+2026 with the sub-roots `PaperD/Modes.lean` and `PaperD/S4.lean` and their 22 and 5 modules), so
+308 modules in all, in namespace `Kagey131.PaperD` (tracks T2 and T8 in `Kagey131.PaperD.RRT`, track T5 in
 `Kagey131.PaperD.T5`, track T7 in `Kagey131.PaperD.T7`, tracks U1, U2, U4 in
 `Kagey131.PaperD.U1`, `Kagey131.PaperD.U2`, `Kagey131.PaperD.U4`, and the copy of
 Proposition 3.25(b) of track U5 in `Kagey131.PaperD.U5`, track U6 in `Kagey131.PaperD.U6`, and the Paper F tracks FL1, FL2 in `Kagey131.PaperF.FL1`,
@@ -61,7 +64,7 @@ statement label" below lists every numbered statement of Paper F with its status
 
 ### Declaration count
 
-The library has 23261 `theorem` and `lemma` declarations (the count of `verify_lean.py`, which
+The library has 23503 `theorem` and `lemma` declarations (the count of `verify_lean.py`, which
 checks that it equals the set of theorems Lean finds). They split as follows.
 
 * 20517 in the 69 generated certificate modules `T7_Gen_*` (for each `N` with `101 ≤ N ≤ 2000`,
@@ -73,8 +76,19 @@ checks that it equals the set of theorems Lean finds). They split as follows.
 * 825 in the modules of the tracks U1 to U6 and `U_EndToEnd`, most of them support lemmas.
 * 813 in the Paper F modules of the tracks FL1 to FL5 and `FLC_Cor25Walk` (section "Paper F by
   statement label").
+* 159 in the modules `Modes/` and their sub-root (section "Modules `Modes/`"), and 83 in the
+  modules `S4/` and their sub-root (section "The coin-turning note"), added on October 25, 2026.
 * 842 in the remaining Paper D modules, most of them support lemmas. The table "Paper D by
   statement label" below names the main ones.
+
+## Build of October 25, 2026
+
+`python -B verify_lean.py PaperC PaperD` passed after the imports of `PaperD.Modes` and
+`PaperD.S4` were added to the root. Lake compiled only the 29 new modules and the root; the
+certificate modules `T7_Gen_*` and every other cached module were replayed. The axiom audit
+checked all 23503 declarations in 308 modules, and every dependency is among `propext`,
+`Classical.choice` and `Quot.sound`. The 13 replayed warnings are linter or deprecation
+warnings.
 
 ## Build of October 23, 2026
 
@@ -194,14 +208,16 @@ indexes the count chain by the number of steps.
 | `lem:center-convex` (superseded) | former 3.22 | center from an assumed convex window | `lem_center_convex_at_crossing`, `center_min_at_crossing`, `center_min_of_convex_five_blocks` | historical kernel proof retained. Replaced in the paper by `lem:center-no-holes`, which needs no convex-window hypothesis. |
 | `cor:unique-min` | 3.19 | strict interior minimum, positive central curvature, rise/plateau/fall, and both complete global modal intervals for every even `N ≥ 8` | `shape_at_crossing_all_even`; component results `center_min_and_curvature_at_crossing_all_even`, `center_unique_interior_min_at_crossing_all_even`, `modal_intervals_at_crossing_all_even` | kernel with only `4 ≤ h`, where `N = 2h`. Uses `prop_dip_hyp`, `no_holes`, and `five_blocks_signPattern`. No classical analytic inputs or convex-window premise. |
 | `lem:center-no-holes` | 3.18 | strict minimum and positive central curvature from `P_N(1) > max(E_N,C_N)` | `center_min_and_curvature_of_no_holes`, `ewBin_center_min_and_curvature_of_no_holes` | kernel, for every even `N ≥ 6` and `0 < ε < 1/2`. Symmetry and strict no holes are discharged for the actual walk. |
-| `cor:height-window` | 3.20 | nonempty central convexity window from maximum height, at every even crossing `N ≥ 8` | none | written chord-sum proof checked, not formalized. |
+| `cor:height-window` | 3.20 | nonempty central convexity window from maximum height, at every even crossing `N ≥ 8` | `Modes.height_window`, `Modes.height_window_generic`, with `Modes.concave_chord`, `Modes.sum_ewBin`, `Modes.ewBin_pos` (`PaperD/Modes/HeightWindow.lean`) | kernel, no classical input. The interval `[l, r]` enters through hypotheses (`1 ≤ l ≤ r < h`, rise, plateau, fall of `P_N`) that are exactly the conclusion of `modal_intervals_at_crossing_all_even`; nonempty means `b ≤ h`. |
 | `cor:fixed-memory-bridge` | 4.1 | weak Landau limit as fixed memory tends to one | none | written proof, not formalized. |
-| `thm:main-limit` | 1.5 (new on October 25, when `prop:main-window` left 1.5) | the fixed-memory limit law with a fair first step has at most two modes, and exactly two for `ε ≤ 1/80` | none | written proof (Theorems 4.2, 4.3 and 4.4), not formalized. |
-| `thm:two-modes` | 4.2 (new on October 25) | the density of the fair-start superdiffusive limit is unimodal at 0 or has exactly two symmetric modes | none | written proof from `thm:five-blocks` (kernel) and Guérin, Laulin and Raschel, AIHP 62 (2026), Theorem 1.3, not formalized. |
-| `thm:two-modes-near-one` | 4.3 (new on October 25) | two modes for `39/40 ≤ a < 1` | none | written proof from the exact first two moments, not formalized. |
+| `thm:main-limit` | 1.5 (new on October 25, when `prop:main-window` left 1.5) | the fixed-memory limit law with a fair first step has at most two modes, and exactly two for `ε ≤ 1/80` | `Modes.two_modes` (at most two modes), `Modes.main_limit_near_one` (case (b) for `0 < ε ≤ 1/80`) | kernel, hypotheses DENS, LAW (and MOM with the identification of the law of `\|X\|` for `ε ≤ 1/80`); see section "Modules `Modes/`". The almost sure convergence, the existence of the density and the threshold sentence (`thm:threshold`) are not formalized. |
+| `thm:two-modes` | 4.2 (new on October 25) | the density of the fair-start superdiffusive limit is unimodal at 0 or has exactly two symmetric modes | `Modes.two_modes`; Steps 1 to 4 `Modes.smoothedD_valuesAtMost`, `Modes.smoothedD_close`, `Modes.smoothedD_tendsto`, `Modes.mol_deriv`, `Modes.mol1_tendsto`, `Modes.mol0_tendsto_density`, `Modes.increments_density`; Step 5 `Modes.two_mode_dichotomy`, `Modes.two_mode_exclusive`, `Modes.two_mode_not_unimodal` (core `Modes.no_valley`) | kernel, hypotheses DENS, LAW. Formalized: "(a) or (b)", that they exclude each other, and that (b) is not unimodal. Not formalized: the sentences on the strict local maxima (only `0`, resp. `±c`) and on local maxima when `g_a` is constant on no interval. The Taylor step has the constant `2M₄η⁴` in place of `M₄η⁴/12` (only the order is used). |
+| `thm:two-modes-near-one` | 4.3 (new on October 25) | two modes for `39/40 ≤ a < 1` | `Modes.main_limit_near_one`; the core `Modes.near_one_numeric`, `Modes.cantelli`, `Modes.cdf_not_concave`, `Modes.not_concave_of_ratio`, `Modes.concave_cdf_of_antitone`, `Modes.gamma_mean_bounds`, `Modes.gamma_second_moment_bound`, `Modes.near_one_incompatible`, `Modes.near_one_not_concave` | kernel, hypotheses DENS, LAW, MOM, `X ∈ L²`, and `P(\|X\| ≤ t) = 2∫_0^t g` (the law of `\|L°_a\|` is that of `\|L_a\|`). `near_one_numeric` uses only `γ > 1/2`, so it proves `M < 80/79` and `V < 59/741` in place of `1.0107` and `0.0752`, which suffices; the paper's hypothesis `1 ≤ μ` is not needed. |
 | `thm:threshold` | 4.4 (new in the second revision of October 25) | computer-assisted threshold, case (a) of 4.2 for `a ≤ z₋`, case (b) for `a ≥ z₊`, `z₊ - z₋ < 3.3·10⁻¹⁵` | none | written proof (Appendix G, Section S6) with the certificate `paperD/certify_threshold.py`, not formalized. |
 | `rem:modes-threshold` | 4.5 (4.4 before the second revision of October 25) | numerical threshold `a_c ≈ 0.66881` and finite-`N` values | none | numerics (`paperD/verify_elephant_modes.py`), not a theorem. |
-| `lem:descartes`, `lem:sp-limit`, `lem:sp-derivative` | F.1 to F.3 (new on October 25) | Descartes rule for exponential sums, limits of sign patterns, one derivative fewer | none | written proofs, not formalized. |
+| `lem:descartes` | F.1 (new on October 25) | Descartes rule for exponential sums | arbitrary real exponents: `Modes.descartes_values`, `Modes.zero_count`, `Modes.expSum_zeros_finite`, `Modes.expSum_sign_atBot` (`ExpValues`, `ExpDescartes`, `ExpSignsA`); equally spaced exponents through Mathlib's rule of signs: `Modes.poly_values_pattern`, `Modes.expsum_valuesAtMost` (`PolySigns`, `PolySigns2`, `PolyValues`) | kernel. The exponent sum is a list of pairs `(λ_k, b_k)` with `λ` strictly increasing and some `b_k ≠ 0`. |
+| `lem:sp-limit` | F.2 (new on October 25) | limits of sign patterns | `Modes.valuesAtMost_of_tendsto`, `Modes.incrementsAtMost_of_tendsto` (core `Modes.signPattern_le_of_tendsto`); the sign tools `Modes.signPattern_sublist_of_sublist`, `Modes.signPattern_mul_pos`, `Modes.signPattern_neg`, `Modes.signPattern_reverse` | kernel, stated for any sign list (the paper uses the alternating ones). |
+| `lem:sp-derivative` | F.3 (new on October 25) | one derivative fewer | `Modes.sp_derivative`, with `Modes.incrementsAtMost_of_deriv`, `Modes.valuesAtMost_piFour_of_incr` | kernel |
 | `lem:thr-hankel` | G.1 (new in the second revision of October 25) | Hankel test that rules out case (a) of 4.2 | none | written proof, not formalized. |
 | `lem:thr-moments`, `lem:thr-trunc`, `lem:thr-cells`, `lem:thr-tail`, `lem:thr-fpp`, `lem:thr-taylor`, `prop:thr-interval`, `lem:thr-scaled` | S6.1 to S6.8 of the arXiv version only (new in the second revision of October 25) | lemmas of the threshold certificate | none | written proofs, not formalized. |
 | `thm:assay-mle` | S4.1 of the arXiv version only (Online Resource 1 from October 23 to 24, 4.2 before October 23) | constrained likelihood concentration and absolute mean-bias bound | none | written proof, not formalized. |
@@ -232,6 +248,59 @@ indexes the count chain by the number of steps.
 | `thm:B-cum-upper` | S2.3 | cumulative upper bound | `thm_B_cum_upper` (`C = 800`), `cum_upper_explicit`, `cum_decomp`, `cum_one_j`, `cum_main`, `cum_shift`, `cum_bigZ`, `cum_noEarly` | kernel; track U5 |
 | `thm:B-local-upper` | S2.4 | local upper bound | `thm_B_local_upper` (`c̄ = 1/40`, `A₁ = 34000`, `C = 20000`), `lower_tail_sum`, `upper_comb` | kernel; track U5 |
 | `or:odd` | S3 | Proposition S3.1, the further results for odd `N` that complete `prop:odd` (3.21) | as in the row of `prop:odd`; (b) also `U5.odd_crossing_explicit`, `U5.odd_crossing_isBigO_G`, `U5.odd_crossing_isBigO_g`, `U5.odd_crossing_isBigO_expansion` (track U5, written independently of U3); `odd_center_le` | kernel ((d) with LFI, CP, ES, UNI) |
+
+## Modules `Modes/` (October 25, 2026)
+
+The 22 modules in `PaperD/Modes/` (sub-root `PaperD/Modes.lean`, namespace
+`Kagey131.PaperD.Modes`) formalize `cor:height-window`, the lemmas of Appendix F and Section 4
+apart from `thm:threshold` (rows above). The limit law of Section 4 enters through three named
+hypotheses, each a definition of type `Prop`, in the style of the section "Named classical
+hypotheses".
+
+| Abbr. | Lean | Statement | Source | Used in |
+|---|---|---|---|---|
+| DENS | `Modes.DensityHyp g` | `g` is continuous, even, nonnegative, integrable and bounded | Guérin, Laulin and Raschel, AIHP 62 (2026), Theorem 1.3 (existence of the density; boundedness is added for the Lean proof) | `thm:two-modes`, `thm:main-limit` |
+| LAW | `Modes.LawConvHyp ε a g` | `∑_k P_N(k) f(z_k) → ∫ f g` for bounded continuous `f`, with `z_k = (2k - N)/N^a` | the same (the almost sure convergence of `(2A_N - N)/N^a`, used only in law) | `thm:two-modes`, `thm:main-limit` |
+| MOM | `Modes.GLRMomentsHyp P X a` | `E X = 1/Γ(1+a)` and `E X² = 1/((2a-1)Γ(2a))` | the same, Theorem 1.4 with `k = 1, 2` | `thm:two-modes-near-one` |
+
+Hypotheses and differences beyond these, statement by statement (the rows above give the
+declarations):
+
+* `thm:two-modes` holds for `0 < ε < 1/4` with `a = 1 - 2ε`, as in the paper. The sentences on
+  strict local maxima are not formalized. In Step 2 the Taylor estimate has the constant
+  `2M₄η⁴` instead of `M₄η⁴/12`.
+* `thm:two-modes-near-one` also takes `X ∈ L²` and `P(|X| ≤ t) = 2∫_0^t g` for `t ≥ 0`, which
+  ties the variable `X` of MOM to the density `g`. `near_one_not_concave` assumes
+  `P(|X| ≤ 0) = 0`.
+* `cor:height-window` takes the conclusion of `modal_intervals_at_crossing_all_even` as
+  hypotheses instead of calling it; composing the two is immediate.
+* `lem:descartes` is stated for lists of pairs `(λ_k, b_k)`, `lem:sp-limit` for any sign list.
+
+## The coin-turning note (`S4_aging_note`) by statement label
+
+The note is `S4_aging_note/s4_note.tex`. Its statements were proved in this library under the
+numbers of the first Paper F draft (table "Paper F by statement label" below, numbers 3.1 to 3.7
+and B.1 to B.3). Since October 25, 2026 the 5 modules in `PaperD/S4/` (sub-root
+`PaperD/S4.lean`, namespace `Kagey131.PaperD.S4`) state them under the note's labels, and add
+the Feller coupling and the numbers of the text and of the figure caption. The numbers are those
+of the note's build of October 25, 2026. Lean indexes the walk by the number of steps after the
+first (`t = N - 1`), and state `1` of the note is `0 : Fin d`. Every declaration below depends
+only on `propext`, `Classical.choice` and `Quot.sound`. `Crossing200` uses `decide +kernel` for
+two integer checks.
+
+| Label | No. | Lean | Existing theorems used | Hypotheses and differences | Module |
+|---|---|---|---|---|---|
+| `prop:aging-urn` | 2.1 | `prop_aging_urn_joint`, `prop_aging_urn_law`, `prop_aging_urn_ratio`, `prop_aging_urn_ratio_mono` | `FL1.prop_aging_urn`, `urnLaw_eq`, `urn_ratio_formula`, `urn_prob_ratio_strictMonoOn`, `urn_prob_ratio_eq_one_iff` | none | `S4.Note` |
+| `rem:aging-feller` | 2.2 | `rem_aging_feller` (= `feller_coupling`), with `fail_prod`, `block_weight`, `runProb_closed`, `sum_ordL`, `orderingSum`, `esf_compact`, `spLaw_eq_esf`, `crpLaw_eq_esfC`, `crpLaw_eq_esf` | `rpoch`, `rpoch_add` | both laws are definitions for a fixed number `T` of trials and `α = dθ > 0`: the spacing law `spLaw` sums the run probabilities of independent trials over the orderings of a multiset, and the restaurant law `crpLaw` is the forward equation of the multiset of table sizes. Both are proved equal to the Ewens formula. The seating of individual customers, the uniform colors and the link to the urn of `prop:aging-urn` are not formalized | `S4.Feller` |
+| `prop:aging-two` | 2.3 | `prop_aging_two_a_joint`, `prop_aging_two_a`, `prop_aging_two_b`, `prop_aging_two_ends` | `FL1.prop_aging_two_a_of_thm`, `prop_aging_two_b_of_thm`, `plusBin_one`, `plus_top_strict_max`, `plus_top_strict_min` | none; the strict extrema of the existing theorems are kept beside the note's form | `S4.Note` |
+| `thm:aging-d` | 2.4 | `thm_aging_d_a`, `thm_aging_d_a_uniform`, `thm_aging_d_b`, `thm_aging_d_corner` | `FL1.thm_aging_d_a`, `thm_aging_d_b`, `corner_strict_max`, `corner_strict_min`, `mem_ageBins`, `card_ageBins` | count vectors are compositions of `N` into `d` parts with first part at least `1`. (a) needs only `N ≥ 2` | `S4.Note` |
+| `rem:aging-d` | 2.5 | `rem_aging_d_two_states`, `rem_aging_d_two_states_chain`, `rem_aging_d_paths`, `rem_aging_d_moves_indep`, `rem_aging_d_crp`, `rem_aging_d_expected_moves`, `rem_aging_d_expected_moves_isBigO` | `FL1.thm_aging_two_state`, `plusBin_eq_ageBin`, `chain_path_1122`, `urn_draws_122`, `movePat_law_one`, `crp_new_table`, `expected_moves_one`, `expected_moves_one_isBigO` | the `O(1)` is an explicit uniform bound. The coupling with the chain of Dietz and Sethuraman and the limits are not formalized | `S4.Note` |
+| `prop:aging-fair` | 2.6 | `prop_aging_fair_a`, `prop_aging_fair_b_ratio`, `prop_aging_fair_b`, `prop_aging_fair_sides` | `agBin_one_interior`, `agBin_one_top`, `agBin_ratio_strictMonoOn`, `aging_crossing_exists_unique`, `aging_crossing_sides`, `continuous_agBin`, `agBin_zero_c` | none | `S4.Note` |
+| `prop:aging-expansion` | 2.7 | `prop_aging_expansion`; the value `0.8932` at `N = 200`: `euler_bounds`, `expansion_value_200`; the computed crossing `c_200 = 0.8925`: `tableZ_spec`, `PA_eq`, `EN_eq`, `sum_lt_rho`, `rho_lt_sum`, `crossing_200_bounds` | `FL4.aging_expansion` | the `O(·)` is an explicit uniform constant, stated for `N = 2h`. The value is bracketed, `0.8931 ≤ … ≤ 0.8933`, with `γ` between `H_128 - log 129` and `H_128 - log 128`; the crossing is bracketed, `0.89245 < c_200 < 0.89255`, by exact integer tables at `c = 17849/20000` and `17851/20000` | `S4.Note`, `S4.Expansion200`, `S4.Crossing200` |
+| `fig:aging`, the caption | | `fig_corner_half` (exact `703/73`), `fig_center_half`, `fig_corner_two`, `fig_center_two`, `panel_a_flat`, `panel_a_ends`, `panel_a_center` | | the roundings are shown by brackets (`9.55 ≤ 9.63 < 9.65`, `0.425 ≤ 0.4303 < 0.435`, `0.0345 ≤ 0.0347 < 0.0355`, `2.05 ≤ 2.061 < 2.15`). Panel (a) is proved from the one-step ratio, which gives a strict maximum at the ends or at the center, more than the caption states | `S4.Numbers` |
+| `lem:D-average` | A.1 | `lem_D_average`, with `lam`, `hitT`, `rhoAB`, `qStay_eq_lam` | `agBin_center_averaging`, `agBin_ge`, `agBin_le` | `P(T = r)` is the joint law `P(S_r = h, X_r = +1)` | `S4.Note` |
+| `prop:D-bracket` | A.2 | `prop_D_bracket_mono`, `prop_D_bracket_expansion`, `prop_D_bracket_crossing`, `prop_D_bracket`, `prop_D_bracket_limit`, `prop_D_bracket_ge` | `FL4.cM_strictMono`, `cM_expansion`, `cN_spec`, `bracket`, `crossing_log_limit`, `cN_ge_cM_three` | stated for `N = 2h`; `c_N` is `FL4.cN h`, the only solution in `(0, 2)` of `C_N = E_N`. The `O(·)` is an explicit constant | `S4.Note` |
+| `prop:D-llt` | A.3 | `prop_D_llt` | `FL4.llt_rate` | stated for `N = 2h` | `S4.Note` |
 
 ## Named hypotheses that remain
 
@@ -589,8 +658,10 @@ Paper D. The current statement table distinguishes complete formal proofs,
 proofs with named classical inputs, and written results without a formal proof.
 The remaining differences are as follows.
 
-* `cor:height-window`, the total variation strengthening of `thm:cp`,
-  `cor:fixed-memory-bridge`, and `thm:assay-mle` are not formalized.
+* The total variation strengthening of `thm:cp`, `cor:fixed-memory-bridge`, `thm:threshold`
+  with Appendix G and Section S6, and `thm:assay-mle` are not formalized. (`cor:height-window`
+  and Section 4 apart from the threshold are formalized since October 25, 2026, the latter
+  modulo DENS, LAW and MOM.)
 * The classical tools LFI, CP, ES, SCH, UNI and HOEF (section "Named classical hypotheses").
 * Corollary 3.11(a) word for word. Lean has `mode_master`, a different form.
 * The current `cor:unique-min` is an even-length statement and is fully formalized.

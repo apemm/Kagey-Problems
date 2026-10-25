@@ -167,6 +167,8 @@ import PaperD.FL5_Thm24
 import PaperD.FL5_Walk
 import PaperD.FLC_Cor25Walk
 import PaperD.ShapeAllEven
+import PaperD.Modes
+import PaperD.S4
 
 /-!
 # Paper D (Problem 131 under memory), root module

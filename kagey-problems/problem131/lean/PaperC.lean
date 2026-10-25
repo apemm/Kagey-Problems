@@ -17,6 +17,8 @@ import PaperC.DVRestriction
 import PaperC.PrincipalMinors
 import PaperC.GeneratorFiber
 import PaperC.CriticalWindow
+import PaperC.C1
+import PaperC.C2
 
 /-!
 # Papers C1 and C2 (Problem 131), root module

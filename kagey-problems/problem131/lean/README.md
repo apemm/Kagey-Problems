@@ -161,6 +161,18 @@ section of their own. The library proves the following.
   `S1_endpoint_information_note`) (`Sticky`, `Fisher`).
 - The second-order constants in finite form, namely the directed 3-cycle, the tree formula for small
   faces, the constants of Papers A and B and the `K_3` edge window (`Constants`, `ChainApps`).
+- For C1 (`C1/`, 14 modules, October 25, 2026): the weighted Cayley formula for every `k` in
+  determinant form, the algebra of the constants on a complete or symmetric face, the
+  admissible faces, the restriction identity and finite facts for the functional of the
+  discrete chain, the exact lemmas and identities of the boundary layer, and the arithmetic of
+  the reducible crossing on the directed 3-cycle.
+- For C2 (`C2/`, 20 modules, October 25, 2026): path reversal from the stationary start,
+  cut-transposes and the invariance of all principal minors, the amplitudes under time reversal
+  and cut-transposes, the reversal of a memoryless block with the invariance of the count law,
+  gluing across a cut, the resultant lemma, second moments for `d ≤ 4`, and the worked examples.
+
+The library has 56 modules (the root, the sub-roots `PaperC/C1.lean` and `PaperC/C2.lean`
+included) and 715 theorem and lemma declarations.
 
 ## Paper D (`paperD/problem131_memory.tex`)
 
@@ -222,9 +234,16 @@ the aging walk, with unique crossings, the uniform law at `c = 1` with a fixed f
 fair-start values and the arcsine law at `c = 1/2` (`Aging`, `AgingExact`, `AgingCrossing`,
 `AgingSmall`, `AgingAveraging`, `AgingSwitches`, `BetaBinomial`).
 
-The library has 217 modules (including the root) and 22427 theorem and lemma declarations. Of
-these 20517 are steps of the generated certificates in `T7_Gen_*`, 163 are for Paper F, and most
-of the rest are support lemmas, so the count is not a count of results. `lake build PaperD`
+Since October 25, 2026 `Modes/` (22 modules) proves the maximum-height window and the two-mode
+theorems of Section 4 of Paper D apart from the computer-assisted threshold, the latter modulo the
+existence of the limit density, the convergence in law and the first two moments of the limit
+(named hypotheses). `S4/` (5 modules) states the results of the note `S4_aging_note` under its
+labels and adds the Feller coupling and the numbers of the text and the figure caption.
+
+The library has 308 modules (the root and the sub-roots `PaperD/Modes.lean` and `PaperD/S4.lean`
+included) and 23503 theorem and lemma declarations. Of these 20517 are steps of the generated
+certificates in `T7_Gen_*`, 163 are for Paper F, and most of the rest are support lemmas, so the
+count is not a count of results. `lake build PaperD`
 takes about 40 minutes on 24 cores. The 69 `T7_Gen_*` modules take 1 to 4 minutes each and a few GB
 of memory each. The module `U6_Cert` takes about 14 minutes and 3 GB. With less memory, build
 them a few at a time (`lake build PaperD.T7_Gen_0101_0300 …`) before `lake build PaperD`.
@@ -262,7 +281,13 @@ of Section 2 of the paper: the law as a sum over compositions into alternating r
 decompositions by the first run and by the final run with the recursion behind the latter, the
 fresh-start identities with the renewal kernels and their sums, the Green function lemma with the
 tail-sum formula for the mean, the first part of the counting lemma, and the renewal inversion in
-part (a) of the inversion theorem. The asymptotic statements are not formalized. `PaperF/MAP.md`
+part (a) of the inversion theorem. Since October 25, 2026 the sub-root `PaperF/Exact.lean` and 11
+modules in `PaperF/Exact/` (namespace `Kagey131.PaperF.Levy.Exact`) add the covering identity,
+the prepared boundary kernels, parts (b) and (c) of the inversion theorem, the representation of
+`ρ`, the giant-run identities, the second part of the counting lemma (for run lengths counted
+inside the window), the log-convex lemma, and the finite cores of several shape and big-jump
+statements. The library has 20 modules (the root and the sub-root included) and 252 theorem and
+lemma declarations. The asymptotic statements are not formalized. `PaperF/MAP.md`
 cites statement labels rather than numbers, since the numbers change when statements move, and it
 lists the declarations, their hypotheses and axioms, and what is left out.
 
@@ -312,7 +337,7 @@ The first command downloads the compiled Mathlib. Then run
     python -B verify_lean.py --workspace .
 
 This builds each library with Lake and runs `#print axioms` on every `theorem` and `lemma`.
-For `PaperD` the build takes about 40 minutes and the axiom check of its 22427 declarations a
+For `PaperD` the build takes about 40 minutes and the axiom check of its 23503 declarations a
 few more (see the Paper D section for the memory needed). It
 checks that only `propext`, `Classical.choice` and `Quot.sound` appear. It also checks that the
 declarations it reads from the source are exactly the theorems Lean finds in the library. The
