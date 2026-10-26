@@ -48,14 +48,19 @@ locally (p = 1 - (d-1)h, u = h/p, V_N, S_n, a_k, D_k).
 
 The numbers are those of the build of October 25, 2026, after the revision for the JTP referee
 report of audit 23, the second review of audit 25, the local law over the whole switching
-range of audit 28, the reducible faces and the counts near a facet of audit 30, and the review
-fixes and the trim of the journal version of audit 33 (`problem131_chains.pdf`, the arXiv version
-with every proof, has 81 pages, and the Springer version `problem131_chains_sn.pdf`, the journal
-version, 72). Statement and section numbers are the same in both.
+range of audit 28, the reducible faces and the counts near a facet of audit 30, the review
+fixes of audit 33 and the proofreading fixes and the new journal build of audit 35
+(`problem131_chains.pdf`, the arXiv version, has 82 pages, and the Springer version
+`problem131_chains_sn.pdf`, the journal version, 79). Each version has every proof of the sections
+it prints. The journal version leaves out Sections 7 and 8 and Appendices C and D, and keeps the
+numbers of the other sections and statements, so its sections are 1 to 6 and 9 and its appendices
+A, B and E.
 Theorems A, B and C in the introduction collect the headline results. Theorem A is the law on a
 face (Theorems 5.6 and 5.7, and Theorem 4.5 for the face maxima of every admissible face),
 Theorem B the support of the mode and the crossing equation (Theorems 4.2 and 5.8, and Corollary
-4.6), and Theorem C the complete graph (Section 7).
+4.6), and Theorem C the complete graph (Section 7). The journal version has Theorems A and B, and
+in place of Theorem C one paragraph in Section 1.3 that states the results of Sections 7 and 8
+and cites the arXiv version.
 
 The law on a face.
 - The killed functional (Section 3). The restriction identity J_F = J_V on the face (Proposition
@@ -99,10 +104,10 @@ reducible face where the
   has relative error O(T^-2 + x^(1/2) T^(-3/2)), which is O(1/T). At a facet profile beta where
   the entrance and exit laws agree (every beta for reversible chains, and the uniform beta for a
   non-reversible face after Proposition 6.2), the Bessel kernel has relative error
-  O(1/T + sqrt(x/T)). At a beta where the remainder r_beta of the rate has a first nonzero
+  O(1/T + sqrt(x/T)). At a beta where the remainder fraktur r_beta of the rate has a first nonzero
   coefficient, of order m >= 3, the relative Bessel form holds if and only if x = o(T^(1-2/m)), and
   for the non-reversible cycle on three states at the uniform beta m = 3 with coefficient
-  -49/(64 sqrt(omega)). Whether r_beta can vanish when the two laws differ is open. Then the exact formulas (Lemmas 6.3 and 6.4), pair faces with an
+  -49/(64 sqrt(omega)). Whether fraktur r_beta can vanish when the two laws differ is open. Then the exact formulas (Lemmas 6.3 and 6.4), pair faces with an
   explicit error (Proposition 6.5), the facet expansion of the rate (Proposition 6.6, whose part
   (v) says that J_G(beta,.) is affine exactly when the entrance and exit laws agree), prefactor
   matching for reversible chains (Proposition 6.7), and the local law of the weighted facet chain
@@ -132,7 +137,7 @@ The complete graph and near a vertex.
 Nothing in the paper is conditional. Section 9 lists the open questions (a local law up to the
 corners of a face, the reducible faces beyond T <= N^(1/3), the counts near a facet when T^2/N is
 of order one, and
-whether r_beta = 0 forces equal entrance and exit laws). The radius z_0 of Theorem 6.8 is not
+whether fraktur r_beta = 0 forces equal entrance and exit laws). The radius z_0 of Theorem 6.8 is not
 explicit. Theorems 4.2(ii) and 4.5 and Corollary 4.6 on reducible faces and Theorem 7.4(ii) on the
 complete graph stay at T <= N^(1/3), and the tie windows at T of order L. The uniqueness of the
 crossing in Corollary 4.6 and the location of the maximizers of a reducible face are open. For a
@@ -152,25 +157,22 @@ the Perron and Frobenius theorem (a hypothesis of the Lean statements) and the a
 - `problem131_chains.tex`: the article version (plain `article` class). Build it here.
 - `problem131_chains_sn.tex`: the journal version, in the Springer Nature template for JTP. The
   class and its files are in `../common/sn-jnl`, and `TEMPLATE.md` records the template source, the
-  choices made and the zip for Snapp. The switch `\arxivbuildfalse` at its top leaves out the
-  proofs listed below and puts in their place one sentence that points to the arXiv version
-  (arXiv:2610.09258v2, the bibliography entry `arxivC1`, which only this build has). Every
-  statement and every label stays. The macro `\arxivpointer` adds "of the arXiv version of this
-  paper" after a reference to a proof that only the arXiv version has.
-- Proofs only in the arXiv version (audit 33, `research_notes/Paper C audits/33_review_fixes_and_trim.md`):
-  Appendices C and D apart from their lemma statements, Lemma 7.1 and Corollary 7.3, the detail
-  of the computations in Section 9, Theorem 4.4(a) and (b), Proposition 5.2(b) for the determinant,
-  the continuum route to Theorem 5.7(b), Theorem 5.9, Corollary 5.10, Example 5.11,
-  Proposition 5.12, Proposition 6.7 and equation (18), Lemmas 6.9 and 6.10, Proposition 6.2,
-  Lemma A.1, Appendix A.7 (in the journal version Theorem 4.2(ii) follows from Theorem 4.5),
-  Lemmas B.1 and B.3, and Appendices E.3 and E.4.
-- Sections, input by both main files: `sec_intro.tex`, `sec_model.tex`, `sec_dv.tex` (the killed
-  functional), `sec_firstorder.tex`, `sec_secondorder.tex`, `sec_boundary.tex`,
-  `sec_complete.tex`, `sec_vertex.tex`, `sec_verify.tex`.
+  choices made and the zip for Snapp. The switch `\arxivbuildfalse` at its top selects the
+  journal text. Since audit 35 the journal version has every proof of the sections it prints. It
+  does not input `sec_complete.tex`, `sec_vertex.tex`, `app_complete.tex` and `app_vertex.tex`,
+  sets the section counter so that Section 9 and Appendix E keep their numbers, replaces Theorem C
+  and Figure 1 by one paragraph in Section 1.3, and cites the arXiv version (arXiv:2610.09258v2, the
+  bibliography entry `arxivC1`, which only this build has) for the two sections it leaves out.
+  Every label of `EXPORTS.md` is defined in both builds with the same number. The figures are
+  numbered from 1 in each build, so the journal figures are one lower.
+- Sections: `sec_intro.tex`, `sec_model.tex`, `sec_dv.tex` (the killed functional),
+  `sec_firstorder.tex`, `sec_secondorder.tex`, `sec_boundary.tex`, `sec_verify.tex`, input by both
+  main files, and `sec_complete.tex` and `sec_vertex.tex`, input by the article file only.
 - Appendices: `app_torus.tex` (proofs of the local law and first-order bounds),
   `app_laplace.tex` (the Laplace lemma with a parameter and its uniform and complex forms),
-  `app_complete.tex` (the complete graph), `app_vertex.tex` (near a vertex), `app_counts.tex`
-  (Appendix E, the reducible faces and the counts near a facet, added October 25, 2026).
+  `app_complete.tex` (the complete graph) and `app_vertex.tex` (near a vertex), which only the
+  article file inputs, and `app_counts.tex` (Appendix E, the reducible faces and the counts near a
+  facet, added October 25, 2026).
   Bibliography: `bib_switching.tex`.
 - `EXPORTS.md`: the statements cited by `../paperC2`, with their labels and numbers.
 - Scripts. `verify_all.py` runs the 9 checks below and writes `data/<script>_output.txt`.
@@ -335,6 +337,17 @@ journal version, at 72 pages, with the long proofs that a referee does not need 
 version (81 pages). Theorem 4.2(ii) now also follows from Theorem 4.5 in both versions. No
 statement, label or exported number changed.
 
+Then a proofreading of both builds (audit 35) found no error in a theorem and 86 points of wording,
+scope and notation, all fixed. Among them the abstract now says that the face with more states has
+the smaller exit rate, Lemma D.1 states its convexity on (0, infinity), the heuristic for p_F has
+the factor h^(k*-1), the scalar remainder of Proposition 6.2 is fraktur r_beta, the angular cutoff in
+the proof of Theorem 6.8 is epsilon_0, and Table 1 lists Lemma 3.4 of Paper B (the determinant of
+Sigma, Proposition 5.2(b)). The journal version was rebuilt. It again has every proof of the
+sections it prints, leaves out Sections 7 and 8 with Appendices C and D, and keeps the other
+numbers. Both versions have a new note before the declarations, which the author must review
+before posting. The journal abstract has 248 words. The arXiv version has 82 pages and the journal version
+79. No statement, label or exported number changed.
+
 The arXiv plan. The article version `problem131_chains.tex` goes to arXiv as version 2 of
 arXiv:2610.09258 and replaces Paper B there. The Springer version does not go to arXiv. The
 introduction says once that this paper replaces the first version, and the bibliography entry
@@ -344,6 +357,6 @@ points to it for comparison in a few other places. Paper C2 cites this paper as 
 without a version. A switch at the top of each main file, true in the article file and false in
 the Springer file, makes the journal build say "the preprint" where the arXiv build says "the
 first version", so the journal version never calls itself a preprint. The same switch makes the
-journal version leave out the proofs listed under Files and cite the arXiv version
+journal version leave out Sections 7 and 8 and Appendices C and D and cite the arXiv version
 (arXiv:2610.09258v2) for them. Item 18 of the audits records the preparation and the form for the
 submission.
