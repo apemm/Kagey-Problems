@@ -1,5 +1,8 @@
 # Occupation counts of rarely switching Markov chains (Paper C1)
 
+Archived release: tag `paperC1-arxiv-v2` (the source of arXiv:2610.09258v2, submitted October 26, 2026),
+Zenodo DOI [10.5281/zenodo.23661434](https://doi.org/10.5281/zenodo.23661434).
+
 Full title: "Occupation counts of rarely switching Markov chains: stratified local laws, support
 selection and the boundary layer". Target: Journal of Theoretical Probability. This is the forward
 theory. The identifiability half of the former Paper C is the companion paper in `../paperC2` (see
