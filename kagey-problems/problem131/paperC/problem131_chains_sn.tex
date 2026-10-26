@@ -48,14 +48,13 @@
 \raggedbottom
 
 % Build switch. The article file is the arXiv version, which replaces the first
-% version of arXiv:2610.09258. The Springer file is the journal version.
+% version of arXiv:2610.09258. The Springer file is the journal version. Both contain every
+% proof of the sections they print. The journal version leaves out Sections 7 and 8 and
+% Appendices C and D, and keeps the numbers of the other sections.
 \newif\ifarxivbuild
 \arxivbuildfalse
 \newcommand{\Bversion}{\ifarxivbuild the first version\else the preprint\fi}
 \newcommand{\BVersion}{\ifarxivbuild The first version\else The preprint\fi}
-% \arxivpointer follows a reference to a proof that only the arXiv version contains.
-% In the journal build it adds "of the arXiv version of this paper", and in the arXiv build nothing.
-\newcommand{\arxivpointer}{\ifarxivbuild\else\ of the arXiv version of this paper~\cite{arxivC1}\fi}
 \begin{document}
 
 \title[Occupation counts of rarely switching Markov chains]{Occupation counts of rarely switching Markov chains: stratified local laws, support selection and the boundary layer}
@@ -64,29 +63,26 @@
 
 \affil*[1]{\orgdiv{Department of Mathematics}, \orgname{Harvey Mudd College}, \orgaddress{\city{Claremont}, \state{CA}, \postcode{91711}, \country{USA}}}
 
-\abstract{A Markov chain on $d$ states runs for $N$ steps with transition matrix
-$I+(T/N)Q$. On each face whose states communicate within it and carry start
+\abstract{A Markov chain with exit rates $q_i$ runs for $N$ steps with transition matrix
+$I+(T/N)Q$. On each face whose states communicate and carry start
 mass, we prove a local limit theorem for the occupation counts with an
 explicit constant and relative error $O(1/T)$, uniformly for $1\le
 T\le\varepsilon N$ with $\varepsilon\max_iq_i<1$ and on compact subsets of the
-open face. Up to $O(1)$, $-\log P_N(n)$ is $|F|-1$ times $\log(N/\sqrt T)$
-plus $N$ times the Donsker and Varadhan functional of the chain $I+(T/N)Q$ at
-$n/N$. Every admissible face has an explicit power of $T$ in its largest
+open face. Up to $O(1)$, minus the log-probability of counts $n$ with support $F$ is
+$|F|-1$ times $\log(N/\sqrt T)$ plus $N$ times the Donsker and Varadhan functional of the chain
+$I+(T/N)Q$ at $n/N$. Every admissible face has an explicit power of $T$ in its largest
 probability for large $T\le N^{1/3}$, and a constant given by a
 finite-dimensional variational formula. For
 $T=\tau\log N$ the face of the mode minimizes $\tau\lambda_F+|F|-1$ at first
-order, with $\lambda_F$ the exit rate. If two admissible faces differ by
-$\Delta\ge1$ states and their exit rates by $\delta>0$, we locate every crossing
-of their largest probabilities there up to $O(1/\log N)$. For faces whose
-states communicate, the crossing is unique for $T\le\varepsilon N$, with
-coefficient $1/2$ of $\log\log N$. Near a facet, the continuous-time occupation
-density is the facet density times an explicit kernel, with relative error
-$O(1/T)$ at times $x\le cT$ off the facet, with $c$ small. The counts
-obey a lattice form with extra error $T^2/N$. The kernel is Bessel for $x=o(T)$
-at the facet profiles where the entry and exit laws of the removed state agree.
-At a profile where the rate has a first correction, of order $m\ge3$, it is
-Bessel if and only if $x=o(T^{1-2/m})$. On the complete graph with the
-uniform start, each face crosses a vertex exactly once.}
+order, with $\lambda_F$ the exit rate. If an admissible face has $\Delta\ge1$ more states than
+another and an exit rate smaller by $\delta>0$, we locate every crossing of their largest
+probabilities for large $T\le N^{1/3}$ up to $O(1/\log N)$. For irreducible faces the crossing is
+unique for $T\le\varepsilon N$, with coefficient $1/2$ of $\log\log N$. Near a facet, the
+continuous-time occupation density is the facet density times an explicit kernel, with relative
+error $O(1/T)$ at times $x\le cT$ off the facet, $c$ small. The counts obey a lattice form with
+extra error $T^2/N$. The kernel is Bessel for $x=o(T)$ at facet profiles where the removed state has
+equal entry and exit laws, and at a profile where the rate has a first correction, of order
+$m\ge3$, if and only if $x=o(T^{1-2/m})$.}
 
 \keywords{occupation times of Markov chains, mode, local limit theorem, principal Dirichlet eigenvalue, Donsker and Varadhan functional, Bessel kernel}
 
@@ -104,10 +100,9 @@ uniform start, each face crosses a vertex exactly once.}
 \input{sec_secondorder.tex}
 \input{sec_boundary.tex}
 
-%% ---------- the complete graph and the near-vertex layer ----------
-\input{sec_complete.tex}
-\input{sec_vertex.tex}
-
+%% Sections 7 and 8 (the complete graph and the near-vertex layer) are only in the arXiv
+%% version. The counter keeps the number of Section 9 equal in both versions.
+\setcounter{section}{8}
 \input{sec_verify.tex}
 
 \backmatter
@@ -117,6 +112,17 @@ The question grew out of Problem~131 of Peter Kagey's Open Problem
 Collection~\cite{kagey131}, and I thank him for posing it. I thank Chase
 Hameetman and Aidan Deshong for conversations about some of the proofs of
 \Bversion~\cite{paperB}.
+
+% AUTHOR: review this note before posting
+\section*{A note on the use of AI}
+I wrote the original paper, the preprint~\cite{paperB}, and its mathematics. In the revision of
+October 2026 I used Claude Opus 5.5 (Anthropic) for revision, and for developing and checking the
+proofs of the results added in that revision, namely the local law over the whole switching range,
+the counts near a facet, the face maxima of reducible faces, the uniqueness of the crossing and the
+exact range of the Bessel form. I also used it for literature search, and it generated the
+verification code and the Lean files, which I reviewed. Section~\ref{sec:verify} separates the
+formal proofs from the numerical checks. I take responsibility for all claims, proofs and
+computations.
 
 \section*{Statements and Declarations}
 
@@ -137,6 +143,7 @@ subfolder \nolinkurl{paperC} and the Lean files in \nolinkurl{lean}.
 Section~\ref{sec:verify} says how to run them. The scripts need Python~3 with
 \texttt{numpy}, \texttt{scipy}, \texttt{sympy} and \texttt{mpmath}, and the
 option \texttt{-{}-full} adds the largest cases of four of them.
+\item \textbf{Use of AI tools.} See the note on the use of AI just before these declarations.
 \item \textbf{Author contribution.} I am the sole author and am responsible for the whole paper.
 \end{itemize}
 
@@ -144,8 +151,8 @@ option \texttt{-{}-full} adds the largest cases of four of them.
 \makeatletter\@addtoreset{equation}{section}\makeatother
 \input{app_torus.tex}
 \input{app_laplace.tex}
-\input{app_complete.tex}
-\input{app_vertex.tex}
+%% Appendices C and D are only in the arXiv version, so the next appendix is E in both.
+\setcounter{section}{4}
 \input{app_counts.tex}
 \end{appendices}
 

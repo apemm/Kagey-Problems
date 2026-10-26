@@ -73,3 +73,31 @@ weaker in the crossing expansion.
   version of the present preprint". That reads oddly in a journal. One option is a switch in the
   bibliography entry for the Springer build.
 - The cross-list to cond-mat.stat-mech is optional.
+
+## Update of October 25, 2026 (audit 33)
+
+- The abstract changed with the review fixes. `18_abstract_C1.txt` and the form hold the new text
+  (1663 characters, under the limit of 1920). The article build still has 81 pages, so the comments
+  line stands.
+- The bundle also needs `app_counts.tex` (Appendix E, added in audit 30), which the list above
+  predates. The source is `problem131_chains.tex` with `\arxivbuildtrue`, which keeps every proof.
+- The question of the bibliography entry `paperB` in the Springer build is settled. The entry reads
+  "the first version of the present preprint" only in the arXiv build.
+- The Springer build is now the journal version, at 72 pages. It leaves out the long proofs that a
+  referee does not need, cites this entry as arXiv:2610.09258v2 for them (bibliography entry
+  `arxivC1`, journal build only), and says so in one sentence at each place. So v2 must contain
+  every proof, which it does. Audit 33 lists the moved proofs.
+
+## Update of October 25, 2026 (audit 35)
+
+- The proofreading fixes changed the abstract. `18_abstract_C1.txt` and the form hold the new text
+  (1701 characters, under the limit of 1920). The crossing sentence now says that the face with
+  more states has the smaller exit rate. The article build has 82 pages, so the comments line now
+  says 82 pages.
+- The journal version is restructured. It again has every proof of the sections it prints, so it
+  no longer cites v2 for single proofs. It leaves out Sections 7 and 8 and Appendices C and D,
+  keeps the numbers of the other sections (so its sections run 1 to 6 and 9, and its appendices
+  A, B and E), states the main results of the two sections in one paragraph in Section 1.3, and
+  cites v2 (`arxivC1`) for them. It has 79 pages.
+- Both builds have a new note before the declarations. The author must review it before posting.
+- The bundle list above is unchanged, with `app_counts.tex` as noted in the audit 33 update.

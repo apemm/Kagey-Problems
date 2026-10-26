@@ -1,5 +1,19 @@
 # Statements of Paper C1 cited by the companion paper (paperC2)
 
+Change of October 25, 2026, proofreading fixes and the new journal build (audit 35): no statement,
+label or exported number changed. The journal build (`problem131_chains_sn.tex`) again has every
+proof of the sections it prints, so the proofs of Proposition 5.12, Theorem 4.2(ii) by explicit
+paths (Appendix A.7), Lemma A.1, Lemma B.1 and Lemma B.3 are back in it, and the notes of audit 33
+below on proofs only in the arXiv version no longer apply. The journal build leaves out Sections 7
+and 8 and Appendices C and D, which no exported statement uses, and sets the section counter so that
+Section 9 and Appendix E keep their numbers. Every label below that C1 defines is defined in both
+builds with the same number (appendix equations are numbered A1, A2 and so on in the Springer
+class, as before). This was checked against the `.aux` of both builds and of the previous build.
+paperC2 cites only statements of Sections 2 to 5, so all its citations land as before. In
+Proposition 6.2 (`prop:layer-cubic`) the scalar remainder of the rate is now written with a fraktur
+r, to separate it from the tilt vector r_beta. The corollary constant of Corollary 4.6 is now
+b_FG, as in Theorem 5.8.
+
 Change of October 25, 2026, review fixes and the journal trim (audit 33): no statement, label or
 exported number changed. The Springer build (`problem131_chains_sn.tex`) is now the journal
 version, and it leaves out some proofs, which only the arXiv version (`problem131_chains.tex`,
@@ -215,7 +229,7 @@ Not cited by paperC2 at present, listed so that a citation can be added without 
 | `cor:reducible-crossing` | Corollary 4.6 | Crossings of two admissible faces in [T_1, N^(1/3)], with the coefficient (p_F - p_G)/Delta of log log N (added October 25, 2026, audit 30). |
 | `thm:pair-counts` | Theorem 6.11 | The counts on a pair face: the discrete Pedler formula, exactly, and two-sided bounds against the Laguerre kernel at every T (added October 25, 2026, audit 30). |
 | `thm:layer-counts` | Theorem 6.12 | The counts near a facet, P_N(n) = P_N'(n-hat) K^h_beta(n_i, S)(1 + O(T^-2 + x^(1/2) T^(-3/2) + T^2/N)) for T_0 <= T <= epsilon_1 N^(1/2), and the Bessel forms with the extra error T^2/N (added October 25, 2026, audit 30). |
-| `prop:layer-cubic` | Proposition 6.2 (was 6.10) | The range of the Bessel form. log f_F/(f_G B_beta) = -S r_beta(sqrt(x/S)) + O(1/T + sqrt(x/T)), with r_beta = varkappa_beta eps^3 + O(eps^4), r_beta = 0 when the entrance and exit laws agree, the relative Bessel form exactly for x = o(T^(1-2/m)) with m the order of r_beta, and varkappa_beta = -49/(64 sqrt(omega_beta)) for the non-reversible cycle on three states (added October 25, 2026, generalized the same day). |
+| `prop:layer-cubic` | Proposition 6.2 (was 6.10) | The range of the Bessel form. log f_F/(f_G B_beta) = -S fr_beta(sqrt(x/S)) + O(1/T + sqrt(x/T)), with the scalar remainder fr_beta (fraktur r since audit 35) = varkappa_beta eps^3 + O(eps^4), fr_beta = 0 when the entrance and exit laws agree, the relative Bessel form exactly for x = o(T^(1-2/m)) with m the order of fr_beta, and varkappa_beta = -49/(64 sqrt(omega_beta)) for the non-reversible cycle on three states (added October 25, 2026, generalized the same day). |
 | `lem:derivative` | Lemma A.5 | The derivative of log P_N(n) in T is -J_F(n/N) + O(1/T) on compacts of a face with (H) (added October 25, 2026, second review). |
 | `tab:overlap` | Table 1 | The results of Paper B reproved in C1 (added October 25, 2026, second review). |
 | `cor:mode-changes` | Corollary 5.10 | Every change of the mode for T in [aL, bL] up to O(1/L), when no third point of the hull lies on an edge (added October 25, 2026). |
