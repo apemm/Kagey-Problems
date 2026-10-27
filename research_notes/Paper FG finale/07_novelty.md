@@ -1,0 +1,315 @@
+# 07. Novelty audit for the merged paper (F plus G)
+
+Date: 2026-10-26. This note checks seven claims of the planned merged paper against the
+literature. It builds on `05_literature.md` (same day) and does not repeat what is there unless
+the verdict depends on it.
+
+## Reading status key
+
+- FULL: arXiv full text read for the parts named (statements, the relevant section, the
+  introduction). Proofs were read only where noted.
+- PART: abstract plus the sections named.
+- ABSTRACT: abstract, journal record or search snippet only, or known only from how another paper
+  quotes it.
+- NOT OPENED: title or citation only.
+
+## Search scope (all claims)
+
+- alphaXiv full-text index: semantic searches on "local limit theorem occupation time arcsine",
+  "Lamperti distribution asymmetry shape U W", "occupation time unequal indices", "aging
+  occupation time".
+- Web search (standard and extended): queries on the Lamperti density with an asymmetry parameter
+  and its modes; "0.7365" / "alpha = sin(pi alpha)"; Mitov-Yanev 2001; local limit theorems for
+  persistent random walks, Levy walks and alternating renewal processes; mode counts of
+  occupation-time laws; heavy-tailed switchback and regenerative designs.
+- Papers read for this note (FULL or PART): Baldassarri-Bouchaud-Dornic-Godreche
+  cond-mat/9805212; Godreche-Luck cond-mat/0010428 (Sections 1, 7, 10); Bel-Barkai
+  cond-mat/0506338; Rebenshtok-Barkai 0803.2354; James 0708.0618 (Sections 1, 2.2, 5);
+  Sibisi-Sibisi 2609.22952; Wang-Schulz-Deng-Barkai 1809.05856 (Sections V, VII); Cenac-Le
+  Ny-de Loynes-Offret 1612.00238 (Sections 2-4, 6); Yamato 2605.23659 (Sections 1, 5, 6);
+  Sera 2403.02658 (Sections 1, 3); Melbourne-Pene-Terhesiu 2610.15720 (Sections 1, 2, 6);
+  Wang-Chen-Deng 1906.03023; Plaud-Benichou 2510.25859 (main text, SM Sections III-IV).
+- Not reachable: Mitov-Yanev 2001 full text (JSTOR; the encyclopedia PDF by Mitov returned 502),
+  Lamperti 1958 full text, Darling-Kac 1957, Kasahara's occupation-time papers, Sera 2020,
+  Denisov-Shneer 2010. Verdicts that lean on these say so.
+
+The search is bounded. "Not found" means not found in this scope, not that it does not exist.
+
+---
+
+## Claim 1. Local limit theorems for A_N in each regime
+
+### 1a. Finite means (stable local law, F Thm bulk). Verdict: PARTLY KNOWN.
+
+- Doney, A bivariate local limit theorem, J. Multivariate Anal. 36 (1991) 95-102 (ABSTRACT;
+  already in F). With the fresh-plus identity it gives the local law at one point at the stable
+  scale.
+- Berger, PTRF 175 (2019), Thm 3.3 (ABSTRACT; in F). F's own introduction says this gives the
+  window |k - pN| <= K B_N.
+- Melbourne, Pene, Terhesiu, arXiv 2610.15720 (PART). Theorem 6.1 is a mixing local limit
+  theorem for Z-valued observables on Young towers, at a fixed point q of the stable scale, under
+  the invariant measure, with test sets A, B in the tower. Theorem 1.2 is the example with an
+  observable taking different values near two neutral fixed points of equal exponent, which is
+  the dynamical version of an occupation count. Their nondegeneracy condition (Definition 3.2,
+  the spanning condition on (v(x_i), 1)) needs both heavy components at the same index. So
+  unequal indices are outside their theorem.
+- What is not in these sources: uniformity over all k, the fresh and general starts, unequal
+  scales (B_N = max of the two scales), and the big-jump zone. F's introduction already states
+  this division correctly.
+- Credit and claim: cite Doney 1991, Berger 2019 and MPT 2026 for the local law at the stable
+  scale, and claim the uniform-in-k statement, the initial runs and unequal scales.
+
+### 1b. Balanced infinite means (local Lamperti law, and its equivalence with SRT, G Thm 1). Verdict: NOT FOUND.
+
+- Global law: Lamperti 1958 (ABSTRACT; classical). Integrated moderate deviations near the
+  endpoint: Sera, arXiv 2403.02658 (FULL statements), Thm 3.13 and Remark 3.14,
+  mu(S^{A_1}_n / n <= c(n)) ~ (beta_2/beta_1)(sin pi alpha/(pi alpha)) c(n)^alpha for c(n) -> 0
+  and n c(n) -> infinity, for infinite ergodic transformations with one index. This is a
+  cumulative statement near the end of the Lamperti law, not a point probability.
+- Conditional ("tied-down") distributional laws: Aaronson-Sera arXiv 2308.09406 and Sera-Yano
+  TAMS 2019 (ABSTRACT). These condition on a return at time n and stay distributional.
+- No source found states N P(A_N = k) -> L(k/N), or ties a local occupation law to the strong
+  renewal theorem. The SRT criterion itself is Caravenna-Doney (EJP 2019), as G says.
+- Credit and claim: cite Lamperti for the density, Caravenna-Doney for the SRT criterion, and Sera
+  2024 as the closest integrated endpoint estimate. The local law and the equivalence can be
+  claimed as new within this search.
+
+### 1c. Dominated regime (01_phase_diagram.md, Theorem D(b)-(d)). Verdict: NOT FOUND (local part).
+
+- The global part (a) is known. See Claim 2.
+- No local statement found: neither D_N P_N(N - j) -> rho(j/D_N), nor the condition (SRT_-) plus
+  (W_+), nor the end-layer matching. Cenac et al. (1612.00238, Section 4.3) and Yamato
+  (2605.23659, Thm 5.8) are distributional. Wang-Chen-Deng (1906.03023, FULL) treat a two-state
+  process with alpha_+ != alpha_- but give only mean squared displacements and the long-time state
+  fractions.
+- Credit and claim: claim (b)-(d) as new. State (a) as known with the sources of Claim 2.
+
+---
+
+## Claim 2. The global limit in the dominated regime. Verdict: KNOWN (in distribution), with one routine gap.
+
+Sources, in order of strength:
+
+1. **Yamato, State-dependent inverse-subordinator time changes of regenerative processes,
+   arXiv 2605.23659 (May 2026), FULL Sections 1, 5, 6.** Theorem 5.8 is a multiscale joint
+   limit for the occupation times of excursion classes. The dominant classes (heaviest index
+   alpha) give generalized arcsine laws. A sub-dominant class with index alpha~_i in [alpha, 1)
+   gives O^{(i)}(lambda t)/g_i(h(lambda)) -> xi~^{(i)}(S^{-1}(t)): a stable subordinator of the
+   lighter index evaluated at the inverse of the dominant subordinator. Remark 5.12(ii) gives the
+   marginal E exp(-q Phi(t)) = E_alpha(-beta~ q^{alpha~} t^alpha). Remark 5.10 treats the endpoint
+   alpha~ = 1 (relatively stable, for instance finite mean), where the limit is
+   beta~ S^{-1}(t), a dilated Mittag-Leffler variable, which he calls the Darling-Kac case. In
+   01's notation these are exactly Y = S_-(E) (alpha_- < 1) and mu_- E (mu_- finite).
+2. **Cenac, Le Ny, de Loynes, Offret, Persistent random walks II, J. Theoret. Probab. 32 (2019)
+   633-658, arXiv 1612.00238, FULL Section 4.3.** This is the lattice walk S_n = 2A_n - n itself.
+   For the "extremal mean drift" case (one side dominates) they write that the limit "seems to be"
+   (u^{1 - alpha/gamma}/Xi(u))(S_{[ut]}/u - t) => T^d_gamma(N^u_alpha(t)) when the lighter time is
+   in D(gamma) with gamma <= alpha < 1, and
+   (u^{1-alpha}/Xi(u))(S_{ut}/u - t) => N^u_alpha(t) (a Mittag-Leffler local time) when it is
+   relatively stable. They add that the next term for gamma in [1, 2] is "heuristically"
+   S^d_gamma(N_alpha(t))/u^{alpha/gamma}. This is stated without proof. F already cites this
+   paper, but for other results.
+3. **Darling-Kac (TAMS 84, 1957), NOT OPENED.** This is the classical Mittag-Leffler limit for the
+   time spent in a set of finite measure. The mixed case alpha_+ < 1 < alpha_- is an instance once
+   the minus runs are read as that set. Sera 2403.02658, Remark 3.10, quotes the general form.
+4. **Lamperti 1958 (ABSTRACT).** His theorem covers every b in [0, infinity] for the fraction
+   A_N/N. For b in {0, infinity} the limit is degenerate, so he does not give the scaled limit of
+   N - A_N. G and 01 say the same.
+5. **Mitov-Yanev, Adv. Appl. Probab. 33 (2001) 896-911 (ABSTRACT).** Limit theorems for the
+   occupation-time process of alternating renewal processes with infinite-mean cycles; extends
+   Dynkin, Lamperti and Erickson; "some new phenomena". I could not read it. It may well contain
+   the scaled lighter-side limit for unequal indices. **Read it before the merged paper goes
+   out.**
+6. **Rebenshtok-Barkai, 0803.2354 (FULL Section V.B).** For unequal indices they state that in the
+   long-time limit the system occupies only the states with the smallest alpha. That is the
+   degenerate first-order statement, at physics level.
+
+The gap: Yamato's excursion classes are chosen by a Poisson marking, not by strict alternation,
+and his time is continuous. The alternating lattice model is not literally a special case. The
+same proof gives it, because the counts of plus and minus runs differ by at most one, so this is
+routine. Cenac et al. treat the right model but give no proof.
+
+Credit and claim: state Theorem D(a) as known. Cite Yamato 2026 (Thm 5.8, Rem. 5.10, 5.12),
+Darling-Kac for the mixed case, Cenac et al. 2019 Section 4.3 for the lattice walk (stated there
+without proof), and Mitov-Yanev 2001 after reading it. Claim only the local statements and the
+explicit density rho (for equal indices with b = 0, the ratio density of S/S', which is classical:
+Lamperti 1958, Zolotarev, Chaumont-Yor 4.23.3, James 2010 eq. (1.1)).
+
+---
+
+## Claim 3. Big-jump local asymptotics and the boundary layer (F Thm B kernel). Verdict: PARTLY KNOWN.
+
+- **Wang-Schulz-Deng-Barkai, PRE 98 (2018) 042139, arXiv 1809.05856, FULL Section VII.**
+  - VII.B, eq. (83), for 1 < alpha < 2, one interval law for both states and a fair start: the
+    non-normalized density of epsilon = T_+ - t/2 is
+    (alpha b_alpha/(t^alpha |Gamma(1-alpha)|)) chi(2|epsilon|/t) with
+    chi(z) = z^{-1-alpha}(1 - (alpha-1)z/alpha) on (0, 1]. It depends only on alpha and b_alpha.
+    This is the continuum, symmetric shape of F's interior kernel.
+  - VII.A, eqs. (74)-(77), for alpha < 1: near the endpoint,
+    f_{T+}(t, T+) ~ p_0(t) L^{-1}[-1/2 + 1/(1 - phi^(u))]. That is the survival probability times
+    (an atom plus the renewal density) in continuous time. It is the formal analogue of G's end
+    layer T(N) u(j).
+  - Simulations only. No error terms, no lattice statement, no unequal laws, and the authors leave
+    "the connection with the big jump principle" and "the effect of initial preparation on the rare
+    fluctuations" to future work (Section VIII).
+- **Rebenshtok-Denisov-Hanggi-Barkai 2014; Schulz-Barkai 2015; Vezzani-Barkai-Burioni 2019,
+  2020** (in F; not re-read here). F's introduction already credits the Levy-walk infinite density
+  |v|^{-1-alpha}[alpha - (alpha-1)|v|], the matching to the stable bulk, and the big-jump
+  derivation.
+- **Godreche-Luck 2001 (FULL Sections 7, 10).** For alpha < 1, eq. (7.11): a scaling form near
+  M = 1 with a non-universal scaling function h(z). For 1 < alpha < 2: the stable typical law and
+  bifractal moments (7.13). No kernel.
+- Rigorous inputs (in F): Denisov-Dieker-Shneer 2008, Berger 2019 PTRF Thm 2.4, Berger-Birkner-Yuan
+  2024. These are local big-jump laws for sums with a fixed number of terms, not for the count at a
+  fixed time.
+- Not found: the lattice two-term kernel gamma(N-k) f_+(L_k) + T_+(L_k) u_-(N-k) with uniform
+  errors up to the endpoint, the run in progress at N as a separate term, the boundary-layer
+  constants kappa(j), unequal laws, and the dominated-regime kernel of 01 Claim K.
+- Credit and claim: say that the continuum shape of the interior kernel is known formally (WSDB
+  eq. (83), RDHB 2014), and so is the endpoint structure for alpha < 1 (WSDB eqs. (74)-(77)).
+  Claim the lattice theorem: uniform errors, the boundary layer, both laws, and the initial run.
+
+---
+
+## Claim 4. The bulk shape with unequal weights (06_shape.md, Theorem C). Verdict: PARTLY KNOWN (b = 1 threshold known; b != 1 not found).
+
+What is known:
+
+- **Baldassarri, Bouchaud, Dornic, Godreche, PRE 59 (1999) R20, arXiv cond-mat/9805212 (FULL;
+  4 pages).** Same law for both states and Levy-stable intervals. Eq. (8) is the magnetization
+  density. The text says: "For theta < theta_c = 0.5946..., where theta_c is the solution of
+  theta_c = cos(pi theta_c/2), x = 0 corresponds to a minimum of f(x), while for larger theta, it
+  corresponds to a local maximum." They mention unequal scale factors for the two states ("the
+  distribution f(x) becomes asymmetrical") but study only the persistence exponents there, not the
+  shape.
+- **Godreche-Luck, JSP 104 (2001) 489, Section 7 (FULL).** Expansion of f_M near x = 0 with the
+  coefficient (cos^2(pi alpha/2) - alpha^2)/cos^2(pi alpha/2). "x = 0 is a minimum ... for
+  alpha < alpha_c, while it is a maximum for alpha > alpha_c, with alpha_c = cos(pi alpha_c/2),
+  yielding alpha_c = 0.594611 [24]." Section 10: "a U-shaped curve for alpha < alpha_c ..., while
+  its maximum is at zero, for alpha > alpha_c." This is symmetric (one law, averaged initial sign).
+- **Rebenshtok-Barkai, J. Stat. Phys. (2008), arXiv 0803.2354 (FULL).** Eq. (23) is the Lamperti
+  density with asymmetry R. Section IV.C gives alpha_c = 0.59461 for the symmetric two-state limit
+  (their eq. (45)). They do not analyze the shape in R.
+- **Bel-Barkai, PRE 73 (2006) 016125, arXiv cond-mat/0506338 (FULL).** Eq. (6) is the Lamperti
+  density with R_x = P_x/(1 - P_x). Figures 2-4: U shape at alpha = 0.3 and 0.5, and a distorted
+  W shape at alpha = 0.8 with R != 1 (simulation plus formula). The abstract says the occupation
+  time "approaches U or W shaped distributions". No threshold in R.
+- **Margolin-Barkai 2006 and Zaburdaev-Denisov-Klafter 2015** (in G): the symmetric value only.
+- **James, Lamperti-type laws, AAP 20 (2010), arXiv 0708.0618 (PART).** Densities, cdf (2.12),
+  mixture representations, the skewed-Bessel occupation law (Prop. 5.1). No discussion of modes.
+- **Sibisi-Sibisi arXiv 2609.22952 (FULL; 12 pages).** Representation-free densities of stable
+  ratios, the Lamperti density for general z. Nothing on modes.
+- **Lamperti 1958: NOT OPENED.** I could not check whether he discusses the shape. James and
+  Sibisi-Sibisi describe his paper as deriving the density by Stieltjes inversion, and neither
+  mentions a shape analysis.
+
+What was not found:
+
+- the count "exactly 1 or 3 critical points" for b != 1;
+- the window |log b| < beta_c(alpha) with beta_c in closed form;
+- the second constant alpha_1 = 0.7365 (alpha = sin pi alpha), beyond which every b gives W;
+- the degenerate cases;
+- the mode criterion alpha > sin(pi alpha) for the ratio density K_alpha of S/S'.
+
+**Correction for G (important).** G's introduction says "We give the threshold in closed form",
+and G Section shape says the arXiv version of Margolin-Barkai has the value but no derivation.
+The closed-form equation alpha_c = cos(pi alpha_c/2) and the local-curvature argument at x = 1/2
+are in Baldassarri et al. 1998/1999 and in Godreche-Luck 2001 eq. (7.6) ff. G already cites
+Godreche-Luck, but not for this. What G adds for b = 1 is the proof that there are exactly 1 or 3
+critical points: those papers check only the sign of the curvature at 1/2. The merged paper must
+credit Baldassarri et al. and Godreche-Luck for alpha_c and its equation, and claim only the exact
+count.
+
+Bel-Barkai's alpha = 0.8, R != 1 W shape agrees with Theorem C (0.8 > alpha_1, so W for every b).
+That is worth a sentence.
+
+Credit and claim: the threshold alpha_c, its defining equation and the U/W change at b = 1 are
+due to Baldassarri-Bouchaud-Dornic-Godreche (1998/99) and Godreche-Luck (2001). The asymmetric W
+shape was seen numerically by Bel-Barkai (2006). The merged paper can claim the exact critical-point
+count for all (alpha, b), beta_c(alpha) in closed form, alpha_1, and the degenerate cases.
+
+---
+
+## Claim 5. Exact mode counts of the law of A_N. Verdict: NOT FOUND.
+
+- No source found counts the local maxima of P(A_N = k) at finite N, or relates them to end
+  profiles. Searches on mode counts of occupation-time and Levy-walk laws returned only the
+  continuum U/W discussion (Claim 4) and the physics golden-ratio exponent that F already credits
+  (Wang-Li-Hanggi 2016; Cipriani-Denisov-Politi 2005; Lee-Dadswell-Nickel-Gray 2005).
+- Ingredients that are known: the bell shape of stable densities (Kwasnicki 2020, in F) and the
+  U/W threshold of the limit density at b = 1 (Claim 4).
+- Credit and claim: claim the eventual counts in both regimes, crediting Kwasnicki and the U/W
+  literature for the limit shapes. The every-N statements stay conjectures.
+
+---
+
+## Claim 6. Heavy-tailed regenerative switchback designs and exposure laws (04_exposure_queues.md). Verdict: NOT FOUND (design side); the cycle asymptotic is KNOWN.
+
+- Design papers already read in 04 (arXiv full text): Bojinov-Simchi-Levi-Zhao; Hu-Wager;
+  Glynn-Johari-Rasouli; Li-Johari-Kuang-Wager (regenerative switchbacks in a bounded queue,
+  App. A.3.1, light-tailed cycles); Jia-Kallus-Yu; Hu 2609.13698 (random-duration runs of finite
+  mean). The extra web search on heavy tails, busy periods and exposure imbalance found practitioner
+  notes and an arXiv appendix (2602.23257, ABSTRACT) that mentions heavy-tailed disturbances in
+  randomization inference, but nothing on infinite-variance cycles or exposure counts.
+- Known: (LR) for the cycle. Kortchemski AIHP 2015 eq. (14) and Janson Probab. Surveys 2012
+  Remark 18.34, read as Galton-Watson total progeny (as recorded in 04). Denisov-Shneer, Queueing
+  Syst. 2010 (NOT OPENED) may hold the continuous-time local busy-period result.
+- Credit and claim: credit Kortchemski and Janson (and Denisov-Shneer, after reading it) for the
+  cycle law. Claim the exposure corollaries (scale N^{1/alpha}, the severe-imbalance asymptotic,
+  the start factor, the golden-ratio rule) as applications of F, and say plainly that the design
+  literature found assumes light-tailed cycles.
+
+---
+
+## Claim 7. Local aging laws (02_aging.md). Verdict: global KNOWN (physics-level proof); local NOT FOUND.
+
+- **Akimoto-Sera-Yamato-Yano, PRE 102 (2020) 032103, arXiv 2004.00808** (FULL in 02). Thm 2 is
+  the aged generalized arcsine law for two-state renewal processes with 0 < alpha < 1. The
+  supplement proof is a scaling argument; convergence to the scaling limit is asserted. The aged
+  density is 02's L_theta, and the atoms are q^{+-}(r).
+- **Akimoto, PRE 108 (2023) 054113, arXiv 2306.00359** (PART, in 02 and F). Triple Laplace
+  transform of the aged occupation time and moments. For 1 < alpha < 2 only the equilibrium start.
+- **Plaud-Benichou, arXiv 2510.25859 (FULL main text).** Aged occupation law for discrete-time
+  jump processes (not renewal), with edge Dirac masses. They credit the renewal case to
+  Godreche-Luck (two-time correlator) and Akimoto et al. (aged law). Distributional.
+- **Wang-Chen-Deng, arXiv 1906.03023 (FULL).** Aging two-state process with alpha_+, alpha_- in
+  (0,2): mean squared displacements only.
+- **Barkai-Cheng, J. Chem. Phys. 118 (2003) 6167; Schulz-Barkai-Metzler PRX 2014;
+  Godreche-Luck 2001 Section 8** (NOT OPENED beyond Godreche-Luck Section 10): aging of the
+  number of renewals and of correlations. Distributional.
+- **Wang-Vezzani-Burioni-Barkai 2019** (in F): ordinary versus equilibrated start for 1 < alpha < 2.
+- Not found: the local aged law N P_N(xN) -> L_theta(x), the lattice atoms and end layers with the
+  constant c_+(theta), the closing of G's aging conjecture, and aging at theta N for 1 < alpha < 2
+  (the aged atom of order N T(N), the extra kernel terms).
+- Credit and claim: cite ASYY 2020 Thm 2 for the global aged law (calling its proof physics-level is
+  accurate; say "the convergence to the scaling limit is asserted there") and Akimoto 2023. Claim the
+  local law, the ends, the finite-mean aging terms, and the proof of the global law under (RV) as a
+  by-product (02, Remark 2 of Section 4.4).
+
+---
+
+## Summary table
+
+| # | Claim | Verdict | Key sources |
+|---|---|---|---|
+| 1a | Local law, finite means | PARTLY KNOWN | Doney 1991; Berger 2019; Melbourne-Pene-Terhesiu 2026 (one point, stationary, equal index) |
+| 1b | Local Lamperti law, equivalence with SRT | NOT FOUND | Sera 2024 (integrated endpoint), Caravenna-Doney 2019 (SRT criterion) |
+| 1c | Local law, dominated regime | NOT FOUND | (global part: Claim 2) |
+| 2 | Global limit, dominated regime | KNOWN in distribution | Yamato 2026 Thm 5.8; Darling-Kac 1957; Cenac et al. 2019 Sec. 4.3 (no proof); Mitov-Yanev 2001 (unread) |
+| 3 | Big-jump kernel and boundary layer | PARTLY KNOWN (formal, continuum, symmetric) | WSDB 2018 eqs. (74)-(77), (83); RDHB 2014; VBB 2019 |
+| 4 | Shape of L_{alpha,b} | PARTLY KNOWN: b = 1 threshold known; b != 1 not found | BBDG 1998/99; Godreche-Luck 2001 Sec. 7; Bel-Barkai 2006 (numerical W at alpha = 0.8) |
+| 5 | Exact mode counts | NOT FOUND | Kwasnicki 2020 (bell shape) as input |
+| 6 | Heavy-tailed switchbacks | NOT FOUND (design); cycle (LR) KNOWN | Kortchemski 2015; Janson 2012 |
+| 7 | Local aging | global KNOWN (physics-level proof), local NOT FOUND | ASYY 2020 Thm 2; Akimoto 2023 |
+
+## Actions for the merged paper
+
+1. Rewrite G's claim "we give the threshold in closed form". Credit Baldassarri et al. (PRE 59,
+   R20, 1999) and Godreche-Luck (2001, eq. (7.6) ff.) for alpha_c = cos(pi alpha_c/2), and claim
+   only the exact count.
+2. State Theorem D(a) as known (Yamato 2026; Darling-Kac; Cenac et al. Section 4.3).
+3. Read Mitov-Yanev 2001 (Adv. Appl. Probab. 33, 896-911) before submission. It is the most likely
+   place for an alternating-renewal version of D(a).
+4. Read Lamperti 1958 for any remark on the shape of the density.
+5. Read Denisov-Shneer 2010 before writing anything about M/G/1 busy periods.
+6. Add Bel-Barkai 2006 as the numerical precedent for the asymmetric W shape.
