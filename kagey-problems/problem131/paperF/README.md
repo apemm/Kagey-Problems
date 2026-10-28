@@ -37,7 +37,8 @@ by their TeX labels, which do not change when statements move.
   inputs are in Appendix A (`sec_appendix.tex`).
 - Theorem B (`thm:bigjump`, Section 4). The boundary layer `P_N(N-j)/T_+(N) -> kappa(j)` under (RV),
   and under (LR) for the plus sign the big-jump kernel `G_N` of `eq:G` on
-  `pN + K lambda_N B_N <= k <= N` in the double limit, with a uniform boundary layer. The infinite
+  `pN + K lambda_N B_N <= k <= N` in the double limit. The uniform boundary layer is now a
+  remark after the theorem (`rem:uniform-layer`), read off the additive form of (b). The infinite
   density (`cor:infinite-density`), the need for the double limit (`rem:no-single-formula`) and for
   (LR) (`ex:rv-not-lr`).
 - Theorem 4.13 (`thm:window`, Section 4.5). When `b_{+,N} <= b_{-,N}`, the start of the big-jump zone
@@ -85,15 +86,15 @@ by their TeX labels, which do not change when statements move.
   regenerations, and the reduction to A_N. Proposition 7.1 (`prop:cycle`): the cycle law satisfies (LR)
   and (SPAN) when the service does (known: Kortchemski 2015, Janson 2012, Denisov and Shneer 2010 for
   the M/G/1 busy period), and (LD) and (LD2) when the service satisfies (LD2), with
-  `f_C(n+1) - f_C(n) = -(alpha+1+o(1)) f_C(n)/n`; (EQ) across arms. The second-difference bounds at
-  deviations of order m (`lem:cycle-second`) extend `lem:second-bigjump`. The exposure corollaries:
+  `f_C(n+1) - f_C(n) = -(alpha+1+o(1)) f_C(n)/n`; (EQ) across arms. The second-difference bounds of
+  `lem:second-bigjump` (Appendix B), stated for deviations of order m, give (LD2). The exposure corollaries:
   the imbalance at the scale `N^(1/alpha)` (`cor:exposure-bulk`, with the endpoint exception for a
   random-time start when alpha < phi), severe imbalance and no switch (`cor:exposure-tail`), the most
   likely exposure and the 3 modes (`cor:exposure-mode`, the last conditional on strict log-convexity
   of the cycle law, checked numerically only).
 - Section 8 (`sec:open`). Open problems. Section 9 (`sec:verify`). The computations.
-- Appendix B (`app:modes`). The proofs for Theorem G, including `lem:second-bigjump`, whose extension
-  Section 7 uses.
+- Appendix B (`app:modes`). The proofs for Theorem G, including `lem:second-bigjump`, the one second-difference
+  lemma, from which `lem:plus-second`(i) to (iii) and the (LD2) bound of Section 7 follow.
 - The exact identities of Section 2 (`prop:fresh-identity`, `prop:first-run`, `lem:green`,
   `prop:final-run` with its explicit form `eq:final-explicit`, `lem:counting`) hold for every `N`
   with no hypothesis. The facts on regular variation are collected in `lem:rv`.
