@@ -185,7 +185,7 @@ iff both period laws satisfy the strong renewal theorem. Near the ends the law i
 period times a renewal mass function, and the global mode sits at bounded distance from an end for
 every index. The paper gives the exact effect of an arbitrary initial period, proves that an initial
 period of length of order N turns the law into an explicit mixture, and so obtains the local aging
-law of the process observed from time theta N on, with atoms of order 1 and end layers of reduced
+law of the process observed from time theta N on, with atoms of order 1 and end layers of explicit
 height. When one tail is heavier it gives the local law of the time on the lighter side at an
 intermediate scale, with the exact renewal conditions. It classifies the critical points of
 Lamperti's density for every index and tail ratio, with a closed-form window for the W shape, counts
