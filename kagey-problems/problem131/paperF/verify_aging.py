@@ -15,8 +15,8 @@ Printed quantities, for theta = t_a/N in {0.5, 1, 2} and N in {500, 1000, 2000}:
   (a) the largest relative difference between the aged and the fresh law on |k - N/2| <= B_N;
   (b) the atom P_N(N) against (1/s) sum_{i=N}^{N+t_a} T(i) and against the limit
       N T(N)(1 - (1+theta)^(1-alpha))/(s(alpha-1));
-  (c) the layer P_N(N-j)/T(N) against kappa^(theta)(j), j = 1..5;
-  (d) the interior of the big-jump zone at L_k = ell N, ell in {0.3, 0.5, 0.7}: P_N(k) against the
+  (c)(i) the layer P_N(N-j)/T(N) against kappa^(theta)(j), j = 1..5;
+  (c)(ii) the interior of the big-jump zone at L_k = ell N, ell in {0.3, 0.5, 0.7}: P_N(k) against the
       finite-N kernel G^nu_N(k) + nu_+(L_k)(1 + mu u(N-k)) and against the limit form
       T(N)/mu [alpha(1-ell) ell^(-alpha-1) + 2 ell^(-alpha) - (ell+theta)^(-alpha)];
   and, for alpha = 1.5 and 1.8 with theta = 1, the ratio of the larger endpoint atom to the largest
