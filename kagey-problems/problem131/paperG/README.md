@@ -29,7 +29,7 @@ the discrete law that two difference statements would turn into the exact count.
 
 Written October 28, 2026 from the report `reports/Paper F and G finale research.md` (Section 5) and the
 research notes in `research_notes/Paper FG finale/` (notes 01, 02, 06 and their audits 08, 09, 10).
-Journal build 43 pages, arXiv build 44 pages. Both builds are clean. Seven lettered theorems:
+Journal build 47 pages, arXiv build 48 pages. Both builds are clean. Seven lettered theorems:
 
 - Theorem A (`thm:local`, Section 4). One point, uniform on compacts and (SRT) for both laws are
   equivalent, under (BAL) and (SPAN). `prop:lambda` identifies the limit with Lamperti's density.

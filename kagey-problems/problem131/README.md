@@ -5,10 +5,10 @@ direction with probability p. Kagey asks for the distribution of the bins, the l
 his numerator tables, when the middle bin is as likely as the endpoints, the normal limit, and what
 changes on a cylinder or a tetrahedron.
 
-Status. There are seven papers by A. Pemmasani, which call each other Papers A, B, C1, C2, D, E
-and F, and four working notes, S1 to S4. Paper A (arXiv:2610.06935) solves the binary problem at
+Status. There are eight papers by A. Pemmasani, which call each other Papers A, B, C1, C2, D, E,
+F and G, and four working notes, S1 to S4. Paper A (arXiv:2610.06935) solves the binary problem at
 every N, and Paper B (arXiv:2610.09258v1) treats d directions on the complete graph. Papers C1, C2,
-D, E and F are in preparation. In October 2026 Paper B was merged into Paper C. Paper C1 will
+D, E, F and G are in preparation, and C1 is under review at the Journal of Theoretical Probability. In October 2026 Paper B was merged into Paper C. Paper C1 will
 replace it as version 2 of arXiv:2610.09258. Version 1 stays available on arXiv, and the folder
 `archive/paperB` keeps it unchanged. On October 24, 2026 Paper C was split in two. Paper C1 (the forward theory of slowly
 switching chains, in `paperC`) keeps the folder and the results of Paper B, and Paper C2 (what the
@@ -18,7 +18,10 @@ planar walk, in `paperE`) were one paper until October 13, 2026, and so were Pap
 walk, in `paperD`) and the first draft of Paper F (heavy-tailed runs and aging walks). On October
 24, 2026 that draft was archived in `archive/paperF_golden_aging`, its aging half became the note
 `S4_aging_note`, and Paper F was started again in `paperF` as a paper on the occupation law of a
-lattice Lévy walk. The titles of Papers C1 to F are working titles, and Paper A cites C and D
+lattice Lévy walk. Papers F and G close the series. F treats the on/off process with finite-mean
+periods and G the one with infinite-mean periods, and together they give the local law of the
+occupation time on the whole square of tail indices in (0,1) and (1,2). The first draft of G, of
+October 25, 2026, is in `archive/paperG_lamperti_draft`. The titles of Papers C1 to F are working titles, and Paper A cites C and D
 under their old titles. The papers share the notation N, L = log N, T, z_N, lambda_F and K_F.
 `PUBLICATION.md` has notes on where to send them.
 
@@ -147,32 +150,51 @@ Paper A's walk.
 Files. The folder `paperE`, with `problem131_planar.tex` and `problem131_planar.pdf`, its section and
 appendix files, the check scripts and `paperE/README.md`.
 
-## Paper F: Bulk, big jumps and boundary layers in the occupation law of a lattice Lévy walk
+## Paper F: Local laws for the occupation time of on/off processes with heavy-tailed, finite-mean periods
 
 Paper F (in preparation, for the Electronic Journal of Probability) was started on October 24,
-2026. A lattice Lévy walk moves in runs of alternating direction whose lengths are independent with
-regularly varying tails of index between 1 and 2. The paper describes the law of the number of
-right steps after N steps at every point of the range {0, ..., N}. It has a stable bulk, a big-jump
-zone on each side where one run is macroscopic, a renewal boundary layer at each end and an atom at
-each endpoint. The law of the first run enters each piece through a sharp criterion. The global mode
-is an endpoint or a point of the bulk, and for the equilibrated start the threshold is the golden ratio. The
-boundary layers identify both run laws. When the run scales differ by an unbounded factor the start
-of the big-jump zone is located up to a factor 1 ± delta. For fresh and fair starts with comparable
-scales, a second-order smoothness condition and no ties in the end profiles the law has exactly M_+ + M_- + 1 modes for all large
-N, where M_± counts the local maxima of the end profiles, so it has three modes exactly when each
-profile has one local maximum. The difference form of the local big jump behind this is stated as a
-result of its own. The draft is complete, with every statement proved in the article or stated as a
-conjecture (80 pages after the integration of the mode count on October 25, 2026).
+2026 and restructured on October 27 and 28. An on/off process alternates on and off periods with
+independent lengths whose tails are regularly varying with indices between 1 and 2, so the periods
+have a finite mean. Equivalently, a lattice Lévy walk moves in runs of alternating direction. The
+paper describes the law of the number of on slots among the first N at every point of the range
+{0, ..., N}. It has a stable bulk, a big-jump zone on each side where one period is macroscopic, a
+renewal boundary layer at each end and an atom at each endpoint. The law of the first period enters
+each piece through a sharp criterion, for a fixed law and for laws that depend on N, and observation
+from time theta N on ages the atom, the layer and the big-jump zone but not the bulk. The global
+mode is an endpoint or a point of the bulk, and for the stationary start and for every aged start the
+threshold is the golden ratio. For fresh and fair starts with comparable scales, a second-order
+smoothness condition and no ties in the end profiles the law has exactly M_+ + M_- + 1 modes for all
+large N, where M_± counts the local maxima of the end profiles. The last section reads the theorems
+as the exposure law of a switchback experiment that switches arm at the regenerations of a slotted
+queue with heavy-tailed service, after proving that the cycle law of the queue satisfies the
+difference hypotheses. Journal build 90 pages, arXiv build 93 pages.
 
-The first draft of Paper F, "The golden-ratio threshold for a lattice Lévy walk and ties in
-coin-turning walks", is archived in `archive/paperF_golden_aging`. Its heavy-tail half is part of
-the new paper: its center theorem is the bulk theorem at the center point, and its golden-ratio
-corollary is part of the theorem on the mode. Its aging half is the note `S4_aging_note`. The
-infinite-mean case 0 < alpha < 1 is left to a later paper.
+Files. The folder `paperF`, with `problem131_levy_arxiv.tex` (the whole paper, the arXiv version
+when compiled alone), the journal driver `problem131_levy.tex`, the two PDFs, the section files, the
+figure and its script in `figures/`, the recorded output of the computations in `data/`, the check
+scripts and `paperF/README.md`.
 
-Files. The folder `paperF`, with `problem131_levy.tex` and `problem131_levy.pdf` (class `ejpecp`,
-80 pages), its section files, the figure and its script in `figures/`, the recorded output of the
-computations in `data/`, the check scripts and `paperF/README.md`.
+## Paper G: The local Lamperti law
+
+Paper G (in preparation, for the Electronic Journal of Probability) was rewritten on October 28,
+2026 from its first draft of October 25. It is the infinite-mean companion of Paper F: the periods
+have regularly varying tails with indices in (0,1). When the two tails are comparable the limit law
+of the occupation fraction is Lamperti's generalized arcsine law, and the paper proves its local
+form: the rescaled point probabilities converge at one interior point iff uniformly on compact sets
+iff both period laws satisfy the strong renewal theorem. Near the ends the law is the tail of a
+period times a renewal mass function, and the global mode sits at bounded distance from an end for
+every index. The paper gives the exact effect of an arbitrary initial period, proves that an initial
+period of length of order N turns the law into an explicit mixture, and so obtains the local aging
+law of the process observed from time theta N on, with atoms of order 1 and end layers of reduced
+height. When one tail is heavier it gives the local law of the time on the lighter side at an
+intermediate scale, with the exact renewal conditions. It classifies the critical points of
+Lamperti's density for every index and tail ratio, with a closed-form window for the W shape, counts
+the modes near the ends exactly, and leaves one second-difference local limit theorem in the bulk
+between a lower bound and the exact count. Both builds are about 47 pages.
+
+Files. The folder `paperG`, with `problem131_lamperti_arxiv.tex` (the whole paper), the journal
+driver `problem131_lamperti.tex`, the two PDFs, the section files, the figure and its script in
+`figures/`, the check scripts and the scans with their outputs, and `paperG/README.md`.
 
 ## Earlier work
 
@@ -203,7 +225,7 @@ and a `README.md`. Papers B, C and D also keep the proofs cut while shortening t
 - `S3_sticky_note/` is a working note on sticky priors for hidden Markov models, which was Section 6 and Appendix D of Paper C until the merge with Paper B in October 2026.
 - `S2_counts_note/` is a working note on which rate matrices the visit counts of a slowly switching chain can tell apart, with its 4 check scripts.
 - `S4_aging_note/` is a short note of 12 pages, "The finite-size shape transition of coin-turning walks" (for Electronic Communications in Probability), on the walk that switches at step k with probability c/k and its version with d states. Every interior point ties with the end exactly at c = 1 for every N, and the chain that redraws or repeats its state has the law of Pólya's urn. It was the aging half of the first draft of Paper F until October 24, 2026, and it has 2 check scripts.
-- `archive/` holds Paper B v1 (`archive/paperB`), the earlier EJP version of Paper C, "Face selection for slowly switching Markov chains", with its supplement (`archive/paperC_switching_ejp`), and the first draft of Paper F, "The golden-ratio threshold for a lattice Lévy walk and ties in coin-turning walks" (`archive/paperF_golden_aging`), each kept as it was and with its own `README.md`.
+- `archive/` holds Paper B v1 (`archive/paperB`), the earlier EJP version of Paper C, "Face selection for slowly switching Markov chains", with its supplement (`archive/paperC_switching_ejp`), the first draft of Paper F, "The golden-ratio threshold for a lattice Lévy walk and ties in coin-turning walks" (`archive/paperF_golden_aging`), and the first draft of Paper G, "A local Lamperti law for the occupation count of a lattice Lévy walk with infinite-mean runs" (`archive/paperG_lamperti_draft`), each kept as it was and with its own `README.md`.
 - `animations/` shows a Galton board with persistence at 4 values of p (`galton.gif`, `galton.mp4`),
   made by `animations/animate.py`.
 - `lean/` holds the Lean 4 proofs, one library per paper (not the large-argument asymptotics).
@@ -228,5 +250,7 @@ progress are these.
 - Paper C2, `elsarticle` build. In `paperC2`,
   `pdflatex -interaction=nonstopmode problem131_reconstruction.tex`, 3 times (the class
   `elsarticle` is in TeX Live).
-- Paper F, `ejpecp` build. In `paperF`, `pdflatex problem131_levy.tex`, 3 times (the class
-  `ejpecp` is in TeX Live).
+- Paper F, `ejpecp` build. In `paperF`, `pdflatex problem131_levy.tex` (journal) or
+  `pdflatex problem131_levy_arxiv.tex` (arXiv), 3 times (the class `ejpecp` is in TeX Live).
+- Paper G, `ejpecp` build. In `paperG`, `pdflatex problem131_lamperti.tex` (journal) or
+  `pdflatex problem131_lamperti_arxiv.tex` (arXiv), 3 times.
