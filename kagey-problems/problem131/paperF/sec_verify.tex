@@ -2,8 +2,8 @@
 
 No proof uses a computed number. The computations check the exact identities,
 produce Figure~\ref{fig:atlas} and Table~\ref{tab:antimode}, and test the limit
-theorems at moderate $N$. Except for the identities and two examples of
-Section~\ref{sec:mode-count} they use the zeta law
+theorems at moderate $N$. Except for the identities, two examples of
+Section~\ref{sec:mode-count} and the queue of Section~\ref{sec:exposure} they use the zeta law
 $f_\sgn(n)=n^{-5/2}/\zeta(5/2)$ for both signs, so $\alpha_\pm=3/2$, $p=1/2$ and
 $s=3.894745$, with a fresh plus start unless we say otherwise.
 
@@ -19,48 +19,94 @@ and by~\eqref{eq:rho-rep} the identity~\eqref{eq:final-explicit} reads
 \begin{equation}\label{eq:run-sum}
  P_N(N-j)=\sum_{t=j}^{N-1}a_t(t-j)\,T_\plus(N-t)+\sum_{m=1}^{j}b_{N-m}(N-j)\,T_\minus(m).
 \end{equation}
-This gives the whole law in $O(N^3)$ operations. Every entry is a dot product with
-nonnegative terms, so in double precision every computed value has relative error
-at most $(1+\gamma_{N+2})^{N+2}-1$ with $\gamma_n=nu/(1-nu)$ and $u=2^{-53}$, which
-is $2.8\cdot10^{-9}$ at $N=5000$. At $N=600$ a run in ball arithmetic confirms the
-double-precision law. In Figure~\ref{fig:atlas}, with $B_N=74$, the largest
-relative error of the bulk on $|k-pN|\le3B_N$ is $0.071$, that of the big-jump
-kernel where $|k-pN|\ge4B_N$ and $\min(k,N-k)\ge2B_N$ is $0.38$, attained at the
-junction with the bulk, and that of the boundary kernel on $1\le\min(k,N-k)\le B_N$
-is $0.094$. At $N=1200$ and $3000$ the ratio $P_N(k)/G_N(k)$ at
-$k=\lceil pN+KB_N\rceil$ is $0.354$, $1.482$, $1.036$ and $0.337$, $1.538$, $1.059$
-for $K=1$, $4$, $16$, against the limits $0.31$, $1.68$, $1.09$ of
-Remark~\ref{rem:no-single-formula}. The minimizers in Table~\ref{tab:antimode}
-are certified against the rounding bound. For the stationary initial run the ratio
-of $P_N(N-j)/T_\plus(N)$ to $\kappa^{\mathrm{st}}_\plus(j)$ is $1.0007$, $1.0031$
-and $1.0098$ at $j=1$, $2$ and $5$ for $N=2400$, about half its deviation at
-$N=1200$. For Section~\ref{sec:extrema}, the ratio $d_j\mu_\minus^2/T_\minus(j)$ of
-Lemma~\ref{lem:diff-renewal} is $-0.963$, $-0.996$ and $-0.9996$ at $j=10$, $100$ and
+This gives the whole law in $O(N^3)$ operations, and an initial run enters by adding its
+weights to $a_t$ and $b_t$. Every entry is a dot product with nonnegative terms, so in
+double precision every computed value has relative error at most
+$(1+\gamma_{N+2})^{N+2}-1$ with $\gamma_n=nu/(1-nu)$ and $u=2^{-53}$, which is
+$2.8\cdot10^{-9}$ at $N=5000$. At $N=600$ a run in ball arithmetic confirms the
+double-precision law.
+
+\emph{The fresh law.} In Figure~\ref{fig:atlas}, with $B_N=74$, the largest relative error
+of the bulk on $|k-pN|\le3B_N$ is $0.071$, that of the big-jump kernel where
+$|k-pN|\ge4B_N$ and $\min(k,N-k)\ge2B_N$ is $0.38$, attained at the junction with the
+bulk, and that of the boundary kernel on $1\le\min(k,N-k)\le B_N$ is $0.094$. At
+$N=1200$ and $3000$ the ratio $P_N(k)/G_N(k)$ at $k=\lceil pN+KB_N\rceil$ is $0.354$,
+$1.482$, $1.036$ and $0.337$, $1.538$, $1.059$ for $K=1$, $4$, $16$, against the limits
+$0.31$, $1.68$, $1.09$ of Remark~\ref{rem:no-single-formula}. The minimizers in
+Table~\ref{tab:antimode} are certified against the rounding bound. For the stationary
+initial run the ratio of $P_N(N-j)/T_\plus(N)$ to $\kappa^{\mathrm{st}}_\plus(j)$ is
+$1.0007$, $1.0031$ and $1.0098$ at $j=1$, $2$ and $5$ for $N=2400$, about half its
+deviation at $N=1200$. For Section~\ref{sec:extrema}, the ratio $d_j\mu_\minus^2/T_\minus(j)$
+of Lemma~\ref{lem:diff-renewal} is $-0.963$, $-0.996$ and $-0.9996$ at $j=10$, $100$ and
 $1000$. The error term of Theorem~\ref{thm:first-diff} for a fresh plus start at $j=20$ is
-$0.73$ at $N=1000$ and $0.23$ at $N=3000$, so at this $j$ it decays like $1/N$. For the fair start the
-law has exactly three modes, at $k=1$, $N/2$ and $N-1$, for $N=400$ and $1000$. For the start
-of Corollary~\ref{cor:four-modes} with $d_0=5$ it has exactly four modes at $N=1000$, at
-$k=1$, $499$, $995$ and $1000$. These modes are certified, since every relative difference
-of neighbouring values exceeds twice the rounding bound.
-For Section~\ref{sec:mode-count}, the zeta law has exactly three modes for the fresh plus and
-the fair start at $N=2500$, $3000$, $3500$ and $4000$. For the law $f(n)\propto n^{-5/2}$, $n\ge2$, of
-Example~\ref{ex:runs2}, $u(2i)>\max\{u(2i-1),u(2i+1)\}$ for $1\le i\le6$, $u$ decreases strictly
-on $12\le j\le10^4$, and the fair start has exactly $15$ modes, at $j$ and $N-j$ for
-$j=0,2,\dots,12$ and at $N/2$, for every $N=2500,2600,\dots,4000$, and $17$, $19$ and $17$
-modes at $N=1000$, $1500$ and $2000$. For the law $f(n)\propto n^{-12/5}$, $n\ge2$, of index $7/5$
-in the same example, the fair start has exactly $13$ modes at $N=3000$ and $4000$. For the law with $f(1)=0.6$ and $f(2)=0.3$ after
+$0.73$ at $N=1000$ and $0.23$ at $N=3000$, so at this $j$ it decays like $1/N$. For the
+fair start the law has exactly three modes, at $k=1$, $N/2$ and $N-1$, for $N=400$ and
+$1000$. For the start of Corollary~\ref{cor:four-modes} with $d_0=5$ it has exactly four
+modes at $N=1000$, at $k=1$, $499$, $995$ and $1000$. These modes are certified, since every
+relative difference of neighbouring values exceeds twice the rounding bound. For
+Section~\ref{sec:mode-count}, the zeta law has exactly three modes for the fresh plus and
+the fair start at $N=2500$, $3000$, $3500$ and $4000$. For the law $f(n)\propto n^{-5/2}$,
+$n\ge2$, of Example~\ref{ex:runs2}, $u(2i)>\max\{u(2i-1),u(2i+1)\}$ for $1\le i\le6$, $u$
+decreases strictly on $12\le j\le10^4$, and the fair start has exactly $15$ modes, at $j$
+and $N-j$ for $j=0,2,\dots,12$ and at $N/2$, for every $N=2500,2600,\dots,4000$, and $17$,
+$19$ and $17$ modes at $N=1000$, $1500$ and $2000$. For the law $f(n)\propto n^{-12/5}$,
+$n\ge2$, of index $7/5$ in the same example, the fair start has exactly $13$ modes at
+$N=3000$ and $4000$. For the law with $f(1)=0.6$ and $f(2)=0.3$ after
 Lemma~\ref{lem:one-max}, $u$ decreases strictly on $2\le j\le10^4$, and the fair start has
 exactly three modes, at $k=2$, $N/2$ and $N-2$, while the fresh plus start has four, at
-$N=1000$, $1500$ and $2000$. The renewal mass functions are sums of nonnegative terms with the
-same rounding bound, and all these signs are certified in the same way. The exact identities of Section~\ref{sec:setting}, the renewal
-identities of Section~\ref{sec:second-order} and~\eqref{eq:renewal-inverse} are
-checked in exact rational arithmetic against a sum over all sign strings for
-$N\le12$. The identities of Section~\ref{sec:identities}, except the bound in
-Lemma~\ref{lem:counting}, are also proved in the Lean library \nolinkurl{PaperF}, whose file \nolinkurl{MAP.md} maps the labels
-to the Lean names.
+$N=1000$, $1500$ and $2000$. The renewal mass functions are sums of nonnegative terms with
+the same rounding bound, and all these signs are certified in the same way.
 
-The scripts, their outputs with the hash of each script, and the Lean files are in
-the folder \nolinkurl{kagey-problems/problem131} of
+\emph{The aged law.} For Theorem~\ref{thm:aging} with $t_a=N$, so $\theta=1$, the aged law
+at $N=500$, $1000$ and $2000$ is computed from the first-run decomposition with the
+initial run~\eqref{eq:aged-nu}, after a check of the method against a sum over all run
+sequences for $t_a+N\le12$. The largest relative difference between the aged and the
+fresh law on $|k-N/2|\le B_N$ is $0.054$, $0.043$ and $0.035$. At $N=2000$ the atom is
+$1.020$ times the limit in part (b), the ratios $P_N(N-j)/(T_\plus(N)\kappa^{(1)}_\plus(j))$
+of part (c) are $1.015$ to $1.028$ for $j=1,\dots,5$, and the aging increment
+$P^{(t_a)}_N(k)-P^{(0)}_N(k)$ at $L_k=\ell N$ is $0.945$, $0.998$ and $1.002$ times the two
+terms that the kernel of part (d) adds to the fresh kernel, for $\ell=0.3$, $0.5$ and
+$0.7$. The aged kernel inherits the slow convergence of the fresh kernel near the bulk,
+where $P_N/G_N$ is $1.30$ at $\ell=0.3$ for the fresh start and $1.24$ for the aged one.
+For Corollary~\ref{cor:aged-mode} the ratio of the larger endpoint atom to the largest
+interior value at $\theta=1$ is $0.258$, $0.292$ and $0.330$ for $\alpha=3/2$, growing by
+the factor $1.13$ per doubling of $N$ against the asymptotic factor
+$2^{1-\alpha+1/\alpha}=1.122$, while the stationary start has already crossed, with the
+ratio $1.117$ at $N=2000$. For $\alpha=9/5$ the aged ratio is $0.024$, $0.022$ and $0.019$,
+against the factor $0.844$. For the zeta law the factor $1-2^{1-\alpha}=0.29$ in the aged
+atom moves the crossover at $\alpha=3/2$ beyond $N=10^6$.
+
+\emph{The queue.} For Section~\ref{sec:exposure} the cycle law is computed
+from~\eqref{eq:cyclic} by FFT convolution up to $n=2^{14}$, with the zeta service law of
+index $\alpha=3/2$ and the loads $\rho_\plus=0.6$ and $\rho_\minus=0.4$. It agrees with a
+dynamic program on the workload itself to a relative $10^{-15}$ for $n\le300$, and with a
+simulation of $4\cdot10^5$ cycles. At $n=2^{14}$ the ratio
+$f_C(n)/(\lambda(1-\rho)^{-\alpha-1}f_Y(n))$ of Proposition~\ref{prop:cycle}(a) is $0.9996$
+for $\rho=0.4$ and $0.9972$ for $\rho=0.6$, and at $n=2^{13}$ the quantities
+$n\Delta f_C(n)/f_C(n)$ and $n^2\Delta^2f_C(n)/f_C(n)$ are $-2.499$ and $8.745$ for
+$\rho=0.4$, against the limits $-5/2$ and $35/4$ of part (b). The computed $f_C$ is
+strictly log-convex on $2\le n<2^{14}$ for both loads. The exposure law is computed by the
+recursion~\eqref{eq:run-recursion} with the initial run injected, and a simulation of
+$3\cdot10^5$ switching queues at $N=200$ agrees with it ($\chi^2=10.8$ on $11$ degrees of
+freedom). At $N=1000$, $2000$ and $4000$, $B_NP_N(\lfloor pN\rfloor)$ is $0.341$, $0.328$ and
+$0.318$ against $h_\theta(0)=0.282$. For Corollary~\ref{cor:exposure-tail}(a) the ratio of
+$\Prob(N-A_N<\varepsilon N)$ to its prediction at $N=4000$ is $1.076$, $1.063$ and $1.066$ for
+the fresh start and $1.009$, $1.012$ and $1.022$ for the random-time start, for
+$\varepsilon=0.05$, $0.1$ and $0.2$, down from $1.15$, $1.12$ and $1.09$ at $N=1000$ for the
+fresh start. For part (b) the ratio of the two no-switch probabilities is $607$, $1204$ and
+$2396$ against the asymptotic values $599$, $1195$ and $2387$. For
+Corollary~\ref{cor:exposure-mode} the ratio of the larger atom to the largest interior
+value for the random-time start is $3.28$, $3.81$ and $4.39$ at $\alpha=3/2$ and $0.291$,
+$0.253$ and $0.220$ at $\alpha=9/5$, and the fresh law has exactly 3 modes at the three
+values of $N$.
+
+The exact identities of Section~\ref{sec:setting} and the renewal identities of
+Section~\ref{sec:second-order}\ifarxivbuild{} and~\eqref{eq:renewal-inverse}\fi{} are checked
+in exact rational arithmetic against a sum over all sign strings for $N\le12$. The
+identities of Section~\ref{sec:identities}, except the bound in Lemma~\ref{lem:counting},
+are also proved in the Lean library \nolinkurl{PaperF}, whose file \nolinkurl{MAP.md} maps the
+labels to the Lean names. The scripts, their outputs with the hash of each script, and the
+Lean files are in the folder \nolinkurl{kagey-problems/problem131} of
 \url{https://github.com/apemm/Kagey-Problems}. In \nolinkurl{paperF} the command
-\texttt{python -I verify\_all.py} runs the checks, and \nolinkurl{README.md} lists
-the software versions and what each script tests.
+\texttt{python -I verify\_all.py} runs the checks, and \nolinkurl{README.md} lists the
+software versions and what each script tests.

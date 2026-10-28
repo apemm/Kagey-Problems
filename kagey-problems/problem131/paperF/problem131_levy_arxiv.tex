@@ -1,0 +1,414 @@
+\documentclass[EJP,preprint]{ejpecp}
+% Occupation law of a lattice Levy walk at every point.
+% The class ejpecp is in TeX Live.
+% This file is the arXiv version. Build: pdflatex problem131_levy_arxiv.tex, three times.
+% The journal version is problem131_levy.tex, a driver that sets \arxivbuildfalse and inputs
+% this file. The switch \ifarxivbuild marks the material that only the arXiv version carries.
+\expandafter\ifx\csname ifarxivbuild\endcsname\relax
+  \expandafter\newif\csname ifarxivbuild\endcsname
+  \csname arxivbuildtrue\endcsname
+\fi
+
+\usepackage{booktabs}
+\usepackage[shortlabels]{enumitem}
+
+% ---------- theorem environments (the class provides theorem, lemma,
+% proposition, corollary, definition, example, remark, hypothesis and its other
+% theorem-like environments, numbered within sections; the lettered main
+% theorems are added here) ----------
+\theoremstyle{ejpecpbodyit}
+\newtheorem{introtheorem}{Theorem}
+\renewcommand{\theintrotheorem}{\Alph{introtheorem}}
+
+% ---------- notation macros ----------
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\RV}{\mathrm{RV}}
+\newcommand{\ones}{\mathbf{1}}
+\newcommand{\plus}{{+}}
+\newcommand{\minus}{{-}}
+\newcommand{\sgn}{\sigma}
+\newcommand{\osgn}{\bar\sigma}
+
+\graphicspath{{figures/}}
+\emergencystretch=1em
+
+\TITLE{Local laws for the occupation time of on/off processes with heavy-tailed, finite-mean periods: bulk, big jumps, boundary layers and aging}
+\SHORTTITLE{Local laws for the occupation time of an on/off process}
+\AUTHORS{Arjun Pemmasani\footnote{Department of Mathematics, Harvey Mudd College,
+Claremont, CA 91711, USA. \BEMAIL{apemmasani@hmc.edu}}}
+\KEYWORDS{on/off process; alternating renewal process; occupation time; L\'evy walk; local
+limit theorem; stable law; big-jump principle; infinite density; aging; renewal theorem;
+number of modes; switchback experiment; busy period}
+\AMSSUBJ{60K05; 60G50; 60F05}
+\AMSSUBJSECONDARY{60G52; 60K15; 60K25; 60F10; 82C41}
+\SUBMITTED{}
+\ACCEPTED{}
+\ABSTRACT{Let $A_N$ be the number of time slots spent in the on state during the first $N$
+slots of a discrete-time on/off process whose on and off periods are independent and have
+regularly varying tails with indices in $(1,2)$. Equivalently, $A_N$ counts the right steps
+of a lattice L\'evy walk. The limit law of $A_N$ at the scale $N^{1/\alpha}$ is stable and
+classical. We describe $\Prob(A_N=k)$ at every point. In the bulk it is a stable density,
+uniformly over the whole range, under regular variation and aperiodicity alone. On each side
+of the bulk and up to the endpoint one kernel gives the law under local regular variation. It
+adds a complete giant period and the period in progress at time $N$, and it contains a
+renewal boundary layer at each end and an atom at each endpoint. This is a lattice form of
+the infinite density of the L\'evy walk. We find the exact effect of an arbitrary initial
+period on each piece, and the effect of aging, when the process is observed from time
+$\theta N$ on. The bulk does not age. The atom, the layer and the big-jump zone do, and we
+give their aged forms in closed form. For the stationary start and for every aged start, the
+most likely value of $A_N$ is an endpoint for all large $N$ when the index is below the
+golden ratio and is interior when it is above. For fresh and fair starts, aperiodic periods,
+comparable scales, a second-order smoothness condition and no ties in the boundary profiles,
+the law has, for all large $N$, one more mode than the two boundary profiles have local
+maxima. Hence it has 3 modes for strictly log-convex period laws. The results give the
+exposure law of an experiment that switches arm at the regenerations of a slotted queue with
+heavy-tailed service. We prove that the cycle law of the queue satisfies the smoothness
+conditions, so the mode count applies to it.}
+
+\begin{document}
+
+\input{sec_intro.tex}
+\input{sec_setting.tex}
+\input{sec_bulk.tex}
+\input{sec_bigjump.tex}
+\input{sec_preparation.tex}
+\input{sec_aging.tex}
+\input{sec_shape.tex}
+\input{sec_exposure.tex}
+\input{sec_open.tex}
+\input{sec_verify.tex}
+
+\appendix
+\input{sec_appendix.tex}
+\input{sec_modeproofs.tex}
+
+\begin{thebibliography}{99}
+
+\bibitem{asyy2020} Akimoto, T., Sera, T., Yamato, K. and Yano, K.: Aging arcsine law in
+  Brownian motion and its generalization. \emph{Phys. Rev. E} \textbf{102}, (2020), 032103.
+  \ARXIV{2004.00808}
+
+\bibitem{afk2003} Asmussen, S., Foss, S. and Korshunov, D.: Asymptotics for sums of random
+  variables with local subexponential behaviour. \emph{J. Theoret. Probab.} \textbf{16},
+  (2003), 489--518. \MR{1982040}
+
+\bibitem{barbemccormick2009} Barbe, Ph. and McCormick, W. P.: Asymptotic expansions for
+  infinite weighted convolutions of heavy tail distributions and applications. \emph{Mem.
+  Amer. Math. Soc.} \textbf{197}, (2009), no. 922, vi+117 pp. \MR{2476950}
+
+\bibitem{akimoto2023} Akimoto, T.: Statistics of the number of renewals,
+  occupation times, and correlation in ordinary, equilibrium, and aging
+  alternating renewal processes. \emph{Phys. Rev. E} \textbf{108}, (2023),
+  Paper No. 054113, 17 pp. \MR{4678605}
+
+\bibitem{berger2019} Berger, Q.: Strong renewal theorems and local large
+  deviations for multivariate random walks and renewals. \emph{Electron. J.
+  Probab.} \textbf{24}, (2019), Paper No. 46, 47 pp. \MR{3949271}
+
+\bibitem{berger2019ptrf} Berger, Q.: Notes on random walks in the Cauchy domain
+  of attraction. \emph{Probab. Theory Related Fields} \textbf{175}, (2019),
+  1--44. \ARXIV{1706.07924}
+
+\bibitem{bby2023} Berger, Q., Birkner, M. and Yuan, L.: Collective vs.\
+  individual behaviour for sums of i.i.d.\ random variables: appearance of the
+  one-big-jump phenomenon. \emph{Ann. Fac. Sci. Toulouse Math. (6)}
+  \textbf{33}, (2024), 1413--1485. \MR{4899969}
+
+\bibitem{bsz2023} Bojinov, I., Simchi-Levi, D. and Zhao, J.: Design and analysis of
+  switchback experiments. \emph{Management Sci.} \textbf{69}, (2023), 3759--3777.
+  \ARXIV{2009.00148}
+
+\bibitem{bgt1989} Bingham, N. H., Goldie, C. M. and Teugels, J. L.: Regular
+  variation. Encyclopedia of Mathematics and its Applications \textbf{27}.
+  \emph{Cambridge University Press}, Cambridge, 1989. xx+494 pp.
+  \MR{1015093}
+
+\bibitem{caravennadoney2019} Caravenna, F. and Doney, R.: Local large
+  deviations and the strong renewal theorem. \emph{Electron. J. Probab.}
+  \textbf{24}, (2019), Paper No. 72, 48 pp. \MR{3978222}
+
+\bibitem{clnlo2018} C\'enac, P., Le Ny, A., de Loynes, B. and Offret, Y.:
+  Persistent random walks. I. Recurrence versus transience. \emph{J. Theoret.
+  Probab.} \textbf{31}, (2018), 232--243. \MR{3769813}
+
+\bibitem{clnlo2019} C\'enac, P., Le Ny, A., de Loynes, B. and Offret, Y.:
+  Persistent random walks. II. Functional scaling limits. \emph{J. Theoret.
+  Probab.} \textbf{32}, (2019), 633--658. \MR{3952725}
+
+\bibitem{cdp2005} Cipriani, P., Denisov, S. and Politi, A.: From anomalous
+  energy diffusion to L\'evy walks and heat conductivity in one-dimensional
+  systems. \emph{Phys. Rev. Lett.} \textbf{94}, (2005), 244301.
+
+\bibitem{debruijnerdos1953} de Bruijn, N. G. and Erd\H{o}s, P.: On a recursion
+  formula and on some Tauberian theorems. \emph{J. Research Nat. Bur.
+  Standards} \textbf{50}, (1953), 161--164. \MR{0054745}
+
+\bibitem{demeyerteugels1980} De Meyer, A. and Teugels, J. L.: On the asymptotic behaviour
+  of the distributions of the busy period and service time in M/G/1. \emph{J. Appl. Probab.}
+  \textbf{17}, (1980), 802--813. \MR{0580038}
+
+\bibitem{dds2008} Denisov, D., Dieker, A. B. and Shneer, V.: Large deviations
+  for random walks under subexponentiality: the big-jump domain. \emph{Ann.
+  Probab.} \textbf{36}, (2008), 1946--1991. \MR{2440928}
+
+\bibitem{denisovshneer2010} Denisov, D. and Shneer, S.: Global and local asymptotics for
+  the busy period of an M/G/1 queue. \emph{Queueing Syst.} \textbf{64}, (2010), 383--393.
+  \MR{2609650}
+
+\bibitem{dzh2012} Denisov, S., Zaburdaev, V. and H\"anggi, P.: L\'evy walks
+  with velocity fluctuations. \emph{Phys. Rev. E} \textbf{85}, (2012),
+  031148.
+
+\bibitem{dsd2013} Dhar, A., Saito, K. and Derrida, B.: Exact solution of a
+  L\'evy walk model for anomalous heat transport. \emph{Phys. Rev. E}
+  \textbf{87}, (2013), 010103(R).
+
+\bibitem{doney1989} Doney, R. A.: A large deviation local limit theorem.
+  \emph{Math. Proc. Cambridge Philos. Soc.} \textbf{105}, (1989), 575--577.
+  \MR{0985693}
+
+\bibitem{doney1991} Doney, R. A.: A bivariate local limit theorem. \emph{J.
+  Multivariate Anal.} \textbf{36}, (1991), 95--102. \MR{1094270}
+
+\bibitem{doney1997} Doney, R. A.: One-sided local large deviation and renewal theorems in
+  the case of infinite mean. \emph{Probab. Theory Related Fields} \textbf{107}, (1997),
+  451--465. \MR{1440141}
+
+\bibitem{doney2023} Doney, R.: Local behaviour of the remainder in renewal
+  theory. \emph{Electron. J. Probab.} \textbf{28}, (2023), Paper No. 120,
+  14 pp. \MR{4660688}
+
+\bibitem{dwass1969} Dwass, M.: The total progeny in a branching process and a related
+  random walk. \emph{J. Appl. Probab.} \textbf{6}, (1969), 682--686. \MR{0253433}
+
+\bibitem{ekm1997} Embrechts, P., Kl\"uppelberg, C. and Mikosch, T.: Modelling
+  extremal events. For insurance and finance. Applications of Mathematics
+  \textbf{33}. \emph{Springer-Verlag}, Berlin, 1997. xvi+645 pp.
+  \MR{1458613}
+
+\bibitem{feller1968} Feller, W.: An introduction to probability theory and its
+  applications. Vol. I. Third edition. \emph{John Wiley \& Sons}, New York,
+  1968. xviii+509 pp. \MR{0228020}
+
+\bibitem{feller1971} Feller, W.: An introduction to probability theory and its
+  applications. Vol. II. Second edition. \emph{John Wiley \& Sons}, New York,
+  1971. xxiv+669 pp. \MR{0270403}
+
+\bibitem{frenk1982} Frenk, J. B. G.: The behavior of the renewal sequence in
+  case the tail of the waiting-time distribution is regularly varying with
+  index $-1$. \emph{Adv. in Appl. Probab.} \textbf{14}, (1982), 870--884.
+  \MR{0677561}
+
+\bibitem{fuknagaev1971} Fuk, D. Kh. and Nagaev, S. V.: Probability
+  inequalities for sums of independent random variables. \emph{Theory Probab.
+  Appl.} \textbf{16}, (1971), 643--660. Russian original: \emph{Teor.
+  Verojatnost. i Primenen.} \textbf{16}, (1971), 660--675. \MR{0293695}
+
+\bibitem{gjr2020} Glynn, P. W., Johari, R. and Rasouli, M.: Adaptive experimental design
+  with temporal interference: a maximum likelihood approach. In: \emph{Advances in Neural
+  Information Processing Systems} \textbf{33}, (2020). \ARXIV{2006.05591}
+
+\bibitem{godrecheluck2001} Godr\`eche, C. and Luck, J. M.: Statistics of the
+  occupation time of renewal processes. \emph{J. Statist. Phys.}
+  \textbf{104}, (2001), 489--524. \MR{1853425}
+
+\bibitem{hrs1998} Heath, D., Resnick, S. and Samorodnitsky, G.: Heavy tails and long range
+  dependence in on/off processes and associated fluid models. \emph{Math. Oper. Res.}
+  \textbf{23}, (1998), 145--165. \MR{1606462}
+
+\bibitem{horvathshao1998} Horv\'ath, L. and Shao, Q.-M.: Limit distributions
+  of directionally reinforced random walks. \emph{Adv. Math.} \textbf{134},
+  (1998), 367--383. \MR{1617789}
+
+\bibitem{hu2026} Hu, Y.: Spectral design of random-duration switchbacks. Preprint, 2026.
+  \ARXIV{2609.13698}
+
+\bibitem{huwager2022} Hu, Y. and Wager, S.: Switchback experiments under geometric mixing.
+  Preprint, 2022. \ARXIV{2209.00197}
+
+\bibitem{ibragimovlinnik1971} Ibragimov, I. A. and Linnik, Yu. V.:
+  Independent and stationary sequences of random variables. With a
+  supplementary chapter by I. A. Ibragimov and V. V. Petrov. Translation from
+  the Russian edited by J. F. C. Kingman. \emph{Wolters-Noordhoff Publishing},
+  Groningen, 1971. 443 pp. \MR{0322926}
+
+\bibitem{janson2012} Janson, S.: Simply generated trees, conditioned Galton--Watson trees,
+  random allocations and condensation. \emph{Probab. Surv.} \textbf{9}, (2012), 103--252.
+  \MR{2908619}
+
+\bibitem{jky2023} Jia, S., Kallus, N. and Yu, C. L.: Clustered switchback designs for
+  experimentation under spatio-temporal interference. Preprint, 2023. \ARXIV{2312.15574}
+
+\bibitem{kagey131} Kagey, P.: Problem 131. Open Problem Collection.
+  \url{https://peterkagey.com/problems/131/}. Accessed October 2026.
+
+\bibitem{kemperman1961} Kemperman, J. H. B.: The passage problem for a stationary Markov
+  chain. Statistical Research Monographs \textbf{I}. \emph{The University of Chicago Press},
+  Chicago, 1961. vii+127 pp. \MR{0119226}
+
+\bibitem{kesten1962} Kesten, H.: Occupation times for Markov and semi-Markov
+  chains. \emph{Trans. Amer. Math. Soc.} \textbf{103}, (1962), 82--112.
+  \MR{0138122}
+
+\bibitem{kortchemski2015} Kortchemski, I.: Limit theorems for conditioned non-generic
+  Galton--Watson trees. \emph{Ann. Inst. Henri Poincar\'e Probab. Stat.} \textbf{51}, (2015),
+  489--511. \MR{3335012}
+
+\bibitem{kwasnicki2020} Kwa\'snicki, M.: A new class of bell-shaped functions.
+  \emph{Trans. Amer. Math. Soc.} \textbf{373}, (2020), 2255--2280. \ARXIV{1710.11023}
+
+\bibitem{lamperti1958} Lamperti, J.: An occupation time theorem for a class of
+  stochastic processes. \emph{Trans. Amer. Math. Soc.} \textbf{88}, (1958),
+  380--387. \MR{0094863}
+
+\bibitem{ljkw2023} Li, S., Johari, R., Kuang, X. and Wager, S.: Experimenting under
+  stochastic congestion. Preprint, 2023. \ARXIV{2302.12093}
+
+\bibitem{ldng2005} Lee-Dadswell, G. R., Nickel, B. G. and Gray, C. G.: Thermal
+  conductivity and bulk viscosity in quartic oscillator chains. \emph{Phys.
+  Rev. E} \textbf{72}, (2005), 031202.
+
+\bibitem{mssz2015} Magdziarz, M., Scheffler, H. P., Straka, P. and
+  \.Zebrowski, P.: Limit theorems and governing equations for L\'evy walks.
+  \emph{Stochastic Process. Appl.} \textbf{125}, (2015), 4021--4038.
+  \MR{3385593}
+
+\bibitem{mmw1996} Mauldin, R. D., Monticino, M. and von Weizs\"acker, H.:
+  Directionally reinforced random walks. \emph{Adv. Math.} \textbf{117},
+  (1996), 239--252. \MR{1371652}
+
+\bibitem{mrrs2002} Mikosch, T., Resnick, S., Rootz\'en, H. and Stegeman, A.: Is network
+  traffic approximated by stable L\'evy motion or fractional Brownian motion? \emph{Ann.
+  Appl. Probab.} \textbf{12}, (2002), 23--68. \MR{1890056}
+
+\bibitem{mitovyanev2001} Mitov, K. V. and Yanev, N. M.: Limit theorems for alternating
+  renewal processes in the infinite mean case. \emph{Adv. in Appl. Probab.} \textbf{33},
+  (2001), 896--911. \MR{1875785}
+
+\bibitem{mpt2026} Melbourne, I., P\`ene, F. and Terhesiu, D.: Multivariate
+  stable mixing local limit theorem for intermittent diffeomorphisms and
+  flows. Preprint, 2026. \ARXIV{2610.15720}
+
+\bibitem{melbourneterhesiu2022} Melbourne, I. and Terhesiu, D.: Analytic proof
+  of multivariate stable local large deviations and application to
+  deterministic dynamical systems. \emph{Electron. J. Probab.} \textbf{27},
+  (2022), Paper No. 21, 17 pp. \MR{4379200}
+
+\bibitem{nagaev1979} Nagaev, S. V.: Large deviations of sums of independent
+  random variables. \emph{Ann. Probab.} \textbf{7}, (1979), 745--789.
+  \MR{0542129}
+
+\bibitem{dlmf} Olver, F. W. J., Olde Daalhuis, A. B., Lozier, D. W.,
+  Schneider, B. I., Boisvert, R. F., Clark, C. W., Miller, B. R., Saunders,
+  B. V., Cohl, H. S. and McClain, M. A. (eds.): NIST Digital Library of
+  Mathematical Functions. Release 1.2.8 of 2026-09-15, \S5.4(iii).
+  \url{https://dlmf.nist.gov/}
+
+\bibitem{paperA} Pemmasani, A.: Uniform Bessel bounds for magnetization
+  crossings in finite Ising chains. Preprint, 2026. \ARXIV{2610.06935}
+
+\bibitem{paperD} Pemmasani, A.: The elephant random walk with rare reversals: a
+  Luria--Delbr\"uck approximation and the shape of the law. Preprint, 2026.
+
+\bibitem{paperG} Pemmasani, A.: The local Lamperti law: point probabilities for the
+  occupation time of on/off processes with infinite-mean periods. In preparation, 2026.
+
+\bibitem{rdhb2014} Rebenshtok, A., Denisov, S., H\"anggi, P. and Barkai, E.:
+  Non-normalizable densities in strong anomalous diffusion: beyond the central
+  limit theorem. \emph{Phys. Rev. Lett.} \textbf{112}, (2014), 110601.
+
+\bibitem{rdhb2014b} Rebenshtok, A., Denisov, S., H\"anggi, P. and Barkai, E.:
+  Infinite densities for L\'evy walks. \emph{Phys. Rev. E} \textbf{90},
+  (2014), 062135.
+
+\bibitem{rogozin1973} Rogozin, B. A.: An estimate of the remainder term in
+  limit theorems of renewal theory. \emph{Theory Probab. Appl.} \textbf{18},
+  (1973), 662--677. Russian original: \emph{Teor. Verojatnost. i Primenen.}
+  \textbf{18}, (1973), 703--717. \MR{0334339}
+
+\bibitem{rozovskii1993} Rozovski\u{\i}, L. V.: Probabilities of large deviations
+  on the whole axis. \emph{Theory Probab. Appl.} \textbf{38}, (1993), 53--79.
+  Russian original: \emph{Teor. Veroyatnost. i Primenen.} \textbf{38}, (1993),
+  79--109. \MR{1317784}
+
+\bibitem{rozovskii1997} Rozovski\u{\i}, L. V.: Probabilities of large deviations
+  for sums of independent random variables with a common distribution function
+  from the domain of attraction of an asymmetric stable law. \emph{Theory Probab.
+  Appl.} \textbf{42}, (1997), 454--482. Russian original: \emph{Teor.
+  Veroyatnost. i Primenen.} \textbf{42}, (1997), 496--530. \MR{1618791}
+
+\bibitem{sb2015} Schulz, J. H. P. and Barkai, E.: Fluctuations around
+  equilibrium laws in ergodic continuous-time random walks. \emph{Phys. Rev.
+  E} \textbf{91}, (2015), 062129. \ARXIV{1409.4586}
+
+\bibitem{sbm2018} Starreveld, N. J., Bekker, R. and Mandjes, M.: Occupation times of
+  alternating renewal processes with L\'evy applications. \emph{J. Appl. Probab.}
+  \textbf{55}, (2018), 1287--1308. \MR{3899940}
+
+\bibitem{takacs1957} Tak\'acs, L.: On limiting distributions concerning a
+  sojourn time problem. \emph{Acta Math. Acad. Sci. Hungar.} \textbf{8},
+  (1957), 279--294.
+
+\bibitem{takacs1959} Tak\'acs, L.: On a sojourn time problem in the theory of
+  stochastic processes. \emph{Trans. Amer. Math. Soc.} \textbf{93}, (1959),
+  531--540. \MR{0109362}
+
+\bibitem{tws1997} Taqqu, M. S., Willinger, W. and Sherman, R.: Proof of a fundamental
+  result in self-similar traffic modeling. \emph{Comput. Commun. Rev.} \textbf{27}, (1997),
+  5--23.
+
+\bibitem{vdhk2008} van der Hofstad, R. and Keane, M.: An elementary proof of the hitting
+  time theorem. \emph{Amer. Math. Monthly} \textbf{115}, (2008), 753--756. \MR{2456095}
+
+\bibitem{vbb2019} Vezzani, A., Barkai, E. and Burioni, R.: Single-big-jump
+  principle in physical modeling. \emph{Phys. Rev. E} \textbf{100}, (2019),
+  012108.
+
+\bibitem{vbb2020} Vezzani, A., Barkai, E. and Burioni, R.: Rare events in
+  generalized L\'evy walks and the big jump principle. \emph{Sci. Rep.}
+  \textbf{10}, (2020), 2732.
+
+\bibitem{wlh2016} Wang, L., Li, N. and H\"anggi, P.: Simulation of heat
+  transport in low-dimensional oscillator lattices. In: Lepri, S. (ed.),
+  Thermal transport in low dimensions. Lecture Notes in Phys. \textbf{921},
+  \emph{Springer}, Cham, 2016, 239--274. \MR{3524227}
+
+\bibitem{whb2020} Wang, W., H\"oll, M. and Barkai, E.: Large deviations of the
+  ballistic L\'evy walk model. \emph{Phys. Rev. E} \textbf{102}, (2020),
+  052115, 12 pp. \MR{4189342}
+
+\bibitem{wsdb2018} Wang, W., Schulz, J. H. P., Deng, W. and Barkai, E.:
+  Renewal theory with fat-tailed distributed sojourn times: typical versus
+  rare. \emph{Phys. Rev. E} \textbf{98}, (2018), 042139. \ARXIV{1809.05856}
+
+\bibitem{wvbb2019} Wang, W., Vezzani, A., Burioni, R. and Barkai, E.:
+  Transport in disordered systems: the single big jump approach. \emph{Phys.
+  Rev. Research} \textbf{1}, (2019), 033172. \ARXIV{1906.04249}
+
+\bibitem{wiener1932} Wiener, N.: Tauberian theorems. \emph{Ann. of Math. (2)}
+  \textbf{33}, (1932), 1--100.
+
+\bibitem{zwart2001} Zwart, A. P.: Tail asymptotics for the busy period in the GI/G/1 queue.
+  \emph{Math. Oper. Res.} \textbf{26}, (2001), 485--493. \MR{1849882}
+
+\bibitem{zdh2011} Zaburdaev, V., Denisov, S. and H\"anggi, P.: Perturbation
+  spreading in many-particle systems: a random walk approach. \emph{Phys. Rev.
+  Lett.} \textbf{106}, (2011), 180601.
+
+\bibitem{zdk2015} Zaburdaev, V., Denisov, S. and Klafter, J.: L\'evy walks.
+  \emph{Rev. Modern Phys.} \textbf{87}, (2015), 483--530. \MR{3403266}
+
+\end{thebibliography}
+
+\begin{acks}[Acknowledgments]
+I thank Peter Kagey, whose Problem~131 in his Open Problem
+Collection~\cite{kagey131} started this work, and Aidan Deshong for
+insightful conversations.
+\end{acks}
+
+\end{document}
