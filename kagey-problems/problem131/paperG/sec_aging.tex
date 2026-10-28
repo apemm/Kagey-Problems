@@ -1,0 +1,371 @@
+\section{Initial runs of length of order $N$, and aging}\label{sec:aging}
+
+Theorem~\ref{thm:initial} fixes the law of the initial run. If that law depends on $N$
+and puts mass of order $1$ on lengths of order $N$, the local law changes. A first run
+of length $zN$ is followed by a fresh walk of length $(1-z)N$, and the law becomes a
+mixture of rescaled Lamperti densities. The first theorem of this section proves the
+mixture under (SRT$_\pm$). The second applies it to the process observed from step
+$t_a+1$ on, with $t_a/N\to\theta$, which is the aged occupation time of the physics
+literature, and gives its atoms and its end layers.
+
+\subsection{The mixture law}\label{sec:mixture}
+
+Let the law $\nu^{(N)}$ of the initial run depend on $N$. We write $D^{(N)}$ for its
+length and keep the notation $\nu_\pm$, $Q_\pm$, $\pi_\pm$, with the dependence on $N$
+understood. We consider three conditions.
+\begin{itemize}[leftmargin=4em,labelsep=0.8em]
+\item[(H0)] The limit $\pi^0=\lim_{\varepsilon\to0}\lim_{N\to\infty}\Prob(D^{(N)}<\varepsilon N)$ exists.
+\item[(H1)] For each sign, the measures $\Prob(\Sigma=\sgn,\,D^{(N)}/N\in\cdot\,)$ restricted to
+$(0,1)$ converge vaguely to $\rho_\sgn(z)\,dz$, with $\rho_\sgn$ continuous on $(0,1)$.
+\item[(H2)] For each $\varepsilon\in(0,\frac12)$,
+$\sup_N\sup_{\varepsilon N\le d\le(1-\varepsilon)N}N\nu_\pm(d)<\infty$.
+\end{itemize}
+For $0<x<1$ put
+\begin{equation}\label{eq:mixture}
+ \mathcal L(x)=\pi^0\La(x)+\int_0^x\rho_\plus(z)\,\La\Bigl(\frac{x-z}{1-z}\Bigr)\frac{dz}{1-z}
+ +\int_0^{1-x}\rho_\minus(z)\,\La\Bigl(\frac x{1-z}\Bigr)\frac{dz}{1-z}.
+\end{equation}
+The first integral is a plus initial run of length $zN$ followed by a fresh minus walk of
+length $(1-z)N$ that takes $(x-z)N$ plus steps, and the second is the mirror.
+
+\begin{introtheorem}[initial runs of length of order $N$]\label{thm:mixture}
+Assume (BAL), (SPAN) and (SRT$_\pm$), and let the law of the initial run satisfy (H0),
+(H1) and (H2). Then $NP_N(\lfloor xN\rfloor)\to\mathcal L(x)$ uniformly for $x$ in compact
+subsets of $(0,1)$.
+\end{introtheorem}
+
+The proof needs a bound on the near-diagonal terms of the first-run decomposition, the
+initial runs that end within $\delta N$ steps of the point $k$. The remainder is then a
+fresh walk with few steps of its own sign, which sits in its own end layer, where the
+probabilities are of order $T(N)$ and not $1/N$. Under (LB$_\pm$), Theorem~\ref{thm:ends}(b)
+bounds each such term. Under (SRT$_\pm$) we bound their sum instead, by a truncated form of
+the count behind the Green identity~\eqref{eq:green}.
+
+\begin{lemma}[the counting bound]\label{lem:count}
+For a fresh minus walk and integers $n_0\ge1$, $I\ge0$ and $m_0\ge1$,
+\[
+ \sum_{i=0}^{I}F^\minus_{n_0+i}(i)\le C\,m_0T_\minus(n_0)+e^{-m_0T_\plus(I+1)}+u_\minus(n_0)\sum_{n=1}^{I}T_\plus(n),
+\]
+and the mirror bound holds for $\sum_{i\le I}F^\plus_{n_0+i}(n_0)$ with the signs exchanged.
+The constant $C$ is that of Lemma~\ref{lem:sums}(i), and the bound needs only (RV).
+\end{lemma}
+
+\begin{proof}
+Let $C_m$ be the number of minus steps among the first $m$ steps of the fresh minus walk,
+and $t_b$ the step of its $b$-th minus step. Then $F^\minus_{n_0+i}(i)=\Prob(C_{n_0+i}=n_0)$,
+so by Tonelli's theorem the left side is $\E\#\{m\in[n_0,n_0+I]:C_m=n_0\}$. The set
+$\{m:C_m=n_0\}$ is the interval $[t_{n_0},t_{n_0+1})$. Its length is $1$ unless step
+$t_{n_0}$ ends the $r$-th minus run, that is $S^\minus_r=n_0$, and then it is $1+X^\plus_r$,
+where $X^\plus_r$ is independent of the event $\{S^\minus_r=n_0\}$, which is a function of the
+minus runs alone. Since the window starts at $n_0\le t_{n_0}$, the count is at most
+$\ones_{\{t_{n_0}\le n_0+I\}}+\sum_r\ones_{\{S^\minus_r=n_0\}}\min(X^\plus_r,I)$, whose expectation is
+at most $\Prob(t_{n_0}-n_0\le I)+u_\minus(n_0)\,\E\min(X_\plus,I)$, and
+$\E\min(X_\plus,I)=\sum_{n=1}^IT_\plus(n)$. Now $t_{n_0}-n_0=S^\plus_{J-1}$, where $J-1$ is the
+number of complete minus runs before the $n_0$-th minus step, a function of the minus runs.
+The event $\{J-1<m_0\}=\{S^\minus_{m_0}\ge n_0\}$ has probability at most $Cm_0T_\minus(n_0)$
+by Lemma~\ref{lem:sums}(i). On $\{J-1\ge m_0\}$ we have $S^\plus_{J-1}\ge S^\plus_{m_0}$, and by
+independence $\Prob(S^\plus_{m_0}\le I)\le(1-T_\plus(I+1))^{m_0}\le e^{-m_0T_\plus(I+1)}$.
+\end{proof}
+
+\begin{corollary}\label{cor:count}
+Assume (BAL) and the upper half of (SRT$_\minus$), $u_\minus\le C\omega_\minus$. Fix $c\in(0,1)$
+and $\delta\in(0,1)$. Then for $n_0\ge cN$ and all large $N$,
+\[
+ \sum_{i\le\delta N}F^\minus_{n_0+i}(i)\le\zeta(\delta):=C_c\bigl(\delta^{\alpha/4}+e^{-\delta^{-\alpha/4}}+\delta^{(1-\alpha)/2}\bigr),
+\]
+and the mirror bound holds under the upper half of (SRT$_\plus$).
+\end{corollary}
+
+\begin{proof}
+Apply Lemma~\ref{lem:count} with $I=\lfloor\delta N\rfloor$ and $m_0=\lceil\eta/T_\plus(N)\rceil$,
+$\eta=\delta^{\alpha/4}$. By (R2), $m_0T_\minus(n_0)\le C_c(\eta+T_\plus(N))$. By (R1),
+$m_0T_\plus(\delta N+1)\ge\eta\,\delta^{-\alpha/2}=\delta^{-\alpha/4}$ for large $N$. Finally
+$u_\minus(n_0)\le C_c/(NT_\plus(N))$ and, by (R3) and (R2),
+$\sum_{n\le\delta N}T_\plus(n)\le C\delta NT_\plus(\delta N)\le C\delta^{(1-\alpha)/2}NT_\plus(N)$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:mixture}]
+Fix $0<x_1<x_2<1$, let $k=k_N$ with $x=k/N\in[x_1,x_2]$, put $j=N-k$, and fix
+$0<\delta<\varepsilon<\min(x_1,1-x_2)/4$. In Proposition~\ref{prop:first-run} the atoms vanish.
+We split the plus part $\sum_{d\le k}\nu_\plus(d)F^\minus_{N-d}(k-d)$ into three ranges.
+
+\emph{Range 1, $d<\varepsilon N$.} The horizon is $n=N-d\ge(1-\varepsilon)N$ and $(k-d)/n$ lies in a
+compact subset of $(0,1)$, at distance at most $2\varepsilon$ from $x$. Theorem~\ref{thm:local}(ii)
+for the fresh minus walk is uniform in the ratio as $n\to\infty$, and $\La$ is uniformly
+continuous on compacts, so $NF^\minus_{N-d}(k-d)=\La(x)+O(\varepsilon)+o(1)$. This range contributes
+$\Prob(\Sigma=\plus,D<\varepsilon N)\,[\La(x)+O(\varepsilon)+o(1)]/N$.
+
+\emph{Range 2, $\varepsilon N\le d\le k-\delta N$.} Here $(k-d)/(N-d)\in[\delta,(x_2-\varepsilon)/(1-\varepsilon)]$
+and the horizon is at least $(1-x_2)N$, so by Theorem~\ref{thm:local}(ii)
+$NF^\minus_{N-d}(k-d)=g_x(d/N)+o(1)$ uniformly, with
+$g_x(z)=\La((x-z)/(1-z))/(1-z)$, and $NF^\minus_{N-d}(k-d)\le C$. The function $g_x$ is continuous
+on $[\varepsilon,x-\delta]$, and the family $(g_x)$ is equicontinuous in $x\in[x_1,x_2]$ there. By
+(H1), with a limit measure that has a density, the weighted sum converges:
+$N\sum_{\varepsilon N\le d\le k-\delta N}\nu_\plus(d)F^\minus_{N-d}(k-d)=\int_\varepsilon^{x-\delta}\rho_\plus(z)g_x(z)\,dz+o(1)$,
+uniformly in $x$.
+
+\emph{Range 3, $k-\delta N<d\le k$.} Put $i=k-d\le\delta N$. The terms are
+$\nu_\plus(k-i)F^\minus_{j+i}(i)$ with $j=N-k\ge(1-x_2)N$, and $d\in[\varepsilon N,(1-\varepsilon)N]$ by
+the choice of $\varepsilon$, so (H2) gives $N\nu_\plus(k-i)\le C_\varepsilon$. By
+Corollary~\ref{cor:count} with $n_0=j$ and $c=1-x_2$, this range contributes at most
+$C_\varepsilon\zeta(\delta)/N$.
+
+The minus part $\sum_{d\le j}\nu_\minus(d)F^\plus_{N-d}(k)$ is the same, with
+$F^\plus_{N-d}(k)=F^\plus_{k+i'}(k)$, $i'=j-d$, and the mirror of Corollary~\ref{cor:count} with
+$n_0=k\ge x_1N$. Adding the ranges, letting $N\to\infty$, then $\delta\to0$, then $\varepsilon\to0$,
+and using (H0) for the mass of range 1 and the integrability of $\rho_\pm$ near $0$ and of
+$g_x$ near $z=x$, where $g_x(z)\le C(x-z)^{\alpha-1}$, gives the claim.
+\end{proof}
+
+Theorem~\ref{thm:mixture} needs no condition of the type (LB). Theorem~\ref{thm:ends}(b)
+would bound each near-diagonal term by $CT(N)\omega(k-d)$, and the sum of these bounds over
+$i\le\delta N$ is of order $T(N)/T(\delta N)$, which is not small. The counting bound
+replaces the pointwise estimate by the expected length of the level set
+$\{m:C_m=n_0\}$, which costs only the upper half of the strong renewal theorem at $n_0$.
+
+\subsection{The aged process}\label{sec:aged}
+
+Let the walk start fresh with either sign at step $1$, and observe it from step $t_a+1$
+on, for an aging time $t_a=t_a(N)$ with $t_a/N\to\theta\in(0,\infty)$. Let $A_N$ now be the
+number of plus steps among the steps $t_a+1,\dots,t_a+N$, and $P_N(k)=\Prob(A_N=k)$. The run in
+progress at step $t_a+1$ is the initial run of the observed walk. Let $\Sigma$ be its sign
+and $D$ the number of its steps from step $t_a+1$ on. Given $(\Sigma,D)$, the later runs are
+fresh and alternate, so $P_N$ is the law of Proposition~\ref{prop:first-run} with an initial
+run that depends on $N$. Let $u_c$ be the renewal mass function of the cycle law
+$f_c=f_\plus*f_\minus$ and $v_c=f_\plus*u_c$, so that for a fresh plus start $u_c(s)$ and $v_c(s)$
+are the probabilities that a plus run, respectively a minus run, starts at step $s+1$. A run
+that starts at step $s+1\le t_a+1$ with length $l$ straddles step $t_a+1$ exactly when
+$l\ge t_a-s+1$, and then $D=s+l-t_a$. Hence
+\begin{equation}\label{eq:aged-law}
+ \nu_\plus(d)=\sum_{s=0}^{t_a}u_c(s)\,f_\plus(t_a-s+d),\qquad
+ \nu_\minus(d)=\sum_{s=0}^{t_a}v_c(s)\,f_\minus(t_a-s+d),
+\end{equation}
+and $Q_\sgn(N)$ is the same sum with $T_\sgn(t_a-s+N)$ in place of $f_\sgn(t_a-s+d)$. For a fresh
+minus start the roles of $u_c$ and $v_c$ are exchanged. Put $p_\plus=1/(1+b)$ and
+$p_\minus=b/(1+b)$, the limit shares of the two signs, and for $z>0$
+\begin{equation}\label{eq:rho-aged}
+ \rho_\sgn(z)=p_\sgn\,\frac{\sin\pi\alpha}\pi\,\frac{\theta^\alpha z^{-\alpha}}{\theta+z}.
+\end{equation}
+
+\begin{lemma}[the marked Dynkin--Lamperti law]\label{lem:DL}
+Assume (BAL). For every $r>0$, $\Prob(\Sigma=\sgn,\,D\ge rN)\to\int_r^\infty\rho_\sgn(z)\,dz$,
+$\Prob(\Sigma=\sgn)\to p_\sgn$, and $\lim_{\varepsilon\to0}\lim_N\Prob(D<\varepsilon N)=0$. In particular
+the aged initial run satisfies (H0) with $\pi^0=0$ and (H1) with the densities~\eqref{eq:rho-aged}.
+\end{lemma}
+
+\begin{proof}
+The cycle tail is $T_c(n)=\Prob(X_\plus+X_\minus\ge n)\sim(1+b)T_\plus(n)$, since the two
+summands are independent with regularly varying tails of the same index. The renewal
+measure $U_c(n)=\sum_{s\le n}u_c(s)$ satisfies $U_c(n)T_c(n)\to1/(\Gamma(1+\alpha)\Gamma(1-\alpha))=\sin(\pi\alpha)/(\pi\alpha)$
+by Karamata's Tauberian theorem~\cite[Section~XIV.3]{feller1971}. So $U_c(N\,dy)/U_c(N)$
+converges vaguely to $d(y^\alpha)$ on $[0,\infty)$, and by (R1), $T_\plus(t_a-y+rN)/T_\plus(N)\to(\theta-y/N+r)^{-\alpha}$
+uniformly in $y\in[0,t_a]$ after the substitution $y=Ny'$. Hence
+\[
+ \Prob(\Sigma=\plus,D\ge rN)=\sum_{s\le t_a}u_c(s)T_\plus(t_a-s+rN)
+ \to\frac{\sin\pi\alpha}{\pi\alpha}\,p_\plus\int_0^\theta(\theta+r-y)^{-\alpha}\,d(y^\alpha).
+\]
+Differentiating in $r$ and using the identity
+$\int_0^\theta y^{\alpha-1}(\theta+r-y)^{-\alpha-1}dy=\theta^\alpha/(\alpha r^\alpha(\theta+r))$, which the
+substitution $v=y/(\theta+r-y)$ turns into $(\theta+r)^{-1}\int_0^{\theta/r}v^{\alpha-1}dv$, gives the
+density $\rho_\plus(r)$. The minus sign is the same with $v_c$, whose partial sums are
+asymptotic to $U_c$. Since $\int_0^\infty\theta^\alpha z^{-\alpha}(\theta+z)^{-1}dz=\pi/\sin\pi\alpha$, the
+densities $\rho_\sgn$ have total mass $p_\sgn$, and $p_\plus+p_\minus=1$, so no mass escapes to
+$0$ and $\Prob(\Sigma=\sgn)\to p_\sgn$.
+\end{proof}
+
+In the scaling limit the run boundaries form the range of a stable subordinator whose
+jumps carry the sign $\plus$ with probability $p_\plus$, independently of their lengths. So
+the sign of the straddling run is asymptotically independent of its length. This is the
+statement after Eq.~(18) of Akimoto, Sera, Yamato and Yano~\cite{asyy2020}, there without
+proof. For $0<x<1$ let
+\begin{equation}\label{eq:L-theta}
+ L_\theta(x)=\int_0^x\rho_\plus(z)\,\La\Bigl(\frac{x-z}{1-z}\Bigr)\frac{dz}{1-z}
+ +\int_0^{1-x}\rho_\minus(z)\,\La\Bigl(\frac x{1-z}\Bigr)\frac{dz}{1-z},
+\end{equation}
+the mixture~\eqref{eq:mixture} with $\pi^0=0$, and put
+\begin{equation}\label{eq:aged-constants}
+ Q^\infty_\sgn(\theta)=\int_1^\infty\rho_\sgn(z)\,dz=p_\sgn\,\frac{\sin\pi\alpha}\pi\,B\Bigl(\frac\theta{1+\theta};\alpha,1-\alpha\Bigr),\qquad
+ c_\sgn(\theta)=\int_0^1\rho_\sgn(z)(1-z)^{-\alpha}\,dz,
+\end{equation}
+with $B(x;a,b)=\int_0^xu^{a-1}(1-u)^{b-1}du$ the incomplete beta function. The substitutions
+$z=\theta w$ and $u=1/(1+w)$ give the closed form of $Q^\infty_\sgn$, and Euler's integral gives
+$c_\sgn(\theta)=p_\sgn\frac{\sin\pi\alpha}\pi\,\theta^{\alpha-1}B(1-\alpha,1-\alpha)\,{}_2F_1(1,1-\alpha;2-2\alpha;-1/\theta)$.
+At $\alpha=1/2$, $\theta=1$ and $b=1$ this is $c_\plus(1)=1/(2\sqrt2)$. We also need a condition
+on the cycle renewal sequences,
+\begin{equation}\label{eq:U}\tag{U}
+ u_c(n)\le C\,\omega_\plus(n)\quad\text{and}\quad v_c(n)\le C\,\omega_\plus(n)\qquad(n\ge1),
+\end{equation}
+with the roles of $u_c$ and $v_c$ exchanged for a fresh minus start at step $1$.
+
+\begin{lemma}[when (U) holds]\label{lem:U}
+Assume (BAL) and (SPAN). Then (U) holds under (LB$_\pm$), for every $\alpha$. It holds under
+no further condition when $\alpha>1/2$. For $\alpha\le1/2$ it holds when $f_c$ and $f_\plus$
+satisfy the strong renewal theorem.
+\end{lemma}
+
+\begin{proof}
+Under (SPAN) for the plus sign the support of $X_\plus+X_\minus$ lies in no progression
+$c+h\Z$ with $h\ge2$, so $f_c$ is aperiodic. Under (LB$_\pm$), splitting the convolution at
+$n/2$ gives $f_c(n)\le CT_c(n)/n$, so Doney's theorem (Lemma~\ref{lem:cd}(iii)) gives the strong
+renewal theorem for $f_c$, that is $u_c\le C\omega_\plus$ since $T_c\asymp T_\plus$. For
+$\alpha>1/2$ the same follows from Lemma~\ref{lem:cd}(iii) without (LB), and for $\alpha\le1/2$
+it is the assumption on $f_c$. For $v_c=f_\plus*u_c$ split at $n/2$. The part
+$\sum_{i\le n/2}f_\plus(i)u_c(n-i)$ is at most $C\omega_\plus(n/2)\le C\omega_\plus(n)$. The part
+$\sum_{i>n/2}f_\plus(i)u_c(n-i)=f_\plus(n)+\sum_{1\le z<n/2}f_\plus(n-z)u_c(z)$ is at most
+$f_\plus(n)+C\sum_{1\le z<n/2}f_\plus(n-z)/(zT_\plus(z)^2)$, since $\omega_\plus(z)\le1/(zT_\plus(z)^2)$.
+Under (LB$_\plus$) this is at most $CT_\plus(n)/n+C(T_\plus(n)/n)U_c(n/2)\le C/n\le C\omega_\plus(n)$.
+Otherwise the sum is the quantity of Lemma~\ref{lem:cd}(iii) for the plus law, which is
+$O(1/(nT_\plus(n)))$ when $f_\plus$ satisfies the strong renewal theorem, and $f_\plus(n)\le T_\plus(n)\le\omega_\plus(n)$
+for large $n$.
+\end{proof}
+
+We split the aged initial run by the start of the straddling run. Write
+$\nu_\sgn=\nu^{\mathrm y}_\sgn+\nu^{\mathrm o}_\sgn$, where $\nu^{\mathrm y}_\sgn$ collects the
+terms of~\eqref{eq:aged-law} with $s>t_a/2$, the young runs, and $\nu^{\mathrm o}_\sgn$ those
+with $s\le t_a/2$, the old runs.
+
+\begin{lemma}[pointwise bounds]\label{lem:aged-pointwise}
+Assume (BAL) and (SPAN), and fix $\varepsilon\in(0,1)$.
+\begin{enumerate}[(a)]
+\item Under (U), $N\nu^{\mathrm y}_\pm(d)\le C_{\varepsilon,\theta}$ for all $d\ge\varepsilon N$ and large $N$.
+\item Under (LB$_\pm$), $N\nu_\pm(d)\le C_{\varepsilon,\theta}$ for all $d\ge\varepsilon N$ and large $N$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) For $s>t_a/2$, (U) gives $u_c(s)\le C\omega_\plus(t_a/2)\le C_\theta/(NT_\plus(N))$, and
+$\sum_sf_\plus(t_a-s+d)\le T_\plus(d)\le C_\varepsilon T_\plus(N)$ by (R2). The minus sign is the same
+with $v_c$. (b) For $s\le t_a/2$ the argument of $f_\plus$ in~\eqref{eq:aged-law} is at least
+$t_a/2+d\ge cN$, so (LB$_\plus$) gives $f_\plus\le CT_\plus(N)/N$, and
+$\sum_{s\le t_a/2}u_c(s)=U_c(t_a/2)\le C/T_\plus(N)$ by the proof of Lemma~\ref{lem:DL}. So the old
+part is at most $C/N$, and the young part is covered by (a), since (LB$_\pm$) implies (U) by
+Lemma~\ref{lem:U}.
+\end{proof}
+
+\begin{introtheorem}[the aged law]\label{thm:aging}
+Let the walk start fresh with either sign at step $1$, and let $t_a/N\to\theta\in(0,\infty)$.
+Assume (BAL) and (SPAN).
+\begin{enumerate}[(a)]
+\item (The bulk.) Assume one of the following: (LB$_\pm$); $\alpha>1/2$; $\alpha<1/2$,
+(SRT$_\pm$) and (U); $\alpha=1/2$, (SRT$_\pm$), (U), and $nT_\plus(n)^2$ bounded above and away
+from zero. Then $NP_N(\lfloor xN\rfloor)\to L_\theta(x)$ uniformly for $x$ in compact subsets
+of $(0,1)$.
+\item (The atoms.) Under (BAL) alone, $P_N(N)=Q_\plus(N)\to Q^\infty_\plus(\theta)$ and
+$P_N(0)\to Q^\infty_\minus(\theta)$.
+\item (The end layers.) Under (U), for every fixed $j\ge1$,
+\[
+ P_N(N-j)=T_\plus(N)\bigl[c_\plus(\theta)\,u_\minus(j)+o(1)\bigr],\qquad
+ P_N(j)=T_\minus(N)\bigl[c_\minus(\theta)\,u_\plus(j)+o(1)\bigr].
+\]
+\end{enumerate}
+\end{introtheorem}
+
+The atoms are of order $1$, against $T_\plus(N)$ and $0$ for a fresh start, and
+$\int_0^1L_\theta+Q^\infty_\plus(\theta)+Q^\infty_\minus(\theta)=1$, since the integral of
+$\rho_\plus+\rho_\minus$ over $(0,\infty)$ is $1$. The density $L_\theta$ is the aging
+generalized arcsine law of Akimoto, Sera, Yamato and Yano~\cite[Theorem~2]{asyy2020}, who obtain
+the convergence in distribution by a scaling argument. Part (a) is its local form, and the
+mixture of Theorem~\ref{thm:mixture} with Lemma~\ref{lem:DL} gives the convergence in
+distribution under (BAL) alone, by continuous mapping from Lamperti's theorem for the
+remainder walk. The end layers keep the fresh shape $u_\minus(j)$ and lose the factor
+$c_\plus(\theta)<p_\plus<1$. As $\theta\to0$ the densities $\rho_\sgn\,dz$ converge to
+$p_\sgn\delta_0$, so $L_\theta\to\La$ uniformly on compacts and $Q^\infty_\sgn(\theta)\to0$, while
+$c_\plus(\theta)\to p_\plus$, since
+$\int_0^1z^{-\alpha}(1-z)^{-\alpha}(\theta+z)^{-1}dz\sim\theta^{-\alpha}\pi/\sin\pi\alpha$. The fresh
+layer is $u_\minus(j)$ for either starting sign, so the limits $\theta\to0$ and $N\to\infty$ do
+not commute at the ends. For small $\theta$ the straddling run still has length of order
+$\theta N\gg j$, and only a plus straddler can feed the plus layer. For Brownian motion this
+is the remark after Eq.~(15) of~\cite{asyy2020}, with $c(r)\to\frac12$, which is the case $b=1$.
+As $\theta\to\infty$, $Q^\infty_\sgn(\theta)\to p_\sgn$ and $L_\theta=O(\theta^{\alpha-1})$.
+
+\begin{proof}[Proof of Theorem~\ref{thm:aging}(b)]
+This is Lemma~\ref{lem:DL} at $r=1$, since $P_N(N)=Q_\plus(N)=\Prob(\Sigma=\plus,D\ge N)$ by
+Proposition~\ref{prop:first-run}.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:aging}(a)]
+Under (LB$_\pm$), Lemma~\ref{lem:DL} gives (H0) with $\pi^0=0$ and (H1), Lemma~\ref{lem:aged-pointwise}(b)
+gives (H2), and (LB$_\pm$) gives (SRT$_\pm$). So Theorem~\ref{thm:mixture} applies and gives
+$L_\theta$. In the other three cases (SRT$_\pm$) holds, by Lemma~\ref{lem:cd}(iii) when
+$\alpha>1/2$ and by assumption otherwise, and (U) holds by Lemma~\ref{lem:U} or by assumption.
+Ranges 1 and 2 of the proof of Theorem~\ref{thm:mixture} used only (H0) and (H1). In range 3
+we split $\nu_\plus=\nu^{\mathrm y}_\plus+\nu^{\mathrm o}_\plus$. The young part satisfies (H2)
+by Lemma~\ref{lem:aged-pointwise}(a), and Corollary~\ref{cor:count} bounds its contribution by
+$C_\varepsilon\zeta(\delta)/N$ as before. It remains to bound the old part
+\[
+ E_{\mathrm o}=\sum_{i\le\delta N}\nu^{\mathrm o}_\plus(k-i)\,F^\minus_{j+i}(i),
+\]
+with $k/N\in[x_1,x_2]$, $j=N-k$ and $\delta\le1-x_2$, and its mirror. Lemma~\ref{lem:E} applies
+to $F^\minus_{j+i}(i)$, because $j+i\ge(1-x_2)N$ and $i\le\delta N\le(j+i)/2$, and gives
+$F^\minus_{j+i}(i)\le CT_\plus(N)\omega_\plus(i)$. Write $T=T_\plus$ and $\omega=\omega_\plus$. With
+$M=t_a+k$ and $y=i+s$, \eqref{eq:aged-law} gives
+\[
+ E_{\mathrm o}\le CT(N)\sum_{y\ge0}f_\plus(M-y)\,W(y),\qquad
+ W(y)=\sum_{\substack{i+s=y\\ i\le\delta N,\ s\le t_a/2}}\omega(i)\,u_c(s),
+\]
+and on the range of the sum $M-y\ge t_a/2+k-\delta N\ge cN$. By (U), $u_c\le C\omega$ with
+$\omega(0)=1$, so $W(y)\le C(\omega*\omega)(y)\le C/(yT(y)^2)$ for $y\ge1$, by splitting the
+convolution at $y/2$ and using $\sum_{i\le Y}\omega(i)\le C/T(Y)$ from (R3). For $y>2\delta N$
+every term has $s\ge y/2$, so $W(y)\le C\omega(y)\sum_{i\le\delta N}\omega(i)\le C\omega(y)/T(\delta N)$.
+
+\emph{The range $y\le2\delta N$.} If $\alpha>1/2$, the function $1/(yT(y)^2)$ is regularly varying
+with the positive index $2\alpha-1$, so $\sup_{y\le2\delta N}W(y)\le C/(\delta NT(\delta N)^2)$, and
+since $\sum_yf_\plus(M-y)\le1$ this range contributes at most
+$CT(N)^2/(\delta NT(\delta N)^2)\le C\delta^{2\alpha-1-\epsilon'}/N$ by Potter's bounds, for any
+$\epsilon'>0$. If $\alpha\le1/2$, this range contributes at most
+$CT(N)[f_\plus(M)+\sum_{1\le y\le2\delta N}f_\plus(M-y)/(yT(y)^2)]$. By Lemma~\ref{lem:cd}(iii),
+(SRT$_\plus$) says that $MT(M)\sum_{z\le\delta'M}f_\plus(M-z)/(zT(z)^2)\le\zeta_{\mathrm{CD}}(\delta')+o(1)$
+with $\zeta_{\mathrm{CD}}(\delta')\to0$ as $\delta'\to0$, uniformly over $M$ in a range of order $N$,
+and its term $z=1$ gives $f_\plus(M)=o(1/(MT(M)))$. Since $2\delta N\le C\delta M$ and $MT(M)\asymp NT(N)$,
+this range contributes at most $C(\zeta_{\mathrm{CD}}(C\delta)+o(1))/N$.
+
+\emph{The range $2\delta N<y\le\eta N$, with $\eta=\delta^{1-\alpha}$.} Using $W(y)\le C\omega(\delta N)/T(\delta N)$
+there, and $\sum_{2\delta N<y\le\eta N}f_\plus(M-y)=T(M-\eta N)-T(M-2\delta N)\le T(N)(C\eta+o(1))$ by
+(R1) at the scale $N$, this range contributes at most
+$C(\eta+o(1))T(N)^2/(\delta NT(\delta N)^2)\le C(\delta^{\alpha-\epsilon'}+o(1))/N$.
+
+\emph{The range $y>\eta N$.} On a dyadic block $(Y,2Y]$ with $Y\ge\eta N/2$ we have
+$W(y)\le C\omega(Y)/T(\delta N)$, and $\sum_{Y<y\le2Y}f_\plus(M-y)=T(M-2Y)-T(M-Y)\le T(N)(CY/N+o(1))$ by
+(R1). Summing over the blocks, with $\sum_YY\omega(Y)=\sum_Y1/T(Y)\le C/T(N)$ and
+$\sum_{Y\ge\eta N/2}\omega(Y)\le C\omega(\eta N)\log(1/\eta)$, this range contributes at most
+$C\frac{T(N)^2}{T(\delta N)}\Bigl[\frac1{NT(N)}+o(1)\,\omega(\eta N)\log\frac1\eta\Bigr]\le C\frac{\delta^{\alpha-\epsilon'}}N+o\Bigl(\frac1N\Bigr)$.
+
+Hence $NE_{\mathrm o}\le C\delta^{\min(\alpha,2\alpha-1)-\epsilon'}+o(1)$ for $\alpha>1/2$ and
+$NE_{\mathrm o}\le C\zeta_{\mathrm{CD}}(C\delta)+C\delta^{\alpha-\epsilon'}+o(1)$ for $\alpha\le1/2$, which
+tends to $0$ as $N\to\infty$ and then $\delta\to0$. The minus side is the same with $v_c$, $f_\minus$,
+the condition of Lemma~\ref{lem:cd}(iii) for $f_\minus$, and the mirror of Lemma~\ref{lem:E}.
+For $\alpha>1/2$ every input is automatic, for $\alpha<1/2$ the inputs are (SRT$_\pm$) and (U),
+and at $\alpha=1/2$ Lemma~\ref{lem:E} adds the condition on $nT_\plus(n)^2$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:aging}(c)]
+Fix $j\ge1$. Proposition~\ref{prop:first-run} at $k=N-j$ gives
+\[
+ P_N(N-j)=\sum_{m=1}^{N-1}\nu_\plus(N-m)\,\Pi^\minus_m(j)+\sum_{d=1}^{j}\nu_\minus(d)\,F^\plus_{N-d}(N-j).
+\]
+In the second sum $F^\plus_{N-d}(N-j)\le C_jT_\plus(N)$ by Theorem~\ref{thm:ends}(a), and
+$\nu_\minus(d)\le\sup_{s>t_a/2}v_c(s)+T_\minus(t_a/2)\to0$, since $v_c(s)\to0$ by the renewal
+theorem for the aperiodic cycle law with infinite mean. So it is $o(T_\plus(N))$. Fix
+$\eta\in(0,1)$. For $m>\eta N$, Theorem~\ref{thm:ends}(a) for a fresh minus walk gives
+$\Pi^\minus_m(j)=T_\plus(m)[u_\minus(j)+o(1)]$ uniformly, and Lemma~\ref{lem:DL} with the bounded
+continuous integrand $(1-z)^{-\alpha}$ on $[0,1-\eta]$ gives
+$\sum_{d<(1-\eta)N}\nu_\plus(d)T_\plus(N-d)/T_\plus(N)\to\int_0^{1-\eta}\rho_\plus(z)(1-z)^{-\alpha}dz$. So the
+terms with $m>\eta N$ give $T_\plus(N)u_\minus(j)\int_0^{1-\eta}\rho_\plus(z)(1-z)^{-\alpha}dz+o(T_\plus(N))$.
+For $m\le\eta N$ we use $\Pi^\minus_m(j)\le C_jT_\plus(m)$. The young part contributes at most
+$(C/N)\sum_{m\le\eta N}T_\plus(m)\le C\eta^{1-\alpha-\epsilon'}T_\plus(N)$ by
+Lemma~\ref{lem:aged-pointwise}(a) and (R3). The old part is at most
+$C_j\sum_yf_\plus(M'-y)W'(y)$ with $M'=t_a+N$ and
+$W'(y)=\sum_{m+s=y,\ m\le\eta N,\ s\le t_a/2}T_\plus(m)u_c(s)$. By (U), splitting at $y/2$,
+$W'\le C$ everywhere, and $W'(y)\le C\omega_\plus(y)\,\eta NT_\plus(\eta N)$ for $y>2\eta N$. The
+range $y\le2\eta N$ costs at most $CT_\plus(N)(\eta+o(1))$, a drop of $T_\plus$ over a window of
+length $2\eta N$ at the scale $N$, and the dyadic blocks above $2\eta N$ cost at most
+$C\eta NT_\plus(\eta N)T_\plus(N)[1/(NT_\plus(N))+o(1)\omega_\plus(\eta N)]\le C\eta^{1-\alpha-\epsilon'}T_\plus(N)+o(T_\plus(N))$,
+as in the proof of (a). Let $N\to\infty$ and then $\eta\to0$. The minus end is the mirror.
+\end{proof}
+
+A uniform matching of the aged layer to the bulk, the analogue of Theorem~\ref{thm:ends}(b),
+is not proved. As $x\to1$ the plus integral of $L_\theta$ behaves like
+$\frac{\sin\pi\alpha}{\pi b}c_\plus(\theta)(1-x)^{\alpha-1}$, which under (SRT$_\minus$) and pure power
+tails is what $T_\plus(N)c_\plus(\theta)u_\minus(j)$ gives for $1\ll j\ll N$, so the two pieces are
+consistent. Section~\ref{sec:verify} reports the checks of all three parts against the exact
+aged law.

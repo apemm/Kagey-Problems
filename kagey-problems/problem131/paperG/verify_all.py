@@ -4,9 +4,13 @@ verify_identities.py checks the exact identities of Section 2 against a sum over
 verify_shape.py checks the threshold of Theorem thm:shape, the transform of Proposition prop:lambda
 and the double integral of Theorem thm:local at a = 1/2. verify_local.py computes the exact law at
 N = 1000, 2000, 4000 and checks the ratios, end layers and sign changes quoted in Section sec:verify.
-verify_initial.py checks the numbers on the initial run (Theorem thm:initial, Remark rem:aging).
+verify_initial.py checks the numbers on the initial run (Theorem thm:initial and the mixture of
+Theorem thm:mixture). lamperti_critical.py checks Theorem thm:shape for every b, and layer_check.py
+the two difference statements (L) and (B) behind Proposition prop:count. The longer scans
+(01_compare.py for the dominated regime, 02_aging_exact.py for the aged law, scan_alpha_lt1.py,
+scan_starts.py, alpha_c_check.py and mixed_index.py for the counts) are run separately, see README.md.
 
-The whole run takes about a minute. Needs numpy, scipy and mpmath. Each script writes its output with
+The whole run takes a few minutes. Needs numpy, scipy and mpmath. Each script writes its output with
 its sha256 and the date to data/, and this runner writes its summary to data/verify_all_output.txt.
 """
 from datetime import date
@@ -19,9 +23,11 @@ import time
 
 base = Path(__file__).resolve().parent
 scripts = ['verify_identities.py',   # Section 2, exact identities, N <= 12
-           'verify_shape.py',        # thm:shape, prop:lambda, thm:local(a)
+           'verify_shape.py',        # thm:shape at b = 1, prop:lambda, thm:local(a)
            'verify_local.py',        # sec:verify, exact law at N = 1000, 2000, 4000
-           'verify_initial.py']      # thm:initial, rem:aging
+           'verify_initial.py',      # thm:initial, the mixture of thm:mixture
+           'lamperti_critical.py',   # thm:shape for every b: beta_c against zero counts
+           'layer_check.py']         # the hypotheses (L) and (B) of prop:count, Sibuya laws
 start = time.time()
 failed = []
 times = []

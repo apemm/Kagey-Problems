@@ -31,9 +31,12 @@ st = load("series_style", PAPER.parent / "figures" / "series_style.py")
 lw = load("lamperti_law", PAPER / "lamperti_law.py")
 
 
+lc = load("lamperti_critical", PAPER / "lamperti_critical.py")
+
+
 def main():
     st.use()
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(st.FULL, 2.4))
+    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(st.FULL, 2.4), gridspec_kw={"width_ratios": [1.1, 1.1, 0.8]})
     ac = brentq(lambda a: np.cos(np.pi * a / 2) - a, 0.3, 0.9)
     x = np.linspace(0.002, 0.998, 2000)
     alphas = [0.3, 0.5, ac, 0.7, 0.9]
@@ -71,7 +74,22 @@ def main():
     ax2.set_xlabel(r"$k/N$")
     ax2.legend(frameon=False, loc="upper center", fontsize=7, handlelength=1.5, markerscale=4)
     st.panel(ax2, "b", y=0.08)
-    fig.tight_layout(w_pad=1.5)
+
+    a1 = brentq(lambda a: np.sin(np.pi * a) - a, 0.55, 0.95)
+    aa = np.linspace(ac + 1e-4, a1 - 1e-4, 400)
+    bc = np.array([lc.beta_c(a) for a in aa])
+    ax3.plot(aa, bc, color=st.SERIES["accent"], lw=1.0)
+    ax3.axvline(ac, color=st.SERIES["prior"], lw=0.6, ls=":")
+    ax3.axvline(a1, color=st.SERIES["prior"], lw=0.6, ls=":")
+    ax3.set_xlim(0.55, 0.78)
+    ax3.set_ylim(0, 4)
+    ax3.set_xlabel(r"$\alpha$")
+    ax3.set_ylabel(r"$\beta_c(\alpha)$")
+    ax3.set_xticks([0.6, 0.65, 0.7, 0.75])
+    ax3.text(0.5 * (ac + a1), 1.2, "W", ha="center", fontsize=8)
+    ax3.text(0.5 * (ac + a1) - 0.02, 3.4, "U", ha="center", fontsize=8)
+    st.panel(ax3, "c", y=0.08)
+    fig.tight_layout(w_pad=1.2)
     st.save(fig, HERE / "shape")
 
 

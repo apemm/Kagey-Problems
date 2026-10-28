@@ -3,26 +3,32 @@
 No proof uses a computed number. The computations check the exact identities and test
 the theorems at moderate $N$. Except where we say otherwise they use the zeta law
 $f(n)=n^{-\alpha-1}/\zeta(\alpha+1)$ for both signs, so $b=1$, and the fair start. The
-exact law comes from~\eqref{eq:run-sum}. The convolution powers $u^\pm_m$ are computed by
-direct convolution, and every entry of $A$, $B$ and $F^\plus_N$ is a sum of nonnegative
-terms, so the relative rounding error stays small. The total mass is $1$ to $12$ digits in
-every case. The identities of Section~\ref{sec:identities} and~\eqref{eq:run-sum} agree
-with a sum over all sign strings for $N\le12$, for two different laws of the two signs and
-a general initial run, to $2\cdot10^{-16}$.
+exact law comes from~\eqref{eq:run-sum}, or from the first-run decomposition with the
+convolution powers computed by FFT. Every entry is a sum of nonnegative terms, so the
+relative rounding error stays small, and the total mass is $1$ to $12$ digits in every
+case. The identities of Section~\ref{sec:identities} and~\eqref{eq:run-sum} agree with a sum
+over all sign strings for $N\le12$, for two different laws of the two signs and a general
+initial run, to $2\cdot10^{-16}$, and the aged law of Section~\ref{sec:aged} agrees with a sum
+over all run sequences for $t_a+N\le12$ to $6\cdot10^{-16}$.
 
-Table~\ref{tab:ratios} shows the ratio $NP_N(k)/L_{\alpha,1}(k/N)$ at $k=N/2$ and $k=N/20$,
-and the number of sign changes of $k\mapsto P_N(k+1)-P_N(k)$. At $\alpha=1/2$ the central
-ratio is $1.0149$, $1.0105$ and $1.0075$ for $N=1000$, $2000$ and $4000$, and the
-distance to $1$ shrinks by a factor close to $\sqrt2$ when $N$ doubles. The convergence is
-slower away from $\alpha=1/2$ and much slower as $\alpha\to1$. At $\alpha=0.9$ the central
-ratio is $0.54$ at $N=4000$. The sign changes sit at $k=N/2$ for $\alpha\le0.58$. At
-$\alpha=0.7$ and $N=1000$ they sit at $k=104$, $500$ and $896$, near the minima of
-$L_{0.7,1}$. At $\alpha=0.9$ and $N=4000$ they sit at $k=1$, $142$, $2000$, $3858$ and
-$3999$. The two outer ones come from the ends, as in Example~\ref{ex:counts}. Indeed
-$P_N(N)/T(N)=\frac12$ exactly, while $P_N(N-1)/T(N)$ is $0.5754$, $0.5737$ and $0.5727$ for
-$N=1000$, $2000$ and $4000$, tending to $f(1)=0.5715$. On both sides of the threshold of
-Theorem~\ref{thm:shape} the count is $1$ at $\alpha=0.58$ and $3$ at $\alpha=0.61$, for all
-three $N$. Every count in the table equals the lower bound of Theorem~\ref{thm:signs}.
+\emph{The local law and the ends.} Table~\ref{tab:ratios} shows the ratio
+$NP_N(k)/L_{\alpha,1}(k/N)$ at $k=N/2$ and $k=N/20$, and the number of sign changes of
+$k\mapsto P_N(k+1)-P_N(k)$. At $\alpha=1/2$ the central ratio is $1.0149$, $1.0105$ and $1.0075$
+for $N=1000$, $2000$ and $4000$, and the distance to $1$ shrinks by a factor close to
+$\sqrt2$ when $N$ doubles. The convergence is slower away from $\alpha=1/2$ and much slower
+as $\alpha\to1$. The sign changes sit at $k=N/2$ for $\alpha\le0.58$. At $\alpha=0.7$ and
+$N=1000$ they sit at $k=104$, $500$ and $896$, near the minima of $L_{0.7,1}$. At
+$\alpha=0.9$ and $N=4000$ they sit at $k=1$, $142$, $2000$, $3858$ and $3999$, and the two
+outer ones come from the ends, as in Example~\ref{ex:counts}. On both sides of $\alpha_c$ the
+count is $1$ at $\alpha=0.58$ and $3$ at $\alpha=0.61$. Every count in the table equals the
+lower bound of Theorem~\ref{thm:signs}. At the plus end, for $\alpha=1/2$, the ratio
+$P_N(N-j)/(T(N)u(j))$ lies in $[1.0009,1.0040]$ for $1\le j\le5$ at $N=1000$ and in
+$[1.0004,1.0020]$ at $N=2000$, and the ratio of $P_N(N-j)$ to $T(N)u(j)\Phi_1(j/N)$ over
+$1\le j\le0.8N$ lies in $[1.0004,1.0148]$ at $N=1000$ and in $[1.0002,1.0105]$ at $N=2000$, as
+Theorem~\ref{thm:ends}(b) predicts. For unequal laws, the zeta law for the plus runs and
+$f_\minus(n)\propto(n+3)^{-\alpha-1}$ for the minus runs with a fresh plus start, the ratios to
+$L_{\alpha,b}$ at $x=0.1,0.3,\dots,0.9$ lie in $[1.0121,1.0397]$ at $N=1000$ and in
+$[1.0069,1.0199]$ at $N=4000$ for $\alpha=1/2$, where $b=2.4498$.
 
 \begin{table}[t]
 \centering
@@ -43,53 +49,75 @@ differences of $P_N$, for the zeta law and the fair start.}
 \label{tab:ratios}
 \end{table}
 
-At the end, for $\alpha=1/2$, the ratio $P_N(N-j)/(T(N)u(j))$ is given in
-Table~\ref{tab:ends} for $1\le j\le5$. It lies in $[1.0009,1.0040]$ at $N=1000$ and in
-$[1.0004,1.0020]$ at $N=2000$, so the error halves when $N$ doubles.
+\emph{The initial run.} For $\alpha=1/2$, a fair sign and $\nu_\pm(d)=d^{-1.2}/(2\zeta(1.2))$,
+the central ratio is $0.815$, $0.836$ and $0.855$ for $N=500$, $1000$ and $2000$. The gap to
+$1$ decays like $N^{-0.2}$, the order of $\Prob(D\ge N)$, which enters through the first run
+with $\varepsilon N\le D<N$ in the proof of Theorem~\ref{thm:initial}(a). For $D$ uniform on
+$\{1,\dots,N/2\}$ with a fair sign, $NP_N(k)$ at $k/N=0.3$ and $0.5$ is $0.898$ and $1.325$ at
+$N=500$ and $0.884$ and $1.299$ at $N=2000$, against the values $0.8694$ and $1.2732$ of the
+mixture~\eqref{eq:mixture} with $\rho_\pm=1$ on $(0,\frac12)$ and $\pi^0=0$, and against the
+values $0.6946$ and $0.6366$ of $L_{1/2,1}$ for a fresh start.
 
-\begin{table}[t]
-\centering
-\begin{tabular}{@{}lccccc@{}}
-\toprule
-& $j=1$ & $j=2$ & $j=3$ & $j=4$ & $j=5$\\
-\midrule
-$N=1000$ & $1.0009$ & $1.0018$ & $1.0026$ & $1.0033$ & $1.0040$\\
-$N=2000$ & $1.0004$ & $1.0009$ & $1.0013$ & $1.0017$ & $1.0020$\\
-\bottomrule
-\end{tabular}
-\caption{The ratio $P_N(N-j)/(T(N)u(j))$ of Theorem~\ref{thm:ends}(a) for the zeta law with
-$\alpha=1/2$ and the fair start.}
-\label{tab:ends}
-\end{table} The ratio of $P_N(N-j)$ to $T(N)u(j)\Phi_1(j/N)$ over $1\le j\le0.8N$ lies
-in $[1.0004,1.0148]$ at $N=1000$ and in $[1.0002,1.0105]$ at $N=2000$, as
-Theorem~\ref{thm:ends}(b) predicts.
+\emph{The aged law.} For Theorem~\ref{thm:aging} with $\theta\in\{\frac12,1,2\}$ and
+$N=500$, $1000$, $2000$, the aged law is computed from the first-run decomposition with the
+initial run~\eqref{eq:aged-law}. At $\alpha=1/2$ and $\theta=1$ the largest relative error of
+$NP_N(\lfloor xN\rfloor)$ against $L_\theta(x)$ on $x\in[0.1,0.9]$ is below $5\%$ at $N=2000$ and
+decreases with $N$, and at $\alpha=0.7$ it is below $15\%$. The atom $P_N(N)$ is $1.0282$,
+$1.0198$ and $1.0139$ times $Q^\infty_\plus(1)$ at the three values of $N$ for $\alpha=1/2$, and
+$1.0418$, $1.0293$ and $1.0206$ times $Q^\infty_\plus(\frac12)$. The ratio
+$P_N(N-j)/(T_\plus(N)c_\plus(\theta)u_\minus(j))$ for $j=1,\dots,5$ lies in $[1.050,1.089]$ at
+$N=2000$ for $\theta=1$, and after removal of the term $T_\plus(N)\sum_{d\le j}\nu_\minus(d)u_\minus(j-d)$,
+which is $o(T_\plus(N))$ but only by a factor of order $1/(NT(N))$, it lies in $[1.0161,1.0167]$.
+Each deviation shrinks by about $1/\sqrt2$ per doubling of $N$. The mass identity
+$\int_0^1L_\theta+Q^\infty_\plus+Q^\infty_\minus=1$ and the closed forms of $Q^\infty_\sgn$ and
+$c_\sgn$ agree with quadrature to $10$ digits.
 
-For unequal laws we take the zeta law for the plus runs and
-$f_\minus(n)\propto(n+3)^{-\alpha-1}$ for the minus runs, so $b=\zeta(\alpha+1)/\zeta(\alpha+1,4)$,
-with a fresh plus start. At $\alpha=1/2$, where $b=2.4498$, the ratios to $L_{\alpha,b}$ at
-$x=0.1,0.3,\dots,0.9$ lie in $[1.0121,1.0397]$ at $N=1000$ and in $[1.0069,1.0199]$ at
-$N=4000$. At $\alpha=0.7$, where $b=3.4700$, they lie in $[0.8460,1.2994]$ at $N=1000$ and in
-$[0.8855,1.1920]$ at $N=4000$. In both cases the number of sign changes is $2$, at $k=1$ and at
-the interior minimum, as in Example~\ref{ex:counts}.
+\emph{The dominated regime.} For Theorem~\ref{thm:dominated} we take zeta laws with a fresh
+plus start, $N=1000$, $2000$, $4000$, the mixed pair $(\alpha_\plus,\alpha_\minus)=(0.6,1.5)$ and
+the infinite pair $(0.5,0.8)$. The largest relative error of $D_NP_N(N-j)$ against
+$\rho(j/D_N)$ on $y\in[0.05,1]$ is $0.304$, $0.247$ and $0.201$ in the mixed case, decreasing
+like $N^{-0.3}$, and on $y\in[0.1,3]$ it is $0.588$, $0.533$ and $0.478$ in the infinite case,
+where the lighter sums carry a drift correction of relative size $m^{1-1/\alpha_\minus}$ with
+only about $83$ cycles at $N=4000$. The finite-$N$ main term of the proof,
+$T_\plus(N-j)\sum_mu^\minus_m(j)\phi(mT_\plus(N-j))$, is closer, within $0.098$ and $0.078$ at
+$N=4000$. At the plus end the ratio $P_N(N-j)/(T_\plus(N)u_\minus(j))$ for $j\le5$ lies in
+$[1.0000,1.0172]$ and $[1.0000,1.0003]$ at $N=4000$, and at the minus end
+$P_N(i)/(T_\minus(N)u_\plus(i))$ for $1\le i\le5$ is within $0.9\%$ of $1$ in both cases. In the
+mixed case the law has exactly $3$ modes at every $N$, at $k=1$, at $k=N$ and at an interior
+point near $N-y^*D_N$ with $y^*$ the maximum of $\phi$, since $\alpha_\plus>1/2$; for
+$(\alpha_\plus,\alpha_\minus)=(0.4,1.5)$ it has exactly $2$, at $k=1$ and $k=N$. At $\alpha=1/2$ the
+density $\phi$ agrees with $e^{-\pi x^2/4}$ to $8$ digits, and the ratio density at
+$\alpha=0.7$ agrees with~\eqref{eq:ratio-density} to $10$ digits.
 
-For the Lamperti density, the root of $\cos(\pi\alpha/2)=\alpha$ is
-$0.594611644056836$, and on a grid of $2\cdot10^5$ points $L_{\alpha,1}$ has $1$ critical
-point for $\alpha\le0.5946$ and $3$ for $\alpha\ge0.5947$, at the values we tried. The
-transform~\eqref{eq:stieltjes} agrees with direct quadrature in $30$-digit arithmetic, and
-at $\alpha=1/2$ the double integral~\eqref{eq:Lambda} agrees with $L_{1/2,1}$ to a relative
-error below $10^{-13}$ at $x=0.2$, $0.5$ and $0.7$.
-
-For the initial run we take $\alpha=1/2$, a fair sign and $\nu_\pm(d)=d^{-1.2}/(2\zeta(1.2))$.
-Then $n\nu_\pm(n)\to0$, and Theorem~\ref{thm:initial}(c) gives the local law. The central
-ratio is $0.815$, $0.836$ and $0.855$ for $N=500$, $1000$ and $2000$. The gap to $1$ decays
-like $N^{-0.2}$, the order of $\Prob(D\ge N)$, which enters through the first run with
-$\varepsilon N\le D<N$ in the proof of Theorem~\ref{thm:initial}(a). For $D$ uniform on
-$\{1,\dots,N/2\}$ with a fair sign, $NP_N(k)$ at $k/N=0.3$ and $0.5$ is $0.898$ and $1.325$
-at $N=500$ and $0.884$ and $1.299$ at $N=2000$. The formula of Conjecture~\ref{rem:aging}
-gives $0.8694$ and $1.2732$, against the values $0.6946$ and $0.6366$ of $L_{1/2,1}$ for a
-fresh start.
+\emph{The shape.} The roots are $\alpha_c=0.594611644056836$ and
+$\alpha_1=0.736484448241517$. On a grid of $\alpha$ from $0.02$ to $0.98$ and $|\beta|\le6$ in
+steps of $0.05$, the number of zeros of the exponential sum that has the sign of
+$\frac d{dt}\log\La$ agrees with Theorem~\ref{thm:shape}, and it flips between
+$\beta_c(0.7)-10^{-3}$ and $\beta_c(0.7)+10^{-3}$. The transform~\eqref{eq:stieltjes} agrees with
+direct quadrature in $30$-digit arithmetic, and at $\alpha=1/2$ the double
+integral~\eqref{eq:Lambda} agrees with $L_{1/2,1}$ to a relative error below $10^{-13}$ at
+$x=0.2$, $0.5$ and $0.7$. For Proposition~\ref{prop:count} we use Sibuya laws,
+$T(n)=\prod_{i<n}(1-\alpha/i)$, which are log-convex, and $N=250,500,\dots,3000$. With $b=1$ and
+a fresh plus or a fair start the law has exactly $2$ modes at every $N$ for $\alpha=0.3$ and
+$0.5$, and exactly $3$ for $\alpha=0.65$, $0.7$ and $0.9$, with the bulk minima at $0.136N$,
+$0.085N$ and $0.021N$ against the minima $0.1388$, $0.085$ and $0.0216$ of $\La$. For the law
+$f(n)\propto n^{-1.7}$ on $n\ge2$ the profiles have maxima at $j=0,2,4$ and the counts are $6$
+for the fresh plus start and $7$ for the fair start at every $N$. For unequal tails of the
+same index, the minus law a mixture of a Sibuya law and a geometric law so that $b=0.6$ at
+$\alpha=0.7$, inside the window, the count is $3$ at every $N$; for $b=0.5$ at $\alpha=0.65$,
+outside the window, it is $3$ up to $N=1500$ and $2$ from $N=2000$ on; and for $b=0.25$ at
+$\alpha=0.7$ it is still $3$ at $N=3000$, where the local law itself is far from its limit
+because the light component adds $O(N^\alpha)$ steps of finite mean. For (L), the ratio
+$D_N(j)/(T_\plus(N)(u_\minus(j+1)-u_\minus(j)))$ at $j=5$, $20$, $50$ and $N=3000$ is $0.952$,
+$0.897$, $0.847$ for $\alpha=0.3$ and $0.969$, $0.917$, $0.819$ for $\alpha=0.7$, rising with $N$ at
+fixed $j$. For (B), $N^2(P_N(k+1)-P_N(k))$ at $x=0.2$, $0.3$, $0.4$, $0.45$ and $N=3000$ is
+$-1.688$, $-0.681$, $-0.266$, $-0.125$ against $\La'=-1.571$, $-0.635$, $-0.248$, $-0.117$ for
+$\alpha=0.3$, and $1.435$, $1.729$, $1.261$, $0.697$ against $1.413$, $1.681$, $1.208$, $0.666$
+for $\alpha=0.7$. The scans decide signs from the floating-point differences, whose smallest
+relative gap at a counted extremum was $7\cdot10^{-10}$ against a rounding error of order
+$10^{-13}$.
 
 The scripts and their outputs, each headed by the hash of its script, are in the folder
 \nolinkurl{kagey-problems/problem131/paperG} of \url{https://github.com/apemm/Kagey-Problems}.
-The command \texttt{python -I verify\_all.py} runs all checks in about a minute, and
-\nolinkurl{README.md} lists what each script tests.
+The command \texttt{python -I verify\_all.py} runs the main checks in a few minutes, and
+\nolinkurl{README.md} lists what each script tests and how to run the longer scans.
