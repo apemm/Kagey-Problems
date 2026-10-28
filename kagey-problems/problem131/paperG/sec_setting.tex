@@ -2,7 +2,7 @@
 
 \subsection{Runs and the occupation count}\label{sec:runs}
 
-The walk takes $N$ steps and each step has a sign, $\plus$ or $\minus$. The signs
+The process takes $N$ steps and each step has a sign, $\plus$ or $\minus$. The signs
 come in maximal runs of equal sign, and consecutive runs have opposite signs. All
 runs after the first are independent. A run of sign $\sgn\in\{\plus,\minus\}$ has a
 length distributed as $X_\sgn$, a random variable on $\{1,2,\dots\}$ with mass
@@ -17,10 +17,10 @@ later runs, and $D<\infty$ almost surely. We put
  \nu_\sgn(d)=\Prob(\Sigma=\sgn,\,D=d),\qquad Q_\sgn(N)=\Prob(\Sigma=\sgn,\,D\ge N),
  \qquad \pi_\sgn=\Prob(\Sigma=\sgn).
 \]
-Except in Conjecture~\ref{rem:aging}, the law of the initial run does not depend on
-$N$. A fresh start of sign $\sgn_0$ has $\nu_{\sgn_0}=f_{\sgn_0}$ and
-$\nu_{\osgn_0}=0$. The fair start is a fresh start of random sign, each sign with
-probability $\frac12$.
+In Sections~\ref{sec:local} to~\ref{sec:initial} the law of the initial run does not
+depend on $N$. In Section~\ref{sec:aging} it does. A fresh start of sign $\sgn_0$ has
+$\nu_{\sgn_0}=f_{\sgn_0}$ and $\nu_{\osgn_0}=0$. The fair start is a fresh start of random
+sign, each sign with probability $\frac12$.
 
 Let $A_N$ be the number of plus steps among steps $1,\dots,N$, and
 $P_N(k)=\Prob(A_N=k)$ for $0\le k\le N$. For a fresh start of sign $\sgn$ we write
@@ -36,20 +36,34 @@ $m$ steps.
 
 The hypotheses carry fixed names, and every statement says which it uses.
 \begin{itemize}[leftmargin=5em,labelsep=0.8em]
-\item[(RV$_\alpha$)] $T_\plus$ is regularly varying with index $-\alpha$, where
-$0<\alpha<1$, and $T_\minus(n)/T_\plus(n)\to b$ for some $b\in(0,\infty)$.
+\item[(RV)] For each sign, $T_\sgn$ is regularly varying with index $-\alpha_\sgn$, where
+$\alpha_\sgn\in(0,1)\cup(1,2)$.
+\item[(BAL)] (RV) holds with $\alpha_\plus=\alpha_\minus=\alpha\in(0,1)$, and
+$T_\minus(n)/T_\plus(n)\to b$ for some $b\in(0,\infty)$.
+\item[(DOM)] (RV) holds with $\alpha_\plus\in(0,1)$ and $T_\minus(n)=o(T_\plus(n))$.
 \item[(SPAN)] For each sign, the support of $X_\sgn$ is not contained in any
 arithmetic progression $c+h\Z$ with $h\ge2$.
-\item[(SRT$_\sgn$)] $u_\sgn(n)\sim\dfrac{\sin\pi\alpha}{\pi}\,\dfrac1{nT_\sgn(n)}$ as
+\item[(SRT$_\sgn$)] $\alpha_\sgn<1$ and $u_\sgn(n)\sim\dfrac{\sin\pi\alpha_\sgn}{\pi}\,\dfrac1{nT_\sgn(n)}$ as
 $n\to\infty$, with $u_\sgn$ the renewal mass function of Section~\ref{sec:kernels}.
 \item[(LB$_\sgn$)] There is $C$ with $f_\sgn(n)\le C\,T_\sgn(n)/n$ for all $n\ge1$.
+\item[(LR)] For each sign, $f_\sgn(n)\sim\alpha_\sgn T_\sgn(n)/n$ as $n\to\infty$.
+\item[(LD2)] For each sign, $|f_\sgn(n+1)-2f_\sgn(n)+f_\sgn(n-1)|=O(f_\sgn(n)/n^2)$.
+\item[(DSRT$_\sgn$)] $\alpha_\sgn<1$ and $u_\sgn(j)-u_\sgn(j+1)\sim(1-\alpha_\sgn)\,u_\sgn(j)/j$ as $j\to\infty$.
 \end{itemize}
-Under (RV$_\alpha$) both tails are regularly varying with index $-\alpha$. Unequal
-indices, or $b\in\{0,\infty\}$, give a degenerate limit of $A_N/N$ and are not
-treated. (SPAN) is the aperiodicity needed for local limit theorems.
-(SRT$_\sgn$) is the strong renewal theorem for the runs of sign $\sgn$. (LB$_\sgn$)
-is Doney's local condition. It implies (SRT$_\sgn$) by Lemma~\ref{lem:cd}(iii)
-below. A hypothesis written with the subscript $\pm$ is assumed for both signs.
+Under (BAL) both periods have infinite mean and both sides set the number of cycles,
+and this is the setting of Sections~\ref{sec:local} to~\ref{sec:aging}, where we write
+$\alpha$ for the common index. Under (DOM) the plus side has the heavier tail and an
+infinite mean, while the minus side may have a finite or an infinite mean. This is the
+setting of Section~\ref{sec:dominated}. Together with the finite-mean case
+of~\cite{paperF}, the two regimes cover every pair of indices in $(0,1)\cup(1,2)$ for
+which $T_\minus/T_\plus$ has a limit in $[0,\infty]$, up to the exchange of the signs. If
+$T_\minus/T_\plus$ has no limit, there are only subsequential limit laws. (SPAN) is the
+aperiodicity needed for local limit theorems. (SRT$_\sgn$) is the strong renewal theorem
+for the runs of sign $\sgn$. (LB$_\sgn$) is Doney's local condition, and it implies
+(SRT$_\sgn$) by Lemma~\ref{lem:cd}(iii) below. (LR) implies (LB) and (RV) with the same
+index. (DSRT$_\sgn$) is a difference form of the strong renewal theorem, and
+Lemma~\ref{lem:dsrt} shows that it holds for log-convex run laws. A hypothesis written
+with the subscript $\pm$ is assumed for both signs.
 
 \emph{Constants.} Unindexed $C$ and $c$ are positive constants that depend only on
 the laws of the runs and may change from one use to the next. A constant written
@@ -57,17 +71,18 @@ $C_\delta$ also depends on $\delta$.
 
 \subsection{Scales, stable densities and the Lamperti density}\label{sec:scales}
 
-Under (RV$_\alpha$) choose an increasing function $a:(0,\infty)\to(0,\infty)$ with
-$t\,T_\plus(a(t))\to1$ as $t\to\infty$, and put $a_m=a(m)$. So $a$ is regularly
-varying with index $1/\alpha$. For $t>0$ let
+For a sign with $\alpha_\sgn<1$ choose an increasing function
+$a_\sgn:(0,\infty)\to(0,\infty)$ with $t\,T_\sgn(a_\sgn(t))\to1$ as $t\to\infty$. So $a_\sgn$ is
+regularly varying with index $1/\alpha_\sgn$. Under (BAL) we write $a$ for $a_\plus$ and
+$a_m=a(m)$, and for $t>0$ we put
 \[
  m_N(t)=\lfloor t/T_\plus(N)\rfloor .
 \]
 Then $T_\plus(a_{m_N(t)})\sim T_\plus(N)/t$, and $a_{m_N(t)}/N\to t^{1/\alpha}$ uniformly for $t$
 in compact subsets of $(0,\infty)$ (Lemma~\ref{lem:rv-facts}).
 
-Put $\Gam=\Gamma(1-\alpha)$, and let $g$ be the density of the positive stable
-variable $Z$ with $\E e^{-\lambda Z}=e^{-\Gam\lambda^\alpha}$. Its L\'evy measure is
+For $0<\alpha<1$ put $\Gam=\Gamma(1-\alpha)$, and let $g$ be the density of the positive
+stable variable $Z$ with $\E e^{-\lambda Z}=e^{-\Gam\lambda^\alpha}$. Its L\'evy measure is
 $\alpha r^{-\alpha-1}dr$ on $(0,\infty)$, with tail $r^{-\alpha}$. For $t>0$ let
 \[
  p_t(z)=t^{-1/\alpha}g\bigl(zt^{-1/\alpha}\bigr),
@@ -118,14 +133,21 @@ the probability that the $m$-th run of sign $\sgn$ covers level $k$ in the time 
 its sign. The second form holds because $X^\sgn_m$ is independent of $S^\sgn_{m-1}$.
 For each $k\ge1$ exactly one $m$ has $S^\sgn_{m-1}<k\le S^\sgn_m$, so
 $\sum_{m\ge1}q^\sgn_m(k)=1$. We write $\omega_\sgn(i)=\min\{1,1/(iT_\sgn(i))\}$ for
-$i\ge1$ and $\omega_\sgn(0)=1$. Under (SRT$_\sgn$) we have $u_\sgn\le C\omega_\sgn$.
+$i\ge1$ and $\omega_\sgn(0)=1$. Under (SRT$_\sgn$) we have $u_\sgn\le C\omega_\sgn$. For a
+start of sign $\sgn_0$ the boundary kernel at the plus end is the probability that a plus
+run starts right after the $j$-th minus step,
+\begin{equation}\label{eq:kappa-fresh}
+ \kappa^{(\plus)}_\plus(j)=u_\minus(j)\quad(j\ge0),\qquad
+ \kappa^{(\minus)}_\plus(j)=u_\minus(j)\ones_{\{j\ge1\}},
+\end{equation}
+and the kernel at the minus end is defined with the signs exchanged~\cite[Section~2.4]{paperF}.
 
 \subsection{Exact identities}\label{sec:identities}
 
-The following identities hold for every $N$ and need no hypothesis. They are
-proved in~\cite[Section~2]{pemmasaniF}, and we include the short proofs. The
-computations of Section~\ref{sec:verify} check them against a sum over all sign
-strings.
+The following identities hold for every $N$ and need no hypothesis. They are proved
+in~\cite[Section~2]{paperF}, and we include the short proofs because every section
+uses them. The computations of Section~\ref{sec:verify} check them against a sum over
+all sign strings.
 
 \begin{proposition}[the fresh-plus identity]\label{prop:fresh-identity}
 For $k,j\ge1$ with $k+j=N$,
@@ -205,4 +227,17 @@ Splitting on the start of the final run gives, with $j=N-k$,
 \begin{equation}\label{eq:run-sum}
  F^\plus_N(k)=\sum_{k'<k}A(k',j)\,T_\plus(k-k')+\sum_{j'<j}B(k,j')\,T_\minus(j-j').
 \end{equation}
-Every term is nonnegative.
+Every term is nonnegative, and an initial run enters by adding its weights to $A$ and
+$B$.
+
+We also need the Green identity of~\cite[Lemma~2.7]{paperF}. For a fresh walk of sign
+$\sgn$ and every $b\ge1$,
+\begin{equation}\label{eq:green}
+ \sum_{m\ge1}\Pi^\sgn_m(b)=1+\E[X_{\osgn}]\,u_\sgn(b),
+\end{equation}
+where $\Pi^\plus_m(b)=F^\plus_m(b)$ and the right side is $+\infty$ when the mean of
+$X_{\osgn}$ is infinite. The proof counts the steps $m$ at which the walk has exactly $b$
+steps of sign $\sgn$. They form the interval between the $b$-th and the $(b+1)$-th such
+step, whose length is $1$ unless the $b$-th step ends a run of sign $\sgn$, and then it is
+$1$ plus the length of the following run of sign $\osgn$, which is independent of the
+event. Section~\ref{sec:aging} uses a truncated form of this count.
