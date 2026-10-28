@@ -1,4 +1,4 @@
-"""The numbers of Section sec:verify on the initial run (Theorem thm:initial and Remark rem:aging).
+"""The numbers of Section sec:verify on the initial run (Theorem thm:initial and the mixture of Theorem thm:mixture).
 
 Model: the zeta law f(n) = n^(-a-1)/zeta(a+1) for both signs, a = 1/2. The law for an initial run is
 assembled from prop:first-run with the fresh laws computed by eq:run-sum (F-_n(i) = F+_n(n-i) by
@@ -11,9 +11,9 @@ symmetry).
      D+_N(N/2) + D-_N(N/2) of thm:initial(a) are printed, and they decrease.
   3. The end layer thm:initial(f): P_N(N-j)/(T(N) kappa_+(j)) for j = 1, 2, 3 moves toward 1 from
      N = 500 to N = 2000.
-  (S) A scale-N initial run (Remark rem:aging): sign fair, D uniform on {1, ..., N/2}.
+  (S) A scale-N initial run (Theorem thm:mixture): sign fair, D uniform on {1, ..., N/2}.
   4. N P_N(k) at x = 0.3, 0.5 is 0.898, 1.325 at N = 500 and 0.884, 1.299 at N = 2000, and it moves
-     toward the values 0.8694, 1.2732 of the formula of Remark rem:aging. At x = 1/2 that value is
+     toward the values 0.8694, 1.2732 of the mixture of Theorem thm:mixture. At x = 1/2 that value is
      4/pi = 2 L(1/2).
   5. The total mass is 1 to 10 digits.
 
