@@ -1,0 +1,315 @@
+\subsection{Aging: the law observed from time $t_a$}\label{sec:aging}
+
+So far the walk starts at step $1$. Now let it start fresh at step $1$ and observe
+it from step $t_a+1$ on, for an aging time $t_a=t_a(N)\ge0$. Let $A^{(t_a)}_N$ be the
+number of plus steps among the steps $t_a+1,\dots,t_a+N$, and let
+$P^{(t_a)}_N(k)=\Prob(A^{(t_a)}_N=k)$. In the physics literature this is the aged
+occupation time, and the stationary initial run of Section~\ref{sec:prep-stationary}
+is its limit as $t_a\to\infty$ with $N$ fixed. Akimoto, Sera, Yamato and
+Yano~\cite{asyy2020} proved the aged form of the arcsine law in distribution for
+$0<\alpha<1$, and Akimoto~\cite{akimoto2023} computed the moments of the aged
+occupation time for $1<\alpha<2$. Here we give the aged law at every point. The result
+is that the bulk does not age, while the atom, the boundary layer and the big-jump
+zone do, and each aged piece interpolates between the fresh start at $\theta=0$ and
+Corollary~\ref{cor:stationary} at $\theta=\infty$, where $\theta=\lim t_a/N$.
+
+The run in progress at step $t_a+1$ is the initial run of the observed walk. Let
+$\Sigma$ be its sign and $D$ the number of its steps from step $t_a+1$ on. Given
+$(\Sigma,D)$, the later runs are fresh and alternate. So $P^{(t_a)}_N$ is the law
+$P_N$ of Section~\ref{sec:prep-statements} with the initial run
+\begin{equation}\label{eq:aged-nu}
+ \nu^{(t_a)}_\plus(d)=\sum_{t=0}^{t_a}a_t\,f_\plus(t_a-t+d),\qquad
+ \nu^{(t_a)}_\minus(d)=\sum_{t=0}^{t_a}b_t\,f_\minus(t_a-t+d),
+\end{equation}
+where $a_t$ and $b_t$ are the probabilities that a plus run, respectively a minus
+run, starts at step $t+1$ of the fresh walk. Indeed, a plus run that starts at step
+$t+1\le t_a+1$ has $d$ steps from step $t_a+1$ on exactly when its length is
+$t_a-t+d$. The plus runs start at the renewal epochs of the cycles of the walk,
+whose law is $f_\plus*f_\minus$ with mean $s$, so $a_t$ is a renewal sequence and
+$b_t=\sum_{t'<t}a_{t'}f_\plus(t-t')$. Under (SPAN) for one sign the support of
+$X_\plus+X_\minus$ lies in no progression $b+h\Z$ with $h\ge2$, so by the renewal
+theorem~\cite[Section~XIII.3]{feller1968}
+\begin{equation}\label{eq:aged-renewal}
+ a_t\to\frac1s,\qquad b_t\to\frac1s\qquad(t\to\infty).
+\end{equation}
+The initial run now depends on $N$ through $t_a$, so the statements of
+Theorem~\ref{thm:preparation}, which fix one law, do not apply as stated. Their proofs
+do, under one condition on the family. We record this first.
+
+\begin{lemma}[triangular arrays of initial runs]\label{lem:array}
+Let the law $\nu^{(N)}$ of the initial run depend on $N$, and suppose that
+\begin{equation}\label{eq:tight}
+ \varepsilon_J=\sup_N\Prob\bigl(D^{(N)}>J\bigr)\to0\qquad(J\to\infty).
+\end{equation}
+Then Theorem~\ref{thm:preparation}(a) holds for $P_N$ with the defects computed from
+$\nu^{(N)}$. Under the hypotheses of Theorem~\ref{thm:preparation}(c), for every
+$\varepsilon>0$ there is $K_0$ such that for $K\ge4K_0$ and all large $N$
+\begin{multline}\label{eq:array-decomp}
+ \sup_{pN+K\lambda_NB_N\le k\le N}
+ \frac{\bigl|P_N(k)-Q^{(N)}_\plus(N)\ones_{\{k=N\}}-G^{\nu^{(N)}}_N(k)-\Psi^{(N)}_N(k)\bigr|}{\widehat G_N(k)}\\
+ \le C\Bigl(\varepsilon+r_N+\frac{(1-p)J}{KB_N}+\varepsilon_J\Bigr)
+\end{multline}
+for every $J\ge1$, with $C$ and $r_N\to0$ depending only on the laws of the runs, and with
+$G^{\nu^{(N)}}_N$ and $\Psi^{(N)}_N$ the kernels~\eqref{eq:G-prep} and~\eqref{eq:Psi} of
+$\nu^{(N)}$.
+\end{lemma}
+
+\begin{proof}
+The proof of Theorem~\ref{thm:preparation}(a) in Section~\ref{sec:prep-bulk} uses the law
+of the initial run in three places. The weights of $E_1$ have total mass at most $1$,
+and the limit~\eqref{eq:prep-shift} does not involve them. The part $E_2$ is at most
+$CC_{10}\Prob(D>J)$. The part $E_3$ is the defect, which is kept exactly. So the bound
+$\limsup_N\sup_k|e_N(k)|\le(C_1+CC_{10})\Prob(D>J)$ becomes
+$(C_1+CC_{10})\varepsilon_J$ for the array, and $J$ is arbitrary. The proof of the
+decomposition in (c), Section~\ref{sec:prep-bigjump}, uses the law only through the
+total mass of the weights, the tail $\Prob(D>J)$ in Steps 2 and 3, and the kernel
+$G^\nu_N$, which records $\pi_\plus$ and $\nu_\minus(d)$ for $d\le j$. Its constants $C$,
+$C_*$, $C_{\mathrm G}$, $K_0$, $n_0$ and $r_N$ come from~\eqref{eq:unif-bigjump} and
+from (LR) and (RV), so they depend only on the laws of the runs. Step 4 then
+gives~\eqref{eq:array-decomp} with $\varepsilon_J$ in place of $\Prob(D>J)$.
+\end{proof}
+
+For the aged initial run, $\Prob(D^{(t_a)}>J)=\sum_{t\le t_a}[a_tT_\plus(t_a-t+J+1)+b_tT_\minus(t_a-t+J+1)]
+\le\sum_{i>J}(T_\plus(i)+T_\minus(i))$, since $a_t,b_t\le1$, and the right side tends
+to zero as $J\to\infty$ because the means are finite. So~\eqref{eq:tight} holds for
+every choice of $t_a(N)$. We also need the aged initial run at the scale $N$.
+
+\begin{lemma}[the aged initial run]\label{lem:aged-nu}
+Assume (RV) and (SPAN), and let $t_a=t_a(N)\ge0$ be arbitrary.
+\begin{enumerate}[(a)]
+\item $\nu^{(t_a)}_\sgn(d)\le T_\sgn(d)$ for every $d\ge1$, and
+$Q^{(t_a)}_\sgn(N)\le\sum_{i\ge N}T_\sgn(i)$.
+\item For every $\varepsilon>0$, uniformly in $d\ge\varepsilon N$,
+\[
+ \nu^{(t_a)}_\plus(d)=\frac1s\bigl[T_\plus(d)-T_\plus(d+t_a+1)\bigr]+o(T_\plus(N)).
+\]
+\item If $t_a\to\infty$, then $\nu^{(t_a)}_\sgn(d)\to T_\sgn(d)/s$ for every fixed $d\ge1$,
+$\pi^{(t_a)}_\plus=\Prob(\Sigma=\plus)\to p$, and
+$Q^{(t_a)}_\plus(N)=(1+o(1))\,s^{-1}\sum_{i=N}^{N+t_a}T_\plus(i)$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) Since $a_t\le1$, \eqref{eq:aged-nu} gives
+$\nu^{(t_a)}_\plus(d)\le\sum_{t\le t_a}f_\plus(t_a-t+d)\le T_\plus(d)$, and summing over
+$d\ge N$ gives the bound on the atom.
+
+(b) Write $a_t=1/s+\eta_t$, so $\eta_t\to0$ by~\eqref{eq:aged-renewal}. The main part of
+\eqref{eq:aged-nu} is $s^{-1}\sum_{i=d}^{t_a+d}f_\plus(i)=s^{-1}[T_\plus(d)-T_\plus(d+t_a+1)]$.
+Fix $M$. The error is at most
+$\sup_{t\ge M}|\eta_t|\,T_\plus(d)+M\sup_{i\ge d-M}f_\plus(i)$. Under (RV),
+$f_\plus(i)=T_\plus(i)-T_\plus(i+1)=o(T_\plus(i))$, and $T_\plus(i)\le T_\plus(\varepsilon N-M)\le C_\varepsilon T_\plus(N)$
+for $i\ge d-M$ and large $N$ by Lemma~\ref{lem:rv}(ii). So the error is at most
+$(\sup_{t\ge M}|\eta_t|+o(1))C_\varepsilon T_\plus(N)$, and $M$ is arbitrary.
+
+(c) In~\eqref{eq:aged-nu} put $m=t_a-t$. Then
+$\nu^{(t_a)}_\plus(d)=\sum_{m=0}^{t_a}a_{t_a-m}f_\plus(m+d)$, the coefficients are at most $1$,
+each tends to $1/s$, and $\sum_mf_\plus(m+d)=T_\plus(d)<\infty$. Dominated convergence
+gives $T_\plus(d)/s$, and the minus sign is the same with $b_t$. In the same way
+$\pi^{(t_a)}_\plus=\sum_{m=0}^{t_a}a_{t_a-m}T_\plus(m+1)\to s^{-1}\sum_{m\ge0}T_\plus(m+1)=\mu_\plus/s=p$.
+For the atom,
+$Q^{(t_a)}_\plus(N)=\sum_{i=N}^{N+t_a}a_{t_a+N-i}T_\plus(i)$. Put $\Sigma_N=\sum_{i=N}^{N+t_a}T_\plus(i)$.
+Since $T_\plus$ is nonincreasing, Lemma~\ref{lem:rv}(ii) gives
+$\Sigma_N\ge\min(t_a,N)\,T_\plus(2N)\ge c\min(t_a,N)\,T_\plus(N)$. Let $M\to\infty$ with
+$M=o(\min(t_a,N))$. The $M$ terms with $t_a+N-i<M$ contribute at most $MT_\plus(N)=o(\Sigma_N)$,
+and in the other terms the coefficient is $1/s+o(1)$ by~\eqref{eq:aged-renewal}. Hence
+$Q^{(t_a)}_\plus(N)=(1/s+o(1))\Sigma_N$.
+\end{proof}
+
+By Lemma~\ref{lem:rv}(i) and~(iv), as $N\to\infty$ with $t_a/N\to\theta$,
+\begin{equation}\label{eq:aged-sums}
+ \sum_{i=N}^{N+t_a}T_\plus(i)\sim
+ \begin{cases}
+  t_aT_\plus(N)&\text{if }\theta=0\text{ and }t_a\to\infty,\\[2pt]
+  NT_\plus(N)\dfrac{1-(1+\theta)^{1-\alpha_\plus}}{\alpha_\plus-1}&\text{if }0<\theta<\infty,\\[6pt]
+  NT_\plus(N)\dfrac1{\alpha_\plus-1}&\text{if }\theta=\infty,
+ \end{cases}
+\end{equation}
+and $T_\plus(N+t_a)/T_\plus(N)\to(1+\theta)^{-\alpha_\plus}$, with $(1+\theta)^{-\alpha_\plus}$ read as
+$0$ at $\theta=\infty$.
+
+\begin{introtheorem}[aging]\label{thm:aging}
+Let the walk start fresh with either sign at step $1$, and let $t_a=t_a(N)\ge0$.
+\begin{enumerate}[(a)]
+\item (The bulk does not age.) Assume (RV) and (SPAN). For every choice of $t_a(N)$,
+\[
+ \sup_{1\le k<N}\bigl|B_NP^{(t_a)}_N(k)-h_N(x_{N,k})\bigr|\to0 .
+\]
+\item (The atom.) Assume (RV) and (SPAN), and let $t_a\to\infty$ with $t_a/N\to\theta\in[0,\infty]$.
+Then $P^{(t_a)}_N(N)=Q^{(t_a)}_\plus(N)\sim s^{-1}\sum_{i=N}^{N+t_a}T_\plus(i)$, which
+\eqref{eq:aged-sums} evaluates. For $0<\theta<\infty$,
+\[
+ P^{(t_a)}_N(N)\sim\frac{NT_\plus(N)}{s(\alpha_\plus-1)}\bigl(1-(1+\theta)^{1-\alpha_\plus}\bigr).
+\]
+\item (The boundary layer.) Assume (RV) and (SPAN), and let $t_a\to\infty$ with
+$t_a/N\to\theta\in[0,\infty]$. For every fixed $j\ge1$,
+\[
+ \frac{P^{(t_a)}_N(N-j)}{T_\plus(N)}\to\kappa^{(\theta)}_\plus(j)
+ =p\,u_\minus(j)+\frac1s+\frac1s\bigl(1-(1+\theta)^{-\alpha_\plus}\bigr)\bigl(1+\mu_\plus u_\minus(j)\bigr).
+\]
+\item (The interior of the big-jump zone.) Assume (RV) and (SPAN) for both signs and (LR)
+for the plus sign. For every $\varepsilon\in(0,\frac12)$ and every choice of $t_a(N)$,
+uniformly over $k$ with $\varepsilon N\le L_k\le(1-\varepsilon)N$,
+\[
+ P^{(t_a)}_N(k)=\frac{N-L_k}{\mu_\minus}\,f_\plus(\lfloor L_k\rfloor)
+ +\frac{2T_\plus(\lfloor L_k\rfloor)-T_\plus(\lfloor L_k\rfloor+t_a)}{\mu_\minus}+o\bigl(T_\plus(N)\bigr).
+\]
+If $t_a/N\to\theta\in[0,\infty]$, then for fixed $v\in(p,1)$, with $\ell=(v-p)/(1-p)$,
+\[
+ \frac{P^{(t_a)}_N(\lfloor vN\rfloor)}{T_\plus(N)}\to I_\plus(v)+\frac{\ell^{-\alpha_\plus}-(\ell+\theta)^{-\alpha_\plus}}{\mu_\minus},
+\]
+with $I_\plus$ as in Corollary~\ref{cor:infinite-density} and $(\ell+\theta)^{-\alpha_\plus}=0$ at $\theta=\infty$.
+\end{enumerate}
+The same holds at the minus end with the signs exchanged.
+\end{introtheorem}
+
+At $\theta=0$ the atom, the layer and the interior kernel are those of the stationary
+initial run with its complete initial run removed, that is $\kappa^{(0)}_\plus=pu_\minus+1/s$
+and the kernel of Theorem~\ref{thm:bigjump}(b), while the atom $t_aT_\plus(N)/s$ grows with
+$t_a$. At $\theta=\infty$ all four parts are those of Corollary~\ref{cor:stationary}. For
+$0<\theta<\infty$ the straddling run reaches the horizon with the probability
+$\nu^{(t_a)}_\plus(L_k)\approx s^{-1}[T_\plus(L_k)-T_\plus(L_k+t_a)]$, and this is the term that
+ages. The bulk never does.
+
+\begin{proof}
+Throughout, $\nu=\nu^{(t_a)}$ is the initial run~\eqref{eq:aged-nu}, which
+satisfies~\eqref{eq:tight} by the remark before Lemma~\ref{lem:aged-nu}.
+
+(a) By Lemma~\ref{lem:array}, Theorem~\ref{thm:preparation}(a) holds for $\nu$, and the
+proof of part (b) of that theorem shows that the error over $1\le k<N$ is
+$\max(\Delta_{\plus,N},\Delta_{\minus,N})+o(1)$. By~\eqref{eq:defect-upper} and
+Lemma~\ref{lem:aged-nu}(a),
+$\Delta_{\plus,N}\le(1+\mu_\plus)B_N\sup_{d>N/2}\nu_\plus(d)\le(1+\mu_\plus)B_NT_\plus(N/2)$, which
+tends to zero by Lemma~\ref{lem:rv}(ii) and~(v). The minus sign is the same.
+
+(b) This is Lemma~\ref{lem:aged-nu}(c) and~\eqref{eq:aged-sums}, together with
+$P_N(N)=Q_\plus(N)$ from Proposition~\ref{prop:first-run}.
+
+(c) Fix $j\ge1$ and let $N>2j$. Proposition~\ref{prop:first-run} at $k=N-j$ gives
+\[
+ P_N(N-j)=\sum_{d=1}^{j}\nu_\minus(d)\,F^\plus_{N-d}(N-j)
+ +\sum_{d\le N/2}\nu_\plus(d)\,\Pi^\minus_{N-d}(j)+\sum_{1\le m<N/2}\nu_\plus(N-m)\,\Pi^\minus_m(j),
+\]
+since $F^\minus_{N-d}(N-j-d)=\Pi^\minus_{N-d}(j)$ and the terms with a minus initial run of
+length $d>j$ vanish. We treat the three sums in turn, and we use
+$T_\plus(N-d)/T_\plus(N)\to1$ for fixed $d$ and $T_\plus(N-d)\le CT_\plus(N)$ for $d\le N/2$.
+
+For $d\le j$, Theorem~\ref{thm:bigjump}(a) at the horizon $N-d$ and~\eqref{eq:kappa} give
+$F^\plus_{N-d}(N-j)/T_\plus(N)\to u_\minus(j-d)$, and $\nu_\minus(d)\to T_\minus(d)/s$ by
+Lemma~\ref{lem:aged-nu}(c). The covering identity~\eqref{eq:cover} gives the limit
+$s^{-1}\sum_{d=1}^jT_\minus(d)u_\minus(j-d)=1/s$.
+
+In the second sum split at a fixed $J$. For $d\le J$, Theorem~\ref{thm:bigjump}(a) for a
+fresh minus start gives $\Pi^\minus_{N-d}(j)/T_\plus(N)\to u_\minus(j)$, and
+$\sum_{d\le J}\nu_\plus(d)\to s^{-1}\sum_{d\le J}T_\plus(d)$. For $J<d\le N/2$ the horizon is
+at least $N/2$, so $\Pi^\minus_{N-d}(j)\le C_jT_\plus(N)$ for large $N$, and the weights add up
+to at most $\varepsilon_J$. Letting $N\to\infty$ and then $J\to\infty$ gives the limit
+$pu_\minus(j)$, since $s^{-1}\sum_{d\ge1}T_\plus(d)=p$.
+
+In the third sum, for each fixed $m$, Lemma~\ref{lem:aged-nu}(b) with $d=N-m\ge N/2$
+and~\eqref{eq:aged-sums} give
+$\nu_\plus(N-m)/T_\plus(N)\to s^{-1}(1-(1+\theta)^{-\alpha_\plus})$. Also
+$\nu_\plus(N-m)\le T_\plus(N/2)\le CT_\plus(N)$ for all $m<N/2$ by Lemma~\ref{lem:aged-nu}(a), and
+$\sum_{m\ge1}\Pi^\minus_m(j)=1+\mu_\plus u_\minus(j)<\infty$ by Lemma~\ref{lem:green}. Dominated
+convergence in $m$ gives the limit $s^{-1}(1-(1+\theta)^{-\alpha_\plus})(1+\mu_\plus u_\minus(j))$.
+Adding the three limits gives $\kappa^{(\theta)}_\plus(j)$.
+
+(d) Fix $\varepsilon\in(0,\frac12)$ and let $Z^\varepsilon_N=\{k:\varepsilon N\le L_k\le(1-\varepsilon)N\}$.
+On $Z^\varepsilon_N$ we have $j=N-k=(1-p)(N-L_k)\ge(1-p)\varepsilon N$, and
+$T_\plus(N)\le\widehat G_N(k)\le C_\varepsilon T_\plus(N)$, as in the proof of
+Theorem~\ref{thm:preparation}(e). Since $\lambda_NB_N=o(N)$, the set $Z^\varepsilon_N$ lies in
+the zone of~\eqref{eq:array-decomp} for every $K$ once $N$ is large, and it contains no
+$k=N$. Letting $N\to\infty$ in~\eqref{eq:array-decomp} with $K=4K_0$, so that
+$J/(KB_N)\to0$, then $J\to\infty$, and using that $\varepsilon$ there is arbitrary, we get
+\begin{equation}\label{eq:aged-decomp}
+ P_N(k)=G^\nu_N(k)+\Psi_N(k)+o\bigl(T_\plus(N)\bigr)\qquad\text{uniformly on }Z^\varepsilon_N .
+\end{equation}
+
+\emph{The kernel $G^\nu_N$.} By~\eqref{eq:kappa-prep}, its boundary coefficient is
+$\kappa_\plus(j)=\pi_\plus u_\minus(j)+\sum_{d\le j}\nu_\minus(d)u_\minus(j-d)$, and we claim
+that $\kappa_\plus(j)\to1/\mu_\minus$ as $j\to\infty$, uniformly in $t_a$. Fix $J$ and split
+the sum at $J$. The part $d>J$ is at most $\varepsilon_J$. In the part $d\le J$ each
+$u_\minus(j-d)$ tends to $1/\mu_\minus$ as $j\to\infty$ by~\eqref{eq:renewal-thm}, so this part
+is $\mu_\minus^{-1}\sum_{d\le J}\nu_\minus(d)+o(1)$, and
+$\sum_{d\le J}\nu_\minus(d)=\pi_\minus-\Prob(\Sigma=\minus,D>J)$ differs from $\pi_\minus$ by at
+most $\varepsilon_J$. Hence
+$|\kappa_\plus(j)-\pi_\plus u_\minus(j)-\pi_\minus/\mu_\minus|\le2\varepsilon_J+o(1)$, and
+since $\pi_\plus+\pi_\minus=1$ and $u_\minus(j)\to1/\mu_\minus$ the claim follows. On
+$Z^\varepsilon_N$ we have $j\to\infty$ uniformly and $T_\plus(\lfloor L_k\rfloor)\le C_\varepsilon T_\plus(N)$, so
+\begin{equation}\label{eq:aged-G}
+ G^\nu_N(k)=\frac{N-L_k}{\mu_\minus}f_\plus(\lfloor L_k\rfloor)+\frac{T_\plus(\lfloor L_k\rfloor)}{\mu_\minus}+o\bigl(T_\plus(N)\bigr)
+ \qquad\text{uniformly on }Z^\varepsilon_N .
+\end{equation}
+
+\emph{The term $\Psi_N$.} Fix $\varepsilon'>0$ and take $R$ and $N_0$ from
+Lemma~\ref{lem:green-conc}. Let $k\in Z^\varepsilon_N$, $j=N-k$ and
+$\mathcal V=\{d:|d-L_k|\le RB_N\}$. For large $N$ every $d\in\mathcal V$ satisfies
+$L_k/2\le d<N$, since $RB_N=o(N)$, so $\mathcal V$ lies in the range of the sum~\eqref{eq:Psi}.
+With $m=N-d$ we have $|m-j/(1-p)|=|d-L_k|$, so Lemma~\ref{lem:green-conc} gives
+$\sum_{d\notin\mathcal V}\Pi^\minus_{N-d}(j)\le\varepsilon'$, and Lemma~\ref{lem:green} gives
+$\sum_{d\in\mathcal V}\Pi^\minus_{N-d}(j)\in[1+\mu_\plus u_\minus(j)-\varepsilon',\,1+\mu_\plus u_\minus(j)]$.
+By Lemma~\ref{lem:aged-nu}(a) and Lemma~\ref{lem:rv}(ii), $\nu_\plus(d)\le T_\plus(L_k/2)\le C_\varepsilon T_\plus(N)$
+for all $d\ge L_k/2$. By Lemma~\ref{lem:aged-nu}(b), uniformly in $d\in\mathcal V$,
+\[
+ \nu_\plus(d)-\nu_\plus(\lfloor L_k\rfloor)
+ =\frac1s\bigl[T_\plus(d)-T_\plus(\lfloor L_k\rfloor)\bigr]-\frac1s\bigl[T_\plus(d+t_a+1)-T_\plus(\lfloor L_k\rfloor+t_a+1)\bigr]+o(T_\plus(N)),
+\]
+and both brackets are $o(T_\plus(N))$, because their arguments are at least $\varepsilon N/2$,
+differ by at most $RB_N+1=o(N)$, and $T_\plus$ is regularly varying (Lemma~\ref{lem:rv}(i)),
+with $T_\plus(\varepsilon N/2)\le C_\varepsilon T_\plus(N)$. Hence
+\begin{align*}
+ \Bigl|\Psi_N(k)-\nu_\plus(\lfloor L_k\rfloor)\bigl(1+\mu_\plus u_\minus(j)\bigr)\Bigr|
+ &\le\sum_{d\notin\mathcal V}\nu_\plus(d)\Pi^\minus_{N-d}(j)
+ +\sum_{d\in\mathcal V}\bigl|\nu_\plus(d)-\nu_\plus(\lfloor L_k\rfloor)\bigr|\Pi^\minus_{N-d}(j)\\
+ &\quad+\nu_\plus(\lfloor L_k\rfloor)\,\varepsilon'\\
+ &\le C_\varepsilon\varepsilon'T_\plus(N)+(1+\mu_\plus)\,o(T_\plus(N))+C_\varepsilon\varepsilon'T_\plus(N),
+\end{align*}
+uniformly on $Z^\varepsilon_N$. Since $\varepsilon'$ is arbitrary, and since
+$1+\mu_\plus u_\minus(j)\to1+\mu_\plus/\mu_\minus=s/\mu_\minus$ uniformly on $Z^\varepsilon_N$,
+Lemma~\ref{lem:aged-nu}(b) gives
+\begin{equation}\label{eq:aged-Psi}
+ \Psi_N(k)=\frac{s}{\mu_\minus}\,\nu_\plus(\lfloor L_k\rfloor)+o(T_\plus(N))
+ =\frac{T_\plus(\lfloor L_k\rfloor)-T_\plus(\lfloor L_k\rfloor+t_a+1)}{\mu_\minus}+o\bigl(T_\plus(N)\bigr).
+\end{equation}
+Now~\eqref{eq:aged-decomp}, \eqref{eq:aged-G} and~\eqref{eq:aged-Psi} give the expansion, since
+$T_\plus(\lfloor L_k\rfloor+t_a)-T_\plus(\lfloor L_k\rfloor+t_a+1)=f_\plus(\lfloor L_k\rfloor+t_a)\le\sup_{i\ge\varepsilon N}f_\plus(i)=o(T_\plus(N))$.
+For $k=\lfloor vN\rfloor$ with $v\in(p,1)$ fixed we have $L_k=\ell N+O(1)$, and as in the proof
+of Corollary~\ref{cor:infinite-density}, (LR) and (RV) give
+$(N-L_k)f_\plus(\lfloor L_k\rfloor)/T_\plus(N)\to\alpha_\plus(1-\ell)\ell^{-\alpha_\plus-1}$ and
+$T_\plus(\lfloor L_k\rfloor)/T_\plus(N)\to\ell^{-\alpha_\plus}$, while
+$T_\plus(\lfloor L_k\rfloor+t_a)/T_\plus(N)\to(\ell+\theta)^{-\alpha_\plus}$ when $t_a/N\to\theta$. The
+minus end is the mirror image.
+\end{proof}
+
+The golden ratio threshold of Theorem~\ref{thm:mode}(d) survives aging. In its proof,
+parts (a) and (b) of Theorem~\ref{thm:mode} use the initial run only
+through~\eqref{eq:mode-interior}, which is Theorem~\ref{thm:aging}(a) for the aged law.
+
+\begin{corollary}[the golden ratio under aging]\label{cor:aged-mode}
+Assume (RV) and (SPAN), a fresh start at step $1$ and $t_a/N\to\theta\in(0,\infty]$. The
+endpoint of sign $\sgn$ beats every interior value of $P^{(t_a)}_N$ for all large $N$ when
+$\alpha_\sgn-1<1/\alpha_*$, and loses to the largest interior value when
+$\alpha_\sgn-1>1/\alpha_*$. With equal indices $\alpha_\plus=\alpha_\minus=\alpha$ the global mode
+is an endpoint for all large $N$ when $\alpha<\varphi$ and is interior for all large $N$ when
+$\alpha>\varphi$. For $T_\plus(n)=T_\minus(n)=n^{-\alpha}$ and $0<\theta<\infty$,
+$B_NP^{(t_a)}_N(N)/H_N\sim(1-(1+\theta)^{1-\alpha})\,\mathcal C(\alpha)N^{1-\alpha+1/\alpha}$, so at
+$\alpha=\varphi$ the mode is interior for every $\theta$.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:aging}(a), \eqref{eq:mode-interior} holds for the aged law, so parts (a)
+and (b) of Theorem~\ref{thm:mode} hold for it with the same proof. By
+Theorem~\ref{thm:aging}(b) and~\eqref{eq:aged-sums}, $P^{(t_a)}_N(N)$ is asymptotic to a
+constant multiple of $NT_\plus(N)$, which is regularly varying with index $1-\alpha_\plus$, and
+$B_N\in\RV_{1/\alpha_*}$ by Lemma~\ref{lem:rv}(v). So $B_NP^{(t_a)}_N(N)/H_N$ tends to infinity or
+to zero according to the sign of $1/\alpha_*-(\alpha_\plus-1)$, and part (b) of
+Theorem~\ref{thm:mode} concludes. The minus end is the same. With equal indices the
+condition $\alpha-1<1/\alpha$ is $\alpha<\varphi$. For the pure power laws the computation in
+the proof of Theorem~\ref{thm:mode}(d) applies with the atom multiplied by
+$1-(1+\theta)^{1-\alpha}<1$, and $\mathcal C(\varphi)<1$.
+\end{proof}
+
+For $t_a=o(N)$ the atom is $t_aT_\plus(N)/s$ by Theorem~\ref{thm:aging}(b), and the comparison
+with the bulk depends on the rate at which $t_a$ grows. For the fresh start itself the mode
+is interior by Theorem~\ref{thm:mode}(d). Section~\ref{sec:verify} reports a check of parts (b)
+and (c) against the exact aged law.

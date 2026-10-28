@@ -1,0 +1,387 @@
+\section{Exposure in experiments that switch at regenerations}\label{sec:exposure}
+
+A switchback experiment assigns one of two treatments, the arms, to a whole system for a
+period of time, then the other, and alternates. The quantity under the experimenter's
+control is the exposure, the number of time slots spent in the treatment arm. The designs
+in the literature switch at fixed times or at the hits of a recurrent
+state~\cite{bsz2023,huwager2022,gjr2020,ljkw2023,jky2023,hu2026}, and each of them assumes
+that the carryover from one period to the next decays geometrically, through a Markov
+state on a finite set, a bounded queue, or a fixed memory. Then the regeneration cycles
+have exponential moments and the exposure count is Gaussian at scale $\sqrt N$. When the
+system is a queue with heavy-tailed service the cycles have infinite variance, and none of
+these results applies. This section works out the exposure law for a switchback that
+switches arm at the regenerations of a slotted queue, where the count is exactly the
+occupation count $A_N$ of this paper and the cycles are the runs. The results are the
+theorems of Sections~\ref{sec:bulk} to~\ref{sec:shape} read in the language of the design,
+once the cycle law is shown to satisfy the hypotheses. The second step is the content of
+Proposition~\ref{prop:cycle}. Its first part, the local tail of the cycle, is known. The
+difference bounds (LD) and (LD2) for the cycle are new, and they are what the mode count
+needs.
+
+\subsection{The queue, the design and the reduction}\label{sec:exposure-model}
+
+Time is slotted. In each slot a customer arrives with probability $\lambda\in(0,1)$, a
+constant unrelated to the factor $\lambda_N$ of~\eqref{eq:lambdaN}, and brings $Y$ slots of
+work, where the $Y$ are independent with values in $\{1,2,\dots\}$. So the work $W$ that
+arrives in a slot has $\Prob(W=0)=1-\lambda$ and $\Prob(W=n)=\lambda f_Y(n)$ for $n\ge1$, and
+its mean is $\rho=\lambda\E Y$, which we assume to be less than $1$. The server does one unit
+of work per slot, so the workload at the end of slot $t$ is
+$V_t=\max(V_{t-1}-1,0)+W_t$. A regeneration is a slot that ends with $V_t=0$, and the cycle
+$C$ is the number of slots between consecutive regenerations. An idle slot is a cycle of
+length $1$, so $\Prob(C=1)=1-\lambda$. Since the fraction of busy slots is $\rho$ and the
+regenerations are the idle slots, $\E C=1/(1-\rho)$.
+
+The 2 arms set their own arrival probabilities $\lambda_\plus$ and $\lambda_\minus$ and
+share the law of $Y$, so their loads $\rho_\pm=\lambda_\pm\E Y$ differ. The experiment
+switches arm at every regeneration. At a switch the system is empty, so the cycles are
+independent, each cycle has the cycle law of its own arm, and consecutive cycles belong to
+opposite arms. Hence the number of slots spent in the treatment arm among the first $N$ is
+the count $A_N$ of Section~\ref{sec:runs}, with the plus runs the cycles under treatment and
+the minus runs the cycles under control. In this section $f_\pm$ and $T_\pm$ are the cycle
+laws of the two arms, $\mu_\pm=1/(1-\rho_\pm)$, $s=\mu_\plus+\mu_\minus$ and $p=\mu_\plus/s$ is the
+long-run treated share. Three starts occur. A fresh start of either arm is an experiment
+that starts on an empty system. A random-time start is an experiment that starts at a
+typical time of a long-running switchback, and its initial run is the stationary initial run
+$\nu_\sgn=T_\sgn/s$ of Section~\ref{sec:prep-stationary}. An aged start is an experiment that
+starts $t_a$ slots after a switchback started on an empty system, and its law is the aged law
+of Section~\ref{sec:aging}.
+
+\subsection{The cycle law}\label{sec:exposure-cycle}
+
+Let $U_n=W_1+\dots+W_n$. Starting from an empty system, $V_1=W_1$ and $V_t=V_{t-1}-1+W_t$ as
+long as $V_{t-1}\ge1$, so $V_t=U_t-t+1$ up to the end of the cycle, and
+$C=\inf\{t\ge1:U_t-t=-1\}$ is the first passage of the downward skip-free walk $U_t-t$ to
+$-1$. The hitting time theorem of Kemperman~\cite{kemperman1961} (see van der Hofstad and
+Keane~\cite{vdhk2008} for a short proof) gives the cyclic lemma
+\begin{equation}\label{eq:cyclic}
+ \Prob(C=n)=\frac1n\,\Prob(U_n=n-1)\qquad(n\ge1).
+\end{equation}
+Equivalently, $C$ is the total progeny of a Galton--Watson tree with offspring law
+$W$~\cite{dwass1969}. Let $W'=W+1$, a law on $\{1,2,\dots\}$ with mass function
+$f_{W'}(n)=f_W(n-1)$ and mean $\mu'=1+\rho$, and let $V_m=f_{W'}^{*m}$. Then $U_n=U'_n-n$ with
+$U'_n$ a sum of $n$ copies of $W'$, so~\eqref{eq:cyclic} reads
+\begin{equation}\label{eq:phi}
+ \varphi(n):=n\,f_C(n)=V_n(2n-1),
+\end{equation}
+a convolution power evaluated at the deviation $L=(2n-1)-n\mu'=(1-\rho)n-1$ above its mean.
+This puts the cycle law inside the big-jump range of the lemmas of Section~\ref{sec:shape}
+and Appendix~\ref{app:modes}, with the number of summands $m=n$ of the order of the deviation.
+
+\begin{proposition}[the cycle law]\label{prop:cycle}
+Let $Y$ satisfy (LR) with index $\alpha\in(1,2)$, that is $f_Y(n)\sim\alpha T_Y(n)/n$ with
+$T_Y\in\RV_{-\alpha}$.
+\begin{enumerate}[(a)]
+\item $f_C(n)\sim f_W\bigl((1-\rho)n\bigr)\sim\lambda(1-\rho)^{-\alpha-1}f_Y(n)$ and
+$T_C(n)\sim\lambda(1-\rho)^{-\alpha-1}T_Y(n)$. So $C$ satisfies (LR) with the index $\alpha$,
+and (SPAN).
+\item If $Y$ also satisfies (LD2), then $C$ satisfies (LD) and (LD2), and
+$f_C(n+1)-f_C(n)=-(\alpha+1+o(1))f_C(n)/n$.
+\item If 2 arms share $Y$ and have loads $\rho_\pm<1$, their cycle laws satisfy (EQ), and
+$T_\plus(n)/T_\minus(n)\to(\lambda_\plus/\lambda_\minus)\bigl((1-\rho_\minus)/(1-\rho_\plus)\bigr)^{\alpha+1}$.
+\end{enumerate}
+\end{proposition}
+
+Part (a) is known. For the total progeny of a Galton--Watson tree it is
+Kortchemski~\cite[Eq.~(14)]{kortchemski2015} and Janson~\cite[Remark~18.34]{janson2012}, and
+for the busy period of the M/G/1 queue in continuous time it is Denisov and
+Shneer~\cite[Corollary~2.2]{denisovshneer2010}, whose $f_\tau(t)\sim f_B((1-\rho)t)$ is the
+analogue of the first relation in (a). The global tail of the busy period, with the factor
+$\E\nu=1/(1-\rho)$ for the mean number served, is due to De Meyer and
+Teugels~\cite{demeyerteugels1980} and Zwart~\cite{zwart2001}. We include the short proof of (a)
+because (b) continues it. We did not find (b) in the literature.
+
+\begin{proof}
+(a) The law $W'$ satisfies (LR) with index $\alpha$, since $f_{W'}(n)=\lambda f_Y(n-1)$ for
+$n\ge2$, and (SPAN), since $f_{W'}(1)=1-\lambda>0$ and $f_{W'}(n)>0$ for all large $n$. The
+local big-jump theorem of Denisov, Dieker and Shneer~\cite[Theorem~9.1]{dds2008}, whose
+hypotheses were verified for a law with (LR) in the proof of Lemma~\ref{lem:local-bigjump},
+gives for every $\varepsilon>0$ an $r_0$ with
+$|\Prob(U'_r-r\mu'\in(x,x+1])/(r\Prob(x<W'-\mu'\le x+1))-1|\le\varepsilon$ for all $r\ge r_0$
+and $x\ge x_r=(1-\rho)r/2$, because $rT_{W'}(x_r)\to0$. Take $r=n$ and
+$x=2n-1-n\mu'-\frac12$. The event is $\{U'_n=2n-1\}$ and
+$\Prob(x<W'-\mu'\le x+1)=f_{W'}(n')$ with $n'=(1-\rho)n+O(1)$. By~\eqref{eq:f-uct} for the
+law $W'$, $f_{W'}(n')=f_{W'}((1-\rho)n)(1+o(1))$, and $f_{W'}((1-\rho)n)=f_W((1-\rho)n-1)\sim f_W((1-\rho)n)$
+by the same lemma. Hence $\varphi(n)=nf_W((1-\rho)n)(1+o(1))$, which is the first relation,
+and the second is the regular variation of $f_W=\lambda f_Y$ on $n\ge1$. The tail follows by
+Karamata's theorem, and (LR) for $C$ follows from (LR) for $Y$. Finally $f_C(1)=1-\lambda>0$ and
+$f_C(n)>0$ for large $n$, which gives (SPAN).
+
+(b) The law $W'$ satisfies (LD2) because $Y$ does, and (LD) by Lemma~\ref{lem:ld2}. Write
+$f=f_{W'}$, $a=a_{W'}$, and $L_x=x-n\mu'$ for the deviation of the point $x$ at $m=n$
+summands, so that $L_{2n-1}=L$ and $L_{2n+i}=L+i+1$. For large $n$, $L\ge Ka(n)$ for any fixed
+$K$, since $a(n)=o(n)$. By~\eqref{eq:phi},
+\[
+ \varphi(n+1)-\varphi(n)=V_{n+1}(2n+1)-V_n(2n-1)
+ =\delta V_n(2n+1)-\nabla V_n(2n+1)-\nabla V_n(2n),
+\]
+in the notation of Lemma~\ref{lem:diff-bigjump}. That lemma, applied to the law $W'$, gives,
+with $o(1)$ as $n\to\infty$,
+\begin{align*}
+ \delta V_n(2n+1)&=f(L)+\mu'(\alpha+1)\frac{nf(L)}L+o\Bigl(f(L)+\frac{nf(L)}L\Bigr),\\
+ \nabla V_n(2n+i)&=(\alpha+1)\frac{nf(L)}L\bigl(1+o(1)\bigr)\qquad(i=0,1),
+\end{align*}
+where we used $f(L+i)=f(L)(1+O(1/L))$ for $|i|\le2$, by (LD). Since $n/L\to1/(1-\rho)$ and
+$\mu'-2=-(1-\rho)$,
+\[
+ \varphi(n+1)-\varphi(n)=f(L)\Bigl[1+(\alpha+1)\frac nL(\mu'-2)+o(1)\Bigr]=-\alpha f(L)(1+o(1)).
+\]
+By (a), $\varphi(n)=nf(L)(1+o(1))$. Hence
+\[
+ f_C(n+1)-f_C(n)=\frac{\varphi(n+1)-\varphi(n)}{n+1}-\frac{\varphi(n)}{n(n+1)}
+ =-\frac{(\alpha+1+o(1))f(L)}{n},
+\]
+and since $f_C(n)\sim f(L)$ by (a), this is (LD) for $C$ with the stated constant. For (LD2) we use the second-difference bounds
+of Lemma~\ref{lem:cycle-second} below, with $c=(1-\rho)/2$, which apply at $m=n$ and at the
+points $2n-1\le x\le2n+3$ for large $n$. Put $D(n)=\varphi(n+1)-\varphi(n)$. Then
+\begin{align*}
+ D(n+1)-D(n)={}&\bigl[\delta V_{n+1}(2n+3)-\delta V_n(2n+1)\bigr]
+ -\bigl[\nabla V_{n+1}(2n+3)-\nabla V_n(2n+1)\bigr]\\
+ &-\bigl[\nabla V_{n+1}(2n+2)-\nabla V_n(2n)\bigr]\\
+ ={}&\delta^2V_n(2n+3)-\nabla\delta V_n(2n+3)-\nabla\delta V_n(2n+2)\\
+ &-\nabla\delta V_n(2n+3)+\nabla^2V_n(2n+3)+\nabla^2V_n(2n+2)\\
+ &-\nabla\delta V_n(2n+2)+\nabla^2V_n(2n+2)+\nabla^2V_n(2n+1),
+\end{align*}
+where each bracket was split into a difference in $m$ at the larger point and a difference in
+$x$ at $m=n$, and $X(x+2)-X(x)=-\nabla X(x+2)-\nabla X(x+1)$. By Lemma~\ref{lem:cycle-second}
+each of the nine terms is at most $Cf(L)/L$ in absolute value, since $n\le L/c$. So
+$|\varphi(n+2)-2\varphi(n+1)+\varphi(n)|\le Cf(L)/n$. With $g(n)=1/n$ the product rule gives
+\[
+ \Delta^2(g\varphi)(n)=g(n+2)\Delta^2\varphi(n)+\Delta\varphi(n)\bigl[\Delta g(n)+\Delta g(n+1)\bigr]+\varphi(n+1)\Delta^2g(n),
+\]
+and the three terms are $O(f(L)/n^2)$, $O(f(L))\cdot O(n^{-2})$ and $O(nf(L))\cdot O(n^{-3})$. Since
+$f(L)\asymp f_C(n)$ by (a), this is (LD2) for $C$.
+
+(c) By (a), $T_\pm(n)\sim\lambda_\pm(1-\rho_\pm)^{-\alpha-1}T_Y(n)$, and the ratio of the two
+constants is the stated limit.
+\end{proof}
+
+The lemma used for (LD2) is the second-difference bound of Lemma~\ref{lem:second-bigjump},
+extended from deviations beyond the mean, $L\ge m\mu$, to deviations of the order of the
+number of summands, together with its consequences for the differences in $m$. The proof of
+Lemma~\ref{lem:second-bigjump} uses $L\ge m\mu$ at two places only, to bound
+$mT(\delta L)$ by $C_\delta LT(L)$ and $m$ by $CL$, and both bounds hold under $L\ge cm$ with
+constants that depend on $c$.
+
+\begin{lemma}[second differences at deviations of order $m$]\label{lem:cycle-second}
+Let $f$ be a law on $\{1,2,\dots\}$ with mean $\mu$ that satisfies (SPAN), (LR) and (LD2), let
+$a$ be its scale function and $V_m=f^{*m}$, and fix $c>0$. There are $K_2$, $L_1$ and $C$,
+depending on $f$ and $c$, such that for all $m\ge1$ and all integers $n$ with
+$L=n-m\mu\ge\max(K_2a(m),L_1,cm)$,
+\[
+ |\nabla^2V_m(n)|\le C\,m\,\frac{f(L)}{L^2},\qquad
+ |\nabla\delta V_m(n)|\le C\,\frac{f(L)}L,\qquad
+ |\delta^2V_m(n)|\le C\,\frac{f(L)}L .
+\]
+\end{lemma}
+
+\begin{proof}
+We write $T$ for the tail of $f$. Throughout, $L\ge cm$ gives $m\le L/c$, $mf(L)\le CT(L)/c$
+by (LR), and $mT(\delta L)\le C_{\delta,c}LT(L)$ by Lemma~\ref{lem:rv}(ii), and
+Lemma~\ref{lem:rv}(ii) also gives $f(L')\le C_bf(L)$ for $L'\ge bL$ and $L$ large. By
+Lemma~\ref{lem:diff-bigjump} there is $K$ such that $|\nabla V_m(x)|\le Cmf(L_x)/L_x$,
+$V_m(x)\le Cmf(L_x)$ and $|\delta V_m(x)|\le C(f(L_x)+mf(L_x)/L_x)$ whenever $L_x=x-m\mu\ge Ka(m)$.
+
+\emph{The first bound.} This is Lemma~\ref{lem:second-bigjump} under $L\ge cm$ in place of
+$L\ge m\mu$. In its proof the hypothesis $L\ge m\mu$ is used to get $mT(\delta L)\le C_\delta LT(L)$,
+which makes $mT(w)\le1$ for $w=\lceil\delta L\rceil$ and $L\ge L_0$, and to get
+$mLf(L)\le CmT(L)\le C$ and $mT(L)L/a(m)\le C$. The first bound holds under $L\ge cm$ with
+$C_{\delta,c}$, and the other two use only $L\ge K_1a(m)$ through~\eqref{eq:potter-m}. Every
+other step of that proof, and of the proofs of Lemmas~\ref{lem:trunc-local},
+\ref{lem:truncated} and~\ref{lem:diff-bigjump} that it invokes, is stated for $L\ge Ka(m)$
+with no upper bound on $m$. So the first bound holds for $L\ge\max(K_1a(m),L_0,cm)$, with
+constants depending on $c$.
+
+\emph{The second bound.} Since $\delta V_m=f*V_m-V_m$ and $\nabla$ commutes with convolution,
+\[
+ \nabla\delta V_m(n)=\sum_{x\le L/2}f(x)\bigl[\nabla V_m(n-x)-\nabla V_m(n)\bigr]
+ -\nabla V_m(n)\,T(L/2)+\sum_{y<n-L/2}f(n-y)\,\nabla V_m(y).
+\]
+For $x\le L/2$ and $1\le i\le x$ the point $n-i+1$ has deviation at least $L/2$, so the first
+bound at the constant $c/2$ gives
+$|\nabla V_m(n-x)-\nabla V_m(n)|\le\sum_{i=1}^{x}|\nabla^2V_m(n-i+1)|\le Cxmf(L)/L^2$, and the first
+sum is at most $C\mu mf(L)/L^2\le Cf(L)/L$. The middle term is at most
+$Cmf(L)T(L/2)/L\le C(mT(L))f(L)/L\le Cf(L)/L$. In the last sum put $Y=\lceil n-L/2\rceil-1$ and sum
+by parts,
+\[
+ \sum_{y\le Y}f(n-y)\bigl[V_m(y-1)-V_m(y)\bigr]
+ =\sum_{y\le Y-1}\bigl[f(n-y-1)-f(n-y)\bigr]V_m(y)-f(n-Y)V_m(Y).
+\]
+For $y\le Y$ we have $n-y\ge L/2$, so $f(n-y)\le Cf(L)$ and, by (LD),
+$|f(n-y-1)-f(n-y)|\le Cf(L)/L$. Since $\sum_yV_m(y)\le1$, the sum is at most $Cf(L)/L$. The
+boundary term has $Y-m\mu\ge L/2-1$, so $V_m(Y)\le Cmf(L)$ and the term is at most
+$Cmf(L)^2\le C(mT(L)/L)f(L)\le Cf(L)/L$.
+
+\emph{The third bound.} Since $\delta^2V_m=f*\delta V_m-\delta V_m$,
+\[
+ \delta^2V_m(n)=\sum_{x\le L/2}f(x)\bigl[\delta V_m(n-x)-\delta V_m(n)\bigr]
+ -\delta V_m(n)\,T(L/2)+\sum_{y<n-L/2}f(n-y)\,\delta V_m(y).
+\]
+By the second bound at the constant $c/2$, the first sum is at most
+$\sum_xf(x)\,x\,Cf(L)/L\le C\mu f(L)/L$. The middle term is at most
+$C(f(L)+mf(L)/L)T(L)\le Cf(L)T(L)=o(f(L)/L)$, since $LT(L)\to0$. For the last sum put
+$\gamma(y)=f(n-y)\ones_{\{y<n-L/2\}}$. With $S_m$ of law $V_m$ and $X$ an independent copy of the
+law $f$, $\delta V_m(y)=\Prob(S_m+X=y)-\Prob(S_m=y)$, so the last sum is
+$\E[\gamma(S_m+X)-\gamma(S_m)]$. If $S_m+X<n-L/2$, then both arguments lie below $n-L/2$, and
+(LD) applied $X$ times gives $|\gamma(S_m+X)-\gamma(S_m)|\le CXf(L)/L$, with expectation at most
+$C\mu f(L)/L$. If $S_m<n-L/2\le S_m+X$, the difference is $\gamma(S_m)\le Cf(L)$, and this event
+has probability $\sum_{k\ge1}T(k)V_m(n'-k)$ with $n'=\lceil n-L/2\rceil$. For $k\le L/4$ the
+point $n'-k$ has deviation at least $L/4-1$, so $V_m(n'-k)\le Cmf(L)$, and these terms add up
+to at most $C\mu mf(L)\le CT(L)$. For $k>L/4$, $T(k)\le T(L/4)\le CT(L)$, and the $V_m$ add up
+to at most $1$. So the event has probability at most $CT(L)$, and its contribution is at most
+$Cf(L)T(L)=o(f(L)/L)$. If $S_m\ge n-L/2$, both values of $\gamma$ vanish. Enlarging $K_2$ and
+$L_1$ so that every deviation used above lies in the range of the earlier bounds completes
+the proof.
+\end{proof}
+
+\subsection{The exposure law}\label{sec:exposure-law}
+
+Throughout this subsection $Y$ satisfies (LR) with index $\alpha\in(1,2)$, so both cycle laws
+satisfy (RV), (LR), (SPAN) and (EQ) by Proposition~\ref{prop:cycle}, and the exposure count
+$A_N$ is the count of this paper with these two run laws. By Proposition~\ref{prop:cycle}(c)
+and Lemma~\ref{lem:rv}, the ratio $\theta_{\sgn,N}=b_{\sgn,N}/B_N$ of the two scales converges,
+to $\theta_\sgn=\min\{1,(\kappa_\sgn/\kappa_{\osgn})^{1/\alpha}\}$ with
+$\kappa_\sgn=\lambda_\sgn(1-\rho_\sgn)^{-\alpha-1}$, so the moving profile $h_N$ converges
+uniformly to the fixed density $h_\theta$ of~\eqref{eq:profile}.
+
+\begin{corollary}[the exposure imbalance]\label{cor:exposure-bulk}
+For a fresh start of either arm,
+\[
+ \sup_{0\le k\le N}\Bigl|B_N\Prob(A_N=k)-h_\theta\Bigl(\frac{k-pN}{B_N}\Bigr)\Bigr|\to0,\qquad
+ \sup_{N,k}B_N\Prob(A_N=k)<\infty .
+\]
+For a random-time start the same holds over $1\le k<N$. It holds over $0\le k\le N$ when
+$\alpha>\varphi$, and when $\alpha<\varphi$ it fails at the endpoints, where
+$B_N\Prob(A_N\in\{0,N\})\to\infty$. In all cases $(A_N-pN)/B_N$ converges in law to
+$W_\theta$, so the treated share $A_N/N$ misses $p$ by a random error of exact order
+$N^{1/\alpha-1}$ with a skewed stable law, in addition to the deterministic imbalance
+$(2p-1)N$ of the counts when $\rho_\plus\ne\rho_\minus$.
+\end{corollary}
+
+\begin{proof}
+The fresh start is Theorem~\ref{thm:bulk}(a) and~(b) with $h_N\to h_\theta$. The random-time
+start satisfies the bulk criterion by Corollary~\ref{cor:stationary}, so
+Theorem~\ref{thm:preparation}(b) gives the statement over $1\le k<N$. Over the whole range it
+holds if and only if $B_NQ_\sgn(N)\to0$ for both arms, and
+$B_NQ_\sgn(N)\in\RV_{1/\alpha+1-\alpha}$ by Corollary~\ref{cor:stationary}(a), which tends to
+zero for $\alpha>\varphi$ and to infinity for $\alpha<\varphi$. The convergence in law follows
+from the local statement over $1\le k<N$ and $Q_\sgn(N)\to0$.
+\end{proof}
+
+The limit in law is classical. For the sojourn time of an alternating renewal process it is
+due to Tak\'acs~\cite{takacs1957}, and Godr\`eche and Luck~\cite{godrecheluck2001} give it for
+one law. What the corollary adds is the local form at every $k$, uniformly, and the bound
+$C/B_N$ at every point, together with the exceptions at the endpoints.
+
+\begin{corollary}[severe imbalance and no switch]\label{cor:exposure-tail}
+Fix $\varepsilon\in(0,1-p)$ and put $\ell_\varepsilon=1-\varepsilon/(1-p)$.
+\begin{enumerate}[(a)]
+\item For a fresh start of either arm,
+\[
+ \Prob(N-A_N<\varepsilon N)\sim NT_\plus(N)\,\frac{\varepsilon}{\mu_\minus}\,\ell_\varepsilon^{-\alpha},
+\]
+and for a random-time start
+\[
+ \Prob(N-A_N<\varepsilon N)\sim NT_\plus(N)\Bigl[\frac{\varepsilon}{\mu_\minus}\,\ell_\varepsilon^{-\alpha}
+ +\frac{\ell_\varepsilon^{1-\alpha}}{s(\alpha-1)}\Bigr].
+\]
+The mirror statements hold for $\Prob(A_N<\varepsilon N)$ with the signs exchanged.
+\item (No switch.) The event $\{A_N\in\{0,N\}\}$ is the event that the first cycle covers all
+$N$ slots. For a fresh start in the treatment arm its probability is $T_\plus(N)$ exactly. For
+a random-time start it is $Q_\plus(N)+Q_\minus(N)$ exactly, with
+$Q_\sgn(N)=s^{-1}\sum_{d\ge N}T_\sgn(d)\sim NT_\sgn(N)/(s(\alpha-1))$. Hence
+\[
+ \frac{\Prob_{\mathrm{random}}(\text{no switch})}{\Prob_{\mathrm{fresh}\,\plus}(\text{no switch})}
+ \sim\frac{N}{s(\alpha-1)}\Bigl(1+\frac{T_\minus(N)}{T_\plus(N)}\Bigr).
+\]
+For an aged start with $t_a/N\to\theta\in(0,\infty)$ the ratio carries the factor
+$1-(1+\theta)^{1-\alpha}$ in the first term, by Theorem~\ref{thm:aging}(b).
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+(b) is Proposition~\ref{prop:fresh-identity}, Proposition~\ref{prop:first-run} and
+Corollary~\ref{cor:stationary}(a). For (a), let $\delta\in(0,\varepsilon)$. The points
+$(1-\varepsilon)N\le k\le(1-\delta)N$ have $L_k\ge(\ell_\varepsilon N)(1+o(1))$, so they lie in
+the zone of Theorem~\ref{thm:bigjump}(b) for every $K$ once $N$ is large, because
+$\lambda_NB_N=o(N)$, and there $\widehat G_N(k)\le C_\varepsilon T_\plus(N)$. By the additive form
+of Theorem~\ref{thm:bigjump}(b), the sum of $P_N(k)$ over these points is
+$\sum_kG_N(k)+o(NT_\plus(N))$. By the computation in the proof of
+Corollary~\ref{cor:infinite-density}, together with the uniform convergence of
+Lemma~\ref{lem:rv}(i) and~\eqref{eq:gamma-asymp}, $G_N(\lfloor vN\rfloor)/T_\plus(N)\to I_\plus(v)$
+uniformly in $v\in[1-\varepsilon,1-\delta]$, and $I_\plus$ is continuous there. So the Riemann
+sum gives $\sum_kG_N(k)\sim NT_\plus(N)\int_{1-\varepsilon}^{1-\delta}I_\plus(v)\,dv$. The points
+$(1-\delta)N<k<N$ have $L_k\ge N/2$ for small $\delta$, so $G_N(k)\le C\widehat G_N(k)\le CT_\plus(N)$
+by~\eqref{eq:G-size}, and by the additive form again they contribute at most
+$C\delta NT_\plus(N)$. The atom at $k=N$ is $T_\plus(N)=o(NT_\plus(N))$. Let $\delta\to0$. With
+$\ell=(v-p)/(1-p)$, $dv=(1-p)\,d\ell$ and $(1-p)/\mu_\minus=1/s$,
+\[
+ \int_{1-\varepsilon}^{1}I_\plus(v)\,dv=\frac1s\int_{\ell_\varepsilon}^{1}\bigl[\alpha(1-\ell)\ell^{-\alpha-1}+\ell^{-\alpha}\bigr]d\ell
+ =\frac1s\Bigl[-(1-\ell)\ell^{-\alpha}\Bigr]_{\ell_\varepsilon}^{1}=\frac{(1-\ell_\varepsilon)\ell_\varepsilon^{-\alpha}}{s}
+ =\frac{\varepsilon}{\mu_\minus}\,\ell_\varepsilon^{-\alpha},
+\]
+since $(1-\ell)\ell^{-\alpha}$ has derivative $-\alpha(1-\ell)\ell^{-\alpha-1}-\ell^{-\alpha}$ and
+$1-\ell_\varepsilon=\varepsilon/(1-p)$. For the random-time start, Corollary~\ref{cor:stationary}(b)
+gives the ratio form $P_N(k)\sim G^{\mathrm{st}}_N(k)$ uniformly on the zone with $k<N$, with
+$G^{\mathrm{st}}_N(\lfloor vN\rfloor)/T_\plus(N)\to I_\plus(v)+\ell^{-\alpha}/\mu_\minus$ uniformly on
+compacts, and $G^{\mathrm{st}}_N(k)\le CT_\plus(N)$ on $L_k\ge N/2$. The same argument adds
+$\int_{1-\varepsilon}^1\ell^{-\alpha}\mu_\minus^{-1}\,dv=(\ell_\varepsilon^{1-\alpha}-1)/(s(\alpha-1))$ to
+the integral and the atom $Q_\plus(N)\sim NT_\plus(N)/(s(\alpha-1))$ to the sum, which together
+give the second term.
+\end{proof}
+
+Part (b) is the design rule. Starting at a regeneration, that is on an empty system, makes
+the no-switch probability smaller by a factor of order $N$ than starting at an arbitrary
+time, and by Corollary~\ref{cor:stationary}(b) it also removes the complete initial cycle
+from the big-jump kernel, which is the second term in (a). The plus and minus statements
+differ only by the two loads, so the heavier arm, the one with the larger load, is the one
+whose cycle is more likely to swallow the experiment.
+
+\begin{corollary}[the most likely exposure]\label{cor:exposure-mode}
+\begin{enumerate}[(a)]
+\item For a fresh start of either arm, the most likely value of $A_N$ is interior for all
+large $N$, within $O(B_N)$ of $pN$.
+\item For a random-time start, and for an aged start with $t_a/N\to\theta\in(0,\infty]$, the
+single most likely value of $A_N$ is an endpoint, that is no switch, for all large $N$ when
+$\alpha<\varphi=(1+\sqrt5)/2$, and is interior for all large $N$ when $\alpha>\varphi$. The
+same holds for an experiment started at a typical time of a system run in control only,
+with the cycle in progress kept in control.
+\item If $Y$ also satisfies (LD2), the start is fresh or fair, the no-tie condition of
+Theorem~\ref{thm:ends} holds at both ends and each end profile $u_\mp(j)$, $j\ge1$, has a single
+local maximum, then $A_N$ has exactly 3 modes for all large $N$, the bulk mode and the two
+no-switch outcomes. The last condition holds when $f_\pm$ is strictly log-convex.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+(a) and the random-time and aged cases of (b) are Theorem~\ref{thm:mode}(d) and
+Corollary~\ref{cor:aged-mode}, with $\alpha_\plus=\alpha_\minus=\alpha$. For the control-only
+start the initial run is $\nu_\minus=T_\minus/\mu_\minus$ and $\nu_\plus=0$, so
+$B_n\Prob(D=n)=B_nT_\minus(n)/\mu_\minus\to0$ and $Q_\minus(N)=\mu_\minus^{-1}\sum_{d\ge N}T_\minus(d)\in\RV_{1-\alpha}$,
+and Theorem~\ref{thm:mode}(c) gives the same threshold. (c) By
+Proposition~\ref{prop:cycle}, the cycle laws satisfy (SPAN), (LR), (LD2) and (EQ), so
+Theorem~\ref{thm:mode-count} and Corollary~\ref{cor:three-modes} apply, and
+Corollary~\ref{cor:logconvex-three} covers the log-convex case.
+\end{proof}
+
+Four points of (b) deserve care. The threshold is not an equivalence at $\alpha=\varphi$,
+where slowly varying factors decide. For the cycle laws of the queue the tails are pure
+powers up to the factor of $T_Y$, and the ratio $B_NQ_\sgn(N)/H_N$ tends to a constant that
+we have not computed. The theorem compares each endpoint atom with the largest interior
+value, not the sum of the two atoms with it. The statement holds for all large $N$, not for
+every $N$. With different service laws in the two arms the indices may differ, and the
+criterion is then $\alpha_\sgn-1<1/\alpha_*$ for each arm separately, by
+Theorem~\ref{thm:mode}(c). For (c), strict log-convexity of the total-progeny law is
+checked only numerically, for the zeta service law, and we do not know a proof.
+Section~\ref{sec:verify} reports the checks of this section against the exact law, computed
+from~\eqref{eq:cyclic} and the recursion~\eqref{eq:run-recursion}, and a simulation of the
+queue itself.
+
+\ifarxivbuild
+\begin{remark}[switching after several cycles]\label{rem:geometric-cycles}
+A design that switches arm after a geometric number $G$ of cycles, with
+$\Prob(G=n)=g(1-g)^{n-1}$, has runs $R=\sum_{i\le G}C_i$. By Asmussen, Foss and
+Korshunov~\cite[Theorem~2(i) and Remark~3]{afk2003}, $f_R(n)\sim\E[G]f_C(n)$, so (LR) and (SPAN)
+carry over to $R$ and Corollaries~\ref{cor:exposure-bulk} and~\ref{cor:exposure-tail} hold with
+the run laws $f_{R_\pm}$. We have not checked (LD) and (LD2) for $R$.
+\end{remark}
+\fi
