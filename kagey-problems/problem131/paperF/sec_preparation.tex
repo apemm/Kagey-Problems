@@ -6,6 +6,24 @@ section turns that identity into a criterion for each zone of the range of the c
 
 \subsection{Statements}\label{sec:prep-statements}
 
+The law of the initial run may depend on $N$. Throughout this section
+$(\Sigma,D)=(\Sigma^{(N)},D^{(N)})$ has a law $\nu=\nu^{(N)}$ that may vary with $N$, and we
+assume the tightness
+\begin{equation}\label{eq:tight}
+ \varepsilon_J=\sup_N\Prob\bigl(D^{(N)}>J\bigr)\to0\qquad(J\to\infty).
+\end{equation}
+A fixed law satisfies~\eqref{eq:tight} because $D$ is finite almost surely, and it is the case
+we have in mind. The general case costs nothing in the proofs, and Section~\ref{sec:aging}
+needs it. We write $\nu_\sgn$, $Q_\sgn$ and $\pi_\sgn=\Prob(\Sigma=\sgn)$ without the index $N$,
+and we put
+\begin{equation}\label{eq:envelope}
+ \bar\nu_\sgn(n)=\sup_N\sup_{d\ge n}\nu^{(N)}_\sgn(d),\qquad\bar\nu(n)=\bar\nu_\plus(n)+\bar\nu_\minus(n),
+\end{equation}
+the upper envelopes of the family. For a fixed law, $\bar\nu_\plus(n)=o(T_\plus(n))$ if and only
+if $\nu_\plus(n)=o(T_\plus(n))$, since $T_\plus$ is nonincreasing, and $B_n\bar\nu(n/2)\to0$ if
+and only if $B_n\Prob(D=n)\to0$, since $B_n\le CB_d$ for $d\ge n/2$ by Lemma~\ref{lem:rv}(ii)
+and~(v).
+
 For a sign $\sgn$ and $b\in\Z$ define the directional defect
 \begin{equation}\label{eq:defect}
  \mathcal D^\sgn_N(b)=B_N\sum_{1\le m<N/2}\nu_\sgn(N-m)\,\Pi^{\osgn}_m(b),\qquad
@@ -17,12 +35,11 @@ $\mathcal D^\sgn_N(b)=0$ for $b\le0$ and for $b\ge N/2$. Take a first run of sig
 $\sgn$ that ends within the last $N/2$ steps. Times $B_N$, its contribution at the
 point $k$ is $\mathcal D^\plus_N(N-k)$ for $\sgn=\plus$ and $\mathcal D^\minus_N(k)$ for
 $\sgn=\minus$. So the argument $b$ is the number of steps of the opposite sign. We
-say that the initial run satisfies the \emph{bulk criterion} if
+say that a fixed initial run satisfies the \emph{bulk criterion} if
 $B_n\Prob(D=n)\to0$.
 
-For the big-jump zone put $\pi_\sgn=\Prob(\Sigma=\sgn)$, let $L_k$ be as
-in~\eqref{eq:Lk} and $\widehat G_N$ as in~\eqref{eq:Ghat}, and define for
-$pN<k\le N$ and $j\ge0$
+For the big-jump zone let $L_k$ be as in~\eqref{eq:Lk} and $\widehat G_N$ as
+in~\eqref{eq:Ghat}, and define for $pN<k\le N$ and $j\ge0$
 \begin{align}
  \kappa_\plus(j)&=\pi_\plus u_\minus(j)\ones_{\{j\ge1\}}+\sum_{d=1}^{j}\nu_\minus(d)\,u_\minus(j-d),
  \label{eq:kappa-prep}\\
@@ -40,19 +57,23 @@ half of the big jump. We also use two conditions on $\nu_\plus$. The first is th
 regularity condition
 \begin{equation}\label{eq:Rnu}\tag{R$\nu$}
 \begin{gathered}
- \nu_\plus(n)>0\ \text{ and }\ \sup_{d\ge n/2}\nu_\plus(d)\le C_\nu\,\nu_\plus(n)\ \text{ for all large $n$},\\
+ \sup_{d\ge n/2}\nu_\plus(d)\le C_\nu\bigl(\nu_\plus(n)+T_\plus(n)\bigr)\ \text{ for all large $n$},\\
  \lim_{\delta\downarrow0}\ \limsup_{n\to\infty}\ \sup_{|d-n|\le\delta n}
- \Bigl|\frac{\nu_\plus(d)}{\nu_\plus(n)}-1\Bigr|=0 .
+ \frac{|\nu_\plus(d)-\nu_\plus(n)|}{\nu_\plus(n)+T_\plus(n)}=0 ,
 \end{gathered}
 \end{equation}
-Every regularly varying $\nu_\plus$ with a negative index satisfies (R$\nu$), by
-Lemma~\ref{lem:rv}(i) and~(ii). The second is a condition on the window averages
+where for a family both bounds are required uniformly in $N$. It says that $\nu_\plus$ is
+continuous at the scale $n$ up to errors of the order of $T_\plus(n)$. Every regularly
+varying $\nu_\plus$ with a negative index satisfies (R$\nu$), by Lemma~\ref{lem:rv}(i)
+and~(ii), and so do $\nu_\plus=0$ and, under (LR), the fresh plus start $\nu_\plus=f_\plus$.
+The second is a condition on the window averages
 \[
- W_n=\frac1{B_n}\sum_{|d-n|\le B_n}\nu_\plus(d).
+ W_n=\frac1{B_n}\sum_{|d-n|\le B_n}\nu_\plus(d),
 \]
+written $W^{(N)}_n$ when the law depends on $N$.
 
 \begin{introtheorem}[the initial run]\label{thm:preparation}
-Fix the law of the initial run $(\Sigma,D)$.
+Let the law of the initial run $(\Sigma,D)$ depend on $N$ or not, subject to~\eqref{eq:tight}.
 \begin{enumerate}[(a)]
 \item (The exact defect.) Assume (RV) and (SPAN) for both signs. Uniformly over
 $0\le k\le N$,
@@ -66,29 +87,34 @@ $0\le k\le N$,
  \sup_{1\le k<N}\bigl|B_NP_N(k)-h_N(x_{N,k})\bigr|&=\max\bigl(\Delta_{\plus,N},\Delta_{\minus,N}\bigr)+o(1),\\
  \sup_{0\le k\le N}\bigl|B_NP_N(k)-h_N(x_{N,k})\bigr|&=\max\bigl(\Delta_{\plus,N},\Delta_{\minus,N},B_NQ_\plus(N),B_NQ_\minus(N)\bigr)+o(1).
 \end{align*}
-The first error tends to zero if and only if $B_n\Prob(D=n)\to0$, and the second if
-and only if $B_n\Prob(D\ge n)\to0$.
-For every fixed $\varepsilon>0$ the approximation holds on
-$\varepsilon N\le k\le(1-\varepsilon)N$ with no condition on the initial run.
+The first error tends to zero if $B_N\bar\nu(N/2)\to0$ and only if $B_N\Prob(D^{(N)}=N-1)\to0$,
+and the second needs in addition $B_NQ_\sgn(N)\to0$ for both signs. For a fixed law the
+first error tends to zero if and only if $B_n\Prob(D=n)\to0$, and the second if and only if
+$B_n\Prob(D\ge n)\to0$. For every fixed $\varepsilon>0$ the approximation holds on
+$\varepsilon N\le k\le(1-\varepsilon)N$ with no condition on the initial run
+beyond~\eqref{eq:tight}.
 \item (The big-jump zone.) Assume (RV) and (SPAN) for both signs and (LR) for the
 plus sign, and let $\lambda_N$ be as in~\eqref{eq:lambdaN}. Then
 \[
  \lim_{K\to\infty}\ \limsup_{N\to\infty}\ \sup_{pN+K\lambda_NB_N\le k\le N}
  \frac{\bigl|P_N(k)-Q_\plus(N)\ones_{\{k=N\}}-G^\nu_N(k)-\Psi_N(k)\bigr|}{\widehat G_N(k)}=0 .
 \]
-The same holds with $\Psi_N$ removed if and only if $\nu_\plus(n)=o(T_\plus(n))$. If
-$\nu_\plus$ satisfies (R$\nu$), it holds with $\Psi_N(k)$ replaced by
-$\nu_\plus(\lfloor L_k\rfloor)(1+\mu_\plus u_\minus(N-k))\ones_{\{k<N\}}$ and
+The same holds with $\Psi_N$ removed if $\bar\nu_\plus(n)=o(T_\plus(n))$, and only if
+$\nu_\plus(N-1)=o(T_\plus(N))$. For a fixed law both conditions read
+$\nu_\plus(n)=o(T_\plus(n))$. If $\nu_\plus$ satisfies (R$\nu$), it holds with $\Psi_N(k)$
+replaced by $\nu_\plus(\lfloor L_k\rfloor)(1+\mu_\plus u_\minus(N-k))\ones_{\{k<N\}}$ and
 $\widehat G_N(k)$ replaced by $\widehat G_N(k)+\nu_\plus(\lfloor L_k\rfloor)$.
 \item (The boundary layer.) Assume (RV) for the plus sign. For every fixed $j\ge0$,
 \[
  P_N(N-j)=Q_\plus(N)\ones_{\{j=0\}}+T_\plus(N)\,\kappa_\plus(j)+B_N^{-1}\mathcal D^\plus_N(j)+o(T_\plus(N)),
 \]
 where $B_N^{-1}\mathcal D^\plus_N(j)=\sum_{1\le m<N/2}\nu_\plus(N-m)\Pi^\minus_m(j)$ does
-not involve the scales. Hence $P_N(N-j)/T_\plus(N)\to\kappa_\plus(j)$ for one $j\ge1$,
-equivalently for every $j\ge1$, if and only if $\nu_\plus(n)=o(T_\plus(n))$. If
-$\nu_\plus$ satisfies (R$\nu$), then
-$B_N^{-1}\mathcal D^\plus_N(j)=\nu_\plus(N)\bigl(1+\mu_\plus u_\minus(j)\bigr)(1+o(1))$
+not involve the scales. The defect term is $o(T_\plus(N))$ for every $j\ge1$ if
+$\bar\nu_\plus(n)=o(T_\plus(n))$, and if it is $o(T_\plus(N))$ for one $j\ge1$, then
+$\nu_\plus(N-m_0)=o(T_\plus(N))$ for some fixed $m_0=m_0(j)\ge1$. For a fixed law both
+conditions read $\nu_\plus(n)=o(T_\plus(n))$, and then $P_N(N-j)/T_\plus(N)\to\kappa_\plus(j)$
+for every $j\ge1$. If $\nu_\plus$ satisfies (R$\nu$), then
+$B_N^{-1}\mathcal D^\plus_N(j)=\nu_\plus(N)\bigl(1+\mu_\plus u_\minus(j)\bigr)+o\bigl(\nu_\plus(N)+T_\plus(N)\bigr)$
 for every $j\ge1$.
 \item (Interior of the big-jump zone.) Assume the hypotheses of (c). For
 $0<\varepsilon<\frac12$ let $Z^\varepsilon_N=\{k:\varepsilon N\le L_k\le(1-\varepsilon)N\}$,
@@ -97,15 +123,17 @@ and consider the property
  \sup_{k\in Z^\varepsilon_N}\frac{|P_N(k)-G^\nu_N(k)|}{\widehat G_N(k)}\to0
  \quad(N\to\infty)\qquad\text{for every }\varepsilon\in(0,\tfrac12).
 \end{equation}
-The condition $\nu_\plus(n)=o(T_\plus(n))$ implies~\eqref{eq:interior-target}.
+The condition $\bar\nu_\plus(n)=o(T_\plus(n))$ implies~\eqref{eq:interior-target}.
 Conversely~\eqref{eq:interior-target} implies the window condition
-$W_n=o(T_\plus(n))$. If (LR) holds for the minus sign as well, then
-$W_n=o(T_\plus(n))$ implies~\eqref{eq:interior-target}.
+$W^{(2n)}_n=o(T_\plus(n))$. If (LR) holds for the minus sign as well, then
+$\sup_{\varepsilon N/4\le n\le N}W^{(N)}_n=o(T_\plus(N))$ for every $\varepsilon\in(0,\frac12)$
+implies~\eqref{eq:interior-target}. For a fixed law the last two conditions read
+$W_n=o(T_\plus(n))$.
 \end{enumerate}
 At the plus end the criteria are nested. Since $\nu_\plus\le Q_\plus$, the atom
-condition $Q_\plus(n)=o(T_\plus(n))$ implies the big-jump condition
-$\nu_\plus(n)=o(T_\plus(n))$. Since $B_nT_\plus(n)\to0$, the big-jump condition
-implies $B_n\nu_\plus(n)\to0$, which is the plus half of the bulk criterion.
+condition $\sup_NQ_\plus(n)=o(T_\plus(n))$ implies the big-jump condition
+$\bar\nu_\plus(n)=o(T_\plus(n))$. Since $B_nT_\plus(n)\to0$, the big-jump condition
+implies $B_n\bar\nu_\plus(n/2)\to0$, which is the plus half of the bulk criterion.
 \end{introtheorem}
 
 The zone in (c) starts where the zone of Theorem~\ref{thm:bigjump}(b) starts, and by
@@ -114,7 +142,10 @@ for a fresh start. For fresh starts Theorem~\ref{thm:window} gives the sharp fac
 $\mathcal D^\plus_N(0)=0$, so (c) and (d) both reduce to the identity
 $P_N(N)=Q_\plus(N)$ of Proposition~\ref{prop:first-run}. Part (e) refines (c) on
 the interior of the zone, where~\eqref{eq:interior-target} is the statement of (c)
-without $\Psi_N$.
+without $\Psi_N$. The regular case of (c) gives one formula on the whole zone up to the
+end, with the term $\nu_\plus(\lfloor L_k\rfloor)(1+\mu_\plus u_\minus(N-k))$ for the first
+run as the giant run, and the regular case of (d) is its value at $j=N-k$ fixed, since
+$\nu_\plus(\lfloor L_k\rfloor)=\nu_\plus(N)(1+o(1))+o(T_\plus(N))$ there by (R$\nu$).
 
 \begin{remark}[the prepared boundary kernel]\label{rem:kappa-prep}
 By~\eqref{eq:renewal-thm} and dominated convergence, $\kappa_\plus(j)\to1/\mu_\minus$,
@@ -251,7 +282,7 @@ By~\eqref{eq:defect} this gives exactly $E_3(k)=\mathcal D^\plus_N(N-k)+\mathcal
 For $E_2$ the horizon is $N-d\ge N/2$. By Theorem~\ref{thm:bulk}(b) there is $C_{10}$
 with $B_nF^{\sgn_0}_n(k)\le C_{10}$ for all $n$, $k$ and $\sgn_0$. By
 Lemma~\ref{lem:rv}(v), $B_N/B_{N-d}\le B_N/B_{\lceil N/2\rceil}\le C$. Hence
-$0\le E_2(k)\le CC_{10}\Prob(D>J)$ for all $k$.
+$0\le E_2(k)\le CC_{10}\varepsilon_J$ for all $k$, by~\eqref{eq:tight}.
 
 For $E_1$ we claim that for each fixed $d\ge1$
 \begin{equation}\label{eq:prep-shift}
@@ -272,9 +303,9 @@ $\sup_k|E_1(k)-\Prob(D\le J)h_N(x_{N,k})|\to0$.
 
 Let $e_N(k)$ be the difference between $B_NP_N(k)$ and the right side of (a)
 without the term $o(1)$. Collecting the three parts,
-$\limsup_{N\to\infty}\sup_{0\le k\le N}|e_N(k)|\le(C_1+CC_{10})\Prob(D>J)$, with $C_1$
-the bound of Lemma~\ref{lem:profile}(a). This tends to zero as $J\to\infty$, since $D$
-is finite almost surely.
+$\limsup_{N\to\infty}\sup_{0\le k\le N}|e_N(k)|\le(C_1+CC_{10})\varepsilon_J$, with $C_1$
+the bound of Lemma~\ref{lem:profile}(a). This tends to zero as $J\to\infty$,
+by~\eqref{eq:tight}.
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{thm:preparation}(b)]
@@ -296,25 +327,23 @@ $Q_\minus$. This proves the formula for the error over the whole range.
 Now we compare the defects with the atoms. The term $m=1$ of~\eqref{eq:defect} at
 $b=1$ is $B_N\nu_\plus(N-1)\Pi^\minus_1(1)=B_N\nu_\plus(N-1)$, since a fresh minus walk
 of one step has one minus step. So $\Delta_{\plus,N}\ge B_N\nu_\plus(N-1)$. In the
-other direction, $\nu_\plus(N-m)\le\sup_{d>N/2}\nu_\plus(d)$ for $m<N/2$, and the Green
+other direction, $\nu_\plus(N-m)\le\bar\nu_\plus(N/2)$ for $m<N/2$, and the Green
 identity, Lemma~\ref{lem:green}, together with $u_\minus\le1$ gives
 \begin{equation}\label{eq:defect-upper}
- \Delta_{\plus,N}\le(1+\mu_\plus)\,B_N\sup_{d>N/2}\nu_\plus(d)
- \le(1+\mu_\plus)\,C\sup_{d>N/2}B_d\,\nu_\plus(d),
+ \Delta_{\plus,N}\le(1+\mu_\plus)\,B_N\sup_{d>N/2}\nu_\plus(d)\le(1+\mu_\plus)\,B_N\,\bar\nu_\plus(N/2).
 \end{equation}
-with $C$ a bound for $B_N/B_d$ on $d>N/2$. The same bounds hold for the minus sign.
-Since $B_{N}/B_{N-1}\to1$ and $\Prob(D=n)=\nu_\plus(n)+\nu_\minus(n)$, the two bounds
-show that $\max(\Delta_{\plus,N},\Delta_{\minus,N})\to0$ if and only if
-$B_n\Prob(D=n)\to0$. This is the interior criterion. For the whole range we need in
-addition $B_NQ_\sgn(N)\to0$ for both signs, and since $\nu_\sgn\le Q_\sgn$ this
-condition implies the interior one. This is the criterion
-$B_n\Prob(D\ge n)\to0$.
+The same bounds hold for the minus sign. So $\max(\Delta_{\plus,N},\Delta_{\minus,N})\to0$ if
+$B_N\bar\nu(N/2)\to0$ and only if $B_N\Prob(D^{(N)}=N-1)\to0$, and for a fixed law both
+conditions read $B_n\Prob(D=n)\to0$, by the remark after~\eqref{eq:envelope} and
+$B_N/B_{N-1}\to1$. This is the interior criterion. For the whole range we need in
+addition $B_NQ_\sgn(N)\to0$ for both signs, and for a fixed law, since $\nu_\sgn\le Q_\sgn$,
+the two conditions together read $B_n\Prob(D\ge n)\to0$.
 
 Finally let $\varepsilon N\le k\le(1-\varepsilon)N$. A nonzero term of
 $\mathcal D^\plus_N(N-k)$ has $m\ge N-k\ge\varepsilon N$, and Theorem~\ref{thm:bulk}(b)
 gives $\Pi^\minus_m(N-k)\le C_{10}/B_m\le C_{10}/B_{\lceil\varepsilon N\rceil}$. Hence
 $\mathcal D^\plus_N(N-k)\le C_{10}(B_N/B_{\lceil\varepsilon N\rceil})\,Q_\plus(\lceil N/2\rceil)\to0$,
-since $D$ is finite almost surely. The minus defect is the same, and part (a)
+since $Q_\plus(\lceil N/2\rceil)\le\varepsilon_J$ once $N>2J$. The minus defect is the same, and part (a)
 gives the approximation on this range.
 \end{proof}
 
@@ -342,34 +371,38 @@ $T_\plus(N)\bigl(\Prob(\Sigma=\plus,D\le J)u_\minus(j)\ones_{\{j\ge1\}}+o(1)\big
 $J<d\le N/2$ the horizon is $n=N-d\ge N/2$. The convergent sequence
 $F^\minus_n(n-j)/T_\plus(n)$ is bounded by some $C_j$ for $n\ge N/2$ and large $N$,
 and $T_\plus(n)\le T_\plus(\lceil N/2\rceil)\le CT_\plus(N)$. So this part is at
-most $CC_jQ_\plus(J+1)T_\plus(N)$. For $N/2<d<N$ put $m=N-d$. Then
+most $CC_j\varepsilon_JT_\plus(N)$, by~\eqref{eq:tight}. For $N/2<d<N$ put $m=N-d$. Then
 $F^\minus_{N-d}(N-d-j)=\Pi^\minus_m(j)$, and by~\eqref{eq:defect} this part equals
 $B_N^{-1}\mathcal D^\plus_N(j)$ exactly. Collecting terms and using~\eqref{eq:kappa-prep},
 \[
  \limsup_{N\to\infty}\frac{\bigl|P_N(N-j)-Q_\plus(N)\ones_{\{j=0\}}-T_\plus(N)\kappa_\plus(j)
- -B_N^{-1}\mathcal D^\plus_N(j)\bigr|}{T_\plus(N)}\le(1+CC_j)\,Q_\plus(J+1),
+ -B_N^{-1}\mathcal D^\plus_N(j)\bigr|}{T_\plus(N)}\le(1+CC_j)\,\varepsilon_J,
 \]
 and the right side tends to zero as $J\to\infty$. This is the expansion.
 
-Let $j\ge1$. If $\nu_\plus(n)=o(T_\plus(n))$, then the Green identity,
+Let $j\ge1$. If $\bar\nu_\plus(n)=o(T_\plus(n))$, then the Green identity,
 Lemma~\ref{lem:green}, and $u_\minus\le1$ give
-$B_N^{-1}\mathcal D^\plus_N(j)\le(1+\mu_\plus)\sup_{d>N/2}\nu_\plus(d)
-=o(T_\plus(\lceil N/2\rceil))=o(T_\plus(N))$, so $P_N(N-j)/T_\plus(N)\to\kappa_\plus(j)$.
-Conversely, suppose this limit holds for one $j\ge1$. By Lemma~\ref{lem:green}
+$B_N^{-1}\mathcal D^\plus_N(j)\le(1+\mu_\plus)\bar\nu_\plus(N/2)
+=o(T_\plus(\lceil N/2\rceil))=o(T_\plus(N))$. Conversely, suppose that the defect term is
+$o(T_\plus(N))$ for one $j\ge1$. By Lemma~\ref{lem:green}
 the weights $\Pi^\minus_m(j)$, $m\ge1$, add up to $1+\mu_\plus u_\minus(j)\ge1$, so
 there is an $m_0=m_0(j)\ge1$ with $\Pi^\minus_{m_0}(j)>0$, and it does not depend on
 $N$. (If $T_\minus(j)>0$ one may take $m_0=j$, with $\Pi^\minus_j(j)=T_\minus(j)$.)
 For $N>2m_0$ the term $m=m_0$ of~\eqref{eq:defect} gives
-$B_N^{-1}\mathcal D^\plus_N(j)\ge\nu_\plus(N-m_0)\Pi^\minus_{m_0}(j)$, and the expansion
-makes the left side $o(T_\plus(N))$. Since $T_\plus(N)/T_\plus(N-m_0)\to1$, we get
-$\nu_\plus(n)=o(T_\plus(n))$.
+$B_N^{-1}\mathcal D^\plus_N(j)\ge\nu_\plus(N-m_0)\Pi^\minus_{m_0}(j)$, so
+$\nu_\plus(N-m_0)=o(T_\plus(N))$. For a fixed law, $T_\plus(N)/T_\plus(N-m_0)\to1$ gives
+$\nu_\plus(n)=o(T_\plus(n))$, and then the expansion gives $P_N(N-j)/T_\plus(N)\to\kappa_\plus(j)$.
 
-Finally let $\nu_\plus$ satisfy (R$\nu$) and $j\ge1$. For each fixed $m$,
-$\nu_\plus(N-m)/\nu_\plus(N)\to1$, and $\nu_\plus(N-m)\le C_\nu\nu_\plus(N)$ for $m<N/2$.
-By Lemma~\ref{lem:green} the weights $\Pi^\minus_m(j)$ have the finite sum
-$1+\mu_\plus u_\minus(j)$. Dominated convergence gives
-$B_N^{-1}\mathcal D^\plus_N(j)/\nu_\plus(N)=\sum_{m<N/2}(\nu_\plus(N-m)/\nu_\plus(N))\Pi^\minus_m(j)
-\to1+\mu_\plus u_\minus(j)$.
+Finally let $\nu_\plus$ satisfy (R$\nu$) and $j\ge1$, and put $r_N=\nu_\plus(N)+T_\plus(N)$.
+Fix $M$. For $m\le M$ the second part of (R$\nu$) gives
+$|\nu_\plus(N-m)-\nu_\plus(N)|\le\epsilon_Nr_N$ with $\epsilon_N\to0$, and for $M<m<N/2$ the first
+part gives $\nu_\plus(N-m)+\nu_\plus(N)\le(C_\nu+1)r_N$. By Lemma~\ref{lem:green} the weights
+$\Pi^\minus_m(j)$ have the finite sum $1+\mu_\plus u_\minus(j)$. Hence
+\begin{multline*}
+ \Bigl|B_N^{-1}\mathcal D^\plus_N(j)-\nu_\plus(N)\bigl(1+\mu_\plus u_\minus(j)\bigr)\Bigr|\\
+ \le\epsilon_N(1+\mu_\plus)r_N+(C_\nu+1)r_N\sum_{m>M}\Pi^\minus_m(j)+\nu_\plus(N)\sum_{m\ge N/2}\Pi^\minus_m(j),
+\end{multline*}
+and letting $N\to\infty$, then $M\to\infty$, the right side is $o(r_N)$.
 \end{proof}
 
 \subsection{The big-jump zone, parts (c) and (e)}\label{sec:prep-bigjump}
@@ -404,7 +437,7 @@ C_*\widehat G_N(k)$ for large $N$.
 \emph{Step 2 (intermediate first-run lengths).} By Step 1
 and~\eqref{eq:unif-bigjump}, every fresh probability in $E_2$ and $E_4$ is at most
 $(C_{\mathrm G}+1)$ times the corresponding $\widehat G_n$, since $\varepsilon\le1$.
-Hence $E_2+E_4\le(C_{\mathrm G}+1)(1+C_*)\Prob(D>J)\,\widehat G_N(k)$.
+Hence $E_2+E_4\le(C_{\mathrm G}+1)(1+C_*)\,\varepsilon_J\,\widehat G_N(k)$, by~\eqref{eq:tight}.
 
 \emph{Step 3 (short first-run lengths).} Let $d\le J$. By Step 1
 and~\eqref{eq:unif-bigjump},
@@ -433,23 +466,23 @@ most $Cr_N\widehat G_N(k)$. Here we used $(N-L)f_\plus(\lfloor L\rfloor)\le C\wi
 and $T_\plus(\lfloor L\rfloor)\le\widehat G_N(k)$.
 
 Now we sum over $d$. In $E_3$ the weights sum to $\Prob(\Sigma=\plus,D\le J)$, which
-differs from $\pi_\plus$ by at most $\Prob(D>J)$. In $E_1$ the weights of the interior
+differs from $\pi_\plus$ by at most $\varepsilon_J$. In $E_1$ the weights of the interior
 term sum to $\Prob(\Sigma=\minus,D\le\min(J,j))$. If $j\ge J$ this differs from
-$\pi_\minus$ by at most $\Prob(D>J)$. If $j<J$, then $N-L<J/(1-p)$ and the whole
+$\pi_\minus$ by at most $\varepsilon_J$. If $j<J$, then $N-L<J/(1-p)$ and the whole
 interior term is at most $CJ\,T_\plus(\lfloor L\rfloor)/L\le C(J/L)\widehat G_N(k)$. The
 boundary terms in $E_1$ sum to $T_\plus(\lfloor L\rfloor)\sum_{d\le\min(J,j)}\nu_\minus(d)u_\minus(j-d)$,
 which differs from $T_\plus(\lfloor L\rfloor)\sum_{d\le j}\nu_\minus(d)u_\minus(j-d)$ by at
-most $\Prob(D>J)\widehat G_N(k)$, since $u_\minus\le1$. By~\eqref{eq:kappa-prep}
+most $\varepsilon_J\widehat G_N(k)$, since $u_\minus\le1$. By~\eqref{eq:kappa-prep}
 and~\eqref{eq:G-prep},
 \[
- |E_1+E_3-G^\nu_N(k)|\le C\Bigl(\varepsilon+r_N+\frac JL+\Prob(D>J)\Bigr)\widehat G_N(k).
+ |E_1+E_3-G^\nu_N(k)|\le C\Bigl(\varepsilon+r_N+\frac JL+\varepsilon_J\Bigr)\widehat G_N(k).
 \]
 
 \emph{Step 4 (conclusion).} Steps 2 and 3 and $J/L\le(1-p)J/(KB_N)$ give, for
 $K\ge4K_0$ and large $N$,
 \begin{multline*}
  \sup_{pN+K\lambda_NB_N\le k\le N}\frac{|P_N(k)-Q_\plus(N)\ones_{\{k=N\}}-G^\nu_N(k)-\Psi_N(k)|}{\widehat G_N(k)}\\
- \le C\Bigl(\varepsilon+r_N+\frac{(1-p)J}{KB_N}+\Prob(D>J)\Bigr).
+ \le C\Bigl(\varepsilon+r_N+\frac{(1-p)J}{KB_N}+\varepsilon_J\Bigr).
 \end{multline*}
 Let $N\to\infty$, then $J\to\infty$. The bound becomes $C\varepsilon$ for every
 $K\ge4K_0(\varepsilon)$, and $\varepsilon$ is arbitrary.
@@ -458,11 +491,11 @@ $K\ge4K_0(\varepsilon)$, and $\varepsilon$ is arbitrary.
 \begin{proof}[Proof of the criteria in Theorem~\ref{thm:preparation}(c)]
 \emph{The whole zone.} By the decomposition, the statement without $\Psi_N$ holds if
 and only if $\lim_K\limsup_N\sup_k\Psi_N(k)/\widehat G_N(k)=0$, the supremum being over
-the zone. Suppose $\nu_\plus(n)=o(T_\plus(n))$. Every $d$ in~\eqref{eq:Psi} has
+the zone. Suppose $\bar\nu_\plus(n)=o(T_\plus(n))$. Every $d$ in~\eqref{eq:Psi} has
 $d\ge L_k/2$, and Lemma~\ref{lem:green} with $u_\minus\le1$ gives, with $j=N-k$,
 \begin{equation}\label{eq:Psi-upper}
  \Psi_N(k)\le\sup_{d\ge L_k/2}\nu_\plus(d)\sum_{m\ge1}\Pi^\minus_m(j)
- \le(1+\mu_\plus)\sup_{d\ge L_k/2}\nu_\plus(d),
+ \le(1+\mu_\plus)\,\bar\nu_\plus(L_k/2),
 \end{equation}
 because $F^\minus_{N-d}(k-d)=\Pi^\minus_{N-d}(j)$ and distinct $d$ give distinct
 $m=N-d$. The right side is $o(T_\plus(\lceil L_k/2\rceil))=o(T_\plus(\lfloor L_k\rfloor))$
@@ -471,26 +504,30 @@ Conversely, for large $N$ the point $k=N-1$ lies in the zone for every $K$, beca
 $\lambda_NB_N=o(N)$, and it has $L=N-1/(1-p)\ge N/2$. The term $d=N-1$
 of~\eqref{eq:Psi} gives $\Psi_N(N-1)\ge\nu_\plus(N-1)F^\minus_1(0)=\nu_\plus(N-1)$, and
 $\widehat G_N(N-1)\le2T_\plus(\lfloor N/2\rfloor)\le CT_\plus(N)$. So the criterion
-forces $\nu_\plus(N-1)=o(T_\plus(N))$, that is, $\nu_\plus(n)=o(T_\plus(n))$.
+forces $\nu_\plus(N-1)=o(T_\plus(N))$, which for a fixed law is $\nu_\plus(n)=o(T_\plus(n))$.
 
-\emph{The regular case.} Let $\nu_\plus$ satisfy (R$\nu$). Fix $\varepsilon>0$. Take
-$R$ and $N_0$ from Lemma~\ref{lem:green-conc}, and $\delta>0$ with
-$|\nu_\plus(d)/\nu_\plus(n)-1|\le\varepsilon$ for $|d-n|\le\delta n$ and large $n$. Let
-$K\ge R(1-p)/\delta+1$ and let $k<N$ lie in the zone, so $j=N-k\ge1$. Put
-$\mathcal V=\{d:|d-L_k|\le RB_N\}$. Since $m=N-d$ satisfies $|m-j/(1-p)|=|d-L_k|$,
-Lemma~\ref{lem:green-conc} gives $\sum_{d\notin\mathcal V}\Pi^\minus_{N-d}(j)\le\varepsilon$,
-the sum running over all $d$ with $N-d\ge1$. Every $d\in\mathcal V$ satisfies
-$|d-L_k|\le RB_N\le\delta L_k$, because $L_k\ge KB_N/(1-p)$, so $d\ge L_k/2$ and
-$\nu_\plus(d)=\nu_\plus(\lfloor L_k\rfloor)(1+O(\varepsilon))$. Hence
-\[
- \Psi_N(k)=\nu_\plus(\lfloor L_k\rfloor)\bigl(1+O(\varepsilon)\bigr)\sum_{d\in\mathcal V}\Pi^\minus_{N-d}(j)
- +O\bigl(\varepsilon C_\nu\nu_\plus(\lfloor L_k\rfloor)\bigr).
-\]
-By Lemma~\ref{lem:green} and the choice of $R$, the last sum lies between
-$1+\mu_\plus u_\minus(j)-\varepsilon$ and $1+\mu_\plus u_\minus(j)$. So
-$|\Psi_N(k)-\nu_\plus(\lfloor L_k\rfloor)(1+\mu_\plus u_\minus(j))|\le C\varepsilon\,\nu_\plus(\lfloor L_k\rfloor)$,
-and the decomposition gives the stated form. At $k=N$ both $\Psi_N$ and the
-replacement vanish.
+\emph{The regular case.} Let $\nu_\plus$ satisfy (R$\nu$) and fix $\varepsilon>0$. Take $R$
+and $N_0$ from Lemma~\ref{lem:green-conc}, and $\delta>0$ and $n_\delta$ such that the first
+part of (R$\nu$) holds for $n\ge n_\delta$ and
+$|\nu_\plus(d)-\nu_\plus(n)|\le\varepsilon(\nu_\plus(n)+T_\plus(n))$ for $|d-n|\le\delta n$ and
+$n\ge n_\delta$. Let $K\ge R(1-p)/\delta+2$ and let $k<N$ lie in the zone, so $j=N-k\ge1$ and
+$L_k\ge KB_N/(1-p)$, and put $n=\lfloor L_k\rfloor$ and $r=\nu_\plus(n)+T_\plus(n)$. For large $N$
+we have $n\ge n_\delta$. Let $\mathcal V=\{d\le N-1:|d-L_k|\le RB_N\}$. Since $m=N-d$ satisfies
+$|m-j/(1-p)|=|d-L_k|$, Lemma~\ref{lem:green-conc} gives
+$\sum_{d\le N-1,\,d\notin\mathcal V}\Pi^\minus_{N-d}(j)\le\varepsilon$, and Lemma~\ref{lem:green}
+then gives $\sum_{d\in\mathcal V}\Pi^\minus_{N-d}(j)\in[1+\mu_\plus u_\minus(j)-\varepsilon,\,1+\mu_\plus u_\minus(j)]$.
+Every $d\ge L_k/2$ has $d\ge n/2$, so $\nu_\plus(d)\le C_\nu r$. Every $d\in\mathcal V$
+has $d\ge L_k/2$ and $|d-n|\le RB_N+1\le\delta n$, because $n\ge KB_N/(1-p)-1$, so
+$|\nu_\plus(d)-\nu_\plus(n)|\le\varepsilon r$. Hence
+\begin{align*}
+ \Bigl|\Psi_N(k)-\nu_\plus(n)\bigl(1+\mu_\plus u_\minus(j)\bigr)\Bigr|
+ &\le\sum_{d\notin\mathcal V}\nu_\plus(d)\Pi^\minus_{N-d}(j)
+ +\sum_{d\in\mathcal V}\bigl|\nu_\plus(d)-\nu_\plus(n)\bigr|\Pi^\minus_{N-d}(j)\\
+ &\quad+\nu_\plus(n)\,\varepsilon
+ \ \le\ \bigl(C_\nu+2+\mu_\plus\bigr)\,\varepsilon\,r .
+\end{align*}
+Since $T_\plus(n)\le\widehat G_N(k)$, the decomposition gives the stated form, with the
+double limit taken as before. At $k=N$ both $\Psi_N$ and the replacement vanish.
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{thm:preparation}(e)]
@@ -503,7 +540,7 @@ $Z^\varepsilon_N$ for every $\varepsilon$. On $Z^\varepsilon_N$ we have
 $T_\plus(N)\le\widehat G_N(k)\le\varepsilon^{-1}T_\plus(\lfloor\varepsilon N\rfloor)\le
 C_\varepsilon T_\plus(N)$. So the condition reads
 $\sup_{k\in Z^\varepsilon_N}\Psi_N(k)=o(T_\plus(N))$. Sufficiency of
-$\nu_\plus(n)=o(T_\plus(n))$ follows from~\eqref{eq:Psi-upper}.
+$\bar\nu_\plus(n)=o(T_\plus(n))$ follows from~\eqref{eq:Psi-upper}.
 
 For the necessity of the window condition, let $n$ be large, put $N=2n$ and choose
 $k$ with $|L_k-n|\le1/(1-p)$, which is possible because $L_k$ moves in steps of
@@ -512,16 +549,17 @@ $m\in[N/4,3N/4]$, and $(m-j)-pm=(1-p)(L_k-d)$ has absolute value at most
 $2(1-p)B_n\le c_{11}B_m$, with $c_{11}$ depending only on the laws, by
 Lemma~\ref{lem:rv}(ii). Theorem~\ref{thm:bulk}(c) and Lemma~\ref{lem:profile}(d) give
 $B_m\Pi^\minus_m(j)=B_mF^\minus_m(m-j)\ge c_{12}>0$ for large $n$. Also $d\ge L_k/2$ and
-$B_m\le CB_n$. Hence $\Psi_N(k)\ge(c_{12}/C)W_n$. If~\eqref{eq:interior-target}
+$B_m\le CB_n$. Hence $\Psi_N(k)\ge(c_{12}/C)W^{(N)}_n$ with $N=2n$. If~\eqref{eq:interior-target}
 holds, then $\Psi_N=o(T_\plus(N))$ on $Z^{1/4}_N$ by the reduction, so
-$W_n=o(T_\plus(2n))=o(T_\plus(n))$.
+$W^{(2n)}_n=o(T_\plus(2n))=o(T_\plus(n))$.
 
 \emph{Sufficiency of the window condition under (LR) for both signs.} Let
-$W_n=o(T_\plus(n))$ and $k\in Z^\varepsilon_N$, with $j=N-k\ge(1-p)\varepsilon N$. A
+$k\in Z^\varepsilon_N$, with $j=N-k\ge(1-p)\varepsilon N$. A
 nonzero term of~\eqref{eq:Psi} has $m=N-d\ge j$, so $m\in[(1-p)\varepsilon N,N]$ and
 $d\in[\varepsilon N/2,N]$. Hence $B_m\ge c_\varepsilon B_N$, and
 Theorem~\ref{thm:bulk}(b) gives $\Pi^\minus_m(j)\le C_\varepsilon/B_N$. Put
-$\overline W_N=\sup_{\varepsilon N/4\le n\le N}W_n$, which is $o(T_\plus(N))$ by (RV).
+$\overline W_N=\sup_{\varepsilon N/4\le n\le N}W^{(N)}_n$, which is $o(T_\plus(N))$ by hypothesis,
+and for a fixed law with $W_n=o(T_\plus(n))$ by (RV).
 Split the $d$ axis into the blocks $\mathcal B_i=\{d:iB_N\le d-L_k<(i+1)B_N\}$,
 $i\in\Z$. Each block meets $[\varepsilon N/2,N]$ in a set covered by at most
 $C_\varepsilon$ windows $[n-B_n,n+B_n]$ with $\varepsilon N/4\le n\le N$, so
@@ -588,7 +626,7 @@ with $|i|>R$ contribute at most $C_\varepsilon\overline W_N$ to $\Psi_N(k)$. Hen
 $\sup_{k\in Z^\varepsilon_N}\Psi_N(k)\le C_{\varepsilon,R}\overline W_N=o(T_\plus(N))$.
 \end{proof}
 
-The gap between the two interior conditions is real. If $\nu_\plus(n_i)=T_\plus(n_i)$
+The gap between the two interior conditions is real. If a fixed law has $\nu_\plus(n_i)=T_\plus(n_i)$
 on a sparse sequence and $\nu_\plus=0$ near it, then $W_n=O(T_\plus(n)/B_n)$, so under
 (LR) for both signs the initial run is invisible on every interior zone, by the
 window criterion (the sufficiency just proved). It is visible at the point $N-1$ for
