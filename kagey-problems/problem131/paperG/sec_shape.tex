@@ -277,24 +277,200 @@ $\widetilde\kappa_\minus=(0,u_\plus(1),u_\plus(2),\dots)$ has one sign change, s
 $\sigma_L+1$.
 \end{example}
 
+\subsection{The layer at the level of differences}\label{sec:layer-diff}
+
+Near the plus end the first differences of $P_N$ follow those of the renewal mass function
+$u_\minus$. The tool is a difference form of Doney's local bound, Lemma~\ref{lem:cd}(v),
+uniform in the number of summands. It is the case $\alpha<1$ of the difference form of the local
+big-jump theorem of~\cite[Section~6]{paperF}, and it needs no centering.
+
+\begin{lemma}[the difference form of Doney's bound]\label{lem:Lstar}
+Let $\alpha_\sgn<1$, assume (SPAN), (LR) and (LD) for the sign $\sgn$, drop the sign and let
+$V_m=f^{*m}$. There is $C$ such that
+\[
+ |V_m(n-1)-V_m(n)|\le C\,m\,\frac{f(n)}n\qquad\text{for all }m\ge1\text{ and }n\ge a_m .
+\]
+\end{lemma}
+
+\begin{proof}
+Write $\nabla V_m(n)=V_m(n-1)-V_m(n)$. For $n\ge a_m$ we have $mT(n)\le mT(a_m)\le C$, and (LR)
+gives $f(n)\asymp T(n)/n$. Fix $\Lambda\ge1$. If $n\le\Lambda a_m$, then $mT(n)\ge c_\Lambda$ by
+Potter's bounds, so $mf(n)/n\ge c_\Lambda a_m^{-2}$, and Lemma~\ref{lem:fourier}(ii) gives the claim.
+Let $n>\Lambda a_m$ with $\Lambda$ large, fix an integer $K\ge2$, put $y=\lceil n/K\rceil$, and let
+$I$ be the first index $i$ with $X_i\ge y$, with $I=\infty$ if there is none. Then
+$V_m(n)=\sum_{i=1}^m\Prob(S_m=n,I=i)+V^{(y)}_m(n)$ in the notation of Lemma~\ref{lem:fourier}.
+
+\emph{A summand of size at least $y$.} Let $h_i(z)=\Prob(S_m-X_i=z,\ X_1,\dots,X_{i-1}<y)$, a
+measure of mass at most $1$ that does not depend on $n$. Since $X_i$ is independent of the rest,
+$\Prob(S_m=n,I=i)=\sum_{z\le n-y}h_i(z)f(n-z)$, and
+\[
+ \nabla\Prob(S_m=\cdot,I=i)(n)=\sum_{z\le n-1-y}h_i(z)\bigl[f(n-1-z)-f(n-z)\bigr]-h_i(n-y)f(y).
+\]
+In the sum $n-z\ge y+1\ge n/K$, so (LD) and Potter's bounds for the regularly varying $f$ give
+$|f(n-1-z)-f(n-z)|\le Cf(n-z)/(n-z)\le C_Kf(n)/n$, and the sum is at most $C_Kf(n)/n$. In the
+boundary term $h_i(n-y)\le V_{m-1}(n-y)$ with $n-y\ge n/2\ge a_m/2$, so Lemma~\ref{lem:cd}(v) gives
+$h_i(n-y)\le CmT(n)/n$, and $f(y)\le C_Kf(n)$. Summing over $i\le m$, this part of $\nabla V_m(n)$ is
+at most $C_Kmf(n)/n+C_Km^2T(n)f(n)/n\le C_Kmf(n)/n$.
+
+\emph{No summand of size $y$.} Let $m_1=\lfloor m/2\rfloor$, $m_2=m-m_1$ and $g_l=V^{(y)}_{m_l}$, so
+that $V^{(y)}_m=g_1*g_2$ and, with $n$ even for notational ease,
+\begin{align*}
+ \nabla V^{(y)}_m(n)&=\sum_{z\le n/2}g_1(z)\nabla g_2(n-z)+\sum_{z>n/2}g_1(z)\nabla g_2(n-z)\\
+ &=\sum_{w\ge n/2}\nabla g_1(n-w)g_2(w)+g_1(n/2)g_2(n/2-1)+\sum_{z>n/2}g_1(z)\nabla g_2(n-z),
+\end{align*}
+where the first sum was rearranged by $w=n-z$ and summed by parts. By Lemma~\ref{lem:fourier}(ii)
+and $m_lT(y)\le C_K$, $\sup|\nabla g_l|\le C_Ka_m^{-2}$. The summands of $g_l$ are bounded by $y$, so
+the Chernoff bound in the proof of Lemma~\ref{lem:onejump}, with $\E[X;X<y]\le CyT(y)$, gives
+\[
+ \sum_{w\ge n/2}g_l(w)=\Prob\Bigl(\sum_{i\le m_l}X_i\ones_{\{X_i<y\}}\ge\frac n2\Bigr)\le\bigl(C_KmT(n)\bigr)^{K/2},
+\]
+and splitting $g_l(x)$ at $x\ge n/2-1$ in the same way, with one of two halves of its summands above
+$n/4$ and Lemma~\ref{lem:cd}(i) for the other half, $g_l(x)\le Ca_m^{-1}(C_KmT(n))^{K/8}$ for
+$x\ge n/2-1$. Hence
+\[
+ |\nabla V^{(y)}_m(n)|\le C_Ka_m^{-2}\bigl(C_KmT(n)\bigr)^{K/2}+Ca_m^{-2}\bigl(C_KmT(n)\bigr)^{K/4}.
+\]
+Put $\lambda=n/a_m>\Lambda$. By Potter's bounds $c\lambda^{-\alpha-\delta}\le mT(n)\le C\lambda^{-\alpha+\delta}$,
+so for $\Lambda$ large $C_KmT(n)\le1$, and
+\[
+ \frac{a_m^{-2}(C_KmT(n))^{K/4}}{mf(n)/n}\le C\,\frac{(n/a_m)^2(C_KmT(n))^{K/4}}{mT(n)}
+ \le C_K\lambda^{2+\alpha+\delta-(\alpha-\delta)K/4}\le C_K
+\]
+once $K\ge4(2+\alpha+\delta)/(\alpha-\delta)$. Fix such a $K$ and the matching $\Lambda$. This proves
+the claim for $n>\Lambda a_m$, and together with the first case for all $n\ge a_m$.
+\end{proof}
+
+\begin{lemma}[consequences]\label{lem:diffs}
+Assume (BAL) and (SPAN), and (LR) and (LD) for both signs. Write $V_m=u^\plus_m$, $q_m=q^\plus_m$,
+$\delta V_m=V_{m+1}-V_m$, and $f$, $T$, $a_m$ for the plus law.
+\begin{enumerate}[(i)]
+\item $|\delta V_m(n)|\le Cf(n)(1+mT(n))$ for $n\ge2a_m$.
+\item $|q_{m+1}(n)-T(n)|\le CmT(n)^2$ for $n\ge2a_m$.
+\item For $j\ge1$, with $\Delta u^\minus_m(j)=u^\minus_m(j+1)-u^\minus_m(j)$,
+\begin{gather*}
+ \sum_{m\ge1}m\,|\Delta u^\minus_m(j)|\le\frac C{j^2T_\minus(j)^2},\qquad
+ |u_\minus(j+1)-u_\minus(j)|\le\frac C{j^2T_\minus(j)},\\
+ \sum_{m\ge1}m\,u^\minus_m(j)\le\frac C{jT_\minus(j)^2},\qquad
+ \sum_{m\ge1}m\,q^\minus_m(j)\le\frac C{T_\minus(j)} .
+\end{gather*}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) Since $\delta V_m=f*V_m-V_m$, $\delta V_m(n)=\sum_xf(x)[V_m(n-x)-V_m(n)]$. For $x\le n/2$,
+Lemma~\ref{lem:Lstar} at the levels $n-i\ge n/2\ge a_m$ gives
+$|V_m(n-x)-V_m(n)|\le\sum_{i<x}|\nabla V_m(n-i)|\le Cxmf(n)/n$, and $\sum_{x\le n/2}xf(x)\le CnT(n)$ by
+Karamata's theorem, so this part is at most $CmT(n)f(n)$. The rest is
+$\sum_{w<n/2}f(n-w)V_m(w)-V_m(n)T(n/2)$, at most $f(n/2)+C(mT(n)/n)T(n/2)\le Cf(n)(1+mT(n))$ by
+Lemma~\ref{lem:cd}(v) and (LR).
+
+(ii) By~\eqref{eq:q-cover}, $q_{m+1}(n)-T(n)=\sum_{x<n}V_m(x)[T(n-x)-T(n)]-T(n)\Prob(S_m\ge n)$. For
+$x\le n/2$, $T(n-x)-T(n)=\sum_{i=n-x}^{n-1}f(i)\le CxT(n)/n$ by (LB), so this part is at most
+$C(T(n)/n)\E[S_m;S_m\le n/2]\le C(T(n)/n)\,m\,\E[X;X\le n]\le CmT(n)^2$. For $x>n/2$,
+Lemma~\ref{lem:cd}(v) gives $V_m(x)\le CmT(n)/n$ and $\sum_{x>n/2}T(n-x)\le CnT(n)$. The last term is
+at most $CmT(n)^2$ by Lemma~\ref{lem:sums}(i).
+
+(iii) Split the first sum at $m_j=c/T_\minus(j)$ with $c$ small, so that $j\ge a_\minus(m)$ for
+$m\le m_j$. There Lemma~\ref{lem:Lstar} for the minus law gives $|\Delta u^\minus_m(j)|\le Cmf_\minus(j)/j$,
+and $\sum_{m\le m_j}m^2\le Cm_j^3$, so this part is at most $C(f_\minus(j)/j)T_\minus(j)^{-3}\le C/(j^2T_\minus(j)^2)$
+by (LR). For $m>m_j$, Lemma~\ref{lem:fourier}(ii) gives $|\Delta u^\minus_m(j)|\le Ca_\minus(m)^{-2}e^{-cmT_\minus(j)}$
+with $a_\minus(m)\ge cj$, and $\sum_mme^{-cmT_\minus(j)}\le C/T_\minus(j)^2$. The second bound is the
+same computation without the factor $m$. For the third, $\sum_mmu^\minus_m(j)=(u_\minus*u_\minus)(j)-u_\minus(j)$,
+since $\sum_{m,m'}u^\minus_{m+m'}(j)=\sum_s(s+1)u^\minus_s(j)$, and
+$(u_\minus*u_\minus)(j)\le2\sup_{l\ge j/2}u_\minus(l)\sum_{l\le j/2}u_\minus(l)\le C\omega_\minus(j)/T_\minus(j)$
+by (SRT$_\minus$), which (LR) gives through (LB), and by $\sum_{l\le x}u_\minus(l)\le C/T_\minus(x)$. For
+the last, $\sum_mmq^\minus_m(j)$ is the expected index of the minus run that covers level $j$, which
+is $1+\sum_{i\ge1}\Prob(S^\minus_i<j)\le1+\sum_{l<j}u_\minus(l)\le C/T_\minus(j)$.
+\end{proof}
+
+\begin{theorem}[the layer at the level of differences]\label{thm:layer-diff}
+Assume (BAL), (SPAN), and (LR) and (LD) for both signs. Let the start be fresh with either sign or
+fair, and put $D_N(j)=P_N(N-j-1)-P_N(N-j)$. For every $\eta>0$ there are $\varepsilon>0$ and $J$ such
+that for all large $N$ and all $J\le j\le\varepsilon N$,
+\[
+ \bigl|D_N(j)-T_\plus(N)\bigl(u_\minus(j+1)-u_\minus(j)\bigr)\bigr|\le\eta\,T_\plus(N)\,\frac{u_\minus(j)}j .
+\]
+The same holds at the minus end with the signs exchanged. Under (DSRT$_\minus$), $D_N(j)<0$ on
+$J\le j\le\varepsilon N$, so $P_N$ increases strictly toward the plus end through the layer.
+\end{theorem}
+
+\begin{proof}
+Let the start be fresh plus, write $a_m=u^\minus_m$, $b_m=q^\minus_m$, $Q_m=q^\plus_{m+1}$, $V_m=u^\plus_m$
+and $n=N-j$, and abbreviate $T=T_\plus$, $f=f_\plus$ and $u=u_\minus$. By
+Proposition~\ref{prop:fresh-identity}, $P_N(N-j)=\sum_m[a_m(j)Q_m(n)+V_m(n)b_m(j)]$, and
+\[
+ D_N(j)=\mathrm I+\mathrm{II}+\mathrm{III}+\mathrm{IV},\qquad
+ \mathrm I=\sum_m\Delta a_m(j)\,Q_m(n-1),\quad
+ \mathrm{II}=\sum_ma_m(j)\,\delta V_m(n-1),
+\]
+\[
+ \mathrm{III}=\sum_mV_m(n-1)\,\Delta b_m(j),\qquad
+ \mathrm{IV}=\sum_m\nabla V_m(n)\,b_m(j),
+\]
+where $\Delta$ acts on $j$, $\nabla V_m(n)=V_m(n-1)-V_m(n)$, and we used
+$Q_m(n-1)-Q_m(n)=\Prob(S^\plus_{m+1}\ge n-1)-\Prob(S^\plus_m\ge n-1)-\Prob(S^\plus_{m+1}\ge n)+\Prob(S^\plus_m\ge n)=\delta V_m(n-1)$.
+With $B_i(j)=\sum_{m>i}b_m(j)=\Prob(S^\minus_i<j)$ and $\Delta B_i(j)=a_i(j)$, summation by parts gives
+$\mathrm{III}=\sum_{i\ge1}a_i(j)\delta V_i(n-1)=\mathrm{II}$. Put $\tau_N(j)=T(N)u(j)/j$. By (SRT$_\minus$),
+$u(j)\asymp1/(jT_\minus(j))$ for $j\ge J$, so $\tau_N(j)\asymp T(N)/(j^2T_\minus(j))$ there, and by (R1),
+$T(n-1)=T(N)(1+O(\varepsilon)+o(1))$ uniformly in $j\le\varepsilon N$. Fix $c_0$ small and put
+$m_0=c_0/T(N)$, so that $a_\plus(m)\le N/4\le(n-1)/2$ for $m\le m_0$ and large $N$.
+
+\emph{The range $m\le m_0$.} Write $\mathrm I=T(n-1)\sum_{m\le m_0}\Delta a_m(j)+\sum_{m\le m_0}\Delta a_m(j)[Q_m(n-1)-T(n-1)]+\mathrm I'$,
+with $\mathrm I'$ the part $m>m_0$. By Lemma~\ref{lem:diffs}(ii) and~(iii) the middle sum is at most
+$CT(N)^2/(j^2T_\minus(j)^2)\le C(T(N)/T_\minus(j))\tau_N(j)\le C\varepsilon^\alpha\tau_N(j)$. By
+Lemma~\ref{lem:diffs}(i) and~(iii), the part $m\le m_0$ of $\mathrm{II}$ and of $\mathrm{III}$ is at most
+$Cf(N)[u(j)+T(N)\sum_mma_m(j)]\le Cf(N)u(j)(1+T(N)/T_\minus(j))\le C(j/N)\tau_N(j)\le C\varepsilon\tau_N(j)$.
+By Lemma~\ref{lem:Lstar} and Lemma~\ref{lem:diffs}(iii), the part $m\le m_0$ of $\mathrm{IV}$ is at most
+$C(f(N)/N)\sum_mmb_m(j)\le Cf(N)/(NT_\minus(j))\le C(j/N)^2\tau_N(j)\le C\varepsilon^2\tau_N(j)$.
+
+\emph{The range $m>m_0$.} Here $mT_\minus(j)\ge c_0T_\minus(j)/T(N)\ge c\,\varepsilon^{-\alpha}$ for
+$j\le\varepsilon N$ and large $N$. The minus factors carry this decay: by Lemma~\ref{lem:sums}(iii),
+Lemma~\ref{lem:decay} and Lemma~\ref{lem:fourier}(ii), $a_m(j)\le Ca_\minus(m)^{-1}e^{-cmT_\minus(j)}$,
+$b_m(j)\le CT_\minus(j)e^{-cmT_\minus(j)}$ and $|\Delta a_m(j)|\le Ca_\minus(m)^{-2}e^{-cmT_\minus(j)}$. The
+plus factors are bounded by Lemma~\ref{lem:key} and Lemma~\ref{lem:fourier}: $Q_m\le CT(N)$,
+$|\delta V_m|\le C/(ma_\plus(m))$ and $|\nabla V_m|\le Ca_\plus(m)^{-2}$. Since $a_\pm(m_0)\ge cN$ and the
+sequences $a_\minus(m)^{-2}$, $1/(ma_\plus(m)a_\minus(m))$ and $a_\plus(m)^{-2}$ are regularly varying
+with indices below $-1$, the sums over $m>m_0$ are at most $Cm_0a_\minus(m_0)^{-2}\le C/(T(N)N^2)$,
+$C/(a_\plus(m_0)a_\minus(m_0))\le C/N^2$ and $Cm_0a_\plus(m_0)^{-2}\le C/(T(N)N^2)$. Hence
+\[
+ |\mathrm I'|\le Ce^{-c\varepsilon^{-\alpha}}N^{-2},\qquad
+ |\mathrm{II}'|+|\mathrm{III}'|\le Ce^{-c\varepsilon^{-\alpha}}N^{-2},\qquad
+ |\mathrm{IV}'|\le Ce^{-c\varepsilon^{-\alpha}}\,\frac{T_\minus(j)}{T(N)N^2},
+\]
+and also $T(n-1)|\sum_{m>m_0}\Delta a_m(j)|\le Ce^{-c\varepsilon^{-\alpha}}N^{-2}$. Since $x^2T_\minus(x)$ and
+$x^2T_\minus(x)^2$ have positive indices, $j^2T_\minus(j)\le C\varepsilon^{2-\alpha}N^2T(N)$ and
+$j^2T_\minus(j)^2\le C\varepsilon^{2-2\alpha}N^2T(N)^2$ for $j\le\varepsilon N$, so
+$\tau_N(j)\ge c\,\varepsilon^{\alpha-2}N^{-2}$ and all four bounds are at most
+$Ce^{-c\varepsilon^{-\alpha}}\varepsilon^{2-2\alpha}\tau_N(j)$.
+
+\emph{Conclusion.} Collecting the terms, with $\sum_{m\ge1}\Delta a_m(j)=u(j+1)-u(j)$ and
+$|u(j+1)-u(j)|\le C/(j^2T_\minus(j))\le C\tau_N(j)/T(N)$ by Lemma~\ref{lem:diffs}(iii),
+\[
+ |D_N(j)-T(N)(u(j+1)-u(j))|\le C\bigl(\varepsilon^\alpha+\varepsilon+\varepsilon^2+e^{-c\varepsilon^{-\alpha}}\varepsilon^{2-2\alpha}+o(1)\bigr)\tau_N(j)
+\]
+uniformly in $J\le j\le\varepsilon N$, where the $o(1)$ is that of (R1). Choose $\varepsilon$ small,
+then $N$ large. For a fresh minus start the identity has $Q_m=q^\plus_m$ and $b_m=q^\minus_{m+1}$. The
+same computation applies, with the one extra boundary term $V_1(n-1)f_\minus(j)=f(n-1)f_\minus(j)\le C\varepsilon\tau_N(j)$
+in $\mathrm{III}$, and gives the same limit, since $\sum_{m\ge1}\Delta a_m(j)=u(j+1)-u(j)$ for $j\ge1$. The
+fair start is the average of the two. Under (DSRT$_\minus$), $u(j+1)-u(j)\le-(1-\alpha-o(1))u(j)/j$, so
+$D_N(j)<0$ for $\eta<1-\alpha$.
+\end{proof}
+
 \subsection{The exact count}\label{sec:count}
 
 In every case of Section~\ref{sec:verify} with a fresh, a fair or a smooth start, the computed
 number of sign changes equals the lower bound of Theorem~\ref{thm:signs} for all large $N$.
-Two difference statements turn the bound into an equality. We state them as hypotheses and
-prove the count from them. For a fresh plus start put $D_N(j)=P_N(N-j-1)-P_N(N-j)$.
+Theorem~\ref{thm:layer-diff} settles the sign of the differences in the layers. One statement
+about the bulk turns the bound into an equality, and we state it as a hypothesis.
 \begin{itemize}[leftmargin=4em,labelsep=0.8em]
-\item[(L)] (The layer.) For every $\eta>0$ there are $\varepsilon>0$ and $J$ such that for all large
-$N$ and $J\le j\le\varepsilon N$, $|D_N(j)-T_\plus(N)(u_\minus(j+1)-u_\minus(j))|\le\eta\,T_\plus(N)u_\minus(j)/j$,
-and the mirror at the minus end.
-\item[(B)] (The bulk.) Uniformly for $k/N$ in compact subsets of $(0,1)$,
+\item[(B)] Uniformly for $k/N$ in compact subsets of $(0,1)$,
 $N^2(P_N(k+1)-P_N(k))\to\La'(k/N)$ and $N^3(P_N(k+1)-2P_N(k)+P_N(k-1))\to\La''(k/N)$.
 \end{itemize}
 
 \begin{proposition}[the exact count]\label{prop:count}
 Assume (BAL), (SPAN), (LR), (LD2) and (DSRT$_\pm$), let the start be fresh or fair, assume
 that $(\alpha,b)$ is not one of the degenerate pairs of Theorem~\ref{thm:shape}(c), and assume
-(L) and (B). Let $J_\pm$ be such that $\widetilde\kappa_\pm$ is strictly decreasing on $[J_\pm,\infty)$,
+(B). Let $J_\pm$ be such that $\widetilde\kappa_\pm$ is strictly decreasing on $[J_\pm,\infty)$,
 assume $\widetilde\kappa_\pm(j+1)\ne\widetilde\kappa_\pm(j)$ for $j<J_\pm$, and let $M_\pm$ be the number
 of local maxima of $\widetilde\kappa_\pm$. Let $m_L\in\{0,1\}$ be the number of interior maxima of
 $\La$. Then for all large $N$, $P_N$ has exactly $M_\plus+M_\minus+m_L$ modes, $M_\plus$ of them
@@ -308,9 +484,9 @@ is $2+m_L$.
 \begin{proof}
 We check the sign of $\Delta P_N(k)=P_N(k+1)-P_N(k)$ on five ranges. For $0\le j<J_\plus$,
 Theorem~\ref{thm:initial}(f) gives $D_N(j)$ the sign of $\widetilde\kappa_\plus(j+1)-\widetilde\kappa_\plus(j)$,
-since $n\nu_\pm(n)\to0$ for fresh and fair starts. For $J_\plus\le j\le\varepsilon N$, (L) and
-(DSRT$_\minus$) give $D_N(j)<0$ once $\eta<1-\alpha$, so $P_N$ increases strictly toward the plus
-end through the layer. By (B) and Theorem~\ref{thm:shape}, on $[\varepsilon N,(1-\varepsilon)N]$ the sign
+since $n\nu_\pm(n)\to0$ for fresh and fair starts. For $J_\plus\le j\le\varepsilon N$, Theorem~\ref{thm:layer-diff} with
+(DSRT$_\minus$) gives $D_N(j)<0$, so $P_N$ increases strictly toward the plus end through the
+layer, and (LD) holds by (LR) and (LD2). By (B) and Theorem~\ref{thm:shape}, on $[\varepsilon N,(1-\varepsilon)N]$ the sign
 of $\Delta P_N(k)$ is that of $\La'(k/N)$ away from the critical points, and near each critical
 point $c$ the second difference has the sign of $\La''(c)\ne0$, so $\Delta P_N$ is strictly
 monotone on a window of width $\delta N$ around $cN$ and changes sign exactly once there.
@@ -327,18 +503,14 @@ $(\frac12,u(1),\dots)$ have one local maximum each, at $j=0$ or $j=1$ according 
 below or above the end value, with no tie when $f(1)\ne\frac12$ for the fair start.
 \end{proof}
 
-What is proved toward (L) and (B). Lemma~\ref{lem:prep-profile} and
-Theorem~\ref{thm:initial}(f) give the first range for every start with (S). For (L), the
-decomposition of $D_N(j)$ by the fresh identity into four sums, as in the first-difference
-theorem of~\cite[Section~6]{paperF}, reduces it to a difference form of Doney's local bound,
-$|V_m(n-1)-V_m(n)|\le Cmf(n)/n$ for all $m\ge1$ and $n\ge a_m$ with $V_m=f^{*m}$, under (SPAN),
-(LR) and the first-difference condition. This is the case $\alpha<1$ of the difference form
-of the local big-jump theorem of~\cite[Section~6]{paperF}, with no centering, and we have not
-written its proof. For (B),
-the first-difference limit follows by taking a difference inside the proof of
-Theorem~\ref{thm:local}, and the second-difference limit is the part that needs work: the range
-of few runs contributes at the order $N^{-3}$ through the second differences of the convolution
-powers. The computations of Section~\ref{sec:verify} agree with (L), (B) and the count in every
+What is proved toward (B). The first-difference limit follows by taking a difference inside
+the proof of Theorem~\ref{thm:local}, with Lemma~\ref{lem:fourier} for the differences of the
+convolution powers in space and in the index. The second-difference limit is the part that
+needs work: the range of few runs contributes at the order $N^{-3}$ through the second
+differences of the convolution powers, and a second-difference form of Lemma~\ref{lem:Lstar} under
+(LD2) is needed there. For starts with (S) other than fresh and fair, Theorem~\ref{thm:layer-diff}
+needs in addition a bound on the differences of the remainder walk over initial runs of length
+above $N/2$. The computations of Section~\ref{sec:verify} agree with (B) and the count in every
 case.
 
 \ifarxivbuild

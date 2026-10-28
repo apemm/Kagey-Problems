@@ -222,6 +222,58 @@ $T(j)\ge3/h\ge T(a_h)$ for large $h$, so $j\le Ca_h$ and $jT(j)/a_h\le CT(j)$. B
 parts are at most $CT(j)e^{-mT(j)/9}$.
 \end{proof}
 
+The next lemma collects the Fourier bounds we need for the differences of the convolution
+powers, in space and in the index.
+
+\begin{lemma}[Fourier bounds]\label{lem:fourier}
+Let $\alpha_\sgn<1$, assume (RV) and (SPAN) for the sign $\sgn$, and drop the sign. Let
+$\varphi(t)=\E e^{itX}$, and for $y\ge1$ let $V^{(y)}_m(x)=\Prob(S_m=x,\ \max_{i\le m}X_i<y)$.
+\begin{enumerate}[(i)]
+\item There is $c>0$ with $|\varphi(t)|\le e^{-cT(1/|t|)}$ for $0<|t|\le\pi$.
+\item For all $m\ge1$, $y\ge1$ and $x$, $|V^{(y)}_m(x-1)-V^{(y)}_m(x)|\le Ce^{CmT(y)}a_m^{-2}$. In
+particular $\sup_x|u_m(x-1)-u_m(x)|\le Ca_m^{-2}$, and $|u_m(x-1)-u_m(x)|\le Ca_m^{-2}e^{-cmT(x)}$ for all
+$m\ge1$ and $x\ge1$.
+\item $\sup_x|u_{m+1}(x)-u_m(x)|\le C/(ma_m)$ for all $m\ge1$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) Let $X'$ be an independent copy of $X$. Then $|\varphi(t)|^2=\E\cos(t(X-X'))$, and for
+$|t|\le1$, using $1-\cos\vartheta\ge\vartheta^2/4$ on $|\vartheta|\le1$, a point $n_0$ of the support of
+$f$, and Karamata's theorem,
+\[
+ 1-|\varphi(t)|^2\ge\frac{t^2}4\E\bigl[(X-X')^2;\ |X-X'|\le1/|t|\bigr]
+ \ge\frac{t^2}4f(n_0)\sum_{2n_0\le n\le1/(2|t|)}\frac{n^2}4f(n)\ge c\,T(1/|t|)
+\]
+for $|t|\le t_0$. Hence $|\varphi(t)|\le(1-cT(1/|t|))^{1/2}\le e^{-cT(1/|t|)/2}$ there. On
+$t_0\le|t|\le\pi$, (SPAN) gives $|\varphi(t)|<1$, so by continuity $|\varphi(t)|\le1-c_0$, which is at
+most $e^{-cT(1/|t|)}$ for $c$ small since $T\le1$.
+
+(ii) The generating function of $V^{(y)}_m$ is $\varphi_y^m$ with $\varphi_y(t)=\sum_{n<y}f(n)e^{itn}$, and
+$|\varphi_y|\le|\varphi|+T(y)\le e^{-cT(1/|t|)}(1+e^cT(y))$, so $|\varphi_y(t)|^m\le e^{CmT(y)}e^{-cmT(1/|t|)}$.
+Fourier inversion gives
+\[
+ |V^{(y)}_m(x-1)-V^{(y)}_m(x)|=\Bigl|\frac1{2\pi}\int_{-\pi}^{\pi}\varphi_y(t)^m(e^{it}-1)e^{-itx}\,dt\Bigr|
+ \le\frac{e^{CmT(y)}}{2\pi}\int_{-\pi}^{\pi}|t|\,e^{-cmT(1/|t|)}\,dt .
+\]
+Substitute $t=s/a_m$. For $s\le1$, $mT(a_m/s)\ge mT(a_m)\ge c$. For $1\le s\le a_m/x_0$, Potter's
+bounds give $mT(a_m/s)\ge cs^{\alpha-\delta}$. For $|t|\ge1/x_0$ the integrand is at most
+$e^{-cmT(x_0)}\le e^{-c'm}$. So the integral is at most
+$a_m^{-2}\bigl[\int_0^1s\,ds+\int_1^\infty se^{-cs^{\alpha-\delta}}ds\bigr]+Ce^{-c'm}\le Ca_m^{-2}$, since
+$a_m\le Cm^{1/\alpha+\delta}$. The case $y=\infty$ is the bound for $u_m$. For the last claim let
+$m\ge2$, $k=\lceil m/2\rceil$ and write $u_m=u_{m-k}*u_k$. Then
+$|u_m(x-1)-u_m(x)|\le\sup_z|u_k(z-1)-u_k(z)|\,\Prob(S_{m-k}\le x)\le Ca_k^{-2}e^{-(m-k)T(x+1)}$ by
+Lemma~\ref{lem:sums}(ii), and $a_k\ge ca_m$, $(m-k)T(x+1)\ge cmT(x)$.
+
+(iii) We have $u_{m+1}(x)-u_m(x)=(2\pi)^{-1}\int_{-\pi}^\pi\varphi(t)^m(\varphi(t)-1)e^{-itx}dt$ and
+$|\varphi(t)-1|\le\E\min(2,|t|X)\le2T(1/|t|)+|t|\,\E[X;X<1/|t|]\le CT(1/|t|)$ by Karamata's theorem. So
+the left side is at most $C\int_0^\pi T(1/t)e^{-cmT(1/t)}dt$. Substitute $t=s/a_m$ again. For $s\le1$,
+$T(a_m/s)\le T(a_m)\le C/m$. For $1\le s\le a_m/x_0$, $T(a_m/s)\le Cs^{\alpha+\delta}/m$ and the
+exponential is at most $e^{-cs^{\alpha-\delta}}$. For $s\ge a_m/x_0$ the integrand is at most
+$e^{-c'm}$ on an interval of length $\pi a_m$. Hence the integral is at most
+$a_m^{-1}[C/m+C/m+Ca_me^{-c'm}]\le C/(ma_m)$.
+\end{proof}
+
 The last lemma of this section is the local form of the inverse renewal count. For
 a sign with $\alpha_\sgn<1$ let $E_\sgn=Z_\sgn^{-\alpha_\sgn}$, where $Z_\sgn$ is the positive
 stable variable with L\'evy tail $z^{-\alpha_\sgn}$, and let $\phi_\sgn$ be its density. Since
