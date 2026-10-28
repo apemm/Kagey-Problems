@@ -44,20 +44,23 @@ by their TeX labels, which do not change when statements move.
   up to a factor `1 +- delta`, with the Cramér cost `I_N` of a shortfall of the minus runs. The
   statement is in both builds. The proof (`lem:laplace`, `lem:tilt`, about 5 pages) is in the arXiv
   build only; the journal build says so after the conjecture `rem:window-conj`.
-- Theorem C (`thm:preparation`, Section 5). Every law of the initial run: the exact defect in the bulk,
-  the bulk criterion `B_n P(D=n) -> 0`, the big-jump zone with the term `Psi_N` and its removal exactly
-  when `nu_+(n) = o(T_+(n))`, the boundary layer with the prepared kernel, and the interior of the
-  big-jump zone with the window condition. The stationary start in closed form (`cor:stationary`), no
-  universal trim (`cor:no-trim`). The identification of the run laws from the ends (`thm:inverse`,
-  also labelled `rem:thinning`) is in the arXiv build only.
-- Theorem D (`thm:aging`, Section 5.8). The law observed from step `t_a + 1` on, with `t_a/N -> theta`.
+- Theorem C (`thm:preparation`, Section 5). Every law of the initial run, fixed or depending on N under
+  the tightness `eq:tight`: the exact defect in the bulk, the bulk criterion `B_n P(D=n) -> 0` (for a
+  family, `B_N nubar(N/2) -> 0` with the upper envelope `nubar` of `eq:envelope`), the big-jump zone with
+  the term `Psi_N` and its removal when `nubar_+(n) = o(T_+(n))`, the regular case under the scale
+  condition (R nu) with one formula on the whole zone up to the end, the boundary layer with the
+  prepared kernel, and the interior of the big-jump zone with the window condition. The stationary
+  start in closed form (`cor:stationary`), no universal trim (`cor:no-trim`). The identification of the
+  run laws from the ends (`thm:inverse`, also labelled `rem:thinning`) is in the arXiv build only.
+- Theorem D (`thm:aging`, Section 5.8), a corollary of Theorem C for the run in progress at step
+  `t_a + 1`, whose law `eq:aged-nu` satisfies `eq:tight` and (R nu) uniformly in `t_a` (`lem:aged-nu`).
   (a) The bulk does not age, for every `t_a(N)`. (b) The atom is `(1/s) sum_{i=N}^{N+t_a} T_+(i)`, which
-  is `N T_+(N)(1 - (1+theta)^(1-alpha))/(s(alpha-1))` for `0 < theta < infinity`. (c) The layer is
-  `p u_-(j) + 1/s + (1/s)(1 - (1+theta)^(-alpha))(1 + mu_+ u_-(j))`. (d) On the interior of the big-jump
-  zone the kernel is `(N-L_k) f_+(L_k)/mu_- + [2 T_+(L_k) - T_+(L_k + t_a)]/mu_-`, for every `t_a(N)`.
-  The proof extends Theorem C to triangular arrays of initial runs (`lem:array`) and uses the aged
-  initial run at the scale N (`lem:aged-nu`). The golden-ratio threshold survives aging
-  (`cor:aged-mode`).
+  is `N T_+(N)(1 - (1+theta)^(1-alpha))/(s(alpha-1))` for `0 < theta < infinity`. (c) On the whole
+  big-jump zone up to the end, for every `t_a(N)`, the kernel gains the term
+  `(1/s)[T_+(L_k) - T_+(L_k + t_a)](1 + mu_+ u_-(N-k))`; hence the layer
+  `p u_-(j) + 1/s + (1/s)(1 - (1+theta)^(-alpha))(1 + mu_+ u_-(j))` and the interior kernel
+  `(N-L_k) f_+(L_k)/mu_- + [2 T_+(L_k) - T_+(L_k + t_a)]/mu_-`. The golden-ratio threshold survives
+  aging (`cor:aged-mode`).
 - Theorem E (`thm:mode`, Section 6). The global mode is an endpoint or a bulk point according to
   `B_N Q_sigma(N)/H_N`, with the golden-ratio threshold for the stationary start and the constant
   `C(phi) = 0.7761317...` at `alpha = phi`.
