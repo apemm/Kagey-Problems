@@ -7,6 +7,9 @@ import PaperD.BiasedModesList
 import PaperD.Modes.RevisionNearOne
 import PaperD.Modes.TransitionBounds
 import PaperD.Modes.TransitionClassification
+import PaperD.Modes.TransitionSmoothingIntegral
+import PaperD.Modes.TransitionIntegrals
+import PaperD.Modes.BiasWeakTransferFinal
 import PaperD.Modes.BiasIntervalEndpoint
 
 /-!
@@ -23,23 +26,28 @@ import PaperD.Modes.BiasIntervalEndpoint
   With the cited raw moments this proves bimodality for memory at least `4/5`.
 * First differences of the actual biased finite law exclude two successive
   strict valleys for every nondegenerate memory and every initial bias.
-  The named lattice local limit transfers this bound to the analytic density.
+  Fixed lattice-window averages transfer this bound under weak convergence.
 * The old weak near-one bridge, together with the proved fair curvature
   partition and published conditional unimodality, gives uniform profiles,
   peak locations and heights, and total variation convergence uniformly in bias.
 * The actual finite law has no valley on the half favoured by the initial bias.
-  Its local limit and reflection dominance give a centred open interval of
+  Its weak limit and reflection dominance give a centred open interval of
   bimodal biases, with a unique unimodal maximum outside and at the endpoints.
 * The bimodality interval's lower endpoint tends to zero near memory one.
 * A positive central-curvature derivative closes a sign bracket into a unique
   modal transition. Negative fourth derivative puts the critical law in the
   unimodal branch. The derivative-tail bootstrap and dominated Fourier
   differentiation are proved with their analytic bounds as explicit inputs.
+* The smoothing chain/product derivatives, dominated integral differentiation,
+  half-interval reflection, weighted power/log integrals, geometric remainder
+  and power-tail integral bounds are now proved separately.
+* Portmanteau, the exact atomic-window identity and lattice normalization give
+  the centred-interval theorem from ordinary probability-measure convergence.
 
 The cited probabilistic limit-law, fixed-point/Fourier, and moment inputs are
 explicit hypotheses. They are not new axioms and are not counted as proved
 literature results. See the statement-by-statement coverage report.
-The Arb enclosures and the detailed differentiated-smoothing integral estimates
-remain separate written and numerical proofs; they are not silently converted
-into kernel-checked numerical claims.
+The Arb enclosures, the characteristic-function instantiation of the smoothing
+derivatives and the assembly of their uniform tail estimates remain written
+and numerical proofs; they are not silently converted into kernel claims.
 -/
