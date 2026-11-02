@@ -2,17 +2,27 @@
 
 ## Current revision, November 2, 2026
 
+The latest posting corrections write the transition as
+`a_* ≈ 0.6688128600146`, a certified rounded value rather than a claimed
+decimal prefix. The introduction explicitly uses weak convergence for the
+bias theorem. The cover letter is plain text and identifies both related
+submissions. The sign range, finite-bias quantifier, record count, notation,
+captions and descriptions of the extended version have been clarified.
+The [posting-corrections record](../../../reports/paperD-posting-corrections-2026-11-02/README.md)
+lists the changes and document checks. The definition of `delta_B` retains
+its exponential factor because the verified Lean statements use it.
+
 The abstract, introduction and cover letter explicitly include the empty bias
 interval when `a <= a_*`. Section 5 counts all five numerical certificates and
 links the complete axiom audit to
 [evidence commit c24791a](https://github.com/apemm/Kagey-Problems/tree/c24791af4f3a9aa0d985fce1b0a2a68f03f33432/reports/paperD-headline-audit-2026-11-01).
 These are editorial corrections. The mathematical statements, proof code,
 numerical certificates and `paperD-arxiv-v3` source tag are unchanged.
-The [editorial build record](../../../reports/paperD-editorial-2026-11-02/README.md)
-records the rebuilt manuscripts and packages.
+The [earlier editorial build record](../../../reports/paperD-editorial-2026-11-02/README.md)
+records the preceding manuscripts and packages.
 
 The journal PDF is 52 pages, including the weak-transfer lemma that removes
-the local-limit dependency. The extended version is 73 pages, including the complete differentiated
+the local-limit dependency. The extended version is 72 pages, including the complete differentiated
 smoothing proof. The review-only threshold extract is 9 pages. Both source
 packages rebuild in isolation, with no undefined references or overfull boxes.
 
