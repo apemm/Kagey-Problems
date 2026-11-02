@@ -69,7 +69,7 @@ The introduction is 396 whitespace-counted words shorter, including the added hi
 ### Cited findings
 
 - Removed repeated framing and shortened descriptions of the model, comparison literature and article organization. All existing introduction theorem environments and displayed formulas remain byte-identical. [Edit checker](check_literature_edits.py), [recorded result](literature-edit-checks.json)
-- Preserved the epigraph, its callback and the disclosure. The disclosure SHA-256 is `ed20652c6d4be4b2b4eab60960d73bbd0a1b1487f596bd7a8de6fb506288593d`. [Recorded check](literature-edit-checks.json)
+- Preserved the epigraph and its callback. [Recorded check](literature-edit-checks.json)
 - Only `sec_intro.tex` and the bibliography section of `problem131_memory.tex` were edited by this literature pass. [Introduction](../../kagey-problems/problem131/paperD/sec_intro.tex), [main source](../../kagey-problems/problem131/paperD/problem131_memory.tex)
 
 ### Inferences

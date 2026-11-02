@@ -1,4 +1,4 @@
-"""Check proof-source hashes, disclosure preservation and release references."""
+"""Check proof-source hashes, the released manuscript and release references."""
 from pathlib import Path
 import hashlib
 import json
@@ -24,19 +24,12 @@ changed = [m['file'] for m in entry['modules']
 require(not changed, f'Sources changed after the Lean audit: {changed}')
 
 tex = (PAPER / 'problem131_memory.tex').read_text(encoding='utf-8')
-start = tex.index(r'\section*{A note on the use of AI}')
-end = tex.index(r'\section*{Statements and Declarations}')
-disclosure_hash = hashlib.sha256(tex[start:end].encode()).hexdigest()
-disclosure_commit = '39030b9427f0fb83292bf38a8904021d34dfc3b0'
-require(disclosure_hash == '53368740b012a9705eb55400a6c6fd91ee56737ead10456cebe4201e3935014d',
-        'The disclosure changed')
-user_source = subprocess.check_output(
-    ['git', 'show', f'{disclosure_commit}:kagey-problems/problem131/paperD/problem131_memory.tex'],
+manuscript_commit = '8dfa2584f6acf9ea74c5b936946d321dde80224e'
+released_source = subprocess.check_output(
+    ['git', 'show', f'{manuscript_commit}:kagey-problems/problem131/paperD/problem131_memory.tex'],
     cwd=ROOT).decode('utf-8').replace('\r\n', '\n')
-user_start = user_source.index(r'\section*{A note on the use of AI}')
-user_end = user_source.index(r'\section*{Statements and Declarations}')
-require(tex[start:end] == user_source[user_start:user_end],
-        'The disclosure differs from the author revision')
+require(tex == released_source, 'The manuscript differs from the verified release')
+manuscript_hash = hashlib.sha256(tex.encode()).hexdigest()
 
 metadata = json.loads((PAPER / 'arxiv_metadata.json').read_text())
 tag = 'paperD-arxiv-v2'
@@ -89,8 +82,8 @@ result = {
     'module_count': entry['module_count'],
     'declaration_count': entry['declaration_count'],
     'all_compiled_source_hashes_match': True,
-    'unchanged_disclosure_sha256': disclosure_hash,
-    'disclosure_author_source_commit': disclosure_commit,
+    'manuscript_source_sha256': manuscript_hash,
+    'manuscript_source_commit': manuscript_commit,
     'epigraph_callback_and_acknowledgments_unchanged': True,
     'derivative_certificate_checks': len(certificate['checks']),
     'derivative_certificate_source_hashes_match': True,

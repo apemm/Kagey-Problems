@@ -27,7 +27,7 @@ The introduction now credits the correlated-Bernoulli model of
 Drezner–Farnum, Heyde's fixed-parameter limit theory, and James–James–Qi's
 time-varying extension. The latter paper was read in full; Heyde's full text
 and the original Drezner–Farnum comparison remain outstanding. The epigraph
-and disclosure are unchanged. Repeated prose has been shortened without
+is unchanged. Repeated prose has been shortened without
 removing mathematical results or proofs.
 
 The [transition report](../../../reports/Paper%20D%20transition%20closure.md)
@@ -59,7 +59,7 @@ The implementations are `../lean/PaperD/BiasedModes.lean`,
 The [strengthening report](../../../reports/Paper%20D%20transition%20and%20modes.md)
 separates the proved results, numerical exploration, and outstanding full-text
 comparisons. The [verification record](../../../reports/paperD-strengthening-2026-11-01/README.md)
-lists the final formal inputs and build evidence. The existing disclosure is unchanged.
+lists the final formal inputs and build evidence.
 
 That revision left the interval structure of bimodal biases and uniqueness
 of the memory transition open; the current revision proves both. The finite
@@ -68,7 +68,7 @@ with older generalized-binomial papers is still limited by full-text access.
 
 The finite-step sign theorem now leads the presentation. It connects the rare-reversal
 approximation to the fixed-memory limit. The title has no colon. The revised abstract,
-introduction, cover letter, disclosure and upload instructions use the same scope.
+introduction, cover letter and upload instructions use the same scope.
 
 The preceding revision strengthened five statements without changing their numbers:
 

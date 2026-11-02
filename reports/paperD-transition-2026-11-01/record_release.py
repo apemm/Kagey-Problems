@@ -34,9 +34,12 @@ for name, expected in (
 ):
     if hashlib.sha256((HERE / name).read_bytes()).hexdigest() != expected:
         raise RuntimeError(f'Changed verification evidence: {name}')
+# Scientific sources and archived packages stay fixed; editorial guides may evolve.
 subprocess.run(['git', 'diff', '--exit-code', source, '--',
                 'kagey-problems/problem131/paperD',
-                'kagey-problems/problem131/lean'], cwd=ROOT, check=True)
+                'kagey-problems/problem131/lean',
+                ':(exclude)kagey-problems/problem131/paperD/README.md'],
+               cwd=ROOT, check=True)
 v1 = subprocess.check_output(
     ['git', 'rev-parse', 'paperD-arxiv-v1^{commit}'], cwd=ROOT, text=True).strip()
 if v1 != '7e78cbad17b2dc60101363d09275e0ee5067c4d5':
@@ -47,8 +50,8 @@ record = {
     'source_commit': source,
     'prior_tag': 'paperD-arxiv-v1',
     'prior_tag_commit_unchanged': v1,
-    'author_disclosure_commit': final['disclosure_author_source_commit'],
-    'author_disclosure_sha256': final['unchanged_disclosure_sha256'],
+    'manuscript_source_commit': final['manuscript_source_commit'],
+    'manuscript_source_sha256': final['manuscript_source_sha256'],
     'lean_modules': final['module_count'],
     'lean_declarations': final['declaration_count'],
     'numerical_scripts_passed': 7,
@@ -78,8 +81,8 @@ not a repeat of all nine heavy jobs.
 
 The journal PDF has 51 pages, the extended PDF 72, and the review extract 9.
 Both archives passed isolated rebuild, citation, font and exact-file checks.
-The disclosure matches the author's commit `39030b94` verbatim. The epigraph,
-callback and acknowledgments are unchanged.
+The manuscript matches the verified source commit. The epigraph, callback
+and acknowledgments are unchanged.
 
 The [verification guide](README.md) records the formalization boundaries.
 Arb transcendental enclosures and the detailed differentiated-smoothing

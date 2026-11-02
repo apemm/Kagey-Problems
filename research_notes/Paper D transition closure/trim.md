@@ -21,7 +21,7 @@ The recorded counts and normalized UTF-8 hashes are in `trim_output.json`.
 
 `trim_redundancy.py` records this one-time edit against the preceding source.
 It is not a manuscript generator and should not be rerun against a later
-revision. No Lean file, epigraph or disclosure was changed by this edit.
+revision. No Lean file or epigraph was changed by this edit.
 
 The second pass removed another **244 words**:
 
@@ -40,8 +40,7 @@ The second script again verified exact preservation of all 72 protected
 blocks and retention of every distinct inline formula. Its counts and
 normalized UTF-8 hashes are recorded in `trim_second_output.json`;
 `trim_redundancy_second.py` records the one-time edit. Neither pass modified
-`app_modes.tex`, `app_bias_interval.tex`, any Lean file, the epigraph or the
-disclosure.
+`app_modes.tex`, `app_bias_interval.tex`, any Lean file or the epigraph.
 
 Across both passes, `sec_erw_crossing.tex` went from 2,189 to 2,007 words
 (182 removed), and `sec_erw_shape.tex` went from 4,511 to 4,086 words

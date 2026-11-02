@@ -15,8 +15,8 @@ not a repeat of all nine heavy jobs.
 
 The journal PDF has 51 pages, the extended PDF 72, and the review extract 9.
 Both archives passed isolated rebuild, citation, font and exact-file checks.
-The disclosure matches the author's commit `39030b94` verbatim. The epigraph,
-callback and acknowledgments are unchanged.
+The manuscript matches the verified source commit. The epigraph, callback
+and acknowledgments are unchanged.
 
 The [verification guide](README.md) records the formalization boundaries.
 Arb transcendental enclosures and the detailed differentiated-smoothing

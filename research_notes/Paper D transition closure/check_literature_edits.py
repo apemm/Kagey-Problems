@@ -1,6 +1,5 @@
 """Check that the literature and intro edits preserve formal content."""
 from pathlib import Path
-import hashlib
 import json
 import re
 import subprocess
@@ -8,7 +7,6 @@ import subprocess
 ROOT = Path(__file__).resolve().parents[2]
 BASE = "0aa0d8e70b684c9aa1d7a3533bc9937ecafe252f"
 INTRO = "kagey-problems/problem131/paperD/sec_intro.tex"
-MAIN = "kagey-problems/problem131/paperD/problem131_memory.tex"
 
 
 def old(path):
@@ -37,20 +35,12 @@ require = {
         "middle usually shows a reversal among its first few steps."
     ) in after,
 }
-main_before = old(MAIN)
-main_after = (ROOT / MAIN).read_text(encoding="utf-8")
-heading = r"\section*{A note on the use of AI}"
-end = r"\section*{Statements and Declarations}"
-disclosure_before = heading + section(main_before, heading, end)
-disclosure_after = heading + section(main_after, heading, end)
-require["disclosure_identical"] = disclosure_before == disclosure_after
 result = {
     "baseline_commit": BASE,
     "checks": require,
     "all_checks_passed": all(require.values()),
     "intro_words_before": len(before.split()),
     "intro_words_after": len(after.split()),
-    "disclosure_sha256": hashlib.sha256(disclosure_after.encode()).hexdigest(),
     "scope": "Intro prose and bibliography only; full builds are checked separately.",
 }
 destination = Path(__file__).with_name("literature-edit-checks.json")

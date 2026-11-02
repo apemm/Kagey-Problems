@@ -70,14 +70,10 @@ endpoint. The endpoint convention exactly matches GLRS Remark 2.1(b).
   introduction and verification section were shortened separately. All
   mathematical results and proofs remain available.
 
-The epigraph, callback and acknowledgments are unchanged. During release
-preparation, the author pushed commit `39030b94`, changing only the disclosure.
-That commit was merged, and its disclosure was retained verbatim. The final
-comparison uses that author revision, with normalized UTF-8 SHA-256:
-
-```text
-53368740b012a9705eb55400a6c6fd91ee56737ead10456cebe4201e3935014d
-```
+The epigraph, callback and acknowledgments are unchanged. The complete main
+manuscript is checked against the verified source commit. Commands in the
+numerical records use portable names; Python and dependency versions are
+recorded separately.
 
 The [research report](../Paper%20D%20transition%20closure.md) records the
 independent proof review and precise source-reading scope. James, James and

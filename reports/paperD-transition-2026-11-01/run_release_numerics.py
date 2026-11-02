@@ -47,7 +47,8 @@ record = {
     'exit_code': result.returncode,
     'all_checks_passed': result.returncode == 0,
     'export_directory': str(export),
-    'command': command,
+    'command': ['python', '-B', 'kagey-problems/problem131/verify_all.py', '--paper', 'd'],
+    'command_notation': 'Portable command, run from export_directory with the Python version and dependencies recorded below.',
     'log_sha256': hashlib.sha256(log.read_bytes()).hexdigest(),
     'python': platform.python_version(),
     'dependencies': {name: importlib.metadata.version(name)
