@@ -169,6 +169,7 @@ import PaperD.FLC_Cor25Walk
 import PaperD.ShapeAllEven
 import PaperD.Modes
 import PaperD.S4
+import PaperD.Revision
 
 /-!
 # Paper D (Problem 131 under memory), root module
@@ -186,6 +187,11 @@ certificates for `101 ≤ N ≤ 2000`, and the relabeling of Lemma 3.2). `EndToE
 `CenterNoHoles`, `ModalIntervals`, and `ShapeAllEven` give the October 23 all-even
 crossing shape theorem, including both complete modal intervals and the unique
 interior minimum, without an asymptotic or convex-window premise.
+
+`Revision` adds the November 1 Jensen bound, the weak Landau limit under the
+quadratic condition, analytic density and entire extension, exact strict modes
+and curvature partition, and the fourth-moment bimodality bound for `a ≥ 4/5`.
+Its published-law inputs remain explicit hypotheses; see the coverage map.
 
 The modules `U1_*` to `U5_*` are the tracks of October 18, 2026: the compound Poisson bulk
 (Theorem 3.8, U1), the Landau limit (Theorem 3.9, U2), the mode and convexity for large `N`
