@@ -118,26 +118,26 @@ Files. The folder `paperC2`, with the main file `problem131_reconstruction.tex` 
 `problem131_reconstruction_arxiv.tex` and its PDF (46 pages, with the reversible design as Section
 8), its section files, the check scripts, the cover letter and `paperC2/README.md`.
 
-## Paper D: The elephant random walk with rare reversals
+## Paper D: Shape transitions and rare reversals in the elephant random walk
 
-Full title "The elephant random walk with rare reversals: a Luria-Delbrück approximation and the
-shape of the law". Paper D (in preparation, for the Journal of Theoretical Probability) asks what
-memory changes. In the elephant random walk each step copies a uniformly chosen earlier step and
-flips it with probability eps, with x = N eps of order log N. The main result bounds the total
-variation distance between the number of steps that disagree with the first one and a truncated
-Luria-Delbrück law, with a local limit theorem as a consequence. The crossing x_N = N eps_N is
-unique and x_N = 2 z_N - log(2 pi) + o(1), about twice the Markov value. The law at the crossing has
-2 humps, one near each end, and the middle is its unique interior minimum. On October 24, 2026 the
-family proofs and the second-difference proofs came back into the article as Appendices D and E,
-so every proof used by the main theorems is in the article. There is no Online Resource. The
-second order, the tail, odd N and the likelihood theorem are Sections S1 to S4 of the arXiv build,
-and the convexity window and the proofs for the threshold certificate are Sections S5 and S6.
-The journal version cites that build where it needs them.
+Paper D is in preparation for the Journal of Theoretical Probability. Its finite-step sign
+theorem connects two regimes. For rare reversals, a total variation approximation by a truncated
+Luria–Delbrück law gives a Landau local limit and mode locations. At the unique crossing between
+the origin and either end, every even length at least eight has two modal intervals and a unique
+interior minimum. For fixed superdiffusive memory, the limit density has one or two point modes
+and exactly two or four inflection points. A computer-free fourth-moment proof gives bimodality
+for memory at least 4/5. The certificate classifies memory outside a window shorter than 3.3e-15;
+uniqueness of a transition inside that window is open.
+
+The November 1 revision also sharpens the center bound and weakens the hypothesis for weak
+Landau convergence. These additions are written proofs, outside the unchanged Lean coverage.
+Sections S1–S5 hold additional results. Section S6 proves the threshold-certificate lemmas and
+is supplied separately, with the bibliography, as review-only material.
 
 Files. The folder `paperD`, with the journal version `problem131_memory.tex` and
-`problem131_memory.pdf` (45 pages), the arXiv build `problem131_arxiv.tex` and
-`problem131_arxiv.pdf` (64 pages) with Sections S1 to S6, its section and appendix files, the check scripts
-and `paperD/README.md`.
+`problem131_memory.pdf` (46 pages), the arXiv build `problem131_arxiv.tex` and
+`problem131_arxiv.pdf` (66 pages) with Sections S1 to S6, its section and appendix files, the check scripts,
+`threshold_proofs_review.pdf`, `submission_notes.md` and `paperD/README.md`.
 
 ## Paper E: Endpoint crossings for the planar persistent walk
 

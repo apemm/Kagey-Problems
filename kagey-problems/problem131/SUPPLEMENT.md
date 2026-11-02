@@ -8,7 +8,7 @@ This supplement serves the 7 papers on Kagey's Problem 131 by A. Pemmasani and t
 | B | Vertex crossings in a symmetric Markov multinomial model | `archive/paperB/problem131_multistate.tex` |
 | C1 | Occupation counts of rarely switching Markov chains: stratified local laws, support selection and the boundary layer (the earlier EJP version was Face selection for slowly switching Markov chains) | `paperC/problem131_chains.tex` (81 pages), Springer build `paperC/problem131_chains_sn.tex` (89 pages) |
 | C2 | What the occupation law of a finite Markov chain determines: time reversal, principal minors and cycle trees | `paperC2/problem131_reconstruction.tex` (43 pages), arXiv build `paperC2/problem131_reconstruction_arxiv.tex` (46 pages) |
-| D | The elephant random walk with rare reversals: a Luria-Delbrück approximation and the shape of the law (earlier The center and the ends of the elephant random walk with rare reversals, and before October 17, 2026 Endpoint crossings for the elephant random walk) | `paperD/problem131_memory.tex` (45 pages), arXiv build `paperD/problem131_arxiv.tex` (64 pages) |
+| D | Shape transitions and rare reversals in the elephant random walk | `paperD/problem131_memory.tex` (46 pages), arXiv build `paperD/problem131_arxiv.tex` (66 pages), and review-only `paperD/threshold_proofs_review.pdf` |
 | E | Endpoint crossings for the planar persistent walk | `paperE/problem131_planar.tex` |
 | F | Bulk, big jumps and boundary layers in the occupation law of a lattice Lévy walk (the first draft, earlier Endpoint crossings for random walks with heavy-tailed runs and for aging walks, is in `archive/paperF_golden_aging`) | `paperF/problem131_levy.tex` (62 pages) |
 | S4 | The finite-size shape transition of coin-turning walks (a note) | `S4_aging_note/s4_note.tex` (12 pages) |
@@ -163,6 +163,12 @@ on the complete graph (Proposition 4.15(iv)) is computed by hand in Appendix B, 
 | `verify_weak_field.py` | A weak field (Proposition 4.16, new in the merge; about a minute). Part (a) by listing all 3^8 words of a 3-state chain. Part (b) on 4 faces (a pair of the path 1-2-3, the 3-arc of the 4-cycle, a non-reversible 3-state face and the full face of K_3): the tilted and untilted face maxima of the continuum density by the torus integral, with the limit of T times their log ratio minus <xi, alpha*> and the shift of the maximizer against the values that completing the square predicts (Richardson in T = 20 to 160); and on the pair at N = 20000 by an exact dynamic program of the chain, against the continuum. Part (d) by the transfer matrix at N = 10^6. Every check is an assertion. |
 
 ## Paper D: the elephant random walk
+
+The November 1 audit is in `../../reports/paperD-audit-2026-11-01/`. All six quick scripts,
+the revised modes checks, the Lean build and its complete axiom inventory passed. The four
+proof-producing threshold scripts retain their recorded hashes. The newer illustrative modes
+script has a matching `paperD/data/verify_modes_output.txt`. The new regularity, curvature,
+fourth-moment, Jensen and weak-limit strengthenings are not yet formalized.
 
 The command `python -B verify_all.py --paper d` runs `paperD/verify_all.py`, which runs 6 scripts
 (`verify_elephant_crossing.py`, `verify_elephant_shape.py`, `verify_elephant_odd.py`,
