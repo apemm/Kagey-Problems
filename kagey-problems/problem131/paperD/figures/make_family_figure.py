@@ -25,6 +25,14 @@ sys.path.insert(0, str(HERE.parent.parent / "figures"))
 import series_style as ss  # noqa: E402
 
 ss.use()
+# Override the series typography locally for Journal of Theoretical Probability.
+plt.rcParams.update({
+    "font.family": "sans-serif", "font.sans-serif": ["DejaVu Sans"],
+    "mathtext.fontset": "dejavusans", "font.size": 8.5,
+    "axes.labelsize": 8.5, "legend.fontsize": 8.5,
+    "xtick.labelsize": 8.5, "ytick.labelsize": 8.5,
+    "pdf.fonttype": 42, "ps.fonttype": 42,
+})
 N, EPS, SEED = 40, 0.07, 89
 
 
@@ -68,16 +76,16 @@ def main():
                 solid_capstyle="round")
     ax.axhline(0, color=c["grid"], lw=0.5, zorder=0)
     ax.set_ylabel("position")
-    ax.text(1.5, 9, r"first step $X_1=+1$", fontsize=8, color=c["ink"])
+    ax.text(1.5, 9, r"first step $X_1=+1$", color=c["ink"])
     ss.panel(ax, "a", x=0.99, y=0.06, ha="right", va="bottom")
 
     for k in range(2, N + 1):
         u = parent[k]
         w = k - u
-        col = c["accent"] if mark[k] else (c["exact"] if (odd[k] and odd[u]) else "#D4D4D4")
+        col = c["accent"] if mark[k] else (c["exact"] if (odd[k] and odd[u]) else "#999999")
         bx.add_patch(Arc(((u + k) / 2, 0), w, w * 0.9, theta1=0, theta2=180,
                          color=col, lw=1.4 if mark[k] else (0.9 if col == c["exact"] else 0.5),
-                         zorder=2 if col != "#D4D4D4" else 1))
+                         zorder=2 if col != "#999999" else 1))
     for k in range(1, N + 1):
         bx.plot(k, 0, "o", ms=3.4, mfc=c["exact"] if odd[k] else "white",
                 mec=c["exact"] if odd[k] else c["ink"], mew=0.7, zorder=3)
@@ -89,13 +97,16 @@ def main():
     v = marks[0]
     bx.annotate(f"first flip, step {v}\nits family has {len(big)} steps",
                 xy=((parent[v] + v) / 2, (v - parent[v]) * 0.45), xytext=(1.0, top * 0.82),
-                color=c["accent"], fontsize=8, ha="left",
+                color=c["ink"], ha="left",
+                bbox=dict(facecolor="white", edgecolor="none", pad=1),
                 arrowprops=dict(arrowstyle="-", lw=0.5, color=c["accent"]))
     ss.panel(bx, "b", x=0.99, y=0.92, ha="right", va="top")
     for side in ("top", "right", "left"):
         bx.spines[side].set_visible(False)
     bx.tick_params(top=False, right=False, left=False)
+    fig.savefig(HERE / "Fig1.eps", format="eps")
     ss.save(fig, HERE / "family")
+    (HERE / "Fig1.pdf").write_bytes((HERE / "family.pdf").read_bytes())
     print(f"marks at {marks}; first family {len(big)} steps; M_N = {int(odd[1:].sum())}")
 
 

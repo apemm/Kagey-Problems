@@ -4,20 +4,52 @@ Revision of November 1, 2026. Nothing has been posted or submitted by this workf
 
 ## Read and review
 
-- `problem131_memory.pdf`: journal manuscript, with its proofs and appendices.
-- `problem131_arxiv.pdf`: the longer version, including Sections S1–S6.
-- `threshold_proofs_review.pdf`: Section S6 and the bibliography, extracted for journal review.
-  It retains the page and statement numbers of the longer version. Read it with the journal manuscript.
-- `cover_letter.md`: draft journal cover letter, describing the review-only supplement.
-- `../../../reports/paperD-audit-2026-11-01/`: audit, source-reading record, and validation outputs.
+| File | Purpose |
+| --- | --- |
+| `problem131_memory.pdf` | Journal manuscript, including its appendices |
+| `problem131_arxiv.pdf` | Extended manuscript, including Sections S1 to S6 |
+| `threshold_proofs_review.pdf` | Identification cover, Section S6, and bibliography for journal referees |
+| `cover_letter.md` | Draft letter explaining the contribution and review material |
+| `paperD_jtp_submission.zip` | Journal package with editable sources, all three PDFs, figure files, cover letter, and package README |
+| `paperD_arxiv_source.zip` | Separate source-only package for arXiv |
+| `arxiv_metadata.json` | Title, abstract, suggested categories, and build-derived page counts |
+| `../../../reports/paperD-audit-2026-11-01/delivery-manifest.json` | Generated file inventory, page counts, and hashes |
 
-The current builds have 46 journal pages and 66 arXiv pages, compared with 45 and 64 before
-the revision. The added regularity and curvature arguments account for most of the increase.
-The layout, font size, and margins have not been compressed.
+The review extract retains the extended manuscript's page and statement numbers after
+its identification cover. Read it with the journal manuscript. It is designated **For peer
+review only**, not a publication supplement. The extended manuscript is also supplied so
+that every pointer in the journal manuscript has an accessible destination. It is not
+described as an already posted arXiv paper.
+
+The audit folder contains the proof review, source-reading record, validation outputs,
+`jtp-guideline-check.md`, and `jtp-reference-check.md`. The generated manifest records the
+final page counts. Historical counts in `README.md` describe earlier builds.
+
+## Journal submission
+
+Use `paperD_jtp_submission.zip` as the journal file package. It includes the sources needed
+to rebuild the manuscript and extended version. Figures are named `figures/Fig1.pdf` and
+`figures/Fig2.pdf`, with EPS counterparts for the journal's preferred vector format.
+Use the archive's README to assign files to the submission system's categories. Attach
+`threshold_proofs_review.pdf` as review-only material, and identify the extended PDF as
+additional review material. The handling editor can decide whether any of this material
+should become published supplementary information.
+
+The [official JTP instructions](https://link.springer.com/journal/10959/submission-guidelines)
+request a 150 to 250-word abstract, four to six keywords, MSC codes, editable sources, and
+a compiled PDF. They recommend the Springer LaTeX template; they do not require it.
+The standard `article` class is retained. No manuscript page cap was stated on the page
+checked on November 1, 2026. The earlier 45-page target was an editorial target, not a
+verified journal rule.
+
+Public preprints remain explicitly labelled as preprints. The guidelines restrict
+bibliographies to published or accepted work, but current JTP articles include arXiv
+references. `jtp-reference-check.md` records the examples and the limits of that evidence.
+No acceptance status has been inferred or invented.
 
 ## arXiv upload
 
-`paperD_arxiv_source.zip` contains only the following 19 files:
+`paperD_arxiv_source.zip` contains the following source files:
 
 ```text
 00README.json
@@ -37,43 +69,41 @@ app_threshold.tex
 or_family_proofs.tex
 online_resource_body.tex
 online_resource_bib.tex
-figures/family.pdf
-figures/shape.pdf
+figures/Fig1.pdf
+figures/Fig2.pdf
 ```
 
 The top-level file is `problem131_arxiv.tex`. `00README.json` declares it and includes
-`spec_version: 1`. The bibliography is inline. The source ZIP was built separately from
-this exact file set. Do not add `crossing.pdf`, `removed_proofs/`, `data/`, scripts,
-audit files, or the review-only PDF to that ZIP.
+`spec_version: 1`. The bibliography is inline. The source ZIP is separate from the journal
+package. Keep data, scripts, audit files, removed proofs, and the review-only PDF out of it.
 
-Use `arxiv_metadata.json` for the title, abstract, comments, and category suggestions.
+Use `arxiv_metadata.json` for the title, abstract, comments, and suggested categories.
 The primary category is `math.PR`, with `cond-mat.stat-mech` suggested as a cross-list.
-`math.CO` is optional. The non-exclusive arXiv license leaves copyright with the author;
-select the license in the upload interface. No license selection has been made here.
+`math.CO` is optional. Select the license in the upload interface. The suggested
+non-exclusive arXiv license leaves copyright with the author; no selection has been made.
 
 ## Before posting or journal submission
 
-1. Review the new written proofs: Lemma F.4, the curvature clause of Theorem 4.2,
-   Theorem 4.3's fourth-moment proof, the Jensen bound, and the weaker weak-limit hypothesis.
-   The current Lean sources do not formalize these strengthenings.
-2. Confirm the disclosure's author-history statements. It records Opus literature search
-   and citation checking, the author's reading, Codex revisions, and GPT-6 Astra edits to
-   Lean. It also identifies the mathematical additions developed in this revision.
-   Read the two newly added preprints before affirming that every cited source has been read.
-3. After arXiv assigns an identifier, replace the `arxivD` placeholder in
-   `problem131_memory.tex`, rebuild the journal PDF, and add that identifier to Paper F's
-   citation. Its title has already been updated.
-4. Attach `threshold_proofs_review.pdf` as review-only material with the journal submission.
-   If the editor requests it as published supplementary information instead, adjust the
-   designation and cover letter.
-5. A Zenodo archive of the proof-code commit remains an optional later action. No DOI has
-   been created or guessed.
+1. Review the added written proofs: Lemma F.4, the curvature clause of Theorem 4.2,
+   Theorem 4.3's fourth-moment argument, the Jensen bound, and the weaker weak-limit
+   hypothesis. The existing Lean files do not formalize these additions.
+2. Confirm the disclosure's author-history statements. Read the added Murahara-Tokumitsu
+   and Vishwakarma preprints before affirming that every cited source has been read.
+   The audit's reading record describes the audit's scope, not the author's reading.
+3. Check the compiled journal and extended PDFs, including figure labels, links,
+   references, and the review extract's identification cover. Confirm that the archive
+   inventory and hashes describe these final files.
+4. Confirm that the manuscript is not under consideration elsewhere, as stated in the
+   cover letter. Complete the journal portal's funding, contribution, competing-interest,
+   and data/code fields; manuscript declarations do not fill those fields automatically.
+5. If an arXiv identifier is assigned before journal submission, add the real identifier
+   to the journal's extended-version pointer and Paper F's citation, then rebuild.
+   There is no placeholder identifier in the journal bibliography.
+6. If the editor requests a publication supplement, replace the review-only designation
+   with the required Online Resource identification, captions, and manuscript citations.
 
-The [current JTP instructions](https://link.springer.com/journal/10959/submission-guidelines)
-request a 150–250-word abstract, 4–6 keywords, editable source files, and a compiled PDF.
-The present version follows those length and file requirements. The page examined on
-November 1 did not state a 45-page cap; 45 pages was the earlier editorial target.
+A Zenodo archive of the proof-code commit is optional. No DOI has been created or guessed.
 
-To regenerate the source ZIP, metadata and referee extract after rebuilding both PDFs, run
-`python reports/paperD-audit-2026-11-01/package_revision.py` from the repository root.
-Its manifest records the source and PDF hashes.
+To regenerate the packages, metadata, and review extract after rebuilding both manuscripts
+and `threshold_review_cover.tex`,
+run `python reports/paperD-audit-2026-11-01/package_revision.py` from the repository root.

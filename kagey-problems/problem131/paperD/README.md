@@ -25,11 +25,32 @@ The certificate still leaves an interval shorter than `3.3e-15` unclassified; un
 of a memory transition inside it is open. The full first-step-bias conjecture is also open.
 The old flat-interval caveat is removed by the new regularity lemma.
 
-The audit and source-reading record are in
-`../../../reports/paperD-audit-2026-11-01/`. `submission_notes.md` gives the exact
-upload list and metadata. `threshold_proofs_review.pdf` reproduces Section S6 for journal
-referees. The sections below retain the dated development record and historical numbers;
-the current manuscript and this revision summary take precedence.
+### Submission files and journal guidance
+
+`submission_notes.md` explains the file assignments and pre-submission checks.
+`paperD_jtp_submission.zip` contains the editable sources, journal and extended PDFs,
+review extract, figures in PDF and EPS, draft cover letter, and package README.
+`paperD_arxiv_source.zip` is the separate source-only arXiv package. Its figure names
+are `figures/Fig1.pdf` and `figures/Fig2.pdf`.
+
+`threshold_proofs_review.pdf` supplies an identification cover followed by Section S6
+and the bibliography, retaining the extended manuscript's statement and page numbers.
+It is marked for peer review only. The journal text points to the supplied extended
+manuscript; no unassigned arXiv identifier appears in its bibliography.
+
+The audit and source-reading record are in `../../../reports/paperD-audit-2026-11-01/`.
+That folder's `jtp-guideline-check.md` distinguishes journal requirements from
+recommendations. `jtp-reference-check.md` documents the status of the public preprints
+and examples of arXiv citations in current JTP articles. The generated
+`delivery-manifest.json` records the final file inventory, page counts, and hashes.
+
+JTP recommends, but does not require, its LaTeX template. The standard `article` class
+is retained. The official instructions checked on November 1 state no manuscript
+page cap; the earlier 45-page figure was an editorial target. Author review of the
+added proofs and sources remains necessary before posting or submission.
+
+The sections below retain the dated development record and historical numbers.
+Use the current manuscript, manifest, and submission notes for the final package.
 
 The paper was titled "The center and the ends of the elephant random walk with rare reversals" from
 October 17 to October 24, 2026, and "Endpoint crossings for the elephant random walk" before that.
@@ -83,7 +104,7 @@ version (at the end of `online_resource_body.tex`) gives the full proofs of the 
 moment bound (S6.1), the truncation bound (S6.2), Taylor cells in t (S6.3), the self-improving
 tail bound from the fixed-point equation of Guerin, Laulin and Raschel (S6.4), the formula for
 g_a''(0) (S6.5), the Cauchy remainder (S6.6), the enclosure on an interval of a (S6.7) and the
-scaled variable near a = 1/2 (S6.8). They do not fit the 45-page limit of the journal version.
+scaled variable near a = 1/2 (S6.8). They do not fit the 45-page target used for that journal version.
 The journal version is 45 pages and the arXiv version 64 pages.
 
 The October 25 revision adds two theorems on the fixed-memory superdiffusive limit law with a

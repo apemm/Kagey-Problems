@@ -5,9 +5,10 @@ Run from anywhere:
     python -B make_figures.py --rebuild  recompute every cache (about 15 minutes on 9 cores)
     python -B make_figures.py --shape-only  redraw Paper D's Figure 2 from its existing cache only
 
-Each figure is 6.4 in wide (the text width of the paper, letter paper with
-1.05 in margins), has no text smaller than 8 pt at its natural size, and is
-written as vector PDF and 600 dpi PNG next to this script. Colours go light to
+Each figure is drawn on a 6.4 in wide canvas (the text width of the paper,
+letter paper with 1.05 in margins), and is written as vector PDF and 600 dpi
+PNG next to this script. Figure 2 has 8.5 pt base lettering and is also
+exported as Fig2.pdf and native vector Fig2.eps with embedded fonts. Colours go light to
 dark and line styles alternate, so the figures still read in greyscale.
 
   crossing  (no longer printed in the paper) x_n/log n for the elephant walk against g_n, the second-order
@@ -94,6 +95,9 @@ def save(fig, name):
     out = PAPER_F / "figures" if name == "heavy" else HERE
     fig.savefig(out / f"{name}.pdf")
     fig.savefig(out / f"{name}.png", dpi=600)
+    if name == "shape":
+        (out / "Fig2.pdf").write_bytes((out / "shape.pdf").read_bytes())
+        fig.savefig(out / "Fig2.eps", format="eps")
     plt.close(fig)
     print(f"wrote {name}.pdf and {name}.png")
 
@@ -673,6 +677,14 @@ def fig_crossing(c):
 # ---------------------------------------------------------------- Figure 2 shape
 
 def fig_shape(s):
+    # Keep the journal-specific typography local to Paper D's active figure.
+    original_style = plt.rcParams.copy()
+    plt.rcParams.update({
+        "font.size": 8.5, "axes.labelsize": 8.5, "legend.fontsize": 8.5,
+        "xtick.labelsize": 8.5, "ytick.labelsize": 8.5,
+        "font.family": "sans-serif", "font.sans-serif": ["DejaVu Sans"],
+        "mathtext.fontset": "dejavusans", "ps.fonttype": 42,
+    })
     a3, b6, ld = s["n3200"], s["n1e6"], s["landau"]
     n, x = a3["n"], a3["x"]
     r = np.array(a3["ratio"])
@@ -750,6 +762,7 @@ def fig_shape(s):
     panel(c, "c")
     fig.subplots_adjust(left=0.07, right=0.99, wspace=0.42)
     save(fig, "shape")
+    plt.rcParams.update(original_style)
 
 
 # ---------------------------------------------------------------- Figure 3 heavy tails

@@ -8,7 +8,9 @@ In the rare-reversal regime, an explicit total variation approximation by a trun
 
 The paper distinguishes these results from the formal asymptotics of Bokes, Hlubinová and Singh, the weak Landau limits of Pakes and Bertoin, and the fixed-memory local-limit literature. The preprint arXiv:2610.06935 treats the persistent random walk and is used only for a heuristic comparison in the journal text.
 
-The submission includes a review-only supplement, `threshold_proofs_review.pdf`, reproducing Section S6 of the longer version. It supplies all proofs behind the threshold certificate summarized in Appendix G. Referees therefore receive the complete argument with the submission. Sections S1–S5 contain additional results not used by the journal paper. The public code repository and verification section distinguish the recorded Lean kernel checks, their named classical hypotheses, and the separate interval computations. The new regularity, curvature and strengthened bounds are written proofs and are not yet formalized in Lean.
+The submission includes the extended manuscript and a review-only supplement, `threshold_proofs_review.pdf`. The supplement has an identification cover followed by Section S6 and the bibliography, retaining the extended manuscript's page and statement numbers. It supplies the proofs behind the threshold certificate summarized in Appendix G. Referees therefore receive the complete argument with the submission. Sections S1 to S5 of the extended manuscript contain additional results not used by the journal paper. I would welcome the editor's guidance on whether the threshold proofs should become published supplementary information.
+
+The source package includes editable LaTeX files and figures in PDF and EPS. The public code repository and verification section distinguish the recorded Lean kernel checks, their named classical hypotheses, and the separate interval computations. The regularity, curvature, and strengthened bounds added in this revision have written proofs and are not yet formalized in Lean.
 
 The manuscript is not under consideration elsewhere.
 
