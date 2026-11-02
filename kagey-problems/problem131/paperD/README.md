@@ -1,4 +1,35 @@
-# The elephant random walk with rare reversals: a Luria–Delbrück approximation and the shape of the law
+# Shape transitions and rare reversals in the elephant random walk
+
+## Current revision, November 1, 2026
+
+The finite-step sign theorem now leads the presentation. It connects the rare-reversal
+approximation to the fixed-memory limit. The title has no colon. The revised abstract,
+introduction, cover letter, disclosure and upload instructions use the same scope.
+
+The revision strengthens five statements without changing theorem numbers:
+
+- The fixed-point equation gives an entire density, excluding flat intervals and making
+  each mode a unique point (Lemma F.4 and Theorem 4.2).
+- The limit density has exactly two inflection points when unimodal and four when bimodal
+  (Theorem 4.2).
+- A shorter fourth-moment proof establishes bimodality for every memory `a >= 4/5`,
+  improving the earlier computer-free range `a >= 39/40` (Theorem 4.3).
+- The center lower bound gains the factor `(1-eps)^(2-12/(N+4))` in place of `1-2eps`
+  (Theorem 2.6(a)); this is exact at N = 2.
+- Weak Landau convergence needs only `x^2 log^2(N)/N -> 0` with `x -> infinity`.
+  The stronger `x^3 log^2(N)/N -> 0` condition is still used for the local approximation
+  (Theorem 3.9).
+
+These strengthenings are written proofs, not additions to the Lean formalization.
+The certificate still leaves an interval shorter than `3.3e-15` unclassified; uniqueness
+of a memory transition inside it is open. The full first-step-bias conjecture is also open.
+The old flat-interval caveat is removed by the new regularity lemma.
+
+The audit and source-reading record are in
+`../../../reports/paperD-audit-2026-11-01/`. `submission_notes.md` gives the exact
+upload list and metadata. `threshold_proofs_review.pdf` reproduces Section S6 for journal
+referees. The sections below retain the dated development record and historical numbers;
+the current manuscript and this revision summary take precedence.
 
 The paper was titled "The center and the ends of the elephant random walk with rare reversals" from
 October 17 to October 24, 2026, and "Endpoint crossings for the elephant random walk" before that.
@@ -33,7 +64,7 @@ value at the crossing. For the elephant walk x = N eps plays the role of T and i
 the role of z_N. The first step is fair unless we say otherwise. (Earlier versions of the paper, and
 the check scripts and Lean files, write n for N.)
 
-## What is proved
+## Revision history through October 25
 
 A second revision of October 25 adds Theorem 4.4 (`thm:threshold`), a computer-assisted theorem
 that locates the change between the two cases of Theorem 4.2. Put
@@ -203,6 +234,9 @@ the arXiv version, are of this kind.
 
 ## Open
 
+- Uniqueness of the transition inside `(z-, z+)`, and the case at each memory in that window.
+- The bias-dependent modality conjecture outside a fair first step.
+
 - An upper bound log C_N <= log(eps c_1) + eps c_2/c_1 + O(eps^2 (log N)^k), where
   C_N = c_1 eps + c_2 eps^2 + ... at fixed N, and the smallest N beyond which the root g_N exceeds
   x_N. Proposition S1.2 proves g_N > x_N for log N >= 3500, while Table 1 has it already at N = 50
@@ -238,8 +272,8 @@ from the classical approximations.
   in the second revision of October 25). Appendices D and E were Sections S5 and S6
   of the Online Resource from October 17 to October 24, 2026, and returned to the article so that
   every proof used by the main theorems is in the article.
-- The journal version is `problem131_memory.tex` alone. It has no Online Resource and no
-  supplementary material. Where it needs a result of Sections S1 to S5 it cites the arXiv version
+- The journal version is `problem131_memory.tex` alone, accompanied by the review-only
+  `threshold_proofs_review.pdf` containing Section S6. Where it refers to a result of Sections S1 to S5 it cites the arXiv version
   of the paper (bibliography item `arxivD`, "arXiv number to be added", with the comment
   `% arXiv id in November`) through the macro `\arxivonly`. Add the arXiv number to that item once
   the arXiv version has one.
@@ -248,7 +282,7 @@ from the classical approximations.
   theorem for the reversible fluctuation assay (S4), the convexity window between the humps
   (S5, the former Section 3.6 and Proposition 1.5, moved on October 25) and the proofs for the
   threshold certificate of Appendix G (S6, new in the second revision of October 25). The journal
-  version cites S6 for those proofs. Only the arXiv version prints them. Its one
+  version cites S6 for those proofs, which are also supplied separately for review. Its one
   bibliography item that the journal version does not cite (Hoeffding 1963) is in
   `online_resource_bib.tex`. The separate Online Resource file `online_resource.tex` and its PDF
   were removed on October 24, 2026 (they are in the git history).
@@ -258,8 +292,11 @@ from the classical approximations.
   resolve inside one PDF. In this build `\arxivonly{Theorem}{label}` prints the S number instead of
   a citation, and the item `arxivD` is left out. Make it the top-level file of the arXiv
   submission. The upload holds `problem131_arxiv.tex`, `problem131_memory.tex`, the `sec_*` and
-  `app_*` files, `or_family_proofs.tex`, `online_resource_body.tex`, `online_resource_bib.tex`, `figures/*.pdf` and a
+  `app_*` files, `or_family_proofs.tex`, `online_resource_body.tex`, `online_resource_bib.tex`,
+  `figures/family.pdf`, `figures/shape.pdf` and a
   `00README.json` that names `problem131_arxiv.tex` as the top-level file.
+  Do not upload `figures/crossing.pdf`, `removed_proofs/`, `data/`, scripts,
+  audit files, or the review-only PDF. The bibliography is inline.
 - `figures/` holds the two figures of the paper, with the captions in `figures/captions.md`.
   Figure 1 (`family.pdf`) is made by `figures/make_family_figure.py` and Figure 2 (`shape.pdf`) by
   `figures/make_figures.py`, both in the shared style `../figures/series_style.py`. The second script makes the
@@ -342,8 +379,9 @@ of the paper pins the supporting code, certificate records and Lean files to com
 `aa88996f79dcfb08fe266a12879087ae0ab52fbd` (before October 25, 2026 the pin was `6f7f9068`).
 That commit contains the certificate for Theorem 4.4 (`certify_threshold.py`, its 3 helper
 modules, `data/threshold_*.txt` and `data/certify_threshold_output.txt`). Later edits to the text
-of the paper do not change the pin, but a change to a script, a record or a Lean file would need a
-new checked commit. The arXiv
+of the paper do not change the pin. A change to a proof-producing certificate or a Lean source
+would need a new checked commit. The revised illustrative modes check has a new matching
+`data/verify_modes_output.txt`; it is not a proof input. The arXiv
 version is `problem131_arxiv.tex`. Build it with `pdflatex problem131_arxiv.tex` three times. It
 gives the paper followed by Sections S1 to S6 in one PDF, with one bibliography.
 

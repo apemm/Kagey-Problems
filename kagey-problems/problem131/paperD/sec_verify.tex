@@ -17,7 +17,11 @@ each crossing and checks by an exact rational comparison that the lower end
 of the bracket exceeds $2/(N+2)$. It also checks the center minimum
 independently, which Corollary~\ref{cor:unique-min} no longer needs. The
 script \texttt{certify\_convex.py} supports only the finite convexity window
+\ifPaperDcombined
+of Section~S5 (Proposition~\ref{prop:convex-certified}).
+\else
 of the arXiv version (\arxivonly{Proposition}{prop:convex-certified}).
+\fi
 The outputs and rational witnesses are in
 \nolinkurl{data/certify_center_output_2026-10-17.txt},
 \nolinkurl{data/certify_convex_output_2026-10-17.txt},
@@ -39,8 +43,9 @@ proof, with the sign $-$ on all of $(\frac12,z_-]$ and $+$ on all of
 $[z_+,0.6712]$. The soundness checks raise exceptions and are not
 Python \texttt{assert} statements, so \texttt{python -O} does not remove them. Theorems~\ref{thm:two-modes}
 and~\ref{thm:two-modes-near-one} use no computation. The script
-\texttt{verify\_elephant\_modes.py} checks the constants in the proof of
-Theorem~\ref{thm:two-modes-near-one} and computes the finite-$N$ numbers of
+\texttt{verify\_elephant\_modes.py} checks the rational arithmetic in the
+fourth-moment proof of Theorem~\ref{thm:two-modes-near-one}, retains checks
+of the earlier two-moment bound for $a\ge39/40$, and computes the finite-$N$ numbers of
 Remark~\ref{rem:modes-threshold}, which are not proof inputs. Its output,
 with a header that records the hash of the script and the software versions,
 is in \nolinkurl{data/verify_modes_output.txt}.
@@ -57,21 +62,32 @@ The library uses Mathlib revision \texttt{0df444a360ea}. The recorded
 kernel build reports only \texttt{propext}, \texttt{Classical.choice}
 and \texttt{Quot.sound}. Generated certificate entries are checked with
 exact outward-rounded integer arithmetic, without \texttt{native\_decide}.
+The kernel checks the proof terms independently of who wrote or edited them;
+matching the formal statements to the manuscript remains a separate check.
 This does not formalize the six classical inputs. Lemma~\ref{lem:center-no-holes} and the full
 all-even shape in Corollary~\ref{cor:unique-min} are kernel-checked,
 including both complete intervals of maximizers. The composed theorem
 \texttt{shape\_at\_crossing\_all\_even} needs only $N=2h$ with $h\ge4$.
 The maximum-height window in Corollary~\ref{cor:height-window} and
 Lemmas~\ref{lem:descartes}, \ref{lem:sp-limit} and~\ref{lem:sp-derivative} are also
-kernel-checked. The dichotomy of Theorem~\ref{thm:two-modes}, with the exclusion of unimodality
-in case (b), and Theorem~\ref{thm:two-modes-near-one} are kernel-checked with three further named
+kernel-checked. The non-strict monotonicity dichotomy underlying
+Theorem~\ref{thm:two-modes}, with the exclusion of unimodality in case (b),
+and the earlier exclusion of case (a) for $a\ge39/40$
+are kernel-checked with three further named
 inputs from~\cite{glr2026}: the existence of the density, the
-convergence in law and the first two moments. The total variation strengthening of
-Theorem~\ref{thm:cp}, the fixed-memory bridge and Theorem~\ref{thm:threshold} are not yet
+convergence in law and the first two moments. The near-one result also takes
+the identity between the absolute-value distribution and the integral of
+the even density as an input. The analyticity argument in
+Lemma~\ref{lem:analytic-density}, the strict monotonicity, the uniqueness
+of each modal point, the inflection-point classification, the fourth-moment
+extension to $a\ge4/5$, and the sharper Jensen center bound are not
+formalized. The total variation strengthening of
+Theorem~\ref{thm:cp}, the enlarged weak-Landau range, the fixed-memory bridge
+and Theorem~\ref{thm:threshold} are not yet
 formalized. The library's earlier pointwise compound
 Poisson bound remains valid.
 
-The separate Python runs used Python~3.14.3, python-flint~0.9.0
+The archived certification runs used Python~3.14.3, python-flint~0.9.0
 (FLINT~3.6.0, including Arb), mpmath~1.3.0, numpy~2.4.2 and scipy~1.17.1.
 The figures, tables and other numerical illustrations are not proof
 inputs. Further checks and rerun commands are documented in the

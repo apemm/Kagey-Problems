@@ -1,5 +1,14 @@
 # Paper D: map from the paper and the research notes to the Lean proofs
 
+November 1, 2026 manuscript update. The title is now "Shape transitions and rare reversals
+in the elephant random walk". Lean source files are unchanged. The new analytic-density lemma
+F.4, strict mode and curvature conclusions, the fourth-moment extension of Theorem 4.3 to
+`a >= 4/5`, the Jensen improvement in Theorem 2.6(a), and the enlarged weak-limit range of
+Theorem 3.9(c) are written proofs, not formalized statements. The existing modes library proves
+the non-strict dichotomy and the earlier `a >= 39/40` sufficient range. Section S6 is now
+also supplied as a review-only extract. The statement map below describes the October 25
+formalization and retains its historical numbers.
+
 Current layout, October 25, 2026 (second revision). The journal article has 45 pages and no
 Online Resource. Sections S1 to S6 (second order, tail, odd N, the likelihood
 theorem, the convexity window between the humps and the proofs for the threshold
@@ -24,8 +33,8 @@ computer-assisted threshold) are formalized in `PaperD/Modes/` since October 25,
 variation strengthening, the constrained likelihood theorem, and the fixed-memory bridge are not
 formalized.
 
-Paper D is `paperD/problem131_memory.tex`, "The elephant random walk with rare reversals: a
-Luria–Delbrück approximation and the shape of the law" (titled "The center and the ends of the
+Paper D is `paperD/problem131_memory.tex`, "Shape transitions and rare reversals in the elephant
+random walk" (titled "The center and the ends of the
 elephant random walk with rare reversals" until October 24). The first table below lists every numbered statement of the paper by its
 label, with its number in a fresh build of the paper of October 25, 2026 (numbers S1.1 and so on
 are in the arXiv version only). The later tables cite the statement labels of the

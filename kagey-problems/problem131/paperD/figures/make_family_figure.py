@@ -1,4 +1,4 @@
-"""Figure 2 of Paper D: one elephant walk and its memory tree (Lemma 3.1).
+"""Figure 1 of Paper D: one elephant walk and its memory tree (Lemma 3.1).
 
 (a) The position of the walk against the step, with the steps that disagree with the first
     step drawn heavier and in blue (so that they still stand out in grayscale).

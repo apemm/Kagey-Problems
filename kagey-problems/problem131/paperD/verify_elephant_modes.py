@@ -1,6 +1,8 @@
 """Checks for Section 4.2 (the number of modes of the fixed-memory limit law).
 
- 1. The constants in the proof of Theorem 4.3 (label thm:two-modes-near-one): the bounds
+ 1. Exact rational checks for the fourth-moment argument of Theorem 4.3
+    (label thm:two-modes-near-one), which proves bimodality for a >= 4/5.
+    The earlier two-moment argument for a >= 39/40 is also checked: the bounds
     M = exp((1-gamma) delta) and V = exp(2(1-gamma) delta)/(1-2 delta) - 1 at delta = 1/40, the
     Cantelli and Chebyshev bounds for F(2/5) and F(7/4), and the final comparison. Also, on a grid
     of a in [39/40, 1), the exact mean and variance of the limit L_a (from the moment recursion of
@@ -51,7 +53,40 @@ def check(label, ok, detail=''):
 
 # ---------------------------------------------------------------- part 1
 def part1():
-    emit('1. Constants in the proof of Theorem 4.3 (a >= 39/40)')
+    emit('1. Exact arithmetic for the fourth-moment argument (a >= 4/5)')
+    points = [Fraction(3, 4), Fraction(4, 5), Fraction(5, 6),
+              Fraction(9, 10), Fraction(39, 40), Fraction(999, 1000)]
+    exact_ratio = True
+    for a in points:
+        m = [Fraction(1), Fraction(1)]
+        for n in range(2, 5):
+            m.append(sum((a if j % 2 else 1) * m[j] * m[n-j]
+                         for j in range(1, n)) / (n*a - (a if n % 2 else 1)))
+        # E L^4 / (E L^2)^2 = [6*a*m_4/m_2^2] B(2a,2a).
+        exact_ratio &= (6*a*m[4]/m[2]**2 == 6*(2*a*a+2*a-1)/(4*a-1))
+    check('fourth-moment beta factor from the recursion at six rational arguments',
+          exact_ratio, 'all comparisons exact')
+    def mul(p, q):
+        return [sum(p[i]*q[j] for i in range(len(p)) for j in range(len(q))
+                    if i+j == k) for k in range(len(p)+len(q)-1)]
+    numerator, denominator = [-1, 2, 2], [-1, 4]
+    nd = mul(numerator, denominator)
+    nprime_d = mul([2, 4], denominator)
+    n_dprime = mul(numerator, [4])
+    residual = [2*nd[k] - (nprime_d[k] if k < len(nprime_d) else 0)
+                + (n_dprime[k] if k < len(n_dprime) else 0)
+                for k in range(len(nd))]
+    shifted = [sum(residual[k]*math.comb(k, j)*Fraction(3, 4)**(k-j)
+                   for k in range(j, len(residual))) for j in range(len(residual))]
+    check("2 - h'/h has positive numerator coefficients after a=s+3/4",
+          shifted == [3, 25, 40, 16], 'exact coefficient comparison: 3, 25, 40, 16')
+    check('2^(1/5) > 8/7 by fifth powers', 2*7**5 > 8**5,
+          f'{2*7**5} > {8**5}')
+    upper = Fraction(282, 55) * Fraction(22, 7) / (8*Fraction(8, 7))
+    check('rational fourth-moment upper bound is below 9/5',
+          upper == Fraction(1551, 880) and upper < Fraction(9, 5),
+          f'{upper} < 9/5')
+    emit('Historical two-moment proof for a >= 39/40 (retained independent check)')
     mp.mp.dps = 50
     g = mp.euler
     d = mp.mpf(1) / 40
@@ -89,7 +124,7 @@ def part1():
     check('moment recursion (k = 1, 2) gives 1/Gamma(1+a) and 1/((2a-1)Gamma(2a))', ok_rec,
           '1000 values of a in [39/40, 1)')
     check('1 <= E L_a <= exp((1-gamma)(1-a)) on the grid', ok_mu, f'largest E L_a {mp.nstr(worst_mu, 8)}')
-    check('Var L_a <= V(1-a) on the grid', ok_v, f'largest Var L_a {mp.nstr(worst_v, 8)} (paper bound 0.0752)')
+    check('Var L_a <= V(1-a) on the grid', ok_v, f'largest Var L_a {mp.nstr(worst_v, 8)} (historical bound 0.0752)')
     emit()
 
 
@@ -267,7 +302,13 @@ def part4():
         else:
             hi = mid
     ac = (lo + hi) / 2
-    check('bisection: a_c = 0.66881 (inside the bracket of Theorem 4.4)', abs(ac - 0.66881) < 5e-6, f'a_c = {ac:.7f}')
+    check('bisection agrees to five decimals with Theorem 4.4',
+          abs(ac - 0.66881) < 5e-6, f'a_c = {ac:.7f}')
+    z_lo = Fraction(1838418790980431, 2748779069440000)
+    z_hi = Fraction(45960469774511, 68719476736000)
+    check('the numerical bisection bracket contains the certified interval',
+          Fraction(lo) <= z_lo < z_hi <= Fraction(hi),
+          f'[{lo:.10f}, {hi:.10f}] contains [z-, z+]')
     emit()
 
 

@@ -1,8 +1,9 @@
-"""Figures for Paper D of Problem 131 (endpoint crossings for random walks with memory).
+"""Figures for Paper D, Shape transitions and rare reversals in the elephant random walk.
 
 Run from anywhere:
     python -B make_figures.py            use the cached data in ../data and compute what is missing
     python -B make_figures.py --rebuild  recompute every cache (about 15 minutes on 9 cores)
+    python -B make_figures.py --shape-only  redraw Paper D's Figure 2 from its existing cache only
 
 Each figure is 6.4 in wide (the text width of the paper, letter paper with
 1.05 in margins), has no text smaller than 8 pt at its natural size, and is
@@ -14,12 +15,11 @@ dark and line styles alternate, so the figures still read in greyscale.
             and D(n) log n against c_*
   shape     (Figure 2) the law of A_N at the crossing N = 3200 relative to the end,
             the bulk x f_N(m) against the Landau density, and the tail over x/(2 m^2)
-  heavy     (Figure 3) R_N/(C(alpha) N^e(alpha)) for the stationary start, and R_N
+  heavy     (legacy Paper F figure) R_N/(C(alpha) N^e(alpha)) for the stationary start, and R_N
             just below the golden ratio with the crossover sizes N*(alpha)
   (The paper writes N for the number of steps; the code below keeps n.)
-Figure 1 of the paper is the program figure problem131/figures/program_D.pdf,
-included directly as ../figures/program_D and made by
-problem131/figures/make_program_figure.py, not here.
+Figure 1 of the paper is family.pdf, made by make_family_figure.py in this folder.
+Use --shape-only to avoid generating the historical crossing figure or changing Paper F.
 
 The data come from exact recursions in floating point and are cached in
 ../data/figdata_crossing.json, figdata_shape.json and figdata_heavy.json.
@@ -676,7 +676,8 @@ def fig_shape(s):
     a3, b6, ld = s["n3200"], s["n1e6"], s["landau"]
     n, x = a3["n"], a3["x"]
     r = np.array(a3["ratio"])
-    col_s, col_b = shades(2, hi=0.7)
+    # Match line styles across panels and keep both colors legible in print.
+    col_s, col_b = "#D55E00", "#7A4F92"
     fig, (a, b, c) = plt.subplots(1, 3, figsize=(FULL, 2.2), gridspec_kw={"width_ratios": [1.08, 1, 1]})
 
     # (a) the law relative to the end, with an inset near a = n
@@ -688,8 +689,8 @@ def fig_shape(s):
     a.set_xlim(-60, n + 60)
     a.set_ylim(0.1, 1e4)
     a.set_xticks([0, 1600, 3200])
-    a.set_xlabel(r"right steps $a$ ($N=3200$)")
-    a.set_ylabel(r"$P_N(a)/E_N$")
+    a.set_xlabel(r"right steps $k$ ($N=3200$)")
+    a.set_ylabel(r"$P_N(k)/E_N$")
     panel(a, "a", x=0.09)
     ins = a.inset_axes([0.36, 0.47, 0.38, 0.35])
     mm = np.arange(0, 61)
@@ -704,7 +705,7 @@ def fig_shape(s):
     ins.set_yticks([1, 1e3])
     ins.minorticks_off()
     ins.tick_params(length=2, pad=1.5)
-    ins.set_xlabel(r"$N-a$", labelpad=0.5)
+    ins.set_xlabel(r"$N-k$", labelpad=0.5)
 
     # (b) the bulk against the Landau density
     lam = np.array(ld["lam"])
@@ -729,7 +730,7 @@ def fig_shape(s):
 
     # (c) the tail divided by x/(2 m^2)
     m = np.arange(1, n // 2 + 1)
-    c.plot(m, r[n - m] * a3["end"] * 2 * m ** 2 / x, "-", color=col_s, lw=1.1)
+    c.plot(m, r[n - m] * a3["end"] * 2 * m ** 2 / x, "-.", color=col_s, lw=1.1)
     law6 = 0.5 * (f6 + np.array(b6["mirror"]))
     g = m6 >= 1
     c.plot(m6[g], law6[g] * 2 * m6[g] ** 2 / x6, "--", color=col_b, lw=1.1)
@@ -805,6 +806,12 @@ def fig_heavy(h):
 
 
 if __name__ == "__main__":
+    if "--shape-only" in sys.argv:
+        if "--rebuild" in sys.argv:
+            raise SystemExit("--shape-only uses the existing cache; omit --rebuild")
+        with data_path("shape").open(encoding="utf-8") as stream:
+            fig_shape(json.load(stream))
+        raise SystemExit(0)
     data = load_data(rebuild="--rebuild" in sys.argv)
     check(data)
     fig_crossing(data["crossing"])
