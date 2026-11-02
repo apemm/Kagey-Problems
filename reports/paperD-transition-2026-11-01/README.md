@@ -70,11 +70,13 @@ endpoint. The endpoint convention exactly matches GLRS Remark 2.1(b).
   introduction and verification section were shortened separately. All
   mathematical results and proofs remain available.
 
-The epigraph, callback and acknowledgments are unchanged. The disclosure's
-normalized UTF-8 SHA-256 remains:
+The epigraph, callback and acknowledgments are unchanged. During release
+preparation, the author pushed commit `39030b94`, changing only the disclosure.
+That commit was merged, and its disclosure was retained verbatim. The final
+comparison uses that author revision, with normalized UTF-8 SHA-256:
 
 ```text
-ed20652c6d4be4b2b4eab60960d73bbd0a1b1487f596bd7a8de6fb506288593d
+53368740b012a9705eb55400a6c6fd91ee56737ead10456cebe4201e3935014d
 ```
 
 The [research report](../Paper%20D%20transition%20closure.md) records the

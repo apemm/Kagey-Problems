@@ -27,8 +27,16 @@ tex = (PAPER / 'problem131_memory.tex').read_text(encoding='utf-8')
 start = tex.index(r'\section*{A note on the use of AI}')
 end = tex.index(r'\section*{Statements and Declarations}')
 disclosure_hash = hashlib.sha256(tex[start:end].encode()).hexdigest()
-require(disclosure_hash == 'ed20652c6d4be4b2b4eab60960d73bbd0a1b1487f596bd7a8de6fb506288593d',
+disclosure_commit = '39030b9427f0fb83292bf38a8904021d34dfc3b0'
+require(disclosure_hash == '53368740b012a9705eb55400a6c6fd91ee56737ead10456cebe4201e3935014d',
         'The disclosure changed')
+user_source = subprocess.check_output(
+    ['git', 'show', f'{disclosure_commit}:kagey-problems/problem131/paperD/problem131_memory.tex'],
+    cwd=ROOT).decode('utf-8').replace('\r\n', '\n')
+user_start = user_source.index(r'\section*{A note on the use of AI}')
+user_end = user_source.index(r'\section*{Statements and Declarations}')
+require(tex[start:end] == user_source[user_start:user_end],
+        'The disclosure differs from the author revision')
 
 metadata = json.loads((PAPER / 'arxiv_metadata.json').read_text())
 tag = 'paperD-arxiv-v2'
@@ -82,6 +90,7 @@ result = {
     'declaration_count': entry['declaration_count'],
     'all_compiled_source_hashes_match': True,
     'unchanged_disclosure_sha256': disclosure_hash,
+    'disclosure_author_source_commit': disclosure_commit,
     'epigraph_callback_and_acknowledgments_unchanged': True,
     'derivative_certificate_checks': len(certificate['checks']),
     'derivative_certificate_source_hashes_match': True,
