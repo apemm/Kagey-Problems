@@ -2,11 +2,38 @@
 
 ## Current revision, November 1, 2026
 
+Two further results extend the scope beyond the fair-start theorem:
+
+- Every initial bias has at most two modal plateaus at every finite time,
+  for every reversal probability strictly between zero and one. The lattice
+  local limit and analytic regularity give at most two local maxima for the
+  superdiffusive density. The finite proof uses first differences and treats
+  both boundaries, including the deterministic initial-step cases.
+- As memory tends to one, the weak Landau bridge becomes a uniform density
+  approximation and a total variation approximation. The reflected mixture
+  estimate is uniform over all initial biases. The fair peaks have asymptotic
+  positions and heights on the reversal-probability scale. For biases bounded
+  away from zero and one, there are exactly two local maxima at sufficiently
+  high memory, with uniform position and mixture-weighted height asymptotics.
+
+The implementations are `../lean/PaperD/BiasedModes.lean`,
+`../lean/PaperD/Modes/BiasLimitTransfer.lean`, and
+`../lean/PaperD/Modes/RevisionNearOne.lean`.
+The [strengthening report](../../../reports/Paper%20D%20transition%20and%20modes.md)
+separates the proved results, numerical exploration, and outstanding full-text
+comparisons. The [verification record](../../../reports/paperD-strengthening-2026-11-01/README.md)
+lists the final formal inputs and build evidence. The existing disclosure is unchanged.
+
+The interval structure of bimodal biases and uniqueness of the memory
+transition remain open. Numerical evidence for those statements is research
+material, not a theorem of this paper. The finite theorem's priority comparison
+with older generalized-binomial papers is still limited by full-text access.
+
 The finite-step sign theorem now leads the presentation. It connects the rare-reversal
 approximation to the fixed-memory limit. The title has no colon. The revised abstract,
 introduction, cover letter, disclosure and upload instructions use the same scope.
 
-The revision strengthens five statements without changing theorem numbers:
+The preceding revision strengthened five statements without changing their numbers:
 
 - The fixed-point equation gives an entire density, excluding flat intervals and making
   each mode a unique point (Lemma F.4 and Theorem 4.2).

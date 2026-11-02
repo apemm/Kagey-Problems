@@ -89,6 +89,11 @@ non-exclusive arXiv license leaves copyright with the author; no selection has b
    argument, the Jensen bound, and the enlarged weak-limit range. The explicit
    published-law hypotheses and build evidence are listed in
    `reports/paperD-formalization-2026-11-01/README.md` at the repository root.
+   The subsequent all-bias theorem and uniform near-one profiles are mapped in
+   `reports/paperD-strengthening-2026-11-01/README.md`. The latter retains the
+   fixed-memory weak bridge as an explicit input. Resolve or qualify the
+   outstanding generalized-binomial full-text comparisons listed in
+   `reports/Paper D transition and modes.md` before making a priority claim.
 2. Confirm the disclosure's author-history statements. Read the added Murahara-Tokumitsu
    and Vishwakarma preprints before affirming that every cited source has been read.
    The audit's reading record describes the audit's scope, not the author's reading.

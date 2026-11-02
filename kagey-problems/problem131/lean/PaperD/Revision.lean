@@ -1,6 +1,10 @@
 import PaperD.RevisionJensen
 import PaperD.RevisionWeakChar
 import PaperD.Modes.RevisionShape
+import PaperD.Modes.BiasLimitTransfer
+import PaperD.Modes.BiasEntire
+import PaperD.BiasedModesList
+import PaperD.Modes.RevisionNearOne
 
 /-!
 # Formalization of the November 2026 manuscript strengthenings
@@ -14,6 +18,12 @@ import PaperD.Modes.RevisionShape
   The resulting strict curvature partition and exact local-mode sets are proved.
 * A direct density comparison gives the unimodal fourth-moment inequality.
   With the cited raw moments this proves bimodality for memory at least `4/5`.
+* First differences of the actual biased finite law exclude two successive
+  strict valleys for every nondegenerate memory and every initial bias.
+  The named lattice local limit transfers this bound to the analytic density.
+* The old weak near-one bridge, together with the proved fair curvature
+  partition and published conditional unimodality, gives uniform profiles,
+  peak locations and heights, and total variation convergence uniformly in bias.
 
 The cited probabilistic limit-law, fixed-point/Fourier, and moment inputs are
 explicit hypotheses. They are not new axioms and are not counted as proved

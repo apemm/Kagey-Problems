@@ -87,9 +87,9 @@ $\phi_a$ of $\mathcal L_a$ satisfies
 \[
  |\phi_a(t)|\le 2e^{-c|t|^r}\qquad(t\in\mathbb R)
 \]
-for some $c=c(a,r)>0$. The densities of $\mathcal L_a$ and
-$\mathcal L^\circ_a$ extend to entire functions. In particular, neither
-density is constant on an interval of positive length.
+for some $c=c(a,r)>0$. For every $q\in[0,1]$, the density of the limit with first-step bias $q$
+extends to an entire function and is not constant on an interval of
+positive length.
 \end{lemma}
 
 \begin{proof}
@@ -128,8 +128,113 @@ symmetry of its modulus gives the bound on $\mathbb R$.
 Since $r>1$, the Fourier integral for the density converges absolutely
 and locally uniformly for complex arguments: for every $B<\infty$,
 $\int_{\mathbb R}e^{B|t|}|\phi_a(t)|\,dt<\infty$. It therefore defines
-an entire function. The fair-start characteristic function is
-$\operatorname{Re}\phi_a(t)$ for real $t$ and obeys the same bound.
-Both densities are integrable with integral one, so neither is constant
-on $\mathbb R$. The identity theorem excludes a constant interval.
+an entire function. At initial bias $q$, the characteristic function is
+$q\phi_a(t)+(1-q)\phi_a(-t)$ and obeys the same bound by the triangle
+inequality. Each resulting density is integrable with integral one, so
+it is not constant on $\mathbb R$. The identity theorem excludes a
+constant interval.
+\end{proof}
+
+
+\subsection{First differences for a biased start}
+
+\begin{proposition}[Two modes for every initial bias]\label{prop:all-bias-modes}
+Let $0<\varepsilon<1$, let $q\in[0,1]$ be the probability that the first
+step is positive, and let $P_n(k)$ be the law of the number of positive
+steps after $n\ge1$ steps. Extend $P_n$ by zero outside $\{0,\ldots,n\}$.
+The first differences $d_n(k)=P_n(k+1)-P_n(k)$ satisfy
+\[
+ \operatorname{sp}\bigl(d_n(-1),d_n(0),\ldots,d_n(n)\bigr)
+ \preceq (+,-,+,-).
+\]
+In particular, $P_n$ has at most two modal plateaus, including endpoint
+modes. Moreover, there are no integers $i_0<\cdots<i_4$ for which
+\[
+ P_n(i_0)>P_n(i_1)<P_n(i_2)>P_n(i_3)<P_n(i_4).
+\]
+\end{proposition}
+
+\begin{proof}
+Put $a=1-2\varepsilon$ and $r_t(k)=\varepsilon+ak/t$. The forward equation
+is
+\[
+ P_{t+1}(k)=(1-r_t(k))P_t(k)+r_t(k-1)P_t(k-1),
+ \qquad P_1=(1-q,q).
+\]
+Subtracting adjacent equations gives
+\begin{equation}\label{eq:bias-first-diff}
+ d_{t+1}(k)=r_t(k-1)d_t(k-1)+(1-r_t(k+1))d_t(k),
+ \qquad 1\le k\le t-1.
+\end{equation}
+Both coefficients are at least $\min(\varepsilon,1-\varepsilon)>0$:
+$r_t(j)$ is a convex combination of $\varepsilon$ and $1-\varepsilon$
+for $0\le j\le t$. We treat the two boundaries separately.
+
+Suppose first that $q<1$. Since
+$P_t(0)=(1-q)(1-\varepsilon)^{t-1}>0$, define
+\[
+ \xi_t=\frac{P_t(1)}{P_t(0)},\qquad
+ b=\frac{1-2\varepsilon}{1-\varepsilon}<1,\qquad
+ A=\frac{\varepsilon}{1-\varepsilon}>0.
+\]
+The boundary equation gives
+\[
+ \xi_{t+1}=(1-b/t)\xi_t+A,\qquad \xi_1=\frac q{1-q}.
+\]
+Thus $\delta_t=\xi_{t+1}-\xi_t$ obeys
+\begin{equation}\label{eq:bias-edge-increments}
+ \delta_{t+1}=\frac{t-b}{t+1}\delta_t+\frac A{t+1}.
+\end{equation}
+A nonnegative increment is followed by a positive increment. Consequently,
+$\xi_t$ first decreases and then increases, allowing either stretch to be
+empty. For $\ell_t=d_t(0)=P_t(0)(\xi_t-1)$ this proves
+\[
+ \operatorname{sp}(\ell_1,\ldots,\ell_N)\preceq(+,-,+).
+\]
+If $q\le1/2$, then $\xi_1\le1$ and the sharper bound is
+$\operatorname{sp}(\ell_1,\ldots,\ell_N)\preceq(-,+)$.
+In particular, a positive $\ell_i$ cannot be followed by a negative
+$\ell_j$. Zeros do not affect either conclusion.
+
+Write $r_t^*=d_t(t-1)$. Reflection of the walk gives
+$r_t^*(q)=-\ell_t(1-q)$ and
+$d_t^{(1-q)}(t-1-k)=-d_t^{(q)}(k)$.
+For $0<q\le1/2$, the right boundary history therefore has pattern
+contained in $(-,+,-)$. For $q=0$ it is nonpositive throughout: the
+conditional count is at most $t-1$, so $r_t^*=-P_t(t-1)\le0$.
+
+Fix $N$ and, for $1\le t\le N$, form the augmented row
+\[
+ Z_t=(\ell_N,\ldots,\ell_{t+1},
+       d_t(0),\ldots,d_t(t-1),
+       r_{t+1}^*,\ldots,r_N^*).
+\]
+For $q\le1/2$, its first row is contained in $(+,-,+,-)$.
+Here is an explicit check that also handles zeros at
+$\ell_1=r_1^*=2q-1$. If $Z_1$ contained four ordered signs $-,+,-,+$
+and the second lay in the reversed left history, the first two would give
+a positive left edge followed in time by a negative one, which is
+impossible. Otherwise the last three lie in the right history and have
+signs $+,-,+$. For $q>0$ their reflected negatives contradict the
+$(-,+,-)$ exclusion for the left history at bias $1-q$; for $q=0$ they
+contradict its nonpositive right history. This proves the asserted base
+pattern, including $N=1$.
+
+Every entry of $Z_{t+1}$ is a nonnegative combination of adjacent entries
+of $Z_t$. The interior entries use \eqref{eq:bias-first-diff}; the two
+new boundary entries and the remaining future edge values are copied
+with coefficients $(1,0)$ or $(0,1)$. Such a step cannot introduce an
+alternating strict-sign pattern: each nonzero entry has a parent of the
+same sign, and parents of successive opposite signs are strictly ordered.
+Thus $\operatorname{sp}(Z_N)\preceq(+,-,+,-)$. Reflection and sign
+reversal preserve this pattern, proving the claim also for $q\ge1/2$,
+including $q=1$.
+
+Finally, extension by zero adds $d_N(-1)=P_N(0)\ge0$ on the left and
+$d_N(N)=-P_N(N)\le0$ on the right; neither enlarges the pattern.
+Every modal plateau contributes a positive-to-negative change, so there
+are at most two. If the last displayed inequalities in the statement
+held, each of their four intervals would contain an adjacent difference
+of the same strict sign, by telescoping. These four differences would
+have signs $-,+,-,+$, a contradiction.
 \end{proof}

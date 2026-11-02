@@ -81,7 +81,8 @@ tightness of $Z_\varepsilon$, and $\varepsilon\log^2n\to0$.
 Replacing $n^{-a}S_n$ by $\mathcal L_a$ proves the claim.
 \end{proof}
 
-This is weak convergence. Trinas and Valle find
+Theorem~\ref{thm:near-one-profile} below upgrades this convergence to a
+uniform density approximation and total variation convergence. Trinas and Valle find
 $\Var\mathcal L_a=2(1-a)+o(1-a)$~\cite[Eq.~(4.5)]{tv2026}. Both results say
 that $\mathcal L_a$ concentrates at $1$ as $a\to1$.
 Theorem~\ref{thm:two-modes-near-one} below uses neither result. It needs only
@@ -299,9 +300,9 @@ do not prove that $g_a''(0)$ has only one zero in $(z_-,z_+)$, and we do not
 know which case holds there. The certificate proves part (b) on all of
 $[z_+,1)$ by itself. On $[\frac45,1)$,
 Theorem~\ref{thm:two-modes-near-one} gives a second proof that uses no
-computer. The conjecture for $q\ne\frac12$ remains open. For $q\ne\frac12$ the
-finite law $qf_N(N-k)+(1-q)f_N(k)$ is not symmetric, and we have no analogue
-of Theorem~\ref{thm:five-blocks} for it.
+computer. The full bias-dependent phase classification remains open. The next
+result gives an at-most-two-mode bound for every bias. It uses first
+differences: the symmetric curvature bound need not persist under bias.
 
 \begin{remark}[the method]\label{rem:modes-threshold}
 Appendix~\ref{app:threshold} gives the proof, and we sketch it here. The
@@ -329,3 +330,226 @@ $D_N(N/2)$ changes sign at $a\approx0.6563$ for $N=4000$ and at
 $a\approx0.6592$ for $N=8000$. These two numbers are computed and are not
 used in any proof.
 \end{remark}
+
+
+\subsection{Arbitrary initial bias}
+
+Write $h_a$ for the density of $\mathcal L_a$ and
+$g_{a,q}(x)=q h_a(x)+(1-q)h_a(-x)$ for initial bias
+$\Prob(X_1=1)=q$. Thus $g_{a,1/2}=g_a$.
+
+\begin{theorem}[at most two modes for every bias]\label{thm:biased-limit-modes}
+For every $a\in(1/2,1)$ and $q\in[0,1]$, the density $g_{a,q}$ has at
+most two local maxima. At finite time, for every $0<\varepsilon<1$ and
+$N\ge1$, the count law has at most two modal plateaus, including its
+endpoints.
+\end{theorem}
+
+\begin{proof}
+Let $P_N$ here denote the count law with first-step bias $q$.
+Proposition~\ref{prop:all-bias-modes} proves the finite assertion and,
+more precisely, excludes two successive strict valleys. The local
+limit theorem of Trinas and Valle~\cite[Theorem~3.1]{tv2026} gives
+\[
+ \frac{N^a}{2}P_N\!\left(\left\lfloor
+             \frac{N+N^a x}{2}\right\rfloor\right)\longrightarrow g_{a,q}(x)
+ \qquad(x\in\mathbb R).
+\]
+The lattice point has the correct parity and differs from $x$ after
+scaling by less than $2N^{-a}$. Continuity therefore justifies this
+form of the local limit, including the span-two factor.
+Lemma~\ref{lem:analytic-density} excludes constant intervals for every
+bias. If $x<y<z$ were local maxima, there would be
+$x<u<y<v<z$ with
+\[
+ g_{a,q}(u)<\min\{g_{a,q}(x),g_{a,q}(y)\},\qquad
+ g_{a,q}(v)<\min\{g_{a,q}(y),g_{a,q}(z)\}.
+\]
+For each pair choose a point below the smaller local maximum in its
+one-sided maximizing neighbourhood. The absence of a constant
+interval makes that decrease strict. The five lattice indices are
+ordered for all large $N$, and the local limit preserves the four
+strict inequalities. This contradicts
+Proposition~\ref{prop:all-bias-modes}.
+\end{proof}
+
+This bounds the number of modes without classifying the biases for
+which both occur. In particular, it does not prove that the set of
+bimodal biases is an interval centred at $1/2$, as conjectured
+in~\cite[Remark~2.1(b)]{glrs2025}.
+
+\subsection{Uniform profiles as memory tends to one}
+
+\begin{theorem}[The two peaks near memory one]\label{thm:near-one-profile}
+Let $h_a$ denote the density of $\mathcal L_a$, and put
+\[
+ A_\varepsilon=1+2\varepsilon\log(1/\varepsilon),\qquad
+ K_\varepsilon(z)=2\varepsilon
+       h_{1-2\varepsilon}(A_\varepsilon-2\varepsilon z),
+\]
+\[
+ H_\varepsilon(z)=4\varepsilon
+       g_{1-2\varepsilon}(A_\varepsilon-2\varepsilon z)
+       \mathbf1\{z<A_\varepsilon/(2\varepsilon)\}.
+\]
+As $\varepsilon\downarrow0$, both profiles converge uniformly to $f_L$,
+and $\|K_\varepsilon-f_L\|_1\to0$. If $c_a>0$ is the positive mode of $g_a$,
+then
+\[
+ c_{1-2\varepsilon}
+   =1+2\varepsilon\log(1/\varepsilon)
+      -2\varepsilon\lambda_{\mathrm L}+o(\varepsilon),\qquad
+ 4\varepsilon g_{1-2\varepsilon}(c_{1-2\varepsilon})
+      \longrightarrow f_L(\lambda_{\mathrm L}).
+\]
+For $q\in[0,1]$, define the two-component density
+\[
+ \widetilde g_{\varepsilon,q}(x)
+ =\frac{q}{2\varepsilon}f_L\!\left(\frac{A_\varepsilon-x}{2\varepsilon}\right)
+ +\frac{1-q}{2\varepsilon}f_L\!\left(\frac{A_\varepsilon+x}{2\varepsilon}\right).
+\]
+Then both approximation bounds are uniform over the initial bias:
+\[
+ \sup_{q\in[0,1]}2\varepsilon
+     \|g_{1-2\varepsilon,q}-\widetilde g_{\varepsilon,q}\|_\infty\longrightarrow0,
+ \qquad
+ \sup_{q\in[0,1]}
+     \|g_{1-2\varepsilon,q}-\widetilde g_{\varepsilon,q}\|_1\longrightarrow0.
+\]
+\end{theorem}
+
+\begin{proof}
+Write $f=f_L$, $m=\lambda_{\mathrm L}$ and
+$B_\varepsilon=A_\varepsilon/(2\varepsilon)\to\infty$.
+The inputs about $f$ are that it is continuous, nonnegative, integrates to
+one, tends to zero at both infinities, has a unique strict maximum at $m$,
+and is strictly concave on a neighbourhood of $m$. The certified mode
+lemma supplies the last two assertions; the Fourier representation and
+the Riemann--Lebesgue lemma supply the tail limits.
+
+The fixed-memory bridge gives convergence of every bounded interval mass
+of $K_\varepsilon$ to the corresponding interval mass of $f$.
+The density $K_\varepsilon$ is unimodal, since $h_{1-2\varepsilon}$ is
+unimodal~\cite{glrs2025}. Its modes tend to $m$. To see this without assuming
+pointwise convergence, fix $b<m$. Choose a short interval about $m$ and
+an equal-length interval strictly between $b$ and $m$. Continuity and the
+strict maximum make the limiting mass of the former larger. A mode to
+the left of $b$ would make the approximating density nonincreasing on
+both intervals and force the reverse mass ordering. The argument to
+the right is identical. On any fixed interval avoiding $m$, the
+approximating densities are consequently monotone in the correct
+direction for all sufficiently small $\varepsilon$. Their values are
+squeezed between adjacent interval averages. Letting the interval length
+decrease to zero proves
+$K_\varepsilon(z)\to f(z)$ for every $z\ne m$.
+The identity
+\[
+ \int|K_\varepsilon-f|
+   =2-2\int\min(K_\varepsilon,f)
+\]
+and dominated convergence now give $L^1$ convergence.
+
+If $k$ is a nonnegative unimodal density with mode $b$, then
+\[
+ k(y)\le \frac1{y-b}\qquad(y>b),
+\]
+because its integral over $[b,y]$ is at least $(y-b)k(y)$.
+Since the modes of $K_\varepsilon$ remain bounded,
+$\sup_{y\ge B_\varepsilon}K_\varepsilon(y)\to0$.
+The fair-density identity gives, for $z<B_\varepsilon$,
+\[
+ H_\varepsilon(z)
+   =K_\varepsilon(z)+K_\varepsilon(2B_\varepsilon-z).
+\]
+It follows that $H_\varepsilon(z)\to f(z)$ for every $z\ne m$.
+
+For small enough $\varepsilon$, the strict-shape theorem gives one
+positive hump of $g_{1-2\varepsilon}$ with a concavity interval between
+two convex intervals. After the affine change of variables,
+$H_\varepsilon$ is unimodal and has the same convex--concave--convex
+partition up to $B_\varepsilon$. We make no convexity assertion across
+the truncation point. The preceding mode argument, or its pointwise
+version, shows that its mode $m_\varepsilon$ tends to $m$.
+
+Choose two fixed triples, one on each side of $m$, in the neighbourhood
+where $f$ is strictly concave. Each strict midpoint-concavity inequality
+persists for $H_\varepsilon$. Neither convex part of
+$H_\varepsilon$ can contain its corresponding triple. Hence its
+concavity interval contains a fixed neighbourhood $[L,R]$ of $m$ for
+all sufficiently small $\varepsilon$.
+For fixed $L<\ell<x<m$ in this neighbourhood, concavity gives
+\[
+ H_\varepsilon(m_\varepsilon)
+ \le H_\varepsilon(x)
+    +\frac{m_\varepsilon-x}{x-\ell}
+       \{H_\varepsilon(x)-H_\varepsilon(\ell)\}.
+\]
+First let $\varepsilon\downarrow0$ and then $x\uparrow m$. This bounds
+the limiting upper peak height by $f(m)$. The inequality
+$H_\varepsilon(m_\varepsilon)\ge H_\varepsilon(x)$ gives the reverse
+bound. Thus $H_\varepsilon(m_\varepsilon)\to f(m)$.
+This secant argument is necessary: weak convergence and unimodality
+alone need not bound the height at the mode.
+
+Monotonicity and a finite grid give uniform convergence on compact
+intervals away from $m$. Near $m$, the converging peak height and the
+values at two nearby endpoints give the same conclusion. Beyond a
+large fixed interval, monotonicity bounds $H_\varepsilon$ by its endpoint
+values, and $f$ tends to zero. Thus $H_\varepsilon\to f$ uniformly on
+$\mathbb R$. The displayed folding identity and the uniform tail bound
+then give $K_\varepsilon\to f$ uniformly below $B_\varepsilon$; above
+$B_\varepsilon$ both functions vanish uniformly in the limit.
+
+Finally,
+$m_\varepsilon=(A_\varepsilon-c_{1-2\varepsilon})/(2\varepsilon)$ and
+$H_\varepsilon(m_\varepsilon)
+ =4\varepsilon g_{1-2\varepsilon}(c_{1-2\varepsilon})$.
+These identities give the stated mode and height limits.
+Reflection and mixing do not increase either the supremum error or
+the density $L^1$ error: for $0\le q\le1$,
+\[
+ \big\|q(K_\varepsilon-f)
+ +(1-q)(K_\varepsilon-f)(2B_\varepsilon-\cdot)\big\|_r
+ \le\|K_\varepsilon-f\|_r,\qquad r=1,\infty.
+\]
+An affine change of variables gives the two assertions uniform in $q$.
+\end{proof}
+
+\begin{corollary}[both peaks under a biased start]\label{cor:biased-near-one-peaks}
+Fix $0<\eta\le1/2$. For all sufficiently small $\varepsilon$, uniformly
+over $q\in[\eta,1-\eta]$, the density $g_{1-2\varepsilon,q}$ has exactly
+two local maxima $x^-_{\varepsilon,q}<x^+_{\varepsilon,q}$. Their positions
+and heights satisfy
+\[
+ \begin{aligned}
+ x^+_{\varepsilon,q}&=A_\varepsilon-2\varepsilon\lambda_{\mathrm L}
+                         +o(\varepsilon),&
+ 2\varepsilon g_{1-2\varepsilon,q}(x^+_{\varepsilon,q})
+                         &=q f_L(\lambda_{\mathrm L})+o(1),\\
+ x^-_{\varepsilon,q}&=-A_\varepsilon+2\varepsilon\lambda_{\mathrm L}
+                         +o(\varepsilon),&
+ 2\varepsilon g_{1-2\varepsilon,q}(x^-_{\varepsilon,q})
+                         &=(1-q) f_L(\lambda_{\mathrm L})+o(1).
+ \end{aligned}
+\]
+All four errors are uniform over this interval of biases.
+\end{corollary}
+
+\begin{proof}
+Fix a small window about $\lambda_{\mathrm L}$. In the positive peak's
+scaled coordinates, Theorem~\ref{thm:near-one-profile} gives uniform
+convergence to $qf_L$ on this window: the other component is evaluated
+at $2B_\varepsilon-z$ and tends uniformly to zero there. The strict gap
+between the value at $\lambda_{\mathrm L}$ and the two endpoint values
+persists uniformly because $q\ge\eta$. Continuity gives a local maximum
+in the interior. Reflection gives a second local maximum in the negative
+window, using $1-q\ge\eta$. The windows are disjoint for small
+$\varepsilon$. Theorem~\ref{thm:biased-limit-modes} excludes any further
+local maximum. Shrinking the fixed windows proves the position
+estimates, and the uniform density approximation gives the height estimates.
+\end{proof}
+
+The uniform approximation of Theorem~\ref{thm:near-one-profile} allows
+biases approaching $0$ or $1$, but the two-mode conclusion above does
+not. An absolute approximation error need not resolve a component whose
+weight tends to zero.
