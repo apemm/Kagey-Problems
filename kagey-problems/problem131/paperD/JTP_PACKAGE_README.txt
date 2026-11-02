@@ -4,8 +4,8 @@ Target: Journal of Theoretical Probability. Prepared for author review; not subm
 
 - Journal manuscript: problem131_memory.pdf (51 pages).
 - Main editable source: problem131_memory.tex. Compile with pdflatex or latexmk -pdf.
-- Extended reference file: problem131_arxiv.pdf (70 pages).
-- Threshold proofs for peer review: threshold_proofs_review.pdf (7 pages, including an identification cover).
+- Extended reference file: problem131_arxiv.pdf (72 pages).
+- Threshold proofs for peer review: threshold_proofs_review.pdf (9 pages, including an identification cover).
 - Extended editable source: problem131_arxiv.tex.
 - Supplement cover source: threshold_review_cover.tex.
 - Vector figures: figures/Fig1.pdf and figures/Fig2.pdf; EPS versions are supplied too.

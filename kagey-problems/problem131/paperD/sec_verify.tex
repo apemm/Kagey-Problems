@@ -1,13 +1,12 @@
 \section{Verification}\label{sec:verify}
 
-The proofs use four certified computations, apart from short exact
-ratios such as those in Proposition~\ref{prop:dip-hyp}.
-First, \texttt{certify\_elephant.py} encloses the 60-term sum in
-Theorem~\ref{thm:erw-bounds}(b) in $[102.586396,102.586398]$.
+Apart from short exact ratios such as Proposition~\ref{prop:dip-hyp},
+the proofs use four numerical certificates.
+First, the 60-term sum in Theorem~\ref{thm:erw-bounds}(b) lies in
+$[102.586396,102.586398]$, as checked by \nolinkurl{certify_elephant.py}.
 With the analytic tail, it is below $102.59$, giving the constant $5200$.
-Any finite bound suffices asymptotically, but this value determines
-the explicit thresholds in Proposition~\ref{prop:dip-hyp} and the
-second-order results. Second, the same script certifies the
+This value fixes the explicit thresholds in Proposition~\ref{prop:dip-hyp}
+and the second-order results. Second, the same script certifies the
 Landau derivative and curvature enclosures of
 Lemma~\ref{lem:landau-mode}. Lean checks these independently.
 
@@ -22,100 +21,88 @@ of Section~S5 (Proposition~\ref{prop:convex-certified}).
 \else
 of the extended version supplied with this manuscript.
 \fi
-The outputs and rational witnesses are in
-\nolinkurl{data/certify_center_output_2026-10-17.txt},
-\nolinkurl{data/certify_convex_output_2026-10-17.txt},
-\nolinkurl{data/witnesses_center_2026-10-17.jsonl} and
-\nolinkurl{data/witnesses_convex_2026-10-17.jsonl}.
-The witnesses record script hashes and software versions.
-Each certification script fails if a required check fails, and
-range-based scripts also reject empty ranges.
+The dated outputs and rational witnesses in \nolinkurl{data/} record
+script hashes and software versions. Certification scripts reject failed
+checks and, where applicable, empty ranges.
 
 Fourth, \texttt{certify\_threshold.py} proves
-Theorem~\ref{thm:threshold} as described in Appendix~\ref{app:threshold}. It
-imports \texttt{threshold\_taylor.py}, \texttt{threshold\_hankel.py} and
-\texttt{threshold\_pointwise.py}. Its 9 runs are recorded in
-\nolinkurl{data/threshold_*.txt}, each with a header that records the hashes
-of the 4 scripts and the software versions, and with the exit status as its
-last line. Each accepted interval is printed with its sign. The mode
+the classification outside the bracket in Theorem~\ref{thm:threshold}
+(Appendix~\ref{app:threshold}). It
+imports \nolinkurl{threshold_taylor.py}, \nolinkurl{threshold_hankel.py} and
+\nolinkurl{threshold_pointwise.py}. Its 9 runs are recorded in
+\nolinkurl{data/threshold_*.txt}, with source hashes, versions, exit status
+and signed accepted intervals. The mode
 \texttt{check} verifies that the records join into the cover used in the
 proof, with the sign $-$ on all of $(\frac12,z_-]$ and $+$ on all of
 $[z_+,0.6712]$. The soundness checks raise exceptions and are not
-Python \texttt{assert} statements, so \texttt{python -O} does not remove them. Theorems~\ref{thm:two-modes}
-and~\ref{thm:two-modes-near-one} use no computation. The script
+Python \texttt{assert} statements, so \texttt{python -O} does not remove them.
+Theorems~\ref{thm:two-modes} and~\ref{thm:two-modes-near-one} use no
+computation. The script
 \texttt{verify\_elephant\_modes.py} checks the rational arithmetic in the
 fourth-moment proof of Theorem~\ref{thm:two-modes-near-one}, retains checks
 of the earlier two-moment bound for $a\ge39/40$, and computes the finite-$N$ numbers of
-Remark~\ref{rem:modes-threshold}, which are not proof inputs. Its output,
-with a header that records the hash of the script and the software versions,
-is in \nolinkurl{data/verify_modes_output.txt}.
+Remark~\ref{rem:modes-threshold}, which are not proof inputs. Its versioned
+output is \nolinkurl{data/verify_modes_output.txt}.
+
+The extension \texttt{certify\_transition.py} closes the unresolved bracket
+by certifying $0.68<\partial_a g_a''(0)<0.70$ and
+$-0.09<g_a^{(4)}(0)<-0.07$ on a larger interval containing it.
+It bounds the actual parameter derivative through the differentiated
+smoothing equation. The source hashes, interval enclosures and checks are in
+\nolinkurl{data/transition_derivative_certificate.json}; the independent
+rerun at higher precision is recorded in
+\nolinkurl{data/transition_derivative_run.txt}. All checks remain active
+under \texttt{python -O}.
 
 The Lean~4.33.1 library in
-\nolinkurl{kagey-problems/problem131/lean/PaperD} proves the finite
-identities, crossing bounds, sign arguments and certificate checks.
-The existing formal bulk and eventual-shape proofs use six named classical inputs,
-namely Fourier inversion, the compound Poisson characteristic function,
-Efron--Stein, Scheff\'e's theorem~\cite{scheffe1947}, unimodality of class-$L$ laws, and Hoeffding's
-hypergeometric bound. Their sources and precise formal status are in
-\nolinkurl{MAP.md} and \nolinkurl{coverage_tables.tex}.
-The library uses Mathlib revision \texttt{0df444a360ea}. The recorded
-kernel build reports only \texttt{propext}, \texttt{Classical.choice}
-and \texttt{Quot.sound}. Generated certificate entries are checked with
-exact outward-rounded integer arithmetic, without \texttt{native\_decide}.
-The kernel checks the proof terms independently of who wrote or edited them;
-matching the formal statements to the manuscript remains a separate check.
-This does not formalize the six classical inputs. Lemma~\ref{lem:center-no-holes} and the full
-all-even shape in Corollary~\ref{cor:unique-min} are kernel-checked,
-including both complete intervals of maximizers. The composed theorem
-\texttt{shape\_at\_crossing\_all\_even} needs only $N=2h$ with $h\ge4$.
-The maximum-height window in Corollary~\ref{cor:height-window} and
-Lemmas~\ref{lem:descartes}, \ref{lem:sp-limit} and~\ref{lem:sp-derivative} are also
-kernel-checked. The November revision formalizes the analytic argument in
-Lemma~\ref{lem:analytic-density}, including an entire extension, and the
-strict monotonicity, exact local maxima and two-or-four inflection-point
-classification of Theorem~\ref{thm:two-modes}. Its explicit inputs from
-the limit-law theory are the density and convergence in law, the
-smoothing inequality for the conditional-first-step characteristic
-function, and the Fourier representation of the fair-start density.
-Continuity, the unit bound, symmetry and decay of the characteristic
-function follow in Lean from a probability measure with a measurable
-density. The smoothing inequality is never imposed on the fair-start law.
-The fourth-moment extension to $a\ge4/5$ is also kernel-checked, from the
-explicit second- and fourth-moment formulas of~\cite{glr2026}; the
-unimodal kurtosis bound is proved directly for a decreasing even density.
-The sharper Jensen bound has no additional classical input. The enlarged
-weak-Landau range is formalized from LFI, CP and ES by characteristic
-functions and L\'evy's continuity theorem from Mathlib; it does not require
-the separate Scheff\'e hypothesis. The total variation strengthening of
-Theorem~\ref{thm:cp}, the fixed-memory bridge and
-Theorem~\ref{thm:threshold} remain unformalized. The earlier pointwise
-compound Poisson bound remains valid. The revision's source inventory,
-build log and full axiom audit are recorded in
-\nolinkurl{reports/paperD-formalization-2026-11-01}.
+\nolinkurl{kagey-problems/problem131/lean/PaperD}, with Mathlib revision
+\texttt{0df444a360ea}, checks the finite identities, crossing bounds,
+complete modal intervals, maximum-height window and sign arguments.
+It uses only \texttt{propext}, \texttt{Classical.choice} and
+\texttt{Quot.sound}. Generated integer certificates use exact outward
+rounding, without \texttt{native\_decide}.
+The bulk and eventual-shape proofs retain six explicit classical inputs:
+Fourier inversion, the compound Poisson characteristic function,
+Efron--Stein, Scheff\'e~\cite{scheffe1947}, class-$L$ unimodality and
+Hoeffding's hypergeometric bound. The enlarged weak-Landau range uses
+only the first three, with Mathlib's L\'evy theorem; the Jensen bound
+has no additional classical input. The statement-by-statement map,
+including these dependencies, is in \nolinkurl{MAP.md} and
+\nolinkurl{coverage_tables.tex}.
 
-The further first-difference theorem in
-Proposition~\ref{prop:all-bias-modes} is formalized for every
-$0<\varepsilon<1$, every $q\in[0,1]$ and every $N\ge1$, including the
-boundary histories. Its limit transfer in
-Theorem~\ref{thm:biased-limit-modes} takes the lattice local limit
-of~\cite{tv2026} as an explicit input; it derives the no-flatness and
-the bound on the set of local maxima from the Fourier inputs above.
-For Theorem~\ref{thm:near-one-profile}, Lean derives interval masses from
-weak convergence using Portmanteau, then proves the mode localization,
-peak-height limit, uniform profiles and $L^1$ convergence. Reflection
-and mixing give both approximation bounds uniformly over the bias.
-Two disjoint peak windows, combined with the all-bias mode bound, give
-Corollary~\ref{cor:biased-near-one-peaks}, including its uniform position
-and height estimates.
-This formal argument uses Corollary~\ref{cor:fixed-memory-bridge} as a
-weak-convergence input, the published conditional unimodality, the
-already formalized fair curvature theorem and the Landau density facts.
-It does not formalize the martingale proof of that bridge. The new source
-inventory and checks are recorded separately in
-\nolinkurl{reports/paperD-strengthening-2026-11-01}.
+The entire extension and strict shape theorem are formalized from the
+limit density, convergence in law, the conditional characteristic
+function's smoothing inequality and the density's Fourier representation.
+Its continuity, unit bound, symmetry and decay follow from a probability
+measure with density. The fourth-moment proof for $a\ge4/5$ uses the
+raw moment formulas of~\cite{glr2026}; Lean proves the unimodal kurtosis
+inequality directly. The all-bias first-difference theorem and
+Proposition~\ref{prop:dominant-half} use the actual finite law, including
+both boundary histories. The lattice local limit~\cite{tv2026}, conditional
+unimodality and Fourier representation then give the centred bias interval
+in Theorem~\ref{thm:biased-limit-modes}. Its no-flatness, half-line shape
+and mode-count bounds are conclusions, not hypotheses.
 
-The archived certification runs used Python~3.14.3, python-flint~0.9.0
-(FLINT~3.6.0, including Arb), mpmath~1.3.0, numpy~2.4.2 and scipy~1.17.1.
-The figures, tables and other numerical illustrations are not proof
-inputs. Further checks and rerun commands are documented in the
-repository named under Code availability.
+For Theorem~\ref{thm:near-one-profile}, Portmanteau supplies interval
+masses from the stated weak bridge. Lean then proves localization,
+peak-height convergence, uniform profiles and $L^1$ convergence, using
+the fair curvature theorem, conditional unimodality and Landau density
+facts. Reflection and mixing give uniformity in the bias, the two peak
+windows of Corollary~\ref{cor:biased-near-one-peaks}, and $b_a\to0$.
+
+For the transition, Lean checks the inhomogeneous maximum argument,
+dominated Fourier differentiation, rational slack inequalities, and the
+passage from the derivative bounds to a unique transition with unimodal
+critical density. The detailed differentiated-smoothing integral estimates
+and Arb transcendental enclosures remain separate written and numerical
+proofs. Their bounds are explicit inputs to the formal interface.
+The total variation upgrade of Theorem~\ref{thm:cp} and the martingale
+proof of the fixed-memory weak bridge also remain unformalized; the
+earlier pointwise compound Poisson bound is formalized.
+The current source inventory and full axiom audit are in
+\nolinkurl{reports/paperD-transition-2026-11-01}.
+
+Each numerical record identifies its software versions. The derivative
+extension was rerun with Python~3.12.14 and python-flint~0.8.0, at
+$1600$-bit precision with $1100$ moments. Figures and other numerical
+illustrations are not proof inputs. The repository gives rerun commands.

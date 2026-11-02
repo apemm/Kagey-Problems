@@ -1,5 +1,26 @@
 # Paper D: map from the paper and the research notes to the Lean proofs
 
+## Transition closure and the interval of biases
+
+The latest November 1 revision adds the following results. Its build and axiom
+audit are recorded separately in `reports/paperD-transition-2026-11-01`.
+The earlier audit records below refer to their respective frozen revisions.
+
+| Manuscript result | Lean declaration or module | Explicit inputs and limits |
+| --- | --- | --- |
+| Proposition F.6, reflection dominance and no valley on the dominant half | `BiasedModes.skew_upper_nonneg`, `BiasedModes.no_right_valley` in `Modes/BiasIntervalFinite` | Actual finite count law; no limiting shape premise |
+| Theorem 4.6, the centred open interval of bimodal biases, including a unique unimodal maximum at its endpoints | `Modes.biased_modes_centered_interval_of_smoothing` | Conditional unimodality, density facts, conditional Fourier smoothing/representation, and the actual span-two lattice local limits. Dominance, half-line shape, analyticity and mode-count bounds are derived |
+| Lower bias endpoint tends to zero near memory one | `Modes/BiasIntervalEndpoint` | The already proved uniform profiles and the preceding interval classification |
+| Theorem 4.4, unique modal transition with a unimodal critical density | `Modes.shape_transition_of_conditional_fourier` | Existing outside-bracket shape certificates, local central-curvature derivative bounds and a negative fourth derivative. Shape and analytic regularity inside the bracket are derived from the prior Fourier theorem |
+| Parameter-derivative certificate's analytic consequences | `Modes.inhomogeneous_bootstrap`, `Modes.hasDerivAt_centralCurvatureFourier`, `Modes.centralCurvature_deriv_pos_of_certificate` | The derivative integral inequalities, an integrable envelope and finite-frequency numerical enclosures are explicit inputs |
+
+The finite, mixture and limit-transfer arguments are kernel-checked. The Arb
+gamma/power-series enclosures and the full differentiated-smoothing reduction
+in `or_transition_proofs.tex` are not replayed in Lean. The formal transition
+interface does not assume uniqueness, but it does take the substantive analytic
+and numerical bounds from that written certificate. The distinction is retained
+in the manuscript's verification section.
+
 ## All initial biases and near-one profiles
 
 The further November 1 revision adds the results below. `PaperD.Revision`
@@ -24,8 +45,9 @@ limit and the L1 conclusion are proved, not assumed. The biased corollary
 derives the mode-count bound and no-flatness from the earlier results.
 The density normalization, continuity and tail limits of the Landau law
 remain explicit facts about that law. The old martingale proof of the weak
-bridge is still not formalized. Neither transition uniqueness nor the
-centred-interval classification of bimodal biases is claimed.
+bridge is still not formalized. That revision did not claim transition
+uniqueness or the centred-interval classification; the section above supersedes
+those limits with the stated formal scope.
 
 ## Earlier November 1 revision
 

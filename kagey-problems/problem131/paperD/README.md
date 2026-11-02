@@ -2,6 +2,43 @@
 
 ## Current revision, November 1, 2026
 
+The journal PDF is 51 pages, the same length as the preceding revision.
+The extended version is 72 pages, including the complete differentiated
+smoothing proof. The review-only threshold extract is 9 pages. Both source
+packages rebuild in isolation, with no undefined references or overfull boxes.
+
+The fair-start modal transition is unique. Its location remains enclosed by
+the existing rational bracket of width below `3.3e-15`. The new
+`certify_transition.py` proves `0.68 < d/da g_a''(0) < 0.70` on a larger
+neighbourhood and a negative fourth spatial derivative, so the critical
+density is unimodal. The global conclusion concerns the modal transition;
+uniqueness of the central-curvature zero is asserted only through `a = 0.6712`.
+
+For every superdiffusive memory, the bimodal initial biases form one open
+interval `(b_a, 1-b_a)`. Outside it, including its endpoints, the density is
+unimodal with one local maximum. The proof uses a new finite-law no-valley
+bound on the half favoured by the initial bias. It settles the interval
+classification in Guérin, Laulin, Raschel and Simon's Remark 2.1(b).
+The interval is empty exactly up to the fair-start transition, and
+`b_a -> 0` as memory tends to one. No rate, continuity or monotonicity in
+memory is claimed for `b_a`, and `b_a = 0` is not excluded.
+
+The introduction now credits the correlated-Bernoulli model of
+Drezner–Farnum, Heyde's fixed-parameter limit theory, and James–James–Qi's
+time-varying extension. The latter paper was read in full; Heyde's full text
+and the original Drezner–Farnum comparison remain outstanding. The epigraph
+and disclosure are unchanged. Repeated prose has been shortened without
+removing mathematical results or proofs.
+
+The [transition report](../../../reports/Paper%20D%20transition%20closure.md)
+records the proof and source comparisons. The
+[verification record](../../../reports/paperD-transition-2026-11-01/README.md)
+distinguishes the kernel-checked finite/mixture arguments from the separate
+Arb enclosures and differentiated-smoothing integral estimates. The full
+formal library does not silently assume an interval of bimodal biases.
+
+### Earlier November 1 additions
+
 Two further results extend the scope beyond the fair-start theorem:
 
 - Every initial bias has at most two modal plateaus at every finite time,
@@ -24,9 +61,9 @@ separates the proved results, numerical exploration, and outstanding full-text
 comparisons. The [verification record](../../../reports/paperD-strengthening-2026-11-01/README.md)
 lists the final formal inputs and build evidence. The existing disclosure is unchanged.
 
-The interval structure of bimodal biases and uniqueness of the memory
-transition remain open. Numerical evidence for those statements is research
-material, not a theorem of this paper. The finite theorem's priority comparison
+That revision left the interval structure of bimodal biases and uniqueness
+of the memory transition open; the current revision proves both. The finite
+theorem's priority comparison
 with older generalized-binomial papers is still limited by full-text access.
 
 The finite-step sign theorem now leads the presentation. It connects the rare-reversal
@@ -52,8 +89,8 @@ and shape theorems retain explicit published-law inputs; the sharper Jensen boun
 has none, and the enlarged weak limit uses LFI, CP and ES without a Scheffé premise.
 The [formalization report](../../../reports/paperD-formalization-2026-11-01/README.md)
 maps each addition to its Lean theorem and records the full build and axiom audit.
-The certificate still leaves an interval shorter than `3.3e-15` unclassified; uniqueness
-of a memory transition inside it is open. The full first-step-bias conjecture is also open.
+That certificate left an interval shorter than `3.3e-15` unclassified and did not
+prove the first-step-bias conjecture. The current revision closes both questions.
 The old flat-interval caveat is removed by the new regularity lemma.
 
 ### Submission files and journal guidance
@@ -388,9 +425,12 @@ from the classical approximations.
   required (version 0.9.0 was used), and mpmath. Its modes are `scaled`, `zero`, `cover` and
   `hankel` for single runs, `full` for all 9 runs in parallel, `check` for the stored records
   and `quick` for a run of a few minutes. See the section on certificate runs below.
-- `verify_all.py` runs the six scripts `verify_elephant_crossing.py`, `verify_elephant_shape.py`,
+- `certify_transition.py` closes the bracket using the parameter-derivative and fourth-derivative
+  enclosures. Its JSON and run log are `data/transition_derivative_certificate.json` and
+  `data/transition_derivative_run.txt`. Run `python -O certify_transition.py --precision 1600 --moments 1100`.
+- `verify_all.py` runs the seven scripts `verify_elephant_crossing.py`, `verify_elephant_shape.py`,
   `verify_elephant_odd.py`, `certify_elephant.py`, `verify_elephant_modes.py` and
-  `certify_threshold.py` (its mode `quick`, or `full` with `--full`).
+  `certify_threshold.py` (its mode `quick`, or `full` with `--full`) and `certify_transition.py`.
 - `data/ledger.md` is the index of the prediction ledgers. `data/ledger_D1.md` and `ledger_D2.md` are
   here, and `ledger_D3.md` and `ledger_D4.md` (heavy tails and aging) are in `../paperF/data`.
 - `data/figdata_*.json` holds cached data for the figures.
@@ -433,10 +473,12 @@ calling `verify_all.py` here. Run `python -B verify_all.py` here (or `python -B 
 heavy cells. The scripts need numpy, scipy, mpmath and python-flint. Build the
 paper with `pdflatex problem131_memory.tex`, run three times so that the references settle. The Code availability statement
 of the paper pins the supporting code, certificate records and Lean files to the release
-tag [`paperD-arxiv-v1`](https://github.com/apemm/Kagey-Problems/tree/paperD-arxiv-v1/kagey-problems/problem131).
-The tagged revision contains the reviewed certificate for Theorem 4.4
+tag [`paperD-arxiv-v2`](https://github.com/apemm/Kagey-Problems/tree/paperD-arxiv-v2/kagey-problems/problem131).
+The tagged revision contains the reviewed outside-bracket certificate for Theorem 4.4
 (`certify_threshold.py`, its 3 helper modules, `data/threshold_*.txt` and
-`data/certify_threshold_output.txt`), the November Lean additions, and the fourth-moment
+`data/certify_threshold_output.txt`), the new derivative/quartic certificate
+(`certify_transition.py` and `data/transition_derivative_certificate.json`),
+the eight new transition and bias-interval Lean modules, and the fourth-moment
 verification script. The tag is not moved after release. A later source change needs a new
 versioned tag and verification run. The illustrative modes check has a matching
 `data/verify_modes_output.txt`; it is not a proof input. The arXiv

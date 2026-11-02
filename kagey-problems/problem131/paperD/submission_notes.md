@@ -13,7 +13,7 @@ Revision of November 1, 2026. Nothing has been posted or submitted by this workf
 | `paperD_jtp_submission.zip` | Journal package with editable sources, all three PDFs, figure files, cover letter, and package README |
 | `paperD_arxiv_source.zip` | Separate source-only package for arXiv |
 | `arxiv_metadata.json` | Title, abstract, suggested categories, and build-derived page counts |
-| `../../../reports/paperD-audit-2026-11-01/delivery-manifest.json` | Generated file inventory, page counts, and hashes |
+| `../../../reports/paperD-transition-2026-11-01/delivery-manifest.json` | Current file inventory, page counts, and hashes |
 
 The review extract retains the extended manuscript's page and statement numbers after
 its identification cover. Read it with the journal manuscript. It is designated **For peer
@@ -65,8 +65,10 @@ app_erw_profile.tex
 app_erw_bulk.tex
 app_erw_signs.tex
 app_modes.tex
+app_bias_interval.tex
 app_threshold.tex
 or_family_proofs.tex
+or_transition_proofs.tex
 online_resource_body.tex
 online_resource_bib.tex
 figures/Fig1.pdf
@@ -94,6 +96,9 @@ non-exclusive arXiv license leaves copyright with the author; no selection has b
    fixed-memory weak bridge as an explicit input. Resolve or qualify the
    outstanding generalized-binomial full-text comparisons listed in
    `reports/Paper D transition and modes.md` before making a priority claim.
+   The unique transition, centred bias interval and their formal/numerical
+   boundaries are recorded in `reports/paperD-transition-2026-11-01/README.md`.
+   The current reading record is `reports/Paper D transition closure.md`.
 2. Confirm the disclosure's author-history statements. Read the added Murahara-Tokumitsu
    and Vishwakarma preprints before affirming that every cited source has been read.
    The audit's reading record describes the audit's scope, not the author's reading.
@@ -113,4 +118,4 @@ A Zenodo archive of the proof-code commit is optional. No DOI has been created o
 
 To regenerate the packages, metadata, and review extract after rebuilding both manuscripts
 and `threshold_review_cover.tex`,
-run `python reports/paperD-audit-2026-11-01/package_revision.py` from the repository root.
+run `python reports/paperD-transition-2026-11-01/package_revision.py` from the repository root.

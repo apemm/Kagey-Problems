@@ -263,14 +263,9 @@ symmetrization, so this contradicts case (a). Theorem~\ref{thm:two-modes}
 then gives case (b).
 \end{proof}
 
-Theorem~\ref{thm:two-modes} proves the unimodal-or-bimodal assertion for
-$q=\frac12$ in the conjecture of Gu\'erin, Laulin, Raschel and Simon, for
-every $a\in(\frac12,1)$. It does not classify the dependence on the
-initial bias $q$. The dependence on $a$ is a separate question.
-Theorem~\ref{thm:two-modes-near-one} shows that the bimodal case occurs, and
-its proof uses no computer. The next theorem locates the change from case (a)
-to case (b). Its proof is computer-assisted, and it covers $(\frac12,1)$
-apart from an interval shorter than $3.3\cdot10^{-15}$.
+The next theorem proves that the fair-start law changes shape exactly once.
+The proof combines the shape alternative with a certified positive parameter
+derivative of the central curvature throughout the transition bracket.
 
 \begin{theorem}[the threshold, computer-assisted]\label{thm:threshold}
 Put
@@ -282,50 +277,28 @@ Put
 \]
 so that $z_+-z_-<3.3\cdot10^{-15}$.
 \begin{enumerate}[(a)]
-\item For every $a\in(\frac12,z_-]$ we have $g_a''(0)<0$, and case (a) of
-Theorem~\ref{thm:two-modes} holds. So $g_a$ is unimodal.
-\item For every $a\in[z_+,1)$ case (b) holds, so $g_a$ has exactly two modes.
-For $a\in[z_+,0.6712]$ also $g_a''(0)>0$.
-\item The function $a\mapsto g_a''(0)$ has a zero in $(z_-,z_+)$, and every
-zero in $(\frac12,0.6712]$ lies there.
+\item There is exactly one $a_*\in(\frac12,0.6712]$ with $g_{a_*}''(0)=0$,
+and $z_-<a_*<z_+$.
+\item For $\frac12<a\le a_*$, case (a) of Theorem~\ref{thm:two-modes}
+holds. For $a_*<a<1$, case (b) holds. Thus $a_*$ is the unique transition
+from one mode to two, and the critical density is unimodal.
+\item We have $g_a''(0)<0$ for $\frac12<a<a_*$ and $g_a''(0)>0$ for
+$a_*<a\le0.6712$.
 \end{enumerate}
 \end{theorem}
 
-So the supremum of the $a$ with case (a) and the infimum of the $a$ with
-case (b) both lie in $[z_-,z_+]$. The two cases are classified outside an
-interval of length less than $3.3\cdot10^{-15}$; this does not establish a
-unique transition as $a$ varies. If the
-conjecture holds, then $q(a)=0$ for $a\le z_-$ and $q(a)>0$ for $a\ge z_+$. We
-do not prove that $g_a''(0)$ has only one zero in $(z_-,z_+)$, and we do not
-know which case holds there. The certificate proves part (b) on all of
-$[z_+,1)$ by itself. On $[\frac45,1)$,
-Theorem~\ref{thm:two-modes-near-one} gives a second proof that uses no
-computer. The full bias-dependent phase classification remains open. The next
-result gives an at-most-two-mode bound for every bias. It uses first
-differences: the symmetric curvature bound need not persist under bias.
+The bracket measures uncertainty in the location of a single transition,
+not an unclassified set of possible shapes. On $[\frac45,1)$,
+Theorem~\ref{thm:two-modes-near-one} gives a second proof of bimodality
+without computation. The results for arbitrary bias below use first
+differences; the symmetric curvature bound need not persist under bias.
 
 \begin{remark}[the method]\label{rem:modes-threshold}
-Appendix~\ref{app:threshold} gives the proof, and we sketch it here. The
-moments of $\mathcal L_a$ follow from the exact recursion
-of~\cite[Theorem~1.4]{glr2026}, and $\mathcal L_a$ has a finite moment
-generating function~\cite[Corollary~2.11]{glr2026}. So its characteristic
-function $\phi_a$ is the sum of its moment series, and
-$g_a''(0)=-\frac1\pi\int_0^\infty t^2\operatorname{Re}\phi_a(t)\,dt$. The
-fixed-point equation of~\cite[Theorem~1.1]{glr2026} gives an inequality for
-$\lvert\phi_a\rvert$ that improves itself. From bounds on a finite range of
-$t$ it yields $\lvert\phi_a(t)\rvert\le Ct^{-4}$ for all larger $t$, with an
-explicit $C$ that holds for a whole interval of $a$. The moment series cancels
-terms of size about $10^{60}$, so we cannot sum it with $a$ as an interval.
-Instead we expand in $a$ around the centre of each interval, in ball
-arithmetic at that exact point, and bound the remainder by Cauchy's estimate
-on a complex disc. This is a Taylor model in $a$. Near $a=\frac12$ we use the
-scaled variable $\mathcal L_a/(\E\mathcal L_a^2)^{1/2}$. Its even moments,
-and its odd moments after division by $\sqrt{(2a-1)\Gamma(2a)}$, are
-analytic at $a=\frac12$, so the cover reaches $\frac12$. For $a\ge0.6705$ we
-rule out case (a) by moments alone. In case (a), Khinchine's theorem would make
-$(2j+1)\E\mathcal L_a^{2j}$ a moment sequence of a positive variable, and a
-Hankel quadratic form of order at most $56$ is negative instead. The
-certificate takes about 2.8 hours of CPU time. On the exact finite law,
+Appendix~\ref{app:threshold} bounds the Fourier integral for $g_a''(0)$
+by Taylor models in $a$ and a tail estimate from the fixed-point equation.
+It uses scaled moments near $a=\frac12$ and a Hankel test for
+$a\ge0.6705$. The original certificate takes about 2.8 hours of CPU time.
+On the exact finite law,
 $D_N(N/2)$ changes sign at $a\approx0.6563$ for $N=4000$ and at
 $a\approx0.6592$ for $N=8000$. These two numbers are computed and are not
 used in any proof.
@@ -338,15 +311,23 @@ Write $h_a$ for the density of $\mathcal L_a$ and
 $g_{a,q}(x)=q h_a(x)+(1-q)h_a(-x)$ for initial bias
 $\Prob(X_1=1)=q$. Thus $g_{a,1/2}=g_a$.
 
-\begin{theorem}[at most two modes for every bias]\label{thm:biased-limit-modes}
+\begin{theorem}[the interval of bimodal biases]\label{thm:biased-limit-modes}
 For every $a\in(1/2,1)$ and $q\in[0,1]$, the density $g_{a,q}$ has at
-most two local maxima. At finite time, for every $0<\varepsilon<1$ and
+most two local maxima. There is $b_a\in[0,1/2]$ such that it has exactly
+two local maxima if and only if
+\[
+                 b_a<q<1-b_a.
+\]
+Outside this open interval, including its endpoints, the density is
+unimodal with a unique local maximum. The interval is empty exactly when
+$a\le a_*$, in which case $b_a=1/2$.
+At finite time, for every $0<\varepsilon<1$ and
 $N\ge1$, the count law has at most two modal plateaus, including its
 endpoints.
 \end{theorem}
 
 \begin{proof}
-Let $P_N$ here denote the count law with first-step bias $q$.
+\emph{The mode bound.} Let $P_N$ here denote the count law with first-step bias $q$.
 Proposition~\ref{prop:all-bias-modes} proves the finite assertion and,
 more precisely, excludes two successive strict valleys. The local
 limit theorem of Trinas and Valle~\cite[Theorem~3.1]{tv2026} gives
@@ -371,12 +352,40 @@ interval makes that decrease strict. The five lattice indices are
 ordered for all large $N$, and the local limit preserves the four
 strict inequalities. This contradicts
 Proposition~\ref{prop:all-bias-modes}.
+
+\emph{The bias interval.} Fix $a$, write $f_q=g_{a,q}$ and $h=h_a$,
+and call $x<y<z$ a strict valley if $f_q(y)<\min\{f_q(x),f_q(z)\}$.
+Proposition~\ref{prop:dominant-half} and the same local limit show that,
+for $q\ge1/2$, $f_q$ has no strict valley on $[0,\infty)$ and
+$f_q(-x)\le f_q(x)$ for $x\ge0$.
+Consequently it has a strict valley if and only if
+$f_q(x)>f_q(y)$ for some $x<y\le0$. Such a descent gives the valley
+$(x,y,-x)$ by reflection dominance. Conversely a valley must start at
+$x<0$; if its middle point $y$ is positive, the no-valley property at
+$(0,y,z)$ gives $f_q(0)\le f_q(y)<f_q(x)$.
+
+At $q=1$, conditional unimodality~\cite{glrs2025} excludes a valley,
+so $h$ is nondecreasing on $(-\infty,0]$. For fixed $x<y\le0$, the
+difference $f_q(x)-f_q(y)$ is affine in $q$ and nonpositive at $q=1$.
+If positive at $q\ge1/2$, it remains positive for every $r\in[1/2,q]$.
+The valley biases in $[1/2,1]$ are therefore downward closed. They are
+relatively open, since the strict inequalities at three fixed points
+persist under a small change of bias, and they exclude $1$. Reflection
+gives an open interval $(b_a,1-b_a)$, possibly empty.
+
+A strict valley gives two local maxima by maximizing on compact
+intervals on its two sides; integrability and positivity supply the
+outer points below the two witness heights. Conversely, two local
+maxima give a strict valley because there is no flat interval.
+The mode bound excludes a third maximum. A continuous integrable
+density without a strict valley is unimodal, and absence of flat
+intervals makes its maximum unique. Finally the bias interval is
+nonempty exactly when it contains $1/2$, so
+Theorem~\ref{thm:threshold} identifies the empty case.
 \end{proof}
 
-This bounds the number of modes without classifying the biases for
-which both occur. In particular, it does not prove that the set of
-bimodal biases is an interval centred at $1/2$, as conjectured
-in~\cite[Remark~2.1(b)]{glrs2025}.
+This proves the initial-bias conjecture
+of~\cite[Remark~2.1(b)]{glrs2025}, with its half-width $q(a)=1/2-b_a$.
 
 \subsection{Uniform profiles as memory tends to one}
 
@@ -552,4 +561,7 @@ estimates, and the uniform density approximation gives the height estimates.
 The uniform approximation of Theorem~\ref{thm:near-one-profile} allows
 biases approaching $0$ or $1$, but the two-mode conclusion above does
 not. An absolute approximation error need not resolve a component whose
-weight tends to zero.
+weight tends to zero. The interval classification nevertheless gives
+$b_a\to0$ as $a\uparrow1$: for every fixed $\eta>0$, the corollary
+puts $\eta$ inside the bimodal interval for all sufficiently large $a$,
+so $0\le b_a<\eta$. No rate for this convergence is asserted.

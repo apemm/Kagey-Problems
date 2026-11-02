@@ -1,4 +1,4 @@
-"""Run the 6 check scripts of Paper D with the current interpreter.
+"""Run the 7 check scripts of Paper D with the current interpreter.
 
 verify_elephant_crossing.py checks Section 2, Table 1 and Appendix A, and
 verify_elephant_shape.py checks Section 3 and Appendices B and C.
@@ -11,6 +11,8 @@ writes data/verify_modes_output.txt. certify_threshold.py proves Theorem 4.4
 data/threshold_*.txt match the current scripts and join into the cover of the
 proof, and it reruns 3 short pieces against the records. With --full it reruns
 the whole certificate in 9 parallel processes and rewrites those records.
+certify_transition.py freshly verifies the parameter-derivative and quartic
+bounds that close the transition bracket, using 1600 bits and 1100 moments.
 certify_center.py and certify_convex.py take much longer, so this runner does
 not run them.
 
@@ -37,13 +39,19 @@ scripts = ('verify_elephant_crossing.py',   # Section 2, Table 1, Appendix A
            'verify_elephant_odd.py',        # Proposition 3.21 (odd N) and Section S3
            'certify_elephant.py',           # Theorem 2.6(b), Proposition 3.7, Lemma 3.10 (needs python-flint)
            'verify_elephant_modes.py',      # Theorem 4.3 and Remark 4.5 (needs python-flint)
-           'certify_threshold.py')          # Theorem 4.4 and Appendix G (needs python-flint)
+           'certify_threshold.py',          # Original outside-bracket cover
+           'certify_transition.py')         # Unique transition and critical density
 extra = ['--full'] if args.full else []
 start = time.time()
 failed = []
 for name in scripts:
     # certify_threshold.py takes its mode as its first argument
-    run_args = ['full' if args.full else 'quick'] if name == 'certify_threshold.py' else extra
+    if name == 'certify_threshold.py':
+        run_args = ['full' if args.full else 'quick']
+    elif name == 'certify_transition.py':
+        run_args = ['--precision', '1600', '--moments', '1100']
+    else:
+        run_args = extra
     print(f'\n=== Running {name} {" ".join(run_args)}'.rstrip(), flush=True)
     result = subprocess.run([sys.executable, '-B', str(base / name)] + run_args, cwd=base)
     if result.returncode:
