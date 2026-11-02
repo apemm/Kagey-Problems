@@ -99,8 +99,10 @@ z+ = 45960469774511/68719476736000 = 0.668812860014601028..., so that z+ - z- < 
 [z+, 1), and a -> g_a''(0) has a zero in (z-, z+), with every zero in (1/2, 0.6712] there. Whether
 that zero is unique, and which case holds inside (z-, z+), stay open. So the fair-start case of the
 conjecture of Guerin, Laulin, Raschel and Simon is settled with the threshold located to within
-3.3e-15, unless g_a is constant on some interval. The certificate covers [z+, 1) by itself, and
-Theorem 4.3 gives a second, computer-free proof of case (b) for a >= 39/40. The former Remark 4.4 is now Remark 4.5
+3.3e-15, subject at that time to a possible flat interval. The November analytic lemma
+removes that caveat; uniqueness within the threshold interval remains open. The certificate
+covers [z+, 1) by itself. Theorem 4.3 originally gave a computer-free proof for a >= 39/40;
+the November fourth-moment proof improves that range to a >= 4/5. The former Remark 4.4 is now Remark 4.5
 (`rem:modes-threshold`). It sketches the method and keeps the finite-N values 0.6563 and 0.6592.
 The new Appendix G (`app_threshold.tex`) states the steps, proves the Hankel test (Lemma G.1,
 from Khinchine's theorem) and derives the theorem from the runs. The new Section S6 of the arXiv
@@ -157,7 +159,7 @@ The October 23 editorial changes also retitle Section 3 "The shape of the law at
 - `thm:cp` now bounds total variation, with the same displayed delta_Sigma. `thm:assay-mle` is now Theorem S4.1 of Online Resource 1 (section `or:likelihood`), with its proof there. It gives finite-sample concentration, mean-bias bounds and uniform absolute consistency for the constrained compound Poisson likelihood, using ceil((log N)^3) independent sensitive-founder cultures of size N. The comparison law truncates jump sizes, not the total count. The theorem does not cover the fair-founder mixture likelihood or continuous-time switching of existing cells.
 - `cor:fixed-memory-bridge` proves the weak Landau limit of the fixed-memory superdiffusive position limit as memory tends to one. It does not assert uniform local convergence or a sharp bimodality threshold.
 
-The all-even minimum and complete modal-interval theorem are now composed in `../lean/PaperD/ShapeAllEven.lean`, using `CenterNoHoles.lean`, `ModalIntervals.lean` and the existing sign and endpoint-dip results. The height window, total variation strengthening, likelihood theorem and fixed-memory bridge are not formalized. The old pointwise compound Poisson formalization remains valid. Superseded proofs are preserved in `removed_proofs/cuts_2026-10-23`.
+The all-even minimum and complete modal-interval theorem are now composed in `../lean/PaperD/ShapeAllEven.lean`, using `CenterNoHoles.lean`, `ModalIntervals.lean` and the existing sign and endpoint-dip results. At the October 23 revision, the height window was not formalized; Modes/HeightWindow.lean subsequently closed that gap. The total variation strengthening, likelihood theorem and fixed-memory bridge remain unformalized. The old pointwise compound Poisson formalization remains valid. Superseded proofs are preserved in `removed_proofs/cuts_2026-10-23`.
 
 The statement numbers below are historical, from the build of October 17, 2026. Check them against the
 current PDF if the paper has changed since then. That build removed the rounding lemma (Lemma 3.7
@@ -383,8 +385,11 @@ from the classical approximations.
   The Landau, mode-location, eventual convexity and second-order proofs retain
   the named classical inputs listed in the map. The earlier pointwise compound
   Poisson bound is formalized, but its total variation strengthening is not.
-  The maximum-height window, likelihood theorem and fixed-memory bridge also
-  remain written proofs. No module uses `native_decide`, and the axiom audit
+  The maximum-height window is formalized in `Modes/HeightWindow.lean`.
+  `Revision.lean` imports the November Jensen, weak-limit, analytic-density,
+  strict-mode, curvature and fourth-moment proofs, with the inputs documented
+  in the map. The likelihood theorem and fixed-memory bridge remain outside
+  the formal coverage. No module uses `native_decide`, and the axiom audit
   permits only `propext`, `Classical.choice` and `Quot.sound`. The Python and Arb
   checks are separate. The library also contains the earlier Paper F modules,
   and most declarations are generated certificate steps, not separate results.
@@ -400,12 +405,13 @@ calling `verify_all.py` here. Run `python -B verify_all.py` here (or `python -B 
 --quick`, the same thing) for the quick run, which takes a few minutes, or add `--full` for the
 heavy cells. The scripts need numpy, scipy, mpmath and python-flint. Build the
 paper with `pdflatex problem131_memory.tex`, run three times so that the references settle. The Code availability statement
-of the paper pins the supporting code, certificate records and Lean files to commit
-`6e1aecde4ef337576ce98f686d65853caac54145` (before October 25, 2026 the pin was `6f7f9068`).
-That commit contains the certificate for Theorem 4.4 (`certify_threshold.py`, its 3 helper
-modules, `data/threshold_*.txt` and `data/certify_threshold_output.txt`). Later edits to the text
-of the paper do not change the pin. A change to a proof-producing certificate or a Lean source
-would need a new checked commit. The revised illustrative modes check has a new matching
+of the paper pins the supporting code, certificate records and Lean files to the release
+tag [`paperD-arxiv-v1`](https://github.com/apemm/Kagey-Problems/tree/paperD-arxiv-v1/kagey-problems/problem131).
+The tagged revision contains the reviewed certificate for Theorem 4.4
+(`certify_threshold.py`, its 3 helper modules, `data/threshold_*.txt` and
+`data/certify_threshold_output.txt`), the November Lean additions, and the fourth-moment
+verification script. The tag is not moved after release. A later source change needs a new
+versioned tag and verification run. The illustrative modes check has a matching
 `data/verify_modes_output.txt`; it is not a proof input. The arXiv
 version is `problem131_arxiv.tex`. Build it with `pdflatex problem131_arxiv.tex` three times. It
 gives the paper followed by Sections S1 to S6 in one PDF, with one bibliography.
