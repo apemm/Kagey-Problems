@@ -72,12 +72,18 @@ with zipfile.ZipFile(PAPER / 'paperD_arxiv_source.zip', 'w', zipfile.ZIP_DEFLATE
 tex = (PAPER / 'problem131_memory.tex').read_text(encoding='utf-8')
 abstract = re.search(r'\\begin\{abstract\}(.*?)\\end\{abstract\}', tex, re.S).group(1)
 abstract = ' '.join(abstract.split())
+code_pin_match = re.search(
+    r'\\paragraph\{Code availability\.\}.*?github\.com/apemm/Kagey-Problems/tree/([0-9a-f]{40})',
+    tex, re.S)
+if code_pin_match is None:
+    raise RuntimeError('Code availability must identify an exact source commit')
+code_pin = code_pin_match.group(1)
 metadata = {
     'title': TITLE, 'author': 'Arjun Pemmasani',
     'primary_category': 'math.PR', 'cross_list': 'cond-mat.stat-mech',
     'optional_cross_list': 'math.CO',
     'abstract': abstract, 'abstract_characters': len(abstract),
-    'comments': f"{counts['problem131_arxiv']} pages, 2 figures; Sections S1-S6 extend the journal version; proof certificates and Lean source at github.com/apemm/Kagey-Problems, commit aa88996f.",
+    'comments': f"{counts['problem131_arxiv']} pages, 2 figures; Sections S1-S6 extend the journal version; proof certificates and Lean source at github.com/apemm/Kagey-Problems, commit {code_pin[:12]}.",
     'license_suggestion': 'arXiv.org perpetual, non-exclusive license',
     'journal_pages': counts['problem131_memory'],
     'arxiv_pages': counts['problem131_arxiv'],

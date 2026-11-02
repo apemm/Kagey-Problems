@@ -84,9 +84,11 @@ non-exclusive arXiv license leaves copyright with the author; no selection has b
 
 ## Before posting or journal submission
 
-1. Review the added written proofs: Lemma F.4, the curvature clause of Theorem 4.2,
-   Theorem 4.3's fourth-moment argument, the Jensen bound, and the weaker weak-limit
-   hypothesis. The existing Lean files do not formalize these additions.
+1. Review the statement correspondence for the formalized additions: Lemma F.4,
+   the strict modes and curvature in Theorem 4.2, Theorem 4.3's fourth-moment
+   argument, the Jensen bound, and the enlarged weak-limit range. The explicit
+   published-law hypotheses and build evidence are listed in
+   `reports/paperD-formalization-2026-11-01/README.md` at the repository root.
 2. Confirm the disclosure's author-history statements. Read the added Murahara-Tokumitsu
    and Vishwakarma preprints before affirming that every cited source has been read.
    The audit's reading record describes the audit's scope, not the author's reading.

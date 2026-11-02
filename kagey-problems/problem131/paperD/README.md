@@ -20,7 +20,11 @@ The revision strengthens five statements without changing theorem numbers:
   The stronger `x^3 log^2(N)/N -> 0` condition is still used for the local approximation
   (Theorem 3.9).
 
-These strengthenings are written proofs, not additions to the Lean formalization.
+These strengthenings are formalized in `../lean/PaperD/Revision.lean`. The analytic
+and shape theorems retain explicit published-law inputs; the sharper Jensen bound
+has none, and the enlarged weak limit uses LFI, CP and ES without a Scheffé premise.
+The [formalization report](../../../reports/paperD-formalization-2026-11-01/README.md)
+maps each addition to its Lean theorem and records the full build and axiom audit.
 The certificate still leaves an interval shorter than `3.3e-15` unclassified; uniqueness
 of a memory transition inside it is open. The full first-step-bias conjecture is also open.
 The old flat-interval caveat is removed by the new regularity lemma.
@@ -397,7 +401,7 @@ calling `verify_all.py` here. Run `python -B verify_all.py` here (or `python -B 
 heavy cells. The scripts need numpy, scipy, mpmath and python-flint. Build the
 paper with `pdflatex problem131_memory.tex`, run three times so that the references settle. The Code availability statement
 of the paper pins the supporting code, certificate records and Lean files to commit
-`aa88996f79dcfb08fe266a12879087ae0ab52fbd` (before October 25, 2026 the pin was `6f7f9068`).
+`6e1aecde4ef337576ce98f686d65853caac54145` (before October 25, 2026 the pin was `6f7f9068`).
 That commit contains the certificate for Theorem 4.4 (`certify_threshold.py`, its 3 helper
 modules, `data/threshold_*.txt` and `data/certify_threshold_output.txt`). Later edits to the text
 of the paper do not change the pin. A change to a proof-producing certificate or a Lean source
