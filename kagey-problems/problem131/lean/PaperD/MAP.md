@@ -1,11 +1,40 @@
 # Paper D: map from the paper and the research notes to the Lean proofs
 
+## All initial biases and near-one profiles
+
+The further November 1 revision adds the results below. `PaperD.Revision`
+imports every new module. The source inventory and full build/axiom record
+are kept in `reports/paperD-strengthening-2026-11-01` at the repository root.
+That audit passed for 353 modules and 23,777 theorem/lemma declarations, with
+zero unimported files and only the three standard Lean axioms. Every recorded
+source hash still matched at the final-state check.
+
+| Manuscript result | Lean declaration | Explicit mathematical inputs |
+| --- | --- | --- |
+| Proposition F.5, finite law for every bias | `BiasedModes.diff_no_pattern`, `BiasedModes.no_four_increments`, `BiasedModes.diff_signPattern` | Only `0 < ε < 1`, `0 ≤ q ≤ 1`, and `n ≥ 1`; the actual finite count law is used |
+| Lemma F.4, entire extension for every bias | `Modes.biased_entire_extension_of_smoothing` | Conditional characteristic-function facts and smoothing inequality; the biased density's Fourier representation |
+| Theorem 4.6, limiting density has at most two local maxima | `Modes.biased_limit_modes_of_smoothing` | Those Fourier inputs, density integrability/nonzero mass, and the span-two lattice local limit `BiasedLocalLimitHyp` |
+| Theorem 4.7, peak positions/heights, uniform profiles, and uniform-in-bias total variation approximation | `Modes.near_one_profiles_of_probability_bridge` | The old weak bridge as convergence of probability measures with the actual scaled densities; conditional unimodality and normalization; existing fair walk-law/Fourier/moment inputs; Landau density facts and the existing mode certificate |
+| Corollary 4.8, exactly two biased peaks with uniform locations/heights | `Modes.NearOneProfileConclusions.biased_modes` | The preceding proved profile conclusions, the actual biased lattice local limits, conditional Fourier representations, and `q` bounded away from zero and one |
+
+The exported profile theorem derives the fair curvature partition through
+`strict_bimodal_four_fifths`. Portmanteau supplies interval-mass convergence.
+Off-mode density convergence, convergence of the peak height, the uniform
+limit and the L1 conclusion are proved, not assumed. The biased corollary
+derives the mode-count bound and no-flatness from the earlier results.
+The density normalization, continuity and tail limits of the Landau law
+remain explicit facts about that law. The old martingale proof of the weak
+bridge is still not formalized. Neither transition uniqueness nor the
+centred-interval classification of bimodal biases is claimed.
+
+## Earlier November 1 revision
+
 November 1, 2026 formalization update. The title is "Shape transitions and rare reversals
 in the elephant random walk". `PaperD.Revision` imports the formal proofs of all five
 mathematical additions in this revision. The table below supersedes the historical coverage
 entries for those results. The later October 25 inventory retains its historical numbers.
 
-The current import closure contains 331 modules and 23,638 theorem/lemma declarations,
+That revision's import closure contained 331 modules and 23,638 theorem/lemma declarations,
 including 23 added modules and 135 added declarations. Most declarations are supporting
 lemmas or certificate steps, not separate manuscript results.
 
