@@ -2,8 +2,8 @@
 
 ## Current revision, November 1, 2026
 
-The journal PDF is 51 pages, the same length as the preceding revision.
-The extended version is 72 pages, including the complete differentiated
+The journal PDF is 52 pages, including the weak-transfer lemma that removes
+the local-limit dependency. The extended version is 73 pages, including the complete differentiated
 smoothing proof. The review-only threshold extract is 9 pages. Both source
 packages rebuild in isolation, with no undefined references or overfull boxes.
 
@@ -16,8 +16,10 @@ uniqueness of the central-curvature zero is asserted only through `a = 0.6712`.
 
 For every superdiffusive memory, the bimodal initial biases form one open
 interval `(b_a, 1-b_a)`. Outside it, including its endpoints, the density is
-unimodal with one local maximum. The proof uses a new finite-law no-valley
-bound on the half favoured by the initial bias. It settles the interval
+unimodal with one local maximum. The proof uses a finite-law no-valley
+bound on the half favoured by the initial bias. Lemma F.7 transfers the
+finite inequalities by weak convergence and lattice-window averages.
+It settles the interval
 classification in Guérin, Laulin, Raschel and Simon's Remark 2.1(b).
 The interval is empty exactly up to the fair-start transition, and
 `b_a -> 0` as memory tends to one. No rate, continuity or monotonicity in
@@ -30,12 +32,17 @@ and the original Drezner–Farnum comparison remain outstanding. The epigraph
 is unchanged. Repeated prose has been shortened without
 removing mathematical results or proofs.
 
-The [transition report](../../../reports/Paper%20D%20transition%20closure.md)
-records the proof and source comparisons. The
-[verification record](../../../reports/paperD-transition-2026-11-01/README.md)
-distinguishes the kernel-checked finite/mixture arguments from the separate
-Arb enclosures and differentiated-smoothing integral estimates. The full
-formal library does not silently assume an interval of bimodal biases.
+The [headline audit](../../../research_notes/Paper%20D%20headline%20audit/primary_review.md)
+re-derives both headline proofs and checks the certificate program.
+Theorem 4.6 no longer depends on the Trinas--Valle local limit, which the
+manuscript identifies as an unrefereed preprint. The
+[verification record](../../../reports/paperD-headline-audit-2026-11-01/README.md)
+lists the new formal proofs and fresh numerical check. Lean verifies the
+smoothing derivatives, scalar integral bounds and weak shape transfer.
+Instantiation with the characteristic function, assembly of the uniform
+tail bounds and Arb enclosures retain their stated written/numerical scope.
+The [earlier transition report](../../../reports/Paper%20D%20transition%20closure.md)
+records the preceding source comparisons.
 
 ### Earlier November 1 additions
 
@@ -473,7 +480,7 @@ calling `verify_all.py` here. Run `python -B verify_all.py` here (or `python -B 
 heavy cells. The scripts need numpy, scipy, mpmath and python-flint. Build the
 paper with `pdflatex problem131_memory.tex`, run three times so that the references settle. The Code availability statement
 of the paper pins the supporting code, certificate records and Lean files to the release
-tag [`paperD-arxiv-v2`](https://github.com/apemm/Kagey-Problems/tree/paperD-arxiv-v2/kagey-problems/problem131).
+tag [`paperD-arxiv-v3`](https://github.com/apemm/Kagey-Problems/tree/paperD-arxiv-v3/kagey-problems/problem131).
 The tagged revision contains the reviewed outside-bracket certificate for Theorem 4.4
 (`certify_threshold.py`, its 3 helper modules, `data/threshold_*.txt` and
 `data/certify_threshold_output.txt`), the new derivative/quartic certificate

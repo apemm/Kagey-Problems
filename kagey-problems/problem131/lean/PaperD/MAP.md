@@ -1,8 +1,28 @@
 # Paper D: map from the paper and the research notes to the Lean proofs
 
+## Headline proof audit and weak transfer
+
+The current audit is in `reports/paperD-headline-audit-2026-11-01`.
+It supersedes the local-limit requirement for Theorem 4.6 in the older
+interfaces below. Those interfaces remain available as alternative proofs.
+
+| Result | Formal entry | Inputs and boundary |
+| --- | --- | --- |
+| Theorem 4.6 from ordinary weak convergence | `Modes.biased_modes_centered_interval_of_weak_probability` in `BiasWeakTransferFinal` | Actual scaled atomic laws, their weak convergence to the reflected-mixture density, conditional unimodality, and the characteristic-function smoothing/Fourier facts. No local limit, interval-mass limit, or limiting shape is assumed. |
+| Lemma F.7 for the actual count lattice | `BiasWeakTransferFinite`, `BiasWeakTransferWindows`, `BiasWeakTransferCounts`, `BiasWeakTransfer`, `BiasWeakTransferProbability` | Finite extrema, ceil/floor geometry, normalization, shrinking averages, and Portmanteau are proved. The formal statement specializes the manuscript's general regular lattice to the actual span-two count lattice. |
+| Differentiation of the smoothing integrand and integral | `TransitionSmoothing`, `TransitionSmoothingIntegral` | Proves the mixed-argument chain rule, the varying-weight product derivative, modulus bounds and half-interval reflection. The integral theorem assumes local differentiability, measurability and an integrable envelope for the component paths. |
+| Scalar bounds used by S6.D | `TransitionIntegrals` | Proves the weighted power and logarithmic half-interval bounds, exact logarithmic integral, differentiated geometric remainder, truncated power tail, and Fourier-integral envelope. No numerical enclosure is assumed for these scalar identities. |
+
+The complete transition certificate is not replayed in Lean. The written proof
+still instantiates the smoothing derivative theorems for the actual characteristic
+function and joins the uniform tail estimates. Its holomorphic moment majorants
+and Cauchy bounds, and the Arb transcendental evaluations, retain their stated
+analytic/numerical scope. The existing transition assembly derives uniqueness
+from these explicit bounds; it does not assume uniqueness.
+
 ## Transition closure and the interval of biases
 
-The latest November 1 revision adds the following results. Its build and axiom
+The preceding November 1 revision added the following results. Its build and axiom
 audit are recorded separately in `reports/paperD-transition-2026-11-01`.
 The earlier audit records below refer to their respective frozen revisions.
 
