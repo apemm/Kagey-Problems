@@ -13,6 +13,13 @@ identifies its source as an unrefereed arXiv preprint.
 
 ## Formal coverage
 
+Ten added Lean modules contain 47 proved theorems. They extend the probability
+limit transfer and the analytic steps behind the transition certificate.
+The complete library build and axiom audit passed for 371 modules and 23,888
+theorem or lemma declarations. Only `propext`, `Classical.choice` and
+`Quot.sound` occur. The 28 build warnings are existing linter or deprecation
+warnings; the added modules produced no warnings.
+
 The new entry `Modes.biased_modes_centered_interval_of_weak_probability`
 starts with the actual scaled atomic laws, their weak convergence and the
 limiting density. It computes interval probabilities, applies Portmanteau,
@@ -39,6 +46,10 @@ checks under `python -O`. It gives `0.68 < d/da g_a''(0) < 0.70` and
 `-0.09 < g_a''''(0) < -0.07` throughout the stated neighbourhood.
 The numerical proof sources and original reviewed threshold records were
 not changed.
+The isolated run at source commit `9d0f4ba4995c7ec423a70463e5136056492d365c`
+passed all seven numerical scripts, including all 19 derivative checks.
+The committed-source Lean rebuild and the complete source-inventory comparison
+also passed. [RELEASE.md](RELEASE.md) records the immutable source reference.
 
 The journal manuscript is 52 pages, the extended version is 73 pages, and
 the threshold review extract is 9 pages. The added page contains the weak
