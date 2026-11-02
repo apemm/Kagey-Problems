@@ -1,13 +1,35 @@
 # Paper D: map from the paper and the research notes to the Lean proofs
 
-November 1, 2026 manuscript update. The title is now "Shape transitions and rare reversals
-in the elephant random walk". Lean source files are unchanged. The new analytic-density lemma
-F.4, strict mode and curvature conclusions, the fourth-moment extension of Theorem 4.3 to
-`a >= 4/5`, the Jensen improvement in Theorem 2.6(a), and the enlarged weak-limit range of
-Theorem 3.9(c) are written proofs, not formalized statements. The existing modes library proves
-the non-strict dichotomy and the earlier `a >= 39/40` sufficient range. Section S6 is now
-also supplied as a review-only extract. The statement map below describes the October 25
-formalization and retains its historical numbers.
+November 1, 2026 formalization update. The title is "Shape transitions and rare reversals
+in the elephant random walk". `PaperD.Revision` imports the formal proofs of all five
+mathematical additions in this revision. The table below supersedes the historical coverage
+entries for those results. The later October 25 inventory retains its historical numbers.
+
+The current import closure contains 331 modules and 23,638 theorem/lemma declarations,
+including 23 added modules and 135 added declarations. Most declarations are supporting
+lemmas or certificate steps, not separate manuscript results.
+
+| Current result | Final theorem or interface | Remaining mathematical inputs |
+| --- | --- | --- |
+| Theorem 2.6(a), sharper Jensen center bound | `thm_erw_bounds_a_jensen`, `jensen_factor_ge_linear` in `RevisionJensen` | Parameter ranges and even `N`; no named classical input |
+| Theorem 3.9(c), weak Landau limit when `x² log² N / N → 0` | `RevisionWeak.thm_landau_quadratic_final` | LFI, CP, ES; no SCH premise |
+| Lemma F.4, every exponent `1 < r < 1/a` | `Modes.charFun_stretched_decay_of_density` | Conditional probability law with measurable density and its smoothing inequality |
+| Lemma F.4, entire extension of the fair density | `Modes.fair_entire_extension_from_probability_measure` | Same law, plus the fair density's inverse-Fourier representation |
+| Theorem 4.2, strict branches and exact local maxima | `Modes.strict_shape_of_conditional_fourier` | DENS, LAW, `ConditionalFourierHyp`; `conditionalFourierHyp_of_probability_measure` discharges the standard characteristic-function facts |
+| Theorem 4.2, full curvature partition and exact inflection points | Same theorem, then `StrictUnimodalShape.inflections` or `StrictBimodalShape.inflections` | Same inputs; no curvature, analyticity or no-flatness premise remains |
+| Theorem 4.3, bimodality for `4/5 ≤ a < 1` | `Modes.main_limit_four_fifths`; full strict shape in `Modes.strict_bimodal_four_fifths` | DENS, LAW, explicit second/fourth raw moments; the strict shape also uses the conditional Fourier inputs |
+
+`ConditionalFourierHyp` keeps the conditional-first-step characteristic function distinct
+from the fair-start density, which is represented by its real part. `GLRFourthMomentsHyp`
+states integrability and the two raw moment formulas; it does not assume a kurtosis inequality
+or bimodality. The sharp unimodal bound `9/5` is proved directly for an even decreasing
+density, without Khinchine's representation as a hypothesis.
+
+The full source inventory, build output, axiom audit, proof correspondence and rerun command
+are in [`reports/paperD-formalization-2026-11-01`](../../../../reports/paperD-formalization-2026-11-01/README.md).
+These are conditional formal proofs of the new arguments, not a formal proof of the cited
+limit-law theory. The earlier total variation upgrade, fixed-memory bridge, likelihood
+theorem and threshold certificate remain outside the formal coverage.
 
 Current layout, October 25, 2026 (second revision). The journal article has 45 pages and no
 Online Resource. Sections S1 to S6 (second order, tail, odd N, the likelihood
