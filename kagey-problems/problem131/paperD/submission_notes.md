@@ -118,4 +118,4 @@ A Zenodo archive of the proof-code commit is optional. No DOI has been created o
 
 To regenerate the packages, metadata, and review extract after rebuilding both manuscripts
 and `threshold_review_cover.tex`,
-run `python reports/paperD-transition-2026-11-01/package_revision.py` from the repository root.
+run `python reports/paperD-editorial-2026-11-02/package_revision.py` from the repository root.

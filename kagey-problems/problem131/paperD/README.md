@@ -1,6 +1,15 @@
 # Shape transitions and rare reversals in the elephant random walk
 
-## Current revision, November 1, 2026
+## Current revision, November 2, 2026
+
+The abstract, introduction and cover letter explicitly include the empty bias
+interval when `a <= a_*`. Section 5 counts all five numerical certificates and
+links the complete axiom audit to
+[evidence commit c24791a](https://github.com/apemm/Kagey-Problems/tree/c24791af4f3a9aa0d985fce1b0a2a68f03f33432/reports/paperD-headline-audit-2026-11-01).
+These are editorial corrections. The mathematical statements, proof code,
+numerical certificates and `paperD-arxiv-v3` source tag are unchanged.
+The [editorial build record](../../../reports/paperD-editorial-2026-11-02/README.md)
+records the rebuilt manuscripts and packages.
 
 The journal PDF is 52 pages, including the weak-transfer lemma that removes
 the local-limit dependency. The extended version is 73 pages, including the complete differentiated
@@ -14,8 +23,8 @@ neighbourhood and a negative fourth spatial derivative, so the critical
 density is unimodal. The global conclusion concerns the modal transition;
 uniqueness of the central-curvature zero is asserted only through `a = 0.6712`.
 
-For every superdiffusive memory, the bimodal initial biases form one open
-interval `(b_a, 1-b_a)`. Outside it, including its endpoints, the density is
+For every superdiffusive memory, the bimodal initial biases form an open
+interval `(b_a, 1-b_a)`, empty exactly when `a <= a_*`. Outside it, including its endpoints, the density is
 unimodal with one local maximum. The proof uses a finite-law no-valley
 bound on the half favoured by the initial bias. Lemma F.7 transfers the
 finite inequalities by weak convergence and lattice-window averages.
