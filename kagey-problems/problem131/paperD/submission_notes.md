@@ -1,6 +1,6 @@
 # Paper D posting and submission files
 
-Revision of November 1, 2026. Nothing has been posted or submitted by this workflow.
+Revision of November 2, 2026. Nothing has been posted or submitted by this workflow.
 
 ## Read and review
 
@@ -13,7 +13,7 @@ Revision of November 1, 2026. Nothing has been posted or submitted by this workf
 | `paperD_jtp_submission.zip` | Journal package with editable sources, all three PDFs, figure files, cover letter, and package README |
 | `paperD_arxiv_source.zip` | Separate source-only package for arXiv |
 | `arxiv_metadata.json` | Title, abstract, suggested categories, and build-derived page counts |
-| `../../../reports/paperD-transition-2026-11-01/delivery-manifest.json` | Current file inventory, page counts, and hashes |
+| `../../../reports/paperD-final-audit-2026-11-02/delivery-manifest.json` | Current file inventory, page counts, and hashes |
 
 The review extract retains the extended manuscript's page and statement numbers after
 its identification cover. Read it with the journal manuscript. It is designated **For peer
@@ -21,9 +21,10 @@ review only**, not a publication supplement. The extended manuscript is also sup
 that every pointer in the journal manuscript has an accessible destination. It is not
 described as an already posted arXiv paper.
 
-The audit folder contains the proof review, source-reading record, validation outputs,
-`jtp-guideline-check.md`, and `jtp-reference-check.md`. The generated manifest records the
-final page counts. Historical counts in `README.md` describe earlier builds.
+The final audit folder records the consistency review and package validation. The
+earlier `reports/paperD-audit-2026-11-01/` folder contains the source-reading record,
+`jtp-guideline-check.md`, and `jtp-reference-check.md`. The current manifest records
+the final page counts. Historical counts in `README.md` describe earlier builds.
 
 ## Journal submission
 
@@ -118,4 +119,4 @@ A Zenodo archive of the proof-code commit is optional. No DOI has been created o
 
 To regenerate the packages, metadata, and review extract after rebuilding both manuscripts
 and `threshold_review_cover.tex`,
-run `python reports/paperD-posting-corrections-2026-11-02/package_revision.py` from the repository root.
+run `python reports/paperD-final-audit-2026-11-02/package_revision.py` from the repository root.

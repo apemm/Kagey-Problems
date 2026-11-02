@@ -2,6 +2,15 @@
 
 ## Current revision, November 2, 2026
 
+The [final audit](../../../reports/paperD-final-audit-2026-11-02/README.md)
+checks the main text, appendices, extended proofs, cover letter and release
+packages. It restricts a concluding bias quantifier to its stated range,
+clarifies the specified-color crossing event and the remaining finite
+convexity gap, and repairs links from the review extract to omitted sections
+in the supplied extended PDF. Its
+[manifest](../../../reports/paperD-final-audit-2026-11-02/delivery-manifest.json)
+is the current file inventory.
+
 The latest posting corrections write the transition as
 `a_* ≈ 0.6688128600146`, a certified rounded value rather than a claimed
 decimal prefix. The introduction explicitly uses weak convergence for the
@@ -135,8 +144,8 @@ manuscript; no unassigned arXiv identifier appears in its bibliography.
 The audit and source-reading record are in `../../../reports/paperD-audit-2026-11-01/`.
 That folder's `jtp-guideline-check.md` distinguishes journal requirements from
 recommendations. `jtp-reference-check.md` documents the status of the public preprints
-and examples of arXiv citations in current JTP articles. The generated
-`delivery-manifest.json` records the final file inventory, page counts, and hashes.
+and examples of arXiv citations in current JTP articles. The final audit manifest
+linked above records the current file inventory, page counts, and hashes.
 
 JTP recommends, but does not require, its LaTeX template. The standard `article` class
 is retained. The official instructions checked on November 1 state no manuscript
