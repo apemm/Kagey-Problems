@@ -1,122 +1,78 @@
-# Paper D posting and submission files
+# Paper D EJP submission files
 
-Revision of November 2, 2026. Nothing has been posted or submitted by this workflow.
+Revision of November 5, 2026.
 
-## Read and review
+The journal and arXiv PDFs now contain the same complete paper. Use the new EJP
+package. The older JTP archive and threshold review extract are historical files.
+They are not part of this submission.
 
 | File | Purpose |
 | --- | --- |
-| `problem131_memory.pdf` | Journal manuscript, including its appendices |
-| `problem131_arxiv.pdf` | Extended manuscript, including Sections S1 to S6 |
-| `threshold_proofs_review.pdf` | Identification cover, Section S6, and bibliography for journal referees |
-| `cover_letter.md` | Draft letter explaining the contribution and review material |
-| `paperD_jtp_submission.zip` | Journal package with editable sources, all three PDFs, figure files, cover letter, and package README |
-| `paperD_arxiv_source.zip` | Separate source-only package for arXiv |
-| `arxiv_metadata.json` | Title, abstract, suggested categories, and build-derived page counts |
-| `../../../reports/paperD-final-audit-2026-11-02/delivery-manifest.json` | Current file inventory, page counts, and hashes |
+| `problem131_memory.pdf` | Complete EJP manuscript, including every threshold proof |
+| `problem131_arxiv.pdf` | The same manuscript built through the arXiv entry point |
+| `paperD_ejp_submission.zip` | Editable source, figures, manuscript, cover letter, numerical records and verification material |
+| `paperD_arxiv_source.zip` | Source-only arXiv upload, with one declared entry point |
+| `paperD_verification_archive.zip` | Certificate code/data and Lean sources for archival deposit |
+| `cover_letter.md` | EJP cover letter |
+| `arxiv_metadata.json` | Current title, abstract, categories and page count |
+| `../../../reports/paperD-ejp-2026-11-05/README.md` | Revision decisions, proof review and remaining limits |
+| `../../../reports/paperD-ejp-2026-11-05/delivery-manifest.json` | Package inventory and SHA-256 hashes |
 
-The review extract retains the extended manuscript's page and statement numbers after
-its identification cover. Read it with the journal manuscript. It is designated **For peer
-review only**, not a publication supplement. The extended manuscript is also supplied so
-that every pointer in the journal manuscript has an accessible destination. It is not
-described as an already posted arXiv paper.
+## Journal requirements
 
-The final audit folder records the consistency review and package validation. The
-earlier `reports/paperD-audit-2026-11-01/` folder contains the source-reading record,
-`jtp-guideline-check.md`, and `jtp-reference-check.md`. The current manifest records
-the final page counts. Historical counts in `README.md` describe earlier builds.
+The [current EJP submission instructions](https://imstat.org/journals-and-publications/electronic-journal-of-probability/electronic-journal-of-probability-manuscript-submission/)
+require the EJP LaTeX template and a PDF submission through EJMS. This revision
+uses `ejpecp` version 1.12.3, dated March 4, 2026, from the
+[official template repository](https://vtex-soft.github.io/texsupport.ims-ejpecp/).
+The instructions permit referee suggestions. The
+[production instructions](https://imstat.org/journals-and-publications/electronic-journal-of-probability/electronic-journal-of-probability-preparation-of-manuscripts/)
+prefer an inline bibliography and no separate macro/style files beyond the class.
+The EJP source package includes every section file needed by
+`problem131_memory.tex`. No external macro file or publication supplement is
+needed. Keeping the section boundaries preserves the repository PDF's layout.
 
-## Journal submission
+No numerical abstract limit or maximum article length was found in these official
+instructions. The abstract is about 200 words. EJP describes itself as a venue for
+full-length probability papers, so the manuscript is kept together. This is an
+editorial judgment, not an assurance of acceptance.
 
-Use `paperD_jtp_submission.zip` as the journal file package. It includes the sources needed
-to rebuild the manuscript and extended version. Figures are named `figures/Fig1.pdf` and
-`figures/Fig2.pdf`, with EPS counterparts for the journal's preferred vector format.
-Use the archive's README to assign files to the submission system's categories. Attach
-`threshold_proofs_review.pdf` as review-only material, and identify the extended PDF as
-additional review material. The handling editor can decide whether any of this material
-should become published supplementary information.
+## Before public posting
 
-The [official JTP instructions](https://link.springer.com/journal/10959/submission-guidelines)
-request a 150 to 250-word abstract, four to six keywords, MSC codes, editable sources, and
-a compiled PDF. They recommend the Springer LaTeX template; they do not require it.
-The standard `article` class is retained. No manuscript page cap was stated on the page
-checked on November 1, 2026. The earlier 45-page target was an editorial target, not a
-verified journal rule.
+1. Read the new results and the complete manuscript. The local bias-width law,
+   critical expansion and enlarged mode range are written proofs. The formal
+   coverage is stated separately in `lean/PaperD/MAP.md`.
+2. The AI note was left unchanged at the author's request. It still says that
+   proofs outside an earlier list were not altered. That sentence does not cover
+   this revision's new proofs and proof changes. Resolve that conflict before
+   posting or submitting this version. The original note and its hash are saved
+   in the revision report; this workflow has not silently revised it.
+3. Confirm the cover letter's submission-status statements and any referee
+   conflicts. The related-paper statuses are retained from the existing letter.
+4. Drezner–Farnum (1993) was checked through the publisher's abstract, which
+   explicitly mentions bimodality. Its full text remains unavailable in this
+   review. The detailed transition-rule comparison uses James–James–Qi (2008).
+5. Deposit `paperD_verification_archive.zip` on Zenodo and replace the repository
+   data link by the assigned DOI if desired. No DOI is invented or reserved by
+   these files. The proposed metadata is in the revision report.
+6. Post the preprint, then use its real public identifier in the courtesy email
+   drafts and journal submission. No arXiv or journal submission has been made
+   by this revision workflow. Courtesy emails have not been sent before a
+   reviewed public preprint is available.
 
-Public preprints remain explicitly labelled as preprints. The guidelines restrict
-bibliographies to published or accepted work, but current JTP articles include arXiv
-references. `jtp-reference-check.md` records the examples and the limits of that evidence.
-No acceptance status has been inferred or invented.
+## Rebuilding
 
-## arXiv upload
+Compile `problem131_memory.tex` with `pdflatex` three times. Compile
+`problem131_arxiv.tex` the same way. Then run
+`python reports/paperD-ejp-2026-11-05/package_revision.py` from the repository root.
+The script builds and checks both source packages in isolation, writes hashes,
+and renders review pages. It does not submit or publish anything.
 
-`paperD_arxiv_source.zip` contains the following source files:
+Run the Lean verifier in the existing workspace outside OneDrive:
 
 ```text
-00README.json
-problem131_arxiv.tex
-problem131_memory.tex
-sec_intro.tex
-sec_erw_crossing.tex
-sec_erw_shape.tex
-sec_bulk_applications.tex
-sec_verify.tex
-app_erw_bounds.tex
-app_erw_profile.tex
-app_erw_bulk.tex
-app_erw_signs.tex
-app_modes.tex
-app_bias_interval.tex
-app_threshold.tex
-or_family_proofs.tex
-or_transition_proofs.tex
-online_resource_body.tex
-online_resource_bib.tex
-figures/Fig1.pdf
-figures/Fig2.pdf
+python reports/paperD-ejp-2026-11-05/run_verification.py --workspace C:/Users/arjun/lean-work/paperD --toolchain C:/Users/arjun/.elan/toolchains/leanprover--lean4---v4.33.1/bin
 ```
 
-The top-level file is `problem131_arxiv.tex`. `00README.json` declares it and includes
-`spec_version: 1`. The bibliography is inline. The source ZIP is separate from the journal
-package. Keep data, scripts, audit files, removed proofs, and the review-only PDF out of it.
-
-Use `arxiv_metadata.json` for the title, abstract, comments, and suggested categories.
-The primary category is `math.PR`, with `cond-mat.stat-mech` suggested as a cross-list.
-`math.CO` is optional. Select the license in the upload interface. The suggested
-non-exclusive arXiv license leaves copyright with the author; no selection has been made.
-
-## Before posting or journal submission
-
-1. Review the statement correspondence for the formalized additions: Lemma F.4,
-   the strict modes and curvature in Theorem 4.2, Theorem 4.3's fourth-moment
-   argument, the Jensen bound, and the enlarged weak-limit range. The explicit
-   published-law hypotheses and build evidence are listed in
-   `reports/paperD-formalization-2026-11-01/README.md` at the repository root.
-   The subsequent all-bias theorem and uniform near-one profiles are mapped in
-   `reports/paperD-strengthening-2026-11-01/README.md`. The latter retains the
-   fixed-memory weak bridge as an explicit input. Resolve or qualify the
-   outstanding generalized-binomial full-text comparisons listed in
-   `reports/Paper D transition and modes.md` before making a priority claim.
-   The unique transition, centred bias interval and their formal/numerical
-   boundaries are recorded in `reports/paperD-transition-2026-11-01/README.md`.
-   The current reading record is `reports/Paper D transition closure.md`.
-2. Confirm the disclosure's author-history statements. Read the added Murahara-Tokumitsu
-   and Vishwakarma preprints before affirming that every cited source has been read.
-   The audit's reading record describes the audit's scope, not the author's reading.
-3. Check the compiled journal and extended PDFs, including figure labels, links,
-   references, and the review extract's identification cover. Confirm that the archive
-   inventory and hashes describe these final files.
-4. Confirm that the manuscript is not under consideration elsewhere, as stated in the
-   cover letter. Complete the journal portal's funding, contribution, competing-interest,
-   and data/code fields; manuscript declarations do not fill those fields automatically.
-5. If an arXiv identifier is assigned before journal submission, add the real identifier
-   to the journal's extended-version pointer and Paper F's citation, then rebuild.
-   There is no placeholder identifier in the journal bibliography.
-6. If the editor requests a publication supplement, replace the review-only designation
-   with the required Online Resource identification, captions, and manuscript citations.
-
-A Zenodo archive of the proof-code commit is optional. No DOI has been created or guessed.
-
-To regenerate the packages, metadata, and review extract after rebuilding both manuscripts
-and `threshold_review_cover.tex`,
-run `python reports/paperD-final-audit-2026-11-02/package_revision.py` from the repository root.
+The numerical verification records state the precision, software versions and
+source hashes. The new short check is `python -O check_critical_shape.py` from
+this paper's directory. The phase figure is an illustration, not a certificate.

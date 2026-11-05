@@ -6,10 +6,7 @@ In this section and Appendices~\ref{app:shape} and~\ref{app:bulk},
  N\ge64,\qquad0<\varepsilon\le\tfrac14,\qquad x=N\varepsilon\ge1 .\tag{H}
 \end{equation}
 Every other statement holds under its own hypotheses.
-Recall that $P_N(N-m)=\frac12[f_N(m)+f_N(N-m)]$. Some statements also use
-odd $N$. There $x_N$ is the value of $x$ at which the two central values are as
-likely as the ends (it exists and is unique by Proposition~\ref{prop:odd}).
-For a mode $a^*\ge N/2$ of $P_N$ we put $m^*=N-a^*$, and $m_h$ is the largest
+Recall that $P_N(N-m)=\frac12[f_N(m)+f_N(N-m)]$. For a mode $a^*\ge N/2$ of $P_N$ we put $m^*=N-a^*$, and $m_h$ is the largest
 mode of $f_N$.
 
 \subsection{Families and the first flip}
@@ -159,8 +156,7 @@ shows the last 60 values, with dots at $N$, $N-1$ and $N-2$. The end is
 below its neighbor, and the modes are at distance 25 from each end (dashed). (b) The
 law of $M_N$, scaled as $xf_N(m)$, against $\lambda_m=(m-x\log x)/x$, with the
 Landau density $f_L$. The dotted line is its mode $\lambda_{\mathrm L}$. (c) The tail
-$P_N(N-m)$ divided by $x/(2m^2)$. The dashed line is the limit $1$ of
-the tail theorem in \arxivonly{Theorem}{thm:profile}, and the dotted curves are the heuristic correction
+$P_N(N-m)$ divided by $x/(2m^2)$. The dashed line is the reference value $1$, and the dotted curves are the heuristic correction
 $1+x(2\log m+2\gamma-3)/m$ for $2x\log x\le m\le N/x$. The rise of the
 $N=3200$ curve near $m=N/2$ is the mirror term $f_N(N-m)$. At $N=10^6$ we use
 $x=g_N=22.4407$.}
@@ -283,7 +279,7 @@ $N\ge8$ is Corollary~\ref{cor:dip}.
 \subsection{The bulk}
 
 The steps that disagree with $X_1$ lie in the flipped families. Recall the
-compound Poisson law $\CP_N$ of Section~\ref{sec:results}. On average $x/(d(d+1))$ flipped vertices have a family of
+compound Poisson law $\CP_N$ of Section~\ref{sec:rare-results}. On average $x/(d(d+1))$ flipped vertices have a family of
 size $d$. If no flipped step has a flipped descendant, which is likely when
 $x^2\log N/N$ is small, then $M_N$ is the total size of the flipped families,
 and this is close to the compound Poisson sum.
@@ -348,10 +344,13 @@ gives the centering $x\log x$, and its remainder gives the rate.
 
 To locate the modes we need to know that $f_L$ is curved at its maximum.
 
-\begin{lemma}[the mode of the Landau density, computer-assisted]\label{lem:landau-mode}
+\begin{lemma}[the Landau mode]\label{lem:landau-mode}
 \begin{enumerate}[(a)]
-\item The density $f_L$ has exactly one mode $\lambda_{\mathrm L}$, and
-$-0.22278299<\lambda_{\mathrm L}<-0.22278297$. It is nondecreasing on
+\item The unique mode $\lambda_{\mathrm L}$ of $f_L$ satisfies
+\[
+ -0.22278299<\lambda_{\mathrm L}<-0.22278297.
+\]
+The density is nondecreasing on
 $(-\infty,\lambda_{\mathrm L}]$ and nonincreasing on $[\lambda_{\mathrm L},\infty)$.
 \item The derivative vanishes at the mode, $f_L'(\lambda_{\mathrm L})=0$, and
 $-0.0792\le f_L''(\lambda)\le-0.0786$ for
@@ -366,30 +365,52 @@ The proof is in Appendix~\ref{app:bulk-mode}, and it is computer-assisted. Lean 
 lemma as well, with the unimodality of $f_L$ that~\cite{yamazato1978} gives as its only input
 (Section~\ref{sec:verify}), so the computation in ball arithmetic is an independent check.
 
-\begin{corollary}[where the modes are]\label{cor:mode-location}
+\begin{corollary}[mode locations]\label{cor:mode-location}
 \begin{enumerate}[(a)]
-\item Assume~\eqref{eq:H}. Let $\kappa_L$ be as in
-Lemma~\ref{lem:landau-mode}(c), let
+\item Assume~\eqref{eq:H} and use $\kappa_L$ from
+Lemma~\ref{lem:landau-mode}(c). Let
 $E_1=889\bigl(\frac{1+\log x}x+\frac xN\bigr)+x\delta_B$ be the bound of
 Theorem~\ref{thm:landau}(b), and put
 \[
  E'=E_1+\frac{16x^2H_N}{N^2}+\frac{\lVert f_L''\rVert_\infty}{8x^2}.
 \]
 If $E'<\kappa_L/2$ and $m_h\le N/4$, then every mode $a^*\ge N/2$ of $P_N$
-satisfies $\lvert m^*-x\log x-\lambda_{\mathrm L}x\rvert\le x\sqrt{2E'/\kappa_L}$,
+satisfies $\lvert m^*-x\log x-\lambda_{\mathrm L}x\rvert\le x\sqrt{2E'/0.039}$,
 and so does every mode of $f_N$.
-\item There are $K$ and $N_2$ such that the following holds for every $N\ge N_2$, even or
+\item There is $N_2$ such that the following holds for every $N\ge N_2$, even or
 odd, and every $\varepsilon$ with $\log N\le x\le2\log N$. Every mode $a^*\ge N/2$ of $P_N$ has
 \[
- \bigl\lvert m^*-x\log x-\lambda_{\mathrm L}x\bigr\rvert\le K\sqrt{x\log x},
+ \bigl\lvert m^*-x\log x-\lambda_{\mathrm L}x\bigr\rvert\le400\sqrt{x\log x},
 \]
 and so has every mode of $f_N$ in place of $m^*$. In particular this holds at the crossing,
 with $x=x_N$, for every large even $N$ (Theorem~\ref{thm:erw-crossing}(b)).
 \end{enumerate}
 In (a) every constant is explicit. (Here
 $\lVert f_L''\rVert_\infty\le16/\pi^4$, since $\lvert e^{B(t)}\rvert=e^{-\pi\lvert t\rvert/2}$.)
-We do not compute $K$ and $N_2$ in (b).
+We do not compute the length threshold $N_2$ in (b).
 \end{corollary}
+
+\begin{corollary}[a wider rare-reversal range]\label{cor:wider-mode-range}
+Suppose $x\to\infty$ and $x^3\log^2N/N\to0$. For every mode
+$a^*\ge N/2$ of $P_N$, and every mode $m$ of $f_N$,
+\[
+ N-a^*=x\log x+\lambda_{\mathrm L}x+o(x),\qquad
+ m=x\log x+\lambda_{\mathrm L}x+o(x).
+\]
+Each error is
+$O\bigl(\sqrt{x(1+\log x)}+x^{5/2}\log N/\sqrt N\bigr)$.
+\end{corollary}
+
+\begin{proof}
+The hypotheses give $E'\to0$ in Corollary~\ref{cor:mode-location}(a).
+They also give $\varepsilon\log N\to0$ and
+$x\log^2(x+1)=o(N)$, so Lemma~\ref{lem:B-mode} puts $m_h\le N/4$
+eventually. That corollary applies, with
+\[
+ E'=O\left(\frac{1+\log x}{x}+\frac{x^3\log^2N}{N}\right).
+\]
+Taking its square root proves both assertions.
+\end{proof}
 
 So each hump of the law at the crossing sits about
 $x\log x-0.2228\,x$ steps from its end. The proof is in
@@ -409,252 +430,3 @@ $\kappa_L=2.6\cdot10^{-10}$ is the constant of Lemma~\ref{lem:landau-mode}(c). W
 constant $889$ this needs $x>2\cdot10^{14}$, and numerically the best $\kappa_L$ is about $0.026$. These numbers are computed
 in double precision and are not used in any proof.
 \end{remark}
-
-\subsection{The tail}
-
-Beyond the humps the law falls like $x/(2m^2)$. We prove in
-\arxivonly{Theorem}{thm:profile} that
-$P_N(N-m)=\frac{x}{2m^2}(1+o(1))$ for even $N$ with $x\ge1$ and
-$x\log^2N/N\to0$, uniformly for $\omega_Nx\log^2(x+1)\le m\le\delta'_NN$, for
-every $\omega_N\to\infty$ and every $\delta'_N\to0$.
-
-At $N=10^6$, $x=22.4407$ and $m=10^4$ the computed ratio
-$P_N(N-m)/(x/(2m^2))$ is $1.03777$. Heuristically, at moderate $m$ the law
-$\CP_N$ suggests $f_N(m)\,m(m+1)/x\approx1+x(2\log m+2\gamma-3)/m$, which we
-do not prove. This factor is still about $2$ near $m=70$ when $N=3200$
-(Figure~\ref{fig:shape}(c)).
-
-\subsection{The shape at every even crossing}\label{sec:convex}
-
-This subsection proves that the second difference of $P_N$ changes sign at
-most four times. At every even crossing with $N\ge8$ this gives the unique
-interior minimum and the two intervals of modes, with no asymptotic input.
-
-Throughout this subsection and the next, $0<\varepsilon<\frac12$ and $c=1-2\varepsilon$, so
-that $r_t(b)=\varepsilon+cb/t$. For $t\ge1$ and every integer $a$ we write
-$P_t(a)=\Prob(A_t=a)$, which is $0$ unless $0\le a\le t$, and
-\[
- D_t(a)=P_t(a+1)-2P_t(a)+P_t(a-1).
-\]
-We also put $s_t=D_t(1)=P_t(0)-2P_t(1)+P_t(2)$ for $t\ge2$.
-
-\begin{lemma}[recurrence for the second difference]\label{lem:D-rec}
-For every $t\ge1$ and every integer $a$,
-\begin{align}
- P_{t+1}(a)&=\bigl(1-r_t(a)\bigr)P_t(a)+r_t(a-1)\,P_t(a-1),\label{eq:P-rec}\\
- D_{t+1}(a)&=\bigl(1-r_t(a+1)\bigr)D_t(a)+r_t(a-2)\,D_t(a-1).\label{eq:D-rec}
-\end{align}
-Also $P_t(a)=P_t(t-a)$ and $D_t(a)=D_t(t-a)$. The same two recurrences hold
-with $f_t(m)$ in place of $P_t(a)$.
-\end{lemma}
-
-\begin{proof}
-Given $A_t=a$, the copied step is $+1$ with probability $a/t$, so step $t+1$
-is $+1$ with probability $(1-\varepsilon)\frac at+\varepsilon(1-\frac
-at)=r_t(a)$. This gives \eqref{eq:P-rec} for $0\le a\le t+1$, where at $a=0$ and at
-$a=t+1$ the formula has one extra term, namely $r_t(-1)P_t(-1)$ or
-$(1-r_t(t+1))P_t(t+1)$, and this term is $0$ because $P_t(-1)=P_t(t+1)=0$. For
-other $a$ every term vanishes. The
-symmetry of $P_t$ is Lemma~\ref{lem:erw-reduction}, and it gives the symmetry
-of $D_t$. The chain $M$ of Lemma~\ref{lem:erw-reduction} has the same
-transition probabilities, so \eqref{eq:P-rec} holds for $f_t$ as well.
-
-For \eqref{eq:D-rec} put $\varsigma=c/t$, so that $r_t(b+1)=r_t(b)+\varsigma$.
-We insert \eqref{eq:P-rec} at $a+1$, $a$ and $a-1$ into the definition of
-$D_{t+1}(a)$ and collect the coefficients of $P_t(a+1)$, $P_t(a)$, $P_t(a-1)$
-and $P_t(a-2)$. They are
-\[
- 1-r_t(a+1),\qquad 3r_t(a)-2,\qquad 1-3r_t(a-1),\qquad r_t(a-2).
-\]
-The right side of \eqref{eq:D-rec} has the coefficients $1-r_t(a+1)$,
-$-2+2r_t(a+1)+r_t(a-2)$, $1-r_t(a+1)-2r_t(a-2)$ and $r_t(a-2)$. The second
-ones agree because $2r_t(a+1)+r_t(a-2)=3r_t(a)$, and the third ones agree
-because $r_t(a+1)+2r_t(a-2)=3r_t(a-1)$.
-\end{proof}
-
-Trinas and Valle~\cite[(2.2)]{tv2026} use \eqref{eq:P-rec}, the forward
-equation of Lemma~\ref{lem:erw-reduction}, for a superdiffusive local
-limit theorem. Their higher-difference recurrence~\cite[(4.10)]{tv2026}
-supports a certified fixed-memory study of log-concavity. We use
-\eqref{eq:D-rec} for signs: its coefficients are positive for
-$2\le a\le t-1$, so sign changes enter only through the two edges.
-The next lemma gives the required variation diminishing property.
-
-For a finite list $z$ of real numbers let $\operatorname{sp}(z)$ be its sign
-pattern. We delete the zeros of $z$, replace each entry by its sign, and merge
-equal neighbors. So $\operatorname{sp}(z)$ is a list of alternating signs. For
-two such lists we write $p\preceq q$ if $p$ is a subsequence of $q$. We put
-$\Pi_5=(+,-,+,-,+)$ and $\Pi_3=(+,-,+)$.
-
-\begin{lemma}[one step]\label{lem:interleave}
-Let $\zeta=(\zeta_1,\dots,\zeta_n)$ be real, and let
-$\eta_i=A_i\zeta_i+B_i\zeta_{i+1}$ for $1\le i\le n-1$ with $A_i\ge0$ and
-$B_i\ge0$. Let $w=(\zeta_1,\eta_1,\zeta_2,\eta_2,\dots,\eta_{n-1},\zeta_n)$.
-Then $\operatorname{sp}(w)=\operatorname{sp}(\zeta)$ and
-$\operatorname{sp}(\eta)\preceq\operatorname{sp}(\zeta)$.
-\end{lemma}
-
-We prove this in Appendix~\ref{app:signs-step}.
-
-\begin{lemma}[the sequence next to the end]\label{lem:level-one}
-For every $t_1\ge2$ we have $\operatorname{sp}(s_2,s_3,\dots,s_{t_1})\preceq\Pi_3$.
-Also, for every $0\le\varepsilon\le1$, the numbers $s_3$ and $s_4$ do not both vanish.
-\end{lemma}
-
-We prove this in Appendix~\ref{app:signs-level}.
-
-\begin{theorem}[at most five blocks]\label{thm:five-blocks}
-Let $N\ge3$ and $0<\varepsilon<\frac12$. Then
-\[
- \operatorname{sp}\bigl(D_N(1),D_N(2),\dots,D_N(N-1)\bigr)\preceq(+,-,+,-,+).
-\]
-So the second difference of $P_N$ changes sign at most four times on
-$\{1,\dots,N-1\}$. The same holds for the second difference of $f_N$, and for
-$f_N$ it holds for $N=2$ as well.
-\end{theorem}
-
-We prove this in Appendix~\ref{app:signs-five}.
-
-A negative-to-positive change at $a_0<a_1$ and its reflection give
-$-,+,+,-$ at $a_0<a_1<N-a_1<N-a_0$. A negative second difference
-between them would give the fifth alternating sign forbidden by
-Theorem~\ref{thm:five-blocks}. For a zero, trace \eqref{eq:D-rec}
-backwards: positivity of its coefficients forces two zero parents,
-unless the parents have opposite signs, again giving five alternating
-signs. Reaching $t=5$ forces $s_3=s_4=0$, contrary to
-Lemma~\ref{lem:level-one}. This proves a whole convex stretch.
-
-\begin{theorem}[no holes]\label{thm:no-holes}
-Let $N\ge5$ and $0<\varepsilon<\frac12$. Let $1\le a_0<a_1\le N/2$ be integers
-with $D_N(a_0)<0<D_N(a_1)$. Then $D_N(a)>0$ for every $a_1\le a\le N-a_1$.
-\end{theorem}
-
-We prove this in Appendix~\ref{app:signs-holes}.
-
-\begin{lemma}[the center from no holes]\label{lem:center-no-holes}
-Let $N\ge6$ be even and $0<\varepsilon<\frac12$. If
-$P_N(1)>\max\{E_N,C_N\}$, then
-$P_N(a)>C_N$ for $1\le a\le N-1$, $a\ne h$, and $D_N(h)>0$.
-\end{lemma}
-
-\begin{proof}
-Suppose that $P_N(a)\le C_N$ for some $1\le a<h$, and let $k$ be the first
-minimizer of $P_N$ on $\{1,\dots,h\}$. Then $2\le k<h$ and
-$P_N(k-1)>P_N(k)\le P_N(k+1)$, so $D_N(k)>0$.
-The first maximizer $a_0$ on $\{0,\dots,k\}$ has value at least $P_N(1)$,
-which exceeds both endpoint values of this interval. Thus $1\le a_0<k$
-and $D_N(a_0)<0$. Theorem~\ref{thm:no-holes} gives $D_N(a)>0$ for
-$k\le a\le N-k$.
-
-Put $\delta(a)=P_N(a+1)-P_N(a)$. These first differences are strictly
-increasing on $\{k-1,\dots,N-k\}$, and symmetry gives
-$\delta(h)=-\delta(h-1)$. Hence $\delta(h-1)<0$, and every difference
-from $k$ to $h-1$ is negative. This makes $P_N(k)>P_N(h)$, a contradiction.
-Reflection proves the other half, and
-$D_N(h)=2(P_N(h-1)-P_N(h))>0$.
-\end{proof}
-
-\begin{corollary}[the shape at every even crossing]\label{cor:unique-min}
-For every even $N\ge8$, at the crossing,
-\[
- P_N(a)>C_N=E_N\quad(1\le a\le N-1,\ a\ne h),\qquad D_N(h)>0.
-\]
-There are integers $1\le l\le r<h$ such that $P_N$ strictly increases
-from $0$ to $l$, is constant from $l$ to $r$, and strictly decreases
-from $r$ to $h$. Its two intervals of global maximizers are
-$\{l,\dots,r\}$ and $\{N-r,\dots,N-l\}$.
-\end{corollary}
-
-\begin{proof}
-At the crossing $P_N(1)>E_N=C_N$ by Proposition~\ref{prop:dip-hyp}, so
-Lemma~\ref{lem:center-no-holes} gives the minimum and central curvature.
-For the humps, let $p=\operatorname{sp}(D_N(1),\dots,D_N(h))$.
-It ends in $+$, and symmetry makes the full pattern $p$ followed by its
-reverse, with the central positive blocks merged. If $p$ has $j$ blocks,
-the full pattern has $2j-1\le5$ by Theorem~\ref{thm:five-blocks}.
-Thus $p$ is a subsequence of $(+,-,+)$.
-
-The first differences $\delta(a)=P_N(a+1)-P_N(a)$ on $0\le a<h$
-therefore have at most three successive monotonic stretches, namely
-nondecreasing, nonincreasing, nondecreasing. Their first value is positive,
-and their last is $-D_N(h)/2<0$. The first stretch stays positive and the
-last stays negative. The middle stretch passes through zero at most once,
-possibly with consecutive zeros. This gives the claimed rise, plateau
-and fall. Symmetry gives the other hump.
-\end{proof}
-
-\begin{corollary}[a window from the maximum]\label{cor:height-window}
-Let $N\ge8$ be even and $x=x_N$. Let $[l,r]$ be the left
-interval of maximizers in Corollary~\ref{cor:unique-min}, and put
-\[
- M=P_N(r),\qquad B=r-1+M^{-1},\qquad
- b=\min\{h,\lceil B\rceil-1\}.
-\]
-Then $D_N(a)>0$ for every integer $b\le a\le N-b$.
-This window is nonempty.
-\end{corollary}
-
-\begin{proof}
-Let $q$ be the first integer after $l$ with $D_N(q)>0$.
-Corollary~\ref{cor:unique-min} gives $D_N(l)<0<D_N(h)$,
-so $q\le h$. The constant plateau gives $q>r$.
-By its definition $P_N$ is concave on $[r,q]$. Hence
-\[
- \frac{M(q-r+1)}2
- \le\sum_{a=r}^{q-1}P_N(a)
- \le\frac{1-P_N(h)}2<\frac12,
-\]
-where the first inequality sums the chord from $P_N(r)=M$
-to the nonnegative value $P_N(q)$. Thus $q<B$, and consequently
-$q\le b\le h$. Theorem~\ref{thm:no-holes}, applied at $l<q$,
-gives positivity on $[q,N-q]$, which contains $[b,N-b]$.
-\end{proof}
-
-Both corollaries use the finite endpoint-dip certificates of
-Proposition~\ref{prop:dip-hyp}, but no mode-location or convex-window
-estimate. The height bound supplies a window at every even length,
-possibly just the center. Heuristically, Theorem~\ref{thm:landau}(b) and
-Corollary~\ref{cor:mode-location} give
-$M=P_N(r)=\frac{f_L(\lambda_{\mathrm L})}{2x}(1+o(1))$, hence, with $m^*=r$,
-$B=m^*+\bigl(2/f_L(\lambda_{\mathrm L})+o(1)\bigr)x$. Since
-$f_L(\lambda_{\mathrm L})\approx0.1807$, this is about $m^*+11x$, far below
-$h$ for large $N$; at $N=4000$, computed $B-m^*$ is about $9.9x$.
-This is not a bound: the $o(1)$ is unevaluated and the constants of
-Theorem~\ref{thm:landau} are not sharp. For a stronger prescribed window,
-see \arxivonly{Section}{or:window}.
-
-\subsection{Odd \texorpdfstring{$N$}{N}}\label{sec:odd}
-
-\begin{proposition}[odd $N$]\label{prop:odd}
-Let $N\ge3$ be odd, and write $\widetilde C_N=P_N(\frac{N-1}2)=P_N(\frac{N+1}2)$ for the two
-central values. The ratio $\widetilde C_N/E_N$ is strictly increasing in $\varepsilon$, and it
-equals $1$ at exactly one $\varepsilon_N\in(0,\frac12)$. Put $x_N=N\varepsilon_N$.
-For every $0<\varepsilon<\frac12$,
-\[
- \widetilde C_N=\Bigl(1-\frac cN\Bigr)^{-1}C_{N+1},
-\]
-where $C_{N+1}$ is the center of the walk with $N+1$ steps and the same $\varepsilon$.
-\end{proposition}
-
-The two central values at odd $N$ reach the center at $N+1$ with equal
-probabilities, giving the factor $1-c/N$. By
-\arxivonly{Proposition}{prop:odd-more}, their crossing satisfies
-Theorem~\ref{thm:erw-crossing}; $P_N(0)<P_N(1)$ there for odd
-$N\ge1689$, and the convexity window of \arxivonly{Section}{or:window}
-holds at every sufficiently large odd $N$.
-
-\begin{proof}
-\emph{The crossing.} By Proposition~\ref{prop:mlr}, $P_N(k)/E_N$ is strictly increasing in
-$\varepsilon$ for $k=\frac{N+1}2$. It tends to $0$ as $\varepsilon\to0$. At
-$\varepsilon=\frac12$ the steps are independent and fair, so
-$\widetilde C_N=\binom Nk2^{-N}>2^{-N}=E_N$. So the ratio equals $1$ at exactly one
-$\varepsilon_N$, and $\varepsilon_N<\frac12$.
-
-\emph{The center identity.} Put $k=\frac{N+1}2$. Since $\varepsilon+\frac c2=\frac12$, we have
-$r_N(k)=\frac12+\frac c{2N}$ and $r_N(k-1)=\frac12-\frac c{2N}$. So \eqref{eq:P-rec} with $t=N$
-and $a=k$ gives
-\[
- C_{N+1}=P_{N+1}(k)=\Bigl(\frac12-\frac c{2N}\Bigr)\bigl(P_N(k)+P_N(k-1)\bigr)
- =\Bigl(1-\frac cN\Bigr)\widetilde C_N .
-\]
-\end{proof}

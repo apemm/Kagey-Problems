@@ -1,12 +1,12 @@
 \section{Verification}\label{sec:verify}
 
 Apart from short exact ratios such as Proposition~\ref{prop:dip-hyp},
-the proofs use five numerical certificates.
+the proofs use five numerical certificates and a separate pointwise check.
 First, the 60-term sum in Theorem~\ref{thm:erw-bounds}(b) lies in
 $[102.586396,102.586398]$, as checked by \nolinkurl{certify_elephant.py}.
 With the analytic tail, it is below $102.59$, giving the constant $5200$.
 This value fixes the explicit thresholds in Proposition~\ref{prop:dip-hyp}
-and the second-order results. Second, the same script certifies the
+in the crossing proof. Second, the same script certifies the
 Landau derivative and curvature enclosures of
 Lemma~\ref{lem:landau-mode}. Lean checks these independently.
 
@@ -14,14 +14,7 @@ Third, \texttt{certify\_center.py} supplies the finite endpoint-dip
 input of Proposition~\ref{prop:dip-hyp} for $10\le N\le2000$. It brackets
 each crossing and checks by an exact rational comparison that the lower end
 of the bracket exceeds $2/(N+2)$. It also checks the center minimum
-independently, which Corollary~\ref{cor:unique-min} no longer needs. The
-script \texttt{certify\_convex.py} supports only the finite convexity window
-\ifPaperDcombined
-of Section~S5 (Proposition~\ref{prop:convex-certified}).
-\else
-of the extended version supplied with this manuscript.
-\fi
-The dated outputs and rational witnesses in \nolinkurl{data/} record
+independently, which Corollary~\ref{cor:unique-min} no longer needs. The dated outputs and rational witnesses in \nolinkurl{data/} record
 script hashes and software versions. Certification scripts reject failed
 checks and, where applicable, empty ranges.
 
@@ -55,6 +48,24 @@ rerun at higher precision is recorded in
 \nolinkurl{data/transition_derivative_run.txt}. All checks remain active
 under \texttt{python -O}.
 
+The additional script \texttt{check\_critical\_shape.py} checks the two
+threshold endpoints by the real-parameter recursion in
+\texttt{threshold\_pointwise.py}. It does not use the parameter Taylor
+models that produced the original bracket. At $2000$-bit precision
+with $1800$ moments, it gives negative and positive central curvatures
+at $z_-$ and $z_+$, respectively. With $1200$ moments it also encloses
+$h_a'(0)$ near $a_*$, using the earlier parameter-derivative bound to
+reach the threshold itself. These checks use python-flint~0.9.0.
+The complete enclosures, software version and source hashes are in
+\nolinkurl{data/critical_shape_check.json}.
+This is an independent pointwise evaluation path, not an independent
+implementation of Arb or of the smoothing theorem.
+
+Propositions~\ref{prop:critical-shape} and~\ref{prop:bias-cusp} use
+these enclosures and the uniform Fourier envelopes to justify Taylor
+expansion and maximization near the critical point. The asymptotic
+proofs are written proofs. They are not claimed to be fully formalized.
+
 The Lean~4.33.1 library in
 \nolinkurl{kagey-problems/problem131/lean/PaperD}, with Mathlib revision
 \texttt{0df444a360ea}, checks the finite identities, crossing bounds,
@@ -87,6 +98,15 @@ representation then give the centred bias interval in
 Theorem~\ref{thm:biased-limit-modes}. Its no-flatness, half-line shape and
 mode-count bounds are conclusions, not hypotheses. No local limit is required.
 
+The derivative form of the bias cutoff and the two stationary-point
+equations at an attained boundary are also formalized, with
+differentiability and the preceding shape properties as explicit inputs.
+The computation-free extension to $a\ge79/100$ checks the rational
+power comparison and the gamma-ratio envelope. The mode bound with
+constant $400$ is formalized from the existing Landau curvature
+certificate and the named bulk inputs. The three-halves opening law
+and the quartic and square-root expansions remain written proofs.
+
 For Theorem~\ref{thm:near-one-profile}, Portmanteau supplies interval
 masses from the stated weak bridge. Lean then proves localization,
 peak-height convergence, uniform profiles and $L^1$ convergence, using
@@ -109,7 +129,7 @@ The total variation upgrade of Theorem~\ref{thm:cp} and the martingale
 proof of the fixed-memory weak bridge also remain unformalized; the
 earlier pointwise compound Poisson bound is formalized.
 The source inventory and full axiom audit are archived in
-\href{https://github.com/apemm/Kagey-Problems/tree/c24791af4f3a9aa0d985fce1b0a2a68f03f33432/reports/paperD-headline-audit-2026-11-01}{evidence commit \texttt{c24791a}}.
+\href{https://github.com/apemm/Kagey-Problems/tree/paperD-ejp-v1/reports/paperD-ejp-2026-11-05}{the tagged verification record}.
 
 Each numerical record identifies its software versions. The derivative
 extension was rerun with Python~3.12.14 and python-flint~0.8.0, at

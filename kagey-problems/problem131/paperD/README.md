@@ -1,6 +1,30 @@
-# Shape transitions and rare reversals in the elephant random walk
+# Bimodality of the elephant random walk
 
-## Current revision, November 2, 2026
+## Current EJP revision, November 5, 2026
+
+The [complete manuscript](problem131_memory.pdf) now leads with the resolved
+GLRS bias-interval conjecture. It includes all threshold proofs, uses the EJP
+class, and has the same mathematical content in its journal and arXiv versions.
+
+New additions give a variational equation for the bias boundary, its
+three-halves opening law and local monotonicity, the quartic critical top and
+square-root mode locations, a computation-free bimodality proof for `a >= 0.79`,
+and the explicit Landau mode constant `400`. A numerical phase diagram
+illustrates the fixed-memory results. Global monotonicity of the bias width,
+a finite-length threshold rate and a uniform bridge to fixed memory remain open.
+
+Read [submission_notes.md](submission_notes.md) for the current packages and
+[the revision report](../../../reports/paperD-ejp-2026-11-05/README.md) for proof,
+literature and verification details. The AI note was preserved at the author's
+request; the submission notes identify a disclosure statement that needs author
+review before posting. No public submission or courtesy email has been made.
+
+The old JTP archive, review-only extract and unused extended-source files below
+are historical. They are excluded from the current source packages. Older
+statements about page counts, theorem numbers and open questions describe those
+frozen revisions and do not override the current report.
+
+## Historical revision, November 2, 2026
 
 The [final audit](../../../reports/paperD-final-audit-2026-11-02/README.md)
 checks the main text, appendices, extended proofs, cover letter and release
