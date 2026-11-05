@@ -1,5 +1,27 @@
 # Paper D: map from the paper and the research notes to the Lean proofs
 
+## EJP revision, November 5, 2026
+
+The current complete build, imported-source inventory and axiom audit are in
+`reports/paperD-ejp-2026-11-05`. `PaperD.Revision` imports all three new modules.
+Older theorem numbers below refer to their dated manuscripts; the labels in
+this table identify the current statements without depending on renumbering.
+
+| Manuscript result | Formal entry | Explicit inputs and limits |
+| --- | --- | --- |
+| `prop:bias-boundary`, derivative characterization of the bias interval | `Modes.reflectedMixture_valley_interval_derivative` and `Modes.reflectedMixture_modes_interval_derivative` in `Modes/EJPBiasDerivativeCutoff` | Differentiability, conditional unimodality, reflection dominance and the preceding half-line/mode-count properties. The cutoff is derived, not assumed. The infimum notation in the paper abbreviates this union of strict derivative inequalities. |
+| `prop:bias-boundary`, stationary equations at an attained interior cutoff | `Modes.reflectedMixture_stationary_of_attained_cutoff` | Differentiability of the derivatives, positivity of the denominator and attainment of the cutoff. Attainment and uniqueness are not claimed. |
+| `cor:analytic-range`, computation-free bimodality for `a >= 79/100` | `Modes.EJPAnalyticRange.two_modes_of_ge` in `EJPModeAnalyticRange` | Existing density, convergence, Fourier and GLR raw-moment inputs. The unimodal fourth-moment inequality, exact power comparison and decreasing envelope are checked. |
+| `cor:mode-location`, explicit constant `400` | `ejp_cor_mode_location_400`, `ejp_uniform_mode_rate_400` in `EJPModeStability` | The existing named Fourier inversion, compound-Poisson characteristic function, Efron–Stein and Landau-unimodality inputs. Both parities at the crossing and the generic uniform-error-to-mode bound are checked. An explicit length threshold is not supplied. |
+| `prop:critical-shape`, quartic top, square-root locations and quadratic peak excess | Written proof, not a new Lean theorem | Existing uniform Fourier envelopes and Arb curvature/fourth-derivative certificates. |
+| `prop:bias-cusp`, three-halves bias width and local monotonicity | Written proof, not a new Lean theorem | Previous row, derivative cutoff, and `h'_(a*)(0) > 0` from `check_critical_shape.py`. Global monotonicity is not claimed. |
+| `cor:wider-mode-range`, every mode in the enlarged rare-reversal range | Written asymptotic application of the mode bound | Uses `x^3 log^2 N / N -> 0`. It does not reach fixed memory. |
+
+The new numerical endpoint check uses an independent real-parameter evaluation
+path, but shares Arb and the analytic smoothing bounds. It is outside the Lean
+trusted base. Helpers in the three new modules are public so the complete
+declaration/axiom audit checks them as well as their final theorems.
+
 ## Headline proof audit and weak transfer
 
 The current audit is in `reports/paperD-headline-audit-2026-11-01`.

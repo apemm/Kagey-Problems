@@ -11,6 +11,9 @@ import PaperD.Modes.TransitionSmoothingIntegral
 import PaperD.Modes.TransitionIntegrals
 import PaperD.Modes.BiasWeakTransferFinal
 import PaperD.Modes.BiasIntervalEndpoint
+import PaperD.Modes.EJPBiasDerivativeCutoff
+import PaperD.EJPModeStability
+import PaperD.EJPModeAnalyticRange
 
 /-!
 # Formalization of the November 2026 manuscript strengthenings
