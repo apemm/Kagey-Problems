@@ -105,6 +105,13 @@ metadata={'title':TITLE,'author':'Arjun Pemmasani','primary_category':'math.PR',
 
 verification=json.loads((HERE/'verification-manifest.json').read_text())
 require(verification.get('all_checks_passed') is True, 'Lean audit is not complete')
+checked_modules=verification['libraries']['PaperD']['modules']
+for module in checked_modules:
+    require(digest(LEAN/module['file']) == module['sha256'],
+            f"Lean source differs from audited source: {module['file']}")
+require({m['file'] for m in checked_modules} ==
+        {p.relative_to(LEAN).as_posix() for p in (LEAN/'PaperD').rglob('*.lean')} |
+        {'PaperD.lean'}, 'Lean source inventory differs from audit')
 verification_pairs=[]
 for f in sorted(P.glob('*.py')):
     verification_pairs.append((f,'paperD/'+f.name))
@@ -121,7 +128,7 @@ verification_pairs.append((HERE/'archive-README.md','README.md'))
 verification_pairs.append((ROOT/'LICENSE','LICENSE'))
 verification_pairs.append((P/'figures/make_phase_figure.py','paperD/figures/make_phase_figure.py'))
 verification_pairs.extend((f,'paperD/figures/'+f.name) for f in figures)
-for name in ['verification-manifest.json','build-log.txt','run_verification.py','README.md','sources.md','proof-review.md','zenodo-metadata.json']:
+for name in ['verification-manifest.json','build-log.txt','run_verification.py','README.md','sources.md','proof-review.md']:
     f=HERE/name
     if f.exists():verification_pairs.append((f,'audit/'+name))
 archive(P/'paperD_verification_archive.zip',verification_pairs)

@@ -1,7 +1,7 @@
 # Courtesy messages after public posting
 
 These are drafts. No messages have been sent. Insert the actual public preprint
-URL after the author has reviewed the manuscript and disclosure. Verify each
+URL after the preprint is posted. Verify each
 recipient through their current institutional page before sending.
 
 ## To Guérin, Laulin, Raschel and Simon

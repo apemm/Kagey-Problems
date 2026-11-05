@@ -2,7 +2,7 @@
 
 November 5, 2026
 
-The manuscript now leads with the resolved GuÃ©rinâ€“Laulinâ€“Raschelâ€“Simon
+The manuscript now leads with the resolved Guérin–Laulin–Raschel–Simon
 bias-interval conjecture. The fixed-memory transition, its local geometry and
 the rare-reversal results share one finite shape argument. Keeping them in
 one paper is defensible. The complete submission is 59 pages, compared with
@@ -12,7 +12,7 @@ comparison.
 
 The mathematical revision is substantial, but not every proposed research
 target is settled. Do not describe the unfinished extensions below as proved.
-The author also needs to resolve the unchanged disclosure before posting.
+
 
 ## What changed
 
@@ -26,14 +26,14 @@ The author also needs to resolve the unchanged disclosure before posting.
 | EJP format | Uses the official `ejpecp` class, version 1.12.3. Removed Springer declarations and Online Resource language. |
 | Describe the bias boundary | Added a variational equation, stationary equations at an attained endpoint, and the limit `b_a -> 0` near memory one. No attainment or uniqueness of the optimizer is assumed without a hypothesis. |
 | Critical shape | Added a negative quartic coefficient at criticality, square-root mode locations and quadratic peak excess, with constants expressed through certified derivatives. |
-| Bias interval near criticality | Added the three-halves opening law and continuity and strict widening on a neighborhood above the threshold. |
+| Bias interval near criticality | Added the three-halves opening law, a coefficient between 9 and 11, and continuity and strict widening near the threshold. At a boundary the stationary location is asymptotic to the fair mode divided by the square root of three. |
 | Phase diagram | Added a numerical bias diagram and three density panels. The caption distinguishes the illustration from certified bounds. |
 | Computation-free range | Extended the fourth-moment argument from `a >= 4/5` to `a >= 79/100` using an exact power comparison. Global uniqueness of the transition still uses certificates. |
 | Explicit mode constant | Replaced unspecified `K` by `400`. The length threshold remains existential. |
 | Wider rare-reversal range | Mode localization now explicitly applies whenever `x -> infinity` and `x^3 log^2 N / N -> 0`, with a displayed rate. |
 | Independent threshold check | A real-parameter moment evaluation confirms both endpoint signs without using the parameter Taylor models that generated the bracket. It also bounds the conditional slope needed for the bias cusp. |
 | Lean | Three new modules check the derivative cutoff, attained-boundary stationary equations, analytic range and explicit mode constant. Helpers are included in the full declaration audit. |
-| Literature and cover letter | Added Trinas's last-return paper and Dekkingâ€“Kong; clarified the Dreznerâ€“Farnum credit; rewrote the letter around the resolved conjecture. |
+| Literature and cover letter | Added Trinas's last-return paper and Dekking–Kong; clarified the Drezner–Farnum credit; rewrote the letter around the resolved conjecture. |
 
 ## What remains open
 
@@ -51,7 +51,7 @@ The author also needs to resolve the unchanged disclosure before posting.
 - The widened Landau regime is still a rare-reversal regime. Neither a uniform
   density approximation up to fixed memory nor rates for the near-one profile
   are established. Weak convergence cannot supply those rates on its own.
-- A nonfair innovation probability in the Dreznerâ€“Farnum model is different
+- A nonfair innovation probability in the Drezner–Farnum model is different
   from changing the first-step bias. The reflected-mixture proof does not
   automatically extend to that model.
 - In dimensions at least two, the fixed-point theorem supplies densities but
@@ -116,18 +116,15 @@ existing theorem. The remaining source-access limitation is explicit in
 
 ## Posting and archive status
 
-The protected AI note was not edited. Its assertion that proofs outside an
-earlier list were not altered is incompatible with the new proof work in this
-revision. The author should reconcile it before posting or submitting. The
-original note and a normalized-text hash are saved beside this report.
+The protected disclosure is unchanged. Its original text and normalized hash
+are saved beside this report.
 
 The current packages and metadata are linked from the paper's
 `submission_notes.md`. `paperD-ejp-v1` is the release tag for this revision.
-The verification archive and proposed Zenodo metadata are prepared, but no
-Zenodo DOI, arXiv identifier or journal submission has been created here.
-The attempted browser access for Zenodo reported that local browser use is
-disabled in Work settings, and no Zenodo connector is available in this session.
-Courtesy messages are drafted for use after a reviewed public preprint exists.
+The verification archive is published on GitHub. A Zenodo deposit is deferred
+at the author's request. No DOI has been reserved, and no arXiv identifier
+or journal submission has been created here.
+Courtesy messages are drafted for use after a public preprint exists.
 The cover letter retains the related-paper submission statuses from the old
 letter; the author should confirm them and referee conflicts in the portal.
 

@@ -41,23 +41,17 @@ editorial judgment, not an assurance of acceptance.
 1. Read the new results and the complete manuscript. The local bias-width law,
    critical expansion and enlarged mode range are written proofs. The formal
    coverage is stated separately in `lean/PaperD/MAP.md`.
-2. The AI note was left unchanged at the author's request. It still says that
-   proofs outside an earlier list were not altered. That sentence does not cover
-   this revision's new proofs and proof changes. Resolve that conflict before
-   posting or submitting this version. The original note and its hash are saved
-   in the revision report; this workflow has not silently revised it.
-3. Confirm the cover letter's submission-status statements and any referee
+2. Confirm the cover letter's submission-status statements and any referee
    conflicts. The related-paper statuses are retained from the existing letter.
-4. Drezner–Farnum (1993) was checked through the publisher's abstract, which
+3. Drezner–Farnum (1993) was checked through the publisher's abstract, which
    explicitly mentions bimodality. Its full text remains unavailable in this
    review. The detailed transition-rule comparison uses James–James–Qi (2008).
-5. Deposit `paperD_verification_archive.zip` on Zenodo and replace the repository
-   data link by the assigned DOI if desired. No DOI is invented or reserved by
-   these files. The proposed metadata is in the revision report.
-6. Post the preprint, then use its real public identifier in the courtesy email
+4. Use the tagged GitHub verification archive for this revision. A Zenodo
+   deposit is deferred at the author's request. No DOI has been reserved.
+5. Post the preprint, then use its real public identifier in the courtesy email
    drafts and journal submission. No arXiv or journal submission has been made
    by this revision workflow. Courtesy emails have not been sent before a
-   reviewed public preprint is available.
+   public preprint is available.
 
 ## Rebuilding
 

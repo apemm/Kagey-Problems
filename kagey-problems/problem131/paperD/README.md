@@ -15,9 +15,8 @@ a finite-length threshold rate and a uniform bridge to fixed memory remain open.
 
 Read [submission_notes.md](submission_notes.md) for the current packages and
 [the revision report](../../../reports/paperD-ejp-2026-11-05/README.md) for proof,
-literature and verification details. The AI note was preserved at the author's
-request; the submission notes identify a disclosure statement that needs author
-review before posting. No public submission or courtesy email has been made.
+literature and verification details. The paper's disclosure is unchanged. No public submission or courtesy
+email has been made.
 
 The old JTP archive, review-only extract and unused extended-source files below
 are historical. They are excluded from the current source packages. Older

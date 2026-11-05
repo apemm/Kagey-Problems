@@ -54,6 +54,16 @@ The support endpoint tends to `sqrt(6C/B)`, so this maximizer stays inside
 the interval. This proves the claimed coefficient without differentiating
 an optimizer or assuming its uniqueness for nearby parameters.
 
+The further referee pass adds two consequences. Squaring the coefficient
+gives `2 C^3/(9 H^2 B)`. Its rational lower and upper bounds are
+`3930400000000/47707733241 > 81` and
+`2450000000000/21202563321 < 121`. Thus the coefficient is between 9 and 11.
+For nearby parameters the positive maximum is attained inside the interval,
+since the ratio vanishes at both endpoints. Every scaled maximizer converges
+to the unique maximum of the limiting cubic. Therefore every boundary
+stationary location has distance `c_a/sqrt(3) + o(sqrt(delta))` from zero.
+This does not assert uniqueness of the maximizing location at fixed memory.
+
 For local continuity, choose a small fixed interval on which the denominator
 stays positive and contains all positive numerator values. A maximum of a
 continuous function over that compact interval varies continuously in the
@@ -107,3 +117,9 @@ rate. It does not imply an approximation for fixed nonzero reversal rates.
   be read as referring to James, James and Qi.
 - Shortened theorem headings and displayed a long bound to remove overfull boxes.
 - Exposed new helper lemmas to the repository's full axiom audit.
+- Replaced "two-parent average" by "two-parent sum" in the proof overview.
+  The coefficients are positive but need not add to one.
+- Removed repeated Landau definitions and repeated statements of the mixture
+  conjecture, and added a direct pointer to the arbitrary-bias proof.
+- Restricted a broad description of formal coverage to the two shape theorems
+  it actually describes. The critical asymptotics remain written proofs.
