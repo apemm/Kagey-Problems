@@ -36,8 +36,9 @@ Uniqueness of that mode comes from the existing fair-shape theorem; it is
 not inferred from the local Taylor expansion alone. Substitution into the
 density expansion gives the peak excess `3 C^2 delta^2/(2B)`.
 
-The certified intervals `C in (0.68,0.70)` and `B in (0.07,0.09)` imply the
-stated quartic and square-root coefficient bounds by direct arithmetic.
+The refined uniform certificate gives the narrow rational enclosures in
+the manuscript's critical-constant table. The broad interval certificate
+continues to provide the regularity on a larger neighborhood.
 
 ## Three-halves opening and local monotonicity
 
@@ -54,14 +55,13 @@ The support endpoint tends to `sqrt(6C/B)`, so this maximizer stays inside
 the interval. This proves the claimed coefficient without differentiating
 an optimizer or assuming its uniqueness for nearby parameters.
 
-The further referee pass adds two consequences. Squaring the coefficient
-gives `2 C^3/(9 H^2 B)`. Its rational lower and upper bounds are
-`3930400000000/47707733241 > 81` and
-`2450000000000/21202563321 < 121`. Thus the coefficient is between 9 and 11.
+Squaring the coefficient gives `2 C^3/(9 H^2 B)`. The refined derivative
+certificate evaluates this expression with outward rounding, giving
+`9.86698768 < Q_* < 9.86698770`.
 For nearby parameters the positive maximum is attained inside the interval,
 since the ratio vanishes at both endpoints. Every scaled maximizer converges
 to the unique maximum of the limiting cubic. Therefore every boundary
-stationary location has distance `c_a/sqrt(3) + o(sqrt(delta))` from zero.
+stationary location has distance `kappa_a/sqrt(3) + o(sqrt(delta))` from zero.
 This does not assert uniqueness of the maximizing location at fixed memory.
 
 For local continuity, choose a small fixed interval on which the denominator
@@ -87,28 +87,66 @@ the numerical proof of the global transition or locate the threshold.
 
 ## Explicit mode constant and wider range
 
-The Landau curvature certificate gives a quadratic gap with coefficient
-`0.039` in a small interval around its mode, and an absolute gap greater
-than `kappa_L` outside that interval. The approximation first localizes a
-discrete maximizer inside the interval; only then is `0.039` used. Replacing
-the global `kappa_L` by `0.039` without this localization would be invalid.
+The global Landau gap is at least `(1/50) min(1, distance^2)`. The proof
+uses curvature on the quarter-unit neighborhood, 188 closed cells on each
+side, and unimodality beyond the covered region. Each interval evaluation
+has a proved integration-tail error and a Fourier derivative Lipschitz
+allowance. The record is `paperD/data/landau_gap_certificate.json`.
+The local curvature coefficient `0.039` is not substituted for the global
+gap. The latter gives the displacement `x sqrt(100 E')` directly when
+`2E' < 1/50`.
 
-The manuscript's total comparison error `E'` includes rounding and the
-reflected tail. Uniformly for `log N <= x <= 2 log N`, it is eventually at
-most `2000 log x/x`. Hence `x sqrt(2E'/0.039) <= 400 sqrt(x log x)`.
-The Lean proof uses slightly different existing rounding/mirror allowances
-and checks the still sufficient inequality `4002/0.039 < 400^2`.
-The full interface and its classical inputs are in `lean-mode-constant.md`.
+The same certificate checks `-Re Psi_infinity(theta) >= 2 abs(theta)/5`.
+Near zero the existing remainder estimate proves this analytically. On
+`[1/10, pi]` a closed cover evaluates the exact elementary expression.
+Integrating the Fourier comparison with this decay, and taking the logarithm
+tangent at eight, gives the local error `(47+10.4 log x)/x + 2.7x/N`.
+The numerical constants are Arb proof inputs. The existing Lean integral
+proof still establishes the weaker constants `889`, `165`, `6.6`.
+
+For `log N >= 30000`, the polynomial lower bound on the exponential gives
+`N >= 160 (log N)^6`. Uniformly on `log N <= x <= 2 log N`, each of the
+truncation, coupling, mirror and rounding contributions to `E'` is at most
+`log x/x`. Thus `E' < 20 log x/x < 1/100`, and the family mode is below
+`N/4`. The displacement is below `sqrt(2000 x log x)`, hence below
+`50 sqrt(x log x)`. This proves the explicit threshold `ceil(exp(30000))`.
+It is a conservative theoretical threshold, not a practical numerical bound.
+
+`EJPGlobalModeGap` formalizes the globalization and stability implications,
+with the local, annular and endpoint inequalities as explicit hypotheses.
+It does not replay the Arb cover. The earlier formal eventual bound with
+constant `400` remains valid. The new constant `50` and length threshold
+have the written proof just described.
 
 Under `x^3 log^2 N/N -> 0`, the error tends to zero and the conditional mode
 is eventually below `N/4`, as required by the existing mode comparison.
 Taking the square root of the displayed error gives the wider localization
 rate. It does not imply an approximation for fixed nonzero reversal rates.
 
+## Quantitative bias boundary near memory one
+
+Let `mu = E L_a > 0` and `rho = Var(L_a)/mu^2`. Three adjacent intervals
+centered at `-mu`, zero and `mu`, each of length `mu`, have equal lengths.
+Chebyshev gives conditional mass at least `1-4rho` in the right interval
+and at most `4rho` in the middle. Reflection gives the left version.
+For the bias mixture, both outer average densities therefore exceed the
+middle one whenever `4rho/(1-4rho) < q < 1-4rho/(1-4rho)`.
+Continuity supplies an ordered strict valley, so the established
+classification gives bimodality. The interval is nonempty for `rho<1/12`.
+
+The exact moments give
+`rho = Gamma(1+a)^2 / ((2a-1) Gamma(2a)) - 1`.
+At one, its value is zero and its derivative is exactly minus two, since
+the two digamma terms cancel. Hence
+`b_a <= 4rho/(1-4rho) = 8(1-a)+O((1-a)^2)`.
+This is an explicit upper rate for the bias cutoff. It does not establish
+global monotonicity, a matching asymptotic equivalent, or a rate for the
+uniform density approximation. The proof is written, not formalized.
+
 ## Corrections made during review
 
-- Used the local curvature constant only after proving localization.
-- Kept the factor `889` in the `x/N` contribution to the error estimate.
+- Used the certified global gap in the displacement inequality.
+- Retained the separate truncation coefficient `2.7` in the sharpened error.
 - Separated local bias monotonicity from the unproved global claim.
 - Made the attained-boundary hypothesis explicit in the stationary equations.
 - Made the numerical script check the complete stated slope enclosure, not

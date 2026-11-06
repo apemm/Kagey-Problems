@@ -68,5 +68,8 @@ python reports/paperD-ejp-2026-11-05/run_verification.py --workspace C:/Users/ar
 ```
 
 The numerical verification records state the precision, software versions and
-source hashes. The new short check is `python -O check_critical_shape.py` from
-this paper's directory. The phase figure is an illustration, not a certificate.
+source hashes. From the paper's directory, `python -O check_critical_shape.py`
+independently checks the threshold endpoints. The refined checks are
+`python -O certify_critical_constants.py` and `python -O certify_landau_gap.py`.
+The full phase boundary is a numerical illustration. The separate hatched
+region plots the sufficient moment inequality proved in the paper.

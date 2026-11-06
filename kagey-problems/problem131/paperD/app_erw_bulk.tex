@@ -60,7 +60,7 @@ Conditional Jensen thus bounds its squared norm in expectation by that of
 $\Lambda-\Lambda^{(j)}$. Moving the subtree of $j+1$ changes family sizes
 only along the old and new parent paths, excluding the root. Each altered
 atom contributes at most $2\varepsilon$ in L1. Writing $\mathrm{dp}$ for
-depth, and using $(a+b)^2\le2(a^2+b^2)$, gives
+depth, and using $(u+v)^2\le2(u^2+v^2)$, gives
 \[
  \E\|\Lambda-\Lambda^{(j)}\|_1^2
  \le16\varepsilon^2\E\mathrm{dp}(U_j)^2
@@ -86,9 +86,9 @@ Every singleton discrepancy is at most total variation. \qed
 
 \subsection{Proof of Theorem~\ref{thm:landau}}\label{app:bulk-landau}
 
-We write $B(t)=-it\log\lvert t\rvert-\frac\pi2\lvert t\rvert$ for real
-$t\ne0$, and $B(0)=0$. For $t>0$ this is the value of $u\log u$ at $u=-it$,
-with the principal logarithm, and $B(-t)=\overline{B(t)}$. We need three
+We write $\Psi_{\mathrm L}(t)=-it\log\lvert t\rvert-\frac\pi2\lvert t\rvert$ for real
+$t\ne0$, and $\Psi_{\mathrm L}(0)=0$. For $t>0$ this is the value of $u\log u$ at $u=-it$,
+with the principal logarithm, and $\Psi_{\mathrm L}(-t)=\overline{\Psi_{\mathrm L}(t)}$. We need three
 facts about $\Psi_N$ and $\Psi_\infty$.
 
 \emph{Fact 1.} For real $\theta$,
@@ -155,31 +155,42 @@ $\lvert\mathsf ue^{-i\theta}\rvert\le1$, the formula for $R$ now gives
 \]
 as $0.631\cdot\frac\pi2+0.53\le1.53$.
 
-\emph{Fact 3.} For $\lvert\theta\rvert\le\pi$,
-$-\operatorname{Re}\Psi_\infty(\theta)=\sum_d\frac{1-\cos\theta d}{d(d+1)}
-\ge\frac{\lvert\theta\rvert}{2\pi}$. We may take $\theta\ne0$. Keep only the
-terms with $d\le D:=\lfloor\pi/\lvert\theta\rvert\rfloor$ and use
-$1-\cos v\ge2v^2/\pi^2$ for $\lvert v\rvert\le\pi$. This gives at least
-$\frac{2\theta^2}{\pi^2}\sum_{d\le D}\frac d{d+1}\ge\frac{\theta^2D}{\pi^2}
-\ge\frac{\lvert\theta\rvert}{2\pi}$, since $D\ge\frac\pi{2\lvert\theta\rvert}$.
+\emph{Fact 3.} For $|\theta|\le\pi$,
+$-\operatorname{Re}\Psi_\infty(\theta)\ge(2/5)|\theta|$.
+For $0<\theta\le1/10$, Fact 2 gives
+\[
+ -\operatorname{Re}\Psi_\infty(\theta)/\theta
+ \ge\pi/2-\theta\{0.631\log(1/\theta)+1.53\}>2/5.
+\]
+The subtracted expression increases on this interval. For
+$1/10\le\theta\le\pi$ we use the exact identity
+\[
+ -\operatorname{Re}\Psi_\infty(\theta)
+ =(1-\cos\theta)\log(2\sin(\theta/2))
+   +\tfrac12(\pi-\theta)\sin\theta.
+\]
+Ball arithmetic on $305$ closed intervals of width $1/100$, starting
+at $1/10$, proves that this exceeds $2\theta/5$. The intervals reach
+$3.15>\pi$. Symmetry covers negative $\theta$, and equality holds at
+zero. Appendix~\ref{app:data} gives the record.
 
-\emph{The function $e^B$ is a characteristic function of class $L$.} Let
+\emph{The function $e^{\Psi_{\mathrm L}}$ is a characteristic function of class $L$.} Let
 $S_x$ have the law $\CP_\infty$ with parameter $x$, namely the law of
 $\sum_{d\ge1}d\,\mathcal N_d$. Its characteristic function is
 $e^{x\Psi_\infty(\theta)}$. By Fact 2, for $t\ne0$ and
 $x\ge\max(1,\lvert t\rvert/\pi)$,
 \begin{equation}\label{eq:bulk-AB}
- x\Psi_\infty(t/x)-it\log x=B(t)+xR(t/x),\qquad
+ x\Psi_\infty(t/x)-it\log x=\Psi_{\mathrm L}(t)+xR(t/x),\qquad
  \lvert xR(t/x)\rvert\le\frac{t^2}x\bigl(0.631(\lvert\log\lvert t\rvert\rvert+\log x)+1.53\bigr).
 \end{equation}
-So the characteristic function of $(S_x-x\log x)/x$ tends to $e^{B(t)}$ as
+So the characteristic function of $(S_x-x\log x)/x$ tends to $e^{\Psi_{\mathrm L}(t)}$ as
 $x\to\infty$, for every real $t$. The limit is continuous at $0$, so by
 L\'evy's continuity theorem it is the characteristic function of a
 probability law. It is integrable, so this law has the bounded continuous
 density $f_L$ of Theorem~\ref{thm:landau}. For $0<c<1$ and real $t$ we have
-$B(ct)=cB(t)-ict\log c$, and hence
+$\Psi_{\mathrm L}(ct)=c\Psi_{\mathrm L}(t)-ict\log c$, and hence
 \[
- e^{B(t)}=e^{B(ct)}\cdot e^{B((1-c)t)}\,e^{it[(1-c)\log(1-c)+c\log c]} .
+ e^{\Psi_{\mathrm L}(t)}=e^{\Psi_{\mathrm L}(ct)}\cdot e^{\Psi_{\mathrm L}((1-c)t)}\,e^{it[(1-c)\log(1-c)+c\log c]} .
 \]
 The last two factors form the characteristic function of a scaled and shifted
 copy of the law. So the law is of class $L$ (self-decomposable), and $f_L$ is
@@ -193,38 +204,40 @@ $\theta=t/x$,
 \]
 Let $\lvert t\rvert\le\pi x$. By \eqref{eq:bulk-AB} and Fact 1,
 \[
- \lvert A(t)-B(t)\rvert\le\frac{t^2}x\bigl(0.631(\lvert\log\lvert t\rvert\rvert+\log x)+1.53\bigr)+\frac{2x}N,
+ \lvert A(t)-\Psi_{\mathrm L}(t)\rvert\le\frac{t^2}x\bigl(0.631(\lvert\log\lvert t\rvert\rvert+\log x)+1.53\bigr)+\frac{2x}N,
 \]
 and by Facts 1 and 3,
-$\max(\operatorname{Re}A(t),\operatorname{Re}B(t))\le-\frac{\lvert t\rvert}{2\pi}+\frac{2x}N$.
-Now $\lvert e^A-e^B\rvert\le\lvert A-B\rvert\,e^{\max(\operatorname{Re}A,\operatorname{Re}B)}$,
+$\max(\operatorname{Re}A(t),\operatorname{Re}\Psi_{\mathrm L}(t))\le-\frac25\lvert t\rvert+\frac{2x}N$.
+Now $\lvert e^u-e^v\rvert\le\lvert u-v\rvert\,e^{\max(\operatorname{Re}u,\operatorname{Re}v)}$,
 and $\frac{2x}N\le\frac12$ because $N\ge4x$. So for $\lvert t\rvert\le\pi x$
 \[
- \lvert e^{A(t)}-e^{B(t)}\rvert\le e^{1/2}e^{-\lvert t\rvert/2\pi}
+ \lvert e^{A(t)}-e^{\Psi_{\mathrm L}(t)}\rvert\le e^{1/2}e^{-2\lvert t\rvert/5}
  \Bigl[\frac{t^2}x\bigl(0.631(\lvert\log\lvert t\rvert\rvert+\log x)+1.53\bigr)+\frac{2x}N\Bigr].
 \]
-For $s\ge1$ the tangent of the logarithm at $16$ gives $\log s\le s/16+\log16-1$, and for
-$0<s<1$ we have $s\lvert\log s\rvert\le1/e$. So
-$s^2\lvert\log s\rvert\le s^3/16+(4\log2-1)s^2+s/e$ for every $s\ge0$. We insert this with
-$s=\lvert t\rvert$ and integrate, using $\int_0^\infty t^ke^{-t/2\pi}\,dt=k!\,(2\pi)^{k+1}$.
-This gives
+The tangent bound for $\log s$ at $8$, together with
+$s|\log s|\le1/e$ for $0<s<1$, gives
 \[
- \frac1{2\pi}\int_{-\pi x}^{\pi x}\lvert e^{A(t)}-e^{B(t)}\rvert\,dt
- \le e^{1/2}\Bigl[\frac{K_0+16\pi^2\cdot0.631\log x}x+\frac{4x}N\Bigr],
+ s^2|\log s|\le s^3/8+(\log8-1)s^2+s/e\qquad(s\ge0).
 \]
-where $K_0=6\pi^3\cdot0.631+16\pi^2\bigl(0.631(4\log2-1)+1.53\bigr)+4\pi\cdot0.631/e\le538.6$.
-Beyond $\pi x$ we use $\lvert e^{B(t)}\rvert=e^{-\pi\lvert t\rvert/2}$, which
-gives $\frac1{2\pi}\int_{\lvert t\rvert>\pi x}\lvert e^{B(t)}\rvert\,dt
-=\frac2{\pi^2}e^{-\pi^2x/2}\le\frac4{\pi^4x}\le\frac{0.042}x$, since $e^{-y}\le1/y$ for $y>0$.
-Since $f_L(\lambda_m)=\frac1{2\pi}\int_{\mathbb R}e^{-i\lambda_mt}e^{B(t)}\,dt$,
-the error is at most the sum of the two integrals. With $e^{1/2}\le1.6488$ and
-$16\pi^2\cdot0.631\le99.66$ this sum is at most
+Integrate the preceding estimate with $\rho=2/5$ and
+$\int_0^\infty t^ke^{-\rho t}\,dt=k!/\rho^{k+1}$. The coefficient of
+$\log x/x$ is
 \[
- \frac{1.6488\cdot538.6+0.042+1.6488\cdot99.66\log x}x+\frac{6.5952\,x}N
- \le\frac{889+165\log x}x+\frac{6.6\,x}N .
+ \frac{e^{1/2}}\pi\frac{2(0.631)}{\rho^3}<10.4,
 \]
-The second bound in (a) holds because $165\le889$. This proves (a). Fourier inversion on $\Z$
-holds at every integer $m$, and $\CP_N(m)=0$ for $m<0$, so the proof covers every integer $m$.
+and that of $x/N$ is $2e^{1/2}/(\pi\rho)<2.7$.
+The omitted Landau tail is
+$2e^{-\pi^2x/2}/\pi^2\le4/(\pi^4x)$. Including it, the remaining
+coefficient of $1/x$ is at most
+\[
+ \frac{e^{1/2}}\pi\left[
+ 0.631\left\{\frac6{8\rho^4}+\frac{2(\log8-1)}{\rho^3}
+                         +\frac1{e\rho^2}\right\}
+              +\frac{2(1.53)}{\rho^3}\right]+\frac4{\pi^4}<47.
+\]
+These strict numerical inequalities are enclosed in the same record.
+Fourier inversion therefore proves (a), including negative integers
+$m$, where $\CP_N(m)=0$.
 
 \emph{Proof of (b).} Since $\varepsilon\le\frac14$, we have $N\ge4x$. By Theorem~\ref{thm:cp},
 $\lvert xf_N(m)-x\,\CP_N(m)\rvert\le x\delta_\Sigma\le x\delta_B$. Add (a).
@@ -252,7 +265,7 @@ $k\ge0$,
  f_L^{(k)}(\lambda)=\frac1\pi\int_0^\infty(-s)^k\,e^{-s\log s-\lambda s}\sin(\pi s)\,ds .
 \end{equation}
 For $k=0$ this is~\cite[Eq.~(4.3)]{mohle2005}, and we include a short proof.
-Since $B(-t)=\overline{B(t)}$, the definition of $f_L$ gives
+Since $\Psi_{\mathrm L}(-t)=\overline{\Psi_{\mathrm L}(t)}$, the definition of $f_L$ gives
 $f_L(\lambda)=\frac1\pi\operatorname{Re}\int_0^\infty\Phi(-it)\,dt$ with
 $\Phi(u)=\exp(u\log u+\lambda u)$. The function $\Phi$ is holomorphic off the
 negative real axis. Put $u=\rho e^{i\varphi}$ with
@@ -274,7 +287,7 @@ $u\log u=-s\log s+i\pi s$, and $dt=i\,du=-i\,ds$. Hence
 \]
 The integrand decays faster than every exponential, so we may differentiate
 under the integral sign. This proves \eqref{eq:landau-real}. Also $f_L''$
-is bounded on the real line, because $t^2e^{B(t)}$ is integrable and we may
+is bounded on the real line, because $t^2e^{\Psi_{\mathrm L}(t)}$ is integrable and we may
 differentiate the Fourier formula for $f_L$ twice.
 
 \emph{Step 2. Certified enclosures.} Let $-0.223\le\lambda\le0$ and
@@ -301,10 +314,10 @@ positive at $-0.22278299$ and negative at $-0.22278297$. The two enclosures are
 $6.8984026\cdot10^{-10}$ and $-8.8809315\cdot10^{-10}$ with radii below $10^{-17}$, and
 these are the smallest margins in the proof.
 
-\emph{Step 3. The mode.} Write $[a,b]=[-0.2229,-0.2227]$. By Step 2, $f_L'$
-is strictly decreasing on $[a,b]$ with $f_L'(a)>0>f_L'(b)$. So $f_L'$ has
-exactly one zero $\lambda_{\mathrm L}$ in $[a,b]$, and $f_L$ is strictly increasing on
-$[a,\lambda_{\mathrm L}]$ and strictly decreasing on $[\lambda_{\mathrm L},b]$. Since $f_L$ is
+\emph{Step 3. The mode.} Write $[u_-,u_+]=[-0.2229,-0.2227]$. By Step 2, $f_L'$
+is strictly decreasing on $[u_-,u_+]$ with $f_L'(u_-)>0>f_L'(u_+)$. So $f_L'$ has
+exactly one zero $\lambda_{\mathrm L}$ in $[u_-,u_+]$, and $f_L$ is strictly increasing on
+$[u_-,\lambda_{\mathrm L}]$ and strictly decreasing on $[\lambda_{\mathrm L},u_+]$. Since $f_L$ is
 unimodal, there is a point $\lambda_*$ such that $f_L$ is nondecreasing on
 $(-\infty,\lambda_*]$ and nonincreasing on $[\lambda_*,\infty)$. If
 $\lambda_*>\lambda_{\mathrm L}$, then $f_L$ would be nondecreasing just to the right of
@@ -313,18 +326,36 @@ impossible. So $\lambda_*=\lambda_{\mathrm L}$, and $f_L$ is nondecreasing on
 $(-\infty,\lambda_{\mathrm L}]$ and nonincreasing on $[\lambda_{\mathrm L},\infty)$. By Step 2 again,
 $\lambda_{\mathrm L}\in(-0.22278299,-0.22278297)$. This proves (a) and (b).
 
-\emph{Step 4. The constant $\kappa_L$.} Let
-$\delta_0=\min(\lambda_{\mathrm L}-a,b-\lambda_{\mathrm L})>0$. For
-$\lvert\lambda-\lambda_{\mathrm L}\rvert\le\delta_0$, Taylor's formula with
-$f_L'(\lambda_{\mathrm L})=0$ and $f_L''\le-0.078$ on $[a,b]$ gives
-$f_L(\lambda_{\mathrm L})-f_L(\lambda)\ge0.039(\lambda-\lambda_{\mathrm L})^2$. For
-$\lvert\lambda-\lambda_{\mathrm L}\rvert>\delta_0$ the monotonicity of Step 3 gives
-$f_L(\lambda)\le f_L(\lambda_{\mathrm L}\pm\delta_0)\le f_L(\lambda_{\mathrm L})-0.039\,\delta_0^2$.
-Since $\delta_0<1$, the bound in (c) holds with $0.039\,\delta_0^2$ in place of
-$\kappa_L$. By (a), $\lambda_{\mathrm L}-a>0.2229-0.22278299>1.17\cdot10^{-4}$ and
-$b-\lambda_{\mathrm L}>0.22278297-0.2227=8.297\cdot10^{-5}$, so
-$0.039\,\delta_0^2>0.039\cdot(8.297\cdot10^{-5})^2>2.68\cdot10^{-10}$. So (c)
-holds with $\kappa_L=2.6\cdot10^{-10}$. \qed
+\emph{Step 4. The global gap.} Write $v=-0.22278298$ and
+$r_0=10^{-8}$, so $|\lambda_{\mathrm L}-v|<r_0$.
+Fourier inversion gives
+\[
+ \|f_L'\|_\infty\le4/\pi^3,\qquad
+ \|f_L^{(3)}\|_\infty\le96/\pi^5.
+\]
+We evaluate \eqref{eq:landau-real} at $160$ bits with
+$\delta=2^{-24}$ and upper cutoff $30$. All arguments exceed $-1.23$.
+The omitted integrals are bounded as in Step 2, replacing $0.223$
+by $1.23$ and using $\log30-1.23>2$.
+
+First, $100$ equally spaced midpoint evaluations of $f_L''$ on
+$[v-1/4,v+1/4]$, each enlarged by
+$(96/\pi^5)(1/400+r_0)$, give $f_L''<-0.04$ throughout
+$[\lambda_{\mathrm L}-1/4,\lambda_{\mathrm L}+1/4]$.
+Taylor's formula gives the required quadratic gap there.
+Next cover distances from $v$ between $0.249$ and $1.001$ on each
+side by $188$ closed cells of width $0.004$. On a cell with midpoint
+$y$ and largest possible distance $d$ from $\lambda_{\mathrm L}$,
+the certificate verifies
+\[
+ f_L(v)-\left\{f_L(y)+\frac4{\pi^3}(0.002)\right\}
+ >\frac1{50}\min(1,d^2).
+\]
+Since $f_L(\lambda_{\mathrm L})\ge f_L(v)$, this proves the gap on
+the cells. They overlap the curvature region and extend past distance
+one from the mode. Monotonicity then gives a gap of at least $1/50$
+on both remaining tails. This proves (c). The record and the formal
+deduction from these inequalities are in Appendix~\ref{app:data}. \qed
 
 \subsection{Proof of Corollary~\ref{cor:mode-location}}\label{app:bulk-cor}
 
@@ -334,7 +365,7 @@ Theorem~\ref{thm:landau}(b) both values are close to values of $f_L$, and
 $f_L$ falls off quadratically away from $\lambda_{\mathrm L}$. So a mode cannot be far
 from $m'$.
 
-We first prove (a). So we assume~\eqref{eq:H}, $E'<\kappa_L/2$ and $m_h\le N/4$, with
+We first prove (a). So we assume~\eqref{eq:H}, $E'<\kappa_L/2$ and $m_{\max}\le N/4$, with
 $E_1$ and $E'$ as in the statement.
 
 Let $m'$ be the integer nearest to $x\log x+\lambda_{\mathrm L}x$. This number
@@ -342,18 +373,18 @@ increases in $x\ge1$ and is at least $\lambda_{\mathrm L}>-\frac12$, so $m'\ge0$
 $\lvert\lambda_{m'}-\lambda_{\mathrm L}\rvert\le\frac1{2x}$, and since
 $f_L'(\lambda_{\mathrm L})=0$,
 $f_L(\lambda_{m'})\ge f_L(\lambda_{\mathrm L})-\lVert f_L''\rVert_\infty/(8x^2)$. Let
-$\tilde m$ be a mode of $f_N$ or $\tilde m=m^*$. We claim that
+$\tilde m$ be a mode of $f_N$ or $\tilde m=m_N$. We claim that
 $f_N(\tilde m)\ge f_N(m')-16xH_N/N^2$. For a mode of $f_N$ this is clear.
-For $m^*$ we have
-$f_N(m^*)+f_N(N-m^*)=2P_N(N-m^*)\ge2P_N(N-m')\ge f_N(m')$. Here
-$N-m^*\ge\lceil N/2\rceil\ge\lceil N/4\rceil\ge m_h$. So
+For $m_N$ we have
+$f_N(m_N)+f_N(N-m_N)=2P_N(N-m_N)\ge2P_N(N-m')\ge f_N(m')$. Here
+$N-m_N\ge\lceil N/2\rceil\ge\lceil N/4\rceil\ge m_{\max}$. So
 $f_N$ is nonincreasing on $\{\lceil N/4\rceil,\dots,N\}$ by
 Lemma~\ref{lem:unimodal}. There are at least $N/4$ integers from
 $\lceil N/4\rceil$ to $\lceil N/2\rceil$. So Lemma~\ref{lem:B-sandwich}
-(with $a=\lceil N/4\rceil\ge m_h$ and $b=\lceil N/2\rceil$) gives the second
+(with $j=\lceil N/4\rceil\ge m_{\max}$ and $b=\lceil N/2\rceil$) gives the second
 inequality below, and Lemma~\ref{lem:B-tail} gives the third,
 \[
- f_N(N-m^*)\le f_N(\lceil N/2\rceil)\le\frac{\Prob(M_N\ge\lceil N/4\rceil)}{N/4}
+ f_N(N-m_N)\le f_N(\lceil N/2\rceil)\le\frac{\Prob(M_N\ge\lceil N/4\rceil)}{N/4}
  \le\frac{16xH_N}{N^2}.
 \]
 Now Theorem~\ref{thm:landau}(b), used at $\tilde m$ and at $m'$, gives
@@ -365,22 +396,31 @@ Now Theorem~\ref{thm:landau}(b), used at $\tilde m$ and at $m'$, gives
  \ge f_L(\lambda_{\mathrm L})-2E'.
  \end{aligned}
 \]
-Put $\delta_0=\min(\lambda_{\mathrm L}+0.2229,-0.2227-\lambda_{\mathrm L})$.
-Step~4 of the mode lemma proves a gap of at least
-$0.039\delta_0^2>\kappa_L$ outside this neighborhood.
-Since $2E'<\kappa_L$, the preceding comparison puts
-$\lambda_{\tilde m}$ inside it. There the local curvature bound gives
-$(\lambda_{\tilde m}-\lambda_{\mathrm L})^2\le2E'/0.039$.
+The global gap in Lemma~\ref{lem:landau-mode}(c) and $2E'<\kappa_L$
+give $(\lambda_{\tilde m}-\lambda_{\mathrm L})^2\le2E'/\kappa_L$.
+This proves (a).
 
-Now we prove (b). Let $N$ be large and $\log N\le x\le2\log N$. Then $x\delta_B$, $889x/N$,
-$16x^2H_N/N^2$ and $\lVert f_L''\rVert_\infty/(8x^2)$ are all at most $\log x/x$, because each
-is $O(\log^5N/N)$ or $O(1/\log^2N)$. For $\log x\ge1$, the definition of
-$E'$ therefore gives $E'\le2000\log x/x$ after increasing the length
-threshold. As
-$\log x/x\le\log\log N/\log N$, for large $N$ we have $E'<\kappa_L/2$. Also \eqref{eq:H}
-holds, $\varepsilon\log N\le2\log^2N/N\le\frac1{40}$ and $804x\log(x+2)\le N$, so
-Lemma~\ref{lem:B-mode} gives $m_h\le A_0x\log^2(x+1)\le N/4$. Hence by (a)
-$\lvert m^*-x\log x-\lambda_{\mathrm L}x\rvert\le x\sqrt{2E'/0.039}\le400\sqrt{x\log x}$,
-since $4000/0.039<400^2$. The same holds for every mode of $f_N$. At the crossing
+For (b), suppose $\log N\ge30000$ and $\log N\le x\le2\log N$.
+The elementary bounds
+\[
+ H_N\le1+\log N,\qquad
+ N=e^{\log N}\ge(\log N)^8/8!\ge160(\log N)^6
+\]
+give $e^{4x^2/N}\le2$ and $\delta_B\le40(\log N)^4/N$.
+Consequently each of $2.7x/N$, $x\delta_B$ and
+$16x^2H_N/N^2$ is at most $1/(2\log N)\le\log x/x$.
+The rounding term is also at most $\log x/x$, since
+$\|f_L''\|_\infty\le16/\pi^4$. As $\log x>10$,
+\[
+ E'\le\frac{47+14.4\log x}{x}
+       <\frac{20\log x}{x}
+       \le\frac{20\log30000}{30000}<\frac1{100}.
+\]
+The same bounds imply \eqref{eq:H},
+$\varepsilon\log N\le1/40$, $804x\log(x+2)\le N$ and
+$15400x\log^2(x+1)\le N/4$. Thus Lemma~\ref{lem:B-mode} gives
+$m_{\max}\le N/4$. Part (a) now gives an error at most
+$\sqrt{2000x\log x}<50\sqrt{x\log x}$, for every stated mode.
+At the crossing
 $x_N=2\log N-\log\log N+O(1)$ for even $N$, by Theorem~\ref{thm:erw-crossing}(b). So
 $\log N\le x_N\le2\log N$ for large even $N$. \qed

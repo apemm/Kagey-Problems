@@ -6,7 +6,7 @@ In this section and Appendices~\ref{app:shape} and~\ref{app:bulk},
  N\ge64,\qquad0<\varepsilon\le\tfrac14,\qquad x=N\varepsilon\ge1 .\tag{H}
 \end{equation}
 Every other statement holds under its own hypotheses.
-Recall that $P_N(N-m)=\frac12[f_N(m)+f_N(N-m)]$. For a mode $a^*\ge N/2$ of $P_N$ we put $m^*=N-a^*$, and $m_h$ is the largest
+Recall that $P_N(N-m)=\frac12[f_N(m)+f_N(N-m)]$. For a mode $\kappa_N\ge N/2$ of $P_N$ we put $m_N=N-\kappa_N$, and $m_{\max}$ is the largest
 mode of $f_N$.
 
 \subsection{Families and the first flip}
@@ -136,7 +136,7 @@ The function $f_N$ is unimodal.
 The proof of~\cite[Theorem~1.1]{glrs2025} treats every $N$ and
 $p=1-\varepsilon\in[0,1]$, for $N-2M_N$ given $X_1=+1$; a Lean proof
 is recorded in Section~\ref{sec:verify}. Thus $f_N$ is nondecreasing on
-$\{0,\dots,m_h\}$ and nonincreasing on $\{m_h,\dots,N\}$. Its fair
+$\{0,\dots,m_{\max}\}$ and nonincreasing on $\{m_{\max},\dots,N\}$. Its fair
 mixture $P_N$ can have two humps when the mode of $f_N$ is far from the center.
 
 \subsection{The end and its neighbor}\label{sec:shape-end}
@@ -226,9 +226,9 @@ $P_N$ is not unimodal.
 
 \begin{proof}
 Theorem~\ref{thm:dip} gives $P_N(N-1)>E_N\ge C_N$. Suppose that $P_N$ is
-nondecreasing on $\{0,\dots,a_0\}$ and nonincreasing on $\{a_0,\dots,N\}$.
-It is symmetric about $h$, so we may replace $a_0$ by $N-a_0$ and assume
-$a_0\le h$. Then $P_N(a)\le C_N$ for every $a\ge h$, including $a=N-1$, which
+nondecreasing on $\{0,\dots,k_0\}$ and nonincreasing on $\{k_0,\dots,N\}$.
+It is symmetric about ${k_{\mathrm c}}$, so we may replace $k_0$ by $N-k_0$ and assume
+$k_0\le {k_{\mathrm c}}$. Then $P_N(k)\le C_N$ for every $k\ge {k_{\mathrm c}}$, including $k=N-1$, which
 is a contradiction.
 \end{proof}
 
@@ -308,20 +308,20 @@ along only two root paths, whose depth second moments have order $\log^2N$.
 Families of size up to $x$ contribute nearly $x\log x$; those of order
 $x$ give fluctuations of order $x$. Centering $M_N$ at $x\log x$ and
 dividing by $x$ gives $\lambda_m$ and the index-one stable density $f_L$.
-Appendix~\ref{app:bulk} shows that $e^B$ is the characteristic function
+Appendix~\ref{app:bulk} shows that $e^{\Psi_{\mathrm L}}$ is the characteristic function
 of a law of class $L$, so $f_L$ is unimodal by~\cite{yamazato1978}.
 
 \begin{theorem}[Landau limit]\label{thm:landau}
 \begin{enumerate}[(a)]
 \item Let $x\ge1$ and $N\ge4x$. For every integer $m$, with $\CP_N(m)=0$ for $m<0$,
 \[
- \bigl\lvert x\,\CP_N(m)-f_L(\lambda_m)\bigr\rvert\le E_0:=\frac{889+165\log x}x+\frac{6.6\,x}N
- \le889\Bigl(\frac{1+\log x}x+\frac xN\Bigr).
+ \bigl\lvert x\,\CP_N(m)-f_L(\lambda_m)\bigr\rvert\le E_0:=\frac{47+10.4\log x}x+\frac{2.7\,x}N
+ \le47\Bigl(\frac{1+\log x}x+\frac xN\Bigr).
 \]
 \item Let $0<\varepsilon\le\frac14$ and $x\ge1$. For every integer $m\ge0$,
 \[
  \bigl\lvert xf_N(m)-f_L(\lambda_m)\bigr\rvert\le E_0+x\delta_\Sigma
- \le889\Bigl(\frac{1+\log x}x+\frac xN\Bigr)+x\delta_B .
+ \le47\Bigl(\frac{1+\log x}x+\frac xN\Bigr)+x\delta_B .
 \]
 \item Let $N_n\ge1$ and $0<\varepsilon_n<1$ for $n\ge1$, and put $x_n=N_n\varepsilon_n$. If
 $x_n\to\infty$ and $x_n^2\log^2N_n/N_n\to0$, then $(M_{N_n}-x_n\log x_n)/x_n$ converges in
@@ -357,45 +357,46 @@ $-0.0792\le f_L''(\lambda)\le-0.0786$ for
 $-0.2229\le\lambda\le-0.2227$.
 \item For every real $\lambda$,
 $f_L(\lambda_{\mathrm L})-f_L(\lambda)\ge\kappa_L\min\{1,(\lambda-\lambda_{\mathrm L})^2\}$ with
-$\kappa_L=2.6\cdot10^{-10}$.
+$\kappa_L=1/50$.
 \end{enumerate}
 \end{lemma}
 
-The proof is in Appendix~\ref{app:bulk-mode}, and it is computer-assisted. Lean proves the
-lemma as well, with the unimodality of $f_L$ that~\cite{yamazato1978} gives as its only input
-(Section~\ref{sec:verify}), so the computation in ball arithmetic is an independent check.
+Appendix~\ref{app:bulk-mode} proves the lemma. Parts (a) and (b) also
+have a Lean proof from class-$L$ unimodality. The constant in (c) uses
+a finite ball-arithmetic cover. Lean checks the deduction from the
+cover's gap bounds and unimodality (Appendix~\ref{app:data}).
 
 \begin{corollary}[mode locations]\label{cor:mode-location}
 \begin{enumerate}[(a)]
 \item Assume~\eqref{eq:H} and use $\kappa_L$ from
 Lemma~\ref{lem:landau-mode}(c). Let
-$E_1=889\bigl(\frac{1+\log x}x+\frac xN\bigr)+x\delta_B$ be the bound of
+$E_1=E_0+x\delta_B$ be the bound of
 Theorem~\ref{thm:landau}(b), and put
 \[
  E'=E_1+\frac{16x^2H_N}{N^2}+\frac{\lVert f_L''\rVert_\infty}{8x^2}.
 \]
-If $E'<\kappa_L/2$ and $m_h\le N/4$, then every mode $a^*\ge N/2$ of $P_N$
-satisfies $\lvert m^*-x\log x-\lambda_{\mathrm L}x\rvert\le x\sqrt{2E'/0.039}$,
+If $E'<\kappa_L/2$ and $m_{\max}\le N/4$, then every mode $\kappa_N\ge N/2$ of $P_N$
+satisfies $\lvert m_N-x\log x-\lambda_{\mathrm L}x\rvert\le x\sqrt{2E'/\kappa_L}$,
 and so does every mode of $f_N$.
-\item There is $N_2$ such that the following holds for every $N\ge N_2$, even or
-odd, and every $\varepsilon$ with $\log N\le x\le2\log N$. Every mode $a^*\ge N/2$ of $P_N$ has
+\item Put $N_2=\lceil e^{30000}\rceil$. For every $N\ge N_2$, even or
+odd, and every $\varepsilon$ with $\log N\le x\le2\log N$. Every mode $\kappa_N\ge N/2$ of $P_N$ has
 \[
- \bigl\lvert m^*-x\log x-\lambda_{\mathrm L}x\bigr\rvert\le400\sqrt{x\log x},
+ \bigl\lvert m_N-x\log x-\lambda_{\mathrm L}x\bigr\rvert\le50\sqrt{x\log x},
 \]
-and so has every mode of $f_N$ in place of $m^*$. In particular this holds at the crossing,
+and so has every mode of $f_N$ in place of $m_N$. In particular this holds at the crossing,
 with $x=x_N$, for every large even $N$ (Theorem~\ref{thm:erw-crossing}(b)).
 \end{enumerate}
 In (a) every constant is explicit. (Here
 $\lVert f_L''\rVert_\infty\le16/\pi^4$, since the characteristic function
 of $f_L$ has modulus $e^{-\pi\lvert t\rvert/2}$.)
-We do not compute the length threshold $N_2$ in (b).
+The explicit threshold in (b) is conservative.
 \end{corollary}
 
 \begin{corollary}[a wider rare-reversal range]\label{cor:wider-mode-range}
 Suppose $x\to\infty$ and $x^3\log^2N/N\to0$. For every mode
-$a^*\ge N/2$ of $P_N$, and every mode $m$ of $f_N$,
+$\kappa_N\ge N/2$ of $P_N$, and every mode $m$ of $f_N$,
 \[
- N-a^*=x\log x+\lambda_{\mathrm L}x+o(x),\qquad
+ N-\kappa_N=x\log x+\lambda_{\mathrm L}x+o(x),\qquad
  m=x\log x+\lambda_{\mathrm L}x+o(x).
 \]
 Each error is
@@ -405,7 +406,7 @@ $O\bigl(\sqrt{x(1+\log x)}+x^{5/2}\log N/\sqrt N\bigr)$.
 \begin{proof}
 The hypotheses give $E'\to0$ in Corollary~\ref{cor:mode-location}(a).
 They also give $\varepsilon\log N\to0$ and
-$x\log^2(x+1)=o(N)$, so Lemma~\ref{lem:B-mode} puts $m_h\le N/4$
+$x\log^2(x+1)=o(N)$, so Lemma~\ref{lem:B-mode} puts $m_{\max}\le N/4$
 eventually. That corollary applies, with
 \[
  E'=O\left(\frac{1+\log x}{x}+\frac{x^3\log^2N}{N}\right).
@@ -424,10 +425,9 @@ The bounds of this subsection are far from sharp at the sizes we can
 compute. At $N=10^6$ and $x=22.4407$ the bound $\delta_B$ is still about
 $0.46$, but there the computed law has
 $\lvert f_N(m)/\CP_N(m)-1\rvert\le3.6\cdot10^{-4}$ for $1\le m\le10^4$. At
-every tested crossing $m^*$ equals the mode of $\CP_N$. The proof of
-Corollary~\ref{cor:mode-location}(b) needs the
-bound of Theorem~\ref{thm:landau}(b) to be below $\kappa_L/2$, where
-$\kappa_L=2.6\cdot10^{-10}$ is the constant of Lemma~\ref{lem:landau-mode}(c). With the
-constant $889$ this needs $x>2\cdot10^{14}$, and numerically the best $\kappa_L$ is about $0.026$. These numbers are computed
-in double precision and are not used in any proof.
+every tested crossing $m_N$ equals the mode of $\CP_N$. The certified global gap is $\kappa_L=0.02$.
+The constants in the local bound still require a large $x$, and
+$N_2=\lceil e^{30000}\rceil$ is not a practical length threshold.
+The displayed approximation errors are numerical observations in
+double precision and are not used in any proof.
 \end{remark}

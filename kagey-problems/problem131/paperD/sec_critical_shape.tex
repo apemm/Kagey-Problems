@@ -39,15 +39,68 @@ fixed $q\in(0,1)$ inside the interval for all sufficiently large $a$.
 Thus $0\le b_a<q$ eventually for every $q>0$, which proves the limit.
 \end{proof}
 
+\begin{corollary}[a rate for the bias boundary near one]\label{cor:bias-boundary-rate}
+Put
+\[
+ \rho_a=\frac{\Gamma(1+a)^2}{(2a-1)\Gamma(2a)}-1.
+\]
+If $\rho_a<1/12$, then
+\[
+ 0\le b_a\le\frac{4\rho_a}{1-4\rho_a}.
+\]
+In particular, as $a\uparrow1$,
+$b_a\le8(1-a)+O((1-a)^2)$.
+\end{corollary}
+
+\begin{proof}
+The conditional limit has mean $\mu_a=1/\Gamma(1+a)>0$ and variance
+$\rho_a\mu_a^2$, by the moment formulas of~\cite[Theorem~1.4]{glr2026}.
+Consider the three adjacent intervals of length $\mu_a$ centered at
+$-\mu_a$, $0$ and $\mu_a$. Chebyshev's inequality puts at least
+$1-4\rho_a$ of the conditional law in the right interval and at most
+$4\rho_a$ in the middle. Reflection gives the opposite bounds for
+the reflected law. The mixture therefore has interval masses at least
+$(1-q)(1-4\rho_a)$ on the left and $q(1-4\rho_a)$ on the right,
+while the middle mass is at most $4\rho_a$.
+
+If $4\rho_a/(1-4\rho_a)<q<1-4\rho_a/(1-4\rho_a)$, both outer
+averages exceed the middle average. Continuity gives three ordered
+points with a strict valley, so the mixture cannot be unimodal.
+Theorem~\ref{thm:biased-limit-modes} then gives two modes and the
+claimed bound on $b_a$. Finally, the logarithmic derivative at $a=1$
+of $1+\rho_a$ is $2\psi(2)-2-2\psi(2)=-2$.
+Thus $\rho_a=2(1-a)+O((1-a)^2)$, which gives the last assertion.
+\end{proof}
+
 \subsection{The critical top and the emerging modes}
 
 The certificate contains more local information than the location of
 the threshold. Write
 \[
  C_* = \left.\partial_a g_a''(0)\right|_{a=a_*},\qquad
- B_*=-g_{a_*}^{(4)}(0).
+ B_*=-g_{a_*}^{(4)}(0),\qquad H_*=h_{a_*}'(0).
 \]
-The certified bounds give $0.68<C_*<0.70$ and $0.07<B_*<0.09$.
+Table~\ref{tab:critical-constants} gives strict certified enclosures.
+The coefficient $Q_*$ is defined in Proposition~\ref{prop:bias-cusp}.
+
+\begin{center}\small
+\captionsetup{hypcap=false}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Constant & Lower bound & Upper bound\\
+\midrule
+$C_*$ & $0.6889503945$ & $0.6889503947$\\
+$B_*$ & $0.079207784468$ & $0.079207784470$\\
+$H_*$ & $0.09707494510086$ & $0.09707494510088$\\
+$Q_*$ & $9.86698768$ & $9.86698770$\\
+$\sqrt{6C_*/B_*}$ & $7.224131934$ & $7.224131936$\\
+\bottomrule
+\end{tabular}
+\captionof{table}{The constants in the critical expansions. The enclosure
+is uniform on a parameter interval centered at the lower endpoint of the
+certified bracket for $a_*$ (Appendix~\ref{or:transition-unique}).}
+\label{tab:critical-constants}
+\end{center}
 
 \begin{proposition}[the critical shape]\label{prop:critical-shape}
 The density at the threshold satisfies
@@ -55,16 +108,13 @@ The density at the threshold satisfies
  g_{a_*}(u)=g_{a_*}(0)-\frac{B_*}{24}u^4+O(u^6)
  \qquad(u\to0).
 \]
-For $a>a_*$ let $c_a>0$ be the positive mode of $g_a$. As $a\downarrow a_*$,
+For $a>a_*$ let $\kappa_a>0$ be the positive mode of $g_a$. As $a\downarrow a_*$,
 \begin{align*}
- c_a&=\sqrt{\frac{6C_*}{B_*}}\sqrt{a-a_*}
+ \kappa_a&=\sqrt{\frac{6C_*}{B_*}}\sqrt{a-a_*}
                  +o\bigl(\sqrt{a-a_*}\bigr),\\
- g_a(c_a)-g_a(0)&=\frac{3C_*^2}{2B_*}(a-a_*)^2
+ g_a(\kappa_a)-g_a(0)&=\frac{3C_*^2}{2B_*}(a-a_*)^2
                  +o\bigl((a-a_*)^2\bigr).
 \end{align*}
-In particular the quartic coefficient lies between $-0.00375$ and
-$-7/2400$, and the coefficient of $\sqrt{a-a_*}$ lies between $6.73$
-and $7.75$.
 \end{proposition}
 
 \begin{proof}
@@ -93,16 +143,14 @@ Substitute it into
  g_a(u)-g_a(0)=\tfrac12\bigl(C_*\delta+o(\delta)\bigr)u^2
                   -\tfrac1{24}\bigl(B_*+o(1)\bigr)u^4+O(u^6)
 \]
-to obtain the height expansion. The numerical intervals follow
-directly from the two rational bounds on $C_*$ and $B_*$.
+to obtain the height expansion.
 \end{proof}
 
 \begin{proposition}[how the bias interval opens]\label{prop:bias-cusp}
-Put $H_*=h_{a_*}'(0)$. The pointwise certificate gives
-$0.097074<H_*<0.097076$. Put
+With the constants of Table~\ref{tab:critical-constants}, put
 \[
  Q_* = \frac{\sqrt{2}\,C_*^{3/2}}{3H_*\sqrt{B_*}},
- \qquad 9<Q_*<11.
+ \qquad Q_*\approx9.86698769.
 \]
 As $a\downarrow a_*$,
 \begin{equation}\label{eq:bias-cusp}
@@ -116,36 +164,26 @@ For $a>a_*$ sufficiently close to $a_*$, the infimum in
 \[
  t_a=\sqrt{\frac{2C_*}{B_*}}\sqrt{a-a_*}
        +o\bigl(\sqrt{a-a_*}\bigr)
-     =\frac{c_a}{\sqrt3}+o\bigl(\sqrt{a-a_*}\bigr).
+     =\frac{\kappa_a}{\sqrt3}+o\bigl(\sqrt{a-a_*}\bigr).
 \]
 At $q=1-b_a$, the stationary point is $-t_a$.
 \end{proposition}
 
 \begin{proof}
-The definitions and bounds for $C_*,B_*$, and the regularity used here,
-are given in Proposition~\ref{prop:critical-shape}. The script
-\texttt{check\_critical\_shape.py} encloses
+Proposition~\ref{prop:critical-shape} supplies the required regularity.
+The refined certificate in Appendix~\ref{or:transition-unique} encloses
 $\pi^{-1}\int_0^\infty t\operatorname{Im}\phi_a(t)\,dt=h_a'(0)$
-at $a=0.66881286$. The parameter derivative bounds from
-Appendix~\ref{or:transition-unique} give
-\[
- |\partial_a h_a'(0)|
- \le\frac1\pi\left(\int_0^{10}4t\,dt+
-                         \int_{10}^\infty4t^{-6}\,dt\right)<64.
-\]
-Their compact bound is less than four below six and their weighted
-bound is less than $4t^{-7}$ above six. Enlarging the latter to four
-on $[6,10]$ justifies the displayed envelope. A parameter displacement
-of at most $10^{-8}$ therefore gives the stated enclosure at $a_*$.
+uniformly on an interval containing $a_*$, giving the positive $H_*$
+in Table~\ref{tab:critical-constants}.
 
 Write $\delta=a-a_*$. By \eqref{eq:bias-boundary},
 \[
  \frac12-b_a=\max\left\{0,\sup_{t\in U_a}
      \frac{g_a'(t)}{h_a'(t)+h_a'(-t)}\right\}.
 \]
-The fair-shape theorem makes the numerator nonpositive for $t\ge c_a$.
+The fair-shape theorem makes the numerator nonpositive for $t\ge \kappa_a$.
 Proposition~\ref{prop:critical-shape} gives
-$c_a=O(\sqrt\delta)$, and $H_*>0$ makes both conditional derivatives
+$\kappa_a=O(\sqrt\delta)$, and $H_*>0$ makes both conditional derivatives
 positive on this shrinking interval. Uniform Taylor expansion gives,
 for bounded $v\ge0$,
 \[
@@ -154,9 +192,9 @@ for bounded $v\ge0$,
        \left(C_*v-\frac{B_*v^3}{6}\right)+o(\delta^{3/2}).
 \]
 The cubic has its unique positive maximum at
-$v=\sqrt{2C_*/B_*}$. Maximizing on $[0,c_a/\sqrt\delta]$, whose
+$v=\sqrt{2C_*/B_*}$. Maximizing on $[0,\kappa_a/\sqrt\delta]$, whose
 right endpoint tends to $\sqrt{6C_*/B_*}$, proves \eqref{eq:bias-cusp}.
-The maximum is positive and attained inside $(0,c_a)$, since the ratio
+The maximum is positive and attained inside $(0,\kappa_a)$, since the ratio
 vanishes at both endpoints. Uniform convergence and the unique maximum
 of the limiting cubic also force every scaled maximizer to tend to
 $\sqrt{2C_*/B_*}$. This proves the assertion about $t_a$.
@@ -166,7 +204,7 @@ three rational enclosures for $C_*,B_*$ and $H_*$.
 For completeness, the same argument gives local continuity and strict
 monotonicity without differentiating a maximum. Choose a small fixed
 $r>0$. For $a$ sufficiently close to $a_*$, the denominator of the
-ratio is positive on $[0,r]$ and $c_a<r$. The maximum can therefore
+ratio is positive on $[0,r]$ and $\kappa_a<r$. The maximum can therefore
 be taken over this fixed compact interval, so it is continuous in $a$.
 The differentiated Fourier bounds justify the expansions
 $\partial_a g_a'(t)=C_*t+o(t)$ and

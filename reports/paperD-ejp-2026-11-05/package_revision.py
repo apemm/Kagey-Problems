@@ -123,6 +123,7 @@ for name in ['PaperD.lean','lean-toolchain','lake-manifest.json','verify_lean.py
     f=LEAN/name
     if f.exists(): verification_pairs.append((f,'lean/'+name))
 verification_pairs.append((LEAN/'PaperD/MAP.md','lean/PaperD/MAP.md'))
+verification_pairs.append((LEAN/'PaperD/coverage_tables.tex','lean/PaperD/coverage_tables.tex'))
 verification_pairs.append((HERE/'archive-lakefile.toml','lean/lakefile.toml'))
 verification_pairs.append((HERE/'archive-README.md','README.md'))
 verification_pairs.append((ROOT/'LICENSE','LICENSE'))

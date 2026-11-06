@@ -15,6 +15,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.optimize import minimize_scalar
 from scipy.integrate import simpson
+from scipy.special import gammaln
 
 P=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(P))
@@ -108,17 +109,29 @@ def draw():
     plt.rcParams.update({'font.family':'serif','font.size':9,'axes.spines.top':False,'axes.spines.right':False,'pdf.fonttype':42})
     fig=plt.figure(figsize=(6.3,5.0),layout='constrained')
     gs=fig.add_gridspec(2,3,height_ratios=[1.25,1])
-    ax=fig.add_subplot(gs[0,:])
+    ax=fig.add_subplot(gs[0,:2])
     a,b=d['a'],d['b']
     ax.fill_between(a,b,1-b,color='#76b8c5',alpha=.65)
     ax.plot(a,b,color='#00566b',lw=1.5); ax.plot(a,1-b,color='#00566b',lw=1.5)
     ax.axvline(ASTAR,color='.3',ls=':',lw=1)
     ax.plot([ASTAR],[.5],'o',color='#ae4a27',ms=4)
-    ax.text(.805,.51,'two local maxima',ha='center')
-    ax.text(.73,.96,'one local maximum',ha='center',va='top')
-    ax.text(.73,.04,'one local maximum',ha='center',va='bottom')
+    ax.text(.805,.51,'two modes',ha='center')
+    ax.text(.73,.96,'one mode',ha='center',va='top')
+    ax.text(.73,.04,'one mode',ha='center',va='bottom')
     ax.annotate(r'$a_*$',(ASTAR,.5),xytext=(ASTAR-.025,.65),arrowprops={'arrowstyle':'-','lw':.7})
-    ax.set(xlabel=r'memory $a$',ylabel=r'initial bias $q$',xlim=(.62,.9),ylim=(0,1))
+    ax.set(xlabel=r'memory $a$',ylabel=r'initial bias $q$',xlim=(.62,.9),ylim=(0,1),title='Numerical boundary')
+    # Plot the explicit theorem's inner region, without solving for b_a.
+    ax=fig.add_subplot(gs[0,2])
+    a1=np.linspace(.96,.99999,600)
+    rho=np.expm1(2*gammaln(1+a1)-np.log(2*a1-1)-gammaln(2*a1))
+    ok=rho<1/12
+    a1,rho=a1[ok],rho[ok]
+    bound=4*rho/(1-4*rho)
+    ax.fill_between(a1,bound,1-bound,color='#afd0b0',alpha=.8,hatch='///',edgecolor='#397849',linewidth=0)
+    ax.plot(a1,bound,color='#397849',lw=1.2)
+    ax.plot(a1,1-bound,color='#397849',lw=1.2)
+    ax.text(.985,.5,'two modes',ha='center',fontsize=8)
+    ax.set(xlabel=r'memory $a$',xlim=(.96,1),ylim=(0,1),title='Proved inner region',xticks=[.96,.98,1])
     titles=['below the transition','at the transition','above the transition']
     for k,(a,y,title) in enumerate(zip(d['curve_a'],d['density'],titles)):
         ax=fig.add_subplot(gs[1,k]); ax.plot(d['u'],y,color='#00566b',lw=1.5)

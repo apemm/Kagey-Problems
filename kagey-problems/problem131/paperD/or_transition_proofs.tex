@@ -115,15 +115,15 @@ and the conservative constants
 It checks $A_1<1$, $\kappa<1/10$ and $A_0+A_S<2$, so both
 contractions have strict slack. The new tail is at most
 $1/(10000\pi)<1/30000$.
-The old zero bracket lies strictly inside $I$.
+The certified zero bracket lies strictly inside $I$.
 
 For the finite-frequency integral, let $w_0$ be the halfwidth of $I$,
-$\rho>w_0$ the Cauchy radius and $q=w_0/\rho$.
+$\rho>w_0$ the Cauchy radius and $\vartheta=w_0/\rho$.
 Differentiating the finite Taylor polynomial in memory leaves the
 coefficient remainder factor
 \[
- \frac1\rho\sum_{i>K}i q^{i-1}
- =\frac{q^K\{(K+1)-Kq\}}{\rho(1-q)^2}.
+ \frac1\rho\sum_{i>K}i \vartheta^{i-1}
+ =\frac{\vartheta^K\{(K+1)-K\vartheta\}}{\rho(1-\vartheta)^2}.
 \]
 The omitted moment series has derivative bound
 $\tau_k(t)/(\rho-w_0)$ by Cauchy's estimate.
@@ -143,7 +143,7 @@ the initial derivative-cell bounds. It was rerun with $1100$ moments
 and $1600$-bit precision under \texttt{python -O}; every check uses
 \texttt{require}, so optimization cannot remove it.
 
-Continuity and the old sign bracket give a zero $a_*$ of $g_a''(0)$.
+Continuity and the sign bracket give a zero $a_*$ of $g_a''(0)$.
 The first inequality in~\eqref{eq:thr-final-derivatives} makes it unique
 within $I$. At $a_*$, evenness
 and the second inequality give
@@ -156,3 +156,32 @@ Together with the signs on either side inside $I$, and the existing shape
 certificate outside the bracket, this proves the unique-transition assertion
 in Theorem~\ref{thm:threshold}. No claim that central curvature has no other
 zero in the already bimodal region is needed.
+
+\paragraph{The critical constants.}
+For Table~\ref{tab:critical-constants} we apply the same estimates on
+$I_*=[z_--10^{-14},z_-+10^{-14}]$, where
+$z_-=1838418790980431/2748779069440000$ is the lower endpoint of the
+certified threshold bracket. The entire bracket lies inside $I_*$.
+Take
+\[
+ \begin{gathered}
+ T_2=10,\quad T=16,\quad\beta=12,\quad\gamma=11,\\
+ C=1/1000,\quad R=1/20,\quad M=D_1=2,\quad M_a=D_a=4.
+ \end{gathered}
+\]
+The base Fourier bound, initial derivative cells and both strict
+contraction inequalities hold uniformly on $I_*$. We use $2000$ moments,
+$2600$-bit ball arithmetic, Cauchy ratio $1/10000$, frequency halfwidth
+$1/32$ and frequency Taylor order $48$.
+The omitted tails for $C_*$, $B_*$ and $H_*$ are bounded respectively by
+\[
+ \frac{D_aT^{3-\gamma}}{\pi(\gamma-3)},\qquad
+ \frac{CT^{5-\beta}}{\pi(\beta-5)},\qquad
+ \frac{CT^{2-\beta}}{\pi(\beta-2)}.
+\]
+The finite-frequency integrals use the same parameter and moment
+remainders as above, with weights $t^2$, $t^4$ and $t$.
+Thus they enclose the values at $a_*$ without substituting a decimal
+approximation for the threshold. Outward arithmetic then gives the
+two derived coefficients in the table. Appendix~\ref{app:data} lists
+the complete record and rerun command.
