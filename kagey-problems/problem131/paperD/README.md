@@ -6,16 +6,18 @@ The [complete manuscript](problem131_memory.pdf) now leads with the resolved
 GLRS bias-interval conjecture. It includes all threshold proofs, uses the EJP
 class, and has the same mathematical content in its journal and arXiv versions.
 
-New additions give a variational equation for the bias boundary, its
-three-halves opening law and local monotonicity, the quartic critical top and
+New additions give a variational equation for the bias boundary, global
+continuity, a unique minimizer wherever the boundary is positive above the
+threshold, its three-halves opening law and local monotonicity, the quartic critical top and
 square-root mode locations, a computation-free bimodality proof for `a >= 0.79`,
-and the explicit Landau mode constant `400`. A numerical phase diagram
+and the explicit Landau mode constant `50`. A numerical phase diagram
 illustrates the fixed-memory results. Global monotonicity of the bias width,
 a finite-length threshold rate and a uniform bridge to fixed memory remain open.
 
 Read [submission_notes.md](submission_notes.md) for the current packages and
 [the revision report](../../../reports/paperD-ejp-2026-11-05/README.md) for proof,
-literature and verification details. The paper's disclosure is unchanged. No public submission or courtesy
+literature and verification details. The source-reading sentence now records
+abstract-only access to Drezner–Farnum and Heyde. No public submission or courtesy
 email has been made.
 
 The old JTP archive, review-only extract and unused extended-source files below

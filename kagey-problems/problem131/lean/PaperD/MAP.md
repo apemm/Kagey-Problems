@@ -2,15 +2,17 @@
 
 ## EJP revision, November 5, 2026
 
-The current complete build, imported-source inventory and axiom audit are in
-`reports/paperD-ejp-2026-11-05`. `PaperD.Revision` imports all four revision modules.
+The earlier EJP build, imported-source inventory and axiom audit are in
+`reports/paperD-ejp-2026-11-05`. `PaperD.Revision` imports the revision modules.
 Older theorem numbers below refer to their dated manuscripts; the labels in
 this table identify the current statements without depending on renumbering.
 
 | Manuscript result | Formal entry | Explicit inputs and limits |
 | --- | --- | --- |
+| `thm:bias-continuity`, global continuity and unique positive-boundary minimizer | Written proof | The fair curvature partition, two-mode theorem, analytic density and locally uniform Fourier decay. The new parameter-uniform part of `lem:analytic-density` is a written martingale and smoothing argument. The localization and maximum-stability steps alone are formalized below. |
 | `prop:bias-boundary`, derivative characterization of the bias interval | `Modes.reflectedMixture_valley_interval_derivative` and `Modes.reflectedMixture_modes_interval_derivative` in `Modes/EJPBiasDerivativeCutoff` | Differentiability, conditional unimodality, reflection dominance and the preceding half-line/mode-count properties. The cutoff is derived, not assumed. The infimum notation in the paper abbreviates this union of strict derivative inequalities. |
 | `prop:bias-boundary`, stationary equations at an attained interior cutoff | `Modes.reflectedMixture_stationary_of_attained_cutoff` | Differentiability of the derivatives, positivity of the denominator and attainment of the cutoff. Attainment and uniqueness are not claimed. |
+| Bias boundary, compact localization and stability of maximum values | `Modes.ejp_bias_ratio_tail_bounds`, `Modes.ejp_bias_ratio_isMaxOn`, `Modes.ejp_bias_ratio_max_stability` in `EJPBiasBoundary` | Quasiconcavity and strict endpoint comparisons localize each ratio. Continuity and a uniform error bound on the shared interval give attainment and stability. The actual density's quasiconcavity, parameter regularity and global boundary continuity require separate arguments. |
 | `cor:bias-boundary-rate`, explicit bound near memory one | Written proof | Exact conditional moments, Chebyshev's inequality on three equal-length intervals and the bias-interval theorem. Gives `b_a <= 4 rho_a/(1-4 rho_a)` for `rho_a < 1/12`, hence `b_a <= 8(1-a)+O((1-a)^2)`. No density-convergence rate or matching lower bound is claimed. |
 | `cor:analytic-range`, computation-free bimodality for `a >= 79/100` | `Modes.EJPAnalyticRange.two_modes_of_ge` in `EJPModeAnalyticRange` | Existing density, convergence, Fourier and GLR raw-moment inputs. The unimodal fourth-moment inequality, exact power comparison and decreasing envelope are checked. |
 | `cor:mode-location`, underlying eventual bound | `ejp_cor_mode_location_400`, `ejp_uniform_mode_rate_400` in `EJPModeStability` | The existing named Fourier inversion, compound-Poisson characteristic function, Efron–Stein and Landau-unimodality inputs. These prove the weaker eventual constant `400`. The manuscript's constant `50` and threshold `ceil(exp(30000))` have a written proof using the sharper numerical constants below. |
@@ -22,8 +24,8 @@ this table identify the current statements without depending on renumbering.
 
 The new numerical endpoint check uses an independent real-parameter evaluation
 path, but shares Arb and the analytic smoothing bounds. It is outside the Lean
-trusted base. Helpers in the four revision modules are public so the complete
-declaration/axiom audit checks them as well as their final theorems.
+trusted base. Helpers in the revision modules are public so a complete
+declaration and axiom audit can check them as well as their final theorems.
 The current table takes precedence over the historical constant and theorem-number
 descriptions below. In particular, the sharper Landau constants are numerical
 proof inputs, not new kernel-checked integration results.

@@ -1,12 +1,12 @@
 \section{Sign patterns and regularity}\label{app:modes}
 
-We prove the lemmas used for Theorem~\ref{thm:two-modes}, with the notation
-of Sections~\ref{sec:convex} and~\ref{sec:modes}. Deleting entries from a list
-replaces its pattern by a subsequence. An alternating list $p$ satisfies
+We use the notation of Sections~\ref{sec:convex} and~\ref{sec:modes}
+to prove the lemmas for Theorem~\ref{thm:two-modes}.
+Deleting entries can only remove signs from a list's pattern. An alternating list $p$ satisfies
 $p\preceq q$ for every alternating list $q$ with the same first sign and at
 least as many entries.
 
-\begin{lemma}[descartes' rule for exponential sums]\label{lem:descartes}
+\begin{lemma}[Descartes' rule for exponential sums]\label{lem:descartes}
 Let $\lambda_1<\dots<\lambda_n$ and $b_1,\dots,b_n$ be real, with
 $b=(b_1,\dots,b_n)\ne0$, and put $F(y)=\sum_{k=1}^nb_ke^{\lambda_ky}$. Then
 $F$ has finitely many real zeros, and
@@ -57,7 +57,7 @@ at $y_1,\dots,y_j$ tend to those of $v$, and the same argument applies to
 them.
 \end{proof}
 
-\begin{lemma}[one derivative fewer]\label{lem:sp-derivative}
+\begin{lemma}[integrating the sign bound]\label{lem:sp-derivative}
 Let $u$ be twice continuously differentiable on $\mathbb R$, with $u'(y)\to0$
 as $y\to\pm\infty$. If $u''$ has values at most $\Pi_5$, then $u'$ has values
 at most $\Pi_4$, and $u$ has increments at most $\Pi_4$.
@@ -81,34 +81,52 @@ the sign of $u'(\xi_i)$ for some $\xi_i\in(y_i,y_{i+1})$, by the mean value
 theorem. So the pattern of the increments is a pattern of values of $u'$.
 \end{proof}
 
-\begin{lemma}[absence of flat intervals]\label{lem:analytic-density}
+\begin{lemma}[entire densities and parameter continuity]\label{lem:analytic-density}
 For every $a\in(\frac12,1)$ and $1<r<1/a$, the characteristic function
 $\phi_a$ of $\mathcal L_a$ satisfies
 \[
  |\phi_a(t)|\le 2e^{-c|t|^r}\qquad(t\in\mathbb R)
 \]
-for some $c=c(a,r)>0$. For every $q\in[0,1]$, the density of the limit with first-step bias $q$
+for some $c=c(a,r)>0$. The same $c$ works on a sufficiently small
+neighborhood of any fixed $a$. Every spatial derivative of $h_a$ is
+jointly continuous in $(a,u)$. For every $q\in[0,1]$, the density of the limit with first-step bias $q$
 extends to an entire function and is not constant on an interval of
 positive length.
 \end{lemma}
 
 \begin{proof}
+First, we check weak continuity in $a$. On a compact
+$J\subset(1/2,1)$, the martingale
+$\mathcal M_n(a)=\Gamma(n)S_n/\Gamma(n+a)$ from the proof of
+Corollary~\ref{cor:fixed-memory-bridge} satisfies
+\[
+ \sup_{a\in J}\E|\mathcal L_a-\mathcal M_n(a)|^2
+ \le C_J\sum_{k\ge n}k^{-2\min J}\longrightarrow0.
+\]
+The walk's centered next step has conditional variance at most one,
+and the gamma ratios are uniformly bounded on $J$. The finite laws are
+continuous in $a$, so $\phi_a(t)$ is jointly continuous, uniformly on
+compact frequency intervals.
+
 The fixed-point equation of~\cite[Theorem~1.1 and (2.10)]{glr2026} gives
 \[
  |\phi_a(t)|\le\int_0^1|\phi_a(tv^a)|\,
                   |\phi_a(t(1-v)^a)|\,dv.
 \]
 Here $\phi_a$ is the characteristic function conditional on a positive
-first step. The random sign in the fixed-point equation causes no change
-in this inequality, since $|\phi_a(-s)|=|\phi_a(s)|$.
-Put $D(v)=v^{ar}+(1-v)^{ar}-1$. Since $ar<1$, we have $D(v)>0$ for
+first step. The random sign disappears after taking absolute values, since
+$|\phi_a(-s)|=|\phi_a(s)|$.
+Fix $a_0$ and $1<r<1/a_0$, and choose $J$ about $a_0$ with $r\max J<1$.
+Put $D(v)=v^{r\max J}+(1-v)^{r\max J}-1$. We have $D(v)>0$ for
 $0<v<1$. Dominated convergence therefore permits $K>1$ such that
 \[
  R:=2\int_0^1e^{-K^r(\log2)D(v)}\,dv<1.
 \]
-The law of $\mathcal L_a$ has a density~\cite[Theorem~1.3]{glr2026}, so
+The law of $\mathcal L_{a_0}$ has a density~\cite[Theorem~1.3]{glr2026}, so
 the Riemann--Lebesgue lemma gives $T>0$ with
-$|\phi_a(t)|\le2^{1-K^r}$ for $|t|\ge T$. Set
+$|\phi_{a_0}(t)|<2^{-K^r}$ for $|t|\ge T$. Joint continuity, after
+shrinking $J$, gives $|\phi_a(t)|\le2^{1-K^r}$ for $a\in J$ and
+$T\le|t|\le KT$. Set
 $c=(\log2)/T^r$ and $b(t)=2e^{-ct^r}$ for $t\ge0$.
 On $[0,T]$ we have $b\ge1$, and on $[T,KT]$ we have
 $b\ge2^{1-K^r}$. Thus $|\phi_a|\le b$ on $[0,KT]$.
@@ -116,23 +134,26 @@ $b\ge2^{1-K^r}$. Thus $|\phi_a|\le b$ on $[0,KT]$.
 For $t\ge KT$,
 \[
  \frac{\int_0^1b(tv^a)b(t(1-v)^a)\,dv}{b(t)}
- =2\int_0^1e^{-ct^rD(v)}\,dv\le R<1.
+ \le2\int_0^1e^{-ct^rD(v)}\,dv\le R<1.
 \]
-If the bound $|\phi_a|\le b$ first ceased to hold at a finite supremum
-$t_*\ge KT$, continuity would give the bound on $[0,t_*]$. The
-fixed-point inequality would then give
-$|\phi_a(t_*)|\le Rb(t_*)<b(t_*)$, and continuity would extend the bound
-beyond $t_*$. This contradiction proves the bound on $[0,\infty)$;
-symmetry of its modulus gives the bound on $\mathbb R$.
+Suppose the interval on which $|\phi_a|\le b$ holds has finite
+supremum $t_*\ge KT$. By continuity it holds on $[0,t_*]$ as well.
+At the endpoint the fixed-point inequality gives the strict bound
+$|\phi_a(t_*)|\le Rb(t_*)<b(t_*)$. Continuity then extends the
+interval past $t_*$, a contradiction. The bound thus holds on
+$[0,\infty)$, and evenness extends it to $\mathbb R$.
 
-Since $r>1$, the Fourier integral for the density converges absolutely
-and locally uniformly for complex arguments: for every $B<\infty$,
-$\int_{\mathbb R}e^{B|t|}|\phi_a(t)|\,dt<\infty$. It therefore defines
-an entire function. At initial bias $q$, the characteristic function is
-$q\phi_a(t)+(1-q)\phi_a(-t)$ and obeys the same bound by the triangle
-inequality. Each resulting density is integrable with integral one, so
-it is not constant on $\mathbb R$. The identity theorem excludes a
-constant interval.
+Since $r>1$, the Fourier integral converges absolutely and locally
+uniformly for complex arguments. Indeed, for every $B<\infty$,
+$\int_{\mathbb R}e^{B|t|}|\phi_a(t)|\,dt<\infty$.
+The Fourier integral therefore defines an entire function.
+After any fixed number of spatial derivatives, the bound on $J$
+still supplies an integrable majorant, giving joint continuity by
+dominated convergence. For initial bias $q$, apply the triangle
+inequality to $q\phi_a(t)+(1-q)\phi_a(-t)$ to get the same bound.
+A density of integral one cannot be constant on $\mathbb R$.
+If it were constant on an interval, the identity theorem would
+make it constant everywhere.
 \end{proof}
 
 
@@ -166,9 +187,9 @@ Subtracting adjacent equations gives
  d_{t+1}(k)=r_t(k-1)d_t(k-1)+(1-r_t(k+1))d_t(k),
  \qquad 1\le k\le t-1.
 \end{equation}
-Both coefficients are at least $\min(\varepsilon,1-\varepsilon)>0$:
-$r_t(j)$ is a convex combination of $\varepsilon$ and $1-\varepsilon$
-for $0\le j\le t$. We treat the two boundaries separately.
+Both coefficients are at least $\min(\varepsilon,1-\varepsilon)>0$,
+since $r_t(j)$ is a convex combination of $\varepsilon$ and
+$1-\varepsilon$ for $0\le j\le t$. It remains to check the two ends.
 
 Suppose first that $q<1$. Since
 $P_t(0)=(1-q)(1-\varepsilon)^{t-1}>0$, define
@@ -185,9 +206,8 @@ Thus $\delta_t=\xi_{t+1}-\xi_t$ obeys
 \begin{equation}\label{eq:bias-edge-increments}
  \delta_{t+1}=\frac{t-b}{t+1}\delta_t+\frac A{t+1}.
 \end{equation}
-A nonnegative increment is followed by a positive increment. Consequently,
-$\xi_t$ first decreases and then increases, allowing either stretch to be
-empty. For $\ell_t=d_t(0)=P_t(0)(\xi_t-1)$ this proves
+Once an increment is nonnegative, every later increment is positive.
+Thus $\xi_t$ first decreases and then increases (either part may be empty). For $\ell_t=d_t(0)=P_t(0)(\xi_t-1)$ this proves
 \[
  \operatorname{sp}(\ell_1,\ldots,\ell_N)\preceq(+,-,+).
 \]
@@ -200,8 +220,8 @@ Write $u_t=d_t(t-1)$. Reflection of the walk gives
 $u_t(q)=-\ell_t(1-q)$ and
 $d_t^{(1-q)}(t-1-k)=-d_t^{(q)}(k)$.
 For $0<q\le1/2$, the right boundary history therefore has pattern
-contained in $(-,+,-)$. For $q=0$ it is nonpositive throughout: the
-conditional count is at most $t-1$, so $u_t=-P_t(t-1)\le0$.
+contained in $(-,+,-)$. For $q=0$ it is nonpositive throughout. The conditional count is at
+most $t-1$, so $u_t=-P_t(t-1)\le0$.
 
 Fix $N$ and, for $1\le t\le N$, form the augmented row
 \[
@@ -210,28 +230,25 @@ Fix $N$ and, for $1\le t\le N$, form the augmented row
        u_{t+1},\ldots,u_N).
 \]
 For $q\le1/2$, its first row is contained in $(+,-,+,-)$.
-Here is an explicit check that also handles zeros at
-$\ell_1=u_1=2q-1$. If $Z_1$ contained four ordered signs $-,+,-,+$
+To include possible zeros at $\ell_1=u_1=2q-1$, argue as follows. If $Z_1$ contained four ordered signs $-,+,-,+$
 and the second lay in the reversed left history, the first two would give
 a positive left edge followed in time by a negative one, which is
 impossible. Otherwise the last three lie in the right history and have
-signs $+,-,+$. For $q>0$ their reflected negatives contradict the
-$(-,+,-)$ exclusion for the left history at bias $1-q$; for $q=0$ they
-contradict its nonpositive right history. This proves the asserted base
-pattern, including $N=1$.
+signs $+,-,+$. For $q>0$, their reflected negatives give the forbidden pattern
+$(-,+,-)$ in the left history at bias $1-q$. For $q=0$, they contradict
+the nonpositive right history. This also covers $N=1$.
 
 Every entry of $Z_{t+1}$ is a nonnegative combination of adjacent entries
-of $Z_t$. The interior entries use \eqref{eq:bias-first-diff}; the two
-new boundary entries and the remaining future edge values are copied
-with coefficients $(1,0)$ or $(0,1)$. Such a step cannot introduce an
-alternating strict-sign pattern: each nonzero entry has a parent of the
-same sign, and parents of successive opposite signs are strictly ordered.
+of $Z_t$. The interior entries use \eqref{eq:bias-first-diff}. The two new
+boundary entries and the remaining future edge values are copied,
+with coefficients $(1,0)$ or $(0,1)$. Each nonzero entry has a parent
+of the same sign. Parents of successive opposite signs are strictly
+ordered, so the new row cannot have an extra alternating sign.
 Thus $\operatorname{sp}(Z_N)\preceq(+,-,+,-)$. Reflection and sign
 reversal preserve this pattern, proving the claim also for $q\ge1/2$,
 including $q=1$.
 
-Finally, extension by zero adds $d_N(-1)=P_N(0)\ge0$ on the left and
-$d_N(N)=-P_N(N)\le0$ on the right; neither enlarges the pattern.
+Finally, extension by zero adds $d_N(-1)=P_N(0)\ge0$ on the left and $d_N(N)=-P_N(N)\le0$ on the right. Neither enlarges the pattern.
 Every modal plateau contributes a positive-to-negative change, so there
 are at most two. If the last displayed inequalities in the statement
 held, each of their four intervals would contain an adjacent difference

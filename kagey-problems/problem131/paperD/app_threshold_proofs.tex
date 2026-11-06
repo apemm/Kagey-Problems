@@ -1,12 +1,10 @@
 \section{Proofs for the threshold certificate}\label{or:threshold}
 
-This section proves the lemmas that Appendix~\ref{app:threshold} summarizes,
-and so completes the proof of Theorem~\ref{thm:threshold}. We use the notation
-of that appendix, and in particular the inequality~\eqref{eq:thr-fixed}. We
+We prove the certificate bounds used in Appendix~\ref{app:threshold}, keeping its notation and the smoothing inequality~\eqref{eq:thr-fixed}. Together these bounds prove Theorem~\ref{thm:threshold}. We
 write $\Phi_N(t)=\sum_{n\le N}c_n(it)^n$ for the partial sums of the moment
 series.
 
-\subsection{One value of the memory}
+\subsection{Bounds at a fixed memory}
 
 \begin{lemma}[moment bounds]\label{lem:thr-moments}
 Let $N\ge3$.
@@ -73,7 +71,7 @@ geometric series with first term $u$ and ratio $r$. Both $u$ and $r$ increase
 in $t$.
 \end{proof}
 
-\begin{lemma}[cells]\label{lem:thr-cells}
+\begin{lemma}[frequency cells]\label{lem:thr-cells}
 Let $\nu$ be even, $t_c>0$ and $\lvert\delta\rvert\le h$. Then
 \[
  \lvert\phi(t_c+\delta)\rvert\le\sum_{k<\nu}\lvert\phi^{(k)}(t_c)\rvert
@@ -86,7 +84,7 @@ This is Taylor's formula, with
 $\lvert\phi^{(\nu)}\rvert\le\E\lvert \mathcal L_a\rvert^\nu=\E \mathcal L_a^\nu=\nu!\,c_\nu$.
 \end{proof}
 
-\begin{lemma}[the tail]\label{lem:thr-tail}
+\begin{lemma}[Fourier tail]\label{lem:thr-tail}
 Let $0<T_2<T_3$ with $T_3\ge2^aT_2$, and let $\beta>3$ with $a\beta>1$.
 Cover $[0,T_3]$ by cells $[l_j,r_j]$ with $l_0=0$ and with $T_2$ among the
 end points, and let $s_j\ge\sup_{[l_j,r_j]}\lvert\phi\rvert$. Let $C$ be the
@@ -157,12 +155,9 @@ $\int_0^{T_3}t^2\tau_0(t)\,dt\le\frac13T_3^3\tau_0(T_3)$. The integral over
 $t>T_3$ is at most $CT_3^{3-\beta}/(\beta-3)$.
 \end{proof}
 
-\subsection{Intervals of the memory}
+\subsection{Bounds on memory intervals}
 
-Ball arithmetic with $a$ as an interval fails here. Near the threshold the
-series for $\phi$ cancels terms of size about $10^{60}$, so the boxes in $a$
-would have to be narrower than about $10^{-65}$. We expand in $a$ around one
-exact point instead.
+Direct interval evaluation loses too much to cancellation. Near the threshold the series for $\phi$ cancels terms of size about $10^{60}$, requiring intervals in $a$ narrower than about $10^{-65}$. We retain this cancellation by expanding in $a$ around one exact point.
 
 \begin{lemma}[Cauchy remainder]\label{lem:thr-taylor}
 Let $h$ be analytic near the closed disc $\lvert z-a_0\rvert\le\rho$, with
@@ -182,7 +177,7 @@ Lemma~\ref{lem:thr-taylor}. Suppose that $\alpha=a_0-\rho>\frac12$, that
 $\lvert z\rvert\le1$ on $S$, and that $\tilde A,\tilde B$ are as in
 Lemma~\ref{lem:thr-moments}(b). Let $\tau_k$ be the bound of
 Lemma~\ref{lem:thr-trunc} with these constants. It holds for every real
-$a\in I$. For a cell with centre $t_c$ write
+$a\in I$. For a cell with center $t_c$ write
 $\partial_t^k\Phi_N(z,t_c)=E_k(z)+iO_k(z)$, where $E_k$ is the sum over even
 $n$ and $iO_k$ the sum over odd $n$. Both $E_k$ and $O_k$ are real for real
 $z$. Let $E_{k,i}$ and $O_{k,i}$ be their Taylor coefficients at $a_0$, and
@@ -190,7 +185,7 @@ put $M_k=\sum_{n\le N}\sup_S\lvert c_n\rvert\,n(n-1)\cdots(n-k+1)\,t_c^{n-k}$.
 
 \begin{proposition}[enclosure on an interval]\label{prop:thr-interval}
 \begin{enumerate}[(a)]
-\item For every $a\in I$ and every $t$ in the cell with centre $t_c$ and
+\item For every $a\in I$ and every $t$ in the cell with center $t_c$ and
 half-width $h$,
 \[
  \lvert\phi_a(t)\rvert\le\sum_{k<12}\Bigl(\sum_{i\le K}w^i
@@ -286,7 +281,7 @@ the disc may cross $a=\frac12$, and the cover reaches $a=\frac12$. The sign
 of $g_a''(0)$ is the opposite of the sign of the integral, since
 $\sigma^3>0$ and the Fourier formula has a minus sign.
 
-\subsection{From the runs to the theorem}\label{or:thr-runs}
+\subsection{Checking the parameter cover}\label{or:thr-runs}
 
 The script accepts an interval of $a$ only when $G\pm\eta$ has one sign on
 each piece of a subdivision of it. In the 7 scaled runs every piece of every
@@ -297,10 +292,7 @@ $[0.6692,0.6712]$ every piece is positive. On $[0.6688,0.6692]$ the pieces
 up to $z_-$ are negative, the pieces from $z_+$ on are positive, and only
 $(z_-,z_+)$ is undecided. Proposition~\ref{prop:thr-interval}(b) turns these
 signs into $g_a''(0)<0$ on $(\frac12,z_-]$ and $g_a''(0)>0$ on
-$[z_+,0.6712]$. The order matters. A positive interval left of $z_-$ would
-give another zero, and the sign classification of Theorem~\ref{thm:threshold} would
-fail. So the script prints the sign of each accepted interval with its exact
-end points. Its mode \texttt{zero} fails unless the signs are $-$ before the
+$[z_+,0.6712]$. To check the sign classification in Theorem~\ref{thm:threshold}, the script records each accepted interval with its sign and exact endpoints. Its mode \texttt{zero} fails unless the signs are $-$ before the
 undecided piece and $+$ after it. Its mode \texttt{check} requires the same of
 the stored records, together with the sign $-$ on every interval of the scaled
 runs.

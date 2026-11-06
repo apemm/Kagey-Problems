@@ -68,7 +68,14 @@ original = (HERE/'disclosure-original.txt').read_text(encoding='utf-8')
 if r'\section*{A note on the use of AI}' in original:
     original = original.split(r'\section*{A note on the use of AI}',1)[1]
 original = original.strip()
-require(disclosure == original, 'The protected disclosure changed')
+# Only the source-access qualification was authorized on this pass.
+authorized = original.replace(
+    'I read every source cited in the paper. I proposed and drafted the following',
+    'I read every source cited in the paper, except that for Drezner and\n'
+    'Farnum~\\cite{dreznerfarnum1993} and Heyde~\\cite{heyde2004} I relied on their\n'
+    'abstracts and the account of James, James and Qi~\\cite{jamesjamesqi2008}.\n'
+    'I proposed and drafted the following')
+require(disclosure == authorized, 'The protected disclosure changed beyond the source-access qualification')
 require(not any(ord(c)<32 and c not in '\n\r' for c in source), 'Control character in manuscript')
 require('Online Resource' not in source and 'Statements and Declarations' not in source,
         'Obsolete journal matter remains')
@@ -150,9 +157,9 @@ deliverables=[P/n for n in ['problem131_memory.pdf','problem131_arxiv.pdf',
                            'paperD_verification_archive.zip','arxiv_metadata.json']]
 manifest={'tag':TAG,'pages':len(ejp_reader.pages),'figures':3,
           'isolated_builds':'passed, three passes each; extracted PDF text identical',
-          'disclosure':'unchanged, normalized line endings',
+          'disclosure':'only the authorized Drezner–Farnum and Heyde source-access qualification changed',
           'latex_warning':'official class sets the already-loaded pagebackref option; informational only',
           'input_sources':{f.relative_to(P).as_posix():digest(f) for f in arxiv_sources},
           'deliverables':{f.relative_to(P).as_posix():{'bytes':f.stat().st_size,'sha256':digest(f)} for f in deliverables}}
 (HERE/'delivery-manifest.json').write_text(json.dumps(manifest,indent=2)+'\n',encoding='utf-8')
-print(json.dumps({'pages':len(ejp_reader.pages),'isolated_builds':'PASS','archives':'PASS','disclosure':'UNCHANGED'},indent=2))
+print(json.dumps({'pages':len(ejp_reader.pages),'isolated_builds':'PASS','archives':'PASS','disclosure':'AUTHORIZED SOURCE-ACCESS CHANGE ONLY'},indent=2))

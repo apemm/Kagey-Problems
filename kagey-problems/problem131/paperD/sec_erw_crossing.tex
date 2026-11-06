@@ -1,17 +1,7 @@
-\section{The elephant walk and its crossing}\label{sec:erw}
+\section{The center-end crossing}\label{sec:erw}
 
-\begin{definition}[elephant walk]\label{def:erw}
-Fix $0<\varepsilon<1$. Let $X_1$ be uniform on $\{\pm1\}$. For $t\ge1$ let
-$U_t$ be uniform on $\{1,\dots,t\}$, and put $X_{t+1}=X_{U_t}$ with
-probability $1-\varepsilon$ and $X_{t+1}=-X_{U_t}$ with probability
-$\varepsilon$. All these choices are independent. We call the event
-$X_{t+1}=-X_{U_t}$ a flip. As in Section~\ref{sec:notation},
-$A_N=\#\{i\le N:X_i=+1\}$ and $P_N(k)=\Prob(A_N=k)$. The crossing
-$\varepsilon_N$ is the value of $\varepsilon$ with $C_N=E_N$ (it exists and is
-unique by Proposition~\ref{prop:mlr}), and $x_N=N\varepsilon_N$.
-\end{definition}
-
-A flip is the reversal of the introduction. Let $M_t$ count the
+We use the fair-start walk of Section~\ref{sec:notation} and call a
+reversal a flip. Let $M_t$ count the
 $i\le t$ with $X_i\ne X_1$, and put
 \[
  r_t(b)=\varepsilon+(1-2\varepsilon)\frac bt,\qquad f_N(m)=\Prob_+(M_N=m).
@@ -36,8 +26,9 @@ $k\mapsto N-k$. Finally $M_N\le N-1$, so $f_N(N)=0$, and
 $f_N(0)=\prod_{t=1}^{N-1}(1-r_t(0))=(1-\varepsilon)^{N-1}$.
 \end{proof}
 
-So the end is that of the persistent walk with switch probability
-$\varepsilon$. More flips always raise the center relative to the end.
+The end mass is therefore the same as for the persistent walk with
+switch probability $\varepsilon$. We next show that increasing the
+flip probability raises the center relative to the end.
 
 \begin{proposition}\label{prop:mlr}
 Let $N\ge2$ and $1\le k\le N-1$. Then $f_N(k)/f_N(0)$ and $P_N(k)/E_N$ are
@@ -48,8 +39,9 @@ particular $C_N\ge2E_N$ there.
 \end{proposition}
 
 \begin{proof}
-We compare each path of $M$ with the path that never flips, one step at a
-time. The probability of a path of $M$ is a product of $N-1$ factors, namely
+Begin by comparing a path of $M$ with the path that never flips.
+A path of $M$ has probability equal to a product of $N-1$ factors,
+namely
 $r_s(b_s)$ for an up step at time $s$ and $1-r_s(b_s)$ otherwise, where $b_s$
 is the state at time $s$. The path that never flips has probability
 $f_N(0)=(1-\varepsilon)^{N-1}$, which is one factor $1-\varepsilon$ for each
@@ -79,10 +71,11 @@ $C_N\ge2E_N$ there. So the ratio equals $1$ at exactly one $\varepsilon$, and
 this $\varepsilon$ lies in $(0,\frac12)$.
 \end{proof}
 
-\subsection{First order, one early flip}
+\subsection{The first flip and the center}
 
-When $\varepsilon=0$ the chain $M$ never leaves $0$. After a first flip, and to
-first order in $\varepsilon$, it is P\'olya's urn.
+At $\varepsilon=0$, the chain $M$ stays at $0$.
+To find the first-order term in $\varepsilon$, allow one first flip
+and then turn off further flips. The remaining evolution is P\'olya's urn.
 
 \begin{lemma}[P\'olya's urn]\label{lem:urn}
 Let $2\le v\le N$. At time $v$ an urn holds one ball of one color and $v-1$
@@ -99,7 +92,8 @@ $\sum_dd\,\beta_v(d)=N/v$. For $1\le d\le N-1$,
 \end{lemma}
 
 \begin{proof}
-We compute the probability of one order of the draws and count the orders.
+Fix an order of the draws. We compute its probability and then
+count how many orders give the same final count.
 At time $k$ the urn holds $k$ balls. So if $s$ of them are of the first
 color, the next draw is of that color with probability $s/k$. Take one order
 of the $N-v$ draws in which $i$ draws are of the first color. The draws of
@@ -130,8 +124,8 @@ Define the hitting probability $V_s(b)$ from state $b$ at time $s$ by
 $V_N(b)=\mathbf 1\{b={k_{\mathrm c}}\}$ and
 $V_s(b)=r_s(b)V_{s+1}(b+1)+(1-r_s(b))V_{s+1}(b)$ for $s<N$. So
 $V_s(b)=\Prob_+(M_N={k_{\mathrm c}}\mid M_s=b)$ whenever $\Prob_+(M_s=b)>0$, and $V_s(b)$
-is a polynomial in $\varepsilon$. In particular it is defined at
-$\varepsilon=0$, without conditioning on an event of probability zero.
+is a polynomial in $\varepsilon$. This defines it at $\varepsilon=0$ as well (so we do not need to
+condition on an event of probability zero).
 For $1\le t\le {k_{\mathrm c}}$
 let
 \[
@@ -140,14 +134,16 @@ let
 \]
 so that $(w_t)_{1\le t\le {k_{\mathrm c}}}$ is a probability vector.
 
-The first-order coefficient in (b) is known. With equal switching
+The coefficient in part (b) below was found by Bokes, Hlubinov\'a
+and Singh. With equal switching
 probabilities $\varepsilon$ and one initial sensitive cell, the resistant-cell
 count of Bokes, Hlubinov\'a and Singh~\cite[Section~2 and Eq.~(1)]{bhs2023}
 is $M$. Their first-switch and P\'olya-urn argument gives
 $\varepsilon N/(m(m+1))$ as the first-order part of $f_N(m)$
 \cite[Eqs.~(6)--(10)]{bhs2023}, hence $\frac{4\varepsilon}{N+2}$ at $m={k_{\mathrm c}}$.
-We retain the proof because (a) and (c) underpin the uniform bounds of
-Theorem~\ref{thm:erw-bounds} and Appendix~\ref{app:erw}.
+We include the derivation because parts (a) and (c) give the weights
+needed for the uniform bounds in Theorem~\ref{thm:erw-bounds} and
+Appendix~\ref{app:erw}.
 
 \begin{proposition}[first order, as in~{\cite[Eqs.~(6)--(10)]{bhs2023}}]\label{prop:first-mutation}
 Let $N\ge2$ be even.
@@ -199,7 +195,7 @@ fraction tends to Beta$(1,t)$, with density $t2^{1-t}$ at $\frac12$.
 Thus $\sum_tt2^{1-t}=4$ explains $4/(N+2)$, and $w_t\le2t2^{-t}$
 restricts this term to early flips.
 
-\subsection{Two-sided bounds on the center}
+\subsection{Bounds on the central mass}
 
 \begin{theorem}\label{thm:erw-bounds}
 Let $N\ge2$ be even.
@@ -222,14 +218,13 @@ $\frac12\le\varepsilon<1$, because its right side is not positive there.
 \paragraph{Idea of the proof.}
 Appendix~\ref{app:erw} represents $M$ at time $s$, after its first flip,
 as P\'olya's urn with $\alpha s$ extra balls of each color, where
-$\alpha=\varepsilon/(1-2\varepsilon)$ (Lemma~\ref{lem:A-polya}). These pull
-the minority fraction toward $\frac12$; dropping them gives (a).
-For (b), use an urn with $\kappa(s+10)$ extra balls, where
-$\kappa=2\varepsilon/(1-4\varepsilon)$. Each step multiplies its hitting
-probability by at most about $e^{\kappa/s}$, whose product is about
-$e^{\kappa H_N}\approx N^{2\varepsilon}$.
+$\alpha=\varepsilon/(1-2\varepsilon)$ (Lemma~\ref{lem:A-polya}). These extra balls pull the minority fraction toward $\frac12$.
+Dropping them gives (a). For (b), we compare with an urn having $\zeta(s+10)$ extra balls, where
+$\zeta=2\varepsilon/(1-4\varepsilon)$. Each step multiplies its hitting
+probability by at most about $e^{\zeta/s}$, whose product is about
+$e^{\zeta H_N}\approx N^{2\varepsilon}$.
 
-\subsection{The crossing}
+\subsection{Locating the crossing}
 
 By Theorem~\ref{thm:erw-bounds},
 $C_N\approx4x/N^2$ when $\varepsilon=x/N$ and $x$ is of order $\log N$. Also
@@ -244,10 +239,10 @@ since $G$ increases from $-\infty$ to $\infty$ on $(0,\infty)$.
 \begin{table}[t]
 \centering\small
 \caption{Elephant crossings $x_N$ and the root $g_N$ of $G(g)=\Lambda_N$.
-These values are numerical and are not used in any proof. We computed $x_N$ in double precision from
-the recursion of Lemma~\ref{lem:erw-reduction}, by Brent's method with an
-absolute tolerance of $10^{-12}$ in $x$, and we found $g_N$ with a tolerance
-of about $10^{-15}$.}
+These are numerical illustrations. We computed $x_N$ in double
+precision from the recursion in Lemma~\ref{lem:erw-reduction}, using
+Brent's method with absolute tolerance $10^{-12}$ in $x$.
+For $g_N$ the tolerance was about $10^{-15}$.}
 \label{tab:erw-crossing}
 \begin{tabular}{@{}rlll@{}}
 \toprule
@@ -342,10 +337,11 @@ let $\theta$ be the switch probability and $T=N\theta$.
 Its runs have typical length $N/T$, and the right-step count spreads
 over about $N/\sqrt T$ values. Its central mass is of order $\sqrt T/N$,
 which balances $e^{-T}$ at $T\approx\log N$.
-An elephant reversal instead starts a family of descendants, governed
-by P\'olya's urn. Reaching the middle requires an early reversal whose
-family occupies about half the walk. This costs order $\varepsilon$,
-and the exact middle costs another $1/N$. Thus the center has mass
+For the elephant walk, follow the descendants of an early reversal
+(the steps that copy it, directly or indirectly). Their number grows
+as in P\'olya's urn. The middle is reached when this family takes up
+about half the walk. The early reversal costs order $\varepsilon$,
+and selecting the exact middle adds a factor $1/N$. Thus the center has mass
 about $4\varepsilon/N=4x/N^2$, balancing the endpoint at
 $x\approx2\log N$. Most of the roughly $2\log N$ reversals there
 occur too late to produce a large family.

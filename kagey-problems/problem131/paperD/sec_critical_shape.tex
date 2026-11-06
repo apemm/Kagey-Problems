@@ -1,7 +1,8 @@
-\subsection{The boundary of the bias interval}
+\subsection{The bias boundary}
 
-The interval theorem gives a one-dimensional equation for its endpoint.
-It also shows which information a phase diagram needs beyond the fair density.
+To find the endpoint of the bias interval, we compare the slopes
+of the conditional density at reflected points. This reduces the
+problem to a one-dimensional infimum.
 
 \begin{proposition}[a variational equation for the bias boundary]
 \label{prop:bias-boundary}
@@ -16,8 +17,7 @@ at $t>0$ with $h_a'(t)>0$ and $b_a<1/2$, then, with $q=1-b_a$,
 \[
  g_{a,q}'(-t)=g_{a,q}''(-t)=0.
 \]
-The equations describe the disappearance of the smaller peak.
-They do not assert uniqueness of this stationary point.
+At this point the smaller peak disappears.
 \end{proposition}
 
 \begin{proof}
@@ -39,6 +39,81 @@ fixed $q\in(0,1)$ inside the interval for all sufficiently large $a$.
 Thus $0\le b_a<q$ eventually for every $q>0$, which proves the limit.
 \end{proof}
 
+\begin{theorem}[continuity of the bias boundary]\label{thm:bias-continuity}
+The function $a\mapsto b_a$ is continuous on $(1/2,1)$ and extends
+continuously to $b_1=0$. If $a>a_*$ and $b_a>0$, the infimum in
+\eqref{eq:bias-boundary} has a unique minimizer $t_a\in(0,\kappa_a)$.
+This minimizer depends continuously on $a$ wherever $a>a_*$ and $b_a>0$.
+\end{theorem}
+
+\begin{proof}
+For $a>a_*$, the curvature partition in Theorem~\ref{thm:two-modes}
+gives $g_a'(t)>0$ on $(0,\kappa_a)$ and $g_a'(t)<0$ on
+$(\kappa_a,\infty)$.
+Put
+\[
+ D_a(t)=h_a'(t)+h_a'(-t),\qquad
+ R_a(t)=\frac{g_a'(t)}{D_a(t)}\quad(0<t<\kappa_a).
+\]
+We have $D_a>0$, $0<R_a\le1/2$, and
+$1/2-b_a=\sup_{0<t<\kappa_a}R_a(t)$. Also $R_a(0+)=0$.
+To see this, $h_a'$ is nonnegative to the left of zero and positive
+just to its right, so its first nonzero Taylor term has even degree.
+This term cancels in $2g_a'(t)=h_a'(t)-h_a'(-t)$ and adds in $D_a(t)$.
+
+The ratio cannot have a strict valley. More precisely,
+\begin{equation}\label{eq:bias-quasiconcave}
+ R_a(v)\ge\min\{R_a(u),R_a(w)\}
+ \qquad(0<u<v<w<\kappa_a).
+\end{equation}
+Otherwise, choose $s\in(0,1/2)$ strictly between the middle value
+and both outer values. With $q=1/2+s$,
+$g_{a,q}'(-t)=D_a(t)(s-R_a(t))$ then has signs $-,+,-$
+at $-w,-v,-u$, and is positive sufficiently close to zero on the left.
+Positivity of the density
+and its zero limits at infinity supply a positive derivative farther
+left and a negative derivative farther right. There would be three
+local maxima, contrary to Theorem~\ref{thm:biased-limit-modes}.
+
+At $\kappa_a$ the limit of $R_a$ is either zero or
+$1/2$. The case that needs checking is $D_a(\kappa_a)=0$.
+The analytic function $h_a'(-t)\ge0$ has a zero of even order there,
+whereas $2g_a'(t)$ has a zero of odd order. In
+$D_a(t)=2h_a'(-t)+2g_a'(t)$ the smaller order dominates, giving
+respectively the limits zero and $1/2$ for $R_a$.
+If $b_a>0$, the latter is impossible. Thus $R_a$ vanishes at both
+ends and attains its positive maximum in the interior.
+Equation~\eqref{eq:bias-quasiconcave} and analyticity make this
+maximum unique, since two maximizers would force a constant interval.
+They also make $R_a$ strictly increasing before its maximizer and
+strictly decreasing after it.
+
+Lemma~\ref{lem:analytic-density} gives joint continuity of all the
+derivatives used here. The signs of $g_a'$ on either side of its
+unique positive zero give continuity of $\kappa_a$. Fix $a_0>a_*$
+with $b_{a_0}>0$, and choose
+$0<l<t_{a_0}<r<\kappa_{a_0}$. The strict inequalities
+$R_a(l),R_a(r)<R_a(t_{a_0})$ persist near $a_0$.
+Equation~\eqref{eq:bias-quasiconcave} bounds every value outside
+$[l,r]$ below $R_a(t_{a_0})$, so a maximum on $[l,r]$ is global.
+Uniform convergence on this fixed compact
+interval proves continuity of the maximum and, by uniqueness, of
+its location. If instead $b_{a_0}=0$, any fixed point where
+$R_{a_0}>1/2-\delta$ persists nearby, giving $0\le b_a<\delta$.
+This proves continuity above $a_*$. Below it $b_a=1/2$,
+Proposition~\ref{prop:bias-cusp} gives continuity at $a_*$, and
+Proposition~\ref{prop:bias-boundary} gives the limit at one.
+\end{proof}
+
+We can use this argument to enclose the boundary numerically, since
+three comparisons restrict the search to a bounded interval.
+Verified inequalities $R_a(l),R_a(r)<R_a(t)$ with
+$0<l<t<r<\kappa_a$ trap the
+maximum in $[l,r]$. If $L\le R_a(t)$ and $R_a\le U$ throughout
+that interval, then $1/2-U\le b_a\le1/2-L$. If these inequalities hold uniformly, the enclosure covers a whole
+parameter interval. This does not yet prove that the maximum increases
+with $a$.
+
 \begin{corollary}[a rate for the bias boundary near one]\label{cor:bias-boundary-rate}
 Put
 \[
@@ -58,24 +133,26 @@ $\rho_a\mu_a^2$, by the moment formulas of~\cite[Theorem~1.4]{glr2026}.
 Consider the three adjacent intervals of length $\mu_a$ centered at
 $-\mu_a$, $0$ and $\mu_a$. Chebyshev's inequality puts at least
 $1-4\rho_a$ of the conditional law in the right interval and at most
-$4\rho_a$ in the middle. Reflection gives the opposite bounds for
-the reflected law. The mixture therefore has interval masses at least
-$(1-q)(1-4\rho_a)$ on the left and $q(1-4\rho_a)$ on the right,
-while the middle mass is at most $4\rho_a$.
+$4\rho_a$ in the middle. For a start to the left, reflect these
+intervals. After mixing, the left interval has mass at least
+$(1-q)(1-4\rho_a)$ and the right at least $q(1-4\rho_a)$.
+The middle still has mass at most $4\rho_a$.
 
-If $4\rho_a/(1-4\rho_a)<q<1-4\rho_a/(1-4\rho_a)$, both outer
-averages exceed the middle average. Continuity gives three ordered
-points with a strict valley, so the mixture cannot be unimodal.
-Theorem~\ref{thm:biased-limit-modes} then gives two modes and the
-claimed bound on $b_a$. Finally, the logarithmic derivative at $a=1$
+For $4\rho_a/(1-4\rho_a)<q<1-4\rho_a/(1-4\rho_a)$, the middle
+has less mass than either outer interval. All three intervals have
+the same length. So, by continuity, we can choose a point in each
+with the middle value strictly smaller than the other two.
+This rules out unimodality. The two-mode bound in
+Theorem~\ref{thm:biased-limit-modes} gives exactly two modes, and
+therefore the stated bound on $b_a$. Finally, the logarithmic derivative at $a=1$
 of $1+\rho_a$ is $2\psi(2)-2-2\psi(2)=-2$.
 Thus $\rho_a=2(1-a)+O((1-a)^2)$, which gives the last assertion.
 \end{proof}
 
-\subsection{The critical top and the emerging modes}
+\subsection{The density at the threshold}
 
-The certificate contains more local information than the location of
-the threshold. Write
+We next ask how far apart the modes are just after the transition.
+The needed constants are derivatives at the threshold. Write
 \[
  C_* = \left.\partial_a g_a''(0)\right|_{a=a_*},\qquad
  B_*=-g_{a_*}^{(4)}(0),\qquad H_*=h_{a_*}'(0).
@@ -120,13 +197,14 @@ For $a>a_*$ let $\kappa_a>0$ be the positive mode of $g_a$. As $a\downarrow a_*$
 \begin{proof}
 On a neighborhood of $a_*$, the certificate bounds
 $|\phi_a(t)|$ by $Ct^{-8}$ and $|\partial_a\phi_a(t)|$ by $4t^{-7}$
-for large $t$ (Appendix~\ref{or:transition-unique}). On bounded
-frequency intervals the moment series and its parameter derivative
-converge locally uniformly. Dominated Fourier inversion therefore
-makes the spatial derivatives through order six continuous in $a$,
-and permits one parameter derivative of the central curvature.
-Taylor remainders through order four are uniform on a smaller
-parameter interval. At criticality, evenness, $g_{a_*}''(0)=0$ and
+for large $t$ (Appendix~\ref{or:transition-unique}). On a bounded
+frequency interval we instead use the moment series, which converges
+locally uniformly, as does its parameter derivative. Together these
+bounds justify dominated Fourier inversion. Thus the spatial
+derivatives through order six are continuous in $a$, and we can
+differentiate the central curvature once in the parameter.
+Restricting to a smaller parameter interval makes the Taylor
+remainders through order four uniform. At criticality, evenness, $g_{a_*}''(0)=0$ and
 $g_{a_*}^{(4)}(0)=-B_*<0$ give the first assertion.
 
 Put $\delta=a-a_*>0$. Uniform Taylor expansion gives
@@ -156,9 +234,7 @@ As $a\downarrow a_*$,
 \begin{equation}\label{eq:bias-cusp}
  \frac12-b_a=Q_*(a-a_*)^{3/2}+o\bigl((a-a_*)^{3/2}\bigr).
 \end{equation}
-Thus $b_a$ is continuous at $a_*$. On some interval immediately
-above $a_*$ it is continuous and strictly decreasing.
-These local assertions do not establish monotonicity on all of $(a_*,1)$.
+On some interval immediately above $a_*$, $b_a$ is strictly decreasing.
 For $a>a_*$ sufficiently close to $a_*$, the infimum in
 \eqref{eq:bias-boundary} is attained. Every minimizer $t_a$ satisfies
 \[
@@ -191,7 +267,7 @@ for bounded $v\ge0$,
  =\frac{\delta^{3/2}}{2H_*}
        \left(C_*v-\frac{B_*v^3}{6}\right)+o(\delta^{3/2}).
 \]
-The cubic has its unique positive maximum at
+The cubic is largest at the unique positive point
 $v=\sqrt{2C_*/B_*}$. Maximizing on $[0,\kappa_a/\sqrt\delta]$, whose
 right endpoint tends to $\sqrt{6C_*/B_*}$, proves \eqref{eq:bias-cusp}.
 The maximum is positive and attained inside $(0,\kappa_a)$, since the ratio
@@ -201,11 +277,10 @@ $\sqrt{2C_*/B_*}$. This proves the assertion about $t_a$.
 The bounds on $Q_*$ follow by squaring its formula and inserting the
 three rational enclosures for $C_*,B_*$ and $H_*$.
 
-For completeness, the same argument gives local continuity and strict
-monotonicity without differentiating a maximum. Choose a small fixed
+For strict monotonicity, choose a small fixed
 $r>0$. For $a$ sufficiently close to $a_*$, the denominator of the
 ratio is positive on $[0,r]$ and $\kappa_a<r$. The maximum can therefore
-be taken over this fixed compact interval, so it is continuous in $a$.
+be taken over this fixed compact interval.
 The differentiated Fourier bounds justify the expansions
 $\partial_a g_a'(t)=C_*t+o(t)$ and
 $\partial_a(h_a'(t)+h_a'(-t))=O(1)$, uniformly as
@@ -218,7 +293,8 @@ Evaluating at that maximizer at any larger nearby memory makes the
 maximum strictly larger. Hence $b_a$ strictly decreases there.
 \end{proof}
 
-The two scales have a simple source. Near the origin the derivative is
-approximately $C_*(a-a_*)t-B_*t^3/6$, so its positive part has width
-of order $\sqrt{a-a_*}$ and height of order $(a-a_*)^{3/2}$.
-The initial bias must overcome this height to remove the smaller peak.
+This also explains why two different powers appear. Near zero,
+the derivative is approximately $C_*(a-a_*)t-B_*t^3/6$.
+Its positive part has width of order $\sqrt{a-a_*}$ but height of
+order $(a-a_*)^{3/2}$. The modes separate on the width scale.
+The bias must overcome the height to remove the smaller peak.

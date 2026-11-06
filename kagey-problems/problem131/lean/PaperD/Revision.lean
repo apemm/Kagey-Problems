@@ -12,6 +12,7 @@ import PaperD.Modes.TransitionIntegrals
 import PaperD.Modes.BiasWeakTransferFinal
 import PaperD.Modes.BiasIntervalEndpoint
 import PaperD.Modes.EJPBiasDerivativeCutoff
+import PaperD.EJPBiasBoundary
 import PaperD.EJPModeStability
 import PaperD.EJPGlobalModeGap
 import PaperD.EJPModeAnalyticRange

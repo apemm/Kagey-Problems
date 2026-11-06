@@ -5,13 +5,21 @@ November 5, 2026
 The manuscript now leads with the resolved Guérin–Laulin–Raschel–Simon
 bias-interval conjecture. The fixed-memory transition, its local geometry and
 the rare-reversal results share one finite shape argument. Keeping them in
-one paper is defensible. The complete submission is 61 pages, compared with
+one paper is defensible. The complete submission is 62 pages, compared with
 72 pages for the previous complete extended version. The previous shorter
 journal PDF omitted essential threshold proofs and is not the right length
 comparison.
-The notation and quantitative-constant pass adds two pages to the 59-page
-version. Section 6 is shorter, but the added gap certificate, refined constants,
-moment bound and open problems need space. The increase includes their proofs.
+The latest pass adds global continuity and unique interior boundary optimization
+where the boundary is positive. The proof needs no new parameter certificate.
+Repeated exposition and a duplicate walk definition were removed. The new
+theorem and its uniform-regularity proof add one page net to the 61-page version.
+The exposition pass covers the main text and all appendices. It replaces vague
+headings, shortens repeated proof narration, and explains the role of the
+boundary histories and the order of limits before the estimates. The epigraph
+is unchanged. The protected disclosure retains only the authorized source-access
+qualification. Displayed mathematics, labels and citations were checked against
+the pre-edit sources. A stray mode symbol in the threshold proof now agrees with
+the theorem it invokes.
 
 The mathematical revision is substantial, but not every proposed research
 target is settled. Do not describe the unfinished extensions below as proved.
@@ -28,24 +36,24 @@ target is settled. Do not describe the unfinished extensions below as proved.
 | Trim secondary material | The second-order center expansion, separate tail theorem, odd-center crossing and assay-likelihood material are excluded. Their historical sources remain in the repository. The proven height-based convexity window stays. |
 | EJP format | Uses the official `ejpecp` class, version 1.12.3. Removed Springer declarations and Online Resource language. |
 | Describe the bias boundary | Added a variational equation, stationary equations at an attained endpoint, and the limit `b_a -> 0` near memory one. No attainment or uniqueness of the optimizer is assumed without a hypothesis. |
+| Global boundary continuity | Analytic proof of continuity on `(1/2,1)`, extending to `b_1=0`. For `a>a_*` and `b_a>0`, the variational minimizer is unique and continuous. Spatial quasiconcavity supplies compact localization. |
 | Critical shape | Added a negative quartic coefficient at criticality, square-root mode locations and quadratic peak excess, with constants expressed through certified derivatives. |
 | Bias interval near criticality | The three-halves opening coefficient is enclosed in `(9.86698768, 9.86698770)`. Continuity and strict widening hold near the threshold. At a boundary the stationary location is asymptotic to the fair mode divided by the square root of three. |
 | Bias boundary near memory one | A three-interval Chebyshev argument gives the explicit moment bound `b_a <= 4rho_a/(1-4rho_a)` when `rho_a < 1/12`, hence the upper rate `8(1-a)+O((1-a)^2)`. |
 | Phase diagram | Numerical bias boundary, proved inner region near memory one, and three density panels. The caption distinguishes the full boundary illustration from the explicit sufficient region. |
 | Computation-free range | Extended the fourth-moment argument from `a >= 4/5` to `a >= 79/100` using an exact power comparison. Global uniqueness of the transition still uses certificates. |
-| Explicit mode constant | The global Landau gap is certified with `kappa_L=0.02`. A sharper Fourier bound gives error constants `47`, `10.4`, `2.7`. The mode error is at most `50 sqrt(x log x)` for `N >= ceil(exp(30000))` in the logarithmic window. This is a theoretical, conservative length threshold. |
+| Explicit mode constant | The global Landau gap is certified with `Delta_L=0.02`. A sharper Fourier bound gives error constants `47`, `10.4`, `2.7`. The mode error is at most `50 sqrt(x log x)` for `N >= ceil(exp(30000))` in the logarithmic window. This is a theoretical, conservative length threshold. |
 | Wider rare-reversal range | Mode localization now explicitly applies whenever `x -> infinity` and `x^3 log^2 N / N -> 0`, with a displayed rate. |
 | Independent threshold check | A real-parameter moment evaluation confirms both endpoint signs without using the parameter Taylor models that generated the bracket. It also bounds the conditional slope needed for the bias cusp. |
-| Lean | Four revision modules check the derivative cutoff, attained-boundary stationary equations, analytic range, an eventual mode constant, and the global-gap/stability deductions. The new Arb gap is an explicit input, not a kernel-checked integral. |
+| Lean | Revision modules check the derivative cutoff, attained-boundary stationary equations, analytic range, an eventual mode constant, the global-gap/stability deductions, and compact boundary localization. The new Arb gap is an explicit input, not a kernel-checked integral. |
 | Notation and verification | Memory uses `a`, finite modes use `kappa_N`, fair modes use `kappa_a`, lattice points use `k,j`, and the midpoint uses `k_c`. Logarithms are written out. Section 6 is a one-page verification table and trusted-base summary; filenames are in the data appendix. |
 | Literature and cover letter | Added Trinas's last-return paper and Dekking–Kong; clarified the Drezner–Farnum credit; rewrote the letter around the resolved conjecture. |
 
 ## What remains open
 
-- Global continuity and monotonicity of the bias width have not been proved.
-  The variational formula alone does not supply compactness of all maximizing
-  locations uniformly in memory. Local continuity and strict monotonicity near
-  the threshold are proved.
+- Global monotonicity and a full certified boundary curve remain open.
+  Global continuity is now proved, with a three-point compact-localization
+  test. Strict monotonicity remains a local result near the threshold.
 - A unique finite-length memory threshold, convergence to `a_*`, and a rate
   need parameter and derivative control of the lattice law. A bound on the
   number of modes does not establish these claims. The two finite numerical
@@ -75,7 +83,7 @@ literal claim that every ambition in the request has been completed.
 [proof-review.md](proof-review.md) records the new deductions and their limits.
 The complete Lean build and declaration audit are recorded in
 [verification-manifest.json](verification-manifest.json) and
-[build-log.txt](build-log.txt). All checks passed for 375 modules and 23,908
+[build-log.txt](build-log.txt). All checks passed for 376 modules and 23,912
 declarations, with zero unimported files. Only `propext`, `Classical.choice`
 and `Quot.sound` occurred. The build retained 28 existing linter/deprecation
 warnings. The map in `lean/PaperD/MAP.md` distinguishes
@@ -138,8 +146,9 @@ existing theorem. The remaining source-access limitation is explicit in
 
 ## Posting and archive status
 
-The protected disclosure is unchanged. Its original text and normalized hash
-are saved beside this report.
+Only the source-reading sentence changed, to qualify abstract-only access to
+Drezner–Farnum and Heyde. The build script permits that exact substitution
+and checks the rest against the saved original text.
 
 The current packages and metadata are linked from the paper's
 `submission_notes.md`. `paperD-ejp-v1` is the release tag for this revision.

@@ -63,3 +63,8 @@ Heyde's 2004 full text was also unavailable in the earlier audit; its general
 limit-regime description is supported by the publisher/author abstract and
 the later full-text comparison. These limitations prevent claiming that all
 historical literature has been independently read in full.
+
+The publisher PDF endpoints were checked again on November 5. Drezner–Farnum
+returned an access denial, and Heyde's PDF remained inaccessible. The manuscript
+now states both abstract-only exceptions and identifies James–James–Qi as the
+full-text source used for the historical formulation and limit comparison.

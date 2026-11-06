@@ -38,14 +38,15 @@ editorial judgment, not an assurance of acceptance.
 
 ## Before public posting
 
-1. Read the new results and the complete manuscript. The local bias-width law,
-   critical expansion and enlarged mode range are written proofs. The formal
+1. Read the new results and the complete manuscript. Global boundary continuity,
+   the local bias-width law, critical expansion and enlarged mode range are written proofs. The formal
    coverage is stated separately in `lean/PaperD/MAP.md`.
 2. Confirm the cover letter's submission-status statements and any referee
    conflicts. The related-paper statuses are retained from the existing letter.
 3. Drezner–Farnum (1993) was checked through the publisher's abstract, which
    explicitly mentions bimodality. Its full text remains unavailable in this
-   review. The detailed transition-rule comparison uses James–James–Qi (2008).
+   review. Heyde (2004) also remains abstract-only. These exceptions are now
+   stated in the manuscript. The detailed comparison uses James–James–Qi (2008).
 4. Use the tagged GitHub verification archive for this revision. A Zenodo
    deposit is deferred at the author's request. No DOI has been reserved.
 5. Post the preprint, then use its real public identifier in the courtesy email

@@ -12,8 +12,9 @@ inequalities proves the infimum formula, including the empty-set convention.
 At an attained interior minimum, differentiating the ratio gives
 `A(t) B'(t) - B(t) A'(t)=0`. Since `B'(t)=-h_a''(-t)`, this is exactly the
 second stationary equation for the mixture at `q=1-b_a`; the first follows
-from equality in the ratio. There is no need to assume a unique minimizer,
-and the statement does not assert one. The cutoff and stationary deductions
+from equality in the ratio. This stationary deduction does not itself assert
+uniqueness. The new continuity theorem proves it when `a>a_*` and `b_a>0`.
+The cutoff and stationary deductions
 have new Lean proofs with their regularity hypotheses explicit.
 
 ## Critical top and fair modes
@@ -62,7 +63,7 @@ For nearby parameters the positive maximum is attained inside the interval,
 since the ratio vanishes at both endpoints. Every scaled maximizer converges
 to the unique maximum of the limiting cubic. Therefore every boundary
 stationary location has distance `kappa_a/sqrt(3) + o(sqrt(delta))` from zero.
-This does not assert uniqueness of the maximizing location at fixed memory.
+The new global continuity theorem separately gives uniqueness at these memories.
 
 For local continuity, choose a small fixed interval on which the denominator
 stays positive and contains all positive numerator values. A maximum of a
@@ -76,6 +77,58 @@ increase. These are local arguments; they do not prove global monotonicity.
 The three-halves exponent is a local cubic-maximization consequence, not a
 claim to have discovered a new general bifurcation exponent. Its content
 here is the verified applicability and explicit constant for this density.
+
+## Global continuity and compact boundary optimization
+
+The new theorem requires no additional numerical certificate. For `a>a_*`,
+the fair curvature partition makes `g_a'` strictly positive before the fair
+mode and strictly negative after it. Thus the positive boundary ratio is
+`R_a(t)=g_a'(t)/(h_a'(t)+h_a'(-t))` on `0<t<kappa_a`.
+
+The two-mode theorem forces this ratio to be quasiconcave. A strict dip in
+the ratio would give a bias whose density has derivative signs `-,+,-,+`
+on the negative half-line. Positivity and the zero tail limits supply the
+outer signs, forcing three maxima. This also implies uniqueness of an
+attained ratio maximum, because an analytic quasiconcave function with two
+maximizers would be constant between them.
+
+Both endpoints need care. At zero the first nonzero Taylor term of `h_a'`
+has even degree, since this derivative is nonnegative on both nearby sides.
+It cancels in the numerator and adds in the denominator, so `R_a(0+)=0`.
+This does not assume `h_a'(0)>0` or global strict positivity of `g_a''(0)`.
+At the fair mode, a zero denominator compares an even-order zero of
+`h_a'(-t)` with an odd-order zero of `2g_a'(t)`. The ratio limit is zero or
+one half. A positive boundary excludes the latter. Thus the maximum is
+attained in the interior whenever `b_a>0`.
+
+Parameter regularity comes from uniform square-mean martingale tails on a
+compact memory interval, followed by a finite-frequency-band argument.
+At a fixed memory, Riemann–Lebesgue supplies a strict band bound. Joint
+continuity transfers it to nearby memories, and the existing smoothing
+barrier extends it to all frequencies. This gives locally uniform
+stretched-exponential decay and joint continuity of every spatial derivative.
+No global parameter derivative estimate is assumed.
+
+Choose points on each side of the unique maximizer where the ratio is
+strictly smaller. These comparisons persist at nearby memories. Quasiconcavity
+bounds every value outside the resulting compact interval by an endpoint
+value. Uniform convergence on that interval proves continuity of the maximum
+and its unique location. At a zero boundary, fixed approximate maximizers
+give continuity directly. The critical expansion and near-one limit cover
+the two remaining endpoints.
+
+`EJPBiasBoundary.lean` checks compact localization and maximum-value stability
+under explicit quasiconcavity and continuity hypotheses. It does not formalize
+the density argument, parameter regularity or the full continuity theorem.
+
+Global monotonicity and a full phase-boundary enclosure remain open. The
+stronger pointwise ordering `R_a(t)` increasing in `a` cannot be used without
+proof. The retained illustration grids give, at `t=1.34`, approximately
+`R_0.8875=0.431379` and `R_0.9=0.363215`, while the optimized half-width
+increases. These are exploratory values, not certified inequalities or proof
+inputs. The spatial maximizer moves, so a global monotonicity proof must
+control the optimized value. The manuscript adds no numerical claim from
+this diagnostic and does not promote its phase illustration to a certificate.
 
 ## Computation-free range
 

@@ -2,16 +2,16 @@
 
 The source, records and rerun commands are in the
 \href{https://github.com/apemm/Kagey-Problems/tree/paperD-ejp-v1/kagey-problems/problem131/paperD}{tagged repository}.
-Each numerical record includes the source hashes, software versions,
-precision and acceptance checks. The submission archive includes these
-records and the Lean sources.
+Each numerical record includes source hashes, software versions,
+precision and acceptance checks. These records and the Lean sources
+are included in the submission archive.
 
 \begin{itemize}
 \item \nolinkurl{certify_elephant.py} checks the series bound giving
 the constant $5200$ in Theorem~\ref{thm:erw-bounds} and the narrow
 Landau-mode enclosure of Lemma~\ref{lem:landau-mode}.
 \item \nolinkurl{certify_landau_gap.py} checks the global gap
-$\kappa_L=1/50$, the Fourier decay bound $2|\theta|/5$ and the
+$\Delta_L=1/50$, the Fourier decay bound $2|\theta|/5$ and the
 local-limit constants $47$, $10.4$ and $2.7$ at $160$ bits with
 python-flint~0.9.0. Its record is
 \nolinkurl{data/landau_gap_certificate.json}.
@@ -27,10 +27,8 @@ Table~\ref{tab:thr-runs}. Its nine records are
 their accepted intervals cover the stated ranges.
 \item \nolinkurl{certify_transition.py} encloses the parameter derivative
 of the central curvature and the fourth spatial derivative.
-\nolinkurl{data/transition_derivative_certificate.json} and
-\nolinkurl{data/transition_derivative_run.txt} record the enclosures
-and a rerun with $1100$ moments at $1600$-bit precision, using
-Python~3.12.14 and python-flint~0.8.0.
+Its records \nolinkurl{data/transition_derivative_*} use $1100$
+moments at $1600$ bits, Python~3.12.14 and python-flint~0.8.0.
 \item \nolinkurl{check_critical_shape.py} evaluates the two threshold
 endpoints with $1800$ moments at $2000$ bits and the conditional slope
 with $1200$ moments, using python-flint~0.9.0. Its record is
@@ -53,15 +51,15 @@ The formal library is
 formal statement and its explicit hypotheses. The full source inventory,
 build log and axiom audit are in the
 \href{https://github.com/apemm/Kagey-Problems/tree/paperD-ejp-v1/reports/paperD-ejp-2026-11-05}{verification record}.
-The audit checks $375$ modules and $23{,}908$ declarations.
-The named classical inputs used across the library are Fourier inversion,
-the compound Poisson characteristic function, Efron--Stein,
-Scheff\'e's theorem, class-$L$ unimodality and Hoeffding's hypergeometric
-bound. The fair-limit and bias theorems also take the cited density and
-weak convergence as inputs. The transition interface takes the certified
-uniform Fourier envelopes as hypotheses. The formal checks do not replace
-the written proofs that establish these hypotheses for the walk.
+The audit checks $376$ modules and $23{,}912$ declarations.
+The classical inputs are those in Table~\ref{tab:verification}, together
+with Hoeffding's hypergeometric bound. The transition interface assumes
+the certified uniform Fourier envelopes. The written proofs establish
+these inputs for the walk.
 The module \nolinkurl{EJPGlobalModeGap.lean} proves the global-gap
 and mode-stability deductions from the certified inequalities.
-The sharper numerical constants and the explicit length threshold
-in Corollary~\ref{cor:mode-location}(b) are not replayed in Lean.
+The compact localization and maximum-stability lemmas are in
+\nolinkurl{EJPBiasBoundary.lean}. They assume quasiconcavity and the
+strict endpoint comparisons. The density regularity and full boundary
+continuity proof remain on paper. The sharper numerical constants
+and explicit length threshold are not replayed in Lean.

@@ -1,11 +1,10 @@
-\noindent\begin{minipage}{\textwidth}
 \section{Verification}\label{sec:verify}
 
-The proofs use analytic arguments, finite interval certificates and Lean
-checks. Table~\ref{tab:verification} separates their roles. A formal
-deduction with stated mathematical inputs does not certify those inputs.
-In particular, the transition's transcendental enclosures are numerical
-proofs outside the Lean kernel.
+Table~\ref{tab:verification} records how each claim is proved and what
+the proof uses. Some Lean results are implications, so their hypotheses
+still need proofs for this walk. In particular, Lean does not check
+the transcendental enclosures at the transition. We compute those
+separately with interval arithmetic.
 
 \begin{center}\small
 \captionsetup{hypcap=false}
@@ -16,8 +15,8 @@ Claim & How it is established & Trusted base\\
 Finite shape bounds and the shape at every even crossing &
 Written proof and Lean, including finite integer certificates &
 Lean kernel and exact rational arithmetic\\[5pt]
-Fair-limit shape, inflection counts and the bias interval &
-Written proof and Lean deductions &
+Fair-limit shape, inflection counts, bias interval and boundary continuity &
+Written proofs, with Lean deductions for shape and the interval &
 Cited limit law, conditional unimodality and Fourier representation\\[5pt]
 Unique memory threshold &
 Interval certificate and written Fourier estimates, followed by a Lean implication &
@@ -33,23 +32,24 @@ Written weak bridge and Lean density deductions &
 Conditional unimodality, fair curvature, Landau facts and Scheff\'e's theorem~\cite{scheffe1947}\\
 \bottomrule
 \end{tabular}
-\captionof{table}{Proof methods and their inputs. Numerical illustrations are not
-proof inputs. Appendix~\ref{app:data} gives the reproducible records and
-the precise statement-by-statement formal coverage.}
+\captionof{table}{The proofs and what they require. The numerical illustrations
+are not used in proofs. Appendix~\ref{app:data} lists the records needed
+to reproduce the checks and the exact scope of each formal result.}
 \label{tab:verification}
 \end{center}
 
-The formal library uses Lean~4.33.1 and the pinned Mathlib revision
-\texttt{0df444a360ea}. Its declaration audit admits only
-\texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}.
-Integer certificates are checked by exact outward rounding, without
-\texttt{native\_decide}. The total variation comparison and the martingale
-weak bridge remain written proofs. So do the critical asymptotic expansions.
-The sharper local-limit constants and the gap $\kappa_L=1/50$ use Arb.
-The formal mode deduction takes the gap inequalities as inputs.
-The numerical transition checks retain their acceptance tests under
-\texttt{python -O}. A separate real-parameter evaluation confirms the
-threshold endpoint signs without the parameter Taylor models. It shares
-Arb and the analytic tail argument, so it is an independent evaluation
-path, not an independent arithmetic implementation.
-\end{minipage}\par\medskip
+We use Lean~4.33.1 with Mathlib pinned to \texttt{0df444a360ea}.
+The declaration audit allows only \texttt{propext},
+\texttt{Classical.choice} and \texttt{Quot.sound}.
+Lean checks the integer certificates by exact outward rounding,
+without \texttt{native\_decide}. The total variation comparison,
+martingale weak bridge, boundary continuity and critical expansions
+have written proofs. Arb supplies the sharper local-limit constants
+and the gap $\Delta_L=1/50$, whose inequalities are hypotheses of the
+formal mode deduction.
+
+For the transition, running \texttt{python -O} does not remove the
+acceptance tests. We also check the two threshold endpoint signs by
+direct evaluation at the real parameter values. This avoids the
+parameter Taylor models, but still uses Arb and the same analytic
+tail estimate.

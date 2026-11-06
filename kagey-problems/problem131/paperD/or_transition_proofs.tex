@@ -1,9 +1,7 @@
 \subsection{Uniqueness of the transition}
 \label{or:transition-unique}
 
-The derivative required to close the bracket cannot be obtained by
-differentiating the error bound in Lemma~\ref{lem:thr-fpp}. We instead
-differentiate the smoothing equation and bound its new tail.
+To prove uniqueness inside the bracket, we differentiate the smoothing equation and bound the derivative's tail. Differentiating the error bound in Lemma~\ref{lem:thr-fpp} would not bound the derivative of the error.
 
 \begin{lemma}[differentiated smoothing bound]\label{lem:thr-parameter-tail}
 Fix a compact memory interval $I\subset(1/2,1)$. Suppose that the
@@ -61,8 +59,7 @@ Writing $x=tv^a$ and $y=t(1-v)^a$, we obtain
  S(t)&\le\int_0^1\{x|\log v|u(x)f(y)
              +y|\log(1-v)|f(x)u(y)+f(x)f(y)\}\,dv.
 \end{align*}
-The final term includes the derivative of $p$: its coefficient is one
-because $p'=1/2$ and $|\phi_a(y)-\phi_a(-y)|\le2f(y)$.
+The final term includes the derivative of $p$. Its coefficient is one because $p'=1/2$ and $|\phi_a(y)-\phi_a(-y)|\le2f(y)$.
 
 Split each integral at $1/2$ and reflect its second half. For the
 frequency derivative, the smaller-argument term is at most
@@ -91,8 +88,7 @@ the larger uses $-\log(1-v)\le\log2$ and $H_\beta\le R$.
 The mixing-weight term is at most $CRt^{-\beta}$.
 Thus $S(t)\le A_St^{-\gamma}$.
 
-For completeness, the propagation is an inhomogeneous compact-maximum
-argument. On any $[T_2,U]$, maximize the continuous weighted derivative.
+To extend the bounds beyond the cells, maximize the continuous weighted derivative on any $[T_2,U]$.
 If its maximum lies in $[T_2,T]$, use the cell bound. Otherwise repeat
 the preceding inequalities with that maximum in place of the proposed
 constant, and rearrange the strict contraction inequality. This first
@@ -127,20 +123,17 @@ coefficient remainder factor
 \]
 The omitted moment series has derivative bound
 $\tau_k(t)/(\rho-w_0)$ by Cauchy's estimate.
-Frequency cells use a Taylor expansion of order $48$; its remainder
-bounds the actual high derivative by the complex coefficient majorant,
-not by a probability moment at complex memory.
+On each frequency cell we use a Taylor expansion of order $48$, with its remainder bounded by the complex coefficient majorant. (At complex memory we cannot use a probability moment.)
 The signed interval checks give
 \begin{equation}\label{eq:thr-final-derivatives}
  0.68<\frac{d}{da}g_a''(0)<0.70,\qquad
  -0.09<g_a^{(4)}(0)<-0.07
  \quad(a\in\operatorname{int}I).
 \end{equation}
-The second enclosure uses the same Fourier bound with weight $t^4$;
-its tail is $CT^{-3}/(3\pi)$.
+The second enclosure uses the same Fourier bound with weight $t^4$, whose tail is $CT^{-3}/(3\pi)$.
 The file \texttt{certify\_transition.py} performs these checks, including
 the initial derivative-cell bounds. It was rerun with $1100$ moments
-and $1600$-bit precision under \texttt{python -O}; every check uses
+and $1600$-bit precision under \texttt{python -O}. Every check uses
 \texttt{require}, so optimization cannot remove it.
 
 Continuity and the sign bracket give a zero $a_*$ of $g_a''(0)$.
@@ -152,10 +145,7 @@ and the second inequality give
  \quad\text{for all sufficiently small }x>0.
 \]
 The strict shape dichotomy therefore puts $a_*$ in the unimodal branch.
-Together with the signs on either side inside $I$, and the existing shape
-certificate outside the bracket, this proves the unique-transition assertion
-in Theorem~\ref{thm:threshold}. No claim that central curvature has no other
-zero in the already bimodal region is needed.
+The signs inside $I$ and the shape certificate outside the bracket now prove the unique transition in Theorem~\ref{thm:threshold}. Central curvature could have further zeros in the bimodal region without changing this conclusion.
 
 \paragraph{The critical constants.}
 For Table~\ref{tab:critical-constants} we apply the same estimates on
@@ -181,7 +171,7 @@ The omitted tails for $C_*$, $B_*$ and $H_*$ are bounded respectively by
 \]
 The finite-frequency integrals use the same parameter and moment
 remainders as above, with weights $t^2$, $t^4$ and $t$.
-Thus they enclose the values at $a_*$ without substituting a decimal
-approximation for the threshold. Outward arithmetic then gives the
-two derived coefficients in the table. Appendix~\ref{app:data} lists
-the complete record and rerun command.
+Since the bounds hold on the whole interval, they include $a_*$
+even though its exact value is unknown. Outward rounding gives the
+table's two derived coefficients. The record and rerun command are
+in Appendix~\ref{app:data}.

@@ -1,7 +1,7 @@
-\section{The certificate for the threshold}\label{app:threshold}
+\section{Certifying the memory threshold}\label{app:threshold}
 
-We prove Theorem~\ref{thm:threshold}. This appendix describes the certificate.
-Appendix~\ref{or:threshold} gives all its analytic estimates and proofs. Fix
+This appendix describes the certificate for Theorem~\ref{thm:threshold}.
+Appendix~\ref{or:threshold} proves the estimates it uses. Fix
 $a\in(\frac12,1)$ and write $\phi(t)=\E e^{it\mathcal L_a}$. Put
 $\theta_j=1$ for even $j$ and $\theta_j=a$ for odd $j$, let $m_0=m_1=1$ and
 $m_n=(na-\theta_n)^{-1}\sum_{j=1}^{n-1}\theta_jm_jm_{n-j}$ for $n\ge2$. Then
@@ -33,23 +33,22 @@ $[T_2,T_3]$, and
  \bigl(r_j^{1/a}-l_j^{1/a}\bigr)+\frac{2^{a\beta}CT_2^{-\beta}}{a\beta-1} .
 \]
 If $R<1$, then $\lvert\phi(t)\rvert\le Ct^{-\beta}$ for all $t\ge T_3$
-(Lemma~\ref{lem:thr-tail}). The proof puts this bound into the right
-side of~\eqref{eq:thr-fixed}, gets back a smaller bound, and closes with a
-continuity argument. It is an explicit form of Step~4 in the proof
+(Lemma~\ref{lem:thr-tail}). Substituting the proposed bound into~\eqref{eq:thr-fixed} gives a
+strictly smaller one. Continuity then prevents a first failure. It is an explicit form of Step~4 in the proof
 of~\cite[Theorem~2.5]{glr2026}. By Fourier inversion $g_a$ then has two
 continuous derivatives, and $g_a''(0)=-\frac1\pi\int_0^\infty t^2\operatorname{Re}\phi(t)\,dt$. We
 integrate the moment series term by term on $[0,T_3]$, and the two error
 terms are explicit.
 
-\emph{Step 2, intervals of $a$.} With $a$ as an interval, ball arithmetic
-fails, as the series cancels terms of size about $10^{60}$. On
+\emph{Step 2, intervals of $a$.} Direct interval evaluation in $a$ is too coarse here, since the
+series cancels terms of size about $10^{60}$. On
 $I=[a_0-w,a_0+w]$ we put $\rho=w/\vartheta$ with $0<\vartheta<1$ and expand in $a-a_0$. The
 coefficients are computed at the exact point $a_0$ by power series arithmetic.
 If $h$ is analytic with $\lvert h\rvert\le M$ on the disc
 $\lvert z-a_0\rvert\le\rho$, then Cauchy's estimate bounds the remainder after
-degree $K$ by $M\vartheta^{K+1}/(1-\vartheta)$ on $I$. We bound $M$ by enclosing $c_n(z)$ on a
-square that contains the disc, where nothing cancels, and beyond degree $N$ by
-the complex form of Step~1 with the product formula for
+degree $K$ by $M\vartheta^{K+1}/(1-\vartheta)$ on $I$. To bound $M$, we enclose $c_n(z)$ on a square containing the disc,
+using absolute bounds. Beyond degree $N$ we use the complex form
+of Step~1 with the product formula for
 $\lvert\Gamma(x)/\Gamma(x+iy)\rvert^2$~\cite[5.8.3]{dlmf}. This gives a
 polynomial $G$ and a number $\eta$ with $\lvert g_a''(0)-G(a-a_0)\rvert\le\eta$
 for every $a\in I$. It also shows that $a\mapsto g_a''(0)$ is continuous on
@@ -90,9 +89,9 @@ The script \texttt{certify\_threshold.py} checks every hypothesis in ball
 arithmetic~\cite{johansson2017}. It evaluates $R$ with $a$ as a ball over $I$
 and evaluates $G$ on subintervals of $I$, bisecting until $G\pm\eta$ has one
 sign on each. For the Hankel test it takes $k$ and a rational $x$ from a
-floating-point eigenvector at the centre of a box of $a$, and checks the sum
-on the whole box with a Taylor model as in Step~2. Choices made in floating
-point, such as $N$, the precision and $x$, affect only whether a run succeeds.
+floating-point eigenvector at the center of a box of $a$, and checks the sum
+on the whole box with a Taylor model as in Step~2. Floating-point choices of $N$, the precision and $x$ only affect
+whether the subsequent certificate succeeds.
 The cells have half-width $\frac1{32}$, the Taylor order in $t$ is $12$,
 $\beta=4$, and the degree $K$ is chosen so that $M\vartheta^{K+1}\le e^{-60}$.
 Table~\ref{tab:thr-runs} lists the runs.
@@ -112,8 +111,8 @@ $[0.6705,1]$ & Step 4 & 115 & $k\le56$ & 25 min\\
 \end{table}
 
 \emph{Step 5, the unique transition.} Put $I=[0.66881285,0.66881287]$,
-which contains $[z_-,z_+]$. Differentiating the fixed-point equation,
-rather than its error bound, gives inhomogeneous integral inequalities for
+which contains $[z_-,z_+]$. Differentiating the fixed-point equation gives inhomogeneous integral
+inequalities for
 $|\partial_t\phi_a(t)|$ and $|\partial_a\phi_a(t)|$.
 The same continuity argument as in Step~1 propagates the bounds
 $2t^{-8}$ and $4t^{-7}$, respectively, from $[6,10]$ to $[6,\infty)$.
@@ -124,9 +123,9 @@ The script \texttt{certify\_transition.py} certifies, uniformly for $a\in\operat
  0.68<\partial_a g_a''(0)<0.70,
  \qquad -0.09<g_a^{(4)}(0)<-0.07.
 \]
-The finite-frequency bounds use parameter Taylor models with their
-differentiated Cauchy remainders. The full argument and numerical constants
-are in Section~\ref{or:transition-unique}.
+At finite frequencies we use parameter Taylor models and differentiate
+their Cauchy remainder bounds. Section~\ref{or:transition-unique}
+gives the argument and constants.
 
 \begin{proof}[Proof of Theorem~\ref{thm:threshold}]
 The 40 intervals of the first run cover $[\frac12,0.668]$. On each, the
@@ -143,8 +142,8 @@ $[0.6705,1]$, and on each the first sum of Lemma~\ref{lem:thr-hankel} is
 negative.
 
 By Step~1, $g_a$ is even with two continuous derivatives, so $g_a'(0)=0$. If
-$g_a''(0)<0$, then $g_a'<0$ on some $(0,\delta)$, which rules out case (b),
-where $g_a$ is nondecreasing on $[0,c]$. If $g_a''(0)>0$, then $g_a'>0$ on
+$g_a''(0)<0$, then $g_a'<0$ on some $(0,\delta)$, which rules out case (b), where $g_a$ is nondecreasing on
+$[0,\kappa]$. If $g_a''(0)>0$, then $g_a'>0$ on
 some $(0,\delta)$, which rules out case (a). Lemma~\ref{lem:thr-hankel}
 gives case (b) on $[0.6705,1)$. By Step~2,
 $a\mapsto g_a''(0)$ is continuous on $[0.6688,0.6692]$, so it has a zero in
