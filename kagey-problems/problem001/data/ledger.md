@@ -252,3 +252,162 @@ two orders), a_6(8) = 8 (guess 1..50, right). Each by two SAT encodings on diffe
 column search without a solver; 7 x 7 also by a split SAT run. f(7,8) = 16 (guess 16, right): no valid
 17-point blackout by two split SAT runs, and 16 points are attained. The count a_7(8) = 18 comes from one
 method only; the second count was stopped before it finished. Data in jis/data/table_counts/.
+
+## Pre-registered predictions for six rows at widths 9..14 (2026-11-06)
+
+Written before any of these runs. Known: m+7 <= blackout(6,m) <= m+8 for 9 <= m <= 14 (the m+9
+structure is UNSAT there, and the 6 x 9 board of 16 points passes the collar test).
+
+1. Structure (proved by hand before the runs, to go in the paper): a valid 6 x m blackout with m+8
+   points has every column a singleton or a double, the doubles on distinct row pairs, and the
+   double pairs form one of: K_{3,3} minus an edge (90 labelled cases), K_{2,4} (15 cases), or
+   K_{3,3} with one empty column (10 cases). Reason: |S| = t + e(H) with e(H) <= 9 and t <= m, so
+   (t, e(H)) = (m, 8) or (m-1, 9); a triangle-free graph on 6 vertices with 8 edges is bipartite and
+   connected (K_{3,3}-e or K_{2,4}), and a column with 3 or more black rows gives a triangle under a
+   re-chosen tree (two same-side vertices of these graphs have a second common neighbour).
+2. Prediction: blackout(6,m) = m+8 holds from some width m_1 on and fails below it, with m_1 = 11
+   (interval 10 <= m_1 <= 13). Attainment is monotone in m. K_{2,4} is never used by an optimum
+   (low confidence).
+3. Falsifiers: m+8 at m = 9; a gap (m+8 at some width, m+7 at a larger width <= 14); no m+8 at any
+   width 9..14.
+Method: the 115 cases per width as SAT instances under two separately written encodings (A on
+cadical153, B on glucose4). UNSAT on every case under both proves blackout(6,m) = m+7. Every model is
+rechecked against the full rectangle list by two enumerators.
+
+## Pre-registered predictions for seven rows (2026-11-06)
+
+Written before any of these runs. Row bound: blackout(7,m) <= m+12 (q_7 = 12), equality only with
+twelve doubles on the edges of a K_{3,4} and singletons elsewhere; W_7 = 10.
+1. Some width m <= 40 has a valid 7 x m blackout of m+12 points that passes the collar test (10
+   boundary-row singletons per side), so blackout(7,m) = m+12 for all large m. Confidence: about 70%.
+2. The smallest width with an m+12 blackout lies in 20..32 (point guess 25; the first widths were 8
+   for five rows and 15 for six rows).
+Method: six_row_structured_sat.py --rows 7 (35 partitions, encoder A, cadical153), witness rechecked by
+verify_narrow and the side-vector enumerator, collar test by both enumerators. Second method for a
+witness: brute.py or the Lean kernel check.
+
+Side observation (2026-11-06, exploration, not a prediction): spreading the doubles more than 2 W_h
+apart in a sea of row-1 singletons is NEVER valid for h >= 5. A double with a black point d rows below
+row 1, d = 4, gives the tilted rectangle with diagonals (y,1)-(x,1+d) and a horizontal one (3-4-5),
+showing a horizontal pair whose axis rival uses two row-1 singletons. Seen at 5 x 77 and 6 x 150.
+
+## Outcomes for six rows at widths 9..14 (2026-11-06)
+
+Item 1 (structure): proved by hand as stated (paper, Lemma "one point below the bound").
+Item 2: blackout(6,m) = m+7 for m = 9, 10, 11 and m+8 for m = 12, 13, 14. So m_1 = 12: inside the
+predicted interval 10..13, but the point guess 11 was WRONG. Attainment is monotone, as predicted.
+The K_{2,4} family is never used by the witnesses found, but this was not checked exhaustively at 12..14.
+- Widths 9, 10, 11: all 115 cases UNSAT under encoder A (cadical153) and encoder B (glucose4),
+  jis/data/six_row_excess8_w{9,10,11}_{A,B}.json. LRAT certificates for all 345 encoder-A instances
+  (CaDiCaL 2.1.2), each passing drat-trim lrat-check and the Lean LRAT checker:
+  jis/data/six_row_excess8_certificates.json (proofs, 1.87 GB, kept in lean-work/unsat/proofs).
+- Widths 12, 13, 14: SAT witnesses in case K (K_{3,3} minus an edge). One family covers all three:
+  16,36,25,12,1^k,23,34,45,56 (k = m-8), valid for k = 4..11 by verify_narrow and the side-vector
+  enumerator, and for widths 12, 13, 14 also by solver/brute.py (six_row_excess8_family.json).
+  It fails for k <= 3, as it must.
+- Calibration: width 8 all 115 UNSAT (f(6,8) = 15 = m+7); width 15 case K SAT (f(6,15) = 24 >= m+8).
+So f(h,m) is now known for every h <= 6 and every m.
+
+## Outcomes for seven rows (2026-11-06)
+
+Item 1: CONFIRMED. Partition {2,4,6} | {1,3,5,7} gives m+12 blackouts at widths 26, 28, 30, 32, 34 (and
+{1,4,7} at 32). The width-28 witness
+34,2,2,2,47,2,2,27,25,7,7,7,7,7,67,36,23,2,12,1,1,16,1,1,14,1,45,56
+passes the collar test with 10 row-7 singletons on the left (both enumerators), so f(7,m) = m+12 for
+every m >= 28 by the collar theorem; f(7,26) = 38 too. brute.py check running.
+Item 2: smallest width <= 26; 20, 22, 24 still unresolved; 27 launched.
+
+Second, independent construction (gadget decomposition, new, exploratory). Put each double of
+K_{A,B} in its own cluster, clusters separated by >= W_h row-1 singletons. A tilted rectangle then
+meets at most one cluster, and the only coupling between clusters is an axis rival through a double
+of another cluster, which can only rival a vertical pair {r,s} in F or a singleton (x,r) with
+{r,s} in F, s in B_x. So the board is valid iff each cluster, padded by W_h row-1 columns on both sides,
+is valid and avoids those two F-relative presentations ("gadget"). SAT finds single-edge gadgets
+for every edge, partition odd|even rows:
+  h = 5, 6: 12,14,16,23,34,36 alone; 25: 5,5,5,25; 45: 5,5,5,45; 56: 6,6,6,6,56.
+  h = 7: as above with 25: 5,7,5,25; 45: 5,7,5,45; 27: 4,5,7,5,27,6; 47: 3,47,5,5,5; 67: 6,7,7,7,7,67,6.
+Assembled boards checked directly by verify_narrow: 5 x 47 (excess 6), 6 x 89 (excess 9), 7 x 167
+(excess 12), all valid with W_h end padding, hence collar boards.
+Why lone doubles fail: with padding row 1, a black (0,c) and a row-1 corner (y,1) are opposite corners
+of a tilted rectangle whose other diagonal is horizontal whenever c-1 = 2k >= 4 (leg of the triple
+(k^2-1, 2k, k^2+1)); it shows a horizontal pair of two row-1 columns, which has an axis rival. So
+exactly the odd rows c >= 5 need shielding. The general theorem f(h,m) = m + q_h (m large) reduces to a
+uniform family of shields for these rows. Open.
+
+## Pre-registered predictions: staircase junctions (2026-11-06, general-theorem search)
+
+Written before the runs at h >= 6. Setup: F = all pairs {odd row, even row}. A *step junction* is a
+sea of row-s singletons, one double {s,t}, then a sea of row-t singletons (s, t of opposite parity);
+a *switch* is a sea of row s followed directly by a sea of row t (s != t). A window is the junction
+with 2 W_h + 1 sea columns on each side. A window is *good* if it is valid, hides no tilted
+rectangle, and no weak tilted rectangle shows a vertical pair in F or a singleton (x,r) with
+{r,u} in F for some u in B_x. On five rows every step junction (both directions) and every switch is
+good (checked 2026-11-06 with W_5 + 1 sea columns).
+Prediction: for every 6 <= h <= 12, every step junction and every switch is good. Confidence: 50%.
+Falsifier: one bad window. Method: junction.py (scratchpad, to be copied into jis/scripts if it holds),
+direct collision test with verify_narrow.rectangles, then assembled full boards checked directly.
+Outcome: FALSIFIED at h = 6. Bad windows: switch and step between rows 2 and 5 (both directions);
+at h = 7 also 3 <-> 6. Reason: a black point of each sea as opposite corners with diagonal (4,3)
+and a vertical other diagonal of length 5 shows the vertical pair {(s+t-5)/2, (s+t+5)/2}, of
+opposite parity, hence in F. Odd distances d >= 3 are traps; d = 1 never is (1 is no leg).
+
+## Pre-registered prediction: staircase of seas with loops (2026-11-06)
+
+Construction S_h: seas in rows 1, 2, ..., h from left to right; sea a and sea a+1 are joined by the
+double {a,a+1} (step); every other pair {a,b} of F with b >= a+3 is a *loop*: one double {a,b} inside
+the sea of row a (that is, the extra point (x,b) in a column of sea a). Junctions are > 2 W_h apart.
+Prediction: every step window a -> a+1 and every loop window (a,{a,b},a) is good for all h <= 12, and
+the assembled boards are valid for h = 5..9. Confidence 40%. Falsifier: one bad window or board.
+Outcome: FALSIFIED at h = 6 (loops at row distance 3: same vertical-pair trap). Steps a -> a+1 were good
+for every h <= 8.
+
+## Pre-registered prediction: alternating boundary seas (2026-11-06)
+
+Construction Z_h: seas alternate between row 1 and row h; every double {a,b} of F sits at a switch
+(sea 1, double, sea h) or (sea h, double, sea 1). Reason to expect it: with both seas in boundary
+rows, every odd-distance vertical trap needs hypotenuse L <= d (impossible), and every even-distance
+horizontal trap straddles the switch column, so its two endpoints lie in different seas.
+Seen first at h = 7, top|bottom partition: all 12 edges good in both directions.
+Prediction: for every 5 <= h <= 12 and both partitions (odd|even and top|bottom), every edge is good
+at a 1 -> h switch and at an h -> 1 switch, and assembled boards Z_h are valid for 5 <= h <= 9.
+Confidence 60%. Falsifier: one bad window or board.
+Outcome (alternating boundary seas): CONFIRMED on every check run. Windows: no bad window for
+h = 5..10, both partitions (h = 11, 12 still running). Full boards checked directly by
+verify_narrow.collision: Z_5, Z_6, Z_7 (both partitions, end padding 2W_h + 1 and also none),
+Z_8 odd|even (width 421, excess 16), and C_5 on 5 and 7 rows (non-bipartite H, excess 5). Gap W_h
+also passes at h <= 7; gap floor(W_h/2) fails.
+Hand proof written (notes/general_theorem_gadgets.md): for every h >= 3 and every triangle-free H on
+the rows, alternating boundary seas with gaps >= 2W_h + 1 give a valid blackout with m + e(H) points.
+With H = K_{floor(h/2),ceil(h/2)}: f(h,m) = m + q_h for all m >= q_h + (q_h - 1)(2W_h + 1).
+Needs an independent audit before it is used.
+
+## Seven rows, widths 26..28, and corrections to earlier entries (2026-11-06)
+
+Width 27 is SAT for the partition {1,4,7} | {2,3,5,6}:
+57,1,16,37,3,67,1,7,1,1,34,7,24,1,15,27,7,1,7,7,45,1,46,7,13,6,12.
+With widths 26 and 28 and the width-28 collar board, f(7,m) = m+12 for every m >= 26. The witnesses of
+widths 26, 27, 28 and the 7 x 38 collar board are valid by verify_narrow, the side-vector enumerator,
+and solver/brute.py (seven_row_witness_brute.json). Item 2 of the seven-row predictions: the
+smallest width is at most 26 (inside 20..32); widths 20..25 are not settled.
+
+Corrections to earlier entries (kept as written above):
+- The 2026-09-21 entry points to paper/narrow_rows.tex, which no longer exists. The proofs are in
+  jis/pemmasani.tex (sections 4 to 6).
+- Outcomes part 2 (2026-10-17) says the separate six-row recheck "did not finish". The DFS checks for
+  widths 9..13 have since finished, and width 14 rests on the two SAT routes; all 70 instances
+  also have LRAT certificates.
+- The table-count outcomes call a_7(8) = 18 "the count". Only a_7(8) >= 18 is established (one method).
+
+## General theorem: audit and second check (2026-11-06)
+
+An independent read of the hand proof in notes/general_theorem_gadgets.md found it correct, with
+three wording gaps (alpha: whiteness must follow the straddle; gamma-diag: c >= 3; side-side: both
+endpoint matchings must be checked). All three are fixed in the note. A separately written board
+check (jis/scripts/general_theorem_board_check.py, random balanced partition, random edge order,
+random end padding, minimal gap 2 W_h + 1) is valid for h = 5, 6, 7 (two seeds each) and h = 8, with
+excess exactly q_h (jis/data/general_theorem_board_check.txt). So f(h,m) = m + floor(h^2/4) for every
+h >= 3 and every m >= q_h + (q_h - 1)(2 W_h + 1).
+
+Side experiment (square grids): the GQ(2,2) incidence graph placed on the 15 x 15 grid under random
+row and column orders keeps at most 28 of its 45 points after the fewest deletions that make it
+valid (3 orders tried). That is below 2n = 30, so it does not answer "first n with f(n,n) > 2n".

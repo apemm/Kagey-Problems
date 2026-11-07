@@ -149,7 +149,80 @@ def boards():
     write('board16.tex', tikz(s, picture(6, 16, s16, s, caption='(b)')))
 
 
+def tilted():
+    """Figure: the diamond D(1,1) and the templates A_1, B_1, C_1, E_1 of the 4 x m grid, each
+    in a 4 x 4 window, with the leftmost corner shown yellow."""
+    shapes = [('$D(1,1)$', [(1, 2), (2, 1), (3, 2), (2, 3)]),
+              ('$\\kA_1$', [(1, 3), (2, 4), (4, 2), (3, 1)]),
+              ('$\\kB_1$', [(1, 3), (3, 4), (4, 2), (2, 1)]),
+              ('$\\kC_1$', [(1, 2), (2, 4), (4, 3), (3, 1)]),
+              ('$\\kE_1$', [(1, 2), (3, 4), (4, 3), (2, 1)])]
+    rows = {'$\\kA_1$': '3412', '$\\kB_1$': '3142', '$\\kC_1$': '2413', '$\\kE_1$': '2143'}
+    rects4 = {frozenset(r) for r in [frozenset((i % 4 + 1, i // 4 + 1) for i in range(16) if r >> i & 1)
+                                     for r in rectangles(4, 4)]}
+    for name, sh in shapes:
+        is_rectangle(sh)
+        assert frozenset(sh) in rects4, name
+        if name in rows:      # corner rows read left to right, as in the definition
+            assert ''.join(str(y) for _, y in sorted(sh)) == rows[name], name
+    s = 0.5
+    gap = 4 + 1.4
+    body = []
+    for k, (name, sh) in enumerate(shapes):
+        body += picture(4, 4, set(), s, shown={min(sh)}, rects=[('kred', sh)], labels=(k == 0),
+                        caption=name, shift=k * gap * s)
+    write('tilted.tex', tikz(s, body))
+
+
+def four():
+    """Figure: the four-row construction for m = 7, its eight-cycle, and the weak rectangle A_1."""
+    h, m = 4, 7
+    black = {(i, 1) for i in range(2, m)} | {(m - 1, 2), (m, 2), (1, 3), (2, 3), (1, 4), (m, 4)}
+    assert len(black) == m + 4
+    check_valid(h, m, black)
+    cyc = [(2, 1), (6, 1), (6, 2), (7, 2), (7, 4), (1, 4), (1, 3), (2, 3)]
+    assert all(p in black for p in cyc)
+    a1 = [(1, 3), (2, 4), (4, 2), (3, 1)]
+    is_rectangle(a1)
+    shown = {p for p in a1 if p not in black}
+    assert shown == {(2, 4), (4, 2)}
+    s = 0.62
+    gap = m + 1.2
+    body = picture(h, m, black, s, rects=[('kblue', cyc)], caption='(a) the cycle of $G_S$')
+    body += picture(h, m, black, s, shown=shown, rects=[('kred', a1)],
+                    caption='(b) $\\kA_1$ shows two points', shift=gap * s)
+    write('four.tex', tikz(s, body))
+
+
+def diamond():
+    """Figure: the diamond test on three rows. (a) The valid word aAbCc. (b) In bAbCc the diamond
+    D(1,1) and the axis-aligned rectangle on columns 2, 4 and rows 2, 3 both show only (2,3)."""
+    letters = {'a': [1], 'b': [2], 'c': [3], 'A': [1, 2], 'C': [2, 3]}
+
+    def word(w):
+        return {(i + 1, r) for i, ch in enumerate(w) for r in letters[ch]}
+
+    ok, bad = word('aAbCc'), word('bAbCc')
+    check_valid(3, 5, ok)
+    check_valid(3, 5, bad, expect=False)
+    d = [(1, 2), (2, 1), (3, 2), (2, 3)]
+    rival = [(2, 2), (4, 2), (4, 3), (2, 3)]
+    is_rectangle(d)
+    is_rectangle(rival)
+    assert {p for p in d if p not in bad} == {(2, 3)} == {p for p in rival if p not in bad}
+    s = 0.62
+    gap = 5 + 1.6
+    body = picture(3, 5, ok, s, rects=[('kred', d)], shown={p for p in d if p not in ok},
+                   caption='(a) $aAbCc$ is valid')
+    body += picture(3, 5, bad, s, rects=[('kblue', rival), ('kred', d)], shown={(2, 3)},
+                    caption='(b) $bAbCc$ fails', shift=gap * s)
+    write('diamond.tex', tikz(s, body))
+
+
 if __name__ == '__main__':
     game()
     boards()
+    tilted()
+    four()
+    diamond()
     print('figures written and checked')

@@ -1,4 +1,5 @@
 \documentclass[12pt]{article}
+\usepackage{fullpage}
 \usepackage{combelow}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{graphicx}
@@ -13,6 +14,7 @@
 \definecolor{kgray}{HTML}{AAAAAA}
 \definecolor{kyellow}{HTML}{FFF64C}
 \definecolor{kred}{HTML}{FF6666}
+\definecolor{kblue}{HTML}{4A86E8}
 \tikzset{
   lab/.style={font=\scriptsize,text=black!55},
   capt/.style={font=\small},
@@ -56,7 +58,7 @@ many points can be blacked out while every rectangle stays determined by what it
 We study the maximum blackout and the number of optima, tabulated in A397315 and A399580
 of the On-Line Encyclopedia of Integer Sequences. A row-column graph and Mantel's theorem
 bound the maximum by the width plus a quarter of the squared height. We find the maximum
-on up to five rows at every width, and on six rows from width 15 on. The five-row result
+on up to six rows at every width, and on seven rows from width 26 on. The five-row result
 refutes our earlier guess that the maximum is the sum of the two sides. We count the three-row optima exactly and
 find the growth rate on four rows. At every fixed height, the maximum minus the width is
 eventually periodic, and the optimum counts have a rational generating function. Some
@@ -181,8 +183,8 @@ Lemma~\ref{lem:threecorners}.}
 \end{figure}
 
 Write $f(h,m)$ for the most points we can black out, and $a_h(m)$
-for the number of ways to attain it. The conjectures recorded in our
-OEIS entries \seqnum{A397315} and \seqnum{A399580}~\cite{oeis} were
+for the number of ways to attain it. The conjectures recorded in the
+OEIS entry \seqnum{A397315}~\cite{oeis} were
 $f(3,m)=m+2$ and $f(h,m)=h+m$ for $\min(h,m)\ge4$, with exceptions
 $f(4,4)=7$ and $f(4,5)=8$. The first was proved in Lean by the Omega
 Institute, whose pull request was merged on 15 September
@@ -190,8 +192,8 @@ Institute, whose pull request was merged on 15 September
 bound (Theorem~\ref{thm:rowbound}) and the boundary cross
 (Lemma~\ref{lem:cross}). The second guess breaks at $5\times8$
 (Theorem~\ref{thm:fiverow}). Throughout, put $q_h=\lfloor h^2/4\rfloor$.
-Computer-assisted claims are marked, with evidence in
-Table~\ref{tab:evidence}.
+Computer-assisted claims are marked, and the supplement to this paper lists the
+evidence for each.
 
 The main results follow, with proof locations in parentheses.
 
@@ -207,14 +209,17 @@ Theorem~\ref{thm:fourvalue}, and Theorem~\ref{thm:fivefive}(a).)}
 claim checked in Lean.) We have $f(4,4)=7$, $f(4,5)=8$,
 $f(5,6)=11$, $f(5,7)=12$, and $f(5,m)=m+6$ for $m\ge8$. \textup{(Corollary~\ref{cor:fourboundary}
 and Theorem~\ref{thm:fiverow}(a), (b).)}
-\item (Computer-assisted for $m\ge9$, with checked certificates for $m\le14$, and checked in
-Lean for $m\ge15$.) We have $f(6,m)\le m+8$ for $8\le m\le14$, and
-$f(6,m)=m+9$ for $m\ge15$. \textup{(Theorem~\ref{thm:sixrow}.)}
+\item (Computer-assisted for $m\le14$, with checked certificates for the upper bounds, and
+checked in Lean for $m\ge15$.) We have $f(6,m)=m+7$ for $8\le m\le11$, $f(6,m)=m+8$ for
+$12\le m\le14$, and $f(6,m)=m+9$ for $m\ge15$. \textup{(Theorem~\ref{thm:sixrow}.)}
 \item (Computer-assisted, with checked certificates.) We have $f(6,6)=12$,
 $f(6,7)=13$, $f(7,7)=14$, and $f(6,8)=15$. \textup{(Theorem~\ref{thm:refute}.)}
+\item (Computer-assisted.) We have $f(7,m)=m+12$ for every $m\ge26$.
+\textup{(Theorem~\ref{thm:sevenrow}.)}
 \end{enumerate}
 \end{introthm}
 
+With (e) and transposition, $f(h,m)$ is known for every $h\le6$ and every $m$.
 For (c) and (d), the collar theorem reduces each infinite family to
 one validity check (Theorem~\ref{thm:collar}). Lemma~\ref{lem:enc}
 justifies the SAT bounds.
@@ -222,7 +227,7 @@ justifies the SAT bounds.
 \begin{introthm}[three-row optima]\label{thm:B}
 \leavevmode
 \begin{enumerate}[(a)]
-\item For $m\ge4$ we have $a_3(m)=4(m-1)(3m+2)\,3^{m-5}+E_m$, where $E_m>0$ counts the
+\item For $m\ge4$ the counts $a_3(m)$ \textup{(}\seqnum{A401223}\textup{)} satisfy $a_3(m)=4(m-1)(3m+2)\,3^{m-5}+E_m$, where $E_m>0$ counts the
 optima with a column black in rows $1$ and $3$ (\seqnum{A398448}), and
 $E_m=O(m^2(1+\sqrt3)^m)$. So $a_3(m)\sim\frac4{81}m^23^m$, and a fraction tending to $4/27$
 of the $m^23^{m-1}$ axis-valid candidates is valid. The series $\sum_{m\ge3}a_3(m)z^m$ is
@@ -238,7 +243,7 @@ proved in Section~\ref{app:threegf}, and Theorem~\ref{thm:threeclosed}.)}
 \begin{introthm}[four rows]\label{thm:C}
 If $m\ge4$, no valid blackout of the $4\times m$ grid hides all corners of a
 rectangle \textup{(Theorem~\ref{thm:hidden})}. (Computer-assisted.) The series
-$\sum_{m\ge6}a_4(m)z^m$ is rational with reduced denominator of degree $420$, and
+$\sum_{m\ge6}a_4(m)z^m$ of the counts in \seqnum{A401224} is rational with reduced denominator of degree $420$, and
 $a_4(m)\sim c\,m^4\rho_4^m$ with $c\approx8.1611\times10^{-5}$ and $\rho_4=3.35199\ldots$, an
 algebraic number of degree $20$ \textup{(Proposition~\ref{prop:fourautomaton},
 Theorem~\ref{thm:fourgfexact}, and Corollary~\ref{cor:fourgrowth}, Section~\ref{sec:four})}.
@@ -257,11 +262,15 @@ largest entry \seqnum{A033638}$(n)$.
 \paragraph{Prior work.} Choosing white points to distinguish rectangles is
 a test-cover problem~\cite{bellitto2018,foucaud2015,katona1966,moretshapiro1985}
 (Corollary~\ref{cor:hitting}). If we only forbid fully black axis-aligned
-rectangles, we get the Zarankiewicz problem~\cite{reiman1958}.
+rectangles, we get the Zarankiewicz problem~\cite{furedi1996,kst1954,reiman1958}.
 To distinguish all axis-aligned rectangles, the row-column graph must
 avoid both four- and six-cycles (Lemma~\ref{lem:girth}). Such graphs,
 including unbalanced parts, are studied by de Caen and
-Sz\'ekely~\cite{decaenszekely1992,decaenszekely1997}.
+Sz\'ekely~\cite{decaenszekely1992,decaenszekely1997}. With $n$ vertices on each
+side, the largest ones have $\Theta(n^{4/3})$ edges. Incidence graphs of generalized
+quadrangles attain this order~\cite{benson1966}, and Hoory~\cite{hoory2002} and
+Neuwirth~\cite{neuwirth2001} bound it from above. Lazebnik, Ustimenko, and
+Woldar~\cite{lazebnik1995} construct dense graphs of every even girth.
 Neuwirth's edge bounds~\cite[Theorem~1(ii) and Proposition~17]{neuwirth2001}
 already give our row bound in graph form. Our Mantel proof~\cite{mantel1907} also classifies and counts
 the equality cases.
@@ -275,9 +284,9 @@ yields Theorem~\ref{thm:E} once regularity is proved.
 \paragraph{Outline.} Sections~\ref{sec:conv} to~\ref{sec:graph} set up
 the problem and its graph bounds. Sections~\ref{sec:three}
 to~\ref{sec:height} handle narrow grids and fixed height.
-Section~\ref{sec:verify} gives computational evidence and encoding
-proofs, Section~\ref{sec:open} the open questions, and
-Appendix~\ref{app:square} the square-grid bound.
+Section~\ref{sec:square} gives the square-grid bounds,
+Section~\ref{sec:verify} the computational evidence and encoding
+proofs, and Section~\ref{sec:open} the open questions.
 \section{Conventions}\label{sec:conv}
 
 We keep track of the black points column by column. The following notation
@@ -449,15 +458,15 @@ Lemma~\ref{lem:girth}.
 \end{proof}
 
 \begin{lemma}[Mantel \cite{mantel1907}]\label{lem:mantel}
-Let $H$ be a simple triangle-free graph on $h$ vertices, let a vertex of maximum degree $\Delta$ have neighbor set $A$, and let $B$ be the other $h-\Delta$ vertices, spanning $e(B)$ edges. Then
+Let $H$ be a simple triangle-free graph on $h$ vertices, let a vertex of maximum degree $\Delta$ have neighbor set $\Gamma$, and let $\Omega$ be the other $h-\Delta$ vertices, spanning $e(\Omega)$ edges. Then
 \[
-e(H)=\sum_{b\in B}d(b)-e(B)\le(h-\Delta)\Delta-e(B)\le q_h.
+e(H)=\sum_{b\in\Omega}d(b)-e(\Omega)\le(h-\Delta)\Delta-e(\Omega)\le q_h.
 \]
 \end{lemma}
 
 \begin{proof}
-The set $A$ is independent, so every edge meets $B$.
-Summing degrees over $B$ counts its internal edges twice.
+The set $\Gamma$ is independent, so every edge meets $\Omega$.
+Summing degrees over $\Omega$ counts its internal edges twice.
 Subtract those once, then use $d(b)\le\Delta$ and
 $(h-\Delta)\Delta\le q_h$.
 \end{proof}
@@ -480,8 +489,8 @@ There are $p_h\,(m)_{q_h}\,h^{m-q_h}$ such blackouts, where $(m)_q$ is the falli
 \end{theorem}
 
 \begin{proof}
-Equality in the row-bound proof forces $t=m$, $e(B)=0$, and
-$(h-\Delta)\Delta=q_h$, with all of $B$ joined to all of $A$.
+Equality in the row-bound proof forces $t=m$, $e(\Omega)=0$, and
+$(h-\Delta)\Delta=q_h$, with all of $\Omega$ joined to all of $\Gamma$.
 Thus $H$ is the graph in (c).
 If $|B_i|\ge3$, its tree $T_i$ has a vertex $v$ with neighbors $u,w$.
 Since $h\ge4$, the part containing $v$ has another vertex $z$.
@@ -550,7 +559,128 @@ Choose sides $(1,-b)$ and $(bd,d)$ with $b=\lfloor n/2\rfloor$ and
 $d=\lceil n/2\rceil$ to attain it.
 \end{proof}
 
-The \emph{diamond} $D(i,j)$ is the square with corners $(i,j+1)$, $(i+1,j)$, $(i+2,j+1)$, and $(i+1,j+2)$. The rectangles $\kA_i$, $\kB_i$, $\kC_i$, and $\kE_i$ have one corner in each of the columns $i$ to $i+3$, in the rows $3412$, $3142$, $2413$, and $2143$ from left to right.
+The \emph{diamond} $D(i,j)$ is the square with corners $(i,j+1)$, $(i+1,j)$, $(i+2,j+1)$, and $(i+1,j+2)$. The rectangles $\kA_i$, $\kB_i$, $\kC_i$, and $\kE_i$ have one corner in each of the columns $i$ to $i+3$, in the rows $3412$, $3142$, $2413$, and $2143$ from left to right (Figure~\ref{fig:tilted}).
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[x=0.5cm,y=0.5cm,baseline=(current bounding box.north)]
+  \begin{scope}[xshift=0.000cm]
+    \draw[black,line width=0.20pt,dash pattern=on 0.75pt off 0.75pt] (1,-1) -- (4,-1) (1,-2) -- (4,-2) (1,-3) -- (4,-3) (1,-4) -- (4,-4) (1,-1) -- (1,-4) (2,-1) -- (2,-4) (3,-1) -- (3,-4) (4,-1) -- (4,-4);
+    \draw[kred,line width=1.42pt,line join=round] (1,-2) -- (2,-1) -- (3,-2) -- (2,-3) -- cycle;
+    \filldraw[fill=white,draw=black,line width=0.30pt] (1,-1) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (2,-1) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (3,-1) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (4,-1) circle (0.3);
+    \filldraw[fill=kyellow,draw=black,line width=0.30pt] (1,-2) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (2,-2) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (3,-2) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (4,-2) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (1,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (2,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (3,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (4,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (1,-4) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (2,-4) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (3,-4) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (4,-4) circle (0.3);
+    \node[lab] at (1,-0.45) {1};
+    \node[lab] at (2,-0.45) {2};
+    \node[lab] at (3,-0.45) {3};
+    \node[lab] at (4,-0.45) {4};
+    \node[lab] at (0.45,-1) {1};
+    \node[lab] at (0.45,-2) {2};
+    \node[lab] at (0.45,-3) {3};
+    \node[lab] at (0.45,-4) {4};
+    \node[capt,anchor=north] at (2.50,-4.45) {$D(1,1)$};
+  \end{scope}
+  \begin{scope}[xshift=2.700cm]
+    \draw[black,line width=0.20pt,dash pattern=on 0.75pt off 0.75pt] (1,-1) -- (4,-1) (1,-2) -- (4,-2) (1,-3) -- (4,-3) (1,-4) -- (4,-4) (1,-1) -- (1,-4) (2,-1) -- (2,-4) (3,-1) -- (3,-4) (4,-1) -- (4,-4);
+    \draw[kred,line width=1.42pt,line join=round] (1,-3) -- (2,-4) -- (4,-2) -- (3,-1) -- cycle;
+    \filldraw[fill=white,draw=black,line width=0.30pt] (1,-1) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (2,-1) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (3,-1) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (4,-1) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (1,-2) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (2,-2) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (3,-2) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (4,-2) circle (0.3);
+    \filldraw[fill=kyellow,draw=black,line width=0.30pt] (1,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (2,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (3,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (4,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (1,-4) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (2,-4) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (3,-4) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (4,-4) circle (0.3);
+    \node[capt,anchor=north] at (2.50,-4.45) {$\kA_1$};
+  \end{scope}
+  \begin{scope}[xshift=5.400cm]
+    \draw[black,line width=0.20pt,dash pattern=on 0.75pt off 0.75pt] (1,-1) -- (4,-1) (1,-2) -- (4,-2) (1,-3) -- (4,-3) (1,-4) -- (4,-4) (1,-1) -- (1,-4) (2,-1) -- (2,-4) (3,-1) -- (3,-4) (4,-1) -- (4,-4);
+    \draw[kred,line width=1.42pt,line join=round] (1,-3) -- (3,-4) -- (4,-2) -- (2,-1) -- cycle;
+    \filldraw[fill=white,draw=black,line width=0.30pt] (1,-1) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (2,-1) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (3,-1) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (4,-1) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (1,-2) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (2,-2) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (3,-2) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (4,-2) circle (0.3);
+    \filldraw[fill=kyellow,draw=black,line width=0.30pt] (1,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (2,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (3,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (4,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (1,-4) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (2,-4) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (3,-4) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (4,-4) circle (0.3);
+    \node[capt,anchor=north] at (2.50,-4.45) {$\kB_1$};
+  \end{scope}
+  \begin{scope}[xshift=8.100cm]
+    \draw[black,line width=0.20pt,dash pattern=on 0.75pt off 0.75pt] (1,-1) -- (4,-1) (1,-2) -- (4,-2) (1,-3) -- (4,-3) (1,-4) -- (4,-4) (1,-1) -- (1,-4) (2,-1) -- (2,-4) (3,-1) -- (3,-4) (4,-1) -- (4,-4);
+    \draw[kred,line width=1.42pt,line join=round] (1,-2) -- (2,-4) -- (4,-3) -- (3,-1) -- cycle;
+    \filldraw[fill=white,draw=black,line width=0.30pt] (1,-1) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (2,-1) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (3,-1) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (4,-1) circle (0.3);
+    \filldraw[fill=kyellow,draw=black,line width=0.30pt] (1,-2) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (2,-2) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (3,-2) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (4,-2) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (1,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (2,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (3,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (4,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (1,-4) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (2,-4) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (3,-4) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (4,-4) circle (0.3);
+    \node[capt,anchor=north] at (2.50,-4.45) {$\kC_1$};
+  \end{scope}
+  \begin{scope}[xshift=10.800cm]
+    \draw[black,line width=0.20pt,dash pattern=on 0.75pt off 0.75pt] (1,-1) -- (4,-1) (1,-2) -- (4,-2) (1,-3) -- (4,-3) (1,-4) -- (4,-4) (1,-1) -- (1,-4) (2,-1) -- (2,-4) (3,-1) -- (3,-4) (4,-1) -- (4,-4);
+    \draw[kred,line width=1.42pt,line join=round] (1,-2) -- (3,-4) -- (4,-3) -- (2,-1) -- cycle;
+    \filldraw[fill=white,draw=black,line width=0.30pt] (1,-1) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (2,-1) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (3,-1) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (4,-1) circle (0.3);
+    \filldraw[fill=kyellow,draw=black,line width=0.30pt] (1,-2) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (2,-2) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (3,-2) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (4,-2) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (1,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (2,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (3,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (4,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (1,-4) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (2,-4) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (3,-4) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.30pt] (4,-4) circle (0.3);
+    \node[capt,anchor=north] at (2.50,-4.45) {$\kE_1$};
+  \end{scope}
+\end{tikzpicture}
+\caption{The tilted rectangles of the $4\times m$ grid, up to translation. Each is drawn in a $4\times4$ window, and its leftmost corner $\ell$ is yellow.}
+\label{fig:tilted}
+\end{figure}
 
 \begin{lemma}[tilted rectangles on narrow grids]\label{lem:tilted-narrow}
 The tilted rectangles of the $3\times m$ grid are the diamonds $D(i,1)$. Those of the $4\times m$ grid are $D(i,1)$, $D(i,2)$, $\kA_i$, $\kB_i$, $\kC_i$, and $\kE_i$.
@@ -607,11 +737,11 @@ double letter for its pair in $F$ (Section~\ref{sec:conv}).
 \begin{proposition}[the two types]\label{prop:threeclass}
 Let $S$ be a blackout of the $3\times m$ grid with $m+2$ points.
 \begin{enumerate}[(a)]
-\item If $S$ is valid, its word is one $X$ among singletons (type T) or two different doubles
-among singletons (type P).
-\item For every word of type T or P, $G_S$ is a tree, so axis-aligned rectangles have
+\item If $S$ is valid, its word is one $X$ among singletons (type~I) or two different doubles
+among singletons (type~II).
+\item For every word of type~I or~II, $G_S$ is a tree, so axis-aligned rectangles have
 distinct presentations.
-\item There are $m3^{m-1}+\binom m2\cdot6\cdot3^{m-2}=m^23^{m-1}$ words of type T or P.
+\item There are $m3^{m-1}+\binom m2\cdot6\cdot3^{m-2}=m^23^{m-1}$ words of type~I or~II.
 \end{enumerate}
 \end{proposition}
 
@@ -650,6 +780,87 @@ tests, with $B\in F$ in (b) and $\{r,s\}\in F$ in (e).
 Two diamonds share at most a tip. For equal presentations, both middle
 columns would need black rows $1$ and $3$, impossible in a candidate.
 \end{proof}
+
+Figure~\ref{fig:diamond} shows one passing and one failing diamond.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[x=0.62cm,y=0.62cm,baseline=(current bounding box.north)]
+  \begin{scope}[xshift=0.000cm]
+    \draw[black,line width=0.25pt,dash pattern=on 0.93pt off 0.93pt] (1,-1) -- (5,-1) (1,-2) -- (5,-2) (1,-3) -- (5,-3) (1,-1) -- (1,-3) (2,-1) -- (2,-3) (3,-1) -- (3,-3) (4,-1) -- (4,-3) (5,-1) -- (5,-3);
+    \draw[kred,line width=1.76pt,line join=round] (1,-2) -- (2,-1) -- (3,-2) -- (2,-3) -- cycle;
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (1,-1) circle (0.3);
+    \draw[black,line width=0.37pt] (0.788,-0.788) -- (1.212,-1.212) (0.788,-1.212) -- (1.212,-0.788);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (2,-1) circle (0.3);
+    \draw[black,line width=0.37pt] (1.788,-0.788) -- (2.212,-1.212) (1.788,-1.212) -- (2.212,-0.788);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (3,-1) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (4,-1) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (5,-1) circle (0.3);
+    \filldraw[fill=kyellow,draw=black,line width=0.37pt] (1,-2) circle (0.3);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (2,-2) circle (0.3);
+    \draw[black,line width=0.37pt] (1.788,-1.788) -- (2.212,-2.212) (1.788,-2.212) -- (2.212,-1.788);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (3,-2) circle (0.3);
+    \draw[black,line width=0.37pt] (2.788,-1.788) -- (3.212,-2.212) (2.788,-2.212) -- (3.212,-1.788);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (4,-2) circle (0.3);
+    \draw[black,line width=0.37pt] (3.788,-1.788) -- (4.212,-2.212) (3.788,-2.212) -- (4.212,-1.788);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (5,-2) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (1,-3) circle (0.3);
+    \filldraw[fill=kyellow,draw=black,line width=0.37pt] (2,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (3,-3) circle (0.3);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (4,-3) circle (0.3);
+    \draw[black,line width=0.37pt] (3.788,-2.788) -- (4.212,-3.212) (3.788,-3.212) -- (4.212,-2.788);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (5,-3) circle (0.3);
+    \draw[black,line width=0.37pt] (4.788,-2.788) -- (5.212,-3.212) (4.788,-3.212) -- (5.212,-2.788);
+    \node[lab] at (1,-0.45) {1};
+    \node[lab] at (2,-0.45) {2};
+    \node[lab] at (3,-0.45) {3};
+    \node[lab] at (4,-0.45) {4};
+    \node[lab] at (5,-0.45) {5};
+    \node[lab] at (0.45,-1) {1};
+    \node[lab] at (0.45,-2) {2};
+    \node[lab] at (0.45,-3) {3};
+    \node[capt,anchor=north] at (3.00,-3.45) {(a) $aAbCc$ is valid};
+  \end{scope}
+  \begin{scope}[xshift=4.092cm]
+    \draw[black,line width=0.25pt,dash pattern=on 0.93pt off 0.93pt] (1,-1) -- (5,-1) (1,-2) -- (5,-2) (1,-3) -- (5,-3) (1,-1) -- (1,-3) (2,-1) -- (2,-3) (3,-1) -- (3,-3) (4,-1) -- (4,-3) (5,-1) -- (5,-3);
+    \draw[kblue,line width=1.76pt,line join=round] (2,-2) -- (4,-2) -- (4,-3) -- (2,-3) -- cycle;
+    \draw[kred,line width=1.76pt,line join=round] (1,-2) -- (2,-1) -- (3,-2) -- (2,-3) -- cycle;
+    \filldraw[fill=white,draw=black,line width=0.37pt] (1,-1) circle (0.3);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (2,-1) circle (0.3);
+    \draw[black,line width=0.37pt] (1.788,-0.788) -- (2.212,-1.212) (1.788,-1.212) -- (2.212,-0.788);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (3,-1) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (4,-1) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (5,-1) circle (0.3);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (1,-2) circle (0.3);
+    \draw[black,line width=0.37pt] (0.788,-1.788) -- (1.212,-2.212) (0.788,-2.212) -- (1.212,-1.788);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (2,-2) circle (0.3);
+    \draw[black,line width=0.37pt] (1.788,-1.788) -- (2.212,-2.212) (1.788,-2.212) -- (2.212,-1.788);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (3,-2) circle (0.3);
+    \draw[black,line width=0.37pt] (2.788,-1.788) -- (3.212,-2.212) (2.788,-2.212) -- (3.212,-1.788);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (4,-2) circle (0.3);
+    \draw[black,line width=0.37pt] (3.788,-1.788) -- (4.212,-2.212) (3.788,-2.212) -- (4.212,-1.788);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (5,-2) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (1,-3) circle (0.3);
+    \filldraw[fill=kyellow,draw=black,line width=0.37pt] (2,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (3,-3) circle (0.3);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (4,-3) circle (0.3);
+    \draw[black,line width=0.37pt] (3.788,-2.788) -- (4.212,-3.212) (3.788,-3.212) -- (4.212,-2.788);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (5,-3) circle (0.3);
+    \draw[black,line width=0.37pt] (4.788,-2.788) -- (5.212,-3.212) (4.788,-3.212) -- (5.212,-2.788);
+    \node[lab] at (1,-0.45) {1};
+    \node[lab] at (2,-0.45) {2};
+    \node[lab] at (3,-0.45) {3};
+    \node[lab] at (4,-0.45) {4};
+    \node[lab] at (5,-0.45) {5};
+    \node[lab] at (0.45,-1) {1};
+    \node[lab] at (0.45,-2) {2};
+    \node[lab] at (0.45,-3) {3};
+    \node[capt,anchor=north] at (3.00,-3.45) {(b) $bAbCc$ fails};
+  \end{scope}
+\end{tikzpicture}
+\caption{The diamond test. (a) In $aAbCc$ the diamond $D(1,1)$ shows the oblique pair $(1,2),(2,3)$, which has no rival since $(1,3)$ is white. (b) In $bAbCc$ it shows only $(2,3)$, and so does the axis-aligned rectangle on columns $2,4$ and rows $2,3$, since $2\in B_2$ and $C\in F$ (Lemma~\ref{lem:diamond}(e)).}
+\label{fig:diamond}
+\end{figure}
 
 A \emph{window} is three consecutive letters, in columns $i$ to $i+2$.
 It \emph{passes} or \emph{fails} with $D(i,1)$.
@@ -694,8 +905,8 @@ A word in $AC_m$ has form $UAVCW$, with singleton strings $U$, $V$,
 and $W$. By the diamond test it is enough that every window passes.
 Set $G_{AC}(z)=\sum_{m\ge2}|AC_m|z^m$. Define $G_{AB}$ by counting
 $UAVBW$, and $G_X(z)=\sum_{m\ge1}|X_m|z^m$ by counting $UXW$.
-Write $R=1-3z$. A nonempty singleton string with a specified letter
-next to a double contributes $z/R$.
+Write $\Phi=1-3z$. A nonempty singleton string with a specified letter
+next to a double contributes $z/\Phi$.
 
 \begin{proposition}[the class $\{A,C\}$]\label{prop:threeGAC}
 The generating function of $AC$ is
@@ -715,16 +926,16 @@ Lemmas~\ref{lem:dichotomy} and~\ref{lem:sixofnine}(c) leave only
 windows centered on a double.
 
 Split according to the gap $V$. With no gap, a nonempty $U$ must end in
-$a$ and a nonempty $W$ must start in $c$, contributing $z^2(1+z/R)^2$.
+$a$ and a nonempty $W$ must start in $c$, contributing $z^2(1+z/\Phi)^2$.
 For $V=t$, the allowed last letters of $U$ number $p_t=3,1,2$, and the
 allowed first letters of $W$ number $q_t=2,1,3$, for $t=a,b,c$.
 Thus $\sum p_t=\sum q_t=6$ and $\sum p_tq_t=13$, giving
-$z^3\sum_t(1+p_tz/R)(1+q_tz/R)=z^3(3+12z/R+13z^2/R^2)$.
-For $|V|\ge2$, each end contributes $3+6z/R$ (a lone endpoint letter,
+$z^3\sum_t(1+p_tz/\Phi)(1+q_tz/\Phi)=z^3(3+12z/\Phi+13z^2/\Phi^2)$.
+For $|V|\ge2$, each end contributes $3+6z/\Phi$ (a lone endpoint letter,
 or one of six passing pairs). The unrestricted middle contributes
-$1/R$, so this case gives $9z^4(1-z)^2/R^3$.
+$1/\Phi$, so this case gives $9z^4(1-z)^2/\Phi^3$.
 Adding proves~\eqref{eq:GAC}. Extract coefficients using
-$[z^m]z^kR^{-3}=\binom{m-k+2}23^{m-k}$ to obtain~\eqref{eq:GACcoef}.
+$[z^m]z^k\Phi^{-3}=\binom{m-k+2}23^{m-k}$ to obtain~\eqref{eq:GACcoef}.
 \end{proof}
 
 \begin{theorem}[the number of three-row optima]\label{thm:threecount}
@@ -749,15 +960,15 @@ and substituting~\eqref{eq:GACcoef} gives~\eqref{eq:threecount}.
 
 \subsection{The generating function}
 
-Put $L=1-2z-2z^2$, $N=1+2z^2$, and $D=LN$.
+Put $L=1-2z-2z^2$, $N=1+2z^2$, and $\Psi=LN$.
 
 \begin{theorem}[three-row generating function, parts (b) and (c) computer-assisted]\label{thm:threegf}
 \leavevmode
 \begin{enumerate}[(a)]
 \item The series $\sum_{m\ge3}a_3(m)z^m$ equals $2G_{AC}+4G_{AB}+G_X-z-12z^2$, with
 $G_{AB}$ and $G_X$ from Propositions~\ref{prop:GAB} and~\ref{prop:GX}, of denominators
-dividing $D^3$ and $D^2$.
-\item Its reduced denominator is exactly $Q=R^3L^3N^3$.
+dividing $\Psi^3$ and $\Psi^2$.
+\item Its reduced denominator is exactly $Q=\Phi^3L^3N^3$.
 \item With
 \begin{align*}
 P(z)={}&z-3z^2-34z^3+228z^4-641z^5+1307z^6-2186z^7\\
@@ -784,9 +995,9 @@ Let $\rho=1+\sqrt3$ and $\sigma=1-\sqrt3$.
 \begin{theorem}[three-row closed form, computer-assisted exact algebra]\label{thm:threeclosed}
 For every $m\ge3$,
 \begin{equation}\label{eq:Eclosed}
-E_m=p_+(m)\rho^m+p_-(m)\sigma^m+T_m,
+E_m=p_+(m)\rho^m+p_-(m)\sigma^m+\eta_m,
 \end{equation}
-where $432\,p_\pm(m)=(19\pm11\sqrt3)m^2+(61\pm41\sqrt3)m+104\pm28\sqrt3$ and $T_m=(-2)^{\lfloor m/2\rfloor}\,\kappa(m)$ with $\kappa(m)=(2m^2+41m-104)/216$ for even $m$ and
+where $432\,p_\pm(m)=(19\pm11\sqrt3)m^2+(61\pm41\sqrt3)m+104\pm28\sqrt3$ and $\eta_m=(-2)^{\lfloor m/2\rfloor}\,\kappa(m)$ with $\kappa(m)=(2m^2+41m-104)/216$ for even $m$ and
 $\kappa(m)=(7m^2-32m-175)/432$ for odd $m$. Hence $E_m\sim\frac{19+11\sqrt3}{432}m^2\rho^m$. The hand proof gives $E_m>0$ and
 \begin{equation}\label{eq:asymp1}
 a_3(m)=\frac4{81}m^23^m-\frac4{243}(m+2)3^m+O(m^2\rho^m).
@@ -802,7 +1013,7 @@ their coefficients have the form~\eqref{eq:Eclosed}.
 Exact algebra determines the twelve rational constants. Both sides obey the order-$12$ recurrence
 from $L^3N^3$ for $m=14$ onward and agree at $m=2,\dots,13$.
 The leading term follows from $|\sigma|<1$ and
-$|T_m|=O(m^22^{m/2})$. For the hand bound, the pole $1/\rho$
+$|\eta_m|=O(m^22^{m/2})$. For the hand bound, the pole $1/\rho$
 of least modulus gives $E_m=O(m^2\rho^m)$, which yields~\eqref{eq:asymp1}
 through~\eqref{eq:threecount}. Finally, the boundary cross has word
 $Xa\cdots a$ (Lemma~\ref{lem:cross}), so $E_m>0$.
@@ -810,7 +1021,7 @@ $Xa\cdots a$ (Lemma~\ref{lem:cross}), so $E_m>0$.
 \subsection{\texorpdfstring{The classes $AB$ and $X$}{The classes AB and X}}\label{app:threegf}
 
 It remains to count $X$ and $AB$ and rule out cancellation in
-Theorem~\ref{thm:threegf}(b). Keep $D=LN=1-2z-4z^3-4z^4$.
+Theorem~\ref{thm:threegf}(b). Keep $\Psi=LN=1-2z-4z^3-4z^4$.
 A \emph{restricted} singleton string has no two $b$ letters at distance
 two. Reversal and reflection carry $AB$ to $BA$, $BC$, and $CB$.
 
@@ -856,12 +1067,12 @@ A fictitious preceding letter, outer for $g$ and $b$ for $u,v$,
 gives $(g_0,g_1,u,v)=z(h_{00},h_{01},h_{10},h_{11})$.
 The recurrence solves to
 \begin{equation}\label{eq:runs}
-Dg_0=z(1+z+3z^2+2z^3),\ \ Dg_1=z(1+z),\ \ Du=z(1+2z^2+2z^3),\ \ Dv=z.
+\Psi g_0=z(1+z+3z^2+2z^3),\ \ \Psi g_1=z(1+z),\ \ \Psi u=z(1+2z^2+2z^3),\ \ \Psi v=z.
 \end{equation}
 
 \begin{proposition}[the triple class]\label{prop:GX}
 With $u$ and $v$ as in~\eqref{eq:runs}, $G_X(z)=z\bigl(1+4u+2v+2u^2+v^2\bigr)$, and its
-denominator divides $D^2$.
+denominator divides $\Psi^2$.
 \end{proposition}
 
 \begin{proof}
@@ -883,7 +1094,7 @@ count continuations from $s$ ending in $\beta$, assigning the empty
 continuation to $\beta=0$. The same recurrence gives the matrix below,
 with rows indexed by $s$ and columns by $\beta$
 \begin{equation}\label{eq:J}
-J=\frac1D\begin{pmatrix}1+2z^2+2z^3&z+z^2\\1&2z^2+2z^3\end{pmatrix}.
+J=\frac1\Psi\begin{pmatrix}1+2z^2+2z^3&z+z^2\\1&2z^2+2z^3\end{pmatrix}.
 \end{equation}
 
 \begin{proposition}[the class $\{A,B\}$, polynomial form computer-assisted]\label{prop:GAB}
@@ -894,7 +1105,7 @@ G_{AB}(z)={}&z^2(1+2u)(1+g_0+g_1)+z^3(\ell_ar_a+\ell_br_b+\ell_cr_c)\\
 &+z^4\,(\ell_a+\ell_c,\ \ell_b)\,J\,(r_a+r_c,\ 2r_b)^{T}.
 \end{aligned}
 \end{equation}
-Moreover $G_{AB}=P_B/D^3$ with
+Moreover $G_{AB}=P_B/\Psi^3$ with
 \begin{equation}\label{eq:PB}
 P_B(z)=z^2(1+z)(1+z^2-3z^3+4z^6+4z^7).
 \end{equation}
@@ -917,11 +1128,11 @@ $k=2$. This gives~\eqref{eq:GAB}, and exact algebra gives~\eqref{eq:PB}.
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{thm:threegf}(b)]
-The denominator divides $R^3D^3=Q$ by part (a).
-Its factors share no roots, since $D(\frac13)\ne0$ and
+The denominator divides $\Phi^3\Psi^3=Q$ by part (a).
+Its factors share no roots, since $\Psi(\frac13)\ne0$ and
 $L-N=-2z-4z^2$ vanishes only where $N\ne0$.
 At $z=\frac13$, $G_{AC}$ alone has a triple pole, its numerator
-being $\frac4{81}$. At roots of $D$, the remainders
+being $\frac4{81}$. At roots of $\Psi$, the remainders
 $P_B\bmod L=\frac z2$ and $P_B\bmod N=\frac14-\frac z2$
 are nonzero. Thus $G_{AB}$ has triple poles there, which neither
 the double poles of $G_X$ nor the regular $G_{AC}$ can cancel.
@@ -966,7 +1177,7 @@ $2z\bigl(u(z^2)+v(z^2)\bigr)$, and the two-double contribution $W$ to get
 4\sum_{m\ge3}o_3(m)z^m={}&\sum_{m\ge3}a_3(m)z^m+z^3+\frac{4z^3(1+z^4+z^6)}{M(1+2z^4)}\\
 &+\frac{2z^3(1-z)(1+5z+3z^2-3z^3)}{(1-3z^2)^2},
 \end{align*}
-Here $M=1-2z^2-2z^4$, so $D(z^2)=M(1+2z^4)$.
+Here $M=1-2z^2-2z^4$, so $\Psi(z^2)=M(1+2z^4)$.
 The independent check \nolinkurl{three_row_orbits.py} agrees with the
 fixed counts through width $24$ and the orbit counts $o_3(m)$ for $m\le10$.
 \end{remark}
@@ -980,7 +1191,125 @@ To attain the upper bound of Theorem~\ref{thm:rowbound}, use
 \begin{equation}\label{eq:fourS}
 S=\{(i,1):2\le i\le m-1\}\cup\{(m-1,2),(m,2),(1,3),(2,3),(1,4),(m,4)\}.
 \end{equation}
-Here $|S|=m+4$ and $G_S$ is the eight-cycle $r_1\,c_2\,r_3\,c_1\,r_4\,c_m\,r_2\,c_{m-1}$ with leaves $c_3,\ldots,c_{m-2}$ on $r_1$.
+Here $|S|=m+4$ and $G_S$ is the eight-cycle $r_1\,c_2\,r_3\,c_1\,r_4\,c_m\,r_2\,c_{m-1}$ with leaves $c_3,\ldots,c_{m-2}$ on $r_1$ (Figure~\ref{fig:four}).
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[x=0.62cm,y=0.62cm,baseline=(current bounding box.north)]
+  \begin{scope}[xshift=0.000cm]
+    \draw[black,line width=0.25pt,dash pattern=on 0.93pt off 0.93pt] (1,-1) -- (7,-1) (1,-2) -- (7,-2) (1,-3) -- (7,-3) (1,-4) -- (7,-4) (1,-1) -- (1,-4) (2,-1) -- (2,-4) (3,-1) -- (3,-4) (4,-1) -- (4,-4) (5,-1) -- (5,-4) (6,-1) -- (6,-4) (7,-1) -- (7,-4);
+    \draw[kblue,line width=1.76pt,line join=round] (2,-1) -- (6,-1) -- (6,-2) -- (7,-2) -- (7,-4) -- (1,-4) -- (1,-3) -- (2,-3) -- cycle;
+    \filldraw[fill=white,draw=black,line width=0.37pt] (1,-1) circle (0.3);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (2,-1) circle (0.3);
+    \draw[black,line width=0.37pt] (1.788,-0.788) -- (2.212,-1.212) (1.788,-1.212) -- (2.212,-0.788);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (3,-1) circle (0.3);
+    \draw[black,line width=0.37pt] (2.788,-0.788) -- (3.212,-1.212) (2.788,-1.212) -- (3.212,-0.788);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (4,-1) circle (0.3);
+    \draw[black,line width=0.37pt] (3.788,-0.788) -- (4.212,-1.212) (3.788,-1.212) -- (4.212,-0.788);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (5,-1) circle (0.3);
+    \draw[black,line width=0.37pt] (4.788,-0.788) -- (5.212,-1.212) (4.788,-1.212) -- (5.212,-0.788);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (6,-1) circle (0.3);
+    \draw[black,line width=0.37pt] (5.788,-0.788) -- (6.212,-1.212) (5.788,-1.212) -- (6.212,-0.788);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (7,-1) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (1,-2) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (2,-2) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (3,-2) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (4,-2) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (5,-2) circle (0.3);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (6,-2) circle (0.3);
+    \draw[black,line width=0.37pt] (5.788,-1.788) -- (6.212,-2.212) (5.788,-2.212) -- (6.212,-1.788);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (7,-2) circle (0.3);
+    \draw[black,line width=0.37pt] (6.788,-1.788) -- (7.212,-2.212) (6.788,-2.212) -- (7.212,-1.788);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (1,-3) circle (0.3);
+    \draw[black,line width=0.37pt] (0.788,-2.788) -- (1.212,-3.212) (0.788,-3.212) -- (1.212,-2.788);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (2,-3) circle (0.3);
+    \draw[black,line width=0.37pt] (1.788,-2.788) -- (2.212,-3.212) (1.788,-3.212) -- (2.212,-2.788);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (3,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (4,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (5,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (6,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (7,-3) circle (0.3);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (1,-4) circle (0.3);
+    \draw[black,line width=0.37pt] (0.788,-3.788) -- (1.212,-4.212) (0.788,-4.212) -- (1.212,-3.788);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (2,-4) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (3,-4) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (4,-4) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (5,-4) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (6,-4) circle (0.3);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (7,-4) circle (0.3);
+    \draw[black,line width=0.37pt] (6.788,-3.788) -- (7.212,-4.212) (6.788,-4.212) -- (7.212,-3.788);
+    \node[lab] at (1,-0.45) {1};
+    \node[lab] at (2,-0.45) {2};
+    \node[lab] at (3,-0.45) {3};
+    \node[lab] at (4,-0.45) {4};
+    \node[lab] at (5,-0.45) {5};
+    \node[lab] at (6,-0.45) {6};
+    \node[lab] at (7,-0.45) {7};
+    \node[lab] at (0.45,-1) {1};
+    \node[lab] at (0.45,-2) {2};
+    \node[lab] at (0.45,-3) {3};
+    \node[lab] at (0.45,-4) {4};
+    \node[capt,anchor=north] at (4.00,-4.45) {(a) the cycle of $G_S$};
+  \end{scope}
+  \begin{scope}[xshift=5.084cm]
+    \draw[black,line width=0.25pt,dash pattern=on 0.93pt off 0.93pt] (1,-1) -- (7,-1) (1,-2) -- (7,-2) (1,-3) -- (7,-3) (1,-4) -- (7,-4) (1,-1) -- (1,-4) (2,-1) -- (2,-4) (3,-1) -- (3,-4) (4,-1) -- (4,-4) (5,-1) -- (5,-4) (6,-1) -- (6,-4) (7,-1) -- (7,-4);
+    \draw[kred,line width=1.76pt,line join=round] (1,-3) -- (2,-4) -- (4,-2) -- (3,-1) -- cycle;
+    \filldraw[fill=white,draw=black,line width=0.37pt] (1,-1) circle (0.3);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (2,-1) circle (0.3);
+    \draw[black,line width=0.37pt] (1.788,-0.788) -- (2.212,-1.212) (1.788,-1.212) -- (2.212,-0.788);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (3,-1) circle (0.3);
+    \draw[black,line width=0.37pt] (2.788,-0.788) -- (3.212,-1.212) (2.788,-1.212) -- (3.212,-0.788);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (4,-1) circle (0.3);
+    \draw[black,line width=0.37pt] (3.788,-0.788) -- (4.212,-1.212) (3.788,-1.212) -- (4.212,-0.788);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (5,-1) circle (0.3);
+    \draw[black,line width=0.37pt] (4.788,-0.788) -- (5.212,-1.212) (4.788,-1.212) -- (5.212,-0.788);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (6,-1) circle (0.3);
+    \draw[black,line width=0.37pt] (5.788,-0.788) -- (6.212,-1.212) (5.788,-1.212) -- (6.212,-0.788);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (7,-1) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (1,-2) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (2,-2) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (3,-2) circle (0.3);
+    \filldraw[fill=kyellow,draw=black,line width=0.37pt] (4,-2) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (5,-2) circle (0.3);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (6,-2) circle (0.3);
+    \draw[black,line width=0.37pt] (5.788,-1.788) -- (6.212,-2.212) (5.788,-2.212) -- (6.212,-1.788);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (7,-2) circle (0.3);
+    \draw[black,line width=0.37pt] (6.788,-1.788) -- (7.212,-2.212) (6.788,-2.212) -- (7.212,-1.788);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (1,-3) circle (0.3);
+    \draw[black,line width=0.37pt] (0.788,-2.788) -- (1.212,-3.212) (0.788,-3.212) -- (1.212,-2.788);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (2,-3) circle (0.3);
+    \draw[black,line width=0.37pt] (1.788,-2.788) -- (2.212,-3.212) (1.788,-3.212) -- (2.212,-2.788);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (3,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (4,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (5,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (6,-3) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (7,-3) circle (0.3);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (1,-4) circle (0.3);
+    \draw[black,line width=0.37pt] (0.788,-3.788) -- (1.212,-4.212) (0.788,-4.212) -- (1.212,-3.788);
+    \filldraw[fill=kyellow,draw=black,line width=0.37pt] (2,-4) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (3,-4) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (4,-4) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (5,-4) circle (0.3);
+    \filldraw[fill=white,draw=black,line width=0.37pt] (6,-4) circle (0.3);
+    \filldraw[fill=kgray,draw=black,line width=0.37pt] (7,-4) circle (0.3);
+    \draw[black,line width=0.37pt] (6.788,-3.788) -- (7.212,-4.212) (6.788,-4.212) -- (7.212,-3.788);
+    \node[lab] at (1,-0.45) {1};
+    \node[lab] at (2,-0.45) {2};
+    \node[lab] at (3,-0.45) {3};
+    \node[lab] at (4,-0.45) {4};
+    \node[lab] at (5,-0.45) {5};
+    \node[lab] at (6,-0.45) {6};
+    \node[lab] at (7,-0.45) {7};
+    \node[lab] at (0.45,-1) {1};
+    \node[lab] at (0.45,-2) {2};
+    \node[lab] at (0.45,-3) {3};
+    \node[lab] at (0.45,-4) {4};
+    \node[capt,anchor=north] at (4.00,-4.45) {(b) $\kA_1$ shows two points};
+  \end{scope}
+\end{tikzpicture}
+\caption{The blackout~\eqref{eq:fourS} for $m=7$. (a) Its row-column graph is an eight-cycle, traced through the black points, with leaves. (b) The weak rectangle $\kA_1$ shows $(2,4)$ and $(4,2)$, the case $i=1$ of the table in the proof of Theorem~\ref{thm:fourvalue}.}
+\label{fig:four}
+\end{figure}
 
 \begin{proof}[Proof of Theorem~\ref{thm:fourvalue}]
 The graph $G_S$ has no four- or six-cycle. Thus Lemma~\ref{lem:girth}
@@ -1060,10 +1389,11 @@ or $i=j$. One choice is always available, since $j\ge2$ or
 $j\le m-3$ when $m\ge4$.
 \end{proof}
 
-\begin{theorem}[forbidden-block bound]\label{thm:foursurvival}
+\begin{remark}[forbidden-block bound]\label{thm:foursurvival}
 For every $m\ge6$ we have $a_4(m)\le3\,(m)_4\,4^{m-4}(53/64)^k$, where
 $k=\max(0,\lfloor m/4\rfloor-4)$. So $a_4(m)=O\bigl(m^4\,212^{m/4}\bigr)$.
-\end{theorem}
+It is weaker than Corollary~\ref{cor:fourgrowth}, but its proof is by hand.
+\end{remark}
 
 \begin{proof}
 First choose $F$, the four double columns, and their pairs, in
@@ -1071,10 +1401,10 @@ $3\,(m)_4$ ways. Call four consecutive singleton columns a
 \emph{block}, recorded by their black rows. Starting at column $x$,
 the four \emph{template words} $2413$, $3412$, $2143$, and $3142$
 are the corner rows of $\kC_x$, $\kA_x$, $\kE_x$, and $\kB_x$.
-Fix one template rectangle $T$ with word $t_1t_2t_3t_4$.
+Fix one template rectangle $\tau$ with word $t_1t_2t_3t_4$.
 
 Swapping $t_p$ and $t_q$ gives a \emph{swap word}. It cannot occur,
-since $T$ and the axis-aligned rectangle through $(x+p-1,t_p)$ and
+since $\tau$ and the axis-aligned rectangle through $(x+p-1,t_p)$ and
 $(x+q-1,t_q)$ would show the same pair. The templates are exactly the
 permutations whose end letters both lie in $\{2,3\}$. Swaps within
 the end or middle positions give templates again. Swaps between these
@@ -1082,7 +1412,7 @@ positions give the sixteen permutations with one end letter in
 $\{2,3\}$. Together these are $20$ forbidden swap words.
 
 An \emph{edit word} changes one letter $t_p=r$ to $s$ with
-$\{r,s\}\in F$. This is also impossible. The rectangle $T$ and the
+$\{r,s\}\in F$. This is also impossible. The rectangle $\tau$ and the
 axis-aligned rectangle on rows $r,s$ and columns $x+p-1$ and $d$,
 where $d$ is the double column for $\{r,s\}$, would show only
 $(x+p-1,r)$. There are $8$ edits per template. Two templates can
@@ -1197,17 +1527,17 @@ where $g_d$ and $\tilde g_d$ are irreducible of degree $d$ with constant term $1
 The automaton proposition identifies the counted words with the
 optima. Running Berlekamp--Massey modulo eight primes on $a_4(m)$ for
 $m\le1500$ produces $P_4$ and $Q_4$.
-To check all widths, let $T_F$ be the transfer
-matrix on reachable states and write $v(n)=v(0)T_F^n$.
+To check all widths, let $M_F$ be the transfer
+matrix on reachable states and write $v(n)=v(0)M_F^n$.
 The state vectors satisfy $\sum_jq_jv(n_F-j)=0$ at
 $n_F=436$, $435$, and $445$ for the three machines.
-Powers of $T_F$ proves the recurrence for
+Taking powers of $M_F$ proves the recurrence for
 all $n\ge445$. Since $\deg P_4=444$, it fails at $n=444$.
 The displayed factorization is obtained in SymPy.
 \end{proof}
 
 \begin{corollary}[growth, computer-assisted]\label{cor:fourgrowth}
-Let $\rho_4=3.351996777310\ldots$ be the largest real root of $p(x)=x^{20}g_{20}(1/x)=x^{20}-4x^{19}+2x^{18}+\cdots-26x^2-4x+8$. There is a polynomial $B$ of degree $4$ with $a_4(m)=\rho_4^m B(m)+O((1000/341)^m)$, so $a_4(m)\sim c\,m^4\rho_4^m$ with $c\approx8.1611\times10^{-5}$.
+Let $\rho_4=3.351996777310\ldots$ be the largest real root of $p(x)=x^{20}g_{20}(1/x)=x^{20}-4x^{19}+2x^{18}+\cdots-26x^2-4x+8$. There is a polynomial $\pi$ of degree $4$ with $a_4(m)=\rho_4^m \pi(m)+O((1000/341)^m)$, so $a_4(m)\sim c\,m^4\rho_4^m$ with $c\approx8.1611\times10^{-5}$.
 \end{corollary}
 
 \begin{proof}
@@ -1220,33 +1550,33 @@ The coefficients of $E$ are $O((1000/341)^m)$.
 Coprimality gives $c_5=H(r)\ne0$, where
 $H(z)=P_4(z)(1-z/r)^5/Q_4(z)$.
 Now $[z^m](1-z/r)^{-j}=\rho_4^m\binom{m+j-1}{j-1}$, so
-$B(m)=\sum_jc_j\binom{m+j-1}{j-1}$ and $c=c_5/24$.
+$\pi(m)=\sum_jc_j\binom{m+j-1}{j-1}$ and $c=c_5/24$.
 Interval arithmetic encloses $c$ between
 $8.1610970775\times10^{-5}$ and $8.1610970776\times10^{-5}$.
 \end{proof}
-\section{Five and six rows}\label{sec:five}
+\section{Five, six, and seven rows}\label{sec:five}
 
 \subsection{Boundary padding}
 
-For a blackout $S$ of the $h\times m$ grid and $L,R\ge0$, form $S_{L,R}$ by
-adding columns $1-L,\dots,0$ and $m+1,\dots,m+R$, black only in a chosen
+For a blackout $S$ of the $h\times m$ grid and $\lambda,\mu\ge0$, form $S_{\lambda,\mu}$ by
+adding columns $1-\lambda,\dots,0$ and $m+1,\dots,m+\mu$, black only in a chosen
 \emph{padding row}, row $1$ or row $h$.
 
 \begin{theorem}[finite collar]\label{thm:collar}
-Let $h\ge3$, fix the padding row and the padded sides, and let $L^*$ and $R^*$ be $W_h$ of
-Lemma~\ref{lem:span} on padded sides and $0$ otherwise. Then $S_{L,R}$ is valid for all
-$L,R\ge0$ vanishing on unpadded sides if and only if $S_{L^*,R^*}$ is valid.
+Let $h\ge3$, fix the padding row and the padded sides, and let $\lambda^*$ and $\mu^*$ be $W_h$ of
+Lemma~\ref{lem:span} on padded sides and $0$ otherwise. Then $S_{\lambda,\mu}$ is valid for all
+$\lambda,\mu\ge0$ vanishing on unpadded sides if and only if $S_{\lambda^*,\mu^*}$ is valid.
 \end{theorem}
 
 \begin{proof}
-Set $S^*=S_{L^*,R^*}$. Necessity follows by this choice. Suppose $S^*$ is valid
-and put $U=S_{L,R}$.
+Set $S^*=S_{\lambda^*,\mu^*}$. Necessity follows by this choice. Suppose $S^*$ is valid
+and put $U=S_{\lambda,\mu}$.
 
 A tilted rectangle has at most one corner in row $1$ and at most one
 in row $h$ (Lemma~\ref{lem:leftmost} and~\eqref{eq:tilt-param}).
 A weak tilted rectangle of $U$ therefore has a black corner in an
 original column $e$. Its span is bounded by Lemma~\ref{lem:span}, so
-its columns lie in $[e-W_h,e+W_h]\cap[1-L,m+R]\subseteq[1-L^*,m+R^*]$.
+its columns lie in $[e-W_h,e+W_h]\cap[1-\lambda,m+\mu]\subseteq[1-\lambda^*,m+\mu^*]$.
 It lies in $S^*$ and has the same presentation there.
 
 Suppose distinct $R_1,R_2$ in $U$ show the same $P$.
@@ -1571,14 +1901,10 @@ Up to transposition, these exhaust the grids of area below $40$.
 Thus $5\times8$ is the first failure of the guess $f(h,m)=h+m$.
 
 \begin{remark}[five-row counts, computer-assisted]\label{rem:fivecounts}
-For $m=13,\dots,23$ the counts $a_5(m)$ are
-\begin{gather*}
-193{,}406,\quad 1{,}346{,}758,\quad 8{,}650{,}416,\quad 52{,}128{,}242,\\
-299{,}349{,}210,\quad 1{,}653{,}637{,}492,\quad 8{,}828{,}301{,}226,\quad 45{,}743{,}165{,}894,\\
-230{,}934{,}909{,}328,\quad 1{,}139{,}486{,}126{,}866,\quad 5{,}510{,}071{,}794{,}736.
-\end{gather*}
-Each count agrees in two independent transfer calculations using the
-equality structure of Theorem~\ref{thm:equality}.
+The counts $a_5(m)$ for $8\le m\le23$ are \seqnum{A401225}. They begin $4$, $44$, $350$,
+$3{,}004$, $24{,}706$, and $193{,}406$, and $a_5(23)=5{,}510{,}071{,}794{,}736$. For $m\ge13$
+each count agrees in two independent transfer calculations using the equality structure of
+Theorem~\ref{thm:equality}.
 \end{remark}
 
 \subsection{Six rows and small grids}
@@ -1587,27 +1913,98 @@ Let $S_{16}$ be the blackout of the $6\times16$ grid in Figure~\ref{fig:boards}(
 in the columns $1,2,3,6,9,10,14,15,16$, carry the edges of $K_{3,3}$ between $\{1,3,5\}$ and
 $\{2,4,6\}$.
 
-\begin{theorem}[six rows, (a) computer-assisted, (b) checked in Lean]\label{thm:sixrow}
+One point below the row bound, the structure is still rigid.
+
+\begin{lemma}[one point below the bound]\label{lem:sixbelow}
+Let $m\ge3$, and let $S$ be an axis-valid blackout of the $6\times m$ grid with $m+8$ points.
+Then every column of $S$ is empty, a singleton, or a double, the doubles have distinct row
+pairs, and one of the following holds.
+\begin{enumerate}[(a)]
+\item No column is empty, and the pairs of the doubles are the edges of $K_{3,3}$ minus one edge.
+\item No column is empty, and the pairs of the doubles are the edges of $K_{2,4}$.
+\item Exactly one column is empty, and the pairs of the doubles are the edges of $K_{3,3}$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:H}, $|S|=t+e(H)$ for every choice of the trees, where $t\le m$ counts the
+nonempty columns. Mantel gives $e(H)\le9$ (Lemma~\ref{lem:mantel}), so $(t,e(H))$ is $(m,8)$ or
+$(m-1,9)$.
+
+In the second case $H$ has $q_6$ edges. The proof of Theorem~\ref{thm:equality} then shows
+that $H$ is $K_{3,3}$ and that no column has three black rows, which gives (c).
+
+In the first case $H$ is triangle-free with $8$ edges. Suppose $H$ is not bipartite. Then its
+shortest odd cycle is a five-cycle, which has no chord. The sixth vertex is adjacent to at most
+two of its vertices, so $e(H)\le7$, a contradiction. Hence $H$ is bipartite with parts of sizes
+$k$ and $6-k$, and $k(6-k)\ge8$ forces $H$ to be $K_{2,4}$ or $K_{3,3}$ minus an edge. In both
+graphs, two vertices in the same part have at least two common neighbors.
+Now suppose $|B_i|\ge3$. Then $T_i$ has a vertex $v$ with two neighbors $u$ and $w$. These lie
+in the same part of $H$, so they have a common neighbor $z\ne v$. Replacing the edge $vw$ of
+$T_i$ by $uw$ gives another tree on $B_i$, and the new graph $H$ contains the triangle $uwz$.
+This contradicts Lemma~\ref{lem:H}. Thus every column is a singleton or a double, and the
+pairs of the doubles are the edges of $H$. They are distinct because $H$ is simple.
+\end{proof}
+
+There are $10\cdot9=90$ labeled graphs in case (a), $15$ in case (b), and $10$ in case (c).
+
+\begin{theorem}[six rows, (a) and (b) computer-assisted, (c) checked in Lean]\label{thm:sixrow}
 \leavevmode
 \begin{enumerate}[(a)]
-\item For $8\le m\le14$ we have $f(6,m)\le m+8$.
+\item For $8\le m\le11$ we have $f(6,m)=m+7$.
+\item For $12\le m\le14$ we have $f(6,m)=m+8$, attained by the blackout
+$16,\allowbreak 36,\allowbreak 25,\allowbreak 12,\allowbreak 1^{m-8},\allowbreak 23,\allowbreak 34,\allowbreak 45,\allowbreak 56$, where $1^{k}$ denotes $k$
+columns black only in row $1$.
 \item For every $m\ge15$ we have $f(6,m)=m+9$.
 \end{enumerate}
+So $f(h,m)$ is known for every $h\le6$ and every $m$.
 \end{theorem}
 
 \begin{proof}
-(a) Corollary~\ref{cor:small-m} handles $m=8$.
 For $9\le m\le14$, an optimum with $m+9$ points would have double
 columns carrying $K_{3,3}$, by Theorem~\ref{thm:equality}.
 There are ten possible row partitions. The structured encoding has
 checked LRAT certificates excluding every one (Lemma~\ref{lem:enc}).
-(b) Again the row bound gives the upper bound. For $m=15$, take
+At $m=8$, Corollary~\ref{cor:small-m} gives the same bound.
+Hence $f(6,m)\le m+8$ for $8\le m\le14$.
+
+(a) The case $m=8$ is Theorem~\ref{thm:refute}. For the lower bound at $9\le m\le11$, the
+blackout $12,\allowbreak 23,\allowbreak 34,\allowbreak 45,\allowbreak 6,\allowbreak 6,\allowbreak 36,\allowbreak 56,\allowbreak 25$ of the $6\times9$ grid is valid with $16$ points. Its
+collar test board, with $W_6=7$ columns black only in row $1$ on each side, is valid
+(\nolinkurl{six_row_collar_6x9_check.py}), so Theorem~\ref{thm:collar} gives $m+7$ points at every
+$m\ge9$. For the upper bound, Lemma~\ref{lem:sixbelow} leaves $115$ structured instances at each
+width, one for each labeled graph in its three cases. They are unsatisfiable under two
+encodings, and encoding A has checked LRAT certificates.
+
+(b) Three enumerators check that the blackout is valid. It has $m+8$ points.
+
+(c) Again the row bound gives the upper bound. For $m=15$, take
 $56,\allowbreak 45,\allowbreak 34,\allowbreak 23,\allowbreak 1,\allowbreak 1,\allowbreak 14,\allowbreak 1,\allowbreak 1,\allowbreak 12,\allowbreak 36,\allowbreak 1,\allowbreak 25,\allowbreak 6,\allowbreak 16$
 from \nolinkurl{jis/data/six_row_sat_w15_A.json}, which is valid with
 $24$ points. For $m\ge16$, apply the collar theorem to $S_{16}$ in
 Figure~\ref{fig:boards}(b). Since $W_6=7$, it suffices to add
 $(17,1),\dots,(23,1)$. Three enumerators and Lean verify distinct
 presentations for all $4{,}627$ rectangles of that test board.
+\end{proof}
+
+\begin{theorem}[seven rows, computer-assisted]\label{thm:sevenrow}
+For every $m\ge26$ we have $f(7,m)=m+12$.
+\end{theorem}
+
+\begin{proof}
+The row bound gives $f(7,m)\le m+12$. For the lower bounds we use the structured encoding A
+of Section~\ref{sec:verify} with twelve doubles on the edges of $K_{3,4}$, for the partitions
+of the rows into $\{2,4,6\}$ and $\{1,3,5,7\}$ (widths $26$ and $28$) and into
+$\{1,4,7\}$ and $\{2,3,5,6\}$ (width $27$). It finds the valid blackouts
+\begin{gather*}
+67,47,23,12,1,7,1,2,2,25,5,36,6,6,45,1,6,27,1,1,1,7,34,14,56,16,\\
+57,1,16,37,3,67,1,7,1,1,34,7,24,1,15,27,7,1,7,7,45,1,46,7,13,6,12,\\
+34,2,2,2,47,2,2,27,25,7,7,7,7,7,67,36,23,2,12,1,1,16,1,1,14,1,45,56
+\end{gather*}
+of widths $26$, $27$, and $28$. Three enumerators confirm all three. The last one stays valid after adding
+$W_7=10$ columns black only in row $7$ on its left. Theorem~\ref{thm:collar}, with padding
+row $7$ on the left side, then gives $m+12$ points at every width $m\ge28$.
+Three enumerators also confirm this collar test board.
 \end{proof}
 
 \begin{theorem}[small grids, computer-assisted]\label{thm:refute}
@@ -1740,261 +2137,7 @@ language. Their union, together with the finitely many shorter optimum
 words, is exactly the language of optimum blackouts. Its counting series
 is rational by the same transfer-matrix argument as above, proving (b).
 \end{proof}
-\section{Computations and verification}\label{sec:verify}
-
-Every computed maximum and exact count has two separately written
-checks. The bound $a_7(8)\ge18$, obtained by
-one enumeration. The repository~\cite{repo} stores the code and
-evidence. All paths here start from \nolinkurl{kagey-problems/problem001}.
-For commands, SHA-256 hashes, and running times, see
-\nolinkurl{jis/scripts/README.md}. Table~\ref{tab:evidence} connects
-each computer-assisted claim to its checks.
-
-We solve the hitting-set problem of Lemma~\ref{lem:diff} by ILP,
-using CBC~\cite{cbc} through PuLP~\cite{pulp}, and check it by brute
-force. SAT enumeration uses PySAT~\cite{pysat2018}.
-The column searches grow the board from left to right. They use
-$f(6,6)\le12$ to prune $6\times7$ and $6\times8$, and
-$f(6,7)\le13$ to prune $6\times8$ and $7\times7$.
-Every saved construction and counted model is tested for validity.
-
-\begin{table}[!htb]
-\centering\scriptsize\setlength{\tabcolsep}{3pt}
-\begin{tabular}{@{}lrrl@{}}
-\toprule
-grid & $f$ & $a_h(m)$ & by \\
-\midrule
-$2\times2$ & $4$ & $1$ & HIB \\
-$2\times3$ & $4$ & $12$ & HIB \\
-$2\times4$ & $5$ & $32$ & HIB \\
-$2\times5$ & $6$ & $80$ & IB \\
-$2\times6$ & $7$ & $192$ & TI \\
-$2\times7$ & $8$ & $448$ & TI \\
-$3\times3$ & $5$ & $53$ & IB \\
-$3\times4$ & $6$ & $224$ & IB \\
-$3\times5$ & $7$ & $892$ & IB \\
-$3\times6$ & $8$ & $3{,}420$ & IB \\
-$3\times7$ & $9$ & $12{,}704$ & IB \\
-\bottomrule
-\end{tabular}\hspace{1.5em}
-\begin{tabular}{@{}lrrl@{}}
-\toprule
-grid & $f$ & $a_h(m)$ & by \\
-\midrule
-$3\times8$ & $10$ & $45{,}864$ & IB \\
-$3\times9$ & $11$ & $161{,}992$ & IB \\
-$3\times10$ & $12$ & $562{,}912$ & ITD \\
-$4\times4$ & $7$ & $316$ & IB \\
-$4\times5$ & $8$ & $1{,}810$ & IB \\
-$4\times6$ & $10$ & $26$ & IB \\
-$4\times7$ & $11$ & $292$ & IB \\
-$4\times8$ & $12$ & $2{,}118$ & IMD \\
-$5\times5$ & $10$ & $8$ & IB \\
-$5\times6$ & $11$ & $76$ & ISC \\
-$5\times7$ & $12$ & $1{,}184$ & ISC \\
-\bottomrule
-\end{tabular}\hspace{1.5em}
-\begin{tabular}{@{}lrrl@{}}
-\toprule
-grid & $f$ & $a_h(m)$ & by \\
-\midrule
-$5\times8$ & $14$ & $4$ & TSDC \\
-$5\times9$ & $15$ & $44$ & TSC \\
-$5\times10$ & $16$ & $350$ & TSC \\
-$5\times11$ & $17$ & $3{,}004$ & TSC \\
-$5\times12$ & $18$ & $24{,}706$ & TSCM \\
-$6\times6$ & $12$ & $160$ & ISC \\
-$6\times7$ & $13$ & $2{,}536$ & SC \\
-$6\times8$ & $15$ & $8$ & SC \\
-$6\times15$ & $24$ & -- & TS \\
-$7\times7$ & $14$ & $7{,}300$ & SC \\
-$7\times8$ & $16$ & $\ge18$ & S \\
-\bottomrule
-\end{tabular}
-\caption{Computed values for $h\le m$. H: hand, T: theorem, I: ILP (value only on
-$3\times10$, $4\times8$, $5\times6$, $5\times7$, and $6\times6$), B: brute force, D: equality
-candidates, C: column search, S: two SAT encodings, with complete enumeration for exact
-counts, M: transfer counter,
---: not established. On $7\times8$ only a lower bound for the count is given.}
-\label{tab:values}
-\end{table}
-
-As a check on rectangle generation, the totals match
-\seqnum{A085582} for squares and \seqnum{A289832} for rectangular grids.
-
-Encoding A prevents the inclusion-minimal differences
-$C(R_1)\triangle C(R_2)$, $R_1\ne R_2$, from being entirely black.
-Encoding B forbids $C(R_1)\triangle C(R_2)$ only for distinct
-rectangles with a common corner. Each rectangle $R$ also has an
-indicator $y_R$, forced true if it is hidden, and at most one $y_R$
-may be true.
-
-For the structured six-row instances, fix a partition $A\mid B$
-into triples. A column type is its black-row set, either a singleton
-or one of the nine pairs meeting $A$ and $B$. Use each pair once.
-Of encoding B's clauses, retain those involving a tilted rectangle
-whose forbidden set can be all black. Cardinality is enforced by
-Sinz's sequential counter~\cite{sinz2005}, expanded by our generator
-for certified instances, or by a totalizer~\cite{bailleux2003}.
-Both enforce exactly the specified size bound.
-
-\begin{lemma}[faithful encodings]\label{lem:enc}
-Let $S$ be a blackout of the $h\times m$ grid, and let
-$\mathcal D=\{C(R_1)\triangle C(R_2)\mid R_1\ne R_2\}$, where $R_1$ and $R_2$ range over
-rectangles of this grid.
-\begin{enumerate}[(a)]
-\item $S$ is valid if and only if it contains no inclusion-minimal member of $\mathcal D$.
-\item $S$ is valid if and only if it hides at most one rectangle and contains no
-$C(R_1)\triangle C(R_2)$ for distinct rectangles $R_1,R_2$ sharing a corner.
-\item Suppose $h=6$, $m\ge3$, and $S$ is valid with $m+9$ points. For some partition of
-the rows into two triples, selecting the black-row set $B_i$ as the type of column $i$
-extends to a satisfying assignment of the structured instance.
-\end{enumerate}
-\end{lemma}
-
-\begin{proof}
-(a) Any member of the finite family $\mathcal D$ contains an
-inclusion-minimal member. Thus a blackout contains a forbidden
-difference exactly when it contains a minimal one. Apply
-Corollary~\ref{cor:hitting}.
-
-(b) Part (a) leaves only pairs with no shared corner to check.
-For these, the difference is $C(R_1)\cup C(R_2)$, contained in $S$
-exactly when both rectangles are hidden. Allowing at most one hidden
-rectangle excludes precisely these remaining pairs.
-
-(c) Theorem~\ref{thm:equality} gives a partition into two row triples.
-Every $B_i$ is a singleton or a pair crossing it, and all nine pairs
-occur once. Use these as the column types. Set $y_R$ to $1$ exactly
-for hidden rectangles. By (b), these choices satisfy encoding B.
-Dropping clauses preserves satisfaction in the structured instance.
-\end{proof}
-
-Reading the point variables of A or B therefore gives precisely the
-valid blackouts of the chosen size. For six rows, part (c) and the
-row bound imply $f(6,m)\le m+8$ once the ten structured instances of
-width $m$ are all unsatisfiable.
-
-CaDiCaL~\cite{biere2024} produces LRAT certificates for
-$f(5,6)<12$, $f(5,7)<13$, $f(6,6)<13$, $f(6,7)<14$, $f(7,7)<15$,
-$f(6,8)<16$, and $f(7,8)<17$ using encoding A on all blackouts.
-It also certifies the $70$ structured six-row instances, for widths
-$8$ to $14$ and ten partitions per width, in Theorem~\ref{thm:sixrow}(a).
-The clauses agree between two independent generators.
-We split $6\times8$ by its first column into $64$ cases, and
-$7\times7$ and $7\times8$ into $128$ each. The second generator
-checks that these splits exhaust the first-column choices.
-Every one of the $394$ proofs passes both drat-trim's
-\texttt{lrat-check}~\cite{cruzfilipe2017,wetzler2014} and the Lean
-LRAT checker.
-
-The constructions in \nolinkurl{jis/data/table_counts/sat_7x8_16.json}
-give $f(7,8)\ge16$, completing $f(7,8)=16$.
-The separate enumeration
-\nolinkurl{jis/data/table_counts/sat2split_7x8_16.json} gives $18$
-valid constructions with $16$ points. This proves only $a_7(8)\ge18$.
-
-\begin{table}[!htb]
-\centering\scriptsize\setlength{\tabcolsep}{3pt}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.3\textwidth}>{\raggedright\arraybackslash}p{0.3\textwidth}>{\raggedright\arraybackslash}p{0.36\textwidth}@{}}
-\toprule
-statement & method; independent check & evidence \\
-\midrule
-Cor.~\ref{cor:fourboundary}, Thm.~\ref{thm:fivefive}(b) & candidates; brute force & \nolinkurl{verify_narrow.py} \\
-Thms.~\ref{thm:threegf}, \ref{thm:threeclosed}, Rem.~\ref{rem:threeorbits} & SymPy; transfer matrix & \nolinkurl{three_row_*.json} \\
-Thm.~\ref{thm:fourgfexact}, Cor.~\ref{cor:fourgrowth}, Table~\ref{tab:fourvalues} & Prop.~\ref{prop:fourautomaton}; candidates & \nolinkurl{four_row_*.json} \\
-Thms.~\ref{thm:fiverow}(a), \ref{thm:refute} & encoding A, LRAT; encoding B & \nolinkurl{unsat_certificates.json}, \nolinkurl{small_cells_*} \\
-Thms.~\ref{thm:fiverow}(b), \ref{thm:sixrow}(b) & collar board; enumerators, Lean & \nolinkurl{five_row_*family*}, \nolinkurl{six_row_*w15*} \\
-Thm.~\ref{thm:fiverow}(c), Rem.~\ref{rem:fivecounts} & SAT, counter; candidate search, second counter & \nolinkurl{five_row_*} \\
-Thm.~\ref{thm:sixrow}(a) & structured, LRAT; encoder, search & \nolinkurl{unsat_certificates.json}, \nolinkurl{six_row_sat_w*} \\
-Table~\ref{tab:values}, open question 2 & SAT; column search; collar test & \nolinkurl{table_counts/*}, \nolinkurl{six_row_collar_*} \\
-\bottomrule
-\end{tabular}
-\caption{Computer-assisted statements, their method and check, and the evidence. Evidence
-files are in \nolinkurl{jis/data}, and \nolinkurl{verify_narrow.py} is in the problem folder.}
-\label{tab:evidence}
-\end{table}
-
-The formal proofs are in \nolinkurl{../lean/KageyProblems/Problem001}.
-They cover Lemmas~\ref{lem:diff}, \ref{lem:threecorners}, and~\ref{lem:span},
-Corollary~\ref{cor:hitting}, the strip theorem, both orientations of
-the row bound, and the collar theorem. They also show that at most
-one rectangle can be hidden.
-
-Kernel-checked validity tests cover $S_0$, $S_8$, the construction
-in Theorem~\ref{thm:refute}, the $6\times15$ construction in
-Theorem~\ref{thm:sixrow}, and the $5\times13$ and $6\times23$ collar
-boards. The kernel also checks that
-$\{(1,2),\allowbreak(2,1),\allowbreak(3,2),\allowbreak(2,3)\}$ hides
-$D(1,1)$ on $4\times3$. Thus the restriction $m\ge4$ in
-Theorem~\ref{thm:hidden} is necessary.
-Together these prove $f(5,m)=m+6$ for $m\ge8$, $f(6,m)=m+9$ for
-$m\ge15$, $f(5,5)\ge10$, and $f(6,8)\ge15$ from only Lean's three
-standard axioms.
-
-The remaining unformalized parts are Lemma~\ref{lem:leftmost},
-Theorem~\ref{thm:equality}, $f(5,5)\le10$, Lemma~\ref{lem:enc}, the
-other results in Sections~\ref{sec:strip} to~\ref{sec:height}, and
-Appendix~\ref{app:square}.
-
-\section{Open questions}\label{sec:open}
-
-\begin{enumerate}[(1),leftmargin=*]
-\item What is the rational series $\sum_{m\ge0}a_5(m)z^m$ guaranteed by
-Theorem~\ref{thm:periodic}, and the growth rate of $a_5(m)$? See the counts
-in Remark~\ref{rem:fivecounts}.
-\item A valid $6\times9$ blackout of $16$ points passes the collar test with seven
-columns black only in row $1$ added on each side
-(\nolinkurl{six_row_collar_6x9_check.py}). Theorems~\ref{thm:collar}
-and~\ref{thm:sixrow} therefore give $m+7\le f(6,m)\le m+8$ for $9\le m\le14$.
-Which value holds at each width?
-\item For $h\ge7$, does $f(h,m)=m+q_h$ hold eventually?
-At height seven, a valid $7\times m$ construction with $m+12$
-points would suffice if it passes the collar test
-(Theorem~\ref{thm:collar}). This would settle $h=7$.
-\item Lemma~\ref{lem:girth} and Neuwirth's bound for bipartite graphs of girth
-eight~\cite[Corollary~16]{neuwirth2001} give
-$f(n,n)<n^{4/3}+\frac23n-\frac29n^{2/3}-\frac{20}{81}n^{1/3}$ for $n\ge3$, and
-Theorem~\ref{thm:alteration} gives $f(n,n)\ge0.29\,n^{6/5}(1+\ln n)^{-2/5}$ for large $n$.
-Lavrov~\cite{kageyMSE} used the same method for the triangular version. What is the true
-order of growth? What is the first $n$ with $f(n,n)>2n$?
-\end{enumerate}
-\section{Acknowledgments}\label{sec:ack}
-
-I thank Peter Kagey for posing the problem, and for discussing its early stages with me,
-including the uniqueness of the $5\times5$ optimum and the first graph-theoretic approach to
-the narrow grids. The design of Figures~\ref{fig:game} and~\ref{fig:boards} follows the figure
-in his posting of Problem 001~\cite{kagey001}.
-
-\section*{A note on the use of AI}
-
-I began this work in January of 2026 and wrote the first draft and its mathematics
-between August and October, together with most of the Python code. I used
-Claude Opus 5.5 (Anthropic) for the October 17--19 revision, including the
-cut of a draft from 45 to 30 pages and the language passes.
-It did not add any language, just proposed a cut version.
-Using this as reference, I rewrote the text myself and implemented the revisions as I saw fit.
-No sentence in this paper was written by an LLM.
-It also drew the figures in the style of Kagey's posting of the problem given my own hand-drawn sketches.
-
-I used it to check my Python code, and it wrote further checks of the
-computer-assisted results. One of these, \texttt{six\_row\_collar\_6x9\_check.py},
-gives the lower bound in the second open question of Section~\ref{sec:open}.
-It also wrote the Lean files, the LRAT certificate pipeline and the formal
-checks described in Theorem~\ref{thm:A} and Section~\ref{sec:verify}.
-The formalization did not change a statement of the paper or find an error
-or missing hypothesis. It changed how several results are established,
-as Section~\ref{sec:verify} describes.
-
-I also used Claude Opus 5.5 to search the literature beyond the sources I
-had found. Several references came from that search. I read every cited
-source, including the parts supporting each citation. Later reviews with
-Claude Opus 5.5 and OpenAI Codex on October 23rd pointed out problems that I checked and
-corrected, such as typos and inconsistencies or redundancies.
-I checked these revisions and implemented them all myself, and take full responsibility for the
-contents of the paper.
-\appendix
-\section{Square grids}\label{app:square}
+\section{Square grids}\label{sec:square}
 
 For squares, $f(n,n)$ eventually exceeds every fixed multiple of $n$.
 Sample black points, then delete points to distinguish the rectangles.
@@ -2098,149 +2241,343 @@ $f(n,n)/T\ge\frac56a-A_{1/10}a^4n^{-1/5}\to5/(6\cdot192^{1/5})$.
 Finally $T/n\to\infty$, so $f(n,n)-2n\to\infty$.
 \end{proof}
 
-\begin{thebibliography}{99}
+The exponent $6/5$ is the one that deletion gives for any family of about $n^6$
+obstructions of six points, and it falls short of the upper bound $n^{4/3}$ of
+Section~\ref{sec:open}. For axis-aligned rectangles alone, the gap does not exist. By
+Lemma~\ref{lem:girth}, a blackout distinguishes them exactly when its row-column graph has
+no four- or six-cycle, and incidence graphs of generalized quadrangles give such
+blackouts of order $n^{4/3}$~\cite{benson1966}.
+The tilted rectangles are what this misses. A set of density $n^{-2/3}$ chosen at random,
+or without structure, contains about $n^6\cdot n^{-4}=n^2$ members of $\mathcal B$ in
+expectation, up to logarithmic factors, against only $n^{4/3}$ points. Girth eight
+excludes only the members of $\mathcal B$ that come from two axis-aligned rectangles.
+A blackout of order $n^{4/3}$ would therefore need algebraic structure matched to the
+lattice, not only high girth.
+\section{Computations and verification}\label{sec:verify}
+
+Every computed maximum and exact count has two separately written
+checks. The one exception is the bound $a_7(8)\ge18$, which comes from
+one enumeration. The repository~\cite{repo} stores the code and
+evidence. All paths here start from \nolinkurl{kagey-problems/problem001}.
+For commands, SHA-256 hashes, and running times, see
+\nolinkurl{jis/scripts/README.md}. The supplement to this paper gives the table of
+computed values and connects each computer-assisted claim to its checks and evidence
+files.
+
+We solve the hitting-set problem of Lemma~\ref{lem:diff} by ILP,
+using CBC~\cite{cbc} through PuLP~\cite{pulp}, and check it by brute
+force. SAT enumeration uses PySAT~\cite{pysat2018}.
+The column searches grow the board from left to right. They use
+$f(6,6)\le12$ to prune $6\times7$ and $6\times8$, and
+$f(6,7)\le13$ to prune $6\times8$ and $7\times7$.
+Every saved construction and counted model is tested for validity.
+
+Encoding A prevents the inclusion-minimal differences
+$C(R_1)\triangle C(R_2)$, $R_1\ne R_2$, from being entirely black.
+Encoding B forbids $C(R_1)\triangle C(R_2)$ only for distinct
+rectangles with a common corner. Each rectangle $R$ also has an
+indicator $y_R$, forced true if it is hidden, and at most one $y_R$
+may be true.
+
+For the structured six-row instances, fix one of the graphs of
+Theorem~\ref{thm:equality} or Lemma~\ref{lem:sixbelow} on the rows. A column type is its
+black-row set, either a singleton or one of the edges of the graph, together with the empty
+set in case (c) of the lemma. Use each edge once, and the empty type once in case (c).
+Of encoding B's clauses, retain those involving a tilted rectangle
+whose forbidden set can be all black. Cardinality is enforced by
+Sinz's sequential counter~\cite{sinz2005}, expanded by our generator
+for certified instances, or by a totalizer~\cite{bailleux2003}.
+Both enforce exactly the specified size bound.
+
+\begin{lemma}[faithful encodings]\label{lem:enc}
+Let $S$ be a blackout of the $h\times m$ grid, and let
+$\mathcal D=\{C(R_1)\triangle C(R_2)\mid R_1\ne R_2\}$, where $R_1$ and $R_2$ range over
+rectangles of this grid.
+\begin{enumerate}[(a)]
+\item $S$ is valid if and only if it contains no inclusion-minimal member of $\mathcal D$.
+\item $S$ is valid if and only if it hides at most one rectangle and contains no
+$C(R_1)\triangle C(R_2)$ for distinct rectangles $R_1,R_2$ sharing a corner.
+\item Suppose $h=6$, $m\ge3$, and $S$ is valid with $m+9$ or $m+8$ points. For one of the
+graphs of Theorem~\ref{thm:equality} or Lemma~\ref{lem:sixbelow}, selecting the black-row set
+$B_i$ as the type of column $i$ extends to a satisfying assignment of the structured instance.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) Any member of the finite family $\mathcal D$ contains an
+inclusion-minimal member. Thus a blackout contains a forbidden
+difference exactly when it contains a minimal one. Apply
+Corollary~\ref{cor:hitting}.
+
+(b) Part (a) leaves only pairs with no shared corner to check.
+For these, the difference is $C(R_1)\cup C(R_2)$, contained in $S$
+exactly when both rectangles are hidden. Allowing at most one hidden
+rectangle excludes precisely these remaining pairs.
+
+(c) Theorem~\ref{thm:equality} or Lemma~\ref{lem:sixbelow} gives the graph.
+Every $B_i$ is a singleton, an edge of it, or, in case (c) of the lemma, empty, and every
+edge occurs once. Use these as the column types. Set $y_R$ to $1$ exactly
+for hidden rectangles. By (b), these choices satisfy encoding B.
+Dropping clauses preserves satisfaction in the structured instance.
+\end{proof}
+
+Reading the point variables of A or B therefore gives precisely the
+valid blackouts of the chosen size. For six rows, part (c) and the
+row bound imply $f(6,m)\le m+8$ once the ten structured instances of
+width $m$ are all unsatisfiable, and $f(6,m)\le m+7$ once the further $115$ are.
+
+CaDiCaL~\cite{biere2024} produces LRAT certificates for every upper bound obtained by SAT:
+$f(5,6)<12$, $f(5,7)<13$, $f(6,6)<13$, $f(6,7)<14$, $f(7,7)<15$,
+$f(6,8)<16$, and $f(7,8)<17$ using encoding A on all blackouts, the $70$ structured six-row
+instances with $m+9$ points for widths $8$ to $14$, and the $345$ with $m+8$ points for
+widths $9$ to $11$. The cell instances on $6\times8$, $7\times7$, and $7\times8$ are split by
+their first column. Every one of the $739$ proofs passes both drat-trim's
+\texttt{lrat-check}~\cite{cruzfilipe2017,wetzler2014} and the Lean LRAT checker.
+
+The formal proofs are in \nolinkurl{../lean/KageyProblems/Problem001}.
+They cover Lemmas~\ref{lem:diff}, \ref{lem:threecorners}, and~\ref{lem:span},
+Corollary~\ref{cor:hitting}, the strip theorem, both orientations of
+the row bound, and the collar theorem. Kernel-checked validity tests of the constructions
+and collar boards then prove $f(5,m)=m+6$ for $m\ge8$, $f(6,m)=m+9$ for
+$m\ge15$, $f(5,5)\ge10$, and $f(6,8)\ge15$ from only Lean's three
+standard axioms. The supplement lists these tests and the remaining unformalized parts.
+
+\section{Open questions}\label{sec:open}
+
+\begin{enumerate}[(1),leftmargin=*]
+\item What is the rational series $\sum_{m\ge0}a_5(m)z^m$ guaranteed by
+Theorem~\ref{thm:periodic}, and the growth rate of $a_5(m)$? See the counts
+in Remark~\ref{rem:fivecounts}.
+\item For $h\ge8$, does $f(h,m)=m+q_h$ hold eventually? It does for $2\le h\le7$
+(Theorems~\ref{thm:A} and~\ref{thm:sevenrow}). For each $h$, one valid board with
+$m+q_h$ points that passes the collar test (Theorem~\ref{thm:collar}) would suffice.
+What is the least $m$ with $f(7,m)=m+12$?
+\item Lemma~\ref{lem:girth} and Neuwirth's bound for bipartite graphs of girth
+eight~\cite[Corollary~16]{neuwirth2001} give
+$f(n,n)<n^{4/3}+\frac23n-\frac29n^{2/3}-\frac{20}{81}n^{1/3}$ for $n\ge3$, and
+Theorem~\ref{thm:alteration} gives $f(n,n)\ge0.29\,n^{6/5}(1+\ln n)^{-2/5}$ for large $n$.
+Lavrov~\cite{kageyMSE} used the same method for the triangular version. What is the true
+order of growth? What is the first $n$ with $f(n,n)>2n$?
+\item The entry \seqnum{A338885} also conjectures that the smallest entry of its row $n$ is
+\seqnum{A228286}$(n)$. Corollary~\ref{cor:oeisconj} settles the largest entry. Is the conjecture
+about the smallest entry true?
+\end{enumerate}
+\section{Acknowledgments}\label{sec:ack}
+
+I thank Peter Kagey for posing the problem, and for discussing its early stages with me,
+including the uniqueness of the $5\times5$ optimum and the first graph-theoretic approach to
+the narrow grids. The design of Figures~\ref{fig:game} and~\ref{fig:boards} follows the figure
+in his posting of Problem 001~\cite{kagey001}.
+
+\section*{A note on the use of AI}
+
+I began this work in January of 2026 and wrote the first draft and its mathematics
+between August and October, together with most of the Python code. I used
+Claude Opus 5.5 (Anthropic) for the October 17--19 revision, including the
+cut of a draft from 45 to 30 pages and the language passes.
+It did not add any language, just proposed a cut version.
+Using this as reference, I rewrote the text myself and implemented the revisions as I saw fit.
+No sentence in this paper was written by an LLM.
+It also drew the figures in the style of Kagey's posting of the problem given my own hand-drawn sketches.
+
+I used it to check my Python code, and it wrote further checks of the
+computer-assisted results. One of these, \texttt{six\_row\_collar\_6x9\_check.py},
+gives the lower bound in the second open question of Section~\ref{sec:open}.
+It also wrote the Lean files, the LRAT certificate pipeline and the formal
+checks described in Theorem~\ref{thm:A} and Section~\ref{sec:verify}.
+The formalization did not change a statement of the paper or find an error
+or missing hypothesis. It changed how several results are established,
+as Section~\ref{sec:verify} describes.
+
+I also used Claude Opus 5.5 to search the literature beyond the sources I
+had found. Several references came from that search. I read every cited
+source, including the parts supporting each citation. Later reviews with
+Claude Opus 5.5 and OpenAI Codex on October 23rd pointed out problems that I checked and
+corrected, such as typos and inconsistencies or redundancies.
+I checked these revisions and implemented them all myself, and take full responsibility for the
+contents of the paper.
+
+\begin{thebibliography}{10}
 
 \bibitem{alanko2011}
-S. Alanko, S. Crevals, A. Isopoussu, P. R. J. \"Osterg\r{a}rd, and V. Pettersson,
-Computing the domination number of grid graphs, \emph{Electron. J. Combin.}
-\textbf{18} (2011), Paper P141.
+S.~Alanko, S.~Crevals, A.~Isopoussu, P.~R.~J. {\"O}sterg{\aa}rd, and
+  V.~Pettersson, Computing the domination number of grid graphs, {\em Electron.
+  J. Combin.} {\bf 18} (2011), Paper P141.
 
 \bibitem{alonspencer2016}
-N. Alon and J. H. Spencer, \emph{The Probabilistic Method}, 4th ed., Wiley, 2016.
+N.~Alon and J.~H. Spencer, {\em The Probabilistic Method}, Wiley, 4th edition,
+  2016.
 
 \bibitem{bailleux2003}
-O. Bailleux and Y. Boufkhad, Efficient CNF encoding of Boolean cardinality
-constraints, in F. Rossi, ed., \emph{Principles and Practice of Constraint Programming
--- CP 2003}, Lecture Notes in Comput. Sci., Vol.~2833, Springer, 2003, pp.~108--122.
+O.~Bailleux and Y.~Boufkhad, Efficient {CNF} encoding of {B}oolean cardinality
+  constraints.
+\newblock In F.~Rossi, editor, {\em Principles and Practice of Constraint
+  Programming -- {CP} 2003}, Vol. 2833 of {\em Lecture Notes in Comput. Sci.},
+  pp.  108--122. Springer, 2003.
 
 \bibitem{bellitto2018}
-T. Bellitto, Separating codes and traffic monitoring, \emph{Theoret. Comput. Sci.}
-\textbf{717} (2018), 73--85.
+T.~Bellitto, Separating codes and traffic monitoring, {\em Theoret. Comput.
+  Sci.} {\bf 717} (2018), 73--85.
+
+\bibitem{benson1966}
+C.~T. Benson, Minimal regular graphs of girths eight and twelve, {\em Canad. J.
+  Math.} {\bf 18} (1966), 1091--1094.
 
 \bibitem{biere2024}
-A. Biere, T. Faller, K. Fazekas, M. Fleury, N. Froleyks, and F. Pollitt, CaDiCaL 2.0, in
-A. Gurfinkel and V. Ganesh, eds., \emph{Computer Aided Verification, CAV 2024}, Lecture Notes in
-Comput. Sci., Vol.~14681, Springer, 2024, pp.~133--152.
+A.~Biere, T.~Faller, K.~Fazekas, M.~Fleury, N.~Froleyks, and F.~Pollitt,
+  {CaDiCaL} 2.0.
+\newblock In A.~Gurfinkel and V.~Ganesh, editors, {\em Computer Aided
+  Verification, {CAV} 2024}, Vol. 14681 of {\em Lecture Notes in Comput. Sci.},
+  pp.  133--152. Springer, 2024.
 
 \bibitem{cruzfilipe2017}
-L. Cruz-Filipe, M. J. H. Heule, W. A. Hunt, Jr., M. Kaufmann, and P. Schneider-Kamp, Efficient
-certified RAT verification, in L. de Moura, ed., \emph{Automated Deduction -- CADE 26}, Lecture Notes
-in Comput. Sci., Vol.~10395, Springer, 2017, pp.~220--236.
+L.~Cruz-Filipe, M.~J.~H. Heule, W.~A. Hunt, Jr., M.~Kaufmann, and
+  P.~Schneider-Kamp, Efficient certified {RAT} verification.
+\newblock In L.~de~Moura, editor, {\em Automated Deduction -- {CADE} 26}, Vol.
+  10395 of {\em Lecture Notes in Comput. Sci.}, pp.  220--236. Springer, 2017.
 
 \bibitem{decaenszekely1992}
-D. de Caen and L. A. Sz\'ekely, The maximum size of 4- and 6-cycle free bipartite
-graphs on $m,n$ vertices, in G. Hal\'asz, L. Lov\'asz, D. Mikl\'os, and T. Sz\H{o}nyi, eds., \emph{Sets, Graphs and Numbers
-(Budapest, 1991)}, Colloq. Math. Soc. J\'anos Bolyai, Vol.~60, North-Holland, 1992,
-pp.~135--142.
+D.~de~Caen and L.~A. Sz{\'e}kely, The maximum size of 4- and 6-cycle free
+  bipartite graphs on $m,n$ vertices.
+\newblock In G.~Hal{\'a}sz, L.~Lov{\'a}sz, D.~Mikl{\'o}s, and T.~Sz{\H{o}}nyi,
+  editors, {\em Sets, Graphs and Numbers (Budapest, 1991)}, Vol.~60 of {\em
+  Colloq. Math. Soc. J{\'a}nos Bolyai}, pp.  135--142. North-Holland, 1992.
 
 \bibitem{decaenszekely1997}
-D. de Caen and L. A. Sz\'ekely, On dense bipartite graphs of girth eight and upper
-bounds for certain configurations in planar point-line systems, \emph{J. Combin.
-Theory Ser. A} \textbf{77} (1997), 268--278.
+D.~de~Caen and L.~A. Sz{\'e}kely, On dense bipartite graphs of girth eight and
+  upper bounds for certain configurations in planar point-line systems, {\em J.
+  Combin. Theory Ser. A} {\bf 77} (1997), 268--278.
 
 \bibitem{euler2005}
-R. Euler, The Fibonacci number of a grid graph and a new class of integer sequences,
-\emph{J. Integer Sequences} \textbf{8} (2005), Article 05.2.6.
+R.~Euler, The {F}ibonacci number of a grid graph and a new class of integer
+  sequences, {\em J. Integer Sequences} {\bf 8} (2005), Article 05.2.6.
 
 \bibitem{flajolet2009}
-P. Flajolet and R. Sedgewick, \emph{Analytic Combinatorics}, Cambridge University
-Press, 2009.
+P.~Flajolet and R.~Sedgewick, {\em Analytic Combinatorics}, Cambridge
+  University Press, 2009.
 
 \bibitem{cbc}
-J. Forrest et al., coin-or/Cbc, version 2.10.3, software, Zenodo, 2019,
-\url{https://doi.org/10.5281/zenodo.3246628}.
+J.~Forrest et~al., coin-or/{Cbc}, version 2.10.3, software, Zenodo,
+  \url{https://doi.org/10.5281/zenodo.3246628}, 2019.
 
 \bibitem{foucaud2015}
-F. Foucaud, Decision and approximation complexity for identifying codes and
-locating-dominating sets in restricted graph classes, \emph{J. Discrete Algorithms}
-\textbf{31} (2015), 48--68.
+F.~Foucaud, Decision and approximation complexity for identifying codes and
+  locating-dominating sets in restricted graph classes, {\em J. Discrete
+  Algorithms} {\bf 31} (2015), 48--68.
+
+\bibitem{furedi1996}
+Z.~F{\"u}redi, On the number of edges of quadrilateral-free graphs, {\em J.
+  Combin. Theory Ser. B} {\bf 68} (1996), 1--6.
 
 \bibitem{glp2025}
-J. Guilhot, E. Little, and J. Parkinson, Bounded weight functions on regular languages
-and groups, \emph{Groups Geom. Dyn.}, online 27 August 2026,
-\url{https://doi.org/10.4171/GGD/983}. Theorem numbers from arXiv:2510.17061v1.
+J.~Guilhot, E.~Little, and J.~Parkinson, Bounded weight functions on regular
+  languages and groups, \emph{Groups Geom. Dyn.}, online 27 August 2026,
+  \url{https://doi.org/10.4171/GGD/983}. Theorem numbers from
+  arXiv:2510.17061v1, 2026.
 
 \bibitem{hardywright2008}
-G. H. Hardy and E. M. Wright, \emph{An Introduction to the Theory of Numbers}, 6th ed.,
-Oxford University Press, 2008.
+G.~H. Hardy and E.~M. Wright, {\em An Introduction to the Theory of Numbers},
+  Oxford University Press, 6th edition, 2008.
+
+\bibitem{hoory2002}
+S.~Hoory, The size of bipartite graphs with a given girth, {\em J. Combin.
+  Theory Ser. B} {\bf 86} (2002), 215--220.
 
 \bibitem{pysat2018}
-A. Ignatiev, A. Morgado, and J. Marques-Silva, PySAT: a Python toolkit for prototyping
-with SAT oracles, in O. Beyersdorff and C. M. Wintersteiger, eds., \emph{Theory and
-Applications of Satisfiability Testing -- SAT 2018}, Lecture Notes in Comput. Sci.,
-Vol.~10929, Springer, 2018, pp.~428--437.
-
-\bibitem{kageyMSE}
-P. Kagey, Removing points from a triangular array without losing information,
-Mathematics Stack Exchange, question 2465571, 2017,
-\url{https://math.stackexchange.com/q/2465571}.
-
-\bibitem{kageyG4G14}
-P. Kagey, Open problem collection, Problem 1, G4G14 gift exchange, 2020,
-\url{https://www.gathering4gardner.org/g4g14gift/G4G14-PeterKagey-OpenishProblems.pdf}.
+A.~Ignatiev, A.~Morgado, and J.~Marques-Silva, {PySAT}: a {P}ython toolkit for
+  prototyping with {SAT} oracles.
+\newblock In O.~Beyersdorff and C.~M. Wintersteiger, editors, {\em Theory and
+  Applications of Satisfiability Testing -- {SAT} 2018}, Vol. 10929 of {\em
+  Lecture Notes in Comput. Sci.}, pp.  428--437. Springer, 2018.
 
 \bibitem{kagey001}
-P. Kagey, Problem 001, Open Problem Collection,
-\url{https://peterkagey.com/problems/001/} (accessed October 2026).
+P.~Kagey, Problem 001, {O}pen {P}roblem {C}ollection,
+  \url{https://peterkagey.com/problems/001/}.
+\newblock Accessed October 2026.
+
+\bibitem{kageyMSE}
+P.~Kagey, Removing points from a triangular array without losing information,
+  Mathematics Stack Exchange, question 2465571,
+  \url{https://math.stackexchange.com/q/2465571}, 2017.
+
+\bibitem{kageyG4G14}
+P.~Kagey, Open problem collection, {P}roblem 1, G4G14 gift exchange,
+  \url{https://www.gathering4gardner.org/g4g14gift/G4G14-PeterKagey-OpenishProblems.pdf},
+  2020.
 
 \bibitem{katona1966}
-G. Katona, On separating systems of a finite set, \emph{J. Combin. Theory}
-\textbf{1} (1966), 174--194.
+G.~Katona, On separating systems of a finite set, {\em J. Combin. Theory} {\bf
+  1} (1966), 174--194.
+
+\bibitem{kst1954}
+T.~K{\H{o}}v{\'a}ri, V.~T. S{\'o}s, and P.~Tur{\'a}n, On a problem of {K}.
+  {Z}arankiewicz, {\em Colloq. Math.} {\bf 3} (1954), 50--57.
+
+\bibitem{lazebnik1995}
+F.~Lazebnik, V.~A. Ustimenko, and A.~J. Woldar, A new series of dense graphs of
+  high girth, {\em Bull. Amer. Math. Soc. (N.S.)} {\bf 32} (1995), 73--79.
 
 \bibitem{mantel1907}
-W. Mantel, Problem 28, \emph{Wiskundige Opgaven} \textbf{10} (1907), 60--61.
+W.~Mantel, Problem 28, {\em Wiskundige Opgaven} {\bf 10} (1907), 60--61.
 
 \bibitem{mertens2024}
-S. Mertens, Domination polynomials of the grid, the cylinder, the torus, and the king
-graph, \emph{J. Integer Sequences} \textbf{27} (2024), Article 24.7.6.
+S.~Mertens, Domination polynomials of the grid, the cylinder, the torus, and
+  the king graph, {\em J. Integer Sequences} {\bf 27} (2024), Article 24.7.6.
 
 \bibitem{sympy2017}
-A. Meurer, C. P. Smith, M. Paprocki, O. \v{C}ert\'{\i}k, S. B. Kirpichev, M. Rocklin,
-A. Kumar, S. Ivanov, J. K. Moore, S. Singh, T. Rathnayake, S. Vig, B. E. Granger,
-R. P. Muller, F. Bonazzi, H. Gupta, S. Vats, F. Johansson, F. Pedregosa, M. J. Curry,
-A. R. Terrel, \v{S}. Rou\v{c}ka, A. Saboo, I. Fernando, S. Kulal, R. Cimrman, and
-A. Scopatz, SymPy: symbolic computing in Python, \emph{PeerJ Comput. Sci.} \textbf{3}
-(2017), e103.
+A.~Meurer, C.~P. Smith, M.~Paprocki, O.~{\v{C}}ert{\'{\i}}k, S.~B. Kirpichev,
+  M.~Rocklin, A.~Kumar, S.~Ivanov, J.~K. Moore, S.~Singh, T.~Rathnayake,
+  S.~Vig, B.~E. Granger, R.~P. Muller, F.~Bonazzi, H.~Gupta, S.~Vats,
+  F.~Johansson, F.~Pedregosa, M.~J. Curry, A.~R. Terrel, {\v{S}}.~Rou{\v{c}}ka,
+  A.~Saboo, I.~Fernando, S.~Kulal, R.~Cimrman, and A.~Scopatz, {SymPy}:
+  symbolic computing in {P}ython, {\em PeerJ Comput. Sci.} {\bf 3} (2017),
+  e103.
 
 \bibitem{pulp}
-S. Mitchell, M. O'Sullivan, and I. Dunning, PuLP: a linear programming toolkit for
-Python, technical report, 2011, \url{https://optimization-online.org/2011/09/3178/}.
+S.~Mitchell, M.~O'Sullivan, and I.~Dunning, {PuLP}: a linear programming
+  toolkit for {P}ython, technical report, Optimization Online, 2011.
+\newblock \url{https://optimization-online.org/2011/09/3178/}.
 
 \bibitem{moretshapiro1985}
-B. M. E. Moret and H. D. Shapiro, On minimizing a set of tests, \emph{SIAM J. Sci.
-Statist. Comput.} \textbf{6} (1985), 983--1003.
+B.~M.~E. Moret and H.~D. Shapiro, On minimizing a set of tests, {\em SIAM J.
+  Sci. Statist. Comput.} {\bf 6} (1985), 983--1003.
 
 \bibitem{neuwirth2001}
-S. Neuwirth, The size of bipartite graphs with girth eight, preprint, 2001,
-\url{https://arxiv.org/abs/math/0102210v1}.
-
-\bibitem{trureturing2026}
-The Omega Institute, Prove the exact Three-Row blackout maximum, pull request 8084,
-merged on 15 September 2026 into the branch \texttt{dev} as commit \texttt{ace272f},
-\url{https://github.com/the-omega-institute/trureturing/pull/8084}.
+S.~Neuwirth, The size of bipartite graphs with girth eight, preprint,
+  \url{https://arxiv.org/abs/math/0102210v1}, 2001.
 
 \bibitem{repo}
-A. Pemmasani, Kagey-Problems repository, 2026, commit \texttt{9d6ac7fc7d76},
-\url{https://github.com/apemm/Kagey-Problems/tree/9d6ac7fc7d76/kagey-problems/problem001}.
+A.~Pemmasani, {Kagey-Problems} repository, commit \texttt{9d6ac7fc7d76},
+  \url{https://github.com/apemm/Kagey-Problems/tree/9d6ac7fc7d76/kagey-problems/problem001},
+  2026.
 
 \bibitem{reiman1958}
-I. Reiman, \"Uber ein Problem von K. Zarankiewicz, \emph{Acta Math. Acad. Sci.
-Hungar.} \textbf{9} (1958), 269--273.
+I.~Reiman, {\"U}ber ein {P}roblem von {K}. {Z}arankiewicz, {\em Acta Math.
+  Acad. Sci. Hungar.} {\bf 9} (1958), 269--273.
 
 \bibitem{sinz2005}
-C. Sinz, Towards an optimal CNF encoding of Boolean cardinality constraints, in
-P. van Beek, ed., \emph{Principles and Practice of Constraint Programming -- CP 2005},
-Lecture Notes in Comput. Sci., Vol.~3709, Springer, 2005, pp.~827--831.
+C.~Sinz, Towards an optimal {CNF} encoding of {B}oolean cardinality
+  constraints.
+\newblock In P.~van Beek, editor, {\em Principles and Practice of Constraint
+  Programming -- {CP} 2005}, Vol. 3709 of {\em Lecture Notes in Comput. Sci.},
+  pp.  827--831. Springer, 2005.
 
 \bibitem{oeis}
-N. J. A. Sloane and The OEIS Foundation Inc., \emph{The On-Line Encyclopedia of
-Integer Sequences}, 2026. Available at \url{https://oeis.org}.
+N.~J.~A. Sloane and {The OEIS Foundation Inc.}, The {O}n-{L}ine {E}ncyclopedia
+  of {I}nteger {S}equences, \url{https://oeis.org}, 2026.
+
+\bibitem{trureturing2026}
+{The Omega Institute}, Prove the exact {T}hree-{R}ow blackout maximum, pull
+  request 8084, merged on 15 September 2026 into the branch \texttt{dev} as
+  commit \texttt{ace272f},
+  \url{https://github.com/the-omega-institute/trureturing/pull/8084}, 2026.
 
 \bibitem{wetzler2014}
-N. Wetzler, M. J. H. Heule, and W. A. Hunt, Jr., DRAT-trim: efficient checking and trimming
-using expressive clausal proofs, in C. Sinz and U. Egly, eds., \emph{Theory and Applications of
-Satisfiability Testing -- SAT 2014}, Lecture Notes in Comput. Sci., Vol.~8561, Springer, 2014,
-pp.~422--429.
+N.~Wetzler, M.~J.~H. Heule, and W.~A. Hunt, Jr., {DRAT-trim}: efficient
+  checking and trimming using expressive clausal proofs.
+\newblock In C.~Sinz and U.~Egly, editors, {\em Theory and Applications of
+  Satisfiability Testing -- {SAT} 2014}, Vol. 8561 of {\em Lecture Notes in
+  Comput. Sci.}, pp.  422--429. Springer, 2014.
 
 \end{thebibliography}
 
@@ -2255,12 +2592,16 @@ matrix, Mantel's theorem, regular language, SAT certificate.
 \seqnum{A002620},
 \seqnum{A033638},
 \seqnum{A085582},
+\seqnum{A228286},
 \seqnum{A289832},
 \seqnum{A322284},
 \seqnum{A338885},
 \seqnum{A397315},
 \seqnum{A398448},
-\seqnum{A399580}, and
+\seqnum{A399580},
+\seqnum{A401223},
+\seqnum{A401224},
+\seqnum{A401225}, and
 \seqnum{A401226}.)
 
 \end{document}
