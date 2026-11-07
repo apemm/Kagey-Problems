@@ -17,7 +17,7 @@ ROOT = P.parents[2]
 HERE = P / 'verification'
 LEAN = ROOT / 'kagey-problems/problem131/lean'
 BUILD = ROOT / '.pdf-build/paperD-submission'
-TAG = 'paperD-ejp-v8'
+TAG = 'paperD-ejp-v9'
 TITLE = 'The bias interval of the elephant random walk'
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--package-only', action='store_true',
