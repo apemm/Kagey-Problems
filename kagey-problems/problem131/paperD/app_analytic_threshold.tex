@@ -1,0 +1,313 @@
+\section{An analytic proof of the transition}\label{app:analytic-threshold}
+
+To prove Theorem~\ref{thm:threshold}, we use the moment equation
+of Gu\'erin, Laulin, Raschel and Simon~\cite[(15)]{glrs2025}
+to write the central curvature as an integral. Its weights are
+positive, so we can compare them as memory varies.
+
+Put
+\begin{equation}\label{eq:an-H}
+ \chi_k=4^{-k}\binom{2k}{k},\qquad
+ H_a(y)=1-\sum_{k\ge1}\frac{\chi_k}{2ak-1}y^k.
+\end{equation}
+The function $H_a$ decreases strictly on $[0,1)$.
+For $a=1$ it is $\sqrt{1-y}$. For $a<1$ every subtracted
+coefficient is larger, so $H_a(1)<0$. The series at one converges,
+since its coefficients are bounded by a constant depending on $a$
+times $\chi_k/(2k-1)$, whose sum is one.
+There is consequently a unique root $Y_a\in(0,1)$.
+The coefficients also give
+\begin{equation}\label{eq:an-H-ode}
+ H_a(y)-2ayH_a'(y)=(1-y)^{-1/2}.
+\end{equation}
+Since $\partial_aH_a(y)>0$ for $y>0$ and $H_a'(Y_a)<0$,
+the root is smooth and $Y_a'>0$.
+
+\begin{lemma}\label{lem:curvature-weight}
+For $1/2<a<1$,
+\begin{equation}\label{eq:an-curvature}
+ g_a''(0)=-\frac{1}{\pi\Gamma(3-3a)}
+ \int_0^{Y_a}y^{1/2}H_a(y)^{2-3a}
+             \bigl[1-(1+a)^2y\bigr]\,d y.
+\end{equation}
+The integral is absolutely convergent.
+\end{lemma}
+
+\begin{proof}
+We first multiply the limit by an independent exponential power
+(this cancels the gamma factors in its moments).
+Let $E$ be an independent exponential random variable of mean one
+and set $Z_a=E^a\mathcal L_a$. With the normalization of~\cite{glrs2025},
+\[
+ m_n=\frac{\Gamma(1+an)}{n!}\E \mathcal L_a^n,
+ \qquad m_0=m_1=1.
+\]
+The bound $m_n\le C_a^n$ in~\cite[Section 3]{glrs2025}, applied to
+the even moments, gives $\E\exp(\delta|Z_a|)<\infty$ for small
+$\delta>0$. Hence $M_a(z)=\E e^{zZ_a}$ is analytic on a strip
+about the imaginary axis. Its power series and the moment equation give
+\begin{equation}\label{eq:an-moment-ode}
+ M_a(z)+azM_a'(z)
+ =\frac{1+a}{2}M_a(z)^2
+  +\frac{1-a}{2}M_a(z)M_a(-z).
+\end{equation}
+The identity holds on the strip by analytic continuation.
+If $M_a(it)=A(t)+iB(t)$, it becomes
+\begin{equation}\label{eq:an-AB}
+ atA'=A^2-A-aB^2,\qquad
+ atB'=((1+a)A-1)B.
+\end{equation}
+
+For $0<y<Y_a$ define
+\begin{equation}\label{eq:an-param}
+ t=\sqrt y\,H_a(y)^{-a},\qquad
+ A(t)=H_a(y)\sqrt{1-y},\qquad B(t)=H_a(y)\sqrt y.
+\end{equation}
+The map from $y$ to $t$ increases from zero to infinity.
+Equation~\eqref{eq:an-H-ode} gives
+\[
+ \frac{1}{t}\frac{dt}{dy}
+ =\frac{1}{2yH_a(y)\sqrt{1-y}},
+\]
+and substitution shows that~\eqref{eq:an-param} satisfies~\eqref{eq:an-AB}.
+Near zero, $A$ is even, $B$ is odd, and both are analytic in $t$,
+with $A(0)=1$ and $B'(0)=1$.
+These data determine its power series. Indeed, the coefficient
+recurrence has denominator $na-1$ for even $n\ge2$, and $na-a$
+for odd $n\ge3$, both positive. Thus it agrees locally with
+$M_a(it)$. Ordinary uniqueness for~\eqref{eq:an-AB} on $t>0$
+extends the agreement to every positive $t$.
+
+Write $f(t)=\operatorname{Re}\E e^{it\mathcal L_a}$. Exponential randomization gives
+\[
+ A(t)=\int_0^\infty e^{-v}f(tv^a)\,d v.
+\]
+We use the Fourier decay in Lemma~\ref{lem:analytic-density},
+which in particular makes every polynomial multiple of $f$
+integrable at infinity. For $0<\Re s<1/a$, absolute Fubini gives
+\begin{equation}\label{eq:an-mellin}
+ J(s):=\int_0^\infty t^{s-1}A(t)\,d t
+ =\Gamma(1-as)\mathcal F(s),\qquad
+ \mathcal F(s)=\int_0^\infty t^{s-1}f(t)\,d t.
+\end{equation}
+The function $\mathcal F$ is holomorphic on $\Re s>0$.
+The integral defining $J$ diverges at $s=3$, which is the value
+we need. Two integrations by parts give a convergent expression there.
+
+Set $\theta=\arcsin\sqrt y$ and
+\[
+ u=F(\theta)=\sin^{-1/a}\theta\,H_a(\sin^2\theta),\qquad
+ w(u)=a\cos\theta\sin^{1/a}\theta.
+\]
+Here $\theta$ decreases from $\arcsin\sqrt{Y_a}$ to zero as
+$u$ increases from zero to infinity. From~\eqref{eq:an-H-ode},
+\[
+ F'(\theta)=-\frac1a\sin^{-1-1/a}\theta,\qquad t=u^{-a}.
+\]
+Changing variables in $J$ gives
+$J(s)=\int_0^\infty u^{-as}w(u)\,d u$.
+Since $F'(\arcsin\sqrt{Y_a})\ne0$, the function $w$ is smooth
+at zero. At infinity, $\theta\sim u^{-a}$, so its definition
+and the derivative formulas below give
+$w(u)=O(u^{-1})$, $w'(u)=O(u^{-2})$ and $w''(u)=O(u^{-3})$.
+For $0<\Re s<1/a$, the boundary terms therefore vanish twice,
+and~\eqref{eq:an-mellin} becomes
+\begin{equation}\label{eq:an-mellin-continued}
+ \mathcal F(s)=\frac{1}{\Gamma(3-as)}
+       \int_0^\infty u^{2-as}w''(u)\,d u.
+\end{equation}
+The right side is holomorphic on $0<\Re s<3/a$, using the
+stated bounds at infinity and boundedness of $w''$ at zero.
+Thus~\eqref{eq:an-mellin-continued} holds throughout this larger
+strip by the identity theorem, and $s=3$ is permitted.
+
+Differentiating through $u=F(\theta)$ gives
+\[
+ \begin{split}
+ w'(u)&=-a\sin^{2/a}\theta
+                  [1-(1+a)\sin^2\theta],\\
+ w''(u)&=2a\sin^{3/a}\theta\cos\theta
+                  [1-(1+a)^2\sin^2\theta].
+ \end{split}
+\]
+Insert the second expression in~\eqref{eq:an-mellin-continued}
+at $s=3$ and return to $y=\sin^2\theta$.
+The powers of $y$ reduce to $y^{1/2}$, giving the integral in
+\eqref{eq:an-curvature}. Fourier inversion supplies the factor
+$g_a''(0)=-\mathcal F(3)/\pi$.
+Finally, $H_a$ has a simple zero at $Y_a$, and $2-3a>-1$,
+so the endpoint singularity is integrable.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:threshold}]
+\emph{Signs outside a short interval.}
+
+Let $\mu_a$ be the probability law on $(0,Y_a)$ with density proportional to
+$y^{1/2}H_a(y)^{2-3a}$, and put
+\begin{equation}\label{eq:an-score}
+ \mathcal R(a)=(1+a)^2\int y\,d\mu_a(y).
+\end{equation}
+Lemma~\ref{lem:curvature-weight} says that $g_a''(0)$ has the sign
+of $\mathcal R(a)-1$.
+
+When $a\le2/3$, the extra weight $H_a^{2-3a}$ decreases in $y$.
+It therefore lowers the mean of the density proportional to
+$y^{1/2}$, giving $\int y\,d\mu_a(y)\le3Y_a/5$.
+At $a=2/3$, the first three terms of~\eqref{eq:an-H} give
+\[
+ H_{2/3}(3/5)
+ \le1-\frac9{10}-\frac{81}{1000}-\frac9{400}
+ =-\frac7{2000}<0.
+\]
+Since $Y_a$ increases, $Y_a\le Y_{2/3}<3/5$ for $a\le2/3$.
+Thus $\mathcal R(a)<(5/3)^2(3/5)^2=1$.
+
+When $a\ge2/3$, the extra weight instead increases, so the
+mean is at least $3Y_a/5$. We need only the lower bound
+$Y_{2/3}>117/200$. To prove it, note that $\chi_k$ decreases.
+At $y=117/200$, the terms with $k\ge4$ are at most
+\[
+ \sum_{k\ge4}\frac{\chi_ky^k}{4k/3-1}
+ \le\frac{\chi_4y^4}{(13/3)(1-y)}.
+\]
+Together with the first three terms this gives the exact bound
+\[
+ H_{2/3}(117/200)\ge\frac{929771}{135987200}>0.
+\]
+For every $a\ge69/100$, therefore,
+\[
+ \mathcal R(a)>
+ \left(\frac{169}{100}\right)^2\frac35\frac{117}{200}
+ =\frac{10024911}{10000000}>1.
+\]
+Any zero must lie between $2/3$ and $69/100$.
+
+\emph{A single crossing.}
+
+We now work on $I=[2/3,69/100]$. Rescale the integration
+interval by $y=Y_au$, so the variable $u$ always lies in $(0,1)$.
+Put
+\begin{equation}\label{eq:an-weights}
+ w_k(a)=\frac{\chi_kY_a^k}{2ak-1},\qquad
+ K_a(u)=\frac{H_a(Y_au)}{1-u}
+       =\sum_{k\ge1}w_k(a)(1+u+\cdots+u^{k-1}).
+\end{equation}
+Since $\sum w_k=1$, we have $K_a\ge1$ and $\partial_uK_a\ge0$.
+Writing $s_a=3a-2\in[0,7/100]$, the rescaled measure has density
+proportional to
+\begin{equation}\label{eq:an-rescaled-weight}
+ W_a(u)=u^{1/2}(1-u)^{-s_a}K_a(u)^{-s_a}.
+\end{equation}
+We will show that its density ratios increase strictly in $u$
+as $a$ increases (so the mean increases too).
+
+First, $Y_a<2/3$ throughout $I$. Indeed, the first three terms give
+\[
+ H_{69/100}(2/3)\le-\frac{9767}{7087608}<0,
+\]
+and $Y_a$ increases. All series and derivatives used below
+therefore converge uniformly on $I\times[0,1]$.
+Define the falling-factorial moments
+\[
+ M_1=\sum k w_k,\qquad M_2=\sum k(k-1)w_k,\qquad
+ M_3=\sum k(k-1)(k-2)w_k.
+\]
+For $G(y)=(1-y)^{-1/2}$, equation~\eqref{eq:an-H-ode} and its
+first two derivatives at $Y=Y_a$ give
+\begin{equation}\label{eq:an-factorial-moments}
+ \begin{split}
+ 2aM_1&=G(Y),\\
+ 2aM_2&=YG'(Y)-(2a-1)M_1,\\
+ 2a(M_3+2M_2)&=Y^2G''(Y)+M_2.
+ \end{split}
+\end{equation}
+In particular,
+\begin{equation}\label{eq:an-Ku}
+ 0\le\partial_uK_a(u)\le\frac{M_2}{2}
+ \le\frac{YG'(Y)}{4a}
+ \le\frac{3\sqrt3}{8}<\frac{21}{32}.
+\end{equation}
+
+We also need a bound for its memory derivative. Write
+$d_k=2k/(2ak-1)$. Differentiating $\sum w_k=1$ gives
+\begin{equation}\label{eq:an-root-derivative}
+ \frac{Y_a'}{Y_a}M_1=\sum d_kw_k\le6,
+ \qquad \frac{Y_a'}{Y_a}\le\frac{12a}{G(Y)}.
+\end{equation}
+Here $d_k$ decreases in $k$ and $d_1\le6$ on $I$.
+The logarithmic derivative $\partial_a\log w_k=kY_a'/Y_a-d_k$
+strictly increases in $k$. Since $1+u+\cdots+u^{k-1}$
+is nondecreasing in $k$, the covariance identity for
+derivatives of expectations gives $\partial_aK_a(u)\ge0$.
+Here the $w_k$ themselves form a probability law.
+
+In $\partial_a\partial_uK_a$, discard the negative term
+$-d_kw_k$ from $\partial_aw_k$, then bound the derivative
+of $1+u+\cdots+u^{k-1}$ by $k(k-1)/2$. Equations
+\eqref{eq:an-factorial-moments} and~\eqref{eq:an-root-derivative} give
+\begin{align}
+ \partial_a\partial_uK_a
+ &\le\frac{Y_a'}{Y_a}\frac{M_3+2M_2}{2}\notag\\
+ &\le3\left(\frac{M_2}{G(Y)}+
+                       \frac{Y^2G''(Y)}{G(Y)}\right)
+ \le3\left(\frac34+3\right)=\frac{45}{4}.
+ \label{eq:an-Kau}
+\end{align}
+The last bounds use
+$M_2/G(Y)\le Y/[4a(1-Y)]$ and
+$Y^2G''(Y)/G(Y)=3Y^2/[4(1-Y)^2]$.
+Since $K_a\ge1$, $\partial_aK_a\ge0$ and
+$\partial_uK_a\ge0$, we obtain
+\[
+ \partial_a\left(\frac{\partial_uK_a}{K_a}\right)
+ =\frac{\partial_a\partial_uK_a}{K_a}
+  -\frac{\partial_uK_a\,\partial_aK_a}{K_a^2}
+ \le\frac{45}{4}.
+\]
+Thus~\eqref{eq:an-rescaled-weight} satisfies the strict bound
+\begin{align}
+ \partial_u\partial_a\log W_a(u)
+ &=\frac3{1-u}-3\frac{\partial_uK_a}{K_a}
+    -s_a\partial_a\left(\frac{\partial_uK_a}{K_a}\right)\notag\\
+ &\ge3-\frac{63}{32}-\frac7{100}\frac{45}{4}
+   =\frac{39}{160}>0.
+ \label{eq:an-MLR}
+\end{align}
+The score $\partial_a\log W_a$ is therefore strictly increasing
+in $u$. If $\nu_a$ denotes the normalized measure in
+\eqref{eq:an-rescaled-weight}, differentiation gives
+\[
+ \frac{d}{da}\int u\,d\nu_a(u)
+ =\operatorname{Cov}_{\nu_a}\bigl(u,\partial_a\log W_a(u)\bigr)>0.
+\]
+The strict inequality follows by writing the covariance as
+one half the expectation of
+$(U-V)(S(U)-S(V))$ for independent $U,V\sim\nu_a$ and the
+strictly increasing score $S$. Differentiation under the
+integral is justified by the integrable bound
+$C(1-u)^{-7/100}(1+|\log(1-u)|)$ on this compact parameter interval.
+
+It follows that
+\[
+ \mathcal R(a)=(1+a)^2Y_a\int u\,d\nu_a(u)
+\]
+has strictly positive derivative in the interior of $I$. The signs already proved
+and the intermediate value theorem give
+exactly one zero of $\mathcal R-1$. There are no zeros outside $I$.
+Finally,~\eqref{eq:an-curvature} writes
+\[
+ g_a''(0)=\frac{\mathcal Z_a}{\pi\Gamma(3-3a)}\,[\mathcal R(a)-1],
+ \qquad \mathcal Z_a=\int_0^{Y_a}y^{1/2}H_a(y)^{2-3a}\,d y>0.
+\]
+The normalizing factor is continuously differentiable near the
+zero, by the same rescaling and domination. At the zero its
+derivative contributes nothing, so
+$\partial_ag_a''(0)=\mathcal Z_a\mathcal R'(a)/[\pi\Gamma(3-3a)]>0$.
+The shape alternatives in Theorem~\ref{thm:two-modes} now give
+unimodality below $a_*$ and bimodality above it. At the critical
+point, let $a\uparrow a_*$ from below. Joint continuity preserves
+$g_a(x)\ge g_a(y)$ for $0\le x<y$. Thus the critical density is
+nonincreasing on the positive half-line too. Analyticity excludes
+a constant interval, so its unique mode is at zero.
+\end{proof}
+

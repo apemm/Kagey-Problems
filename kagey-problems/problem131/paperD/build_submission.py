@@ -15,7 +15,7 @@ ROOT = P.parents[2]
 HERE = P / 'verification'
 LEAN = ROOT / 'kagey-problems/problem131/lean'
 BUILD = ROOT / '.pdf-build/paperD-submission'
-TAG = 'paperD-ejp-v3'
+TAG = 'paperD-ejp-v4'
 TITLE = 'The bias interval of the elephant random walk'
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--package-only', action='store_true',
@@ -170,7 +170,7 @@ archive(P/'paperD_ejp_submission.zip',ejp_pairs)
 rendered=BUILD/'rendered'
 rendered.mkdir(exist_ok=True)
 doc=pdfium.PdfDocument(str(ejp_pdf))
-for page in sorted({p for p in [0,1,2,3,4,5,10,11,12,13,14,15,16,17,18,19,28,29,len(doc)-1]
+for page in sorted({p for p in [0,1,2,3,4,5,10,11,12,13,14,15,16,17,18,19,21,22,23,24,25,26,28,29,len(doc)-1]
                     if 0 <= p < len(doc)}):
     doc[page].render(scale=1.5).to_pil().save(rendered/f'page-{page+1:02d}.png')
 deliverables=[P/n for n in ['problem131_memory.pdf','problem131_arxiv.pdf',

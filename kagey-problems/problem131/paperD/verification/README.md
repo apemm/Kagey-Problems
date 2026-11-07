@@ -1,10 +1,10 @@
 # Paper D verification records
 
-The recorded audit checks 386 modules and 24,005 theorem or lemma declarations.
+The recorded audit checks 389 modules and 24,067 theorem or lemma declarations.
 Its allowed axioms are `propext`, `Classical.choice` and `Quot.sound`.
 `verification-manifest.json` contains the imported-source inventory, hashes,
 toolchain versions and declaration results. `build-log.txt` contains the run output.
-These records are preserved from the completed audit, not a new execution.
+The full build and declaration audit were rerun for the analytic threshold revision.
 
 The [coverage map](../../lean/PaperD/MAP.md) specifies the hypotheses and limits
 of each formal result. The transcendental interval enclosures are checked by
