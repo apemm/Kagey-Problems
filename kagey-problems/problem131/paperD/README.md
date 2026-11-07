@@ -2,9 +2,10 @@
 
 ## Fixed-memory EJP manuscript
 
-The [33-page manuscript](problem131_memory.pdf) proves the GLRS bias-interval
+The [35-page manuscript](problem131_memory.pdf) proves the GLRS bias-interval
 conjecture for every superdiffusive memory. Theorem 1.1 contains the analytic
-classification. Theorem 1.2 separates the computer-assisted threshold and
+classification and proves that fair-start bimodality has a unique memory
+threshold. Theorem 1.2 separates its certified numerical location and
 critical asymptotics.
 
 The paper also gives the finite shape bounds, the variational bias boundary,
@@ -27,11 +28,15 @@ for the declaration audit. The Lean library includes both present and
 archived results. Its [coverage map](../lean/PaperD/MAP.md) distinguishes
 formal proofs, hypotheses and written analysis.
 
+The analytic threshold proof uses a positive-weight curvature integral and
+strict likelihood-ratio order. The accompanying Lean modules check its scalar
+bounds, covariance argument and Mellin continuation. The construction of the
+actual transform remains a written proof.
+
 ## Certificate files
 
 | Claim or illustration | Script | Records |
 | --- | --- | --- |
-| Parameter cover | certify_threshold.py, threshold_taylor.py, threshold_hankel.py, threshold_pointwise.py | data/threshold_*.txt |
 | Transition derivative and fourth derivative | certify_transition.py | data/transition_derivative_* |
 | Independent endpoint check and conditional slope | check_critical_shape.py | data/critical_shape_check.json |
 | Refined critical constants | certify_critical_constants.py | data/critical_constants_certificate.json |

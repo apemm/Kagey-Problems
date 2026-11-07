@@ -120,10 +120,10 @@ Files. The folder `paperC2`, with the main file `problem131_reconstruction.tex` 
 
 ## Paper D: The bias interval of the elephant random walk
 
-Paper D targets the Electronic Journal of Probability. Its 33-page manuscript
+Paper D targets the Electronic Journal of Probability. Its 35-page manuscript
 proves the GLRS conjecture for every superdiffusive memory. The analytic
-theorem classifies the bimodal biases and proves positivity and interior
-regularity of their boundary. A separate computer-assisted theorem locates
+theorem classifies the bimodal biases, proves the unique fair-start memory
+threshold, and gives positivity and interior regularity of the bias boundary. A separate computer-assisted theorem locates
 the unique memory transition and gives its quartic and three-halves laws.
 
 The finite sign engine, weak transfer and Gaussian smoothing are explicit.

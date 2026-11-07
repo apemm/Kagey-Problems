@@ -1,8 +1,9 @@
-\section{Proofs for the threshold certificate}\label{or:threshold}
+\section{Bounds for the numerical enclosures}\label{or:threshold}
 
 We prove the bounds used in Appendix~\ref{app:threshold}, using
 its notation and the smoothing inequality~\eqref{eq:thr-fixed}.
-These give the certificate for Theorem~\ref{thm:threshold}.
+These locate the threshold of Theorem~\ref{thm:threshold} and
+certify the critical derivatives.
 Write $\Phi_N(t)=\sum_{n\le N}c_n(it)^n$ for a partial sum of the
 moment series.
 
@@ -234,74 +235,5 @@ $\phi_a(t)$ is continuous in $a$. Moreover $t^2\lvert\phi_a(t)\rvert$ is at
 most $t^2$ on $[0,T_3]$ and $Ct^{2-\beta}$ beyond, uniformly in $a\in I$.
 Dominated convergence gives the continuity.
 \end{proof}
-
-The bounds of Lemma~\ref{lem:thr-moments} break down near
-$a=\frac12$, since $m_2=a/(2a-1)$ diverges. We remove this factor
-by rescaling.
-
-\begin{lemma}[the scaled variable]\label{lem:thr-scaled}
-Put $y=2a-1$ and $\mu_n=m_ny^{\lfloor n/2\rfloor}$.
-\begin{enumerate}[(a)]
-\item We have $\mu_0=\mu_1=1$, $\mu_2=a$, and for $n\ge3$
-\[
- (na-\theta_n)\mu_n=\sum_{j=1}^{n-1}\theta_jy^{e_{nj}}\mu_j\mu_{n-j},
-\]
-where $e_{nj}=1$ if $n$ is even and $j$ is odd, and $e_{nj}=0$ otherwise.
-Here $na-\theta_n$ is $(n-1)a$ for odd $n$ and $na-1$ for even $n$. So every
-$\mu_n$ is a rational function of $a$ with no pole in
-$\operatorname{Re}a>\frac14$.
-\item Let $\sigma^2=\E \mathcal L_a^2$, $X=\mathcal L_a/\sigma$ and
-$\hat c_n=\mu_n\Gamma(2a)^{\lfloor n/2\rfloor}/\Gamma(1+an)$. Then
-$\sigma^2=1/(y\Gamma(2a))$,
-\[
- \E e^{iuX}=\sum_{n\text{ even}}\hat c_n(iu)^n
- +\sqrt{y\Gamma(2a)}\sum_{n\text{ odd}}\hat c_n(iu)^n,
- \qquad
- g_a''(0)=-\frac1{\pi\sigma^3}\int_0^\infty u^2\operatorname{Re}\E e^{iuX}\,du .
-\]
-\end{enumerate}
-\end{lemma}
-
-\begin{proof}
-Multiply the recursion for $m_n$ by $y^{\lfloor n/2\rfloor}$. The exponent
-$\lfloor n/2\rfloor-\lfloor j/2\rfloor-\lfloor(n-j)/2\rfloor$ is $1$ when $n$ is
-even and $j$ is odd, and $0$ otherwise. Also $m_2=a/y$. This proves (a), as
-the zeros of the factors are $a=0$ and $a=1/n\le\frac14$. For (b),
-$\sigma^2=2m_2/\Gamma(1+2a)=1/(y\Gamma(2a))$ and
-$\E X^n/n!=c_n\sigma^{-n}=\mu_n\Gamma(2a)^{\lfloor n/2\rfloor}
-(y\Gamma(2a))^{(n\bmod2)/2}/\Gamma(1+an)$. The formula for $g_a''(0)$ follows
-from the substitution $t=u/\sigma$ in Lemma~\ref{lem:thr-fpp}.
-\end{proof}
-
-The fixed-point equation is linear, so $X$ satisfies it too, and
-\eqref{eq:thr-fixed} and Lemmas~\ref{lem:thr-cells} to~\ref{lem:thr-fpp} hold
-for $X$. The proof of Lemma~\ref{lem:thr-moments}(b) carries over to $\mu_n$
-for $n\ge3$ and $\alpha>\frac14$, with two changes. The constant $A$ becomes
-$((N+1)\alpha-1)/(N\kappa)$, where $\kappa$ is the largest value of
-$\max(1,\lvert z\rvert)\max(1,\lvert2z-1\rvert)$ on $S$. And $\tilde B$ gains
-the factor $\max(1,\sup_S\lvert\Gamma(2z)\rvert)^{1/2}$. For real $a$ the odd
-part carries the factor $\sqrt{y\Gamma(2a)}$. In the cell bounds we treat the
-even and odd parts as separate analytic functions. We multiply the odd part
-by $f=\sup_I\sqrt{y\Gamma(2a)}$ only for real $a$, and the remainders by
-$\max(1,f)$. The real part of $\E e^{iuX}$ involves only the even part. So
-the disc may cross $a=\frac12$, and the cover reaches $a=\frac12$. The sign
-of $g_a''(0)$ is the opposite of the sign of the integral, since
-$\sigma^3>0$ and the Fourier formula has a minus sign.
-
-\subsection{Checking the parameter cover}\label{or:thr-runs}
-
-The script accepts an interval of $a$ only when $G\pm\eta$ has one sign on
-each piece of a subdivision of it. In the seven scaled runs every piece is negative, giving
-$g_a''(0)<0$ on $(\frac12,0.668]$. The zero run has eight intervals
-covering $[0.668,0.6712]$. Every piece is negative in the two
-covering $[0.668,0.6688]$ and positive in the five covering
-$[0.6692,0.6712]$. On $[0.6688,0.6692]$ the pieces
-up to $z_-$ are negative, the pieces from $z_+$ on are positive, and only
-$(z_-,z_+)$ is undecided. Proposition~\ref{prop:thr-interval}(b) turns these
-signs into $g_a''(0)<0$ on $(\frac12,z_-]$ and $g_a''(0)>0$ on
-$[z_+,0.6712]$. To check the sign classification in Theorem~\ref{thm:threshold}, the script records each accepted interval with its sign and exact endpoints. Its mode \texttt{zero} fails unless the signs are $-$ before the
-undecided piece and $+$ after it. Its mode \texttt{check} requires the same of
-the stored records, together with the sign $-$ on every interval of the scaled
-runs.
 
 \input{or_transition_proofs.tex}

@@ -1,7 +1,7 @@
 # Paper D EJP submission files
 
 Fixed-memory revision of November 6, 2026. Both entry points build the same
-complete 33-page paper. The combined 70-page manuscript, including the
+complete 35-page paper. The combined 70-page manuscript, including the
 rare-reversal material, is preserved in archive/combined-2026-11-06.
 
 | File | Purpose |
@@ -15,8 +15,7 @@ rare-reversal material, is preserved in archive/combined-2026-11-06.
 
 The [EJP submission instructions](https://imstat.org/journals-and-publications/electronic-journal-of-probability/electronic-journal-of-probability-manuscript-submission/)
 require the EJP template and PDF submission through EJMS. This manuscript uses
-the official ejpecp class. The abstract is under 200 words. The 33-page length
-is an editorial target, not a published EJP page limit.
+the official ejpecp class. The abstract is under 200 words. EJP has no published page limit.
 
 ## Building
 
@@ -28,8 +27,9 @@ to build both packages in isolation, verify their text and write hashes.
 The completed Lean audit is in paperD/verification/.
 Run Lean only in the separate workspace C:/Users/arjun/lean-work/paperD,
 never inside OneDrive. The shared library includes archived results as
-specified in its MAP.md. The structural split does not change Lean sources
-or certificate inputs.
+specified in its MAP.md. The analytic uniqueness proof adds three Lean modules. Their checked steps
+and remaining analytic inputs are listed in the map. The numerical certificate
+inputs are unchanged.
 
 ## Scope
 
