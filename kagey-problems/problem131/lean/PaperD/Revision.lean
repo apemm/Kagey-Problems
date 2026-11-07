@@ -34,6 +34,8 @@ import PaperD.EJPAnalyticThresholdParamModel
 import PaperD.EJPAnalyticThresholdComparison
 import PaperD.EJPAnalyticThresholdFinal
 import PaperD.EJPAnalyticThresholdFinalRegularity
+import PaperD.EJPModelThreshold
+import PaperD.EJPModelFiniteMomentsRRT
 
 /-!
 # Formalization of the November 2026 manuscript strengthenings
@@ -43,6 +45,15 @@ import PaperD.EJPAnalyticThresholdFinalRegularity
   exponentially randomized characteristic function. The inverse chart, Mellin
   continuation and final substitution give the central-curvature integral.
   Rational bounds and strict covariance control its parameter dependence.
+
+* The model modules start from the actual finite count laws and ordinary weak
+  convergence. Finite even-moment bounds justify passage of all moments to the
+  limit. The exact splitting formula gives the distributional fixed point;
+  Beta integrals and exponential randomization give the normalized moment
+  recurrence and analytic transform equation. The fixed point and nonzero
+  mean give full support, initial Fourier decay and stretched-exponential bounds.
+  Gaussian approximation and Fourier inversion identify the canonical inverse
+  as the density of the actual fair symmetrization.
 
 * The exact first-flip weights give the Jensen center bound.
 * A direct characteristic-function proof gives the weak Landau limit under
@@ -73,9 +84,10 @@ import PaperD.EJPAnalyticThresholdFinalRegularity
 * Portmanteau, the exact atomic-window identity and lattice normalization give
   the centred-interval theorem from ordinary probability-measure convergence.
 
-The cited probabilistic limit-law, fixed-point/Fourier, and moment inputs are
-explicit hypotheses. They are not new axioms and are not counted as proved
-literature results. See the statement-by-statement coverage report.
+Existence and ordinary weak convergence of the classical limit law remain
+explicit hypotheses. The model-specific threshold assembly derives the moment
+and Fourier inputs. Conditional unimodality in the separate bias-interval
+theorem remains a cited input. See the statement-by-statement coverage report.
 The Arb enclosures, the characteristic-function instantiation of the smoothing
 derivatives and the assembly of their uniform tail estimates remain written
 and numerical proofs; they are not silently converted into kernel claims.

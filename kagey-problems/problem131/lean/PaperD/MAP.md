@@ -1,6 +1,6 @@
 # Paper D: map from the paper and the research notes to the Lean proofs
 
-## EJP fixed-memory revision, November 6, 2026
+## EJP fixed-memory revision, November 7, 2026
 
 The current EJP manuscript contains only the fixed-memory results. The shared library also retains the finite-threshold, rare-reversal and near-one profile results in the archived combined manuscript. The build, imported-source inventory and axiom audit are in
 [`paperD/verification`](../../paperD/verification/README.md). `PaperD.Revision` imports the revision modules.
@@ -9,11 +9,11 @@ this table identify the current statements without depending on renumbering.
 
 | Manuscript result | Formal entry | Explicit inputs and limits |
 | --- | --- | --- |
-| `thm:threshold`, analytic uniqueness and curvature signs | `AnalyticThresholdFinal.actual_transitionCrossing`, `exists_unique_actual_curvature_transition` | The actual H-weighted ratio has exactly one crossing in `(1/2,1)`, located in `(2/3,69/100)`. Continuity, strict comparison, exterior signs, integrability, transform identification and the positive curvature prefactor are derived. The conditional-law inputs are the named classical `MomentEquation` and `ConditionalFourierHyp`; no numerical certificate or uniqueness premise is used. |
-| `thm:threshold`, positive slope at the transition | `AnalyticThresholdFinalRegularity.actual_curvature_derivative_pos_at_transition` | The actual prefactor is differentiable, and the actual ratio derivative is positive. Their product gives the curvature derivative at the crossing. Parameter regularity of the law family is not assumed separately; the proved curvature identity supplies it. |
-| `lem:curvature-weight`, actual central-curvature integral | `AnalyticThresholdAssembly.actual_curvature_identity` | Constructs the H-series and its root, identifies the exponentially randomized conditional transform, and proves the Mellin continuation and final substitution, including absolute integrability. The law-specific inputs are `MomentEquation` and `ConditionalFourierHyp`, described below. Neither the H identification nor the curvature identity is assumed. |
+| `thm:threshold`, analytic uniqueness and curvature signs | `ModelThreshold.exists_unique_actual_curvature_transition`; scalar result `AnalyticThresholdFinal.actual_transitionCrossing` | The actual H-weighted ratio has exactly one crossing in `(1/2,1)`, located in `(2/3,69/100)`. Continuity, strict comparison, exterior signs, integrability, transform identification and the positive curvature prefactor are derived. The moment and Fourier inputs are derived from the actual finite laws and ordinary weak convergence in the `EJPModel` modules. No numerical certificate, moment equation, Fourier bound or uniqueness premise is used in the model-specific assembly. Existence of the classical weak limit remains an input. |
+| `thm:threshold`, positive slope at the transition | `ModelThreshold.exists_unique_actual_curvature_transition_with_derivative` | The actual prefactor is differentiable, and the actual ratio derivative is positive. Their product gives the curvature derivative at the crossing. Parameter regularity of the law family is not assumed separately; the proved curvature identity supplies it. |
+| `lem:curvature-weight`, actual central-curvature integral | `AnalyticThresholdAssembly.actual_curvature_identity` | Constructs the H-series and its root, identifies the exponentially randomized conditional transform, and proves the Mellin continuation and final substitution, including absolute integrability. The generic theorem takes `MomentEquation` and `ConditionalFourierHyp`. The `EJPModel` modules derive both for the actual weak limit, including the density representation. Neither the H identification nor the curvature identity is assumed. |
 | Analytic threshold, series and root | `Modes.AnalyticThreshold.Series.H_ode`, `rootY_mem`, `H_rootY`, `rootY_two_thirds_enclosure`, `rootY_lt_two_thirds_on_band` in `EJPAnalyticThresholdSeries` and `SeriesRoots` | The central-binomial coefficients, convergent series, strict decrease in y, unique root and rational root enclosures are constructed and proved. |
-| Analytic threshold, transform identification | `AnalyticThresholdModel.series_parametric_identification` | The real and imaginary parts are those of the actual product-law exponential randomization. Singular analytic ODE uniqueness and continuation identify them with the H parametrization. `MomentEquation` supplies the normalized generating equation and analyticity derived from GLRS's moment bounds and equation (15). |
+| Analytic threshold, transform identification | `AnalyticThresholdModel.series_parametric_identification` | The real and imaginary parts are those of the actual product-law exponential randomization. Singular analytic ODE uniqueness and continuation identify them with the H parametrization. `ModelMoment.actual_momentEquation` now supplies the normalized generating equation and analyticity from the actual weak limit. The Gamma normalization, all-order moment bounds, recurrence and exponential randomization are proved in Lean. |
 | Analytic threshold, inverse chart and Mellin continuation | `AnalyticThresholdParam.chartOfRoot_twiceAdmissible`, `chartOfRoot_continuedBounds`; `AnalyticThresholdContinuation.curvature_integral_chartOfRoot` | The inverse chart, its two derivatives, endpoint bounds, two improper integrations by parts, gamma normalization and identity-theorem continuation are proved. `Assembly` discharges the chart-weight identity using the actual randomized transform. |
 | Analytic threshold, rational and scalar bounds | `Modes.AnalyticThreshold.hThree_two_thirds_three_fifths`, `hThree_upper_endpoint`, `hThree_sub_tail_lower_endpoint`, `moment_Ku_lt`, `moment_Kau_le`, `deriv_logWeightScore_lower_bound` in `EJPAnalyticThresholdBounds` | Exact arithmetic, geometric-tail summation and scalar derivative inequalities. The series and weight modules connect these inequalities to the actual H coefficients and factorial moments. |
 | Analytic threshold, actual normalized measures | `weightedIntervalProbability_isProbability`, `analyticMean_eq_integral_ratio`, `analyticWeight_integrals_hasDerivAt`, `analyticMean_derivative_pos` in `EJPAnalyticThresholdMeasure` and `MeasureDiff` | Probability measures are defined by `withDensity` and actual Bochner integrals. Positivity, full interval support, endpoint domination, differentiation under the integral, and strict covariance are proved. The generic derivative theorem states its kernel bounds and derivative inputs explicitly. |
@@ -43,15 +43,26 @@ this table identify the current statements without depending on renumbering.
 | `prop:bias-cusp`, three-halves bias width and local monotonicity | Written proof, not a new Lean theorem | Previous row, derivative cutoff, and the certified positive conditional slope. Global monotonicity is not claimed. |
 | Archived `cor:wider-mode-range`, every mode in the enlarged rare-reversal range | Written asymptotic application of the mode bound | Uses `x^3 log^2 N / N -> 0`. It does not reach fixed memory. |
 
-For the actual threshold curvature formula, `MomentEquation` concerns the
-right-first-step conditional law. It packages the normalized moment equation,
-the linear coefficient and analyticity along real frequencies. GLRS's moment
-bounds, equations (3), (12) and (15), exponential randomization and analytic
-continuation justify this classical input. That derivation from the published
-moment sequence is not re-proved in Lean. `ConditionalFourierHyp` links the
-same conditional characteristic function to the fair density and supplies
-the fixed-point inequality and decay to zero. The formal library derives
-the stronger Fourier decay, differentiation and curvature formula from it.
+The model-specific proof starts with `ModelLimit.WeakLimit`, ordinary weak
+convergence of the right-first-step laws of `S_n / n^a`. These finite measures
+are defined from the actual count recurrence. Existence and convergence of
+the classical limit remain cited inputs. No moment, fixed-point, support,
+Fourier-decay or density-representation hypothesis is added at this step.
+
+| Model input now derived | Formal entry | What is checked |
+| --- | --- | --- |
+| Uniform finite moments | `ModelFiniteMoments.scaledMoment_even_uniform` | The actual transition recurrence gives all even-moment bounds for `1/2 < a <= 1`. |
+| Limit moments and normalization | `ModelLimit.weakLimit_all_moments`, `weakLimit_all_moments_converge`, `weakLimit_mean` | Truncation and uniform integrability transfer every moment to the weak limit. The first moment is `1/Gamma(a+1)`, obtained from the finite mean product. |
+| Distributional fixed point | `ModelLimit.fixedPoint_of_weakLimit` | The exact finite split, moving-frequency convergence and bounded Riemann sums give the independent two-copy smoothing law. |
+| Randomized moments and generating equation | `ModelRandomizedMoments.integral_randomized_power`; `ModelMoment.actual_gammaNormalizedMoment_recurrence`, `actual_momentEquation` | Exponential randomization multiplies the nth moment by `Gamma(an+1)`. The fixed point gives the normalized recurrence, coefficient bounds, real analyticity and quadratic transform equation. |
+| Full support and Fourier decay | `ModelFourier.isOpenPosMeasure_of_fixedPoint`, `charFun_norm_tendsto_zero_of_fixedPoint`, `charFun_stretched_decay_of_fixedPoint` | The fixed point and proved nonzero mean give full support. Strict characteristic-function modulus and smoothing give decay, then stretched-exponential bounds and all exponential Fourier weights. |
+| Actual fair-law density | `ModelThreshold.actual_fairLaw_eq_withDensity`; generic inversion `ModelFourier.measure_eq_withDensity_fourierCharDensity` | Gaussian convolution and Fatou prove positivity and integrability of the inverse transform. Fourier inversion and characteristic-function uniqueness identify its measure. Symmetrization gives the fair density with the exact `1/(2*pi)` normalization. No density or Fourier-representation premise is supplied. |
+
+The generic `MomentEquation` and `ConditionalFourierHyp` interfaces remain
+available for reuse. Their use in older intermediate theorems does not make
+them additional inputs to the new model-specific assembly. Conditional
+unimodality, needed for the bias-interval theorem, remains a separate cited
+result. The new moment and Fourier proofs do not claim to formalize that result.
 
 The new numerical endpoint check uses an independent real-parameter evaluation
 path, but shares Arb and the analytic smoothing bounds. It is outside the Lean

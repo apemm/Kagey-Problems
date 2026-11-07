@@ -5,7 +5,7 @@ Work on problems from Peter Kagey's Open Problem Collection (peterkagey.com/prob
 The code in this repository is under the MIT license (see `LICENSE`). The text of the papers is copyright the author.
 
 - `problem001/` — grid blackouts preserving rectangle identifiability: two-, three-, and four-row values and the 5 x 5 value proved; general row bound; higher-dimensional case open
-- `problem131/` — Galton board with persistence p. Papers A (*Uniform Bessel bounds for endpoint crossings in the persistent random walk*) and B (*Vertex crossings in a symmetric Markov multinomial model*), with further papers in `paperC/` and `paperD/`. Lean proofs are in `problem131/lean`. Paper D targets EJP with a 33-page fixed-memory classification and a proved unique memory transition. Its rare-reversal material is archived separately.
+- `problem131/` — Galton board with persistence p. Papers A (*Uniform Bessel bounds for endpoint crossings in the persistent random walk*) and B (*Vertex crossings in a symmetric Markov multinomial model*), with further papers in `paperC/` and `paperD/`. Lean proofs are in `problem131/lean`. Paper D targets EJP with a 35-page fixed-memory classification and a proved unique memory transition. Its rare-reversal material is archived separately.
 - `problem137/` — the rational tree of x+1 and -1/x (complete solution of the three questions)
 - `lean/` — Lean 4 / Mathlib formalizations of the proved results (Problem 137 in full; Problem 001: the reduction lemma and the Strip Theorem)
 
