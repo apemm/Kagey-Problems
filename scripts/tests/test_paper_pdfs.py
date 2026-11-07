@@ -224,6 +224,17 @@ class BibliographyTests(unittest.TestCase):
         self.assertEqual(self.bibtex_commands(), [['bibtex', 'draft.v2'], ['bibtex', 'journal']])
         self.assertEqual(self.passes, {'draft.v2.tex': 3, 'journal.tex': 3})
 
+    def test_cross_document_labels_stabilize_and_are_published(self):
+        self.group['reference_exports'] = [
+            {'source': 'draft.v2.aux', 'output': 'main_refs.tex', 'url': 'draft.v2.pdf'}]
+        self.aux = lambda root, turn: (
+            r'\newlabel{x}{{' + ('1.1' if turn < 3 else '1.2') + r'}{2}{}{theorem.1}{}}' + '\n')
+        outputs = self.compile()
+        self.assertEqual(self.passes['draft.v2.tex'], 4)
+        self.assertIn((self.directory / 'main_refs.tex').as_posix(), outputs)
+        self.assertIn(r'{{1.2}{2}{}{theorem.1}{draft.v2.pdf}}',
+                      (self.directory / 'main_refs.tex').read_text())
+
     def test_bibtex_failure_reports_transcript_and_stops(self):
         self.bibtex_error = 2
         with self.assertRaisesRegex(RuntimeError, 'BibTeX failed on pass 1; see .*bibtex-pass1'):

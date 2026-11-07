@@ -13,6 +13,10 @@ import re
 import shutil
 import subprocess
 import sys
+try:
+    from latex_references import export_references
+except ModuleNotFoundError:
+    from scripts.latex_references import export_references
 
 CONFIG = Path('.github/papers.json')
 STATE = Path('.github/latex-build-state.json')
@@ -80,6 +84,8 @@ def dependency_order(config, selected):
 def fingerprints(config, tracked, read_bytes):
     outputs = {str(Path(g['directory'], root).with_suffix('.pdf')).replace('\\', '/')
                for g in config.values() for root in g['roots']}
+    outputs.update((Path(g['directory']) / item['output']).as_posix()
+                   for g in config.values() for item in g.get('reference_exports', []))
     result, inputs = {}, {}
     for name in dependency_order(config, config):
         group = config[name]
@@ -190,8 +196,9 @@ def compile_group(name, group, epoch):
                     raise RuntimeError(f'{name}/{root}: BibTeX produced no bibliography; see {transcript}')
                 bibliographies[root] = signature
                 last_bibtex_turn = turn
+        references_changed = export_references(directory, group.get('reference_exports', []))
         current = auxiliary_signature(directory, roots)
-        if turn >= max(3, last_bibtex_turn + 2) and current == previous:
+        if turn >= max(3, last_bibtex_turn + 2) and current == previous and not references_changed:
             break
         previous = current
     else:
@@ -208,6 +215,8 @@ def compile_group(name, group, epoch):
             raise RuntimeError('Missing or invalid PDF: ' + str(pdf))
         pdfs.append(pdf.as_posix())
         summary(f'Built {pdf.as_posix()} ({turn} passes).')
+    pdfs.extend((directory / item['output']).as_posix()
+                for item in group.get('reference_exports', []))
     return pdfs
 
 

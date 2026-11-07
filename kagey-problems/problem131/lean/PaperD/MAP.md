@@ -1,8 +1,8 @@
 # Paper D: map from the paper and the research notes to the Lean proofs
 
-## EJP fixed-memory revision, November 7, 2026
+## EJP focused revision, November 7, 2026
 
-The current EJP manuscript contains only the fixed-memory results. The shared library also retains the finite-threshold, rare-reversal and near-one profile results in the archived combined manuscript. The build, imported-source inventory and axiom audit are in
+The current EJP manuscript contains only the fixed-memory results. Its numerical error analysis is in the accompanying supplement. The analytic classification, threshold uniqueness, boundary continuity and local decrease, quartic top, and critical exponents do not use numerical certificates. Certificates locate the threshold and enclose the constants. The shared library also retains the finite-threshold, rare-reversal and near-one profile results in the archived combined manuscript. The build, imported-source inventory and axiom audit are in
 [`paperD/verification`](../../paperD/verification/README.md). `PaperD.Revision` imports the revision modules.
 Older theorem numbers below refer to their dated manuscripts; the labels in
 this table identify the current statements without depending on renumbering.
@@ -21,11 +21,11 @@ this table identify the current statements without depending on renumbering.
 | Analytic threshold, exterior signs and rescaling | `AnalyticThresholdExteriorActual.integrable_rootWeight`, `ratio_lt_one`, `ratio_gt_one`; `AnalyticThresholdFinal.actual_curvature_ratio` | The H-density is integrable for every `1/2 < a < 1`. Actual weighted-mean comparisons with the Beta(3/2,1) law give both exterior signs. The linear substitution identifies the curvature integral with the normalized mean, with a strictly positive prefactor. |
 | Analytic threshold, unique-crossing deductions | `Modes.AnalyticThreshold.exists_transitionCrossing_of_deriv_pos`, `TransitionCrossing.curvature_signs`, `curvature_derivative_at_root` in `EJPAnalyticThresholdOrder` | Continuity, derivative positivity on the short band, and signs on the two exterior ranges imply exactly one crossing throughout `(1/2,1)`. These are general implications, not substitutes for checking those inputs for H. |
 | Strict finite reflection dominance and negative-half first differences | `BiasedModes.mass_one_upper_dominates_strict`, `BiasedModes.mass_one_negative_half_diff_pos` in `EJPStrictNegativeHalf` | Actual conditional count law with first step positive and `0 < ε < 1/2`. Both strict inequalities are proved by induction. The backward-martingale argument transferring strict positivity to the limiting derivative is separate written analysis, not a theorem in this module. |
-| `thm:bias-continuity`, continuous differentiability and unique minimizer | Written proof | The fair curvature partition, two-mode theorem, strict conditional slopes, analytic density and locally uniform differentiated Fourier bounds. The localization and maximum-stability steps alone are formalized below. The sign of the boundary derivative remains open globally. |
+| `thm:bias-continuity`, continuity, continuous differentiability, unique minimizer and local decrease | Written analytic proof | The fair curvature partition makes the positive mode shrink to zero at the threshold. The positive conditional slope controls the ratio denominator. Analytic parameter regularity and the envelope formula prove continuity and local strict decrease without certificates. Only localization and maximum-stability steps are formalized below. The derivative sign remains open globally. |
 | `prop:bias-boundary`, derivative characterization of the bias interval | `Modes.reflectedMixture_valley_interval_derivative` and `Modes.reflectedMixture_modes_interval_derivative` in `Modes/EJPBiasDerivativeCutoff` | Differentiability, conditional unimodality, reflection dominance and the preceding half-line/mode-count properties. The cutoff is derived, not assumed. The infimum notation in the paper abbreviates this union of strict derivative inequalities. |
 | `prop:bias-boundary`, stationary equations at an attained interior cutoff | `Modes.reflectedMixture_stationary_of_attained_cutoff` | Differentiability of the derivatives, positivity of the denominator and attainment of the cutoff. Attainment and uniqueness are not claimed. |
 | Bias boundary, compact localization and stability of maximum values | `Modes.ejp_bias_ratio_tail_bounds`, `Modes.ejp_bias_ratio_isMaxOn`, `Modes.ejp_bias_ratio_max_stability` in `EJPBiasBoundary` | Quasiconcavity and strict endpoint comparisons localize each ratio. Continuity and a uniform error bound on the shared interval give attainment and stability. The actual density's quasiconcavity, parameter regularity and global boundary continuity require separate arguments. |
-| Uniform three-point test and boundary enclosures | `Modes.ejp_bias_ratio_uniform_max`, `Modes.ejp_bias_boundary_uniform_bounds` in `EJPBiasUniform` | Shared compact interval, quasiconcavity, strict comparisons and continuous ratios are hypotheses. No actual parameter cover is certified by these abstract theorems. |
+| Archived uniform three-point test and boundary enclosures | `Modes.ejp_bias_ratio_uniform_max`, `Modes.ejp_bias_boundary_uniform_bounds` in `EJPBiasUniform` | Shared compact interval, quasiconcavity, strict comparisons and continuous ratios are hypotheses. No actual parameter cover is certified by these abstract theorems. |
 | Strict boundary monotonicity from a parameter derivative | `Modes.ejp_bias_boundary_uniform_of_deriv_lower_bound` in `EJPRefinementAlgebra` | A positive uniform derivative bound and attained maxima are explicit inputs. The mean value theorem and transfer to maxima are checked. The required ERW derivative sign remains unproved globally. |
 | Archived quadratic boundary estimate; current moment bound | `Modes.ejp_bias_cutoff_le_mixture_threshold`, `Modes.ejp_bias_cutoff_le_of_reflected_drop` in `EJPBiasValueBound`, plus written analysis | Lean checks the two-point mixture comparison and its scalar upper bound. Exact moments, the negative-tail estimate and the Landau profile give the written result `limsup b_a/(1-a)^2 <= 2/f_L(lambda_L)`. The present corollary retains the explicit finite-parameter moment bound with its written proof. The quadratic profile bound is in the archive. No matching lower bound or asymptotic equivalent is claimed. |
 | Archived `thm:near-one-profile`, quantitative rates | Written proof in `app:fixed-refinements`; scalar split `Modes.ejp_smoothing_l1_split` | The Poisson coupling, martingale comparison, uniform rescaled Fourier bound, spatial derivative rates and tail integration are not fully formalized. Earlier qualitative density deductions remain available. |
@@ -39,8 +39,9 @@ this table identify the current statements without depending on renumbering.
 | Archived `cor:mode-location`, underlying eventual bound | `ejp_cor_mode_location_400`, `ejp_uniform_mode_rate_400` in `EJPModeStability` | The existing named Fourier inversion, compound-Poisson characteristic function, Efron–Stein and Landau-unimodality inputs. These prove the weaker eventual constant `400`. The manuscript's constant `50` and threshold `ceil(exp(30000))` have a written proof using the sharper numerical constants below. |
 | Archived `lem:landau-mode`(c), global gap and `cor:mode-location`(a), mode stability | `ejp_global_mode_gap`, `ejp_global_mode_stability`, `ejp_global_mode_stability_one_div_fifty` in `EJPGlobalModeGap` | The local quadratic gap, annular and endpoint gaps, and monotonicity enter as explicit hypotheses. The specialization gives displacement at most `sqrt(100 E)` when `2E < 1/50`. The Arb cover establishing the gap `1/50` is not kernel-checked. Parts (a) and (b) of the mode lemma retain their kernel-checked integration proof. |
 | Archived `thm:landau`, constants `47`, `10.4`, `2.7` | Written Fourier proof and `certify_landau_gap.py` | The stronger Fourier decay `2 abs(theta)/5` is checked by an Arb cover, then integrated analytically. Lean retains the valid weaker constants `889`, `165`, `6.6`; it does not certify the sharper constants. |
-| `prop:critical-shape`, quartic top, square-root locations and quadratic peak excess | Written proof, not a new Lean theorem | Existing uniform Fourier envelopes and Arb curvature/fourth-derivative certificates. |
-| `prop:bias-cusp`, three-halves bias width and local monotonicity | Written proof, not a new Lean theorem | Previous row, derivative cutoff, and the certified positive conditional slope. Global monotonicity is not claimed. |
+| `lem:analytic-quartic`, negative fourth derivative on `[2/3,69/100]` | Written analytic proof, not a new Lean theorem | A third Mellin integration by parts gives a polynomial integral. A rational quadratic majorant and increasing-weight comparison make it strictly negative. No interval certificate is used. |
+| `prop:critical-shape`, quartic top, square-root locations and quadratic peak excess | Written analytic proof, not a new Lean theorem | The analytic fourth-derivative sign, positive transition slope and locally uniform density derivatives. Arb supplies numerical constants only. |
+| `prop:bias-cusp`, three-halves bias width | Written analytic proof, not a new Lean theorem | Previous row, derivative cutoff and the proved positive conditional slope. Local strict decrease is proved earlier in `thm:bias-continuity`; global monotonicity is not claimed. |
 | Archived `cor:wider-mode-range`, every mode in the enlarged rare-reversal range | Written asymptotic application of the mode bound | Uses `x^3 log^2 N / N -> 0`. It does not reach fixed memory. |
 
 The model-specific proof starts with `ModelLimit.WeakLimit`, ordinary weak
@@ -72,11 +73,10 @@ The current table takes precedence over the historical constant and theorem-numb
 descriptions below. In particular, the sharper Landau constants are numerical
 proof inputs, not new kernel-checked integration results.
 
-## Headline proof audit and weak transfer
+## Alternative formal transfer and historical interfaces
 
 The current audit is in [`paperD/verification`](../../paperD/verification/README.md).
-The weak-transfer interface supersedes the local-limit requirement for Theorem 4.6 in the older
-interfaces below. Those interfaces remain available as alternative proofs.
+The formal weak-transfer interface proves the bias-interval conclusion from ordinary weak convergence. The current written paper instead transfers signs through `lem:derivative-limits`, whose all-order compactness argument is not newly formalized. These are alternative proof routes. Theorem numbers in the historical tables refer to the dated combined manuscripts, not the current numbering.
 
 | Result | Formal entry | Inputs and boundary |
 | --- | --- | --- |
@@ -106,7 +106,7 @@ Earlier counts below describe their respective frozen revisions.
 | Theorem 4.4, unique modal transition with a unimodal critical density | `Modes.shape_transition_of_conditional_fourier` | Existing outside-bracket shape certificates, local central-curvature derivative bounds and a negative fourth derivative. Shape and analytic regularity inside the bracket are derived from the prior Fourier theorem |
 | Parameter-derivative certificate's analytic consequences | `Modes.inhomogeneous_bootstrap`, `Modes.hasDerivAt_centralCurvatureFourier`, `Modes.centralCurvature_deriv_pos_of_certificate` | The derivative integral inequalities, an integrable envelope and finite-frequency numerical enclosures are explicit inputs |
 
-The finite, mixture and limit-transfer arguments are kernel-checked. The Arb
+The finite, mixture and alternative weak-transfer arguments are kernel-checked. The Arb
 gamma/power-series enclosures and the full differentiated-smoothing reduction
 in `or_transition_proofs.tex` are not replayed in Lean. The formal transition
 interface does not assume uniqueness, but it does take the substantive analytic
