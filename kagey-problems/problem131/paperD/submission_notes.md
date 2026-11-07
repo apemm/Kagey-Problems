@@ -1,28 +1,34 @@
 # Paper D EJP submission files
 
-Fixed-memory revision of November 6, 2026. Both entry points build the same
-complete 35-page paper. The combined 70-page manuscript, including the
+Focused revision of November 7, 2026. Both entry points build the same
+27-page paper, with a seven-page numerical supplement. The combined 70-page manuscript, including the
 rare-reversal material, is preserved in archive/combined-2026-11-06.
 
 | File | Purpose |
 | --- | --- |
-| problem131_memory.pdf | EJP manuscript with all proofs |
+| problem131_memory.pdf | Main EJP manuscript with analytic proofs |
+| paperD_supplement.pdf | Complete certificate error analysis and independent moment check |
 | problem131_arxiv.pdf | Same paper through the arXiv entry point |
-| paperD_ejp_submission.zip | Source, figures, manuscript, cover letter and verification archive |
-| paperD_arxiv_source.zip | Source-only upload with one declared entry point |
+| paperD_ejp_submission.zip | Main paper, supplement, source, figures, cover letter and verification archive |
+| paperD_arxiv_source.zip | One declared main entry point and ancillary supplement PDF |
 | paperD_verification_archive.zip | Certificate code/data and shared Lean library |
 | arxiv_metadata.json | Current title, abstract and page count |
 
-The [EJP submission instructions](https://imstat.org/journals-and-publications/electronic-journal-of-probability/electronic-journal-of-probability-manuscript-submission/)
-require the EJP template and PDF submission through EJMS. This manuscript uses
-the official ejpecp class. The abstract is under 200 words. EJP has no published page limit.
+The paper uses the official ejpecp class and includes affiliations, MSC codes,
+keywords, and an abstract under 200 words. The accessible
+[journal submission-page mirror](https://www.maths.tcd.ie/EMIS/journals/EJP-ECP/about/submissions.html)
+allows supplementary files and encourages the class. The current IMS page
+could not be retrieved during this check, so this is not a claim about a
+newly verified submission policy. Upload the supplement with the main PDF
+and ask that its complete numerical proofs be refereed.
 
 ## Building
 
-Run pdflatex three times on problem131_memory.tex and problem131_arxiv.tex.
 From the repository root, run
 python kagey-problems/problem131/paperD/build_submission.py
-to build both packages in isolation, verify their text and write hashes.
+to build both main entry points and the supplement in isolation, stabilize
+the cross-document labels, compare their text and write hashes. The automatic
+GitHub build also updates the supplement and generated reference inputs.
 
 The completed Lean audit is in paperD/verification/.
 Run Lean only in the separate workspace C:/Users/arjun/lean-work/paperD,

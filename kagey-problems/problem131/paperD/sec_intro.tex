@@ -1,108 +1,97 @@
 \section{Introduction}\label{sec:intro}
 
-\noindent\begin{minipage}{\linewidth}
-\begin{quote}\small\itshape
-An elephant and an ant are playing hide and seek. The elephant counts while
-the ant hides among many identical anthills, then opens its eyes and knows
-at once which one the ant is in. The ant's shoes are outside the door.
-\end{quote}
-\hfill\textup{(Anonymous)}
-\medskip
-\end{minipage}
-
 Fix the first step of a superdiffusive elephant random walk.
 Gu\'erin, Laulin, Raschel and Simon prove that its limit density is
-unimodal~\cite[Theorem~1.1]{glrs2025}. Randomizing the first step mixes
-this density with its reflection. The mixture can have two peaks,
-even though each component has one. They conjecture that the biases
-giving two peaks form an open interval centered at one
-half~\cite[Remark~2.1(b)]{glrs2025}.
-We prove their conjecture and locate the unique memory threshold
-where two peaks first appear under a fair start. A related conjecture,
-eventual log-concavity, is disproved by Trinas and Valle in a recent
-preprint~\cite{tv2026}.
+unimodal~\cite[Theorem~1.1]{glrs2025}. Randomizing the first step
+mixes this density with its reflection. They conjecture that the
+initial biases giving two peaks form an open interval centered at
+one half~\cite[Remark~2.1(b)]{glrs2025}. We prove this and show
+that the interval is nonempty exactly above a unique memory threshold.
 
-Their conditional unimodality proof uses induction in the finite
-walk, followed by passage to the limit. For an arbitrary start,
-we must allow two peaks and control new signs at the ends.
-We include the endpoint values needed at later lengths in each
-row. This boundary-history construction extends the induction
-to the whole row and rules out a valley on the half favored by
-the first step. Averaging over short lattice intervals transfers
-both bounds under weak convergence
-(Lemma~\ref{lem:weak-shape-transfer}). Gaussian smoothing then
-lets us apply Descartes' rule for exponential sums to curvature.
+Their finite-walk induction proves conditional unimodality. For an
+arbitrary start, new signs can enter at the ends, so we retain the
+boundary values needed at later lengths in each row. This gives
+at most two peaks and no valley on the half favored by the first
+step. An affine comparison in the initial bias then gives the
+interval. We also prove that the conditional density has positive
+slope at zero for every superdiffusive memory, which makes the
+bimodal interval a proper subinterval of $(0,1)$. To determine when
+it opens, we use the transform parametrization of
+\cite[Proposition~3.2]{glrs2025}. A Mellin calculation converts it
+to a positive-weight formula for the central curvature, whose
+single crossing gives the unique threshold.
 
 \subsection{The walk and its parameters}\label{sec:notation}
 
-The elephant walk~\cite{schutz2004} takes steps
-$X_1,\dots,X_N\in\{+1,-1\}$, with $+1$ meaning right.
-To take the next step, it chooses uniformly from its earlier steps.
-It repeats the chosen direction, except with probability $\varepsilon$,
-when it goes the other way. Write $U_t$ for the step chosen at time $t+1$,
-and call it the parent of that step. We choose all parents and all
-reversal coins independently, also independently of $X_1$.
-
-Put $A_N=\#\{i\le N:X_i=+1\}$ and $P_N(k)=\Prob(A_N=k)$.
-The position is $S_N=2A_N-N$. We take a fair first step unless
-another bias is specified, so $P_N(k)=P_N(N-k)$.
+The elephant walk~\cite{schutz2004} takes steps $X_i\in\{+1,-1\}$.
+At each new step it chooses an earlier step uniformly and copies
+its direction, except with probability $\varepsilon$, when it
+reverses it. The choices and reversal coins are independent, also
+of the first step. Put
+\[
+ A_N=\#\{i\le N:X_i=+1\},\qquad S_N=2A_N-N,\qquad
+ P_N(k)=\Prob(A_N=k).
+\]
+We use $a=1-2\varepsilon$ for memory and $q=\Prob(X_1=1)$ for the
+initial bias. The original copying probability is $p=(1+a)/2$.
+The next-step probability at count $k$ is
+$r_t(k)=\varepsilon+ak/t$. A fair start means $q=1/2$.
 The notation $\Prob_+$ and $\E_+$ conditions on $X_1=1$.
-For even $N$, write $k_{\mathrm c}=N/2$. All logarithms are natural.
 
-For fixed memory put $a=1-2\varepsilon\in(1/2,1)$ and
-condition on $X_1=1$. The almost-sure limit of
-$S_N/N^a$ has density $h_a$. With $\Prob(X_1=1)=q$, its density is
+For $a\in(1/2,1)$, $S_N/N^a$ has an almost-sure limit
+\cite{baurbert2016,bercu2018}. Denote its conditional density by
+$h_a$. For initial bias $q$, write
 \[
  g_{a,q}(u)=q h_a(u)+(1-q)h_a(-u),\qquad g_a=g_{a,1/2}.
 \]
-The copying probability in the original notation is $p=(1+a)/2$.
-In the finite recurrences we use $r_t(k)=\varepsilon+(1-2\varepsilon)k/t$.
 
-\subsection{The bias interval and its threshold}
-\label{sec:results}
+\subsection{The bias interval and its threshold}\label{sec:results}
 
-\begin{theorem}[the bias interval, analytic]\label{thm:main-limit}
-For every $a\in(1/2,1)$ there is $b_a\in(0,1/2]$ such that $g_{a,q}$
-has exactly two local maxima if and only if $b_a<q<1-b_a$.
-Outside this interval, including its endpoints, it is unimodal with
-a unique local maximum. For a fair start the density has exactly
-two inflection points when unimodal and four when bimodal.
-There is exactly one $a_*\in(2/3,69/100)$ with $g_{a_*}''(0)=0$,
-and the bias interval is empty exactly when $a\le a_*$.
-The central curvature is strictly negative below $a_*$ and strictly
-positive above it, with $\partial_a g_a''(0)|_{a=a_*}>0$.
-On $(a_*,1)$,
-the boundary is continuously differentiable, and $b_a\to0$ as $a\uparrow1$.
+\begin{theorem}[the bias interval]\label{thm:main-limit}
+For every $a\in(1/2,1)$ there is $b_a\in(0,1/2]$ such that
+$g_{a,q}$ has exactly two local maxima if and only if
+$b_a<q<1-b_a$. Outside this open interval, including its endpoints,
+the density is unimodal with a unique local maximum.
 \end{theorem}
 
-The shape assertions follow from Theorems~\ref{thm:two-modes}
-and~\ref{thm:biased-limit-modes}. A positive-weight curvature integral
-gives the unique transition in Theorem~\ref{thm:threshold}.
-Theorem~\ref{thm:bias-continuity} gives positivity and regularity
-where the interval is nonempty, and
-Corollary~\ref{cor:bias-boundary-rate} gives the limit at one.
-These arguments need no numerical certificate.
+Thus strongly biased starts are always unimodal. The next theorem
+determines which memories admit two peaks.
 
-\begin{theorem}[the critical shape, computer-assisted]\label{thm:main-threshold}
-The threshold satisfies $a_*\approx0.6688$.
-At $a_*$ the fair density has a quartic top. Its two modes emerge
-at distance proportional to $\sqrt{a-a_*}$, and
+\begin{theorem}[the analytic threshold]\label{thm:main-analytic}
+There is exactly one $a_*\in(2/3,69/100)$ with $g_{a_*}''(0)=0$.
+The central curvature is negative below $a_*$ and positive above
+it, and $\partial_a g_a''(0)|_{a=a_*}>0$.
+The bias interval is empty exactly when $a\le a_*$.
+The function $a\mapsto b_a$ is continuous on $(1/2,1)$,
+continuously differentiable on $(a_*,1)$, strictly decreasing
+immediately above $a_*$, and tends to zero as $a\uparrow1$.
+The fair density has exactly two inflection points when unimodal
+and four when bimodal. At $a_*$ it has a quartic top. For positive
+constants $K_*,Q_*$, its positive mode and bias boundary satisfy
 \[
- \tfrac12-b_a\sim Q_*(a-a_*)^{3/2},
- \qquad Q_*\approx9.86698769.
+ \kappa_a\sim K_*\sqrt{a-a_*},\qquad
+ \tfrac12-b_a\sim Q_*(a-a_*)^{3/2}\quad(a\downarrow a_*).
 \]
-The interval strictly widens immediately above $a_*$.
 \end{theorem}
 
-The certificates in Appendix~\ref{app:threshold} locate the zero
-and establish the derivative bounds in Table~\ref{tab:critical-constants}.
-Taylor expansion then gives the quartic and three-halves laws
-(Propositions~\ref{prop:critical-shape} and~\ref{prop:bias-cusp}).
-Theorem~\ref{thm:bias-continuity} gives a continuous boundary,
-continuously differentiable and positive on $(a_*,1)$, and a unique
-optimizer in its variational formula. Continuity at $a_*$ uses the
-certified critical expansion. We do not prove that the boundary
-decreases throughout $(a_*,1)$.
+Theorems~\ref{thm:two-modes} and~\ref{thm:biased-limit-modes}
+give the shape classification. Theorem~\ref{thm:threshold} proves
+the unique transition, Theorem~\ref{thm:bias-continuity} gives the
+boundary regularity, and Corollary~\ref{cor:bias-boundary-rate}
+gives the limit at one. None of these arguments uses a numerical
+certificate. Lemma~\ref{lem:analytic-quartic} and
+Propositions~\ref{prop:critical-shape} and~\ref{prop:bias-cusp}
+give the critical shape and opening laws. Global decrease of $b_a$ remains open.
+
+\begin{proposition}[numerical constants, computer-assisted]\label{thm:main-threshold}
+The threshold is $a_*\approx0.6688$. The positive constants in
+Theorem~\ref{thm:main-analytic} satisfy
+$K_*\approx7.224$ and $Q_*\approx9.867$.
+\end{proposition}
+
+Propositions~\ref{prop:critical-shape} and~\ref{prop:bias-cusp}
+give the expansions. Appendix~\ref{app:threshold} records the
+certified enclosures, with their error analysis in the supplement.
 
 \begin{figure}[t]
 \centering
@@ -118,133 +107,68 @@ enclosure is given in Appendix~\ref{app:threshold}.}
 \label{fig:phase}
 \end{figure}
 
-\begin{theorem}[the finite shape bounds]\label{thm:shape-engine}
-For every $N\ge1$, every $0<\varepsilon<1$ and every initial bias,
-the count law has at most two modal plateaus, including its endpoints.
-If $q\ge1/2$, it dominates its reflection on the right half and has
-no strict valley there. For a fair start, $N\ge3$ and
-$0<\varepsilon<1/2$, the nonzero signs of
-\[
- D_N(k)=P_N(k+1)-2P_N(k)+P_N(k-1),\qquad 1\le k<N,
-\]
-after equal neighbors are merged, form a subsequence of $(+,-,+,-,+)$.
-\end{theorem}
-
-Proposition~\ref{prop:all-bias-modes},
-Proposition~\ref{prop:dominant-half} and Theorem~\ref{thm:five-blocks}
-prove the finite bounds. Their valley exclusions pass to continuous
-limits under weak convergence (Lemma~\ref{lem:weak-shape-transfer}).
-Gaussian smoothing carries the sign bound to curvature.
-
 \subsection{From finite signs to the limiting shape}\label{sec:architecture}
 
-\paragraph{Boundary histories.}
-A new sign can enter at an end, where the interior recurrence
-does not apply. We keep the endpoint values in the enlarged row
-before they are needed. Each update either copies an entry or
-takes a positive sum of neighbors, so the sign bound holds for
-the whole row. First differences give at most two modal plateaus,
-and second differences under a fair start give at most five sign blocks.
+The interior recurrence takes positive sums of neighbors, so it
+cannot create a sign change. The ends need separate treatment.
+We enlarge each row by the boundary values that will enter later
+(Figure~\ref{fig:augmented-rows}). Bounding their signs first
+closes the induction for the whole row and for the half favored
+by the initial bias. Lemma~\ref{lem:derivative-limits} passes the
+resulting bounds directly to the density and its derivatives.
 
-\paragraph{The half favored by the first step.}
-Take $q\ge1/2$. The right half has no valley and dominates its
-reflection, so a second peak occurs exactly when the density
-decreases somewhere on the left. For two fixed points there, the
-later value minus the earlier one is affine in the bias and
-nonnegative at $q=1$, by conditional unimodality. Once negative,
-it stays negative as the bias moves toward one half. Taking all
-such pairs gives an interval, and reflection gives its other half.
-Analyticity excludes flat pieces. The two-mode bound later controls
-the boundary ratio and gives continuity.
+For $q\ge1/2$, the right half has no valley and dominates its
+reflection. A second peak therefore occurs exactly when the
+density decreases somewhere on the left. At two fixed points
+there, the difference is affine in $q$ and has the opposite sign
+at $q=1$. Once a decrease occurs, it persists as $q$ moves toward
+one half. Taking all pairs and reflecting gives the bias interval.
 
-\paragraph{Passing to the limit.}
-Suppose the limit density had a valley excluded by the finite bound.
-Take three short intervals around its high and low points.
-Their averages keep the strict inequalities, which weak convergence
-passes to the finite law. The smallest atom in the middle interval
-and the largest in each outer interval then give the forbidden
-finite valley.
-For two valleys we use five intervals instead
-(Lemma~\ref{lem:weak-shape-transfer}).
-For curvature, Gaussian smoothing puts the second differences in
-the form needed by Descartes' rule. Summation by parts gives the
-limit at a fixed Gaussian width. Only then do we let the width
-tend to zero.
-
-\paragraph{The unique transition.}
-Randomize the scale by an independent exponential variable.
-The moment equation of~\cite[(15)]{glrs2025} then gives an explicit
-parametrization of the characteristic function. Two integrations
-by parts in its Mellin transform express $g_a''(0)$ as a weighted
-mean minus a constant. Rational bounds fix its sign outside
-$[2/3,69/100]$. Inside that interval, increasing memory moves the
-weight to the right and rules out a second crossing
-(Appendix~\ref{app:analytic-threshold}). To locate the zero and
-compute the critical derivatives, we separately integrate the
-moment series and bound its Fourier tail. The certificates and
-their error estimates are in Appendices~\ref{app:threshold}
-and~\ref{or:threshold}.
-
-The finite bounds and their limiting consequences are in
-Sections~\ref{sec:convex} and~\ref{sec:bulk-applications}.
-Sections~\ref{sec:verify} and~\ref{sec:open} give the verification
-scope and open questions. Longer proofs are in the appendices.
+For the memory threshold, an independent exponential scale gives
+the explicit transform of~\cite[Proposition~3.2]{glrs2025}.
+Two integrations by parts in its Mellin transform express the
+central curvature as a weighted mean minus a constant. Rational
+bounds fix the sign outside $[2/3,69/100]$. Within that interval,
+an increasing score and a covariance identity give exactly one
+crossing (Appendix~\ref{app:analytic-threshold}).
 
 \subsection{Prior work}\label{sec:prior}
 
-The counting chain predates the elephant walk. In the formulation
-of James, James and Qi~\cite[p.~2339]{jamesjamesqi2008}, the
-Drezner--Farnum model~\cite{dreznerfarnum1993} has next-success
-probability $(1-\theta)p+\theta k/t$.
+The counting chain predates the elephant walk. The Drezner--Farnum
+model~\cite{dreznerfarnum1993}, in the formulation of
+James, James and Qi~\cite[p.~2339]{jamesjamesqi2008}, has
+next-success probability $(1-\theta)p+\theta k/t$.
 Taking $p=1/2$ and $\theta=a$ gives our transition rule.
-Drezner and Farnum's family includes bimodal laws.
-Heyde~\cite{heyde2004} established the fixed-parameter limit
-regimes, and James, James and Qi treat time-varying dependence.
-We classify limiting shapes as the initial bias and memory vary.
-
-Fixed-memory results include
+Their family includes bimodal laws. Heyde~\cite{heyde2004}
+established fixed-parameter limit regimes, and James, James and
+Qi treat time-varying dependence. Baur and Bertoin~\cite{baurbert2016}
+derive functional limits through the connection with P\'olya-type
+urns. Further limit and fluctuation results include
 \cite{coletti2017,bercu2018,kubotatakei2019}.
-Kiss and Vet\H{o}~\cite{kissveto2022} compute the first four limit
-moments for general step distributions. Peres and
-Qin~\cite{peresqin2026} bound transition probabilities for
-step-reinforced walks on groups. Murahara and
-Tokumitsu~\cite{muraharatokumitsu2026} give optimal Gaussian local and central limit rates for fixed copying
-probabilities at most $3/4$. Vishwakarma~\cite{vishwakarma2026} studies moment recurrences in the three
-regimes. We use the density and moments
-of~\cite[Theorems~1.3 and~1.4]{glr2026} and conditional unimodality
-from~\cite[Theorem~1.1]{glrs2025}. The local limit in Trinas and Valle's
-preprint~\cite[Theorem~3.1]{tv2026} could replace our weak-transfer
-argument. Their Theorem~4.4 disproves the log-concavity conjecture
-of~\cite[Remark~2.3]{glrs2025}.
 
-The same transition appears in the growing-network model of
-Mohandas et al.~\cite{mohandas2025}. They observe the symmetric
-bimodality transition and extrapolate its finite-length central
-curvatures to a copying probability near $0.836$
-(Supplemental Material, Section~IV.A).
-Our certified threshold is $(1+a_*)/2\approx0.83440643$ in their
-parameter. The slow finite-length approach is visible in
-Remark~\ref{rem:modes-threshold}.
+We use the density and moments of
+\cite[Theorems~1.3 and~1.4]{glr2026} and conditional unimodality
+from~\cite[Theorem~1.1]{glrs2025}.
+Kiss and Vet\H{o}~\cite{kissveto2022} give low-order moments for
+general steps. Recent preprints study transition probabilities,
+Gaussian rates and moment recurrences
+\cite{peresqin2026,muraharatokumitsu2026,vishwakarma2026}.
+Trinas and Valle~\cite{tv2026} prove a superdiffusive local limit
+and disprove conditional log-concavity. Their difference recurrence
+also yields our derivative-limit lemma, whose proof is included
+here, so no result depends on the unrefereed preprint.
 
-Which mixing weights give two peaks is a classical question. Eisenberger~\cite{eisenberger1964} studies how the
-mixing weight affects bimodality for two normal components, and
-Robertson and Fryer~\cite{robertsonfryer1969} examine their shape
-across parameter space. Here the two components are a non-Gaussian
-limit density and its reflection. We prove that their bimodal
-weights form an interval by controlling the finite walk, without
-an explicit formula for the conditional density.
+Mohandas et al.~\cite[Supplemental Material, Section~IV.A]{mohandas2025}
+observe the fair-start transition in a growing-network model.
+They extrapolate finite-length central curvatures to a copying
+probability near $0.836$. Our threshold is
+$(1+a_*)/2\approx0.8344$ in their parameter.
 
-Dekking and Kong~\cite[Theorem~4.1]{dekkingkong2011} classify the Markov
-binomial law as unimodal, bimodal or trimodal. It depends on the previous
-state, so it differs from the walk here.
-Trinas~\cite{trinas2026return} studies last returns to zero at fixed
-superdiffusive memory. His leading constant involves $g_{a,q}(0)$, which
-is independent of $q$ by reflection. The bias changes the shape away
-from zero even though it leaves that value unchanged.
-
-The sign arguments use classical variation diminution from
-Karlin's work~\cite{karlin1964,karlin1968}.
-For Gaussian smoothing we use the generalized Descartes rule from
-P\'olya and Szeg\H{o}~\cite[Part~V, Chapter~1]{polyaszego1998}.
-We include the elementary forms needed here. For this walk, we must also bound the boundary histories
-before applying the positive interior recurrence.
+Which mixing weights give two peaks is a classical question.
+Eisenberger~\cite{eisenberger1964} and Robertson and
+Fryer~\cite{robertsonfryer1969} study it for normal mixtures.
+Here the components are a non-Gaussian limit density and its
+reflection. The finite sign argument uses classical variation
+diminution~\cite{karlin1964,karlin1968}, with the extra work of
+controlling boundary histories before applying the positive
+interior recurrence.

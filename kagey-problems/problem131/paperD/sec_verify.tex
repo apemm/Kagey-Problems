@@ -1,53 +1,13 @@
-\section{Verification}\label{sec:verify}
+\section{Computer assistance}\label{sec:verify}
 
-Table~\ref{tab:verification} separates analytic arguments from
-interval computations. The numerical illustrations are not used in
-any proof.
-
-\begin{center}\small
-\captionsetup{hypcap=false}
-\begin{tabular}{p{0.29\textwidth}p{0.28\textwidth}p{0.31\textwidth}}
-\toprule
-Claim & How it is established & Trusted base\\
-\midrule
-Finite shape bounds &
-Written recurrence and sign proofs &
-Exact finite identities and ordered sign patterns\\[5pt]
-Fair-limit shape, inflection counts, bias interval and boundary regularity &
-Written shape, transfer and maximization proofs &
-Cited weak limit and conditional unimodality. Proved Fourier representation\\[5pt]
-Unique memory threshold &
-Written integral and comparison proof, formalized in Lean &
-Cited weak-limit convergence of the actual walk\\[5pt]
-Numerical threshold location &
-Endpoint sign certificates &
-Arb arithmetic and the proved moment and Fourier-tail bounds\\[5pt]
-Quartic critical top, emerging modes and bias width &
-Written Taylor and maximization arguments using certified derivatives &
-The same Fourier envelopes and interval enclosures\\
-\bottomrule
-\end{tabular}
-\captionof{table}{Proofs and their inputs. Appendix~\ref{app:data}
-gives the records needed to reproduce the computations.}
-\label{tab:verification}
-\end{center}
-
-The \href{https://github.com/apemm/Kagey-Problems/tree/paperD-ejp-v6/kagey-problems/problem131/lean/PaperD}{shared formalization}
-uses Lean~4.33.1 and Mathlib at \texttt{0df444a360ea}, with only
-\texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}
-allowed by the axiom audit. From the finite walk and its cited weak limit,
-it derives the moments, their normalized recurrence, the fixed-point
-equation and Fourier decay. Fourier inversion identifies the fair density.
-These supply the inputs for the $H_a$ series, its root, the randomized
-transform and the curvature integral (including the changes of variables
-and Mellin continuation). The weight comparison then gives the unique
-crossing. Weak-limit convergence remains an explicit input.
-The accompanying \nolinkurl{MAP.md} records each result's hypotheses
-and separates current from archived results. The numerical scripts check
-the transcendental interval enclosures. Boundary regularity and the
-critical expansions have written proofs.
-
-The transition check retains its acceptance tests under
-\texttt{python -O}. A second check evaluates the signs at the two bracket endpoints
-directly, without the parameter Taylor models. It still uses Arb
-and the same analytic tail bound.
+Only the numerical location and critical derivative enclosures in
+Appendix~\ref{app:threshold} use interval arithmetic. They use Arb~\cite{johansson2017}
+through python-flint~0.8.0 at $1600$ bits, with independent endpoint
+checks at $2000$ bits and refined constants at $2600$ bits through
+python-flint~0.9.0. The supplement proves the truncation and tail
+bounds. The \href{https://github.com/apemm/Kagey-Problems/tree/paperD-ejp-v7/kagey-problems/problem131/paperD}{tagged records}
+give the inputs, acceptance tests and rerun commands.
+Lean independently checks the finite sign arguments and analytic
+threshold proof from the classical weak limit, as detailed in
+\href{https://github.com/apemm/Kagey-Problems/blob/paperD-ejp-v7/kagey-problems/problem131/lean/PaperD/MAP.md}{the coverage map},
+and is not needed to referee the written proofs.

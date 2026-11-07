@@ -5,6 +5,11 @@ Its allowed axioms are `propext`, `Classical.choice` and `Quot.sound`.
 `verification-manifest.json` contains the imported-source inventory, hashes,
 toolchain versions and declaration results. `build-log.txt` contains the run output.
 The full build and declaration audit were rerun for the moment and Fourier proofs.
+Those Lean sources are unchanged in the focused revision. The current manuscript
+uses a shorter written derivative-limit transfer, while the formalization retains
+its checked weak-transfer proof. The analytic quartic-sign, memory-regularity,
+and critical boundary arguments have written proofs; the coverage map marks
+them separately from the kernel-checked threshold assembly.
 Source hashes record both the original bytes and LF-normalized text, so the
 archive can be checked after Git changes Windows line endings.
 

@@ -41,85 +41,28 @@ $(-d_2,-d_1)$ and $(d_1,d_2)$. Thus it has exactly two inflection points
 in case (a) and four in case (b).
 \end{theorem}
 
-To pass from the second differences of $P_N$ to the curvature of
-$g_a$, we smooth with a Gaussian. Factoring out a positive Gaussian
-leaves an exponential sum whose signs Descartes' rule controls. We let
-$N\to\infty$ at a fixed Gaussian width, and only afterward let
-the width tend to $0$. This order lets us use weak convergence
-before recovering curvature. Appendix~\ref{app:modes} proves the lemmas used below. A real
-function $v$ has \emph{values at most} $\Pi$ if
-$\operatorname{sp}(v(y_1),\dots,v(y_j))\preceq\Pi$ for all $y_1<\dots<y_j$, and
-\emph{increments at most} $\Pi$ if
-$\operatorname{sp}(v(y_2)-v(y_1),\dots,v(y_j)-v(y_{j-1}))\preceq\Pi$ for all
-such points. We put $\Pi_4=(+,-,+,-)$.
+A real function $v$ has \emph{values at most} $\Pi$ if
+$\operatorname{sp}(v(y_1),\ldots,v(y_j))\preceq\Pi$ for every
+$y_1<\cdots<y_j$.
 
 \begin{proof}
-Fix $a$, so that $\varepsilon=(1-a)/2\in(0,\frac14)$.
+Fix $a\in(1/2,1)$. Lemma~\ref{lem:derivative-limits} at order two
+passes the five-block bound of Theorem~\ref{thm:five-blocks} to
+$g_a''$. Indeed, the interpolant's values are positive sums of
+adjacent second differences, and its lattice fills every fixed
+compact interval as $N\to\infty$. Lemmas~\ref{lem:interleave}
+and~\ref{lem:sp-limit} therefore give values at most $\Pi_5$.
 
-\emph{Step 1, smoothing.} Fix $\sigma>0$ and let
-$\varphi(y)=e^{-y^2/(2\sigma^2)}/(\sigma\sqrt{2\pi})$. For $N\ge3$ put
-$\eta=2N^{-a}$ and $z_k=(2k-N)N^{-a}$, so that $S_N/N^a=z_{A_N}$, and let
-\[
- V_N(y)=\eta^{-2}\sum_{k=1}^{N-1}D_N(k)\,\varphi(y-z_k).
-\]
-Since $\varphi(y-z_k)=\varphi(y)e^{-z_k^2/(2\sigma^2)}e^{yz_k/\sigma^2}$ and
-the $z_k$ increase with $k$, Lemma~\ref{lem:descartes} and
-Theorem~\ref{thm:five-blocks} show that $V_N$ has values at most $\Pi_5$. (If
-every $D_N(k)$ vanishes, then $V_N=0$ and every pattern is empty.)
 
-\emph{Step 2, the limit $N\to\infty$.} Let $u(y)=\E\varphi(y-\mathcal L^\circ_a)$.
-The derivatives of $\varphi$ are bounded, so $u$ is smooth and
-$u^{(j)}(y)=\E\varphi^{(j)}(y-\mathcal L^\circ_a)$. We show that
-$V_N(y)\to u''(y)$ for every $y$. Put $P_N(k)=0$ for $k\notin\{0,\dots,N\}$.
-Then $D_N(k)=0$ unless $-1\le k\le N+1$, and summation by parts gives
-\[
- \sum_{k=-1}^{N+1}D_N(k)\,\varphi(y-z_k)=\sum_{k=0}^NP_N(k)\,\Delta\varphi(y-z_k),
- \qquad \Delta\varphi(t)=\varphi(t+\eta)-2\varphi(t)+\varphi(t-\eta).
-\]
-Taylor's formula gives
-$\lvert\eta^{-2}\Delta\varphi(t)-\varphi''(t)\rvert\le\eta^2\lVert\varphi''''\rVert_\infty/12$.
-By symmetry, the four boundary terms on the left, with $k\in\{-1,0,N,N+1\}$,
-have total absolute value at most
-$\varphi(0)\,(6P_N(0)+2P_N(1))$. Here
-$P_N(0)=\tfrac12(1-\varepsilon)^{N-1}$. The boundary recurrence gives
-$\xi_{n+1}=(1-a/((1-\varepsilon)n))\xi_n+\varepsilon/(1-\varepsilon)$,
-where $\xi_n=P_n(1)/P_n(0)$ and $\xi_1=1$.
-Thus $\xi_n\le1+(n-1)\varepsilon/(1-\varepsilon)$ and
-$P_N(1)=O_\varepsilon(N(1-\varepsilon)^N)$. Since $\eta^{-2}=N^{2a}/4$
-grows only polynomially, the boundary terms scaled by $\eta^{-2}$
-tend to $0$. Hence
-\[
- V_N(y)=\E\varphi''\bigl(y-S_N/N^a\bigr)+o(1)\longrightarrow
- \E\varphi''(y-\mathcal L^\circ_a)=u''(y),
-\]
-because $S_N/N^a\to\mathcal L^\circ_a$ in law and $\varphi''$ is bounded and
-continuous. By Lemma~\ref{lem:sp-limit}, $u''$ has values at most $\Pi_5$.
-
-\emph{Step 3, integrating the sign bound.} By dominated convergence, $u'(y)\to0$ as
-$y\to\pm\infty$. So $u$ has increments at most $\Pi_4$, by
-Lemma~\ref{lem:sp-derivative}.
-
-\emph{Step 4, the limit $\sigma\to0$.} Write $u=u_\sigma$. As $g_a$ is bounded
-and continuous, $u_\sigma(y)=\int g_a(y-t)\varphi(t)\,dt$ tends to $g_a(y)$ for
-every $y$. So the increments of $u_\sigma$ tend to those of $g_a$, and
-Lemma~\ref{lem:sp-limit} shows that $g_a$ has increments at most $\Pi_4$.
-Lemma~\ref{lem:analytic-density} also makes $g_a''$ bounded and continuous,
-so $u_\sigma''=g_a''*\varphi\to g_a''$ pointwise. Hence $g_a''$ has
-values at most $\Pi_5$.
-
-\emph{Step 5, symmetry.} Let $0\le y_1<\dots<y_j$, let
-$d_i=g_a(y_{i+1})-g_a(y_i)$, and let $p$ be the pattern of the $d_i$. As $g_a$
-is even, the points $-y_j<\dots<-y_1<y_1<\dots<y_j$, with $-y_1$ left out if
-$y_1=0$, have the increments $-d_{j-1},\dots,-d_1$, then $0$ if $y_1>0$, then
-$d_1,\dots,d_{j-1}$. Their pattern is $-p$ read backward, followed by $p$. It has
-$2\lvert p\rvert$ entries and is $\preceq\Pi_4$. So $p$ is empty, $(+)$,
-$(-)$ or $(+,-)$. In particular there are no $0\le y<y'<y''$ with
-$g_a(y)>g_a(y')<g_a(y'')$.
+\emph{Symmetry.} Proposition~\ref{prop:dominant-half} and
+Lemma~\ref{lem:derivative-limits}, with $r=0$, show that $g_a$
+has no strict valley on $[0,\infty)$. Such a valley would persist
+at nearby lattice points under locally uniform convergence.
 
 If every increment on $[0,\infty)$ is nonpositive, case (a)
 holds. Otherwise choose $y_1<y_2$ with $g_a(y_1)<g_a(y_2)$.
 Integrability supplies $y_3<y_4$, both beyond $y_2$, with
-$g_a(y_3)>g_a(y_4)$. The sign bound excludes any later increase,
+$g_a(y_3)>g_a(y_4)$. The no-valley property excludes any later increase,
 so $g_a$ attains a maximum on $[0,\infty)$ at some $\kappa$.
 The absence of a strict valley makes it nondecreasing before
 $\kappa$ and nonincreasing afterward. The positive increment forces
@@ -132,7 +75,7 @@ Equality at two points of a monotone interval would force a constant
 interval, contrary to Lemma~\ref{lem:analytic-density}. Thus the
 monotonicities are strict and there is no additional local maximum.
 
-\emph{Step 6, curvature.} The Fourier bound in
+\emph{Curvature.} The Fourier bound in
 Lemma~\ref{lem:analytic-density} gives $g_a(y),g_a'(y)\to0$ as
 $y\to\infty$. Evenness and the $\Pi_5$ bound give at most three sign
 blocks for $g_a''$ on $(0,\infty)$. Its last sign must be positive. Otherwise $g_a'$ would eventually
@@ -149,41 +92,6 @@ of zero curvature and makes the resulting convexities strict. In
 case (b), $g_a'(d_1)>0>g_a'(d_2)$, so $d_1<\kappa<d_2$.
 \end{proof}
 
-\begin{theorem}[two modes for memory near one]\label{thm:two-modes-near-one}
-If $\frac45\le a<1$, that is $0<\varepsilon\le\frac1{10}$, then case (b)
-of Theorem~\ref{thm:two-modes} holds. So $g_a$ has exactly two modes.
-\end{theorem}
-
-\begin{proof}
-In case (a), Khinchine's representation~\cite{dj1988} gives
-$\mathcal L^\circ_a\overset{d}=UZ$, with $U$ uniform on $(0,1)$ and
-independent of $Z$. Hence Cauchy--Schwarz gives
-$\E(\mathcal L^\circ_a)^4\ge\frac95[\E(\mathcal L^\circ_a)^2]^2$.
-The moment recursion of~\cite[Theorem~1.4]{glr2026} gives the actual ratio
-\[
- \frac{\E\mathcal L_a^4}{(\E\mathcal L_a^2)^2}
- =\frac{6(2a^2+2a-1)}{4a-1}\,\operatorname{Beta}(2a,2a),
-\]
-where $\operatorname{Beta}$ is the beta function. For $a\ge\frac34$, its integral and
-$t(1-t)\le\frac14$ give
-$\operatorname{Beta}(2a,2a)\le4^{-2a+3/2}\operatorname{Beta}(\frac32,\frac32)=\pi2^{-4a}$.
-Put $R(a)=(2a^2+2a-1)/(4a-1)$. On $[\frac34,1]$ we have
-$(\log R)'\le2<4\log2$. The first inequality reduces to
-$4a(4a^2+a-2)\ge0$. Thus $6\pi R(a)2^{-4a}$ decreases there, and for
-$a\ge\frac45$ the displayed moment ratio is at most
-\[
- \frac{282\pi}{55\,2^{16/5}}
- <\frac{141}{80}<\frac95,
-\]
-using $\pi<22/7$ and $2^{1/5}>8/7$. Even moments are unchanged by
-symmetrization, so this contradicts case (a). Theorem~\ref{thm:two-modes}
-then gives case (b).
-\end{proof}
-
-The moment argument gives an independent check near one.
-To find the complete transition, we compare central curvature
-across memories.
-
 \begin{theorem}[the unique transition]\label{thm:threshold}
 There is exactly one $a_*\in(1/2,1)$ with $g_{a_*}''(0)=0$.
 It lies in $(2/3,69/100)$, and
@@ -199,17 +107,10 @@ $a>a_*$. In particular, the critical density is unimodal.
 To rule out a second crossing, Appendix~\ref{app:analytic-threshold}
 expresses the curvature sign as a comparison of positive weighted
 means, without numerical input. On the short interval where the
-sign can change, the rescaled weights have strictly increasing
-likelihood ratios as memory increases. Together with the endpoint
-signs, this gives exactly one crossing.
+sign can change, an increasing score and a covariance identity make
+the weighted mean strictly increase with memory. Together with the
+endpoint signs, this gives exactly one crossing.
 Appendix~\ref{app:threshold} separately locates it near $0.6688$.
-
-\begin{remark}[finite-length thresholds]\label{rem:modes-threshold}
-For the exact finite law, $D_N(N/2)$ changes sign at
-$a\approx0.6563$ for $N=4000$ and at $a\approx0.6592$ for $N=8000$.
-These computed examples are not used in any proof. They show how
-slowly the finite law approaches the limiting transition.
-\end{remark}
 
 \subsection{Arbitrary initial bias}
 
@@ -233,13 +134,11 @@ endpoints.
 \end{theorem}
 
 \begin{proof}
-\emph{The mode bound.} Let $P_N$ denote the count law with first-step bias $q$.
-Proposition~\ref{prop:all-bias-modes} gives the finite assertion
-and excludes two successive strict valleys. If $g_{a,q}$ had two,
-weak convergence of $S_N/N^a$ and
-averages over five short intervals would give five finite-law atoms
-with those same forbidden inequalities
-(Lemma~\ref{lem:weak-shape-transfer}).
+\emph{The mode bound.} Proposition~\ref{prop:all-bias-modes}
+gives the finite assertion and excludes two successive strict valleys.
+The locally uniform density convergence in
+Lemma~\ref{lem:derivative-limits}, with $r=0$, passes these
+inequalities to $g_{a,q}$.
 Lemma~\ref{lem:analytic-density} excludes constant intervals
 for every bias. Hence three local maxima $x<y<z$
 would give
@@ -255,7 +154,7 @@ the two forbidden valleys.
 
 \emph{The bias interval.} Fix $a$, write $f_q=g_{a,q}$ and $h=h_a$,
 and call $x<y<z$ a strict valley if $f_q(y)<\min\{f_q(x),f_q(z)\}$.
-Proposition~\ref{prop:dominant-half} and the same weak-transfer lemma show that,
+Proposition~\ref{prop:dominant-half} and the same density convergence show that,
 for $q\ge1/2$, $f_q$ has no strict valley on $[0,\infty)$ and
 $f_q(-x)\le f_q(x)$ for $x\ge0$.
 Thus it has a strict valley if and only if
@@ -265,8 +164,10 @@ must start at $x<0$. If its middle point $y$ is positive,
 the no-valley property at $(0,y,z)$ gives
 $f_q(0)\le f_q(y)<f_q(x)$.
 
-At $q=1$, conditional unimodality~\cite{glrs2025} excludes a valley,
-so $h$ is nondecreasing on $(-\infty,0]$. For fixed $x<y\le0$, the
+At $q=1$, conditional unimodality~\cite{glrs2025} and reflection
+dominance place the mode in $[0,\infty)$. A negative mode would have
+a reflected point of at least the same height, contrary to uniqueness.
+Thus $h$ is nondecreasing on $(-\infty,0]$. For fixed $x<y\le0$, the
 difference $f_q(x)-f_q(y)$ is affine in $q$ and nonpositive at $q=1$.
 If positive at $q\ge1/2$, it remains positive for every $r\in[1/2,q]$.
 Thus, within $[1/2,1]$, a valley persists when the bias decreases.
@@ -289,8 +190,6 @@ Theorem~\ref{thm:threshold} identifies the empty case.
 
 This proves the initial-bias conjecture
 of~\cite[Remark~2.1(b)]{glrs2025}, with its half-width $q(a)=1/2-b_a$.
-The stronger local limit of Trinas and Valle~\cite[Theorem~3.1]{tv2026},
-in an unrefereed arXiv preprint, would also transfer the finite
-inequalities, but weak convergence suffices here.
+The derivative-limit argument used here is proved in Appendix~\ref{app:modes}.
 
 \input{sec_critical_shape.tex}

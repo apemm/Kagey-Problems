@@ -1,42 +1,34 @@
 # The bias interval of the elephant random walk
 
-## Fixed-memory EJP manuscript
+The [27-page manuscript](problem131_memory.pdf) proves the GLRS bias-interval
+conjecture for every superdiffusive memory. Theorem 1.1 gives the interval,
+Theorem 1.2 gives its analytic threshold and critical behavior, and
+Proposition 1.3 reports numerical constants.
 
-The [35-page manuscript](problem131_memory.pdf) proves the GLRS bias-interval
-conjecture for every superdiffusive memory. Theorem 1.1 contains the analytic
-classification and proves that fair-start bimodality has a unique memory
-threshold. Theorem 1.2 separates its certified numerical location and
-critical asymptotics.
+The boundary is positive, continuous, continuously differentiable above
+the threshold, and strictly decreasing just above it. The analytic proofs
+also establish the quartic critical top and the square-root and three-halves
+laws. Interval certificates only locate the threshold and enclose constants.
+Global decrease of the boundary and an all-length finite-threshold theorem
+remain open.
 
-The paper also gives the finite shape bounds, the variational bias boundary,
-its positive continuously differentiable branch, the quartic critical top,
-and the three-halves opening law. The analytic theorem states positivity
-of the bias boundary explicitly, so sufficiently biased starts are unimodal.
-The finite-threshold development remains in the combined archive.
-Global decrease of the bias boundary and an all-length finite-threshold
-theorem are open questions, not additional claims of this submission.
+The [seven-page supplement](paperD_supplement.pdf) contains the complete
+certificate error analysis and an independent fourth-moment check. It is
+part of the journal submission and an ancillary PDF in the arXiv package.
+Both main entry points contain the same paper. Source builds automatically
+regenerate the cross-document labels.
 
-The rare-reversal results, Luriaâ€“DelbrÃ¼ck and Landau estimates, near-one
-profile, crossings, finite-threshold development and their proofs are preserved in the
-[archived 70-page combined version](archive/combined-2026-11-06/README.md).
-The fixed-memory manuscript does not depend on that archive for a proof.
-The journal and arXiv entry points contain the same paper.
+The [archived combined version](archive/combined-2026-11-06/README.md)
+retains the rare-reversal material. The present proofs do not depend on it.
+See [submission_notes.md](submission_notes.md) for packages and build commands.
 
-See [submission_notes.md](submission_notes.md) for the source packages and
-build commands, and [the verification record](verification/README.md)
-for the declaration audit. The Lean library includes both present and
-archived results. Its [coverage map](../lean/PaperD/MAP.md) distinguishes
-formal proofs, hypotheses and written analysis.
-
-The analytic threshold proof uses a positive-weight curvature integral and
-strict likelihood-ratio order. Lean constructs the actual H-series and its
-root, identifies the randomized characteristic function, and derives the
-curvature integral. The actual weight comparison then gives the unique
-crossing on the full memory interval. The moment recurrence, exponential
-randomization, fixed-point equation, Fourier decay and density representation
-are derived from the actual finite walk and its ordinary weak limit.
-Existence and convergence of that classical weak limit remain explicit inputs.
-The coverage map records this boundary and the separate written proofs.
+The [coverage map](../lean/PaperD/MAP.md) distinguishes formal proofs,
+classical inputs, and written arguments. The existing Lean library derives
+the actual moments, randomized transform, Fourier representation, and
+unique curvature crossing from the finite walk and ordinary weak convergence.
+It retains a checked weak-transfer proof, while the manuscript uses a
+shorter derivative-limit argument. The new analytic quartic-sign and
+boundary-regularity proofs are written proofs, not additional Lean theorems.
 
 ## Certificate files
 

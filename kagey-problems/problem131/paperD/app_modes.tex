@@ -1,4 +1,8 @@
-\section{Sign patterns and regularity}\label{app:modes}
+\section{Derivative limits and regularity}\label{app:modes}
+
+\input{app_derivative_limits.tex}
+
+\subsection{Sign patterns}
 
 We prove the sign and regularity lemmas used in Theorem~\ref{thm:two-modes}, with the
 notation of Sections~\ref{sec:convex} and~\ref{sec:modes}.
@@ -6,49 +10,10 @@ Deleting entries can only remove signs from a list's pattern. An alternating lis
 $p\preceq q$ for every alternating list $q$ with the same first sign and at
 least as many entries.
 
-We use the exponential-sum form of the generalized Descartes
-rule~\cite[Part~V, Chapter~1]{polyaszego1998}, retaining the first sign,
-which a zero count alone does not specify.
-
-\begin{lemma}[Descartes' rule for exponential sums]\label{lem:descartes}
-Let $\lambda_1<\dots<\lambda_n$ and $b_1,\dots,b_n$ be real, with
-$b=(b_1,\dots,b_n)\ne0$, and put $F(y)=\sum_{k=1}^nb_ke^{\lambda_ky}$. Then
-$F$ has finitely many real zeros, and
-$\operatorname{sp}(F(y_1),\dots,F(y_j))\preceq\operatorname{sp}(b)$ for all
-$y_1<\dots<y_j$. The same holds for $\psi F$ for every positive function
-$\psi$.
-\end{lemma}
-
-\begin{proof}
-Let $Z(F)$ count the distinct real zeros of $F$, and $S(b)$ count the sign
-changes of $b$. We prove $Z(F)\le S(b)$ by induction on $S(b)$. If
-$S(b)=0$, then $F$ has the sign of the nonzero $b_k$ everywhere. If $S(b)\ge1$,
-choose $i$ such that the last nonzero $b_k$ with $k\le i$ and the first
-nonzero $b_k$ with $k>i$ have opposite signs, and choose
-$\lambda_i<\kappa<\lambda_{i+1}$. Then
-\[
- G(y)=\frac{d}{dy}\bigl(e^{-\kappa y}F(y)\bigr)
- =\sum_{k=1}^nb_k(\lambda_k-\kappa)e^{(\lambda_k-\kappa)y}.
-\]
-The coefficient $b_k(\lambda_k-\kappa)$ has the sign of $-b_k$ for $k\le i$
-and of $b_k$ for $k>i$, so the coefficients of $G$ have $S(b)-1$ sign changes.
-By Rolle's theorem $G$ vanishes between any two zeros of $F$, so
-$Z(F)\le Z(G)+1\le S(b)$.
-
-If $b_{k_0}$ is the first nonzero $b_k$, then
-$e^{-\lambda_{k_0}y}F(y)\to b_{k_0}$ as $y\to-\infty$. The zeros of $F$ cut the
-line into at most $S(b)+1$ open intervals, on each of which $F$ has one sign.
-Merging equal neighbors gives an alternating list starting
-with the sign of $b_{k_0}$ and having at most $S(b)+1$ entries, hence
-$\preceq\operatorname{sp}(b)$. The nonzero values $F(y_1),\dots,F(y_j)$ lie in
-these intervals in order. A positive factor $\psi$ changes no sign.
-\end{proof}
-
 \begin{lemma}[pointwise limits]\label{lem:sp-limit}
 Let $v_n$ and $v$ be real functions on $\mathbb R$ with $v_n(y)\to v(y)$ for
 every $y$, and let $\Pi$ be an alternating list. If every $v_n$ has values at
-most $\Pi$, then so has $v$. If every $v_n$ has increments at most $\Pi$, then
-so has $v$.
+most $\Pi$, then so has $v$.
 \end{lemma}
 
 \begin{proof}
@@ -56,34 +21,7 @@ Let $y_1<\dots<y_j$, and let $I$ be the set of indices $i$ with $v(y_i)\ne0$.
 For all large $n$, $v_n(y_i)$ has the sign of $v(y_i)$ for every $i\in I$.
 Then $\operatorname{sp}(v(y_1),\dots,v(y_j))$ is the pattern of the list
 $(v_n(y_i))_{i\in I}$, which is a subsequence of
-$\operatorname{sp}(v_n(y_1),\dots,v_n(y_j))\preceq\Pi$. The increments of $v_n$
-at $y_1,\dots,y_j$ tend to those of $v$, and the same argument applies to
-them.
-\end{proof}
-
-\begin{lemma}[integrating the sign bound]\label{lem:sp-derivative}
-Let $u$ be twice continuously differentiable on $\mathbb R$, with $u'(y)\to0$
-as $y\to\pm\infty$. If $u''$ has values at most $\Pi_5$, then $u'$ has values
-at most $\Pi_4$, and $u$ has increments at most $\Pi_4$.
-\end{lemma}
-
-\begin{proof}
-It is enough to treat points $y_1<\dots<y_j$ at which the values of $u'$ are
-nonzero and alternate in sign. The limits at infinity supply the outer
-comparison points. Let $s$ be the sign of $u'(y_1)$. Choose $y_0<y_1$
-with $\lvert u'(y_0)\rvert<\lvert u'(y_1)\rvert$, and $y_{j+1}>y_j$ with
-$\lvert u'(y_{j+1})\rvert<\lvert u'(y_j)\rvert$. For $0\le i\le j$ the mean
-value theorem gives $w_i\in(y_i,y_{i+1})$ with
-$u''(w_i)(y_{i+1}-y_i)=u'(y_{i+1})-u'(y_i)$. The right side has the sign $s$
-for $i=0$, the sign of $u'(y_{i+1})$ for $1\le i\le j-1$, and the sign of
-$-u'(y_j)$ for $i=j$. In each case this is $(-1)^is$. So $u''$ takes $j+1$
-alternating signs, starting with $s$, at $w_0<\dots<w_j$. This list is
-$\preceq\Pi_5$, so $j+1\le5$, and $j+1\le4$ if $s$ is $-$. In both cases the
-$j$ signs of $u'(y_1),\dots,u'(y_j)$ form a list $\preceq\Pi_4$.
-
-For the increments at $y_1<\dots<y_j$, each nonzero $u(y_{i+1})-u(y_i)$ has
-the sign of $u'(\xi_i)$ for some $\xi_i\in(y_i,y_{i+1})$, by the mean value
-theorem. Thus the increments have the pattern of values of $u'$.
+$\operatorname{sp}(v_n(y_1),\dots,v_n(y_j))\preceq\Pi$.
 \end{proof}
 
 \begin{lemma}[entire densities and parameter continuity]\label{lem:analytic-density}
@@ -93,8 +31,15 @@ $\phi_a$ of $\mathcal L_a$ satisfies
  |\phi_a(t)|\le 2e^{-c|t|^r}\qquad(t\in\mathbb R)
 \]
 for some $c=c(a,r)>0$. The same $c$ works on a sufficiently small
-neighborhood of any fixed $a$. Every spatial derivative of $h_a$ and its
-first derivative in $a$ are jointly continuous in $(a,u)$.
+neighborhood of any fixed $a$. For every compact
+$J\subset(1/2,1)$ and every $\beta>0$, there is $C_{J,\beta}<\infty$ such that
+\[
+ |\partial_t\phi_a(t)|+|\partial_a\phi_a(t)|
+ \le C_{J,\beta}(1+|t|)^{-\beta}
+ \qquad(a\in J,\ t\in\mathbb R).
+\]
+For every integer $k\ge0$, the derivatives $\partial_u^k h_a(u)$ and
+$\partial_a\partial_u^k h_a(u)$ exist and are jointly continuous in $(a,u)$.
 For every $q\in[0,1]$, the density of the limit with first-step bias $q$
 extends to an entire function and is not constant on an interval of
 positive length.
@@ -160,22 +105,115 @@ A density of integral one cannot be constant on $\mathbb R$.
 If it were constant on an interval, the identity theorem would
 make it constant everywhere.
 
-For the memory derivative, Lemma~\ref{lem:thr-moments}(b) gives a
-complex moment majorant and local parameter differentiation
-on every compact frequency interval. The differentiated smoothing
-inequalities in Lemma~\ref{lem:thr-parameter-tail} extend this to
-Fourier inversion. For any prescribed power $\beta$, the
-exponential bound above supplies $f(t)\le Ct^{-\beta}$.
-Taking $T$ large makes both contraction coefficients $R$ and $\kappa$
-in that lemma smaller than one. Choose $D_1$ to bound the frequency
-derivative on $[T_2,T]$ and to satisfy its strict contraction inequality,
-then choose $D_a$ in the same way for the memory derivative.
-The maximum argument in that proof gives
-$|\partial_a\phi_a(t)|=O_J((1+|t|)^{1-\beta})$.
-The power $\beta$ is arbitrary, and we may shrink the compact memory
-interval about any fixed parameter. Multiplication by any fixed power
-of $t$ therefore leaves an integrable majorant. Differentiation
-under Fourier inversion proves the asserted joint continuity.
+To differentiate in memory, we first work on bounded frequency intervals.
+The moment recursion of~\cite[Theorem~1.4]{glr2026} is
+\[
+ m_0=m_1=1,\qquad
+ m_n(z)=\frac{\sum_{j=1}^{n-1}\theta_j(z)m_j(z)m_{n-j}(z)}
+                   {nz-\theta_n(z)},\qquad
+ \theta_j(z)=\begin{cases}1&j\text{ even},\\z&j\text{ odd}.
+                  \end{cases}
+\]
+Choose a closed complex disc about $a_0$ on which
+$\operatorname{Re}z\ge\alpha>1/2$, $|z|<1$ and
+$|\operatorname{Im}z|\le\rho$. All denominators for $n\ge2$ have
+real part at least $n\alpha-1>0$.
+Put $A=2\alpha-1$ and $B=A^{-1}$. Induction gives
+\[
+ |m_n(z)|\le AB^n\quad(n\ge1),\qquad
+ \frac{(n-1)A^2}{n\alpha-1}\le A\quad(n\ge2).
+\]
+For $x>0$ and real $y$, the gamma product gives
+\[
+ \left|\frac{\Gamma(x)}{\Gamma(x+iy)}\right|^2
+ =\prod_{j\ge0}\left(1+\frac{y^2}{(x+j)^2}\right)
+ \le\exp\left(\frac{y^2}{x^2}+\frac{y^2}{x}\right).
+\]
+Taking $x=1+n\operatorname{Re}z$ and $y=n\operatorname{Im}z$ gives
+\[
+ \left|\frac{m_n(z)}{\Gamma(1+nz)}\right|
+ \le\frac{C B_0^n}{\Gamma(1+n\alpha)}.
+\]
+Here $C,B_0$ are independent of $n,z$. We used monotonicity of
+$\Gamma$ on $[2,\infty)$ for $n\ge2$, and enlarged $C$ for $n=0,1$.
+Thus $\sum_{n\ge0}m_n(z)(it)^n/\Gamma(1+nz)$ converges locally
+uniformly in complex $t$ and $z$ in the disc's interior.
+For real $z=a$ this is $\phi_a(t)$, by the moment formula and
+exponential moments of~\cite[Corollary~2.11]{glr2026}.
+Cauchy's formula gives local joint continuity of every frequency
+derivative and its memory derivative.
+
+We now obtain bounds at large frequencies without a numerical input.
+Shrink $J$ about $a_0$ so that it lies inside this disc and retains the
+uniform exponential bound. For $t\ge0$ write
+$f_a(t)=|\phi_a(t)|$, $u_a(t)=|\partial_t\phi_a(t)|$ and
+$w_a(t)=|\partial_a\phi_a(t)|$. The smoothing equation is
+\[
+ \phi_a(t)=\int_0^1\phi_a(tv^a)
+ \{p\phi_a(t(1-v)^a)+(1-p)\phi_a(-t(1-v)^a)\}\,dv,
+ \qquad p=(1+a)/2.
+\]
+The local bounds just proved justify differentiation under this integral,
+since $v^{\min J}|\log v|$ is integrable. Put $x=tv^a$,
+$y=t(1-v)^a$ and, for nonnegative $z$, define
+\[
+ (\mathcal K_a z)(t)=\int_0^1\{z(x)f_a(y)+f_a(x)z(y)\}\,dv.
+\]
+Taking absolute values and discarding factors $v^a,(1-v)^a\le1$
+in the frequency derivative gives
+\[
+ u_a\le\mathcal K_a u_a,\qquad
+ w_a\le\mathcal K_a w_a+S_a,
+\]
+where
+\[
+ S_a(t)=\int_0^1\{x|\log v|u_a(x)f_a(y)
+       +y|\log(1-v)|f_a(x)u_a(y)+f_a(x)f_a(y)\}\,dv.
+\]
+The last term bounds the derivative of $p$, since $p'=1/2$ and
+$|\phi_a(y)-\phi_a(-y)|\le2f_a(y)$.
+
+Fix $\beta>0$. Splitting at $1/2$ and reflecting the second half gives
+\[
+ K_{a,\beta}(t)=2\int_0^{1/2}
+ \left\{\left(\frac{1+t}{1+x}\right)^\beta f_a(y)
+       +\left(\frac{1+t}{1+y}\right)^\beta f_a(x)\right\}\,dv
+ \longrightarrow0
+\]
+uniformly for $a\in J$ as $t\to\infty$.
+Indeed, $y\ge t/2$ bounds the first term by
+$2(1+t)^\beta e^{-c(t/2)^r}$ and the second ratio by $2^\beta$.
+Also $x\ge tv^{\max J}$, so the exponential bound and dominated
+convergence make the second integral tend to zero uniformly.
+Choose $T$ so that $K_{a,\beta}(t)\le1/2$ for all $a\in J$, $t\ge T$.
+For $X\ge T$ let
+\[
+ U_X=\max_{a\in J,\,0\le t\le X}(1+t)^\beta u_a(t).
+\]
+All arguments $x,y$ are at most $t$. The first smoothing inequality gives
+\[
+ U_X\le\max\{U_T,U_X/2\},\qquad\text{hence }U_X\le U_T.
+\]
+The bound is independent of $X$. This proves arbitrary polynomial decay for $u_a$.
+
+The same decay holds for $S_a$. On $0<v\le1/2$, the first
+logarithmic term uses the exponential decay of $f_a(y)$ and boundedness
+of $u_a(x)$, with $x|\log v|\le tv^{\min J}|\log v|$.
+The second uses arbitrary polynomial decay of $u_a(y)$,
+$f_a(x)\le1$ and $|\log(1-v)|\le\log2$. The last uses the
+exponential decay of $f_a(y)$. Reflection covers the other half.
+Thus $S_\beta:=\sup_{a\in J,t\ge0}(1+t)^\beta S_a(t)<\infty$.
+Defining $W_X$ as above with $w_a$ in place of $u_a$, we obtain
+\[
+ W_X\le\max\{W_T,W_X/2+S_\beta\}
+ \quad\Longrightarrow\quad W_X\le\max\{W_T,2S_\beta\}.
+\]
+Conjugate symmetry extends both derivative bounds to negative $t$.
+A finite cover gives the stated bounds on every compact memory interval.
+Since $\beta$ is arbitrary, multiplication by any fixed power of $t$
+leaves an integrable uniform majorant. Differentiation under Fourier
+inversion and dominated convergence prove the claimed joint continuity
+of $\partial_a\partial_u^k h_a$ for every $k$.
 \end{proof}
 
 

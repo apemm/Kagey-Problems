@@ -42,8 +42,9 @@ and set $Z_a=E^a\mathcal L_a$. With the normalization of~\cite{glrs2025},
  m_n=\frac{\Gamma(1+an)}{n!}\E \mathcal L_a^n,
  \qquad m_0=m_1=1.
 \]
-The bound $m_n\le C_a^n$ in~\cite[Section 3]{glrs2025}, applied to
-the even moments, gives $\E\exp(\delta|Z_a|)<\infty$ for small
+The bound $0<m_n\le C_a^n$ follows from
+\cite[Lemma~2.10 and Corollary~2.14]{glr2026}. Applied to
+the even moments, it gives $\E\exp(\delta|Z_a|)<\infty$ for small
 $\delta>0$. Hence $M_a(z)=\E e^{zZ_a}$ is analytic on a strip
 about the imaginary axis. Its power series and the moment equation give
 \begin{equation}\label{eq:an-moment-ode}
@@ -63,6 +64,10 @@ For $0<y<Y_a$ define
  t=\sqrt y\,H_a(y)^{-a},\qquad
  A(t)=H_a(y)\sqrt{1-y},\qquad B(t)=H_a(y)\sqrt y.
 \end{equation}
+This is the imaginary-axis form of the closed expression in
+\cite[Proposition~3.2]{glrs2025}, with their $G(it)=i\sqrt y$
+and $(G(it)/(it))^{1/a}=H_a(y)$. We verify the continuation
+directly from~\eqref{eq:an-AB}.
 The map from $y$ to $t$ increases from zero to infinity.
 Equation~\eqref{eq:an-H-ode} gives
 \[
@@ -70,8 +75,11 @@ Equation~\eqref{eq:an-H-ode} gives
  =\frac{1}{2yH_a(y)\sqrt{1-y}},
 \]
 and substitution shows that~\eqref{eq:an-param} satisfies~\eqref{eq:an-AB}.
-Near zero, $A$ is even, $B$ is odd, and both are analytic in $t$,
-with $A(0)=1$ and $B'(0)=1$.
+Since $H_a(0)=1$, the analytic map $y\mapsto yH_a(y)^{-2a}$
+has derivative one at zero. The identity $t^2=yH_a(y)^{-2a}$
+therefore makes $y$ analytic in $t^2$ near zero.
+Thus $A$ is even and analytic, while $B=tH_a(y)^{1+a}$ is odd
+and analytic, with $A(0)=1$ and $B'(0)=1$.
 These data determine both power series. The coefficient
 recurrence has denominator $na-1$ for even $n\ge2$, and $na-a$
 for odd $n\ge3$, both positive. Thus the parametrization agrees locally with
@@ -151,7 +159,7 @@ Lemma~\ref{lem:curvature-weight} says that $g_a''(0)$ has the sign
 of $\mathcal R(a)-1$.
 
 When $a\le2/3$, the extra weight $H_a^{2-3a}$ decreases in $y$.
-It therefore lowers the mean of the density proportional to
+By Chebyshev's association inequality, it lowers the mean of the density proportional to
 $y^{1/2}$, giving $\int y\,d\mu_a(y)\le3Y_a/5$.
 At $a=2/3$, the first three terms of~\eqref{eq:an-H} give
 \[
@@ -198,8 +206,9 @@ proportional to
 \begin{equation}\label{eq:an-rescaled-weight}
  W_a(u)=u^{1/2}(1-u)^{-s_a}K_a(u)^{-s_a}.
 \end{equation}
-To make the mean increase, we show that its density ratios increase
-strictly in $u$ as $a$ increases.
+To make the mean increase, we show that the score
+$\partial_a\log W_a(u)$ is strictly increasing in $u$ and use
+the covariance identity for the derivative of an expectation.
 
 First, $Y_a<2/3$ on $I$. The first three terms give
 \[
@@ -272,7 +281,7 @@ terms, giving the strict bound
     -s_a\partial_a\left(\frac{\partial_uK_a}{K_a}\right)\notag\\
  &\ge3-\frac{63}{32}-\frac7{100}\frac{45}{4}
    =\frac{39}{160}>0.
- \label{eq:an-MLR}
+ \label{eq:an-increasing-score}
 \end{align}
 The score $\partial_a\log W_a$ is therefore strictly increasing
 in $u$. If $\nu_a$ denotes the normalized measure in
@@ -281,7 +290,8 @@ in $u$. If $\nu_a$ denotes the normalized measure in
  \frac{d}{da}\int u\,d\nu_a(u)
  =\operatorname{Cov}_{\nu_a}\bigl(u,\partial_a\log W_a(u)\bigr)>0.
 \]
-The strict inequality follows by writing the covariance as
+This is the strict form of Chebyshev's association inequality.
+Indeed, the covariance is
 one half the expectation of
 $(U-V)(S(U)-S(V))$ for independent $U,V\sim\nu_a$ and the
 strictly increasing score $S$. Differentiation under the
@@ -310,5 +320,74 @@ point, let $a\uparrow a_*$ from below. Joint continuity preserves
 $g_a(x)\ge g_a(y)$ for $0\le x<y$. Thus the critical density is
 nonincreasing on the positive half-line too. Analyticity excludes
 a constant interval, so its unique mode is at zero.
+\end{proof}
+
+The root bounds also determine the sign of the fourth derivative
+at the threshold.
+
+\begin{lemma}\label{lem:analytic-quartic}
+For $2/3\le a\le69/100$, we have $g_a^{(4)}(0)<0$.
+In particular, $B_*=-g_{a_*}^{(4)}(0)>0$.
+\end{lemma}
+
+\begin{proof}
+We first extend the Mellin calculation by one integration by parts.
+With $u,w$ as in the proof of Lemma~\ref{lem:curvature-weight}, put
+\[
+ c_a=(1+a)^2,\qquad
+ P_a(y)=\frac3a(1-y)(1-c_ay)-y(1-c_ay)-2c_ay(1-y).
+\]
+Since $dy/du=-2ay^{1+1/(2a)}\sqrt{1-y}$, differentiation gives
+$w'''(u)=-2a^2y^{2/a}P_a(y)$.
+This derivative is bounded at zero and is $O(u^{-4})$ at infinity.
+The boundary terms vanish for $0<\Re s<3/a$, so
+\eqref{eq:an-mellin-continued} gives
+\[
+ \mathcal F(s)=-\frac1{\Gamma(4-as)}
+                \int_0^\infty u^{3-as}w'''(u)\,d u.
+\]
+The right side is holomorphic for $0<\Re s<4/a$.
+For $1/2<a<4/5$, we may therefore set $s=5$ and use
+$g_a^{(4)}(0)=\mathcal F(5)/\pi$ to obtain
+\begin{equation}\label{eq:an-fourth-derivative}
+ g_a^{(4)}(0)=\frac{a}{\pi\Gamma(4-5a)}
+ \int_0^{Y_a}y^{3/2}(1-y)^{-1/2}H_a(y)^{3-5a}P_a(y)\,d y.
+\end{equation}
+The integral converges absolutely because $H_a$ has a simple zero
+and $3-5a>-1$.
+
+Now let $a\in[2/3,69/100]$. The root bounds in the preceding proof
+give $1/2<Y_a<2/3$. Expanding $P_a$ and bounding its coefficients
+using $2/3\le a\le7/10$ gives, for $y\ge0$,
+\[
+ \begin{split}
+ P_a(y)&=\frac3a-\left(2a^2+7a+9+\frac6a\right)y
+                    +\left(3a^2+9a+9+\frac3a\right)y^2\\
+       &\le\frac92-23y+22y^2=:Q(y).
+ \end{split}
+\]
+Here the coefficient of $-y$ is at least $1457/63>23$, and
+the coefficient of $y^2$ is at most $2127/100<22$.
+Since $Q(0)>0$, $Q(1/2)=-3/2$ and $Q(2/3)=-19/18$,
+this quadratic has exactly one root $r$ in $(0,Y_a)$.
+It is positive before $r$ and negative after it.
+For $1/2\le Y\le2/3$, direct integration gives
+\[
+ Y^{-5/2}\int_0^Y y^{3/2}Q(y)\,d y
+ =\frac95-\frac{46}{7}Y+\frac{44}{9}Y^2
+ \le-\frac{83}{315}<0,
+\]
+where convexity reduces the bound to the two endpoints.
+
+The remaining weight $R_a(y)=(1-y)^{-1/2}H_a(y)^{3-5a}$
+is positive and increasing on $(0,Y_a)$.
+The sign change at $r$ therefore gives
+$R_a(y)Q(y)\le R_a(r)Q(y)$ throughout this interval. Consequently,
+\[
+ \int_0^{Y_a}y^{3/2}R_a(y)P_a(y)\,d y
+ \le R_a(r)\int_0^{Y_a}y^{3/2}Q(y)\,d y<0.
+\]
+The prefactor in~\eqref{eq:an-fourth-derivative} is positive on
+$[2/3,69/100]$, which proves the claim.
 \end{proof}
 
