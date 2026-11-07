@@ -3,6 +3,7 @@
 import importlib.util
 import json
 import os
+from contextlib import chdir
 from pathlib import Path
 import tempfile
 import unittest
@@ -58,6 +59,25 @@ class SelectionTests(unittest.TestCase):
     def test_external_auxiliary_files_are_built_on_a_clean_checkout(self):
         self.assertEqual(pdfs.dependency_order(self.config, ['S3']), ['C', 'S3'])
 
+    def test_tex_search_inputs_rebuild_paper_and_dependents(self):
+        self.config['C']['texinputs'] = ['papers/common/sn-jnl']
+        template = 'papers/common/sn-jnl/sn-jnl.cls'
+        self.files[template] = b'original class'
+        before = self.hashes()
+        self.files[template] = b'updated class'
+        after = self.hashes()
+        self.assertNotEqual(before['C'], after['C'])
+        self.assertNotEqual(before['S3'], after['S3'])
+        self.assertEqual(before['D'], after['D'])
+
+    def test_journal_class_search_path_is_configured(self):
+        repository = Path(__file__).resolve().parents[2]
+        config = json.loads((repository / pdfs.CONFIG).read_text(encoding='utf-8'))
+        group = config['C']
+        self.assertIn('problem131_chains_sn.tex', group['roots'])
+        self.assertIn('kagey-problems/problem131/common/sn-jnl', group['texinputs'])
+        self.assertIn('C', config['S3']['depends_on'])
+
     def test_dependency_cycles_fail(self):
         self.config['C']['depends_on'] = ['S3']
         with self.assertRaises(ValueError):
@@ -70,6 +90,42 @@ class SelectionTests(unittest.TestCase):
                         'Package xr Warning: No file supplement.aux']:
             self.assertRegex(message, pdfs.BAD_REFERENCES)
         self.assertNotRegex('Overfull \\hbox (0.1pt too wide)', pdfs.BAD_REFERENCES)
+
+
+class CompilationTests(unittest.TestCase):
+    def test_texinputs_reach_every_pass_with_portable_paths_and_defaults(self):
+        with tempfile.TemporaryDirectory(prefix='paper build ') as folder, chdir(folder):
+            directory = Path(folder)
+            (directory / 'main.pdf').write_bytes(b'%PDF-test')
+            (directory / 'main.log').write_text('No reference warnings.')
+            template = directory / 'shared template'
+            group = {'directory': str(directory), 'roots': ['main.tex']}
+            for separator in (':', ';'):
+                for inherited in ('', 'user-tex-path'):
+                    for configured in (False, True):
+                        with self.subTest(separator=separator, inherited=inherited,
+                                          configured=configured):
+                            group['texinputs'] = ['shared template'] if configured else []
+                            with patch.object(pdfs, 'WORK', directory / 'work'), \
+                                 patch.object(pdfs, 'summary'), \
+                                 patch.object(pdfs.os, 'pathsep', separator), \
+                                 patch.dict(os.environ, {'TEXINPUTS': inherited}), \
+                                 patch.object(pdfs.subprocess, 'run') as run:
+                                run.return_value.returncode = 0
+                                pdfs.compile_group('C', group, '123')
+                            self.assertEqual(run.call_count, 3)
+                            for call in run.call_args_list:
+                                environment = call.kwargs['env']
+                                if configured:
+                                    paths = ['.', template.resolve().as_posix()]
+                                    if inherited:
+                                        paths.append(inherited)
+                                    self.assertEqual(environment['TEXINPUTS'],
+                                                     separator.join([*paths, '']))
+                                else:
+                                    self.assertEqual(environment['TEXINPUTS'], inherited)
+                                self.assertEqual(environment['SOURCE_DATE_EPOCH'], '123')
+                                self.assertEqual(call.kwargs['cwd'], directory)
 
 
 class PublishingTests(unittest.TestCase):
