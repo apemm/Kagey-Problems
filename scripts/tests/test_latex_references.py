@@ -9,6 +9,12 @@ spec.loader.exec_module(module)
 
 
 class ReferenceExports(unittest.TestCase):
+    def test_abstract_stops_before_generated_labels(self):
+        preamble = (r'{A {nested} abstract with \{escaped braces\}.}' + '\n' +
+                    r'\newlabel{thm:x}{{1.2}{3}{Title}{theorem.1.2}{main.pdf}}')
+        self.assertEqual(module.groups(preamble)[0],
+                         r'A {nested} abstract with \{escaped braces\}.')
+
     def test_nested_title_and_external_destination(self):
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder)
