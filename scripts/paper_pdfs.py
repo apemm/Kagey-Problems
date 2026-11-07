@@ -49,7 +49,8 @@ def below(path, directory):
 
 
 def source_files(group, tracked, outputs):
-    prefixes = [group['directory'], *group.get('extra_inputs', [])]
+    prefixes = [group['directory'], *group.get('extra_inputs', []),
+                *group.get('texinputs', [])]
     excluded = [group['directory'] + '/' + item for item in group.get('exclude', [])]
     return sorted(p for p in tracked if p not in outputs
                   and Path(p).suffix.lower() in EXTENSIONS
@@ -125,6 +126,15 @@ def compile_group(name, group, epoch):
     directory = Path(group['directory'])
     roots = group['roots']
     environment = {**os.environ, 'SOURCE_DATE_EPOCH': str(epoch), 'FORCE_SOURCE_DATE': '1'}
+    if group.get('texinputs'):
+        # Config paths are repository-relative; TeX runs in the paper directory.
+        # Forward slashes work with kpathsea on both Windows and Unix. An empty
+        # final component keeps the standard TeX search path available.
+        paths = [Path(path).resolve().as_posix() for path in group['texinputs']]
+        if environment.get('TEXINPUTS'):
+            paths.append(environment['TEXINPUTS'])
+        environment['TEXINPUTS'] = os.pathsep.join(
+            ['.', *paths, ''])
     previous = None
     for turn in range(1, 7):
         for root in roots:
