@@ -4,7 +4,7 @@ Status (2026-11-06): hand proof below, checked by computer for h <= 8 on full bo
 h <= 10 on every junction window. An independent audit of the proof found it correct up to three
 wording gaps, fixed below (alpha, gamma-diag, and the side-side case). A second, separately written
 board check confirms random balanced partitions, random edge orders and random end padding for
-h = 5, 6, 7, 8. Not yet in any paper.
+h = 5, 6, 7, 8. The proof is now Section 8 of jis/pemmasani.tex (Theorem "large widths").
 
 ## Statement
 

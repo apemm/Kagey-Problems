@@ -11,3 +11,5 @@ import KageyProblems.Problem001.Padding
 import KageyProblems.Problem001.AxisCycles
 import KageyProblems.Problem001.Collar
 import KageyProblems.Problem001.CollarBoards
+import KageyProblems.Problem001.GeneralLocal
+import KageyProblems.Problem001.GeneralTheorem

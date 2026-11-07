@@ -33,5 +33,6 @@ corners.
 - Proofs in `jis/pemmasani.tex` (the paper); checks in `verify_narrow.py` and `jis/scripts`.
 - Excess-1 is refuted: f(5,8) = 14 > 5+8 (2026-10-17), and f(6,8) = 15.
 - Six rows solved at every width (2026-11-06); seven rows: f(7,m) = m+12 for m >= 24.
-- Still open: f(h,m) = m + floor(h^2/4) for large m when h >= 8; counting optima beyond four
-  rows; the growth of f(n,n).
+- General theorem (2026-11-06): f(h,m) = m + floor(h^2/4) for every h >= 3 and all large m
+  (paper, Section 8).
+- Still open: the least such width; counting optima beyond four rows; the growth of f(n,n).

@@ -419,3 +419,12 @@ Widths 24 and 25 are SAT for the partition {2,4,6} | {1,3,5,7}:
 16,25,7,27,1,7,7,7,12,2,14,1,1,23,34,45,56,7,7,47,6,6,4,36,67.
 Both pass verify_narrow, the side-vector enumerator and solver/brute.py. So f(7,m) = m+12 for every
 m >= 24. Widths 20 and 22 are still running; the least width is open (open question 2).
+
+## General theorem in the paper and in Lean (2026-11-06)
+
+The theorem is now Section 8 of jis/pemmasani.tex (Theorem "large widths" and Proposition
+"alternating seas"), with intro Theorem D. The h = 9 board (width 708, excess 20) is also valid.
+The Lean files lean/KageyProblems/Problem001/GeneralLocal.lean and GeneralTheorem.lean prove
+fval_general : 3 <= h -> Mh h <= m -> fval h m = m + h^2/4 symbolically for every h, with the
+Proposition for any triangle-free graph (AltHyp.alt_sea); #print axioms gives only propext,
+Classical.choice and Quot.sound. Open question 2 now asks for the growth of the least such width.
