@@ -17,7 +17,7 @@ import sys
 CONFIG = Path('.github/papers.json')
 STATE = Path('.github/latex-build-state.json')
 WORK = Path('.pdf-build')
-GLOBAL_INPUTS = [str(CONFIG), 'scripts/paper_pdfs.py', '.github/workflows/paper-pdfs.yml']
+GLOBAL_INPUTS = [CONFIG.as_posix(), 'scripts/paper_pdfs.py', '.github/workflows/paper-pdfs.yml']
 EXTENSIONS = {'.tex', '.sec', '.bib', '.bst', '.cls', '.sty', '.clo', '.def',
               '.bbx', '.cbx', '.lbx', '.pdf', '.png', '.jpg', '.jpeg', '.eps',
               '.svg', '.csv', '.dat', '.txt', '.tikz', '.pgf'}
