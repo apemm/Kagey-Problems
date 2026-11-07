@@ -22,7 +22,7 @@ h rows and m columns, and a_h(m) is the number of maximum blackouts.
   with the finite collar theorem).
 - Six rows (computer): f(6,m) = m+7 for 8 <= m <= 11, f(6,m) = m+8 for 12 <= m <= 14, and
   f(6,m) = m+9 for every m >= 15. So f(h,m) is known for every h <= 6 and every m.
-- Seven rows (computer): f(7,m) = m+12 for every m >= 26.
+- Seven rows (computer): f(7,m) = m+12 for every m >= 24.
 - Small cells (computer): f(6,6) = 12, f(6,7) = 13, f(7,7) = 14, f(6,8) = 15, f(7,8) = 16. The guess
   f = h+m for both sides at least 4 fails at 5 x 8 and 6 x 8.
 - Square grids: f(n,n) >= c n^(6/5) (1+ln n)^(-2/5) for some c > 0 and all large n.
