@@ -15,7 +15,7 @@ ROOT = P.parents[2]
 HERE = P / 'verification'
 LEAN = ROOT / 'kagey-problems/problem131/lean'
 BUILD = ROOT / '.pdf-build/paperD-submission'
-TAG = 'paperD-ejp-v4'
+TAG = 'paperD-ejp-v5'
 TITLE = 'The bias interval of the elephant random walk'
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--package-only', action='store_true',
@@ -56,7 +56,7 @@ def build(directory, stem):
                                 stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         (directory/f'pass{n+1}.txt').write_bytes(result.stdout)
         require(result.returncode == 0, f'Failed TeX build: {directory}')
-    log = (directory/(stem+'.log')).read_text(errors='replace')
+    log = (directory/(stem+'.log')).read_text(encoding='utf-8', errors='replace')
     for bad in ['undefined references', 'undefined citations', 'Overfull',
                 '! LaTeX Error', 'Label(s) may have changed', 'does not exist']:
         require(bad not in log, f'{stem}: {bad}')
@@ -98,7 +98,7 @@ for path in ejp_sources:
     shutil.copy2(path,ejp/path.relative_to(P))
 
 if args.package_only:
-    previous=json.loads((HERE/'delivery-manifest.json').read_text())
+    previous=json.loads((HERE/'delivery-manifest.json').read_text(encoding='utf-8'))
     for path in arxiv_sources:
         name=path.relative_to(P).as_posix()
         require(digest(path)==previous['input_sources'].get(name) or
@@ -126,7 +126,7 @@ metadata={'title':TITLE,'author':'Arjun Pemmasani','primary_category':'math.PR',
           'license_suggestion':'arXiv.org perpetual, non-exclusive license'}
 (P/'arxiv_metadata.json').write_text(json.dumps(metadata,indent=2)+'\n',encoding='utf-8')
 
-verification=json.loads((HERE/'verification-manifest.json').read_text())
+verification=json.loads((HERE/'verification-manifest.json').read_text(encoding='utf-8'))
 require(verification.get('all_checks_passed') is True, 'Lean audit is not complete')
 checked_modules=verification['libraries']['PaperD']['modules']
 for module in checked_modules:

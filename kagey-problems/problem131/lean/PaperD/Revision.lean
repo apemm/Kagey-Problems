@@ -29,15 +29,20 @@ import PaperD.EJPFiniteCentralZero
 import PaperD.EJPAnalyticThresholdBounds
 import PaperD.EJPAnalyticThresholdOrder
 import PaperD.EJPAnalyticThresholdMellin
+import PaperD.EJPAnalyticThresholdSeriesEndpoint
+import PaperD.EJPAnalyticThresholdParamModel
+import PaperD.EJPAnalyticThresholdComparison
+import PaperD.EJPAnalyticThresholdFinal
+import PaperD.EJPAnalyticThresholdFinalRegularity
 
 /-!
 # Formalization of the November 2026 manuscript strengthenings
 
-* The analytic threshold modules check rational endpoint bounds, scalar
-  derivative estimates, strict covariance for actual integrals, unique-crossing
-  deductions, and Mellin continuation after two integrations by parts.
-  The H-series construction and its identification with the randomized
-  characteristic function and central curvature remain written analysis.
+* The analytic threshold modules construct the H-series, its root and the
+  normalized root weights. Singular ODE uniqueness identifies the actual
+  exponentially randomized characteristic function. The inverse chart, Mellin
+  continuation and final substitution give the central-curvature integral.
+  Rational bounds and strict covariance control its parameter dependence.
 
 * The exact first-flip weights give the Jensen center bound.
 * A direct characteristic-function proof gives the weak Landau limit under

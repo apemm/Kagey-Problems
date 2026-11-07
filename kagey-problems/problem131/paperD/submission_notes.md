@@ -27,8 +27,9 @@ to build both packages in isolation, verify their text and write hashes.
 The completed Lean audit is in paperD/verification/.
 Run Lean only in the separate workspace C:/Users/arjun/lean-work/paperD,
 never inside OneDrive. The shared library includes archived results as
-specified in its MAP.md. The analytic uniqueness proof adds three Lean modules. Their checked steps
-and remaining analytic inputs are listed in the map. The numerical certificate
+specified in its MAP.md. The analytic uniqueness modules construct the H-series
+and identify the actual randomized transform and curvature integral. The map
+lists their checked steps and cited probabilistic inputs. The numerical certificate
 inputs are unchanged.
 
 ## Scope

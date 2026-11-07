@@ -29,9 +29,11 @@ archived results. Its [coverage map](../lean/PaperD/MAP.md) distinguishes
 formal proofs, hypotheses and written analysis.
 
 The analytic threshold proof uses a positive-weight curvature integral and
-strict likelihood-ratio order. The accompanying Lean modules check its scalar
-bounds, covariance argument and Mellin continuation. The construction of the
-actual transform remains a written proof.
+strict likelihood-ratio order. Lean constructs the actual H-series and its
+root, identifies the randomized characteristic function, and derives the
+curvature integral. The actual weight comparison then gives the unique
+crossing on the full memory interval. The published moment equation and
+conditional-law Fourier facts are explicit inputs, as recorded in the coverage map.
 
 ## Certificate files
 

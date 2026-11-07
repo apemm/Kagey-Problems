@@ -2,7 +2,7 @@
 
 This archive contains the Paper D Lean library, its pinned Mathlib dependency,
 certificate scripts and records, and the phase-figure script and data.
-It accompanies repository tag `paperD-ejp-v4` at
+It accompanies repository tag `paperD-ejp-v5` at
 https://github.com/apemm/Kagey-Problems.
 
 Extract outside OneDrive or another synchronized folder. With the matching
