@@ -122,6 +122,26 @@ def auxiliary_signature(directory, roots):
             if (directory / Path(root).with_suffix(suffix)).exists()}
 
 
+def bibliography_signature(directory, root):
+    commands, visited = [], set()
+
+    def read_aux(path):
+        path = path.resolve()
+        if path in visited or not path.exists():
+            return
+        visited.add(path)
+        for command, value in re.findall(
+                r'^\s*\\(citation|bibdata|bibstyle|@input)\{([^}\r\n]*)\}',
+                path.read_text(encoding='utf-8', errors='replace'), re.MULTILINE):
+            if command == '@input':
+                read_aux(directory / value)
+            else:
+                commands.append((command, value))
+
+    read_aux(directory / Path(root).with_suffix('.aux'))
+    return tuple(commands) if any(cmd == 'bibdata' for cmd, _ in commands) else None
+
+
 def compile_group(name, group, epoch):
     directory = Path(group['directory'])
     roots = group['roots']
@@ -136,6 +156,7 @@ def compile_group(name, group, epoch):
         environment['TEXINPUTS'] = os.pathsep.join(
             ['.', *paths, ''])
     previous = None
+    bibliographies, last_bibtex_turn = {}, 0
     for turn in range(1, 7):
         for root in roots:
             transcript = WORK / 'logs' / name / (Path(root).stem + f'-pass{turn}.txt')
@@ -149,8 +170,28 @@ def compile_group(name, group, epoch):
             if result.returncode:
                 print(transcript.read_text(errors='replace')[-8000:], flush=True)
                 raise RuntimeError(f'{name}/{root} failed on pass {turn}; see {transcript}')
+            signature = bibliography_signature(directory, root)
+            bbl = directory / Path(root).with_suffix('.bbl')
+            if signature is not None and (bibliographies.get(root) != signature or not bbl.is_file()):
+                transcript = WORK / 'logs' / name / (Path(root).stem + f'-bibtex-pass{turn}.txt')
+                with transcript.open('w', encoding='utf-8') as out:
+                    try:
+                        result = subprocess.run(
+                            ['bibtex', Path(root).with_suffix('').as_posix()],
+                            cwd=directory, env=environment, stdout=out, stderr=subprocess.STDOUT,
+                            timeout=180)
+                    except OSError as error:
+                        out.write(str(error))
+                        raise RuntimeError(f'{name}/{root}: BibTeX could not start; see {transcript}') from error
+                if result.returncode:
+                    print(transcript.read_text(errors='replace')[-8000:], flush=True)
+                    raise RuntimeError(f'{name}/{root}: BibTeX failed on pass {turn}; see {transcript}')
+                if not bbl.is_file():
+                    raise RuntimeError(f'{name}/{root}: BibTeX produced no bibliography; see {transcript}')
+                bibliographies[root] = signature
+                last_bibtex_turn = turn
         current = auxiliary_signature(directory, roots)
-        if turn >= 3 and current == previous:
+        if turn >= max(3, last_bibtex_turn + 2) and current == previous:
             break
         previous = current
     else:

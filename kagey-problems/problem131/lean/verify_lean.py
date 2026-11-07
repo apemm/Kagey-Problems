@@ -368,7 +368,10 @@ def check_library(lib: str, ws: Path, lake: str, env: dict[str, str], lean_versi
         decls = declarations(path)
         names.extend(decls)
         module_entries.append({'module': module, 'file': path.relative_to(BASE).as_posix(),
-                               'sha256': sha256(path), 'declarations': len(decls)})
+                               'sha256': sha256(path),
+                               'sha256_lf': hashlib.sha256(
+                                   path.read_bytes().replace(b'\r\n', b'\n')).hexdigest(),
+                               'declarations': len(decls)})
     duplicates = sorted({n for n in names if names.count(n) > 1})
     if duplicates:
         raise CheckFailed(f'{lib}: declarations parsed twice: {duplicates}')

@@ -5,6 +5,7 @@ import json
 import os
 from contextlib import chdir
 from pathlib import Path
+import subprocess
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -126,6 +127,131 @@ class CompilationTests(unittest.TestCase):
                                     self.assertEqual(environment['TEXINPUTS'], inherited)
                                 self.assertEqual(environment['SOURCE_DATE_EPOCH'], '123')
                                 self.assertEqual(call.kwargs['cwd'], directory)
+
+
+class BibliographyTests(unittest.TestCase):
+    def setUp(self):
+        temporary = tempfile.TemporaryDirectory(prefix='paper bibliography ')
+        self.addCleanup(temporary.cleanup)
+        self.directory = Path(temporary.name)
+        self.group = {'directory': str(self.directory), 'roots': ['draft.v2.tex']}
+        self.aux = lambda root, turn: (
+            '\\citation{first}\n\\bibdata{references}\n\\bibstyle{plain}\n')
+        self.commands, self.passes = [], {}
+        self.bibtex_error = None
+        self.produce_bbl = True
+
+    def simulate(self, command, **kwargs):
+        self.assertEqual(kwargs['cwd'], self.directory)
+        self.assertEqual(kwargs['env']['SOURCE_DATE_EPOCH'], '123')
+        self.assertEqual(kwargs['timeout'], 180)
+        self.commands.append(command)
+        if command[0] == 'pdflatex':
+            root = command[-1]
+            turn = self.passes[root] = self.passes.get(root, 0) + 1
+            aux = self.aux(root, turn)
+            if (self.directory / Path(root).with_suffix('.bbl')).exists():
+                aux += '\\bibcite{first}{1}\n'
+            (self.directory / Path(root).with_suffix('.aux')).write_text(aux)
+            (self.directory / Path(root).with_suffix('.pdf')).write_bytes(b'%PDF-test')
+            (self.directory / Path(root).with_suffix('.log')).write_text('No reference warnings.')
+        else:
+            self.assertEqual(command[0], 'bibtex')
+            kwargs['stdout'].write('BibTeX transcript\n')
+            if isinstance(self.bibtex_error, Exception):
+                raise self.bibtex_error
+            if self.bibtex_error:
+                return subprocess.CompletedProcess(command, self.bibtex_error)
+            if self.produce_bbl:
+                (self.directory / (command[1] + '.bbl')).write_text('Generated bibliography')
+        return subprocess.CompletedProcess(command, 0)
+
+    def compile(self):
+        with patch.object(pdfs, 'WORK', self.directory / 'work'), \
+             patch.object(pdfs, 'summary'), patch('builtins.print'), \
+             patch.object(pdfs.subprocess, 'run', side_effect=self.simulate):
+            return pdfs.compile_group('paper', self.group, '123')
+
+    def bibtex_commands(self):
+        return [command for command in self.commands if command[0] == 'bibtex']
+
+    def test_bibtex_runs_once_then_two_latex_passes_ignore_bibcite_changes(self):
+        self.compile()
+        self.assertEqual([command[0] for command in self.commands],
+                         ['pdflatex', 'bibtex', 'pdflatex', 'pdflatex'])
+        self.assertEqual(self.bibtex_commands(), [['bibtex', 'draft.v2']])
+        transcript = self.directory / 'work/logs/paper/draft.v2-bibtex-pass1.txt'
+        self.assertIn('BibTeX transcript', transcript.read_text())
+
+    def test_manual_bibliography_does_not_run_bibtex(self):
+        self.aux = lambda root, turn: '\\citation{first}\n\\bibcite{first}{1}\n'
+        self.compile()
+        self.assertEqual(self.bibtex_commands(), [])
+        self.assertEqual(self.passes['draft.v2.tex'], 3)
+
+    def test_existing_bibliography_is_refreshed_on_first_pass(self):
+        (self.directory / 'draft.v2.bbl').write_text('Stale bibliography')
+        self.compile()
+        self.assertEqual(self.bibtex_commands(), [['bibtex', 'draft.v2']])
+        self.assertEqual((self.directory / 'draft.v2.bbl').read_text(), 'Generated bibliography')
+
+    def test_bibliography_input_changes_rerun_bibtex_and_delay_stabilization(self):
+        for command in ('citation', 'bibdata', 'bibstyle'):
+            with self.subTest(command=command):
+                self.commands, self.passes = [], {}
+                self.aux = lambda root, turn: (
+                    '\\citation{first}\n\\bibdata{references}\n\\bibstyle{plain}\n' +
+                    '\\' + command + '{' + ('before' if turn < 3 else 'after') + '}\n')
+                self.compile()
+                self.assertEqual(self.bibtex_commands(), [['bibtex', 'draft.v2']] * 2)
+                self.assertEqual(self.passes['draft.v2.tex'], 5)
+                self.assertTrue((self.directory / 'work/logs/paper/draft.v2-bibtex-pass3.txt').exists())
+
+    def test_included_auxiliary_citation_changes_rerun_bibtex(self):
+        def auxiliary(root, turn):
+            (self.directory / 'section.aux').write_text(
+                '\\citation{' + ('first' if turn < 3 else 'second') + '}\n' +
+                '\\@input{./draft.v2.aux}\n')
+            return '\\bibdata{references}\n\\bibstyle{plain}\n\\@input{section.aux}\n'
+        self.aux = auxiliary
+        self.compile()
+        self.assertEqual(self.bibtex_commands(), [['bibtex', 'draft.v2']] * 2)
+        self.assertEqual(self.passes['draft.v2.tex'], 5)
+
+    def test_multiple_roots_have_separate_bibliographies(self):
+        self.group['roots'].append('journal.tex')
+        self.compile()
+        self.assertEqual(self.bibtex_commands(), [['bibtex', 'draft.v2'], ['bibtex', 'journal']])
+        self.assertEqual(self.passes, {'draft.v2.tex': 3, 'journal.tex': 3})
+
+    def test_bibtex_failure_reports_transcript_and_stops(self):
+        self.bibtex_error = 2
+        with self.assertRaisesRegex(RuntimeError, 'BibTeX failed on pass 1; see .*bibtex-pass1'):
+            self.compile()
+        self.assertEqual(self.passes['draft.v2.tex'], 1)
+
+    def test_missing_bibtex_reports_transcript_and_stops(self):
+        self.bibtex_error = FileNotFoundError('bibtex unavailable')
+        with self.assertRaisesRegex(RuntimeError, 'BibTeX could not start; see .*bibtex-pass1'):
+            self.compile()
+        transcript = self.directory / 'work/logs/paper/draft.v2-bibtex-pass1.txt'
+        self.assertIn('bibtex unavailable', transcript.read_text())
+
+    def test_bibtex_without_output_fails(self):
+        self.produce_bbl = False
+        with self.assertRaisesRegex(RuntimeError, 'BibTeX produced no bibliography'):
+            self.compile()
+
+    def test_bibtex_timeout_propagates_to_build_failure_handling(self):
+        self.bibtex_error = subprocess.TimeoutExpired(['bibtex', 'draft.v2'], 180)
+        with self.assertRaises(subprocess.TimeoutExpired):
+            self.compile()
+
+    def test_unstable_citations_exhaust_pass_limit(self):
+        self.aux = lambda root, turn: '\\bibdata{references}\n\\citation{key' + str(turn) + '}\n'
+        with self.assertRaisesRegex(RuntimeError, 'references did not stabilize after six passes'):
+            self.compile()
+        self.assertEqual(self.passes['draft.v2.tex'], 6)
 
 
 class PublishingTests(unittest.TestCase):
