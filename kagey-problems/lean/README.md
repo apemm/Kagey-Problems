@@ -54,6 +54,14 @@ Mathlib `v4.33.1` (Lean `v4.33.1`).  All files compile with no `sorry`, no `axio
     for every `m ≥ 8` (`fval_five`) and `f(6,m) = m + 9` for every `m ≥ 15` (`fval_six`).
     In `fval_six` the width `m = 15` comes from the stored 24-point board and every `m ≥ 16` from
     the collar theorem.
+  - `Problem001/GeneralLocal.lean` and `Problem001/GeneralTheorem.lean` (proof): the general
+    theorem of Section "Every height at large widths" (Theorem "large widths"), `f(h,m) = m + ⌊h²/4⌋` for every `h ≥ 3` and every
+    `m ≥ M_h = q_h + (q_h - 1)(2W_h + 1)` (`fval_general`, with the bound in
+    `general_theorem`). The lower bound is the Proposition on alternating boundary seas
+    (`AltHyp.alt_sea`): for any triangle-free graph on the rows with `q` distinct edges and
+    doubles at least `2W_h + 2` columns apart, the blackout is valid and has `m + q` points.
+    It is applied to `K_{⌊h/2⌋,⌈h/2⌉}`. `GeneralLocal.lean` holds the case analysis near one
+    double. This formalization was generated with Claude Opus 5.5.
   - Not formalized: Lemma "leftmost corner" itself (only the row and span facts the collar
     proof uses), the rectangle counts, Sections 5–6, the generating functions, `f(5,5) ≤ 10`,
     and every SAT-based upper bound.
@@ -68,7 +76,8 @@ lake build
 
 `decide +kernel` makes the kernel evaluate each finite check, so the compiler is not trusted,
 but it is slow: on an unloaded machine `Kernel.lean` takes about 30 minutes and `Boards.lean`
-about 5, and both take about an hour on a loaded machine.  The other files take seconds.
+about 5, and both take about an hour on a loaded machine.  `GeneralLocal.lean` takes about
+2 minutes and the other files take seconds.
 
 The `.lake/` directory (Mathlib checkout and build cache) is git-ignored; if this folder lives
 inside a synced directory you may prefer to copy it elsewhere before building.
