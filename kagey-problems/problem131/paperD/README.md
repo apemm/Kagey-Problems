@@ -32,8 +32,11 @@ The analytic threshold proof uses a positive-weight curvature integral and
 strict likelihood-ratio order. Lean constructs the actual H-series and its
 root, identifies the randomized characteristic function, and derives the
 curvature integral. The actual weight comparison then gives the unique
-crossing on the full memory interval. The published moment equation and
-conditional-law Fourier facts are explicit inputs, as recorded in the coverage map.
+crossing on the full memory interval. The moment recurrence, exponential
+randomization, fixed-point equation, Fourier decay and density representation
+are derived from the actual finite walk and its ordinary weak limit.
+Existence and convergence of that classical weak limit remain explicit inputs.
+The coverage map records this boundary and the separate written proofs.
 
 ## Certificate files
 
