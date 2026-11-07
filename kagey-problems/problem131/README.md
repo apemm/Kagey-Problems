@@ -118,26 +118,21 @@ Files. The folder `paperC2`, with the main file `problem131_reconstruction.tex` 
 `problem131_reconstruction_arxiv.tex` and its PDF (46 pages, with the reversible design as Section
 8), its section files, the check scripts, the cover letter and `paperC2/README.md`.
 
-## Paper D: Shape transitions and rare reversals in the elephant random walk
+## Paper D: The bias interval of the elephant random walk
 
-Paper D is in preparation for the Journal of Theoretical Probability. Its finite-step sign
-theorem connects two regimes. For rare reversals, a total variation approximation by a truncated
-Luria–Delbrück law gives a Landau local limit and mode locations. At the unique crossing between
-the origin and either end, every even length at least eight has two modal intervals and a unique
-interior minimum. For fixed superdiffusive memory, the limit density has one or two point modes
-and exactly two or four inflection points. A computer-free fourth-moment proof gives bimodality
-for memory at least 4/5. The certificate classifies memory outside a window shorter than 3.3e-15;
-uniqueness of a transition inside that window is open.
+Paper D targets the Electronic Journal of Probability. Its 33-page manuscript
+proves the GLRS conjecture for every superdiffusive memory. The analytic
+theorem classifies the bimodal biases and proves positivity and interior
+regularity of their boundary. A separate computer-assisted theorem locates
+the unique memory transition and gives its quartic and three-halves laws.
 
-The November 1 revision also sharpens the center bound and weakens the hypothesis for weak
-Landau convergence. These additions are written proofs, outside the unchanged Lean coverage.
-Sections S1–S5 hold additional results. Section S6 proves the threshold-certificate lemmas and
-is supplied separately, with the bibliography, as review-only material.
-
-Files. The folder `paperD`, with the journal version `problem131_memory.tex` and
-`problem131_memory.pdf` (46 pages), the arXiv build `problem131_arxiv.tex` and
-`problem131_arxiv.pdf` (66 pages) with Sections S1 to S6, its section and appendix files, the check scripts,
-`threshold_proofs_review.pdf`, `submission_notes.md` and `paperD/README.md`.
+The finite sign engine, weak transfer and Gaussian smoothing are explicit.
+One paragraph describes formal coverage and points to the detailed map.
+Global boundary monotonicity and finite thresholds at every length remain open.
+The rare-reversal and finite-threshold developments are preserved in the
+[combined archive](paperD/archive/combined-2026-11-06/README.md).
+See [the manuscript](paperD/problem131_memory.pdf),
+[submission files](paperD/submission_notes.md) and [Lean coverage](lean/PaperD/MAP.md).
 
 ## Paper E: Endpoint crossings for the planar persistent walk
 
