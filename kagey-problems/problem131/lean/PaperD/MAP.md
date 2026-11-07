@@ -3,7 +3,7 @@
 ## EJP fixed-memory revision, November 6, 2026
 
 The current EJP manuscript contains only the fixed-memory results. The shared library also retains the finite-threshold, rare-reversal and near-one profile results in the archived combined manuscript. The build, imported-source inventory and axiom audit are in
-`reports/paperD-ejp-2026-11-05`. `PaperD.Revision` imports the revision modules.
+[`paperD/verification`](../../paperD/verification/README.md). `PaperD.Revision` imports the revision modules.
 Older theorem numbers below refer to their dated manuscripts; the labels in
 this table identify the current statements without depending on renumbering.
 
@@ -42,8 +42,8 @@ proof inputs, not new kernel-checked integration results.
 
 ## Headline proof audit and weak transfer
 
-The current audit is in `reports/paperD-headline-audit-2026-11-01`.
-It supersedes the local-limit requirement for Theorem 4.6 in the older
+The current audit is in [`paperD/verification`](../../paperD/verification/README.md).
+The weak-transfer interface supersedes the local-limit requirement for Theorem 4.6 in the older
 interfaces below. Those interfaces remain available as alternative proofs.
 
 | Result | Formal entry | Inputs and boundary |
@@ -62,9 +62,9 @@ from these explicit bounds; it does not assume uniqueness.
 
 ## Transition closure and the interval of biases
 
-The preceding November 1 revision added the following results. Its build and axiom
-audit are recorded separately in `reports/paperD-transition-2026-11-01`.
-The earlier audit records below refer to their respective frozen revisions.
+The following results entered the library on November 1. They are included
+in the current build and axiom audit in `paperD/verification/`.
+Earlier counts below describe their respective frozen revisions.
 
 | Manuscript result | Lean declaration or module | Explicit inputs and limits |
 | --- | --- | --- |
@@ -85,8 +85,8 @@ in the manuscript's verification section.
 
 The further November 1 revision adds the results below. `PaperD.Revision`
 imports every new module. The source inventory and full build/axiom record
-are kept in `reports/paperD-strengthening-2026-11-01` at the repository root.
-That audit passed for 353 modules and 23,777 theorem/lemma declarations, with
+are included in the current audit in `paperD/verification/`.
+The November 1 audit passed for 353 modules and 23,777 theorem/lemma declarations, with
 zero unimported files and only the three standard Lean axioms. Every recorded
 source hash still matched at the final-state check.
 
@@ -137,7 +137,7 @@ or bimodality. The sharp unimodal bound `9/5` is proved directly for an even dec
 density, without Khinchine's representation as a hypothesis.
 
 The full source inventory, build output, axiom audit, proof correspondence and rerun command
-are in [`reports/paperD-formalization-2026-11-01`](../../../../reports/paperD-formalization-2026-11-01/README.md).
+are in [`paperD/verification`](../../paperD/verification/README.md).
 These are conditional formal proofs of the new arguments, not a formal proof of the cited
 limit-law theory. The earlier total variation upgrade, fixed-memory bridge, likelihood
 theorem and threshold certificate remain outside the formal coverage.
@@ -840,9 +840,7 @@ results has a Lean counterpart, so no Lean theorem lost its place in the paper.
   `paperD/certify_center.py`. Theorem 3.15 (the window around the center, with constants `C_w` and
   `N_0`) is gone, together with part (b) of Proposition B.5, which only it used. The double-precision
   certificate of the old Lemma 3.7 is still in `paperD/certify_elephant.py` as a supplementary
-  check. Both statements, in an earlier wording, are in
-  `paperD/removed_proofs/cuts_2026-10-15/sec_erw_shape.tex`, and the git history has their last
-  versions. Old Section 3.5 (the center), which held only Theorem 3.15 and the conjecture, is gone,
+  check. The repository history preserves both removed statements. Old Section 3.5 (the center), which held only Theorem 3.15 and the conjecture, is gone,
   and the conjecture moved to the section on convexity.
 * Added. Definition 3.14 (convex between the humps) and Lemma 3.23 (the center from convexity).
   The introduction now has Theorems 1.1, 1.2 and 1.3, which do not change the numbers of the other

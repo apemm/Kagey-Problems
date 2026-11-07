@@ -15,14 +15,14 @@ The finite-threshold development remains in the combined archive.
 Global decrease of the bias boundary and an all-length finite-threshold
 theorem are open questions, not additional claims of this submission.
 
-The rare-reversal results, Luria–Delbrück and Landau estimates, near-one
+The rare-reversal results, Luriaâ€“DelbrÃ¼ck and Landau estimates, near-one
 profile, crossings, finite-threshold development and their proofs are preserved in the
 [archived 70-page combined version](archive/combined-2026-11-06/README.md).
 The fixed-memory manuscript does not depend on that archive for a proof.
 The journal and arXiv entry points contain the same paper.
 
 See [submission_notes.md](submission_notes.md) for the source packages and
-build commands, and [the verification record](../../../reports/paperD-ejp-2026-11-05/README.md)
+build commands, and [the verification record](verification/README.md)
 for the declaration audit. The Lean library includes both present and
 archived results. Its [coverage map](../lean/PaperD/MAP.md) distinguishes
 formal proofs, hypotheses and written analysis.
@@ -44,5 +44,3 @@ and 1600 bits. The independent endpoint check uses python-flint 0.9.0,
 1800 moments and 2000 bits, and 1200 moments for the conditional slope.
 The refined constants use 2000 moments and 2600 bits. Both refined scripts
 retain their acceptance tests under python -O.
-
-Historical descriptions are in [archive/README-before-fixed-split.md](archive/README-before-fixed-split.md).

@@ -49,7 +49,7 @@ requires `T3 < 10`. The bound on the absolute first moment follows from
 A fresh run with 1,100 moments and 1,600-bit precision under `python -O`
 passed all 19 checks. It returned `Q' = [0.6890 +/- 8.16e-5]` and
 `g''''(0) = [-0.07921 +/- 4.05e-6]`. The numerical source files were unchanged.
-The fresh output is in `reports/paperD-headline-audit-2026-11-01`.
+The fresh output is in `kagey-problems/problem131/paperD/verification`.
 
 ## Theorem 4.6 and Propositions F.5--F.6
 

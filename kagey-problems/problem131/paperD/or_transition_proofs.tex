@@ -1,7 +1,10 @@
 \subsection{Uniqueness of the transition}
 \label{or:transition-unique}
 
-To prove uniqueness inside the bracket, we differentiate the smoothing equation and bound the derivative's tail. Differentiating the error bound in Lemma~\ref{lem:thr-fpp} would not bound the derivative of the error.
+To prove uniqueness inside the bracket, we need a bound on the
+memory derivative. We differentiate the smoothing equation and
+then bound the tail. The error bound in Lemma~\ref{lem:thr-fpp}
+alone gives no bound on the derivative of that error.
 
 \begin{lemma}[differentiated smoothing bound]\label{lem:thr-parameter-tail}
 Fix a compact memory interval $I\subset(1/2,1)$. Suppose that the
@@ -43,7 +46,7 @@ The complex majorant in Lemma~\ref{lem:thr-moments}(b) makes the
 moment series locally uniformly convergent in the frequency and memory.
 Cauchy's estimate on a smaller parameter disc gives the same conclusion
 for its memory derivative and every fixed frequency derivative.
-Thus these are actual derivatives of $\phi_a$.
+We may therefore differentiate the series for $\phi_a$ term by term.
 The smoothing equation, with $p=(1+a)/2$, is
 \[
  \phi_a(t)=\int_0^1\phi_a(tv^a)
@@ -109,7 +112,7 @@ and the conservative constants
  \quad D_1=2,\quad M_a=D_a=4.
 \]
 It checks $A_1<1$, $\kappa<1/10$ and $A_0+A_S<2$, so both
-contractions have strict slack. The new tail is at most
+contractions have strict slack. The resulting tail bound is
 $1/(10000\pi)<1/30000$.
 The certified zero bracket lies strictly inside $I$.
 
@@ -132,9 +135,9 @@ The signed interval checks give
 \end{equation}
 The second enclosure uses the same Fourier bound with weight $t^4$, whose tail is $CT^{-3}/(3\pi)$.
 The file \texttt{certify\_transition.py} performs these checks, including
-the initial derivative-cell bounds. It was rerun with $1100$ moments
-and $1600$-bit precision under \texttt{python -O}. Every check uses
-\texttt{require}, so optimization cannot remove it.
+the initial derivative-cell bounds. The recorded run uses $1100$ moments
+and $1600$-bit precision under \texttt{python -O}.
+Each check uses \texttt{require}, so it also runs with optimization enabled.
 
 Continuity and the sign bracket give a zero $a_*$ of $g_a''(0)$.
 The first inequality in~\eqref{eq:thr-final-derivatives} makes it unique
@@ -171,7 +174,7 @@ The omitted tails for $C_*$, $B_*$ and $H_*$ are bounded respectively by
 \]
 The finite-frequency integrals use the same parameter and moment
 remainders as above, with weights $t^2$, $t^4$ and $t$.
-Since the bounds hold on the whole interval, they include $a_*$
-even though its exact value is unknown. Outward rounding gives the
-table's two derived coefficients. The record and rerun command are
+The bounds hold throughout the interval, so they apply at $a_*$
+without needing its exact value. Outward rounding then gives the
+two derived coefficients in the table. The record and rerun command are
 in Appendix~\ref{app:data}.

@@ -1,7 +1,7 @@
 \section{Certifying the memory threshold}\label{app:threshold}
 
-This appendix describes the certificate for Theorem~\ref{thm:threshold}.
-Appendix~\ref{or:threshold} proves the estimates it uses. Fix
+We describe how the certificate checks Theorem~\ref{thm:threshold}.
+The estimates are proved in Appendix~\ref{or:threshold}. Fix
 $a\in(\frac12,1)$ and write $\phi(t)=\E e^{it\mathcal L_a}$. Put
 $\theta_j=1$ for even $j$ and $\theta_j=a$ for odd $j$, let $m_0=m_1=1$ and
 $m_n=(na-\theta_n)^{-1}\sum_{j=1}^{n-1}\theta_jm_jm_{n-j}$ for $n\ge2$. Then
@@ -29,9 +29,9 @@ $g_a''(0)=-\pi^{-1}\int_0^\infty t^2\operatorname{Re}\phi(t)\,dt$
 on $[0,T_3]$ and bound both the series remainder and Fourier tail
 by Lemma~\ref{lem:thr-fpp}.
 
-\emph{Step 2, intervals of $a$.} Direct interval evaluation loses
-cancellations between terms of size about $10^{60}$. Instead, on
-$I=[a_0-w,a_0+w]$ we expand in $a-a_0$. Choose $\rho=w/\vartheta$
+\emph{Step 2, intervals of $a$.} The series cancels terms of size about $10^{60}$, and direct
+interval evaluation loses this cancellation. On
+$I=[a_0-w,a_0+w]$ we therefore expand in $a-a_0$ first. Choose $\rho=w/\vartheta$
 with $0<\vartheta<1$. A complex bound $|h|\le M$ on the disc of
 radius $\rho$ gives the degree-$K$ remainder
 $M\vartheta^{K+1}/(1-\vartheta)$ on $I$.
@@ -70,8 +70,8 @@ arithmetic~\cite{johansson2017}. It evaluates $R$ with $a$ as a ball over $I$
 and evaluates $G$ on subintervals of $I$, bisecting until $G\pm\eta$ has one
 sign on each. For the Hankel test it takes $k$ and a rational $x$ from a
 floating-point eigenvector at the center of a box of $a$, and checks the sum
-on the whole box with a Taylor model as in Step~2. Floating-point choices of $N$, the precision and $x$ only affect
-whether the subsequent certificate succeeds.
+on the whole box with a Taylor model as in Step~2. Floating-point calculations choose $N$, the precision and $x$.
+The ball-arithmetic check still has to succeed for those choices.
 The cells have half-width $\frac1{32}$, the Taylor order in $t$ is $12$,
 $\beta=4$, and the degree $K$ is chosen so that $M\vartheta^{K+1}\le e^{-60}$.
 Table~\ref{tab:thr-runs} lists the runs.
@@ -105,13 +105,12 @@ parameter Taylor estimates. The resulting certificate gives
 \begin{proof}[Proof of Theorem~\ref{thm:threshold}]
 The 40 intervals of the first run cover $[\frac12,0.668]$. On each, the
 scaled enclosure from Step~3 is negative, so $g_a''(0)<0$ for
-$a\in(\frac12,0.668]$. The 8 intervals of the second run cover
-$[0.668,0.6712]$. On the 2 intervals that cover $[0.668,0.6688]$ the enclosure
-is negative, and on the 5 that cover $[0.6692,0.6712]$ it is positive. On
+$a\in(\frac12,0.668]$. The eight intervals of the second run cover
+$[0.668,0.6712]$. The enclosure is negative on the two covering
+$[0.668,0.6688]$ and positive on the five covering $[0.6692,0.6712]$. On
 $[0.6688,0.6692]$ we have $\eta<1.1\cdot10^{-15}$. There the enclosure is
 negative on closed pieces that end at $z_-$ and positive on closed pieces that
-start at $z_+$, and only $(z_-,z_+)$ is undecided. The script prints these
-signs and checks this arrangement. So $g_a''(0)<0$ on $(\frac12,z_-]$ and
+start at $z_+$, and only $(z_-,z_+)$ is undecided. The script prints the signs and checks their order. So $g_a''(0)<0$ on $(\frac12,z_-]$ and
 $g_a''(0)>0$ on $[z_+,0.6712]$. The 115 boxes of the third run cover
 $[0.6705,1]$, and on each the first sum of Lemma~\ref{lem:thr-hankel} is
 negative.

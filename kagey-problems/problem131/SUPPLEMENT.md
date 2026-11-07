@@ -8,7 +8,7 @@ This supplement serves the 7 papers on Kagey's Problem 131 by A. Pemmasani and t
 | B | Vertex crossings in a symmetric Markov multinomial model | `archive/paperB/problem131_multistate.tex` |
 | C1 | Occupation counts of rarely switching Markov chains: stratified local laws, support selection and the boundary layer (the earlier EJP version was Face selection for slowly switching Markov chains) | `paperC/problem131_chains.tex` (81 pages), Springer build `paperC/problem131_chains_sn.tex` (89 pages) |
 | C2 | What the occupation law of a finite Markov chain determines: time reversal, principal minors and cycle trees | `paperC2/problem131_reconstruction.tex` (43 pages), arXiv build `paperC2/problem131_reconstruction_arxiv.tex` (46 pages) |
-| D | Shape transitions and rare reversals in the elephant random walk | `paperD/problem131_memory.tex` (52 pages), arXiv build `paperD/problem131_arxiv.tex` (72 pages), and review-only `paperD/threshold_proofs_review.pdf` (9 pages) |
+| D | The bias interval of the elephant random walk | `paperD/problem131_memory.tex` and `paperD/problem131_arxiv.tex` (33 pages each) |
 | E | Endpoint crossings for the planar persistent walk | `paperE/problem131_planar.tex` |
 | F | Bulk, big jumps and boundary layers in the occupation law of a lattice Lévy walk (the first draft, earlier Endpoint crossings for random walks with heavy-tailed runs and for aging walks, is in `archive/paperF_golden_aging`) | `paperF/problem131_levy.tex` (62 pages) |
 | S4 | The finite-size shape transition of coin-turning walks (a note) | `S4_aging_note/s4_note.tex` (12 pages) |
@@ -164,18 +164,16 @@ on the complete graph (Proposition 4.15(iv)) is computed by hand in Appendix B, 
 
 ## Paper D: the elephant random walk
 
-The scientific sources are pinned by `paperD-arxiv-v3` at commit
-`9d0f4ba4995c7ec423a70463e5136056492d365c`. The complete verification evidence is in
-[`reports/paperD-headline-audit-2026-11-01/`](https://github.com/apemm/Kagey-Problems/tree/c24791af4f3a9aa0d985fce1b0a2a68f03f33432/reports/paperD-headline-audit-2026-11-01)
-at evidence commit `c24791a`. All seven numerical scripts passed, as did the Lean build
-and axiom audit of 371 modules and 23,888 theorem or lemma declarations. The regularity,
-curvature, fourth-moment, Jensen, weak-limit and subsequent headline additions have
-formal counterparts with the inputs listed in `lean/PaperD/MAP.md` and manuscript
-Section 5. Arb enclosures, instantiation of the transition estimates with the actual
-characteristic function, assembly of uniform tails, the total variation compound
-Poisson upgrade and the fixed-memory weak bridge retain the stated written or
-numerical scope. The final document audit and package inventory are in
-`../../reports/paperD-final-audit-2026-11-02/`.
+The fixed-memory manuscript and its verification files are pinned by
+`paperD-ejp-v3`. The [verification record](paperD/verification/README.md)
+contains the build and axiom audit of 386 modules and 24,005 theorem or lemma
+declarations. The [coverage map](lean/PaperD/MAP.md) distinguishes formal
+deductions, explicit hypotheses and written or numerical proofs. The package
+inventory is in `paperD/verification/delivery-manifest.json`.
+
+The earlier combined manuscript is preserved in
+`paperD/archive/combined-2026-11-06/`. The following scripts also check its
+rare-reversal results.
 
 The command `python -B verify_all.py --paper d` runs `paperD/verify_all.py`, which runs 7 scripts
 (`verify_elephant_crossing.py`, `verify_elephant_shape.py`, `verify_elephant_odd.py`,
