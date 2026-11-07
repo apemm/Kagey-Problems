@@ -65,8 +65,8 @@ genuine inputs from newly proved steps.
 The complete Paper D audit passed after this assembly: 353 modules, 23,777
 theorem/lemma declarations, and no unimported source files. Every checked
 declaration uses only the allowed axioms `propext`, `Classical.choice`, and
-`Quot.sound`. The [build log](../../reports/paperD-strengthening-2026-11-01/build-log.txt)
-and [verification manifest](../../reports/paperD-strengthening-2026-11-01/verification-manifest.json)
+`Quot.sound`. The [build log](../../kagey-problems/problem131/paperD/verification/build-log.txt)
+and [verification manifest](../../kagey-problems/problem131/paperD/verification/verification-manifest.json)
 record the exact source hashes and results. These checks do not erase the
 explicit probability, literature, and numerical-certificate inputs listed next.
 

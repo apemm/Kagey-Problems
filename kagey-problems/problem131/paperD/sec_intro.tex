@@ -14,34 +14,35 @@ Fix the first step of a superdiffusive elephant random walk.
 Gu\'erin, Laulin, Raschel and Simon prove that its limit density is
 unimodal~\cite[Theorem~1.1]{glrs2025}. Randomizing the first step mixes
 this density with its reflection. The mixture can have two peaks,
-although each component has one. They ask which biases give two,
-conjecturing an open interval
-centered at one half~\cite[Remark~2.1(b)]{glrs2025}.
+even though each component has one. They conjecture that the biases
+giving two peaks form an open interval centered at one
+half~\cite[Remark~2.1(b)]{glrs2025}.
 We prove their conjecture and locate the unique memory threshold
 where two peaks first appear under a fair start. A related conjecture,
 eventual log-concavity, is disproved by Trinas and Valle in a recent
 preprint~\cite{tv2026}.
 
 Gu\'erin, Laulin, Raschel and Simon prove conditional unimodality
-by induction in the finite walk and then pass to its limit.
-We need an induction that allows two peaks and an arbitrary start.
-We carry the boundary histories in augmented rows, so the interior
-sign argument also controls signs entering at the ends. Restricting
-these rows to the half favored by the first step excludes a valley
-there. Lattice-window averages then transfer both shape bounds under
-weak convergence (Lemma~\ref{lem:weak-shape-transfer}).
-For curvature, Gaussian smoothing reduces the problem to Descartes'
-rule for exponential sums. The rule is classical. The contribution
-is the boundary and dominant-half construction that makes it apply
-to the biased walk.
+by induction in the finite walk, then pass to the limit.
+For an arbitrary start we must allow two peaks. We enlarge each
+row to include its boundary history (the endpoint values needed
+at later lengths). The sign argument then covers the ends too.
+On the half favored by the first step, the induction rules out
+a valley. Averaging over short lattice intervals passes both
+shape bounds to the limit under weak convergence
+(Lemma~\ref{lem:weak-shape-transfer}). For curvature we first smooth
+with a Gaussian, then use Descartes' rule for exponential sums.
+The new step is the boundary-history construction and its
+dominant-half induction, which let us use this classical rule
+for the biased walk.
 
 \subsection{The walk and its parameters}\label{sec:notation}
 
 The elephant walk~\cite{schutz2004} takes steps
 $X_1,\dots,X_N\in\{+1,-1\}$, with $+1$ meaning right.
-At each step it chooses uniformly from its earlier steps and repeats
-the chosen direction, except with probability $\varepsilon$, when it
-goes the other way. Write $U_t$ for the step chosen at time $t+1$,
+To take the next step, it chooses uniformly from its earlier steps.
+It repeats the chosen direction, except with probability $\varepsilon$,
+when it goes the other way. Write $U_t$ for the step chosen at time $t+1$,
 and call it the parent of that step. We choose all parents and all
 reversal coins independently, also independently of $X_1$.
 
@@ -60,7 +61,7 @@ $S_N/N^a$ has density $h_a$. With $\Prob(X_1=1)=q$, its density is
 The copying probability in the original notation is $p=(1+a)/2$.
 In the finite recurrences we use $r_t(k)=\varepsilon+(1-2\varepsilon)k/t$.
 
-\subsection{Fixed memory}
+\subsection{The bias interval and its threshold}
 \label{sec:results}
 
 \begin{theorem}[the bias interval, analytic]\label{thm:main-limit}
@@ -75,10 +76,10 @@ the boundary is continuously differentiable, and $b_a\to0$ as $a\uparrow1$.
 
 Theorems~\ref{thm:two-modes} and~\ref{thm:biased-limit-modes} prove
 the shape assertions, and Corollary~\ref{cor:analytic-range} gives
-the moment criterion. The interior argument in
-Theorem~\ref{thm:bias-continuity} proves positivity and regularity
-where the interval is nonempty. Corollary~\ref{cor:bias-boundary-rate}
-gives the limit at one. These arguments use no numerical certificate.
+the moment criterion. Theorem~\ref{thm:bias-continuity} proves positivity and regularity
+where the interval is nonempty, and
+Corollary~\ref{cor:bias-boundary-rate} gives the limit at one.
+None of these arguments needs a numerical certificate.
 
 \begin{theorem}[the transition, computer-assisted]\label{thm:main-threshold}
 There is a unique threshold $a_*$ such that the bias interval is
@@ -135,22 +136,22 @@ Weak convergence is enough to carry the valley bounds to a continuous
 limit (Lemma~\ref{lem:weak-shape-transfer}). For the curvature bound,
 we first smooth by a Gaussian and then apply the sign bound.
 
-\subsection{Proof overview}\label{sec:architecture}
+\subsection{How the proof works}\label{sec:architecture}
 
 \paragraph{Signs at the ends.}
-The recurrence alone is not enough at the ends. We append the boundary
-end values to each row, so that the induction keeps track of where a
-new sign could enter. In this enlarged row, an entry is either copied
-or is a positive sum of neighbors from the preceding row. We can
-therefore bound the signs of the entire row. For first differences
+A new sign can enter at an end, where the interior recurrence
+does not apply. We keep the endpoint values in the enlarged row
+before they are needed. Each update now either copies an entry
+or takes a positive sum of neighbors, so the sign bound holds
+for the whole row. For first differences
 this gives at most two modal plateaus. For second differences under
 a fair start it gives at most five sign blocks.
 
 \paragraph{The half favored by the first step.}
 Take $q\ge1/2$. The right half has no valley and dominates its
-reflection. A second peak therefore requires a decrease on the left,
-and this is also sufficient. Fix two points on the left and compare
-their values. The right value minus the left is affine in the bias
+reflection. A second peak occurs exactly when the density decreases somewhere
+on the left. Fix two points there. The value at the later point
+minus the value at the earlier point is affine in the bias
 and nonnegative at $q=1$, by conditional unimodality. Once negative,
 it stays negative as the bias moves toward one half. Taking all such
 pairs gives an interval, and reflection gives its other half.
@@ -158,11 +159,12 @@ Analyticity excludes flat pieces. We later use the two-mode bound
 again, this time to control the boundary ratio and prove continuity.
 
 \paragraph{Passing to the limit.}
-If the limit density had a forbidden valley, average over three short
-intervals around its high and low points. The inequalities remain
-strict, so weak convergence gives them for the finite law too.
-The smallest atom in the middle interval and the largest in each
-outer interval then give a forbidden finite valley.
+Suppose the limit density had a valley excluded by the finite bound.
+Take three short intervals around its high and low points.
+Their averages keep the strict inequalities, so weak convergence
+gives the same inequalities for the finite law. Choose the smallest
+atom in the middle interval and the largest in each outer interval.
+These three atoms give the forbidden finite valley.
 For two valleys we use five intervals instead
 (Lemma~\ref{lem:weak-shape-transfer}).
 For curvature we first smooth the second differences with a Gaussian.
@@ -172,8 +174,8 @@ tend to zero.
 
 \paragraph{Locating the threshold.}
 We integrate the moment series for $g_a''(0)$ and bound its Fourier
-tail through the smoothing equation. Taylor models in memory retain
-the cancellations lost by direct interval evaluation. Near the
+tail through the smoothing equation. We expand in memory before bounding the remainder
+(direct interval evaluation loses the cancellations). Near the
 zero, a positive parameter derivative makes the transition unique,
 while a negative fourth spatial derivative gives the quartic top.
 Table~\ref{tab:critical-constants} records the certified constants.
@@ -217,8 +219,7 @@ Our certified threshold is $(1+a_*)/2\approx0.83440643$ in their
 parameter. The slow finite-length approach is visible in
 Remark~\ref{rem:modes-threshold}.
 
-The bias question also belongs to the classical study of modality
-in mixtures. Eisenberger~\cite{eisenberger1964} studies how the
+Which mixing weights give two peaks is a classical question. Eisenberger~\cite{eisenberger1964} studies how the
 mixing weight affects bimodality for two normal components, and
 Robertson and Fryer~\cite{robertsonfryer1969} examine their shape
 across parameter space. Here the two components are a non-Gaussian
@@ -238,6 +239,5 @@ The sign arguments use classical variation diminution, as developed
 in Karlin's work~\cite{karlin1964,karlin1968}.
 For Gaussian smoothing we use the generalized Descartes rule from
 P\'olya and Szeg\H{o}~\cite[Part~V, Chapter~1]{polyaszego1998}.
-We include the elementary forms needed here. The walk-specific step
-is to control the boundary histories, where the positive interior
-recurrence alone gives no sign bound.
+We include the elementary forms needed here. For this walk, we must also bound the boundary histories
+before applying the positive interior recurrence.
