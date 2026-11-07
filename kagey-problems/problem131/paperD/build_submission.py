@@ -17,7 +17,7 @@ ROOT = P.parents[2]
 HERE = P / 'verification'
 LEAN = ROOT / 'kagey-problems/problem131/lean'
 BUILD = ROOT / '.pdf-build/paperD-submission'
-TAG = 'paperD-ejp-v7'
+TAG = 'paperD-ejp-v8'
 TITLE = 'The bias interval of the elephant random walk'
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--package-only', action='store_true',
@@ -78,7 +78,7 @@ def archive(path, pairs):
 source = flatten(P/'problem131_memory.tex')
 disclosure = source.split(r'\section*{A note on the use of AI}',1)[1].split(
     r'\section*{Code and data}',1)[0].strip()
-require(hashlib.sha256(disclosure.encode()).hexdigest() == '84c4b1f8d8f9e6d647d5f1ce43d77c64b2bdb197af29e0eef7c0256c95e82ed6',
+require(hashlib.sha256(disclosure.encode()).hexdigest() == '7e6596d532a7540579306e137cdda239c5a28e977ca5037f317f249214e26cca',
         'The protected disclosure differs from the pinned text')
 require(not any(ord(c)<32 and c not in '\n\r' for c in source), 'Control character in manuscript')
 require('Online Resource' not in source and 'Statements and Declarations' not in source,
@@ -139,7 +139,10 @@ for origin,name in [(ejp_pdf,'problem131_memory.pdf'),(arxiv_pdf,'problem131_arx
 arxiv_sources=[P/'problem131_arxiv.tex',P/'00README.json',P/'ejpecp.cls',*main_inputs,*figures]
 ejp_sources=common_sources
 
-abstract = source.split(r'\ABSTRACT{',1)[1].split(r'\begin{document}',1)[0].rstrip().removesuffix('}')
+sys.path.insert(0, str(ROOT/'scripts'))
+from latex_references import groups
+abstract = groups(source.split(r'\ABSTRACT',1)[1].split(r'\begin{document}',1)[0])[0]
+require(r'\newlabel' not in abstract, 'Generated reference labels entered the abstract')
 metadata={'title':TITLE,'author':'Arjun Pemmasani','primary_category':'math.PR',
           'cross_list':'cond-mat.stat-mech','abstract':abstract,
           'comments':f'{len(ejp_reader.pages)} pages, {figure_count} figures; {len(supplement_reader.pages)}-page ancillary supplement; repository tag {TAG}.',
