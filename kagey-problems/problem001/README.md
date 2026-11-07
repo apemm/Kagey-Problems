@@ -20,7 +20,9 @@ h rows and m columns, and a_h(m) is the number of maximum blackouts.
   420, and a_4(m) ~ c m^4 3.3520^m (computer).
 - Five rows: f(5,5) = 10, f(5,6) = 11, f(5,7) = 12, and f(5,m) = m+6 for every m >= 8 (computer,
   with the finite collar theorem).
-- Six rows: f(6,m) = m+9 for every m >= 15, and f(6,m) <= m+8 for 8 <= m <= 14 (computer).
+- Six rows (computer): f(6,m) = m+7 for 8 <= m <= 11, f(6,m) = m+8 for 12 <= m <= 14, and
+  f(6,m) = m+9 for every m >= 15. So f(h,m) is known for every h <= 6 and every m.
+- Seven rows (computer): f(7,m) = m+12 for every m >= 26.
 - Small cells (computer): f(6,6) = 12, f(6,7) = 13, f(7,7) = 14, f(6,8) = 15, f(7,8) = 16. The guess
   f = h+m for both sides at least 4 fails at 5 x 8 and 6 x 8.
 - Square grids: f(n,n) >= c n^(6/5) (1+ln n)^(-2/5) for some c > 0 and all large n.
@@ -33,8 +35,9 @@ incidence graph of the blackout has no 4-cycle and no 6-cycle (m >= 3). Replacin
 tree on its black rows gives a triangle-free graph on the rows, and Mantel's theorem gives the
 upper bound. The constructions for three and four rows are checked against every tilted rectangle.
 
-The main write-up is `notes/notes.pdf` (source `notes/notes.tex`): detailed notes that walk
-through every result with small examples and about 25 figures. The figures are drawn by
+The main write-up is the paper, `jis/pemmasani.tex`. The notes `notes/notes.pdf` (source
+`notes/notes.tex`) are a longer companion that walks through the results with small examples
+and about 25 figures. The figures are drawn by
 `notes/make_figures.py`, which checks every blackout it draws against the definition first. The
 paper is `jis/pemmasani.tex` (sections in `jis/sections`, compiled: `jis/pemmasani.pdf`), and
 `jis/pemmasani_jis.tex` is the same paper as one file, built by `jis/scripts/make_jis_single_file.py`.
@@ -47,18 +50,21 @@ constructions at widths up to 128, and runs the two finite four-row checks.
 
 The ILP engine and the brute-force oracle used for the table of values are in `solver/`, with
 their tests; they need the packages in `requirements.txt`. The predictions and their outcomes are
-in `data/ledger.md`. Section 9 of the paper proves that the SAT encodings behind the
-computer-assisted bounds are faithful and lists, for each computer-assisted statement, its method,
-its independent check and its evidence file; `jis/scripts/README.md` gives the commands.
+in `data/ledger.md`. Section 10 of the paper proves that the SAT encodings behind the
+computer-assisted bounds are faithful. The supplement `jis/supplement.tex` gives the table of
+values and lists, for each computer-assisted statement, its method, its independent check and its
+evidence file; `jis/scripts/README.md` gives the commands.
 
 Build the notes from `notes/` with `python make_figures.py` and then `pdflatex notes.tex` (3
-times). Build the paper from `jis/` with `pdflatex pemmasani.tex` (three times).
+times). Build the paper from `jis/` with `pdflatex pemmasani.tex`, `bibtex pemmasani`, and
+`pdflatex pemmasani.tex` twice more, then the supplement with `pdflatex supplement.tex` (twice).
 
 `game/index.html` is a playable version of the problem on grids up to 10 x 10 (open it in a
 browser). It is the rectangle game from my website, with larger grids.
 
 ## Open
 
-- Classify and count the optima for three and four rows.
-- Excess-1: blackout n+m when both dimensions are at least 5.
-- Compare the incidence-cycle formulation with the test-cover and extremal graph literature.
+- Does f(h,m) = m + floor(h^2/4) hold for all large m at every height h >= 8?
+- The generating function and growth rate of a_5(m).
+- The order of growth of f(n,n), between n^(6/5) and n^(4/3) up to logarithms.
+- Excess-1 (f = n+m when both sides are at least 4, except 4 x 4 and 4 x 5) is refuted at 5 x 8.

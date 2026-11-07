@@ -6,7 +6,8 @@ guide forbids % comments in the submitted file. A line whose first non-space cha
 is dropped. A comment after code on a line is removed together with the line end and the
 leading spaces of the next line, which is what TeX itself does with it, so the typeset text
 does not change. An escaped \\% is kept as text. The TODO comments stay in the multi-file
-sources.
+sources. The \\bibliographystyle and \\bibliography lines are replaced by pemmasani.bbl, which
+BibTeX writes from pemmasani.bib with jis.bst.
 
 Usage, from the jis folder:
     python scripts/make_jis_single_file.py [root] [output]
@@ -79,7 +80,14 @@ def main():
     here = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     root = sys.argv[1] if len(sys.argv) > 1 else here
     target = sys.argv[2] if len(sys.argv) > 2 else os.path.join(root, 'pemmasani_jis.tex')
-    text = strip_comments(expand(root, read(root, 'pemmasani.tex')))
+    text = expand(root, read(root, 'pemmasani.tex'))
+    # Inline the bibliography that BibTeX wrote (run pdflatex and bibtex on pemmasani.tex first),
+    # so the export stays a single file.
+    bib = BS + 'bibliographystyle{jis}\n' + BS + 'bibliography{pemmasani}'
+    if bib in text:
+        bbl = read(root, 'pemmasani.bbl').rstrip('\n')
+        text = text.replace(bib, bbl)
+    text = strip_comments(text)
     if '%' in text.replace(BS + '%', ''):
         sys.exit('an unescaped % is left in the output')
     with open(target, 'w', encoding='utf-8', newline='\n') as fh:

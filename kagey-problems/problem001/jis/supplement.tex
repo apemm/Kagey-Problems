@@ -1,0 +1,172 @@
+\documentclass[12pt]{article}
+\usepackage{fullpage}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[shortlabels]{enumitem}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\usepackage{xr-hyper}
+\externaldocument[P-]{pemmasani}
+\setlength{\emergencystretch}{2em}
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thesection}{S\arabic{section}}
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem*{theorem*}{Theorem}
+\newcommand{\kA}{\mathsf{A}}
+\newcommand{\kB}{\mathsf{B}}
+\newcommand{\kC}{\mathsf{C}}
+\newcommand{\kE}{\mathsf{E}}
+\newcommand{\seqnum}[1]{\href{https://oeis.org/#1}{\rm \underline{#1}}}
+
+\title{Supplement to ``Maximum Blackouts That Keep Every Lattice Rectangle Identifiable''}
+\author{Arjun Pemmasani}
+\date{}
+
+\begin{document}
+\maketitle
+
+This supplement collects the computed values, the evidence for each computer-assisted
+statement, and the details of the certificates and formal checks. Numbers of theorems,
+lemmas, and sections refer to the paper. All paths start from
+\nolinkurl{kagey-problems/problem001} in the repository cited there.
+
+\section{Computed values}
+
+\begin{table}[!htb]
+\centering\scriptsize\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrl@{}}
+\toprule
+grid & $f$ & $a_h(m)$ & by \\
+\midrule
+$2\times2$ & $4$ & $1$ & HIB \\
+$2\times3$ & $4$ & $12$ & HIB \\
+$2\times4$ & $5$ & $32$ & HIB \\
+$2\times5$ & $6$ & $80$ & IB \\
+$2\times6$ & $7$ & $192$ & TI \\
+$2\times7$ & $8$ & $448$ & TI \\
+$3\times3$ & $5$ & $53$ & IB \\
+$3\times4$ & $6$ & $224$ & IB \\
+$3\times5$ & $7$ & $892$ & IB \\
+$3\times6$ & $8$ & $3{,}420$ & IB \\
+$3\times7$ & $9$ & $12{,}704$ & IB \\
+$3\times8$ & $10$ & $45{,}864$ & IB \\
+$3\times9$ & $11$ & $161{,}992$ & IB \\
+$3\times10$ & $12$ & $562{,}912$ & ITD \\
+\bottomrule
+\end{tabular}\hspace{1.5em}
+\begin{tabular}{@{}lrrl@{}}
+\toprule
+grid & $f$ & $a_h(m)$ & by \\
+\midrule
+$4\times4$ & $7$ & $316$ & IB \\
+$4\times5$ & $8$ & $1{,}810$ & IB \\
+$4\times6$ & $10$ & $26$ & IB \\
+$4\times7$ & $11$ & $292$ & IB \\
+$4\times8$ & $12$ & $2{,}118$ & IMD \\
+$5\times5$ & $10$ & $8$ & IB \\
+$5\times6$ & $11$ & $76$ & ISC \\
+$5\times7$ & $12$ & $1{,}184$ & ISC \\
+$5\times8$ & $14$ & $4$ & TSDC \\
+$5\times9$ & $15$ & $44$ & TSC \\
+$5\times10$ & $16$ & $350$ & TSC \\
+$5\times11$ & $17$ & $3{,}004$ & TSC \\
+$5\times12$ & $18$ & $24{,}706$ & TSCM \\
+$6\times6$ & $12$ & $160$ & ISC \\
+\bottomrule
+\end{tabular}\hspace{1.5em}
+\begin{tabular}{@{}lrrl@{}}
+\toprule
+grid & $f$ & $a_h(m)$ & by \\
+\midrule
+$6\times7$ & $13$ & $2{,}536$ & SC \\
+$6\times8$ & $15$ & $8$ & SC \\
+$6\times9$ & $16$ & -- & TS \\
+$6\times10$ & $17$ & -- & TS \\
+$6\times11$ & $18$ & -- & TS \\
+$6\times12$ & $20$ & -- & TS \\
+$6\times13$ & $21$ & -- & TS \\
+$6\times14$ & $22$ & -- & TS \\
+$6\times15$ & $24$ & -- & TS \\
+$7\times7$ & $14$ & $7{,}300$ & SC \\
+$7\times8$ & $16$ & $\ge18$ & S \\
+$7\times26$ & $38$ & -- & T \\
+$7\times27$ & $39$ & -- & T \\
+\bottomrule
+\end{tabular}
+\caption{Computed values for $h\le m$. H: hand, T: theorem, I: ILP (value only on
+$3\times10$, $4\times8$, $5\times6$, $5\times7$, and $6\times6$), B: brute force, D: equality
+candidates, C: column search, S: two SAT encodings, with complete enumeration for exact
+counts, M: transfer counter,
+--: not established. On $7\times8$ only a lower bound for the count is given.}
+\label{tab:values}
+\end{table}
+
+As a check on rectangle generation, the totals match
+\seqnum{A085582} for squares and \seqnum{A289832} for rectangular grids.
+The constructions in \nolinkurl{jis/data/table_counts/sat_7x8_16.json}
+give $f(7,8)\ge16$, completing $f(7,8)=16$.
+The separate enumeration
+\nolinkurl{jis/data/table_counts/sat2split_7x8_16.json} gives $18$
+valid constructions with $16$ points. This proves only $a_7(8)\ge18$.
+
+\section{Evidence for the computer-assisted statements}
+
+\begin{table}[!htb]
+\centering\scriptsize\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.3\textwidth}>{\raggedright\arraybackslash}p{0.3\textwidth}>{\raggedright\arraybackslash}p{0.36\textwidth}@{}}
+\toprule
+statement & method; independent check & evidence \\
+\midrule
+Cor.~\ref{P-cor:fourboundary}, Thm.~\ref{P-thm:fivefive}(b) & candidates; brute force & \nolinkurl{verify_narrow.py} \\
+Thms.~\ref{P-thm:threegf}, \ref{P-thm:threeclosed}, Rem.~\ref{P-rem:threeorbits} & SymPy; transfer matrix & \nolinkurl{three_row_*.json} \\
+Thm.~\ref{P-thm:fourgfexact}, Cor.~\ref{P-cor:fourgrowth}, Table~\ref{P-tab:fourvalues} & Prop.~\ref{P-prop:fourautomaton}; candidates & \nolinkurl{four_row_*.json} \\
+Thms.~\ref{P-thm:fiverow}(a), \ref{P-thm:refute} & encoding A, LRAT; encoding B & \nolinkurl{unsat_certificates.json}, \nolinkurl{small_cells_*} \\
+Thms.~\ref{P-thm:fiverow}(b), \ref{P-thm:sixrow}(c) & collar board; enumerators, Lean & \nolinkurl{five_row_*family*}, \nolinkurl{six_row_*w15*} \\
+Thm.~\ref{P-thm:fiverow}(c), Rem.~\ref{P-rem:fivecounts} & SAT, counter; candidate search, second counter & \nolinkurl{five_row_*} \\
+Thm.~\ref{P-thm:sixrow}, upper bounds & structured, LRAT; second encoder, search & \nolinkurl{unsat_certificates.json}, \nolinkurl{six_row_sat_w*}, \nolinkurl{six_row_excess8_*} \\
+Thm.~\ref{P-thm:sixrow}(a), lower bound & collar board; two enumerators & \nolinkurl{six_row_collar_6x9_check.json} \\
+Thm.~\ref{P-thm:sixrow}(b), lower bound & three enumerators & \nolinkurl{six_row_excess8_family.json} \\
+Thm.~\ref{P-thm:sevenrow} & structured SAT, collar board; enumerators, brute force & \nolinkurl{seven_row_sat_w*}, \nolinkurl{seven_row_witness_brute.json} \\
+Table~\ref{tab:values} & SAT; column search & \nolinkurl{table_counts/*} \\
+\bottomrule
+\end{tabular}
+\caption{Computer-assisted statements, their method and check, and the evidence. Evidence
+files are in \nolinkurl{jis/data}, and \nolinkurl{verify_narrow.py} is in the problem folder.}
+\label{tab:evidence}
+\end{table}
+
+\section{Certificates}
+
+The CNF files for the cell instances and the $70$ structured instances with $m+9$ points
+are written twice, by two independently written generators, and the clauses agree. We split $6\times8$ by its first column into $64$ cases,
+and $7\times7$ and $7\times8$ into $128$ each. The second generator checks that these splits
+exhaust the first-column choices. The $345$ instances with $m+8$ points on six rows, one for
+each labeled graph of Lemma~\ref{P-lem:sixbelow} at widths $9$, $10$, and $11$, are written
+by \nolinkurl{jis/scripts/six_row_excess8_export_cnf.py}. Encoding B, run separately on
+the same $345$ cases, also finds every one unsatisfiable. The hashes of the CNF files, the
+proofs, and the results of both proof checkers are in
+\nolinkurl{jis/data/unsat_certificates.json} and
+\nolinkurl{jis/data/six_row_excess8_certificates.json}. The proofs themselves are too large
+for the repository.
+
+\section{Formal checks}
+
+Kernel-checked validity tests cover $S_0$, $S_8$, the construction
+in Theorem~\ref{P-thm:refute}, the $6\times15$ construction in
+Theorem~\ref{P-thm:sixrow}, and the $5\times13$ and $6\times23$ collar
+boards. The formal proofs also show that at most one rectangle can be hidden.
+The kernel also checks that
+$\{(1,2),(2,1),(3,2),(2,3)\}$ hides
+$D(1,1)$ on $4\times3$. Thus the restriction $m\ge4$ in
+Theorem~\ref{P-thm:hidden} is necessary.
+
+The remaining unformalized parts are Lemma~\ref{P-lem:leftmost},
+Theorem~\ref{P-thm:equality}, Lemma~\ref{P-lem:sixbelow}, $f(5,5)\le10$,
+Lemma~\ref{P-lem:enc}, the seven-row constructions, and the other results in
+Sections~\ref{P-sec:strip} to~\ref{P-sec:square}.
+
+
+
+\end{document}

@@ -43,7 +43,7 @@ below, where it was rerun, and whether the regenerated file equals the committed
 
 ## Inventory
 
-### R0. Section 9 programs
+### R0. Section 10 programs
 
 - `python -m solver.engine` (ILP, CBC through PuLP), `python -m solver.brute` (from the
   definition, no lemma) and `python verify_narrow.py` (the lemmas and constructions of Sections 4
@@ -187,17 +187,32 @@ nor a measured CPU time. The whole-grid runs on 7 x 8, and the whole-grid MiniSa
 search on 7 x 7, stopped at the 1800 s cap and are recorded unresolved. `table_counts/summary.json`
 collects the counts.
 
-### R11. Six rows, widths 9 to 14 (open question 2)
+### R11. Six rows, widths 9 to 14 (Theorem "six rows" (a) and (b))
 
 | Command | Inputs | Evidence | Stored time | Rerun |
 |---|---|---|---|---|
 | `python jis/scripts/six_row_collar_6x9_check.py` | `small_cells_sat_6x9_b16.json` | `six_row_collar_6x9_check.json` | 6.8 s invocation | 8.1 s, equal |
+| `python jis/scripts/six_row_excess8_sat.py W A 7200` and `... W B 7200`, for W = 8 to 14 | `verify_narrow.py`, `six_row_structured_sat.py` | `six_row_excess8_w{W}_{A,B}.json`, logs in `jis/logs` | widths 9 to 11: all 115 cases UNSAT in both; at most a few seconds per case | not rerun |
+| `python jis/scripts/six_row_excess8_family.py` | `verify_narrow.py`, `solver/brute.py` | `six_row_excess8_family.json` | | about 1 min |
+| `python jis/scripts/six_row_excess8_brute.py OUT w12 w13 w14 result files` | `solver/brute.py` | `six_row_excess8_brute.json` | | under 1 min |
+| `python jis/scripts/six_row_excess8_export_cnf.py OUT_DIR 9 10 11` | `six_row_excess8_sat.py` | the 345 CNF files and `six8_manifest.json`, certified in `six_row_excess8_certificates.json` | | |
+
+Width 8 is the calibration (all 115 cases UNSAT, f(6,8) = 15), and width 15 in case K is SAT, as it
+must be. Widths 12 to 14 stop at the first SAT case; the stored files are partial on purpose.
+
+### R11b. Seven rows (Theorem "seven rows")
+
+| Command | Inputs | Evidence | Stored time | Rerun |
+|---|---|---|---|---|
+| `python jis/scripts/seven_row_sat.py W A TRIPLE 14400` (W = 26, 27, 28; TRIPLE = 246, 147, 246) | `six_row_structured_sat.py` | `seven_row_sat_w{W}_A_p{TRIPLE}.json` | | not rerun |
+| `python jis/scripts/seven_row_witness_brute.py` | the three files above, `solver/brute.py` | `seven_row_witness_brute.json` | about 4 min | |
 
 ### R12. LRAT certificates
 
 f(5,6) < 12, f(5,7) < 13, f(6,6) < 13, f(6,7) < 14, f(6,8) < 16, f(7,7) < 15, f(7,8) < 17, and the six-row instances of
-Theorem "six rows" (a) for widths 8 to 14. The sources, the commands and the faithfulness argument
-are in `jis/unsat/README.md`. The paper proves the faithfulness of the encodings in Section 9
+Theorem "six rows" for widths 8 to 14 with m+9 points, and the 345 instances with m+8 points for
+widths 9 to 11 (`six_row_excess8_certificates.json`, same pipeline, one CNF generator). The sources, the commands and the faithfulness argument
+are in `jis/unsat/README.md`. The paper proves the faithfulness of the encodings in Section 10
 (Lemma "faithful encodings"). The 394 proofs (28.6 GB as text LRAT) are not in the repository.
 Their SHA-256 are in the evidence file.
 
