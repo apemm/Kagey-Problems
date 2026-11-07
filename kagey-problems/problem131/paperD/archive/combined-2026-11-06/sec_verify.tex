@@ -1,0 +1,53 @@
+\section{Verification}\label{sec:verify}
+
+Table~\ref{tab:verification} separates the written proofs, Lean proofs
+and interval computations. Several Lean results take hypotheses that
+we must establish for this walk. The transition's transcendental
+enclosures, for example, come from interval arithmetic outside Lean.
+
+\begin{center}\small
+\captionsetup{hypcap=false}
+\begin{tabular}{p{0.29\textwidth}p{0.28\textwidth}p{0.31\textwidth}}
+\toprule
+Claim & How it is established & Trusted base\\
+\midrule
+Finite shape bounds and the shape at every even crossing &
+Written proof and Lean, including finite integer certificates &
+Lean kernel and exact rational arithmetic\\[5pt]
+Fair-limit shape, inflection counts, bias interval and boundary regularity &
+Written proofs, with Lean deductions for shape and the interval &
+Cited limit law, conditional unimodality and Fourier representation\\[5pt]
+Unique memory threshold &
+Interval certificate and written Fourier estimates, followed by a Lean implication &
+Arb transcendental arithmetic and the stated uniform envelopes\\[5pt]
+Quartic critical top, emerging modes and bias width &
+Written Taylor and maximization arguments using certified derivatives &
+The same Fourier envelopes and interval enclosures\\[5pt]
+Compound Poisson and Landau approximations &
+Written proofs, certified constants and Lean mode deductions &
+Fourier inversion, compound Poisson identity, Efron--Stein and Arb\\[5pt]
+Near-one profile and eventual unique finite threshold &
+Written coupling, finite-difference and sign proofs, with Lean recurrence steps &
+Martingale bounds, Poisson integrals, the shape theorem and derivative regularity\\
+\bottomrule
+\end{tabular}
+\captionof{table}{Proofs and their inputs. We do not use the numerical
+illustrations in the proofs. Appendix~\ref{app:data} gives the reproduction records
+and specifies what each formal result checks.}
+\label{tab:verification}
+\end{center}
+
+The formalization uses Lean~4.33.1 and Mathlib at \texttt{0df444a360ea}.
+Its declaration audit allows only \texttt{propext},
+\texttt{Classical.choice} and \texttt{Quot.sound}.
+Lean checks the integer certificates by exact outward rounding,
+without \texttt{native\_decide}. We prove the total variation comparison,
+martingale bridge, boundary regularity, profile rates and critical expansions
+in the text. The formal mode deduction takes the sharper local-limit
+bounds and the gap $\Delta_L=1/50$ as hypotheses. Arb verifies these
+inequalities separately.
+
+The transition check retains its acceptance tests under
+\texttt{python -O}. A second check evaluates the two threshold endpoint
+signs directly at the real parameter values. It bypasses the parameter
+Taylor models, though it still uses Arb and the same analytic tail bound.

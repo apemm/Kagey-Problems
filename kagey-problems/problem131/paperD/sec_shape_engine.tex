@@ -1,8 +1,8 @@
 \section{Finite shape bounds}\label{sec:convex}
 
 The second difference of $P_N$ changes sign at most four times.
-At an even crossing with $N\ge8$, this will give two intervals of modes
-and a unique interior minimum, without taking a limit.
+Together with the first-difference bound, this controls the modes
+and inflection points of the limiting density.
 Appendix~\ref{app:modes} treats first differences for arbitrary initial
 bias and proves the corresponding bounds for the limit density.
 
@@ -20,8 +20,7 @@ For every $t\ge1$ and every integer $k$,
  P_{t+1}(k)&=\bigl(1-r_t(k)\bigr)P_t(k)+r_t(k-1)\,P_t(k-1),\label{eq:P-rec}\\
  D_{t+1}(k)&=\bigl(1-r_t(k+1)\bigr)D_t(k)+r_t(k-2)\,D_t(k-1).\label{eq:D-rec}
 \end{align}
-Also $P_t(k)=P_t(t-k)$ and $D_t(k)=D_t(t-k)$. The same two recurrences hold
-with $f_t(m)$ in place of $P_t(k)$.
+Also $P_t(k)=P_t(t-k)$ and $D_t(k)=D_t(t-k)$.
 \end{lemma}
 
 \begin{proof}
@@ -31,9 +30,8 @@ kt)=r_t(k)$. This gives \eqref{eq:P-rec} for $0\le k\le t+1$, where at $k=0$ and
 $k=t+1$ the formula has one extra term, namely $r_t(-1)P_t(-1)$ or
 $(1-r_t(t+1))P_t(t+1)$, and this term is $0$ because $P_t(-1)=P_t(t+1)=0$. For
 other $k$ every term vanishes. The
-symmetry of $P_t$ is Lemma~\ref{lem:erw-reduction}, and it gives the symmetry
-of $D_t$. The chain $M$ of Lemma~\ref{lem:erw-reduction} has the same
-transition probabilities, so \eqref{eq:P-rec} holds for $f_t$ as well.
+symmetry follows by reversing every step, which preserves the law
+under a fair start. Taking second differences gives the symmetry of $D_t$.
 
 For \eqref{eq:D-rec} put $\varsigma=a/t$, so that $r_t(b+1)=r_t(b)+\varsigma$.
 We insert \eqref{eq:P-rec} at $k+1$, $k$ and $k-1$ into the definition of
@@ -48,12 +46,12 @@ ones agree because $2r_t(k+1)+r_t(k-2)=3r_t(k)$, and the third ones agree
 because $r_t(k+1)+2r_t(k-2)=3r_t(k-1)$.
 \end{proof}
 
-Trinas and Valle~\cite[(2.2)]{tv2026} use \eqref{eq:P-rec}, the forward
-equation of Lemma~\ref{lem:erw-reduction}, for a superdiffusive local
+Trinas and Valle~\cite[(2.2)]{tv2026} use \eqref{eq:P-rec}, the forward equation, for a superdiffusive local
 limit theorem. Their higher-difference recurrence~\cite[(4.10)]{tv2026}
 supports a certified fixed-memory study of log-concavity. We use \eqref{eq:D-rec} to count sign changes. Its coefficients are
 positive for $2\le k\le t-1$, so new sign changes can enter only at
-the ends. The next lemma is the elementary fact behind this argument.
+the ends. The next lemma is the elementary variation-diminishing fact behind
+this argument (see~\cite{karlin1964,karlin1968} for the general theory).
 
 For a finite real list $z$, define its sign pattern
 $\operatorname{sp}(z)$ by deleting the zeros of $z$, replacing each
@@ -72,6 +70,58 @@ $\operatorname{sp}(\eta)\preceq\operatorname{sp}(\zeta)$.
 
 We prove this in Appendix~\ref{app:signs-step}.
 
+\begin{proposition}[augmented rows and weak limits]\label{prop:augmented-transfer}
+Let laws on lattices of spacing $\eta_n\to0$ converge weakly to a
+continuous density $g$. Include zero masses in each lattice row.
+Suppose that, for each $n$, its first differences occur in order in
+the last of a finite sequence of augmented rows. Each update has
+the form $z_i^{\mathrm{new}}=A_i z_i+B_i z_{i+1}$ with
+$A_i,B_i\ge0$.
+If every initial row has sign pattern contained in $(+,-,+,-)$,
+then $g$ has no two successive strict valleys.
+If the same construction for differences on the positive half-line
+starts with pattern contained in $(+,-)$, then $g$ has no strict
+valley on $[0,\infty)$.
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:interleave} preserves the stated patterns through
+each finite sequence of rows. Two successive strict valleys would
+give differences with signs $-,+,-,+$, by telescoping.
+A single valley gives $-,+$. The respective patterns exclude these.
+Lemma~\ref{lem:weak-shape-transfer} transfers the exclusions to $g$
+by averaging over short lattice windows.
+\end{proof}
+
+For the walk, the work is to construct these rows and check their
+initial signs. Figure~\ref{fig:augmented-rows} shows the construction
+for first differences. Proposition~\ref{prop:all-bias-modes} checks
+the full rows, and Proposition~\ref{prop:dominant-half} checks the
+half favored by the first step.
+
+\begin{figure}[ht]
+\centering
+\small
+\[
+\begin{array}{c@{\quad}c@{\quad}c}
+\underbrace{\ell_N,\ldots,\ell_{t+1}}_{\text{left boundary history}}&
+\underbrace{d_t(0),\ldots,d_t(t-1)}_{\text{active row}}&
+\underbrace{u_{t+1},\ldots,u_N}_{\text{right boundary history}}\\[9pt]
+&\downarrow\ \text{copy or sum adjacent entries}&\\[9pt]
+\ell_N,\ldots,\ell_{t+2}&
+\ell_{t+1},d_{t+1}(1),\ldots,d_{t+1}(t-1),u_{t+1}&
+u_{t+2},\ldots,u_N
+\end{array}
+\]
+\caption{Fix a final length $N$ and retain the boundary values
+that will enter later. Here $d_t(k)=P_t(k+1)-P_t(k)$,
+$\ell_t=d_t(0)$ and $u_t=d_t(t-1)$.
+The active row grows by one while the augmented row shrinks by one.
+The incoming ends are copied from the histories, so they cannot
+introduce an untracked sign change.}
+\label{fig:augmented-rows}
+\end{figure}
+
 \begin{lemma}[sign changes next to an end]\label{lem:level-one}
 For every $t_1\ge2$ we have $\operatorname{sp}(s_2,s_3,\dots,s_{t_1})\preceq\Pi_3$.
 Also, for every $0\le\varepsilon\le1$, the numbers $s_3$ and $s_4$ do not both vanish.
@@ -85,116 +135,7 @@ Let $N\ge3$ and $0<\varepsilon<\frac12$. Then
  \operatorname{sp}\bigl(D_N(1),D_N(2),\dots,D_N(N-1)\bigr)\preceq(+,-,+,-,+).
 \]
 So the second difference of $P_N$ changes sign at most four times on
-$\{1,\dots,N-1\}$. The same holds for the second difference of $f_N$, and for
-$f_N$ it holds for $N=2$ as well.
+$\{1,\dots,N-1\}$.
 \end{theorem}
 
 We prove this in Appendix~\ref{app:signs-five}.
-
-A negative-to-positive change at $k_0<k_1$ and its reflection give
-$-,+,+,-$ at $k_0<k_1<N-k_1<N-k_0$. A negative value between
-the two positive ones would give the five-sign pattern excluded by
-Theorem~\ref{thm:five-blocks}. To exclude a zero, trace
-\eqref{eq:D-rec} backward. Both coefficients are strictly positive,
-so both parents must vanish or have opposite signs. Opposite signs give the
-forbidden pattern, so both parents must vanish. Repeating this back
-to $t=5$ forces $s_3=s_4=0$,
-contrary to Lemma~\ref{lem:level-one}. So the convex stretch has no gaps.
-
-\begin{theorem}[no holes]\label{thm:no-holes}
-Let $N\ge5$ and $0<\varepsilon<\frac12$. Let $1\le k_0<k_1\le N/2$ be integers
-with $D_N(k_0)<0<D_N(k_1)$. Then $D_N(k)>0$ for every $k_1\le k\le N-k_1$.
-\end{theorem}
-
-We prove this in Appendix~\ref{app:signs-holes}.
-
-\begin{lemma}[a criterion for a central minimum]\label{lem:center-no-holes}
-Let $N\ge6$ be even and $0<\varepsilon<\frac12$. If
-$P_N(1)>\max\{E_N,C_N\}$, then
-$P_N(k)>C_N$ for $1\le k\le N-1$, $k\ne {k_{\mathrm c}}$, and $D_N({k_{\mathrm c}})>0$.
-\end{lemma}
-
-\begin{proof}
-Suppose that $P_N(k)\le C_N$ for some $1\le k<{k_{\mathrm c}}$, and let $j$ be the first
-minimizer of $P_N$ on $\{1,\dots,{k_{\mathrm c}}\}$. Then $2\le j<{k_{\mathrm c}}$ and
-$P_N(j-1)>P_N(j)\le P_N(j+1)$, so $D_N(j)>0$.
-The first maximizer $k_0$ on $\{0,\dots,j\}$ has value at least $P_N(1)$,
-which exceeds both endpoint values of this interval. Thus $1\le k_0<j$
-and $D_N(k_0)<0$. Theorem~\ref{thm:no-holes} gives $D_N(k)>0$ for
-$j\le k\le N-j$.
-
-Put $\delta(k)=P_N(k+1)-P_N(k)$. These first differences are strictly
-increasing on $\{j-1,\dots,N-j\}$, and symmetry gives
-$\delta({k_{\mathrm c}})=-\delta({k_{\mathrm c}}-1)$. Hence $\delta({k_{\mathrm c}}-1)<0$, and every difference
-from $j$ to ${k_{\mathrm c}}-1$ is negative. This makes $P_N(j)>P_N({k_{\mathrm c}})$, a contradiction.
-Reflection proves the other half, and
-$D_N({k_{\mathrm c}})=2(P_N({k_{\mathrm c}}-1)-P_N({k_{\mathrm c}}))>0$.
-\end{proof}
-
-\begin{corollary}[the shape at every even crossing]\label{cor:unique-min}
-For every even $N\ge8$, at the crossing,
-\[
- P_N(k)>C_N=E_N\quad(1\le k\le N-1,\ k\ne {k_{\mathrm c}}),\qquad D_N({k_{\mathrm c}})>0.
-\]
-There are integers $1\le l\le r<{k_{\mathrm c}}$ such that $P_N$ strictly increases
-from $0$ to $l$, is constant from $l$ to $r$, and strictly decreases
-from $r$ to ${k_{\mathrm c}}$. Its two intervals of global maximizers are
-$\{l,\dots,r\}$ and $\{N-r,\dots,N-l\}$.
-\end{corollary}
-
-\begin{proof}
-At the crossing $P_N(1)>E_N=C_N$ by Proposition~\ref{prop:dip-hyp}, so
-Lemma~\ref{lem:center-no-holes} gives the minimum and central curvature.
-For the humps, let $p=\operatorname{sp}(D_N(1),\dots,D_N({k_{\mathrm c}}))$.
-It ends in $+$, and symmetry makes the full pattern $p$ followed by its
-reverse, with the central positive blocks merged. If $p$ has $j$ blocks,
-the full pattern has $2j-1\le5$ by Theorem~\ref{thm:five-blocks}.
-Thus $p$ is a subsequence of $(+,-,+)$.
-
-The first differences $\delta(k)=P_N(k+1)-P_N(k)$ on $0\le k<{k_{\mathrm c}}$
-therefore have at most three successive monotonic stretches, namely
-nondecreasing, nonincreasing, nondecreasing. Their first value is positive,
-and their last is $-D_N({k_{\mathrm c}})/2<0$. The first stretch stays positive and the
-last stays negative. The middle stretch passes through zero at most once,
-possibly with consecutive zeros. This gives the claimed rise, plateau
-and fall. Symmetry gives the other hump.
-\end{proof}
-
-\begin{corollary}[a convexity window from the peak height]\label{cor:height-window}
-Let $N\ge8$ be even and $x=x_N$. Let $[l,r]$ be the left
-interval of maximizers in Corollary~\ref{cor:unique-min}, and put
-\[
- M=P_N(r),\qquad w_N=r-1+M^{-1},\qquad
- k_{\mathrm v}=\min\{{k_{\mathrm c}},\lceil w_N\rceil-1\}.
-\]
-Then $D_N(k)>0$ for every integer $k_{\mathrm v}\le k\le N-k_{\mathrm v}$.
-This window is nonempty.
-\end{corollary}
-
-\begin{proof}
-Let $j_0$ be the first integer after $l$ with $D_N(j_0)>0$.
-Corollary~\ref{cor:unique-min} gives $D_N(l)<0<D_N({k_{\mathrm c}})$,
-so $j_0\le {k_{\mathrm c}}$. The constant plateau gives $j_0>r$.
-By its definition $P_N$ is concave on $[r,j_0]$. Hence
-\[
- \frac{M(j_0-r+1)}2
- \le\sum_{k=r}^{j_0-1}P_N(k)
- \le\frac{1-P_N({k_{\mathrm c}})}2<\frac12,
-\]
-where the first inequality sums the chord from $P_N(r)=M$
-to the nonnegative value $P_N(j_0)$. Thus $j_0<w_N$, and consequently
-$j_0\le k_{\mathrm v}\le {k_{\mathrm c}}$. Theorem~\ref{thm:no-holes}, applied at $l<j_0$,
-gives positivity on $[j_0,N-j_0]$, which contains $[k_{\mathrm v},N-k_{\mathrm v}]$.
-\end{proof}
-
-Both corollaries use the endpoint-dip certificates of
-Proposition~\ref{prop:dip-hyp}. The peak height alone gives a convexity
-window, without locating the mode (it may give only the center).
-Heuristically, Theorem~\ref{thm:landau}(b) and
-Corollary~\ref{cor:mode-location} give
-$M=P_N(r)=\frac{f_L(\lambda_{\mathrm L})}{2x}(1+o(1))$, hence, with $m_N=r$,
-$w_N=m_N+\bigl(2/f_L(\lambda_{\mathrm L})+o(1)\bigr)x$. Since
-$f_L(\lambda_{\mathrm L})\approx0.1807$, this is about $m_N+11x$, far below ${k_{\mathrm c}}$ for large $N$.
-At $N=4000$, the computed value of $w_N-m_N$ is about $9.9x$.
-These asymptotics explain the expected width. The preceding chord
-argument proves the window for every even length.

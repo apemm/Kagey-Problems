@@ -16,6 +16,16 @@ import PaperD.EJPBiasBoundary
 import PaperD.EJPModeStability
 import PaperD.EJPGlobalModeGap
 import PaperD.EJPModeAnalyticRange
+import PaperD.EJPBiasUniform
+import PaperD.EJPBiasValueBound
+import PaperD.EJPRefinementAlgebra
+import PaperD.EJPFiniteThreshold
+import PaperD.EJPStrictNegativeHalf
+import PaperD.EJPStrictSlopeAlgebra
+import PaperD.EJPBalancedStart
+import PaperD.EJPPositiveStartTwo
+import PaperD.EJPFiniteShapeStability
+import PaperD.EJPFiniteCentralZero
 
 /-!
 # Formalization of the November 2026 manuscript strengthenings

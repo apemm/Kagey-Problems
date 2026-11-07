@@ -1,0 +1,277 @@
+\section{Sign patterns and regularity}\label{app:modes}
+
+We use the notation of Sections~\ref{sec:convex} and~\ref{sec:modes}
+to prove the lemmas for Theorem~\ref{thm:two-modes}.
+Deleting entries can only remove signs from a list's pattern. An alternating list $p$ satisfies
+$p\preceq q$ for every alternating list $q$ with the same first sign and at
+least as many entries.
+
+\begin{lemma}[Descartes' rule for exponential sums]\label{lem:descartes}
+Let $\lambda_1<\dots<\lambda_n$ and $b_1,\dots,b_n$ be real, with
+$b=(b_1,\dots,b_n)\ne0$, and put $F(y)=\sum_{k=1}^nb_ke^{\lambda_ky}$. Then
+$F$ has finitely many real zeros, and
+$\operatorname{sp}(F(y_1),\dots,F(y_j))\preceq\operatorname{sp}(b)$ for all
+$y_1<\dots<y_j$. The same holds for $\psi F$ for every positive function
+$\psi$.
+\end{lemma}
+
+\begin{proof}
+Let $Z(F)$ be the number of distinct real zeros of $F$, and $S(b)$ the number
+of sign changes of $b$. We show $Z(F)\le S(b)$ by induction on $S(b)$. If
+$S(b)=0$, then $F$ has the sign of the nonzero $b_k$ everywhere. If $S(b)\ge1$,
+choose $i$ such that the last nonzero $b_k$ with $k\le i$ and the first
+nonzero $b_k$ with $k>i$ have opposite signs, and choose
+$\lambda_i<\kappa<\lambda_{i+1}$. Then
+\[
+ G(y)=\frac{d}{dy}\bigl(e^{-\kappa y}F(y)\bigr)
+ =\sum_{k=1}^nb_k(\lambda_k-\kappa)e^{(\lambda_k-\kappa)y}.
+\]
+The coefficient $b_k(\lambda_k-\kappa)$ has the sign of $-b_k$ for $k\le i$
+and of $b_k$ for $k>i$, so the coefficients of $G$ have $S(b)-1$ sign changes.
+By Rolle's theorem $G$ vanishes between any two zeros of $F$, so
+$Z(F)\le Z(G)+1\le S(b)$.
+
+If $b_{k_0}$ is the first nonzero $b_k$, then
+$e^{-\lambda_{k_0}y}F(y)\to b_{k_0}$ as $y\to-\infty$. The zeros of $F$ cut the
+line into at most $S(b)+1$ open intervals, on each of which $F$ has one sign.
+With equal neighbors merged, these signs form an alternating list that starts
+with the sign of $b_{k_0}$ and has at most $S(b)+1$ entries, so it is
+$\preceq\operatorname{sp}(b)$. The nonzero values $F(y_1),\dots,F(y_j)$ lie in
+these intervals in order. A positive factor $\psi$ changes no sign.
+\end{proof}
+
+\begin{lemma}[pointwise limits]\label{lem:sp-limit}
+Let $v_n$ and $v$ be real functions on $\mathbb R$ with $v_n(y)\to v(y)$ for
+every $y$, and let $\Pi$ be an alternating list. If every $v_n$ has values at
+most $\Pi$, then so has $v$. If every $v_n$ has increments at most $\Pi$, then
+so has $v$.
+\end{lemma}
+
+\begin{proof}
+Let $y_1<\dots<y_j$, and let $I$ be the set of indices $i$ with $v(y_i)\ne0$.
+For all large $n$, $v_n(y_i)$ has the sign of $v(y_i)$ for every $i\in I$.
+Then $\operatorname{sp}(v(y_1),\dots,v(y_j))$ is the pattern of the list
+$(v_n(y_i))_{i\in I}$, which is a subsequence of
+$\operatorname{sp}(v_n(y_1),\dots,v_n(y_j))\preceq\Pi$. The increments of $v_n$
+at $y_1,\dots,y_j$ tend to those of $v$, and the same argument applies to
+them.
+\end{proof}
+
+\begin{lemma}[integrating the sign bound]\label{lem:sp-derivative}
+Let $u$ be twice continuously differentiable on $\mathbb R$, with $u'(y)\to0$
+as $y\to\pm\infty$. If $u''$ has values at most $\Pi_5$, then $u'$ has values
+at most $\Pi_4$, and $u$ has increments at most $\Pi_4$.
+\end{lemma}
+
+\begin{proof}
+It is enough to treat points $y_1<\dots<y_j$ at which the values of $u'$ are
+nonzero and alternate in sign. Let $s$ be the sign of $u'(y_1)$. Choose $y_0<y_1$
+with $\lvert u'(y_0)\rvert<\lvert u'(y_1)\rvert$, and $y_{j+1}>y_j$ with
+$\lvert u'(y_{j+1})\rvert<\lvert u'(y_j)\rvert$. For $0\le i\le j$ the mean
+value theorem gives $w_i\in(y_i,y_{i+1})$ with
+$u''(w_i)(y_{i+1}-y_i)=u'(y_{i+1})-u'(y_i)$. The right side has the sign $s$
+for $i=0$, the sign of $u'(y_{i+1})$ for $1\le i\le j-1$, and the sign of
+$-u'(y_j)$ for $i=j$. In each case this is $(-1)^is$. So $u''$ takes $j+1$
+alternating signs, starting with $s$, at $w_0<\dots<w_j$. This list is
+$\preceq\Pi_5$, so $j+1\le5$, and $j+1\le4$ if $s$ is $-$. In both cases the
+list of the $j$ signs of $u'(y_1),\dots,u'(y_j)$ is $\preceq\Pi_4$.
+
+For the increments at $y_1<\dots<y_j$, each nonzero $u(y_{i+1})-u(y_i)$ has
+the sign of $u'(\xi_i)$ for some $\xi_i\in(y_i,y_{i+1})$, by the mean value
+theorem. So the pattern of the increments is a pattern of values of $u'$.
+\end{proof}
+
+\begin{lemma}[entire densities and parameter continuity]\label{lem:analytic-density}
+For every $a\in(\frac12,1)$ and $1<r<1/a$, the characteristic function
+$\phi_a$ of $\mathcal L_a$ satisfies
+\[
+ |\phi_a(t)|\le 2e^{-c|t|^r}\qquad(t\in\mathbb R)
+\]
+for some $c=c(a,r)>0$. The same $c$ works on a sufficiently small
+neighborhood of any fixed $a$. Every spatial derivative of $h_a$ and its
+first derivative in $a$ are jointly continuous in $(a,u)$.
+For every $q\in[0,1]$, the density of the limit with first-step bias $q$
+extends to an entire function and is not constant on an interval of
+positive length.
+\end{lemma}
+
+\begin{proof}
+First, we check weak continuity in $a$. On a compact
+$J\subset(1/2,1)$, the martingale
+$\mathcal M_n(a)=\Gamma(n)S_n/\Gamma(n+a)$ from the proof of
+Corollary~\ref{cor:fixed-memory-bridge} satisfies
+\[
+ \sup_{a\in J}\E|\mathcal L_a-\mathcal M_n(a)|^2
+ \le C_J\sum_{k\ge n}k^{-2\min J}\longrightarrow0.
+\]
+The walk's centered next step has conditional variance at most one,
+and the gamma ratios are uniformly bounded on $J$. The finite laws are
+continuous in $a$, so $\phi_a(t)$ is jointly continuous, uniformly on
+compact frequency intervals.
+
+The fixed-point equation of~\cite[Theorem~1.1 and (2.10)]{glr2026} gives
+\[
+ |\phi_a(t)|\le\int_0^1|\phi_a(tv^a)|\,
+                  |\phi_a(t(1-v)^a)|\,dv.
+\]
+Here $\phi_a$ is the characteristic function conditional on a positive
+first step. The random sign disappears after taking absolute values, since
+$|\phi_a(-s)|=|\phi_a(s)|$.
+Fix $a_0$ and $1<r<1/a_0$, and choose $J$ about $a_0$ with $r\max J<1$.
+Put $D(v)=v^{r\max J}+(1-v)^{r\max J}-1$. We have $D(v)>0$ for
+$0<v<1$. Dominated convergence therefore permits $K>1$ such that
+\[
+ R:=2\int_0^1e^{-K^r(\log2)D(v)}\,dv<1.
+\]
+The law of $\mathcal L_{a_0}$ has a density~\cite[Theorem~1.3]{glr2026}, so
+the Riemann--Lebesgue lemma gives $T>0$ with
+$|\phi_{a_0}(t)|<2^{-K^r}$ for $|t|\ge T$. Joint continuity, after
+shrinking $J$, gives $|\phi_a(t)|\le2^{1-K^r}$ for $a\in J$ and
+$T\le|t|\le KT$. Set
+$c=(\log2)/T^r$ and $b(t)=2e^{-ct^r}$ for $t\ge0$.
+On $[0,T]$ we have $b\ge1$, and on $[T,KT]$ we have
+$b\ge2^{1-K^r}$. Thus $|\phi_a|\le b$ on $[0,KT]$.
+
+For $t\ge KT$,
+\[
+ \frac{\int_0^1b(tv^a)b(t(1-v)^a)\,dv}{b(t)}
+ \le2\int_0^1e^{-ct^rD(v)}\,dv\le R<1.
+\]
+Suppose the interval on which $|\phi_a|\le b$ holds has finite
+supremum $t_*\ge KT$. By continuity it holds on $[0,t_*]$ as well.
+At the endpoint the fixed-point inequality gives the strict bound
+$|\phi_a(t_*)|\le Rb(t_*)<b(t_*)$. Continuity then extends the
+interval past $t_*$, a contradiction. The bound thus holds on
+$[0,\infty)$, and evenness extends it to $\mathbb R$.
+
+Since $r>1$, the Fourier integral converges absolutely and locally
+uniformly for complex arguments. Indeed, for every $B<\infty$,
+$\int_{\mathbb R}e^{B|t|}|\phi_a(t)|\,dt<\infty$.
+The Fourier integral therefore defines an entire function.
+After any fixed number of spatial derivatives, the bound on $J$
+still supplies an integrable majorant, giving joint continuity by
+dominated convergence. For initial bias $q$, apply the triangle
+inequality to $q\phi_a(t)+(1-q)\phi_a(-t)$ to get the same bound.
+A density of integral one cannot be constant on $\mathbb R$.
+If it were constant on an interval, the identity theorem would
+make it constant everywhere.
+
+For the memory derivative, Lemma~\ref{lem:thr-moments}(b) gives a
+complex moment majorant and local parameter differentiation
+on every compact frequency interval. The differentiated smoothing
+inequalities in Lemma~\ref{lem:thr-parameter-tail} extend this to
+Fourier inversion. Indeed, for any prescribed power $\beta$, the
+exponential bound above supplies $f(t)\le Ct^{-\beta}$.
+Taking $T$ large makes both contraction coefficients $R$ and $\kappa$
+in that lemma smaller than one. Choose $D_1$ to bound the frequency
+derivative on $[T_2,T]$ and to satisfy its strict contraction inequality,
+then choose $D_a$ in the same way for the memory derivative.
+The maximum argument in that proof gives
+$|\partial_a\phi_a(t)|=O_J((1+|t|)^{1-\beta})$.
+Here $\beta$ is arbitrary and the compact memory interval can be
+shrunk about any fixed parameter. Multiplication by any fixed power
+of $t$ therefore leaves an integrable majorant. Differentiation
+under Fourier inversion proves the asserted joint continuity.
+\end{proof}
+
+
+\subsection{First differences for a biased start}
+
+\begin{proposition}[two modes for every initial bias]\label{prop:all-bias-modes}
+Let $0<\varepsilon<1$, let $q\in[0,1]$ be the probability that the first
+step is positive, and let $P_n(k)$ be the law of the number of positive
+steps after $n\ge1$ steps. Extend $P_n$ by zero outside $\{0,\ldots,n\}$.
+The first differences $d_n(k)=P_n(k+1)-P_n(k)$ satisfy
+\[
+ \operatorname{sp}\bigl(d_n(-1),d_n(0),\ldots,d_n(n)\bigr)
+ \preceq (+,-,+,-).
+\]
+In particular, $P_n$ has at most two modal plateaus, including endpoint
+modes. Moreover, there are no integers $i_0<\cdots<i_4$ for which
+\[
+ P_n(i_0)>P_n(i_1)<P_n(i_2)>P_n(i_3)<P_n(i_4).
+\]
+\end{proposition}
+
+\begin{proof}
+Put $a=1-2\varepsilon$ and $r_t(k)=\varepsilon+ak/t$. The forward equation
+is
+\[
+ P_{t+1}(k)=(1-r_t(k))P_t(k)+r_t(k-1)P_t(k-1),
+ \qquad P_1=(1-q,q).
+\]
+Subtracting adjacent equations gives
+\begin{equation}\label{eq:bias-first-diff}
+ d_{t+1}(k)=r_t(k-1)d_t(k-1)+(1-r_t(k+1))d_t(k),
+ \qquad 1\le k\le t-1.
+\end{equation}
+Both coefficients are at least $\min(\varepsilon,1-\varepsilon)>0$,
+since $r_t(j)$ is a convex combination of $\varepsilon$ and
+$1-\varepsilon$ for $0\le j\le t$. It remains to check the two ends.
+
+Suppose first that $q<1$. Since
+$P_t(0)=(1-q)(1-\varepsilon)^{t-1}>0$, define
+\[
+ \xi_t=\frac{P_t(1)}{P_t(0)},\qquad
+ b=\frac{1-2\varepsilon}{1-\varepsilon}<1,\qquad
+ A=\frac{\varepsilon}{1-\varepsilon}>0.
+\]
+The boundary equation gives
+\[
+ \xi_{t+1}=(1-b/t)\xi_t+A,\qquad \xi_1=\frac q{1-q}.
+\]
+Thus $\delta_t=\xi_{t+1}-\xi_t$ obeys
+\begin{equation}\label{eq:bias-edge-increments}
+ \delta_{t+1}=\frac{t-b}{t+1}\delta_t+\frac A{t+1}.
+\end{equation}
+Once an increment is nonnegative, every later increment is positive.
+Thus $\xi_t$ first decreases and then increases (either part may be empty). For $\ell_t=d_t(0)=P_t(0)(\xi_t-1)$ this proves
+\[
+ \operatorname{sp}(\ell_1,\ldots,\ell_N)\preceq(+,-,+).
+\]
+If $q\le1/2$, then $\xi_1\le1$ and the sharper bound is
+$\operatorname{sp}(\ell_1,\ldots,\ell_N)\preceq(-,+)$.
+In particular, a positive $\ell_i$ cannot be followed by a negative
+$\ell_j$. Zeros do not affect either conclusion.
+
+Write $u_t=d_t(t-1)$. Reflection of the walk gives
+$u_t(q)=-\ell_t(1-q)$ and
+$d_t^{(1-q)}(t-1-k)=-d_t^{(q)}(k)$.
+For $0<q\le1/2$, the right boundary history therefore has pattern
+contained in $(-,+,-)$. For $q=0$ it is nonpositive throughout. The conditional count is at
+most $t-1$, so $u_t=-P_t(t-1)\le0$.
+
+Fix $N$ and, for $1\le t\le N$, form the augmented row
+\[
+ Z_t=(\ell_N,\ldots,\ell_{t+1},
+       d_t(0),\ldots,d_t(t-1),
+       u_{t+1},\ldots,u_N).
+\]
+For $q\le1/2$, its first row is contained in $(+,-,+,-)$.
+To include possible zeros at $\ell_1=u_1=2q-1$, argue as follows. If $Z_1$ contained four ordered signs $-,+,-,+$
+and the second lay in the reversed left history, the first two would give
+a positive left edge followed in time by a negative one, which is
+impossible. Otherwise the last three lie in the right history and have
+signs $+,-,+$. For $q>0$, their reflected negatives give the forbidden pattern
+$(-,+,-)$ in the left history at bias $1-q$. For $q=0$, they contradict
+the nonpositive right history. This also covers $N=1$.
+
+Every entry of $Z_{t+1}$ is a nonnegative combination of adjacent entries
+of $Z_t$. The interior entries use \eqref{eq:bias-first-diff}. The two new
+boundary entries and the remaining future edge values are copied,
+with coefficients $(1,0)$ or $(0,1)$. Each nonzero entry has a parent
+of the same sign. Parents of successive opposite signs are strictly
+ordered, so the new row cannot have an extra alternating sign.
+Thus $\operatorname{sp}(Z_N)\preceq(+,-,+,-)$. Reflection and sign
+reversal preserve this pattern, proving the claim also for $q\ge1/2$,
+including $q=1$.
+
+Finally, extension by zero adds $d_N(-1)=P_N(0)\ge0$ on the left and $d_N(N)=-P_N(N)\le0$ on the right. Neither enlarges the pattern.
+Every modal plateau contributes a positive-to-negative change, so there
+are at most two. If the last displayed inequalities in the statement
+held, each of their four intervals would contain an adjacent difference
+of the same strict sign, by telescoping. These four differences would
+have signs $-,+,-,+$, a contradiction.
+\end{proof}
+
+\input{app_bias_interval.tex}

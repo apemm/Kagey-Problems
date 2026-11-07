@@ -2,8 +2,8 @@
 
 This archive contains the Paper D Lean library, its pinned Mathlib dependency,
 certificate scripts and records, the phase-figure script and data, and the
-November 5, 2026 verification audit. It accompanies repository tag
-`paperD-ejp-v1` at https://github.com/apemm/Kagey-Problems.
+November 6, 2026 verification audit. It accompanies repository tag
+`paperD-ejp-v2` at https://github.com/apemm/Kagey-Problems.
 
 Extract it outside OneDrive or another synchronized folder. With the matching
 Lean toolchain installed, run from `lean/`:

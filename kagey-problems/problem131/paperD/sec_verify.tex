@@ -1,9 +1,8 @@
 \section{Verification}\label{sec:verify}
 
-Table~\ref{tab:verification} separates the written proofs, Lean proofs
-and interval computations. Several Lean results take hypotheses that
-we must establish for this walk. The transition's transcendental
-enclosures, for example, come from interval arithmetic outside Lean.
+Table~\ref{tab:verification} separates analytic arguments from
+interval computations. The numerical illustrations are not used in
+any proof.
 
 \begin{center}\small
 \captionsetup{hypcap=false}
@@ -11,41 +10,37 @@ enclosures, for example, come from interval arithmetic outside Lean.
 \toprule
 Claim & How it is established & Trusted base\\
 \midrule
-Finite shape bounds and the shape at every even crossing &
-Written proof and Lean, including finite integer certificates &
-Lean kernel and exact rational arithmetic\\[5pt]
-Fair-limit shape, inflection counts, bias interval and boundary continuity &
-Written proofs, with Lean deductions for shape and the interval &
+Finite shape bounds &
+Written recurrence and sign proofs &
+Exact finite identities and ordered sign patterns\\[5pt]
+Fair-limit shape, inflection counts, bias interval and boundary regularity &
+Written shape, transfer and maximization proofs &
 Cited limit law, conditional unimodality and Fourier representation\\[5pt]
 Unique memory threshold &
-Interval certificate and written Fourier estimates, followed by a Lean implication &
+Interval certificate and written Fourier estimates &
 Arb transcendental arithmetic and the stated uniform envelopes\\[5pt]
 Quartic critical top, emerging modes and bias width &
 Written Taylor and maximization arguments using certified derivatives &
-The same Fourier envelopes and interval enclosures\\[5pt]
-Compound Poisson and Landau approximations &
-Written proofs, certified constants and Lean mode deductions &
-Fourier inversion, compound Poisson identity, Efron--Stein and Arb\\[5pt]
-Near-one profile &
-Written weak bridge and Lean density deductions &
-Conditional unimodality, fair curvature, Landau facts and Scheff\'e's theorem~\cite{scheffe1947}\\
+The same Fourier envelopes and interval enclosures\\
 \bottomrule
 \end{tabular}
 \captionof{table}{Proofs and their inputs. We do not use the numerical
-illustrations in the proofs. Appendix~\ref{app:data} gives the reproduction records
-and specifies what each formal result checks.}
+illustrations in the proofs. Appendix~\ref{app:data} gives the reproduction records.}
 \label{tab:verification}
 \end{center}
 
-The formalization uses Lean~4.33.1 and Mathlib at \texttt{0df444a360ea}.
-Its declaration audit allows only \texttt{propext},
-\texttt{Classical.choice} and \texttt{Quot.sound}.
-Lean checks the integer certificates by exact outward rounding,
-without \texttt{native\_decide}. We prove the total variation comparison,
-martingale weak bridge, boundary continuity and critical expansions
-in the text. The formal mode deduction takes the sharper local-limit
-bounds and the gap $\Delta_L=1/50$ as hypotheses. Arb verifies these
-inequalities separately.
+The \href{https://github.com/apemm/Kagey-Problems/tree/paperD-ejp-v2/kagey-problems/problem131/lean/PaperD}{shared formalization}
+uses Lean~4.33.1 and Mathlib at \texttt{0df444a360ea}.
+Its audit checks $386$ modules and $24{,}005$ declarations, allowing
+only \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}.
+The accompanying \nolinkurl{MAP.md} records each statement,
+its hypotheses and whether it belongs to this paper or the archived
+combined version. Lean checks finite recurrences, reflection
+comparisons and several deductions from named analytic hypotheses.
+It does not replay the transcendental interval enclosures.
+Boundary regularity and the critical expansions have written proofs.
+Thus the audit checks the formal statements listed in the map,
+not every argument in the manuscript.
 
 The transition check retains its acceptance tests under
 \texttt{python -O}. A second check evaluates the two threshold endpoint

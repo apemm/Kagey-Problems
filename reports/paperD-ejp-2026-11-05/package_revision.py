@@ -14,8 +14,8 @@ HERE = Path(__file__).resolve().parent
 P = ROOT / 'kagey-problems/problem131/paperD'
 LEAN = ROOT / 'kagey-problems/problem131/lean'
 BUILD = ROOT / '.pdf-build/paperD-ejp-2026-11-05'
-TAG = 'paperD-ejp-v1'
-TITLE = 'Bimodality of the elephant random walk: the bias interval, the threshold and rare reversals'
+TAG = 'paperD-ejp-v2'
+TITLE = 'The bias interval of the elephant random walk'
 
 
 def require(value, message):
@@ -25,6 +25,9 @@ def require(value, message):
 
 def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+def digest_lf(path):
+    return hashlib.sha256(path.read_bytes().replace(b'\r\n', b'\n')).hexdigest()
 
 
 inputs = []
@@ -68,19 +71,21 @@ original = (HERE/'disclosure-original.txt').read_text(encoding='utf-8')
 if r'\section*{A note on the use of AI}' in original:
     original = original.split(r'\section*{A note on the use of AI}',1)[1]
 original = original.strip()
-# Only the source-access qualification was authorized on this pass.
+# The author confirmed full reading and authorized the two archive references.
 authorized = original.replace(
-    'I read every source cited in the paper. I proposed and drafted the following',
-    'I read every source cited in the paper, except that for Drezner and\n'
-    'Farnum~\\cite{dreznerfarnum1993} and Heyde~\\cite{heyde2004} I relied on their\n'
-    'abstracts and the account of James, James and Qi~\\cite{jamesjamesqi2008}.\n'
-    'I proposed and drafted the following')
-require(disclosure == authorized, 'The protected disclosure changed beyond the source-access qualification')
+    r'Theorem~\ref{thm:erw-bounds}(a)',
+    'Theorem~4.5(a) of the archived combined version').replace(
+    r'Theorem~\ref{thm:landau}(c)', 'its Theorem~5.9(c)')
+require(disclosure == authorized, 'The protected disclosure changed beyond the authorized references')
+baseline = (P/'archive/combined-2026-11-06/sec_intro.tex').read_text(encoding='utf-8')
+epigraph = lambda s: s.split(r'\noindent\begin{minipage}',1)[1].split(r'\end{minipage}',1)[0]
+require(epigraph(source) == epigraph(baseline), 'The protected epigraph changed')
 require(not any(ord(c)<32 and c not in '\n\r' for c in source), 'Control character in manuscript')
 require('Online Resource' not in source and 'Statements and Declarations' not in source,
         'Obsolete journal matter remains')
 
-figures = [P/'figures'/name for name in ['phase.pdf','Fig1.pdf','Fig2.pdf']]
+figures = [P/'figures/phase.pdf']
+figure_count = source.count(r'\begin{figure}')
 arxiv_sources = [P/'problem131_arxiv.tex', P/'00README.json', P/'ejpecp.cls', *inputs, *figures]
 ejp = BUILD/'ejp'
 arxiv = BUILD/'arxiv'
@@ -105,7 +110,7 @@ shutil.copy2(arxiv_pdf,P/'problem131_arxiv.pdf')
 abstract = source.split(r'\ABSTRACT{',1)[1].split(r'\begin{document}',1)[0].rstrip().removesuffix('}')
 metadata={'title':TITLE,'author':'Arjun Pemmasani','primary_category':'math.PR',
           'cross_list':'cond-mat.stat-mech','abstract':abstract,
-          'comments':f'{len(ejp_reader.pages)} pages, 3 figures; complete proofs and verification records; repository tag {TAG}.',
+          'comments':f'{len(ejp_reader.pages)} pages, {figure_count} figures; complete proofs and verification records; repository tag {TAG}.',
           'journal_pages':len(ejp_reader.pages),'arxiv_pages':len(arxiv_reader.pages),
           'license_suggestion':'arXiv.org perpetual, non-exclusive license'}
 (P/'arxiv_metadata.json').write_text(json.dumps(metadata,indent=2)+'\n',encoding='utf-8')
@@ -114,7 +119,8 @@ verification=json.loads((HERE/'verification-manifest.json').read_text())
 require(verification.get('all_checks_passed') is True, 'Lean audit is not complete')
 checked_modules=verification['libraries']['PaperD']['modules']
 for module in checked_modules:
-    require(digest(LEAN/module['file']) == module['sha256'],
+    require(digest(LEAN/module['file']) == module['sha256'] or
+            digest_lf(LEAN/module['file']) == module.get('sha256_lf'),
             f"Lean source differs from audited source: {module['file']}")
 require({m['file'] for m in checked_modules} ==
         {p.relative_to(LEAN).as_posix() for p in (LEAN/'PaperD').rglob('*.lean')} |
@@ -133,6 +139,7 @@ verification_pairs.append((LEAN/'PaperD/MAP.md','lean/PaperD/MAP.md'))
 verification_pairs.append((LEAN/'PaperD/coverage_tables.tex','lean/PaperD/coverage_tables.tex'))
 verification_pairs.append((HERE/'archive-lakefile.toml','lean/lakefile.toml'))
 verification_pairs.append((HERE/'archive-README.md','README.md'))
+verification_pairs.append((P/'README.md','paperD/README.md'))
 verification_pairs.append((ROOT/'LICENSE','LICENSE'))
 verification_pairs.append((P/'figures/make_phase_figure.py','paperD/figures/make_phase_figure.py'))
 verification_pairs.extend((f,'paperD/figures/'+f.name) for f in figures)
@@ -143,6 +150,7 @@ archive(P/'paperD_verification_archive.zip',verification_pairs)
 
 archive(P/'paperD_arxiv_source.zip',[(f,f.relative_to(P).as_posix()) for f in arxiv_sources])
 ejp_pairs=[(ejp_pdf,'problem131_memory.pdf'),(P/'cover_letter.md','cover_letter.md'),
+           (P/'README.md','README.md'),(P/'submission_notes.md','submission_notes.md'),
            (P/'paperD_verification_archive.zip','paperD_verification_archive.zip')]
 ejp_pairs.extend((f,f.relative_to(P).as_posix()) for f in ejp_sources)
 archive(P/'paperD_ejp_submission.zip',ejp_pairs)
@@ -150,16 +158,20 @@ archive(P/'paperD_ejp_submission.zip',ejp_pairs)
 rendered=HERE/'rendered'
 rendered.mkdir(exist_ok=True)
 doc=pdfium.PdfDocument(str(ejp_pdf))
-for page in [0,1,2,13,14,15,28,29,36,39,40,len(doc)-1]:
+for page in sorted({p for p in [0,1,2,3,4,5,10,11,12,13,14,15,16,17,18,19,28,29,len(doc)-1]
+                    if 0 <= p < len(doc)}):
     doc[page].render(scale=1.5).to_pil().save(rendered/f'page-{page+1:02d}.png')
 deliverables=[P/n for n in ['problem131_memory.pdf','problem131_arxiv.pdf',
                            'paperD_arxiv_source.zip','paperD_ejp_submission.zip',
                            'paperD_verification_archive.zip','arxiv_metadata.json']]
-manifest={'tag':TAG,'pages':len(ejp_reader.pages),'figures':3,
+manifest={'tag':TAG,'pages':len(ejp_reader.pages),'figures':figure_count,
           'isolated_builds':'passed, three passes each; extracted PDF text identical',
-          'disclosure':'only the authorized Drezner–Farnum and Heyde source-access qualification changed',
+          'disclosure':'full-reading sentence restored at author request; two removed-result references identify the archived combined version; otherwise unchanged',
+          'epigraph':'unchanged',
           'latex_warning':'official class sets the already-loaded pagebackref option; informational only',
           'input_sources':{f.relative_to(P).as_posix():digest(f) for f in arxiv_sources},
+          'input_sources_lf':{f.relative_to(P).as_posix():digest_lf(f) for f in arxiv_sources
+                              if f.suffix in {'.tex','.cls','.json'}},
           'deliverables':{f.relative_to(P).as_posix():{'bytes':f.stat().st_size,'sha256':digest(f)} for f in deliverables}}
 (HERE/'delivery-manifest.json').write_text(json.dumps(manifest,indent=2)+'\n',encoding='utf-8')
-print(json.dumps({'pages':len(ejp_reader.pages),'isolated_builds':'PASS','archives':'PASS','disclosure':'AUTHORIZED SOURCE-ACCESS CHANGE ONLY'},indent=2))
+print(json.dumps({'pages':len(ejp_reader.pages),'isolated_builds':'PASS','archives':'PASS','disclosure':'AUTHORIZED CHANGES ONLY'},indent=2))

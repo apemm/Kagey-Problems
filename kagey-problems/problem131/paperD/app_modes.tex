@@ -6,6 +6,10 @@ Deleting entries can only remove signs from a list's pattern. An alternating lis
 $p\preceq q$ for every alternating list $q$ with the same first sign and at
 least as many entries.
 
+The following is the exponential-sum form of the generalized Descartes
+rule~\cite[Part~V, Chapter~1]{polyaszego1998}. We give its short proof
+to specify the sign-pattern conclusion used below.
+
 \begin{lemma}[Descartes' rule for exponential sums]\label{lem:descartes}
 Let $\lambda_1<\dots<\lambda_n$ and $b_1,\dots,b_n$ be real, with
 $b=(b_1,\dots,b_n)\ne0$, and put $F(y)=\sum_{k=1}^nb_ke^{\lambda_ky}$. Then
@@ -88,8 +92,9 @@ $\phi_a$ of $\mathcal L_a$ satisfies
  |\phi_a(t)|\le 2e^{-c|t|^r}\qquad(t\in\mathbb R)
 \]
 for some $c=c(a,r)>0$. The same $c$ works on a sufficiently small
-neighborhood of any fixed $a$. Every spatial derivative of $h_a$ is
-jointly continuous in $(a,u)$. For every $q\in[0,1]$, the density of the limit with first-step bias $q$
+neighborhood of any fixed $a$. Every spatial derivative of $h_a$ and its
+first derivative in $a$ are jointly continuous in $(a,u)$.
+For every $q\in[0,1]$, the density of the limit with first-step bias $q$
 extends to an entire function and is not constant on an interval of
 positive length.
 \end{lemma}
@@ -97,8 +102,7 @@ positive length.
 \begin{proof}
 First, we check weak continuity in $a$. On a compact
 $J\subset(1/2,1)$, the martingale
-$\mathcal M_n(a)=\Gamma(n)S_n/\Gamma(n+a)$ from the proof of
-Corollary~\ref{cor:fixed-memory-bridge} satisfies
+$\mathcal M_n(a)=\Gamma(n)S_n/\Gamma(n+a)$ of~\cite[(2.4), Appendix~A]{bercu2018} satisfies
 \[
  \sup_{a\in J}\E|\mathcal L_a-\mathcal M_n(a)|^2
  \le C_J\sum_{k\ge n}k^{-2\min J}\longrightarrow0.
@@ -154,6 +158,23 @@ inequality to $q\phi_a(t)+(1-q)\phi_a(-t)$ to get the same bound.
 A density of integral one cannot be constant on $\mathbb R$.
 If it were constant on an interval, the identity theorem would
 make it constant everywhere.
+
+For the memory derivative, Lemma~\ref{lem:thr-moments}(b) gives a
+complex moment majorant and local parameter differentiation
+on every compact frequency interval. The differentiated smoothing
+inequalities in Lemma~\ref{lem:thr-parameter-tail} extend this to
+Fourier inversion. Indeed, for any prescribed power $\beta$, the
+exponential bound above supplies $f(t)\le Ct^{-\beta}$.
+Taking $T$ large makes both contraction coefficients $R$ and $\kappa$
+in that lemma smaller than one. Choose $D_1$ to bound the frequency
+derivative on $[T_2,T]$ and to satisfy its strict contraction inequality,
+then choose $D_a$ in the same way for the memory derivative.
+The maximum argument in that proof gives
+$|\partial_a\phi_a(t)|=O_J((1+|t|)^{1-\beta})$.
+Here $\beta$ is arbitrary and the compact memory interval can be
+shrunk about any fixed parameter. Multiplication by any fixed power
+of $t$ therefore leaves an integrable majorant. Differentiation
+under Fourier inversion proves the asserted joint continuity.
 \end{proof}
 
 
@@ -223,12 +244,17 @@ For $0<q\le1/2$, the right boundary history therefore has pattern
 contained in $(-,+,-)$. For $q=0$ it is nonpositive throughout. The conditional count is at
 most $t-1$, so $u_t=-P_t(t-1)\le0$.
 
+We now keep the boundary values that the later rows will need.
 Fix $N$ and, for $1\le t\le N$, form the augmented row
 \[
  Z_t=(\ell_N,\ldots,\ell_{t+1},
        d_t(0),\ldots,d_t(t-1),
        u_{t+1},\ldots,u_N).
 \]
+The left history is read backward and the right history forward.
+Thus an endpoint entering the active row is already present in the
+preceding augmented row. This is why an interior recurrence suffices
+once the two histories have been checked.
 For $q\le1/2$, its first row is contained in $(+,-,+,-)$.
 To include possible zeros at $\ell_1=u_1=2q-1$, argue as follows. If $Z_1$ contained four ordered signs $-,+,-,+$
 and the second lay in the reversed left history, the first two would give
@@ -241,9 +267,14 @@ the nonpositive right history. This also covers $N=1$.
 Every entry of $Z_{t+1}$ is a nonnegative combination of adjacent entries
 of $Z_t$. The interior entries use \eqref{eq:bias-first-diff}. The two new
 boundary entries and the remaining future edge values are copied,
-with coefficients $(1,0)$ or $(0,1)$. Each nonzero entry has a parent
-of the same sign. Parents of successive opposite signs are strictly
-ordered, so the new row cannot have an extra alternating sign.
+with coefficients $(1,0)$ or $(0,1)$. To check the ordering, number the augmented entries from left to
+right. Output entry $i$ uses input entries $i$ and $i+1$, including
+copied entries by allowing one coefficient to vanish. A nonzero output
+has a parent of the same sign. For consecutive opposite output signs,
+the chosen parent indices cannot coincide, since one input cannot have
+both signs. They are therefore strictly increasing. Applying this to
+any alternating subsequence of the output embeds its signs, in order,
+in the input. No alternating pattern can be added.
 Thus $\operatorname{sp}(Z_N)\preceq(+,-,+,-)$. Reflection and sign
 reversal preserve this pattern, proving the claim also for $q\ge1/2$,
 including $q=1$.

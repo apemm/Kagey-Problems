@@ -10,6 +10,7 @@ access and does not substitute absence of a search result for a priority proof.
 | Guérin, Laulin, Raschel and Simon, EJP 30 (2025), paper 102, [DOI](https://doi.org/10.1214/25-EJP1362), [author preprint](https://arxiv.org/abs/2409.06836). Full preprint and relevant theorem/proof passages checked; published numbering also recorded in the earlier repository audit. | Conditional unimodality; Remark 2.1(b) asks for the centered interval of bimodal biases. | This is the headline comparison. The finite dominant-half bound and weak transfer answer the interval question. Credit conditional unimodality as an input. |
 | Trinas and Valle, [arXiv:2609.14753](https://arxiv.org/html/2609.14753v1). Full HTML checked, focusing on main results and recurrence. | A uniform span-two local limit theorem and failure of a log-concavity conjecture. | Cite as a preprint. Its local limit could transfer finite inequalities, but the present proof needs only weak convergence. Its log-concavity threshold is not the modal threshold. |
 | Trinas, [The Prodigal Elephant Returns](https://arxiv.org/html/2611.01279v1), [submission record](https://arxiv.org/abs/2611.01279). Main statements and their zero-density constants checked. | Last-return laws at fixed superdiffusive memory, using the value of the same limit density at zero. Submitted October 31, 2026. | Added the citation and explained why the value at zero is independent of initial bias although the shape is not. Its stated results do not settle the bias-interval classification. |
+| Mohandas, Górski, Suchecki, Andres, Vaccario and Hołyst, [Structurally balanced growing network as randomized Pólya urn process](https://arxiv.org/abs/2510.24659), v2 (2025), and [supplement](https://arxiv.org/src/2510.24659v2/anc/supp.pdf). Main article and full supplement read on November 6. | The same count transition after setting their copying probability to `(1+a)/2`. The supplement's Section IV.A fits finite central-curvature crossings and extrapolates to about `0.836`. Section I explains the fair mixture of reflected conditional laws. | Added numerical precedent to the introduction. D's certified value corresponds to about `0.83440643`, so the fitted value must not be described as exact agreement. The source does not prove the general initial-bias interval, its boundary regularity or monotonicity. Its finite-size fit is relevant to D's newly proved local threshold expansion. |
 | Guérin, Laulin and Raschel, [A fixed-point equation approach](https://arxiv.org/abs/2308.14630), [published DOI](https://doi.org/10.1214/24-AIHP1534). Full preprint checked for fixed-point, density and moment statements. | Fixed-point descriptions, density regularity and moments, including multidimensional models. | These remain named inputs. The multidimensional framework does not by itself prove a radial peak-to-crater transition. |
 | Drezner and Farnum, [A generalized binomial distribution](https://www.tandfonline.com/doi/abs/10.1080/03610929308831202), 1993. Publisher abstract only; full PDF unavailable. | The abstract explicitly includes unimodal and bimodal members of the correlated-binomial family. | Credit the observation of bimodality. Do not claim to have checked its complete shape analysis. The transition-rule comparison is supported separately by James–James–Qi. |
 | James, James and Qi, [Limit theorems for correlated Bernoulli random variables](https://doi.org/10.1016/j.spl.2008.01.104), 2008. Full text was read in the earlier transition review; local source retained. | The formulation uses next-success probability `(1-theta)p + theta b/t`; fixed and varying dependence are treated. | Taking innovation probability `p=1/2` gives the present chain. Changing initial bias is not the same as changing innovation probability. |
@@ -56,7 +57,7 @@ The current [template repository](https://vtex-soft.github.io/texsupport.ims-ejp
 provided the class used here. Older cached sample files and conflicting
 third-party fee summaries were not treated as current journal policy.
 
-## Unresolved access
+## Earlier access record (superseded for author reading)
 
 Drezner–Farnum's complete 1993 paper remains the main historical-access gap.
 Heyde's 2004 full text was also unavailable in the earlier audit; its general
@@ -65,6 +66,71 @@ the later full-text comparison. These limitations prevent claiming that all
 historical literature has been independently read in full.
 
 The publisher PDF endpoints were checked again on November 5. Drezner–Farnum
-returned an access denial, and Heyde's PDF remained inaccessible. The manuscript
-now states both abstract-only exceptions and identifies James–James–Qi as the
-full-text source used for the historical formulation and limit comparison.
+returned an access denial, and Heyde's PDF remained inaccessible. That draft stated both abstract-only exceptions. On November 6 the author
+confirmed that he has now read both sources in full, and requested removal
+of those exceptions. This is an author reading confirmation, not a claim
+that the earlier retrieval succeeded.
+
+## November 6 search update
+
+Murahara and Tokumitsu's [Optimal Rates in Local and Central Limit Theorems
+for the Elephant Random Walk](https://arxiv.org/html/2610.35019v1), posted
+October 26, treats the diffusive and critical regimes, with copying
+probability at most three quarters. The abstract, model, main-results
+scope and related-work discussion were checked. In D's memory notation,
+this is \(a\le1/2\), whereas the new local curvature-threshold estimate
+is near \(a_*>1/2\). The stated results therefore do not subsume that
+estimate. This is a scope comparison, not a claim to have audited all
+47 pages or all possible consequences of their methods.
+
+Guérin, Laulin and Raschel's [Elephant polynomials](https://arxiv.org/html/2401.04959v2)
+was checked for a possible analytic comparison. Its root interlacing
+concerns successive lengths at a fixed memory. It does not give
+monotonicity of the optimized bias boundary in memory. Likewise, the
+positive Eulerian recurrence in Liu, Liu, Ma and Zhang's
+[ratio-monotonicity preprint](https://arxiv.org/abs/2509.03397)
+has a different derivative sign. Neither result is used as an
+unverified monotonicity input.
+
+
+## Fixed-memory split and classical attribution
+
+The official EJP instructions were rechecked on November 6. The required
+class is used. The 33-page length is an editorial choice.
+
+Karlin's Total Positivity, Volume I (Stanford, 1968) supplies the classical
+background attribution. The variation-diminishing statement was checked
+directly in the introduction of his 1964 paper, pages 34–36
+(https://doi.org/10.1090/S0002-9947-1964-0168010-2;
+https://paperzz.com/doc/8359702/total-positivity--absorption-probabilities-and).
+The 1968 volume's full text was not retrieved in this pass.
+
+Pólya–Szegő, Problems and Theorems in Analysis II, Part V, Chapter 1,
+is cited for the generalized Descartes tradition. The publisher's chapter
+record and original front matter confirm the scope and bibliographic
+details (https://doi.org/10.1007/978-3-642-61905-2_2).
+The full chapter could not be downloaded in this pass. The manuscript
+keeps a complete proof of the precise exponential-sum form it uses.
+No unverified problem number or theorem number has been added.
+
+## Mixture-modality lineage and latest reading confirmation
+
+The author reports full reading of Drezner–Farnum (1993) and Heyde (2004).
+Their existing bibliographic entries remain unchanged. The manuscript
+no longer describes the Drezner–Farnum observation as abstract-only.
+
+Eisenberger, Genesis of bimodal distributions, Technometrics 6 (1964),
+357–363, DOI 10.1080/00401706.1964.10490199. The publisher abstract explicitly
+studies bimodality as the mixture weight varies and unimodality near
+weights zero and one. The manuscript cites this only as the normal-mixture
+lineage, not as a theorem for elephant-walk densities.
+
+Robertson and Fryer, Some descriptive properties of normal mixtures,
+Scandinavian Actuarial Journal 1969 (1969), 137–146,
+DOI 10.1080/03461238.1969.10404590. The publisher abstract describes
+the shape across the parameter space of two normal components.
+No numbered theorem is attributed without full-text access.
+
+The publisher abstracts and metadata for these two additions were checked.
+Full text was not retrieved in this pass. Karlin (1964) was read at the relevant variation-diminishing
+passages. The book access limits above remain recorded.

@@ -7,44 +7,38 @@
 \newcommand{\Prob}{\mathbb{P}}
 \newcommand{\Var}{\operatorname{Var}}
 \newcommand{\CP}{\mathrm{CP}}
-\SHORTTITLE{Bimodality of the elephant random walk}
-\TITLE{Bimodality of the elephant random walk: the bias interval, the threshold and rare reversals}
-\hypersetup{pdftitle={Bimodality of the elephant random walk: the bias interval, the threshold and rare reversals},
+\SHORTTITLE{The bias interval of the elephant random walk}
+\TITLE{The bias interval of the elephant random walk}
+\hypersetup{pdftitle={The bias interval of the elephant random walk},
 pdfauthor={Arjun Pemmasani}}
 \AUTHORS{Arjun Pemmasani\footnote{\raggedright Department of Mathematics, Harvey Mudd College,
 Claremont, CA 91711, USA. \mbox{\EMAIL{apemmasani@hmc.edu}}\newline
 ORCID \href{https://orcid.org/0009-0001-2776-6298}{0009-0001-2776-6298}.}}
-\KEYWORDS{elephant random walk; bimodality; shape transition; random recursive tree;
-compound Poisson approximation; Landau distribution}
+\KEYWORDS{elephant random walk; bimodality; shape transition; variation diminution; initial bias}
 \AMSSUBJ{60G50}
-\AMSSUBJSECONDARY{60E07; 60F05; 60C05; 65G30}
-\ABSTRACT{We prove the conjecture of Gu\'erin, Laulin, Raschel and Simon that
-the bimodal initial biases form a (possibly empty) open interval centered at one half
-for each superdiffusive memory of the elephant random walk.
-The interval's endpoints vary continuously with memory, and outside it
-the limit density has one local maximum. There is a unique memory threshold,
-enclosed near $0.6688128600146$, at or below which the interval is empty.
-The fair density has two inflection points below and at this threshold
-and four above it. At the threshold the maximum is quartic.
-The two modes then separate on a square-root scale, while the bias
-interval opens on a three-halves scale. A fourth-moment argument proves
-bimodality for memory at least $0.79$ without computation.
-Near memory one, two Landau components approximate the density in total
-variation and scaled uniform distance, uniformly over the initial bias.
+\AMSSUBJSECONDARY{60F05; 60C05; 65G30}
+\ABSTRACT{We prove the conjecture of Gu\'erin, Laulin, Raschel and Simon
+that the bimodal initial biases of the superdiffusive elephant random walk
+form a possibly empty open interval centered at one half. Outside it,
+including its endpoints, the limit density has a unique local maximum.
+Finite sign bounds pass to the limit under weak convergence.
+They give exactly two inflection points for the fair unimodal density
+and four for the bimodal density. A moment argument proves bimodality
+for memory at least $0.79$ without computation.
 
-For rare reversals, we give an explicit total variation approximation
-by a truncated Luria--Delbr\"uck law and a Landau local limit theorem
-with a rate. The bounds locate every mode. For even length $N$, the origin is as
-likely as each end at exactly one reversal probability, with $N\varepsilon=2\log N-\log\log N-\log16+o(1)$.
-For every even $N\ge8$, this crossing law has two symmetric modal
-plateaus, with the center as its only interior minimum.}
+A certificate locates the unique fair-start transition
+near $0.66881286$. The critical density has a quartic top.
+Its two modes separate on a square-root scale, while the bias interval
+opens on a three-halves scale. Above the threshold, the bias boundary
+is positive and continuously differentiable, with a variational formula
+and a unique optimizer. Thus strongly biased starts are unimodal at
+every fixed memory, although the boundary tends to zero as memory
+tends to one.}
 \begin{document}
 \raggedbottom
 \input{sec_intro.tex}
 \input{sec_shape_engine.tex}
 \input{sec_bulk_applications.tex}
-\input{sec_erw_crossing.tex}
-\input{sec_erw_shape.tex}
 \input{sec_verify.tex}
 \input{sec_open.tex}
 
@@ -52,7 +46,7 @@ plateaus, with the center as its only interior minimum.}
 I thank Peter Kagey, whose Problem~131 of the Open Problem Collection
 \cite{kagey131} led to the crossing question, and Aidan Deshong for
 helpful conversations.
-The opening riddle points to the same idea as the crossing argument,
+The opening riddle recalls the crossing question that led to this work,
 namely to look for the first reversal.
 \end{acks}
 
@@ -60,15 +54,12 @@ namely to look for the first reversal.
 I wrote the original draft of this paper and its mathematics. I used Claude
 Opus 5.5 (Anthropic, through Claude Code) for literature searches, citation
 checks and referee-style reviews that informed the framing and abstract.
-I read every source cited in the paper, except that for Drezner and
-Farnum~\cite{dreznerfarnum1993} and Heyde~\cite{heyde2004} I relied on their
-abstracts and the account of James, James and Qi~\cite{jamesjamesqi2008}.
-I proposed and drafted the following
+I read every source cited in the paper. I proposed and drafted the following
 additions: Lemma~\ref{lem:analytic-density}; the strictness and
 inflection-point clauses of Theorem~\ref{thm:two-modes}; the fourth-moment
 extension of Theorem~\ref{thm:two-modes-near-one} to $a\ge4/5$; the Jensen
-lower bound in Theorem~\ref{thm:erw-bounds}(a); and the weaker
-weak-convergence hypothesis in Theorem~\ref{thm:landau}(c).
+lower bound in Theorem~4.5(a) of the archived combined version; and the weaker
+weak-convergence hypothesis in its Theorem~5.9(c).
 I used GPT-6 Astra (OpenAI, through Codex) to revise the manuscript and to
 revise the proofs of these additions. Proofs aside from the aforementioned were not altered by either model.
 The associated Lean files in
@@ -78,21 +69,19 @@ proofs, their named classical hypotheses and the separate numerical checks.
 I take responsibility for the claims, proofs and computations in the paper.
 
 \section*{Code and data}
-The \href{https://github.com/apemm/Kagey-Problems/tree/paperD-ejp-v1/kagey-problems/problem131/paperD}{tagged repository}
+The \href{https://github.com/apemm/Kagey-Problems/tree/paperD-ejp-v2/kagey-problems/problem131/paperD}{tagged repository}
 contains the source, certificate records and Lean files.
 The submission package also contains the numerical records and
-checksums. For the assumptions and formal coverage, see
+checksums. The \href{https://github.com/apemm/Kagey-Problems/blob/paperD-ejp-v2/kagey-problems/problem131/paperD/archive/combined-2026-11-06/problem131_memory.pdf}{archived combined version}
+retains the rare-reversal results. For the assumptions and formal coverage, see
 Section~\ref{sec:verify}.
 
 \appendix
 \input{app_modes.tex}
 \input{app_threshold.tex}
 \input{app_threshold_proofs.tex}
-\input{app_erw_bounds.tex}
-\input{app_erw_profile.tex}
-\input{app_erw_bulk.tex}
-\input{or_family_proofs.tex}
 \input{app_erw_signs.tex}
+\input{app_derivative_limits.tex}
 \input{app_data.tex}
 
 \begin{thebibliography}{99}\small\setlength{\baselineskip}{11pt}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}
@@ -117,17 +106,6 @@ process}, Aust.\ N.\ Z.\ J.\ Statist.\ \textbf{46} (2004), 53--57.
 B.~James, K.~James and Y.~Qi, \emph{Limit theorems for correlated Bernoulli
 random variables}, Statist.\ Probab.\ Lett.\ \textbf{78} (2008), 2339--2345.
 \url{https://doi.org/10.1016/j.spl.2008.01.104}.
-
-\bibitem{adlv2022}
-L.~Addario-Berry, L.~Devroye, G.~Lugosi and V.~Velona, \emph{Broadcasting on
-random recursive trees}, Ann.\ Appl.\ Probab.\ \textbf{32} (2022), 497--528.
-\url{https://doi.org/10.1214/21-AAP1686}.
-
-\bibitem{ahs2026}
-E.~Althaus, L.~Hartung and R.~Steiner, \emph{A random walk approach to
-broadcasting on random recursive trees}, J.\ Theor.\ Probab.\ \textbf{39}
-(2026), article no.~65.
-\url{https://doi.org/10.1007/s10959-026-01519-z}.
 
 \bibitem{coletti2017}
 C.~F.~Coletti, R.~Gava and G.~M.~Sch\"utz, \emph{Central limit theorem and
@@ -175,135 +153,6 @@ preprint, 2026.
 P.~Kagey, \emph{Problem 131}, Open Problem Collection,
 \url{https://peterkagey.com/problems/131/} (accessed October 2026).
 
-\bibitem{paperA}
-A.~Pemmasani, \emph{Uniform Bessel bounds for magnetization crossings in
-finite Ising chains}, preprint, 2026.
-\href{https://arxiv.org/abs/2610.06935}{arXiv:2610.06935}.
-
-\bibitem{fanqi2026}
-X.~Fan and Y.~Qi, \emph{A generalized elephant random walk with time-dependent
-memory}, preprint, 2026.
-\href{https://arxiv.org/abs/2610.16065}{arXiv:2610.16065}.
-
-\bibitem{rtt2025}
-R.~Roy, M.~Takei and H.~Tanemura, \emph{The elephant random walk in the
-triangular array setting}, J.\ Appl.\ Probab.\ \textbf{62} (2025), 997--1009.
-\url{https://doi.org/10.1017/jpr.2024.106}.
-
-\bibitem{kursten2016}
-R.~K\"ursten, \emph{Random recursive trees and the elephant random walk},
-Phys.\ Rev.\ E \textbf{93} (2016), 032111.
-\url{https://doi.org/10.1103/PhysRevE.93.032111}.
-
-\bibitem{baur2016}
-E.~Baur, \emph{Percolation on random recursive trees}, Random Struct.\
-Algorithms \textbf{48} (2016), 655--680.
-\url{https://doi.org/10.1002/rsa.20603}.
-
-\bibitem{ev2018}
-J.~Engl\"ander and S.~Volkov, \emph{Turning a coin over instead of tossing
-it}, J.\ Theor.\ Probab.\ \textbf{31} (2018), 1097--1118.
-\url{https://doi.org/10.1007/s10959-016-0725-1}.
-
-\bibitem{baurbertoin2016}
-E.~Baur and J.~Bertoin, \emph{Elephant random walks and their connection to
-P\'olya-type urns}, Phys.\ Rev.\ E \textbf{94} (2016), 052134.
-\url{https://doi.org/10.1103/PhysRevE.94.052134}.
-
-\bibitem{bertoin2014}
-J.~Bertoin, \emph{Sizes of the largest clusters for supercritical percolation
-on random recursive trees}, Random Struct.\ Algorithms \textbf{44} (2014),
-29--44. \url{https://doi.org/10.1002/rsa.20448}.
-
-\bibitem{miyazakitakei2020}
-T.~Miyazaki and M.~Takei, \emph{Limit theorems for the `laziest' minimal
-random walk model of elephant type}, J.~Stat.~Phys. \textbf{181} (2020),
-587--602.
-\url{https://doi.org/10.1007/s10955-020-02590-4}.
-
-\bibitem{kesslerlevine2015}
-D.~A.~Kessler and H.~Levine, \emph{Scaling solution in the large population
-limit of the general asymmetric stochastic Luria--Delbr\"uck evolution
-process}, J.~Stat.~Phys. \textbf{158} (2015), 783--805.
-\url{https://doi.org/10.1007/s10955-014-1143-3}.
-
-\bibitem{kesslerlevine2013}
-D.~A.~Kessler and H.~Levine, \emph{Large population solution of the
-stochastic Luria--Delbr\"uck evolution model}, Proc.\ Natl.\ Acad.\ Sci.\ USA
-\textbf{110} (2013), 11682--11687.
-\url{https://doi.org/10.1073/pnas.1309667110}.
-
-\bibitem{bhs2023}
-P.~Bokes, A.~Hlubinov\'a and A.~Singh, \emph{Reversible transitions in a
-fluctuation assay modify the tail of Luria--Delbr\"uck distribution}, Axioms
-\textbf{12} (2023), 249.
-\url{https://doi.org/10.3390/axioms12030249}.
-
-\bibitem{pakes1993}
-A.~G.~Pakes, \emph{Remarks on the Luria--Delbr\"uck distribution},
-J.~Appl.~Probab. \textbf{30} (1993), 991--994.
-\url{https://doi.org/10.2307/3214530}.
-
-\bibitem{mohle2005}
-M.~M\"ohle, \emph{Convergence results for compound Poisson distributions
-and applications to the standard Luria--Delbr\"uck distribution},
-J.~Appl.~Probab. \textbf{42} (2005), 620--631.
-\url{https://doi.org/10.1239/jap/1127322016}.
-
-\bibitem{schweinsberg2012}
-J.~Schweinsberg, \emph{Dynamics of the evolving Bolthausen--Sznitman
-coalescent}, Electron.\ J.\ Probab.\ \textbf{17} (2012), paper no.~91, 1--50.
-\url{https://doi.org/10.1214/EJP.v17-2378}.
-
-\bibitem{bertoin2014ejp}
-J.~Bertoin, \emph{On the non-Gaussian fluctuations of the giant cluster for
-percolation on random recursive trees}, Electron.\ J.\ Probab.\ \textbf{19}
-(2014), paper no.~24, 1--15.
-\url{https://doi.org/10.1214/EJP.v19-2822}.
-
-\bibitem{iksanovmohle2007}
-A.~Iksanov and M.~M\"ohle, \emph{A probabilistic proof of a weak limit law for
-the number of cuts needed to isolate the root of a random recursive tree},
-Electron.\ Commun.\ Probab.\ \textbf{12} (2007), 28--35.
-\url{https://doi.org/10.1214/ECP.v12-1253}.
-
-\bibitem{meirmoon1974}
-A.~Meir and J.~W.~Moon, \emph{Cutting down recursive trees}, Math.\ Biosci.\
-\textbf{21} (1974), 173--181.
-\url{https://doi.org/10.1016/0025-5564(74)90013-3}.
-
-\bibitem{dhw2023}
-C.~Desmarais, C.~Holmgren and S.~Wagner, \emph{Broadcasting-induced colorings
-of preferential attachment trees}, Random Struct.\ Algorithms \textbf{63}
-(2023), 364--405.
-\url{https://doi.org/10.1002/rsa.21142}.
-
-\bibitem{ksw2026}
-T.~Kardas, V.~Shneer and V.~Wachtel, \emph{Broadcasting on random trees:
-martingale methods and error bounds}, preprint, 2026.
-\href{https://arxiv.org/abs/2606.22960}{arXiv:2606.22960}.
-
-\bibitem{gs2026}
-A.~Gut and U.~Stadtm\"uller, \emph{Bernoulli elephant random walks}, J.\
-Theor.\ Probab.\ \textbf{39} (2026), article no.~60.
-\url{https://doi.org/10.1007/s10959-026-01517-1}.
-
-\bibitem{ks1984}
-K.~S.~K\"olbig and B.~Schorr, \emph{A program package for the Landau
-distribution}, Comput.~Phys.~Commun. \textbf{31} (1984), 97--111.
-\url{https://doi.org/10.1016/0010-4655(84)90085-7}.
-
-\bibitem{yamazato1978}
-M.~Yamazato, \emph{Unimodality of infinitely divisible distribution
-functions of class $L$}, Ann.\ Probab.\ \textbf{6} (1978), 523--531.
-\url{https://doi.org/10.1214/aop/1176995474}.
-
-\bibitem{johansson2018}
-F.~Johansson, \emph{Numerical integration in arbitrary-precision ball
-arithmetic}, in: Mathematical Software -- ICMS 2018, Lect.\ Notes
-Comput.\ Sci.\ \textbf{10931}, Springer, 2018, 255--263.
-\url{https://doi.org/10.1007/978-3-319-96418-8_30}.
-
 \bibitem{johansson2017}
 F.~Johansson, \emph{Arb: efficient arbitrary-precision midpoint-radius
 interval arithmetic}, IEEE Trans.\ Comput.\ \textbf{66} (2017), 1281--1292.
@@ -313,20 +162,10 @@ interval arithmetic}, IEEE Trans.\ Comput.\ \textbf{66} (2017), 1281--1292.
 S.~Dharmadhikari and K.~Joag-dev, \emph{Unimodality, Convexity, and
 Applications}, Academic Press, Boston, 1988.
 
-\bibitem{katznelson2004}
-Y.~Katznelson, \emph{An Introduction to Harmonic Analysis}, 3rd ed., Cambridge
-University Press, Cambridge, 2004.
-\url{https://doi.org/10.1017/CBO9781139165372}.
-
 \bibitem{durrett2019}
 R.~Durrett, \emph{Probability: Theory and Examples}, 5th ed., Cambridge University
 Press, Cambridge, 2019.
 \url{https://doi.org/10.1017/9781108591034}.
-
-\bibitem{scheffe1947}
-H.~Scheff\'e, \emph{A useful convergence theorem for probability distributions},
-Ann.\ Math.\ Stat.\ \textbf{18} (1947), 434--438.
-\url{https://doi.org/10.1214/aoms/1177730390}.
 
 \bibitem{dlmf}
 F.~W.~J.~Olver et al.\ (eds.), \emph{NIST Digital Library of Mathematical
@@ -342,6 +181,35 @@ The prodigal elephant returns: last-return laws in the superdiffusive regime,
 arXiv:2611.01279 (2026).
 \url{https://arxiv.org/abs/2611.01279}.
 
+\bibitem{mohandas2025}
+K.~Mohandas, P.~J.~G\'orski, K.~Suchecki, G.~Andres, G.~Vaccario and J.~A.~Ho{\l}yst,
+\emph{Structurally balanced growing network as randomized P\'olya urn process},
+arXiv preprint (2025).
+\url{https://arxiv.org/abs/2510.24659}.
+
+\bibitem{karlin1968}
+S.~Karlin, \emph{Total Positivity}, Vol.~I, Stanford University Press,
+Stanford, CA, 1968.
+
+\bibitem{karlin1964}
+S.~Karlin, \emph{Total positivity, absorption probabilities and applications},
+Trans.\ Amer.\ Math.\ Soc.\ \textbf{111} (1964), 33--107.
+\url{https://doi.org/10.1090/S0002-9947-1964-0168010-2}.
+
+\bibitem{polyaszego1998}
+G.~P\'olya and G.~Szeg\H{o}, \emph{Problems and Theorems in Analysis II},
+Springer, Berlin, 1998, reprint of the 1976 edition.
+\url{https://doi.org/10.1007/978-3-642-61905-2}.
+
+\bibitem{eisenberger1964}
+I.~Eisenberger, \emph{Genesis of bimodal distributions},
+Technometrics \textbf{6} (1964), 357--363.
+\url{https://doi.org/10.1080/00401706.1964.10490199}.
+
+\bibitem{robertsonfryer1969}
+C.~A.~Robertson and J.~G.~Fryer, \emph{Some descriptive properties of
+normal mixtures}, Scand.\ Actuar.\ J.\ \textbf{1969} (1969), 137--146.
+\url{https://doi.org/10.1080/03461238.1969.10404590}.
 \end{thebibliography}
 
 \end{document}

@@ -22,11 +22,18 @@ where two peaks first appear under a fair start. A related conjecture,
 eventual log-concavity, is disproved by Trinas and Valle in a recent
 preprint~\cite{tv2026}.
 
-We prove the shape bounds by tracking signs in the finite law's first
-and second differences. Positive sums of neighbors cannot add a sign
-change in the interior. Retaining earlier endpoint values lets the
-induction cover the ends as well. These bounds give the rare-reversal
-shape directly and the fixed-memory shape after passage to the limit.
+Gu\'erin, Laulin, Raschel and Simon prove conditional unimodality
+by induction in the finite walk and then pass to its limit.
+We need an induction that allows two peaks and an arbitrary start.
+We carry the boundary histories in augmented rows, so the interior
+sign argument also controls signs entering at the ends. Restricting
+these rows to the half favored by the first step excludes a valley
+there. Lattice-window averages then transfer both shape bounds under
+weak convergence (Lemma~\ref{lem:weak-shape-transfer}).
+For curvature, Gaussian smoothing reduces the problem to Descartes'
+rule for exponential sums. The rule is classical. The contribution
+is the boundary and dominant-half construction that makes it apply
+to the biased walk.
 
 \subsection{The walk and its parameters}\label{sec:notation}
 
@@ -38,31 +45,14 @@ goes the other way. Write $U_t$ for the step chosen at time $t+1$,
 and call it the parent of that step. We choose all parents and all
 reversal coins independently, also independently of $X_1$.
 
-It is convenient to count right steps instead of tracking position.
 Put $A_N=\#\{i\le N:X_i=+1\}$ and $P_N(k)=\Prob(A_N=k)$.
-Its position is $2A_N-N$, with $A_N=N/2$ at the origin and
-$A_N\in\{0,N\}$ at the two ends (all steps in one direction).
-We take $\Prob(X_1=+1)=\frac12$ unless we specify another bias.
-Reflection then gives $P_N(k)=P_N(N-k)$.
-For the walk started to the right, we use $\Prob_+$ and $\E_+$,
-namely probability and expectation conditional on $X_1=+1$.
-For even $N$ put ${k_{\mathrm c}}=N/2$, $C_N=P_N({k_{\mathrm c}})$ and $E_N=P_N(N)=P_N(0)$, the center
-and end masses. The center mass $C_N$ is used only for even $N$. We call the solution of
-$C_N=E_N$ the crossing.
-
-All logarithms are natural,
-$H_k=\sum_{j\le k}1/j$ is the $k$-th harmonic number, and $\gamma$ is Euler's
-constant. For rare reversals we take $N\to\infty$, restricting to even
-$N$ in statements about $C_N$. This is also the limit in $O(\cdot)$
-and $o(\cdot)$. Any dependence in the constants implied by $O(\cdot)$
-is stated explicitly (otherwise they are absolute).
-
-The reversal probability is $\varepsilon\in(0,1)$, $x=N\varepsilon$, and
-the crossing is $\varepsilon_N$, with $x_N=N\varepsilon_N$.
-
+The position is $S_N=2A_N-N$. We take a fair first step unless
+another bias is specified, so $P_N(k)=P_N(N-k)$.
+The notation $\Prob_+$ and $\E_+$ conditions on $X_1=1$.
+For even $N$, write $k_{\mathrm c}=N/2$. All logarithms are natural.
 
 For fixed memory put $a=1-2\varepsilon\in(1/2,1)$ and
-$S_N=2A_N-N$. Conditional on $X_1=1$, the almost-sure limit of
+condition on $X_1=1$. The almost-sure limit of
 $S_N/N^a$ has density $h_a$. With $\Prob(X_1=1)=q$, its density is
 \[
  g_{a,q}(u)=q h_a(u)+(1-q)h_a(-u),\qquad g_a=g_{a,1/2}.
@@ -73,31 +63,45 @@ In the finite recurrences we use $r_t(k)=\varepsilon+(1-2\varepsilon)k/t$.
 \subsection{Fixed memory}
 \label{sec:results}
 
-\begin{theorem}[the bias interval and the memory threshold]\label{thm:main-limit}
-For each $a\in(1/2,1)$ there is $b_a\in[0,1/2]$ such that $g_{a,q}$
+\begin{theorem}[the bias interval, analytic]\label{thm:main-limit}
+For every $a\in(1/2,1)$ there is $b_a\in(0,1/2]$ such that $g_{a,q}$
 has exactly two local maxima if and only if $b_a<q<1-b_a$.
-Otherwise it is unimodal with a unique local maximum, including at the
-two endpoints. The interval is empty exactly when $a\le a_*$, where
-\[
- 0.668812860014597754<a_*<0.668812860014601029.
-\]
-The boundary $b_a$ is continuous in $a$, with $b_a\to0$ as $a\to1$.
-The fair density has exactly two inflection points for $a\le a_*$
-and four for $a>a_*$. Bimodality for $a\ge79/100$ has a proof
-without computation. At $a_*$ the top is quartic, and the two fair
-modes emerge at distance proportional to $\sqrt{a-a_*}$. The bias
-interval has half-width asymptotic to $Q_*\approx9.86698769$ times
-$(a-a_*)^{3/2}$, and strictly widens just above the threshold.
+Outside this interval, including its endpoints, it is unimodal with
+a unique local maximum. For a fair start the density has exactly
+two inflection points when unimodal and four when bimodal.
+For $a\ge79/100$ it is bimodal. On the open set where $b_a<1/2$,
+the boundary is continuously differentiable, and $b_a\to0$ as $a\uparrow1$.
 \end{theorem}
 
-Theorem~\ref{thm:biased-limit-modes} proves the interval assertion.
-Theorems~\ref{thm:two-modes}--\ref{thm:threshold} classify the fair density
-and enclose its threshold. Proposition~\ref{prop:critical-shape} gives
-the shape at that threshold. Proposition~\ref{prop:bias-boundary}
-gives the variational equation for $b_a$,
-and Theorem~\ref{thm:bias-continuity} proves global continuity.
-Proposition~\ref{prop:bias-cusp} gives the three-halves law and local
-monotonicity of its width.
+Theorems~\ref{thm:two-modes} and~\ref{thm:biased-limit-modes} prove
+the shape assertions, and Corollary~\ref{cor:analytic-range} gives
+the moment criterion. The interior argument in
+Theorem~\ref{thm:bias-continuity} proves positivity and regularity
+where the interval is nonempty. Corollary~\ref{cor:bias-boundary-rate}
+gives the limit at one. These arguments use no numerical certificate.
+
+\begin{theorem}[the transition, computer-assisted]\label{thm:main-threshold}
+There is a unique threshold $a_*$ such that the bias interval is
+empty exactly when $a\le a_*$. Numerically, $a_*\approx0.6688$.
+At $a_*$ the fair density has a quartic top. Its two modes emerge
+at distance proportional to $\sqrt{a-a_*}$, and
+\[
+ \tfrac12-b_a\sim Q_*(a-a_*)^{3/2},
+ \qquad Q_*\approx9.86698769.
+\]
+The interval strictly widens immediately above $a_*$.
+\end{theorem}
+
+The certified enclosure is in Appendix~\ref{app:threshold}.
+The certificate establishes the signs and derivative bounds in
+Theorem~\ref{thm:threshold} and Table~\ref{tab:critical-constants}.
+The quartic and three-halves laws then follow by Taylor expansion
+(Propositions~\ref{prop:critical-shape} and~\ref{prop:bias-cusp}).
+Theorem~\ref{thm:bias-continuity} gives a continuous boundary,
+continuously differentiable and positive on $(a_*,1)$, and a unique
+optimizer in its variational formula. Continuity at $a_*$ uses the
+certified critical expansion. We do not prove that the boundary
+decreases throughout $(a_*,1)$.
 
 \begin{figure}[t]
 \centering
@@ -109,31 +113,9 @@ $4\rho_a/(1-4\rho_a)<q<1-4\rho_a/(1-4\rho_a)$ proved in
 Corollary~\ref{cor:bias-boundary-rate}. It does not locate the full boundary.
 The lower panels show the fair density before, at and after the
 transition. Its top is quartic at the threshold, whose certified
-enclosure is given in Theorem~\ref{thm:main-limit}.}
+enclosure is given in Appendix~\ref{app:threshold}.}
 \label{fig:phase}
 \end{figure}
-
-\begin{theorem}[the profile near memory one]\label{thm:main-near-one}
-Put $\varepsilon=(1-a)/2$ and
-$A_\varepsilon=1+2\varepsilon\log(1/\varepsilon)$. Let $f_L$ be the
-Landau density with characteristic function
-$\exp\{-it\log|t|-\pi|t|/2\}$, and let $\lambda_{\mathrm L}$ be its mode.
-As $\varepsilon\downarrow0$, the density
-\[
- \frac{q}{2\varepsilon}f_L\left(\frac{A_\varepsilon-u}{2\varepsilon}\right)
- +\frac{1-q}{2\varepsilon}f_L\left(\frac{A_\varepsilon+u}{2\varepsilon}\right)
-\]
-approximates $g_{1-2\varepsilon,q}$ in $L^1$ and in supremum norm
-multiplied by $2\varepsilon$, uniformly over $q\in[0,1]$.
-In particular $b_a\to0$, with the explicit upper rate
-$b_a\le8(1-a)+O((1-a)^2)$ from Corollary~\ref{cor:bias-boundary-rate}.
-For a fair start the positive mode is
-$A_\varepsilon-2\varepsilon\lambda_{\mathrm L}+o(\varepsilon)$ and
-its height is $(f_L(\lambda_{\mathrm L})+o(1))/(4\varepsilon)$.
-\end{theorem}
-
-Theorem~\ref{thm:near-one-profile} and
-Corollary~\ref{cor:biased-near-one-peaks} prove these assertions.
 
 \begin{theorem}[the finite shape bounds]\label{thm:shape-engine}
 For every $N\ge1$, every $0<\varepsilon<1$ and every initial bias,
@@ -153,91 +135,10 @@ Weak convergence is enough to carry the valley bounds to a continuous
 limit (Lemma~\ref{lem:weak-shape-transfer}). For the curvature bound,
 we first smooth by a Gaussian and then apply the sign bound.
 
-\subsection{Rare reversals}\label{sec:rare-results}
-
-Now let $\varepsilon\to0$ with $x=N\varepsilon$ of order $\log N$.
-The center and a specified end cross at about twice as many reversals
-as in the persistent walk~\cite{paperA}, which copies or reverses only
-its immediately preceding step. An early reversal changes an entire family of descendants (all the
-steps that copy it, directly or indirectly). The calculation is in
-Section~\ref{sec:erw}.
-
-Let $M_N$ count steps opposite to $X_1$.
-Its law $f_N(m)=\Prob(M_N=m)$ does not depend on $X_1$, and
-$P_N(k)=\frac12[f_N(N-k)+f_N(k)]$ (Lemma~\ref{lem:erw-reduction}). Let
-$\CP_N$ be the law of $\sum_{d=1}^{N-1}d\,\mathcal N_d$, where the
-$\mathcal N_d$ are independent Poisson variables with means $x/(d(d+1))$.
-Put $\lambda_m=(m-x\log x)/x$. We use the Landau density $f_L$
-of Theorem~\ref{thm:main-near-one}.
-
-\begin{theorem}[compound Poisson and Landau approximations]\label{thm:main-bulk}
-For $N\ge1$ and $0<\varepsilon<1$ the total variation distance between
-$f_N$ and $\CP_N$ is at most an explicit $\delta_\Sigma=O(x^2\log^2N/N)$
-(Theorem~\ref{thm:cp}). Suppose that $x\to\infty$ and $x^3\log^2N/N\to0$.
-Then, uniformly over integers $m\ge0$,
-\[
- \bigl\lvert xf_N(m)-f_L(\lambda_m)\bigr\rvert
- =O\Bigl(\frac{1+\log x}{x}+\frac{x^3\log^2N}{N}\Bigr).
-\]
-The weak convergence $(M_N-x\log x)/x\Rightarrow f_L$ needs only
-$x\to\infty$ and $x^2\log^2N/N\to0$.
-Theorem~\ref{thm:landau} gives explicit finite-$N$ bounds.
-\end{theorem}
-
-\begin{theorem}[mode locations]\label{thm:main-modes}
-Suppose $x\to\infty$ and $x^3\log^2N/N\to0$. For every mode
-$\kappa_N\ge N/2$ of $P_N$, and every mode $m$ of $f_N$,
-\[
- N-\kappa_N=x\log x+\lambda_{\mathrm L}x+o(x),\qquad
- m=x\log x+\lambda_{\mathrm L}x+o(x).
-\]
-Both errors are
-$O\bigl(\sqrt{x(1+\log x)}+x^{5/2}\log N/\sqrt N\bigr)$.
-Here $\lambda_{\mathrm L}\approx-0.222783$ is the unique Landau mode
-(Lemma~\ref{lem:landau-mode}, computer-assisted).
-Corollary~\ref{cor:wider-mode-range} proves the assertion.
-For $\log N\le x\le2\log N$, Corollary~\ref{cor:mode-location}
-also gives the bound $50\sqrt{x\log x}$ for sufficiently large $N$
-(an explicit threshold is in Remark~\ref{rem:bulk}).
-\end{theorem}
-
-\begin{theorem}[the center and the crossing]\label{thm:main-center}
-Let $N\ge2$ be even.
-\begin{enumerate}[(a)]
-\item The ratio $C_N/E_N$ is strictly increasing in $\varepsilon\in(0,1)$, and
-the crossing $\varepsilon_N$ exists, is unique and lies in $(0,\frac12)$
-(Proposition~\ref{prop:mlr}).
-\item Uniformly as $\varepsilon\log N\to0$,
-$C_N=\frac{4\varepsilon}{N+2}(1+O(\varepsilon\log N))$.
-Theorem~\ref{thm:erw-bounds} gives explicit two-sided bounds.
-\item As $N\to\infty$ over even $N$, the crossing satisfies
-$x_N+\log x_N=2\log N-\log8+O(\log^2N/N)$, and so
-\[
- x_N=2\log N-\log\log N-\log16+O\Bigl(\frac{\log\log N}{\log N}\Bigr)
-\]
-(Theorem~\ref{thm:erw-crossing}).
-\end{enumerate}
-\end{theorem}
-
-At the crossing the relative error in (b) is $O(\log^2N/N)$.
-For the shape between the humps put
-$D_N(k)=P_N(k+1)-2P_N(k)+P_N(k-1)$ and $m_N=N-\kappa_N$ for a mode $\kappa_N\ge N/2$.
-
-\begin{theorem}[shape at the crossing]\label{thm:main-shape}
-For every even $N\ge8$, the crossing law has exactly two symmetric
-intervals of maximizing points. On either half, moving from the end
-to the center, the probabilities strictly increase up to the maximizing
-interval and strictly decrease after it. The center is the only
-interior minimum (Corollary~\ref{cor:unique-min}). The proof uses the
-finite endpoint-dip certificates in Proposition~\ref{prop:dip-hyp}.
-Lean checks these certificates as well as the deduction of the shape
-statement (Section~\ref{sec:verify}).
-\end{theorem}
-
 \subsection{Proof overview}\label{sec:architecture}
 
 \paragraph{Signs at the ends.}
-The recurrence alone is not enough at the ends. We append the earlier
+The recurrence alone is not enough at the ends. We append the boundary
 end values to each row, so that the induction keeps track of where a
 new sign could enter. In this enlarged row, an entry is either copied
 or is a positive sum of neighbors from the preceding row. We can
@@ -270,57 +171,31 @@ the limit for a fixed Gaussian width, after which we let that width
 tend to zero.
 
 \paragraph{Locating the threshold.}
-Near the transition, the question reduces to the sign of $g_a''(0)$.
-We evaluate its Fourier integral and bound the tail using exact
-moments and the smoothing equation. We use a Taylor model on each
-interval of $a$ because direct interval evaluation loses cancellations
-in the integral. In the small interval containing the zero, we also
-differentiate the smoothing equation, obtaining
-$0.68<\partial_a g_a''(0)<0.70$ and
-$-0.09<g_a^{(4)}(0)<-0.07$. The first inequality makes the zero unique.
-The second identifies the first nonconstant term at the critical maximum,
-namely the quartic term. At the threshold we have the sharper bounds
-in Table~\ref{tab:critical-constants}. All estimates used by the
-certificate are proved in
-Appendices~\ref{app:threshold} and~\ref{or:threshold}.
+We integrate the moment series for $g_a''(0)$ and bound its Fourier
+tail through the smoothing equation. Taylor models in memory retain
+the cancellations lost by direct interval evaluation. Near the
+zero, a positive parameter derivative makes the transition unique,
+while a negative fourth spatial derivative gives the quartic top.
+Table~\ref{tab:critical-constants} records the certified constants.
+Appendices~\ref{app:threshold} and~\ref{or:threshold} prove every
+estimate used in the certificate.
 
-\paragraph{The rare-reversal limit.}
-The finite bounds already give two humps with just one interior minimum
-at every even crossing with $N\ge8$. For their locations, view each
-step as a vertex joined to its parent. A reversal then affects a whole
-family. Ignoring repeated flips in a family leads to a compound
-Poisson approximation, with an explicit bound for the discarded
-interactions. Its Landau limit locates the peaks on the $x\log x$
-scale. We obtain the same profile from the fixed-memory density as
-memory tends to one. Here the curvature partition matters, since
-weak convergence alone would not rule out a thin spike at a mode.
-
-\subsection{Organization}\label{sec:organization}
-
-We prove the finite shape bounds in Section~\ref{sec:convex} and use
-them for fixed memory in Section~\ref{sec:bulk-applications}.
-Sections~\ref{sec:erw} and~\ref{sec:shape} turn to rare reversals,
-first the crossing and then the approximation.
-Section~\ref{sec:verify} records the proof methods and their inputs,
-and Section~\ref{sec:open} gives the open questions.
-The appendices contain the longer arguments, including all estimates
-needed by the certificates.
+Section~\ref{sec:convex} gives the finite bounds and
+Section~\ref{sec:bulk-applications} their limiting consequences.
+Sections~\ref{sec:verify} and~\ref{sec:open} record verification scope
+and open questions. Longer proofs are in the appendices.
 
 \subsection{Prior work}\label{sec:prior}
 
-The counting chain predates the elephant walk. Drezner and Farnum's
-generalized binomial model~\cite{dreznerfarnum1993}, in the formulation
-of James, James and Qi~\cite[p.~2339]{jamesjamesqi2008}, has next-success
-probability $(1-\theta)p+\theta b/t$. Taking $p=1/2$ and
-$\theta=a=1-2\varepsilon$ gives our $r_t(b)=\varepsilon+(1-2\varepsilon)b/t$.
-For $0<\varepsilon\le1/2$ this is the same transition rule.
-The fair-start chain also has their initialization. Other initial biases change only that
-initialization. Heyde~\cite{heyde2004} established the fixed-parameter limit
-regimes, including almost-sure convergence for $\theta>1/2$.
-James, James and Qi~\cite[Theorem~2.2]{jamesjamesqi2008} treat time-varying
-dependence parameters. Drezner and Farnum's abstract identifies bimodal members of this
-family. We classify the limiting shapes and prove quantitative bounds
-when reversals are rare.
+The counting chain predates the elephant walk. In the formulation
+of James, James and Qi~\cite[p.~2339]{jamesjamesqi2008}, the
+Drezner--Farnum model~\cite{dreznerfarnum1993} has next-success
+probability $(1-\theta)p+\theta k/t$.
+Taking $p=1/2$ and $\theta=a$ gives our transition rule.
+Drezner and Farnum's family includes bimodal laws.
+Heyde~\cite{heyde2004} established the fixed-parameter limit
+regimes, and James, James and Qi treat time-varying dependence.
+We classify limiting shapes as the initial bias and memory vary.
 
 Fixed-memory results include
 \cite{coletti2017,bercu2018,kubotatakei2019}. Murahara and
@@ -333,55 +208,23 @@ preprint~\cite[Theorem~3.1]{tv2026} could replace our weak-transfer
 argument. Their Theorem~4.4 disproves the log-concavity conjecture
 of~\cite[Remark~2.3]{glrs2025}.
 
-Engl\"ander and Volkov's coin-turning walk switches at time $n$ with
-probability $p_n$. For $p_n=c/n$ eventually, its occupation fraction tends
-to Beta$(c,c)$~\cite[Section~4, Theorem~1]{ev2018}. Fan and
-Qi~\cite{fanqi2026} vary the elephant's memory within a walk. Our reversal
-probability varies with the final length, giving a triangular array,
-as in Roy, Takei and Tanemura's varying memory windows~\cite{rtt2025}.
+The same transition appears in the growing-network model of
+Mohandas et al.~\cite{mohandas2025}. They observe the symmetric
+bimodality transition and extrapolate its finite-length central
+curvatures to a copying probability near $0.836$
+(Supplemental Material, Section~IV.A).
+Our certified threshold is $(1+a_*)/2\approx0.83440643$ in their
+parameter. The slow finite-length approach is visible in
+Remark~\ref{rem:modes-threshold}.
 
-K\"ursten's coupling~\cite{kursten2016} copies a parent with probability $1-2\varepsilon$ and otherwise assigns
-a fair sign. Baur and Bertoin~\cite{baurbertoin2016} give the urn connection. Our regime is
-strongly supercritical in Baur's classification~\cite{baur2016}, following
-Bertoin~\cite{bertoin2014}. Baur's Corollary~1 treats the largest nonroot
-clusters. Miyazaki and Takei derive root-cluster limits via
-the minimal elephant walk~\cite[Theorems~2.3, 2.4 and Section~2.3]{miyazakitakei2020}.
-These results do not estimate our exact central mass.
-
-Bokes, Hlubinov\'a and Singh~\cite{bhs2023} derived the first-order
-mutation profile for this counting chain. We bound its
-error uniformly in the rare-reversal regime and use it to locate the
-crossing.
-
-The untruncated law is the Lea--Coulson Luria--Delbr\"uck law. Pakes proved
-its weak Landau limit~\cite[p.~993]{pakes1993}. M\"ohle gave a uniform
-lattice local limit for integer parameters, without a
-rate~\cite[Corollaries~4.1--4.2]{mohle2005}. Kessler and
-Levine give the small-parameter profile, Landau limit and dip threshold,
-with mode near $\mu N(\log\mu N-0.22)$~\cite[Section~2 and Eqs.~(14),
-(18), (19)]{kesslerlevine2015}. Bertoin proves the same weak limit for
-vertices cut off from a recursive-tree root at cut probability of order
-$k^{-1/4}$ on a tree of size $k$~\cite[Proposition~1]{bertoin2014ejp}.
-The Iksanov--M\"ohle coupling~\cite[Proposition~1]{iksanovmohle2007}
-represents the Meir--Moon subtree cuts~\cite{meirmoon1974} by independent
-sizes of law $1/(j(j+1))$ up to first passage. The same weights appear
-in our expected family counts.
-Schweinsberg~\cite{schweinsberg2012} and Bertoin~\cite{bertoin2014ejp}
-obtain the stable root-cluster fluctuations at retention $1-c/\log n$.
-We add total variation and local error bounds for the truncated law,
-transfer them to the elephant walk and locate its modes.
-
-Broadcasting papers study root-color reconstruction~\cite{adlv2022,ahs2026},
-color-count limits and martingale error bounds~\cite{dhw2023,ksw2026}.
-We estimate the tie probability as the flip probability tends to zero.
-Gut and Stadtm\"uller's count~\cite[(1.5)]{gs2026} has next-step
-probability $pk/n$, whereas ours has
-$\varepsilon+(1-2\varepsilon)k/n$, so their chain cannot leave zero.
-The irreversible mutation expansion of Kessler and
-Levine~\cite[Eqs.~(10), (13), (14)]{kesslerlevine2013} has the same
-first derivative at $\varepsilon=0$ as our law, but not our uniform
-relative bound at $N\varepsilon\asymp\log N$.
-
+The bias question also belongs to the classical study of modality
+in mixtures. Eisenberger~\cite{eisenberger1964} studies how the
+mixing weight affects bimodality for two normal components, and
+Robertson and Fryer~\cite{robertsonfryer1969} examine their shape
+across parameter space. Here the two components are a non-Gaussian
+limit density and its reflection. We prove that their bimodal
+weights form an interval by controlling the finite walk, without
+an explicit formula for the conditional density.
 
 Dekking and Kong~\cite[Theorem~4.1]{dekkingkong2011} classify the Markov
 binomial law as unimodal, bimodal or trimodal. It depends on the previous
@@ -390,3 +233,11 @@ Trinas~\cite{trinas2026return} studies last returns to zero at fixed
 superdiffusive memory. His leading constant involves $g_{a,q}(0)$, which
 is independent of $q$ by reflection. The bias changes the shape away
 from zero even though it leaves that value unchanged.
+
+The sign arguments use classical variation diminution, as developed
+in Karlin's work~\cite{karlin1964,karlin1968}.
+For Gaussian smoothing we use the generalized Descartes rule from
+P\'olya and Szeg\H{o}~\cite[Part~V, Chapter~1]{polyaszego1998}.
+We include the elementary forms needed here. The walk-specific step
+is to control the boundary histories, where the positive interior
+recurrence alone gives no sign bound.

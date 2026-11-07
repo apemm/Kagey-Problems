@@ -19,9 +19,11 @@ Write the bias explicitly as $P_{n,q}$ and put
 \]
 The forward equation gives
 $A_{n+1}(k)=(1-r_n(k))A_n(k)+r_n(k-1)A_n(k-1)$.
-Induction gives $A_n(k)\ge0$ for $2k\ge n$. Both parents lie in
-the preceding upper half unless $k$ is the new center, where
-$A_{n+1}(k)=0$ by reflection. Terms outside the support vanish. In particular, the
+At $n=1$, $A_1(1)=2q-1\ge0$. Suppose the assertion holds at
+length $n$. At a point strictly above the new center, both parents lie in
+the preceding upper half and both coefficients are nonnegative.
+At an integer center $A_{n+1}(k)=0$ by reflection. Terms outside the
+support vanish. This proves the induction. In particular, the
 central first difference of an odd row is nonnegative.
 
 Restrict the augmented row $Z_t$ in the preceding proof to spatial
@@ -29,8 +31,10 @@ indices $2k+1\ge t$. At $t=1$ its pattern is contained in $(+,-)$. The central e
 $2q-1\ge0$, followed by the future right boundary values
 $u_s(q)=-\ell_s(1-q)$. Since
 $1-q\le1/2$, their pattern is $(+,-)$ by
-\eqref{eq:bias-edge-increments}. The positive two-parent recurrence
-preserves absence of a negative entry followed by a positive one.
+\eqref{eq:bias-edge-increments}. We exclude a negative difference followed by a positive one,
+including the future boundary entries. If such a pair first appeared
+in the next row, each entry would have a same-sign parent. Their
+indices must be strictly ordered by the preceding proof.
 The sole possible parent outside the previous half occurs at the new
 central difference of an odd row. That entry is nonnegative, so it
 cannot begin the forbidden pair. More explicitly, if a negative entry
@@ -62,12 +66,18 @@ Since the limiting law has no atoms, weak convergence gives
 \]
 Here $B_n(J)$ averages the scaled atom masses on $J$.
 If $g$ had two successive strict valleys, choose five disjoint
-equal-length intervals about the witnesses. By continuity, their
-averages retain all four strict inequalities. The corresponding
+equal-length intervals about the witnesses. Choose their common radius so that every value on a high interval
+exceeds every value on either neighboring low interval. This is possible
+because there are only four strict comparisons and $g$ is continuous.
+Their averages therefore retain all four inequalities. The corresponding
 $B_n$ satisfy these inequalities for large $n$.
 Choose a point of maximum mass in the first, third and fifth intervals,
-and one of minimum mass in each of the other two. The five points are ordered, and their scaled masses
-retain all four comparisons. This is a contradiction.
+and one of minimum mass in each of the other two. The intervals are disjoint and ordered, so the selected points are
+ordered too. Each selected high mass is at least its interval average,
+and each selected low mass is at most its interval average. Thus the
+same four strict comparisons hold between individual atom masses.
+Including zero masses is essential here, since a low interval need not
+meet the support of a particular finite law. This is a contradiction.
 
 Three positive intervals give the one-valley assertion by the same
 maximum--minimum--maximum selection. If the first witness is $0$,
@@ -76,4 +86,126 @@ inequalities. Finally, for any interval $J\subset(0,\infty)$ the
 reflection hypothesis gives $\mu_n(-J)\le\mu_n(J)$. Weak convergence
 passes this inequality to the limiting interval masses. Shrink $J$ to $x>0$ and use continuity to get $g(-x)\le g(x)$.
 At $x=0$ there is equality.
+\end{proof}
+
+\subsection{A start with one step in each direction}
+
+\begin{lemma}\label{lem:balanced-start}
+Fix the first two steps to be $+1,-1$. For $0\le a\le1$, the count
+law at each length $n\ge2$ is log-concave, with positive support
+$\{1,\ldots,n-1\}$. If $1/2<a<1$, its limiting density
+$f_a^{+-}$ is symmetric and log-concave, with
+$(f_a^{+-})'(t)<0$ for $t>0$.
+Consequently the density conditional on a positive first step satisfies
+\[
+ h_a'(t)>0\qquad(t<0).
+\]
+\end{lemma}
+
+\begin{proof}
+The extra initial step removes the boundary obstruction to the
+log-concavity induction of~\cite[Proposition~2.2]{glrs2025}.
+To see this directly, write one update as $g_k=Af_k+Bf_{k-1}$, where
+\[
+ A=\frac{1+a}{2}-\frac{ak}{n},\qquad
+ B=\frac{1-a}{2}+\frac{a(k-1)}n,\qquad d=\frac an.
+\]
+For $u=f_{k-2}$, $v=f_{k-1}$, $w=f_k$ and $z=f_{k+1}$, expansion gives
+\begin{align*}
+ g_k^2-g_{k-1}g_{k+1}
+ &=(A^2-d^2)(w^2-vz)+(B^2-d^2)(v^2-uw)\\
+ &\quad +(A-d)(B-d)(wv-uz)+d^2(w-v)^2.
+\end{align*}
+For $2\le k\le n-1$ we have $A,B\ge d\ge0$.
+Log-concavity and interval support make all three gaps nonnegative.
+At either boundary, an adjacent output mass vanishes. The initial
+row is a point mass at one, so induction proves the assertion.
+The same recurrence gives strict positivity throughout the support.
+
+Log-linear interpolation of these lattice masses is log-concave.
+Its integral differs from that of the step interpolation by at most
+twice the largest atom, which tends to zero because the limiting law
+has a continuous density. Thus the limit is log-concave.
+The two-subtree representation gives
+\[
+ \mathcal L_a^{+-}\ \stackrel d=\ U^a\mathcal L_a'-(1-U)^a\mathcal L_a'',
+\]
+with independent copies and an independent uniform $U$.
+This proves symmetry. It also gives positivity and an entire density,
+by positivity of $h_a$ and the Fourier bound of
+Lemma~\ref{lem:analytic-density}. The derivative of $\log f_a^{+-}$
+is nonincreasing and vanishes at zero. If it vanished at a positive
+point, the density would be constant on an interval, contradicting
+analyticity. Hence $(f_a^{+-})'<0$ on the positive half-line.
+
+For two positive initial steps, reflection dominance and the
+first-difference recurrence give nonnegative first differences on
+the negative half-line. The induction starts from the point mass
+at count two. Both parents stay in the preceding lower half except
+at the central difference of an odd row, where reflection dominance
+gives the required sign. Passing to the derivative limit as in
+Lemma~\ref{lem:derivative-limits} gives $(f_a^{++})'(t)\ge0$ for $t<0$.
+Finally
+$h_a=((1+a)/2)f_a^{++}+((1-a)/2)f_a^{+-}$.
+The second summand has strictly positive derivative there.
+\end{proof}
+
+\begin{lemma}[the conditional mode is positive]\label{lem:positive-conditional-mode}
+For every $1/2<a<1$, we have $h_a'(0)>0$. In particular the unique
+conditional mode lies strictly to the right of zero.
+\end{lemma}
+
+\begin{proof}
+We keep a positive amount of the finite reflection difference when
+passing to the limit. Write $f_n(k)=\Prob_+(A_n=k)$ and, on
+$z\equiv n\pmod2$, put
+$d_n(z)=f_n((n+z)/2)-f_n((n-z)/2)$.
+The reflection induction in Proposition~\ref{prop:dominant-half}
+is strict for $0<z\le n$ when the start is positive. Every noncentral
+upper-half entry has a positive parent with positive coefficient,
+starting from $d_1(1)=1$.
+The recurrence is
+\begin{gather*}
+ d_{n+1}(z)=A_n(z)d_n(z+1)+B_n(z)d_n(z-1),\\
+ A_n(z)=\frac12-\frac{a(z+1)}{2n},\qquad
+ B_n(z)=\frac12+\frac{a(z-1)}{2n}.
+\end{gather*}
+Fix $n_0>4a$ and divide by $z$. After multiplication by
+$\prod_{j=n_0}^{n-1}(1-2a/j)^{-1}$, the resulting values $v_n(z)$
+satisfy a backward averaging equation with weights
+\[
+ q_+=\frac{A_n(z)(z+1)}{z(1-2a/n)},\qquad
+ q_-=\frac{B_n(z)(z-1)}{z(1-2a/n)}.
+\]
+The weights sum to one and are nonnegative in the interior band
+used below. At $z=1$, the weight of the parent zero vanishes.
+For the corresponding backward chain,
+\[
+ \E[z_n^2\mid z_{n+1}=z]
+ =\frac{n-4a}{n-2a}z^2+\frac{3n-4a}{n-2a}.
+\]
+Set $\gamma_n=\Gamma(n-2a)/\Gamma(n-4a)\sim n^{2a}$.
+Then $Y_n=z_n^2/\gamma_n$ has backward drift
+$\delta_n=(3n-4a)/\{(n-2a)\gamma_n\}$, and
+$\sum_{n\ge n_0}\delta_n\to0$ as $n_0\to\infty$.
+
+Fix $R>0$. Start at $z_N=1$ for odd $N$ and $z_N=2$ for even $N$,
+and stop at row $n_0$ or on leaving $0<z/\sqrt{\gamma_n}\le R$.
+For sufficiently large $n_0$, every band state and its immediate
+parents lie inside the support. The expected stopped value of $Y$
+is at most $z_N^2/\gamma_N+\sum_{n\ge n_0}\delta_n$.
+At an exit it exceeds $R^2$, so increasing $n_0$ and then $N$
+makes the exit probability less than one half.
+All stopped $v$ values are positive. Their minimum $m_0$ at row
+$n_0$ is positive, since that row has finitely many band states.
+The bounded stopping argument gives $v_N(z_N)\ge m_0/2$.
+The product normalizer is asymptotic to a positive constant times
+$N^{2a}$, and hence
+\[
+ \liminf_N N^{2a}\frac{d_N(z_N)}{z_N}>0.
+\]
+The first-difference convergence proved in
+Lemma~\ref{lem:derivative-limits}, applied to the conditional start,
+identifies the limit as $4h_a'(0)$. Conditional unimodality
+then puts its mode to the right of zero.
 \end{proof}

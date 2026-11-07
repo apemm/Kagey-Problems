@@ -1,0 +1,450 @@
+\section{Rates near memory one and finite-length transitions}
+\label{app:fixed-refinements}
+
+\subsection{Rounding the Landau jumps}
+
+Write $d_{\rm K}$ for Kolmogorov distance. The following coupling
+keeps the small jumps instead of estimating a Fourier integral.
+
+\begin{lemma}\label{lem:landau-rounding}
+Let $S_x$ have the untruncated compound Poisson law with intensities
+$x/[d(d+1)]$, $d\ge1$, and let $Z$ have density $f_L$.
+For every $x\ge1$ these variables can be coupled so that
+\[
+ \E\left|Z-\left(\frac{S_x}{x}-\log x\right)\right|^2\le\frac2x.
+\]
+Consequently their Kolmogorov distance is $O(x^{-1/3})$.
+Also $\Prob(|Z|>R)=O(R^{-1})$ as $R\to\infty$.
+\end{lemma}
+
+\begin{proof}
+Take a Poisson random measure $\Pi$ on $(0,\infty)$ with intensity
+$\nu(du)=u^{-2}du$. Round each point $u\ge1/x$ down to
+$\lfloor xu\rfloor/x$. The number rounded to $d/x$ is Poisson
+with mean $\nu([d/x,(d+1)/x))=x/[d(d+1)]$, independently over $d$.
+The sum of the rounded points therefore has law $S_x/x$.
+
+For $v\ge1$ put $r(v)=v-\lfloor v\rfloor$. Direct integration gives
+\[
+ \int_1^\infty\frac{r(v)}{v^2}\,dv
+ =\lim_{m\to\infty}\{\log(m+1)-H_{m+1}+1\}=1-\gamma.
+\]
+Thus the mean of the discarded rounding error is $1-\gamma$,
+independently of $x$. The compensated small-jump integral converges
+in square mean as its lower cutoff tends to zero. Define
+\[
+ Z=\int_{(0,1/x)}u(\Pi-\nu)(du)
+   +\int_{[1/x,\infty)}u\Pi(du)-\log x+\gamma-1.
+\]
+This definition is independent of $x$. Subtracting the rounded sum
+minus $\log x$ leaves two independent centered integrals. Their
+variances add, giving
+\[
+ \E\left|Z-\left(\frac{S_x}{x}-\log x\right)\right|^2
+ =\frac1x+\frac1x\int_1^\infty\frac{r(v)^2}{v^2}\,dv\le\frac2x.
+\]
+The characteristic-function limit in \eqref{eq:bulk-AB} identifies
+this $Z$ with the Landau law. The squared difference is integrable
+even though the two variables themselves have infinite second moments.
+For any coupling $Y,Z$ and $s>0$,
+\[
+ d_{\rm K}(Y,Z)\le\Prob(|Y-Z|>s)+2\|f_L\|_\infty s.
+\]
+Chebyshev's inequality and $s=x^{-1/3}$ give the stated rate.
+
+Finally split the same Poisson integral at $R$. A point above $R$
+has probability at most $1/R$. The compensated integral below $R$
+has variance $R$, and the remaining drift is $\log R+\gamma-1$.
+For large $R$ this drift has modulus at most $R/2$, so another
+application of Chebyshev gives the tail bound.
+\end{proof}
+
+\subsection{A quantitative bridge}
+
+Put $Y_\varepsilon=(A_\varepsilon-\mathcal L_{1-2\varepsilon})/(2\varepsilon)$,
+whose density is $K_\varepsilon$, and write
+\[
+ \mathcal E_\varepsilon
+ =\varepsilon^{1/4}\{1+\log(1/\varepsilon)\}^{3/4}.
+\]
+We show first that
+\begin{equation}\label{eq:near-one-kolmogorov}
+ d_{\rm K}(Y_\varepsilon,Z)=O(\mathcal E_\varepsilon).
+\end{equation}
+All constants in this subsection are independent of sufficiently
+small $\varepsilon$. They need not be sharp.
+
+Use the walk and martingale from Corollary~\ref{cor:fixed-memory-bridge}.
+For an integer $n$ and $x=n\varepsilon$, put
+$Z_n=(M_n-x\log x)/x$ and $s_n=2\varepsilon\log n$.
+The gamma-ratio and martingale estimates there give, on the same space,
+\[
+ Y_\varepsilon=e^{s_n}Z_n+d_n+E_n',\qquad
+ d_n=\frac{1-e^{s_n}}{2\varepsilon}
+       +e^{s_n}\log x+\log(1/\varepsilon),
+\]
+\[
+ \E|E_n'|^2\le C\left\{
+       \frac{n^{4\varepsilon}(1+\log n)}x
+       +\frac{n^{4\varepsilon}}{x^2}\right\}.
+\]
+If $\log n=O(\log(1/\varepsilon))$, then
+$d_n=O(\varepsilon\log^2 n)$ and $e^{s_n}-1=O(\varepsilon\log n)$.
+Theorem~\ref{thm:cp} couples $M_n$ to $\CP_n$ with failure probability
+$O(\varepsilon x\log^2 n)$. Adding jumps of size at least $n$
+changes $\CP_n$ to $S_x$ with failure probability at most
+$x\sum_{d\ge n}1/[d(d+1)]=\varepsilon$.
+Lemma~\ref{lem:landau-rounding} then gives
+\[
+ d_{\rm K}(Z_n,Z)
+ \le C\{\varepsilon x\log^2 n+\varepsilon+x^{-1/3}\}.
+\]
+The Landau density is bounded, and unimodality implies
+$\sup_z|z|f_L(z)<\infty$. Thus a scale change by $1+o(1)$ and a
+shift change its distribution function by at most a constant times
+the scale and shift errors. To add $E_n'$, bound its tail by
+Chebyshev and compare the distribution functions at points a distance
+$s$ apart. The intermediate law may be discrete, so use its already
+bounded Kolmogorov distance to the continuous Landau law before
+bounding this increment by $2\|f_L\|_\infty s$.
+This gives
+\[
+ d_{\rm K}(Y_\varepsilon,Z)
+ \le C\left\{\varepsilon x\log^2 n+\varepsilon+x^{-1/3}
+       +\left(\frac{1+\log n}{x}\right)^{1/3}
+       +\varepsilon\log^2 n\right\}.
+\]
+Take
+\[
+ n=\left\lfloor\varepsilon^{-7/4}
+       \{1+\log(1/\varepsilon)\}^{-5/4}\right\rfloor.
+\]
+Then $n^{4\varepsilon}$ stays bounded and each term is
+$O(\mathcal E_\varepsilon)$, proving \eqref{eq:near-one-kolmogorov}.
+This choice uses the total variation bound, not the narrower range
+of the local approximation.
+
+\subsection{From distribution functions to densities}
+\label{app:profile-rates}
+
+\begin{lemma}[uniform smoothing of the rescaled law]\label{lem:profile-fourier}
+For every $0<r<1$ there are $c>0$ and $\varepsilon_0>0$ such that
+the characteristic function $\psi_\varepsilon$ of $Y_\varepsilon$ satisfies
+\[
+ |\psi_\varepsilon(t)|\le2e^{-c|t|^r}
+ \qquad(0<\varepsilon\le\varepsilon_0,\ t\in\mathbb R).
+\]
+Consequently every fixed derivative of $K_\varepsilon$ is uniformly
+bounded and converges uniformly to the corresponding derivative of $f_L$.
+\end{lemma}
+
+\begin{proof}
+The modulus inequality of Lemma~\ref{lem:analytic-density} also holds
+after centering and rescaling. Choose $K>1$ there with
+$D(v)=v^r+(1-v)^r-1$. Since $a\le1$,
+$v^{ar}+(1-v)^{ar}-1\ge D(v)$. The Landau characteristic function
+has modulus $e^{-\pi|t|/2}$, so choose $T$ with
+$e^{-\pi T/2}<2^{-K^r}$. Weak convergence in
+Corollary~\ref{cor:fixed-memory-bridge} is uniform on the fixed
+frequency interval $[T,KT]$. For small $\varepsilon$ it therefore gives
+$|\psi_\varepsilon|\le2^{1-K^r}$ there.
+The same first-contact argument, with
+$c=(\log2)/T^r$, proves the bound on the whole line.
+It is integrable after multiplication by any fixed power of $|t|$.
+Fourier inversion and dominated convergence give the derivative claims.
+\end{proof}
+
+We now prove the rates in Theorem~\ref{thm:near-one-profile}.
+Write $f=f_L$, $m=\lambda_{\mathrm L}$,
+$B_\varepsilon=A_\varepsilon/(2\varepsilon)$ and
+$\delta=\mathcal E_\varepsilon$.
+Lemma~\ref{lem:profile-fourier} gives a uniform Lipschitz constant for
+$K_\varepsilon$. Compare each density with its average on an interval
+of length $\sqrt\delta$. The two averaging errors are $O(\sqrt\delta)$,
+and \eqref{eq:near-one-kolmogorov} bounds the difference of the averages
+by $O(\delta/\sqrt\delta)$. Thus
+$\|K_\varepsilon-f\|_\infty=O(\delta^{1/2})$.
+
+The global quadratic gap of Lemma~\ref{lem:landau-mode} puts every
+mode of $K_\varepsilon$ within $O(\delta^{1/4})$ of $m$.
+Unimodality then gives
+$K_\varepsilon(y)\le1/(y-m_\varepsilon)$ for $y>m_\varepsilon$,
+where $m_\varepsilon$ is its mode. In particular its supremum for
+$y\ge B_\varepsilon-1$ is $O(\varepsilon)$.
+For $z<B_\varepsilon$ the folding identity is
+\[
+ H_\varepsilon(z)=K_\varepsilon(z)+K_\varepsilon(2B_\varepsilon-z).
+\]
+The second term is $O(\varepsilon)$, uniformly on this half-line.
+Beyond the cutoff $H_\varepsilon=0$, while unimodality gives the same
+$O(\varepsilon)$ bound for $f$. Hence
+$\|H_\varepsilon-f\|_\infty=O(\delta^{1/2})$.
+If $\eta=\|K_\varepsilon-f\|_\infty$, then for $R\ge1$,
+\[
+ \|K_\varepsilon-f\|_1
+ \le2R\eta+2\Prob(|Z|>R)+4d_{\rm K}(Y_\varepsilon,Z).
+\]
+Lemma~\ref{lem:landau-rounding} and $R=\delta^{-1/4}$ give
+$\|K_\varepsilon-f\|_1=O(\delta^{1/4})$.
+
+Finally, the global quadratic gap of Lemma~\ref{lem:landau-mode}
+puts the mode of $H_\varepsilon$ within $O(\delta^{1/4})$ of $m$.
+Its height differs from $f(m)$ by $O(\delta^{1/2})$.
+Undo the affine change of variables to get the mode and height
+estimates. Reflection and mixing cannot increase either norm, so
+the two-component bounds are uniform over $q\in[0,1]$.
+
+The spatial derivatives also have rates. Fix integers $M>j\ge1$.
+A finite-difference formula of order $M$ bounds the $j$-th derivative
+of a function by a constant times
+$s^{-j}\|v\|_\infty+s^{M-j}\|v^{(M)}\|_\infty$.
+Apply it to $v=K_\varepsilon-f$ and take
+$s=\delta^{1/(2M)}$. Lemma~\ref{lem:profile-fourier} gives
+\begin{equation}\label{eq:profile-derivative-rate}
+ \|K_\varepsilon^{(j)}-f_L^{(j)}\|_\infty
+ =O_{j,M}\bigl(\mathcal E_\varepsilon^{(1-j/M)/2}\bigr).
+\end{equation}
+These are spatial derivative estimates. They do not compare different
+memories at the small reflected peak.
+
+\subsection{Where the finite curvature vanishes}
+\label{app:finite-threshold}
+
+For even $N$, write $D_{N,a}(N/2)$ to make the memory explicit.
+
+\begin{lemma}[persistence of a central maximum]\label{lem:finite-shape-persistence}
+Fix $0<a<1$. If a fair-start row of length $n\ge2$ is unimodal
+about its center, every later row is unimodal too.
+For even $N$, a zero central curvature gives a central plateau
+of exactly three points and a strictly negative centered fourth difference.
+A negative central curvature stays strictly negative at all later even lengths.
+\end{lemma}
+
+\begin{proof}
+We first include zeros in the sign count. For a finite vector $v$,
+let $S^+(v)$ be the largest number of sign changes obtained by
+assigning either sign to its zero entries, and let $S^-(v)$ delete
+the zeros. If an onto linear map $B$ satisfies
+$S^-(Bv)\le S^-(v)$ for every $v$, then
+$S^+(Bv)\le S^+(v)$ as well. Indeed, perturb the zero coordinates
+of $Bv$ to realize any prescribed signs. A linear right inverse
+lifts this to a perturbation tending to zero at $v$. Its nonzero
+coordinates retain their signs, so the ordinary variation bound
+proves the claim.
+
+Apply this observation to the augmented rows in the proof of
+Proposition~\ref{prop:all-bias-modes}, adjoining a positive entry
+at the left and a negative entry at the right. Each update is onto.
+Its interior block sends $t$ coordinates to $t-1$ positive sums
+of neighbors, whose first $t-1$ columns form an invertible triangular
+matrix. All other coordinates are copied separately.
+
+For a fair start, put $\ell_t=d_t(0)$ as in that proof. The first
+augmented row, with its added endpoint signs, is
+\[
+ (+,\ell_N,\ldots,\ell_2,0,-\ell_2,\ldots,-\ell_N,-).
+\]
+The edge ratio starts at $\xi_1=1$, with
+$\delta_1=(1-3a)/(1+a)$. Equation~\eqref{eq:bias-edge-increments}
+shows that, for $a>1/3$, the later $\ell_t$ are negative, then
+possibly zero once, then positive. For $a<1/3$ they are all positive.
+At $a=1/3$, only $\ell_2$ vanishes. In each case the displayed row
+has $S^+\le3$, including the three consecutive zeros in the last case.
+The updates therefore give
+\begin{equation}\label{eq:finite-strong-variation}
+ S^+\bigl(d_N(-1),d_N(0),\ldots,d_N(N)\bigr)\le3.
+\end{equation}
+The two adjoined signs can be those of the actual endpoint masses.
+
+Now let $N=2m$ and $D_N(m)=0$. Symmetry gives
+$d_N(m-1)=d_N(m)=0$. If a mass to the right exceeded $P_N(m)$,
+there would be a positive difference to the right and a negative
+one to the left. Together with the endpoint signs, assigning the
+two central zeros the signs $+,-$ would give five changes.
+Thus the center is a global maximum. The dominant-half theorem
+makes the row unimodal. Four consecutive zero differences would
+also permit five changes, so its central plateau has exactly three
+points. Consequently, with zero masses outside the support,
+\[
+ \nabla^4P_N(m+2)=2\{P_N(m+2)-P_N(m)\}<0.
+\]
+
+For persistence, a unimodal row has $\ell_n\ge0$, so the edge
+history makes all later edge values positive. The positive
+first-difference recurrence preserves the signs on both halves.
+The central difference of an odd row is zero by symmetry.
+At the next even row, its left-central difference has one
+nonnegative parent and one zero parent. This proves absorption.
+If an even row has negative central curvature, its left-central
+difference is positive, and the dominant-half theorem makes the
+row unimodal. Its coefficient stays positive in these
+two updates, proving strict negativity at all later even lengths.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:finite-threshold-location}]
+At $a=0$ the law is binomial, so its central curvature is negative.
+For $N=2$ the curvature is $(3a-1)/2$.
+For $N=2m\ge4$, the single-mark terms in the tree representation give,
+as $\varepsilon=(1-a)/2\downarrow0$,
+\[
+ D_{N,a}(m)=\varepsilon N
+ \left\{\frac1{(m-1)m}+\frac1{(m+1)(m+2)}
+                   -\frac2{m(m+1)}\right\}+O(\varepsilon^2)>0.
+\]
+The bracket is positive because $1/[t(t+1)]$ is strictly convex
+for $t>0$. Continuity gives a zero for each even length.
+
+We next locate the zeros near $a_*$. For backward differences put
+\[
+ W_n^{(r)}(a)=\frac{n^{(r+1)a}}{2^{r+1}}
+       \nabla^rP_{n,a}((n+r)/2),\qquad n+r\text{ even}.
+\]
+On any compact $J\subset(1/2,1)$, repeated subtraction in
+\eqref{eq:P-rec} gives, for each fixed $r$,
+\[
+ \nabla^rP_{n+1,a}(k)
+ =\left(\frac{1+a}{2}-\frac{ak}{n}\right)\nabla^rP_{n,a}(k)
+ +\left(\frac{1-a}{2}+\frac{a(k-r-1)}n\right)
+                         \nabla^rP_{n,a}(k-1).
+\]
+This is the higher-difference recurrence of~\cite[(4.10)]{tv2026}.
+For all sufficiently large $n$, uniformly on $J$, every coefficient
+multiplying a nonzero entry is nonnegative. Interior row sums are
+$1-(r+1)a/n$, and the two outer coefficients $(1+a)/2$ are no larger.
+Iteration therefore gives
+\begin{equation}\label{eq:finite-difference-bound}
+ \sup_k|\nabla^rP_{n,a}(k)|\le C_{J,r}n^{-(r+1)a}.
+\end{equation}
+
+For completeness, these bounds identify the derivative limits as well.
+Linearly interpolate the values
+$n^{(r+1)a}\nabla^rP_{n,a}(k)/2^{r+1}$ at
+$(2k-n-r)n^{-a}$. The bounds for orders $r$ and $r+1$ give a
+common bound and Lipschitz constant. Summation by parts against a
+smooth compactly supported test function, followed by weak convergence,
+identifies every locally uniform subsequential limit as $g_a^{(r)}$.
+The martingale estimate in Lemma~\ref{lem:analytic-density} makes
+the weak convergence uniform on $J$, and that lemma also gives joint
+continuity of $g_a^{(r)}$. The same compactness argument with a
+convergent sequence of parameters thus proves
+$W_n^{(r)}(a)\to g_a^{(r)}(0)$ uniformly on $J$.
+
+Applying the recurrence twice at the center gives, with $c=(r+1)a$,
+\begin{align*}
+ W_{n+2}^{(r)}&=Q_{n,r}W_n^{(r)}+R_{n,r}n^{-2a}W_n^{(r+2)},\\
+ Q_{n,r}&=(1+2/n)^c(1-c/(n+1))(1-c/n),\\
+ R_{n,r}&=(1+2/n)^c(1-c/(n+1))(1-(c+a)/n).
+\end{align*}
+These are the coefficients in~\cite[(4.11)]{tv2026}.
+Uniformly on $J$, $Q_{n,r}=1+O(n^{-2})$ and $R_{n,r}=1+O(n^{-1})$.
+Telescope the $r=2$ recurrence from $n=N$ to infinity, over even
+lengths. The boundedness above and the uniform fourth-derivative limit give
+\begin{equation}\label{eq:finite-curvature-expansion}
+ \frac{N^{3a}}8D_{N,a}(N/2)
+ =g_a''(0)-\frac{g_a^{(4)}(0)}{2(2a-1)}N^{1-2a}
+               +o_J(N^{1-2a}).
+\end{equation}
+Here $\sum_{j\ge0}(N+2j)^{-2a}
+ =N^{1-2a}/[2(2a-1)]+O(N^{-2a})$ uniformly on $J$.
+The $Q-1$ contribution is $O(N^{-1})$, which is smaller uniformly
+since $\max J<1$.
+
+Choose $J$ inside the interval where $\partial_a g_a''(0)>0$,
+with $a_*$ in its interior. Its endpoint signs persist in
+\eqref{eq:finite-curvature-expansion}, giving a finite-length zero.
+Every zero in $J$ tends to $a_*$ and is within
+$O(N^{1-2\min J})$ of it. In particular $(a_N-a_*)\log N\to0$,
+so $N^{1-2a_N}/N^{1-2a_*}\to1$. Now use
+$g_{a_*}^{(4)}(0)=-B_*$ and
+$g_{a_N}''(0)=C_*(a_N-a_*)+o(|a_N-a_*|)$ in
+\eqref{eq:finite-curvature-expansion}. This gives
+\eqref{eq:finite-threshold-shift} for every choice of the zeros.
+
+It remains to prove uniqueness in $J$. Shrink $J$ so that
+$\min J>2/3$, which is possible since $a_*>2/3$.
+Write $d_{n,r}(k)=\nabla^rP_{n,a}(k)$ and differentiate its recurrence
+in $a$. The new forcing term is
+\[
+ \left(\frac12-\frac kn\right)d_{n,r+1}(k)
+       -\frac{r+1}{n}d_{n,r}(k-1).
+\]
+On its support $|1/2-k/n|$ is bounded for fixed $r$.
+The positive row-sum bound and
+\eqref{eq:finite-difference-bound} therefore give, uniformly on $J$,
+\[
+ n^{(r+1)a}\|\partial_a d_{n,r}\|_\infty
+ \le C_{J,r}\left(1+\sum_{j\le n}j^{-a}+\log n\right)
+ =O_{J,r}(n^{1-a}).
+\]
+The derivative of the normalizing power adds only $O(\log n)$, so
+$|\partial_a W_n^{(r)}|=O_{J,r}(n^{1-a})$ as well.
+Now differentiate the exact two-step identity. Since
+$\partial_aQ_{n,r}=O(n^{-2})$ and
+$\partial_aR_{n,r}=O(n^{-1})$, it gives
+\[
+ |\partial_aW_{n+2}^{(r)}-\partial_aW_n^{(r)}|
+ \le C_{J,r}\{n^{-1-a}+n^{-2}
+             +(1+\log n)n^{-2a}+n^{1-3a}\}.
+\]
+This is summable uniformly on $J$ because $\min J>2/3$.
+Thus $\partial_aW_n^{(r)}$ converges uniformly for each fixed even $r$.
+In particular it is bounded. Use this boundedness at orders two and
+four in the differentiated recurrence and telescope once more to get
+\[
+ \partial_aW_N^{(2)}
+ =\partial_a g_a''(0)+O_J(N^{1-2a}\log N).
+\]
+Uniform convergence of $W_n^{(2)}$ identifies the derivative limit.
+It is bounded below by a positive constant on $J$, so for large $N$,
+$W_N^{(2)}$ is strictly increasing there. Its zero in $J$ is unique.
+
+We now exclude zeros outside $J$. If $a>a_*$ and some even row
+had nonpositive central curvature, the dominant-half theorem and
+Lemma~\ref{lem:finite-shape-persistence} would make that row and every
+later row unimodal. Replace each rescaled point mass by a uniform
+density on its lattice cell. These densities are unimodal and have
+the same weak limit, so that limit would be unimodal too,
+contrary to Theorem~\ref{thm:threshold}.
+At $a=a_*$, equation~\eqref{eq:finite-curvature-expansion} and
+$g_{a_*}^{(4)}(0)<0$ instead give positive central curvature for
+all sufficiently large even lengths, again contradicting persistence.
+Thus $D_{N,a}(N/2)>0$ for every even $N$ and $a_*\le a<1$.
+
+For the lower range we need only one finite starting row.
+Set $x=a/(1-a)$ and use the integer recurrence
+\[
+ Q_{1,0}=Q_{1,1}=1,\qquad
+ Q_{n+1,k}=[n+2(n-k)x]Q_{n,k}+[n+2(k-1)x]Q_{n,k-1},
+\]
+with zero entries outside the row. Then
+$Q_{n,k}=2^n(n-1)!(1+x)^{n-1}P_{n,a}(k)$.
+Up to a positive integer factor, $Q_{12,7}-Q_{12,6}$ is
+\begin{align*}
+ p(x)={}&-20582100-164656800x-546708330x^2-932010579x^3\\
+ &-738292807x^4+88855543x^5+748239073x^6+705001700x^7\\
+ &+321932736x^8+74195136x^9+6842880x^{10}.
+\end{align*}
+Its coefficients have one sign change and $p(1)=-457183548<0$.
+Descartes' rule puts its unique positive root above one.
+Hence $D_{12,a}(6)<0$ for $0\le a\le1/2$, and continuity extends
+this to $0\le a\le a_0$ for some $a_0>1/2$.
+
+Fix a small $\delta>0$. On $[a_0,a_*-\delta]$, the limiting
+central curvature is negative. At each parameter, derivative
+convergence gives an even row with negative central curvature,
+and continuity gives the same sign nearby. Take a finite subcover
+and the largest of these lengths. Lemma~\ref{lem:finite-shape-persistence}
+propagates strict negativity to every later even length.
+Together with the starting row, this proves
+$D_{N,a}(N/2)<0$ on $[0,a_*-\delta]$ for all sufficiently large even $N$.
+All zeros therefore lie in $(a_*-\delta,a_*)$. Choose $\delta$
+so that this interval is contained in $J$. Local uniqueness in $J$
+is now uniqueness on $(0,1)$.
+
+Finally, at $a=a_N$ the centered fourth difference is negative by
+Lemma~\ref{lem:finite-shape-persistence}. The unnormalized two-step
+identity at order two therefore gives
+$D_{N+2,a_N}((N+2)/2)<0$ for $N\ge4$.
+The unique zero at length $N+2$ must lie to its right.
+Thus $a_{N+2}>a_N$ throughout the range of uniqueness.
+\end{proof}
