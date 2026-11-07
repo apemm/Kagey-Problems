@@ -411,3 +411,11 @@ h >= 3 and every m >= q_h + (q_h - 1)(2 W_h + 1).
 Side experiment (square grids): the GQ(2,2) incidence graph placed on the 15 x 15 grid under random
 row and column orders keeps at most 28 of its 45 points after the fewest deletions that make it
 valid (3 orders tried). That is below 2n = 30, so it does not answer "first n with f(n,n) > 2n".
+
+## Seven rows down to width 24 (2026-11-06)
+
+Widths 24 and 25 are SAT for the partition {2,4,6} | {1,3,5,7}:
+56,45,34,23,1,1,14,1,12,1,6,16,7,1,47,6,67,7,7,6,25,7,36,27 and
+16,25,7,27,1,7,7,7,12,2,14,1,1,23,34,45,56,7,7,47,6,6,4,36,67.
+Both pass verify_narrow, the side-vector enumerator and solver/brute.py. So f(7,m) = m+12 for every
+m >= 24. Widths 20 and 22 are still running; the least width is open (open question 2).

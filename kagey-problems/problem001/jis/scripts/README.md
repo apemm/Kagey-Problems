@@ -204,7 +204,7 @@ must be. Widths 12 to 14 stop at the first SAT case; the stored files are partia
 
 | Command | Inputs | Evidence | Stored time | Rerun |
 |---|---|---|---|---|
-| `python jis/scripts/seven_row_sat.py W A TRIPLE 14400` (W = 26, 27, 28; TRIPLE = 246, 147, 246) | `six_row_structured_sat.py` | `seven_row_sat_w{W}_A_p{TRIPLE}.json` | | not rerun |
+| `python jis/scripts/seven_row_sat.py W A TRIPLE 14400` (W = 24, 25, 26, 27, 28; TRIPLE = 246, 246, 246, 147, 246) | `six_row_structured_sat.py` | `seven_row_sat_w{W}_A_p{TRIPLE}.json` | | not rerun |
 | `python jis/scripts/seven_row_witness_brute.py` | the three files above, `solver/brute.py` | `seven_row_witness_brute.json` | about 4 min | |
 
 ### R12. LRAT certificates
