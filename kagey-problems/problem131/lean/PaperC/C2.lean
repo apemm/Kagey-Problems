@@ -18,6 +18,15 @@ import PaperC.C2.MemorylessBlock
 import PaperC.C2.ResultantGraph
 import PaperC.C2.OneN
 import PaperC.C2.StationaryConverse
+import PaperC.C2.EigenplaneSign
+import PaperC.C2.SecondMomentsGeneral
+import PaperC.C2.ResolventOrders
+import PaperC.C2.OneTimeCore
+import PaperC.C2.CycleDepths
+import PaperC.C2.CollatzWielandt
+import PaperC.C2.ReducibleGenerators
+import PaperC.C2.FiberIrreducible
+import PaperC.C2.HidingTimeReversal
 
 /-!
 # Paper C2: additional exact results

@@ -276,6 +276,8 @@ also defined there.
 
 ## Section 6, low temperature and the cycle hierarchy
 
+Every row of this table (Example 6.5, `ex:four-state`, with the prefactors and the window of `thm:critical-window`) was dropped from C2 on 2026-11-08 (kept in Lean). The kept statements of Section 6 are in the section "Modules added on 2026-11-08" at the end of this file.
+
 | Paper statement | Lean | Hypotheses in Lean | Note label |
 | --- | --- | --- | --- |
 | Example 6.5 (`ex:four-state`), the rates, `π ∝ (1, t, t, t)` and the exit rates `q_1, …, q_4` | `qOff`, `Q4`, `Q4_offdiag`, `Q4_rowsum`, `detailed_balance`, `exit_rates` | `t` real (the identities need no sign) | C modal hierarchy 01, (28) |
@@ -298,12 +300,12 @@ exact and algebraic results of Sections 3, 4 and 6 of C2. The rows cite labels o
 
 | Paper statement | Lean | Hypotheses and differences | Module |
 | --- | --- | --- | --- |
-| `ex:branch-switch` and the examples after `thm:cycles-from-depths`, the exit rates and block eigenvalues | `branch_exit_one`, `branch_block_two`, `branch_block_23_eigen`, `branch_gap`, `branch_lt`, `weak_exit_one`, `weak_block_12_eigen`, `two_state_killing` | each eigenvalue is certified by a positive eigenvector, as in `CriticalWindow`; that it is the Perron root is not a Lean statement | `C2.BranchSwitch` |
+| (dropped from C2 on 2026-11-08 (kept in Lean)) `ex:branch-switch` and the examples after `thm:cycles-from-depths`, the exit rates and block eigenvalues | `branch_exit_one`, `branch_block_two`, `branch_block_23_eigen`, `branch_gap`, `branch_lt`, `weak_exit_one`, `weak_block_12_eigen`, `two_state_killing` | each eigenvalue is certified by a positive eigenvector, as in `CriticalWindow`; that it is the Perron root is not a Lean statement | `C2.BranchSwitch` |
 | `thm:nonreversible`, the worked `d = 4` cut-transpose example after the corollary (unlabeled) | `cutQ_isGenerator`, `cutQ'_isGenerator`, `cutQ_factors`, `cutPi_pos`, `cutPi_sum`, `cutQ_stationary`, `cutQ'_stationary`, `cutC'_null`, `cutQ'_eq_conj`, `cutQ'_X`, `cutQ'_Y`, `cutStar_01`, `cutQ'_ne_star`, `cutQ'_ne_Q`, `cut_example_minors` | the minors are compared for all 16 subsets (the empty one included) | `C2.CutExample4`, `C2.MinorTools`, `C2.TimeReversal` |
 | `ex:five-state` | `memQ_isGenerator`, `memQB_isGenerator`, `memQ_exit`, `memQ_enter`, `memQ_stationary`, `memQB_stationary`, `memQB_ne_Q`, `memQB_ne_star`, `memory_example_minors`; `memOffQB_eq`, `memory_example_law` | all 32 principal minors agree; the count laws from `π` agree for every `N`, `h` and composition (through `lawP_aBlock`) | `C2.MemorylessExample5`, `C2.MemorylessLaw` |
 | `rem:stationary`, path reversal from the stationary start | `aRev`, `aRev_eq_starMat`, `aRev_exit`, `wordWt_reverse`, `lawP_aRev`, `lawP_aRev_weighted` | the path identity holds for any positive `π`; stationarity enters only in `aRev_exit` (the reversed chain keeps the exit rates). The weighted law is `P_N(n) g(n)` for any `g` | `C2.PathReversal` |
-| `prop:amplitudes`(c), the null vector of the cut-transpose and its killed blocks | `cut_rows`, `cut_cols`, `cut_total`, `cutTranspose_null`, `cutPoint`, `cutTranspose_blocks`, `cutTranspose_isGenerator`, `exists_nonneg_factors`, `cutTranspose_isGenerator_of_blocks` | `Q` and `π` are given by `∑_j q_ij = 0` and `∑_i π_i q_ij = 0`; needs `∑ b ≠ 0` and `c·π_Y ≠ 0`. `cutTranspose_isGenerator` assumes `a, b, c, u ≥ 0`, the normalization of the factors in `eq:cut-transpose`; `cutTranspose_isGenerator_of_blocks` derives it from nonzero nonnegative rank-one blocks | `C2.CutTranspose` |
-| `prop:amplitudes`(b), the time-reversal part | `starTilt_eq`, `starTilt_right`, `starTilt_left`, `starTilt_pairing`, `starTilt_amplitude` | none | `C2.TimeReversalEigen` |
+| (dropped from C2 on 2026-11-08 (kept in Lean)) `prop:amplitudes`(c), the null vector of the cut-transpose and its killed blocks | `cut_rows`, `cut_cols`, `cut_total`, `cutTranspose_null`, `cutPoint`, `cutTranspose_blocks`, `cutTranspose_isGenerator`, `exists_nonneg_factors`, `cutTranspose_isGenerator_of_blocks` | `Q` and `π` are given by `∑_j q_ij = 0` and `∑_i π_i q_ij = 0`; needs `∑ b ≠ 0` and `c·π_Y ≠ 0`. `cutTranspose_isGenerator` assumes `a, b, c, u ≥ 0`, the normalization of the factors in `eq:cut-transpose`; `cutTranspose_isGenerator_of_blocks` derives it from nonzero nonnegative rank-one blocks | `C2.CutTranspose` |
+| (dropped from C2 on 2026-11-08 (kept in Lean)) `prop:amplitudes`(b), the time-reversal part | `starTilt_eq`, `starTilt_right`, `starTilt_left`, `starTilt_pairing`, `starTilt_amplitude` | none | `C2.TimeReversalEigen` |
 | `thm:nonreversible`(c), a cut-transpose has the principal minors of the matrix it comes from | `det_cut_unit`, `dense_det_ne_zero`, `det_cutTranspose`, `sumEquivS`, `pminor_cut`, `pminor_cutTranspose` | over `ℝ`, for any blocks (no Z-matrix or irreducibility hypothesis). The singular case is by continuity in `A + s·1`. That the fiber is the set of generator points of the orbit, and the bound `2d` on the number of cut-transposes, are not in Lean | `C2.CutTransposeMinors` |
 | `def:memoryless`, `thm:memoryless` | `Memoryless`, `flux_balance`, `colB`, `rowB`, `memoryless_isGenerator`, `memoryless_stationary`, `memoryless_eq_iff`, `memoryless_two`, `memoryless_eq_star`, `memoryless_irreducible`; `seg_reverse`, `segSum_eq_sub`, `maskB_vecMul`, `maskC_vecMul`, `maskB_pow`, `insideMass`, `outside_eq`, `pathSum_eq`, `memoryless_block_reversal`; `stepMat_aBlock`, `genPoly`, `coeff_genPoly`, `eval_genPoly`, `lawP_aBlock` | `Memoryless` asks `B` nonempty instead of `2 ≤ \|B\| ≤ d - 1`, and no sign on `κ` or `c`. `lawP_aBlock` (equal count laws of `I + hQ` and `I + hQ^[B]` for every `N`, `h`, composition) assumes only exit rates from `B` that do not depend on the state of `B`, entry rates and start proportional to a weight `w` on `B`; no stochasticity or stationarity. `F_{Q^[B]} = F_Q` for the continuous-time transform is not stated in that form | `C2.MemorylessBlock`, `C2.BlockSegment`, `C2.BlockReversal`, `C2.BlockReversalLaw` |
 | `prop:gluing`, both formulas; `cor:balance`, the algebraic direction; `rem:memoryless-cut`, `p_1 = p_2` | `glue_solution`, `starBlock_mul`, `starBlock_eq`, `star_q1`, `star_q2`, `star_beta`, `star_EY`, `glue_difference`, `glue_eq_iff`, `glue_eq_of_balanced`, `p1_eq_p2_memoryless` | stated at one point `x` for a solution `z` of `(diag x - Q) z = 1` (so `F_Q = π z`), over any field, with `R_X`, `R_Y` inverses of the blocks and `1 - αβ ≠ 0`. The passage from points to rational functions, and the use of `thm:one-horizon` in `cor:balance`, are not in Lean | `C2.GluingCut` |
@@ -324,7 +326,7 @@ exact and algebraic results of Sections 3, 4 and 6 of C2. The rows cite labels o
   `fiber_three` assumes that all six off-diagonal entries of both generators are positive. In the
   normalization (N) the existence of the positive null vector, from Perron and Frobenius, is a
   hypothesis of the Lean statements.
-* Proposition 3.9 (`prop:amplitudes`)(a), and (b), (c) beyond the rows of the modules `C2/`. In
+* Proposition 3.9 (`prop:amplitudes`), Section 5 (modal supports) and Section 8 (the reversible design): dropped from C2 on 2026-11-08 (kept in Lean where the rows above say so). Beyond the rows of the modules `C2/`, in
   Section 4 (the exact occupation law): `lem:reductions`, `thm:one-horizon`, `thm:generic-start`,
   `thm:second-moments`(ii) and (iii), cases (i) to (iii) of `thm:stationary-law`,
   `rem:balance-necessary`, the passage from points to rational functions in `prop:gluing` and
@@ -458,3 +460,65 @@ This was Section 8 of an earlier version. It is now the note
 | The proof of `Λ_N(h) → h̄` in Paper B, Proposition 5.1(3), with powers of the transition matrix, the mean and the covariance of the occupation counts of the Potts chain. The earlier EJP version proved the limit of the normalizing sum for every irreducible chain in another way, and C1 does not state it. | `PaperB.Covariance`, `PaperB.ChainCovariance`: `trans_pow`, `trans_eq_Tmat`, `mean_occ`, `twoPoint`, `twoPoint_abs`, `cov_kernel`, `cov_occ`, `cov_occ_closed`, `sum_sigma_abs`, `sum_sigma_abs_one`, `ratio_identity` | B Prop 5.1(3) |
 | The step of Paper B's generating function that conditions on the last letter | `PaperB.Refresh`: `endLaw_succ`, `law_eq_sum_endLaw`, `endLaw_of_zero` | B Prop 2.1 |
 | Singleton insertion and `S_(b,1,...,1)`, and the Gram determinant of a removed remark of Paper B | `PaperB.Singleton`, `PaperB.Modes`: `singleton_insertion`, `SL_b1`, `SL_b11`, `SL_singletons`, `gram_det`, `latVec_gram` | B, removed |
+
+## Modules added on 2026-11-08 (identifiability core)
+
+The paper was cut to its identifiability core on 2026-11-08. Eight modules were added to
+`PaperC/C2/` (sub-root `PaperC/C2.lean`), all in the namespace `Kagey131.PaperC.C2`, with no
+`sorry` and only `propext`, `Classical.choice` and `Quot.sound` among the axioms. The rows are
+keyed by `\label`. "Hypothesis" means a classical theorem or an analytic step that the Lean
+statement takes as an explicit assumption.
+
+### Coverage of the kept statements
+
+| Label | Class | Where |
+| --- | --- | --- |
+| `lem:RF-irreducible` | classical (Al Ahmadieh, Lemma 5.1; Hartfiel and Loewy) | hypothesis `hirr` of `one_time_core`; the multiaffine expansion of `R_F` is in `PrincipalMinors` |
+| `lem:perron-branch` | partly in Lean: the divisibility step; the inverse function theorem step and the irreducibility are hypotheses | `perron_branch_divides` |
+| `thm:dv` | partly: (iii) gives the same polynomials (`charpoly_eq_of_minors_eq`); the analytic parts (Donsker and Varadhan, smallest real root) are classical or not in Lean | `PrincipalMinors`, `C2.CollatzWielandt` |
+| `thm:nonreversible` | in Lean: (N), (R), irreducibility of the members, minors of a cut-transpose, `d ≤ 3`. Classical: Loewy, Hartfiel and Loewy, Chatterjee, Ghosh, Gurjar and Raj (the whole fiber) | `GeneratorFiber`, `C2.FiberIrreducible`, `C2.CutTransposeMinors` |
+| `prop:reducible` | partly: (iv) ⟹ (iii) and the last step of (ii) ⟹ (iv) | `C2.ReducibleGenerators` |
+| `prop:variational`(b) | partly: the Collatz and Wielandt inequality and the stationary characterization; the existence of `u` is classical | `C2.CollatzWielandt` |
+| `lem:reductions` | missing as stated (analytic: Feynman and Kac, Laplace transform); the count laws are `lawP_*` and `rem:one-N` is in Lean | none new |
+| `lem:graph` | in Lean | `C2.ResultantGraph` |
+| `thm:one-horizon` | Steps 5 and 6 (polynomial algebra, `c = 0`) in Lean; Steps 1 to 4 (analytic, transcendence) not in Lean | `C2.OneTimeCore` |
+| `thm:generic-start` | the expansion argument in Lean, in a stronger form; the finite union of proper subspaces and the measure statement are not | `C2.ResolventOrders` |
+| `thm:second-moments` | (i) for `d ≤ 4` and (ii) in Lean; (iii) (genericity) not in Lean | `C2.SecondMoments`, `C2.SecondMomentsFour`, `C2.EigenplaneSign`, `C2.SecondMomentsGeneral` |
+| `thm:stationary-law` | the converse in Lean; the cases follow from `thm:one-horizon`, `thm:second-moments` and `thm:nonreversible`(b) | `C2.StationaryConverse` |
+| `rem:nocut-moments`, `rem:one-N`, `rem:stationary` | `rem:one-N` and `rem:stationary` in Lean; the explicit 5-state example of `rem:nocut-moments` is not | `C2.OneN`, `C2.PathReversal` |
+| `prop:gluing`, `cor:balance`, `rem:balance-necessary`, `def:memoryless`, `thm:memoryless`, `ex:five-state` | in Lean (see the table above); the first and second order of `rem:balance-necessary` are new | `C2.GluingCut`, `C2.ResolventOrders`, `C2.MemorylessBlock` and others |
+| `thm:depth` | the exit-time bounds in Lean; `D(F) = max Γ(C)` is Catoni (classical), used as `DepthData.exists_cycle` | `C2.CycleDepths` |
+| `lem:laminar` | in Lean from the elementary hitting-probability properties | `C2.CycleDepths` |
+| `lem:nested` | the conclusion step in Lean (`depth_gap`); Wald's identity for the rounds is not in Lean | `C2.CycleDepths` |
+| `thm:cycles-from-depths`, `cor:tree-from-dv` | in Lean (the combinatorial part) | `C2.CycleDepths` |
+| `lem:gamma-unique` | not in Lean: Γ-convergence is not available in Mathlib in a form that applies, and the order-theoretic core is a short induction | none |
+
+### New rows
+
+| Paper statement | Lean | Hypotheses and differences | Module |
+| --- | --- | --- | --- |
+| `thm:second-moments`(ii), the eigenplane argument | `Planes`, `PlaneEdge`, `planeEdge_symm`, `plane_of_eigen`, `plane_rotation`, `plane_sign`, `sign_eq_of_edge`, `kills_complement`, `eigenplane_sign` | the spectral data of `K²` (orthonormal pairs `f k`, `g k`, eigenvalues `-u k`, complement in the kernel) spell out "every nonzero eigenvalue has multiplicity exactly 2"; the graph is `SimpleGraph.fromRel (PlaneEdge S P)` | `C2.EigenplaneSign` |
+| `eq:sym-powers`, `thm:second-moments`(ii) in terms of `Q` | `sPart`, `kPart`, `gmat`, `sym_one`, `sym_two`, `sym_three`, `sigma_eq_conj`, `Q_pow`, `second_moments_ii` | `π = s²` with `s > 0` and `G = diag(s) Q diag(s)⁻¹`; the conclusion is `Q' = Q ∨ Q' = starMat π Q` | `C2.SecondMomentsGeneral` |
+| `thm:generic-start`, the expansion `v_Q = m + diag(m) Q m + O(\|m\|³)` | `Npoly`, `Qpoly`, `resolvent_orders`, `exists_small`, `generic_start_determines` | exact, through the adjugate of `I - sA`. The hypothesis is a common solution `z` of `(diag x - Q) z = 1` and `(diag x - Q') z = 1` on an orthant `x_i > R`; the order `s` alone gives `Q = Q'` | `C2.ResolventOrders` |
+| `rem:balance-necessary`, first and second order | `lin_ext`, `polar`, `balanced_orders`, `balanced_first_order`, `balanced_second_order` | solutions of `(diag x - Q_X) z = a` and `= 1` on an orthant with `π·z_a = u·z_1`; the conclusions are `u = π a` and `(a_j - a_i)(π_i q_ij - π_j q_ji) = 0`. The case `\|X\| = 2` is the displayed consequence | `C2.ResolventOrders` |
+| `thm:one-horizon`, Steps 5 and 6 | `evalAt_comp_shift`, `shift_eq`, `numerator_eq`, `real_eig_nonpos`, `generator_charpoly_zero`, `eig_of_charpoly_zero`, `Pmv`, `evalAt_Pmv`, `shift_real`, `shift_const_zero`, `one_time_core` | `Pmv Q` irreducible (hypothesis); the branches `θ`, `θ + c` on an open set are the output of Steps 1 to 4; the degree bound on the numerators is a hypothesis of `numerator_eq`; the principal minors are not extracted from `Pmv Q' = Pmv Q` | `C2.OneTimeCore` |
+| `thm:depth`, the bounds `1/M ≤ λ_F ≤ \|F\|/M` | `exit_time_bounds`, `exit_rate_bounds` | a nonnegative matrix with `G_ij ≤ G_jj` and a positive eigenvector for `κ` | `C2.CycleDepths` |
+| `lem:laminar` | `IsCycleAbs`, `laminar` | hitting probabilities `h η z A B` in `[0,1]`, monotone in `A` and `B`, with `h(z; {x}, B) + h(z; B, {x}) = 1` | `C2.CycleDepths` |
+| `lem:nested`, conclusion | `depth_gap` | `M_C ≥ ½ e^{α/η} M_{C'}` eventually, and the depths as limits | `C2.CycleDepths` |
+| `thm:cycles-from-depths` | `DepthData`, `DepthData.condII_of_cycle`, `DepthData.cycle_of_condII`, `DepthData.cycle_iff_ii`, `DepthData.condII_iff_condIII`, `DepthData.cycle_iff_iii` | `DepthData` bundles monotonicity, `thm:depth` (a cycle of the same depth in each proper face) and `lem:nested` | `C2.CycleDepths` |
+| `cor:tree-from-dv` | `depth_eq_of_eq`, `cycles_eq_of_depth_eq` | equal exit rates give equal limits, then equal cycles | `C2.CycleDepths` |
+| `prop:variational`(b) and `sec:gamma` | `collatz_wielandt_ineq`, `generator_ratio_ge_log`, `stationary_ratio_nonneg` | the `u` of the formula of Collatz and Wielandt is a hypothesis; no Metzler hypothesis is needed in the inequality | `C2.CollatzWielandt` |
+| `prop:reducible`, (iv) ⟹ (iii), and the last step of (ii) ⟹ (iv) | `pminor_blockTriangular`, `pminor_eq_of_components`, `DependsOn`, `StrictAntiIn`, `eq_of_depends_on` | block triangular for a map `b` to a linear order; a negative partial derivative is modeled as strict decrease in the coordinate | `C2.ReducibleGenerators` |
+| `lem:perron-branch`, divisibility | `perron_branch_divides` | `R̃` irreducible of degree `1` in `w₁`, `p₁ R' = p'₁ R̃`, `p₁ ≠ 0` | `C2.ReducibleGenerators` |
+| `thm:nonreversible`(a), irreducibility of the members, and step (R) | `fiber_irreducible`, `real_similarity` | the positivity of the proper principal minors of `-Q` is a hypothesis (`lem:face-monotone`) | `C2.FiberIrreducible` |
+
+### Section `sec:law-hiding` (added 2026-11-08, module `C2.HidingTimeReversal`)
+
+| Paper statement | Lean | Hypotheses and differences | Module |
+| --- | --- | --- | --- |
+| `lem:flux-form`, first claim | `flux`, `flux_apply`, `flux_anti`, `flux_form`, `flux_form_star`, `flux_form_diff` | `u`, `v`, `z` are given solutions of `(diag x - Q) u = 1`, `(diag x - Q) v = f`, `(diag x - Q*) z = 1`; `π` has no zero entry. Gives `F_{Q*} - F_Q = uᵀ Φ v` for `μ = π∘f`. The restriction to a face (`x_j → ∞`) is not in Lean | `C2.HidingTimeReversal` |
+| `lem:closure`(a) | `Attached`, `Closed`, `noAttached_iff_closed`, `closed_memoryless` | a closed block of an irreducible generator with stationary `π > 0` is a `Memoryless` block with `κ > 0`; the converse is the definition | `C2.HidingTimeReversal` |
+| `lem:closure`(b) | `nbhd`, `closureN`, `closureN_subset_of_closed`, `closureN_subset`, `closureN_fixed`, `closureN_closed`, `closureN_eq_univ` | `N(X)` is the `|ι|`-th iterate; it has no attached state, lies in every closed block containing `X`, and is `[d]` if `X` lies in no proper closed block | `C2.HidingTimeReversal` |
+| `thm:hiding`, "if" | `form_prop_zero`, `hiding_if` | uniform exit rows `Q i y = κ ν y` on `B`, `f = c` on `B`, and `A_B` injective (`hinj`); then `∑_{i,j ∈ C} u_i Φ_ij v_j = 0` for `C ⊆ B`. The case `N(C) = [d]` is `form_prop_zero` with `v = c u`. The "only if" half and the conditional-expectation form are not in Lean | `C2.HidingTimeReversal` |
+| `lem:attached`, `eq:schur-form` | `schur_reduce`, `schur_form` | pure algebra: the Schur complement system and the splitting of the form for antisymmetric `Φ`. Parts (a) for `k ≥ 1` and (b) (the limits `s → ∞`) are not in Lean | `C2.HidingTimeReversal` |
+| `lem:attached`(a), `k = 0`, coefficient step | `attached_base`, `const_of_connected` | a form `∑ Φ_ij b_j η_i η_j` vanishing on the positive orthant gives `Φ_ij (b_j - b_i) = 0`; connectivity of the graph of `Φ_ij ≠ 0` gives `b` constant. The expansion `A⁻¹ = t⁻¹ diag(ξ)⁻¹ + O(t⁻²)` is not in Lean | `C2.HidingTimeReversal` |
