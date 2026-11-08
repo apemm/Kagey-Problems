@@ -2,6 +2,8 @@
 
 \subsection{Boundary padding}
 
+We extend a finite construction by adding black points along a boundary row.
+The next theorem reduces validity at every width to one finite check.
 For a blackout $S$ of the $h\times m$ grid and $\lambda,\mu\ge0$, form $S_{\lambda,\mu}$ by
 adding columns $1-\lambda,\dots,0$ and $m+1,\dots,m+\mu$, black only in a chosen
 \emph{padding row}, row $1$ or row $h$.
@@ -13,8 +15,8 @@ $\lambda,\mu\ge0$ vanishing on unpadded sides if and only if $S_{\lambda^*,\mu^*
 \end{theorem}
 
 \begin{proof}
-Set $S^*=S_{\lambda^*,\mu^*}$. Necessity follows by this choice. Suppose $S^*$ is valid
-and put $U=S_{\lambda,\mu}$.
+Set $S^*=S_{\lambda^*,\mu^*}$. Necessity follows by choosing these padding lengths.
+For sufficiency, suppose $S^*$ is valid and put $U=S_{\lambda,\mu}$.
 
 A tilted rectangle has at most one corner in row $1$ and at most one
 in row $h$ (Lemma~\ref{lem:leftmost} and~\eqref{eq:tilt-param}).
@@ -42,8 +44,8 @@ contradiction.
 
 \subsection{Five rows}
 
-For the constructions, list the black rows in each column from left
-to right. Start with the blackout $S_8$ given by $14,\allowbreak 45,\allowbreak 25,\allowbreak 5,\allowbreak 5,\allowbreak 34,\allowbreak 23,\allowbreak 12$ of the $5\times8$ grid, so that $B_1=\{1,4\}$ and $B_4=\{5\}$.
+List each column's black rows from left to right. On five rows, start with
+the blackout $S_8$ given by $14,\allowbreak 45,\allowbreak 25,\allowbreak 5,\allowbreak 5,\allowbreak 34,\allowbreak 23,\allowbreak 12$ of the $5\times8$ grid, so that $B_1=\{1,4\}$ and $B_4=\{5\}$.
 
 \begin{figure}[!t]
 \centering
@@ -68,7 +70,7 @@ reflection and column reversal.
 \begin{proof}
 (b) The upper bound is Theorem~\ref{thm:rowbound}.
 For the construction, $W_5=5$, so the collar theorem with right padding
-in row $1$ reduces the whole family from $S_8$ to Figure~\ref{fig:boards}(a).
+in row $1$ reduces the family to the test board in Figure~\ref{fig:boards}(a).
 Three enumerators and Lean verify that the $954$ rectangles of this
 test board have different presentations.
 (a) At $m=5$, use Corollary~\ref{cor:small-m} and the construction $S_0$
@@ -102,7 +104,8 @@ Let $S_{16}$ be the blackout of the $6\times16$ grid in Figure~\ref{fig:boards}(
 in the columns $1,2,3,6,9,10,14,15,16$, carry the edges of $K_{3,3}$ between $\{1,3,5\}$ and
 $\{2,4,6\}$.
 
-One point below the row bound, the structure is still rigid.
+To exclude blackouts one point below the row bound, we first classify
+their possible row graphs.
 
 \begin{lemma}[one point below the bound]\label{lem:sixbelow}
 Let $m\ge3$, and let $S$ be an axis-valid blackout of the $6\times m$ grid with $m+8$ points.
@@ -116,23 +119,24 @@ pairs, and one of the following holds.
 \end{lemma}
 
 \begin{proof}
-By Lemma~\ref{lem:H}, $|S|=t+e(H)$ for every choice of the trees, where $t\le m$ counts the
-nonempty columns. Mantel gives $e(H)\le9$ (Lemma~\ref{lem:mantel}), so $(t,e(H))$ is $(m,8)$ or
-$(m-1,9)$.
+For every choice of trees, Lemma~\ref{lem:H} gives $|S|=t+e(H)$,
+where $t\le m$ counts nonempty columns. Since $e(H)\le9$ by
+Lemma~\ref{lem:mantel}, $(t,e(H))$ is $(m,8)$ or $(m-1,9)$.
 
-In the second case $H$ has $q_6$ edges. The proof of Theorem~\ref{thm:equality} then shows
-that $H$ is $K_{3,3}$ and that no column has three black rows, which gives (c).
+In the second case $H$ has $q_6$ edges. The proof of Theorem~\ref{thm:equality}
+makes $H$ a $K_{3,3}$ and excludes columns with three black rows, giving (c).
 
-In the first case $H$ is triangle-free with $8$ edges. Suppose $H$ is not bipartite. Then its
-shortest odd cycle is a five-cycle, which has no chord. The sixth vertex is adjacent to at most
-two of its vertices, so $e(H)\le7$, a contradiction. Hence $H$ is bipartite with parts of sizes
+In the first case $H$ is triangle-free with $8$ edges. If it were not bipartite,
+its shortest odd cycle would be a chordless five-cycle. The sixth vertex could meet
+at most two cycle vertices, giving $e(H)\le7$, a contradiction. Hence $H$ is bipartite with parts of sizes
 $k$ and $6-k$, and $k(6-k)\ge8$ forces $H$ to be $K_{2,4}$ or $K_{3,3}$ minus an edge. In both
 graphs, two vertices in the same part have at least two common neighbors.
-Now suppose $|B_i|\ge3$. Then $T_i$ has a vertex $v$ with two neighbors $u$ and $w$. These lie
-in the same part of $H$, so they have a common neighbor $z\ne v$. Replacing the edge $vw$ of
-$T_i$ by $uw$ gives another tree on $B_i$, and the new graph $H$ contains the triangle $uwz$.
-This contradicts Lemma~\ref{lem:H}. Thus every column is a singleton or a double, and the
-pairs of the doubles are the edges of $H$. They are distinct because $H$ is simple.
+If $|B_i|\ge3$, then $T_i$ has a vertex $v$ with neighbors $u$ and $w$.
+These share a part of $H$, so they have a common neighbor $z\ne v$.
+Replace $vw$ in $T_i$ by $uw$. This gives another tree on $B_i$ but creates
+the triangle $uwz$ in $H$, contrary to Lemma~\ref{lem:H}.
+Thus every column is a singleton or a double. The double pairs are the edges
+of the simple graph $H$, so they are distinct.
 \end{proof}
 
 There are $10\cdot9=90$ labeled graphs in case (a), $15$ in case (b), and $10$ in case (c).
@@ -152,8 +156,8 @@ So $f(h,m)$ is known for every $h\le6$ and every $m$.
 \begin{proof}
 For $9\le m\le14$, an optimum with $m+9$ points would have double
 columns carrying $K_{3,3}$, by Theorem~\ref{thm:equality}.
-There are ten possible row partitions. The structured encoding has
-checked LRAT certificates excluding every one (Lemma~\ref{lem:enc}).
+Checked LRAT certificates exclude all ten row partitions in the
+structured encoding (Lemma~\ref{lem:enc}).
 At $m=8$, Corollary~\ref{cor:small-m} gives the same bound.
 Hence $f(6,m)\le m+8$ for $8\le m\le14$.
 
@@ -181,10 +185,10 @@ For every $m\ge24$ we have $f(7,m)=m+12$.
 \end{theorem}
 
 \begin{proof}
-The row bound gives $f(7,m)\le m+12$. For the lower bounds we use the structured encoding A
-of Section~\ref{sec:verify} with twelve doubles on the edges of $K_{3,4}$, for the partitions
-of the rows into $\{2,4,6\}$ and $\{1,3,5,7\}$ (widths $24$, $25$, $26$, and $28$) and into
-$\{1,4,7\}$ and $\{2,3,5,6\}$ (width $27$). It finds the valid blackouts
+The row bound gives $f(7,m)\le m+12$. For the lower bounds, structured encoding A
+of Section~\ref{sec:verify} uses twelve doubles on the edges of $K_{3,4}$.
+We partition the rows into $\{2,4,6\}$ and $\{1,3,5,7\}$ (widths $24$, $25$, $26$, and $28$) and into
+$\{1,4,7\}$ and $\{2,3,5,6\}$ (width $27$). The resulting blackouts are
 \begin{gather*}
 56,45,34,23,1,1,14,1,12,1,6,16,7,1,47,6,67,7,7,6,25,7,36,27,\\
 16,25,7,27,1,7,7,7,12,2,14,1,1,23,34,45,56,7,7,47,6,6,4,36,67,\\
@@ -229,8 +233,7 @@ below under the square's symmetries.
 \begin{proof}
 (a) Corollary~\ref{cor:small-m} gives the upper bound. To attain it,
 take $S_0$ to be $45,\allowbreak 34,\allowbreak 123,\allowbreak 1,\allowbreak 15$.
-Its row-column graph is an $8$-cycle with two pendant edges, hence it is
-axis-valid. Lemma~\ref{lem:leftmost} lists $30$ tilted rectangles, namely
+Its row-column graph is an eight-cycle with two pendant edges, so it is axis-valid. Lemma~\ref{lem:leftmost} lists $30$ tilted rectangles, namely
 nine unit diamonds, sixteen others from Lemma~\ref{lem:tilted-narrow},
 and five spanning the grid. The fifteen weak rectangles show the pairs
 below. After an oblique pair, the point following the bar is a white

@@ -18,9 +18,8 @@ Lemma~\ref{lem:threecorners}.}
 \label{fig:game}
 \end{figure}
 
-Write $f(h,m)$ for the most points we can black out, and $a_h(m)$
-for the number of ways to attain it. The conjectures recorded in the
-OEIS entry \seqnum{A397315}~\cite{oeis} were
+Write $f(h,m)$ for the maximum blackout size, and $a_h(m)$
+for the number of optima. The OEIS entry \seqnum{A397315}~\cite{oeis} conjectured
 $f(3,m)=m+2$ and $f(h,m)=h+m$ for $\min(h,m)\ge4$, with exceptions
 $f(4,4)=7$ and $f(4,5)=8$. The first was proved in Lean by the Omega
 Institute, whose pull request was merged on 15 September
@@ -32,7 +31,11 @@ Computer-assisted claims are marked, and the supplement to this paper lists the
 evidence for each.
 % TODO(author): add the date of A397315 after its A-number (item S6).
 
-The main results follow, with proof locations in parentheses.
+The graph bound is sharp at every height once the grid is wide enough.
+To attain it, we separate the columns containing two black points and alternate
+the intervening black points between the boundary rows. The separation lets us
+check tilted rectangles near one double column at a time. The main results
+follow, with proof locations in parentheses.
 
 \begin{introthm}[narrow grids]\label{thm:A}
 \leavevmode
@@ -61,6 +64,7 @@ For (c) and (d), the collar theorem reduces each infinite family to
 one validity check (Theorem~\ref{thm:collar}). Lemma~\ref{lem:enc}
 justifies the SAT bounds.
 
+\Needspace{5\baselineskip}
 \begin{introthm}[three-row optima]\label{thm:B}
 \leavevmode
 \begin{enumerate}[(a)]
@@ -108,26 +112,23 @@ a test-cover problem~\cite{bellitto2018,foucaud2015,katona1966,moretshapiro1985}
 rectangles, we get the Zarankiewicz problem~\cite{furedi1996,kst1954,reiman1958}.
 To distinguish all axis-aligned rectangles, the row-column graph must
 avoid both four- and six-cycles (Lemma~\ref{lem:girth}). Such graphs,
-including unbalanced parts, are studied by de Caen and
+including those with unequal parts, are studied by de Caen and
 Sz\'ekely~\cite{decaenszekely1992,decaenszekely1997}. With $n$ vertices on each
 side, the largest ones have $\Theta(n^{4/3})$ edges. Incidence graphs of generalized
 quadrangles attain this order~\cite{benson1966}, and Hoory~\cite{hoory2002} and
 Neuwirth~\cite{neuwirth2001} bound it from above. Lazebnik, Ustimenko, and
 Woldar~\cite{lazebnik1995} construct dense graphs of every even girth.
 Neuwirth's edge bounds~\cite[Theorem~1(ii) and Proposition~17]{neuwirth2001}
-already give our row bound in graph form. Our Mantel proof~\cite{mantel1907} also classifies and counts
-the equality cases.
-The tilted rectangles require additional arguments.
-For fixed height, our column method uses transfer
+give our row bound in graph form. Our proof using Mantel's theorem~\cite{mantel1907}
+also classifies and counts equality cases. We then check the tilted rectangles.
+At fixed height, we count column words using transfer
 matrices~\cite{alanko2011,euler2005,mertens2024},
 \cite[Proposition~V.6]{flajolet2009}.
 Theorem~1(3) of Guilhot, Little, and Parkinson~\cite{glp2025} also
 yields Theorem~\ref{thm:E} once regularity is proved.
 
-\paragraph{Outline.} Sections~\ref{sec:conv} to~\ref{sec:graph} set up
-the problem and its graph bounds. Sections~\ref{sec:three}
-to~\ref{sec:five} handle narrow grids, Section~\ref{sec:general} every height at large
-widths, and Section~\ref{sec:height} fixed height.
-Section~\ref{sec:square} gives the square-grid bounds,
-Section~\ref{sec:verify} the computational evidence and encoding
-proofs, and Section~\ref{sec:open} the open questions.
+\paragraph{Outline.} Sections~\ref{sec:conv} to~\ref{sec:graph} give the definitions
+and graph bounds. Sections~\ref{sec:three} to~\ref{sec:five} treat narrow grids,
+followed by large widths in Section~\ref{sec:general}, fixed height in
+Section~\ref{sec:height}, and squares in Section~\ref{sec:square}.
+Sections~\ref{sec:verify} and~\ref{sec:open} give the verification and open questions.

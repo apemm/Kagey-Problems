@@ -1,11 +1,10 @@
 \section{Every fixed height}\label{sec:height}
 
-Fix the height $h$ and read the grid from left to right. Its blackout is
-the \emph{column word} $w=B_1\cdots B_m$, whose letter $B_i$ records the
-black rows in column $i$. Write $|w|=m$ and $S(w)$ for its blackout, and
-let $\mathcal L_h$ be the valid words, including the empty word. We first
-show that validity needs only finite memory. A bounded counter will then
-pick out the words with the most black points.
+At fixed height $h$, finite memory suffices to test validity and count optima.
+Read a blackout as the \emph{column word} $w=B_1\cdots B_m$, with $B_i$
+recording column $i$'s black rows. Write $|w|=m$ and $S(w)$ for its blackout,
+and let $\mathcal L_h$ be the valid words, including the empty word.
+We first recognize all valid words, then add a bounded counter to select optima.
 
 \begin{theorem}[regularity and rational series]\label{thm:regular}
 For every $h\ge1$ the language $\mathcal L_h$ is regular, and $G_h(z,u)=\sum_{w\in\mathcal L_h}z^{|w|}u^{|S(w)|}$ is rational in $z$ and $u$.
@@ -25,10 +24,9 @@ only finitely many templates~\eqref{eq:tilt-param}, each of span at most
 $W_h$, again with arbitrary empty columns on either side.
 
 An automaton can therefore read $w$ while guessing two rectangle traces.
-It checks the containment above and remembers whether the traces have
-differed anywhere. Accepting when they differ recognizes the invalid words.
-Regular languages are closed under complementation, so $\mathcal L_h$ is
-regular too.
+It checks the containment in each column and records whether the traces ever
+differ. Accepting exactly when they differ recognizes the invalid words.
+Closure under complementation then makes $\mathcal L_h$ regular.
 
 Choose a deterministic automaton for $\mathcal L_h$ and give a transition
 reading $B$ the weight $u^{|B|}$. If $M(u)$ is its weighted transition
@@ -57,21 +55,20 @@ suffix gives
 \[
  k-C_h\le E(u)=k-E(v)\le C_h.
 \]
-Thus, for a fixed $k$, only finitely many prefix excesses need to be
-remembered. Add this counter to an automaton for $\mathcal L_h$, and
-accept when the final excess is $k$. It recognizes the regular language
-$\mathcal L_{h,k}$ of valid words with that excess.
+For fixed $k$, the counter therefore needs only finitely many values.
+Add it to an automaton for $\mathcal L_h$ and accept when the final excess
+is $k$. This recognizes the regular language $\mathcal L_{h,k}$.
 
 The set of lengths of a regular language is eventually periodic. For
 $m\ge3$, Lemma~\ref{lem:cross} and Theorem~\ref{thm:rowbound} put the
-optimal excess between $h-1$ and $q_h$. There are only finitely many such
-$k$, so choose one common period $p$ and threshold $m_0$ for their length
-sets. The largest available excess then depends only on $m\bmod p$.
+optimal excess between $h-1$ and $q_h$. These finitely many
+$k$ admit a common period $p$ and threshold $m_0$ for their length sets.
+The largest available excess depends only on $m\bmod p$.
 Calling it $k_r$ proves (a).
 
 For each residue $r$, keep the words of $\mathcal L_{h,k_r}$ whose lengths
-are at least $m_0$ and congruent to $r$ modulo $p$. This is still a regular
-language. Their union, together with the finitely many shorter optimum
-words, is exactly the language of optimum blackouts. Its counting series
-is rational by the same transfer-matrix argument as above, proving (b).
+are at least $m_0$ and congruent to $r$ modulo $p$. Each resulting language is regular.
+Their union and the finitely many shorter optimum words give all optimum
+blackouts. The transfer-matrix argument makes their counting series
+rational, proving (b).
 \end{proof}

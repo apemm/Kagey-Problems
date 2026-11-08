@@ -1,33 +1,30 @@
 \section{Computations and verification}\label{sec:verify}
 
-Every computed maximum and exact count has two separately written
-checks. The one exception is the bound $a_7(8)\ge18$, which comes from
-one enumeration. The repository~\cite{repo} stores the code and
-evidence. All paths here start from \nolinkurl{kagey-problems/problem001}.
-For commands, SHA-256 hashes, and running times, see
-\nolinkurl{jis/scripts/README.md}. The supplement to this paper gives the table of
-computed values and connects each computer-assisted claim to its checks and evidence
-files.
+Every computed maximum and exact count has two separately written checks.
+The bound $a_7(8)\ge18$ comes from one enumeration. The repository~\cite{repo}
+stores the code and evidence, with commands, SHA-256 hashes, and running times in
+\nolinkurl{jis/scripts/README.md}. All paths start from
+\nolinkurl{kagey-problems/problem001}. The supplement tabulates the values
+and lists each computer-assisted claim's checks and evidence files.
 
-We solve the hitting-set problem of Lemma~\ref{lem:diff} by ILP,
-using CBC~\cite{cbc} through PuLP~\cite{pulp}, and check it by brute
-force. SAT enumeration uses PySAT~\cite{pysat2018}.
+We solve the hitting-set problem of Lemma~\ref{lem:diff} with
+CBC~\cite{cbc} through PuLP~\cite{pulp}, and check the ILP results by brute force. SAT enumeration uses PySAT~\cite{pysat2018}.
 The column searches grow the board from left to right. They use
 $f(6,6)\le12$ to prune $6\times7$ and $6\times8$, and
 $f(6,7)\le13$ to prune $6\times8$ and $7\times7$.
 Every saved construction and counted model is tested for validity.
 
-Encoding A prevents the inclusion-minimal differences
-$C(R_1)\triangle C(R_2)$, $R_1\ne R_2$, from being entirely black.
+Encoding A forbids an entirely black inclusion-minimal difference
+$C(R_1)\triangle C(R_2)$, $R_1\ne R_2$.
 Encoding B forbids $C(R_1)\triangle C(R_2)$ only for distinct
 rectangles with a common corner. Each rectangle $R$ also has an
 indicator $y_R$, forced true if it is hidden, and at most one $y_R$
 may be true.
 
-For the structured six-row instances, fix one of the graphs of
-Theorem~\ref{thm:equality} or Lemma~\ref{lem:sixbelow} on the rows. A column type is its
-black-row set, either a singleton or one of the edges of the graph, together with the empty
-set in case (c) of the lemma. Use each edge once, and the empty type once in case (c).
+For a structured six-row instance, fix a row graph from
+Theorem~\ref{thm:equality} or Lemma~\ref{lem:sixbelow}. A column's type is
+its black-row set, either a singleton or an edge, with the empty set also
+allowed in case (c). Use each edge once, and the empty type once in case (c).
 Of encoding B's clauses, retain those involving a tilted rectangle
 whose forbidden set can be all black. Cardinality is enforced by
 Sinz's sequential counter~\cite{sinz2005}, expanded by our generator
@@ -49,15 +46,13 @@ $B_i$ as the type of column $i$ extends to a satisfying assignment of the struct
 \end{lemma}
 
 \begin{proof}
-(a) Any member of the finite family $\mathcal D$ contains an
-inclusion-minimal member. Thus a blackout contains a forbidden
-difference exactly when it contains a minimal one. Apply
-Corollary~\ref{cor:hitting}.
+(a) Since $\mathcal D$ is finite, each member contains an inclusion-minimal
+one. Excluding these therefore excludes every forbidden difference.
+Apply Corollary~\ref{cor:hitting}.
 
-(b) Part (a) leaves only pairs with no shared corner to check.
-For these, the difference is $C(R_1)\cup C(R_2)$, contained in $S$
-exactly when both rectangles are hidden. Allowing at most one hidden
-rectangle excludes precisely these remaining pairs.
+(b) It remains to check pairs with no shared corner. Their difference is
+$C(R_1)\cup C(R_2)$, contained in $S$ exactly when both rectangles are
+hidden. Allowing at most one hidden rectangle excludes precisely these pairs.
 
 (c) Theorem~\ref{thm:equality} or Lemma~\ref{lem:sixbelow} gives the graph.
 Every $B_i$ is a singleton, an edge of it, or, in case (c) of the lemma, empty, and every
@@ -66,12 +61,13 @@ for hidden rectangles. By (b), these choices satisfy encoding B.
 Dropping clauses preserves satisfaction in the structured instance.
 \end{proof}
 
-Reading the point variables of A or B therefore gives precisely the
-valid blackouts of the chosen size. For six rows, part (c) and the
+The point variables of A or B therefore describe exactly the valid
+blackouts of the chosen size. For six rows, part (c) and the
 row bound imply $f(6,m)\le m+8$ once the ten structured instances of
 width $m$ are all unsatisfiable, and $f(6,m)\le m+7$ once the further $115$ are.
 
-CaDiCaL~\cite{biere2024} produces LRAT certificates for every upper bound obtained by SAT:
+CaDiCaL~\cite{biere2024} produces LRAT certificates for every SAT upper bound.
+These cover
 $f(5,6)<12$, $f(5,7)<13$, $f(6,6)<13$, $f(6,7)<14$, $f(7,7)<15$,
 $f(6,8)<16$, and $f(7,8)<17$ using encoding A on all blackouts, the $70$ structured six-row
 instances with $m+9$ points for widths $8$ to $14$, and the $345$ with $m+8$ points for
