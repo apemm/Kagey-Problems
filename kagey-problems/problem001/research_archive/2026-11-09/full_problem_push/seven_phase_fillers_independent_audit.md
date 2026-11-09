@@ -1,0 +1,11 @@
+# Independent audit of the seven-filler refinement
+
+9 November 2026. The revised proof in [seven_phase_filler_profiles.md](seven_phase_filler_profiles.md) passes independent review. Its scope is a valid background, one-label insertion, and two specific multi-label exclusions; it is not a complete quadratic-width construction.
+
+The original slope condition needed strengthening. With g=1 and κ=3, fillers at columns 0 and 56 have rows F₀ and F₀+42. High hole points at columns −7 and 63 form a horizontal black side of length 70. The filler diagonal has squared length 56²+42²=70², and both pairs have midpoint column 28. Their common horizontal pair is (−7,F₀+21),(63,F₀+21). This is a genuine mixed collision, so arbitrary high-hole replacements were not justified by the original condition alone.
+
+The revised choice κ=−1 for square g and κ=1 for nonsquare g satisfies both χ(κg)=−1 and χ(1+4κ²)=χ(5)=−1. It removes the counterexample and also handles a second omitted role: two labels can form the horizontal black side while two different fillers form the black diagonal. In both cases the coarse norm equation is e²=5d² modulo seven. Hence e=d=0, the filler phases agree, and their actual rows agree; the diagonal rectangle is then degenerate.
+
+The remaining case split is sound. The transversality expression in (3) is nonzero for low points, high points, and high hole replacements. The crossed-pair congruences (4) force equal filler phases. Four filler phases lie on the nonisotropic line of direction (1,2κ); equal norms and perpendicularity force matching unordered phase pairs or two internally constant pairs. The corresponding actual row pairs make the mixed geometry degenerate. The one-label cases retain the old parity and bracketing exclusions, with the vertical filters imposed on all seven bounded filler rows.
+
+Complete occupation of phases zero and one excludes the horizontal two-label role only inside that occupied region. The note correctly retains additional collar interactions as a separate task. The sign rule in Section 7 also checks: equal signs give zero coarse gap, while opposite signs give χ(d)=σ(e), contrary to the triangle requirement χ(d)=−σ(e). These conclusions do not address the remaining mixed supports, higher arities, or equal-residue label blocks.

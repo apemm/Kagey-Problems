@@ -1,0 +1,15 @@
+# Independent audit of the occupied-phase three-label load
+
+9 November 2026. [occupied_phase_three_label_incidence.md](occupied_phase_three_label_incidence.md) passes review. Its conclusion concerns the resource criterion for the stated uniform-permutation model, not the existence or width of other constructions.
+
+For X=floor(eta h), both nonroot vertical increments are at most 98X, and the fourth row is at most 196X above the root. Both horizontal leg lengths are at most 98X², so their total diameter is at most 196X². A sufficiently small fixed eta therefore puts all rows in the eligible bulk interval and the complete rectangle inside less than half the occupied interval. The right-going leg uniquely determines p,q,k; the left-going leg then determines l. All three black columns are distinct, including when the two nonroot rows coincide.
+
+The coprime harmonic sum gives Theta(X² log²X) distinct rooted angles. Fixing one deleted nonroot row fixes kq or lp. Its divisor choices, followed by the remaining harmonic scale sum, give O_epsilon(h^(1+epsilon)) angles. Thus deleting O_epsilon(h^(3/4+epsilon)) rows loses only O_epsilon(h^(7/4+2epsilon)), which is lower order for a sufficiently small fixed epsilon. A surviving root in the specified bulk interval exists because the eligible residue class has positive density.
+
+Each nonroot odd row has Theta(h) surviving even mates. The two mate choices contribute Theta(h²) label templates; when the odd rows agree, only O(h) choices identify the two labels and need removal. The root label cannot equal either other label because their odd rows are strictly larger. These assignments do not introduce multiplicity: a nondegenerate right triangle has a unique right-angle vertex, and the horizontal signs distinguish its two legs.
+
+All relative columns are multiples of 98 and therefore respect the phase-49 slots. The diameter bound leaves Omega(n) translations of each template into n consecutive slots. Distinct templates and translations give distinct canonical three-assignment events. Each event has probability 1/(n)_3. At the fixed root-label resource, their actual total probability is consequently Omega(h^4 log²h * n/(n)_3)=Omega(log²h), since n is of order h². The general resource-load criterion therefore fails for this unmodified universe, independently of how loosely its maximum template degree is estimated.
+
+The completion column lies between the two nonroot black columns, so full occupation also applies there. If the completion is white, the opposite-parity endpoint in its real double and the separate final owner of that parity edge form the axis singleton rival. If it is black, the rectangle is hidden; in this family even direct subdivision is available because both side vectors have a factor of 98. Thus every counted triple is genuinely forbidden in the final equality board. The final-owner premise is essential and is stated explicitly.
+
+The result leaves correlated subdivisions, different order distributions, and other backgrounds open. It proves no logarithmic lower bound for the true threshold.

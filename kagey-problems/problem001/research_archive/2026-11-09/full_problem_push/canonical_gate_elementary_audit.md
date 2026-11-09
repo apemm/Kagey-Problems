@@ -1,0 +1,11 @@
+# Elementary audit of the canonical gate criterion
+
+9 November 2026. The elementary statements in [exact_canonical_gate_and_uniqueness_limits.md](exact_canonical_gate_and_uniqueness_limits.md) pass review, with the collar clarification below. This short audit does not independently recheck the cited sampling, influence, or nearest-neighbor theorems.
+
+For the returning-gate lemma, take the right cut at least L columns after the last edited position. The history at that cut, and the history before the edited region, then lie in the original recurrent component. The valid modification gives a path through the constant history; strong connectivity of the original component closes the return. Saying only that the history immediately after the edited interval is unchanged would be insufficient, since that history can still contain the last L edited letters. Enlarging the interval by its unchanged right collar resolves this.
+
+Horizontal reversal is an anti-isomorphism of the full higher-block graph: reversing the two overlapping words in a transition reverses its direction. It preserves spectral radii and fixes the constant history. A one-way escape theorem for every competing component therefore also applies to its reversed component, and reflection supplies the required return path. An escape established for one component alone does not have this consequence.
+
+Forbidding the gate deletes its history vertex. The Perron root of a finite irreducible component strictly decreases under deletion of a vertex, while every other component already avoids that vertex. Finiteness of the component set proves both directions of the stated gate-avoidance entropy equivalence.
+
+The marker example has exactly the claimed two recurrent types. Consecutive markers have gap at most L, so the rule forbidding opposite markers within distance L forces one marker type throughout a bi-infinite word. Each type gives the renewal equation 1=sum_{j=0}^{L-1} k^j/lambda^(j+1), and its root increases to k+1. Taking k to infinity and then choosing L sufficiently large makes the deficit from log(k+2) tend to zero while retaining two maximal-entropy components. This establishes only the limitation of range-independent entropy closeness, as stated.
