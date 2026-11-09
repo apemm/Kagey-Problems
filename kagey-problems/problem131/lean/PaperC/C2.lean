@@ -27,6 +27,7 @@ import PaperC.C2.CollatzWielandt
 import PaperC.C2.ReducibleGenerators
 import PaperC.C2.FiberIrreducible
 import PaperC.C2.HidingTimeReversal
+import PaperC.C2.BalancedSides
 
 /-!
 # Paper C2: additional exact results
