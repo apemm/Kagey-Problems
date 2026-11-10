@@ -99,40 +99,16 @@ its supplement are in `archive/paperC_switching_ejp/`.
 
 ## Paper C2: What the occupation law of a finite Markov chain determines
 
-Full title "What the occupation law of a finite Markov chain determines: time reversal, principal
-minors and cycle trees". Paper C2 (in preparation, for Stochastic Processes and their
-Applications) asks what the law of C1 and its coarse functionals determine about Q. The Donsker and
-Varadhan functional determines exactly the principal minors of -Q, and the generators with the
-same minors form a finite set, which is {Q, Q*} without a cut and for d <= 3. The exact law of the
-occupation times at one time determines it at every time, and it determines Q for a generic start
-(Section 4). From the stationary start Q and its time reversal give the same law, and they are the
-only generators that do when d <= 4, without a cut, and for almost all rates, while reversal inside
-a memoryless block gives a third one for d = 5. The controlled boundaries of the modal supports determine the same minors.
-A reversible design fixed in advance recovers Q, also at a finite horizon uniformly over a compact
-class. At low temperature the calibrated rewards read off the cycle tree. The introduction states
-these results as Theorems A to D. Section 2 states the results of C1 that the paper uses, each with
-its C1 number.
-
-Files. The folder `paperC2`, with the main file `problem131_reconstruction.tex` and
-`problem131_reconstruction.pdf` (class `elsarticle`, 43 pages), the arXiv build
-`problem131_reconstruction_arxiv.tex` and its PDF (46 pages, with the reversible design as Section
-8), its section files, the check scripts, the cover letter and `paperC2/README.md`.
+Moved. Since November 8, 2026 Paper C2 is developed in its own repository,
+`apemm/occupation-identifiability`. Its earlier state here is in the history of this repository.
 
 ## Paper D: The bias interval of the elephant random walk
 
-Paper D targets the Electronic Journal of Probability. Its 35-page manuscript
-proves the GLRS conjecture for every superdiffusive memory. The analytic
-theorem classifies the bimodal biases, proves the unique fair-start memory
-threshold, and gives positivity and interior regularity of the bias boundary. A separate computer-assisted theorem locates
-the unique memory transition and gives its quartic and three-halves laws.
-
-The finite sign engine, weak transfer and Gaussian smoothing are explicit.
-One paragraph describes formal coverage and points to the detailed map.
-Global boundary monotonicity and finite thresholds at every length remain open.
-The rare-reversal and finite-threshold developments are preserved in the
-[combined archive](paperD/archive/combined-2026-11-06/README.md).
-See [the manuscript](paperD/problem131_memory.pdf),
-[submission files](paperD/submission_notes.md) and [Lean coverage](lean/PaperD/MAP.md).
+Moved. Since November 9, 2026 Paper D, its certificates and its coverage map are in the repository
+[apemm/elephant-bias-interval](https://github.com/apemm/elephant-bias-interval), archived as
+[doi:10.5281/zenodo.24095945](https://doi.org/10.5281/zenodo.24095945). The version that was here
+is at the tag `paperD-ejp-v11`. The Lean library `lean/PaperD` stays here, since the bridge library
+`lean/PaperAD` imports it.
 
 ## Paper E: Endpoint crossings for the planar persistent walk
 
@@ -201,17 +177,17 @@ section on related work.
 
 ## Shared files
 
-Each paper has its own folder, `paperA` to `paperF` and `paperC2` (Paper B in `archive/paperB`), with its source
-and PDF, its figures, its check scripts and runner, their recorded output and ledgers in `data/`,
-and a `README.md`. Papers B, C and D also keep the proofs cut while shortening them in
+Each paper here has its own folder, `paperA`, `paperC`, `paperE`, `paperF` and `paperG` (Paper B
+in `archive/paperB`), with its source and PDF, its figures, its check scripts and runner, their
+recorded output and ledgers in `data/`, and a `README.md`. Papers C2 and D are in their own
+repositories. Papers B and C also keep the proofs cut while shortening them in
 `removed_proofs/`, for reference. The files below are shared.
 
 - `SUPPLEMENT.md` is the one verification supplement for the papers. It lists each result that
   rests on computation with the script that checks it.
-- `verify_all.py` runs the checks with `--paper a`, `b`, `c`, `c2`, `d`, `e`, `f`, `s4` or `all`
-  (the default). It calls `paperA/verify_all.py` to `paperF/verify_all.py`, each in its own folder,
-  with `c` for Paper C1 in `paperC` and `c2` for Paper C2 in `paperC2`, and says so in one line
-  when a runner is missing. With `s4` it runs the 2 check scripts of the note `S4_aging_note`.
+- `verify_all.py` runs the checks with `--paper a`, `b`, `c`, `e`, `f`, `s4` or `all`
+  (the default). It calls the runner `verify_all.py` of each paper in its own folder, with `c`
+  for Paper C1 in `paperC`, and says so in one line when a runner is missing. With `s4` it runs the 2 check scripts of the note `S4_aging_note`.
 - `figures/` holds the variants of the program figure (`program_A` to `program_F`), made by
   `figures/make_program_figure.py`, with the captions in `figures/program_captions.md`. The current
   drafts of Papers C to F do not include their variants. The variants A and B are the ones posted
@@ -231,7 +207,7 @@ and a `README.md`. Papers B, C and D also keep the proofs cut while shortening t
   September 2026, before the papers were split.
 - `literature_review.md` says what each earlier source proves.
 
-Run `python -B verify_all.py --paper a` (or `b`, `c`, `c2`, `d`, `e`, `f`, `s4`, or `all`). Add
+Run `python -B verify_all.py --paper a` (or `b`, `c`, `e`, `f`, `s4`, or `all`). Add
 `--full` for the long runs and `--dry-run` to list the commands. Build each paper in its folder with
 pdflatex, 3 times, for example `pdflatex problem131.tex` in `paperA` and
 `pdflatex problem131_multistate.tex` in `archive/paperB`. The builds of the three papers in
@@ -242,9 +218,6 @@ progress are these.
 - Paper C1, Springer build. In `paperC`, from Git Bash,
   `TEXINPUTS=".;../common/sn-jnl;" pdflatex -interaction=nonstopmode problem131_chains_sn.tex`,
   3 times. The class is in `common/sn-jnl`, as `paperC/TEMPLATE.md` explains.
-- Paper C2, `elsarticle` build. In `paperC2`,
-  `pdflatex -interaction=nonstopmode problem131_reconstruction.tex`, 3 times (the class
-  `elsarticle` is in TeX Live).
 - Paper F, `ejpecp` build. In `paperF`, `pdflatex problem131_levy.tex` (journal) or
   `pdflatex problem131_levy_arxiv.tex` (arXiv), 3 times (the class `ejpecp` is in TeX Live).
 - Paper G, `ejpecp` build. In `paperG`, `pdflatex problem131_lamperti.tex` (journal) or

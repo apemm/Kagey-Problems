@@ -121,7 +121,7 @@ then the outcome, with nothing deleted).
 ## Ledgers of Papers C to F
 
 - [paperC/data/ledger.md](paperC/data/ledger.md) indexes the ledgers of Paper C.
-- [paperD/data/ledger.md](paperD/data/ledger.md) indexes the ledgers of Paper D.
+- The ledgers of Paper D were indexed by `paperD/data/ledger.md`, which is at the tag `paperD-ejp-v11`.
 - [paperE/data/ledger_C3.md](paperE/data/ledger_C3.md) is the ledger of Paper E, the planar walk.
   It was written for Paper C before the split of October 13, 2026.
 - [paperF/data/ledger_D3.md](paperF/data/ledger_D3.md) (heavy-tailed runs) and

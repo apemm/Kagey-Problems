@@ -7,8 +7,8 @@ This supplement serves the 7 papers on Kagey's Problem 131 by A. Pemmasani and t
 | A | Uniform Bessel bounds for magnetization crossings in finite Ising chains (arXiv v1: Uniform Bessel bounds for endpoint crossings in the persistent random walk) | `paperA/problem131.tex` |
 | B | Vertex crossings in a symmetric Markov multinomial model | `archive/paperB/problem131_multistate.tex` |
 | C1 | Occupation counts of rarely switching Markov chains: stratified local laws, support selection and the boundary layer (the earlier EJP version was Face selection for slowly switching Markov chains) | `paperC/problem131_chains.tex` (81 pages), Springer build `paperC/problem131_chains_sn.tex` (89 pages) |
-| C2 | What the occupation law of a finite Markov chain determines: time reversal, principal minors and cycle trees | `paperC2/problem131_reconstruction.tex` (43 pages), arXiv build `paperC2/problem131_reconstruction_arxiv.tex` (46 pages) |
-| D | The bias interval of the elephant random walk | `paperD/problem131_memory.tex` and `paperD/problem131_arxiv.tex` (33 pages each) |
+| C2 | What the occupation law of a finite Markov chain determines | moved to its own repository, `apemm/occupation-identifiability` |
+| D | The bias interval of the elephant random walk | moved to [apemm/elephant-bias-interval](https://github.com/apemm/elephant-bias-interval) |
 | E | Endpoint crossings for the planar persistent walk | `paperE/problem131_planar.tex` |
 | F | Bulk, big jumps and boundary layers in the occupation law of a lattice Lévy walk (the first draft, earlier Endpoint crossings for random walks with heavy-tailed runs and for aging walks, is in `archive/paperF_golden_aging`) | `paperF/problem131_levy.tex` (62 pages) |
 | S4 | The finite-size shape transition of coin-turning walks (a note) | `S4_aging_note/s4_note.tex` (12 pages) |
@@ -164,102 +164,10 @@ on the complete graph (Proposition 4.15(iv)) is computed by hand in Appendix B, 
 
 ## Paper D: the elephant random walk
 
-The fixed-memory manuscript and its verification files are pinned by
-`paperD-ejp-v3`. The [verification record](paperD/verification/README.md)
-contains the build and axiom audit of 386 modules and 24,005 theorem or lemma
-declarations. The [coverage map](lean/PaperD/MAP.md) distinguishes formal
-deductions, explicit hypotheses and written or numerical proofs. The package
-inventory is in `paperD/verification/delivery-manifest.json`.
-
-The earlier combined manuscript is preserved in
-`paperD/archive/combined-2026-11-06/`. The following scripts also check its
-rare-reversal results.
-
-The command `python -B verify_all.py --paper d` runs `paperD/verify_all.py`, which runs 7 scripts
-(`verify_elephant_crossing.py`, `verify_elephant_shape.py`, `verify_elephant_odd.py`,
-`certify_elephant.py` and, since October 25, 2026, `verify_elephant_modes.py` and
-`certify_threshold.py` in its mode `quick`, followed by `certify_transition.py` at
-1600-bit precision with 1100 moments). Runtime depends on the machine. The quick run
-of October 25 is `paperD/data/verify_output_2026-10-25.txt`, and the quick run
-with `certify_threshold.py` is `paperD/data/verify_output_2026-10-25_threshold.txt`. With `--full` it runs larger cases in its first 2 scripts and the whole threshold certificate
-(`certify_threshold.py full`, about 30 minutes in 9 parallel processes, which rewrites the records
-`paperD/data/threshold_*.txt`). A script that finds a failed
-check exits with an error, and the runner then names it and exits with an error too. The runner
-does not run `certify_convex.py` (about an hour for 10 <= N <= 2000) or `certify_center.py` (about
-half an hour), so run them by hand as `python -B certify_convex.py 10 2000` and
-`python -B certify_center.py 10 2000`. Their outputs of October 17, 2026 are
-`paperD/data/certify_convex_output_2026-10-17.txt` and `paperD/data/certify_center_output_2026-10-17.txt`,
-with per-N witnesses in `paperD/data/witnesses_convex_2026-10-17.jsonl` and
-`paperD/data/witnesses_center_2026-10-17.jsonl`. The earlier outputs
-`paperD/data/certify_convex_output.txt` (October 9) and `paperD/data/certify_center_output_2026-10-16.txt`
-are kept as historical logs. The output of October 16 added the check that the enclosure of the
-crossing lies above 2/(N+2). The earlier
-`paperD/data/certify_center_output.txt`, from October 13, 2026, lacks that check. These outputs
-cite no statement numbers. The output of `certify_elephant.py` from October 16, 2026, is
-`paperD/data/certify_elephant_output.txt`, and its labels still use the numbers of October 15
-(Lemma 3.7, Proposition 3.8 and Lemma 3.11 there are the removed rounding lemma, Proposition 3.7
-and Lemma 3.10 now). The other stored outputs predate the split and use the old statement
-numbers, and they include the checks of heavy-tailed runs and aging walks that now belong to Paper
-F. They are `paperD/data/verify_output.txt` and `verify_output_full.txt`, a quick run and a full run
-of 4 scripts from September 26, 2026 (before `verify_aging_urn.py`, `certify_elephant.py` and
-`verify_elephant_odd.py`), and `paperD/data/verify_output_2026-10-09.txt`, a quick run of 6 scripts
-from October 9, 2026 (still without `verify_elephant_odd.py`). The ledgers are
-`paperD/data/ledger_D1.md` and `ledger_D2.md`, indexed by `paperD/data/ledger.md`. Labels that say
-"research notes, not printed" check numbers that the paper no longer prints.
-
-The statement numbers in this section are those of the build of October 17, 2026. That build
-removed Lemma 3.7 (the rounding error of a double-precision computation) and Theorem 3.15 (the
-window around the center), and `lean/PaperD/MAP.md` lists the numbers that moved. A later build of
-the same day moved the second order, the tail and the proof of parts (b) to (d) of the proposition
-on odd N to the further results of the arXiv version (`paperD/problem131_arxiv.tex`, now Sections S1 to S6, with numbers S1.1 and so on). The
-numbers here are those of that later build, and `lean/PaperD/MAP.md` lists them too. On October 25,
-2026 the convexity window between the humps (the propositions called 3.24 and 3.26 below, the
-conjecture 3.14 and the remark 3.27) moved to Section S5 of the arXiv version, and Section 4.2
-gained Theorems 4.2 and 4.3 on the modes of the fixed-memory limit law. `lean/PaperD/MAP.md`
-gives the numbers of October 25. The journal proofs now use computation only for Theorem 2.6(b),
-Proposition 3.7 and Lemma 3.10. Theorems 4.2 and 4.3 use none. A second revision of October 25
-added Theorem 4.4 (`thm:threshold`), which locates the change between the two cases of Theorem
-4.2 and rests on the certificate `paperD/certify_threshold.py`, with Appendix G and Section S6 of
-the arXiv version. Remark 4.4 became Remark 4.5.
-
-The journal proof uses the five certificates listed in Section 5. The table below
-retains the earlier result numbers for comparison with the stored logs; the transition
-derivative certificate is listed separately after it. Some constants are values
-of explicit sums and integrals, Lemma 3.10 uses ball arithmetic, and the ball-arithmetic enclosure
-of the crossing and of the law for 10 <= N <= 2000 proves Propositions 3.24 and 3.26 and, for even
-10 <= N < 1688, Proposition 3.7. Theorem 4.4 rests on the threshold certificate. The other rows
-are numbers quoted outside the proofs.
-
-| Result that rests on computation | Script | The 2 methods |
-| --- | --- | --- |
-| The upper bound on C_N in Theorem 2.6(b) (the constant 5200) | `certify_elephant.py` (Part 3, needs python-flint), and without certification `verify_elephant_crossing.py` | Ball arithmetic encloses the first 60 terms of the series sum over t of t^2 log(t+1) 2^(-t/2) in [102.586396, 102.586398], and with a geometric bound on the tail the series is below 102.59. So 3 + 50.4 times 102.59 is below 5200. The uncertified check sums the series by mpmath and directly. |
-| Proposition 3.7 for 8 <= N < 1688 (C_N < E_N at eps = 2/(N+2)) | `certify_center.py` (needs python-flint), and `certify_elephant.py` for N = 2, 4, 6 and 8 | For even 10 <= N <= 2000, an exact rational comparison shows that the lower end of the ball-arithmetic enclosure of eps_N lies above 2/(N+2), with smallest margin 1.107 at N = 10. For N = 2, 4, 6 and 8 the ratio C_N/E_N in exact rational arithmetic. As a supplementary check, which the paper no longer uses, Part 1 of `certify_elephant.py` still runs the recursion in double precision with a rounding bound for the 840 even N, and in exact integer arithmetic for 20 values of N. |
-| Lemma 3.10, the mode lambda_L of the Landau density and f_L'' near it | `certify_elephant.py` (needs python-flint), and without certification `verify_elephant_shape.py` | Ball arithmetic with rigorous error bounds, with enclosures of f_L' at 4 points and of f_L'' on 2 intervals. The uncertified check uses a real integral and Fourier inversion. Lean proves enclosures of the same quantities by an integration that its kernel checks (`lean/PaperD/U6_Cert.lean`), so the Arb run is an independent check. |
-| Proposition 3.24, convexity between the humps for every 10 <= N <= 2000 | `certify_convex.py` (needs python-flint), and without certification `verify_elephant_shape.py` for N <= 600 | Ball arithmetic. For each N the crossing is enclosed and the law is run with that enclosure. For every possible mode the second difference is certified positive between the humps directly, and the 2 inequalities that Theorem 3.19 needs are certified as well. The uncertified check is in double precision. |
-| Proposition 3.26, the center is the unique interior minimum for every even 10 <= N <= 2000 | `certify_center.py` (needs python-flint) | Ball arithmetic, with the enclosures of `certify_convex.py`. The hypothesis 2m*+1 <= N/2 of Lemma 3.22 holds for every possible mode, for all 996 even N, and with Proposition 3.24 the lemma applies. The direct test P_N(a) > C_N for every other interior a also succeeds for all of them. |
-| Theorem 4.4, the threshold between 1 mode and 2 modes of the fair-start limit law | `certify_threshold.py` (needs python-flint), with `threshold_taylor.py`, `threshold_hankel.py` and `threshold_pointwise.py` | Ball arithmetic throughout. On 48 intervals covering [1/2, 0.6712], Taylor models in a with Cauchy remainders and the self-improving tail bound of Lemma S6.4 enclose g_a''(0) uniformly, in the scaled variable on [1/2, 0.668]. On 115 boxes covering [0.6705, 1] a Hankel form of the even moments is negative (Lemma G.1). Mode `check` verifies that the 9 records join into this cover. The pointwise enclosure of `threshold_pointwise.py` and the float grid of `verify_elephant_modes.py` agree with it. |
-| Conjecture 3.14, checked for 10 <= N <= 600 and on the grid N = 50, 100, ..., 12800 (and 25600 with `--full`) | `verify_elephant_shape.py` | The law from the minority-count chain and from the law of A_N directly. |
-| The numbers in Remarks 3.12 and 3.27, and in Remark S1.3 of the arXiv version | `verify_elephant_crossing.py`, `verify_elephant_shape.py` and `verify_elephant_odd.py` | For Remark S1.3 the Taylor coefficients from 2 dynamic programs (the second at N = 51200 only with `--full`), and the limit from its closed form and from a series. For Remark 3.12 the minority-count chain and the full law of A_N where a law is computed. For Remark 3.27 one method only, the Landau density by quadrature in mpmath. |
-
-The additional script `certify_transition.py` closes the bracket in Theorem 4.4.
-Its 19 checks give `0.68 < d/da g_a''(0) < 0.70` and
-`-0.09 < g_a''''(0) < -0.07` on the stated neighbourhood. The records are
-`paperD/data/transition_derivative_certificate.json` and
-`paperD/data/transition_derivative_run.txt`. These checks remain active under
-`python -O`. The current `verify_elephant_modes.py` also checks the exact rational
-fourth-moment argument for `a >= 4/5`; the older two-moment checks for `a >= 39/40`
-are retained. The remaining script descriptions record the earlier runs and numbering.
-
-| Script | What it checks |
-| --- | --- |
-| `verify_elephant_crossing.py` | The crossing of the elephant walk (Section 2, Table 1 and Appendix A). The dynamic programs against exact rationals and 40-digit arithmetic, the constants in the proofs of Theorem 2.6(b), Proposition S1.1 of the arXiv version and the lemmas of Appendix A and of Section S1.A, the monotone ratio of Proposition 2.3 for N <= 12, the crossings of Table 1 by the minority-count chain on a window and by the full law of A_N, the comparison with Paper A's walk in Theorem 2.8, and the coefficients of Remark S1.3. For Paper A's walk it uses an exact run-count formula and a dynamic program. |
-| `verify_elephant_shape.py` | The shape of the law at the crossing (Section 3 and Appendices B and C). Lemma 2.4 in exact arithmetic for N <= 30 and against all recursive trees for N <= 7, the inequalities in the proof of Proposition 3.7, the dip, the sign changes and convexity between the humps for 10 <= N <= 600 and on the grid, the bounds of Theorem 3.5, the tail of Theorem S2.1 of the arXiv version, the facts behind Theorem 3.9, Lemma 3.10 in double precision, and the numbers of Figure 2 and Remark 3.12. |
-| `verify_elephant_odd.py` | Proposition 3.25, whose parts (b) to (d) are proved in Section S3 of the arXiv version, and Remark 3.27 (about 10 seconds). The identity of Proposition 3.25(a) in exact rational arithmetic for 6 odd N and in double precision for 4 more, the crossing for odd N against the root g_N, the constants of part (c) at eps = 2/N, and the half-maximum and inflection points of the Landau density quoted in Remark 3.27. |
-| `certify_elephant.py` | Proposition 3.7 for N = 2, 4, 6 and 8, Lemma 3.10 and the series in Theorem 2.6(b) (about a minute). The exact ratios C_N/E_N at eps = 2/(N+2) for N = 2, 4, 6 and 8, the ball-arithmetic enclosures for the Landau density, and the ball-arithmetic enclosure of the series. As a supplementary check it also keeps the double-precision recursion for 8 <= N < 1688 with checks that its integers are exact and that nothing underflows, the same bits from plain Python floats, and exact integer arithmetic for 20 values of N (this was the proof through the rounding lemma, which the paper removed on October 17, 2026). |
-| `certify_convex.py` | Proposition 3.24 in ball arithmetic for the range of N given on the command line (not run by `verify_all.py`). |
-| `certify_threshold.py` | Theorem 4.4 (new in the second revision of October 25, 2026). Mode `full` runs the 9 certificate runs in parallel (about 2.7 hours of CPU time) and writes `paperD/data/threshold_*.txt`, each with the sha256 of the 4 scripts and the software versions in its first line and the exit status in its last, and its own log `paperD/data/certify_threshold_output.txt`. Mode `check` verifies the hashes, the exit status and that the records join into the cover of (1/2, 1). Mode `quick` (about 3 minutes, run by `verify_all.py`) adds 3 short reruns compared with the records. |
-| `certify_center.py` | Proposition 3.26, and Proposition 3.7 for even 10 <= N < 1688, in ball arithmetic for the even N in the range given on the command line (not run by `verify_all.py`). It imports `certify_convex.py`. |
-| `verify_elephant_modes.py` | Section 4.2 (new on October 25, 2026; about a minute). The constants in the proof of Theorem 4.3 at a = 39/40 in 50-digit arithmetic, and the exact mean and variance of the limit against their bounds on a grid of a in [39/40, 1). As an illustration of Step 1 of the proof of Theorem 4.2, the sign pattern of the Gaussian smoothing of the second differences at N = 2000. The numbers of Remark 4.5, which are not proof inputs: the value of a at which the second difference at the center of the exact finite law changes sign for N = 1000, 4000 and 8000 (double precision, bisection). As a cross-check of Theorem 4.4 that is not part of its proof, the sign of g_a''(0) for the limit law on the grid a = 0.55 to 0.85 and its change of sign a_c = 0.66881, from the moment recursion and the cosine series in ball arithmetic. Output in `paperD/data/verify_modes_output.txt`, with the sha256 of the script and the software versions in its first line. |
+Paper D, its certificate scripts and records, and its coverage map moved on November 9,
+2026 to [apemm/elephant-bias-interval](https://github.com/apemm/elephant-bias-interval).
+The scripts and records that were in `paperD/` here, including the older outputs named
+below for Paper F, are at the tag `paperD-ejp-v11` of this repository.
 
 ## Paper E: the planar persistent walk
 
@@ -292,7 +200,7 @@ The command `python -B verify_all.py --paper f` runs `paperF/verify_all.py`, whi
 and takes a few minutes. With `--full` it adds the heavy cells. A script that finds a failed check exits with an error, and
 the runner then names it and exits with an error too. The folder `paperF/data` holds no output of
 the checks. The checks of `verify_heavy_runs.py` and `verify_aging.py` are in the outputs of Paper D
-from September 26, 2026 (`paperD/data/verify_output.txt` and `verify_output_full.txt`), and those of
+(at the tag `paperD-ejp-v11`) from September 26, 2026 (`paperD/data/verify_output.txt` and `verify_output_full.txt`), and those of
 all 3 scripts are in `paperD/data/verify_output_2026-10-09.txt`. These outputs use the old numbers
 (4.x, 5.x, D.x and E.x). The ledgers are `paperF/data/ledger_D3.md` and `ledger_D4.md`, which keep
 their names and their numbers from Paper D. The check labels of the scripts use the current

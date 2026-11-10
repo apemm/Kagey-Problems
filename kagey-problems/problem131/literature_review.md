@@ -117,5 +117,5 @@ Paper B uses the standard fact that the binomial transform preserves log-concavi
 
 ## Papers C and D
 
-Papers C and D discuss their earlier work in their own introductions. `paperD/README.md` also
+Papers C and D discuss their earlier work in their own introductions. `paperD/README.md` (at the tag `paperD-ejp-v11`) also
 lists the sources for the elephant walk, heavy-tailed runs and aging walks.

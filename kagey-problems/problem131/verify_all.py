@@ -1,9 +1,10 @@
 """Run the checks for Papers A to F and the note S4 of Problem 131 with the current interpreter.
 
 Each paper has its own runner, paperA/verify_all.py to paperF/verify_all.py, and runs its scripts
-in its own folder. With --paper c this script runs the runner of Paper C1 in paperC, and with
---paper c2 that of Paper C2 in paperC2. It calls the runners in turn with --quick, or with --full
-when --full is given. The runner of Paper C2 takes neither flag, so it is called with none. The
+in its own folder. With --paper c this script runs the runner of Paper C1 in paperC. Papers C2
+and D moved to their own repositories in November 2026 (apemm/occupation-identifiability and
+apemm/elephant-bias-interval), and their checks run there. This script calls the runners in turn
+with --quick, or with --full when --full is given. The
 note S4 (S4_aging_note) has no runner of its own, so this script runs its 2 check scripts,
 verify_aging.py (with --full when --full is given) and verify_aging_urn.py, in that folder.
 The quick runs take about 2 minutes each for Papers A and B, about three and a half
@@ -39,7 +40,7 @@ import sys
 base = Path(__file__).resolve().parent
 parser = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-parser.add_argument('--paper', choices=('a', 'b', 'c', 'c2', 'd', 'e', 'f', 's4', 'all'),
+parser.add_argument('--paper', choices=('a', 'b', 'c', 'e', 'f', 's4', 'all'),
                     default='all')
 parser.add_argument('--full', action='store_true',
                     help='also run the long scripts of Papers A and B (about 21 and 3 minutes '
@@ -49,7 +50,7 @@ parser.add_argument('--dry-run', action='store_true',
 args = parser.parse_args()
 
 mode = '--full' if args.full else '--quick'
-papers = ['a', 'b', 'c', 'c2', 'd', 'e', 'f', 's4'] if args.paper == 'all' else [args.paper]
+papers = ['a', 'b', 'c', 'e', 'f', 's4'] if args.paper == 'all' else [args.paper]
 runs = []          # (name, folder, [(script, arguments)])
 for paper in papers:
     if paper == 's4':
@@ -59,9 +60,6 @@ for paper in papers:
     elif paper == 'c':
         name, folder = 'Paper C1', base / 'paperC'
         scripts = [('verify_all.py', [mode])]
-    elif paper == 'c2':
-        name, folder = 'Paper C2', base / 'paperC2'
-        scripts = [('verify_all.py', [])]
     else:
         name = f'Paper {paper.upper()}'
         folder = base / 'archive/paperB' if paper == 'b' else base / f'paper{paper.upper()}'
