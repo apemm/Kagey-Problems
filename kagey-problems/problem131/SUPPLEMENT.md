@@ -166,8 +166,7 @@ on the complete graph (Proposition 4.15(iv)) is computed by hand in Appendix B, 
 
 Paper D, its certificate scripts and records, and its coverage map moved on November 9,
 2026 to [apemm/elephant-bias-interval](https://github.com/apemm/elephant-bias-interval).
-The scripts and records that were in `paperD/` here, including the older outputs named
-below for Paper F, are at the tag `paperD-ejp-v11` of this repository.
+Its certificate scripts and records are there.
 
 ## Paper E: the planar persistent walk
 
@@ -199,9 +198,9 @@ computed at finite N, which illustrate the theorems.
 The command `python -B verify_all.py --paper f` runs `paperF/verify_all.py`, which runs 3 scripts
 and takes a few minutes. With `--full` it adds the heavy cells. A script that finds a failed check exits with an error, and
 the runner then names it and exits with an error too. The folder `paperF/data` holds no output of
-the checks. The checks of `verify_heavy_runs.py` and `verify_aging.py` are in the outputs of Paper D
-(at the tag `paperD-ejp-v11`) from September 26, 2026 (`paperD/data/verify_output.txt` and `verify_output_full.txt`), and those of
-all 3 scripts are in `paperD/data/verify_output_2026-10-09.txt`. These outputs use the old numbers
+the checks. The checks of `verify_heavy_runs.py` and `verify_aging.py` were recorded with the outputs of Paper D
+from September 26 and October 9, 2026, which are no longer in this repository. Rerun the scripts
+to reproduce them. These outputs use the old numbers
 (4.x, 5.x, D.x and E.x). The ledgers are `paperF/data/ledger_D3.md` and `ledger_D4.md`, which keep
 their names and their numbers from Paper D. The check labels of the scripts use the current
 numbers. In the outputs, Corollary 2.5, Remarks 2.7 and 2.10, Theorems 2.8, 2.9

@@ -100,14 +100,13 @@ its supplement are in `archive/paperC_switching_ejp/`.
 ## Paper C2: What the occupation law of a finite Markov chain determines
 
 Moved. Since November 8, 2026 Paper C2 is developed in its own repository,
-`apemm/occupation-identifiability`. Its earlier state here is in the history of this repository.
+`apemm/occupation-identifiability`.
 
 ## Paper D: The bias interval of the elephant random walk
 
 Moved. Since November 9, 2026 Paper D, its certificates and its coverage map are in the repository
 [apemm/elephant-bias-interval](https://github.com/apemm/elephant-bias-interval), archived as
-[doi:10.5281/zenodo.24095945](https://doi.org/10.5281/zenodo.24095945). The version that was here
-is at the tag `paperD-ejp-v11`. The Lean library `lean/PaperD` stays here, since the bridge library
+[doi:10.5281/zenodo.24095945](https://doi.org/10.5281/zenodo.24095945). The Lean library `lean/PaperD` stays here, since the bridge library
 `lean/PaperAD` imports it.
 
 ## Paper E: Endpoint crossings for the planar persistent walk
