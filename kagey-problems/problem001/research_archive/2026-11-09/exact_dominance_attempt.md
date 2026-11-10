@@ -6,6 +6,25 @@ derives the structural consequence for every competing component, and isolates t
 quantity that decides whether a Peierls argument for walls can work. It reads, and does
 not modify, the notes in `full_problem_push/`.
 
+**Corrections (added after audit).** Sections 6 to 8 contain statements that later audits
+found false. They are left in place for the record and must not be cited.
+
+* The codegree hypothesis of Proposition 9 is false by one factor of h. The tail bound
+  itself survives with weaker proved codegrees; see
+  `full_problem_push/exact_dominance_codegree_tail_audit.md`.
+* The O(log^4 h) bound on mixed four-cell crossing mass is false: an explicit family has
+  mass of order h. The correct statement is o(h log^2 h).
+* The transverse scale l has weight 1/l^2, so its even part is 1/4, not 1/2. The corrected
+  six-cell survival ratios are 15/17 (constant parity), 1/7 (checkerboards) and 13/16
+  (quadratic phases), not the range 0.67 to 0.82 given here.
+* The wall family has a logarithmically growing vertical-rival load, so the first-order
+  expansion used here did not apply as written. The positive wall gain is proved, with a
+  fixed collar of width O(h sqrt(log h)), in
+  `full_problem_push/same_slope_wall_resolution.md`.
+
+Theorem 1 (light pure windows are states of C_*) is unaffected and passes in
+`full_problem_push/exact_dominance_light_bridge_and_quadratic_audit.md`.
+
 Notation. Fix the parity partition and a large height h. W = 1 + floor((h-1)^2/4),
 L = 2W. G is the sea graph with memory L, C_* its component containing the constant
 states, lambda_* its Perron root. An affine law is X(x) = alpha x + beta (mod 2). A word
