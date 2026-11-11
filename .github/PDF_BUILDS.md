@@ -6,8 +6,8 @@ same branch. This works for edits made on the website or pushed from a computer.
 Wait for the green check in the repository's **Actions** tab before downloading
 the PDF. Pull the bot's commit before making further local edits.
 
-The workflow builds Papers A, C, D, E and F, the S1-S3 notes, Problem 001 and its
-expository notes, and both Problem 137 papers. Archived Paper B and removed
+The workflow builds Papers A, C, D, E and F, the S1-S3 notes and both
+Problem 137 papers. Archived Paper B and removed
 drafts are excluded. D's journal PDF, Online Resource and combined arXiv PDF are
 all maintained. C and D are compiled with their supplements until references
 stabilize. S3 builds C first because it imports C's theorem numbers.
@@ -18,16 +18,6 @@ workflow checks source fingerprints against the last successful build, so rapid
 successive edits are not lost. It only commits the configured PDFs and its build
 state, never manuscript sources, auxiliary files, or proof computations. It does
 not run Python enumerations, regenerate figures, or build Lean.
-
-## Problem 001's single-file export
-
-`pemmasani.tex` plus `sections/` is one source document. `pemmasani_jis.tex` is
-another, standalone document. Both PDFs are compiled, but the workflow does not
-overwrite either source. **Changes in `sections/` update `pemmasani.pdf`, not
-the text of `pemmasani_jis.tex`.** The latter has also received direct edits.
-When a fresh single-file export is wanted, first reconcile any direct edits and
-then run `scripts/make_jis_single_file.py` in the `jis` directory and commit its
-output. That commit triggers the corresponding PDF build.
 
 ## Failures and manual builds
 
