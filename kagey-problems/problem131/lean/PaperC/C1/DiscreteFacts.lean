@@ -4,7 +4,7 @@ import PaperC.C1.DiscreteExit
 /-!
 # Paper C1: further finite facts on the discrete functional
 
-Paper C1 (`paperC/problem131_chains.tex`), `paperC/sec_dv.tex`, `prop:discrete-rate` and
+Paper C1 (`archive/paperC1_jtp/problem131_chains.tex`), `archive/paperC1_jtp/sec_dv.tex`, `prop:discrete-rate` and
 `prop:discrete-variational`, the parts that are finite and algebraic and not covered by
 `PaperC.C1.DiscreteRate` and `PaperC.C1.DiscreteExit`.
 

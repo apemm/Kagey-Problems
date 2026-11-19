@@ -5,7 +5,7 @@ Work on problems from Peter Kagey's Open Problem Collection (peterkagey.com/prob
 The code in this repository is under the MIT license (see `LICENSE`). The text of the papers is copyright the author.
 
 - Problem 001 (grid blackouts preserving rectangle identifiability) moved to its own repository in November 2026.
-- `problem131/` — Galton board with persistence p. Papers A (*Uniform Bessel bounds for endpoint crossings in the persistent random walk*) and B (*Vertex crossings in a symmetric Markov multinomial model*), with further papers in `paperC/`, `paperE/`, `paperF/` and `paperG/`. Lean proofs are in `problem131/lean`. Papers C2 and D moved to their own repositories in November 2026; Paper D is at https://github.com/apemm/elephant-bias-interval.
+- `problem131/` — Galton board with persistence p. Papers A (*Uniform Bessel bounds for endpoint crossings in the persistent random walk*) and B (*Vertex crossings in a symmetric Markov multinomial model*), with further papers in `archive/paperC1_jtp/`, `paperE/`, `paperF/` and `paperG/`. Lean proofs are in `problem131/lean`. Papers C2 and D moved to their own repositories in November 2026; Paper D is at https://github.com/apemm/elephant-bias-interval.
 - `problem137/` — the rational tree of x+1 and -1/x (complete solution of the three questions)
 - `lean/` — Lean 4 / Mathlib formalizations of the proved results (Problem 137)
 

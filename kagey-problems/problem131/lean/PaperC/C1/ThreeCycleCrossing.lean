@@ -3,8 +3,8 @@ import Mathlib
 /-!
 # Paper C1: the arithmetic of `cor:reducible-crossing` on the directed 3-cycle
 
-Paper C1 (`paperC/problem131_chains.tex`), `paperC/sec_firstorder.tex`, `cor:reducible-crossing`,
-applied to `paperC/sec_secondorder.tex`, `ex:threecycle`: `d = 3`, `q_12 = b > 2`,
+Paper C1 (`archive/paperC1_jtp/problem131_chains.tex`), `archive/paperC1_jtp/sec_firstorder.tex`, `cor:reducible-crossing`,
+applied to `archive/paperC1_jtp/sec_secondorder.tex`, `ex:threecycle`: `d = 3`, `q_12 = b > 2`,
 `q_23 = q_31 = 1`, `μ_1 = 1`.
 
 The faces `{1}`, `{1,2}`, `{1,2,3}` have `k = 1, 2, 3`, `λ = b, 1, 0`, `p = 0, 1, 1`

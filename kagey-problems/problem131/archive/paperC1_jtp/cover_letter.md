@@ -14,7 +14,7 @@ The arXiv version is arXiv:2610.09258v2. Version 1 of that entry is my earlier p
 
 Two related papers should be mentioned. My paper on the two-state walk, arXiv:2610.06935, is under review at J. Stat. Mech. This paper cites it only for context and does not depend on it. My companion paper on what the occupation law determines about the generator is in preparation for SPA. It is not needed to read this one.
 
-The paper is 79 pages because it is self-contained. No proof depends on a computation. The code and Lean files are publicly available, and the release that matches the arXiv version is archived at https://doi.org/10.5281/zenodo.23661434. A note on the use of AI tools appears before the declarations.
+The paper is 79 pages because it is self-contained. No proof depends on a computation. The code and Lean files are publicly available. A note on the use of AI tools appears before the declarations.
 
 The manuscript is not under consideration elsewhere. Thank you for your time and consideration of my work.
 

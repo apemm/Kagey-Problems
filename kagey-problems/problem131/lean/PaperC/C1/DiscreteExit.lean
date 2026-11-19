@@ -3,7 +3,7 @@ import Mathlib
 /-!
 # Paper C1: the elementary identities for the discrete exit rate
 
-Paper C1 (`paperC/problem131_chains.tex`), `paperC/sec_dv.tex`, `prop:discrete-variational` and the
+Paper C1 (`archive/paperC1_jtp/problem131_chains.tex`), `archive/paperC1_jtp/sec_dv.tex`, `prop:discrete-variational` and the
 discussion before `prop:discrete-rate`.
 
 * `integral_exit_rate`: for `h > 0` and `1 + hκ > 0`,

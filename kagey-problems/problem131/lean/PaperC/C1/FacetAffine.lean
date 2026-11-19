@@ -3,7 +3,7 @@ import Mathlib
 /-!
 # Paper C1: the weighted facet rate is affine when the in- and out-laws agree
 
-Paper C1 (`paperC/problem131_chains.tex`), `paperC/sec_boundary.tex`,
+Paper C1 (`archive/paperC1_jtp/problem131_chains.tex`), `archive/paperC1_jtp/sec_boundary.tex`,
 `prop:layer-constants`(v) and the gradient formula in the proof of (ii).
 
 For a facet `G` (a finite type `ι`), a profile `β ≥ 0`, off-diagonal rates `a`, exit rates `q`,

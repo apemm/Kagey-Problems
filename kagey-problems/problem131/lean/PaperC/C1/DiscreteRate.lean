@@ -3,7 +3,7 @@ import Mathlib
 /-!
 # Paper C1: the discrete functional restricts to a face
 
-Paper C1 (`paperC/problem131_chains.tex`), `paperC/sec_dv.tex`, `prop:discrete-rate`(a). For a
+Paper C1 (`archive/paperC1_jtp/problem131_chains.tex`), `archive/paperC1_jtp/sec_dv.tex`, `prop:discrete-rate`(a). For a
 matrix `Q` on `Fin d` with nonnegative off-diagonal entries, a step `h > 0` with
 `1 + h Q_ii > 0` for all `i` (that is, `h q_max < 1` for a generator), a face `F` and
 `u ∈ (0,∞)^F`, put

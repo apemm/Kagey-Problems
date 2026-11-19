@@ -2,7 +2,7 @@
 
 Paper B was posted as [arXiv:2610.09258v1](https://arxiv.org/abs/2610.09258v1). Paper C1,
 "Occupation counts of rarely switching Markov chains: stratified local laws, crossings and the
-boundary layer" (in `../../paperC`), replaces it as version 2 of the same entry,
+boundary layer" (in `../paperC1_jtp`), replaces it as version 2 of the same entry,
 arXiv:2610.09258. C1 proves the results on the crossings with a vertex and near a vertex again as
 cases of a general theory (its Sections 7 and 8). The next term 1/(8z) of the crossing equation,
 the Bessel majorant and the boundary crossover are only here, and C1 cites v1 for them. This

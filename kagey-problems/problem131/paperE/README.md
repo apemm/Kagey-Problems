@@ -51,7 +51,7 @@ more states, and the walk on Z^d for d >= 3.
 - `problem131_planar.tex` is the paper. It includes `sec_intro.tex`, `sec_setting.tex`,
   `sec_planar.tex`, `sec_discussion.tex` and `sec_verify.tex` (Sections 1 to 5) and
   `app_planar.tex` (Appendix A).
-- `figures/` holds Figure 2 (`fig_planar`), made by `../paperC/figures/make_figures.py`. Figure 1
+- `figures/` holds Figure 2 (`fig_planar`), made by `../archive/paperC1_jtp/figures/make_figures.py`. Figure 1
   (the 3 kinds of paths) is drawn in the source with TikZ.
 - `verify_planar.py` checks the planar walk (Section 3 and Appendix A). It also tests the identity of
   Theorem 3.9(a) in exact rational arithmetic for even N up to 30. It imports the polynomial S_N of

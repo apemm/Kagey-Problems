@@ -20,7 +20,7 @@ from pypdf import PdfReader
 QA = Path(__file__).resolve().parent
 FIGURES = QA.parent
 PAPER = FIGURES.parent
-ROOT = PAPER.parents[2]
+ROOT = PAPER.parents[3]
 STEM = "fig_complete_envelope"
 
 

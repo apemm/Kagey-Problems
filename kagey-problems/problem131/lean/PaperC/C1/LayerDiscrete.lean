@@ -3,7 +3,7 @@ import PaperC.ChainLaw
 /-!
 # Paper C1: the discrete form of the boundary-layer representation
 
-Paper C1 (`paperC/problem131_chains.tex`), `paperC/sec_boundary.tex`, `lem:layer-exact-discrete`.
+Paper C1 (`archive/paperC1_jtp/problem131_chains.tex`), `archive/paperC1_jtp/sec_boundary.tex`, `lem:layer-exact-discrete`.
 The chain on `Fin d` has transition entries `stepP a q h` (`PaperC.ChainLaw`). Fix a state `i`.
 For a word `x` over the other states (a list with no letter `i`) and `p ≠ i`, let `chainZ p x`
 be the polynomial in `z` (here `X`) with the weights of the chain on `G = F ∖ {i}` in which every

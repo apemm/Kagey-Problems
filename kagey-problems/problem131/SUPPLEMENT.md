@@ -6,7 +6,7 @@ This supplement serves the 7 papers on Kagey's Problem 131 by A. Pemmasani and t
 | --- | --- | --- |
 | A | Uniform Bessel bounds for magnetization crossings in finite Ising chains (arXiv v1: Uniform Bessel bounds for endpoint crossings in the persistent random walk) | `paperA/problem131.tex` |
 | B | Vertex crossings in a symmetric Markov multinomial model | `archive/paperB/problem131_multistate.tex` |
-| C1 | Occupation counts of rarely switching Markov chains: stratified local laws, support selection and the boundary layer (the earlier EJP version was Face selection for slowly switching Markov chains) | `paperC/problem131_chains.tex` (81 pages), Springer build `paperC/problem131_chains_sn.tex` (89 pages) |
+| C1 | Occupation counts of rarely switching Markov chains: stratified local laws, support selection and the boundary layer (the earlier EJP version was Face selection for slowly switching Markov chains) | `archive/paperC1_jtp/problem131_chains.tex` (81 pages), Springer build `archive/paperC1_jtp/problem131_chains_sn.tex` (89 pages) |
 | C2 | What the occupation law of a finite Markov chain determines | moved to its own repository, `apemm/occupation-identifiability` |
 | D | The bias interval of the elephant random walk | moved to [apemm/elephant-bias-interval](https://github.com/apemm/elephant-bias-interval) |
 | E | Endpoint crossings for the planar persistent walk | `paperE/problem131_planar.tex` |
@@ -124,19 +124,19 @@ registrations and check nothing, so `archive/paperB/verify_all.py` does not run 
 
 ## Paper C: slowly switching Markov chains
 
-Since October 2026 Paper C incorporates Paper B (see `paperC/README.md`). The command
-`python -B verify_all.py --paper c` runs `paperC/verify_all.py`, which runs 7 scripts
+Since October 2026 Paper C incorporates Paper B (see `archive/paperC1_jtp/README.md`). The command
+`python -B verify_all.py --paper c` runs `archive/paperC1_jtp/verify_all.py`, which runs 7 scripts
 and takes about ten minutes (`verify_forest.py` alone takes about 5), or up to about half an hour
 with `--full`. The statements that came from Paper B are also checked by the scripts of Paper B
 (`--paper b`, above). A script that finds a failed check exits with an error (`verify_forest.py`,
 `verify_rate_flows.py` and `verify_weak_field.py` stop at the first failed assertion), and then the
-runner stops. The output of the merged version is `paperC/data/verify_output_2026-10-23.txt`. The 2
+runner stops. The output of the merged version is `archive/paperC1_jtp/data/verify_output_2026-10-23.txt`. The 2
 older stored outputs predate the split and the merge and use the old statement numbers. They are
-`paperC/data/verify_output.txt`, a run of 5 scripts from September 26, 2026, and
-`paperC/data/verify_output_2026-10-09.txt`, a run of 6 scripts from October 9, 2026. Both include
+`archive/paperC1_jtp/data/verify_output.txt`, a run of 5 scripts from September 26, 2026, and
+`archive/paperC1_jtp/data/verify_output_2026-10-09.txt`, a run of 6 scripts from October 9, 2026. Both include
 the planar checks that now belong to Paper E, and neither includes `verify_forest.py`,
-`verify_rate_flows.py` or `verify_weak_field.py`. The ledgers are `paperC/data/ledger_C1.md`,
-`ledger_C2.md`, `ledger_C4.md` and `ledger_C5.md`, indexed by `paperC/data/ledger.md`, and they also
+`verify_rate_flows.py` or `verify_weak_field.py`. The ledgers are `archive/paperC1_jtp/data/ledger_C1.md`,
+`ledger_C2.md`, `ledger_C4.md` and `ledger_C5.md`, indexed by `archive/paperC1_jtp/data/ledger.md`, and they also
 use the old numbers. The check labels of the scripts use the numbers of the merged paper (build of
 October 23, 2026), and those of the sticky checks use the numbers of the note `S3_sticky_note`.
 
@@ -174,8 +174,8 @@ The command `python -B verify_all.py --paper e` runs `paperE/verify_all.py`, whi
 and takes a few minutes. With `--full` it adds the crossings for N = 1280 to 10240, and the
 top-level runner puts Papers C and E at up to about half an hour together. A failed check ends
 either script with an error. The folder `paperE/data` holds no output of the checks. The planar
-checks are in 2 outputs of Paper C, `paperC/data/verify_output.txt` (September 26, 2026, with
-`verify_planar.py` only) and `paperC/data/verify_output_2026-10-09.txt` (October 9, 2026, with both
+checks are in 2 outputs of Paper C, `archive/paperC1_jtp/data/verify_output.txt` (September 26, 2026, with
+`verify_planar.py` only) and `archive/paperC1_jtp/data/verify_output_2026-10-09.txt` (October 9, 2026, with both
 scripts), and they use the old numbers (6.x and C.x). The ledger is `paperE/data/ledger_C3.md`,
 which keeps its name and its numbers from Paper C. The docstrings and check labels of both
 scripts use the current numbers.

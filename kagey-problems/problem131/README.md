@@ -8,10 +8,10 @@ changes on a cylinder or a tetrahedron.
 Status. There are eight papers by A. Pemmasani, which call each other Papers A, B, C1, C2, D, E,
 F and G, and four working notes, S1 to S4. Paper A (arXiv:2610.06935) solves the binary problem at
 every N, and Paper B (arXiv:2610.09258v1) treats d directions on the complete graph. Papers C1, C2,
-D, E, F and G are in preparation, and C1 is under review at the Journal of Theoretical Probability. In October 2026 Paper B was merged into Paper C. Paper C1 will
+D, E, F and G are in preparation. Since November 18, 2026 Paper C1 is developed in its own repository, `apemm/occupation-local-law`, and its earlier version is in `archive/paperC1_jtp`. In October 2026 Paper B was merged into Paper C. Paper C1 will
 replace it as version 2 of arXiv:2610.09258. Version 1 stays available on arXiv, and the folder
 `archive/paperB` keeps it unchanged. On October 24, 2026 Paper C was split in two. Paper C1 (the forward theory of slowly
-switching chains, in `paperC`) keeps the folder and the results of Paper B, and Paper C2 (what the
+switching chains, then in `paperC`) kept the folder and the results of Paper B, and Paper C2 (what the
 occupation law determines about the generator, in `paperC2`) holds the identifiability half. The
 earlier EJP version of Paper C is in `archive/paperC_switching_ejp`. Paper C and Paper E (the
 planar walk, in `paperE`) were one paper until October 13, 2026, and so were Paper D (the elephant
@@ -61,11 +61,19 @@ and near a vertex as cases of the general theory. The next term of the crossing 
 Bessel majorant and the boundary crossover were not carried into C1 and remain in version 1, which
 C1 cites for them.
 
-## Paper C1: Occupation counts of rarely switching Markov chains
+## Paper C1: A uniform local limit theorem for the occupation vector of a finite Markov chain
+
+Moved. Since November 18, 2026 Paper C1 is developed in its own repository,
+`apemm/occupation-local-law`. It was rebuilt there around the local law on each face, in continuous
+time and for the chain I + (T/N)Q, with the conditional transition counts as a corollary. The
+earlier version, described below, was moved from `paperC` to `archive/paperC1_jtp` and is the source
+of arXiv:2610.09258v2.
+
+Earlier version: Occupation counts of rarely switching Markov chains.
 
 Full title "Occupation counts of rarely switching Markov chains: stratified local laws, support
-selection and the boundary layer". Paper C1 (in preparation, for the Journal of Theoretical
-Probability) is the forward theory for a chain on d states with transition matrix P = I + (T/N)Q,
+selection and the boundary layer". It was written for the Journal of Theoretical
+Probability and is the forward theory for a chain on d states with transition matrix P = I + (T/N)Q,
 run for N steps with T = tau L. Its object is the law of the vector of occupation counts, which
 has a face of the simplex as support. Every rate on a face is the
 restriction of the Donsker and Varadhan functional of the whole chain. To first order the mode
@@ -82,19 +90,19 @@ note `S3_sticky_note`.
 On October 24, 2026 an editing pass for the journal cut C1 from 67 to 59 pages. It removed the tree
 formula on a general face, the pair identity and the two-state corollary, a remark on first-order
 winners on other graphs, the restated local law on the complete graph and the figure of the 6-cycle.
-No remaining statement changed. `paperC/EXPORTS.md` records the new numbers, and
+No remaining statement changed. `archive/paperC1_jtp/EXPORTS.md` records the new numbers, and
 `lean/PaperC/MAP.md` keeps the Lean theorems of the removed statements in its section on cut
 statements.
 
 On October 25, 2026 the paper gained the local law over the whole switching range, the face maxima
 and crossings of every admissible face and the counts near a facet, and it now has 81 pages.
 
-Files. The folder `paperC`, with the main file `problem131_chains.tex` and `problem131_chains.pdf`
+Files. The folder `archive/paperC1_jtp`, with the main file `problem131_chains.tex` and `problem131_chains.pdf`
 (article class, 81 pages), the same paper in the Springer Nature template
-`problem131_chains_sn.tex` and `problem131_chains_sn.pdf` (89 pages, `paperC/TEMPLATE.md` says how
+`problem131_chains_sn.tex` and `problem131_chains_sn.pdf` (89 pages, `archive/paperC1_jtp/TEMPLATE.md` says how
 it was set up and built), their shared section and appendix files, the check scripts,
-`paperC/EXPORTS.md` (the statements that Paper C2 cites, with their numbers) and
-`paperC/README.md`. The earlier main file `problem131_switching.tex` (class `ejpecp`), its PDF and
+`archive/paperC1_jtp/EXPORTS.md` (the statements that Paper C2 cites, with their numbers) and
+`archive/paperC1_jtp/README.md`. The earlier main file `problem131_switching.tex` (class `ejpecp`), its PDF and
 its supplement are in `archive/paperC_switching_ejp/`.
 
 ## Paper C2: What the occupation law of a finite Markov chain determines
@@ -176,9 +184,9 @@ section on related work.
 
 ## Shared files
 
-Each paper here has its own folder, `paperA`, `paperC`, `paperE`, `paperF` and `paperG` (Paper B
-in `archive/paperB`), with its source and PDF, its figures, its check scripts and runner, their
-recorded output and ledgers in `data/`, and a `README.md`. Papers C2 and D are in their own
+Each paper here has its own folder, `paperA`, `paperE`, `paperF` and `paperG` (Paper B
+in `archive/paperB` and the earlier Paper C1 in `archive/paperC1_jtp`), with its source and PDF, its figures, its check scripts and runner, their
+recorded output and ledgers in `data/`, and a `README.md`. Papers C1, C2 and D are in their own
 repositories. Papers B and C also keep the proofs cut while shortening them in
 `removed_proofs/`, for reference. The files below are shared.
 
@@ -186,7 +194,7 @@ repositories. Papers B and C also keep the proofs cut while shortening them in
   rests on computation with the script that checks it.
 - `verify_all.py` runs the checks with `--paper a`, `b`, `c`, `e`, `f`, `s4` or `all`
   (the default). It calls the runner `verify_all.py` of each paper in its own folder, with `c`
-  for Paper C1 in `paperC`, and says so in one line when a runner is missing. With `s4` it runs the 2 check scripts of the note `S4_aging_note`.
+  for Paper C1 in `archive/paperC1_jtp`, and says so in one line when a runner is missing. With `s4` it runs the 2 check scripts of the note `S4_aging_note`.
 - `figures/` holds the variants of the program figure (`program_A` to `program_F`), made by
   `figures/make_program_figure.py`, with the captions in `figures/program_captions.md`. The current
   drafts of Papers C to F do not include their variants. The variants A and B are the ones posted
@@ -195,7 +203,7 @@ repositories. Papers B and C also keep the proofs cut while shortening them in
 - `S3_sticky_note/` is a working note on sticky priors for hidden Markov models, which was Section 6 and Appendix D of Paper C until the merge with Paper B in October 2026.
 - `S2_counts_note/` is a working note on which rate matrices the visit counts of a slowly switching chain can tell apart, with its 4 check scripts.
 - `S4_aging_note/` is a short note of 12 pages, "The finite-size shape transition of coin-turning walks" (for Electronic Communications in Probability), on the walk that switches at step k with probability c/k and its version with d states. Every interior point ties with the end exactly at c = 1 for every N, and the chain that redraws or repeats its state has the law of Pólya's urn. It was the aging half of the first draft of Paper F until October 24, 2026, and it has 2 check scripts.
-- `archive/` holds Paper B v1 (`archive/paperB`), the earlier EJP version of Paper C, "Face selection for slowly switching Markov chains", with its supplement (`archive/paperC_switching_ejp`), the first draft of Paper F, "The golden-ratio threshold for a lattice Lévy walk and ties in coin-turning walks" (`archive/paperF_golden_aging`), and the first draft of Paper G, "A local Lamperti law for the occupation count of a lattice Lévy walk with infinite-mean runs" (`archive/paperG_lamperti_draft`), each kept as it was and with its own `README.md`.
+- `archive/` holds Paper B v1 (`archive/paperB`), the version of Paper C1 sent to the Journal of Theoretical Probability (`archive/paperC1_jtp`), the earlier EJP version of Paper C, "Face selection for slowly switching Markov chains", with its supplement (`archive/paperC_switching_ejp`), the first draft of Paper F, "The golden-ratio threshold for a lattice Lévy walk and ties in coin-turning walks" (`archive/paperF_golden_aging`), and the first draft of Paper G, "A local Lamperti law for the occupation count of a lattice Lévy walk with infinite-mean runs" (`archive/paperG_lamperti_draft`), each kept as it was and with its own `README.md`.
 - `animations/` shows a Galton board with persistence at 4 values of p (`galton.gif`, `galton.mp4`),
   made by `animations/animate.py`.
 - `lean/` holds the Lean 4 proofs, one library per paper (not the large-argument asymptotics).
@@ -212,11 +220,11 @@ pdflatex, 3 times, for example `pdflatex problem131.tex` in `paperA` and
 `pdflatex problem131_multistate.tex` in `archive/paperB`. The builds of the three papers in
 progress are these.
 
-- Paper C1, article build. In `paperC`, `pdflatex -interaction=nonstopmode problem131_chains.tex`,
+- Paper C1, article build. In `archive/paperC1_jtp`, `pdflatex -interaction=nonstopmode problem131_chains.tex`,
   3 times.
-- Paper C1, Springer build. In `paperC`, from Git Bash,
+- Paper C1, Springer build. In `archive/paperC1_jtp`, from Git Bash,
   `TEXINPUTS=".;../common/sn-jnl;" pdflatex -interaction=nonstopmode problem131_chains_sn.tex`,
-  3 times. The class is in `common/sn-jnl`, as `paperC/TEMPLATE.md` explains.
+  3 times. The class is in `common/sn-jnl`, as `archive/paperC1_jtp/TEMPLATE.md` explains.
 - Paper F, `ejpecp` build. In `paperF`, `pdflatex problem131_levy.tex` (journal) or
   `pdflatex problem131_levy_arxiv.tex` (arXiv), 3 times (the class `ejpecp` is in TeX Live).
 - Paper G, `ejpecp` build. In `paperG`, `pdflatex problem131_lamperti.tex` (journal) or

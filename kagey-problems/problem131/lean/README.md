@@ -16,7 +16,7 @@ numbers that changed that day.
 
 In October 2026 Paper B was merged into Paper C, and the application to sticky priors moved out
 of Paper C to the note `S3_sticky_note`. On October 24, 2026 Paper C was split in two. Paper C1
-(`paperC/problem131_chains.tex`) is the forward theory and contains the results of Paper B.
+(`archive/paperC1_jtp/problem131_chains.tex`) is the forward theory and contains the results of Paper B.
 Paper C2 (`paperC2/problem131_reconstruction.tex`) is about what the occupation law determines.
 The library `PaperC` serves both, and `PaperC/MAP.md` maps C1 and C2 in separate sections,
 including the statements of C1 from Paper B, whose Lean files stay in `PaperB/`. `PaperB/MAP.md`
@@ -136,7 +136,7 @@ Remark 4.7, which the paper cites. The items that are not formalized are listed 
 - The ordering of the window constants `a_k`, the exact parts of the weak-field phase diagram and
   the covolume `√k` behind the superlevel volumes (`Constants`, `Modes`).
 
-## Papers C1 (`paperC/problem131_chains.tex`) and C2 (`paperC2/problem131_reconstruction.tex`)
+## Papers C1 (`archive/paperC1_jtp/problem131_chains.tex`) and C2 (`paperC2/problem131_reconstruction.tex`)
 
 `PaperC/` is about the chain `P = I + (T/N)Q` and the planar walk. Paper C1 is "Occupation counts
 of rarely switching Markov chains: stratified local laws, support selection and the boundary

@@ -1,5 +1,5 @@
 """Figures for Papers C and E of Problem 131 (face selection, and the planar persistent walk).
-The planar figure fig_planar and its data are written to ../../paperE.
+The planar figure fig_planar and its data are written to ../../../paperE.
 
 Run from anywhere:
     python -B make_figures.py                 check the quoted values, then draw every figure
@@ -77,8 +77,8 @@ plt.rcParams.update({
 })
 
 
-# The planar walk is now Paper E. Its figure and its cached data live in ../../paperE.
-PAPER_E = HERE.parent.parent / "paperE"
+# The planar walk is now Paper E. Its figure and its cached data live in ../../../paperE.
+PAPER_E = HERE.parents[2] / "paperE"
 
 
 def save(fig, name):
@@ -91,7 +91,7 @@ def save(fig, name):
 
 
 import sys as _sys
-_sys.path.insert(0, str(HERE.parent.parent / "figures"))
+_sys.path.insert(0, str(HERE.parents[2] / "figures"))
 import dark_style  # the manim palette, see figures/dark_style.py
 dark_style.light()  # white background
 

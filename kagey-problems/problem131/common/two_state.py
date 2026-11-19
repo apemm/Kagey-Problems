@@ -1,6 +1,6 @@
 """The two-state run polynomial and recurrence used by Papers C and E.
 
-These helpers were extracted unchanged from paperC/verify_sticky_fisher.py.
+These helpers were extracted unchanged from archive/paperC1_jtp/verify_sticky_fisher.py.
 They use numpy and scipy, and do not import a paper-specific verification script.
 """
 from math import log

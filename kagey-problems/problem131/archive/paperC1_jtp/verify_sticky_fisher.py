@@ -1,4 +1,4 @@
-"""Checks for the note S3 (../S3_sticky_note, Section 6 and Appendix D of Paper C until October 2026), and for the note S1 (../S1_endpoint_information_note).
+"""Checks for the note S3 (../../S3_sticky_note, Section 6 and Appendix D of Paper C until October 2026), and for the note S1 (../../S1_endpoint_information_note).
 
 Part 1, sticky priors. The chain has transition matrix (1-h)I + h Pi with
 h = tau log N / N, and Pi is a switching kernel (stochastic, zero diagonal).
@@ -40,7 +40,7 @@ from scipy.special import betainc, betaincinv, betaln, gammaln
 
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from common.two_state import logS, paperA_law, uN_dp, uN_runs
 from verify_second_order import RunFace, S_ab
 

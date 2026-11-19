@@ -3,7 +3,7 @@ import Mathlib
 /-!
 # Paper C1: the cubic coefficient for the non-reversible 3-cycle
 
-Paper C1 (`paperC/problem131_chains.tex`), `paperC/sec_boundary.tex`, `prop:layer-cubic`(e).
+Paper C1 (`archive/paperC1_jtp/problem131_chains.tex`), `archive/paperC1_jtp/sec_boundary.tex`, `prop:layer-cubic`(e).
 For the cycle with `q_12 = q_23 = q_31 = 2`, `q_21 = q_32 = q_13 = 1`, `i = 3`, `β = (1/2, 1/2)`,
 the weighted two-state chain on `G = {1, 2}` has `d(z) = (3 - 2z)·1`, `a_12(z) = 2 + z`,
 `a_21(z) = 1 + 4z`, and (Lemma `lem:L-two`) the rate

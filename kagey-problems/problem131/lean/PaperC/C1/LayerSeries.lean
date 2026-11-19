@@ -3,7 +3,7 @@ import Mathlib
 /-!
 # Paper C1: the series identities in the proof of `lem:layer-exact`
 
-Paper C1 (`paperC/problem131_chains.tex`), `paperC/sec_boundary.tex`, proof of
+Paper C1 (`archive/paperC1_jtp/problem131_chains.tex`), `archive/paperC1_jtp/sec_boundary.tex`, proof of
 `lem:layer-exact`. With `ρ - 1 = r` (so `ρ ≥ 1`) the proof uses two identities.
 
 * `choose_div_factorial`: `C(n+r, r)/(n+r)! = 1/(n! r!)`;

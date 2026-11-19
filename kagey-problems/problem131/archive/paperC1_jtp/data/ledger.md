@@ -12,10 +12,10 @@ The section numbers below are those of the current papers.
 - [ledger_C2.md](ledger_C2.md) covers complete graphs, the cycle cascade, 2 triangles, the paw and
   the house, and the census of small graphs (Section 5). Entries 0 to 11, and an erratum that
   records the checks of the path P_4 and of C_6 at N = 40.
-- [ledger_C3.md](../../paperE/data/ledger_C3.md) covers the planar walk, corner against origin
+- [ledger_C3.md](../../../paperE/data/ledger_C3.md) covers the planar walk, corner against origin
   (now Section 3 and Appendix A of Paper E). Entries C3-P1 to C3-P8.
 - [ledger_C4.md](ledger_C4.md) covers sticky priors (Section 6 and Appendix D) and the Fisher
-  information of the endpoint (now the note `../../S1_endpoint_information_note`). Entries C4-F1
+  information of the endpoint (now the note `../../../S1_endpoint_information_note`). Entries C4-F1
   to C4-F7, C4-S1 to C4-S5, C4-G1 and C4-R1 to C4-R3.
 - [ledger_C5.md](ledger_C5.md) covers the local law, the constants K_F, the crossings, the window
   on K_3 and the directed 3-cycle (Section 4 and Appendices A and B). Entries P0 to P10, P3', P6',
@@ -38,4 +38,4 @@ numbers of their dates.
 The output of the merged version (October 23, 2026, after Paper B was merged into Paper C) is in
 `verify_output_2026-10-23.txt` and uses the numbers of the merged paper.
 
-Note of October 13, 2026. The ledger of the planar walk, `ledger_C3.md`, moved to `../../paperE/data` with Paper E.
+Note of October 13, 2026. The ledger of the planar walk, `ledger_C3.md`, moved to `../../../paperE/data` with Paper E.

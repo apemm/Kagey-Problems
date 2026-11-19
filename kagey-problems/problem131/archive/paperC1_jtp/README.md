@@ -1,11 +1,15 @@
 # Occupation counts of rarely switching Markov chains (Paper C1)
 
-Archived release: tag `paperC1-arxiv-v2` (the source of arXiv:2610.09258v2, submitted October 26, 2026),
-Zenodo DOI [10.5281/zenodo.23661434](https://doi.org/10.5281/zenodo.23661434).
+Archived on November 18, 2026. This folder was `problem131/paperC` until then. It holds the version
+of Paper C1 that was submitted to the Journal of Theoretical Probability, which is close to the tag
+`paperC1-arxiv-v2` (the source of arXiv:2610.09258v2, submitted October 26, 2026). The journal did
+not accept it. The paper was rebuilt as "A uniform local limit theorem for the occupation vector of
+a finite Markov chain" in the repository `apemm/occupation-local-law`, which keeps the local law and
+not the other results. The text below describes this folder as it was.
 
 Full title: "Occupation counts of rarely switching Markov chains: stratified local laws, support
 selection and the boundary layer". Target: Journal of Theoretical Probability. This is the forward
-theory. The identifiability half of the former Paper C is the companion paper in `../paperC2` (see
+theory. The identifiability half of the former Paper C is the companion paper in `../../paperC2` (see
 History below).
 
 A Markov chain on d states with transition matrix I + (T/N)Q runs for N steps, so its path
@@ -22,15 +26,15 @@ law at a facet, and Sections 7 and 8 treat the complete graph and the compositio
 For two states the question is Problem 131 of Kagey's Open Problem Collection
 (https://peterkagey.com/problems/131/), which the paper mentions only in its acknowledgments.
 
-Companion papers. `../paperA` ("Uniform Bessel bounds for magnetization crossings in finite Ising
+Companion papers. `../../paperA` ("Uniform Bessel bounds for magnetization crossings in finite Ising
 chains", arXiv:2610.06935) treats the two-state walk at every N. This paper uses one of its results
 (Lemma 3.2(b) in Appendix D) and recalls one more for comparison (the fixed-edge expansion, after
 Theorem 8.2).
-`../archive/paperB` ("Vertex crossings in a symmetric Markov multinomial model",
+`../paperB` ("Vertex crossings in a symmetric Markov multinomial model",
 arXiv:2610.09258v1) treats the complete graph, and this paper replaces it as version 2 of the same
 entry. Table 1 of the introduction lists each result of it that is reproved here, where, which
 part, and whether the proof is a case of the general theory or the exact argument of the preprint.
-The results that are not reproved are listed in the paragraph before the table. `../paperC2` ("What the
+The results that are not reproved are listed in the paragraph before the table. `../../paperC2` ("What the
 occupation law of a finite Markov chain determines: principal minors, modal supports and cycle
 trees", in preparation) asks what the Donsker and Varadhan functional and the modal supports
 determine about the generator. `EXPORTS.md` lists the statements of this paper that it cites, with
@@ -150,8 +154,8 @@ cover them.
 ## What rests on computation
 
 No proof rests on a computation. Section 9 (`sec_verify.tex`) lists what the Lean files and the
-scripts check. The Lean files are in `../lean/PaperC` and `../lean/PaperB`, and
-`../lean/PaperC/MAP.md` matches the statements to their Lean theorems. What Lean does not cover:
+scripts check. The Lean files are in `../../lean/PaperC` and `../../lean/PaperB`, and
+`../../lean/PaperC/MAP.md` matches the statements to their Lean theorems. What Lean does not cover:
 the Perron and Frobenius theorem (a hypothesis of the Lean statements) and the asymptotic results.
 `MAP.md` still uses the numbers from before audit 20, whose report has the renumbering table.
 
@@ -159,7 +163,7 @@ the Perron and Frobenius theorem (a hypothesis of the Lean statements) and the a
 
 - `problem131_chains.tex`: the article version (plain `article` class). Build it here.
 - `problem131_chains_sn.tex`: the journal version, in the Springer Nature template for JTP. The
-  class and its files are in `../common/sn-jnl`, and `TEMPLATE.md` records the template source, the
+  class and its files are in `../../common/sn-jnl`, and `TEMPLATE.md` records the template source, the
   choices made and the zip for Snapp. The switch `\arxivbuildfalse` at its top selects the
   journal text. Since audit 35 the journal version has every proof of the sections it prints. It
   does not input `sec_complete.tex`, `sec_vertex.tex`, `app_complete.tex` and `app_vertex.tex`,
@@ -177,7 +181,7 @@ the Perron and Frobenius theorem (a hypothesis of the Lean statements) and the a
   article file inputs, and `app_counts.tex` (Appendix E, the reducible faces and the counts near a
   facet, added October 25, 2026).
   Bibliography: `bib_switching.tex`.
-- `EXPORTS.md`: the statements cited by `../paperC2`, with their labels and numbers.
+- `EXPORTS.md`: the statements cited by `../../paperC2`, with their labels and numbers.
 - Scripts. `verify_all.py` runs the 9 checks below and writes `data/<script>_output.txt`.
   - `verify_counts.py` (added October 25, 2026, audit 30): Theorem 6.11(a) against all paths in
     exact arithmetic for N <= 12, the bounds of Theorem 6.11(c) on a grid up to N' = 10^4,
@@ -212,23 +216,23 @@ the Perron and Frobenius theorem (a hypothesis of the Lean statements) and the a
     word sum exactly by a recursion over the words, checks Lemma 6.10(e) against Section 6.1 for
     real z, and prints S |eps| for S = 4 to 32 (64 with `--full`) at three values of z, real and
     complex. At z = 0 the products settle at 0.438 and 0.545.
-  - `verify_sticky_fisher.py` checks the notes `../S3_sticky_note` and
-    `../S1_endpoint_information_note`, not this paper, and `verify_all.py` does not run it.
-  - The scripts of the identifiability results moved to `../paperC2` with their outputs.
+  - `verify_sticky_fisher.py` checks the notes `../../S3_sticky_note` and
+    `../../S1_endpoint_information_note`, not this paper, and `verify_all.py` does not run it.
+  - The scripts of the identifiability results moved to `../../paperC2` with their outputs.
 - `data/`: the outputs of the checks, each headed by the sha256 of its script, plus the older
   ledgers, combined logs (`verify_output*.txt`) and figure data of the earlier version.
 - `figures/`: the figures (`fig_complete_envelope`, `fig_simplex`) with their scripts, and
   `captions.md`. The 4-cycle figure is TikZ in `sec_firstorder.tex`. `fig_cycles` and its script
   stay in the folder but the paper no longer includes it.
 - Earlier versions: `problem131_switching.tex` and its PDF of October 23, with the supplement, are
-  in `../archive/paperC_switching_ejp/`. `removed_proofs/` keeps the first draft of September 26.
+  in `../paperC_switching_ejp/`. `removed_proofs/` keeps the first draft of September 26.
   The paper itself points to none of these.
 - `cover_letter.md`: the cover letter for JTP.
 
 ## Build and run
 
     pdflatex -interaction=nonstopmode problem131_chains.tex      (three times)
-    TEXINPUTS=".;../common/sn-jnl;" pdflatex -interaction=nonstopmode problem131_chains_sn.tex   (three times, from Git Bash)
+    TEXINPUTS=".;../../common/sn-jnl;" pdflatex -interaction=nonstopmode problem131_chains_sn.tex   (three times, from Git Bash)
     py -I verify_all.py            (about four minutes; --full adds the largest cases of four scripts)
     py -I verify_layer.py          (any script also runs on its own)
 
@@ -257,7 +261,7 @@ to Section 7. Labels removed in the cuts of October 24 before arXiv: `sec:weakfi
 `cor:weakfield-phases`, `cor:weakfield-full-hierarchy`, `eq:weakfield-maximum` and
 `eq:weakfield-lines`. Labels removed in the split of October 24: `hyp:L`, `rem:layer-four`,
 `thm:D`, `sec:intro-reconstruction`, `sec:intro-lowtemp`, `eq:planar-bessel`, and every label of
-the former Sections 9 and 10, which are now in `../paperC2`. Earlier removals: `lem:L`,
+the former Sections 9 and 10, which are now in `../../paperC2`. Earlier removals: `lem:L`,
 `prop:threecycle`, `ex:simplex-edge-mode` (now `rem:simplex-edge-mode`), `tab:C4worked`,
 `rem:flows`, `rem:nextterm`, `rem:layer-discrete`, `sec:layer-heuristic`, `sec:layer-numerics`.
 
@@ -265,11 +269,11 @@ the former Sections 9 and 10, which are now in `../paperC2`. Earlier removals: `
 
 In October 2026 Paper B (arXiv:2610.09258v1) was merged into Paper C, which kept its folder. The
 results on the complete graph and near a vertex come from it. The sticky-prior application moved to
-the note `../S3_sticky_note`. On October 24, 2026 the paper was restructured for JTP and revised
+the note `../../S3_sticky_note`. On October 24, 2026 the paper was restructured for JTP and revised
 after three reviews (in `research_notes/Paper C audits/`, items 06 to 08). An independent referee
 report of the same day (item 10) found no error that touches a theorem and asked for a split along
 the narrow interface between the two halves (item 09 has the plan). Later that day the paper was
-split. The identifiability half became the companion paper in `../paperC2`, and this folder kept
+split. The identifiability half became the companion paper in `../../paperC2`, and this folder kept
 the forward theory as Paper C1 (item 11). Item 13 is an editor's check with a line edit. Then the
 local law of the weighted facet chain was proved for every facet, and the facet theorem now holds
 for every face with at least two states (item 16). Before the arXiv submission the author cut the

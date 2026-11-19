@@ -60,7 +60,7 @@ where e vanishes.
 check() compares every plotted formula with the constants of the papers and
 with the exact crossings in their data files (listed above load_exact), and
 stops with a list of disagreements. If a data file is missing, for example in a
-copy of the repository without paperC or paperD, check() prints a note and
+copy of the repository without archive/paperC1_jtp or paperD, check() prints a note and
 skips the comparisons that need it.
 """
 
@@ -190,10 +190,10 @@ def third_order(L, a):
 # ---------------------------------------------------------------- checks
 
 # The exact crossings come from the data files of the papers.
-#   Paper A  N(1 - p_N) for N = 40, ..., 10240 (key "nq" of paperC/data/figdata_planar_0p1_1.json)
+#   Paper A  N(1 - p_N) for N = 40, ..., 10240 (key "nq" of archive/paperC1_jtp/data/figdata_planar_0p1_1.json)
 #            and z_n for n = 50, ..., 51200 (key "z" of paperD/data/figdata_crossing.json)
 #   Paper B  a_k and the roots N u_{N,k} (archive/paperB/data/simplex-verification.json)
-#   Paper C  T*_N for (r, s) = (1, 1) and N = 40, ..., 10240 (paperC/data/figdata_planar_1_1.json)
+#   Paper C  T*_N for (r, s) = (1, 1) and N = 40, ..., 10240 (archive/paperC1_jtp/data/figdata_planar_1_1.json)
 #   Paper D  x_n for n = 50, ..., 51200 (key "x" of paperD/data/figdata_crossing.json)
 # D_G and D_DIFF hold the roots g_n and the differences D(n) printed in the table of exact
 # elephant crossings in Paper D.

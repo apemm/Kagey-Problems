@@ -3,8 +3,8 @@ import PaperC.C1.WeightedCayley
 /-!
 # Paper C1: symmetric faces and the complete face
 
-Paper C1 (`paperC/problem131_chains.tex`): `paperC/sec_secondorder.tex`, `cor:symface`;
-`paperC/sec_complete.tex`, `ex:complete-face` and `cor:paperB`. The arithmetic of these three
+Paper C1 (`archive/paperC1_jtp/problem131_chains.tex`): `archive/paperC1_jtp/sec_secondorder.tex`, `cor:symface`;
+`archive/paperC1_jtp/sec_complete.tex`, `ex:complete-face` and `cor:paperB`. The arithmetic of these three
 statements, with the tree sum taken as the determinant of the reduced Laplacian `redLap` of
 `PaperC.C1.WeightedCayley` (the matrix-tree theorem is not in Mathlib).
 

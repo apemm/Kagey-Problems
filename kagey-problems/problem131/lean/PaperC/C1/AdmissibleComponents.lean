@@ -3,7 +3,7 @@ import PaperC.C1.Admissible
 /-!
 # Paper C1: admissible faces and the chain of strongly connected components
 
-Paper C1 (`paperC/problem131_chains.tex`), `paperC/sec_model.tex`, `lem:admissible`(a).
+Paper C1 (`archive/paperC1_jtp/problem131_chains.tex`), `archive/paperC1_jtp/sec_model.tex`, `lem:admissible`(a).
 
 Let `C_1, …, C_r` be the strongly connected components of `G_F`. Part (a) says that `F` is
 admissible if and only if the components can be numbered so that `μ(C_1) > 0` and, for each

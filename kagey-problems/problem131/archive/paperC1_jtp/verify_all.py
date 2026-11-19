@@ -1,7 +1,7 @@
 """Run the checks of Paper C1 (problem131_chains.tex) and save their outputs under data/.
 
 The checks of the identifiability results (reconstruction, finite horizons, low temperature)
-moved with those results to the companion paper in ../paperC2 on October 24, 2026.
+moved with those results to the companion paper in ../../paperC2 on October 24, 2026.
 The script verify_weak_field.py was removed the same day, with the weak field that it checked.
 On October 25, 2026 verify_forest.py was retired from this list. It checks the tree formula for
 K_F on a general face, which the paper no longer states, and it stays in the folder for the record.
@@ -23,8 +23,8 @@ graphs on 6 states, and the cells at N = 160 of the first-order section), which 
 and verify_layer_general.py adds S = 64.
 Needs numpy, scipy, sympy and mpmath. Run:  py -I verify_all.py [--full] [--only NAME ...]
 
-The script verify_sticky_fisher.py in this folder checks the notes ../S3_sticky_note and
-../S1_endpoint_information_note, not this paper, and is not run here. Neither is verify_forest.py.
+The script verify_sticky_fisher.py in this folder checks the notes ../../S3_sticky_note and
+../../S1_endpoint_information_note, not this paper, and is not run here. Neither is verify_forest.py.
 """
 import argparse
 import datetime
@@ -64,7 +64,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--full', action='store_true', help='also run the heavy cells')
     parser.add_argument('--quick', action='store_true',
-                        help='the default run; accepted so that ../verify_all.py can pass it')
+                        help='the default run; accepted so that ../../verify_all.py can pass it')
     parser.add_argument('--only', nargs='*', help='run only these scripts')
     args = parser.parse_args()
     (BASE / 'data').mkdir(exist_ok=True)

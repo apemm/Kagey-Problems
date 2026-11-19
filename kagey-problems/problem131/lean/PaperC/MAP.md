@@ -4,8 +4,8 @@ This file matches the statements of the two papers that came out of Paper C to t
 of the libraries `PaperC` (root `PaperC.lean`) and `PaperB` (root `PaperB.lean`).
 
 - Paper C1, "Occupation counts of rarely switching Markov chains: stratified local laws, support
-  selection and the boundary layer", main files `paperC/problem131_chains.tex` (article build, 81
-  pages) and `paperC/problem131_chains_sn.tex` (Springer build, 89 pages). Statement numbers agree in the two
+  selection and the boundary layer", main files `archive/paperC1_jtp/problem131_chains.tex` (article build, 81
+  pages) and `archive/paperC1_jtp/problem131_chains_sn.tex` (Springer build, 89 pages). Statement numbers agree in the two
   builds. Equation numbers agree too, except in the appendices, where the Springer build numbers
   equations by appendix. The numbers below are those of the article build.
 - Paper C2, "What the occupation law of a finite Markov chain determines: time reversal,

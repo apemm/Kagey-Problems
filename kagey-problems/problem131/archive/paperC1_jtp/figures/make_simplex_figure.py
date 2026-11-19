@@ -27,7 +27,7 @@ Q = np.array([[-1.0, 1.0, 0.0], [1.0, -2.0, 1.0], [0.0, 1.0, -1.0]])
 PANELS = (2.0, 5.5, 10.0)
 
 import sys as _sys
-_sys.path.insert(0, str(HERE.parent.parent / "figures"))
+_sys.path.insert(0, str(HERE.parents[2] / "figures"))
 import dark_style  # the manim palette, see figures/dark_style.py
 dark_style.light()  # white background
 PALETTE = dark_style.HEAT

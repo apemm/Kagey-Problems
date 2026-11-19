@@ -3,7 +3,7 @@ import Mathlib
 /-!
 # Paper C1: the critical point and the conductances of a reversible face
 
-Paper C1 (`paperC/problem131_chains.tex`), `paperC/sec_secondorder.tex`, `prop:constant`(b).
+Paper C1 (`archive/paperC1_jtp/problem131_chains.tex`), `archive/paperC1_jtp/sec_secondorder.tex`, `prop:constant`(b).
 For rates `q` with `ν_i q_ij = ν_j q_ji` on `k` states and a positive vector `α`, the vector
 `u = √(α/ν)` is a critical point of the Donsker–Varadhan functional, the tilted chain has the
 conductances `c_ij(α) = √(α_i α_j) q_ij √(ν_i/ν_j)`, and `α_i θ_i(α) = ∑_{j≠i} c_ij(α)`.

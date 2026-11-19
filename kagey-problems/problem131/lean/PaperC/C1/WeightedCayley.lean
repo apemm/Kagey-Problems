@@ -3,8 +3,8 @@ import Mathlib
 /-!
 # Paper C1: the weighted Cayley formula and the rank-one determinant
 
-Paper C1 (`paperC/problem131_chains.tex`), `paperC/sec_complete.tex`, `lem:weighted-cayley`, and
-`paperC/sec_secondorder.tex`, `prop:constant`(b), the determinant step.
+Paper C1 (`archive/paperC1_jtp/problem131_chains.tex`), `archive/paperC1_jtp/sec_complete.tex`, `lem:weighted-cayley`, and
+`archive/paperC1_jtp/sec_secondorder.tex`, `prop:constant`(b), the determinant step.
 
 Mathlib has no matrix-tree theorem, so the tree sum `tree(c)` of the paper is represented here by
 the determinant of the reduced Laplacian (the Laplacian of the conductances with state `0`

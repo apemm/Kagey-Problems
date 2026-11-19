@@ -19,16 +19,16 @@ faces (Proposition 2.6), with the gap between the conditional mode and where the
 - `s3_note.tex` is the note. It includes `s3_body.tex` (Section 2, the old Section 6 of Paper C)
   and `s3_appendix.tex` (Appendix A, the old Appendix D).
 - The note quotes Theorems 3.3 and 4.8, Proposition 5.1, Corollary 5.2 and Example 2.5 of the
-  merged Paper C (`../paperC/problem131_switching.tex`). Their numbers are read with the package
-  `xr` from `../paperC/problem131_switching.aux`, so build the paper first.
-- The checks are the part on sticky priors of `../paperC/verify_sticky_fisher.py`, which stays in
+  merged Paper C (`../archive/paperC1_jtp/problem131_switching.tex`). Their numbers are read with the package
+  `xr` from `../archive/paperC1_jtp/problem131_switching.aux`, so build the paper first.
+- The checks are the part on sticky priors of `../archive/paperC1_jtp/verify_sticky_fisher.py`, which stays in
   `../paperC` because it also holds the checks of the note `../S1_endpoint_information_note` and
   the polynomial S_N that `../paperE/verify_planar.py` imports. Its check labels use the numbers
-  of this note ("S3, Proposition 2.2" and so on). `../paperC/verify_all.py` runs it.
+  of this note ("S3, Proposition 2.2" and so on). `../archive/paperC1_jtp/verify_all.py` runs it.
 - The finite steps are in Lean in `../lean/PaperC/Sticky.lean`. The table "Section 7, sticky
   priors" of `../lean/PaperC/MAP.md` lists them with the numbers of this note.
 
 ## How to build
 
-Build `../paperC/problem131_switching.tex` first, then run `pdflatex s3_note.tex` in this folder
+Build `../archive/paperC1_jtp/problem131_switching.tex` first, then run `pdflatex s3_note.tex` in this folder
 3 times.

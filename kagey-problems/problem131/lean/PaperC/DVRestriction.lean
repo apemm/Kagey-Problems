@@ -3,7 +3,7 @@ import PaperC.DVRate
 /-!
 # Paper C1: the restriction identity `J_F = J_V` on a face
 
-Paper C1 (`paperC/problem131_chains.tex`), Section 3.1, Proposition 3.1 (`paperC/sec_dv.tex`,
+Paper C1 (`archive/paperC1_jtp/problem131_chains.tex`), Section 3.1, Proposition 3.1 (`archive/paperC1_jtp/sec_dv.tex`,
 `prop:restriction`). For a generator `Q` on `Fin d`
 (nonnegative off-diagonal entries), a face `F` and a nonnegative vector `α` that vanishes off
 `F`, the Donsker–Varadhan functional of the whole chain,

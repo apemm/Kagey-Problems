@@ -3,8 +3,8 @@
 Papers B and C update, October 23, 2026.
 
 Paper B is merged into Paper C, which keeps its title, "Face selection for slowly switching
-Markov chains", its folder `paperC` and its file name, and targets the Electronic Journal of
-Probability (class `ejpecp`, with the supplement `paperC/supplement.tex`). The application to
+Markov chains", its folder `archive/paperC1_jtp` and its file name, and targets the Electronic Journal of
+Probability (class `ejpecp`, with the supplement `archive/paperC1_jtp/supplement.tex`). The application to
 sticky priors is in the note `S3_sticky_note`. The historical B source, PDF, code and data
 are in `archive/paperB`. Its original arXiv version remains accessible at
 [arXiv:2610.09258v1](https://arxiv.org/abs/2610.09258v1).

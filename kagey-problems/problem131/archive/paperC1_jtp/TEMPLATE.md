@@ -11,7 +11,7 @@ versions follow.
   Nature LaTeX template" to https://www.springernature.com/gp/authors/campaigns/latex-author-support
 - Zip downloaded from that page (the "journal article template", December 2024 release):
   https://cms-resources.apps.public.k8s.springernature.io/springer-cms/rest/v1/content/18782940/data/v12
-- Downloaded 2026-10-24, saved as `../common/sn-jnl/download/sn-article-template.zip`
+- Downloaded 2026-10-24, saved as `../../common/sn-jnl/download/sn-article-template.zip`
   (901,814 bytes, entries dated 2024-12-13).
 - sha256 of the zip: `812e76dcaa9c28dc1bff1fb6065d51729b67d4ea140552a05088317414a3ecae`
 - sha256 of `sn-jnl.cls`: `36d0c3273a59d48dc6a9c7b080dfa1ec50dc10229d8751568d1f2e490ffa5ecc`
@@ -19,7 +19,7 @@ versions follow.
   for Springer Journal articles]`. Springer never bumped this string; the file dates (2024-12-13)
   are the real version marker.
 
-Copied into `../common/sn-jnl/`: `sn-jnl.cls`, the nine `.bst` files (`sn-mathphys-num.bst` is
+Copied into `../../common/sn-jnl/`: `sn-jnl.cls`, the nine `.bst` files (`sn-mathphys-num.bst` is
 the one we would use), the sample `sn-article.tex` with its PDF `sn-article.pdf`, and
 `user-manual.pdf`. The sample `.bib` and `.eps` files were not copied. Note that `sn-jnl.cls`
 and `sn-article.tex` use bare CR line endings, so view them with `tr '\r' '\n'`.
@@ -43,7 +43,7 @@ and `sn-article.tex` use bare CR line endings, so view them with `tr '\r' '\n'`.
 - `\keywords{...}` and `\pacs[MSC Classification]{...}` carry the keywords and the 2020 MSC codes
   of the article version. The `\pacs` argument spells out "Primary 60J10; Secondary 60J27, 60F10,
   60F05, 15B48" so that the split shows. The codes 15A18 and 15A29 (principal minors, inverse
-  problems) went with the identifiability half to `../paperC2`.
+  problems) went with the identifiability half to `../../paperC2`.
 - Theorems use the class styles: `thmstyleone` for theorem, lemma, proposition, corollary,
   conjecture and introtheorem (the hypothesis environment was removed in the split, and its one
   statement is now proved as Theorem 6.6); `thmstylethree` for definition and example; `thmstyletwo` for
@@ -81,7 +81,7 @@ and `sn-article.tex` use bare CR line endings, so view them with `tr '\r' '\n'`.
 From this folder, with the class found through TEXINPUTS (no files copied next to the main file;
 this works on TeX Live 2026 in Git Bash):
 
-    TEXINPUTS=".;../common/sn-jnl;" pdflatex -interaction=nonstopmode problem131_chains_sn.tex
+    TEXINPUTS=".;../../common/sn-jnl;" pdflatex -interaction=nonstopmode problem131_chains_sn.tex
 
 Run it three times. After the referee revision of October 25 (audit 24), both builds have no
 errors, no undefined references, no multiply defined labels and no overfull boxes. The sn version
@@ -96,7 +96,7 @@ since every figure is in `figures/`.
 Snapp compiles with pdflatex on TeX Live 2021 from one zip and does not know `TEXINPUTS`. So the
 zip must be flat with respect to the class:
 
-1. `problem131_chains_sn.tex` at the top level, with `sn-jnl.cls` copied from `../common/sn-jnl`
+1. `problem131_chains_sn.tex` at the top level, with `sn-jnl.cls` copied from `../../common/sn-jnl`
    beside it (no `.bst` is needed, since the bibliography is the inline `thebibliography`).
 2. The nine input files `sec_intro.tex`, `sec_model.tex`, `sec_dv.tex`, `sec_firstorder.tex`,
    `sec_secondorder.tex`, `sec_boundary.tex`, `sec_complete.tex`, `sec_vertex.tex`,

@@ -3,7 +3,7 @@ import PaperC.C1.LayerDiscrete
 /-!
 # Paper C1: the discrete Pedler formula on a pair face
 
-Paper C1 (`paperC/problem131_chains.tex`), `paperC/sec_boundary.tex`, `thm:pair-counts`(a).
+Paper C1 (`archive/paperC1_jtp/problem131_chains.tex`), `archive/paperC1_jtp/sec_boundary.tex`, `thm:pair-counts`(a).
 Let `F = {j, i}` with `j ≠ i`, the count vector `n` with `n_j = N'` and `n_i = m`, and put
 `ω = a_{ji} a_{ij}`, `c_0 = 1`, `c_1 = a_{ji} + (μ_i/μ_j) a_{ij}`, `c_2 = (μ_i/μ_j) ω`, `p_l = 1 - h q_l`.
 For `N', m ≥ 1`, `μ_j > 0` and `p_j > 0`, exactly,

@@ -1,7 +1,7 @@
 """Run the checks for Papers A to F and the note S4 of Problem 131 with the current interpreter.
 
 Each paper has its own runner, paperA/verify_all.py to paperF/verify_all.py, and runs its scripts
-in its own folder. With --paper c this script runs the runner of Paper C1 in paperC. Papers C2
+in its own folder. With --paper c this script runs the runner of Paper C1 in archive/paperC1_jtp. Papers C2
 and D moved to their own repositories in November 2026 (apemm/occupation-identifiability and
 apemm/elephant-bias-interval), and their checks run there. This script calls the runners in turn
 with --quick, or with --full when --full is given. The
@@ -15,7 +15,7 @@ few minutes more (the largest cases of four scripts, about 4 minutes of them for
 verify_layer_general.py), Paper E up to about half an hour, Paper D up to about 45 minutes and
 Paper F about 2 minutes in all. Paper C2 runs the same with or without --full.
 (Papers E and F were split off Papers C and D in October 2026, and Paper B was merged into Paper C.
-On October 24, 2026 Paper C was split into Paper C1, which keeps the folder paperC and the results
+On October 24, 2026 Paper C was split into Paper C1, which keeps the folder archive/paperC1_jtp and the results
 of Paper B, and Paper C2 in paperC2. With --paper b this script still runs the checks of Paper B,
 which also cover the statements of Paper C1 that came from Paper B. On October 24, 2026 the first
 draft of Paper F was archived in archive/paperF_golden_aging, with its own runner, and Paper F was
@@ -58,7 +58,7 @@ for paper in papers:
         scripts = [('verify_aging.py', ['--full'] if args.full else []),
                    ('verify_aging_urn.py', [])]
     elif paper == 'c':
-        name, folder = 'Paper C1', base / 'paperC'
+        name, folder = 'Paper C1', base / 'archive/paperC1_jtp'
         scripts = [('verify_all.py', [mode])]
     else:
         name = f'Paper {paper.upper()}'

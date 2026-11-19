@@ -120,7 +120,7 @@ then the outcome, with nothing deleted).
 
 ## Ledgers of Papers C to F
 
-- [paperC/data/ledger.md](paperC/data/ledger.md) indexes the ledgers of Paper C.
+- [archive/paperC1_jtp/data/ledger.md](archive/paperC1_jtp/data/ledger.md) indexes the ledgers of Paper C.
 - The ledgers of Paper D are no longer in this repository.
 - [paperE/data/ledger_C3.md](paperE/data/ledger_C3.md) is the ledger of Paper E, the planar walk.
   It was written for Paper C before the split of October 13, 2026.

@@ -3,7 +3,7 @@ import PaperC.ChainLaw
 /-!
 # Paper C1: admissible faces and walks
 
-Paper C1 (`paperC/problem131_chains.tex`), `paperC/sec_model.tex`, `lem:admissible`, the walk
+Paper C1 (`archive/paperC1_jtp/problem131_chains.tex`), `archive/paperC1_jtp/sec_model.tex`, `lem:admissible`, the walk
 criterion in its proof and parts (b) and (c).
 
 A face `F` is admissible if some path of positive probability has support exactly `F`
